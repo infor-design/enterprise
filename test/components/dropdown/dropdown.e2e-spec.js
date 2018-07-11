@@ -237,7 +237,7 @@ describe('Dropdown example-no-search-filtering tests', () => {
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), ''), config.waitsFor);
     const dropdownHTML = await browser.executeScript('return document.querySelector("div[aria-controls=\'dropdown-list\']").innerHTML');
 
-    expect(dropdownHTML).toEqual('<span>&nbsp;</span>');
+    expect(dropdownHTML).toEqual('<span></span>');
   });
 });
 
@@ -257,6 +257,6 @@ describe('Dropdown example-no-search tests', () => {
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), ''), config.waitsFor);
     const dropdownHTML = await browser.executeScript('return document.querySelector("div[aria-controls=\'dropdown-list\']").innerHTML');
 
-    expect(dropdownHTML).toEqual('<span>&nbsp;</span>');
+    expect(dropdownHTML).toEqual('<span></span>');
   });
 });

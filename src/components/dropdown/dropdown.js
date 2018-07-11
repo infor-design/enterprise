@@ -313,7 +313,7 @@ Dropdown.prototype = {
     this.tooltipApi = null;
 
     this.setListIcon();
-    this.setValue();
+    this.setDisplayedValues();
     this.setInitial();
     this.setWidth();
 
@@ -658,7 +658,7 @@ Dropdown.prototype = {
 
       // Highlight search term
       if (term && term.length > 0) {
-        const exp = new RegExp(`(${term})`, 'i');
+        const exp = self.getSearchRegex(term);
         text = text.replace(exp, '<i>$1</i>').trim();
       }
 
@@ -789,13 +789,17 @@ Dropdown.prototype = {
     }
 
     this.position();
+
+    if (this.isOpen()) {
+      this.highlightOption(this.listUl.find('li').first());
+    }
   },
 
   /**
-   * Set the value based on selected option on the select.
+   * Sets the displayed value of the Pseudo-Element based on currently-selected options.
    * @private
    */
-  setValue() {
+  setDisplayedValues() {
     const opts = this.element.find('option:selected');
     let text = this.getOptionText(opts);
 
@@ -808,31 +812,19 @@ Dropdown.prototype = {
       return;
     }
 
-    // Set initial values for the edit box
-    this.setPseudoElemDisplayText(text);
+    // Displays the text on the pseudo-element
+    const maxlength = this.element.attr('maxlength');
+    if (maxlength) {
+      text = text.substr(0, maxlength);
+    }
+    text = text.trim();
+    this.pseudoElem.find('span').text(text);
 
     // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
 
     this.updateItemIcon(opts);
     this.setBadge(opts);
-  },
-
-  /**
-   * Sets only the display text of the Dropdown/Mutliselect
-   * Can be used for setting a pre-populated value when working with an AJAX call.
-   * @private
-   * @param  {string} text The text to set.
-   */
-  setPseudoElemDisplayText(text) {
-    const maxlength = this.element.attr('maxlength');
-
-    if (maxlength) {
-      text = text.substr(0, maxlength);
-    }
-    text = text.trim();
-
-    this.pseudoElem.find('span').text(text);
   },
 
   /**
@@ -897,7 +889,7 @@ Dropdown.prototype = {
       return; // eslint-disable-line
     }
 
-    if (e.ctrlKey || e.metaKey) {
+    if (e.ctrlKey) {
       return false;
     }
 
@@ -918,35 +910,6 @@ Dropdown.prototype = {
     // False means space will select/deselect.  True means
     // Space will add a space inside the search input.
     this.searchKeyMode = false;
-
-    /*
-    this.searchInput.on('keydown.dropdown', function (e) {
-      const searchInput = $(this);
-
-      if (!self.ignoreKeys(searchInput, e)) {
-        return;
-      }
-
-      if (!self.handleKeyDown(searchInput, e)) {
-        return;
-      }
-
-      if (self.settings.noSearch === false) {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-          if (searchInput.val() === '') {
-            self.resetList();
-          } else {
-            self.filterList(searchInput.val().toLowerCase());
-          }
-        }, 100);
-      }
-      //self.handleAutocomplete(e);
-    }).on('keypress.dropdown', (e) => {
-      self.isFiltering = true;
-      self.handleAutoComplete(e);
-    });
-    */
 
     this.searchInput
       .on(`keydown.${COMPONENT_NAME}`, (e) => {
@@ -1018,7 +981,7 @@ Dropdown.prototype = {
       }
 
       // Highlight Term
-      const exp = new RegExp(`(${term})`, 'i');
+      const exp = self.getSearchRegex(term);
       const text = li.text().replace(exp, '<i>$1</i>').trim();
       li.removeClass('hidden').children('a').html(text);
     });
@@ -1137,10 +1100,6 @@ Dropdown.prototype = {
       return e; //eslint-disable-line
     }
 
-    if (e.metaKey) {
-      return;
-    }
-
     if (self.isOpen()) {
       options = this.listUl.find(excludes);
       selectedIndex = -1;
@@ -1195,7 +1154,6 @@ Dropdown.prototype = {
         // that rely on dropdown may need to trigger routines when the Esc key is pressed.
         break;
       }
-      case 32: // spacebar // TODO: Figure Out what to do about using Spacebar.
       case 13: { // enter
         if (self.isOpen()) {
           if (key === 32 && self.searchKeyMode === true) {
@@ -1278,9 +1236,11 @@ Dropdown.prototype = {
       }
     }
 
+    /*
     if (self.isOpen() && self.isControl(key) && key !== 8) {
       return false;  //eslint-disable-line
     }
+    */
 
     const isSearchInput = self.searchInput && self.searchInput.length;
 
@@ -1306,6 +1266,56 @@ Dropdown.prototype = {
   },
 
   /**
+   * @private
+   * @param {jQuery.Event} e incoming keydown event
+   * @returns {boolean} whether or not the keydown event is allowed to continue
+   */
+  handlePseudoElemKeydown(e) {
+    const target = $(e.target);
+    const key = e.key;
+
+    // Control Keydowns are ignored
+    const controlKeys = ['Tab', 'Alt', 'Shift', 'Control', 'Meta'];
+    if (controlKeys.indexOf(key) > -1) {
+      return false;
+    }
+
+    if (!this.ignoreKeys(target, e)) {
+      return false;
+    }
+
+    // Down arrow opens the list.
+    if (key === 'ArrowDown') {
+      if (this.settings.noSearch) {
+        return false;
+      }
+      this.open();
+      return false;
+    }
+
+    /*
+    // TODO: Purpose? Customer request for a specific team?
+    if (!this.settings.noSearch && e.keyCode !== 27) {
+      this.toggleList();
+      return false;
+    }
+    */
+
+    if (this.settings.onKeyDown) {
+      const ret = this.settings.onKeyDown(e);
+      if (ret === false) {
+        e.stopPropagation();
+        e.preventDefault();
+        return false; //eslint-disable-line
+      }
+    }
+
+    //this.handleKeyDown(target, e);
+    this.handleAutoComplete(e);
+    return true;
+  },
+
+  /**
    * Handle the typeahead.
    * @private
    * @param {object} e The event object
@@ -1320,17 +1330,20 @@ Dropdown.prototype = {
       clearTimeout(this.timer);
     }
 
-    if (!self.settings.source && !self.settings.noSearch) {
-      return;
-    }
-
-    const searchInput = this.searchInput;
-
     this.initialFilter = true;
     if (e.type === 'input') {
-      this.filterTerm = searchInput.val();
+      this.filterTerm = this.searchInput.val();
     } else {
-      this.filterTerm += e.key;
+      this.filterTerm += $.actualChar(e);
+    }
+
+    // if called by `open()`, runs in the context of this Dropdown's API
+    function filter() {
+      if (self.filterTerm === '') {
+        self.resetList();
+      } else {
+        self.filterList(self.filterTerm.toLowerCase());
+      }
     }
 
     this.timer = setTimeout(() => {
@@ -1340,16 +1353,11 @@ Dropdown.prototype = {
       }
 
       if (!self.isOpen()) {
-        searchInput.val(self.filterTerm);
-        self.toggleList();
+        self.open(filter);
         return;
       }
 
-      if (searchInput.val() === '') {
-        self.resetList();
-      } else {
-        self.filterList(searchInput.val().toLowerCase());
-      }
+      filter();
     }, self.settings.delay);
   },
 
@@ -1412,6 +1420,24 @@ Dropdown.prototype = {
   },
 
   /**
+   * @private
+   * @param {string} term incoming search term
+   * @returns {RegExp} a valid regex object used to filter search results
+   */
+  getSearchRegex(term) {
+    let regex;
+
+    try {
+      regex = new RegExp(`(${term})`, 'i');
+    } catch (e) {
+      // create a "matches all" regex if we can't create a regex from the search term
+      regex = /[\s\S]*/i;
+    }
+
+    return regex;
+  },
+
+  /**
    * Retrieves a string containing all text for currently selected options.
    * @private
    * @param  {array} opts The current option elements.
@@ -1436,8 +1462,10 @@ Dropdown.prototype = {
 
   /**
    * Open the dropdown list of options
+   * @param {function} callback additional items that can be run after the opening process completes
+   * @returns {void}
    */
-  open() {
+  open(callback) {
     const self = this;
 
     if (!this.inputTimer()) {
@@ -1448,12 +1476,17 @@ Dropdown.prototype = {
       return;
     }
 
-    if (!self.callSource(() => {
+    function completeOpen() {
       self.updateList();
       self.openList();
-    })) {
-      self.updateList();
-      this.openList();
+
+      if (callback && typeof callback === 'function') {
+        callback.call(this);
+      }
+    }
+
+    if (!self.callSource(completeOpen)) {
+      completeOpen();
     }
   },
 
@@ -1548,34 +1581,42 @@ Dropdown.prototype = {
       this.list.css('max-width', `${this.settings.maxWidth}px`);
     }
 
+    // Set the contents of the search input.
+    // If we've got a stored typeahead
+    if (this.initialFilter) {
+      this.searchInput.val(this.filterTerm);
+    } else {
+      this.searchInput.val(this.pseudoElem.find('span').text().trim());
+    }
+
+    /*
     if (!this.settings.multiple && this.initialFilter) {
       setTimeout(() => {
-        if (self.settings.noSearch) {
-          let selectedOpt;
-          let selectedOptText = '';
-
-          // Set the text of the SearchInput.
-          // Use fallback for `HTMLSelectElement.selectedOptions` in IE
-          if (this.isIe10 || this.isIe11) {
-            selectedOpt = self.element[0].options[self.element[0].selectedIndex];
-            selectedOptText = selectedOpt ? selectedOpt.innerText : '';
-          } else {
-            selectedOpt = self.element[0].selectedOptions;
-            selectedOptText = selectedOpt.length > 0 ? selectedOpt[0].innerText : '';
-          }
-
-          self.searchInput.val(selectedOptText);
+        if (self.searchInput.val() !== '' || !self.settings.noSearch) {
           return;
         }
 
-        self.searchInput.val(self.filterTerm);
-        self.filterList(self.searchInput.val());
+        let selectedOpt;
+        let selectedOptText = '';
+
+        // Set the text of the SearchInput.
+        // Use fallback for `HTMLSelectElement.selectedOptions` in IE
+        if (this.isIe10 || this.isIe11) {
+          selectedOpt = self.element[0].options[self.element[0].selectedIndex];
+          selectedOptText = selectedOpt ? selectedOpt.innerText : '';
+        } else {
+          selectedOpt = self.element[0].selectedOptions;
+          selectedOptText = selectedOpt.length > 0 ? selectedOpt[0].innerText : '';
+        }
+
+        self.searchInput.val(selectedOptText);
       }, 0);
       this.initialFilter = false;
     } else {
       // Change the values of both inputs and swap out the active descendant
       this.searchInput.val(this.pseudoElem.find('span').text().trim());
     }
+    */
 
     const noScroll = this.settings.multiple;
     this.highlightOption(current, noScroll);
@@ -1907,8 +1948,14 @@ Dropdown.prototype = {
       this.touchmove = false;
     }
 
+    // Rendering-related resets
     this.filterTerm = '';
-    this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
+    this.setDisplayedValues();
+
+    this.searchInput.off([
+      `input.${COMPONENT_NAME}`,
+      `keydown.${COMPONENT_NAME}`,
+    ].join(' '));
 
     // Destroy any tooltip items
     this.listUl.find('.has-tooltip').each(function () {
@@ -1919,7 +1966,13 @@ Dropdown.prototype = {
     });
 
     this.list
-      .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list')
+      .off([
+        `click.${COMPONENT_NAME}`,
+        `touchmove.${COMPONENT_NAME}`,
+        `touchend.${COMPONENT_NAME}`,
+        `touchcancel.${COMPONENT_NAME}`,
+        `mousewheel.${COMPONENT_NAME}`,
+        `mouseenter.${COMPONENT_NAME}`].join(' '))
       .remove();
 
     this.pseudoElem
@@ -1930,7 +1983,12 @@ Dropdown.prototype = {
       .removeAttr('aria-activedescendant');
 
     $(document)
-      .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
+      .off([
+        `click.${COMPONENT_NAME}`,
+        `scroll.${COMPONENT_NAME}`,
+        `touchmove.${COMPONENT_NAME}`,
+        `touchend.${COMPONENT_NAME}`,
+        `touchcancel.${COMPONENT_NAME}`].join(' '));
 
     $('body').off('resize.dropdown');
     $(window).off('orientationchange.dropdown');
@@ -2001,7 +2059,6 @@ Dropdown.prototype = {
    */
   isOpen() {
     return !!(this.pseudoElem.hasClass('is-open'));
-    //return !!((this.list && this.list.is(':visible')));
   },
 
   /**
@@ -2731,7 +2788,7 @@ Dropdown.prototype = {
 
     // update the list and set a new value, if applicable
     this.updateList();
-    this.setValue();
+    this.setDisplayedValues();
 
     this.element.trigger('has-updated');
 
@@ -2768,36 +2825,19 @@ Dropdown.prototype = {
   handleEvents() {
     const self = this;
 
-    this.pseudoElem.on('keydown.dropdown', function (e) {
-      if (!self.ignoreKeys($(this), e)) {
-        return;
-      }
-      self.handleKeyDown($(this), e);
-    }).on('keypress.dropdown', function (e) {
-      if (e.keyCode === 9) {
-        return;
-      }
-
-      if (!self.ignoreKeys($(this), e)) {
-        return;
-      }
-
-      if (!self.settings.noSearch && e.keyCode !== 27) {
+    this.pseudoElem
+      .on('keydown.dropdown', e => this.handlePseudoElemKeydown(e))
+      .on('click.dropdown', (e) => {
+        // landmark would like the click event to bubble up if ctrl and shift are pressed
+        if (!(e.originalEvent.ctrlKey && e.originalEvent.shiftKey)) {
+          e.stopPropagation();
+        }
+      }).on('mouseup.dropdown', (e) => {
+        if (e.button === 2) {
+          return;
+        }
         self.toggleList();
-      }
-
-      self.handleAutoComplete(e);
-    }).on('click.dropdown', (e) => {
-      // landmark would like the click event to bubble up if ctrl and shift are pressed
-      if (!(e.originalEvent.ctrlKey && e.originalEvent.shiftKey)) {
-        e.stopPropagation();
-      }
-    }).on('mouseup.dropdown', (e) => {
-      if (e.button === 2) {
-        return;
-      }
-      self.toggleList();
-    })
+      })
       .on('touchend.dropdown touchcancel.dropdown', (e) => {
         e.stopPropagation();
         self.toggleList();

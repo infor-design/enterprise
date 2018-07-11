@@ -11,7 +11,7 @@ describe('Listview example-singleselect tests', () => {
     await utils.setPage('/components/listview/example-singleselect');
     const listviewEl = await element(by.id('period-end'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitFor);
   });
 
   if (!utils.isIE()) {
@@ -26,11 +26,11 @@ describe('Listview example-singleselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitFor);
 
     expect(await element(by.css('li[aria-selected="true"]')).isPresent()).toBeTruthy();
     await browser.driver
-      .wait(protractor.ExpectedConditions.textToBePresentInElement(element(by.className('selection-count')), '1 Selected'), config.waitsFor);
+      .wait(protractor.ExpectedConditions.textToBePresentInElement(element(by.className('selection-count')), '1 Selected'), config.waitFor);
 
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
   });
@@ -39,14 +39,14 @@ describe('Listview example-singleselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitFor);
 
     expect(await element(by.css('li[aria-selected="true"]')).isPresent()).toBeTruthy();
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
 
     listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitFor);
 
     expect(await element(by.css('li[aria-selected="false"]')).isPresent()).toBeTruthy();
   });
@@ -57,15 +57,15 @@ describe('Listview example-singleselect tests', () => {
     const listviewItemElTwo = await element(by.css('li[aria-posinset="2"]'));
     await listviewEl.sendKeys(protractor.Key.TAB);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="1"][aria-selected="true"]')).isPresent()).toBeTruthy();
     await listviewItemElOne.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitFor);
     await listviewItemElTwo.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="3"].is-selected')).isPresent()).toBeTruthy();
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
@@ -77,7 +77,7 @@ describe('Listview example-multiselect tests', () => {
     await utils.setPage('/components/listview/example-multiselect');
     const listviewEl = await element(by.id('multiselect-listview'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitFor);
   });
 
   if (!utils.isIE()) {
@@ -92,11 +92,11 @@ describe('Listview example-multiselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitFor);
 
     expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('selection-count'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('selection-count'))), config.waitFor);
 
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
   });
@@ -105,14 +105,14 @@ describe('Listview example-multiselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitFor);
 
     expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
 
     listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitFor);
 
     expect(await element(by.css('li[aria-selected="false"]'))).toBeTruthy();
   });
@@ -121,7 +121,7 @@ describe('Listview example-multiselect tests', () => {
     it('Should mouseover 1st, and change background-color', async () => {
       const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(listviewItemElOne), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(listviewItemElOne), config.waitFor);
       await browser.driver.actions().mouseMove(listviewItemElOne).perform();
       await browser.driver.sleep(config.sleep);
       // Value returned will be as the browser interprets it, tricky to form a proper assertion
@@ -134,10 +134,10 @@ describe('Listview example-multiselect tests', () => {
     const listviewItemElThree = await element(by.css('li[aria-posinset="3"]'));
     listviewItemElOne.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-selected'))), config.waitFor);
     listviewItemElThree.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="3"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="3"].is-selected'))), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="1"].is-selected')).isPresent()).toBeTruthy();
     expect(await element(by.css('li[aria-posinset="1"][aria-selected="true"]'))).toBeTruthy();
@@ -152,7 +152,7 @@ describe('Listview example-multiselect tests', () => {
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemElOne.sendKeys(protractor.Key.SPACE);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-selected'))), config.waitFor);
     await listviewItemElOne.sendKeys(protractor.Key.ARROW_DOWN);
 
     expect(await element(by.css('li[aria-posinset="1"][tabindex="0"]'))).toBeTruthy();
@@ -172,7 +172,7 @@ describe('Listview example-mixed selection tests', () => {
     await utils.setPage('/components/listview/example-mixed-selection');
     const listviewEl = await element(by.id('task-listview'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitFor);
   });
 
   if (!utils.isIE()) {
@@ -195,14 +195,14 @@ describe('Listview example-mixed selection tests', () => {
     const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .label-text'));
     listviewItemInputEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewItemInputEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(listviewItemInputEl), config.waitFor);
 
     expect(await element(by.className('is-selected'))).toBeTruthy();
     expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
 
     listviewItemInputEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitFor);
 
     expect(await element(by.css('li[aria-selected="false"]'))).toBeTruthy();
   });
@@ -212,10 +212,10 @@ describe('Listview example-mixed selection tests', () => {
     const listviewItemElThree = await element(by.css('li[aria-posinset="3"] .label-text'));
     await listviewItemElOne.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-selected'))), config.waitFor);
     await listviewItemElThree.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="3"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="3"].is-selected'))), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="1"][aria-selected="true"]'))).toBeTruthy();
     expect(await element(by.css('li[aria-posinset="3"][aria-selected="true"]')).isPresent()).toBeTruthy();
@@ -225,7 +225,7 @@ describe('Listview example-mixed selection tests', () => {
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemElOne.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-activated'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-activated'))), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="1"][aria-selected="false"]'))).toBeTruthy();
   });
@@ -236,7 +236,7 @@ describe('Listview example-search tests', () => {
     await utils.setPage('/components/listview/example-search');
     const listviewEl = await element(by.id('search-listview'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitFor);
   });
 
   if (!utils.isIE()) {
@@ -250,12 +250,12 @@ describe('Listview example-search tests', () => {
   it('Should hide unmatching items based on search term, and highlight pattern', async () => {
     const searchListviewEl = await element(by.id('gridfilter'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(searchListviewEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(searchListviewEl), config.waitFor);
     await searchListviewEl.click();
     await browser.driver.switchTo().activeElement().clear();
     await browser.driver.switchTo().activeElement().sendKeys('to');
     await browser.driver
-      .wait(protractor.ExpectedConditions.textToBePresentInElementValue(await element(by.id('gridfilter')), 'to'), config.waitsFor);
+      .wait(protractor.ExpectedConditions.textToBePresentInElementValue(await element(by.id('gridfilter')), 'to'), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="2"]')).getText()).toContain('Update pending quotes and send out again to customers.');
     expect(await element(by.css('li[aria-posinset="2"]')).isDisplayed()).toBeTruthy();
@@ -270,7 +270,7 @@ describe('Listview example-paging tests', () => {
     await utils.setPage('/components/listview/example-paging');
     const listviewPagerEl = await element(by.css('.pager-toolbar.is-listview'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewPagerEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(listviewPagerEl), config.waitFor);
   });
 
   if (!utils.isIE()) {
@@ -285,7 +285,7 @@ describe('Listview example-paging tests', () => {
     const listviewPagerEl = await element.all(by.css('.pager-toolbar li')).get(2);
     await listviewPagerEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="4"] .listview-heading'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="4"] .listview-heading'))), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="4"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
   });
@@ -294,7 +294,7 @@ describe('Listview example-paging tests', () => {
     const listviewPagerNextEl = await element(by.css('.pager-next'));
     await listviewPagerNextEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="4"] .listview-heading'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="4"] .listview-heading'))), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="4"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
   });
@@ -307,7 +307,7 @@ describe('Listview example-paging tests', () => {
     await listviewPagerNextEl.click();
     await listviewPagerPrevEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="7"] .listview-heading'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="7"] .listview-heading'))), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="7"] .listview-heading')).getText()).toContain('Beechtree Dr. Resurfacing');
   });
@@ -318,7 +318,7 @@ describe('Listview example-index tests', () => {
     await utils.setPage('/components/listview/example-index');
     const listviewEl = await element(by.id('task-listview'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitFor);
   });
 
   it('Should do nothing on a disabled item', async () => {
@@ -334,7 +334,7 @@ describe('Listview example-paging-clientside tests', () => {
     await utils.setPage('/components/listview/example-paging-clientside');
     const listviewPagerEl = await element(by.css('.pager-toolbar.is-listview'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewPagerEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(listviewPagerEl), config.waitFor);
   });
 
   if (!utils.isIE()) {
@@ -349,7 +349,7 @@ describe('Listview example-paging-clientside tests', () => {
     const listviewPagerEl = await element.all(by.css('.pager-toolbar li')).get(2);
     listviewPagerEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="12"] .listview-heading'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="12"] .listview-heading'))), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="12"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
   });
@@ -358,7 +358,7 @@ describe('Listview example-paging-clientside tests', () => {
     const listviewPagerNextEl = await element(by.css('.pager-next'));
     listviewPagerNextEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="12"] .listview-heading'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="12"] .listview-heading'))), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="12"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
   });
@@ -370,7 +370,7 @@ describe('Listview example-paging-clientside tests', () => {
     await listviewPagerNextEl.click();
     await listviewPagerPrevEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="11"] .listview-heading'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="11"] .listview-heading'))), config.waitFor);
 
     expect(await element(by.css('li[aria-posinset="11"] .listview-heading')).isDisplayed()).toBeTruthy();
     expect(await element(by.css('li[aria-posinset="11"] .listview-heading')).getText()).toContain('Fort Woods Swimming Pool');
@@ -382,7 +382,7 @@ describe('Listview remove-clear tests', () => {
     await utils.setPage('/components/listview/remove-clear');
     const listviewMultiSelectEl = await element(by.id('multiselect-listview'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewMultiSelectEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(listviewMultiSelectEl), config.waitFor);
   });
 
   if (!utils.isIE()) {
@@ -402,7 +402,7 @@ describe('Listview remove-clear tests', () => {
     await listviewItemElThree.click();
     await listviewItemElFour.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('li[aria-posinset="4"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('li[aria-posinset="4"].is-selected'))), config.waitFor);
 
     expect(await element(by.className('status')).getText()).toContain('3 of 12 items selected');
     await listviewRemove.click();
@@ -416,7 +416,7 @@ describe('Listview example-header-totals` tests', () => {
     await utils.setPage('/components/listview/example-header-totals');
     const listviewButtonToggleEl = await element(by.css('.listview-header button'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewButtonToggleEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(listviewButtonToggleEl), config.waitFor);
   });
 
   if (!utils.isIE()) {
