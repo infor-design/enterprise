@@ -5,8 +5,6 @@ demo:
   pages:
   - name: Main Validation Examples
     slug: example-index
-  - name: Disabled Form
-    slug: example-form-disabled
   - name: Multiple Validation Errors on a Field
     slug: example-multiple-errors
   - name: Legacy Short Fields
@@ -42,6 +40,14 @@ $('#username-field')
 //Later on
 $('#username-field').removeError()
 ```
+
+## Code Example - Skipping Fields from Validation
+
+Its possible to skip fields that are normally validated from validation. You can do this in one of three ways.
+
+1. Add a class of `disable-validation`  to the input.
+1. Add an attribute of `data-disable-validation="true"` to the input.
+1. Make the input disabled.
 
 ## Validation Types
 
