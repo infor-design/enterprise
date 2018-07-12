@@ -85,18 +85,18 @@ $circlepager-disable-focus-border-color: $slate05;
 
 
 // Popovers
-$popover-bg-color: $slate07;
-$popover-border-color: $slate05;
-$popover-box-shadow: 0 2px 5px $drop-shadow-depth;
-$popover-arrow-border-color: $slate05;
-$popover-color: $font-color;
-$popover-separator-color: $slate05;
-$popover-alternate-color: inherit;
-$popover-alternate-subheader-color: inherit;
-$popover-alternate-bg-color: $slate07;
-$popover-alternate-arrow-color: $slate07;
-$popover-alternate-title-bg-color: $slate06;
-$popover-alternate-table-header: inherit;
+$popover-bg-color: $notification-bg-color;
+$popover-border-color: $notification-border-color;
+$popover-box-shadow: $notification-box-shadow;
+$popover-arrow-border-color: $notification-arrow-border-color;
+$popover-color: $notification-text-color;
+$popover-separator-color: $notification-separator-color;
+$popover-alternate-color: $notification-alternate-color;
+$popover-alternate-subheader-color: $notification-alternate-subheader-color;
+$popover-alternate-bg-color: $notification-alternate-bg-color;
+$popover-alternate-arrow-color: $notification-alternate-arrow-color;
+$popover-alternate-title-bg-color: $notification-alternate-title-bg-color;
+$popover-alternate-table-header: $notification-alternate-table-header;
 
 //Progress
 $progress-bg-color: transparent;
@@ -112,19 +112,19 @@ $tooltip-error-bg-color: $alert-red;
 $tooltip-error-color: $white;
 
 // Badges
-$badge-neutral-color: $white;
-$badge-neutral-bg-color: $slate06;
-$badge-neutral-hover-bg-color: $slate05;
-$badge-secondary-color: $white;
-$badge-secondary-bg-color: $slate07;
-$badge-secondary-border-color: $slate05;
-$badge-error-color: $white;
-$badge-alert-color: $graphite10;
-$badge-good-color: $graphite10;
-$badge-info-color: $white;
+$badge-neutral-color: $pill-neutral-color;
+$badge-neutral-bg-color: $pill-neutral-bg-color;
+$badge-neutral-hover-bg-color: $pill-neutral-hover-bg-color;
+$badge-secondary-color: $pill-secondary-color;
+$badge-secondary-bg-color: $pill-secondary-bg-color;
+$badge-secondary-border-color: $pill-secondary-border-color;
+$badge-error-color: $pill-error-color;
+$badge-alert-color: $pill-alert-color;
+$badge-good-color: $pill-good-color;
+$badge-info-color: $pill-info-color;
 $badge-info-bg-color: $primary-color;
-$badge-neutral-icon-color: $slate03;
-$badge-neutral-hover-icon-color: $white;
+$badge-neutral-icon-color: $pill-neutral-icon-color;
+$badge-neutral-hover-icon-color: $pill-neutral-hover-icon-color;
 
 
 // Popup Menu
@@ -139,34 +139,34 @@ $popupmenu-hover-color: $slate06;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
-$primary-btn-color: $inverse-color;
-$primary-btn-hover-bg-color: $azure08;
-$primary-btn-focus-bg-color: $primary-color;
-$primary-btn-active-bg-color: $azure07;
+$primary-btn-color: $button-primary-text-color;
+$primary-btn-hover-bg-color: $button-primary-hover-bg-color;
+$primary-btn-focus-bg-color: $button-primary-focus-bg-color;
+$primary-btn-active-bg-color: $button-primary-active-bg-color;
 $primary-btn-disabled-color: $primary-btn-color;
-$primary-btn-disabled-bg-color: $primary-btn-bg-color; //Primary at 50%
-$primary-btn-disabled-border-color: $primary-btn-bg-color;
-$primary-btn-disabled-opacity: .5;
+$primary-btn-disabled-bg-color: $button-primary-disabled-bg-color; //Primary at 50%
+$primary-btn-disabled-border-color: $button-primary-disabled-border-color;
+$primary-btn-disabled-opacity: $button-disabled-opacity;
 
 // Secondary/Normal Buttons
-$btn-color: $slate10;
-$btn-bg-color: $slate03;
+$btn-color: $button-default-text-color;
+$btn-bg-color: $button-default-bg-color;
 $btn-hover-bg-color: $slate04;
-$btn-focus-bg-color: $primary-color;
+$btn-focus-bg-color: $button-default-focus-bg-color;
 $btn-focus-border-color: $primary-color;
 $btn-active-bg-color: $slate04;
 $btn-disabled-bg-color: $slate03;
 $btn-disabled-color: $slate10;
 $btn-disabled-border-color: $slate03;
-$btn-disabled-opacity: .5;
+$btn-disabled-opacity: $button-disabled-opacity;
 
 // Tertiary Buttons
-$tertiary-btn-color: $slate03;
-$tertiary-btn-hover-color: $white;
+$tertiary-btn-color: $button-link-text-color;
+$tertiary-btn-hover-color:  $button-link-hover-text-color;
 $tertiary-btn-active-color: $white;
 $tertiary-btn-open-color: $primary-color;
-$tertiary-btn-disabled-color: $slate03;
-$tertiary-btn-disabled-opacity: .5;
+$tertiary-btn-disabled-color: $button-link-disabled-color;
+$tertiary-btn-disabled-opacity: $button-disabled-opacity;
 
 // Secondary With Border
 $secondary-border-btn-color:  $slate03;
@@ -176,18 +176,18 @@ $secondary-border-btn-hover-border-color: $white;
 $secondary-border-btn-ripple-color: $white;
 
 // Input Fields
-$input-border-color: $slate04;
-$input-color: $white;
-$input-bg-color: transparent;
-$input-disabled-bg-color: transparent;
-$input-disabled-border-color: $slate05;
-$input-disabled-color: $disabled-color;
+$input-border-color: $input-border-color;
+$input-color: $input-text-color;
+$input-bg-color: $input-bg-color;
+$input-disabled-bg-color: $input-disabled-bg-color;
+$input-disabled-border-color: $input-disabled-border-color;
+$input-disabled-color: $input-disabled-text-color;
 $input-focus-border-color: $primary-color;
-$input-hover-border-color: $slate02;
-$input-placeholder-color: $slate04;
-$input-readonly-border-color: $input-border-color;
-$input-readonly-bg-color: $slate06;
-$input-readonly-color: $white;
+$input-hover-border-color: $input-hover-border-color;
+$input-placeholder-color: $input-placeholder-text-color;
+$input-readonly-border-color: $input-readonly-border-color;
+$input-readonly-bg-color: $input-readonly-bg-color;
+$input-readonly-color: $input-readonly-text-color;
 
 //States
 $error-color: $alert-red;
@@ -254,14 +254,14 @@ $contextual-toolbar-bg-color: $primary-color;
 $contextual-panel-seperator-bg-color: $slate03;
 
 // Drop down
-$dropdown-filter-color: $font-color-extrahighcontrast;
-$dropdown-color: $input-color;
-$dropdown-search-color: $autocomplete-light-text;
+$dropdown-filter-color: $dropdown-filter-color;
+$dropdown-color: $dropdown-color;
+$dropdown-search-color: $dropdown-search-color;
 $dropdown-menu-border-color: $primary-color;
-$dropdown-menu-separator-color: $slate04;
-$dropdown-menu-separator-border-color: $slate05;
-$dropdown-group-label-color: $slate03;
-$dropdown-box-shadow: 0 5px 5px $drop-shadow-depth;
+$dropdown-menu-separator-color: $dropdown-menu-separator-color;
+$dropdown-menu-separator-border-color: $dropdown-menu-separator-border-color;
+$dropdown-group-label-color: $dropdown-group-label-color;
+$dropdown-box-shadow: $dropdown-box-shadow;
 
 // Date Picker
 $datepicker-month-year-color: $inverse-color;
@@ -393,14 +393,14 @@ $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, .3);
 $editor-blockquote-color: $slate04;
 
 // Radio Buttons
-$radio-border-color: $slate04;
-$radio-hover-border-color: $slate02;
+$radio-border-color: $radio-border-color;
+$radio-hover-border-color: $radio-border-hover-color;
 $radio-selected-color: $primary-color;
-$radio-selected-bg-color: $white;
-$radio-disabled-border-color: #64676f;
-$radio-disabled-bg-color: $body-bg-color;
-$radio-disabled-select-bg-color: $slate03;
-$radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color, 0 0 4px 5px rgba(255, 255, 255, .3);
+$radio-selected-bg-color: $radio-checked-bg-color;
+$radio-disabled-border-color: $radio-disabled-border-color;
+$radio-disabled-bg-color: $radio-disabled-bg-color;
+$radio-disabled-select-bg-color: $radio-disabled-checked-bg-color;
+$radio-focus-shadow: $radio-focus-shadow;
 
 //Pager
 $pager-text-color: $primary-color;
@@ -675,10 +675,10 @@ $image-border-color: $slate04;
 $image-background-color: $slate04;
 
 //Toast
-$toast-bg-color: $slate07;
-$toast-border-color: $slate05;
-$toast-header-color: $white;
-$toast-text-color: $white;
+$toast-bg-color: $notification-bg-color;
+$toast-border-color: $notification-border-color;
+$toast-header-color: $notification-header-color;
+$toast-text-color: $notification-text-color;
 $toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
 
 
