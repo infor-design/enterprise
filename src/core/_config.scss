@@ -100,18 +100,18 @@ $circlepager-disable-focus-border-color: $graphite03;
 
 
 // Popovers
-$popover-bg-color: $white;
-$popover-border-color: $graphite03;
-$popover-arrow-border-color: $graphite03;
-$popover-box-shadow: 0 2px 5px $drop-shadow-depth;
-$popover-color: $font-color;
-$popover-separator-color: $graphite03;
-$popover-alternate-color: $graphite10;
-$popover-alternate-subheader-color: $graphite06;
-$popover-alternate-bg-color: $graphite01;
-$popover-alternate-arrow-color: $graphite01;
-$popover-alternate-title-bg-color: $white;
-$popover-alternate-table-header: $graphite01;
+$popover-bg-color: $notification-bg-color;
+$popover-border-color: $notification-border-color;
+$popover-arrow-border-color: $notification-arrow-border-color;
+$popover-box-shadow: $notification-box-shadow;
+$popover-color: $notification-text-color;
+$popover-separator-color: $notification-separator-color;
+$popover-alternate-color: $notification-alternate-color;
+$popover-alternate-subheader-color: $notification-alternate-subheader-color;
+$popover-alternate-bg-color: $notification-alternate-bg-color;
+$popover-alternate-arrow-color: $notification-alternate-arrow-color;
+$popover-alternate-title-bg-color: $notification-alternate-title-bg-color;
+$popover-alternate-table-header: $notification-alternate-table-header;
 
 // Tooltips
 $tooltip-bg-color: $slate08;
@@ -769,10 +769,10 @@ $image-border-color: $graphite02;
 $image-background-color: $graphite02;
 
 //Toast
-$toast-bg-color: $white;
-$toast-border-color: $graphite03;
-$toast-header-color: $graphite10;
-$toast-text-color: $graphite06;
+$toast-bg-color: $notification-bg-color;
+$toast-border-color: $notification-border-color;
+$toast-header-color: $notification-header-color;
+$toast-text-color: $notification-text-color;
 $toast-shadow: none; //0 0 5px $drop-shadow-depth;
 
 //Builder Pattern
