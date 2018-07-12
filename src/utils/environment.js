@@ -44,7 +44,7 @@ const Environment = {
       this.browser.name = 'chrome';
     }
 
-    if (ua.indexOf('Mac OS X') !== -1) {
+    if (navigator.platform.indexOf('MacIntel') !== -1) {
       cssClasses += 'is-mac ';
       this.os.name = 'Mac OS X';
     }
@@ -124,6 +124,13 @@ const Environment = {
  */
 Environment.browser.isIE11 = function () {
   return Environment.browser.name === 'ie' && Environment.browser.version === '11';
+};
+
+/**
+ * @returns {boolean} whether or not the current browser is IE10
+ */
+Environment.browser.isIE10 = function () {
+  return Environment.browser.name === 'ie' && Environment.browser.version === '10';
 };
 
 /**

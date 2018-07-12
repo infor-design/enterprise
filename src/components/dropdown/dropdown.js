@@ -113,9 +113,6 @@ Dropdown.prototype = {
   init() {
     let orgId = this.element.attr('id');
 
-    this.isIe10 = (env.browser.name === 'ie' && env.browser.version === '10');
-    this.isIe11 = (env.browser.name === 'ie' && env.browser.version === '11');
-
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
     this.isInlineLabel = this.element.parent().is('.inline');
@@ -879,11 +876,13 @@ Dropdown.prototype = {
       return false;
     }
 
+    /*
     if (charCode === 8 && input.hasClass('dropdown')) {
       e.stopPropagation();
       e.preventDefault();
       return false;
     }
+    */
 
     if (input.is(':disabled') || input.hasClass('is-readonly')) {
       return; // eslint-disable-line
@@ -1056,12 +1055,16 @@ Dropdown.prototype = {
       return !this.value || $.trim(this.value).length === 0;
     });
 
-    if (blank.length > 0) {
-      blank[0].selected = true;
-      blank[0].setAttribute('selected', true);
-      this.element.triggerHandler('updated');
-      this.element.triggerHandler('change');
+    if (!blank.length) {
+      return;
     }
+
+    // TODO: Refactor this in v4.9.0 to call `selectOption` instead.  Can't currently
+    // do that because `selectOption` depends on the list being open.
+    blank[0].selected = true;
+    blank[0].setAttribute('selected', true);
+    this.element.triggerHandler('updated');
+    this.element.triggerHandler('change');
   },
 
   /**
@@ -1285,11 +1288,30 @@ Dropdown.prototype = {
     }
 
     // Down arrow opens the list.
-    if (key === 'ArrowDown') {
-      if (this.settings.noSearch) {
-        return false;
+    if (key === 'ArrowDown' || key === 'Enter') {
+      if (!this.isOpen()) {
+        this.open();
       }
-      this.open();
+
+      // TODO: refactor this out so that `handleKeyDown` is no longer necessary.
+      // This is necessary here because in `noSearch` mode, there is no actionable searchInput.
+      if (this.settings.noSearch && !e.ctrlKey) {
+        this.handleKeyDown(target, e);
+      }
+
+      return false;
+    }
+
+    // Mac OSX: "backspace" delete key
+    // Everything else: DEL key (numpad, control keys)
+    const isOSX = env.os.name === 'Mac OS X';
+    if ((!isOSX && key === 'Delete') || (isOSX && key === 'Backspace')) {
+      this.selectBlank();
+
+      if (key === 'Backspace') {
+        e.stopPropagation();
+        e.preventDefault();
+      }
       return false;
     }
 
@@ -1410,7 +1432,7 @@ Dropdown.prototype = {
     selectText();
 
     // Set focus back to the element
-    if (self.isIe10 || self.isIe11) {
+    if (env.browser.isIE10 || env.browser.isIE11) {
       setTimeout(() => {
         input[0].focus();
       }, 0);
@@ -1588,35 +1610,6 @@ Dropdown.prototype = {
     } else {
       this.searchInput.val(this.pseudoElem.find('span').text().trim());
     }
-
-    /*
-    if (!this.settings.multiple && this.initialFilter) {
-      setTimeout(() => {
-        if (self.searchInput.val() !== '' || !self.settings.noSearch) {
-          return;
-        }
-
-        let selectedOpt;
-        let selectedOptText = '';
-
-        // Set the text of the SearchInput.
-        // Use fallback for `HTMLSelectElement.selectedOptions` in IE
-        if (this.isIe10 || this.isIe11) {
-          selectedOpt = self.element[0].options[self.element[0].selectedIndex];
-          selectedOptText = selectedOpt ? selectedOpt.innerText : '';
-        } else {
-          selectedOpt = self.element[0].selectedOptions;
-          selectedOptText = selectedOpt.length > 0 ? selectedOpt[0].innerText : '';
-        }
-
-        self.searchInput.val(selectedOptText);
-      }, 0);
-      this.initialFilter = false;
-    } else {
-      // Change the values of both inputs and swap out the active descendant
-      this.searchInput.val(this.pseudoElem.find('span').text().trim());
-    }
-    */
 
     const noScroll = this.settings.multiple;
     this.highlightOption(current, noScroll);

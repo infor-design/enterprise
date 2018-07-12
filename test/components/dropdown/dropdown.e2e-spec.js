@@ -55,8 +55,12 @@ describe('Dropdown example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await dropdownEl.click();
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.click();
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-focused'))), config.waitsFor);
 
@@ -70,8 +74,12 @@ describe('Dropdown example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await dropdownEl.click();
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.click();
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-focused'))), config.waitsFor);
 
@@ -117,8 +125,12 @@ describe('Dropdown example-ajax tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await dropdownEl.click();
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.click();
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('is-focused'))), config.waitsFor);
 
@@ -221,6 +233,8 @@ describe('Dropdown example-no-search-filtering tests', () => {
   });
 
   it('Should clear a previous dropdown selection when pressing DELETE', async () => {
+    // On Macs, use "backspace" delete, instead of control keys' delete
+    const keyPressed = utils.isMac() ? 'BACK_SPACE' : 'DELETE';
     const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
@@ -232,7 +246,7 @@ describe('Dropdown example-no-search-filtering tests', () => {
 
     expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual('15');
 
-    await dropdownPseudoEl.sendKeys(protractor.Key.DELETE);
+    await dropdownPseudoEl.sendKeys(protractor.Key[keyPressed]);
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), ''), config.waitsFor);
     const dropdownHTML = await browser.executeScript('return document.querySelector("div[aria-controls=\'dropdown-list\']").innerHTML');
