@@ -123,19 +123,19 @@ $tooltip-error-border-color:  $color-danger;
 $tooltip-error-color: $white;
 
 // Badges
-$badge-neutral-color: $graphite10;
-$badge-neutral-bg-color: $graphite02;
-$badge-neutral-hover-bg-color: $graphite03;
-$badge-secondary-color: $graphite10;
-$badge-secondary-bg-color: $white;
-$badge-secondary-border-color: $graphite03;
-$badge-error-color: $white;
-$badge-alert-color: $graphite10;
-$badge-good-color: $white;
-$badge-info-color: $white;
-$badge-info-bg-color: $azure07;
-$badge-neutral-icon-color: $graphite06;
-$badge-neutral-hover-icon-color: $graphite10;
+$badge-neutral-color: $pill-neutral-color;
+$badge-neutral-bg-color: $pill-neutral-bg-color;
+$badge-neutral-hover-bg-color: $pill-neutral-hover-bg-color;
+$badge-secondary-color: $pill-secondary-color;
+$badge-secondary-bg-color: $pill-secondary-bg-color;
+$badge-secondary-border-color: $pill-secondary-border-color;
+$badge-error-color: $pill-error-color;
+$badge-alert-color: $pill-alert-color;
+$badge-good-color: $pill-good-color;
+$badge-info-color: $pill-info-color;
+$badge-info-bg-color: $pill-info-bg-color;
+$badge-neutral-icon-color: $pill-neutral-icon-color;
+$badge-neutral-hover-icon-color: $pill-neutral-hover-icon-color;
 
 // Popup Menu
 $popupmenu-color: $font-color-extrahighcontrast;
