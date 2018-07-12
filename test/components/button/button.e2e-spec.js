@@ -192,23 +192,23 @@ describe('Button example-with-icons tests', () => {
     const buttonEl = await element(by.id('menu-button-alone'));
     await buttonEl.click();
 
-    expect(buttonEl.getAttribute('class')).toContain('is-open');
-
+    expect(await buttonEl.getAttribute('class')).toContain('is-open');
     expect(await element(by.css('button#menu-button-alone[aria-haspopup="true"]')).isDisplayed()).toBe(true);
   });
 
-  if (utils.isChrome()) {
-    xit('Should not visual regress', async () => {
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
       const buttonEl = await element(by.id('menu-button-alone'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkScreen('buttonPage')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(buttonEl, 'button-init')).toEqual(0);
     });
   }
 
   if (!utils.isIE()) {
-    xit('Should be accessible on click with no WCAG 2AA violations', async () => {
+    it('Should be accessible on click with no WCAG 2AA violations', async () => {
       const buttonEl = await element(by.id('menu-button-alone'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);

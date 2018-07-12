@@ -1,0 +1,37 @@
+<div class="row form-responsive">
+  <div class="six columns">
+    <form action="/" method="post">
+      <div class="field">
+        <label for="range" class="label">Range Validator (Only a number between 10 and 100)</label>
+        <input type="text" name="range" id="range" data-validate="range" data-val-range-min="10" data-val-range-max="100" data-mask="###" data-val-range="Must be between 10 and 100." />
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    $('body').initialize('en-US');
+
+    $.fn.validation.rules.range = {
+      check: function (value, field) {
+        if (!value) {
+          return true;
+        }
+
+        var min = $(field).attr('data-val-range-min');
+        var max = $(field).attr('data-val-range-max');
+        this.message = $(field).attr('data-val-range');
+
+        value = Number(value.replace(',', ''));
+        min = Number(min);
+        max = Number(max);
+
+        return (value >= min && value <= max);
+      },
+      // commenting this out will result in several repeat errors - maybe need to default this for a better fix
+      type: 'error',
+      message: 'The value must be in range.'
+    };
+  });
+</script>

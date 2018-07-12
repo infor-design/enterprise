@@ -1388,6 +1388,9 @@ Accordion.prototype = {
     // or allows it to continue.
     function clickInterceptor(e, element) {
       const type = getElementType(element);
+
+      // Trigger a document click since we stop propgation, to close any open menus/popups.
+      $('body').trigger('click');
       return self[`handle${type}Click`](e, element);
     }
 

@@ -46,7 +46,11 @@ module.exports = function (config) {
     webpackMiddleware: {
       logLevel: 'error'
     },
-    reporters: ['mocha', 'coverage'],
+    reporters: ['mocha'],
+    mochaReporter: {
+      ignoreSkipped: true,
+    },
+    // reporters: ['mocha', 'coverage'],
     // coverageReporter: {
     //   dir: 'coverage',
     //   reporters: [
