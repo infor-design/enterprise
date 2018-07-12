@@ -311,17 +311,17 @@ $swaplist-text-color-selected: $white;
 
 
 // Drop down
-$dropdown-filter-color: $font-color-extrahighcontrast;
-$dropdown-color: $input-color;
-$dropdown-search-color: $autocomplete-light-text;
-$dropdown-menu-border-color: $color-primary;
-$dropdown-menu-separator-color: $graphite04;
-$dropdown-menu-separator-border-color: $graphite03;
-$dropdown-group-label-color: $graphite05;
-$dropdown-selected-bg-color: $color-primary;
-$dropdown-selected-color: $white;
-$dropdown-box-shadow: 0 5px 5px $drop-shadow-depth;
-$dropdown-box-shadow-top: 0 -5px 5px $drop-shadow-depth;
+$dropdown-filter-color: $dropdown-filter-color;
+$dropdown-color: $dropdown-color;
+$dropdown-search-color: $dropdown-search-color;
+$dropdown-menu-border-color: $dropdown-menu-border-color;
+$dropdown-menu-separator-color: $dropdown-menu-separator-color;
+$dropdown-menu-separator-border-color: $dropdown-menu-separator-border-color;
+$dropdown-group-label-color: $dropdown-group-label-color;
+$dropdown-selected-bg-color: $dropdown-menu-border-color;
+$dropdown-selected-color: $dropdown-selected-color;
+$dropdown-box-shadow: $dropdown-box-shadow;
+$dropdown-box-shadow-top: $dropdown-box-shadow-top;
 
 //Date Picker
 $datepicker-icon-active-color: $trigger-active-color;
@@ -457,11 +457,11 @@ $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(54, 138, 192, .3);
 $editor-blockquote-color: $graphite06;
 
 // Radio Buttons
-$radio-hover-border-color: $graphite08;
-$radio-selected-color: $radio-bg-checked-color;
-$radio-selected-bg-color: $white;
+$radio-hover-border-color: $radio-border-hover-color;
+$radio-selected-color: $radio-checked-color;
+$radio-selected-bg-color: $radio-checked-bg-color;
 $radio-disabled-select-bg-color: $radio-disabled-checked-bg-color;
-$radio-focus-shadow: 0 0 0 2px $body-bg-color-primary, 0 0 0 3px $checkbox-color, 0 0 4px 5px rgba(54, 138, 192, .3);
+$radio-focus-shadow: $radio-focus-shadow;
 
 //Pager
 $pager-text-color: $color-primary;
