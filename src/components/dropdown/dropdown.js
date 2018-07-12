@@ -2534,7 +2534,8 @@ Dropdown.prototype = {
           textContent = option.label;
         }
 
-        if (option.value === val || (self.selectedValues && self.selectedValues.indexOf(val) > -1)) {
+        const selectedValues = (self.selectedValues && self.selectedValues.indexOf(val) > -1);
+        if (option.value === val || selectedValues) {
           option.selected = true;
           selected = ' selected';
         }
