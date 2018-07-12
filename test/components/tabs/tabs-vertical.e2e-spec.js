@@ -72,19 +72,21 @@ describe('Tabs vertical click example-responsive tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
-  it('Should not visual regress on example-responsive at 500px', async () => {
-    const windowSize = await browser.driver.manage().window().getSize();
-    await browser.driver.manage().window().setSize(500, 600);
-    await browser.driver.sleep(config.sleep);
-    const tabsEl = await element(by.id('tabs-vertical'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
-    await browser.driver.sleep(config.waitsFor);
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-responsive at 500px', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(500, 600);
+      await browser.driver.sleep(config.sleep);
+      const tabsEl = await element(by.id('tabs-vertical'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
 
-    expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-vertical-500px')).toEqual(0);
-    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
-    await browser.driver.sleep(config.sleep);
-  });
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-vertical-500px')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+      await browser.driver.sleep(config.sleep);
+    });
+  }
 
   it('Should change to header tabs at 500px then back to vertical tabs at 1200px', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
