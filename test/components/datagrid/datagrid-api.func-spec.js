@@ -101,9 +101,10 @@ describe('Datagrid API', () => {
   });
 
   it('Should be able to call addRow and removeRow', () => {
+    const iconExclamation = '<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-exclamation"></use></svg>';
     datagridObj.addRow({ productId: 'New', productName: 'New' });
 
-    expect(document.body.querySelector('tr td').innerHTML).toEqual('<div class="datagrid-cell-wrapper">New</div>');
+    expect(document.body.querySelector('tr td').innerHTML).toEqual(`${iconExclamation}<div class="datagrid-cell-wrapper">New</div>`);
     expect(document.body.querySelectorAll('tr').length).toEqual(9);
 
     datagridObj.addRow({ productId: 'New 2', productName: 'New 2' }, 'bottom');
@@ -111,7 +112,7 @@ describe('Datagrid API', () => {
     const nodes = document.body.querySelectorAll('tr');
     const lastRow = nodes[nodes.length - 1];
 
-    expect(lastRow.querySelector('td').innerHTML).toEqual('<div class="datagrid-cell-wrapper">New 2</div>');
+    expect(lastRow.querySelector('td').innerHTML).toEqual(`${iconExclamation}<div class="datagrid-cell-wrapper">New 2</div>`);
     expect(document.body.querySelectorAll('tr').length).toEqual(10);
 
     // Cleanup

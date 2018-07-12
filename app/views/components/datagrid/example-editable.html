@@ -9,17 +9,20 @@
       </div>
 
       <div class="buttonset">
+          <button type="button" id="toggle-row-status" class="btn">
+            <span>Add Row Status</span>
+          </button>
           <button type="button" id="validate" class="btn-menu">
             <span>Validate</span>
           </button>
           <ul class="popupmenu">
-            <li><a href="#" data-action="sr">Specific Row Error</a></li>
-            <li><a href="#" data-action="acr">All Cells in Row</a></li>
-            <li><a href="#" data-action="arc">All Rows and Cells</a></li>
+            <li><a href="#" data-action="specific-row-error">Specific Row Error</a></li>
+            <li><a href="#" data-action="all-cells-in-row">All Cells in Row</a></li>
+            <li><a href="#" data-action="all-rows-and-cells">All Rows and Cells</a></li>
             <li class="separator"></li>
-            <li><a href="#" data-action="csr">Clear Specific Row Error</a></li>
-            <li><a href="#" data-action="cacr">Clear All Cells in Row</a></li>
-            <li><a href="#" data-action="carc">Clear All Rows and Cells</a></li>
+            <li><a href="#" data-action="clear-specific-row-error">Clear Specific Row Error</a></li>
+            <!-- <li><a href="#" data-action="clear-all-cells-in-row">Clear All Cells in Row</a></li> -->
+            <li><a href="#" data-action="clear-all-rows-and-cells">Clear All Rows and Cells</a></li>
           </ul>
         <button class="btn-icon" type="button" id="add-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -119,16 +122,29 @@
         gridApi = $('#datagrid').data('datagrid');
 
         //Example row status
-        gridApi.rowStatus(0, 'error', 'Error');
-        gridApi.rowStatus(0, 'error', 'Error 2');
-        gridApi.rowStatus(0, 'error', 'Error 3');
-        gridApi.rowStatus(1, 'alert', 'Alert');
-        gridApi.rowStatus(2, 'info', 'Info');
-        gridApi.rowStatus(3, 'in-progress', 'inProgress');
-        gridApi.rowStatus(4, 'confirm', 'Confirm');
-        gridApi.rowStatus(5, 'dirty');
-        gridApi.rowStatus(6, 'new', 'new');
-        gridApi.rowStatus(6, 'error', 'This row has errors');
+        $('#toggle-row-status').on('click', function () {
+          var btn = $(this).find('span');
+          var status = {
+            add: 'Add Row Status',
+            remove: 'Remove Row Status'
+          };
+          if (btn.text() === status.add) {
+            btn.text(status.remove);
+            gridApi.rowStatus(0, 'error', 'Error');
+            gridApi.rowStatus(0, 'error', 'Error 2');
+            gridApi.rowStatus(0, 'error', 'Error 3');
+            gridApi.rowStatus(1, 'alert', 'Alert');
+            gridApi.rowStatus(2, 'info', 'Info');
+            gridApi.rowStatus(3, 'in-progress', 'inProgress');
+            gridApi.rowStatus(4, 'confirm', 'Confirm');
+            gridApi.rowStatus(5, 'dirty');
+            gridApi.rowStatus(6, 'new', 'new');
+            gridApi.rowStatus(6, 'error', 'This row has errors');
+          } else {
+            btn.text(status.add);
+            gridApi.resetRowStatus();
+          }
+        });
 
       window.data = data;
   });
@@ -148,23 +164,20 @@
   //A few other ways
   $('#validate').on('selected', function (e, args) {
     var action = args.attr('data-action');
-    if (action === 'sr') {
+
+    if (action === 'specific-row-error') {
       gridApi.showRowError(2, 'This row has a custom error message.', 'error');
     }
-
-    if (action === 'acr') {
+    if (action === 'all-cells-in-row') {
       gridApi.validateRow(2);
     }
-
-    if (action === 'arc') {
+    if (action === 'all-rows-and-cells') {
       gridApi.validateAll();
     }
-
-    if (action === 'csr') {
+    if (action === 'clear-specific-row-error') {
       gridApi.clearRowError(2);
     }
-
-    if (action === 'carc') {
+    if (action === 'clear-all-rows-and-cells') {
       gridApi.clearAllErrors();
     }
   });

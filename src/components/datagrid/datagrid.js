@@ -914,6 +914,10 @@ Datagrid.prototype = {
 
     for (let j = 0; j < this.settings.columns.length; j++) {
       const column = self.settings.columns[j];
+      if (column.id === 'rowStatus') {
+        continue;
+      }
+
       const id = self.uniqueId(`-header-${j}`);
       const isSortable = (column.sortable === undefined ? true : column.sortable);
       const isResizable = (column.resizable === undefined ? true : column.resizable);
@@ -2320,6 +2324,7 @@ Datagrid.prototype = {
       this.sortDataset();
     }
 
+    let forcedTooltip = false;
     for (let i = 0; i < s.dataset.length; i++) {
       // For better performance dont render out of page
       if (s.paging && !s.source) {
@@ -2405,6 +2410,10 @@ Datagrid.prototype = {
 
       tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
       this.recordCount++;
+
+      if (s.dataset[i].rowStatus) {
+        forcedTooltip = true;
+      }
     }
 
     // Append a Summary Row
@@ -2426,7 +2435,7 @@ Datagrid.prototype = {
     self.tableBody.html(tableHtml);
     self.setVirtualHeight();
     self.setScrollClass();
-    self.setupTooltips();
+    self.setupTooltips(forcedTooltip);
     self.afterRender();
   },
 
@@ -2765,13 +2774,20 @@ Datagrid.prototype = {
     isEven = (this.recordCount % 2 === 0);
     const isSelected = this.isNodeSelected(rowData);
     const isActivated = rowData._rowactivated;
+    const rowStatus = { class: '', svg: '', tooltip: '' };
+    if (rowData && rowData.rowStatus) {
+      rowStatus.show = true;
+      rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
+      rowStatus.icon = (rowData.rowStatus.icon === 'confirm') ? '#icon-check' : '#icon-exclamation';
+      rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${rowStatus.icon}"></use></svg>`;
+      rowStatus.tooltip = rowData.rowStatus.tooltip;
+    }
 
     rowHtml = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
               ` data-index="${actualIndex}"${
                 self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
               }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
-              }${isSelected ? ' aria-selected= "true"' : ''
-              } class="datagrid-row${
+              }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
                 isHidden ? ' is-hidden' : ''
               }${isActivated ? ' is-rowactivated' : ''
               }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
@@ -2783,6 +2799,10 @@ Datagrid.prototype = {
 
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
+      if (col.id === 'rowStatus') {
+        continue;
+      }
+
       let cssClass = '';
       const defaultFormatter = col.summaryRowFormatter || col.formatter || self.defaultFormatter;
       const formatter = isSummaryRow ? defaultFormatter : col.formatter || self.defaultFormatter;
@@ -2916,16 +2936,26 @@ Datagrid.prototype = {
         }
       }
 
+      // Set rowStatus info
+      if (j !== 0) {
+        rowStatus.class = '';
+        rowStatus.svg = '';
+        rowStatus.tooltip = '';
+      }
+
+      if (rowStatus.class !== '') {
+        cssClass += ' rowstatus-cell';
+      }
+
       rowHtml += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}" ` +
           ` aria-describedby="${self.uniqueId(`-header-${j}`)}"${
             isSelected ? ' aria-selected= "true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
           }${colspan ? ` colspan="${colspan}"` : ''
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
-          }${col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ` title="${rowData.rowStatus.tooltip}"` : ''
+          }${rowStatus.tooltip !== '' ? ` title="${rowStatus.tooltip}"` : ''
           }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
-          }${rowspan || ''
-          }><div class="datagrid-cell-wrapper">`;
+          }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
 
       if (col.contentVisible) {
         const canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
@@ -3443,9 +3473,11 @@ Datagrid.prototype = {
   /**
    * Setup tooltips on the cells.
    * @private
+   * @param  {boolean} forced true to show tooltip
+   * @returns {void}
    */
-  setupTooltips() {
-    if (!this.settings.enableTooltips) {
+  setupTooltips(forced) {
+    if (!this.settings.enableTooltips && !forced) {
       return;
     }
 
@@ -3487,6 +3519,33 @@ Datagrid.prototype = {
 
       self.setupContentTooltip(elem, width, td);
     });
+
+    // Set rowStatus with error color
+    const cellNodes = [].slice.call(this.table[0].querySelectorAll('td.rowstatus-cell'));
+    cellNodes.forEach((cellNode) => {
+      const rowNode = this.closest(cellNode, el => el.classList.contains('datagrid-row'));
+      const classList = rowNode ? rowNode.classList : {};
+      const isErrorColor = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
+      $(cellNode).tooltip({ placement: 'right', isErrorColor });
+    });
+  },
+
+  /**
+   * Get closest element of a given element by passing callback to
+   * target by class, id, or tag name
+   * Callback usage as:
+   * const elem = this.element[0].querySelector(selectorString);
+   * class: const closestEl = this.closest(elem, el => el.classList.contains('some-class'));
+   * id: const closestEl = this.closest(elem, el => el.id === 'some-id');
+   * tag: const closestEl = this.closest(elem, el => el.tagName.toLowerCase() === 'some-tag');
+   * http://clubmate.fi/jquerys-closest-function-and-pure-javascript-alternatives/
+   * @private
+   * @param  {object} el The element to start from.
+   * @param  {object} fn The callback function.
+   * @returns {object} The closest element.
+   */
+  closest(el, fn) {
+    return el && (fn(el) ? el : this.closest(el.parentNode, fn));
   },
 
   /**
@@ -6764,6 +6823,27 @@ Datagrid.prototype = {
     icon.tooltip({ placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: messages });
   },
 
+  /**
+   * Clear all error for a given cell in a row
+   * @param {number} row The row index.
+   * @param {number} cell The cell index.
+   * @returns {void}
+   */
+  clearAllCellError(row, cell) {
+    const validationTypes = $.fn.validation.ValidationTypes;
+    for (const props in validationTypes) {  // eslint-disable-line
+      const validationType = validationTypes[props];
+      this.clearCellError(row, cell, validationType.type);
+    }
+  },
+
+  /**
+   * Clear a cell with an error of a given type
+   * @param {number} row The row index.
+   * @param {number} cell The cell index.
+   * @param {string} type of error.
+   * @returns {void}
+   */
   clearCellError(row, cell, type) {
     this.clearNonVisibleCellErrors(row, cell, type);
     const rowNode = this.dataRowNode(row);
@@ -6793,30 +6873,50 @@ Datagrid.prototype = {
     }
   },
 
+  /**
+   * Clear a row level all errors, alerts, info messages and dirty indicators
+   * @param {number} row The row index.
+   * @returns {void}
+   */
   clearRowError(row) {
+    const classList = 'error alert rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-confirm';
     const rowNode = this.dataRowNode(row);
 
-    rowNode.removeClass('error alert');
+    rowNode.removeClass(classList);
     this.rowStatus(row, '', '');
+    for (let cell = 0; cell < this.settings.columns.length; cell++) {
+      this.clearAllCellError(row, cell);
+    }
   },
 
   /**
    * Clear all errors, alerts, info messages and dirty indicators in entire datagrid.
+   * @returns {void}
    */
   clearAllErrors() {
-    const errors = this.settings.dataset.filter(row => row.rowStatus);
-
-    for (let i = 0; i < errors.length; i++) {
-      delete errors[i].rowStatus;
+    let rowStatus = 0;
+    for (let row = 0; row < this.settings.dataset.length; row++) {
+      if (this.settings.dataset[row].rowStatus) {
+        delete this.settings.dataset[row].rowStatus;
+        rowStatus++;
+      }
+      for (let cell = 0; cell < this.settings.columns.length; cell++) {
+        this.clearAllCellError(row, cell);
+      }
     }
 
-    if (errors.length > 0) {
+    if (rowStatus > 0) {
       this.render();
     }
-
-    // TODO test that this clears dirty, alert, info
   },
 
+  /**
+   * Remove messages form a cell element.
+   * @private
+   * @param {object} node cell element.
+   * @param {string} type of messages.
+   * @returns {void}
+   */
   clearNodeErrors(node, type) {
     node.removeClass(type).removeAttr(`data-${type}message`);
 
@@ -6830,17 +6930,21 @@ Datagrid.prototype = {
   },
 
   /**
-  * Reset the status on all rows.
+  * Set the row status on a row to none.
   * @returns {void}
   */
   resetRowStatus() {
-    for (let i = 0; i < this.settings.dataset.length; i++) {
-      this.rowStatus(i, '');
+    const errors = this.settings.dataset.filter(row => row.rowStatus);
+    for (let i = 0; i < errors.length; i++) {
+      delete errors[i].rowStatus;
+    }
+    if (errors.length > 0) {
+      this.render();
     }
   },
 
   /**
-  * Get the currently dirty rows.
+  * Return all of the currently dirty rows by row index.
   * @returns {array} An array of dirty rows.
   */
   dirtyRows() {
@@ -6856,12 +6960,12 @@ Datagrid.prototype = {
   },
 
   /**
-  * Show an error on a row.
-  * @param  {number} row The row index.
-  * @param  {string} message The row description.
-  * @param  {string} type The error type.
-  * @returns {void}
-  */
+   * Show an error on a row of a given type.
+   * @param  {number} row The row index.
+   * @param  {string} message The row description.
+   * @param  {string} type The error type.
+   * @returns {void}
+   */
   showRowError(row, message, type) {
     const messageType = type || 'error';
     const rowNode = this.dataRowNode(row);
@@ -6871,10 +6975,10 @@ Datagrid.prototype = {
   },
 
   /**
-  * Validate all visible cells in a row if they have validation on the column
-  * @param  {number} row The row index.
-  * @returns {void}
-  */
+   * Validate all visible cells in a row if they have validation on the column
+   * @param  {number} row The row index.
+   * @returns {void}
+   */
   validateRow(row) {
     for (let i = 0; i < this.settings.columns.length; i++) {
       this.validateCell(row, i);
@@ -6882,10 +6986,9 @@ Datagrid.prototype = {
   },
 
   /**
-  * Validate all rows and cells in the entire gridif they have validation on the column
-  * @param  {number} row The row index.
-  * @returns {void}
-  */
+   * Validate all rows and cells in the entire grid if they have validation on the column
+   * @returns {void}
+   */
   validateAll() {
     for (let j = 0; j < this.settings.dataset.length; j++) {
       for (let i = 0; i < this.settings.columns.length; i++) {
@@ -6895,11 +6998,11 @@ Datagrid.prototype = {
   },
 
   /**
-  * Get the settings for a column by index.
-  * @param  {number} idx The column index.
-  * @param  {boolean} onlyVisible If only the visible columns should be included.
-  * @returns {array} The settings array
-  */
+   * Get the settings for a column by index.
+   * @param  {number} idx The column index.
+   * @param  {boolean} onlyVisible If only the visible columns should be included.
+   * @returns {array} The settings array
+   */
   columnSettings(idx, onlyVisible) {
     let foundColumn = this.settings.columns[idx];
 
@@ -6911,15 +7014,15 @@ Datagrid.prototype = {
   },
 
   /**
-  * Attempt to serialize the value back into the dataset
-  * @private
-  * @param {any} value The new column value
-  * @param {any} oldVal The old column value.
-  * @param {number} col The column definition
-  * @param {number} row  The row index.
-  * @param {number} cell The cell index.
-  * @returns {void}
-  */
+   * Attempt to serialize the value back into the dataset
+   * @private
+   * @param {any} value The new column value
+   * @param {any} oldVal The old column value.
+   * @param {number} col The column definition
+   * @param {number} row  The row index.
+   * @param {number} cell The cell index.
+   * @returns {void}
+   */
   coerceValue(value, oldVal, col, row, cell) {
     let newVal;
 
@@ -6940,12 +7043,12 @@ Datagrid.prototype = {
   },
 
   /**
-  * Update one cell with a specific value
-  * @param {number} row  The row index.
-  * @param {number} cell The cell index.
-  * @param {any} value The value to use.
-  * @returns {void}
-  */
+   * Update one cell with a specific value
+   * @param {number} row  The row index.
+   * @param {number} cell The cell index.
+   * @param {any} value The value to use.
+   * @returns {void}
+   */
   updateCell(row, cell, value) {
     const col = this.columnSettings(cell);
 
@@ -6957,15 +7060,15 @@ Datagrid.prototype = {
   },
 
   /**
-  * Update one cell with a specific value
-  * @private
-  * @param {number} row  The row index.
-  * @param {number} cell The cell index.
-  * @param {any} value The value to use.
-  * @param {boolean} fromApiCall Us from an api call.
-  * @param {boolean} isInline If the editor is an inline value.
-  * @returns {void}
-  */
+   * Update one cell with a specific value
+   * @private
+   * @param {number} row  The row index.
+   * @param {number} cell The cell index.
+   * @param {any} value The value to use.
+   * @param {boolean} fromApiCall Us from an api call.
+   * @param {boolean} isInline If the editor is an inline value.
+   * @returns {void}
+   */
   updateCellNode(row, cell, value, fromApiCall, isInline) {
     let coercedVal;
     let rowNode = this.actualRowNode(row);
@@ -7001,6 +7104,14 @@ Datagrid.prototype = {
       coercedVal = value;
     }
 
+    // Remove rowStatus icon
+    if (rowNode.length && rowData && !rowData.rowStatus) {
+      const rowstatusIcon = rowNode.find('svg.icon-rowstatus');
+      if (rowstatusIcon.length) {
+        rowstatusIcon.remove();
+      }
+    }
+
     // Setup/Sync tooltip
     if (cellNode.data('tooltip')) {
       cellNode.data('tooltip').destroy();
@@ -7012,10 +7123,11 @@ Datagrid.prototype = {
         rowNode[0].classList.add(`rowstatus-row-${rowData.rowStatus.icon}`);
         cellNode[0].classList.add('rowstatus-cell');
 
-        if (rowData.rowStatus.icon === 'confirm') {
-          cellNode.prepend('<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-check"></use></svg>');
-        } else {
-          cellNode.prepend('<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-exclamation"></use></svg>');
+        const svg = cellNode.find('svg.icon-rowstatus');
+
+        if (!svg.length) {
+          const svgIcon = rowData.rowStatus.icon === 'confirm' ? '#icon-check' : '#icon-exclamation';
+          cellNode.prepend(`<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${svgIcon}"></use></svg>`);
         }
       }
       if (rowData.rowStatus.tooltip) {
@@ -7080,18 +7192,18 @@ Datagrid.prototype = {
         this.settings.treeDepth[row].node : rowData;
 
       /**
-      * Fires when a cell value is changed via the editor.
-      * @event cellchange
-      * @memberof Datagrid
-      * @property {object} event The jquery event object
-      * @property {object} args Additional arguments
-      * @property {number} args.row An array of selected rows.
-      * @property {number} args.cell An array of selected rows.
-      * @property {HTMLElement} args.target The cell html element that was entered.
-      * @property {any} args.value The cell value.
-      * @property {any} args.oldValue The previous cell value.
-      * @property {object} args.column The column object
-      */
+       * Fires when a cell value is changed via the editor.
+       * @event cellchange
+       * @memberof Datagrid
+       * @property {object} event The jquery event object
+       * @property {object} args Additional arguments
+       * @property {number} args.row An array of selected rows.
+       * @property {number} args.cell An array of selected rows.
+       * @property {HTMLElement} args.target The cell html element that was entered.
+       * @property {any} args.value The cell value.
+       * @property {any} args.oldValue The previous cell value.
+       * @property {object} args.column The column object
+       */
       this.element.trigger('cellchange', args);
       this.wasJustUpdated = true;
 

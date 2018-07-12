@@ -448,7 +448,8 @@ const formatters = {
     if (col.inlineEditor) {
       return html;
     }
-    html = `<span class="colorpicker-container trigger dropdown-trigger"><span class="swatch" style="background-color: ${value}"></span><input class="colorpicker" id="colorpicker-${cell}" name="colorpicker-${cell}" type="text" role="combobox" aria-autocomplete="list" value="${value}" aria-describedby="">`;
+    const classList = `swatch${value === '' ? ' is-empty' : ''}`;
+    html = `<span class="colorpicker-container trigger dropdown-trigger"><span class="${classList}" style="background-color: ${value}"></span><input class="colorpicker" id="colorpicker-${cell}" name="colorpicker-${cell}" type="text" role="combobox" aria-autocomplete="list" value="${value}" aria-describedby="">`;
     html += `<span class="trigger">${$.createIcon({ icon: 'dropdown' })}</span></span>`;
 
     return html;

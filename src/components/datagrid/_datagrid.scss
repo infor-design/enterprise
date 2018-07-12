@@ -1066,6 +1066,26 @@ $datagrid-short-row-height: 23px;
         }
 
       }
+
+      &.rowstatus-row-error,
+      &.rowstatus-row-alert,
+      &.rowstatus-row-info,
+      &.rowstatus-row-in-progress,
+      &.rowstatus-row-confirm,
+      &.rowstatus-row-dirty,
+      &.rowstatus-row-new {
+        .rowstatus-cell {
+          &::before {
+            left: -16px;
+            top: -15px;
+          }
+
+          .icon-rowstatus {
+            left: -1px;
+            top: 0;
+          }
+        }
+      }
     }
 
     .datagrid-cell-wrapper {
@@ -1385,6 +1405,10 @@ $datagrid-short-row-height: 23px;
       @include rowstatus($alert-red);
     }
 
+    &.rowstatus-row-dirty {
+      @include rowstatus($dirty-icon-fill);
+    }
+
     &.rowstatus-row-alert {
       @include rowstatus($alert-color);
     }
@@ -1399,6 +1423,10 @@ $datagrid-short-row-height: 23px;
 
     &.rowstatus-row-confirm {
       @include rowstatus($alert-green);
+    }
+
+    &.rowstatus-row-new {
+      @include rowstatus($trigger-icon-fill-color);
     }
   }
 
