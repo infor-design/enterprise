@@ -274,3 +274,49 @@ describe('Dropdown example-no-search tests', () => {
     expect(dropdownHTML).toEqual('<span></span>');
   });
 });
+
+describe('Dropdown typeahead-reloading tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/test-reload-typeahead');
+  });
+
+  if (!utils.isSafari()) {
+    it('Should open with down arrow, make ajax request, filter to "new", make ajax request, down arrow to New Jersey, and focus', async () => {
+      // Open the list
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.click();
+
+      // NOTE: Sleep simulates the Dropdown's default typeahead delay (300ms)
+      await dropdownSearchEl.sendKeys('New');
+      await browser.driver.sleep(config.sleep);
+
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
+
+      expect(await element(by.css('.dropdown span')).getText()).toEqual('New Jersey');
+    });
+
+    it('Should open by keying "new", make ajax request, down arrow to New Jersey, and focus', async () => {
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+
+      await dropdownEl.sendKeys('New');
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
+
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
+
+      expect(await element(by.css('.dropdown span')).getText()).toEqual('New Jersey');
+    });
+  }
+});

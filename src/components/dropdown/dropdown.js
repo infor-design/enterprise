@@ -788,7 +788,7 @@ Dropdown.prototype = {
     this.position();
 
     if (this.isOpen()) {
-      this.highlightOption(this.listUl.find('li').first());
+      this.highlightOption(this.listUl.find('li:visible:not(.separator):not(.group-label):not(.is-disabled)').first());
     }
   },
 
@@ -875,14 +875,6 @@ Dropdown.prototype = {
       e.preventDefault();
       return false;
     }
-
-    /*
-    if (charCode === 8 && input.hasClass('dropdown')) {
-      e.stopPropagation();
-      e.preventDefault();
-      return false;
-    }
-    */
 
     if (input.is(':disabled') || input.hasClass('is-readonly')) {
       return; // eslint-disable-line
@@ -1239,14 +1231,6 @@ Dropdown.prototype = {
       }
     }
 
-    /*
-    if (self.isOpen() && self.isControl(key) && key !== 8) {
-      return false;  //eslint-disable-line
-    }
-    */
-
-    const isSearchInput = self.searchInput && self.searchInput.length;
-
     self.initialFilter = false;
     if (!self.isOpen() && !self.isControl(key) &&
       !this.settings.source && !this.settings.noSearch) {
@@ -1255,7 +1239,7 @@ Dropdown.prototype = {
       self.isFiltering = true;
       self.filterTerm = $.actualChar(e);
 
-      if (isSearchInput) {
+      if (self.searchInput && self.searchInput.length) {
         self.searchInput.val($.actualChar(e));
       }
       self.toggleList();
@@ -1315,14 +1299,7 @@ Dropdown.prototype = {
       return false;
     }
 
-    /*
-    // TODO: Purpose? Customer request for a specific team?
-    if (!this.settings.noSearch && e.keyCode !== 27) {
-      this.toggleList();
-      return false;
-    }
-    */
-
+    // handle `onKeyDown` callback
     if (this.settings.onKeyDown) {
       const ret = this.settings.onKeyDown(e);
       if (ret === false) {
@@ -1332,7 +1309,6 @@ Dropdown.prototype = {
       }
     }
 
-    //this.handleKeyDown(target, e);
     this.handleAutoComplete(e);
     return true;
   },
