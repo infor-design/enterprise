@@ -180,7 +180,8 @@ ContextualActionPanel.prototype = {
       } else if (!buttonset.length) {
         const toolbarCSSClass = this.settings.useFlexToolbar ? 'flex-toolbar' : 'toolbar';
         const toolbarTitleSection = this.settings.useFlexToolbar ? `<div class="toolbar-section title"><h2>${this.settings.title}</h2></div>` : '';
-        const toolbarButtonsetSection = '<div class="toolbar-section buttonset"></div>';
+        const toolbarButtonsetCSSClass = this.settings.useFlexToolbar ? 'toolbar-section buttonset' : 'buttonset';
+        const toolbarButtonsetSection = `<div class="${toolbarButtonsetCSSClass}"></div>`;
         const toolbarSearchfieldSection = this.settings.useFlexToolbar && hasSearchfield ? '<div class="toolbar-section search"></div>' : '';
         const toolbarHTML = `<div class="${toolbarCSSClass}">
           ${toolbarTitleSection}

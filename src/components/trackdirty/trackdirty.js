@@ -148,7 +148,7 @@ Trackdirty.prototype = {
         }
 
         if (field.is('.editor-container')) {
-          el = field.find('.editor');
+          el = field.find('.editor-source');
         }
 
         // Used element without .field wrapper

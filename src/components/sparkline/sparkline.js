@@ -69,7 +69,7 @@ Sparkline.prototype = {
     let tooltipIntervalDots;
     const tooltipDataCacheMedianRange = [];
     const tooltipDataCacheDots = [];
-    let tooltipData = this.settings.tooltip;
+    let tooltipData = self.settings.tooltip;
 
     // calculate max and min values in the NLWest data
     let max = 0;
@@ -84,7 +84,7 @@ Sparkline.prototype = {
     });
     const dotsize = dimensions.width > 300 ? 4 : 3;
 
-    const chartData = this.settings.dataset;
+    const chartData = self.settings.dataset;
     for (i = 0; i < chartData.length; i++) {
       min = d3.min([d3.min(chartData[i].data), min]);
       max = d3.max([d3.max(chartData[i].data), max]);
@@ -112,7 +112,7 @@ Sparkline.prototype = {
 
     // Add Median Range
     // https://www.purplemath.com/modules/meanmode.htm
-    if (this.settings.isMedianRange) {
+    if (self.settings.isMedianRange) {
       max = d3.max(chartData[0].data);
       min = d3.min(chartData[0].data);
 
@@ -131,12 +131,12 @@ Sparkline.prototype = {
         .attr('width', maxWidth)
         .attr('height', bot)
         .style('fill', '#d8d8d8')
-        .on('mouseenter', () => {
+        .on('mouseenter', function () {
           const rect = this.getBoundingClientRect();
-          let content = '<p>' + (chartData[0].name ? chartData[0].name +'<br> ' : '') + // eslint-disable-line
-            Locale.translate('Median') + ': <b>' + median + '</b><br>' +
-            Locale.translate('Range') + ': <b>' + range + '</b>' +
-            (this.settings.isPeakDot ? '<br>' + Locale.translate('Peak') +': <b>'+ max +'</b>' : '') + '</p>'; // eslint-disable-line
+          let content = '<p class="sparkline-tooltip">' + // eslint-disable-line
+            Locale.translate('Median') + '<b>' + median + '</b><br>' +
+            Locale.translate('Range') + '<b>' + range + '</b>' +
+            (self.settings.isPeakDot ? '<br>' + Locale.translate('Peak') +'<b>'+ max +'</b>' : '') + '</p>'; // eslint-disable-line
 
           const show = function () {
             const size = charts.tooltipSize(content);
@@ -182,7 +182,7 @@ Sparkline.prototype = {
 
       g.append('path')
         .attr('d', line(set.data))
-        .attr('stroke', this.settings.isMinMax ? '#999999' : this.sparklineColors(i))
+        .attr('stroke', self.settings.isMinMax ? '#999999' : this.sparklineColors(i))
         .attr('class', 'team connected-line');
     }
 
@@ -255,14 +255,14 @@ Sparkline.prototype = {
           show();
         }
 
-        d3.select(this).attr('r', (this.settings.isMinMax && max === d ||
-            this.settings.isMinMax && min === d) ? (dotsize + 2) : (dotsize + 1));
+        d3.select(this).attr('r', (self.settings.isMinMax && max === d ||
+            self.settings.isMinMax && min === d) ? (dotsize + 2) : (dotsize + 1));
       })
       .on('mouseleave', function (d) {
         clearInterval(tooltipIntervalDots);
         charts.hideTooltip();
         d3.select(this).attr('r', (self.settings.isMinMax && max === d ||
-            this.settings.isMinMax && min === d) ? (dotsize + 1) : dotsize);
+            self.settings.isMinMax && min === d) ? (dotsize + 1) : dotsize);
       });
 
     /**

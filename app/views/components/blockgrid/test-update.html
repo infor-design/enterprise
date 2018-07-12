@@ -21,8 +21,8 @@
     var data = [];
 
     data.push({
-      image: 'https://randomuser.me/api/portraits/med/women/8.jpg',
-      title: 'Sheena Taylor',
+      image: 'https://randomuser.me/api/portraits/med/men/8.jpg',
+      title: 'Neyo Taylor',
       subtitle: 'Infor, Developer',
       id: 1
     });
@@ -33,7 +33,7 @@
       id: 2
     });
     data.push({
-      image: 'https://randomuser.me/api/portraits/med/women/10.jpg',
+      image: 'https://randomuser.me/api/portraits/med/men/10.jpg',
       title: 'Sam Smith',
       subtitle: 'Infor, SVP',
       id: 3
@@ -53,7 +53,10 @@
 
     var bg = $('#blockgrid').blockgrid({
       dataset: data,
-      selectable: 'single'
+      selectable: 'multiple',
+      paging: true,
+      pagesize: 3,
+      pagesizes: [3, 10, 25, 50, 75]
     }).on('selected', function (e, args) {
       console.log(args);
     });

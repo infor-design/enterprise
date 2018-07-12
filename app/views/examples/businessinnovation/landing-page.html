@@ -88,7 +88,7 @@
 
   <script>
 
-    var req = $.get({url: '{{basepath}}api/colleagues?favorites=true'});
+    var req = $.get({url: '{{basepath}}api/colleagues-favorite'});
     $.when(req).then(function() {
       $('#colleagues-listview').listview({
         dataset: req.responseJSON,
@@ -106,7 +106,7 @@
       });
     });
 
-    var req2 = $.get({url: '{{basepath}}api/colleagues'});
+    var req2 = $.get({url: '{{basepath}}api/colleagues-all'});
     $.when(req).then(function() {
       $('#colleagues-recent-listview').listview({
         dataset: req2.responseJSON,

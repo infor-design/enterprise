@@ -14,6 +14,18 @@ describe('Timepicker example-index tests', () => {
     await utils.setPage('/components/timepicker/example-index');
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      const timepickerSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(timepickerSection), config.waitsFor);
+      await element(by.css('.timepicker + .icon')).click();
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(timepickerSection, 'timepicker-open')).toEqual(0);
+    });
+  }
+
   it('Should open popup on icon click', async () => {
     await element(by.css('.timepicker + .icon')).click();
 

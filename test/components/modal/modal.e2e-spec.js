@@ -15,7 +15,7 @@ describe('Modal init example-modal tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-modal', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-modal', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
@@ -94,6 +94,15 @@ describe('Modal open example-modal tests on click', () => {
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      await browser.driver.sleep(config.waitsFor);
+      const bodyEl = await element(by.className('modal-engaged'));
+
+      expect(await browser.protractorImageComparison.checkElement(bodyEl, 'modal-open')).toEqual(0);
+    });
+  }
+
   if (!utils.isIE()) {
     xit('Should be accessible on open with no WCAG 2AA violations on example-modal', async () => {
       const res = await axePageObjects(browser.params.theme);
@@ -120,7 +129,7 @@ describe('Modal example-validation tests', () => {
 
   if (utils.isChrome()) {
     it('Should focus on first focusable item in modal', async () => {
-      const dropdownEl = await element(by.css('div.dropdown'));
+      const dropdownEl = await element.all(by.css('div.dropdown')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
@@ -136,7 +145,60 @@ describe('Modal example-validation tests', () => {
       await element(by.id('context-desc')).click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await element(by.className('message-text')).getText()).toEqual('Email address not valid');
+      const messageEl = await element.all(by.className('message-text')).first();
+
+      expect(await messageEl.getText()).toEqual('Email address not valid');
+    });
+
+    it('Should enable submit', async () => {
+      expect(await element(by.id('submit')).isEnabled()).toBe(false);
+
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.ENTER);
+      await browser.driver.sleep(config.sleep);
+
+      await element(by.id('context-name')).sendKeys('test@test.com');
+      await element(by.id('context-desc')).sendKeys('test description');
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.id('submit')).isEnabled()).toBe(true);
     });
   }
+});
+
+describe('Modal example-validation-editor tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-validation-editor');
+    const modalEl = await element(by.css('button[data-modal="modal-1"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
+    await modalEl.sendKeys(protractor.Key.ENTER);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
+  });
+
+  it('Should enable submit after add text to all fields', async () => {
+    expect(await element(by.id('submit')).isEnabled()).toBe(false);
+
+    const dropdownEl = await element.all(by.css('.modal div[aria-controls="dropdown-list"]')).first();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownEl.sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    await element(by.id('context-name')).sendKeys('test@test.com');
+    await element(by.id('context-desc')).sendKeys('test description');
+    await element(by.css('.editor')).sendKeys('test description');
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('submit')).isEnabled()).toBe(true);
+  });
 });
