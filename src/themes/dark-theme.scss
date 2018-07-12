@@ -151,19 +151,19 @@ $primary-btn-disabled-opacity: $button-disabled-opacity;
 // Secondary/Normal Buttons
 $btn-color: $button-default-text-color;
 $btn-bg-color: $button-default-bg-color;
-$btn-hover-bg-color: $slate04;
+$btn-hover-bg-color: $button-default-hover-bg-color;
 $btn-focus-bg-color: $button-default-focus-bg-color;
 $btn-focus-border-color: $primary-color;
-$btn-active-bg-color: $slate04;
-$btn-disabled-bg-color: $slate03;
-$btn-disabled-color: $slate10;
-$btn-disabled-border-color: $slate03;
+$btn-active-bg-color: $button-default-active-bg-color;
+$btn-disabled-bg-color: $button-default-disabled-bg-color;
+$btn-disabled-color: $button-default-disabled-color;
+$btn-disabled-border-color: $button-default-disabled-border-color;
 $btn-disabled-opacity: $button-disabled-opacity;
 
 // Tertiary Buttons
 $tertiary-btn-color: $button-link-text-color;
 $tertiary-btn-hover-color:  $button-link-hover-text-color;
-$tertiary-btn-active-color: $white;
+$tertiary-btn-active-color: $button-link-active-text-color;
 $tertiary-btn-open-color: $primary-color;
 $tertiary-btn-disabled-color: $button-link-disabled-color;
 $tertiary-btn-disabled-opacity: $button-disabled-opacity;
