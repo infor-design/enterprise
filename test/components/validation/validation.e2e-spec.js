@@ -95,9 +95,10 @@ describe('Validation form submit button', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
     await dropdownEl.click();
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ENTER);
+    const dropdownSearchEl = await element(by.id('dropdown-search'));
+    await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
 
     await browser.driver.sleep(config.sleep);
 
