@@ -686,7 +686,7 @@ Line.prototype = {
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${COMPONENT_NAME}`, () => {
         this.handleResize();
       });
 
@@ -761,8 +761,7 @@ Line.prototype = {
       this.settings.dataset = settings.dataset;
     }
     return this
-      .teardown()
-      .init();
+      .build();
   },
 
   /**
@@ -772,7 +771,7 @@ Line.prototype = {
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
-    $(window).off(`resize.${COMPONENT_NAME}`);
+    $('body').off(`resize.${COMPONENT_NAME}`);
     return this;
   },
 
