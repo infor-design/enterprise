@@ -1107,14 +1107,6 @@ Dropdown.prototype = {
       }
     }
 
-    // Down arrow, Up arrow, or Spacebar to open
-    if (!self.isOpen() && (key === 38 || key === 40 || key === 32)) {
-      self.toggleList();
-      e.stopPropagation();
-      e.preventDefault();
-      return e; //eslint-disable-line
-    }
-
     if (self.isOpen()) {
       options = this.listUl.find(excludes);
       selectedIndex = -1;
@@ -1169,6 +1161,7 @@ Dropdown.prototype = {
         // that rely on dropdown may need to trigger routines when the Esc key is pressed.
         break;
       }
+      case 32: // Spacebar
       case 13: { // enter
         if (self.isOpen()) {
           if (key === 32 && self.searchKeyMode === true) {
@@ -1282,7 +1275,7 @@ Dropdown.prototype = {
     const key = e.key;
 
     // Control Keydowns are ignored
-    const controlKeys = ['Tab', 'Alt', 'Shift', 'Control', 'Meta'];
+    const controlKeys = ['Alt', 'Shift', 'Control', 'Meta'];
     if (controlKeys.indexOf(key) > -1) {
       return false;
     }
@@ -1292,7 +1285,8 @@ Dropdown.prototype = {
     }
 
     // Down arrow opens the list.
-    if (key === 'ArrowDown' || key === 'Enter') {
+    const openKeys = ['ArrowDown', 'ArrowUp', 'Enter', 'Spacebar', ' '];
+    if (openKeys.indexOf(key) > -1) {
       if (!this.isOpen()) {
         this.open();
       }
@@ -1317,6 +1311,14 @@ Dropdown.prototype = {
         e.preventDefault();
       }
       return false;
+    }
+
+    // In nosearch mode, bypass the typeahead autocomplete and pass keydown events
+    // along to the list elements
+    if (this.settings.noSearch && key !== 'Escape') {
+      if (this.isOpen()) {
+        return this.handleKeyDown(target, e);
+      }
     }
 
     // handle `onKeyDown` callback

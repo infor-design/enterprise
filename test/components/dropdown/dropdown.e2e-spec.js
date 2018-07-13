@@ -13,7 +13,7 @@ const clickOnDropdown = async () => {
   await dropdownEl.click();
 };
 
-describe('Dropdown example-index tests', () => {
+fdescribe('Dropdown example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-index');
   });
@@ -122,7 +122,7 @@ describe('Dropdown example-index tests', () => {
   });
 });
 
-describe('Dropdown example-ajax tests', () => {
+fdescribe('Dropdown example-ajax tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-ajax');
   });
@@ -147,7 +147,7 @@ describe('Dropdown example-ajax tests', () => {
   }
 });
 
-describe('Dropdown example-no-search-lsf tests', () => {
+fdescribe('Dropdown example-no-search-lsf tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-no-search-lsf');
   });
@@ -157,9 +157,6 @@ describe('Dropdown example-no-search-lsf tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
 
-    await dropdownPseudoEl.click();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
     await dropdownPseudoEl.sendKeys('r');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), 'R - Rocket Raccoon'), config.waitsFor);
@@ -172,7 +169,6 @@ describe('Dropdown example-no-search-lsf tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
 
-    await dropdownPseudoEl.click();
     await dropdownPseudoEl.sendKeys('t');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), 'T - Thor'), config.waitsFor);
@@ -199,7 +195,7 @@ describe('Dropdown example-no-search-lsf tests', () => {
   });
 });
 
-describe('Dropdown example-no-search-filtering tests', () => {
+fdescribe('Dropdown example-no-search-filtering tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-no-search-filtering');
   });
@@ -208,7 +204,7 @@ describe('Dropdown example-no-search-filtering tests', () => {
     const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
-    await dropdownPseudoEl.click();
+
     await dropdownPseudoEl.sendKeys('15');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), '15'), config.waitsFor);
@@ -247,7 +243,6 @@ describe('Dropdown example-no-search-filtering tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
 
-    await dropdownPseudoEl.click();
     await dropdownPseudoEl.sendKeys('15');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), '15'), config.waitsFor);
@@ -263,7 +258,7 @@ describe('Dropdown example-no-search-filtering tests', () => {
   });
 });
 
-describe('Dropdown example-no-search tests', () => {
+fdescribe('Dropdown example-no-search tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-no-search');
   });
@@ -273,7 +268,6 @@ describe('Dropdown example-no-search tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
 
-    await dropdownPseudoEl.click();
     await dropdownPseudoEl.sendKeys('z');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), ''), config.waitsFor);
@@ -283,7 +277,7 @@ describe('Dropdown example-no-search tests', () => {
   });
 });
 
-describe('Dropdown typeahead-reloading tests', () => {
+fdescribe('Dropdown typeahead-reloading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/test-reload-typeahead');
   });
