@@ -41,7 +41,8 @@ This is a list of Infor teams and contributors using the Enterprise controls rep
 |Infor SCE Administration Console | Using some widget styling and Charts | James Wang, George Matthews | `4.x` |
 | Infor Supplier Exchange | Replacing Fat client Java Swing UI | John Sipher | `4.x` |
 | IPA | Using D3 component example and some controls |  Christopher Fried, Keith Knud | `4.x` |
-| Landmark  | Jetty Server Servlet, Angular Shared repo | Phillip Patton, Andrew Lipensky | `4.x` |
+| Landmark | (incl GHR and CSF) jQuery/HTML5, Angular Shared repo | Phillip Patton, Andrew Lipetzky | `3.3`, `3.5`, `4x` |
+| Landmark | (GHR and CSF suites) Old UI: jQuery/HTML5; New UI: Typescript/Angular Shared repo | Phillip Patton, Andrew Lipetzky | `3.3`, `3.5`, `4x` |
 | Lawson S3  | | Andy Buboltz | `4.x` |
 | LBI | | Steve Stahl, Rommel Dollison | `3.x` |
 | LTM App Group | | Jerry Drinka, David Cooper | `3.x` |
