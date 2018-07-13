@@ -26,7 +26,7 @@ const setTimer = () => {
   };
 };
 
-fdescribe('Multiselect example-states tests', () => {
+describe('Multiselect example-states tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-states');
   });
@@ -101,7 +101,7 @@ fdescribe('Multiselect example-states tests', () => {
   }
 });
 
-fdescribe('Multiselect example-index tests', () => {
+describe('Multiselect example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-index');
   });
@@ -207,7 +207,7 @@ fdescribe('Multiselect example-index tests', () => {
   });
 });
 
-fdescribe('Multiselect example-clear-all tests', () => {
+describe('Multiselect example-clear-all tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-clear-all');
   });
@@ -228,7 +228,7 @@ fdescribe('Multiselect example-clear-all tests', () => {
   }
 });
 
-fdescribe('Multiselect example-select-all-performance tests', () => {
+describe('Multiselect example-select-all-performance tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/test-select-all-performance');
   });
@@ -275,7 +275,7 @@ fdescribe('Multiselect example-select-all-performance tests', () => {
   });
 });
 
-fdescribe('Multiselect typeahead-reloading tests', () => {
+describe('Multiselect typeahead-reloading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/test-reload-typeahead');
   });

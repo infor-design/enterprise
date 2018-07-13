@@ -9,7 +9,7 @@ const ddSelector = function (dropdown) {
   return `#timepicker-popup select.dropdown.${dropdown} + .dropdown-wrapper div[aria-controls="dropdown-list"]`;
 };
 
-fdescribe('Timepicker example-index tests', () => {
+describe('Timepicker example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/example-index');
   });
@@ -85,7 +85,7 @@ fdescribe('Timepicker example-index tests', () => {
   });
 });
 
-fdescribe('Timepicker 24 Hour tests', () => {
+describe('Timepicker 24 Hour tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/example-24-hour');
   });
@@ -122,7 +122,7 @@ fdescribe('Timepicker 24 Hour tests', () => {
   });
 });
 
-fdescribe('Timepicker with seconds example tests', () => {
+describe('Timepicker with seconds example tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/example-seconds-picker');
   });
@@ -187,7 +187,7 @@ fdescribe('Timepicker with seconds example tests', () => {
   });
 });
 
-fdescribe('Timepicker Intervals tests', () => {
+describe('Timepicker Intervals tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/example-intervals');
   });
@@ -229,7 +229,7 @@ fdescribe('Timepicker Intervals tests', () => {
   });
 });
 
-fdescribe('Timepicker states tests', () => {
+describe('Timepicker states tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/example-states');
   });
@@ -264,7 +264,7 @@ fdescribe('Timepicker states tests', () => {
   });
 });
 
-fdescribe('Timepicker validation tests', () => {
+describe('Timepicker validation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/example-with-validation');
   });
