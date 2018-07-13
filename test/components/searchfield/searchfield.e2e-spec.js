@@ -27,7 +27,7 @@ describe('Searchfield example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+    xit('Should not visual regress on example-index', async () => {
       await browser.driver.sleep(config.waitsFor);
       const searchfieldInputEl = await element(by.id(searchfieldId));
       const searchfieldSection = await element(by.id('maincontent'));
