@@ -106,11 +106,11 @@ $circlepager-disable-focus-border-color: $graphite04;
 
 // Popovers
 $popover-bg-color: $graphite01;
-$popover-border-color: $graphite06;
-$popover-box-shadow: 0 2px 5px $drop-shadow-depth;
-$popover-arrow-border-color: $graphite06;
-$popover-color: $font-color;
-$popover-separator-color: $graphite06;
+$popover-border-color: $notification-border-color;
+$popover-box-shadow: $notification-box-shadow;
+$popover-arrow-border-color: $notification-arrow-border-color;
+$popover-color: $notification-text-color;
+$popover-separator-color: $notification-separator-color;
 
 // Tooltips
 $tooltip-bg-color: $graphite08;
@@ -122,19 +122,19 @@ $tooltip-error-border-color:  $alert-red;
 $tooltip-error-color: $white;
 
 // Badges
-$badge-neutral-color: $black;
-$badge-neutral-bg-color: $graphite04;
-$badge-neutral-hover-bg-color: $graphite05;
-$badge-secondary-color: $black;
-$badge-secondary-bg-color: $graphite02;
-$badge-secondary-border-color: $graphite06;
-$badge-error-color: $white;
-$badge-alert-color: $black;
-$badge-good-color: $white;
-$badge-info-color: $white;
+$badge-neutral-color: $pill-neutral-color;
+$badge-neutral-bg-color: $pill-neutral-bg-color;
+$badge-neutral-hover-bg-color: $pill-neutral-hover-bg-color;
+$badge-secondary-color: $pill-secondary-color;
+$badge-secondary-bg-color: $pill-secondary-bg-color;
+$badge-secondary-border-color: $pill-secondary-border-color;
+$badge-error-color: $pill-error-color;
+$badge-alert-color: $pill-alert-color;
+$badge-good-color: $pill-good-color;
+$badge-info-color: $pill-info-color;
 $badge-info-bg-color: $primary-color;
-$badge-neutral-icon-color: $graphite09;
-$badge-neutral-hover-icon-color: $graphite06;
+$badge-neutral-icon-color: $pill-neutral-icon-color;
+$badge-neutral-hover-icon-color: $pill-neutral-hover-icon-color;
 
 .tag,
 .badge {
@@ -153,32 +153,32 @@ $popupmenu-checked-color: $azure09;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
-$primary-btn-color: $inverse-color;
-$primary-btn-hover-bg-color: $azure08;
+$primary-btn-color: $button-primary-text-color;
+$primary-btn-hover-bg-color: $button-primary-hover-bg-color;
 $primary-btn-focus-bg-color: $primary-color;
-$primary-btn-active-bg-color: $azure08;
-$primary-btn-disabled-color: $inverse-color;
+$primary-btn-active-bg-color: $button-primary-active-bg-color;
+$primary-btn-disabled-color: $button-primary-text-color;
 $primary-btn-disabled-bg-color: $primary-color; //Primary at 50%
 $primary-btn-disabled-border-color: $primary-color;
-$primary-btn-disabled-opacity: .5;
+$primary-btn-disabled-opacity: $button-disabled-opacity;
 
 // Secondary/Normal Buttons
-$btn-color: $white;
-$btn-bg-color: $graphite07;
-$btn-hover-bg-color: $graphite06;
+$btn-color: $button-default-text-color;
+$btn-bg-color: $button-default-bg-color;
+$btn-hover-bg-color: $button-default-hover-bg-color;
 $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
-$btn-active-bg-color: $graphite05;
-$btn-disabled-bg-color: $graphite07;
-$btn-disabled-color: $white;
-$btn-disabled-border-color: $graphite07;
-$btn-disabled-opacity: .5;
+$btn-active-bg-color: $button-default-active-bg-color;
+$btn-disabled-bg-color: $button-default-disabled-bg-color;
+$btn-disabled-color: $button-default-text-color;
+$btn-disabled-border-color: $button-default-disabled-border-color;
+$btn-disabled-opacity: $button-disabled-opacity;
 
 // Tertiary Buttons
-$tertiary-btn-color: $graphite09;
-$tertiary-btn-hover-color: $graphite06;
+$tertiary-btn-color: $button-link-text-color;
+$tertiary-btn-hover-color: $button-link-hover-text-color;
 $tertiary-btn-open-color: $primary-color;
-$tertiary-btn-active-color: $graphite06;
+$tertiary-btn-active-color: $button-link-hover-text-color;
 $tertiary-btn-ripple-color: $azure07;
 
 // Secondary with Border
@@ -189,18 +189,18 @@ $secondary-border-btn-hover-border-color: $graphite10;
 $secondary-border-btn-ripple-color: $azure07;
 
 // Input Fields
-$input-border-color: $graphite06;
-$input-color: $black;
-$input-bg-color: $white;
-$input-disabled-bg-color: transparent;
-$input-disabled-border-color: $graphite04;
-$input-disabled-color: $graphite05;
-$input-hover-border-color: $black;
-$input-focus-border-color: $graphite08;
-$input-placeholder-color: $graphite05;
-$input-readonly-border-color: $input-border-color;
-$input-readonly-bg-color: $graphite04;
-$input-readonly-color: $black;
+$input-border-color: $input-border-color;
+$input-color: $input-text-color;
+$input-bg-color: $input-bg-color;
+$input-disabled-bg-color: $input-disabled-bg-color;
+$input-disabled-border-color: $input-disabled-border-color;
+$input-disabled-color: $input-disabled-text-color;
+$input-hover-border-color: $input-hover-border-color;
+$input-focus-border-color: $input-focus-border-color;
+$input-placeholder-color: $input-placeholder-text-color;
+$input-readonly-border-color: $input-readonly-border-color;
+$input-readonly-bg-color: $input-readonly-bg-color;
+$input-readonly-color: $input-readonly-text-color;
 
 //States
 $error-color: $alert-red;
@@ -278,15 +278,15 @@ $contextual-toolbar-button-disabled-color: rgba($inverse-color, .3);
 $contextual-panel-seperator-bg-color: $graphite06;
 
 // Drop down
-$dropdown-filter-color: $font-color-extrahighcontrast;
-$dropdown-color: $input-color;
-$dropdown-search-color: $autocomplete-light-text;
+$dropdown-filter-color: $dropdown-filter-color;
+$dropdown-color: $dropdown-color;
+$dropdown-search-color: $dropdown-search-color;
 $dropdown-menu-border-color: $primary-color;
-$dropdown-menu-separator-color: $graphite07;
-$dropdown-menu-separator-border-color: $graphite06;
-$dropdown-group-label-color: $graphite05;
+$dropdown-menu-separator-color: $dropdown-menu-separator-color;
+$dropdown-menu-separator-border-color: $dropdown-menu-separator-border-color;
+$dropdown-group-label-color: $dropdown-group-label-color;
 $dropdown-selected-bg-color: $primary-color;
-$dropdown-box-shadow: 0 5px 5px $drop-shadow-depth;
+$dropdown-box-shadow: $dropdown-box-shadow;
 
 // Date Picker
 $datepicker-month-year-color: $black;
@@ -371,17 +371,17 @@ $cardlist-actions-color: $graphite09;
 
 // Checkboxes
 $checkbox-color: $primary-color;
-$checkbox-arrow-color: #ffffff;
-$checkbox-border-color: $graphite06;
-$checkbox-bg-color: #ffffff;
-$checkbox-hover-border-color: $black;
-$checkbox-disabled-font-color: $disabled-color;
-$checkbox-disabled-border-color: $input-disabled-border-color;
-$checkbox-disabled-bg-color: transparent;
-$checkbox-disabled-select-bg-color: $input-readonly-bg-color;
-$checkbox-disabled-arrow-color: #f4f4f4;
-$checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $azure07;
-$checkbox-label-color: $input-color;
+$checkbox-arrow-color: $checkbox-arrow-color;
+$checkbox-border-color: $checkbox-border-color;
+$checkbox-bg-color: $checkbox-bg-color;
+$checkbox-hover-border-color: $checkbox-hover-border-color;
+$checkbox-disabled-font-color: $checkbox-disabled-text-color;
+$checkbox-disabled-border-color: $checkbox-disabled-border-color;
+$checkbox-disabled-bg-color: $checkbox-disabled-bg-color;
+$checkbox-disabled-select-bg-color: $checkbox-disabled-checked-bg-color;
+$checkbox-disabled-arrow-color: $checkbox-disabled-arrow-color;
+$checkbox-focus-shadow: $checkbox-focus-shadow;
+$checkbox-label-color: $checkbox-label-color;
 
 // Switch
 $switch-checked-color: $primary-color;
@@ -415,15 +415,15 @@ $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(41, 41, 41, .3);
 $editor-blockquote-color: $graphite07;
 
 // Radio Buttons
-$radio-bg-color: $white;
-$radio-border-color: $graphite06;
-$radio-hover-border-color: $black;
+$radio-bg-color: $radio-bg-color;
+$radio-border-color: $radio-border-color;
+$radio-hover-border-color: $radio-border-hover-color;
 $radio-selected-color: $primary-color;
-$radio-selected-bg-color: $white;
-$radio-disabled-border-color: $graphite04;
-$radio-disabled-bg-color: $body-bg-color;
-$radio-disabled-select-bg-color: $white;
-$radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $azure07, 0 0 4px 5px rgba(41, 41, 41, .3);
+$radio-selected-bg-color: $radio-checked-bg-color;
+$radio-disabled-border-color: $radio-disabled-border-color;
+$radio-disabled-bg-color: $radio-disabled-bg-color;
+$radio-disabled-select-bg-color: $radio-disabled-checked-bg-color;
+$radio-focus-shadow: $radio-focus-shadow;
 
 // Pager
 $pager-text-color: $primary-color;
@@ -703,10 +703,10 @@ $image-border-color: $graphite03;
 $image-background-color: $graphite03;
 
 //Toast
-$toast-bg-color: $white;
-$toast-border-color: $graphite06;
-$toast-header-color: $black;
-$toast-text-color: $black;
+$toast-bg-color: $notification-bg-color;
+$toast-border-color: $notification-border-color;
+$toast-header-color: $notification-header-color;
+$toast-text-color: $notification-text-color;
 
 $toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
 
