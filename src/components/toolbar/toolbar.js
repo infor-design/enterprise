@@ -1,7 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../button/button.jquery';
@@ -534,7 +534,7 @@ Toolbar.prototype = {
       popupLiText = item.text();
     }
 
-    return stringUtils.stripHTML(popupLiText);
+    return xssUtils.stripHTML(popupLiText);
   },
 
   /**

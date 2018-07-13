@@ -1,6 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils, math } from '../../utils/utils';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { Locale } from '../../../src/components/locale/locale';
 
@@ -65,8 +65,8 @@ Toast.prototype = {
     let container = $('#toast-container');
     const toast = $(`
       <div class="toast">
-        <span class="toast-title">${stringUtils.stripHTML(settings.title)}</span>
-        <span class="toast-message">${stringUtils.stripHTML(settings.message)}</span>
+        <span class="toast-title">${xssUtils.stripHTML(settings.title)}</span>
+        <span class="toast-message">${xssUtils.stripHTML(settings.message)}</span>
       </div>`);
     const closeBtn = $(`
       <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">

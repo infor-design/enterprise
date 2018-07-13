@@ -53,6 +53,7 @@
     "test": "npm run mdlint && npm run eslint && npm run functional:ci && npm run e2e:ci"
   },
   "dependencies": {
+    "csurf": "^1.9.0",
     "d3": "^4.13.0",
     "jquery": "^3.3.1"
   },

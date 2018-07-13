@@ -4,6 +4,7 @@ import { DOM } from '../../utils/dom';
 import { breakpoints } from '../../utils/breakpoints';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery components
 import '../../utils/lifecycle';
@@ -2017,7 +2018,7 @@ Tabs.prototype = {
         return;
       }
 
-      htmlContent = $.sanitizeHTML(htmlContent);
+      htmlContent = xssUtils.sanitizeHTML(htmlContent);
 
       // Get a new random tab ID for this tab if one can't be derived from the URL string
       if (isURL) {
@@ -2543,10 +2544,9 @@ Tabs.prototype = {
     // If content is text/string, simply inline it.
     const markup = $(`<div id="${tabId}" class="tab-panel" role="tabpanel"></div>`);
     if (content instanceof $) {
-      markup.append(content);
-    } else {
-      markup[0].innerHTML = content || '';
+      content = content[0];
     }
+    markup[0].innerHTML = content || '';
 
     if (doInsert === true) {
       this.container.append(markup);

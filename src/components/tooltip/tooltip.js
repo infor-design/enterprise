@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery components
 import '../place/place.jquery';
@@ -347,7 +348,7 @@ Tooltip.prototype = {
     }
 
     // Store an internal copy of the processed content
-    this.content = $.sanitizeHTML(content);
+    this.content = xssUtils.sanitizeHTML(content);
 
     // Wrap tooltip content in <p> tags if there isn't already one present.
     // Only happens for non-jQuery markup.

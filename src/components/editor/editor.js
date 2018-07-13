@@ -7,6 +7,7 @@ import { debounce } from '../../utils/debounced-resize';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
 
 const COMPONENT_NAME = 'editor';
 
@@ -489,7 +490,7 @@ Editor.prototype = {
       this.sourceView.addClass('is-focused');
     }).on('blur.editor', (e) => {
       this.sourceView.removeClass('is-focused');
-      this.element.empty().html($.sanitizeHTML(this.textarea.val()));
+      this.element.empty().html(xssUtils.sanitizeHTML(this.textarea.val()));
 
       if (this.element.data('validate')) {
         this.element.data('validate').validate(this.element, true, e);
@@ -1786,7 +1787,7 @@ Editor.prototype = {
 
   toggleSource() {
     if (this.sourceViewActive()) {
-      this.element.empty().html($.sanitizeHTML(this.textarea.val()));
+      this.element.empty().html(xssUtils.sanitizeHTML(this.textarea.val()));
       this.element.removeClass('source-view-active hidden');
       this.sourceView.addClass('hidden').removeClass('is-focused');
       this.element.trigger('focus.editor');

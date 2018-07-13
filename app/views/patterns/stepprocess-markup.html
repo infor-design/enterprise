@@ -1,3 +1,4 @@
+{{> includes/svg-inline-refs}}
 <header class="header is-personalizable top-header">
   <div class="toolbar">
     <div class="title">
@@ -285,14 +286,15 @@
 
       // We do this because folders don't have an associated content panel
       // as they are just links to open the subfolders.
-      var hashLoc = $(args.stepLink).attr('href');
+      var escapedLink = $($.escapeHTML(args.stepLink));
+      var hashLoc = escapedLink.attr('href');
 
       var stepId;
 
       if (hashLoc !== '#') {
-        stepId = $(args.stepLink).attr('href').substring(1);
+        stepId = escapedLink.attr('href').substring(1);
       } else {
-        stepId = $(args.stepLink).attr('id');
+        stepId = escapedLink.attr('id');
       }
 
       var deferred = $.Deferred();

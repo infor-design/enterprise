@@ -918,8 +918,14 @@ const Locale = {  // eslint-disable-line
   },
 
   decimalPlaces(number) {
-    const result = /^-?[0-9]+\.([0-9]+)$/.exec(number);
-    return result === null ? 0 : result[1].length;
+    if (Math.floor(number) === number) {
+      return 0;
+    }
+
+    if (number.toString().indexOf('.') === -1) {
+      return 0;
+    }
+    return number.toString().split('.')[1].length || 0;
   },
 
   truncateDecimals(number, minDigits, maxDigits, round) {

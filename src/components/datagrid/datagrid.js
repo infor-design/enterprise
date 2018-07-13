@@ -5,7 +5,7 @@ import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../../utils/debounced-resize';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
@@ -2998,7 +2998,7 @@ Datagrid.prototype = {
       // Get formatted value (without html) so we have accurate string that
       // will display for this cell
       val = self.formatValue(columnDef.formatter, i, null, val, columnDef, row, self);
-      val = stringUtils.stripHTML(val);
+      val = xssUtils.stripHTML(val);
 
       len = val.toString().length;
 
@@ -3006,7 +3006,7 @@ Datagrid.prototype = {
         for (let k = 0; k < row.values.length; k++) {
           let groupVal = this.fieldValue(row.values[k], columnDef.field);
           groupVal = self.formatValue(columnDef.formatter, i, null, groupVal, columnDef, row, self);
-          groupVal = stringUtils.stripHTML(groupVal);
+          groupVal = xssUtils.stripHTML(groupVal);
 
           len = groupVal.toString().length;
           if (len > max) {
@@ -3468,7 +3468,7 @@ Datagrid.prototype = {
           cell.data('tooltip').settings.maxWidth = w;
 
           clonedEl.remove();
-          return stringUtils.stripHTML(text);
+          return xssUtils.stripHTML(text);
         }
 
         clonedEl.remove();

@@ -185,7 +185,7 @@ describe('Listview example-mixed selection tests', () => {
 
   it('Should select item on click on checkbox', async () => {
     const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .label-text'));
-    listviewItemInputEl.click();
+    await listviewItemInputEl.click();
 
     expect(await element(by.className('is-selected')).isPresent()).toBeTruthy();
     expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();

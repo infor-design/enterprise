@@ -35,3 +35,32 @@
     These errors still occur:
     - False positive on elements without a nonce attribute (3) (or pages have auto nonce)
     - Libraries that allow strict-dynamic bypass (1) (it warns about jQuery but the latest version does no longer have an Eval in it 3.3.1)
+
+## Static Scan
+
+- zip folders app, src, scripts and submit
+- 107 Flaws - 74 Points
+
+## Tools to Checkout
+
+[OWASP XSS Info](https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet#Why_Can.27t_I_Just_HTML_Entity_Encode_Untrusted_Data.3F)
+[Older JQuery Encoder Code](https://github.com/chrisisbeef/jquery-encoder)
+[Yahoo Xss Filters Utils](https://github.com/yahoo/xss-filters)
+
+Resulted in error "Improper Output Neutralization for Logs", console.log not needed so was removed.
+
+## Statements on Mitigation
+
+This method is sanitized via a whitelist that only allows x,y,z tags. Its also expect that data is sanitized server side
+by the implementing application teams.
+
+## Context Escaping
+
+[Escaping Info](http://jehiah.cz/a/guide-to-escape-sequences)
+
+## Re-test / Impacted
+
+- Step Process (index and markup examples)
+- Locale
+- Toolbar Flex
+- Misc Examples
