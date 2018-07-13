@@ -29,6 +29,7 @@ const Environment = {
    */
   addBrowserClasses() {
     const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const platform = navigator.platform;
     const html = $('html');
     let cssClasses = ''; // User-agent string
 
@@ -44,7 +45,8 @@ const Environment = {
       this.browser.name = 'chrome';
     }
 
-    if (navigator.platform.indexOf('MacIntel') !== -1) {
+    const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
+    if (macosPlatforms.indexOf(platform) > -1 && !/Linux/.test(platform)) {
       cssClasses += 'is-mac ';
       this.os.name = 'Mac OS X';
     }
@@ -99,6 +101,10 @@ const Environment = {
     if ((/Android/.test(ua))) {
       cssClasses += 'android ';
       this.os.name = 'android';
+    }
+
+    if (!this.os.name && /Linux/.test(platform)) {
+      this.os.name = 'linux';
     }
 
     html.addClass(cssClasses);
