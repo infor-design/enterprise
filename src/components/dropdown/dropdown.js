@@ -1306,11 +1306,12 @@ Dropdown.prototype = {
     if ((!isOSX && key === 'Delete') || (isOSX && key === 'Backspace')) {
       this.selectBlank();
 
+      // Stop the backspace key from navigating back a page
       if (key === 'Backspace') {
         e.stopPropagation();
         e.preventDefault();
       }
-      return false;
+      return true;
     }
 
     // In nosearch mode, bypass the typeahead autocomplete and pass keydown events

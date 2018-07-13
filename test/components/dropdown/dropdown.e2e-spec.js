@@ -239,6 +239,14 @@ describe('Dropdown example-no-search-filtering tests', () => {
   it('Should clear a previous dropdown selection when pressing DELETE', async () => {
     // On Macs, use "backspace" delete, instead of control keys' delete
     const keyPressed = utils.isMac() ? 'BACK_SPACE' : 'DELETE';
+    console.log(`Key pressed: ${keyPressed}`); //eslint-disable-line
+
+    if (utils.isMac()) {
+      expect(keyPressed).toBe('BACK_SPACE');
+    } else {
+      expect(keyPressed).toBe('DELETE');
+    }
+
     const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
