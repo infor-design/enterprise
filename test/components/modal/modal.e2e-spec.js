@@ -189,10 +189,11 @@ describe('Modal example-validation-editor tests', () => {
     const dropdownEl = await element.all(by.css('.modal div[aria-controls="dropdown-list"]')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
-    await browser.driver.sleep(config.sleep);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ENTER);
+    await dropdownEl.click();
+    const dropdownSearchEl = await element(by.id('dropdown-search'));
+    await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
     await element(by.id('context-name')).sendKeys('test@test.com');
