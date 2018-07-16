@@ -1007,6 +1007,10 @@ SearchField.prototype = {
       e.preventDefault();
     }
 
+    if (e.ctrlKey && key === 8) {
+      this.element.val('');
+    }
+
     if (key === 9) { // Tab
       this.handleSafeBlur();
     }
