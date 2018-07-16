@@ -519,6 +519,11 @@ Datagrid.prototype = {
   */
   updateDataset(dataset, pagerInfo) {
     this.loadData(dataset, pagerInfo);
+
+    if (this.settings.toolbar.keywordFilter) {
+      this.element.parent().find('.toolbar').find('.searchfield').val('');
+      this.keywordSearch('');
+    }
   },
 
   /**
