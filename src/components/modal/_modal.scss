@@ -214,6 +214,7 @@
 }
 
 .modal-content {
+  position: relative;
   background: $modal-bg-color;
   border: 1px solid $modal-border-color;
   border-radius: 2px;
@@ -289,6 +290,12 @@
     display: block;
     font-size: 1.5rem;
     margin: 25px auto 5px;
+  }
+
+  .btn-close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
   }
 
   .message {
