@@ -39,16 +39,13 @@ describe('DatePicker Aria', () => {
   });
 
   it('Should update ARIA labels with calendar open', (done) => {
-    const field = document.querySelector('#date-field-normal');
-    field.value = '11/06/2018';
+    datepickerAPI.setValue('11/06/2018');
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
       expect(document.querySelector('#calendar-popup .calendar-table').getAttribute('aria-label')).toEqual('Calendar');
-      expect(document.querySelector('#calendar-popup tbody td:not(.alternate)').getAttribute('aria-label')).toEqual('Friday, June 1, 2018');
+      expect(document.querySelector('#calendar-popup tbody td.is-selected').getAttribute('aria-label')).toEqual('Tuesday, November 6, 2018');
       expect(document.querySelector('#calendar-popup tbody td span:not(.alternate)').getAttribute('aria-hidden')).toEqual('true');
-      expect(document.querySelector('#calendar-popup tbody td span').innerHTML).toEqual('27');
-      expect(document.querySelector('#calendar-popup tbody td span:not(.alternate)').innerHTML).toEqual('27');
       done();
     }, 100);
   });

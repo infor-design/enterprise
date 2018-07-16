@@ -21,8 +21,6 @@ demo:
     slug: example-modal.html
   - name: Various Sizes
     slug: example-sizes.html
-  - name: In a Form
-    slug: example-form.html
   - name: State Api
     slug: example-state-methods.html
   - name: Islamic Umalqura Calendar
