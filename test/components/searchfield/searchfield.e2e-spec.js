@@ -27,14 +27,15 @@ describe('Searchfield example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress on example-index', async () => {
-      await browser.driver.sleep(config.waitsFor);
+    it('Should not visual regress on example-index', async () => {
       const searchfieldInputEl = await element(by.id(searchfieldId));
       const searchfieldSection = await element(by.id('maincontent'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(searchfieldInputEl, 'searchfield-init')).toEqual(0);
+      await searchfieldInputEl.clear();
       await searchfieldInputEl.sendKeys('co');
       await browser.driver.sleep(config.waitsFor);
 
