@@ -81,37 +81,78 @@ npm run e2e:local:debug
 
 ## Debugging E2E Tests
 
-- Put a `debugger;` statement at a place in the test/code
+- Put a `debugger;` statement above the lines of code in question
 - Isolate the test or suite using [fdescribe](https://jasmine.github.io/api/edge/global.html#fdescribe) or [fit](https://jasmine.github.io/api/edge/global.html#fit)
-- If interested in the Axe results put it under the `res = await AxeBuilder` command.
-- Start the server normally with `npm run quickstart` or `npm run start`
-- In another terminal, run the functional test with for example `env ENTERPRISE_THEME='high-contrast' npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js` in watch mode
+- Start the server with `npm run quickstart` or `npm run start`
+- In another terminal, run the e2e test with the command below
+
+```sh
+npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js
+```
+
 - In Chrome open `chrome://inspect` in a new tab.
 - Click on the 'Target' you will see generated under remote target
-- Hit go on the debugger
-- If interested in the Axe results you can view `res.violations` in the console
+- Hit resume/play on the debugger
 
 ## Working With Visual Regression Tests
 
-Currently on-hold until running w/CI is figured out. See: [SOHO-7464](https://jira.infor.com/browse/SOHO-7464)
-
-- Create an e2e test similar to the following...
+Create an e2e visual regression test by using the code snippet below as an example.
 
 ```javascript
-if (utils.isChrome()) {
-    it('Should not visual regress', async () => {
-        const textareaEl = await element(by.id('description-max'));
-        await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(textareaEl), config.waitsFor);
+// Only test visual regressions on Chrome, and the CI
+if (utils.isChrome() && utils.isCI()) {
+  it('Should not visual regress', async () => {
+    const dropdownEl = element(by.css('div[aria-controls="dropdown-list"]'));
+    const dropdownElList = element(by.id('dropdown-list'));
+    // Wait for animations to complete
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
-        expect(await browser.protractorImageComparison.checkScreen('textarea')).toEqual(0);
-    });
+    // Test init/default state
+    expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-init')).toEqual(0);
+    await clickOnDropdown();
+    // Wait for animations to complete
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownElList), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
+
+    // Test open state
+    expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-open')).toEqual(0);
+  });
 }
 ```
 
-- run this test once and it will generate an error and create a baseline file (in tests/.tmp)
-- copy this file out to the baseline folder if it looks correct
-- next time you run it will compare this.
+Follow [this guide](https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image) in order to debug Travis, and to create baseline images. Use the `node_js` [image](https://hub.docker.com/r/travisci/ci-nodejs/)
+
+After cloning the Enterprise repository, please install, and build manually.
+
+Many of the commands ran can be found in the [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml).
+
+### Creating Baseline Screenshots
+
+We need to do this process on a machine that is nearly identical to the CI machine.
+
+Copy `.tmp/actual` verified screenshots to the `baseline` folder for testing, locally, and in the Docker container.
+
+Open the Docker container shell, navigate to Enterprise repo, and run `npm start`.
+
+For convenience, open another Docker container shell, run `npm test`.
+
+[Copy](https://docs.docker.com/engine/reference/commandline/cp/) actual screenshots from .tmp/actual/*.png using.
+
+```sh
+docker cp INSERT_CONTAINER_ID:/home/travis/enterprise/test/.tmp .
+```
+
+See [https://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container](https://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container) for additional help
+
+Move `.tmp/actual` verified screenshots to the `baseline` folder for testing, locally, and in the Docker container. Open the Docker container shell, navigate to Enterprise repo, and run `npm start`
+For convenience, open another shell under the travis user, and `npm run e2e:ci`.
+
+Once the files are copied to the host machine, check the image for quality, commit, and push.
+
+Tests should now pass on the branch CI as the baselines should identical to the screenshots created during the test.
 
 ### Testing Coverage Rating Scale
 
@@ -156,5 +197,4 @@ Validation | ☹️
 
 ## E2E Problems
 
-- `[Visual Regression]` Maintaining baseline screenshots across different environments is problematic, and not consistent. The same machines need to run comparisons. Different machines can be generated their own screenshots, and compare them to screenshots on other system.
 - `[Browser driver differences]` Lack of process to automate a record of differences to to aid reduction of manual testing. Lack of process to check automated tests manually

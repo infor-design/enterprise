@@ -5,8 +5,6 @@ demo:
   pages:
   - name: Main Validation Examples
     slug: example-index
-  - name: Disabled Form
-    slug: example-form-disabled
   - name: Multiple Validation Errors on a Field
     slug: example-multiple-errors
   - name: Legacy Short Fields
@@ -43,9 +41,17 @@ $('#username-field')
 $('#username-field').removeError()
 ```
 
+## Code Example - Skipping Fields from Validation
+
+Its possible to skip fields that are normally validated from validation. You can do this in one of three ways.
+
+1. Add a class of `disable-validation`  to the input.
+1. Add an attribute of `data-disable-validation="true"` to the input.
+1. Make the input disabled.
+
 ## Validation Types
 
-There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule, but error is used if it is not defined.
+There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule or duplicate messages may appear.
 
 ```javascript
 $.fn.validation.rules.customWarningRule = {
@@ -58,7 +64,7 @@ $.fn.validation.rules.customWarningRule = {
 };
 ```
 
-Each type is style differntly and can be defined if the formValidation passes or errors based on the rules result. This is defined via the errorsForm on the validation type.
+Each type is style differently and can be defined if the formValidation passes or errors based on the rules result. This is defined via the errorsForm on the validation type.
 
 ```javascript
 $.fn.validation.ValidationTypes.alert = { type: 'alert', title: 'Alert', errorsForm: false };
@@ -107,4 +113,4 @@ Or you can specify either different events for multiple rules as per as:
 
 ## Upgrading from 3.X
 
-This api is backwards compatible.
+This api is (mostly) backwards compatible.

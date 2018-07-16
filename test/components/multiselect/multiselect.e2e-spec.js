@@ -152,13 +152,22 @@ describe('Multiselect example-index tests', () => {
     });
   }
 
-  if (utils.isChrome()) {
-    xit('Should not visual regress', async () => {
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
+      const multiselectElList = await element(by.id('dropdown-list'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkScreen('multiselectPage')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(multiselectEl, 'multiselect-init')).toEqual(0);
+
+      await clickOnMultiselect();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(multiselectElList), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(multiselectElList, 'multiselect-open')).toEqual(0);
     });
   }
 

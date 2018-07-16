@@ -24,6 +24,17 @@ describe('Tabs click example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      const tabsEl = await element(by.id('tabs-normal'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-init')).toEqual(0);
+    });
+  }
+
   if (!utils.isIE()) {
     xit('Should be accessible on init with no WCAG 2AA violations on example-index', async () => {
       const res = await axePageObjects(browser.params.theme);
@@ -97,6 +108,17 @@ describe('Tabs click example-counts tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-counts', async () => {
+      const tabsEl = await element(by.id('tabs-counts'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-counts')).toEqual(0);
+    });
+  }
 
   if (!utils.isIE()) {
     xit('Should be accessible on init with no WCAG 2AA violations on example-index', async () => {
@@ -237,6 +259,17 @@ describe('Tabs click example-add-tab button tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-add-tab-button', async () => {
+      const tabsEl = await element(by.id('add-capable-tabs'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-add-tab')).toEqual(0);
+    });
+  }
+
   if (!utils.isIE()) {
     xit('Should be accessible on init with no WCAG 2AA violations on example-add-tab-button', async () => {
       const res = await axePageObjects(browser.params.theme);
@@ -330,6 +363,17 @@ describe('Tabs click example-dropdown-tabs tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-dropdown-tabs', async () => {
+      const tabsEl = await element(by.id('tabs-dropdown'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-dropdown')).toEqual(0);
+    });
+  }
 
   it('Should open dropdown tab', async () => {
     await element.all(by.className('tab')).get(1).click();

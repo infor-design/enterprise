@@ -1,6 +1,7 @@
 const popupmenuPageObject = require('./helpers/popupmenu-page-objects.js');
 
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
+const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
 const axePageObjects = requireHelper('axe-page-objects');
@@ -11,6 +12,19 @@ describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-selectable', async () => {
+      const popupmenuSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
+      const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
+      await buttonTriggerEl.click();
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(popupmenuSection, 'popupmenu-single-open')).toEqual(0);
+    });
+  }
 
   it('Should open on click, and close on click', async () => {
     const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
@@ -97,6 +111,19 @@ describe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable-multiple');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-selectable-multiple', async () => {
+      const popupmenuSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
+      const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
+      await buttonTriggerEl.click();
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(popupmenuSection, 'popupmenu-multi-open')).toEqual(0);
+    });
+  }
 
   if (!utils.isIE() && !utils.isSafari()) {
     it('Should select first, and last item on spacebar, arrowing down', async () => {

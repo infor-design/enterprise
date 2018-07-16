@@ -10,8 +10,32 @@ describe('Colorpicker example-index tests', () => {
     await utils.setPage('/components/colorpicker/example-index');
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      await browser.driver.sleep(config.waitsFor);
+      const colorpickerSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(colorpickerSection), config.waitsFor);
+      const colorpickerContainer = await element.all(by.className('colorpicker-container')).first();
+
+      expect(await browser.protractorImageComparison.checkElement(colorpickerContainer, 'colorpicker-init')).toEqual(0);
+      await element(by.css('#background-color + .trigger .icon')).click();
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(colorpickerSection, 'colorpicker-open')).toEqual(0);
+    });
+  }
+
   it('Should open popup on icon click', async () => {
     await element(by.css('#background-color + .trigger .icon')).click();
+
+    expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
+  });
+
+  it('Should open popup on keyboard down', async () => {
+    const colorInputEl = await element(by.css('#background-color'));
+    await colorInputEl.click();
+    await colorInputEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
   });
@@ -21,6 +45,34 @@ describe('Colorpicker example-index tests', () => {
     await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
 
     expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#1A1A1A');
+  });
+
+  it('Should pick color from picker on keyboard enter', async () => {
+    const colorInputEl = await element(by.id('background-color'));
+    await colorInputEl.click();
+    await colorInputEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.id('colorpicker-menu'))), config.waitsFor);
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_UP).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_UP).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+
+    expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#1A1A1A');
+  });
+
+  it('Should set color from manual entry of #898989', async () => {
+    const colorInputEl = await element(by.id('background-color'));
+    await colorInputEl.click();
+    await colorInputEl.clear();
+    await colorInputEl.sendKeys('898989');
+    await colorInputEl.sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#898989');
+    expect(await element.all(by.className('swatch')).first().getAttribute('style')).toBe('background-color: rgb(137, 137, 137);');
   });
 
   it('Should pick clear color from picker', async () => {
