@@ -8,7 +8,7 @@ let datepickerEl;
 let svgEl;
 let datepickerAPI;
 
-fdescribe('DatePicker Aria', () => { //eslint-disable-line
+describe('DatePicker Aria', () => {
   beforeEach(() => {
     datepickerEl = null;
     svgEl = null;
@@ -34,17 +34,37 @@ fdescribe('DatePicker Aria', () => { //eslint-disable-line
     rowEl.parentNode.removeChild(rowEl);
   });
 
-  it('Should trigger "change" event', (done) => {
+  it('Should trigger "change" and "input" event', (done) => {
     const field = document.querySelector('#date-field-normal');
     field.value = '11/06/2018';
 
     const spyEvent = spyOnEvent('#date-field-normal', 'change');
+    const spyEventInput = spyOnEvent('#date-field-normal', 'input');
     datepickerAPI.openCalendar();
     setTimeout(() => {
       const firstDay = document.querySelector('#calendar-popup tbody td:not(.alternate)');
       firstDay.click();
 
       expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEventInput).toHaveBeenTriggered();
+      done();
+    }, 100);
+  });
+
+  it('Should trigger "listopen" and "listclosed" event', (done) => {
+    const field = document.querySelector('#date-field-normal');
+    field.value = '11/06/2018';
+
+    const spyEvent = spyOnEvent('#date-field-normal', 'listopened');
+    const spyEventClosed = spyOnEvent('#date-field-normal', 'listclosed');
+    datepickerAPI.openCalendar();
+    setTimeout(() => {
+      expect(spyEvent).toHaveBeenTriggered();
+
+      const firstDay = document.querySelector('#calendar-popup tbody td:not(.alternate)');
+      firstDay.click();
+
+      expect(spyEventClosed).toHaveBeenTriggered();
       done();
     }, 100);
   });

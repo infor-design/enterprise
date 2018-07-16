@@ -1849,7 +1849,6 @@ DatePicker.prototype = {
    */
   setValue(date, trigger, isTime) {
     const s = this.settings;
-    // TODO Document this as the way to get the date
     this.currentDate = date;
 
     if (date instanceof Array) {
