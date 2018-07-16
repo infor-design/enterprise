@@ -2894,7 +2894,7 @@ Datagrid.prototype = {
 
       if (skipColumns > 0) {
         skipColumns -= 1;
-        continue;
+        cssClass += ' is-hidden';
       }
 
       // Run an optional function to calculate a colspan
