@@ -176,17 +176,10 @@ $secondary-border-btn-hover-border-color: $white;
 $secondary-border-btn-ripple-color: $white;
 
 // Input Fields
-$input-border-color: $input-border-color;
 $input-color: $input-text-color;
-$input-bg-color: $input-bg-color;
-$input-disabled-bg-color: $input-disabled-bg-color;
-$input-disabled-border-color: $input-disabled-border-color;
 $input-disabled-color: $input-disabled-text-color;
 $input-focus-border-color: $primary-color;
-$input-hover-border-color: $input-hover-border-color;
 $input-placeholder-color: $input-placeholder-text-color;
-$input-readonly-border-color: $input-readonly-border-color;
-$input-readonly-bg-color: $input-readonly-bg-color;
 $input-readonly-color: $input-readonly-text-color;
 
 //States
@@ -254,14 +247,7 @@ $contextual-toolbar-bg-color: $primary-color;
 $contextual-panel-seperator-bg-color: $slate03;
 
 // Drop down
-$dropdown-filter-color: $dropdown-filter-color;
-$dropdown-color: $dropdown-color;
-$dropdown-search-color: $dropdown-search-color;
 $dropdown-menu-border-color: $primary-color;
-$dropdown-menu-separator-color: $dropdown-menu-separator-color;
-$dropdown-menu-separator-border-color: $dropdown-menu-separator-border-color;
-$dropdown-group-label-color: $dropdown-group-label-color;
-$dropdown-box-shadow: $dropdown-box-shadow;
 
 // Date Picker
 $datepicker-month-year-color: $inverse-color;
@@ -349,17 +335,8 @@ $cardlist-actions-color: $slate03;
 
 // Checkboxes
 $checkbox-color: $primary-color;
-$checkbox-arrow-color: $checkbox-arrow-color;
-$checkbox-border-color: $checkbox-border-color;
-$checkbox-bg-color: $checkbox-bg-color;
-$checkbox-hover-border-color: $checkbox-hover-border-color;
 $checkbox-disabled-font-color: $checkbox-disabled-text-color;
-$checkbox-disabled-border-color: $checkbox-disabled-border-color;
-$checkbox-disabled-bg-color: $checkbox-disabled-bg-color;
 $checkbox-disabled-select-bg-color: $checkbox-disabled-border-color;
-$checkbox-disabled-arrow-color: $checkbox-disabled-arrow-color;
-$checkbox-focus-shadow: $checkbox-focus-shadow;
-$checkbox-label-color: $checkbox-label-color;
 
 // Switch
 $switch-checked-color: $primary-color;
@@ -393,14 +370,10 @@ $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, .3);
 $editor-blockquote-color: $slate04;
 
 // Radio Buttons
-$radio-border-color: $radio-border-color;
 $radio-hover-border-color: $radio-border-hover-color;
 $radio-selected-color: $primary-color;
 $radio-selected-bg-color: $radio-checked-bg-color;
-$radio-disabled-border-color: $radio-disabled-border-color;
-$radio-disabled-bg-color: $radio-disabled-bg-color;
 $radio-disabled-select-bg-color: $radio-disabled-checked-bg-color;
-$radio-focus-shadow: $radio-focus-shadow;
 
 //Pager
 $pager-text-color: $primary-color;

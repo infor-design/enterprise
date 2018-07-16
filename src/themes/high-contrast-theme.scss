@@ -189,17 +189,9 @@ $secondary-border-btn-hover-border-color: $graphite10;
 $secondary-border-btn-ripple-color: $azure07;
 
 // Input Fields
-$input-border-color: $input-border-color;
 $input-color: $input-text-color;
-$input-bg-color: $input-bg-color;
-$input-disabled-bg-color: $input-disabled-bg-color;
-$input-disabled-border-color: $input-disabled-border-color;
 $input-disabled-color: $input-disabled-text-color;
-$input-hover-border-color: $input-hover-border-color;
-$input-focus-border-color: $input-focus-border-color;
 $input-placeholder-color: $input-placeholder-text-color;
-$input-readonly-border-color: $input-readonly-border-color;
-$input-readonly-bg-color: $input-readonly-bg-color;
 $input-readonly-color: $input-readonly-text-color;
 
 //States
@@ -278,15 +270,8 @@ $contextual-toolbar-button-disabled-color: rgba($inverse-color, .3);
 $contextual-panel-seperator-bg-color: $graphite06;
 
 // Drop down
-$dropdown-filter-color: $dropdown-filter-color;
-$dropdown-color: $dropdown-color;
-$dropdown-search-color: $dropdown-search-color;
 $dropdown-menu-border-color: $primary-color;
-$dropdown-menu-separator-color: $dropdown-menu-separator-color;
-$dropdown-menu-separator-border-color: $dropdown-menu-separator-border-color;
-$dropdown-group-label-color: $dropdown-group-label-color;
 $dropdown-selected-bg-color: $primary-color;
-$dropdown-box-shadow: $dropdown-box-shadow;
 
 // Date Picker
 $datepicker-month-year-color: $black;
@@ -371,17 +356,8 @@ $cardlist-actions-color: $graphite09;
 
 // Checkboxes
 $checkbox-color: $primary-color;
-$checkbox-arrow-color: $checkbox-arrow-color;
-$checkbox-border-color: $checkbox-border-color;
-$checkbox-bg-color: $checkbox-bg-color;
-$checkbox-hover-border-color: $checkbox-hover-border-color;
 $checkbox-disabled-font-color: $checkbox-disabled-text-color;
-$checkbox-disabled-border-color: $checkbox-disabled-border-color;
-$checkbox-disabled-bg-color: $checkbox-disabled-bg-color;
 $checkbox-disabled-select-bg-color: $checkbox-disabled-checked-bg-color;
-$checkbox-disabled-arrow-color: $checkbox-disabled-arrow-color;
-$checkbox-focus-shadow: $checkbox-focus-shadow;
-$checkbox-label-color: $checkbox-label-color;
 
 // Switch
 $switch-checked-color: $primary-color;
@@ -415,15 +391,10 @@ $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(41, 41, 41, .3);
 $editor-blockquote-color: $graphite07;
 
 // Radio Buttons
-$radio-bg-color: $radio-bg-color;
-$radio-border-color: $radio-border-color;
 $radio-hover-border-color: $radio-border-hover-color;
 $radio-selected-color: $primary-color;
 $radio-selected-bg-color: $radio-checked-bg-color;
-$radio-disabled-border-color: $radio-disabled-border-color;
-$radio-disabled-bg-color: $radio-disabled-bg-color;
 $radio-disabled-select-bg-color: $radio-disabled-checked-bg-color;
-$radio-focus-shadow: $radio-focus-shadow;
 
 // Pager
 $pager-text-color: $primary-color;

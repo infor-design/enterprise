@@ -309,20 +309,6 @@ $swaplist-title-text-color: $graphite10;
 $swaplist-text-color: $graphite10;
 $swaplist-text-color-selected: $white;
 
-
-// Drop down
-$dropdown-filter-color: $dropdown-filter-color;
-$dropdown-color: $dropdown-color;
-$dropdown-search-color: $dropdown-search-color;
-$dropdown-menu-border-color: $dropdown-menu-border-color;
-$dropdown-menu-separator-color: $dropdown-menu-separator-color;
-$dropdown-menu-separator-border-color: $dropdown-menu-separator-border-color;
-$dropdown-group-label-color: $dropdown-group-label-color;
-$dropdown-selected-bg-color: $dropdown-menu-border-color;
-$dropdown-selected-color: $dropdown-selected-color;
-$dropdown-box-shadow: $dropdown-box-shadow;
-$dropdown-box-shadow-top: $dropdown-box-shadow-top;
-
 //Date Picker
 $datepicker-icon-active-color: $trigger-active-color;
 $datepicker-month-year-color: $graphite10;
@@ -414,12 +400,8 @@ $cardlist-text-color: $font-color;
 
 // Checkboxes
 $checkbox-color: $color-primary;
-$checkbox-hover-border-color: $checkbox-hover-border-color;
 $checkbox-disabled-font-color: $checkbox-disabled-text-color;
 $checkbox-disabled-select-bg-color: $checkbox-disabled-checked-bg-color;
-$checkbox-disabled-arrow-color: $checkbox-disabled-arrow-color;
-$checkbox-focus-shadow: $checkbox-focus-shadow;
-$checkbox-label-color: $checkbox-label-color;
 
 // Switch
 $focus-color: #cbdce6;
@@ -461,7 +443,6 @@ $radio-hover-border-color: $radio-border-hover-color;
 $radio-selected-color: $radio-checked-color;
 $radio-selected-bg-color: $radio-checked-bg-color;
 $radio-disabled-select-bg-color: $radio-disabled-checked-bg-color;
-$radio-focus-shadow: $radio-focus-shadow;
 
 //Pager
 $pager-text-color: $color-primary;
