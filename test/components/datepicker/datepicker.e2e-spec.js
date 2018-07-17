@@ -180,7 +180,7 @@ describe('Datepicker custom format tests', () => {
   });
 });
 
-describe('Datepicker custom validation tests', () => {
+describe('Datepicker disabled date tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-disabled-dates');
   });
