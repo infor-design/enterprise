@@ -180,7 +180,7 @@ describe('Datepicker custom format tests', () => {
   });
 });
 
-fdescribe('Datepicker custom validation tests', () => { //eslint-disable-line
+describe('Datepicker custom validation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-disabled-dates');
   });
