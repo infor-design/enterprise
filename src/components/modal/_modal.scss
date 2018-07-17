@@ -447,5 +447,10 @@ html[dir='rtl'] {
     .message {
       text-align: right;
     }
+
+    .btn-close {
+      right: auto;
+      left: 0px;
+    }
   }
 }
