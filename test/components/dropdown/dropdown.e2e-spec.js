@@ -120,6 +120,29 @@ describe('Dropdown example-index tests', () => {
 
     expect(await element(by.className('is-focused')).getText()).toEqual('Colorado');
   });
+
+  if (!utils.isSafari()) {
+    it('Should keep the filter term in tact when pausing between keyboard presses', async () => {
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+
+      await dropdownEl.sendKeys('New');
+
+      // Wait for the list to open
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const dropdownSearchEl = element(by.id('dropdown-search'));
+
+      await dropdownSearchEl.click();
+      await dropdownSearchEl.sendKeys(' Jersey');
+
+      await browser.driver.sleep(config.sleep);
+
+      // SearchInput should display "New Jersey" and not just " Jersey"
+      expect(await element(by.id('dropdown-search')).getAttribute('value')).toEqual('New Jersey');
+    });
+  }
 });
 
 describe('Dropdown example-ajax tests', () => {

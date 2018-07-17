@@ -920,7 +920,9 @@ Dropdown.prototype = {
     // Used to determine how spacebar should function.
     // False means space will select/deselect.  True means
     // Space will add a space inside the search input.
-    this.searchKeyMode = false;
+    if (!this.filterTerm) {
+      this.searchKeyMode = false;
+    }
 
     this.searchInput
       .on(`keydown.${COMPONENT_NAME}`, (e) => {
@@ -1015,6 +1017,8 @@ Dropdown.prototype = {
   resetList() {
     // 'typeahead' reloading skips client-side filtering in favor of server-side
     if (this.settings.source && this.settings.reload === 'typeahead') {
+      this.filterTerm = '';
+      this.searchKeyMode = false;
       this.callSource(null, true);
       return;
     }
@@ -1244,11 +1248,9 @@ Dropdown.prototype = {
       }
     }
 
-    self.initialFilter = false;
     if (!self.isOpen() && !self.isControl(key) &&
       !this.settings.source && !this.settings.noSearch) {
       // Make this into Auto Complete
-      self.initialFilter = true;
       self.isFiltering = true;
       self.filterTerm = $.actualChar(e);
 
@@ -1351,7 +1353,6 @@ Dropdown.prototype = {
       clearTimeout(this.timer);
     }
 
-    this.initialFilter = true;
     if (e.type === 'input') {
       this.filterTerm = this.searchInput.val();
     } else {
@@ -1373,6 +1374,7 @@ Dropdown.prototype = {
         return;
       }
 
+      this.searchKeyMode = true;
       if (!self.isOpen()) {
         self.open(filter);
         return;
@@ -1417,7 +1419,7 @@ Dropdown.prototype = {
     }
 
     function selectText() {
-      if (self.isMobile()) {
+      if (self.isMobile() || self.filterTerm) {
         return;
       }
 
@@ -1604,7 +1606,7 @@ Dropdown.prototype = {
 
     // Set the contents of the search input.
     // If we've got a stored typeahead
-    if (this.initialFilter) {
+    if (this.filterTerm) {
       this.searchInput.val(this.filterTerm);
     } else {
       this.searchInput.val(this.pseudoElem.find('span').text().trim());
@@ -1649,10 +1651,10 @@ Dropdown.prototype = {
       .removeClass('dropdown-tall')
       .on('touchend.list click.list', 'li', function (e) {
         const itemSelected = self.selectListItem($(this));
-        if (itemSelected) {
+        e.preventDefault();
+        if (!itemSelected) {
           return;
         }
-        e.preventDefault();
         e.stopPropagation();
       })
       .on('mouseenter.list', 'li', function () {
@@ -1942,6 +1944,7 @@ Dropdown.prototype = {
 
     // Rendering-related resets
     this.filterTerm = '';
+    this.searchKeyMode = false;
     this.setDisplayedValues();
 
     this.searchInput.off([
