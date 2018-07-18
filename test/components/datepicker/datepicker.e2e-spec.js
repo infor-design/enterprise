@@ -306,7 +306,7 @@ describe('Datepicker Month Year Changer Tests', () => {
     const testDate = new Date();
     testDate.setMonth(testDate.getMonth() + 2);
 
-    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual(`${(testDate.getMonth())}/1/${testDate.getFullYear() + 2}`);
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual(`${(testDate.getMonth())}/1/${testDate.getFullYear()}`);
   });
 });
 
