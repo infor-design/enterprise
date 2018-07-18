@@ -5,7 +5,7 @@
   td {
     // scss-lint:disable ImportantRule
     border-bottom: 1px solid $color !important;
-    border-top: 1px solid $color;
+    box-shadow: 0 -1px 1px -1px $color;
     // scss-lint:enable ImportantRule
 
     &:first-child {

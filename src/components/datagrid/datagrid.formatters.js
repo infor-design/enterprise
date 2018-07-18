@@ -570,7 +570,7 @@ const formatters = {
       return '<span></span>';
     }
 
-    return `${$.createIcon({ icon: item.rowStatus.icon, classes: ['icon', `icon-${item.rowStatus.icon}`, 'datagrid-alert-icon'] })}<span class="audible">${item.rowStatus.text}</span>`;
+    return `${$.createIcon({ icon: item.rowStatus.icon, classes: ['icon', `icon-${item.rowStatus.icon}`] })}<span class="audible">${item.rowStatus.text}</span>`;
   },
 
   TargetedAchievement(row, cell, value, col) {
