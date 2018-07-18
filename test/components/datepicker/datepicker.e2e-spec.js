@@ -238,7 +238,6 @@ describe('Datepicker Month Year Picker Tests', () => {
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ENTER);
-    await dropdownEl.sendKeys(protractor.Key.TAB);
 
     const buttonEl = await element(by.css('.select-month.btn-tertiary'));
     await buttonEl.click();
@@ -246,7 +245,7 @@ describe('Datepicker Month Year Picker Tests', () => {
     const testDate = new Date();
     testDate.setMonth(testDate.getMonth() + 1);
 
-    expect(await element(by.id('month-year')).getAttribute('value')).toEqual(`${(testDate.getMonth() + 1).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
+    expect(await element(by.id('month-year')).getAttribute('value')).toEqual(`${(testDate.getMonth()).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
   });
 
   it('Should be able to function as month/year picker long', async () => {
@@ -257,13 +256,12 @@ describe('Datepicker Month Year Picker Tests', () => {
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ENTER);
-    await dropdownEl.sendKeys(protractor.Key.TAB);
 
     const buttonEl = await element(by.css('.select-month.btn-tertiary'));
     await buttonEl.click();
 
     const testDate = new Date();
-    testDate.setMonth(testDate.getMonth() + 1);
+    testDate.setMonth(testDate.getMonth());
 
     expect(await element(by.id('month-year-long')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }));
   });
@@ -282,29 +280,25 @@ describe('Datepicker Month Year Changer Tests', () => {
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ENTER);
-    await dropdownEl.sendKeys(protractor.Key.TAB);
 
     const yearEl = await element(by.css('#year-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
     await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
     await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
     await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
     await yearEl.sendKeys(protractor.Key.ENTER);
-    await yearEl.sendKeys(protractor.Key.TAB);
 
     const prevButtonEl = await element(by.css('.prev.btn-icon'));
-    await prevButtonEl.sendKeys(protractor.Key.TAB);
     await prevButtonEl.sendKeys(protractor.Key.ENTER);
 
     const lastButtonEl = await element(by.css('.next.btn-icon'));
     await lastButtonEl.sendKeys(protractor.Key.ENTER);
-    await lastButtonEl.sendKeys(protractor.Key.TAB);
 
     await browser.driver.sleep(config.sleep);
     const buttonEl = await element.all(by.css('.calendar-table td:not(.alternate)')).first();
     await buttonEl.click();
 
     const testDate = new Date();
-    testDate.setMonth(testDate.getMonth() + 2);
+    testDate.setMonth(testDate.getMonth() + 1);
 
     expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual(`${(testDate.getMonth())}/1/${testDate.getFullYear()}`);
   });
