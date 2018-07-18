@@ -1145,7 +1145,7 @@ Dropdown.prototype = {
           self.setItemIconOverColor(next);
           // NOTE: Do not also remove the ".is-selected" class here!
           // It's not the same as ".is-focused"!
-          // Talk to ed.coyle@infor.com if you need to know why.
+          // Talk to ed coyle if you need to know why.
           next.parent().find('.is-focused').removeClass('is-focused');
           next.addClass('is-focused');
         }
@@ -1166,7 +1166,7 @@ Dropdown.prototype = {
           self.setItemIconOverColor(next);
           // NOTE: Do not also remove the ".is-selected" class here!
           //  It's not the same as ".is-focused"!
-          // Talk to ed.coyle@infor.com if you need to know why.
+          // Talk to ed coyle if you need to know why.
           next.parent().find('.is-focused').removeClass('is-focused');
           next.addClass('is-focused');
         }
