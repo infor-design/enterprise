@@ -122,10 +122,12 @@ describe('Modal example-close-btn tests', () => {
 
     const modalBtn = await element(by.id('add-context'));
     await modalBtn.click();
+
     expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
 
     const closeBtn = await element(by.css('button.btn-close'));
     await closeBtn.click();
+
     expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
   });
 });

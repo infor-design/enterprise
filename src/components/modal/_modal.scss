@@ -294,8 +294,12 @@
 
   .btn-close {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    right: 0;
+    top: 0;
+
+    .icon {
+      width: 16px;
+    }
   }
 
   .message {

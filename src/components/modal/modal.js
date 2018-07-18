@@ -128,7 +128,6 @@ Modal.prototype = {
         '</div>' +
       '</div>');
 
-
     if (this.settings.showCloseBtn) {
       const closeBtn = $(`
         <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
@@ -137,7 +136,7 @@ Modal.prototype = {
         </button>
       `);
       this.element.find('.modal-content').append(closeBtn);
-      closeBtn.on('click', () => this.close());
+      closeBtn.on('click.modal', () => this.close()).tooltip();
     }
 
     if (this.settings.id) {
@@ -741,7 +740,7 @@ Modal.prototype = {
     let tabbableElements;
 
     // Escape key
-    $(document).on('keyup.modal', (e) => {
+    $(document).on('keydown.modal', (e) => {
       const keyCode = e.which || e.keyCode;
       if (keyCode === 27) {
         const modals = $('.modal.is-visible');
