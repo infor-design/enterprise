@@ -726,7 +726,7 @@ Modal.prototype = {
     let tabbableElements;
 
     // Escape key
-    $(document).on('keyup.modal', (e) => {
+    $(document).on('keydown.modal', (e) => {
       const keyCode = e.which || e.keyCode;
       if (keyCode === 27) {
         const modals = $('.modal.is-visible');

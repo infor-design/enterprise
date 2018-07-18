@@ -409,6 +409,8 @@ DatePicker.prototype = {
         if (key === 27) {
           this.closeCalendar();
           this.element.focus();
+          e.stopImmediatePropagation();
+          handled = true;
         }
 
         if (handled) {
