@@ -225,6 +225,12 @@ div.multiselect {
     box-shadow: $dropdown-box-shadow-top;
   }
 
+  &.with-badge {
+    a {
+      display: inline;
+    }
+  }
+
   ul {
     @include font-size(14);
     background-color: $popupmenu-bg-color;
@@ -298,6 +304,8 @@ div.multiselect {
 
       .badge {
         border-color: $inverse-color;
+        background-color: white;
+        color: $dropdown-selected-bg-color !important;
       }
     }
 
@@ -347,7 +355,7 @@ div.multiselect {
     @include css3(touch-callout, none);
     @include css3(user-select, none);
     color: $popupmenu-color;
-    display: inline;
+    display: block;
     overflow: hidden;
     text-decoration: none;
     text-overflow: ellipsis;
