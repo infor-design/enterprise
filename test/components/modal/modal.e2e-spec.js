@@ -116,6 +116,20 @@ describe('Modal open example-modal tests on click', () => {
   });
 });
 
+describe('Modal example-close-btn tests', () => {
+  it('Should close the modal via the x close icon', async () => {
+    await utils.setPage('/components/modal/example-close-btn');
+
+    const modalBtn = await element(by.id('add-context'));
+    await modalBtn.click();
+    expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
+
+    const closeBtn = await element(by.css('button.btn-close'));
+    await closeBtn.click();
+    expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
+  });
+});
+
 describe('Modal example-validation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/example-validation');
