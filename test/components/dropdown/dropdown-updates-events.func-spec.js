@@ -39,12 +39,11 @@ describe('Dropdown updates, events', () => {
       multiple: false,
       noSearch: false,
       placementOpts: null,
-      reloadSourceOnOpen: false,
+      reload: 'none',
       showEmptyGroupHeaders: false,
       showSelectAll: false,
       sourceArguments: {},
-      onKeyDown: null,
-      clearable: false
+      onKeyDown: null
     };
 
     expect(dropdownObj.settings).toEqual(settings);
@@ -62,12 +61,11 @@ describe('Dropdown updates, events', () => {
       multiple: false,
       noSearch: false,
       placementOpts: null,
-      reloadSourceOnOpen: false,
+      reload: 'none',
       showEmptyGroupHeaders: false,
       showSelectAll: false,
       sourceArguments: {},
-      onKeyDown: null,
-      clearable: false
+      onKeyDown: null
     };
 
     dropdownObj.updated();
@@ -89,16 +87,24 @@ describe('Dropdown updates, events', () => {
       multiple: false,
       noSearch: false,
       placementOpts: null,
-      reloadSourceOnOpen: false,
+      reload: 'none',
       showEmptyGroupHeaders: false,
       showSelectAll: false,
       sourceArguments: {},
-      onKeyDown: null,
-      clearable: false
+      onKeyDown: null
     };
     dropdownObj.updated(settings);
 
     expect(dropdownObj.settings).toEqual(settings);
+  });
+
+  it('Should convert legacy settings', () => {
+    const settings = {
+      reloadSourceOnOpen: false // removed in v4.9.0 in favor of `reload`
+    };
+    dropdownObj.updated(settings);
+
+    expect(dropdownObj.settings.reload).toEqual('none');
   });
 
   it('Should trigger "has-updated" event', () => {
