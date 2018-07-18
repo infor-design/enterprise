@@ -245,12 +245,35 @@ Datagrid.prototype = {
   * @private
   */
   initSettings() {
+    this.ignoredColumnById('rowStatus');
     this.sortColumn = { sortField: null, sortAsc: true };
     this.gridCount = $('.datagrid').length + 1;
     this.lastSelectedRow = 0; // Remember index to use shift key
 
     this.contextualToolbar = this.element.prev('.contextual-toolbar');
     this.contextualToolbar.addClass('datagrid-contextual-toolbar');
+  },
+
+  /**
+  * Ignore given Column from settings.
+  * @private
+  * @param {string} columnId for column to be ignored
+  * @returns {void}
+  */
+  ignoredColumnById(columnId) {
+    const s = this.settings;
+    if (!columnId || !s.columns || (s.columns && !s.columns.length)) {
+      return;
+    }
+    const column = { index: -1 };
+    for (let i = 0, l = s.columns.length; i < l; i++) {
+      if (s.columns[i].id === columnId) {
+        column.index = i;
+      }
+    }
+    if (column.index > -1) {
+      s.columns.splice(column.index, 1);
+    }
   },
 
   /**
@@ -914,9 +937,6 @@ Datagrid.prototype = {
 
     for (let j = 0; j < this.settings.columns.length; j++) {
       const column = self.settings.columns[j];
-      if (column.id === 'rowStatus') {
-        continue;
-      }
 
       const id = self.uniqueId(`-header-${j}`);
       const isSortable = (column.sortable === undefined ? true : column.sortable);
@@ -2799,9 +2819,6 @@ Datagrid.prototype = {
 
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
-      if (col.id === 'rowStatus') {
-        continue;
-      }
 
       let cssClass = '';
       const defaultFormatter = col.summaryRowFormatter || col.formatter || self.defaultFormatter;

@@ -8,6 +8,11 @@
     border-top: 1px solid $color;
     // scss-lint:enable ImportantRule
 
+    .datagrid-cell-wrapper {
+      min-height: $datagrid-row-height + 5;
+      padding-top: 3px;
+    }
+
     &:first-child {
       border-left: 1px solid $color;
     }
@@ -709,6 +714,18 @@ $datagrid-short-row-height: 23px;
         }
 
       }
+
+      &.rowstatus-row-error,
+      &.rowstatus-row-alert,
+      &.rowstatus-row-info,
+      &.rowstatus-row-in-progress,
+      &.rowstatus-row-confirm,
+      &.rowstatus-row-dirty,
+      &.rowstatus-row-new {
+        .datagrid-cell-wrapper {
+          min-height: $datagrid-medium-row-height + 4;
+        }
+      }
     }
 
     .datagrid-cell-wrapper {
@@ -1074,6 +1091,11 @@ $datagrid-short-row-height: 23px;
       &.rowstatus-row-confirm,
       &.rowstatus-row-dirty,
       &.rowstatus-row-new {
+        .datagrid-cell-wrapper {
+          min-height: $datagrid-short-row-height + 4;
+          padding-top: 2px;
+        }
+
         .rowstatus-cell {
           &::before {
             left: -16px;
