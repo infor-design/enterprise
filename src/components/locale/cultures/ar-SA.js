@@ -250,7 +250,7 @@ Soho.Locale.addCulture('ar-SA', {
       dateFormat: {
         separator: '/', // Infered
         timeSeparator: ':',
-        short: 'd/MM//yyyy', // use four digit year
+        short: 'd/MM/yyyy', // use four digit year
         medium: 'dd/MM/yyyy',
         long: 'd MMMM، yyyy',
         full: 'EEEE، d MMMM، yyyy',

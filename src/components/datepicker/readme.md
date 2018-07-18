@@ -7,13 +7,11 @@ demo:
     slug: example-index
   - name: Anniversary Format (Month, Year)
     slug: example-anniversay-format
-  - name: Date Picker With Time
-    slug: example-with-time
   - name: Date Picker With Legend
     slug: example-legend
   - name: Set Value Api
     slug: example-set-value
-  - name: Date Picker With Time Custom Format
+  - name: Date Picker With Time
     slug: example-timeformat.html
   - name: Disabling Calendar Days
     slug: example-disabled-dates.html
@@ -24,7 +22,7 @@ demo:
   - name: State Api
     slug: example-state-methods.html
   - name: Islamic Umalqura Calendar
-    slug: example-umalqura.html?locale=ar-SA
+    slug: example-umalqura.html
   - name: Customizing Validation
     slug: example-custom-validation.html
   - name: Month/Year Picker
