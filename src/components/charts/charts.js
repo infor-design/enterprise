@@ -163,7 +163,7 @@ charts.chartColor = function chartColor(i, chartType, data) {
   if (/^(bar-single|column-single)$/.test(chartType)) {
     return '#1D5F8A';
   }
-  if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
+  if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|scatterplot|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
     return this.colors(i);
   }
 
@@ -254,7 +254,10 @@ charts.addLegend = function (series, chartType, settings, container) {
     let seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0"></span>`;
     const hexColor = charts.chartColor(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
-    const color = $(`<span class="chart-legend-color" style="background-color: ${series[i].pattern ? 'transparent' : hexColor}"></span>`);
+    let color = $(`<span class="chart-legend-color" style="background-color: ${series[i].pattern ? 'transparent' : hexColor}"></span>`);
+    if (chartType === 'scatterplot') {
+      color = $('<span class="chart-legend-color"></span>');
+    }
     const textBlock = $(`<span class="chart-legend-item-text">${series[i].name}</span>`);
 
     if (series[i].pattern) {
@@ -284,6 +287,18 @@ charts.addLegend = function (series, chartType, settings, container) {
       legend.find('.container').append(seriesLine);
     } else {
       legend.append(seriesLine);
+    }
+
+    // Add shapes
+    if (chartType === 'scatterplot') {
+      self.svg = d3.select(color[0]).append('svg')
+        .attr('width', '24')
+        .attr('height', '24')
+        .append('path')
+        .attr('class', 'symbol')
+        .attr('transform', 'translate(10, 10)')
+        .attr('d', d3.symbol().size('80').type( () => { return d3.symbols[i]; })) //eslint-disable-line
+        .style('fill', hexColor);
     }
   }
 

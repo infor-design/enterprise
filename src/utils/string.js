@@ -81,4 +81,14 @@ stringUtils.capitalize = function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
+/**
+ * [capitalize description]
+ * @param  {string} val A text string ("true" or "false") that can be converted to a boolean.
+ * @returns {boolean} true or false
+ */
+stringUtils.toBoolean = function capitalize(val) {
+  const num = +val;
+  return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
+};
+
 export { stringUtils }; //eslint-disable-line
