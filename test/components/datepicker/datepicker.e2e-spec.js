@@ -434,12 +434,12 @@ describe('Datepicker Gregorian SA Tests', () => {
     const todayEl = await element(by.css('button.is-today'));
     todayEl.click();
 
-    const value = await element(by.id('islamic-date')).getAttribute('value');
+    await browser.driver.sleep(config.sleep);
     const testDate = new Date();
     testDate.setHours(12);
     testDate.setMinutes(0);
 
-    expect(value).toEqual(`${testDate.getDate()}/${(testDate.getMonth() + 1).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
+    expect(await element(by.id('islamic-date')).getAttribute('value')).toEqual(`${testDate.getDate()}/${(testDate.getMonth() + 1).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
   });
 });
 
