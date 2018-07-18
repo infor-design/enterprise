@@ -128,7 +128,6 @@ Modal.prototype = {
         '</div>' +
       '</div>');
 
-
     if (this.settings.showCloseBtn) {
       const closeBtn = $(`
         <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
@@ -137,7 +136,7 @@ Modal.prototype = {
         </button>
       `);
       this.element.find('.modal-content').append(closeBtn);
-      closeBtn.on('click', () => this.close());
+      closeBtn.on('click.modal', () => this.close()).tooltip();
     }
 
     if (this.settings.id) {
