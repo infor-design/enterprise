@@ -45,7 +45,7 @@ describe('Blockgrid example-mixed-selection tests', () => {
 
   it('Should block checked after selected', async () => {
     const blockEl = await element.all(by.css('.block.is-selectable')).first();
-    const checkEl = element(by.css("label[for='checkbox0']"));
+    const checkEl = await element(by.css("label[for='checkbox0']"));
     await browser.actions().mouseMove(blockEl).click().perform();
 
     await checkEl.click();
@@ -75,8 +75,8 @@ describe('Blockgrid example-multiselect tests', () => {
     const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
     const blockEl2 = await element.all(by.css('.block.is-selectable')).get(2);
 
-    browser.actions().mouseMove(blockEl1).click().perform();
-    browser.actions().mouseMove(blockEl2).click().perform();
+    await browser.actions().mouseMove(blockEl1).click().perform();
+    await browser.actions().mouseMove(blockEl2).click().perform();
 
     expect(await element(by.className('is-activated'))).toBeTruthy();
   });
@@ -84,14 +84,14 @@ describe('Blockgrid example-multiselect tests', () => {
   it('Should blocks checked after selected', async () => {
     const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
     const blockEl2 = await element.all(by.css('.block.is-selectable')).get(2);
-    const checkEl1 = element(by.css("label[for='checkbox0']"));
-    const checkEl2 = element(by.css("label[for='checkbox1']"));
+    const checkEl1 = await element(by.css("label[for='checkbox0']"));
+    const checkEl2 = await element(by.css("label[for='checkbox1']"));
 
-    browser.actions().mouseMove(blockEl1).click().perform();
-    browser.actions().mouseMove(checkEl1).click().perform();
+    await browser.actions().mouseMove(blockEl1).click().perform();
+    await browser.actions().mouseMove(checkEl1).click().perform();
 
-    browser.actions().mouseMove(blockEl2).click().perform();
-    browser.actions().mouseMove(checkEl2).click().perform();
+    await browser.actions().mouseMove(blockEl2).click().perform();
+    await browser.actions().mouseMove(checkEl2).click().perform();
 
     expect(await element(by.className('is-selected'))).toBeTruthy();
   });
@@ -117,17 +117,17 @@ describe('Blockgrid example-singleselect tests', () => {
   it('Should blocks singleselect highlight after clicked', async () => {
     const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
 
-    browser.actions().mouseMove(blockEl1).click().perform();
+    await browser.actions().mouseMove(blockEl1).click().perform();
 
     expect(await element(by.className('is-selected'))).toBeTruthy();
   });
 
   it('Should blocks singleselect checked after selected', async () => {
     const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
-    const checkEl1 = element(by.css("label[for='checkbox0']"));
+    const checkEl1 = await element(by.css("label[for='checkbox0']"));
 
-    browser.actions().mouseMove(blockEl1).click().perform();
-    browser.actions().mouseMove(checkEl1).click().perform();
+    await browser.actions().mouseMove(blockEl1).click().perform();
+    await browser.actions().mouseMove(checkEl1).click().perform();
 
     expect(await element(by.className('is-selected'))).toBeTruthy();
   });
