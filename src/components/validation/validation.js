@@ -123,12 +123,14 @@ function ValidationRules() {
 
         if (value !== '') {
           if (self.rules.date.check(value, field)) { // if valid date
+            const datepickerApi = field.data('datepicker');
+            const options = datepickerApi ? datepickerApi.settings : {};
+            const hasOptions = Object.keys(options).length > 0;
             let d;
             let i;
             let l;
             let min;
             let max;
-            const options = field.data('datepicker').settings;
             let dateObj = value;
             if (typeof dateObj === 'string') {
               let format = options.dateFormat !== 'locale' ?
@@ -141,7 +143,7 @@ function ValidationRules() {
             }
             let d2 = options.useUTC ? Locale.dateToUTC(dateObj) : dateObj;
 
-            if (d2 && options) {
+            if (d2 && hasOptions) {
               min = (options.useUTC ?
                 Locale.dateToUTC(new Date(options.disable.minDate)).setHours(0, 0, 0, 0) :
                 new Date(options.disable.minDate).setHours(0, 0, 0, 0));
@@ -175,8 +177,10 @@ function ValidationRules() {
                 }
               }
             }
-            check = !!(((check && !options.disable.isEnable) ||
-              (!check && options.disable.isEnable)));
+            if (hasOptions) {
+              check = !!(((check && !options.disable.isEnable) ||
+                (!check && options.disable.isEnable)));
+            }
           } else { // Invalid date
             check = false;
             this.message = '';
