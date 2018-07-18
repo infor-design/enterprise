@@ -225,12 +225,6 @@ div.multiselect {
     box-shadow: $dropdown-box-shadow-top;
   }
 
-  &.with-badge {
-    a {
-      display: inline;
-    }
-  }
-
   ul {
     @include font-size(14);
     background-color: $popupmenu-bg-color;
