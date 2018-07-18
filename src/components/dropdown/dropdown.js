@@ -664,9 +664,7 @@ Dropdown.prototype = {
       }
 
       if (badge) {
-        badgeHtml = `<span class="badge ${badgeColor ? badgeColor.value : 'azure07'}">
-          ${badge.value}
-        </span>`;
+        badgeHtml = `<span class="badge ${badgeColor ? badgeColor.value : 'azure07'}">${badge.value}</span>`;
       }
 
       if (liCssClasses.indexOf('clear') > -1 && text === '') {
@@ -680,12 +678,7 @@ Dropdown.prototype = {
       }
 
       liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" data-val="${trueValue}" ${copiedDataAttrs}${tabIndex}${hasTitle} role="presentation">
-        <a id="list-option-${index}" href="#" ${aCssClasses} role="option">
-          ${iconHtml}
-          ${text}
-        </a>
-        ${badgeHtml}
-      </li>`;
+        <a id="list-option-${index}" href="#" ${aCssClasses} role="option">${iconHtml}${text}${badgeHtml}</a></li>`;
 
       return liMarkup;
     }
