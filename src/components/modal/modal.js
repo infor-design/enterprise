@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { Locale } from '../../../src/components/locale/locale';
 
 // jQuery components
 import '../button/button.jquery';
@@ -22,8 +23,9 @@ const COMPONENT_NAME = 'modal';
 * @param {string} [settings.id=null] Optionally tag a dialog with an id.
 * @param {number} [settings.frameHeight=180] Optional extra height to add.
 * @param {number} [settings.frameWidth=46] Optional extra width to add.
-* @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
 * @param {function} [settings.beforeShow=null] A call back function that can be used to return data for the modal.
+* @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
+* @param {boolean} [settings.showCloseBtn] If true, show a close icon button on the top right of the modal.
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
 */
 const MODAL_DEFAULTS = {
@@ -37,7 +39,8 @@ const MODAL_DEFAULTS = {
   frameHeight: 180,
   frameWidth: 46,
   beforeShow: null,
-  useFlexToolbar: false
+  useFlexToolbar: false,
+  showCloseBtn: false
 };
 
 function Modal(element, settings) {
@@ -124,6 +127,18 @@ Modal.prototype = {
           '</div>' +
         '</div>' +
       '</div>');
+
+
+    if (this.settings.showCloseBtn) {
+      const closeBtn = $(`
+        <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
+          ${$.createIcon('close')}
+          <span class="audible">${Locale.translate('Close')}</span>
+        </button>
+      `);
+      this.element.find('.modal-content').append(closeBtn);
+      closeBtn.on('click', () => this.close());
+    }
 
     if (this.settings.id) {
       this.element.attr('id', this.settings.id);

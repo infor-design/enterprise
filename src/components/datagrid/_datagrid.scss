@@ -1,6 +1,48 @@
 // Datagrid
 //================================================== //
 
+@mixin rowstatus($color) {
+  td {
+    // scss-lint:disable ImportantRule
+    border-bottom: 1px solid $color !important;
+    box-shadow: 0 -1px 1px -1px $color;
+    // scss-lint:enable ImportantRule
+
+    &:first-child {
+      border-left: 1px solid $color;
+    }
+
+    &:last-child {
+      border-right: 1px solid $color;
+    }
+
+    &.rowstatus-cell {
+      position: relative;
+
+      &::before {
+        background-color: $color;
+        content: '';
+        display: block;
+        height: 32px;
+        left: -11px;
+        position: absolute;
+        top: -14px;
+        transform: rotate(45deg);
+        width: 26px;
+      }
+
+      .icon-rowstatus {
+        fill: $white;
+        height: 10px;
+        left: 1px;
+        position: absolute;
+        top: 2px;
+        width: 10px;
+      }
+    }
+  }
+}
+
 $datagrid-header-height: 39px;  //1px border in parent
 $datagrid-filterable-header-height: 61px;
 
@@ -665,7 +707,6 @@ $datagrid-short-row-height: 23px;
             top: 10px;
           }
         }
-
       }
     }
 
@@ -1024,6 +1065,26 @@ $datagrid-short-row-height: 23px;
         }
 
       }
+
+      &.rowstatus-row-error,
+      &.rowstatus-row-alert,
+      &.rowstatus-row-info,
+      &.rowstatus-row-in-progress,
+      &.rowstatus-row-confirm,
+      &.rowstatus-row-dirty,
+      &.rowstatus-row-new {
+        .rowstatus-cell {
+          &::before {
+            left: -16px;
+            top: -15px;
+          }
+
+          .icon-rowstatus {
+            left: -1px;
+            top: 0;
+          }
+        }
+      }
     }
 
     .datagrid-cell-wrapper {
@@ -1082,27 +1143,6 @@ $datagrid-short-row-height: 23px;
       td {
         border-bottom-color: transparent;
       }
-    }
-
-    //Validation
-    &.error td {
-      background-color: $alert-bg-red;
-      //border-color: $alert-red; - Use for focus state
-    }
-
-    &.alert td {
-      background-color: $alert-bg-orange;
-      //border-color: $alert-red; - Use for focus state
-    }
-
-    &.confirm td {
-      background-color: $alert-bg-green;
-      //border-color: $alert-red; - Use for focus state
-    }
-
-    &.info td {
-      background-color: $alert-bg-info;
-      //border-color: $alert-red; - Use for focus state
     }
 
     .is-editor {
@@ -1358,6 +1398,34 @@ $datagrid-short-row-height: 23px;
       height: 60px;
       margin-top: -7px;
       width: 60px;
+    }
+
+    &.rowstatus-row-error {
+      @include rowstatus($alert-red);
+    }
+
+    &.rowstatus-row-dirty {
+      @include rowstatus($dirty-icon-fill);
+    }
+
+    &.rowstatus-row-alert {
+      @include rowstatus($alert-color);
+    }
+
+    &.rowstatus-row-info {
+      @include rowstatus($primary-color);
+    }
+
+    &.rowstatus-row-in-progress {
+      @include rowstatus($trigger-icon-fill-color);
+    }
+
+    &.rowstatus-row-confirm {
+      @include rowstatus($alert-green);
+    }
+
+    &.rowstatus-row-new {
+      @include rowstatus($trigger-icon-fill-color);
     }
   }
 

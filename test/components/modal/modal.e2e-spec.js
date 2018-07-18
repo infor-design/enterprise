@@ -116,6 +116,20 @@ describe('Modal open example-modal tests on click', () => {
   });
 });
 
+describe('Modal example-close-btn tests', () => {
+  it('Should close the modal via the x close icon', async () => {
+    await utils.setPage('/components/modal/example-close-btn');
+
+    const modalBtn = await element(by.id('add-context'));
+    await modalBtn.click();
+    expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
+
+    const closeBtn = await element(by.css('button.btn-close'));
+    await closeBtn.click();
+    expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
+  });
+});
+
 describe('Modal example-validation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/example-validation');
@@ -156,10 +170,11 @@ describe('Modal example-validation tests', () => {
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
-      await browser.driver.sleep(config.sleep);
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await dropdownEl.sendKeys(protractor.Key.ENTER);
+      await dropdownEl.click();
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
       await browser.driver.sleep(config.sleep);
 
       await element(by.id('context-name')).sendKeys('test@test.com');
@@ -188,10 +203,11 @@ describe('Modal example-validation-editor tests', () => {
     const dropdownEl = await element.all(by.css('.modal div[aria-controls="dropdown-list"]')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
-    await browser.driver.sleep(config.sleep);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ENTER);
+    await dropdownEl.click();
+    const dropdownSearchEl = await element(by.id('dropdown-search'));
+    await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
     await element(by.id('context-name')).sendKeys('test@test.com');

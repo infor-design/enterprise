@@ -112,8 +112,12 @@ describe('Multiselect example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
       await multiselectEl.click();
-      await multiselectEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await multiselectEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const multiselectSearchEl = await element(by.id('dropdown-search'));
+      await multiselectSearchEl.click();
+      await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('is-focused'))), config.waitsFor);
 
@@ -128,8 +132,9 @@ describe('Multiselect example-index tests', () => {
       await element(by.css('body')).sendKeys(protractor.Key.TAB);
       await element(by.css('body')).sendKeys(protractor.Key.TAB);
       await multiselectEl.sendKeys(protractor.Key.ENTER);
-      await multiselectEl.sendKeys(protractor.Key.ENTER);
-      await multiselectEl.sendKeys(protractor.Key.TAB);
+      const multiselectSearchEl = await element(by.id('dropdown-search'));
+      await multiselectSearchEl.sendKeys(protractor.Key.ENTER);
+      await multiselectSearchEl.sendKeys(protractor.Key.TAB);
 
       expect(await element.all(by.css('.dropdown span')).first().getText()).toEqual('');
     });
@@ -139,11 +144,15 @@ describe('Multiselect example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
       await multiselectEl.click();
-      await multiselectEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await multiselectEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await multiselectEl.sendKeys(protractor.Key.SPACE);
-      await multiselectEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await multiselectEl.sendKeys(protractor.Key.SPACE);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const multiselectSearchEl = await element(by.id('dropdown-search'));
+      await multiselectSearchEl.click();
+      await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await multiselectSearchEl.sendKeys(protractor.Key.ENTER);
+      await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await multiselectSearchEl.sendKeys(protractor.Key.ENTER);
 
       expect(await element(by.className('is-focused')).getText()).toEqual('Arkansas');
       const multiselectSearchElVal = element(by.id('dropdown-search')).getAttribute('value');
@@ -264,4 +273,42 @@ describe('Multiselect example-select-all-performance tests', () => {
     expect(selected).toEqual(0);
     expect(timer.elapsed).toBeLessThan(2200);
   });
+});
+
+describe('Multiselect typeahead-reloading tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/multiselect/test-reload-typeahead');
+  });
+
+  if (!utils.isSafari()) {
+    it('Should make ajax calls properly on typeahead for multiple items', async () => {
+      // Open the list
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.click();
+
+      // Search for "new" and select "New Jersey"
+      // NOTE: Sleep simulates the Multiselect's default typeahead delay (300ms)
+      await dropdownSearchEl.sendKeys('New');
+      await browser.driver.sleep(config.sleep);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
+
+      // Search for "new" and select "New York"
+      await dropdownSearchEl.sendKeys('New');
+      await browser.driver.sleep(config.sleep);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
+
+      expect(await element(by.css('.dropdown span')).getText()).toEqual('New Jersey, New York');
+    });
+  }
 });
