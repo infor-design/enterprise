@@ -32,11 +32,19 @@
   }
 }
 
-.line-chart:not(.bubble) {
+.line-chart:not(.bubble):not(.scatterplot) {
   .x.axis .tick line {  //small line that shows up on the x axis
     visibility: hidden;
   }
 }
+
+.line-chart.scatterplot {
+  .chart-legend-color {
+    top: -2px;
+  }
+}
+
+
 
 // Mobile Specific style
 @include respond-to(phone) {
