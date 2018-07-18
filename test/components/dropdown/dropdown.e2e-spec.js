@@ -142,6 +142,27 @@ describe('Dropdown example-index tests', () => {
       // SearchInput should display "New Jersey" and not just " Jersey"
       expect(await element(by.id('dropdown-search')).getAttribute('value')).toEqual('New Jersey');
     });
+
+    it('Should close an open list and tab to the next element without re-opening', async () => {
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await dropdownEl.click();
+
+      // Wait for the list to open
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const dropdownSearchEl = element(by.id('dropdown-search'));
+
+      // First key press causes the menu to close
+      await dropdownSearchEl.sendKeys(protractor.Key.TAB);
+
+      // Second key press causes the focus to shift away
+      await element(by.css('div[aria-controls="dropdown-list"]')).sendKeys(protractor.Key.TAB);
+
+      // The Dropdown Pseudo element should no longer have focus
+      expect(await browser.driver.switchTo().activeElement().getAttribute('class')).not.toContain('dropdown');
+    });
   }
 });
 

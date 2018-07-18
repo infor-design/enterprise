@@ -1317,6 +1317,12 @@ Dropdown.prototype = {
       }
     }
 
+    // Allow some keys to pass through with no changes in functionality
+    const allowedKeys = ['Tab'];
+    if (allowedKeys.indexOf(key) > -1) {
+      return true;
+    }
+
     // handle `onKeyDown` callback
     if (this.settings.onKeyDown) {
       const ret = this.settings.onKeyDown(e);
