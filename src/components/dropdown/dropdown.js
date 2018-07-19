@@ -1318,7 +1318,7 @@ Dropdown.prototype = {
     }
 
     // Allow some keys to pass through with no changes in functionality
-    const allowedKeys = ['Tab'];
+    const allowedKeys = ['Tab', 'Escape'];
     if (allowedKeys.indexOf(key) > -1) {
       return true;
     }
