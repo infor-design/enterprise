@@ -152,7 +152,7 @@ describe('Dropdown example-index tests', () => {
       // Wait for the list to open
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-      const dropdownSearchEl = element(by.id('dropdown-search'));
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
 
       // First key press causes the menu to close
       await dropdownSearchEl.sendKeys(protractor.Key.TAB);
@@ -173,7 +173,7 @@ describe('Dropdown example-index tests', () => {
       // Wait for the list to open
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-      const dropdownSearchEl = element(by.id('dropdown-search'));
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
 
       // First key press causes the menu to close
       await dropdownSearchEl.sendKeys(protractor.Key.ESCAPE);
