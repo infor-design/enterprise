@@ -590,7 +590,10 @@ Modal.prototype = {
           this.element.find('.btn-modal-primary:enabled').length) {
         e.stopPropagation();
         e.preventDefault();
-        this.element.find('.btn-modal-primary:enabled').trigger('click');
+
+        if (!target.hasClass('fileupload')) {
+          this.element.find('.btn-modal-primary:enabled').trigger('click');
+        }
       }
     });
 
