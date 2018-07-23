@@ -1,5 +1,6 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
+const config = requireHelper('e2e-config');
 requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
@@ -37,8 +38,9 @@ describe('Blockgrid example-mixed-selection tests', () => {
 
   it('Should block highlight after clicked', async () => {
     const blockEl = await element.all(by.css('.block.is-selectable')).first();
-    await browser.actions().mouseMove(blockEl).click().perform();
     await blockEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-activated'))), config.waitsFor);
 
     expect(await blockEl.getAttribute('class')).toContain('is-activated');
   });
