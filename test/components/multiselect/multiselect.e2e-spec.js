@@ -57,15 +57,9 @@ describe('Multiselect example-states tests', () => {
 
   if (!utils.isSafari()) {
     it('Should show validation message error "Required" on tab out', async () => {
-      const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).get(2);
+      const multiselectEl = await element(by.css('#validated-multi + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
-      await element(by.css('body')).sendKeys(protractor.Key.TAB);
-      await element(by.css('body')).sendKeys(protractor.Key.TAB);
-      await element(by.css('body')).sendKeys(protractor.Key.TAB);
-      await multiselectEl.sendKeys(protractor.Key.ENTER);
-      await multiselectEl.sendKeys(protractor.Key.ENTER);
-      await multiselectEl.sendKeys(protractor.Key.ENTER);
       await multiselectEl.sendKeys(protractor.Key.TAB);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(element(by.className('message-text'))), config.waitsFor);

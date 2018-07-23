@@ -24,6 +24,21 @@ describe('Dropdown example-index tests', () => {
     expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
+  it('Should be able to select next element', async () => {
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
+
+    expect(await element(by.id('states')).getAttribute('value')).toEqual('NM');
+  });
+
   it('Should scroll down to end of list, and Vermont Should be visible', async () => {
     await clickOnDropdown();
     await browser.driver
