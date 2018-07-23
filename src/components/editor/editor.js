@@ -345,7 +345,7 @@ Editor.prototype = {
     // fill the text area with any content that may already exist within the editor DIV
     this.textarea.text($.sanitizeHTML(this.element.html().toString()));
 
-    self.element.on('input.editor keyup.editor', self.element, debounce(() => {
+    self.container.on('input.editor keyup.editor', '.editor', debounce(() => {
       self.textarea.html($.sanitizeHTML(self.element.html().toString()));
       // setting the value via .val doesn't trigger the change event
       self.element.trigger('change');
