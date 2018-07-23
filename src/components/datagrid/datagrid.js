@@ -5264,15 +5264,9 @@ Datagrid.prototype = {
         }
       });
 
-      // Hide non matching rows
-      if (!found) {
+      // Hide non matching rows and non detail rows
+      if (!found && !row.find('.datagrid-row-detail').length) {
         row.addClass('is-filtered').hide();
-      } else if (found && row.is('.datagrid-expandable-row') && term !== '') {
-        row.prev().show();
-        row.prev().find('.datagrid-expand-btn').addClass('is-expanded');
-        row.prev().find('.plus-minus').addClass('active');
-        row.addClass('is-expanded').css('display', 'table-row');
-        row.find('.datagrid-row-detail').css('height', 'auto');
       }
     });
   },
