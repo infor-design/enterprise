@@ -350,6 +350,8 @@ describe('Datepicker Timeformat Tests', () => {
   it('Should set custom pattern time when selected', async () => {
     const datepickerEl = await element(by.id('dp1'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('calendar-popup'))), config.waitsFor);
 
     const todayEl = await element(by.css('button.is-today'));
     await todayEl.click();
