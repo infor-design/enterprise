@@ -352,7 +352,7 @@ describe('Datepicker Timeformat Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     const todayEl = await element(by.css('button.is-today'));
-    todayEl.click();
+    await todayEl.click();
 
     const testDate = new Date();
 
@@ -364,7 +364,7 @@ describe('Datepicker Timeformat Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     const todayEl = await element(by.css('button.is-today'));
-    todayEl.click();
+    await todayEl.click();
 
     const testDate = new Date();
 
@@ -387,7 +387,7 @@ describe('Datepicker Umalqura Tests', () => {
     expect(await element(by.css('.popup-footer .cancel')).getText()).toEqual('مسح');
 
     const todayEl = await element(by.css('button.is-today'));
-    todayEl.click();
+    await todayEl.click();
 
     const value = await element(by.id('islamic-date')).getAttribute('value');
 
@@ -406,7 +406,7 @@ describe('Datepicker 12hr Time Tests', () => {
 
     await browser.driver.sleep(config.sleep);
     const todayEl = await element(by.css('button.is-today'));
-    todayEl.click();
+    await todayEl.click();
 
     const value = await element(by.id('datetime-field-time')).getAttribute('value');
     const testDate = new Date();
@@ -432,7 +432,7 @@ describe('Datepicker Gregorian SA Tests', () => {
     expect(await element(by.css('.popup-footer .cancel')).getText()).toEqual('مسح');
 
     const todayEl = await element(by.css('button.is-today'));
-    todayEl.click();
+    await todayEl.click();
 
     await browser.driver.sleep(config.sleep);
     const testDate = new Date();
