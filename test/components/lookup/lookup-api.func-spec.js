@@ -57,6 +57,7 @@ describe('Lookup API', () => {
 
   it('Should destroy lookup', () => {
     lookupObj.destroy();
+
     expect(document.body.querySelector('.trigger')).toBeFalsy();
   });
 });
