@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="twelve columns">
+		<button class="btn-secondary" type="button" id="add-context">Add Context</button>
+	</div>
+</div>
+
+<script>
+  // Just return `true`
+  function onBeforeShow(response) {
+    response(true);
+  }
+
+  var modals = {
+    'add-context': {
+      'title': 'Add Context',
+      'id': 'my-id',
+      'beforeShow': onBeforeShow
+    }
+  };
+
+  function setModal(opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    var modal = $('body').modal(opt).data('modal');
+  };
+
+  $('#add-context').on('click', function () {
+    setModal(modals[this.id]);
+  });
+</script>
