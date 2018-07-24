@@ -256,3 +256,61 @@ describe('Colorpicker states tests', () => {
     expect(await element(by.id('color-only')).getCssValue('width')).toBe('10px');
   });
 });
+
+fdescribe('Colorpicker modal tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/colorpicker/test-modal');
+  });
+
+  it('Should open colorpicker modal', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+  });
+
+  it('Should close colorpicker modal on "cancel" button click', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await element(by.id('modal-button-1')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+  });
+
+  it('Should select color, and close colorpicker modal on "save" button click', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await element(by.id('modal-button-2')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+  });
+
+  it('Should close colorpicker modal on keypress escape', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+  });
+});
