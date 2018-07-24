@@ -423,13 +423,25 @@ Modal.prototype = {
         return false;
       }
 
-      self.open(true);
-
       $('#modal-busyindicator').trigger('complete.busyindicator');
+
+      // Returning `true` from the response will cause a modal area to render to the page,
+      // but remain hidden.  In this scenario it will be up to the app developer to reveal
+      // the modal when needed.
+      if (content === true) {
+        if (self.busyIndicator) {
+          self.busyIndicator.remove();
+          delete self.busyIndicator;
+        }
+
+        return true;
+      }
 
       if (!(content instanceof jQuery)) {
         content = $(content);
       }
+
+      self.open(true);
 
       self.element.find('.modal-body').empty();
       self.element.find('.modal-body').append(content);
@@ -454,6 +466,7 @@ Modal.prototype = {
 
     if (this.busyIndicator) {
       this.busyIndicator.remove();
+      delete this.busyIndicator;
     }
 
     if (!this.trigger || this.trigger.length === 0) {
