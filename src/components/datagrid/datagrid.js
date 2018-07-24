@@ -97,7 +97,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.emptyMessage.title='No Data Available']
  * @param {object}   [settings.emptyMessageinfor='']
  * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
- * @param {boolean}  [settings.expandRowOnSearch=true]
+ * @param {boolean}  [settings.expandRowOnSearch=true] If true enable expanding of row on search
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
  * icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
