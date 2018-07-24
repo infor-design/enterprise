@@ -257,7 +257,7 @@ describe('Colorpicker states tests', () => {
   });
 });
 
-fdescribe('Colorpicker modal tests', () => {
+describe('Colorpicker modal tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/colorpicker/test-modal');
   });
@@ -271,13 +271,17 @@ fdescribe('Colorpicker modal tests', () => {
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
   });
 
-  it('Should close colorpicker modal on "cancel" button click', async () => {
+  it('Should select color, and close colorpicker modal on "cancel" button click', async () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await element(by.css('#color1 + .trigger .icon')).click();
+    await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
+
+    expect(await element(by.id('color1')).getAttribute('value')).toEqual('#1A1A1A');
     await element(by.id('modal-button-1')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
@@ -292,6 +296,32 @@ fdescribe('Colorpicker modal tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await element(by.css('#color1 + .trigger .icon')).click();
+    await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
+
+    expect(await element(by.id('color1')).getAttribute('value')).toEqual('#1A1A1A');
+    await element(by.id('modal-button-2')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+  });
+
+  it('Should select from both colorpickers, and close colorpicker modal on "save" button click', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await element(by.css('#color1 + .trigger .icon')).click();
+    await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
+
+    expect(await element(by.id('color1')).getAttribute('value')).toEqual('#1A1A1A');
+    await element(by.css('#color2 + .trigger .icon')).click();
+    await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
+
+    expect(await element(by.id('color2')).getAttribute('value')).toEqual('#1A1A1A');
     await element(by.id('modal-button-2')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
