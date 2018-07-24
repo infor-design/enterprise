@@ -49,11 +49,28 @@
   input {
     &.fileupload-background-transparent {
       background-color: transparent;
+      color: $input-color;
       padding-right: 50px;
+      -webkit-text-fill-color: $input-color;
       text-overflow: ellipsis;
 
       &.readonly {
         background-color: $input-readonly-bg-color;
+        color: $input-readonly-color;
+        -webkit-text-fill-color: $input-readonly-color;
+      }
+
+      &[disabled] {
+        background-color: $input-disabled-bg-color;
+        color: $input-disabled-color;
+        -webkit-text-fill-color: $input-disabled-color;
+      }
+    }
+
+    &.fileupload {
+      &[readonly] {
+        color: $input-color;
+        -webkit-text-fill-color: $input-color;
       }
     }
   }
