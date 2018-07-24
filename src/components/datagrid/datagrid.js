@@ -97,6 +97,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.emptyMessage.title='No Data Available']
  * @param {object}   [settings.emptyMessageinfor='']
  * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
+ * @param {boolean}  [settings.expandRowOnSearch=true]
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
  * icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
@@ -168,7 +169,8 @@ const DATAGRID_DEFAULTS = {
   onDestroyCell: null,
   onEditCell: null,
   onExpandRow: null,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
+  expandRowOnSearch: true
 };
 
 function Datagrid(element, settings) {
@@ -5241,6 +5243,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   highlightSearchRows(term) {
+    const self = this;
     // Move across all visible cells and rows, highlighting
     this.tableBody.find('tr').each(function () {
       let found = false;
@@ -5267,6 +5270,12 @@ Datagrid.prototype = {
       // Hide non matching rows and non detail rows
       if (!found && !row.find('.datagrid-row-detail').length) {
         row.addClass('is-filtered').hide();
+      } else if (self.settings.expandRowOnSearch && found && row.is('.datagrid-expandable-row') && term !== '') {
+        row.prev().show();
+        row.prev().find('.datagrid-expand-btn').addClass('is-expanded');
+        row.prev().find('.plus-minus').addClass('active');
+        row.addClass('is-expanded').css('display', 'table-row');
+        row.find('.datagrid-row-detail').css('height', 'auto');
       }
     });
   },
