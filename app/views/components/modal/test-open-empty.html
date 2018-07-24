@@ -5,9 +5,16 @@
 </div>
 
 <script>
+  let timer;
+
   // Just return `true`
   function onBeforeShow(response) {
-    response(true);
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(function() {
+      response(true);
+    }, 1500);
   }
 
   var modals = {
