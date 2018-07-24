@@ -245,7 +245,7 @@ MaskInput.prototype = {
     }
 
     // Use the piped value, if applicable.
-    const finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
+    let finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
     const patternOptions = this.settings.patternOptions;
     if (finalValue !== '' && patternOptions && patternOptions.suffix && finalValue.indexOf(patternOptions.suffix) < 0) {
       finalValue += this.settings.patternOptions.suffix;
