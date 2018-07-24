@@ -42,6 +42,14 @@ describe('Lookup example-custom-buttons tests', () => {
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
   });
+
+  it('Should lookup apply button enabled', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('btn-modal-primary'))), config.waitsFor);
+    expect(await element(by.className('btn-modal-primary')).isEnabled()).toBe(true);
+  });
 });
 
 describe('Lookup example-custom-toolbar tests', () => {
@@ -81,6 +89,14 @@ describe('Lookup example-custom-toolbar tests', () => {
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
   });
+
+  it('Should lookup cancel button enabled', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('btn-modal'))), config.waitsFor);
+    expect(await element(by.className('btn-modal')).isEnabled()).toBe(true);
+  });
 });
 
 describe('Lookup example-editable-strict tests', () => {
@@ -109,6 +125,30 @@ describe('Lookup example-editable-strict tests', () => {
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('datagrid-checkbox-wrapper'))), config.waitsFor);
     expect(await element(by.className('datagrid-checkbox-wrapper'))).toBeTruthy();
   });
+
+  it('Should lookup field editable', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('datagrid-checkbox-wrapper'))), config.waitsFor);
+    expect(await element(by.className('has-editor'))).toBeTruthy();
+  });
+
+  it('Should lookup cancel button enabled', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('btn-modal'))), config.waitsFor);
+    expect(await element(by.className('btn-modal')).isEnabled()).toBe(true);
+  });
+
+  it('Should lookup apply button enabled', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+    expect(await element(by.className('btn-modal-primary')).isEnabled()).toBe(true);
+  });
 });
 
 describe('Lookup example-editable tests', () => {
@@ -136,6 +176,30 @@ describe('Lookup example-editable tests', () => {
 
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('datagrid-checkbox-wrapper'))), config.waitsFor);
     expect(await element(by.className('datagrid-checkbox-wrapper'))).toBeTruthy();
+  });
+
+  it('Should lookup field editable', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('datagrid-checkbox-wrapper'))), config.waitsFor);
+    expect(await element(by.className('has-editor'))).toBeTruthy();
+  });
+
+  it('Should lookup cancel button enabled', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('btn-modal'))), config.waitsFor);
+    expect(await element(by.className('btn-modal')).isEnabled()).toBe(true);
+  });
+
+  it('Should lookup apply button enabled', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+    expect(await element(by.className('btn-modal-primary')).isEnabled()).toBe(true);
   });
 });
 
@@ -168,6 +232,14 @@ describe('Lookup example-index tests', () => {
 
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
     expect(await element(by.className('modal-content'))).toBeTruthy();
+  });
+
+  it('Should lookup cancel button enabled', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('btn-modal'))), config.waitsFor);
+    expect(await element(by.className('btn-modal')).isEnabled()).toBe(true);
   });
 
   it('Should lookup set a value', async () => {
@@ -209,6 +281,22 @@ describe('Lookup example-multiselect tests', () => {
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('datagrid-checkbox-wrapper'))), config.waitsFor);
     expect(await element(by.className('datagrid-checkbox-wrapper'))).toBeTruthy();
   });
+
+  it('Should lookup cancel button enabled', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('btn-modal'))), config.waitsFor);
+    expect(await element(by.className('btn-modal')).isEnabled()).toBe(true);
+  });
+
+  it('Should lookup apply button enabled', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+    expect(await element(by.className('btn-modal-primary')).isEnabled()).toBe(true);
+  });
 });
 
 describe('Lookup example-paging tests', () => {
@@ -240,11 +328,11 @@ describe('Lookup example-paging tests', () => {
 
   it('Should lookup modal components', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
-    const lookupEl = await element(by.id('paging'));
 
     await buttonEl.click();
 
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('searchfield'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('btn-actions'))), config.waitsFor);
     expect(await element(by.className('searchfield'))).toBeTruthy();
     expect(await element(by.className('btn-actions'))).toBeTruthy();
   });
@@ -259,5 +347,33 @@ describe('Lookup example-paging tests', () => {
     await element.all(by.className('datagrid-cell-wrapper')).first().click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('214220');
+  });
+
+  it('Should lookup pager enabled', async () => {
+    const buttonEl = await element.all(by.className('trigger')).first();
+
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('pager-next'))), config.waitsFor);
+    expect(await element(by.className('pager-next')).isEnabled()).toBe(true);
+  });
+
+  it('Should lookup pager turn on next page', async () => {
+    const buttonEl = await element.all(by.className('trigger')).first();
+
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('pager-next'))), config.waitsFor);
+    await element(by.className('pager-next')).click();
+
+    expect (await element(by.name('pager-pageno')).getAttribute('value')).toEqual('2');
+  });
+
+  it('Should lookup cancel button enabled', async () => {
+    const buttonEl = await element(by.className('trigger'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('btn-modal'))), config.waitsFor);
+    expect(await element(by.className('btn-modal')).isEnabled()).toBe(true);
   });
 });
