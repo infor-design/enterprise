@@ -1,5 +1,6 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
+const config = requireHelper('e2e-config');
 requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
@@ -37,8 +38,9 @@ describe('Blockgrid example-mixed-selection tests', () => {
 
   it('Should block highlight after clicked', async () => {
     const blockEl = await element.all(by.css('.block.is-selectable')).first();
-    await browser.actions().mouseMove(blockEl).click().perform();
     await blockEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-activated'))), config.waitsFor);
 
     expect(await blockEl.getAttribute('class')).toContain('is-activated');
   });
@@ -46,8 +48,7 @@ describe('Blockgrid example-mixed-selection tests', () => {
   it('Should block checked after selected', async () => {
     const blockEl = await element.all(by.css('.block.is-selectable')).first();
     const checkEl = await element(by.css("label[for='checkbox0']"));
-    await browser.actions().mouseMove(blockEl).click().perform();
-
+    await blockEl.click();
     await checkEl.click();
 
     expect(await blockEl.getAttribute('class')).toContain('is-selected');
@@ -71,29 +72,28 @@ describe('Blockgrid example-multiselect tests', () => {
     expect(await element.all(by.className('is-selectable'))).toBeTruthy();
   });
 
-  it('Should blocks highlight after clicked', async () => {
+  it('Should highlight blocks after click', async () => {
     const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
     const blockEl2 = await element.all(by.css('.block.is-selectable')).get(2);
-
-    await browser.actions().mouseMove(blockEl1).click().perform();
-    await browser.actions().mouseMove(blockEl2).click().perform();
+    await blockEl1.click();
+    await blockEl2.click();
 
     expect(await element(by.className('is-activated'))).toBeTruthy();
   });
 
-  it('Should blocks checked after selected', async () => {
+  it('Should select multiple blocks', async () => {
     const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
     const blockEl2 = await element.all(by.css('.block.is-selectable')).get(2);
-    const checkEl1 = await element(by.css("label[for='checkbox0']"));
-    const checkEl2 = await element(by.css("label[for='checkbox1']"));
+    const blockEl3 = await element.all(by.css('.block.is-selectable')).get(3);
+    await blockEl1.click();
+    await blockEl2.click();
+    await blockEl3.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element.all(by.css('.is-selected')).get(3)), config.waitsFor);
 
-    await browser.actions().mouseMove(blockEl1).click().perform();
-    await browser.actions().mouseMove(checkEl1).click().perform();
-
-    await browser.actions().mouseMove(blockEl2).click().perform();
-    await browser.actions().mouseMove(checkEl2).click().perform();
-
-    expect(await element(by.className('is-selected'))).toBeTruthy();
+    expect(await element.all(by.css('.block.is-selectable')).get(1).getAttribute('class')).toContain('is-selected');
+    expect(await element.all(by.css('.block.is-selectable')).get(2).getAttribute('class')).toContain('is-selected');
+    expect(await element.all(by.css('.block.is-selectable')).get(3).getAttribute('class')).toContain('is-selected');
   });
 });
 
@@ -110,26 +110,23 @@ describe('Blockgrid example-singleselect tests', () => {
     expect(await element(by.className('block'))).toBeTruthy();
   });
 
-  it('Should singleselect blocks be selectable', async () => {
+  it('Should have singleselect blocks be selectable', async () => {
     expect(await element.all(by.className('is-selectable'))).toBeTruthy();
   });
 
-  it('Should blocks singleselect highlight after clicked', async () => {
+  it('Should select only 1 blocks', async () => {
     const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
+    const blockEl2 = await element.all(by.css('.block.is-selectable')).get(2);
+    const blockEl3 = await element.all(by.css('.block.is-selectable')).get(3);
+    await blockEl1.click();
+    await blockEl2.click();
+    await blockEl3.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-selected'))), config.waitsFor);
 
-    await browser.actions().mouseMove(blockEl1).click().perform();
-
-    expect(await element(by.className('is-selected'))).toBeTruthy();
-  });
-
-  it('Should blocks singleselect checked after selected', async () => {
-    const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
-    const checkEl1 = await element(by.css("label[for='checkbox0']"));
-
-    await browser.actions().mouseMove(blockEl1).click().perform();
-    await browser.actions().mouseMove(checkEl1).click().perform();
-
-    expect(await element(by.className('is-selected'))).toBeTruthy();
+    expect(await element.all(by.css('.block.is-selectable')).get(1).getAttribute('class')).not.toContain('is-selected');
+    expect(await element.all(by.css('.block.is-selectable')).get(2).getAttribute('class')).not.toContain('is-selected');
+    expect(await element.all(by.css('.block.is-selectable')).get(3).getAttribute('class')).toContain('is-selected');
   });
 });
 
