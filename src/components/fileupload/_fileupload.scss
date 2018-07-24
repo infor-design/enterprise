@@ -66,13 +66,6 @@
         -webkit-text-fill-color: $input-disabled-color;
       }
     }
-
-    &.fileupload {
-      &[readonly] {
-        color: $input-color;
-        -webkit-text-fill-color: $input-color;
-      }
-    }
   }
 
   // Make this flow offscreen
