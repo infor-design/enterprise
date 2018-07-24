@@ -246,6 +246,10 @@ MaskInput.prototype = {
 
     // Use the piped value, if applicable.
     const finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
+    const patternOptions = this.settings.patternOptions;
+    if (finalValue !== '' && patternOptions && patternOptions.suffix && finalValue.indexOf(patternOptions.suffix) < 0) {
+      finalValue += this.settings.patternOptions.suffix;
+    }
 
     // Setup values for getting corrected caret position
     // TODO: Improve this by eliminating the need for an extra settings object.
