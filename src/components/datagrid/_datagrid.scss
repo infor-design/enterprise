@@ -1694,7 +1694,7 @@ $datagrid-short-row-height: 23px;
         width: 100%;
 
         .trigger {
-          margin-left: -21px;
+          margin-left: -12px;
           margin-top: 1px;
         }
       }
@@ -1725,7 +1725,7 @@ $datagrid-short-row-height: 23px;
         width: 100%;
 
         &.lookup {
-          width: calc(100% - 21px);
+          width: calc(100% - 29px);
 
           ~.trigger .icon {
             top: calc(50% - 6px);
