@@ -622,6 +622,9 @@ Dropdown.prototype = {
     // selected.  Use the internal storage of selected values instead.
     if (this.settings.reload === 'typeahead') {
       selectedFilterMethod = function (i, opt) {
+        if (!self.selectedValues) {
+          return false;
+        }
         return self.selectedValues.indexOf(opt.value) > -1;
       };
     }
