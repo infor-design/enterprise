@@ -28,18 +28,18 @@ describe('Lookup API', () => {
     expect(lookupObj).toEqual(jasmine.any(Object));
   });
 
-  it('Should visible lookup', () => {
+  it('Should be visible', () => {
     expect(document.body.querySelector('.lookup')).toBeTruthy();
   });
 
-  it('Should disable lookup', () => {
+  it('Should be able to disable it', () => {
     lookupObj.disable();
 
     expect(lookupEl.disabled).toBeTruthy();
     expect(lookupObj.isDisabled()).toBeTruthy();
   });
 
-  it('Should enable lookup', () => {
+  it('Should be able to enable it', () => {
     lookupObj.enable();
 
     expect(lookupEl.readOnly).toBeFalsy();
@@ -48,14 +48,14 @@ describe('Lookup API', () => {
     expect(lookupObj.isDisabled()).toBeFalsy();
   });
 
-  it('Should readonly lookup', () => {
+  it('Should be able to make it readonly', () => {
     lookupObj.readonly();
 
     expect(lookupEl.readOnly).toBeTruthy();
     expect(lookupObj.isReadonly()).toBeTruthy();
   });
 
-  it('Should destroy lookup', () => {
+  it('Should be able to destroy it', () => {
     lookupObj.destroy();
 
     expect(document.body.querySelector('.trigger')).toBeFalsy();

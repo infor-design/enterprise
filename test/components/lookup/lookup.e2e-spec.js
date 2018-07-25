@@ -6,32 +6,32 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Lookup example-custom-buttons tests', () => {
+describe('Lookup custom button tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-custom-buttons');
   });
 
-  it('Should custom-buttons lookup field be enabled', async () => {
+  it('Field should be enabled', async () => {
     const lookupEl = await element(by.id('custom'));
 
     expect(await lookupEl.isEnabled()).toBe(true);
   });
 
-  it('Should display lookup modal with custom button', async () => {
+  it('Lookup modal should display', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
     expect(await element(by.className('modal-content'))).toBeTruthy();
   });
 
-  it('Should lookup modal has custom button', async () => {
+  it('Lookup modal should display with custom buttons', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
     await buttonEl.click();
 
     expect(await element(by.className('btn-modal-primary')).getText()).toEqual('Apply It Now');
   });
 
-  it('Should custom-buttons lookup field set a value', async () => {
+  it('Should be able to select on the custom button lookup', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
     const lookupEl = await element(by.id('custom'));
 
@@ -43,7 +43,7 @@ describe('Lookup example-custom-buttons tests', () => {
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
   });
 
-  it('Should lookup modal apply button be enabled', async () => {
+  it('Modal apply button should be enabled', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -53,25 +53,25 @@ describe('Lookup example-custom-buttons tests', () => {
   });
 });
 
-describe('Lookup example-custom-toolbar tests', () => {
+describe('Lookup custom toolbar tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-custom-toolbar');
   });
 
-  it('Should custom-toolbar lookup field be enabled', async () => {
+  it('Custom toolbar field should be enabled', async () => {
     const lookupEl = await element(by.id('custom'));
 
     expect(await lookupEl.isEnabled()).toBe(true);
   });
 
-  it('Should display lookup modal with custom toolbar', async () => {
+  it('Should display a modal', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
     expect(await element(by.className('modal-content'))).toBeTruthy();
   });
 
-  it('Should lookup modal has custom toolbar', async () => {
+  it('Should display a modal with a custom toolbar', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
     await buttonEl.click();
 
@@ -79,7 +79,7 @@ describe('Lookup example-custom-toolbar tests', () => {
     expect(await element(by.className('has-more-button'))).toBeTruthy();
   });
 
-  it('Should custom-toolbar lookup field set a value', async () => {
+  it('Should be able to select on a custom toolbar', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
     const lookupEl = await element(by.id('custom'));
 
@@ -91,7 +91,7 @@ describe('Lookup example-custom-toolbar tests', () => {
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
   });
 
-  it('Should lookup with custom toolbar cancel button enabled', async () => {
+  it('Should have an enabled cancel button on a custom toolbar lookup', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -101,18 +101,18 @@ describe('Lookup example-custom-toolbar tests', () => {
   });
 });
 
-describe('Lookup example-editable-strict tests', () => {
+describe('Lookup editable strict tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-editable-strict');
   });
 
-  it('Should editable-strict lookup field be enabled', async () => {
+  it('Editable strict lookup should have an enabled field', async () => {
     const lookupEl = await element(by.id('lookup'));
 
     expect(await lookupEl.isEnabled()).toBe(true);
   });
 
-  it('Should display editable-strict lookup modal', async () => {
+  it('Editable strict lookup should display a modal', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -121,7 +121,7 @@ describe('Lookup example-editable-strict tests', () => {
     expect(await element(by.className('modal-content'))).toBeTruthy();
   });
 
-  it('Should editable-strict lookup modal has a checkbox', async () => {
+  it('Editable strict lookup should show a checkbox', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -130,7 +130,7 @@ describe('Lookup example-editable-strict tests', () => {
     expect(await element(by.className('datagrid-checkbox-wrapper'))).toBeTruthy();
   });
 
-  it('Should editable-strict lookup field be editable', async () => {
+  it('Editable strict lookup should be editable', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -139,7 +139,7 @@ describe('Lookup example-editable-strict tests', () => {
     expect(await element(by.className('has-editor'))).toBeTruthy();
   });
 
-  it('Should editable-strict lookup modal cancel button enabled', async () => {
+  it('Editable strict lookup should have an enabled cancel button', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -148,7 +148,7 @@ describe('Lookup example-editable-strict tests', () => {
     expect(await element(by.className('btn-modal')).isEnabled()).toBe(true);
   });
 
-  it('Should editable-strict lookup modal apply button be enabled', async () => {
+  it('Editable strict lookup should have an enabled apply button', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -158,18 +158,18 @@ describe('Lookup example-editable-strict tests', () => {
   });
 });
 
-describe('Lookup example-editable tests', () => {
+describe('Lookup editable tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-editable');
   });
 
-  it('Should editable lookup field be enabled', async () => {
+  it('Editable lookup should have an enabled field', async () => {
     const lookupEl = await element(by.id('lookup'));
 
     expect(await lookupEl.isEnabled()).toBe(true);
   });
 
-  it('Should display editable lookup modal', async () => {
+  it('Editable lookup should display a modal', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -178,7 +178,7 @@ describe('Lookup example-editable tests', () => {
     expect(await element(by.className('modal-content'))).toBeTruthy();
   });
 
-  it('Should editable lookup modal has a checkbox', async () => {
+  it('Editable lookup should have a checkbox', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -187,7 +187,7 @@ describe('Lookup example-editable tests', () => {
     expect(await element(by.className('datagrid-checkbox-wrapper'))).toBeTruthy();
   });
 
-  it('Should editable lookup modal field be editable', async () => {
+  it('Editable lookup should be editable', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -196,7 +196,7 @@ describe('Lookup example-editable tests', () => {
     expect(await element(by.className('has-editor'))).toBeTruthy();
   });
 
-  it('Should editable lookup modal cancel button be enabled', async () => {
+  it('Editable lookup should have an enabled cancel button', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -205,7 +205,7 @@ describe('Lookup example-editable tests', () => {
     expect(await element(by.className('btn-modal')).isEnabled()).toBe(true);
   });
 
-  it('Should editable lookup modal apply button be enabled', async () => {
+  it('Editable lookup should have an enabled apply button', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -215,30 +215,30 @@ describe('Lookup example-editable tests', () => {
   });
 });
 
-describe('Lookup example-index tests', () => {
+describe('Lookup index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-index');
   });
 
-  it('Should index product lookup field be enabled', async () => {
+  it('Product lookup field should be enabled', async () => {
     const lookupEl = await element(by.id('product-lookup'));
 
     expect(await lookupEl.isEnabled()).toBe(true);
   });
 
-  it('Should index lookup-small field be enabled', async () => {
+  it('Lookup small field should be enabled', async () => {
     const lookupEl = await element(by.id('lookup-field-small'));
 
     expect(await lookupEl.isEnabled()).toBe(true);
   });
 
-  it('Should index lookup field be disabled', async () => {
+  it('Should have a disabled lookup field', async () => {
     const lookupEl = await element(by.id('lookup-field-disabled'));
 
     expect(await lookupEl.isEnabled()).toBe(false);
   });
 
-  it('Should display index lookup modal', async () => {
+  it('Should be able to open the modal', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
     await buttonEl.click();
 
@@ -247,7 +247,7 @@ describe('Lookup example-index tests', () => {
     expect(await element(by.className('modal-content'))).toBeTruthy();
   });
 
-  it('Should index lookup modal cancel button be enabled', async () => {
+  it('Should have an enabled modal cancel button', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -256,7 +256,7 @@ describe('Lookup example-index tests', () => {
     expect(await element(by.className('btn-modal')).isEnabled()).toBe(true);
   });
 
-  it('Should index lookup field set a value', async () => {
+  it('Should be able to set a value', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
     const lookupEl = await element(by.id('product-lookup'));
 
@@ -269,18 +269,18 @@ describe('Lookup example-index tests', () => {
   });
 });
 
-describe('Lookup example-multiselect tests', () => {
+describe('Lookup multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-multiselect');
   });
 
-  it('Should multiselect lookup field be enabled', async () => {
+  it('Multiselect should have an enabled field', async () => {
     const lookupEl = await element(by.id('product-lookup'));
 
     expect(await lookupEl.isEnabled()).toBe(true);
   });
 
-  it('Should display multiselect lookup modal', async () => {
+  it('Multiselect lookup should display a modal', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -289,7 +289,7 @@ describe('Lookup example-multiselect tests', () => {
     expect(await element(by.className('modal-content'))).toBeTruthy();
   });
 
-  it('Should multiselect lookup modal has a checkbox', async () => {
+  it('Multiselect lookup should have a checkbox', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -298,7 +298,7 @@ describe('Lookup example-multiselect tests', () => {
     expect(await element(by.className('datagrid-checkbox-wrapper'))).toBeTruthy();
   });
 
-  it('Should multiselect lookup modal cancel button be enabled', async () => {
+  it('Multiselect lookup should have an enabled cancel button', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -307,7 +307,7 @@ describe('Lookup example-multiselect tests', () => {
     expect(await element(by.className('btn-modal')).isEnabled()).toBe(true);
   });
 
-  it('Should multiselect lookup modal apply button be enabled', async () => {
+  it('Multiselect lookup should have an enabled apply button', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -317,18 +317,18 @@ describe('Lookup example-multiselect tests', () => {
   });
 });
 
-describe('Lookup example-paging tests', () => {
+describe('Lookup paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-paging');
   });
 
-  it('Should paging lookup field be enabled', async () => {
+  it('Paging lookup should have an enabled field', async () => {
     const lookupEl = await element(by.id('paging'));
 
     expect(await lookupEl.isEnabled()).toBe(true);
   });
 
-  it('Should display paging lookup modal', async () => {
+  it('Paging lookup should have a modal', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -337,7 +337,7 @@ describe('Lookup example-paging tests', () => {
     expect(await element(by.className('modal-content'))).toBeTruthy();
   });
 
-  it('Should paging lookup modal has a paging section', async () => {
+  it('Paging lookup should have a pager component on it', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
@@ -346,7 +346,7 @@ describe('Lookup example-paging tests', () => {
     expect(await element(by.className('pager-toolbar'))).toBeTruthy();
   });
 
-  it('Should paging lookup modal have components', async () => {
+  it('Paging lookup should have a search and actions', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
 
     await buttonEl.click();
@@ -358,7 +358,7 @@ describe('Lookup example-paging tests', () => {
     expect(await element(by.className('btn-actions'))).toBeTruthy();
   });
 
-  it('Should paging lookup field set a value', async () => {
+  it('Paging lookup should be able to select a value', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
     const lookupEl = await element(by.id('paging'));
 
@@ -370,7 +370,7 @@ describe('Lookup example-paging tests', () => {
     expect(await lookupEl.getAttribute('value')).toEqual('214220');
   });
 
-  it('Should paging lookup modal pager be enabled', async () => {
+  it('Paging lookup should have an enabled next page button', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
 
     await buttonEl.click();
@@ -380,7 +380,7 @@ describe('Lookup example-paging tests', () => {
     expect(await element(by.className('pager-next')).isEnabled()).toBe(true);
   });
 
-  it('Should paging lookup modal pager turn on next page', async () => {
+  it('Paging lookup should be able to go the next page', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
 
     await buttonEl.click();
@@ -391,7 +391,7 @@ describe('Lookup example-paging tests', () => {
     expect(await element(by.name('pager-pageno')).getAttribute('value')).toEqual('2');
   });
 
-  it('Should paging lookup modal cancel button be enabled', async () => {
+  it('Paging lookup should have an enabled cancel button', async () => {
     const buttonEl = await element(by.className('trigger'));
     await buttonEl.click();
 
