@@ -58,11 +58,11 @@ exports.config = {
     },
     {
       browserName: 'Firefox',
-      browser_version: '60.0',
+      browser_version: '61.0',
       resolution: '1280x800',
       os_version: '10',
       os: 'Windows',
-      'browserstack.geckodriver' : '0.19.1',
+      'browserstack.geckodriver' : '0.21.0',
       'browserstack.selenium_version': '3.11.0',
     },
     {
