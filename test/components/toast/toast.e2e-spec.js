@@ -33,7 +33,7 @@ describe('Toast example-index tests', () => {
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('toast-container'))), config.waitsFor);
 
     await element(by.className('btn-close')).click();
-    
+
     expect(await element(by.id('toast-container'))).toBeTruthy();
   });
 });
