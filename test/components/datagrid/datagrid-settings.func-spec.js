@@ -101,7 +101,7 @@ describe('Datagrid Settings', () => {
       onEditCell: null,
       onExpandRow: null,
       emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
-      expandRowOnSearch: true
+      searchExpandableRow: true
     };
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
   });

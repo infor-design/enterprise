@@ -97,7 +97,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.emptyMessage.title='No Data Available']
  * @param {object}   [settings.emptyMessageinfor='']
  * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
- * @param {boolean}  [settings.expandRowOnSearch=true] If true enable expanding of row on search
+ * @param {boolean}  [settings.searchExpandableRow=true] If true enable expanding of row on search
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
  * icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
@@ -170,7 +170,7 @@ const DATAGRID_DEFAULTS = {
   onEditCell: null,
   onExpandRow: null,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
-  expandRowOnSearch: true
+  searchExpandableRow: true
 };
 
 function Datagrid(element, settings) {
@@ -5253,7 +5253,7 @@ Datagrid.prototype = {
         const cell = $(this);
         const cellText = cell.text().toLowerCase();
 
-        if (cellText.indexOf(term) > -1) {
+        if (cellText.indexOf(term) > -1 && !row.hasClass('datagrid-expandable-row')) {
           found = true;
           cell.find('*').each(function () {
             if (this.innerHTML === this.textContent) {
@@ -5270,7 +5270,7 @@ Datagrid.prototype = {
       // Hide non matching rows and non detail rows
       if (!found && !row.find('.datagrid-row-detail').length) {
         row.addClass('is-filtered').hide();
-      } else if (self.settings.expandRowOnSearch && found && row.is('.datagrid-expandable-row') && term !== '') {
+      } else if (self.settings.searchExpandableRow && found && row.is('.datagrid-expandable-row') && term !== '') {
         row.prev().show();
         row.prev().find('.datagrid-expand-btn').addClass('is-expanded');
         row.prev().find('.plus-minus').addClass('active');
