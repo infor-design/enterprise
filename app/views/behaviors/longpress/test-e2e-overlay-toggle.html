@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="six columns">
+    <h2 id="page-title">LongPress Behavior Test: Overlay</h2>
+    <p>Original Issue: <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/245" target="_blank">#245</a></p>
+    <p>Hold down the mouse button, or longpress via touch anywhere on the page to toggle a red overlay.  Note that this test corresponds to one of the LongPress behavior's end-to-end tests.</p>
+  </div>
+</div>
+
+<style id="test-style">
+  .test-overlay {
+    background-color: #ff0000;
+    bottom: 0;
+    display: none;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .test-overlay.visible {
+    display: block;
+  }
+</style>
+
+<script id="test-script">
+  $('body').on('initialized', function() {
+    $(this).append('<div id="test-overlay" class="test-overlay"></div>');
+
+    $(this).on('longpress.test', function() {
+      $('#test-overlay').toggleClass('visible');
+    });
+  });
+</script>
