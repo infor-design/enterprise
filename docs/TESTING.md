@@ -96,7 +96,7 @@ npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js
 
 ## Working With Visual Regression Tests
 
-Create an e2e visual regression test by using the code snippet below as an example.
+A visual regression test will be similar to the following code snippet. But because the tests run on ci in travis we need to mimic the screen shots on that environment. So you'll need to do some setup with docker (that will probably only work well on Mac).
 
 ```javascript
 // Only test visual regressions on Chrome, and the CI
@@ -123,23 +123,49 @@ if (utils.isChrome() && utils.isCI()) {
 }
 ```
 
-Follow [this guide](https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image) in order to debug Travis, and to create baseline images. Use the `node_js` [image](https://hub.docker.com/r/travisci/ci-nodejs/)
+The next instructions are based on following [this guide](https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image) in order to debug Travis. We use the `node_js` [image](https://hub.docker.com/r/travisci/ci-nodejs/)
 
-After cloning the Enterprise repository, please install, and build manually.
-
-Many of the commands ran can be found in the [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml).
+Many of the travis commands ran can be found in the [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml).
 
 ### Creating Baseline Screenshots
 
-We need to do this process on a machine that is nearly identical to the CI machine.
+1. Run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the travis ci docker image to mimic the environment. And wait....
+1. Open up the image and go in `docker exec -it travis-debug bash -l`
+1. Switch to the travis user `su - travis`
+1. Go to home you home directory `(`cd ~`)`
+1. Clone ids
 
-Copy `.tmp/actual` verified screenshots to the `baseline` folder for testing, locally, and in the Docker container.
+```sh
+git clone https://github.com/infor-design/enterprise.git
+```
 
-Open the Docker container shell, navigate to Enterprise repo, and run `npm start`.
+1. Run the install commands from `npm install -g grunt-cli && npm install`
+1. May need to update chrome with.
 
-For convenience, open another Docker container shell, run `npm test`.
+```sh
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome*.deb
+```
 
-[Copy](https://docs.docker.com/engine/reference/commandline/cp/) actual screenshots from .tmp/actual/*.png using.
+1. Update node.js
+
+```sh
+nvm install 9
+```
+
+1. Run the tests
+
+```sh
+npm run quickstart && npm run e2e:ci
+```
+
+1. Push the branch your working on to github
+
+```sh
+git commit --all && git push
+```
+
+Copy `.tmp/actual` verified screenshots to the `baseline` folder for testing, locally, from the Docker container. [Copy](https://docs.docker.com/engine/reference/commandline/cp/) actual screenshots from .tmp/actual/*.png using.
 
 ```sh
 docker cp INSERT_CONTAINER_ID:/home/travis/enterprise/test/.tmp .
