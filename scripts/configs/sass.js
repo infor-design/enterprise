@@ -1,7 +1,10 @@
+const sass = require('node-sass');
+
 module.exports = {
   sass: {
     dist: {
       options: {
+        implementation: sass,
         sourceMap: true
       },
       files: {
@@ -14,6 +17,7 @@ module.exports = {
 
     app: {
       options: {
+        implementation: sass,
         sourceMap: true
       },
       files: {
