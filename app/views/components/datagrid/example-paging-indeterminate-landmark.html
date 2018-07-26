@@ -19,7 +19,7 @@
       pagesize: 5,
       rowHeight: 'short',
       indeterminate: true,
-      source: datagridPagingFucntion
+      source: datagridPagingFunction
     })
     .on('selected', function(e, args) {
       if (args && args.length > 1) {
@@ -43,7 +43,7 @@
     })
     .data('datagrid');
 
-    function datagridPagingFucntion(request, response) {
+    function datagridPagingFunction(request, response) {
       // -------------------------------------------------------------------------------------------------
       // call async function to get first/last/previous/next page of data.
       // -------------------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@
         var activatedRow = grid.activatedRow();
 
         if (selectedRow) {
-          grid.unSelectAllRows();
+          grid.unSelectAllRows(true);
         }
 
         var activatedRowIndex = -1;
@@ -85,10 +85,6 @@
           activatedRow.length === 1 &&
           activatedRow[0].row > -1) {
           grid.activateRow(activateRowIndex);
-        }
-
-        if (selectedRow) {
-          grid.selectRow(selectedRow.idx);
         }
       });
     }

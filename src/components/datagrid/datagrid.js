@@ -5315,13 +5315,18 @@ Datagrid.prototype = {
 
   /**
   * Deselect all rows that are currently selected.
+  * @param {boolean} isPager Do not remove selected nodes if the call comes from a pager
   */
-  unSelectAllRows() {
+  unSelectAllRows(isPager) {
+    if (!isPager) {
+      isPager = false;
+    }
+
     const selectedRows = this.selectedRows();
     this.dontSyncUi = true;
     for (let i = 0, l = selectedRows.length; i < l; i++) {
       const idx = this.pagingRowIndex(selectedRows[i].idx);
-      this.unselectRow(idx, true, true);
+      this.unselectRow(idx, true, true, isPager);
     }
     this.dontSyncUi = false;
     this.syncSelectedUI();
@@ -5701,11 +5706,16 @@ Datagrid.prototype = {
 
   /**
   * De-select a selected row.
-  * @param  {number} idx The row index
-  * @param  {boolean} nosync Do not sync the header
-  * @param  {boolean} noTrigger Do not trgger any events
+  * @param {number} idx The row index
+  * @param {boolean} nosync Do not sync the header
+  * @param {boolean} noTrigger Do not trigger any events
+  * @param {boolean} isPager Do not remove selected nodes if the call comes from a pager
   */
-  unselectRow(idx, nosync, noTrigger) {
+  unselectRow(idx, nosync, noTrigger, isPager) {
+    if (!isPager) {
+      isPager = false;
+    }
+
     const self = this;
     const s = self.settings;
     const rowNode = self.actualRowNode(idx);
@@ -5750,7 +5760,8 @@ Datagrid.prototype = {
           const gData = self.groupArray[idx];
           rowData = s.dataset[gData.group].values[gData.node];
         }
-        if (rowData !== undefined) {
+
+        if (rowData !== undefined && !isPager) {
           removeSelected(rowData);
         }
       }
