@@ -25,4 +25,16 @@ describe('Longpress events', () => {
 
     expect(spyEvent).toHaveBeenTriggered();
   });
+
+  it('can be updated with new settings', () => {
+    const newSettings = {
+      delay: 1500,
+      mouseEvents: true
+    };
+
+    longPress.updated(newSettings);
+
+    expect(longPress.settings.delay).toEqual(1500);
+    expect(longPress.settings.mouseEvents).toEqual(true);
+  });
 });

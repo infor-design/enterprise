@@ -6,13 +6,19 @@ const BEHAVIOR_NAME = 'longpress';
 
 // Default LongPress settings
 const LONGPRESS_DEFAULTS = {
-  delay: 300
+  delay: 600,
+  mouseEvents: false
 };
 
 /**
  * @class LongPress
  * @constructor
- * @param {Object} settings incoming settings
+ * @param {Object} [settings] incoming settings
+ * @param {Number} [settings.delay] the amount of time that should pass between the touch start, and
+ *  the trigger of the "longpress" event.
+ * @param {boolean} [settings.mouseEvents] if true, will setup longpress capability against mouse events
+ *  as well as touch events.  If false, only touch events will be enabled, excluding mice from triggering
+ *  the event.
  */
 function LongPress(settings) {
   this.settings = utils.mergeSettings(this.element, settings, LONGPRESS_DEFAULTS);
@@ -89,12 +95,14 @@ LongPress.prototype = {
    */
   getInputEventNames() {
     const isTouch = env.features.touch;
+    const useMouse = this.settings.mouseEvents;
+    const testCondition = isTouch || !useMouse;
 
     return {
-      mousedown: isTouch ? 'touchstart' : 'mousedown',
-      mouseout: isTouch ? 'touchcancel' : 'mouseout',
-      mouseup: isTouch ? 'touchend' : 'mouseup',
-      mousemove: isTouch ? 'touchmove' : 'mousemove'
+      mousedown: testCondition ? 'touchstart' : 'mousedown',
+      mouseout: testCondition ? 'touchcancel' : 'mouseout',
+      mouseup: testCondition ? 'touchend' : 'mouseup',
+      mousemove: testCondition ? 'touchmove' : 'mousemove'
     };
   },
 
@@ -106,6 +114,9 @@ LongPress.prototype = {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
+
+    this.teardown();
+    this.init();
   },
 
   /**
