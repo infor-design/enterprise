@@ -220,3 +220,33 @@ describe('Modal example-validation-editor tests', () => {
     expect(await element(by.id('submit')).isEnabled()).toBe(true);
   });
 });
+
+describe('Modal manual content loading', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-manual-open');
+  });
+
+  it('should load content without immediately displaying the modal', async () => {
+    const loadButtonEl = await element(by.css('#load-content'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(loadButtonEl), config.waitsFor);
+    await loadButtonEl.click();
+
+    // 1501 = 1ms longer than the visual test's simulated load time.
+    await browser.driver.sleep(1501);
+
+    // Expect the modal element to be drawn
+    expect(await element(by.css('#my-id')).getAttribute('class')).toContain('modal');
+
+    const displayButtonEl = await element(by.css('#show-modal'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(displayButtonEl), config.waitsFor);
+    await displayButtonEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-engaged'))), config.waitsFor);
+
+    // Expect the modal to be engaged with a Multiselect present
+    expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
+    expect(await element(by.css('#test-multiselect')).getAttribute('value')).toEqual('1');
+  });
+});
