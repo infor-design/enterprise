@@ -16,7 +16,7 @@ describe('Toast API', () => {
     toastObj = new Toast(toastEl, {
       title: toastTitle,
       message: toastMessage,
-      timeout: 200000
+      timeout: 6000
     });
   });
 
@@ -46,11 +46,15 @@ describe('Toast API', () => {
     expect(toastMessageContentEl.innerText).toEqual('Toast Message');
   });
 
+  it('Should have progress bar', () => {
+    expect(document.body.querySelector('.toast-progress')).toBeTruthy();
+  });
+
   it('Should have settings updated', () => {
     const settings = {
       title: 'Toast Title 2',
       message: 'Toast Message 2',
-      timeout: 200000
+      timeout: 6000
     };
 
     toastObj.updated(settings);
