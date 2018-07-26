@@ -56,4 +56,14 @@ xssUtils.sanitizeHTML = function (html) {
   return santizedHtml;
 };
 
+/**
+ * Make sure a string is only alphanumeric (with dashes allowed.)
+ * @private
+ * @param {string} string HTML in string form
+ * @returns {string} the modified value
+ */
+xssUtils.ensureAlphaNumeric = function (string) {
+  return this.stripTags(string).replace(/[^a-z0-9-]/gi, '', '');
+};
+
 export { xssUtils }; //eslint-disable-line

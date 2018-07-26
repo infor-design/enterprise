@@ -4,6 +4,7 @@ import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { ListFilter } from '../listfilter/listfilter';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../icons/icons.jquery';
@@ -81,6 +82,7 @@ Dropdown.prototype = {
    */
   init() {
     let orgId = this.element.attr('id');
+    orgId = orgId ? xssUtils.stripTags(orgId) : '';
 
     this.isIe10 = (env.browser.name === 'ie' && env.browser.version === '10');
     this.isIe11 = (env.browser.name === 'ie' && env.browser.version === '11');
@@ -95,7 +97,7 @@ Dropdown.prototype = {
     if (orgId === undefined) {
       orgId = this.element.uniqueId('dropdown');
       this.element.attr('id', orgId);
-      this.element.parent().find('label').first().attr('for', orgId);
+      this.element.parent().find('label').first()[0].setAttribute('for', orgId);
     }
 
     if (env.os.name === 'ios' || env.os.name === 'android') {

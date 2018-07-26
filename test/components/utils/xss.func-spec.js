@@ -1,6 +1,6 @@
 import { xssUtils } from '../../../src/utils/xss';
 
-describe('String Utils', () => {
+describe('Xss Utils', () => {
   it('Should white list specific html tags', () => {
     let result = xssUtils.stripTags('<p>Test</p> <br /><b>Test</b> <i>Test</i>', '<i><b>');
 
@@ -117,5 +117,23 @@ describe('String Utils', () => {
     result = xssUtils.sanitizeHTML('<script><script>alert(\'hello world\')</script></script>');
 
     expect(result).toEqual('');
+  });
+
+  it('Should force alphanumber values', () => {
+    let result = xssUtils.ensureAlphaNumeric('<strong>hello world</strong>');
+
+    expect(result).toEqual('helloworld');
+
+    result = xssUtils.ensureAlphaNumeric('test-module-1');
+
+    expect(result).toEqual('test-module-1');
+
+    result = xssUtils.ensureAlphaNumeric('<a href="x">test-module-1</a>');
+
+    expect(result).toEqual('test-module-1');
+
+    result = xssUtils.ensureAlphaNumeric('test-module-1!@%^@!^&@%^&@!&^%@!%^&!@%^&^@%!&');
+
+    expect(result).toEqual('test-module-1');
   });
 });

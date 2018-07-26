@@ -73,8 +73,8 @@ Toast.prototype = {
     if (settings.allowLink) {
       toast = $(`
         <div class="toast">
-          <span class="toast-title">${stringUtils.stripHTML(settings.title)}</span>
-          <span class="toast-message">${settings.message}</span>
+          <span class="toast-title">${xssUtils.stripHTML(settings.title)}</span>
+          <span class="toast-message">${xssUtils.stripTags(settings.message, '<a>')}</span>
         </div>`);
     }
     const closeBtn = $(`
