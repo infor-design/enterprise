@@ -20,7 +20,7 @@
 <script>
 $('body').on('initialized', function () {
 
-  var pieData = [{
+  /*var pieData = [{
     data: [{
         name: 'Company Deductions',
         shortName: 'CD',
@@ -48,11 +48,22 @@ $('body').on('initialized', function () {
         value: 52,
         tooltip: 'Wages <b>%value%</b>'
       }]
+    }];*/
+
+    var donutData = [{
+      data: [{
+        name: 'Component A',
+        value: 10
+      }, {
+        name: 'Component B',
+        value: 30
+      }],
+      centerLabel: 'Donut Chart'
     }];
 
   $('#pie-chart-example').chart({
     type: 'pie',
-    dataset: pieData,
+    dataset: donutData,
     showLines: false
   });
 
