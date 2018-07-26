@@ -6,7 +6,7 @@ const BEHAVIOR_NAME = 'longpress';
 
 // Default LongPress settings
 const LONGPRESS_DEFAULTS = {
-  delay: 600,
+  delay: 400,
   mouseEvents: false
 };
 
