@@ -5252,8 +5252,9 @@ Datagrid.prototype = {
       row.find('td').each(function () {
         const cell = $(this);
         const cellText = cell.text().toLowerCase();
+        const isSearchExpandableRow = self.settings.searchExpandableRow ? true : !row.hasClass('datagrid-expandable-row');
 
-        if (cellText.indexOf(term) > -1 && !row.hasClass('datagrid-expandable-row')) {
+        if (cellText.indexOf(term) > -1 && isSearchExpandableRow) {
           found = true;
           cell.find('*').each(function () {
             if (this.innerHTML === this.textContent) {
