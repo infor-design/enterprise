@@ -298,6 +298,8 @@ div.multiselect {
 
       .badge {
         border-color: $inverse-color;
+        background-color: $inverse-color;
+        color: $dropdown-selected-bg-color !important;
       }
     }
 

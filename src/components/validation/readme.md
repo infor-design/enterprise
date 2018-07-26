@@ -70,7 +70,7 @@ Each type is style differently and can be defined if the formValidation passes o
 $.fn.validation.ValidationTypes.alert = { type: 'alert', title: 'Alert', errorsForm: false };
 ```
 
-## Validation Rules
+## Built in Validation Rules
 
 There are a few built in validation rules you can use.
 
@@ -82,6 +82,22 @@ There are a few built in validation rules you can use.
 - `passwordReq` - Checks basic password rules. Must be at least 10 characters which contain at least one lowercase letter. One uppercase letter. One numeric digit and one special character.
 - `time` - Checks that the time is valid in the time picker.
 - `test` - Used for testing only will only be valid if the input === 1 exactly.
+
+## Controlling When Validation Fires
+
+You can control on what events your validation rules fire. Note that if you use multiple events the rule will fire multiple times for all the listed events so this may need to be adjusted for async validation.
+
+You can specify either one set of events to trigger on for all rules as:
+
+```html
+<input  data-validation-events="blur change">
+```
+
+Or you can specify either different events for multiple rules as per as:
+
+```html
+<input data-validation-events="{'required': 'keydown', 'checkGivenNamesCount': 'keydown change blur'}">
+```
 
 ## Accessibility
 

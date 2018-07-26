@@ -9,31 +9,27 @@
       </div>
 
       <div class="buttonset">
+          <button type="button" id="toggle-row-status" class="btn">
+            <span>Add Row Status</span>
+          </button>
           <button type="button" id="validate" class="btn-menu">
             <span>Validate</span>
           </button>
           <ul class="popupmenu">
-            <li><a href="#" data-action="sr">Specific Row Error</a></li>
-            <li><a href="#" data-action="acr">All Cells in Row</a></li>
-            <li><a href="#" data-action="arc">All Rows and Cells</a></li>
+            <li><a href="#" data-action="specific-row-error">Specific Row Error</a></li>
+            <li><a href="#" data-action="all-cells-in-row">All Cells in Row</a></li>
+            <li><a href="#" data-action="all-rows-and-cells">All Rows and Cells</a></li>
             <li class="separator"></li>
-            <li><a href="#" data-action="csr">Clear Specific Row Error</a></li>
-            <li><a href="#" data-action="cacr">Clear All Cells in Row</a></li>
-            <li><a href="#" data-action="carc">Clear All Rows and Cells</a></li>
+            <li><a href="#" data-action="clear-specific-row-error">Clear Specific Row Error</a></li>
+            <!-- <li><a href="#" data-action="clear-all-cells-in-row">Clear All Cells in Row</a></li> -->
+            <li><a href="#" data-action="clear-all-rows-and-cells">Clear All Rows and Cells</a></li>
           </ul>
-          <button class="btn-icon" type="button" id="add-reset">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-reset"></use>
-            </svg>
-            <span class="audible">Reset</span>
-          </button>
         <button class="btn-icon" type="button" id="add-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-add"></use>
           </svg>
           <span class="audible">Add</span>
         </button>
-
       </div>
 
       <div class="more">
@@ -44,10 +40,7 @@
           <span class="audible">More Actions</span>
         </button>
         <ul class="popupmenu">
-          <li><a href="#">Option One</a></li>
-          <li><a href="#">Option Two</a></li>
-          <li><a href="#">Option Three</a></li>
-          <li class="separator single-selectable-section"></li>
+          <li class="single-selectable-section"></li>
           <li class="heading">Row Height</li>
           <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
           <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
@@ -69,9 +62,7 @@
       </div>
     </div>
 
-    <div id="datagrid">
-
-    </div>
+    <div id="datagrid"></div>
   </div>
 </div>
 
@@ -93,7 +84,7 @@
         data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 2});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Formatters.Status, align: 'center'});
+        // columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Formatters.Status, align: 'center'});
         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
         columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
         columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
@@ -131,17 +122,29 @@
         gridApi = $('#datagrid').data('datagrid');
 
         //Example row status
-        gridApi.setActiveCell(1,2, 0);
-        gridApi.rowStatus(0, 'error', 'Error');
-        gridApi.rowStatus(0, 'error', 'Error 2');
-        gridApi.rowStatus(0, 'error', 'Error 3');
-        gridApi.rowStatus(1, 'alert', 'Alert');
-        gridApi.rowStatus(2, 'info', 'Info');
-        gridApi.rowStatus(3, 'in-progress', 'inProgress');
-        gridApi.rowStatus(4, 'confirm', 'Confirm');
-        //gridApi.rowStatus(5, 'dirty');
-        //gridApi.rowStatus(6, 'new', 'new');
-        gridApi.rowStatus(6, 'error', 'This row has errors');
+        $('#toggle-row-status').on('click', function () {
+          var btn = $(this).find('span');
+          var status = {
+            add: 'Add Row Status',
+            remove: 'Remove Row Status'
+          };
+          if (btn.text() === status.add) {
+            btn.text(status.remove);
+            gridApi.rowStatus(0, 'error', 'Error');
+            gridApi.rowStatus(0, 'error', 'Error 2');
+            gridApi.rowStatus(0, 'error', 'Error 3');
+            gridApi.rowStatus(1, 'alert', 'Alert');
+            gridApi.rowStatus(2, 'info', 'Info');
+            gridApi.rowStatus(3, 'in-progress', 'inProgress');
+            gridApi.rowStatus(4, 'confirm', 'Confirm');
+            gridApi.rowStatus(5, 'dirty');
+            gridApi.rowStatus(6, 'new', 'new');
+            gridApi.rowStatus(6, 'error', 'This row has errors');
+          } else {
+            btn.text(status.add);
+            gridApi.resetRowStatus();
+          }
+        });
 
       window.data = data;
   });
@@ -158,31 +161,23 @@
     gridApi.removeSelected();
   });
 
-  //Example of clearing all cell errors
-  $('#add-reset').on('click', function () {
-    gridApi.clearAllErrors();
-  });
-
   //A few other ways
   $('#validate').on('selected', function (e, args) {
     var action = args.attr('data-action');
-    if (action === 'sr') {
+
+    if (action === 'specific-row-error') {
       gridApi.showRowError(2, 'This row has a custom error message.', 'error');
     }
-
-    if (action === 'acr') {
+    if (action === 'all-cells-in-row') {
       gridApi.validateRow(2);
     }
-
-    if (action === 'arc') {
+    if (action === 'all-rows-and-cells') {
       gridApi.validateAll();
     }
-
-    if (action === 'csr') {
+    if (action === 'clear-specific-row-error') {
       gridApi.clearRowError(2);
     }
-
-    if (action === 'carc') {
+    if (action === 'clear-all-rows-and-cells') {
       gridApi.clearAllErrors();
     }
   });

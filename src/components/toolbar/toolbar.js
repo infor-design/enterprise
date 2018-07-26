@@ -151,6 +151,7 @@ Toolbar.prototype = {
       this.more = $('<button class="btn-actions" type="button"></button>')
         .html(`${$.createIcon({ icon: 'more' })
         }<span class="audible">${Locale.translate('MoreActions')}</span>`)
+        .attr('title', Locale.translate('More'))
         .appendTo(moreContainer);
     }
 

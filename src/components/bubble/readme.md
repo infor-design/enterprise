@@ -23,7 +23,7 @@ demo:
 4. Example showing Get Selected value [View Example]( ../components/bubble/example-get-selected)
 5. Example showing Set Selected value [View Example]( ../components/bubble/example-set-selected)
 
-The ubble chart is a line chart with the isBubble set that adds the bubble. Plus the z dimension in the data.
+The bubble chart is a line chart with the isBubble set that adds the bubble. Plus the z dimension in the data.
 See the [line chart api]( ../components/line) for more details.
 
 ## Code Example
@@ -220,6 +220,24 @@ var dataset = [{
 }];
 
 $('#line-example').chart({type: 'bubble', dataset: dataset});
+```
+
+To control the tooltip contents and formatting you can also provide data on the first series.
+
+```javascript
+name: 'Series 01',
+labels: {
+name: 'Series',
+value: {
+  x: 'Revenue',
+  y: 'Sold',
+  z: 'Market Share'
+}
+},
+// Use d3 Format - only value will be formated
+valueFormatterString: {
+z: '0.0%'
+}
 ```
 
 ## Accessibility

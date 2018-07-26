@@ -42,7 +42,7 @@
     "e2e:ci:bs": "npx protractor test/protractor.ci.bs.conf.js || true",
     "e2e:local:bs": "npm run webdriver:update && npx protractor test/protractor.local.bs.conf.js",
     "e2e:local:debug": "npm run webdriver:update && npx protractor test/protractor.local.debug.conf.js",
-    "webdriver:update": "npx webdriver-manager update --standalone false --quiet",
+    "webdriver:update": "npx webdriver-manager update --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
@@ -101,7 +101,7 @@
     "handlebars-registrar": "^1.5.2",
     "html-loader": "^0.5.5",
     "ids-css": "^1.2.8",
-    "ids-identity": "^1.1.0-dev.2",
+    "ids-identity": "1.1.1",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jasmine-core": "^3.0.0",
     "jasmine-jquery": "^2.1.1",
@@ -136,7 +136,7 @@
     "unoconv": "^0.1.2",
     "vinyl-contents-tostring": "^1.0.0",
     "vinyl-write": "^0.2.2",
-    "webpack": "^4.12.0",
+    "webpack": "^4.15.1",
     "yargs": "^11.0.0"
   }
 }

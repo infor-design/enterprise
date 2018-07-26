@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="six columns">
+    <div class="field">
+      <label for="dropdown">Typeahead-Reloaded Dropdown</label>
+      <select id="dropdown" class="dropdown" data-init="false"></select>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('#dropdown').dropdown({
+    reload: 'typeahead',
+    source: function (response, term) {
+      $.getJSON('{{basepath}}api/states?term='+term, function(data) {
+        response(data);
+      });
+    }
+  });
+</script>

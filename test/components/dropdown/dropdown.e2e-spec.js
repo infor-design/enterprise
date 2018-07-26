@@ -24,6 +24,21 @@ describe('Dropdown example-index tests', () => {
     expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
+  it('Should be able to select next element', async () => {
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
+
+    expect(await element(by.id('states')).getAttribute('value')).toEqual('NM');
+  });
+
   it('Should scroll down to end of list, and Vermont Should be visible', async () => {
     await clickOnDropdown();
     await browser.driver
@@ -55,8 +70,12 @@ describe('Dropdown example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await dropdownEl.click();
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.click();
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-focused'))), config.waitsFor);
 
@@ -70,8 +89,12 @@ describe('Dropdown example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await dropdownEl.click();
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.click();
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-focused'))), config.waitsFor);
 
@@ -112,6 +135,52 @@ describe('Dropdown example-index tests', () => {
 
     expect(await element(by.className('is-focused')).getText()).toEqual('Colorado');
   });
+
+  if (!utils.isSafari()) {
+    it('Should keep the filter term in tact when pausing between keyboard presses', async () => {
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+
+      await dropdownEl.sendKeys('New');
+
+      // Wait for the list to open
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const dropdownSearchEl = element(by.id('dropdown-search'));
+
+      await dropdownSearchEl.click();
+      await dropdownSearchEl.sendKeys(' Jersey');
+
+      await browser.driver.sleep(config.sleep);
+
+      // SearchInput should display "New Jersey" and not just " Jersey"
+      expect(await element(by.id('dropdown-search')).getAttribute('value')).toEqual('New Jersey');
+    });
+
+    it('Should close an open list and tab to the next element without re-opening', async () => {
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await dropdownEl.click();
+
+      // Wait for the list to open
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const dropdownSearchEl = element(by.id('dropdown-search'));
+
+      // First key press causes the menu to close
+      await dropdownSearchEl.sendKeys(protractor.Key.TAB);
+
+      // Second key press causes the focus to shift away
+      await browser.driver.sleep(config.sleep);
+      await element(by.css('div[aria-controls="dropdown-list"]')).sendKeys(protractor.Key.TAB);
+      await browser.driver.sleep(config.sleep);
+
+      // The Dropdown Pseudo element should no longer have focus
+      expect(await browser.driver.switchTo().activeElement().getAttribute('class')).not.toContain('dropdown');
+    });
+  }
 });
 
 describe('Dropdown example-ajax tests', () => {
@@ -125,8 +194,12 @@ describe('Dropdown example-ajax tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await dropdownEl.click();
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.click();
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('is-focused'))), config.waitsFor);
 
@@ -145,9 +218,6 @@ describe('Dropdown example-no-search-lsf tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
 
-    await dropdownPseudoEl.click();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
     await dropdownPseudoEl.sendKeys('r');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), 'R - Rocket Raccoon'), config.waitsFor);
@@ -160,7 +230,6 @@ describe('Dropdown example-no-search-lsf tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
 
-    await dropdownPseudoEl.click();
     await dropdownPseudoEl.sendKeys('t');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), 'T - Thor'), config.waitsFor);
@@ -196,7 +265,7 @@ describe('Dropdown example-no-search-filtering tests', () => {
     const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
-    await dropdownPseudoEl.click();
+
     await dropdownPseudoEl.sendKeys('15');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), '15'), config.waitsFor);
@@ -228,25 +297,29 @@ describe('Dropdown example-no-search-filtering tests', () => {
     expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual('56');
   });
 
-  it('Should clear a previous dropdown selection when pressing DELETE', async () => {
-    const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
+  // TODO: Figure out why this uses "BACK_SPACE" as the keypress on Ubuntu Linux (TravisCI)
+  if (!utils.isCI()) {
+    it('Should clear a previous dropdown selection when pressing DELETE', async () => {
+      // On Macs, use "backspace" delete, instead of control keys' delete
+      const keyPressed = utils.isMac() ? 'BACK_SPACE' : 'DELETE';
+      const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
 
-    await dropdownPseudoEl.click();
-    await dropdownPseudoEl.sendKeys('15');
-    await browser.driver
-      .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), '15'), config.waitsFor);
+      await dropdownPseudoEl.sendKeys('15');
+      await browser.driver
+        .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), '15'), config.waitsFor);
 
-    expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual('15');
+      expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual('15');
 
-    await dropdownPseudoEl.sendKeys(protractor.Key.DELETE);
-    await browser.driver
-      .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), ''), config.waitsFor);
-    const dropdownHTML = await browser.executeScript('return document.querySelector("div[aria-controls=\'dropdown-list\']").innerHTML');
+      await dropdownPseudoEl.sendKeys(protractor.Key[keyPressed]);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), ''), config.waitsFor);
+      const dropdownHTML = await browser.executeScript('return document.querySelector("div[aria-controls=\'dropdown-list\']").innerHTML');
 
-    expect(dropdownHTML).toEqual('<span>&nbsp;</span>');
-  });
+      expect(dropdownHTML).toEqual('<span></span>');
+    });
+  }
 });
 
 describe('Dropdown example-no-search tests', () => {
@@ -259,12 +332,57 @@ describe('Dropdown example-no-search tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
 
-    await dropdownPseudoEl.click();
     await dropdownPseudoEl.sendKeys('z');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), ''), config.waitsFor);
     const dropdownHTML = await browser.executeScript('return document.querySelector("div[aria-controls=\'dropdown-list\']").innerHTML');
 
-    expect(dropdownHTML).toEqual('<span>&nbsp;</span>');
+    expect(dropdownHTML).toEqual('<span></span>');
   });
+});
+
+describe('Dropdown typeahead-reloading tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/test-reload-typeahead');
+  });
+
+  if (!utils.isSafari()) {
+    it('Should open with down arrow, make ajax request, filter to "new", make ajax request, down arrow to New Jersey, and focus', async () => {
+      // Open the list
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.click();
+
+      // NOTE: Sleep simulates the Dropdown's default typeahead delay (300ms)
+      await dropdownSearchEl.sendKeys('New');
+      await browser.driver.sleep(config.sleep);
+
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
+
+      expect(await element(by.css('.dropdown span')).getText()).toEqual('New Jersey');
+    });
+
+    it('Should open by keying "new", make ajax request, down arrow to New Jersey, and focus', async () => {
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+
+      await dropdownEl.sendKeys('New');
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
+
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
+
+      expect(await element(by.css('.dropdown span')).getText()).toEqual('New Jersey');
+    });
+  }
 });

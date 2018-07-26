@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Modal Test: Manual Open</h2>
+    <p>Related Issue: <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/409" target="_blank">#409</a></p>
+    <p>Demonstration of the Modal component being manually opened, for timing reasons.  In this case, additional Soho components need to be invoked after a simulated AJAX response loads their base HTML markup.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+	<div class="twelve columns">
+		<button class="btn-secondary" type="button" id="load-content">Load Content</button>
+    <button class="btn-secondary" type="button" id="show-modal" disabled>Show Modal</button>
+	</div>
+</div>
+
+<script>
+  let timer;
+
+  // Simulation of an AJAX call returning data, which we are manually turning
+  // into HTML and appending directly to the Modal's body element.
+  function onBeforeShow(response) {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(function() {
+      $('#show-modal').prop('disabled', false);
+
+      // Manually add some content to the Modal and invoke it
+      const modalContent = '<select class="multiselect" id="test-multiselect">' +
+        '<option value="1">One</option>' +
+        '<option value="2">Two</option>' +
+        '<option value="3">Three</option>' +
+        '<option value="4">Four</option>' +
+        '<option value="5">Five</option>'
+      '</select>';
+      const modalBody = $('#my-id').find('.modal-body');
+      modalBody.append(modalContent);
+      modalBody.find('#test-multiselect').multiselect();
+
+      response(true);
+    }, 1500);
+  }
+
+  var modals = {
+    'load-content': {
+      'title': 'Select Some Values',
+      'id': 'my-id',
+      'beforeShow': onBeforeShow
+    }
+  };
+  function setModal(opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    var modal = $('body').modal(opt).data('modal');
+  };
+
+  // Clicking "Load Content" builds the modal
+  $('#load-content').on('click.test', function () {
+    $(this).prop('disabled', true);
+    setModal(modals[this.id]);
+  });
+
+  // Clicking "Show Modal" manually calls the `open()` method on the Modal's API
+  $('#show-modal').on('click.test', function () {
+    if ($(this).prop('disabled') === true) {
+      return;
+    }
+
+    // Since we're technically controlling the display of an AJAX response, the modal's
+    // `open()` method must be passed a `true` first argument to avoid reloading
+    // from the AJAX source.
+    $('body').data('modal').open(true);
+
+    $(this).prop('disabled', true);
+    $('#load-content').prop('disabled', false);
+  });
+</script>

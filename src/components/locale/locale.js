@@ -1025,7 +1025,8 @@ const Locale = {  // eslint-disable-line
    */
   translateDayPeriod(period) {
     if (/am|pm|AM|PM/i.test(period)) {
-      return Locale.calendar().dayPeriods[/AM|am/i.test(period) ? 0 : 1];
+      const periods = this.calendar().dayPeriods || ['AM', 'PM'];
+      return periods[/AM|am/i.test(period) ? 0 : 1];
     }
     return period;
   },
@@ -1053,7 +1054,8 @@ const Locale = {  // eslint-disable-line
         timestamp: 'h:mm:ss a',
         datetime: 'M/d/yyyy h:mm a'
       },
-      timeFormat: 'HH:mm:ss'
+      timeFormat: 'HH:mm:ss',
+      dayPeriods: ['AM', 'PM']
     };
   },
 

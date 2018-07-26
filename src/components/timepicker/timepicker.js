@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { stringUtils as str } from '../../utils/string';
 
 // jQuery components
 import '../dropdown/dropdown.jquery';
@@ -279,7 +280,7 @@ TimePicker.prototype = {
    * @private
    */
   roundMinutes() {
-    if (!this.getBoolean(this.settings.roundToInterval)) {
+    if (!str.toBoolean(this.settings.roundToInterval)) {
       return;
     }
 
@@ -982,18 +983,6 @@ TimePicker.prototype = {
    */
   isDisabled() {
     return this.element.prop('disabled');
-  },
-
-  /**
-   * Convert a string to boolean
-   * @private
-   * @param {string} val a text string ("true" or "false") that can be converted to a boolean.
-   * @returns {boolean}
-   */
-  // TODO: Move this to Soho.utils?
-  getBoolean(val) {
-    const num = +val;
-    return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
   },
 
   /**

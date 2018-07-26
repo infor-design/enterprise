@@ -269,28 +269,6 @@
     margin-right: 20px;
   }
 
-  &.percent,
-  &.currency {
-
-    &::before,
-    &::after {
-      @include font-size(14);
-      display: inline-block;
-      position: absolute;
-      top: 32px;
-    }
-  }
-
-  &.currency::before {
-    content: attr(data-currency-symbol);
-    left: 10px;
-  }
-
-  &.percent::before {
-    content: attr(data-currency-symbol);
-    left: 10px;
-  }
-
   &.top-padding {
     margin-top: 3rem;
   }

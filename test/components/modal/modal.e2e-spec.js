@@ -116,6 +116,22 @@ describe('Modal open example-modal tests on click', () => {
   });
 });
 
+describe('Modal example-close-btn tests', () => {
+  it('Should close the modal via the x close icon', async () => {
+    await utils.setPage('/components/modal/example-close-btn');
+
+    const modalBtn = await element(by.id('add-context'));
+    await modalBtn.click();
+
+    expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
+
+    const closeBtn = await element(by.css('button.btn-close'));
+    await closeBtn.click();
+
+    expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
+  });
+});
+
 describe('Modal example-validation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/example-validation');
@@ -156,10 +172,11 @@ describe('Modal example-validation tests', () => {
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
-      await browser.driver.sleep(config.sleep);
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await dropdownEl.sendKeys(protractor.Key.ENTER);
+      await dropdownEl.click();
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
       await browser.driver.sleep(config.sleep);
 
       await element(by.id('context-name')).sendKeys('test@test.com');
@@ -188,10 +205,11 @@ describe('Modal example-validation-editor tests', () => {
     const dropdownEl = await element.all(by.css('.modal div[aria-controls="dropdown-list"]')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
-    await browser.driver.sleep(config.sleep);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ENTER);
+    await dropdownEl.click();
+    const dropdownSearchEl = await element(by.id('dropdown-search'));
+    await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
     await element(by.id('context-name')).sendKeys('test@test.com');
@@ -200,5 +218,35 @@ describe('Modal example-validation-editor tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('submit')).isEnabled()).toBe(true);
+  });
+});
+
+describe('Modal manual content loading', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-manual-open');
+  });
+
+  it('should load content without immediately displaying the modal', async () => {
+    const loadButtonEl = await element(by.css('#load-content'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(loadButtonEl), config.waitsFor);
+    await loadButtonEl.click();
+
+    // 1501 = 1ms longer than the visual test's simulated load time.
+    await browser.driver.sleep(1501);
+
+    // Expect the modal element to be drawn
+    expect(await element(by.css('#my-id')).getAttribute('class')).toContain('modal');
+
+    const displayButtonEl = await element(by.css('#show-modal'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(displayButtonEl), config.waitsFor);
+    await displayButtonEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-engaged'))), config.waitsFor);
+
+    // Expect the modal to be engaged with a Multiselect present
+    expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
+    expect(await element(by.css('#test-multiselect')).getAttribute('value')).toEqual('1');
   });
 });
