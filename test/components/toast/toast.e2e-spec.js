@@ -25,6 +25,17 @@ describe('Toast example-index tests', () => {
 
     expect(await element(by.id('toast-container'))).toBeTruthy();
   });
+
+  it('Should toast closed after clicking close button', async () => {
+    const buttonEl = await element(by.id('show-toast-message'));
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('toast-container'))), config.waitsFor);
+
+    await element(by.className('btn-close')).click();
+
+    expect(await element(by.id('toast-container'))).toBeTruthy();
+  });
 });
 
 describe('Toast example-positions tests', () => {
