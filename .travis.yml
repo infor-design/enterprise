@@ -22,10 +22,10 @@ before_script:
   - npm run mdlint
   - npm run build
 script:
-  - npm run quickstart &
+  - if [ $TEST_SUITE = e2e ]; then (npm run quickstart &) && sleep 5; fi
   - npm run $TEST_SUITE:ci
-  - npm run stop
-  - if [ $TRAVIS_EVENT_TYPE = cron ]; then npm run e2e:ci:bs; fi
+  - if [ $TEST_SUITE = e2e ]; then npm run stop; fi
+  - if [ [$TRAVIS_EVENT_TYPE = cron] && [$TEST_SUITE = e2e] ]; then npm run e2e:ci:bs; fi
 deploy:
     # DEPLOY BUILD TO DEMO SERVER
     # this runs conditionally `on`
