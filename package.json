@@ -36,6 +36,7 @@
     "eslint": "npx eslint -c .eslintrc.js src test",
     "eslint:log": "npx eslint -c .eslintrc.js src test -o eslint.log",
     "eslint:error-only": "npx eslint -c .eslintrc.js --quiet src test",
+    "lint:ci": "npm run eslint:error-only && npm run mdlint",
     "functional:local": "npx karma start test/karma.conf.js",
     "functional:ci": "npx karma start test/karma.conf.js --single-run",
     "e2e:ci": "npm run webdriver:update && npx protractor test/protractor.ci.conf.js",

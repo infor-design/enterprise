@@ -12,20 +12,19 @@ cache:
   directories:
     - node_modules
 env:
-  - TEST_SUITE=functional
   - TEST_SUITE=e2e
+  - TEST_SUITE=functional
+  - TEST_SUITE=lint
 install:
   - npm install -g grunt-cli
   - npm install
 before_script:
-  - npm run eslint:error-only
-  - npm run mdlint
-  - npm run build
+  - if [ $TEST_SUITE != lint ]; then npm run build; fi
 script:
   - if [ $TEST_SUITE = e2e ]; then (npm run quickstart &) && sleep 5; fi
   - npm run $TEST_SUITE:ci
   - if [ $TEST_SUITE = e2e ]; then npm run stop; fi
-  - if [ [$TRAVIS_EVENT_TYPE = cron] && [$TEST_SUITE = e2e] ]; then npm run e2e:ci:bs; fi
+  - if [ $TRAVIS_EVENT_TYPE = cron ] && [ $TEST_SUITE = e2e ]; then npm run e2e:ci:bs; fi
 deploy:
     # DEPLOY BUILD TO DEMO SERVER
     # this runs conditionally `on`
