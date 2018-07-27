@@ -157,25 +157,23 @@ sudo apt-get install -y nodejs
 1. Run the travis commands as per the build
 
 ```sh
-npm run quickstart && npm run e2e:ci
+npm run quickstart & npm run e2e:ci
 ```
 
-1. Push the branch your working on to github
+1. Push the branch your working on to github and switch to the same branch on the vm
+1. Run the `npm run start` command in the VM on one session.
+1. Run `npm run e2e:ci` on the other session.
+1. Copy the file from the actual folder to the baseline folder `mv /root/enterprise/test/.tmp/actual/radio-init-chrome-1200x800-dpr-1.png /root/enterprise/test/baseline/radio-init-chrome-1200x800-dpr-1.png`
+1. Run the `npm run e2e:ci` again to tests
+1. Commit and push the files
 
-```sh
-git commit --all && git push
-```
-
-Copy `.tmp/actual` verified screenshots to the `baseline` folder for testing, locally, from the Docker container. [Copy](https://docs.docker.com/engine/reference/commandline/cp/) actual screenshots from .tmp/actual/*.png using.
+Can also copy `.tmp/actual` verified screenshots to the `baseline` folder for testing, from the Docker container. [Copy](https://docs.docker.com/engine/reference/commandline/cp/) actual screenshots from .tmp/actual/*.png using.
 
 ```sh
 docker cp INSERT_CONTAINER_ID:/home/travis/enterprise/test/.tmp .
 ```
 
 See [https://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container](https://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container) for additional help
-
-Move `.tmp/actual` verified screenshots to the `baseline` folder for testing, locally, and in the Docker container. Open the Docker container shell, navigate to Enterprise repo, and run `npm start`
-For convenience, open another shell under the travis user, and `npm run e2e:ci`.
 
 Once the files are copied to the host machine, check the image for quality, commit, and push.
 
