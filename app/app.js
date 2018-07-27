@@ -113,6 +113,7 @@ router.get('/performance-tests', (req, res, next) => {
 // ======================================
 //  Components Routes
 // ======================================
+app.use('/behaviors', generalRoute);
 app.use('/components', generalRoute);
 app.use('/patterns', generalRoute);
 app.use('/examples', generalRoute);
