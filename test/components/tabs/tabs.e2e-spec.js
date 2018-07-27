@@ -417,3 +417,18 @@ describe('Tabs click example-url-hash-change tests', () => {
     expect(await element.all(by.className('tab')).get(3).getAttribute('class')).toContain('is-selected');
   });
 });
+
+fdescribe('Tabs ajax as source tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/test-ajax-source-as-string');
+    const tabsContainerEl = await element(by.id('tabs'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
+  });
+
+  it('Should be able to activate tabs', async () => {
+    await clickTabTest('4');
+    await clickTabTest('2');
+    await clickTabTest('1');
+  });
+});

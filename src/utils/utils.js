@@ -415,49 +415,6 @@ $.copyToClipboard = function (text) { // eslint-disable-line
 };
 
 /**
- * Escapes HTML, replacing special characters with encoded symbols.
- * Symbols taken from https://bit.ly/1iVkGlc
- * @private
- * @param {string} value HTML in string form
- * @returns {string} the modified value
- */
-$.escapeHTML = function (value) {
-  const newValue = value;
-  if (typeof newValue === 'string') {
-    const map = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#x27;',
-      '/': '&#x2F;'
-    };
-    const reg = /[&<>"'/]/ig;
-    return newValue.replace(reg, match => (map[match]));
-  }
-  return newValue;
-};
-
-/**
- * Un-escapes HTML, replacing encoded symbols with special characters.
- * Symbols taken from https://bit.ly/1iVkGlc
- * @private
- * @param {string} value HTML in string form
- * @returns {string} the modified value
- */
-$.unescapeHTML = function (value) {
-  let newValue = value;
-  if (typeof value === 'string') {
-    newValue = newValue.replace(/&amp;/g, '&');
-    newValue = newValue.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-    newValue = newValue.replace(/&quot;/g, '"');
-    newValue = newValue.replace(/&#x27;/g, "'");
-    newValue = newValue.replace(/&#x2F;/g, '/');
-  }
-  return newValue;
-};
-
-/**
  * Clearable (Shows an X to clear)
  * @private
  */

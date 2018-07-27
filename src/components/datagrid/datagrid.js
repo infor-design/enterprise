@@ -2223,7 +2223,7 @@ Datagrid.prototype = {
     const rawValue = obj[field];
     let value = (rawValue || rawValue === 0 || rawValue === false ? rawValue : '');
 
-    value = $.escapeHTML(value);
+    value = xssUtils.escapeHTML(value);
     return value;
   },
 
@@ -6599,10 +6599,10 @@ Datagrid.prototype = {
       }
       // Fix: Not sure why, but `input.closest('td')` did not work
       cellNode = this.tableBody.find(`#${input.attr('id')}`).closest('td');
-      newValue = $.escapeHTML(newValue);
+      newValue = xssUtils.escapeHTML(newValue);
     } else {
       cellNode = input.closest('td');
-      newValue = $.escapeHTML(newValue);
+      newValue = xssUtils.escapeHTML(newValue);
     }
 
     // Format Cell again
@@ -7164,7 +7164,7 @@ Datagrid.prototype = {
       }
     }
 
-    coercedVal = $.unescapeHTML(coercedVal);
+    coercedVal = xssUtils.unescapeHTML(coercedVal);
 
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
@@ -7182,7 +7182,7 @@ Datagrid.prototype = {
     }
 
     // update cell value
-    const escapedVal = $.escapeHTML(coercedVal);
+    const escapedVal = xssUtils.escapeHTML(coercedVal);
     const rowIdx = (isTreeGrid ? row + 1 : row);
     const val = (isEditor ? coercedVal : escapedVal);
     formatted = this.formatValue(formatter, rowIdx, cell, val, col, rowData);

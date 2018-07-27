@@ -1,6 +1,7 @@
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 import { Formatters } from './datagrid.formatters';
+import { xssUtils } from '../../utils/xss';
 
 /**
 *  A object containing all the supported Editors
@@ -169,7 +170,7 @@ const editors = {
 
       container.append('' +
         `<div class="editor-wrapper" style="width: ${this.editorWidth};">
-          <div class="editor" data-init="false">${$.unescapeHTML(value)}</div>
+          <div class="editor" data-init="false">${xssUtils.unescapeHTML(value)}</div>
         </div>`);
       this.td = container.closest('td');
       this.input = $('.editor', container);

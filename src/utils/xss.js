@@ -66,4 +66,64 @@ xssUtils.ensureAlphaNumeric = function (string) {
   return this.stripTags(string).replace(/[^a-z0-9-]/gi, '', '');
 };
 
-export { xssUtils }; //eslint-disable-line
+/**
+ * Escapes HTML, replacing special characters with encoded symbols.
+ * Symbols taken from https://bit.ly/1iVkGlc
+ * @private
+ * @param {string} value HTML in string form
+ * @returns {string} the modified value
+ */
+xssUtils.escapeHTML = function (value) {
+  const newValue = value;
+  if (typeof newValue === 'string') {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      '/': '&#x2F;'
+    };
+    const reg = /[&<>"'/]/ig;
+    return newValue.replace(reg, match => (map[match]));
+  }
+  return newValue;
+};
+
+/**
+ * Un-escapes HTML, replacing encoded symbols with special characters.
+ * Symbols taken from https://bit.ly/1iVkGlc
+ * @private
+ * @param {string} value HTML in string form
+ * @returns {string} the modified value
+ */
+xssUtils.unescapeHTML = function (value) {
+  let newValue = value;
+  if (typeof value === 'string') {
+    newValue = newValue.replace(/&amp;/g, '&');
+    newValue = newValue.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    newValue = newValue.replace(/&quot;/g, '"');
+    newValue = newValue.replace(/&#x27;/g, "'");
+    newValue = newValue.replace(/&#x2F;/g, '/');
+  }
+  return newValue;
+};
+
+/**
+ * htmlentities() is a PHP function which converts special characters (like <)
+ * into their escaped/encoded values (like &lt;). This is a JS verson of it.
+ * This allows you to show to display the string without the browser reading it as HTML.
+ * This is useful for encoding hrefs.
+ * @private
+ * @param {string} string string to process
+ * @returns {string} the processed value
+ */
+xssUtils.htmlEntities = function (string) {
+  return String(string)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+};
+
+export { xssUtils };

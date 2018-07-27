@@ -1,5 +1,6 @@
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
+import { xssUtils } from '../../utils/xss';
 
 /**
 * A object containing all the supported UI formatters.
@@ -289,7 +290,7 @@ const formatters = {
     let classes = 'is-editor';
     classes += col.singleline ? ' is-singleline' : ' datagrid-multiline-text';
     classes += col.contentTooltip ? ' content-tooltip' : '';
-    return `<div class="${classes}">${$.unescapeHTML(formatted)}</div>`;
+    return `<div class="${classes}">${xssUtils.unescapeHTML(formatted)}</div>`;
   },
 
   // Expand / Collapse Button
