@@ -97,6 +97,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.emptyMessage.title='No Data Available']
  * @param {object}   [settings.emptyMessageinfor='']
  * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
+ * @param {boolean}  [settings.searchExpandableRow=true] If true enable expanding of row on search
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
  * icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
@@ -168,7 +169,8 @@ const DATAGRID_DEFAULTS = {
   onDestroyCell: null,
   onEditCell: null,
   onExpandRow: null,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
+  searchExpandableRow: true
 };
 
 function Datagrid(element, settings) {
@@ -5241,6 +5243,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   highlightSearchRows(term) {
+    const self = this;
     // Move across all visible cells and rows, highlighting
     this.tableBody.find('tr').each(function () {
       let found = false;
@@ -5249,8 +5252,9 @@ Datagrid.prototype = {
       row.find('td').each(function () {
         const cell = $(this);
         const cellText = cell.text().toLowerCase();
+        const isSearchExpandableRow = self.settings.searchExpandableRow ? true : !row.hasClass('datagrid-expandable-row');
 
-        if (cellText.indexOf(term) > -1) {
+        if (cellText.indexOf(term) > -1 && isSearchExpandableRow) {
           found = true;
           cell.find('*').each(function () {
             if (this.innerHTML === this.textContent) {
@@ -5264,10 +5268,10 @@ Datagrid.prototype = {
         }
       });
 
-      // Hide non matching rows
-      if (!found) {
+      // Hide non matching rows and non detail rows
+      if (!found && !row.find('.datagrid-row-detail').length) {
         row.addClass('is-filtered').hide();
-      } else if (found && row.is('.datagrid-expandable-row') && term !== '') {
+      } else if (self.settings.searchExpandableRow && found && row.is('.datagrid-expandable-row') && term !== '') {
         row.prev().show();
         row.prev().find('.datagrid-expand-btn').addClass('is-expanded');
         row.prev().find('.plus-minus').addClass('active');
