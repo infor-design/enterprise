@@ -147,13 +147,14 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome*.deb
 ```
 
-1. Update node.js
+1. Update/Install node.js
 
 ```sh
-nvm install 9
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt-get install -y nodejs
 ```
 
-1. Run the tests
+1. Run the travis commands as per the build
 
 ```sh
 npm run quickstart && npm run e2e:ci

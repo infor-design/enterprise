@@ -14,7 +14,7 @@ const setPage = async function (url) {
 
 const radioId = 'option1';
 
-describe('Radios example-index tests', () => {
+fdescribe('Radios example-index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await setPage('/components/radios/example-index');
     await browser.driver
