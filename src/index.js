@@ -26,6 +26,9 @@ import { renderLoop, RenderLoopItem } from './utils/renderloop';
 renderLoop.start();
 export { renderLoop, RenderLoopItem };
 
+// LongPress needs a single instance of itself
+export { longPress } from './behaviors/longpress/longpress';
+
 // Theme/Personalization need single instances of themselves
 export { theme } from './components/personalize/personalize';
 export { personalization } from './components/personalize/personalize.bootstrap';

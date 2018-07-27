@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="six columns">
+    <h2 id="page-title">LongPress Behavior Test: Overlay</h2>
+    <p>Original Issue: <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/245" target="_blank">#245</a></p>
+    <p>Hold down the mouse button, or longpress via touch anywhere on the page to toggle a red overlay.  Note that this test corresponds to one of the LongPress behavior's end-to-end tests.  Also note that on this test, the event handler will return false if the target is a paragraph, hyperlink, or header text node.</p>
+  </div>
+</div>
+
+<style id="test-style">
+  .test-overlay {
+    background-color: #ff0000;
+    bottom: 0;
+    display: none;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .test-overlay.visible {
+    display: block;
+  }
+</style>
+
+<script id="test-script">
+  const ignoredTagNames = ['A', 'P', 'H2', 'SPAN', 'DIV'];
+
+  $('body').on('initialized', function() {
+    // Add the red test overlay
+    $(this).append('<div id="test-overlay" class="test-overlay"></div>');
+
+    // Add a `.longpress-target` CSS class to test nodes.
+    // This prevents touch callouts from appearing on any text nodes, and from touch-based text selection occuring.
+    $(this).find(ignoredTagNames.join(', ').toLowerCase()).addClass('longpress-target');
+
+    // Setup the longpress event
+    $(this).on('longpress.test', function(e) {
+      $('#test-overlay').toggleClass('visible');
+    });
+  });
+</script>

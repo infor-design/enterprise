@@ -11,6 +11,10 @@ const Environment = {
 
   browser: {},
 
+  features: {
+    touch: (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0))
+  },
+
   os: {},
 
   rtl: $('html').attr('dir') === 'rtl',
