@@ -931,9 +931,9 @@ Editor.prototype = {
   },
 
   updateCurrentLink(alink) {
-    const emUrl = $(`[name="em-url-${this.id}"]`).val();
-    const emClass = $(`[name="em-class-${this.id}"]`).val();
-    const emTarget = $(`[name="em-target-${this.id}"]`).val();
+    const emUrl = xssUtils.stripTags($(`[name="em-url-${this.id}"]`).val());
+    const emClass = xssUtils.stripTags($(`[name="em-class-${this.id}"]`).val());
+    const emTarget = xssUtils.stripTags($(`[name="em-target-${this.id}"]`).val());
     const emIsClickable = this.settings.anchor.showIsClickable ? $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
     alink.attr('href', this.fixLinkFormat((emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl)));
@@ -959,7 +959,7 @@ Editor.prototype = {
 
     // Fix and Format the Link
     const originalValue = input[0].value;
-    input.val(this.fixLinkFormat(input[0].value));
+    input.val(xssUtils.stripTags(this.fixLinkFormat(input[0].value)));
 
     // Set selection url/class/target for Link
     this.settings.anchor.url = input.val();
