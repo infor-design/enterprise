@@ -152,7 +152,7 @@ describe('Dropdown example-index tests', () => {
       // Wait for the list to open
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-      const dropdownSearchEl = element(by.id('dropdown-search'));
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
 
       // First key press causes the menu to close
       await dropdownSearchEl.sendKeys(protractor.Key.TAB);
@@ -162,6 +162,27 @@ describe('Dropdown example-index tests', () => {
 
       // The Dropdown Pseudo element should no longer have focus
       expect(await browser.driver.switchTo().activeElement().getAttribute('class')).not.toContain('dropdown');
+    });
+
+    it('Should not allow the escape key to re-open a closed menu', async () => {
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await dropdownEl.click();
+
+      // Wait for the list to open
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+
+      // First key press causes the menu to close
+      await dropdownSearchEl.sendKeys(protractor.Key.ESCAPE);
+
+      // Second key press should do nothing
+      await element(by.css('div[aria-controls="dropdown-list"]')).sendKeys(protractor.Key.ESCAPE);
+
+      // The Dropdown Pseudo element should no longer have focus
+      expect(await browser.driver.switchTo().activeElement().getAttribute('class')).not.toContain('is-open');
     });
   }
 });
