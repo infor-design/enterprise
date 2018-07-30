@@ -37,7 +37,8 @@ Soho.Locale.addCulture('sv-SE', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['fm', 'em']
+    dayPeriods: ['fm', 'em'],
+    firstDayofWeek: 1, // Starts on Monday
   }],
   // numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
   currencySign: 'kr', // (Replace Sign http://www.currencysymbols.in ?)

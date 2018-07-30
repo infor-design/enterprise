@@ -54,9 +54,9 @@
 <script>
   $('body').on('initialized', function() {
 
-    // Randomize the number on the tab counts
-    $('#tabs-counts').find('.count').each(function() {
-      $(this).text((Math.floor(Math.random() * (20 - 0)) + 0) + ' ');
+    var countArr = [0, 12, 100, 0, 99, 12, 1, 200]
+    $('#tabs-counts').find('.count').each(function(i) {
+      $(this).text(countArr[i] + ' ');
     });
   });
 </script>

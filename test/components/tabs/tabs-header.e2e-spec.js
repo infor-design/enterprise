@@ -24,6 +24,17 @@ describe('Tabs header click example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      const tabsEl = await element(by.id('header-tabs'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'header-tabs-init')).toEqual(0);
+    });
+  }
+
   if (!utils.isIE()) {
     xit('Should be accessible on init with no WCAG 2AA violations on example-index', async () => {
       const res = await axePageObjects(browser.params.theme);

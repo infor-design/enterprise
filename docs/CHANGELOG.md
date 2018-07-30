@@ -3,7 +3,7 @@
 ## v4.8.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS NG (Angular) Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
 
 ### v4.8.0 Features
 
@@ -67,7 +67,7 @@
 
 - [Full Jira Release Notes](https://bit.ly/2HyT3zF)
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [Angular Components Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
 
 ### v4.7.0 Features
 
@@ -130,8 +130,7 @@
 
 - [Full Jira Release Notes](https://bit.ly/2jodbem)
 - [Npm Package](http://npm.infor.com)
-- [Angular Components Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)
-- [Example Site](http://usalvlhlpool1.infor.com/4.6.0/components/)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
 
 ### v4.6.0 Key New Features
 
@@ -215,14 +214,9 @@
 
 ## v4.5.0
 
-[Full Jira Release Notes](https://bit.ly/2GlnGJ1)\
-[Npm Package](http://npm.infor.com)\
-[Angular Components Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)\
-[Example Site](http://usalvlhlpool1.infor.com/4.5.0/components/)
-
 ### v4.5.0 Key New Features
 
-- `[Font]` Experimental new font added from IDS as explained [here](http://bit.ly/2p2sjjZ)
+- `[Font]` Experimental new font added from IDS as explained
 - `[Datagrid]` Added support for pasting from excel
 - `[Datagrid]` Added option to specify which column stretches
 

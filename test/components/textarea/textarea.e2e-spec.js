@@ -39,13 +39,14 @@ describe('Textarea example-index tests', () => {
     });
   }
 
-  if (utils.isChrome()) {
-    xit('Should not visual regress', async () => {
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
       const textareaEl = await element(by.id('description-max'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(textareaEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkScreen('textarea')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(textareaEl, 'textarea-init')).toEqual(0);
     });
   }
 });

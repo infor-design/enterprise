@@ -214,6 +214,7 @@
 }
 
 .modal-content {
+  position: relative;
   background: $modal-bg-color;
   border: 1px solid $modal-border-color;
   border-radius: 2px;
@@ -289,6 +290,16 @@
     display: block;
     font-size: 1.5rem;
     margin: 25px auto 5px;
+  }
+
+  .btn-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    .icon {
+      width: 16px;
+    }
   }
 
   .message {
@@ -439,6 +450,11 @@ html[dir='rtl'] {
     h2,
     .message {
       text-align: right;
+    }
+
+    .btn-close {
+      right: auto;
+      left: 0px;
     }
   }
 }

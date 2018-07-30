@@ -256,9 +256,13 @@ Blockgrid.prototype = {
       this.settings.dataset = settings.dataset;
     }
 
-    return this
-      .teardown()
-      .init();
+    this.element.empty();
+    if (this.element[0].classList.contains('paginated')) {
+      this.element.data('pager').renderPages('initial');
+    }
+    this.build();
+
+    return this;
   },
 
   /**

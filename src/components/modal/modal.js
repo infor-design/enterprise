@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { Locale } from '../../../src/components/locale/locale';
 
 // jQuery components
 import '../button/button.jquery';
@@ -22,8 +23,9 @@ const COMPONENT_NAME = 'modal';
 * @param {string} [settings.id=null] Optionally tag a dialog with an id.
 * @param {number} [settings.frameHeight=180] Optional extra height to add.
 * @param {number} [settings.frameWidth=46] Optional extra width to add.
-* @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
 * @param {function} [settings.beforeShow=null] A call back function that can be used to return data for the modal.
+* @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
+* @param {boolean} [settings.showCloseBtn] If true, show a close icon button on the top right of the modal.
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
 */
 const MODAL_DEFAULTS = {
@@ -37,7 +39,8 @@ const MODAL_DEFAULTS = {
   frameHeight: 180,
   frameWidth: 46,
   beforeShow: null,
-  useFlexToolbar: false
+  useFlexToolbar: false,
+  showCloseBtn: false
 };
 
 function Modal(element, settings) {
@@ -124,6 +127,17 @@ Modal.prototype = {
           '</div>' +
         '</div>' +
       '</div>');
+
+    if (this.settings.showCloseBtn) {
+      const closeBtn = $(`
+        <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
+          ${$.createIcon('close')}
+          <span class="audible">${Locale.translate('Close')}</span>
+        </button>
+      `);
+      this.element.find('.modal-content').append(closeBtn);
+      closeBtn.on('click.modal', () => this.close()).tooltip();
+    }
 
     if (this.settings.id) {
       this.element.attr('id', this.settings.id);
@@ -409,13 +423,25 @@ Modal.prototype = {
         return false;
       }
 
-      self.open(true);
-
       $('#modal-busyindicator').trigger('complete.busyindicator');
+
+      // Returning `true` from the response will cause a modal area to render to the page,
+      // but remain hidden.  In this scenario it will be up to the app developer to reveal
+      // the modal when needed.
+      if (content === true) {
+        if (self.busyIndicator) {
+          self.busyIndicator.remove();
+          delete self.busyIndicator;
+        }
+
+        return true;
+      }
 
       if (!(content instanceof jQuery)) {
         content = $(content);
       }
+
+      self.open(true);
 
       self.element.find('.modal-body').empty();
       self.element.find('.modal-body').append(content);
@@ -440,6 +466,7 @@ Modal.prototype = {
 
     if (this.busyIndicator) {
       this.busyIndicator.remove();
+      delete this.busyIndicator;
     }
 
     if (!this.trigger || this.trigger.length === 0) {
@@ -576,7 +603,10 @@ Modal.prototype = {
           this.element.find('.btn-modal-primary:enabled').length) {
         e.stopPropagation();
         e.preventDefault();
-        this.element.find('.btn-modal-primary:enabled').trigger('click');
+
+        if (!target.hasClass('fileupload')) {
+          this.element.find('.btn-modal-primary:enabled').trigger('click');
+        }
       }
     });
 
@@ -726,7 +756,7 @@ Modal.prototype = {
     let tabbableElements;
 
     // Escape key
-    $(document).on('keyup.modal', (e) => {
+    $(document).on('keydown.modal', (e) => {
       const keyCode = e.which || e.keyCode;
       if (keyCode === 27) {
         const modals = $('.modal.is-visible');

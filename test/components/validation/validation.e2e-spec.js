@@ -27,41 +27,17 @@ describe('Validation example-index tests', () => {
 
 describe('Validation disabled form tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/validation/example-form-disabled');
+    await utils.setPage('/components/validation/test-disable-validation');
   });
 
   it('Should be able to disable validation', async () => {
-    const emailEl = await element(by.id('credit-code2'));
-    await emailEl.clear();
+    const submit = await element(by.id('submit'));
+    await submit.click();
 
-    expect(await emailEl.getAttribute('value')).toEqual('');
-
-    await emailEl.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.message-text')).getText()).toBe('Required');
-    expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
-    expect(await emailEl.getAttribute('class')).toContain('error');
-
-    const resetEl = await element(by.id('reset-button'));
-    await resetEl.click();
-
-    expect(await element(by.css('.message-text')).isPresent()).toBe(false);
-    expect(await emailEl.getAttribute('class')).not.toContain('error');
-
-    const changeEl = await element(by.id('change-button'));
-    await changeEl.click();
-
-    expect(await element(by.css('.message-text')).isPresent()).toBe(false);
-    expect(await emailEl.getAttribute('class')).not.toContain('error');
-
-    await emailEl.clear();
-
-    await emailEl.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleep);
-
-    expect(await element(by.css('.message-text')).isPresent()).toBe(false);
-    expect(await emailEl.getAttribute('class')).not.toContain('error');
+    expect(await element.all(by.css('.message-text')).count()).toEqual(1);
+    expect(await element.all(by.css('.icon-error')).count()).toEqual(1);
   });
 });
 
@@ -119,9 +95,10 @@ describe('Validation form submit button', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
     await dropdownEl.click();
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ENTER);
+    const dropdownSearchEl = await element(by.id('dropdown-search'));
+    await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
 
     await browser.driver.sleep(config.sleep);
 
@@ -137,10 +114,10 @@ describe('Validation alert types', () => {
   });
 
   it('Should render different alert types', async () => {
+    await browser.driver.sleep(config.sleep);
     const elem = await element(by.css('.error-message'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(elem), config.waitsFor);
-    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(true);
     expect(await element(by.css('.alert-message')).isPresent()).toBe(true);
@@ -157,13 +134,13 @@ describe('Validation alert on parent', () => {
 
   it('Should render icon on parent', async () => {
     const expander = await element(by.css('.expandable-expander'));
-    expander.click();
+    await expander.click();
 
     const emailEl = await element(by.id('date-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(emailEl), config.waitsFor);
 
-    emailEl.click();
+    await emailEl.click();
     await emailEl.sendKeys('10');
     await emailEl.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
@@ -273,6 +250,7 @@ describe('No Validation on Readonly', () => {
   it('Should not validate when readonly', async () => {
     const email = await element(by.id('ro-email-address-ok'));
 
+    await email.click();
     await email.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
@@ -281,7 +259,8 @@ describe('No Validation on Readonly', () => {
     const toggle = await element(by.id('toggle'));
     toggle.click();
 
-    await email.clear();
+    await browser.driver.sleep(config.sleep);
+    await email.click();
     await email.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
@@ -351,5 +330,35 @@ describe('Validation Emails', () => {
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(false);
     expect(await element(by.css('.icon-confirm')).isPresent()).toBe(true);
+  });
+});
+
+describe('Validation Manual', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/validation/test-validation-form-manual');
+  });
+
+  it('Should be able to handle submit manually', async () => {
+    const submit = await element(by.id('submit'));
+    await submit.click();
+
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.message-text')).count()).toEqual(2);
+    expect(await element.all(by.css('.icon-error')).count()).toEqual(2);
+
+    const email = await element(by.id('email-address-ok'));
+    await email.sendKeys('test@test.com');
+    await email.sendKeys(protractor.Key.TAB);
+
+    const card = await element(by.id('credit-card'));
+    await card.sendKeys('1111-1111-1111-1111');
+    await card.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    await submit.click();
+
+    expect(await element.all(by.css('.message-text')).count()).toEqual(0);
+    expect(await element.all(by.css('.icon-error')).count()).toEqual(0);
   });
 });

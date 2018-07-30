@@ -9,9 +9,12 @@ const COMPONENT_NAME = 'multiselect';
 
 // Component Defaults
 const MULTISELECT_DEFAULTS = {
+  closeOnSelect: false,
+  empty: true,
   filterMode: 'contains',
   maxSelected: undefined,
   moveSelected: 'all',
+  multiple: true,
   showEmptyGroupHeaders: false,
   showSelectAll: false,
   source: undefined
@@ -53,38 +56,7 @@ MultiSelect.prototype = {
    * @returns {void}
    */
   build() {
-    const ddOpts = {
-      closeOnSelect: false,
-      empty: true,
-      moveSelected: 'all',
-      multiple: true
-    };
-
-    if (this.settings.filterMode) {
-      ddOpts.filterMode = this.settings.filterMode;
-    }
-
-    if (this.settings.source) {
-      ddOpts.source = this.settings.source;
-    }
-
-    if (this.settings.maxSelected) {
-      ddOpts.maxSelected = this.settings.maxSelected;
-    }
-
-    if (this.settings.moveSelected) {
-      ddOpts.moveSelected = this.settings.moveSelected;
-    }
-
-    if (this.settings.showEmptyGroupHeaders) {
-      ddOpts.showEmptyGroupHeaders = this.settings.showEmptyGroupHeaders;
-    }
-
-    if (this.settings.showSelectAll) {
-      ddOpts.showSelectAll = this.settings.showSelectAll;
-    }
-
-    this.element.dropdown(ddOpts);
+    this.element.dropdown(this.settings);
     this.dropdown = this.element.data('dropdown');
 
     return this;

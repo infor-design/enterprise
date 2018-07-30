@@ -1,0 +1,4 @@
+.longpress-target {
+  @include css3(user-select, none);
+  -webkit-touch-callout: none;
+}

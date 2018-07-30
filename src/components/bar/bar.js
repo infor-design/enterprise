@@ -132,19 +132,26 @@ Bar.prototype = {
     const tooltipData = self.settings.tooltip;
 
     let maxBarHeight = 30;
-    const legendHeight = 40;
-    const gapBetweenGroups = 0.5; // As of one bar height (barHeight * 0.5)
+    const legendHeight = 30;
+    const gapBetweenGroups = 0.6; // Makes it one bar in height (barHeight * 0.5)
     const isViewSmall = this.element.parent().width() < 450;
+    let dataset = this.settings.dataset;
 
     const margins = {
-      top: self.settings.isStacked ? 30 : 20,
+      top: 20,
       left: 30,
       right: 30,
-      bottom: 30 // 30px plus size of the bottom axis (20)
+      bottom: dataset.length === 1 ? 5 : 30
     };
 
-    let dataset = this.settings.dataset;
     this.element.addClass('bar-chart');
+    if (this.settings.isGrouped) {
+      this.element.addClass('bar-chart-grouped');
+    }
+
+    if (this.settings.isStacked) {
+      this.element.addClass('bar-chart-stacked');
+    }
 
     // Handle Empty Data Set
     if (dataset.length === 0) {
@@ -672,7 +679,7 @@ Bar.prototype = {
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${COMPONENT_NAME}`, () => {
         this.handleResize();
       });
 
@@ -746,8 +753,8 @@ Bar.prototype = {
     this.element.empty();
 
     return this
-      .teardown()
-      .init();
+      .build()
+      .element.trigger('rendered', [this.svg]);
   },
 
   /**
@@ -757,7 +764,7 @@ Bar.prototype = {
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
-    $(window).off(`resize.${COMPONENT_NAME}`);
+    $('body').off(`resize.${COMPONENT_NAME}`);
     return this;
   },
 

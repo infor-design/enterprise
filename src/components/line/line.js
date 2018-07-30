@@ -23,7 +23,8 @@ const COMPONENT_NAME = 'line';
  * for the whole chart.
  * @param {string} [settings.isArea] Render as an area chart.
  * @param {string} [settings.isBubble=false] Render as a bubble chart.
- * @param {string} [settings.showLegend=true] If false the label will not be shown.
+ * @param {string} [settings.isScatterPlot=false] Render as a Scatter Plot Chart.
+* @param {string} [settings.showLegend=true] If false the label will not be shown.
  * @param {object} [settings.xAxis] A series of options for the xAxis
  * @param {number} [settings.xAxis.rotate] Rotate the elements on the x axis.
  * Recommend -65 deg but this can be tweaked depending on look.
@@ -59,6 +60,7 @@ const LINE_DEFAULTS = {
   dataset: [],
   isArea: false,
   isBubble: false,
+  isScatterPlot: false,
   showLegend: true,
   hideDots: false,
   animate: true,
@@ -117,6 +119,7 @@ Line.prototype = {
     };
 
     this.element.addClass(`line-chart${self.settings.isBubble ? ' bubble' : ''}`);
+    this.element.addClass(`line-chart${self.settings.isScatterPlot ? ' scatterplot' : ''}`);
 
     // Handle Empty Data Set
     if (self.settings.dataset.length === 0) {
@@ -131,10 +134,16 @@ Line.prototype = {
       class: 'dot'
     };
 
+    // Set to zero for animation
     if (self.settings.isBubble) {
       dots.radius = 0;
       dots.radiusOnHover = 0;
       dots.strokeWidth = 0;
+    }
+
+    if (self.settings.isScatterPlot) {
+      dots.radius = 0;
+      dots.strokeWidth = 50;
     }
     $.extend(true, dots, this.settings.dots);
 
@@ -247,11 +256,16 @@ Line.prototype = {
     const y = d3.scaleLinear().range([height, 0]);
     const z = d3.scaleLinear().range([1, 25]);
 
-    if (this.settings.isBubble) {
+    if (self.settings.isBubble) {
       maxes = {
         x: dataset.map(function (d) { return getMaxes(d, 'x'); }),
         y: dataset.map(function (d) { return getMaxes(d, 'y'); }),
         z: dataset.map(function (d) { return getMaxes(d, 'z'); })
+      };
+    } else if (self.settings.isScatterPlot) {
+      maxes = {
+        x: dataset.map(function (d) { return getMaxes(d, 'x'); }),
+        y: dataset.map(function (d) { return getMaxes(d, 'y'); })
       };
     } else {
       maxes = dataset.map(function (d) { return getMaxes(d); });
@@ -260,14 +274,15 @@ Line.prototype = {
     const entries = d3.max(dataset.map(function (d) { return d.data.length; })) - 1;
     const xScale = x.domain(!!self.settings.xAxis && !!self.settings.xAxis.domain ?
       (self.settings.xAxis.domain) :
-      ([0, self.settings.isBubble ? d3.max(maxes.x) : entries]));
+      ([0, self.settings.isBubble || self.settings.isScatterPlot ? d3.max(maxes.x) : entries]));
 
-    const yScale = y.domain([0, d3.max(self.settings.isBubble ? maxes.y : maxes)]).nice();
+    const yScale = y.domain([0, d3.max(self.settings.isBubble ||
+      self.settings.isScatterPlot ? maxes.y : maxes)]).nice();
     const zScale = z.domain([0, d3.max(self.settings.isBubble ? maxes.z : maxes)]).nice();
     let numTicks = entries;
     if (self.settings.xAxis && self.settings.xAxis.ticks) {
       numTicks = self.settings.xAxis.ticks === 'auto' ? Math.max(width / 85, 2) : self.settings.xAxis.ticks;
-      if (self.settings.isBubble && isViewSmall) {
+      if (self.settings.isBubble || self.settings.isScatterPlot && isViewSmall) {
         numTicks = Math.round(entries / 2);
       }
     }
@@ -275,7 +290,7 @@ Line.prototype = {
     const xAxis = d3.axisBottom(xScale)
       .ticks(numTicks)
       .tickPadding(10)
-      .tickSize(self.settings.isBubble ? -(height + 10) : 0)
+      .tickSize(self.settings.isBubble || self.settings.isScatterPlot ? -(height + 10) : 0)
       .tickFormat(function (d, j) {
         if (self.settings.xAxis) {
           if (self.settings.xAxis.formatter) {
@@ -285,7 +300,7 @@ Line.prototype = {
             return names[d];
           }
         }
-        return self.settings.isBubble ? d : names[j];
+        return self.settings.isBubble || self.settings.isScatterPlot ? d : names[j];
       });
 
     const yAxis = d3.axisLeft(yScale)
@@ -353,7 +368,7 @@ Line.prototype = {
     // Offset the tick inside, uses the fact that the yAxis has 20 added.
     self.svg.selectAll('.tick line').attr('x1', '-10');
 
-    if (self.settings.isBubble) {
+    if (self.settings.isBubble || self.settings.isScatterPlot) {
       self.svg.selectAll('.x.axis .tick line, .y.axis .tick line').style('opacity', 0);
       self.svg.select('.x.axis .tick line').attr('x2', '-10').style('opacity', 1);
       self.svg.select('.y.axis .tick line').style('opacity', 1);
@@ -391,10 +406,10 @@ Line.prototype = {
         if (!!self.settings.xAxis && !!self.settings.xAxis.parser) {
           return xScale(self.settings.xAxis.parser(d, n));
         }
-        return xScale(self.settings.isBubble ? d.value.x : n);
+        return xScale(self.settings.isBubble || self.settings.isScatterPlot ? d.value.x : n);
       })
       .y(function (d) {
-        return yScale(self.settings.isBubble ? d.value.y : d.value);
+        return yScale(self.settings.isBubble || self.settings.isScatterPlot ? d.value.y : d.value);
       });
 
     // Append the lines
@@ -410,7 +425,8 @@ Line.prototype = {
           })
           .y0(height)
           .y1(function (db) {
-            return yScale(self.settings.isBubble ? db.value.y : db.value);
+            return yScale(self.settings.isBubble ||
+              self.settings.isScatterPlot ? db.value.y : db.value);
           });
 
         lineGroups.append('path')
@@ -425,7 +441,7 @@ Line.prototype = {
         .datum(d.data)
         .attr('d', line(d.data))
         .attr('stroke', function () {
-          return self.settings.isBubble ? '' : charts.chartColor(lineIdx, 'line', d);
+          return self.settings.isBubble || self.settings.isScatterPlot ? '' : charts.chartColor(lineIdx, 'line', d);
         })
         .attr('stroke-width', 2)
         .attr('fill', 'none')
@@ -444,111 +460,143 @@ Line.prototype = {
         .ease(d3.easeCubic)
         .attr('stroke-dashoffset', 0);
 
-      if (!hideDots) {
-        lineGroups.selectAll('circle')
-          .data(d.data)
-          .enter()
-          .append('circle')
-          .attr('class', dots.class)
-          .attr('cx', function (dd, p) {
-            if (!!self.settings.xAxis && !!self.settings.xAxis.parser) {
-              return xScale(self.settings.xAxis.parser(dd, p));
-            }
-            return xScale(self.settings.isBubble ? dd.value.x : p);
-          })
-          .attr('cy', function (de) { return yScale(self.settings.isBubble ? 0 : de.value); })
-          .attr('r', dots.radius)
-          .style('stroke-width', dots.strokeWidth)
-          .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
-          .style('opacity', (self.settings.isBubble ? '.7' : '1'))
-          .on('mouseenter.chart', function (mouseEnterData) {
-            const rect = this.getBoundingClientRect();
-            let content = `<p><b>${mouseEnterData.name} </b> ${format(mouseEnterData.value)}</p>`;
+      const handleMouseEnter = function (elem, mouseEnterData) {
+        const rect = elem.getBoundingClientRect();
+        let content = `<p><b>${mouseEnterData.name} </b> ${format(mouseEnterData.value)}</p>`;
 
-            const show = function () {
-              const size = charts.tooltipSize(content);
-              let posX = rect.left - (size.width / 2) + 6;
-              const posY = rect.top - size.height - 18;
+        const show = function () {
+          const size = charts.tooltipSize(content);
+          let posX = rect.left - (size.width / 2) + 6;
+          const posY = rect.top - size.height - 18;
 
-              posX = self.settings.isBubble ?
-                ((rect.left + (rect.width / 2)) - (size.width / 2)) : posX;
+          posX = self.settings.isBubble || self.settings.isScatterPlot ?
+            ((rect.left + (rect.width / 2)) - (size.width / 2)) : posX;
 
-              if (content !== '') {
-                charts.showTooltip(posX, posY, content, 'top');
-              }
-            };
+          if (content !== '') {
+            charts.showTooltip(posX, posY, content, 'top');
+          }
+        };
 
-            if (self.settings.isBubble) {
-              content = `${'' +
-                '<div class="chart-swatch" style="min-width: 95px;">' +
-                  '<div class="swatch-caption">' +
-                    '<span style="background-color:'}${charts.chartColor(lineIdx, 'line', mouseEnterData)};" class="indicator-box"></span>` +
-                    `<b>${mouseEnterData.name}</b>` +
-                  '</div>';
+        if (self.settings.isBubble || self.settings.isScatterPlot) {
+          content = `${'' +
+            '<div class="chart-swatch" style="min-width: 95px;">' +
+              '<div class="swatch-caption">' +
+                '<span style="background-color:'}${charts.chartColor(lineIdx, 'line', mouseEnterData)};" class="indicator-box"></span>` +
+                `<b>${mouseEnterData.name}</b>` +
+              '</div>';
 
-              for (const key in mouseEnterData) {  //eslint-disable-line
-                if (mouseEnterData.hasOwnProperty(key)) {  //eslint-disable-line
-                  if (typeof mouseEnterData[key] !== 'object') {
+          for (const key in mouseEnterData) {  //eslint-disable-line
+            if (mouseEnterData.hasOwnProperty(key)) {  //eslint-disable-line
+              if (typeof mouseEnterData[key] !== 'object') {
+                content += `${'' +
+                    '<div class="swatch-row">' +
+                      '<span>'}${labels[key]}</span>` +
+                      `<b>${d.name}</b>` +
+                    '</div>';
+              } else {
+                const obj2 = mouseEnterData[key];
+                for (const key2 in obj2) {  //eslint-disable-line
+                  if (obj2.hasOwnProperty(key2)) {  //eslint-disable-line
                     content += `${'' +
                         '<div class="swatch-row">' +
-                          '<span>'}${labels[key]}</span>` +
-                          `<b>${d.name}</b>` +
+                          '<span style="text-transform: capitalize;">'}${labels[key][key2]}</span>` +
+                          `<b>${formatValue(valueFormatterString[key2], obj2[key2])}</b>` +
                         '</div>';
-                  } else {
-                    const obj2 = mouseEnterData[key];
-                    for (const key2 in obj2) {  //eslint-disable-line
-                      if (obj2.hasOwnProperty(key2)) {  //eslint-disable-line
-                        content += `${'' +
-                            '<div class="swatch-row">' +
-                              '<span style="text-transform: capitalize;">'}${labels[key][key2]}</span>` +
-                              `<b>${formatValue(valueFormatterString[key2], obj2[key2])}</b>` +
-                            '</div>';
-                      }
-                    }
                   }
                 }
               }
-              content += '</div>';
             }
+          }
+          content += '</div>';
+        }
 
-            if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
-              content = '';
-              let runInterval = true;
-              tooltipInterval = setInterval(function () {
-                if (runInterval) {
-                  runInterval = false;
-                  tooltipData(function (data) {
-                    content = data;
-                    tooltipDataCache[i] = data;
-                  });
-                }
-                if (content !== '') {
-                  clearInterval(tooltipInterval);
-                  show();
-                }
-              }, 10);
-            } else {
-              tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
-              content = tooltipDataCache[i] || tooltipData || mouseEnterData.tooltip || d.tooltip || content || '';
+        if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
+          content = '';
+          let runInterval = true;
+          tooltipInterval = setInterval(function () {
+            if (runInterval) {
+              runInterval = false;
+              tooltipData(function (data) {
+                content = data;
+                tooltipDataCache[i] = data;
+              });
+            }
+            if (content !== '') {
+              clearInterval(tooltipInterval);
               show();
             }
+          }, 10);
+        } else {
+          tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
+          content = tooltipDataCache[i] || tooltipData || mouseEnterData.tooltip || d.tooltip || content || '';
+          show();
+        }
 
-            // Circle associated with hovered point
-            d3.select(this).attr('r', function (df) {
-              return self.settings.isBubble ? (2 + zScale(df.value.z)) : dots.radiusOnHover;
-            });
-          })
-          .on('mouseleave.chart', function () {
-            clearInterval(tooltipInterval);
-            charts.hideTooltip();
-            d3.select(this).attr('r', function (dg) {
-              return self.settings.isBubble ? zScale(dg.value.z) : dots.radius;
-            });
-          })
-          .on('click.chart', function (dh) {
-            charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element);
-          });
+        // Circle associated with hovered point
+        d3.select(this).attr('r', function (df) {
+          return self.settings.isBubble ? (2 + zScale(df.value.z)) : dots.radiusOnHover;
+        });
+      };
 
+      if (!hideDots) {
+        if (!self.settings.isScatterPlot) {
+          lineGroups.selectAll('circle')
+            .data(d.data)
+            .enter()
+            .append('circle')
+            .attr('class', dots.class)
+            .attr('cx', function (dd, p) {
+              if (!!self.settings.xAxis && !!self.settings.xAxis.parser) {
+                return xScale(self.settings.xAxis.parser(dd, p));
+              }
+              return xScale(self.settings.isBubble || self.settings.isScatterPlot ? dd.value.x : p);
+            })
+            .attr('cy', function (de) { return yScale(self.settings.isBubble || self.settings.isScatterPlot ? 0 : de.value); })
+            .attr('r', dots.radius)
+            .style('stroke-width', dots.strokeWidth)
+            .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
+            .style('opacity', (self.settings.isBubble || self.settings.isScatterPlot ? '.7' : '1'))
+            .on('mouseenter.chart', function (mouseEnterData) {
+              handleMouseEnter(this, mouseEnterData);
+            })
+            .on('mouseleave.chart', function () {
+              clearInterval(tooltipInterval);
+              charts.hideTooltip();
+              d3.select(this).attr('r', function (dg) {
+                return self.settings.isBubble ? zScale(dg.value.z) : dots.radius;
+              });
+            })
+            .on('click.chart', function (dh) {
+              charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element);
+            });
+        }
+
+        if (self.settings.isScatterPlot) {
+          lineGroups.selectAll('.symbol')
+            .data(d.data)
+            .enter()
+            .append('path')
+            .attr('class', 'symbol')
+            .attr('transform', function (ds) {
+              return `translate(${xScale(ds.value.x)},${yScale(ds.value.y)})`;
+            })
+            .attr('d', d3.symbol().size(dots.strokeWidth).type(function () { return d3.symbols[lineIdx]; }))
+            .style('opacity', 0)
+            .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
+            .on('mouseenter.chart', function (mouseEnterData) {
+              handleMouseEnter(this, mouseEnterData);
+            })
+            .on('mouseleave.chart', function () {
+              clearInterval(tooltipInterval);
+              charts.hideTooltip();
+              d3.select(this).attr('r', function () {
+                return dots.radius;
+              });
+            })
+            .on('click.chart', function (dh) {
+              charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element);
+            });
+        }
         if (self.settings.isBubble) {
           // Add animation
           lineGroups.selectAll('circle')
@@ -556,6 +604,14 @@ Line.prototype = {
             .transition().duration(self.settings.animate ? 750 : 0)
             .ease(d3.easeCubic)
             .attr('r', function (dj) { return zScale(dj.value.z); });
+        }
+
+        if (self.settings.isScatterPlot) {
+          // Add animation
+          lineGroups.selectAll('.symbol')
+            .transition().duration(self.settings.animate ? 750 : 0)
+            .ease(d3.easeCubic)
+            .style('opacity', 1);
         }
       }
     });
@@ -570,7 +626,7 @@ Line.prototype = {
     });
 
     if (this.settings.showLegend) {
-      charts.addLegend(series, 'line', this.settings, this.element);
+      charts.addLegend(series, self.settings.isScatterPlot ? 'scatterplot' : 'line', this.settings, this.element);
     }
     charts.appendTooltip();
 
@@ -686,7 +742,7 @@ Line.prototype = {
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${COMPONENT_NAME}`, () => {
         this.handleResize();
       });
 
@@ -761,8 +817,7 @@ Line.prototype = {
       this.settings.dataset = settings.dataset;
     }
     return this
-      .teardown()
-      .init();
+      .build();
   },
 
   /**
@@ -772,7 +827,7 @@ Line.prototype = {
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
-    $(window).off(`resize.${COMPONENT_NAME}`);
+    $('body').off(`resize.${COMPONENT_NAME}`);
     return this;
   },
 

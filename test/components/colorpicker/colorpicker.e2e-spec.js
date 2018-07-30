@@ -10,8 +10,32 @@ describe('Colorpicker example-index tests', () => {
     await utils.setPage('/components/colorpicker/example-index');
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      await browser.driver.sleep(config.waitsFor);
+      const colorpickerSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(colorpickerSection), config.waitsFor);
+      const colorpickerContainer = await element.all(by.className('colorpicker-container')).first();
+
+      expect(await browser.protractorImageComparison.checkElement(colorpickerContainer, 'colorpicker-init')).toEqual(0);
+      await element(by.css('#background-color + .trigger .icon')).click();
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(colorpickerSection, 'colorpicker-open')).toEqual(0);
+    });
+  }
+
   it('Should open popup on icon click', async () => {
     await element(by.css('#background-color + .trigger .icon')).click();
+
+    expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
+  });
+
+  it('Should open popup on keyboard down', async () => {
+    const colorInputEl = await element(by.css('#background-color'));
+    await colorInputEl.click();
+    await colorInputEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
   });
@@ -21,6 +45,34 @@ describe('Colorpicker example-index tests', () => {
     await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
 
     expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#1A1A1A');
+  });
+
+  it('Should pick color from picker on keyboard enter', async () => {
+    const colorInputEl = await element(by.id('background-color'));
+    await colorInputEl.click();
+    await colorInputEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.id('colorpicker-menu'))), config.waitsFor);
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_UP).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_UP).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+
+    expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#1A1A1A');
+  });
+
+  it('Should set color from manual entry of #898989', async () => {
+    const colorInputEl = await element(by.id('background-color'));
+    await colorInputEl.click();
+    await colorInputEl.clear();
+    await colorInputEl.sendKeys('898989');
+    await colorInputEl.sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#898989');
+    expect(await element.all(by.className('swatch')).first().getAttribute('style')).toBe('background-color: rgb(137, 137, 137);');
   });
 
   it('Should pick clear color from picker', async () => {
@@ -202,5 +254,137 @@ describe('Colorpicker states tests', () => {
 
   it('Should check for api option Just Color', async () => {
     expect(await element(by.id('color-only')).getCssValue('width')).toBe('10px');
+  });
+});
+
+describe('Colorpicker modal tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/colorpicker/test-modal');
+  });
+
+  it('Should open colorpicker modal', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+  });
+
+  it('Should select color, and close colorpicker modal on "cancel" button click', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await element(by.css('#color1 + .trigger .icon')).click();
+    await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
+
+    expect(await element(by.id('color1')).getAttribute('value')).toEqual('#1A1A1A');
+    await element(by.id('modal-button-1')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+  });
+
+  it('Should select color, and close colorpicker modal on "save" button click', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await element(by.css('#color1 + .trigger .icon')).click();
+    await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
+
+    expect(await element(by.id('color1')).getAttribute('value')).toEqual('#1A1A1A');
+    await element(by.id('modal-button-2')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+  });
+
+  it('Should select from both colorpickers, and close colorpicker modal on "save" button click', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await element(by.css('#color1 + .trigger .icon')).click();
+    await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
+
+    expect(await element(by.id('color1')).getAttribute('value')).toEqual('#1A1A1A');
+    await element(by.css('#color2 + .trigger .icon')).click();
+    await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
+
+    expect(await element(by.id('color2')).getAttribute('value')).toEqual('#1A1A1A');
+    await element(by.id('modal-button-2')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+  });
+
+  it('Should close colorpicker modal on keypress escape', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+  });
+
+  it('Should tab to, and open second colorpicker, tab out, and press enter on cancel to close', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+
+    expect(await element(by.id('color2')).getAttribute('value')).toEqual('#1A1A1A');
+
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+  });
+
+  it('Should tab to, and enter hex, and press enter, display value, and close modal', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys('1a1a1a').perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+
+    expect(await element(by.id('color2')).getAttribute('value')).toEqual('#1A1A1A');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
   });
 });
