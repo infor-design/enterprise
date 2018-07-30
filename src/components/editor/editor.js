@@ -936,9 +936,11 @@ Editor.prototype = {
     const emTarget = xssUtils.stripTags($(`[name="em-target-${this.id}"]`).val());
     const emIsClickable = this.settings.anchor.showIsClickable ? $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
-    alink.attr('href', this.fixLinkFormat((emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl)));
-    alink.attr('class', (emClass && $.trim(emClass).length ? emClass : this.settings.anchor.defaultClass));
-    alink.attr('data-url', (emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl).replace('http://', ''));
+    if (alink) {
+      alink[0].setAttribute('href', this.fixLinkFormat((emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl)));
+      alink[0].setAttribute('class', (emClass && $.trim(emClass).length ? emClass : this.settings.anchor.defaultClass));
+      alink[0].setAttribute('data-url', (emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl).replace('http://', ''));
+    }
 
     if (emIsClickable) {
       alink.attr('contenteditable', false);

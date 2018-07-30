@@ -27,7 +27,7 @@
       source: function(ui, callback) {
         var categoryId = ui.anchor.attr('data-category-id'),
           setContent = function (htmlString) {
-            ui.pane.append(htmlString);
+            ui.pane.append(Soho.xss.stripTags(htmlString, '<div><span><a>'));
             callback();
           },
           isCategory = categoryId || 'fruits';

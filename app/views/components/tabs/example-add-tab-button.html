@@ -92,7 +92,7 @@
 
       var stringName = name.toLowerCase().replace(/[^a-z\d\s]/g, '').split(' ').join('-');
 
-      var existing = $('[id^="'+ stringName +'"]');
+      var existing = $('[id^="'+ Soho.xss.ensureAlphaNumeric(stringName) +'"]');
       if (!existing.length) {
         return stringName + '-0';
       }

@@ -39,11 +39,9 @@
       var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
 
       setTimeout(function () {
-
          $.getJSON(url, function(res) {
           $('#datagrid').data('datagrid').loadData(res.data);
          });
-
       }, 3000);
 
   });

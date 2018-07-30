@@ -1,6 +1,7 @@
 // Other Shared Imports
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
@@ -391,7 +392,11 @@ CompletionChart.prototype = {
       '</div>';
     }
 
-    html.body.append(html.remaining, html.completed, html.targetline);
+    html.body.append(
+      xssUtils.stripTags(html.remaining, '<div><span>'),
+      xssUtils.stripTags(html.completed, '<div><span>'),
+      xssUtils.stripTags(html.targetline, '<div><span>')
+    );
     this.element.append(html.label, html.body);
 
     cacheElements();

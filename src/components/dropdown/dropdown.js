@@ -122,9 +122,9 @@ Dropdown.prototype = {
     this.timer = null;
     this.filterTerm = '';
 
-    if (orgId === undefined) {
+    if (!orgId) {
       orgId = this.element.uniqueId('dropdown');
-      this.element.attr('id', orgId);
+      this.element[0].setAttribute('id', orgId);
       this.element.parent().find('label').first()[0].setAttribute('for', orgId);
     }
 

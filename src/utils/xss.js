@@ -24,6 +24,10 @@ xssUtils.stripHTML = function stripHTML(str) {
  * @returns {string} the modified value
  */
 xssUtils.stripTags = function (html, allowed) {
+  if (!html) {
+    return '';
+  }
+
   const whitelist = ((`${allowed || ''}`)
     .toLowerCase()
     .match(/<[a-z][a-z0-9]*>/g) || [])
