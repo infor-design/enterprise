@@ -297,10 +297,10 @@ Autocomplete.prototype = {
         self.list.append(xssUtils.sanitizeHTML(renderedTmpl));
       } else {
         const listItem = $('<li role="listitem"></li>');
-        listItem.attr('id', dataset.listItemId);
-        listItem.attr('data-index', dataset.index);
-        listItem.attr('data-value', dataset.value);
-        listItem.append(`<a href="#" tabindex="-1"><span>${dataset.label}</span></a>`);
+        listItem.attr('id', xssUtils.ensureAlphaNumeric(dataset.listItemId));
+        listItem.attr('data-index', xssUtils.ensureAlphaNumeric(dataset.index));
+        listItem.attr('data-value', xssUtils.ensureAlphaNumeric(dataset.value));
+        listItem.append(`<a href="#" tabindex="-1"><span>${xssUtils.ensureAlphaNumeric(dataset.label)}</span></a>`);
         self.list.append(xssUtils.sanitizeHTML(listItem));
       }
     });
@@ -542,7 +542,7 @@ Autocomplete.prototype = {
       if (deferredStatus === false) {
         return dfd.reject(searchTerm);
       }
-      return dfd.resolve(searchTerm, response);
+      return dfd.resolve(xssUtils.ensureAlphaNumeric(searchTerm), response);
     }
 
     this.loadingTimeout = setTimeout(() => {

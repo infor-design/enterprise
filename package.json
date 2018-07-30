@@ -53,7 +53,6 @@
     "test": "npm run mdlint && npm run eslint && npm run functional:ci && npm run e2e:ci"
   },
   "dependencies": {
-    "csurf": "^1.9.0",
     "d3": "^4.13.0",
     "jquery": "^3.3.1"
   },
@@ -70,6 +69,7 @@
     "chai-jquery": "^2.0.0",
     "chalk": "^2.3.2",
     "connect-multiparty": "^2.0.0",
+    "csurf": "^1.9.0",
     "del": "^3.0.0",
     "directory-to-s3": "^1.0.0",
     "documentation": "^5.3.5",
@@ -80,6 +80,7 @@
     "eslint-plugin-jasmine-jquery": "^1.0.0",
     "express": "^4.13.4",
     "express-csp": "^0.1.3",
+    "express-session": "^1.15.6",
     "express-slash": "^2.0.1",
     "extend": "^3.0.0",
     "front-matter": "^2.3.0",

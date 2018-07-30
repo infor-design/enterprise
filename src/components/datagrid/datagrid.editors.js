@@ -168,10 +168,10 @@ const editors = {
       this.editorWidth = api.setUnit(editorOptions.width || container.outerWidth());
       delete editorOptions.width;
 
-      container.append('' +
+      container[0].innerHTML =
         `<div class="editor-wrapper" style="width: ${this.editorWidth};">
           <div class="editor" data-init="false">${xssUtils.unescapeHTML(value)}</div>
-        </div>`);
+        </div>`;
       this.td = container.closest('td');
       this.input = $('.editor', container);
 

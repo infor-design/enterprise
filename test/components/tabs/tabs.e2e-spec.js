@@ -418,17 +418,40 @@ describe('Tabs click example-url-hash-change tests', () => {
   });
 });
 
-fdescribe('Tabs ajax as source tests', () => { //eslint-disable-line
+describe('Tabs ajax as source tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/test-ajax-source-as-string');
-    const tabsContainerEl = await element(by.id('tabs'));
+    const tabsContainerEl = await element(by.id('ajaxified-tabs'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
   it('Should be able to activate tabs', async () => {
-    await clickTabTest('4');
-    await clickTabTest('2');
-    await clickTabTest('1');
+    expect(await element(by.id('tab-one')).getAttribute('innerHTML')).not.toBe('');
+
+    await element.all(by.className('tab')).get(2).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#tab-three.is-visible'))), config.waitsFor);
+
+    expect(await element(by.id('tab-three')).getAttribute('innerHTML')).not.toBe('');
+  });
+});
+
+describe('Tabs ajax as href tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/test-ajax-source-as-tab-href');
+    const tabsContainerEl = await element(by.id('ajaxified-tabs-tab-1'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
+  });
+
+  it('Should be able to activate href tabs', async () => {
+    expect(await element(by.id('ajaxified-tabs-tab-1')).getAttribute('innerHTML')).not.toBe('');
+
+    await element.all(by.className('tab')).get(2).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#ajaxified-tabs-tab-2.is-visible'))), config.waitsFor);
+
+    expect(await element(by.id('ajaxified-tabs-tab-2')).getAttribute('innerHTML')).not.toBe('');
   });
 });

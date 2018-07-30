@@ -100,8 +100,6 @@ module.exports = (req, res, next) => {
       }
     }
 
-    paragraph += '.';
-
     if (type === 'html') {
       paragraph += '</p>';
     }
