@@ -6252,6 +6252,13 @@ Datagrid.prototype = {
           } else {
             self.setActiveCell(row, cell);
           }
+
+          if (key === 9 && self.settings.actionableMode) {
+            self.makeCellEditable(self.activeCell.rowIndex, cell, e);
+            if (self.isContainTextfield(node) && self.notContainTextfield(node)) {
+              self.quickEditMode = true;
+            }
+          }
           self.quickEditMode = false;
           handled = true;
         }
@@ -6357,6 +6364,7 @@ Datagrid.prototype = {
         if (!self.editor) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
+        e.preventDefault();
       }
 
       // if column have click function to fire [ie. action button]
@@ -7441,7 +7449,7 @@ Datagrid.prototype = {
 
   setNextActiveCell(e) {
     const self = this;
-    if (e.type === 'keydown') {
+    if (e.type === 'keydown' && !self.settings.actionableMode) {
       if (this.settings.actionableMode) {
         setTimeout(() => {
           const evt = $.Event('keydown.datagrid');
