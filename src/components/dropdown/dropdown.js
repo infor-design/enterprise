@@ -1286,7 +1286,9 @@ Dropdown.prototype = {
     }
 
     // Down arrow opens the list.
-    const openKeys = ['ArrowDown', 'ArrowUp', 'Enter', 'Spacebar', ' '];
+    // Down/Up are for IE/Edge.
+    // ArrowDown/ArrowUp are for all others.
+    const openKeys = ['ArrowDown', 'ArrowUp', 'Down', 'Up', 'Enter', 'Spacebar', ' '];
     if (openKeys.indexOf(key) > -1) {
       if (!this.isOpen()) {
         this.open();

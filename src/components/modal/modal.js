@@ -581,7 +581,7 @@ Modal.prototype = {
     $(this.element).on('keypress.modal', (e) => {
       const target = $(e.target);
 
-      if (target.is('.dropdown, .editor, .searchfield, textarea, :button') || target.closest('.tab-list').length) {
+      if (target.is('editor, .searchfield, textarea, :button') || target.closest('.tab-list').length || $('#dropdown-list').length) {
         return;
       }
 
@@ -747,14 +747,6 @@ Modal.prototype = {
       const keyCode = e.which || e.keyCode;
       if (keyCode === 27) {
         const modals = $('.modal.is-visible');
-        const doAction = function (api) {
-          if (!api.element.data('listclosed')) {
-            api.close();
-          }
-          setTimeout(() => {
-            api.element.removeData('listclosed');
-          }, 0);
-        };
 
         if (modals.length > 1) {
           modals.not(':last').on('beforeclose.modal', () => false);
@@ -763,10 +755,10 @@ Modal.prototype = {
           });
           const apiModal = modals.last().data('modal');
           if (apiModal && apiModal.close) {
-            doAction(apiModal);
+            apiModal.close();
           }
         } else {
-          doAction(self);
+          self.close();
         }
       }
     });
