@@ -126,7 +126,6 @@ $badge-info-bg-color: $primary-color;
 $badge-neutral-icon-color: $pill-neutral-icon-color;
 $badge-neutral-hover-icon-color: $pill-neutral-hover-icon-color;
 
-
 // Popup Menu
 $popupmenu-color: $white;
 $popupmenu-icon-color: $slate01;
@@ -136,17 +135,6 @@ $popupmenu-border-color: $slate05;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-checked-color: $azure06;
 $popupmenu-hover-color: $slate06;
-
-// Form Buttons
-$primary-btn-bg-color: $primary-color;
-$primary-btn-color: $button-primary-text-color;
-$primary-btn-hover-bg-color: $button-primary-hover-bg-color;
-$primary-btn-focus-bg-color: $button-primary-focus-bg-color;
-$primary-btn-active-bg-color: $button-primary-active-bg-color;
-$primary-btn-disabled-color: $primary-btn-color;
-$primary-btn-disabled-bg-color: $button-primary-disabled-bg-color; //Primary at 50%
-$primary-btn-disabled-border-color: $button-primary-disabled-border-color;
-$primary-btn-disabled-opacity: $button-disabled-opacity;
 
 // Secondary/Normal Buttons
 $btn-color: $button-default-text-color;

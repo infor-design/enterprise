@@ -116,35 +116,35 @@ button {
 
 // standard, primary, destructive
 .btn-primary {
-  background-color: $primary-btn-bg-color;
-  border: 1px solid $primary-btn-bg-color;
-  color: $primary-btn-color;
+  background-color: $button-primary-bg-color;
+  border: 1px solid $button-primary-bg-color;
+  color: $button-primary-text-color;
 
   &.btn {
-    color: $primary-btn-color;
+    color: $button-primary-text-color;
   }
 
   .icon {
-    fill: $primary-btn-color;
+    fill: $button-primary-text-color;
   }
 
   // In case both are specified
   &.btn {
-    color: $primary-btn-color;
+    color: $button-primary-text-color;
   }
 
   &:hover {
-    background-color: $primary-btn-hover-bg-color;
-    border: 1px solid $primary-btn-hover-bg-color;
+    background-color: $button-primary-hover-bg-color;
+    border: 1px solid $button-primary-hover-bg-color;
 
     &.btn {
-      color: $primary-btn-color;
+      color: $button-primary-text-color;
     }
   }
 
   &:active {
-    background-color: $primary-btn-active-bg-color;
-    border: 1px solid $primary-btn-active-bg-color;
+    background-color: $button-primary-active-bg-color;
+    border: 1px solid $button-primary-active-bg-color;
     box-shadow: none;
   }
 
@@ -152,23 +152,23 @@ button {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color, $focus-box-shadow;
+      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $button-primary-bg-color, $focus-box-shadow;
     }
 
     &:active {
-      background-color: $primary-btn-active-bg-color;
+      background-color: $button-primary-active-bg-color;
       box-shadow: none;
     }
   }
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $primary-btn-disabled-bg-color;
-    border-color: $primary-btn-disabled-border-color;
+    background-color: $button-primary-disabled-bg-color;
+    border-color: $button-primary-disabled-border-color;
     box-shadow: none;
-    color: $primary-btn-disabled-color;
+    color: $color-primary-contrast;
     cursor: default;
-    opacity: $primary-btn-disabled-opacity;
+    opacity: $button-disabled-opacity;
 
     .icon {
       fill: $white;
@@ -182,18 +182,18 @@ button {
   }
 
   &.btn-menu {
-    color: $primary-btn-color;
+    color: $button-primary-text-color;
 
     .icon {
-      fill: $primary-btn-color;
+      fill: $button-primary-text-color;
     }
 
     &:hover,
     &.is-open {
-      color: $primary-btn-color;
+      color: $button-primary-text-color;
 
       .icon {
-        fill: $primary-btn-color;
+        fill: $button-primary-text-color;
       }
     }
 
@@ -612,10 +612,10 @@ a.btn-close {
 
 .btn-toggle {
   &.is-pressed {
-    color: $primary-btn-bg-color !important;
+    color: $button-primary-bg-color !important;
 
     svg {
-      fill: $primary-btn-bg-color !important;
+      fill: $button-primary-bg-color !important;
     }
   }
 }

@@ -152,15 +152,15 @@ $popupmenu-hover-color: $graphite04;
 $popupmenu-checked-color: $azure09;
 
 // Form Buttons
-$primary-btn-bg-color: $primary-color;
-$primary-btn-color: $button-primary-text-color;
-$primary-btn-hover-bg-color: $button-primary-hover-bg-color;
-$primary-btn-focus-bg-color: $primary-color;
-$primary-btn-active-bg-color: $button-primary-active-bg-color;
-$primary-btn-disabled-color: $button-primary-text-color;
-$primary-btn-disabled-bg-color: $primary-color; //Primary at 50%
-$primary-btn-disabled-border-color: $primary-color;
-$primary-btn-disabled-opacity: $button-disabled-opacity;
+$button-primary-bg-color: $button-primary-bg-color;
+$button-primary-text-color: $button-primary-text-color;
+$button-primary-hover-bg-color: $button-primary-hover-bg-color;
+$button-primary-focus-bg-color: $primary-color;
+$button-primary-active-bg-color: $button-primary-active-bg-color;
+$color-primary-contrast: $button-primary-text-color;
+$button-primary-disabled-bg-color: $primary-color; //Primary at 50%
+$button-primary-disabled-border-color: $primary-color;
+$button-disabled-opacity: $button-disabled-opacity;
 
 // Secondary/Normal Buttons
 $btn-color: $button-default-text-color;
