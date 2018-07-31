@@ -27,6 +27,7 @@
   "scripts": {
     "start": "npm run build  && node app/server.js",
     "quickstart": "npx grunt demo && node app/server.js",
+    "quickstart:livereload": "npx grunt demo && node app/server.js --livereload",
     "build": "npx grunt",
     "stop": "./scripts/stop.sh",
     "watch": "npm run build -- watch",
