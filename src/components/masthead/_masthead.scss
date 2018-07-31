@@ -101,7 +101,9 @@ $masthead-button-focus-color: $white;
     [class^="btn"] {
       background-color: transparent;
       color: $masthead-text-color;
-
+      vertical-align: top;
+      margin: 3px 3px 2px 0;
+      
       .ripple-effect {
         background-color: $white;
       }
