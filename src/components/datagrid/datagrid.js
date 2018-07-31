@@ -7351,7 +7351,7 @@ Datagrid.prototype = {
     }
 
     // Find the cell if it exists
-    self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), (cell), null, targetLevel).attr('tabindex', '0');
+    self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), (cell), false, targetLevel).attr('tabindex', '0');
 
     if (self.activeCell.node && prevCell.node.length === 1) {
       self.activeCell.row = rowNum;
