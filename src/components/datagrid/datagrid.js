@@ -4394,6 +4394,7 @@ Datagrid.prototype = {
   cellNode(row, cell, includeGroups, targetLevel) {
     let cells = null;
     let rowNode = null;
+    targetLevel = targetLevel || 0;
 
     if (row instanceof jQuery) {
       rowNode = row;

@@ -250,7 +250,7 @@ describe('Datagrid Validation API', () => {
       expect(document.body.querySelectorAll('tbody tr')[2].querySelector('td[aria-colindex="4"]').querySelectorAll('.icon-error').length).toEqual(1);
 
       const rowNode = datagridObj.dataRowNode(2);
-      const node = datagridObj.cellNode(rowNode, 3);
+      const node = datagridObj.cellNode(rowNode, 3, 0);
 
       datagridObj.clearNodeErrors(node, 'error');
 
