@@ -26,6 +26,7 @@ const COMPONENT_NAME = 'popupmenu';
  * @param {function} [settings.beforeOpen]  Callback that can be used for populating the contents of the menu.
  * @param {string} [settings.ariaListbox=false]   Switches aria to use listbox construct instead of menu construct (internal).
  * @param {string} [settings.eventObj]  Can pass in the event object so you can do a right click with immediate.
+ * @param {string} [settings.triggerSelect]  If false select event will not be triggered.
  * @param {string} [settings.showArrow]  If true you can explicitly set an arrow on the menu.
  * @param {boolean|function} [settings.returnFocus]  If set to false, focus will not be
   returned to the calling element. Can also be defined as a callback that can determine how
@@ -50,6 +51,7 @@ const POPUPMENU_DEFAULTS = {
   eventObj: undefined,
   returnFocus: true,
   showArrow: null,
+  triggerSelect: true,
   placementOpts: new PlacementObject({
     containerOffsetX: 10,
     containerOffsetY: 10,
@@ -1129,7 +1131,7 @@ PopupMenu.prototype = {
     // Trigger a selected event containing the anchor that was selected
     // If an event object is not passed to `handleItemClick()`, assume it was due to this
     // event being triggered already, making it not necessary to re-trigger it.
-    if (e) {
+    if (e && this.settings.triggerSelect) {
       if (selectionResult.length === 1) {
         selectionResult.push(undefined);
       }
