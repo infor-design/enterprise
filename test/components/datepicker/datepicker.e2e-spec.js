@@ -275,6 +275,7 @@ describe('Datepicker Month Year Changer Tests', () => {
   it('Should be able to change month and year from the pickers', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver.sleep(config.sleep);
 
     const dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -295,14 +296,14 @@ describe('Datepicker Month Year Changer Tests', () => {
 
     const lastButtonEl = await element(by.css('.next.btn-icon'));
     await lastButtonEl.sendKeys(protractor.Key.ENTER);
-
     await browser.driver.sleep(config.sleep);
+
     const buttonEl = await element.all(by.css('.calendar-table td:not(.alternate)')).first();
     await buttonEl.click();
+    await browser.driver.sleep(config.sleep);
 
     const testDate = new Date();
     testDate.setMonth(testDate.getMonth() + 1);
-    testDate.setTime(testDate.getTime() + testDate.getTimezoneOffset() * 60 * 1000);
 
     expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual(`${(testDate.getMonth())}/1/${testDate.getFullYear()}`);
   });
