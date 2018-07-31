@@ -4390,7 +4390,7 @@ Datagrid.prototype = {
    * @param  {boolean} includeGroups If true groups are taken into account.
    * @returns {object} The dom node
    */
-  cellNode(row, cell, includeGroups) {
+  cellNode(row, cell, includeGroups, targetLevel) {
     let cells = null;
     let rowNode = null;
 
@@ -4411,7 +4411,7 @@ Datagrid.prototype = {
       return $();
     }
 
-    cells = rowNode.find('td');
+    cells = $(rowNode[targetLevel]).find('td');
     return cells.eq(cell >= cells.length ? cells.length - 1 : cell);
   },
 
@@ -4578,7 +4578,9 @@ Datagrid.prototype = {
       * @property {object} args.originalEvent The original event object.
       */
       self.triggerRowEvent('click', e, true);
-      self.setActiveCell(target.closest('td'));
+
+      const targetLevel = target.parents('.datagrid-expandable-row').length;
+      self.setActiveCell(target.closest('td'), null, targetLevel);
 
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn')) {
@@ -7291,7 +7293,7 @@ Datagrid.prototype = {
   },
 
   // Update a specific Cell
-  setActiveCell(row, cell) {
+  setActiveCell(row, cell, targetLevel) {
     const self = this;
     const prevCell = self.activeCell;
     let rowElem = row;
@@ -7348,7 +7350,7 @@ Datagrid.prototype = {
     }
 
     // Find the cell if it exists
-    self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), (cell)).attr('tabindex', '0');
+    self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), (cell), null, targetLevel).attr('tabindex', '0');
 
     if (self.activeCell.node && prevCell.node.length === 1) {
       self.activeCell.row = rowNum;
