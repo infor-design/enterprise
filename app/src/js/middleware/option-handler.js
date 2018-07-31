@@ -67,8 +67,8 @@ module.exports = function (app, defaults) {
       res.opts.enableLiveReloadVM = true;
       res.opts.enableLiveReload = false;
     }
-    console.log(req.hostname);
-
+    logger('info', req.hostname);
+    logger('info', req);
     next();
   };
 };
