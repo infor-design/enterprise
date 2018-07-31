@@ -32,7 +32,7 @@
         var activatedRow = grid.activatedRow();
 
         if (selectedRow) {
-          grid.unSelectAllRows(true);
+          grid.unSelectAllRows();
         }
 
         var activatedRowIndex = -1;
@@ -55,6 +55,8 @@
         // -------------------------------------------------------------------------------------------------
         request.firstPage = result.firstPage;
         request.lastPage = result.lastPage;
+        request.beginIndex = result.beginIndex;
+        request.endIndex = result.endIndex;
 
         // -------------------------------------------------------------------------------------------------
         // put the new page of data back into the datagrid
@@ -85,7 +87,9 @@
         endIndex = beginIndex + request.pagesize;
 
         var result = {
-          data: getData().slice(beginIndex, endIndex),
+          data: getData(),
+          beginIndex: beginIndex,
+          endIndex: endIndex,
           firstPage: beginIndex === 0,
           lastPage: endIndex >= getData().length - 1
         };

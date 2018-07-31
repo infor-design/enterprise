@@ -589,6 +589,19 @@ Datagrid.prototype = {
       pagerInfo = {};
     }
 
+    if (this.settings.paging) {
+      let maxCounter = pagerInfo.endIndex;
+      let step = pagerInfo.beginIndex;
+      for (let i = 0; i < this.settings.dataset.length; i++) {
+        if (i >= step && step !== maxCounter) {
+          this.settings.dataset[i].render = true;
+          step++;
+        } else {
+          this.settings.dataset[i].render = false;
+        }
+      }
+    }
+
     if (pagerInfo.type === 'filterrow') {
       pagerInfo.activePage = this.pager && this.pager.activePage || 1;
       pagerInfo.pagesize = this.settings.pagesize;
@@ -2436,7 +2449,14 @@ Datagrid.prototype = {
         currentCount = this.recordCount;
       }
 
-      tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
+      if (this.settings.paging && this.settings.source) {
+        if (s.dataset[i] && s.dataset[i].render) {
+          tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
+        }
+      } else {
+        tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
+      }
+
       this.recordCount++;
 
       if (s.dataset[i].rowStatus) {
@@ -5315,14 +5335,10 @@ Datagrid.prototype = {
 
   /**
   * Deselect all rows that are currently selected.
-  * @param {boolean} isPager Do not remove selected nodes if the call comes from a pager
   */
-  unSelectAllRows(isPager) {
-    if (!isPager) {
-      isPager = false;
-    }
-
+  unSelectAllRows() {
     const selectedRows = this.selectedRows();
+    let isPager = this.settings.paging;
     this.dontSyncUi = true;
     for (let i = 0, l = selectedRows.length; i < l; i++) {
       const idx = this.pagingRowIndex(selectedRows[i].idx);
@@ -5709,13 +5725,9 @@ Datagrid.prototype = {
   * @param {number} idx The row index
   * @param {boolean} nosync Do not sync the header
   * @param {boolean} noTrigger Do not trigger any events
-  * @param {boolean} isPager Do not remove selected nodes if the call comes from a pager
+  * @param {boolean} IsPager Determines if the calls come from the unselectAllRows with paging
   */
   unselectRow(idx, nosync, noTrigger, isPager) {
-    if (!isPager) {
-      isPager = false;
-    }
-
     const self = this;
     const s = self.settings;
     const rowNode = self.actualRowNode(idx);
