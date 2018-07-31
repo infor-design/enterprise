@@ -32,6 +32,10 @@ describe('Kitchen-sink tests', () => {
       });
     }
 
+    it('Should not have errors', async () => {
+      await utils.checkForErrors();
+    });
+
     it('Should change themes', async () => {
       const buttonChangerEl = await element(by.css('.page-changer'));
       await browser.driver

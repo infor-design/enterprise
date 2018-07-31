@@ -78,8 +78,14 @@ describe('Autocomplete example-index tests', () => {
         .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('autocomplete-list'))), config.waitsFor);
 
       expect(await element(by.id('autocomplete-default')).getAttribute('value')).toEqual('New Jersey');
+
+      await utils.checkForErrors();
     });
   }
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
 
   xit('Should clear a dirty autocomplete field with `alt + backspace/del`', async () => {
     await clickOnAutocomplete();

@@ -62,10 +62,21 @@ module.exports = function (app, defaults) {
       res.opts.nonce = Math.random().toString(12).replace(/[^a-z0-9]+/g, '').substr(0, 8);
     }
 
-    // Disable live reload for IE
+    let useLiveReload = false;
+    process.argv.forEach((val) => {
+      if (val === '--livereload') {
+        useLiveReload = true;
+      }
+    });
 
-    if (req.hostname === '10.0.2.2') {
+    // Disable live reload for IE
+    if (req.hostname === '10.0.2.2' && useLiveReload) {
       res.opts.enableLiveReloadVM = true;
+      res.opts.enableLiveReload = false;
+    }
+
+    if (!useLiveReload) {
+      res.opts.enableLiveReloadVM = false;
       res.opts.enableLiveReload = false;
     }
 

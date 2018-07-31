@@ -8,6 +8,7 @@
  *
  * Flags:
  * --verbose       - Log all details
+ * --livereload    - Enable livereload
  *
  * NOTE: More than likely there is a command in the package.json
  * to run this script with NPM.
