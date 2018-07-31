@@ -15,6 +15,7 @@ describe('Editor example-index tests', () => {
 
     await elem.clear();
     await elem.sendKeys('Test');
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.editor')).getText()).toEqual('Test');
     await browser.driver.sleep(config.sleep);
@@ -22,9 +23,9 @@ describe('Editor example-index tests', () => {
     await browser.driver.sleep(config.sleep);
 
     const sourceElem = await element(by.tagName('textarea'));
-    sourceElem.getText().then((text) => {
-      expect(text.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('Test');
-    });
+    const testText = await sourceElem.getText();
+
+    expect(testText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('Test');
 
     await sourceElem.sendKeys('<b>Test</b>');
     await element(by.css('button[data-action=visual]')).click();

@@ -32,11 +32,9 @@ describe('Validation short-field tests', () => {
 
   it('Should validate all short fields', async () => {
     const bodyEl = await element(by.css('body'));
-    const tabs = [];
     for (let i = 0; i < 30; i++) {
-      tabs.push(bodyEl.sendKeys(protractor.Key.TAB));
+      await bodyEl.sendKeys(protractor.Key.TAB);  //eslint-disable-line
     }
-    await Promise.all(tabs);
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.message-text')).count()).toEqual(21);
@@ -107,7 +105,7 @@ describe('Validation form submit button', () => {
 
     const submitButton = await element(by.id('submit'));
 
-    expect(submitButton.isEnabled()).toBe(false);
+    expect(await submitButton.isEnabled()).toBe(false);
 
     const dropdownEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver

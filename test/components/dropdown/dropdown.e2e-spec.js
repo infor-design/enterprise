@@ -180,6 +180,7 @@ describe('Dropdown example-index tests', () => {
 
       // Second key press should do nothing
       await element(by.css('div[aria-controls="dropdown-list"]')).sendKeys(protractor.Key.ESCAPE);
+      await browser.driver.sleep(config.sleep);
 
       // The Dropdown Pseudo element should no longer have focus
       expect(await browser.driver.switchTo().activeElement().getAttribute('class')).not.toContain('is-open');
