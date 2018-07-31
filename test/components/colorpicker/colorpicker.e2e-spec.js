@@ -343,4 +343,48 @@ describe('Colorpicker modal tests', () => {
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
   });
+
+  it('Should tab to, and open second colorpicker, tab out, and press enter on cancel to close', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+
+    expect(await element(by.id('color2')).getAttribute('value')).toEqual('#1A1A1A');
+
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+  });
+
+  it('Should tab to, and enter hex, and press enter, display value, and close modal', async () => {
+    const modalBtnEl = await element(by.id('add-comment'));
+    await modalBtnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys('1a1a1a').perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+
+    expect(await element(by.id('color2')).getAttribute('value')).toEqual('#1A1A1A');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
+
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+  });
 });
