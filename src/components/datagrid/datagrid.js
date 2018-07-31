@@ -4388,6 +4388,7 @@ Datagrid.prototype = {
    * @param  {number} row The row index.
    * @param  {number} cell The cell index.
    * @param  {boolean} includeGroups If true groups are taken into account.
+   * @param  {number} targetLevel The level of the nested grid (0 is not nested).
    * @returns {object} The dom node
    */
   cellNode(row, cell, includeGroups, targetLevel) {
