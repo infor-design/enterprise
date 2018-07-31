@@ -105,7 +105,7 @@ describe('Validation form submit button', () => {
 
     const submitButton = await element(by.id('submit'));
 
-    expect(submitButton.isEnabled()).toBe(false);
+    expect(await submitButton.isEnabled()).toBe(false);
 
     const dropdownEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver
