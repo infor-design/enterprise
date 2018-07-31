@@ -132,6 +132,18 @@ describe('Datagrid API', () => {
     expect(document.body.querySelectorAll('tbody tr').length).toEqual(2);
   });
 
+  it('Should be able to call updateDataset with null toolbar', () => {
+    const newData = [];
+    newData.push({ id: 1, productId: 2142201, sku: 'SKU #9000001-237', productName: 'Compressor' });
+    newData.push({ id: 2, productId: 2241202, sku: 'SKU #9000001-236', productName: 'Different Compressor' });
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, toolbar: null });
+
+    datagridObj.updateDataset(newData);
+
+    expect(document.body.querySelectorAll('tbody tr').length).toEqual(2);
+  });
+
   it('Should be able to call triggerSource', (done) => {
     let didCallSource = false;
 
