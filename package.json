@@ -48,8 +48,8 @@
     "documentation": "node ./scripts/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
     "release:beta": "release-it minor --preRelease=beta",
-    "release:rc": "release-it minor --preRelease=rc",
-    "release:final": "release-it minor",
+    "release:rc": "release-it --preRelease=rc",
+    "release:final": "release-it",
     "prepublishOnly": "npm run build",
     "test": "npm run mdlint && npm run eslint && npm run functional:ci && npm run e2e:ci"
   },
