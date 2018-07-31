@@ -12,5 +12,10 @@ module.exports = {
     const pageurl = `${browser.baseUrl + url}?theme=${browser.params.theme}`;
     await browser.waitForAngularEnabled(false);
     await browser.driver.get(pageurl);
+  },
+  checkForErrors: async () => {
+    await browser.manage().logs().get('browser').then((browserLog) => {
+      expect(browserLog.length).toEqual(0);
+    });
   }
 };
