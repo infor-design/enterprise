@@ -16,7 +16,7 @@ module.exports = {
   checkForErrors: async () => {
     await browser.manage().logs().get('browser').then((browserLog) => {
       for (let i = 0; i < browserLog.length; i++) {
-        console.log(browserLog[i].level.name, browserLog[i].index); //eslint-disable-line
+        console.log(browserLog[i].level.name, browserLog[i].message); //eslint-disable-line
       }
       expect(browserLog.length).toEqual(0);
     });
