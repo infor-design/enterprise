@@ -590,7 +590,7 @@ Datagrid.prototype = {
     }
 
     if (this.settings.paging) {
-      let maxCounter = pagerInfo.endIndex;
+      const maxCounter = pagerInfo.endIndex;
       let step = pagerInfo.beginIndex;
       for (let i = 0; i < this.settings.dataset.length; i++) {
         if (i >= step && step !== maxCounter) {
@@ -5338,7 +5338,7 @@ Datagrid.prototype = {
   */
   unSelectAllRows() {
     const selectedRows = this.selectedRows();
-    let isPager = this.settings.paging;
+    const isPager = this.settings.paging;
     this.dontSyncUi = true;
     for (let i = 0, l = selectedRows.length; i < l; i++) {
       const idx = this.pagingRowIndex(selectedRows[i].idx);
@@ -5725,7 +5725,7 @@ Datagrid.prototype = {
   * @param {number} idx The row index
   * @param {boolean} nosync Do not sync the header
   * @param {boolean} noTrigger Do not trigger any events
-  * @param {boolean} IsPager Determines if the calls come from the unselectAllRows with paging
+  * @param {boolean} isPager Determines if the calls come from the unselectAllRows with paging
   */
   unselectRow(idx, nosync, noTrigger, isPager) {
     const self = this;
