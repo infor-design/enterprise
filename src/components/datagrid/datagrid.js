@@ -4566,6 +4566,11 @@ Datagrid.prototype = {
         return;
       }
 
+      if (target.parents('td').length > 1) {
+        e.preventDefault(); // stop nested clicks from propagating
+        e.stopPropagation();
+      }
+
       /**
       * Fires after a row is clicked.
       * @event click
@@ -7348,7 +7353,7 @@ Datagrid.prototype = {
     }
 
     // Find the cell if it exists
-    self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), (cell)).attr('tabindex', '0');
+    self.activeCell.node = self.cellNode((isGroupRow || rowElem ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), cell).attr('tabindex', '0');
 
     if (self.activeCell.node && prevCell.node.length === 1) {
       self.activeCell.row = rowNum;
