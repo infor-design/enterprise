@@ -76,7 +76,7 @@ describe('Datagrid API', () => {
     datagridObj = new Datagrid(datagridEl, {
       filterable: true,
       dataset: data,
-      columns,
+      columns: columns,
       paging: true,
       pagesize: 10,
       source(e) {

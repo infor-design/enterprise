@@ -2449,7 +2449,7 @@ Datagrid.prototype = {
         currentCount = this.recordCount;
       }
 
-      if (this.settings.paging && this.settings.source) {
+      if (this.settings.paging && this.settings.source && this.settings.source.name !== 'source') {
         if (s.dataset[i] && s.dataset[i].render) {
           tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
         }
