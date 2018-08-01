@@ -46,6 +46,7 @@ git config --global credential.helper wincred
 
 1. Make sure you have release-it installed (`npm install release-it -g`)
 1. Checkout the release branch and `git pull --tags`
+    - Set the master branch to the next minor dev version. For example if we made branch `4.9.x`, then the `master` package.json version should now be changed to `4.10.0-dev`
 1. Run a release cmd:
     - `npm run release:beta` - beta
     - `npm run release:rc` - release candidate normally the final testing branch before the release
