@@ -7119,7 +7119,22 @@ Datagrid.prototype = {
       rowNode = this.visualRowNode(row);
       cellNode = rowNode.find('td').eq(cell);
     }
-    const oldVal = (col.field ? rowData[col.field] : '');
+    // const oldVal = (col.field ? rowData[col.field] : '');
+    let oldVal = '';
+    if (col.field) {
+      if (col.field.indexOf('.') > -1) {
+        var parts = col.field.split('.');
+        if (parts.length === 2) {
+          oldVal = rowData[parts[0]][parts[1]];
+        }
+
+        if (parts.length === 3) {
+          oldVal = rowData[parts[0]][parts[1]][parts[2]];
+        }
+      } else {
+        oldVal = rowData[col.field];
+      }
+    }
 
     // Coerce/Serialize value if from cell edit
     if (!fromApiCall) {
