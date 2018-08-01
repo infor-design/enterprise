@@ -468,7 +468,7 @@ Datagrid.prototype = {
       * @property {object} args.oldValue - Always an empty object added for consistent api.
       */
       self.element.triggerHandler('addrow', args);
-    }, 10);
+    }, 100);
   },
 
   /**
