@@ -401,10 +401,10 @@ Pie.prototype = {
         const rads = self.midAngle(d);
 
         // https://www.wyzant.com/resources/lessons/math/trigonometry/unit-circle
-        const isTop = (rads < (Math.PI / 4) && rads > 0) || rads > (7 * Math.PI / 4);
-        const isRight = rads < (3 * Math.PI / 4) && rads > (Math.PI / 4);
-        const isBottom = rads < (5 * Math.PI / 4) && rads > (3 * Math.PI / 4);
-        const isLeft = rads < (7 * Math.PI / 4) && rads > (5 * Math.PI / 4);
+        const isTop = (rads <= (Math.PI / 4) && rads >= 0) || rads > (7 * Math.PI / 4);
+        const isRight = rads <= (3 * Math.PI / 4) && rads >= (Math.PI / 4);
+        const isBottom = rads <= (5 * Math.PI / 4) && rads >= (3 * Math.PI / 4);
+        const isLeft = rads <= (7 * Math.PI / 4) && rads >= (5 * Math.PI / 4);
 
         // Build the content
         let content = '';
