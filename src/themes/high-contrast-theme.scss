@@ -150,7 +150,6 @@ $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-heading-color: $graphite07;
 $popupmenu-hover-color: $graphite04;
 $popupmenu-checked-color: $azure09;
-$popupmenu-checked-color-light: $azure06;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
@@ -779,17 +778,4 @@ $treemap-title-color: $white;
 // Override contrast text on high contrast
 .datagrid-cell-wrapper .chart-targeted-text {
   color: $white;
-}
-
-// Change color of masthead check submenu
-.high-contrast-theme {
-  .masthead {
-    .popupmenu {
-      li {
-        &.is-checked > a::before {
-          border-color: $popupmenu-checked-color-light $popupmenu-checked-color-light $popupmenu-checked-color-light transparent;
-        }
-      }
-    }
-  }
 }

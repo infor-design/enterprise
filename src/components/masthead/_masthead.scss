@@ -7,6 +7,7 @@ $masthead-text-color: $slate03;
 $masthead-button-color: $slate04;
 $masthead-button-hover-color: $white;
 $masthead-button-focus-color: $white;
+$popupmenu-checked-color-inverse: $azure06;
 
 .masthead {
   background-color: $masthead-bg-color;
@@ -72,6 +73,14 @@ $masthead-button-focus-color: $white;
   .toolbar {
     height: 100%;
     margin-bottom: 0;
+
+    .popupmenu {
+      li {
+        &.is-checked > a::before {
+          border-color: $popupmenu-checked-color-inverse $popupmenu-checked-color-inverse $popupmenu-checked-color-inverse transparent;
+        }
+      }
+    }
 
     .title {
       height: 100%;
