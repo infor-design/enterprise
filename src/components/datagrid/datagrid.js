@@ -4413,7 +4413,7 @@ Datagrid.prototype = {
       return $();
     }
 
-    cells = $(rowNode[targetLevel]).find('td');
+    cells = rowNode.length <= targetLevel ? rowNode.find('td') : $(rowNode[targetLevel]).find('td');
     return cells.eq(cell >= cells.length ? cells.length - 1 : cell);
   },
 
