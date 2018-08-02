@@ -135,9 +135,8 @@ Tree.prototype = {
    */
   decorateNode(a) {
     let parentCount = 0;
-    let badgeData = a.attr('data-badge');
-    const alertIcon = a.attr('data-alert-icon');
-    const badge = { elem: $('<span class="tree-badge badge"></span>') };
+    let badgeData = a[0].getAttribute('data-badge');
+    const alertIcon = a[0].getAttribute('data-alert-icon');
     const isParentsDisabled = a.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0;
     const isDisabled = a.hasClass('is-disabled') || isParentsDisabled;
 
@@ -186,59 +185,25 @@ Tree.prototype = {
 
     a.text('');
     if (a.children('svg.icon-tree').length === 0) {
-      a.prepend($.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
+      a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
 
       if (this.settings.useStepUI) {
-        a.prepend($.createIcon({ icon: alertIcon, classes: ['step-alert', `icon-${alertIcon}`] }));
+        a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: alertIcon, classes: ['step-alert', `icon-${alertIcon}`] }));
       }
     }
 
     // Inject checkbox
     if (this.isMultiselect && !this.settings.hideCheckboxes) {
-      const span = document.createElement('span');
-      span.classList.add('tree-checkbox');
-      a[0].appendChild(span);
+      a[0].insertAdjacentHTML('beforeend', '<span class="tree-checkbox"></span>');
     }
 
     // Inject badge
-    if (badgeData && !badgeData.remove) {
-      badge.text = '';
-
-      if (typeof badgeData.text !== 'undefined') {
-        badge.text = badgeData.text.toString();
-        badge.elem.html(badge.text);
-        if (badge.text.length === 1) {
-          badge.elem.addClass('round');
-        }
-      }
-
-      let badgeStyle = '';
-      if (/info|good|error|alert|pending/i.test(badgeData.type)) {
-        badge.elem.addClass(badgeData.type);
-      } else if (badgeData.type && badgeData.type.charAt(0) === '#' && badgeData.type.length === 7) {
-        badgeStyle = `background-color: ${badgeData.type} !important;`;
-      }
-      if (badgeData.backColor) {
-        badgeStyle = `background-color: ${badgeData.backColor} !important;`;
-      }
-      if (badgeData.foreColor) {
-        badgeStyle += `color: ${badgeData.foreColor} !important;`;
-      }
-
-      badge.elem.attr('style', badgeStyle);
-
-      if (badge.elem.text() !== '') {
-        a.append(badge.elem);
-      }
-      if (badgeData.type && badgeData.type.indexOf('pending') !== -1) {
-        badge.elem.text('');
-      }
+    const badgeHtml = this.getBadgeHtml(badgeData);
+    if (badgeHtml !== '') {
+      a[0].insertAdjacentHTML('beforeend', badgeHtml);
     }
 
-    const span = document.createElement('span');
-    span.classList.add('tree-text');
-    span.textContent = text;
-    a[0].appendChild(span);
+    a[0].insertAdjacentHTML('beforeend', `<span class="tree-text">${text}</span>`);
 
     if (a.is('[class^="icon"]')) {
       // CreateIconPath
@@ -949,9 +914,22 @@ Tree.prototype = {
     self.element.empty();
 
     self.loading = true;
+    self.jsonData = [];
+    let html = '';
     for (let i = 0, l = dataset.length; i < l; i++) {
-      self.addNode(dataset[i], 'bottom');
+      html += self.getNodeHtml(dataset[i], i);
     }
+    self.element[0].insertAdjacentHTML('beforeend', html);
+    const nodes = [].slice.call(self.element[0].querySelectorAll('a[role="treeitem"]'));
+    nodes.forEach((node, i) => {
+      const a = $(node);
+      const data = self.jsonData[i];
+      a.data('jsonData', data);
+      if (data.selected) {
+        self.selectNode(a, data.focus);
+      }
+    });
+    self.jsonData = undefined;
     self.loading = false;
 
     self.syncDataset(self.element);
@@ -959,6 +937,124 @@ Tree.prototype = {
     self.focusFirst();
     self.attachMenu(self.settings.menuId);
     self.createSortable();
+  },
+
+  /**
+   * Create html for given json data.
+   * @private
+   * @param {object} data to do html.
+   * @param {number} position for node.
+   * @param {number} level for node.
+   * @param {boolean} isParentsDisabled for node.
+   * @returns {string} created html
+   */
+  getNodeHtml(data, position, level, isParentsDisabled) {
+    level = level || 0;
+    position += 1;
+    const s = this.settings;
+    const isDisabled = isParentsDisabled || data.disabled || false;
+    const a = {
+      id: typeof data.id !== 'undefined' ? ` id="${data.id}"` : '',
+      href: ` href="${typeof data.href !== 'undefined' ? data.href : '#'}"`,
+      expanded: ` aria-expanded="${data.open ? 'true' : 'false'}"`,
+      icon: 'tree-node',
+      alertIcon: '',
+      alertIconAttr: typeof data.alertIcon !== 'undefined' ? ` data-alert-icon="${data.alertIcon}"` : '',
+      text: `<span class="tree-text">${data.text}</span>`,
+      classList: ` class="hide-focus${isDisabled ? ' is-disabled' : ''}"`,
+      ariaDisabled: isDisabled ? 'aria-disabled="true"' : '',
+      checkbox: this.isMultiselect && !this.settings.hideCheckboxes ? '<span class="tree-checkbox"></span>' : '',
+      badge: typeof data.badge === 'object' ? this.getBadgeHtml(data.badge) : ''
+    };
+    this.jsonData.push(data);
+
+    if (s.useStepUI) {
+      a.alertIcon = `<svg class="icon step-alert icon-${data.alertIcon}" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-${data.alertIcon}"></use>`;
+    }
+
+    const isChildren = typeof data.children !== 'undefined';
+    let liClassList = isChildren ? 'folder' : '';
+    liClassList += data.selected ? ' is-selected' : '';
+    if (liClassList !== '') {
+      liClassList += data.open ? ' is-open' : '';
+      liClassList = ` class="${liClassList}"`;
+    }
+    if (isChildren) {
+      if (data.open) {
+        a.icon = s.folderIconOpen;
+        isParentsDisabled = isDisabled;
+      } else {
+        a.icon = s.folderIconClosed;
+      }
+    } else if (data.icon) {
+      a.icon = data.icon;
+    }
+    a.icon = `#icon-${a.icon.replace(/^#?icon-?/, '')}`;
+
+    let html = `
+      <li${liClassList}>
+        <a role="treeitem" area-selected="false"
+          area-level="${level}"
+          area-position="${position}"
+          area-setsize="${position}"
+          ${a.id + a.href + a.classList + a.expanded + a.ariaDisabled + a.alertIconAttr}>
+            <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${a.icon}"></use>
+            </svg>${a.checkbox + a.alertIcon + a.badge + a.text}
+        </a>`;
+
+    if (isChildren) {
+      html += `<ul class="folder${data.open ? ' is-open' : ''}" role="group">`;
+      for (let i = 0, l = data.children.length; i < l; i++) {
+        html += this.getNodeHtml(data.children[i], i, (level + 1), isParentsDisabled);
+      }
+      html += '</ul>';
+    }
+    html += '</li>';
+
+    return html;
+  },
+
+  /**
+   * Create badge html.
+   * @private
+   * @param {object} badgeData to do html.
+   * @returns {string} html created
+   */
+  getBadgeHtml(badgeData) {
+    const badge = { html: '', style: '', class: ['badge', 'tree-badge'] };
+
+    if (badgeData && !badgeData.remove) {
+      badge.text = '';
+
+      if (typeof badgeData.text !== 'undefined') {
+        badge.text = badgeData.text.toString();
+        if (badge.text.length === 1) {
+          badge.class.push('round');
+        }
+      }
+
+      if (/info|good|error|alert|pending/i.test(badgeData.type)) {
+        badge.class.push(badgeData.type);
+      } else if (badgeData.type && badgeData.type.charAt(0) === '#' && badgeData.type.length === 7) {
+        badge.style = `background-color: ${badgeData.type} !important;`;
+      }
+      if (badgeData.backColor) {
+        badge.style = `background-color: ${badgeData.backColor} !important;`;
+      }
+      if (badgeData.foreColor) {
+        badge.style += `color: ${badgeData.foreColor} !important;`;
+      }
+      if (badge.style !== '') {
+        badge.style = ` style="${badge.style}"`;
+      }
+      if (badge.text !== '') {
+        if (badgeData.type && badgeData.type.indexOf('pending') !== -1) {
+          badge.text = '';
+        }
+        badge.html = `<span class="${badge.class.join(' ')}"${badge.style}>${badge.text}</span>`;
+      }
+    }
+    return badge.html;
   },
 
   // Functions to Handle Internal Data Store
