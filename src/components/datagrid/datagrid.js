@@ -7127,7 +7127,7 @@ Datagrid.prototype = {
       rowNode = this.visualRowNode(row);
       cellNode = rowNode.find('td').eq(cell);
     }
-    const oldVal = (col.field ? rowData[col.field] : '');
+    const oldVal = this.fieldValue(rowData, col.field);
 
     // Coerce/Serialize value if from cell edit
     if (!fromApiCall) {

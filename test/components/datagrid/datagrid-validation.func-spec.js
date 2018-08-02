@@ -260,54 +260,16 @@ describe('Datagrid Validation API', () => {
     }, 0);
   });
 
-  it('Should show currently dirty rows', () => {
-    const output = [{
-      id: 2,
-      productId: 2241202,
-      productName: 'Different Compressor',
-      activity: 'Inspect and Repair',
-      quantity: 2,
-      price: 210.991,
-      status: '',
-      portable: false,
-      action: 1,
-      percent: '',
-      phone: '',
-      description: 'The kit has an air blow gun that can be used for cleaning',
-      rowStatus: {
-        icon: 'dirty',
-        text: '[Dirty]',
-        tooltip: '[Dirty]'
-      }
-    },
-    {
-      id: 4,
-      productId: 2445204,
-      productName: 'Another Compressor',
-      activity: 'Assemble Paint',
-      portable: true,
-      quantity: 3,
-      price: '',
-      status: 'OK',
-      action: 3,
-      percent: '',
-      phone: '',
-      description: 'Compressor comes with with air tool kit',
-      rowStatus: {
-        icon: 'dirty',
-        text: '[Dirty]',
-        tooltip: '[Dirty]'
-      }
-    }];
+  it('Should show currently dirty rows', (done) => {
     datagridObj.rowStatus(1, 'dirty');
     datagridObj.rowStatus(3, 'dirty');
-    const dirtyRows = datagridObj.dirtyRows();
 
-    // OrderDate contains current time
-    delete dirtyRows[0].orderDate;
-    delete dirtyRows[1].orderDate;
+    setTimeout(() => {
+      const dirtyRows = datagridObj.dirtyRows();
 
-    expect(dirtyRows).toEqual(output);
+      expect(dirtyRows.length).toEqual(2);
+      done();
+    }, 0);
   });
 
   it('Should show in title non visible error on another page', () => {
