@@ -49,7 +49,7 @@
     "webdriver:update": "npx webdriver-manager update --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
-    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
+    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.9.0 -v",
     "release:beta": "release-it minor --preRelease=beta",
     "release:rc": "release-it minor --preRelease=rc",
     "release:final": "release-it minor",
