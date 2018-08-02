@@ -55,6 +55,51 @@ describe('Blockgrid example-mixed-selection tests', () => {
   });
 });
 
+describe('Blockgrid example-mixed-selection responsive tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/blockgrid/example-mixed-selection');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-responsive', async () => {
+      const blockgridEl = await element(by.id('blockgrid'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkScreen('blockgrid')).toEqual(0);
+    });
+
+    it('Should not visual regress on example-responsive at 500px', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(500, 600);
+      await browser.driver.sleep(config.sleep);
+      const blockgridEl = await element(by.id('blockgrid'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkScreen('blockgrid-500px')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+      await browser.driver.sleep(config.sleep);
+    });
+
+    it('Should not visual regress on example-responsive at 320px', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(320, 480);
+      await browser.driver.sleep(config.sleep);
+      const blockgridEl = await element(by.id('blockgrid'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkScreen('blockgrid-320px')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+      await browser.driver.sleep(config.sleep);
+    });
+  }
+});
+
 describe('Blockgrid example-multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/blockgrid/example-multiselect');
