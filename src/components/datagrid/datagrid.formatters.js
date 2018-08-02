@@ -149,7 +149,7 @@ const formatters = {
       formatted = col.editorOptions.field(item, null, null);
     }
 
-    return `<span class="trigger ${col.lookupAlign === 'right' ? 'align-text-right' : ''}">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
+    return `<span class="trigger ${col.align === 'right' ? 'align-text-right' : ''}">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
   },
 
   Decimal(row, cell, value, col) {

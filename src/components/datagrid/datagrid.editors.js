@@ -699,7 +699,7 @@ const editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $(`<input class="lookup ${column.lookupAlign === 'right' ? 'align-text-right' : ''}" data-init="false" />`).appendTo(container);
+      this.input = $(`<input class="lookup ${column.align === 'right' ? 'align-text-right' : ''}" data-init="false" />`).appendTo(container);
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
