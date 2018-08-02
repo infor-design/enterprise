@@ -67,7 +67,7 @@
       display: inline-block;
 
       &:focus:not(.hide-focus) {
-        border-color: $btn-focus-border-color;
+        border-color: $button-default-focus-border-color;
       }
     }
   }
