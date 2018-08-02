@@ -148,7 +148,7 @@ const Locale = {  // eslint-disable-line
       'es-US', 'et-EE', 'fi-FI', 'fr-CA', 'fr-FR', 'he-IL', 'hi-IN', 'hr-HR',
       'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
       'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
-      'uk-UA', 'vi-VN', 'zh-CN', 'zh-TW'];
+      'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'];
 
     if (allLocales.indexOf(locale) === -1) {
       locale = defaults.filter(a => a.lang === lang);

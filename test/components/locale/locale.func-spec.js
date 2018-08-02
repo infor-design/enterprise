@@ -49,6 +49,8 @@ require('../../../src/components/locale/cultures/tr-TR.js');
 require('../../../src/components/locale/cultures/uk-UA.js');
 require('../../../src/components/locale/cultures/vi-VN.js');
 require('../../../src/components/locale/cultures/zh-CN.js');
+require('../../../src/components/locale/cultures/zh-Hans.js');
+require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
 describe('Locale API', () => {
