@@ -3,6 +3,9 @@
   "slug": "ids-enterprise",
   "version": "4.10.0-dev",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
+  "engines": {
+    "node": ">11.0.0 <12.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/infor-design/enterprise.git"
@@ -51,7 +54,9 @@
     "release:rc": "release-it minor --preRelease=rc",
     "release:final": "release-it minor",
     "prepublishOnly": "npm run build",
-    "test": "npm run mdlint && npm run eslint && npm run functional:ci && npm run e2e:ci"
+    "test": "npm run mdlint && npm run eslint && npm run functional:ci && npm run e2e:ci",
+    "requirements-check": "node scripts/check-node-version.js",
+    "postinstall": "npm run requirements-check"
   },
   "dependencies": {
     "d3": "^4.13.0",
@@ -132,6 +137,7 @@
     "rollup-plugin-json": "^3.0.0",
     "rollup-plugin-license": "^0.6.0",
     "rollup-plugin-node-resolve": "^3.0.0",
+    "semver": "^5.5.0",
     "slash": "^2.0.0",
     "uglify-es": "^3.3.10",
     "unoconv": "^0.1.2",
