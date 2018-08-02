@@ -4388,11 +4388,13 @@ Datagrid.prototype = {
    * @param  {number} row The row index.
    * @param  {number} cell The cell index.
    * @param  {boolean} includeGroups If true groups are taken into account.
+   * @param  {number} targetLevel The level of the nested grid (0 is not nested).
    * @returns {object} The dom node
    */
-  cellNode(row, cell, includeGroups) {
+  cellNode(row, cell, includeGroups, targetLevel) {
     let cells = null;
     let rowNode = null;
+    targetLevel = targetLevel || 0;
 
     if (row instanceof jQuery) {
       rowNode = row;
@@ -4411,7 +4413,7 @@ Datagrid.prototype = {
       return $();
     }
 
-    cells = rowNode.find('td');
+    cells = rowNode.length <= targetLevel ? rowNode.find('td') : $(rowNode[targetLevel]).find('td');
     return cells.eq(cell >= cells.length ? cells.length - 1 : cell);
   },
 
@@ -4578,7 +4580,9 @@ Datagrid.prototype = {
       * @property {object} args.originalEvent The original event object.
       */
       self.triggerRowEvent('click', e, true);
-      self.setActiveCell(target.closest('td'));
+
+      const targetLevel = target.parents('.datagrid-expandable-row').length;
+      self.setActiveCell(target.closest('td'), null, targetLevel);
 
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn')) {
@@ -7299,7 +7303,7 @@ Datagrid.prototype = {
   },
 
   // Update a specific Cell
-  setActiveCell(row, cell) {
+  setActiveCell(row, cell, targetLevel) {
     const self = this;
     const prevCell = self.activeCell;
     let rowElem = row;
@@ -7356,7 +7360,7 @@ Datagrid.prototype = {
     }
 
     // Find the cell if it exists
-    self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), (cell)).attr('tabindex', '0');
+    self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), (cell), false, targetLevel).attr('tabindex', '0');
 
     if (self.activeCell.node && prevCell.node.length === 1) {
       self.activeCell.row = rowNum;
