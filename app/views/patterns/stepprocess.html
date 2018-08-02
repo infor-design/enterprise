@@ -1,3 +1,4 @@
+{{> includes/svg-inline-refs}}
 <header class="header is-personalizable top-header">
   <div class="toolbar">
     <div class="title">
@@ -249,7 +250,7 @@
     for (var i = 5; i < 20; i++) {
       stepFunctions.createHTML('#step-list', {
         id: 'content' + i,
-        title: 'Step ' + i
+        title: 'step ' + i
       });
     }
 
@@ -295,8 +296,8 @@
 
       setTimeout(function () {
         var subSteps = [
-          { id: 'content3-1', title: 'Step 3-1'},
-          { id: 'content3-2', title: 'Step 3-2' }
+          { id: 'content3-1', title: 'step 3-1'},
+          { id: 'content3-2', title: 'step 3-2' }
         ];
         var folder = $('.js-step-link[href="' + stepId + '"]').next('.js-step-folder');
         for (var i = 0; i < subSteps.length; i++) {
@@ -357,6 +358,7 @@
     },
 
     createHTML: function(stepFolder, step) {
+      console.log(step);
       var $stepContainer = $(stepFolder);
       var $contentContainer = $('.step-container');
       $stepContainer.append('<li class="js-step">' +
@@ -369,7 +371,7 @@
       '</li>');
       $contentContainer.append('<div id="' + step.id + '" class="js-step-panel">' +
         '<h2>' + step.title + '</h2>' +
-        '<p>This is step ${step.id}</p>' +
+        '<p>This is ' + step.title + '</p>' +
       '</div>');
     }
 
