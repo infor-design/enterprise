@@ -22,7 +22,7 @@
   border-radius: 2px;
   display: inline-block;
   overflow: hidden;
-  width: 150px;
+  min-width: 150px;
 
   &.is-focused {
     border-color: $input-focus-border-color;
