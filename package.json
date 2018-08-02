@@ -127,6 +127,7 @@
     "mmm": "^0.2.2",
     "moment": "^2.19.2",
     "node-sass": "^4.9.2",
+    "node-pre-gyp": "^0.10.3",
     "protractor": "^5.4.0",
     "protractor-flake": "^3.3.0",
     "protractor-image-comparison": "^2.0.0",
