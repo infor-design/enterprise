@@ -51,7 +51,7 @@ LongPress.prototype = {
         id: `${BEHAVIOR_NAME}-timer`,
         duration: math.convertDelayToFPS(this.settings.delay),
         timeoutCallback() {
-          self.fire(target);
+          self.fire(target, e);
         }
       });
       renderLoop.register(this.timer);
@@ -69,10 +69,11 @@ LongPress.prototype = {
 
   /**
    * @param {HTMLElement} target the target element on which to trigger the event
+   * @param {jQuery.Event} [e=undefined] the original event, if applicable
    * @returns {void}
    */
-  fire(target) {
-    $(target).trigger(`${BEHAVIOR_NAME}`);
+  fire(target, e) {
+    $(target).trigger(`${BEHAVIOR_NAME}`, [e]);
   },
 
   /**
