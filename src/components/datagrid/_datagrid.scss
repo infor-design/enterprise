@@ -616,6 +616,10 @@ $datagrid-short-row-height: 23px;
                 top: calc(50% - 6px);
                 width: inherit;
               }
+
+              &.align-text-right {
+                width: calc(100% - 28px);
+              }
             }
 
             &.timepicker {
@@ -747,6 +751,13 @@ $datagrid-short-row-height: 23px;
         margin-left: -10px !important;
         margin-top: -5px !important;
       }
+
+      .align-text-right {
+        + .trigger {
+          margin-left: 0 !important;
+          margin-top: -4px !important;
+        }
+      }
     }
     // scss-lint:enable ImportantRule
 
@@ -764,6 +775,16 @@ $datagrid-short-row-height: 23px;
         .icon {
           left: 9px;
           top: 5px;
+        }
+      }
+
+      .align-text-right {
+        &.trigger {
+          width: calc(100% - 16px);
+        }
+
+        + .icon.icon-search-list {
+          left: 3px;
         }
       }
     }
@@ -929,6 +950,12 @@ $datagrid-short-row-height: 23px;
 
           .dropdown-trigger + .icon {
             left: -3px;
+          }
+
+          .trigger {
+            &.align-text-right {
+              width: calc(100% - 21px);
+            }
           }
         }
         // scss-lint:enable NestingDepth
@@ -1104,6 +1131,12 @@ $datagrid-short-row-height: 23px;
         .trigger {
           height: 20px;
         }
+      }
+    }
+
+    .align-text-right {
+      + .icon-search-list {
+        left: 0 !important;
       }
     }
 
@@ -1693,6 +1726,16 @@ $datagrid-short-row-height: 23px;
         vertical-align: top;
         width: 100%;
 
+        .lookup.is-not-editable {
+          + .trigger {
+            margin-left: -10px;
+          }
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+
         .trigger {
           margin-left: -21px;
           margin-top: 1px;
@@ -1725,7 +1768,11 @@ $datagrid-short-row-height: 23px;
         width: 100%;
 
         &.lookup {
-          width: calc(100% - 21px);
+          width: calc(100% - 31px);
+
+          &.align-text-right {
+            width: 100%;
+          }
 
           ~.trigger .icon {
             top: calc(50% - 6px);
@@ -1895,6 +1942,10 @@ $datagrid-short-row-height: 23px;
     &.l-right-text {
       .datagrid-cell-wrapper {
         text-align: right;
+
+        .lookup-wrapper {
+          padding-right: 30px;
+        }
       }
     }
 
@@ -2512,6 +2563,12 @@ td .btn-actions {
 .datagrid-trigger-cell {
   &:not(.is-readonly) {
     cursor: pointer;
+  }
+
+  .align-text-right {
+    + .icon.icon-search-list {
+      left: 0;
+    }
   }
 
   .icon {
