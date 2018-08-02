@@ -11,11 +11,11 @@ describe('Blockgrid example-index tests', () => {
   });
 
   it('Should have a blockgrid', async () => {
-    expect(await element(by.className('blockgrid'))).toBeTruthy();
+    expect(await element(by.className('blockgrid')).isPresent()).toBeTruthy();
   });
 
   it('Should have a block', async () => {
-    expect(await element(by.className('block'))).toBeTruthy();
+    expect(await element(by.className('block')).isPresent()).toBeTruthy();
   });
 });
 
@@ -25,15 +25,15 @@ describe('Blockgrid example-mixed-selection tests', () => {
   });
 
   it('Should have a blockgrid mixed selection', async () => {
-    expect(await element(by.className('blockgrid'))).toBeTruthy();
+    expect(await element(by.className('blockgrid')).isPresent()).toBeTruthy();
   });
 
   it('Should have a block mixed selection', async () => {
-    expect(await element(by.className('block'))).toBeTruthy();
+    expect(await element(by.className('block')).isPresent()).toBeTruthy();
   });
 
   it('Should blocks be selectable', async () => {
-    expect(await element(by.className('is-selectable'))).toBeTruthy();
+    expect(await element(by.className('is-selectable')).isPresent()).toBeTruthy();
   });
 
   it('Should block highlight after clicked', async () => {
@@ -61,15 +61,15 @@ describe('Blockgrid example-multiselect tests', () => {
   });
 
   it('Should have a blockgrid multiselect', async () => {
-    expect(await element(by.className('blockgrid'))).toBeTruthy();
+    expect(await element(by.className('blockgrid')).isPresent()).toBeTruthy();
   });
 
   it('Should have a block multiselect', async () => {
-    expect(await element(by.className('block'))).toBeTruthy();
+    expect(await element(by.className('block')).isPresent()).toBeTruthy();
   });
 
   it('Should all blocks be selectable', async () => {
-    expect(await element.all(by.className('is-selectable'))).toBeTruthy();
+    expect(await element.all(by.className('is-selectable')).isPresent()).toBeTruthy();
   });
 
   it('Should highlight blocks after click', async () => {
@@ -103,15 +103,15 @@ describe('Blockgrid example-singleselect tests', () => {
   });
 
   it('Should have a blockgrid singleselect', async () => {
-    expect(await element(by.className('blockgrid'))).toBeTruthy();
+    expect(await element(by.className('blockgrid')).isPresent()).toBeTruthy();
   });
 
   it('Should have a block singleselect', async () => {
-    expect(await element(by.className('block'))).toBeTruthy();
+    expect(await element(by.className('block')).isPresent()).toBeTruthy();
   });
 
   it('Should have singleselect blocks be selectable', async () => {
-    expect(await element.all(by.className('is-selectable'))).toBeTruthy();
+    expect(await element.all(by.className('is-selectable')).isPresent()).toBeTruthy();
   });
 
   it('Should select only 1 blocks', async () => {
@@ -136,14 +136,14 @@ describe('Blockgrid example-text tests', () => {
   });
 
   it('Should have a blockgrid in the page', async () => {
-    expect(await element.all(by.css('.row.blockgrid.l-center'))).toBeTruthy();
+    expect(await element.all(by.css('.row.blockgrid.l-center')).isPresent()).toBeTruthy();
   });
 
   it('Should have a block in the page', async () => {
-    expect(await element(by.className('block'))).toBeTruthy();
+    expect(await element(by.className('block')).isPresent()).toBeTruthy();
   });
 
   it('Should have a text in the page', async () => {
-    expect(await element(by.css('p'))).toBeTruthy();
+    expect(await element(by.css('p')).isPresent()).toBeTruthy();
   });
 });

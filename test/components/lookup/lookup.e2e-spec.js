@@ -248,7 +248,7 @@ describe('Lookup index tests', () => {
   });
 
   it('Should have an enabled modal cancel button', async () => {
-    const buttonEl = await element(by.className('trigger'));
+    const buttonEl = await element.all(by.className('trigger')).first();
     await buttonEl.click();
 
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('btn-modal'))), config.waitsFor);
