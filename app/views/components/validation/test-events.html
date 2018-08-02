@@ -22,10 +22,10 @@
 
 <script>
   $('form').on('valid', function (e, args) {
-    $('body').toast({ title: 'validation', message: 'valid event fired' });
+    $('body').toast({ title: 'validation', timeout: 20000, message: 'valid event fired' });
   });
 
   $('form').on('error', function (e, args) {
-    $('body').toast({ title: 'validation', message: 'error event fired' });
+    $('body').toast({ title: 'validation', timeout: 20000, message: 'error event fired' });
   });
 </script>

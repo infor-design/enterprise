@@ -543,7 +543,7 @@ Datagrid.prototype = {
   * @param {object} pagerInfo The pager info object with information like activePage ect.
   */
   updateDataset(dataset, pagerInfo) {
-    if (this.settings.toolbar.keywordFilter) {
+    if (this.settings.toolbar && this.settings.toolbar.keywordFilter) {
       const searchField = this.element.parent().find('.toolbar').find('.searchfield');
       searchField.val('');
       searchField.parent().removeClass('has-text');
