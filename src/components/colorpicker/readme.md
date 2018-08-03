@@ -10,7 +10,7 @@ description: This page describes Color Picker.
 1. Select the label not the Hex [View Example]( ../components/colorpicker/example-show-label)
 1. Test States [View Test]( ../components/colorpicker/test-states)
 1. Test it works on a Modal [View Test]( ../components/colorpicker/test-modal)
-1. Showing Custom Colors [View Example]( ../components/colorpicker/example-sizes)
+1. Showing different colorpicker sizes [View Example]( ../components/colorpicker/example-sizes)
 
 ## Code Example
 
