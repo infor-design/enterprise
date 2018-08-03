@@ -66,9 +66,8 @@ Note: There may be a cost involved to using this with Infor's amazon s3 account 
 
 ### Install pre-requisites
 
-- `[MAC]` We suggest installing [homebrew](https://brew.sh/). Once installed use the command `brew install node`
-- `[Windows]` Use the [node installer](https://nodejs.org/en)
-- `[Windows]` You'll need to [install Python](https://www.python.org/downloads/). Make sure the version is at least `2.5.0`
+- `[MAC]` We suggest using [nvm](https://github.com/creationix/nvm) to handle the versions.  As its possible that you would need different versions for different projects.
+- `[Windows]` You can use a similar version manager for windows [nvm-windows](https://github.com/coreybutler/nvm-windows). Or use the [node installer](https://nodejs.org/en)
 - `[Windows]` You'll need to [install Python](https://www.python.org/downloads/). Make sure the version is at least `2.5.0`
 - `[Windows]` Run the command `git config core.autocrlf false` to allow our standard of LF for the project.
 

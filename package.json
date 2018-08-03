@@ -4,7 +4,8 @@
   "version": "4.10.0-dev",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "engines": {
-    "node": ">10.0.0 <11.0.0"
+    "node": ">10.2.1 <11.0.0",
+    "npm": ">6.0.0"
   },
   "repository": {
     "type": "git",
