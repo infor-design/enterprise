@@ -93,7 +93,7 @@ You’ll see documentation pages unless they aren’t generated, then you’ll s
 
 ### Running the tests
 
-Functional tests are the primary way we test the codebase. To run the every type of test, run `npm run test`.
+Functional tests are the primary way we test the codebase. To run every type of test, run `npm run test`.
 
 ### Editor Plugins
 
