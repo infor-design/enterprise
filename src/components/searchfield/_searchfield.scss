@@ -68,6 +68,18 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
     padding-right: 34px;
     @include transition(background-color 300ms $cubic-bezier-ease,
       border-color 300ms $cubic-bezier-ease);
+    
+    &:disabled {
+      cursor: not-allowed;
+
+      &:hover {
+        border-color: #bdbdbd;
+      }
+
+      ~ svg.icon {
+        fill: #bdbdbd;
+      }
+    }
   }
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
