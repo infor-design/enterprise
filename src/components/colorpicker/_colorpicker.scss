@@ -78,6 +78,8 @@
       input[readonly] {
         background-color: $input-bg-color;
         border-color: $input-border-color;
+        color: $graphite10;
+        -webkit-text-fill-color: $graphite10;
       }
 
       input[readonly]:focus {
