@@ -48,6 +48,7 @@ const HIERARCHY_DEFAULTS = {
   beforeExpand: null,
   paging: false,
   renderSubLevel: false,
+  es6Template: null,
   rootClass: 'hierarchy',
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
@@ -532,7 +533,7 @@ Hierarchy.prototype = {
       rootNodeHTML.push(multiRootHTML);
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
     } else {
-      const leaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: data });
+      const leaf = this.getTemplate(data);
       rootNodeHTML.push(leaf);
 
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
@@ -625,6 +626,20 @@ Hierarchy.prototype = {
     }
     return false;
   },
+  /**
+   * Builds leaf template
+   * @params {object} data
+   * returns {string}
+   */
+  getTemplate(data) {
+    if (this.settings.es6Template === null) {
+      return Tmpl.compile(`{{#dataset}}${$(`#${this.settings.templateId}`).html()}{{/dataset}}`, { dataset: data });
+    } else if (this.settings.es6Template !== null) {
+      return this.settings.es6Template(data);
+    }
+
+    return Tmpl.compile(`{{#dataset}}${$(`#${this.settings.templateId}`).html()}{{/dataset}}`, { dataset: data });
+  },
 
   /**
   * Add the legend from the Settings
@@ -663,7 +678,6 @@ Hierarchy.prototype = {
   */
   createLeaf(nodeData, container) {
     const self = this;
-    const s = this.settings;
     const chartClassName = self.settings.rootClass;
     const chart = $(`.${chartClassName} .chart`, self.container);
     const elClassName = container.attr('class');
@@ -680,7 +694,7 @@ Hierarchy.prototype = {
     function processDataForLeaf(thisNodeData) {
       self.setColor(thisNodeData);
 
-      const leaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: thisNodeData });
+      const leaf = self.getTemplate(thisNodeData);
       let parent = el.length === 1 ? el : container;
       let branchState = thisNodeData.isExpanded || thisNodeData.isExpanded === undefined ? 'branch-expanded' : 'branch-collapsed';
 
@@ -699,7 +713,7 @@ Hierarchy.prototype = {
 
         for (let j = 0, l = thisNodeData.children.length; j < l; j++) {
           self.setColor(thisNodeData.children[j]);
-          const childLeaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: thisNodeData.children[j] });
+          const childLeaf = self.getTemplate(thisNodeData.children[j]);
 
           if (j === thisNodeData.children.length - 1) {
             childrenNodes += `<li>${$(childLeaf)[0].outerHTML}</li>`;

@@ -165,7 +165,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
       z-index: -1;
     }
 
-    .sub-level > li ul {
+    .sub-level > li ul:not(.popupmenu) {
       position: relative;
     }
 
@@ -201,12 +201,9 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     cursor: pointer;
     height: $hierarchy-node-height;
     position: relative;
+    display: flex;
 
     width: $hierarchy-node-width;
-
-    .content {
-      overflow: hidden;
-    }
 
     &.azure08 {
       border-left-color: $azure08;
@@ -267,13 +264,12 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     }
 
     .detail {
-      display: inline-block;
-      float: left;
       margin-left: 20px;
       margin-right: 10px;
       max-width: 178px;
       overflow: hidden;
       text-align: left;
+      flex-grow: 1;
     }
 
     .heading {
@@ -314,14 +310,13 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
   //Adjust size for buttons
   ul > li > .leaf {
     width: 315px;
-
+    .btn-actions,
     .btn-expand,
     .btn-collapse {
       height: 30px;
       left: auto;
       min-height: 30px;
       min-width: 30px;
-      position: absolute;
       right: 13px;
       top: 22px;
       width: 30px;
@@ -462,7 +457,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     }
 
     // Child Nodes - 4th level down
-    li ul {
+    li ul:not(.popupmenu) {
       overflow: hidden;
       padding-left: 45px;
       padding-right: 5px;
@@ -476,12 +471,53 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
         }
       }
     }
+
+    li ul.popupmenu li {
+      margin: 0;
+
+      &:last-child:not(:first-child) {
+        margin: 0;
+      }
+    }
   }
 
   .image-user-status {
     display: block;
   }
 
+  .popupmenu.has-detail-fields {
+    padding-top: 0;
+  }
+
+  .popupmenu.has-detail-fields + .arrow {
+    border-bottom-color: $slate08;
+  }
+  .popupmenu.has-detail-fields + .arrow:after {
+    border-bottom-color: $slate08;
+  }
+
+  .detail-fields {
+    background: $slate08;
+    padding: 10px;
+
+    .dt-fields-row {
+      display: table-row;
+    }
+    .dt-fields-cell:first-child {
+      text-align: right;
+      padding-right: 8px;
+      opacity: .7;
+      &:after {
+        content: ':';
+      }
+    }
+    .dt-fields-cell {
+      color: $white;
+      font-size: 1.2rem;
+      line-height: 1.4rem;
+      display: table-cell;
+    }
+  }
 }
 
 // Media Query for Mobile View
@@ -666,14 +702,6 @@ html[dir='rtl'] {
         margin-right: 14px;
       }
 
-      .detail {
-        // display: inline-block;
-        float: right;
-        margin-left: 10px;
-        margin-right: 20px;
-        text-align: right;
-      }
-
       .btn-icon {
         left: auto;
         right: 0;
@@ -738,7 +766,7 @@ html[dir='rtl'] {
       }
 
       // Child Nodes - 4th level down
-      li ul {
+      li ul:not(.popupmenu) {
         margin-left: inherit;
         margin-right: 45px;
         padding-left: 5px;
