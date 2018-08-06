@@ -163,14 +163,21 @@ FieldOptions.prototype = {
     this.hoverElem = isSpinbox ? this.element.add(this.field.find('.down, .up')) : this.targetElem;
     this.hoverElem = isColorpicker ? this.element.add(this.field.find('.colorpicker-container, .swatch, .trigger')) : this.hoverElem;
 
-    // Set is-hover for field
-    this.hoverElem
-      .on(`mouseenter.${COMPONENT_NAME}`, () => {
-        this.field.addClass('is-hover');
-      })
-      .on(`mouseleave.${COMPONENT_NAME}`, () => {
-        this.field.removeClass('is-hover');
-      });
+    // Set field-options visibility.
+    // In touch environments, the button should always be visible.
+    // In desktop environments, the button should only display when the field is in use.
+    if (env.features.touch) {
+      this.field.addClass('visible');
+    } else {
+      this.field.removeClass('visible');
+      this.hoverElem
+        .on(`mouseenter.${COMPONENT_NAME}`, () => {
+          this.field.addClass('visible');
+        })
+        .on(`mouseleave.${COMPONENT_NAME}`, () => {
+          this.field.removeClass('visible');
+        });
+    }
 
     // Adjust stack order for dropdown
     if (dropdown) {
