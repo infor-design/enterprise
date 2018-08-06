@@ -626,10 +626,12 @@ Hierarchy.prototype = {
     }
     return false;
   },
+
   /**
    * Builds leaf template
-   * @params {object} data
-   * returns {string}
+   * @private
+   * @param {object} data leaf data
+   * @returns {string} compiled template as HTML string
    */
   getTemplate(data) {
     if (this.settings.es6Template === null) {
