@@ -140,6 +140,28 @@ describe('Blockgrid example-multiselect tests', () => {
     expect(await element.all(by.css('.block.is-selectable')).get(2).getAttribute('class')).toContain('is-selected');
     expect(await element.all(by.css('.block.is-selectable')).get(3).getAttribute('class')).toContain('is-selected');
   });
+
+  it('Should be able to select at 320px', async () => {
+    const windowSize = await browser.driver.manage().window().getSize();
+    await browser.driver.manage().window().setSize(320, 480);
+    await browser.driver.sleep(config.sleep);
+    const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
+    const blockEl2 = await element.all(by.css('.block.is-selectable')).get(2);
+    const blockgridEl = await element(by.id('blockgrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
+
+    await blockEl1.click();
+    await blockEl2.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element.all(by.css('.is-selected')).get(2)), config.waitsFor);
+
+    expect(await element.all(by.css('.block.is-selectable')).get(1).getAttribute('class')).toContain('is-selected');
+    expect(await element.all(by.css('.block.is-selectable')).get(2).getAttribute('class')).toContain('is-selected');
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    await browser.driver.sleep(config.sleep);
+  });
 });
 
 describe('Blockgrid example-singleselect tests', () => {
