@@ -67,18 +67,11 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
     padding-left: 34px;
     padding-right: 34px;
     @include transition(background-color 300ms $cubic-bezier-ease,
-      border-color 300ms $cubic-bezier-ease);
-    
-    &:disabled {
-      cursor: not-allowed;
+    border-color 300ms $cubic-bezier-ease);
+    opacity: $searchfield-disabled-opacity;
 
-      &:hover {
-        border-color: #bdbdbd;
-      }
-
-      ~ svg.icon {
-        fill: #bdbdbd;
-      }
+    ~ svg.icon {
+      fill: $searchfiled-disabled-icon-color;
     }
   }
 
@@ -211,7 +204,7 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
     }
 
     .searchfield {
-      border-color: $input-hover-border-color;
+      border-color: $searchfiled-disabled-border-color;
     }
 
     &.has-categories {
