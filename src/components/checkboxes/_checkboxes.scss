@@ -368,3 +368,14 @@ html[dir='rtl'] {
     left: -25px;
   }
 }
+
+// Colored Checkboxes
+@each $name in $color-names {
+  $i: index($color-names, $name);
+  $color: nth($color-vars, $i);
+
+  input.checkbox.#{$name} + label::before {
+    background-color: $color;
+    border-color: $color;
+  }
+}

@@ -227,6 +227,7 @@ Accordion.prototype = {
     // Expand to the current accordion header if we find one that's selected
     if (isGlobalBuild && !this.element.data('updating')) {
       let targetsToExpand = headers.filter('.is-selected, .is-expanded');
+      targetsToExpand.next('.accordion-pane').addClass('no-transition');
 
       if (this.settings.allowOnePane) {
         targetsToExpand = targetsToExpand.first();
@@ -234,6 +235,7 @@ Accordion.prototype = {
 
       this.expand(targetsToExpand);
       this.select(targetsToExpand.last());
+      targetsToExpand.next('.accordion-pane').removeClass('no-transition');
     }
 
     // Retain an internal storage of available filtered accordion headers.

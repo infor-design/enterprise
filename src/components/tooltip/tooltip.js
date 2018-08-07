@@ -32,6 +32,7 @@ const COMPONENT_NAME = 'tooltip';
  * @param {string} [settings.extraClass] Extra css class.
  * @param {object} [settings.placementOpt] Placement options.
  * @param {string} [settings.maxWidth] Toolip max width.
+* @param {boolean} [settings.initializeContent] Init the content in the tooltip.
  */
 
 const TOOLTIP_DEFAULTS = {
@@ -50,7 +51,8 @@ const TOOLTIP_DEFAULTS = {
   keepOpen: false,
   extraClass: null,
   placementOpts: {},
-  maxWidth: null
+  maxWidth: null,
+  initializeContent: true
 };
 
 function Tooltip(element, settings) {
@@ -226,9 +228,7 @@ Tooltip.prototype = {
     }
 
     if (this.settings.trigger === 'immediate') {
-      timer = setTimeout(() => {
-        toggleTooltipDisplay();
-      }, 1);
+      toggleTooltipDisplay();
     }
 
     const isFocusable = this.settings.trigger === 'focus';
@@ -477,7 +477,9 @@ Tooltip.prototype = {
       title.appendChild(closeBtnX[0]);
     }
 
-    content.initialize();
+    if (this.settings.initializeContent) {
+      content.initialize();
+    }
   },
 
   /**

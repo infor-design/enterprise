@@ -1,0 +1,16 @@
+//* Calendar
+//================================================== *
+
+.calendar {
+  background-color: $calendar-bg-color;
+  height: 100%;
+  width: 100%;
+
+  .calendar-options {
+    width: 250px;
+
+    .accordion-header a {
+      @include font-size(16);
+    }
+  }
+}

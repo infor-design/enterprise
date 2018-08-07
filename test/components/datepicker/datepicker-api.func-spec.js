@@ -47,7 +47,7 @@ describe('DatePicker API', () => {
 
     setTimeout(() => {
       expect(datepickerAPI.isOpen()).toBeTruthy();
-      expect(document.body.querySelector('#calendar-popup')).toBeVisible();
+      expect(document.body.querySelector('#monthview-popup')).toBeVisible();
       done();
     }, 100);
   });
@@ -56,7 +56,7 @@ describe('DatePicker API', () => {
     datepickerAPI.destroy();
 
     expect(datepickerAPI.isOpen()).toBeFalsy();
-    expect(document.body.querySelector('#calendar-popup')).toBeFalsy();
+    expect(document.body.querySelector('#monthview-popup')).toBeFalsy();
   });
 
   it('Should disable datepicker', () => {
@@ -199,7 +199,7 @@ describe('DatePicker API', () => {
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
-      const tds = document.body.querySelectorAll('.calendar-table td');
+      const tds = document.body.querySelectorAll('.monthview-table td');
 
       expect(tds[0].classList.contains('is-disabled')).toEqual(true);
       expect(tds[6].classList.contains('is-disabled')).toEqual(true);
@@ -234,7 +234,7 @@ describe('DatePicker API', () => {
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
-      const legendItems = document.body.querySelectorAll('.calendar-legend-item');
+      const legendItems = document.body.querySelectorAll('.monthview-legend-item');
 
       expect(legendItems[0].textContent.trim()).toEqual('Public Holiday');
       expect(legendItems[1].textContent.trim()).toEqual('Weekends');
@@ -242,7 +242,7 @@ describe('DatePicker API', () => {
       expect(legendItems[3].textContent.trim()).toEqual('Half Days');
       expect(legendItems[4].textContent.trim()).toEqual('Full Days');
 
-      const tds = document.body.querySelectorAll('.calendar-table td');
+      const tds = document.body.querySelectorAll('.monthview-table td');
 
       expect(tds[0].style.backgroundColor).toEqual('rgba(118, 176, 81, 0.3)');
       expect(tds[6].style.backgroundColor).toEqual('rgba(239, 168, 54, 0.3)');
@@ -257,8 +257,8 @@ describe('DatePicker API', () => {
     setTimeout(() => {
       datepickerAPI.showMonth('6', '2018');
 
-      expect(document.body.querySelectorAll('.calendar-header span')[0].textContent).toEqual('July ');
-      expect(document.body.querySelectorAll('.calendar-header span')[1].textContent).toEqual(' 2018');
+      expect(document.body.querySelectorAll('.monthview-header span')[0].textContent).toEqual('July ');
+      expect(document.body.querySelectorAll('.monthview-header span')[1].textContent).toEqual(' 2018');
       expect(document.body.querySelectorAll('td:not(.alternate)').length).toEqual(31);
       done();
     }, 100);
@@ -274,8 +274,8 @@ describe('DatePicker API', () => {
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
-      expect(document.body.querySelectorAll('.calendar-header span')[0].textContent).toEqual('2018年 ');
-      expect(document.body.querySelectorAll('.calendar-header span')[1].textContent).toEqual('6月 ');
+      expect(document.body.querySelectorAll('.monthview-header span')[0].textContent).toEqual('2018年 ');
+      expect(document.body.querySelectorAll('.monthview-header span')[1].textContent).toEqual('6月 ');
       done();
     }, 100);
   });
@@ -290,8 +290,8 @@ describe('DatePicker API', () => {
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
-      expect(document.body.querySelectorAll('.calendar-table thead th')[0].textContent).toEqual('M');
-      expect(document.body.querySelectorAll('.calendar-table thead th')[1].textContent).toEqual('T');
+      expect(document.body.querySelectorAll('.monthview-table thead th')[0].textContent).toEqual('M');
+      expect(document.body.querySelectorAll('.monthview-table thead th')[1].textContent).toEqual('T');
       done();
     }, 100);
   });
@@ -306,8 +306,8 @@ describe('DatePicker API', () => {
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
-      expect(document.body.querySelectorAll('.calendar-table thead th')[0].textContent).toEqual('M');
-      expect(document.body.querySelectorAll('.calendar-table thead th')[1].textContent).toEqual('Τ');
+      expect(document.body.querySelectorAll('.monthview-table thead th')[0].textContent).toEqual('M');
+      expect(document.body.querySelectorAll('.monthview-table thead th')[1].textContent).toEqual('Τ');
       done();
     }, 100);
   });
@@ -321,8 +321,8 @@ describe('DatePicker API', () => {
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
-      expect(document.body.querySelectorAll('.calendar-header select')[0].value).toEqual('5');
-      expect(document.body.querySelectorAll('.calendar-header select')[1].value).toEqual('2018');
+      expect(document.body.querySelectorAll('.monthview-header select')[0].value).toEqual('5');
+      expect(document.body.querySelectorAll('.monthview-header select')[1].value).toEqual('2018');
       done();
     }, 100);
   });
@@ -350,10 +350,10 @@ describe('DatePicker API', () => {
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
-      expect(document.body.querySelectorAll('.calendar select')[0].value).toEqual('12');
-      expect(document.body.querySelectorAll('.calendar select')[1].value).toEqual('25');
-      expect(document.body.querySelectorAll('.calendar select')[2].value).toEqual('10');
-      expect(document.body.querySelectorAll('.calendar select')[3].value).toEqual('AM');
+      expect(document.body.querySelectorAll('.monthview select')[0].value).toEqual('12');
+      expect(document.body.querySelectorAll('.monthview select')[1].value).toEqual('25');
+      expect(document.body.querySelectorAll('.monthview select')[2].value).toEqual('10');
+      expect(document.body.querySelectorAll('.monthview select')[3].value).toEqual('AM');
       datepickerEl.value = '';
       done();
     }, 100);

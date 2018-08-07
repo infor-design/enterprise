@@ -42,7 +42,7 @@ describe('DatePicker Aria', () => {
     const spyEventInput = spyOnEvent('#date-field-normal', 'input');
     datepickerAPI.openCalendar();
     setTimeout(() => {
-      const firstDay = document.querySelector('#calendar-popup tbody td:not(.alternate)');
+      const firstDay = document.querySelector('#monthview-popup tbody td:not(.alternate)');
       firstDay.click();
 
       expect(spyEvent).toHaveBeenTriggered();
@@ -61,7 +61,7 @@ describe('DatePicker Aria', () => {
     setTimeout(() => {
       expect(spyEvent).toHaveBeenTriggered();
 
-      const firstDay = document.querySelector('#calendar-popup tbody td:not(.alternate)');
+      const firstDay = document.querySelector('#monthview-popup tbody td:not(.alternate)');
       firstDay.click();
 
       expect(spyEventClosed).toHaveBeenTriggered();
