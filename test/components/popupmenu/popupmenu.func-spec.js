@@ -2,7 +2,7 @@ import { PopupMenu } from '../../../src/components/popupmenu/popupmenu';
 
 const popupmenuHTML = require('../../../app/views/components/popupmenu/example-index.html');
 const popupmenuSelectableHTML = require('../../../app/views/components/popupmenu/example-selectable.html');
-const popupmenuContextMenuHTML = require('../../../app/views/components/contextmenu/example-index.html');
+const popupmenuContextMenuHTML = require('../../../app/views/components/contextmenu/test-input-fields.html');
 const popupmenuIconHTML = require('../../../app/views/components/popupmenu/example-icons.html');
 const svg = require('../../../src/components/icons/svg.html');
 
