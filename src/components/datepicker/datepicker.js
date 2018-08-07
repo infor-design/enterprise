@@ -1145,30 +1145,6 @@ DatePicker.prototype = {
   },
 
   /**
-   * Convert the provided hex to an RGBA for states
-   * This may be later moved into a colors file along with getLuminousColorShade
-   * @private
-   * @param {string} hex to set.
-   * @param {string} opacity to check.
-   * @returns {string} converted rgba
-   */
-  hexToRgba(hex, opacity) {
-    let c;
-    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-      c = hex.substring(1).split('');
-
-      if (c.length === 3) {
-        c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-      }
-
-      c = `0x${c.join('')}`;
-      // eslint-disable-next-line
-      return `rgba(${[(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',')},${opacity.toString()})`;
-    }
-    return '';
-  },
-
-  /**
    * Set focus after opening the calendar
    * @private
    * @returns {void}
