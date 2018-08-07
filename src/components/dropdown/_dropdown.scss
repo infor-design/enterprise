@@ -147,7 +147,7 @@ div.multiselect {
     }
   }
 
-  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly):not(.is-open) {
+  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly):not(.is-open):not(.error) {
     border-color: $trigger-hover-color;
 
     + .icon {

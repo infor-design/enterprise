@@ -150,35 +150,9 @@ $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-heading-color: $graphite07;
 $popupmenu-hover-color: $graphite04;
 $popupmenu-checked-color: $azure09;
-
-// Form Buttons
-$primary-btn-bg-color: $primary-color;
-$primary-btn-color: $button-primary-text-color;
-$primary-btn-hover-bg-color: $button-primary-hover-bg-color;
-$primary-btn-focus-bg-color: $primary-color;
-$primary-btn-active-bg-color: $button-primary-active-bg-color;
-$primary-btn-disabled-color: $button-primary-text-color;
-$primary-btn-disabled-bg-color: $primary-color; //Primary at 50%
-$primary-btn-disabled-border-color: $primary-color;
-$primary-btn-disabled-opacity: $button-disabled-opacity;
-
-// Secondary/Normal Buttons
-$btn-color: $button-default-text-color;
-$btn-bg-color: $button-default-bg-color;
-$btn-hover-bg-color: $button-default-hover-bg-color;
-$btn-focus-bg-color: $primary-color;
-$btn-focus-border-color: $primary-color;
-$btn-active-bg-color: $button-default-active-bg-color;
-$btn-disabled-bg-color: $button-default-disabled-bg-color;
-$btn-disabled-color: $button-default-text-color;
-$btn-disabled-border-color: $button-default-disabled-border-color;
-$btn-disabled-opacity: $button-disabled-opacity;
+$popupmenu-checked-color-inverse: $azure06;
 
 // Tertiary Buttons
-$tertiary-btn-color: $button-link-text-color;
-$tertiary-btn-hover-color: $button-link-hover-text-color;
-$tertiary-btn-open-color: $primary-color;
-$tertiary-btn-active-color: $button-link-hover-text-color;
 $tertiary-btn-ripple-color: $azure07;
 
 // Secondary with Border
@@ -232,8 +206,8 @@ $listview-header-bg-color: $graphite04;
 $listview-header-color: $font-color-extrahighcontrast;
 $listview-subhead-color: $graphite06;
 
-$listview-toolbar-button-text-color: $tertiary-btn-color;
-$listview-toolbar-button-icon-color: $tertiary-btn-color;
+$listview-toolbar-button-text-color: $button-link-text-color;
+$listview-toolbar-button-icon-color: $button-link-text-color;
 $listview-toolbar-button-text-hover-color: $primary-color;
 $listview-toolbar-button-icon-hover-color: $primary-color;
 $listview-toolbar-button-text-selected-color: $primary-color;
@@ -642,8 +616,8 @@ $hierarchy-line-color: $graphite10;
 // Searchfield Colors
 $searchfield-bg-color: $white;
 $searchfield-border-color: $graphite03;
-$searchfield-icon-color: $tertiary-btn-color;
-$searchfield-text-color: $tertiary-btn-color;
+$searchfield-icon-color: $button-link-text-color;
+$searchfield-text-color: $button-link-text-color;
 $searchfield-lighter-bg-color: $graphite02;
 $searchfield-lighter-text-color: $graphite05;
 $searchfield-active-icon-color: $azure09;
@@ -751,7 +725,7 @@ $swaplist-title-text-color: $black;
 
 // Block Grid
 $blockgrid-selected-bg-color: $selected-bg-color;
-$blockgrid-selected-border-color: $btn-focus-border-color;
+$blockgrid-selected-border-color: $button-default-focus-border-color;
 $blockgrid-hover-color: $listview-hover-bg-color;
 $blockgrid-focus-border-color: $primary-color;
 

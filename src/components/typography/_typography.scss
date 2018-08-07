@@ -293,9 +293,11 @@ small,
   text-align: left;
 }
 
+// scss-lint:disable ImportantRule
 .align-text-right {
-  text-align: right;
+  text-align: right !important;
 }
+// scss-lint:disable ImportantRule
 
 .align-text-enter, //typo backwards compat
 .align-text-center {

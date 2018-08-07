@@ -2,7 +2,7 @@
 //================================================== //
 
 // Overrides some basic styles from the "input".
-.spinbox {
+input.spinbox {
   border-radius: 0;
   -webkit-font-smoothing: subpixel-antialiased;
   font-weight: 400;
@@ -12,9 +12,8 @@
   width: 84px;
 
   &:focus {
-    box-shadow: none;
+    box-shadow: none !important;
   }
-
 }
 
 input[type='number'] {
@@ -103,6 +102,11 @@ input::-webkit-inner-spin-button {
     top: 0;
   }
 
+  &.error .spinbox-control {
+    border-color: $error-color;
+    color: $error-color;
+  }
+
   + .icon-error {
     margin-top: -15px;
   }
@@ -160,7 +164,7 @@ input::-webkit-inner-spin-button {
   }
 
   .spinbox {
-    height: inherit;
+    height: 26px;
     margin-bottom: 0;
   }
 

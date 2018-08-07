@@ -25,6 +25,22 @@ describe('Validation example-index tests', () => {
   });
 });
 
+describe('Validation short-field tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/validation/example-short-fields');
+  });
+
+  it('Should validate all short fields', async () => {
+    const bodyEl = await element(by.css('body'));
+    for (let i = 0; i < 30; i++) {
+      await bodyEl.sendKeys(protractor.Key.TAB);  //eslint-disable-line
+    }
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.message-text')).count()).toEqual(21);
+  });
+});
+
 describe('Validation disabled form tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/validation/test-disable-validation');
@@ -89,7 +105,7 @@ describe('Validation form submit button', () => {
 
     const submitButton = await element(by.id('submit'));
 
-    expect(submitButton.isEnabled()).toBe(false);
+    expect(await submitButton.isEnabled()).toBe(false);
 
     const dropdownEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver
@@ -204,7 +220,7 @@ describe('Validation Legacy Tooltip', () => {
     await utils.setPage('/components/validation/test-legacy-tooltip');
   });
 
-  it('Should render legacy validation tooltip', async () => {
+  it('Should render legacy validation tooltip with 2 messages', async () => {
     const dateEl = await element(by.id('email-address-ok'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateEl), config.waitsFor);
@@ -213,8 +229,29 @@ describe('Validation Legacy Tooltip', () => {
     await dateEl.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('#validation-tooltip .tooltip-content')).getText()).toBe('Custom Error');
+    const text = await element(by.css('#validation-tooltip .tooltip-content')).getAttribute('innerHTML');
+
+    expect(text.replace(/(\r\n\t|\n|\r\t)/gm, '')).toBe('• Required<br>• Value is not valid (test).');
     expect(await element(by.css('#validation-tooltip')).isDisplayed()).toBe(true);
+  });
+
+  it('Should clear legacy validation tooltip', async () => {
+    const cardEl = await element(by.id('credit-code2'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(cardEl), config.waitsFor);
+
+    await cardEl.clear();
+    await cardEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('#validation-tooltip .tooltip-content')).getText()).toBe('Required');
+    expect(await element(by.css('#validation-tooltip')).isDisplayed()).toBe(true);
+
+    await cardEl.sendKeys('1234');
+    await cardEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('#validation-tooltip')).isDisplayed()).toBe(false);
   });
 });
 
@@ -360,5 +397,76 @@ describe('Validation Manual', () => {
 
     expect(await element.all(by.css('.message-text')).count()).toEqual(0);
     expect(await element.all(by.css('.icon-error')).count()).toEqual(0);
+  });
+});
+
+describe('Validation Duplicate Events', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/validation/test-events');
+  });
+
+  it('Should only trigger one of each event', async () => {
+    const emailEl = await element(by.id('email-address-ok'));
+    await emailEl.sendKeys(protractor.Key.TAB);
+    const dateEl = await element(by.id('date-field'));
+    await dateEl.sendKeys('2121');
+    await dateEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.toast-message')).count()).toEqual(2);
+    expect(await element.all(by.css('.toast-message')).get(0).getText()).toEqual('error event fired');
+    expect(await element.all(by.css('.toast-message')).get(1).getText()).toEqual('error event fired');
+
+    await emailEl.sendKeys('test@test.com');
+    await emailEl.sendKeys(protractor.Key.TAB);
+    await dateEl.sendKeys('10/1/2014');
+    await dateEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.toast-message')).count()).toEqual(4);
+    expect(await element.all(by.css('.toast-message')).get(2).getText()).toEqual('valid event fired');
+    expect(await element.all(by.css('.toast-message')).get(3).getText()).toEqual('valid event fired');
+  });
+});
+
+describe('Validation input tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/input/example-index');
+  });
+
+  it('Should not show duplicate messages', async () => {
+    const emailOkEl = await element(by.id('email-address-ok'));
+    await emailOkEl.sendKeys('test@test.com');
+    await emailOkEl.sendKeys(protractor.Key.TAB);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.icon-confirm'))), config.waitsFor);
+
+    expect(await element.all(by.css('.icon-confirm')).count()).toEqual(1);
+
+    let emailEl = await element(by.id('email-address'));
+    await emailEl.sendKeys(protractor.Key.TAB);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.message-text'))), config.waitsFor);
+
+    expect(await element.all(by.css('.message-text')).get(0).getText()).toEqual('Required');
+    expect(await element.all(by.css('.icon-error')).count()).toEqual(1);
+
+    emailEl = await element(by.id('email-address'));
+    await emailEl.sendKeys('Test');
+    await emailEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.message-text')).count()).toEqual(1);
+    expect(await element.all(by.css('.message-text')).get(0).getText()).toEqual('Email address not valid');
+    expect(await element.all(by.css('.icon-error')).count()).toEqual(1);
+
+    emailEl = await element(by.id('email-address'));
+    await emailEl.clear();
+    await emailEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.message-text')).count()).toEqual(1);
+    expect(await element.all(by.css('.message-text')).get(0).getText()).toEqual('Required');
+    expect(await element.all(by.css('.icon-error')).count()).toEqual(1);
   });
 });

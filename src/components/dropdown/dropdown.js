@@ -622,6 +622,9 @@ Dropdown.prototype = {
     // selected.  Use the internal storage of selected values instead.
     if (this.settings.reload === 'typeahead') {
       selectedFilterMethod = function (i, opt) {
+        if (!self.selectedValues) {
+          return false;
+        }
         return self.selectedValues.indexOf(opt.value) > -1;
       };
     }
@@ -1269,6 +1272,9 @@ Dropdown.prototype = {
     const target = $(e.target);
     const key = e.key;
 
+    // "Esc" is used by IE11
+    const isEscapeKey = key === 'Esc' || key === 'Escape';
+
     // Control Keydowns are ignored
     const controlKeys = ['Alt', 'Shift', 'Control', 'Meta'];
     if (controlKeys.indexOf(key) > -1) {
@@ -1280,7 +1286,9 @@ Dropdown.prototype = {
     }
 
     // Down arrow opens the list.
-    const openKeys = ['ArrowDown', 'ArrowUp', 'Enter', 'Spacebar', ' '];
+    // Down/Up are for IE/Edge.
+    // ArrowDown/ArrowUp are for all others.
+    const openKeys = ['ArrowDown', 'ArrowUp', 'Down', 'Up', 'Enter', 'Spacebar', ' '];
     if (openKeys.indexOf(key) > -1) {
       if (!this.isOpen()) {
         this.open();
@@ -1311,15 +1319,14 @@ Dropdown.prototype = {
 
     // In nosearch mode, bypass the typeahead autocomplete and pass keydown events
     // along to the list elements
-    if (this.settings.noSearch && key !== 'Escape') {
+    if (this.settings.noSearch && isEscapeKey) {
       if (this.isOpen()) {
         return this.handleKeyDown(target, e);
       }
     }
 
     // Allow some keys to pass through with no changes in functionality
-    const allowedKeys = ['Tab'];
-    if (allowedKeys.indexOf(key) > -1) {
+    if (isEscapeKey || key === 'Tab') {
       return true;
     }
 

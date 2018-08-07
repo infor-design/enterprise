@@ -119,10 +119,10 @@ $toolbarsearchfield-category-empty-width: 51px;
 
       &:not(.hide-focus) {
         box-shadow: none;
-        color: $btn-color;
+        color: $button-default-text-color;
 
         &::after {
-          border: 1px solid $btn-focus-bg-color;
+          border: 1px solid $button-default-focus-bg-color;
           border-radius: 2px;
           content: '';
           display: inline-block;
@@ -448,39 +448,39 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .go-button {
-      background-color: $btn-bg-color;
-      border-color: $btn-bg-color;
-      color: $btn-color;
+      background-color: $button-default-bg-color;
+      border-color: $button-default-bg-color;
+      color: $button-default-text-color;
 
       .icon {
-        fill: $btn-color;
+        fill: $button-default-text-color;
       }
 
       &:hover {
-        background-color: $btn-hover-bg-color;
-        border: 1px solid $btn-hover-bg-color;
+        background-color: $button-default-hover-bg-color;
+        border: 1px solid $button-default-hover-bg-color;
       }
 
       &:active {
-        background-color: $btn-active-bg-color;
-        border: 1px solid $btn-active-bg-color;
+        background-color: $button-default-active-bg-color;
+        border: 1px solid $button-default-active-bg-color;
       }
 
       &:focus {
         &:active {
-          background-color: $btn-active-bg-color;
+          background-color: $button-default-active-bg-color;
           box-shadow: none;
         }
       }
 
       &[disabled],
       &[disabled]:hover {
-        background-color: $btn-disabled-bg-color;
-        border: 1px solid $btn-disabled-border-color;
+        background-color: $button-default-disabled-bg-color;
+        border: 1px solid $button-default-disabled-border-color;
         box-shadow: none;
-        color: $btn-disabled-color;
+        color: $button-default-disabled-text-color;
         cursor: default;
-        opacity: $btn-disabled-opacity;
+        opacity: $button-disabled-opacity;
       }
 
       .ripple-effect {
@@ -495,7 +495,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
         &:not(.hide-focus) {
           box-shadow: none;
-          color: $btn-color;
+          color: $button-default-text-color;
 
           &::after {
             border: 1px solid $header-button-focus-color;

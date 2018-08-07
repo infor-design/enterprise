@@ -89,7 +89,8 @@ function ValidationRules() {
         return valid;
       },
       message: 'Required',
-      type: 'error'
+      type: 'error',
+      id: 'required'
     },
 
     // date: Validate date, datetime (24hr or 12hr am/pm)
@@ -112,7 +113,8 @@ function ValidationRules() {
         return !(((parsedDate === undefined) && value !== ''));
       },
       message: 'Invalid Date',
-      type: 'error'
+      type: 'error',
+      id: 'date'
     },
 
     // Validate date, disable dates
@@ -190,7 +192,8 @@ function ValidationRules() {
         return check;
       },
       message: 'Unavailable Date',
-      type: 'error'
+      type: 'error',
+      id: 'availableDate'
     },
 
     // Range date
@@ -226,7 +229,8 @@ function ValidationRules() {
         return check;
       },
       message: 'Range Dates',
-      type: 'error'
+      type: 'error',
+      id: 'rangeDate'
     },
 
     email: {
@@ -237,7 +241,8 @@ function ValidationRules() {
         return (value.length) ? regex.test(value) : true;
       },
       message: 'EmailValidation',
-      type: 'error'
+      type: 'error',
+      id: 'email'
     },
 
     enableSubmit: {
@@ -254,7 +259,8 @@ function ValidationRules() {
         return true;
       },
       message: '',
-      type: 'error'
+      type: 'error',
+      id: 'enableSubmit'
     },
 
     emailPositive: {
@@ -275,7 +281,8 @@ function ValidationRules() {
         return true;
       },
       message: 'EmailValidation',
-      type: 'error'
+      type: 'error',
+      id: 'emailPositive'
     },
 
     passwordReq: {
@@ -290,7 +297,8 @@ function ValidationRules() {
         return (value.length) ? value.match(regex) : true;
       },
       message: 'PasswordValidation',
-      type: 'error'
+      type: 'error',
+      id: 'passwordReq'
     },
 
     passwordConfirm: {
@@ -301,7 +309,8 @@ function ValidationRules() {
         return (value.length) ? check : true;
       },
       message: 'PasswordConfirmValidation',
-      type: 'error'
+      type: 'error',
+      id: 'passwordConfirm'
     },
 
     time: {
@@ -371,18 +380,18 @@ function ValidationRules() {
         return true;
       },
       message: 'Invalid Time',
-      type: 'error'
+      type: 'error',
+      id: 'time'
     },
 
-    // Test validation function, always returns false
+    // Test validation function which always returns false
     test: {
-
       check(value) {
         return value === '1';
       },
-
       message: 'Value is not valid (test).',
-      type: 'error'
+      type: 'error',
+      id: 'test'
     }
   };
 }

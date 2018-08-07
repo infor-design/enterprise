@@ -616,6 +616,10 @@ $datagrid-short-row-height: 23px;
                 top: calc(50% - 6px);
                 width: inherit;
               }
+
+              &.align-text-right {
+                width: calc(100% - 28px);
+              }
             }
 
             &.timepicker {
@@ -747,6 +751,13 @@ $datagrid-short-row-height: 23px;
         margin-left: -10px !important;
         margin-top: -5px !important;
       }
+
+      .align-text-right {
+        + .trigger {
+          margin-left: 0 !important;
+          margin-top: -4px !important;
+        }
+      }
     }
     // scss-lint:enable ImportantRule
 
@@ -764,6 +775,16 @@ $datagrid-short-row-height: 23px;
         .icon {
           left: 9px;
           top: 5px;
+        }
+      }
+
+      .align-text-right {
+        &.trigger {
+          width: calc(100% - 16px);
+        }
+
+        + .icon.icon-search-list {
+          left: 3px;
         }
       }
     }
@@ -929,6 +950,12 @@ $datagrid-short-row-height: 23px;
 
           .dropdown-trigger + .icon {
             left: -3px;
+          }
+
+          .trigger {
+            &.align-text-right {
+              width: calc(100% - 21px);
+            }
           }
         }
         // scss-lint:enable NestingDepth
@@ -1107,6 +1134,12 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    .align-text-right {
+      + .icon-search-list {
+        left: 0 !important;
+      }
+    }
+
     .icon-search-list {
       // scss-lint:disable ImportantRule
       left: -9px !important;
@@ -1162,15 +1195,15 @@ $datagrid-short-row-height: 23px;
       cursor: move;
 
       .icon {
-        fill: $tertiary-btn-color;
+        fill: $button-link-text-color;
         vertical-align: middle;
 
         &:hover {
-          fill: $tertiary-btn-hover-color;
+          fill: $button-link-hover-text-color;
         }
 
         &:active {
-          fill: $tertiary-btn-active-color;
+          fill: $button-link-active-text-color;
         }
       }
     }
@@ -1222,16 +1255,16 @@ $datagrid-short-row-height: 23px;
       background-color: $datagrid-row-selected-color;
 
       .btn.row-btn {
-        background-color: $primary-btn-bg-color;
-        border: 1px solid  $primary-btn-bg-color;
-        color: $primary-btn-color;
+        background-color: $button-primary-bg-color;
+        border: 1px solid  $button-primary-bg-color;
+        color: $button-primary-text-color;
 
         &:hover {
-          background-color: $primary-btn-hover-bg-color;
+          background-color: $button-primary-hover-bg-color;
         }
 
         &:active {
-          background-color: $primary-btn-active-bg-color;
+          background-color: $button-primary-active-bg-color;
         }
       }
     }
@@ -1265,7 +1298,7 @@ $datagrid-short-row-height: 23px;
 
     .icon.plus-minus::before,
     .icon.plus-minus::after {
-      background-color: $tertiary-btn-color;
+      background-color: $button-link-text-color;
     }
 
     &.alt-shading {
@@ -1693,6 +1726,16 @@ $datagrid-short-row-height: 23px;
         vertical-align: top;
         width: 100%;
 
+        .lookup.is-not-editable {
+          + .trigger {
+            margin-left: -10px;
+          }
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+
         .trigger {
           margin-left: -21px;
           margin-top: 1px;
@@ -1725,7 +1768,11 @@ $datagrid-short-row-height: 23px;
         width: 100%;
 
         &.lookup {
-          width: calc(100% - 21px);
+          width: calc(100% - 31px);
+
+          &.align-text-right {
+            width: 100%;
+          }
 
           ~.trigger .icon {
             top: calc(50% - 6px);
@@ -1895,6 +1942,10 @@ $datagrid-short-row-height: 23px;
     &.l-right-text {
       .datagrid-cell-wrapper {
         text-align: right;
+
+        .lookup-wrapper {
+          padding-right: 30px;
+        }
       }
     }
 
@@ -2514,6 +2565,12 @@ td .btn-actions {
     cursor: pointer;
   }
 
+  .align-text-right {
+    + .icon.icon-search-list {
+      left: 0;
+    }
+  }
+
   .icon {
     fill: $trigger-icon-fill-color;
     left: 4px;
@@ -2633,7 +2690,7 @@ td .btn-actions {
   &:hover {
     .icon.plus-minus::before,
     .icon.plus-minus::after {
-      background-color: $tertiary-btn-hover-color;
+      background-color: $button-link-hover-text-color;
     }
 
     span {

@@ -1,4 +1,3 @@
-
 # Teams Using Enterprise
 
 This is a list of Infor teams and contributors using the Enterprise controls repository.
@@ -41,15 +40,17 @@ This is a list of Infor teams and contributors using the Enterprise controls rep
 | Infor BI Modeling | Doing a quick assessment on required changes for Xi, no dedicated Xi release plan yet. The application is part of the SOA Farm and based on BI Farm Architecture.  The client is implemented as a Plugin for BI Dashboards. | Guido Buecker | `4.x` |
 | Infor Enroute 911  | Actively working on converting  | James Coonce | `^4.x` |
 | Infor Hospitality in France  | POS  (France) | Bruno Martinot | `^4.x` |
+| Infor Learning Management | | Shakeeb Murtaza | `4.x` |
 | Infor Mobility Framework | HTML5 , React | Oskar Eriksson |
 | Infor SCE Administration Console | Using some widget styling and Charts | James Wang, George Matthews | `4.x` |
 | Infor Supplier Exchange | Replacing Fat client Java Swing UI | John Sipher | `4.x` |
+| Krypton | Angular 6 App for Testing Admin | Rishni Perera  | `4.x` |
 | LBI | | Steve Stahl, Rommel Dollison | `3.x` |
-| LMS  | Angular (2.0) interested, using some widgets. Has PM | Tony Shah | `4.x` |
 | LTM App Group | | Jerry Drinka, David Cooper | `3.x` |
 | Landmark | (GHR and CSF suites) Old UI: jQuery/HTML5; New UI: Typescript/Angular Shared repo | Phillip Patton, Andrew Lipetzky | `3.3`, `3.5`, `4x` |
 | Landmark | (incl GHR and CSF) jQuery/HTML5, Angular Shared repo | Phillip Patton, Andrew Lipetzky | `3.3`, `3.5`, `4x` |
 | Lawson S3  | | Andy Buboltz | `4.x` |
+| LN - Homepage Widgets | Angular Components in Home pages. | Rajiv Ghatage, Madhavi Dasika | `4.x` |
 | M3 Sales Hub |  Typescript, Angular 1.0 | Jörgen Nilsson | `4.x` |
 | M3 Sales and Marketing Suite Team - Metadata Publisher | | Ralph Brian Mercadal, Lito Lopez | `3.x` |
 | MNT0386 - Cloud Enablement of SRS | | Leo Peng | `3.x` |
@@ -59,6 +60,7 @@ This is a list of Infor teams and contributors using the Enterprise controls rep
 | Mingle Registry / IFS|  part of CE and OP| Ritesh Budarapu  | `4.x` |
 | Mingle|  Pulling SASS files into Mingle | Ravi Narayan | `4.x` |
 | Mongoose | Wizard, Editor Ect  and Demo Services, Looking at Shared Repo | Paul Horne,  Lee Flaherty | `4.x` |
+| MRM (Marketing Resource Management) | Angular Components | Saravana Kumar | `4.x` |
 | NGCC - Content Creator HCM - LMS | | Shakeeb Murtaza | `3.x` |
 | Optiva | Asp Based  | Bert Cushman | `4.x` |
 | Outbound marketing |  Omni-Channel Campaign management - JSF and template based HTML | Karthikeyan Alagarasamy | `^4.x` |

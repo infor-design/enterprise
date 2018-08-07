@@ -1326,6 +1326,9 @@ SearchField.prototype = {
     let nextElem = this.wrapper.next();
     let width;
 
+    if (!buttonset.length) {
+      return;
+    }
     // If small form factor, use the right edge
     if (nextElem.is('.title')) {
       nextElem = buttonset;
@@ -1342,10 +1345,6 @@ SearchField.prototype = {
       }
 
       this.openWidth = width;
-      return;
-    }
-
-    if (!buttonset.length) {
       return;
     }
 
