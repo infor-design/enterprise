@@ -13,7 +13,7 @@
  *   - JSON files in dist/, zips them, and POSTs them to the specified
  *     ids-website server
  *
- * @example `node ./build/deploy-documentation.js`
+ * @example `node ./scripts/deploy-documentation.js`
  *
  * Flags:
  * --dry-run       - Run the script, skipping POSTing to the api

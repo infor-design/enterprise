@@ -292,6 +292,7 @@ const editors = {
     this.name = 'colorpicker';
     this.originalValue = value;
     this.useValue = true; // use the data set value not cell value
+    value = xssUtils.stripTags(value);
 
     this.init = function () {
       this.input = $(`<input id="colorpicker-${cell}" name="colorpicker-${cell}" class="colorpicker" value="${value}" type="text" />`).appendTo(container);

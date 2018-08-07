@@ -3,7 +3,7 @@
 // Other Shared Imports
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { xssUtils } from '../../utils/xss';
+import { DOM } from '../../utils/dom';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
@@ -870,7 +870,7 @@ Column.prototype = {
         const text = d3.select(this).text();
         const markup = self.settings.xAxis.formatText(text, m);
 
-        elem.html(xssUtils.stripTags(markup, '<tspan>'));
+        DOM.html(elem.node(), markup, '<tspan>');
       });
     }
 

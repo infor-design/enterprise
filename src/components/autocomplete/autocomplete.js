@@ -2,6 +2,7 @@
 
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { ListFilter } from '../listfilter/listfilter';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
@@ -294,14 +295,8 @@ Autocomplete.prototype = {
     filterResult.forEach((dataset) => {
       if (typeof Tmpl !== 'undefined') {
         const renderedTmpl = Tmpl.compile(self.tmpl, dataset);
-        self.list.append(xssUtils.sanitizeHTML(renderedTmpl));
-      } else {
-        const listItem = $('<li role="listitem"></li>');
-        listItem.attr('id', xssUtils.ensureAlphaNumeric(dataset.listItemId));
-        listItem.attr('data-index', xssUtils.ensureAlphaNumeric(dataset.index));
-        listItem.attr('data-value', xssUtils.ensureAlphaNumeric(dataset.value));
-        listItem.append(`<a href="#" tabindex="-1"><span>${xssUtils.ensureAlphaNumeric(dataset.label)}</span></a>`);
-        self.list.append(xssUtils.sanitizeHTML(listItem));
+        // self.list.append(xssUtils.sanitizeHTML(renderedTmpl));
+        DOM.append(self.list, renderedTmpl, '*');
       }
     });
 
