@@ -70,7 +70,7 @@
     padding: 0 5px;
   }
 
-  &:hover {
+  &.visible {
     ~ .btn-actions {
       opacity: 1;
     }
@@ -288,12 +288,24 @@
       }
     }
   }
+
+  &.visible {
+    .btn-actions {
+      opacity: 1;
+    }
+  }
 }
 
 // Hover effect ================================================================
 .field.visible {
   .btn-actions {
     opacity: 1;
+  }
+
+  &.is-fieldoptions {
+    .btn-actions {
+      opacity: 1;
+    }
   }
 }
 
