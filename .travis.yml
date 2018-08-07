@@ -6,8 +6,8 @@ dist: trusty
 node_js:
   - "10"
 before_install:
-  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - sudo dpkg -i google-chrome*.deb
+  - if [ $TEST_SUITE != lint ]; then wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb; fi
+  - if [ $TEST_SUITE != lint ]; then sudo dpkg -i google-chrome*.deb; fi
 cache:
   directories:
     - node_modules
@@ -29,6 +29,7 @@ jobs:
   include:
     - stage: deploy
       env: TEST_SUITE=e2e
+      before_install: skip
       install: skip
       script: skip
       deploy:

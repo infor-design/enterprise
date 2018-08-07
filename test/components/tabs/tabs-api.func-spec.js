@@ -6,6 +6,7 @@ const svg = require('../../../src/components/icons/svg.html');
 let tabsEl;
 let tabsPanelEl;
 let svgEl;
+let rowEl;
 let tabsObj;
 
 describe('Tabs API', () => {
@@ -17,6 +18,7 @@ describe('Tabs API', () => {
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', tabsHTML);
     tabsEl = document.body.querySelector('.tab-container');
+    rowEl = document.body.querySelector('.row');
     tabsPanelEl = document.body.querySelector('.tab-panel-container');
     svgEl = document.body.querySelector('.svg-icons');
     tabsEl.classList.add('no-init');
@@ -26,6 +28,7 @@ describe('Tabs API', () => {
   afterEach(() => {
     tabsObj.destroy();
     tabsEl.parentNode.removeChild(tabsEl);
+    rowEl.parentNode.removeChild(rowEl);
     tabsPanelEl.parentNode.removeChild(tabsPanelEl);
     svgEl.parentNode.removeChild(svgEl);
   });
@@ -383,8 +386,8 @@ describe('Tabs API', () => {
     setTimeout(() => {
       expect(tabs).toEqual(jasmine.any(Object));
       expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-selected');
-      expect(document.querySelectorAll('[aria-expanded="true"]').length).toEqual(0);
-      expect(document.querySelectorAll('[aria-selected="true"]').length).toEqual(0);
+      expect(document.querySelectorAll('.tab a[aria-expanded="true"]').length).toEqual(0);
+      expect(document.querySelectorAll('.tab a[aria-selected="true"]').length).toEqual(0);
       // Teardown interferes with afterEach script, so we restore Tabs instance
       tabsObj = new Tabs(tabsEl);
       done();
@@ -396,8 +399,8 @@ describe('Tabs API', () => {
     const empty = {};
     setTimeout(() => {
       expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-selected');
-      expect(document.querySelectorAll('[aria-expanded="true"]').length).toEqual(0);
-      expect(document.querySelectorAll('[aria-selected="true"]').length).toEqual(0);
+      expect(document.querySelectorAll('.tab a[aria-expanded="true"]').length).toEqual(0);
+      expect(document.querySelectorAll('.tab a[aria-selected="true"]').length).toEqual(0);
       expect(tabsObj.element.data()).toEqual(empty);
       // Teardown interferes with afterEach script, so we restore Tabs instance
       tabsObj = new Tabs(tabsEl);

@@ -344,10 +344,10 @@ Editor.prototype = {
     this.textarea = this.createTextarea();
 
     // fill the text area with any content that may already exist within the editor DIV
-    this.textarea.text(this.element.html().toString());
+    this.textarea.text($.sanitizeHTML(this.element.html().toString()));
 
-    self.container.on('input.editor keyup.editor', self.element, debounce(() => {
-      self.textarea.val(self.element.html().toString());
+    self.container.on('input.editor keyup.editor', '.editor', debounce(() => {
+      self.textarea.html($.sanitizeHTML(self.element.html().toString()));
       // setting the value via .val doesn't trigger the change event
       self.element.trigger('change');
     }, 500));
@@ -2042,7 +2042,7 @@ Editor.prototype = {
   },
 
   teardown() {
-    this.container.off('input.editor keyup.editor', this.element);
+    this.element.off('input.editor keyup.editor');
     $('html').off('mouseup.editor');
 
     this.destroyToolbar();

@@ -375,12 +375,7 @@ ListView.prototype = {
           break;
         case 'string':
           if (s.indexOf('http') === 0 || s.indexOf('/') === 0) {
-            $.ajax({
-              url: s,
-              async: false,
-              dataType: 'json',
-              success: done
-            });
+            $.getJSON(s, done);
           }
           return;
         default:

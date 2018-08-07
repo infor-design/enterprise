@@ -468,7 +468,7 @@ Datagrid.prototype = {
       * @property {object} args.oldValue - Always an empty object added for consistent api.
       */
       self.element.triggerHandler('addrow', args);
-    }, 10);
+    }, 100);
   },
 
   /**
@@ -543,7 +543,7 @@ Datagrid.prototype = {
   * @param {object} pagerInfo The pager info object with information like activePage ect.
   */
   updateDataset(dataset, pagerInfo) {
-    if (this.settings.toolbar.keywordFilter) {
+    if (this.settings.toolbar && this.settings.toolbar.keywordFilter) {
       const searchField = this.element.parent().find('.toolbar').find('.searchfield');
       searchField.val('');
       searchField.parent().removeClass('has-text');
@@ -4566,6 +4566,11 @@ Datagrid.prototype = {
         return;
       }
 
+      if (target.parents('td').length > 1) {
+        e.preventDefault(); // stop nested clicks from propagating
+        e.stopPropagation();
+      }
+
       /**
       * Fires after a row is clicked.
       * @event click
@@ -6252,6 +6257,13 @@ Datagrid.prototype = {
           } else {
             self.setActiveCell(row, cell);
           }
+
+          if (key === 9 && self.settings.actionableMode) {
+            self.makeCellEditable(self.activeCell.rowIndex, cell, e);
+            if (self.isContainTextfield(node) && self.notContainTextfield(node)) {
+              self.quickEditMode = true;
+            }
+          }
           self.quickEditMode = false;
           handled = true;
         }
@@ -6357,6 +6369,7 @@ Datagrid.prototype = {
         if (!self.editor) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
+        e.preventDefault();
       }
 
       // if column have click function to fire [ie. action button]
@@ -7119,7 +7132,7 @@ Datagrid.prototype = {
       rowNode = this.visualRowNode(row);
       cellNode = rowNode.find('td').eq(cell);
     }
-    const oldVal = (col.field ? rowData[col.field] : '');
+    const oldVal = this.fieldValue(rowData, col.field);
 
     // Coerce/Serialize value if from cell edit
     if (!fromApiCall) {
@@ -7348,7 +7361,7 @@ Datagrid.prototype = {
     }
 
     // Find the cell if it exists
-    self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), (cell)).attr('tabindex', '0');
+    self.activeCell.node = self.cellNode((isGroupRow || rowElem ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), cell).attr('tabindex', '0');
 
     if (self.activeCell.node && prevCell.node.length === 1) {
       self.activeCell.row = rowNum;
@@ -7441,7 +7454,7 @@ Datagrid.prototype = {
 
   setNextActiveCell(e) {
     const self = this;
-    if (e.type === 'keydown') {
+    if (e.type === 'keydown' && !self.settings.actionableMode) {
       if (this.settings.actionableMode) {
         setTimeout(() => {
           const evt = $.Event('keydown.datagrid');

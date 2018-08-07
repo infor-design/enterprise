@@ -159,8 +159,6 @@ sections:
       slug: contextualactionpanel
     - name: Signin
       slug: signin
-    - name: Step Process
-      slug: stepprocess
 - name: Charts
   pages:
   - name: Getting Start with Charts

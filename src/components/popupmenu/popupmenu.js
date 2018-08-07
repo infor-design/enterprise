@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { DOM } from '../../utils/dom';
@@ -26,6 +27,7 @@ const COMPONENT_NAME = 'popupmenu';
  * @param {function} [settings.beforeOpen]  Callback that can be used for populating the contents of the menu.
  * @param {string} [settings.ariaListbox=false]   Switches aria to use listbox construct instead of menu construct (internal).
  * @param {string} [settings.eventObj]  Can pass in the event object so you can do a right click with immediate.
+ * @param {string} [settings.triggerSelect]  If false select event will not be triggered.
  * @param {string} [settings.showArrow]  If true you can explicitly set an arrow on the menu.
  * @param {boolean|function} [settings.returnFocus]  If set to false, focus will not be
   returned to the calling element. Can also be defined as a callback that can determine how
@@ -50,6 +52,7 @@ const POPUPMENU_DEFAULTS = {
   eventObj: undefined,
   returnFocus: true,
   showArrow: null,
+  triggerSelect: true,
   placementOpts: new PlacementObject({
     containerOffsetX: 10,
     containerOffsetY: 10,
@@ -65,7 +68,6 @@ const POPUPMENU_DEFAULTS = {
 function PopupMenu(element, settings) {
   this.settings = utils.mergeSettings(element, settings, POPUPMENU_DEFAULTS);
   this.element = $(element);
-  this.isOldIe = $('html').is('.ie11, .ie10, .ie9');
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -100,7 +102,7 @@ PopupMenu.prototype = {
    * @returns {boolean} whether or not the reading/writing direction is RTL
    */
   isRTL() {
-    return $('html').attr('dir') === 'rtl';
+    return env.rtl;
   },
 
   /**
@@ -754,7 +756,7 @@ PopupMenu.prototype = {
       e.preventDefault();
 
       if (self.keydownThenClick) {
-        self.keydownThenClick = undefined;
+        delete self.keydownThenClick;
         return;
       }
 
@@ -762,6 +764,8 @@ PopupMenu.prototype = {
       if (e.button > btn || self.element.is(':disabled')) {
         return;
       }
+
+      self.holdingDownClick = true;
 
       doOpen(e);
     }
@@ -778,11 +782,35 @@ PopupMenu.prototype = {
       // Right-Click activation
       if (!leftClick) {
         this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
-        this.element
-          .on('contextmenu.popupmenu', (e) => {
-            disableBrowserContextMenu(e);
-            contextMenuHandler(e);
-          });
+
+        const disallowedOS = ['android', 'ios'];
+        if (disallowedOS.indexOf(env.os.name) === -1) {
+          // Normal desktop operation
+          this.element
+            .on('contextmenu.popupmenu', (e) => {
+              disableBrowserContextMenu(e);
+              contextMenuHandler(e);
+            });
+        } else {
+          // Touch-based operation on a mobile device
+          this.element
+            .on('touchstart.popupmenu', (e) => {
+              // iOS needs this prevented to prevent its own longpress feature in Safari
+              if (env.os.name === 'ios') {
+                e.preventDefault();
+              }
+              $(e.target)
+                .addClass('longpress-target');
+            })
+            .on('touchend.popupmenu', (e) => {
+              $(e.target)
+                .removeClass('longpress-target');
+            })
+            .on('longpress.popupmenu', (e, originalE) => {
+              self.openedWithTouch = true;
+              contextMenuHandler(originalE);
+            });
+        }
       }
     }
 
@@ -815,6 +843,7 @@ PopupMenu.prototype = {
       });
 
     // Media Query Listener to detect a menu closing on mobile devices that change orientation.
+    /*
     if (window.matchMedia) {
       this.matchMedia = window.matchMedia('(orientation: landscape)');
       this.mediaQueryListener = function () {
@@ -822,10 +851,11 @@ PopupMenu.prototype = {
         if (!self.menu.hasClass('is-open')) {
           return;
         }
-        self.close();
+        self.handleCloseEvent();
       };
       this.matchMedia.addListener(this.mediaQueryListener);
     }
+    */
   },
 
   handleKeys() {
@@ -1129,7 +1159,7 @@ PopupMenu.prototype = {
     // Trigger a selected event containing the anchor that was selected
     // If an event object is not passed to `handleItemClick()`, assume it was due to this
     // event being triggered already, making it not necessary to re-trigger it.
-    if (e) {
+    if (e && this.settings.triggerSelect) {
       if (selectionResult.length === 1) {
         selectionResult.push(undefined);
       }
@@ -1229,14 +1259,18 @@ PopupMenu.prototype = {
       return {};
     }
 
-    if (e.pageX || e.pageY) {
+    if (e.changedTouches) {
+      const touch = e.changedTouches[0];
+      x = touch.pageX;
+      y = touch.pageY;
+    } else if (e.pageX || e.pageY) {
       x = e.pageX;
       y = e.pageY;
     } else if (e.clientX || e.clientY) {
       x = e.clientX + document.body.scrollLeft +
-                         document.documentElement.scrollLeft;
+        document.documentElement.scrollLeft;
       y = e.clientY + document.body.scrollTop +
-                         document.documentElement.scrollTop;
+        document.documentElement.scrollTop;
     }
 
     return {
@@ -1566,6 +1600,11 @@ PopupMenu.prototype = {
           return;
         }
 
+        if (self.holdingDownClick) {
+          delete self.holdingDownClick;
+          return;
+        }
+
         // Click functionality will toggle the menu - otherwise it closes and opens
         if ($(thisE.target).is(self.element)) {
           return;
@@ -1579,7 +1618,7 @@ PopupMenu.prototype = {
       // in desktop environments, close the list on viewport resize
       if (window.orientation === undefined) {
         $('body').on('resize.popupmenu', () => {
-          self.close();
+          self.handleCloseEvent();
         });
       }
 
@@ -1603,7 +1642,7 @@ PopupMenu.prototype = {
 
       if (self.settings.trigger === 'rightClick') {
         self.element.on('click.popupmenu touchend.popupmenu', () => {
-          self.close();
+          self.handleCloseEvent();
         });
       }
     }, 300);
@@ -1686,6 +1725,19 @@ PopupMenu.prototype = {
         self.element.triggerHandler('afteropen', [self.menu]);
       }, 1);
     }
+  },
+
+  /**
+   * Only allows a menu to close if a key is no longer being pressed
+   * @private
+   * @returns {void}
+   */
+  handleCloseEvent() {
+    if (this.holdingDownClick) {
+      return;
+    }
+
+    this.close();
   },
 
   /**
@@ -1950,10 +2002,6 @@ PopupMenu.prototype = {
 
     this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
 
-    if (this.settings.trigger === 'rightClick') {
-      this.element.off('click.popupmenu touchend.popupmenu');
-    }
-
     $('iframe').each(function () {
       const frame = $(this);
       try {
@@ -1994,7 +2042,13 @@ PopupMenu.prototype = {
       wrapper[0].style.width = '';
     }
 
-    this.menu.find('.submenu').off('mouseenter mouseleave').removeClass('is-submenu-open');
+    this.menu.find('.submenu')
+      .off([
+        'mouseenter.popupmenu',
+        'mouseleave.popupmenu'
+      ].join(' '))
+      .removeClass('is-submenu-open');
+
     if (menu[0]) {
       menu[0].style.left = '';
       menu[0].style.top = '';
@@ -2005,8 +2059,23 @@ PopupMenu.prototype = {
     this.menu.find('.is-focused').removeClass('is-focused');
 
     // Close all events
-    $(document).off(`keydown.popupmenu.${this.id} click.popupmenu.${this.id} mousemove.popupmenu.${this.id}`);
-    this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
+    $(document).off([
+      `keydown.popupmenu.${this.id}`,
+      `click.popupmenu.${this.id}`,
+      `mousemove.popupmenu.${this.id}`,
+      `touchend.popupmenu.${self.id}`
+    ].join(' '));
+
+    this.menu.off([
+      'click.popupmenu',
+      'touchend.popupmenu',
+      'touchcancel.popupmenu',
+      'mouseenter.popupmenu',
+      'mouseleave.popupmenu'].join(' '));
+
+    // Get rid of internal flags that check for how the menu was opened
+    delete this.keydownThenClick;
+    delete this.holdingDownClick;
 
     /**
      * Fires when close.
@@ -2022,6 +2091,15 @@ PopupMenu.prototype = {
     if (this.settings.trigger === 'immediate') {
       this.destroy();
     }
+
+    // On text input targets, don't refocus the input if the opening event was called by a touch
+    if (this.element[0].tagName === 'INPUT' && this.openedWithTouch) {
+      this.element.removeClass('longpress-target');
+      delete this.openedWithTouch;
+      return;
+    }
+
+    delete this.openedWithTouch;
 
     if (noFocus) {
       return;
@@ -2101,10 +2179,6 @@ PopupMenu.prototype = {
       delete self.wrapperPlace;
     }
     wrapper.off().remove();
-
-    if (this.matchMedia) {
-      this.matchMedia.removeListener(this.mediaQueryListener);
-    }
 
     if (this.menu[0]) {
       $.removeData(this.menu[0], 'trigger');

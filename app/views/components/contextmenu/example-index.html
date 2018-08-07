@@ -1,17 +1,14 @@
 <div class="row">
+  <div class="six columns">
+    <h2>Context Menu Example</h2>
+    <p>Right-click (Long-press on Mobile) anywhere on the page to open a context menu</p>
+  </div>
+</div>
+
+<div class="row">
   <div class="twelve columns">
 
-    <div class="field">
-      <label for="input-menu">Label</label>
-      <input type="text" data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu">
-    </div>
-
-    <div class="field">
-      <label for="input-menu2">Label2</label>
-      <input type="text"  data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu2">
-    </div>
-
-    <ul id="action-popupmenu" class="popupmenu">
+    <ul id="action-popupmenu" data-init="false" class="popupmenu">
       <li><a href="#">Cut</a></li>
       <li><a href="#">Copy</a></li>
       <li><a href="#">Paste</a></li>
@@ -52,5 +49,11 @@
     </ul>
 
   </div>
-
 </div>
+
+<script id="test-script">
+  $('body').popupmenu({
+    menu: 'action-popupmenu',
+    trigger: 'rightClick'
+  });
+</script>

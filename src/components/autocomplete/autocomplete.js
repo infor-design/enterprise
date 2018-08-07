@@ -286,6 +286,7 @@ Autocomplete.prototype = {
       attachToBody: true,
       autoFocus: false,
       returnFocus: false,
+      triggerSelect: false,
       placementOpts: {
         parent: this.element,
         callback: afterPlaceCallback
@@ -380,7 +381,6 @@ Autocomplete.prototype = {
       popup.close();
     }
 
-    this.currentDataSet = null;
     this.element.trigger('listclose');
     $('#autocomplete-list').parent('.popupmenu-wrapper').remove();
     $('#autocomplete-list').remove();

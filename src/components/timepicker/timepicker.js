@@ -24,7 +24,8 @@ const TIMEPICKER_DEFAULTS = function () {
     mode: TIMEPICKER_MODES[0],
     roundToInterval: true,
     parentElement: null,
-    returnFocus: true
+    returnFocus: true,
+    customValidation: false
   };
 };
 
@@ -40,6 +41,7 @@ const TIMEPICKER_DEFAULTS = function () {
  * @property {string} [settings.mode = 'standard']  Can be set to 'standard', 'range',
  * @property {boolean} [settings.roundToInterval = true]  if `false`, does not automatically round user-entered values
  * from the pickers to their nearest interval.
+ * @param {boolean} [settings.customValidation=false] If true the internal validation is disabled.
  * @param {null|jQuery[]} [settings.parentElement] if defined as a jQuery-wrapped element, will be used as the target element.
  * @property {string} [settings.returnFocus = true]  If set to false, focus will not be returned to
  *  the calling element. It usually should be for accessibility purposes.
@@ -363,12 +365,14 @@ TimePicker.prototype = {
       }
     }
 
-    this.element
-      .attr('data-validate', validation)
-      .attr('data-validation-events', JSON.stringify(events))
-      .mask(maskOptions)
-      .validate()
-      .triggerHandler('updated');
+    if (!this.settings.customValidation) {
+      this.element
+        .attr('data-validate', validation)
+        .attr('data-validation-events', JSON.stringify(events))
+        .mask(maskOptions)
+        .validate()
+        .triggerHandler('updated');
+    }
   },
 
   /**

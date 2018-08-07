@@ -1378,6 +1378,7 @@ DatePicker.prototype = {
     const self = this;
 
     elem[0].style.backgroundColor = '';
+    elem.off('mouseenter.legend mouseleave.legend');
 
     if (hex) {
       // set color on elem at .3 of provided color as per design
@@ -1388,11 +1389,11 @@ DatePicker.prototype = {
       const hoverColor = self.hexToRgba(hex, 0.7);
 
       // handle hover states
-      elem.on('mouseenter', function () {
+      elem.on('mouseenter.legend', function () {
         const thisElem = $(this);
         thisElem[0].style.backgroundColor = hoverColor;
         thisElem.find('span')[0].style.backgroundColor = 'transparent';
-      }).on('mouseleave', function () {
+      }).on('mouseleave.legend', function () {
         const thisElem = $(this);
         thisElem[0].style.backgroundColor = normalColor;
         thisElem.find('span')[0].style.backgroundColor = '';

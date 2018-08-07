@@ -55,7 +55,7 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 
   &:hover input:not([disabled]):not(:focus) {
     + svg {
-      fill: $tertiary-btn-hover-color;
+      fill: $button-link-hover-text-color;
     }
   }
 

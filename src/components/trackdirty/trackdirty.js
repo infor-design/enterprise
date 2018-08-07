@@ -127,11 +127,16 @@ Trackdirty.prototype = {
   handleEvents() {
     const input = this.element;
 
+    if (input.is('.editor')) {
+      const textArea = input.parent().find('textarea');
+      textArea.data('original', this.valMethod(textArea));
+    }
+
     input.data('original', this.valMethod(input, true))
       .on('resetdirty.dirty', () => {
         if (input.is('.editor')) {
           const textArea = input.parent().find('textarea');
-          textArea[0].defaultValue = this.valMethod(textArea);
+          textArea.data('original', this.valMethod(textArea));
         }
 
         input.data('original', this.valMethod(input))
@@ -211,7 +216,7 @@ Trackdirty.prototype = {
           // editors values are further down it's tree in a textarea,
           // so get the elements with the value
           const textArea = field.find('textarea');
-          original = textArea[0].defaultValue;
+          original = textArea.data('original');
           current = this.valMethod(textArea);
         }
 

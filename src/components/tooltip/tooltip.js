@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { xssUtils } from '../../utils/xss';
 
@@ -113,6 +114,10 @@ Tooltip.prototype = {
       this.element.removeAttr('title');
     }
 
+    if (this.settings.trigger === 'hover') {
+      this.element.addClass('longpress-target');
+    }
+
     this.isPopover = (this.settings.content !== null && typeof this.settings.content === 'object') || this.settings.popover === true;
 
     this.settings.closebutton = !!((this.settings.closebutton || this.element.data('closebutton')));
@@ -196,18 +201,21 @@ Tooltip.prototype = {
 
     if (this.settings.trigger === 'hover' && !this.settings.isError) {
       ((this.element.is('.dropdown, .multiselect')) ? this.activeElement : this.element)
-        .on('mouseenter.tooltip', () => {
+        .on(`mouseenter.${COMPONENT_NAME}`, () => {
           timer = setTimeout(() => {
             self.show();
           }, delay);
         })
-        .on('mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip', () => {
+        .on(`mouseleave.${COMPONENT_NAME} click.${COMPONENT_NAME}`, () => {
           clearTimeout(timer);
           setTimeout(() => {
             self.hide();
           }, delay);
         })
-        .on('updated.tooltip', () => {
+        .on(`longpress.${COMPONENT_NAME}`, () => {
+          self.show();
+        })
+        .on(`updated.${COMPONENT_NAME}`, () => {
           self.updated();
         });
     }
@@ -221,7 +229,7 @@ Tooltip.prototype = {
     }
 
     if (this.settings.trigger === 'click') {
-      this.element.on('click.tooltip', () => {
+      this.element.on(`click.${COMPONENT_NAME}`, () => {
         toggleTooltipDisplay();
       });
     }
@@ -234,10 +242,11 @@ Tooltip.prototype = {
 
     const isFocusable = this.settings.trigger === 'focus';
     if (isFocusable) {
-      this.element.on('focus.tooltip', () => {
-        self.show();
-      })
-        .on('blur.tooltip', () => {
+      this.element
+        .on(`focus.${COMPONENT_NAME}`, () => {
+          self.show();
+        })
+        .on(`blur.${COMPONENT_NAME}`, () => {
           if (!self.settings.keepOpen) {
             self.hide();
           }
@@ -245,7 +254,7 @@ Tooltip.prototype = {
     }
 
     // Close the popup/tooltip on orientation changes (but not when keyboard is open)
-    $(window).on('orientationchange.tooltip', () => {
+    $(window).on(`orientationchange.${COMPONENT_NAME}`, () => {
       // Match every time.
       if (self.tooltip.hasClass('is-hidden')) {
         return;
@@ -557,28 +566,31 @@ Tooltip.prototype = {
      */
     this.element.trigger('show', [this.tooltip]);
 
+    const mouseUpEventName = env.features.touch ? 'touchend' : 'mouseup';
+
     setTimeout(() => {
-      $(document).on('mouseup.tooltip', (e) => {
-        const target = $(e.target);
+      $(document)
+        .on(`${mouseUpEventName}.${COMPONENT_NAME}`, (e) => {
+          const target = $(e.target);
 
-        if (self.settings.isError || self.settings.trigger === 'focus') {
-          return;
-        }
+          if (self.settings.isError || self.settings.trigger === 'focus') {
+            return;
+          }
 
-        if (target.is(self.element) && target.is('svg.icon')) {
-          return;
-        }
+          if (target.is(self.element) && target.is('svg.icon')) {
+            return;
+          }
 
-        if ($('#editor-popup').length && $('#colorpicker-menu').length) {
-          return;
-        }
+          if ($('#editor-popup').length && $('#colorpicker-menu').length) {
+            return;
+          }
 
-        if (target.closest('.popover').length === 0 &&
-            target.closest('.dropdown-list').length === 0) {
-          self.hide(e);
-        }
-      })
-        .on('keydown.tooltip', (e) => {
+          if (target.closest('.popover').length === 0 &&
+              target.closest('.dropdown-list').length === 0) {
+            self.hide(e);
+          }
+        })
+        .on(`keydown.${COMPONENT_NAME}`, (e) => {
           if (e.which === 27 || self.settings.isError) {
             self.hide();
           }
@@ -591,13 +603,13 @@ Tooltip.prototype = {
       }
 
       if (window.orientation === undefined) {
-        $('body').on('resize.tooltip', () => {
+        $('body').on(`resize.${COMPONENT_NAME}`, () => {
           self.hide();
         });
       }
 
       // Hide on Page scroll
-      $('body').on('scroll.tooltip', () => {
+      $('body').on(`scroll.${COMPONENT_NAME}`, () => {
         self.hide();
       });
 
@@ -615,7 +627,7 @@ Tooltip.prototype = {
 
       // Click to close
       if (self.settings.isError) {
-        self.tooltip.on('click.tooltip', () => {
+        self.tooltip.on(`click.${COMPONENT_NAME}`, () => {
           self.hide();
         });
       }
@@ -782,12 +794,20 @@ Tooltip.prototype = {
    * @returns {void}
    */
   detachOpenEvents() {
-    this.tooltip.off('click.tooltip');
-    $(document).off('mouseup.tooltip');
-    $('body').off('resize.tooltip scroll.tooltip');
-    this.element.closest('.modal-body-wrapper').off('scroll.tooltip');
-    this.element.closest('.scrollable').off('scroll.tooltip');
-    this.element.closest('.datagrid-body').off('scroll.tooltip');
+    this.tooltip.off(`click.${COMPONENT_NAME}`);
+
+    $(document).off([
+      `keydown.${COMPONENT_NAME}`,
+      `mouseup.${COMPONENT_NAME}`,
+      `touchend.${COMPONENT_NAME}`].join(' '));
+
+    $('body').off([
+      `resize.${COMPONENT_NAME}`,
+      `scroll.${COMPONENT_NAME}`].join(' '));
+
+    this.element.closest('.modal-body-wrapper').off(`scroll.${COMPONENT_NAME}`);
+    this.element.closest('.scrollable').off(`scroll.${COMPONENT_NAME}`);
+    this.element.closest('.datagrid-body').off(`scroll.${COMPONENT_NAME}`);
   },
 
   /**
@@ -809,10 +829,18 @@ Tooltip.prototype = {
       this.tooltip.data('place').destroy();
     }
 
-    this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip updated.tooltip focus.tooltip blur.tooltip');
+    this.element.off([
+      `mouseenter.${COMPONENT_NAME}`,
+      `mouseleave.${COMPONENT_NAME}`,
+      `longpress.${COMPONENT_NAME}`,
+      `click.${COMPONENT_NAME}`,
+      `updated.${COMPONENT_NAME}`,
+      `focus.${COMPONENT_NAME}`,
+      `blur.${COMPONENT_NAME}`].join(' '));
+
     this.detachOpenEvents();
 
-    $(window).off('orientationchange.tooltip');
+    $(window).off(`orientationchange.${COMPONENT_NAME}`);
 
     return this;
   },

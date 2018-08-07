@@ -101,24 +101,16 @@
             return;
           }
 
-        }).on('error', function (e, args) {
-          console.log('error',args);
-          $('#submit').prop('disabled', true);
-        }).on('valid', function (e, args) {
+        }).on('aftervalidate', function (e, args) {
           var api = $(this).data('validate');
 
           if (api.isFormValid($(this))) {
             console.log('Form Corrected', args);
             $('#submit').prop('disabled', false);
+          } else {
+            $('#submit').prop('disabled', true);
           }
         });
-
-        $('input, select, .editor').on('error', function (e, args) {
-          console.log('error', args);
-        }).on('valid', function (e, args) {
-          console.log('valid', args);
-        });
-
       });
     </script>
   </div>
