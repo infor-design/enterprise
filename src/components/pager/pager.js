@@ -236,22 +236,40 @@ Pager.prototype = {
       }
 
       if (li.is('.pager-prev')) {
-        self.setActivePage(self.activePage - 1, false, 'prev');
+        if (self.settings.indeterminate) {
+          self.activePage = -1; // so setActivePage doesn't skip rendering the row data
+          self.setActivePage(1, false, 'prev');
+        } else {
+          self.setActivePage(self.activePage - 1, false, 'prev');
+        }
         return false;
       }
 
       if (li.is('.pager-next')) {
-        self.setActivePage((self.activePage === -1 ? 0 : self.activePage) + 1, false, 'next');
+        if (self.settings.indeterminate) {
+          self.activePage = -1; // so setActivePage doesn't skip rendering the row data
+          self.setActivePage(1, false, 'next');
+        } else {
+          self.setActivePage((self.activePage === -1 ? 0 : self.activePage) + 1, false, 'next');
+        }
         return false;
       }
 
       if (li.is('.pager-first')) {
+        if (self.settings.indeterminate) {
+          self.activePage = -1; // so setActivePage doesn't skip rendering the row data
+        }
         self.setActivePage(1, false, 'first');
         return false;
       }
 
       if (li.is('.pager-last')) {
-        self.setActivePage(self.pageCount(), false, 'last'); // TODO Calculate Last Page?
+        if (self.settings.indeterminate) {
+          self.activePage = -1; // so setActivePage doesn't skip rendering the row data
+          self.setActivePage(1, false, 'last');
+        } else {
+          self.setActivePage(self.pageCount(), false, 'last'); // TODO Calculate Last Page?
+        }
         return false;
       }
 
@@ -369,15 +387,13 @@ Pager.prototype = {
 
     // If any of the following conditions are met, don't rerender the pages.
     // Only rerender the pager bar.
-    if (!this.settings.indeterminate) {
-      if (pageNum === undefined ||
+    if (pageNum === undefined ||
         pageNum === 0 ||
         isNaN(pageNum) ||
         pageNum > this.pageCount() ||
         (pageNum === this.activePage && !force)) {
-        this.renderBar(pagingInfo);
-        return this.activePage;
-      }
+      this.renderBar(pagingInfo);
+      return this.activePage;
     }
 
     this.activePage = pageNum;
