@@ -369,13 +369,15 @@ Pager.prototype = {
 
     // If any of the following conditions are met, don't rerender the pages.
     // Only rerender the pager bar.
-    if (pageNum === undefined ||
+    if (!this.settings.indeterminate) {
+      if (pageNum === undefined ||
         pageNum === 0 ||
         isNaN(pageNum) ||
         pageNum > this.pageCount() ||
         (pageNum === this.activePage && !force)) {
-      this.renderBar(pagingInfo);
-      return this.activePage;
+        this.renderBar(pagingInfo);
+        return this.activePage;
+      }
     }
 
     this.activePage = pageNum;
