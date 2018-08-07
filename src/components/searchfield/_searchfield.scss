@@ -68,6 +68,11 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
     padding-right: 34px;
     @include transition(background-color 300ms $cubic-bezier-ease,
       border-color 300ms $cubic-bezier-ease);
+      opacity: $searchfield-disabled-opacity;
+
+      ~ svg.icon {
+      fill: $searchfiled-disabled-icon-color;
+    }
   }
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
@@ -199,7 +204,7 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
     }
 
     .searchfield {
-      border-color: $input-hover-border-color;
+      border-color: $searchfiled-disabled-border-color;
     }
 
     &.has-categories {
