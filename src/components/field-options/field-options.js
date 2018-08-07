@@ -162,6 +162,7 @@ FieldOptions.prototype = {
     // Update hover element
     this.hoverElem = isSpinbox ? this.element.add(this.field.find('.down, .up')) : this.targetElem;
     this.hoverElem = isColorpicker ? this.element.add(this.field.find('.colorpicker-container, .swatch, .trigger')) : this.hoverElem;
+    this.hoverElem = isRadio || isCheckbox ? this.field : this.targetElem;
 
     // Set field-options visibility.
     // In touch environments, the button should always be visible.
