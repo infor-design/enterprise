@@ -172,6 +172,10 @@ FieldOptions.prototype = {
       this.field.removeClass('visible');
       this.field
         .on(`mouseover.${COMPONENT_NAME}`, () => {
+          if (this.element.prop('disabled') || this.element.closest('is-disabled').length) {
+            return;
+          }
+
           if (this.field[0].className.indexOf('visible') < 0) {
             this.field[0].classList.add('visible');
           }
