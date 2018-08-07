@@ -40,6 +40,7 @@ describe('Accordion API', () => {
 
   it('Should be able to enable it', () => {
     accordionObj.enable();
+    accordionObj.enable();
 
     expect(document.body.querySelector('.accordion.is-disabled')).toBeFalsy();
   });
