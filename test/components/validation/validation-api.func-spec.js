@@ -70,69 +70,65 @@ describe('Validation API', () => {
   });
 
   it('can get values', () => {
-    let value = validatorAPI.value($(emailID));
+    const value = validatorAPI.value($(emailID));
 
     expect(value).toEqual('someone@someplace.com');
-
-    value = validatorAPI.value($('.editor'));
-
-    expect(value.replace(/\s/g, '')).toEqual('');
   });
 
   it('add / remove messages of different types', () => {
-    validatorAPI.addMessage($(emailID), 'This is the message', 'error', true, false, false, true, '');
+    validatorAPI.addMessage($(emailID), { id: 'error', message: 'This is the message', type: 'error' }, true, false);
 
     expect(document.body.querySelector('.error-message')).toBeTruthy();
 
-    validatorAPI.removeMessage($(emailID), 'error', true);
+    validatorAPI.removeMessage($(emailID), { id: 'error', type: 'error' });
 
     expect(document.body.querySelector('.error-message')).toBeFalsy();
 
-    validatorAPI.addMessage($(emailID), 'This is the message', 'alert', true, false, false, true, '');
+    validatorAPI.addMessage($(emailID), { id: 'alert', message: 'This is the message', type: 'alert' }, true, false);
 
     expect(document.body.querySelector('.alert-message')).toBeTruthy();
 
-    validatorAPI.removeMessage($(emailID), 'alert', true);
+    validatorAPI.removeMessage($(emailID), { id: 'alert', type: 'alert' });
 
     expect(document.body.querySelector('.alert-message')).toBeFalsy();
 
-    validatorAPI.addMessage($(emailID), 'This is the message', 'confirm', true, false, false, true, '');
+    validatorAPI.addMessage($(emailID), { id: 'confirm', message: 'This is the message', type: 'confirm' }, true, false);
 
     expect(document.body.querySelector('.confirm-message')).toBeTruthy();
 
-    validatorAPI.removeMessage($(emailID), 'confirm', true);
+    validatorAPI.removeMessage($(emailID), { id: 'confirm', type: 'confirm' });
 
     expect(document.body.querySelector('.confirm-message')).toBeFalsy();
 
-    validatorAPI.addMessage($(emailID), 'This is the message', 'info', true, false, false, true, '');
+    validatorAPI.addMessage($(emailID), { id: 'info', message: 'This is the message', type: 'info' }, true, false);
 
     expect(document.body.querySelector('.info-message')).toBeTruthy();
 
-    validatorAPI.removeMessage($(emailID), 'info', true);
+    validatorAPI.removeMessage($(emailID), { id: 'info', type: 'info' });
 
     expect(document.body.querySelector('.info-message')).toBeFalsy();
 
-    validatorAPI.addMessage($(emailID), 'This is the message', 'icon', true, false, false, true, 'mail');
+    validatorAPI.addMessage($(emailID), { id: 'icon', message: 'This is the message', type: 'icon', icon: 'mail' }, true, false);
 
     expect(document.body.querySelector('.custom-icon-message')).toBeTruthy();
 
-    validatorAPI.removeMessage($(emailID), 'icon', true);
+    validatorAPI.removeMessage($(emailID), { id: 'icon', type: 'icon' });
 
     expect(document.body.querySelector('.custom-icon-message')).toBeFalsy();
   });
 
   it('remove error type after icon type is added', () => {
-    validatorAPI.addMessage($(emailID), 'This is the message', 'icon', true, false, false, true, 'mail');
-    validatorAPI.addMessage($(emailID), 'This is the message', 'error', true, false, false, true, '');
+    validatorAPI.addMessage($(emailID), { id: 'icon', message: 'This is the message', type: 'icon', icon: 'mail' }, true, false);
+    validatorAPI.addMessage($(emailID), { id: 'error', message: 'This is the message', type: 'error' }, true, false);
 
     expect(document.body.querySelector('.custom-icon-message')).toBeTruthy();
     expect(document.body.querySelector('.error-message')).toBeTruthy();
 
-    validatorAPI.removeMessage($(emailID), 'error', true);
+    validatorAPI.removeMessage($(emailID), { id: 'error', type: 'error' });
 
     expect(document.body.querySelector('.error-message')).toBeFalsy();
 
-    validatorAPI.removeMessage($(emailID), 'icon', true);
+    validatorAPI.removeMessage($(emailID), { id: 'icon', type: 'icon' });
 
     expect(document.body.querySelector('.custom-icon-message')).toBeFalsy();
     expect(document.body.querySelector('.error-message')).toBeFalsy();
@@ -142,11 +138,11 @@ describe('Validation API', () => {
     const spyEvent = spyOnEvent(emailEl, 'error');
     const spyEvent2 = spyOnEvent(emailEl, 'valid');
 
-    validatorAPI.addMessage($(emailEl), 'This is the message', 'error', true, false, false, true, '');
+    validatorAPI.addMessage($(emailEl), { id: 'error', message: 'This is the message', type: 'error' }, true, false);
 
     expect(spyEvent).toHaveBeenTriggered();
 
-    validatorAPI.removeMessage($(emailID), 'error', true);
+    validatorAPI.removeMessage($(emailID), { id: 'error', type: 'error' });
 
     expect(spyEvent2).toHaveBeenTriggered();
   });
@@ -190,5 +186,25 @@ describe('Validation API', () => {
       expect(tooltip).toHaveClass('is-hidden');
       done();
     }, 100);
+  });
+
+  it('be able to call getMessage', () => {
+    validatorAPI.addMessage($(emailID), { id: 'error', message: 'This is the message', type: 'error' }, true, false);
+
+    expect($(emailID).getMessage()).toEqual('This is the message');
+
+    validatorAPI.addMessage($(emailID), { id: 'error2', message: 'This is another message', type: 'error' }, true, false);
+
+    expect($(emailID).getMessage()).toEqual('• This is the message• This is another message');
+  });
+
+  it('be able to call getMessages', () => {
+    validatorAPI.addMessage($(emailID), { id: 'error', message: 'This is the message', type: 'error' }, true, false);
+
+    expect($(emailID).getMessages()[0].message).toEqual('This is the message');
+
+    validatorAPI.addMessage($(emailID), { id: 'error2', message: 'This is another message', type: 'error' }, true, false);
+
+    expect($(emailID).getMessages()[1].message).toEqual('This is another message');
   });
 });

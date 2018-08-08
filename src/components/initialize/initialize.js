@@ -103,7 +103,7 @@ const PLUGIN_MAPPINGS = [
   ['editor'],
 
   // Tooltips
-  ['tooltip', 'button[title], span[title], .hyperlink[title]'],
+  ['tooltip', 'button[title], span[title], .hyperlink[title], .icon[title]'],
 
   // Tree
   ['tree'],

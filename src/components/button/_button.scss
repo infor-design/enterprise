@@ -116,35 +116,35 @@ button {
 
 // standard, primary, destructive
 .btn-primary {
-  background-color: $primary-btn-bg-color;
-  border: 1px solid $primary-btn-bg-color;
-  color: $primary-btn-color;
+  background-color: $button-primary-bg-color;
+  border: 1px solid $button-primary-bg-color;
+  color: $button-primary-text-color;
 
   &.btn {
-    color: $primary-btn-color;
+    color: $button-primary-text-color;
   }
 
   .icon {
-    fill: $primary-btn-color;
+    fill: $button-primary-text-color;
   }
 
   // In case both are specified
   &.btn {
-    color: $primary-btn-color;
+    color: $button-primary-text-color;
   }
 
   &:hover {
-    background-color: $primary-btn-hover-bg-color;
-    border: 1px solid $primary-btn-hover-bg-color;
+    background-color: $button-primary-hover-bg-color;
+    border: 1px solid $button-primary-hover-bg-color;
 
     &.btn {
-      color: $primary-btn-color;
+      color: $button-primary-text-color;
     }
   }
 
   &:active {
-    background-color: $primary-btn-active-bg-color;
-    border: 1px solid $primary-btn-active-bg-color;
+    background-color: $button-primary-active-bg-color;
+    border: 1px solid $button-primary-active-bg-color;
     box-shadow: none;
   }
 
@@ -152,23 +152,23 @@ button {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color, $focus-box-shadow;
+      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $button-primary-bg-color, $focus-box-shadow;
     }
 
     &:active {
-      background-color: $primary-btn-active-bg-color;
+      background-color: $button-primary-active-bg-color;
       box-shadow: none;
     }
   }
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $primary-btn-disabled-bg-color;
-    border-color: $primary-btn-disabled-border-color;
+    background-color: $button-primary-disabled-bg-color;
+    border-color: $button-primary-disabled-border-color;
     box-shadow: none;
-    color: $primary-btn-disabled-color;
+    color: $button-primary-text-color;
     cursor: default;
-    opacity: $primary-btn-disabled-opacity;
+    opacity: $button-disabled-opacity;
 
     .icon {
       fill: $white;
@@ -182,18 +182,18 @@ button {
   }
 
   &.btn-menu {
-    color: $primary-btn-color;
+    color: $button-primary-text-color;
 
     .icon {
-      fill: $primary-btn-color;
+      fill: $button-primary-text-color;
     }
 
     &:hover,
     &.is-open {
-      color: $primary-btn-color;
+      color: $button-primary-text-color;
 
       .icon {
-        fill: $primary-btn-color;
+        fill: $button-primary-text-color;
       }
     }
 
@@ -262,45 +262,45 @@ a.btn-close {
 
 // Secondary Button
 .btn-secondary {
-  background-color: $btn-bg-color;
-  border: 1px solid $btn-bg-color;
-  color: $btn-color;
+  background-color: $button-default-bg-color;
+  border: 1px solid $button-default-bg-color;
+  color: $button-default-text-color;
 
   .icon {
-    fill: $btn-color;
+    fill: $button-default-text-color;
   }
 
   &:hover {
-    background-color: $btn-hover-bg-color;
-    border: 1px solid $btn-hover-bg-color;
+    background-color: $button-default-hover-bg-color;
+    border: 1px solid $button-default-hover-bg-color;
   }
 
   &:active {
-    background-color: $btn-active-bg-color;
-    border: 1px solid $btn-active-bg-color;
+    background-color: $button-default-active-bg-color;
+    border: 1px solid $button-default-active-bg-color;
  }
 
   &:focus {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color, $focus-box-shadow;
+      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $button-default-focus-border-color, $focus-box-shadow;
     }
 
     &:active {
-      background-color: $btn-active-bg-color;
+      background-color: $button-default-active-bg-color;
       box-shadow: none;
     }
   }
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $btn-disabled-bg-color;
-    border: 1px solid $btn-disabled-border-color;
+    background-color: $button-default-disabled-bg-color;
+    border: 1px solid $button-default-disabled-border-color;
     box-shadow: none;
-    color: $btn-disabled-color;
+    color: $button-default-disabled-text-color;
     cursor: default;
-    opacity: $btn-disabled-opacity;
+    opacity: $button-disabled-opacity;
   }
 
   .ripple-effect {
@@ -309,18 +309,18 @@ a.btn-close {
 
   // Menu Button Form
   &.btn-menu {
-    color: $btn-color;
+    color: $button-default-text-color;
 
     .icon {
-      fill: $btn-color;
+      fill: $button-default-text-color;
     }
 
     &:hover,
     &.is-open {
-      color: $btn-color;
+      color: $button-default-text-color;
 
       .icon {
-        fill: $btn-color;
+        fill: $button-default-text-color;
       }
     }
   }
@@ -337,23 +337,23 @@ a.btn-close {
   border: 1px solid transparent;
   border-radius: 2px;
   box-shadow: none;
-  color: $tertiary-btn-color;
+  color: $button-link-text-color;
   overflow: hidden;
 
   &:hover {
-    color: $tertiary-btn-hover-color;
+    color: $button-link-hover-text-color;
 
     .icon {
-      fill: $tertiary-btn-hover-color;
+      fill: $button-link-hover-text-color;
     }
   }
 
   &:active {
-    color: $tertiary-btn-active-color;
+    color: $button-link-active-text-color;
   }
 
   &:focus:not(.hide-focus) {
-    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $btn-focus-bg-color, $focus-box-shadow;
+    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $button-default-focus-bg-color, $focus-box-shadow;
 
     &:active {
       box-shadow: none;
@@ -362,12 +362,12 @@ a.btn-close {
 
   &[disabled],
   &[disabled]:hover {
-    color: $tertiary-btn-disabled-color;
+    color: $button-link-disabled-text-color;
     cursor: default;
-    opacity: $tertiary-btn-disabled-opacity;
+    opacity: $button-disabled-opacity;
 
     .icon {
-      fill: $tertiary-btn-disabled-color;
+      fill: $button-link-disabled-text-color;
     }
   }
 
@@ -376,7 +376,7 @@ a.btn-close {
   }
 
   .icon {
-    fill: $tertiary-btn-color;
+    fill: $button-link-text-color;
   }
 
   .ripple-effect {
@@ -403,10 +403,10 @@ a.btn-close {
 .btn-menu,
 .btn-actions {
   &.is-open {
-    color: $tertiary-btn-open-color;
+    color: $button-link-open-text-color;
 
     .icon {
-      fill: $tertiary-btn-open-color;
+      fill: $button-link-open-text-color;
     }
   }
 }
@@ -593,13 +593,13 @@ a.btn-close {
 
   &:active {
     .icon {
-      fill: $tertiary-btn-active-color;
+      fill: $button-link-active-text-color;
     }
 
     .plus-minus {
       &::before,
       &::after {
-        background-color: $tertiary-btn-active-color;
+        background-color: $button-link-active-text-color;
       }
     }
   }
@@ -612,10 +612,10 @@ a.btn-close {
 
 .btn-toggle {
   &.is-pressed {
-    color: $primary-btn-bg-color !important;
+    color: $button-primary-bg-color !important;
 
     svg {
-      fill: $primary-btn-bg-color !important;
+      fill: $button-primary-bg-color !important;
     }
   }
 }
