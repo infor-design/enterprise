@@ -90,7 +90,7 @@ describe('Datagrid Paging API', () => {
       const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
 
       // build the dataGrid object with a source option. This should to cause the
-      // source() to be called with a request.type === 'initial'
+      // source() to be called with a request.type === 'first'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
@@ -120,7 +120,7 @@ describe('Datagrid Paging API', () => {
       const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
 
       // build the dataGrid object with a source option. This should to cause the
-      // source() to be called with a request.type === 'initial'
+      // source() to be called with a request.type === 'first'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
@@ -150,14 +150,14 @@ describe('Datagrid Paging API', () => {
       const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
 
       // build the dataGrid object with a source option. This should to cause the
-      // source() to be called with a request.type === 'initial'
+      // source() to be called with a request.type === 'next'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
       // wait for any timeouts to complete to ensure the source function is called.
       setTimeout(() => {
         datagridObj.triggerSource('next', () => {
-          // ensure it's been called with a request.type of 'initial'
+          // ensure it's been called with a request.type of 'next'
           expect(dataSourceSpy).toHaveBeenCalled();
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
@@ -180,7 +180,7 @@ describe('Datagrid Paging API', () => {
       const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
 
       // build the dataGrid object with a source option. This should to cause the
-      // source() to be called with a request.type === 'initial'
+      // source() to be called with a request.type === 'prev'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
@@ -210,7 +210,7 @@ describe('Datagrid Paging API', () => {
       const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
 
       // build the dataGrid object with a source option. This should to cause the
-      // source() to be called with a request.type === 'initial'
+      // source() to be called with a request.type === 'first'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
@@ -249,7 +249,7 @@ describe('Datagrid Paging API', () => {
       const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
 
       // build the dataGrid object with a source option. This should to cause the
-      // source() to be called with a request.type === 'initial'
+      // source() to be called with a request.type === 'last'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
@@ -289,7 +289,7 @@ describe('Datagrid Paging API', () => {
       const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
 
       // build the dataGrid object with a source option. This should to cause the
-      // source() to be called with a request.type === 'initial'
+      // source() to be called with a request.type === 'next'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
@@ -328,7 +328,7 @@ describe('Datagrid Paging API', () => {
       const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
 
       // build the dataGrid object with a source option. This should to cause the
-      // source() to be called with a request.type === 'initial'
+      // source() to be called with a request.type === 'last'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
