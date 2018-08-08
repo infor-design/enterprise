@@ -18,7 +18,7 @@ describe('Accordion example-accordion-click-event tests', () => {
     const buttonEl = await element.all(by.tagName('button')).first();
     await buttonEl.click();
 
-    expect(await element(by.xpath('//a[@aria-expanded="true"]'))).toBeTruthy();
+    expect(await element(by.css('[aria-expanded="true"]'))).toBeTruthy();
   });
 
   it('Should accordion click event be shown', async () => {
@@ -44,7 +44,7 @@ describe('Accordion example-accordion-lazy-loading tests', () => {
     const buttonEl = await element.all(by.tagName('button')).first();
     await buttonEl.click();
 
-    expect(await element(by.xpath('//a[@aria-expanded="true"]'))).toBeTruthy();
+    expect(await element(by.css('[aria-expanded="true"]'))).toBeTruthy();
   });
 });
 
@@ -65,7 +65,7 @@ describe('Accordion example-accordion-panels tests', () => {
     const buttonEl = await element.all(by.tagName('button')).first();
     await buttonEl.click();
 
-    expect(await element(by.xpath('//a[@aria-expanded="true"]'))).toBeTruthy();
+    expect(await element(by.css('[aria-expanded="true"]'))).toBeTruthy();
   });
 });
 
@@ -82,7 +82,7 @@ describe('Accordion example-ajax tests', () => {
     const buttonEl = await element.all(by.tagName('button')).first();
     await buttonEl.click();
 
-    expect(await element(by.xpath('//a[@aria-expanded="true"]'))).toBeTruthy();
+    expect(await element(by.css('[aria-expanded="true"]'))).toBeTruthy();
   });
 });
 
@@ -113,6 +113,6 @@ describe('Accordion example-index tests', () => {
     const buttonEl = await element.all(by.tagName('button')).first();
     await buttonEl.click();
 
-    expect(await element(by.xpath('//a[@aria-expanded="true"]'))).toBeTruthy();
+    expect(await element(by.css('[aria-expanded="true"]'))).toBeTruthy();
   });
 });
