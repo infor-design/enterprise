@@ -1,9 +1,6 @@
 <figure class="hierarchy" id="hierarchy"></figure>
-
 <script>
-
   $.getJSON('{{basepath}}api/orgstructure', function(data) {
-
     const legendData = [
       { 'value' : 'FT', 'label' : 'Full Time'     },
       { 'value' : 'PT', 'label' : 'Part Time'     },
@@ -11,61 +8,51 @@
       { 'value' : 'O',  'label' : 'Open Position' }
     ];
 
-    const es6Template = function(d) {
-      return `
-        <div class="leaf ${d.colorClass}" id="${d.id}">
-          ${d.Picture && !d.Initials ?
-            `<img src="${d.Picture}" class="image" alt="Image of ${d.Name}"/>` :
-            `${d.Initials ?
-              `<div class="image-initials">${d.Initials}</div>` :
-              `<span class="image-placeholder"></span>`
-              }`
-            }
-          }
-          <div class="detail">
-            <p class="heading">${d.Name}</p>
-            <p class="subheading">${d.Position}</p>
-            <p class="micro">${d.EmploymentType}</p>
-          </div>
-
-          ${d.details || d.actions  ?
-            `<button class="btn-actions btn-icon" type="button">
-              <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-                <use xlink:href="#icon-more"></use>
-              </svg>
-              <span class="audible">More Info & Additional Actions</span>
-            </button>
-            <ul class="popupmenu ${d.details ? 'has-detail-fields' : ''}">
-              ${d.details ? `
-                <li>
-                  <div class="detail-fields">${d.details.map(v => `<div class="dt-fields-row"><div class="dt-fields-cell">${v.key}</div><div class="dt-fields-cell">${v.value}</div></div>`).join("")}</div>
-                </li>` : ''
-              }
-
-              ${d.actions ? d.actions.map(a => `<li><a href="#">${a.label}</a></li>`).join("") : ''}
-            </ul>` : ``
-          }
-
-          <button class="btn btn-icon" type="button">
-            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-              <use xlink:href="#icon-caret-up"></use>
-            </svg>
-            <span class="audible">Expand/Collapse</span>
-          </button>
-        </div>`;
-    }
-
     $('#hierarchy').hierarchy({
-      templateId: 'hierarchyChartTemplate2',
+      templateId: 'hierarchyChartTemplate',
       legendKey: 'EmploymentType',
       legend: legendData,
-      dataset: data,
-      es6Template: es6Template
+      dataset: data
     });
-
   });
 
   $('#hierarchy').on('selected', function(event, eventInfo) {
     console.log(event, eventInfo);
   });
+</script>
+
+{{={{{ }}}=}}
+<script type="text/html" id="hierarchyChartTemplate">
+  <div class="leaf {{colorClass}}" id="{{id}}">
+
+    {{#Picture}}
+    <img src="{{Picture}}" class="image" alt="Image of {{Name}}" />
+    {{/Picture}}
+    {{^Picture}}
+    <span class="image-placeholder"></span>
+    {{/Picture}}
+
+    <div class="detail">
+      <p class="heading">{{Name}}</p>
+      <p class="subheading">{{Position}}</p>
+      <p class="micro">{{EmploymentType}}</p>
+    </div>
+
+    {{#menu}}
+      <button class="btn-actions btn-icon" type="button" data-init="false" id="btn-{{id}}">
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use xlink:href="#icon-more"></use>
+        </svg>
+        <span class="audible">More Info & Additional Actions</span>
+      </button>
+      <ul class="popupmenu"></ul>
+    {{/menu}}
+
+    <button class="btn btn-icon" type="button">
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use xlink:href="#icon-caret-up" />
+      </svg>
+      <span class="audible">Expand/Collapse</span>
+    </button>
+  </div>
 </script>

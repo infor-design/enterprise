@@ -503,6 +503,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     .dt-fields-row {
       display: table-row;
     }
+
     .dt-fields-cell:first-child {
       text-align: right;
       padding-right: 8px;
@@ -511,6 +512,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
         content: ':';
       }
     }
+
     .dt-fields-cell {
       color: $white;
       font-size: 1.2rem;

@@ -27,6 +27,7 @@ const COMPONENT_NAME = 'hierarchy';
 * @param {boolean} [settings.paging=false] If true show pagination.
 * @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
 * @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
+* @param {boolean} [settings.es6Template] If true create template using es6 template literals
 * An empty message will be displayed when there is no chart data. This accepts an object of the form
 * `emptyMessage: {
 *   title: 'No Data Available',
@@ -163,6 +164,7 @@ Hierarchy.prototype = {
       const isCollapseButton = svgHref ? svgHref.baseVal === '#icon-caret-up' : false;
       const isExpandButton = svgHref ? svgHref.baseVal === '#icon-caret-down' : false;
       const isForward = svgHref ? svgHref.baseVal === '#icon-caret-right' : false;
+      const isActions = target.hasClass('btn-actions');
       let eventType = 'selected';
 
       $('.is-selected').removeClass('is-selected');
@@ -180,6 +182,11 @@ Hierarchy.prototype = {
 
       if (isBack) {
         eventType = 'back';
+      }
+
+      if (isActions) {
+        eventType = 'actions';
+        hierarchy.buildActionsMenu(nodeData, leaf);
       }
 
       if (isButton && isForward && isNotBack) {
@@ -205,11 +212,36 @@ Hierarchy.prototype = {
         isExpandEvent: hierarchy.isExpandEvent(),
         isCollapseEvent: hierarchy.isCollapseEvent(),
         isSelectedEvent: hierarchy.isSelectedEvent(),
+        isActionsEvent: hierarchy.isActionsEvent(eventType),
         allowLazyLoad: hierarchy.allowLazyLoad(nodeData, eventType)
       };
 
       leaf.trigger('selected', eventInfo);
     });
+  },
+
+  /**
+   * @private
+   * @param {object} data associated with leaf
+   * @param {leaf} leaf jQuery reference in DOM
+   */
+  buildActionsMenu(data, leaf) {
+    const popupMenu = leaf.find('.popupmenu');
+    const template = [];
+
+    // Reset & rebuild
+    popupMenu.empty();
+
+    if (data.menu.details) {
+      popupMenu.addClass('has-detail-fields');
+      template.push(`<div class="detail-fields">${data.menu.details.map(v => `<div class="dt-fields-row"><div class="dt-fields-cell">${v.key}</div><div class="dt-fields-cell">${v.value}</div></div>`).join('')}</div>`);
+    }
+
+    if (data.menu.actions) {
+      template.push(`${data.menu.actions.map(a => `<li><a href="${a.url}">${a.value}</a></li>`).join('')}`);
+    }
+
+    template.forEach((i) => { popupMenu.append(i); });
   },
 
   /**
@@ -270,6 +302,16 @@ Hierarchy.prototype = {
    */
   isSelectedEvent(eventType) {
     return eventType === 'select';
+  },
+
+  /**
+   * Checks if is actions event
+   * @private
+   * @param {string} eventType is actions
+   * @returns {boolean} true if actions event
+   */
+  isActionsEvent(eventType) {
+    return eventType === 'actions';
   },
 
   /**
@@ -634,13 +676,23 @@ Hierarchy.prototype = {
    * @returns {string} compiled template as HTML string
    */
   getTemplate(data) {
+    let template;
+
     if (this.settings.es6Template === null) {
-      return Tmpl.compile(`{{#dataset}}${$(`#${this.settings.templateId}`).html()}{{/dataset}}`, { dataset: data });
+      template = Tmpl.compile(`{{#dataset}}${$(`#${this.settings.templateId}`).html()}{{/dataset}}`, { dataset: data });
     } else if (this.settings.es6Template !== null) {
       return this.settings.es6Template(data);
     }
 
-    return Tmpl.compile(`{{#dataset}}${$(`#${this.settings.templateId}`).html()}{{/dataset}}`, { dataset: data });
+    // Init popupmenu after rendered in DOM
+    setTimeout(() => {
+      const actionButton = $(`#btn-${data.id}`);
+      if (actionButton.length !== 0) {
+        actionButton.popupmenu();
+      }
+    }, 1);
+
+    return $(template).prop('outerHTML');
   },
 
   /**
