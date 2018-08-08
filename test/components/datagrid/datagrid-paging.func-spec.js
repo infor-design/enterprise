@@ -280,7 +280,7 @@ describe('Datagrid Paging API', () => {
       const dataSourceContainer = {
         dataSource: (request, response) => {
           request.firstPage = false;
-          request.lastPage = request.type === 'last';
+          request.lastPage = request.type === 'next';
           response(sampleData, request);
         }
       };
@@ -297,7 +297,7 @@ describe('Datagrid Paging API', () => {
       // and the paging bar is rendered
       setTimeout(() => {
         // get first button and click it
-        const buttonEl = document.body.querySelector('li.pager-last a');
+        const buttonEl = document.body.querySelector('li.pager-next a');
         const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
         buttonEl.click();
 
@@ -308,18 +308,18 @@ describe('Datagrid Paging API', () => {
           // ensure it's been called with a request.type of 'first'
           expect(dataSourceSpy).toHaveBeenCalled();
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('last');
+          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
           done();
         }, 500);
       }, 1);
     });
 
-    it('test using last paging bar button', (done) => {
+    it('test using previous paging bar button', (done) => {
       // build a source function
       const dataSourceContainer = {
         dataSource: (request, response) => {
-          request.firstPage = false;
-          request.lastPage = request.type === 'last';
+          request.firstPage = request.type === 'prev';
+          request.lastPage = false;
           response(sampleData, request);
         }
       };
@@ -336,7 +336,7 @@ describe('Datagrid Paging API', () => {
       // and the paging bar is rendered
       setTimeout(() => {
         // get first button and click it
-        const buttonEl = document.body.querySelector('li.pager-last a');
+        const buttonEl = document.body.querySelector('li.pager-prev a');
         const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
         buttonEl.click();
 
@@ -347,7 +347,7 @@ describe('Datagrid Paging API', () => {
           // ensure it's been called with a request.type of 'first'
           expect(dataSourceSpy).toHaveBeenCalled();
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('last');
+          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('prev');
           done();
         }, 500);
       }, 1);
