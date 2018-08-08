@@ -22,7 +22,7 @@
   border-radius: 2px;
   display: inline-block;
   overflow: hidden;
-  min-width: 90px;
+  width: 150px;
 
   &.is-focused {
     border-color: $input-focus-border-color;
@@ -78,8 +78,8 @@
       input[readonly] {
         background-color: $input-bg-color;
         border-color: $input-border-color;
-        color: $graphite10;
-        -webkit-text-fill-color: $graphite10;
+        color: $input-color;
+        -webkit-text-fill-color: $input-color;
       }
 
       input[readonly]:focus {
