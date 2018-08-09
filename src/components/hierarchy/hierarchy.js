@@ -27,7 +27,6 @@ const COMPONENT_NAME = 'hierarchy';
 * @param {boolean} [settings.paging=false] If true show pagination.
 * @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
 * @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
-* @param {boolean} [settings.es6Template] If true create template using es6 template literals
 * An empty message will be displayed when there is no chart data. This accepts an object of the form
 * `emptyMessage: {
 *   title: 'No Data Available',
@@ -49,7 +48,6 @@ const HIERARCHY_DEFAULTS = {
   beforeExpand: null,
   paging: false,
   renderSubLevel: false,
-  es6Template: null,
   rootClass: 'hierarchy',
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
@@ -444,6 +442,19 @@ Hierarchy.prototype = {
   },
 
   /**
+   * Closes popupmenu
+   * @private
+   * @param node leaf containing btn-actions
+   */
+  closePopupMenu(node) {
+    const actionButton = node.find('.btn-actions');
+
+    if (actionButton.length !== 0) {
+      actionButton.data('popupmenu').close();
+    }
+  },
+
+  /**
    * Expand the nodes until nodeId is displayed on the page.
    * @private
    * @param {object} event .
@@ -455,6 +466,14 @@ Hierarchy.prototype = {
     const s = this.settings;
     const node = domObject.leaf;
     let nodeTopLevel = node.next();
+    const actionButton = node.find('.btn-actions');
+
+    // close popupmenu if open
+    this.closePopupMenu(node);
+
+    if (actionButton.length !== 0) {
+      actionButton.data('popupmenu').close();
+    }
 
     nodeTopLevel.animateOpen();
     /**
@@ -489,6 +508,9 @@ Hierarchy.prototype = {
     const s = this.settings;
     const node = domObject.leaf;
     let nodeTopLevel = node.next();
+
+    // close popupmenu if open
+    this.closePopupMenu(node);
 
     nodeTopLevel.animateClosed().on('animateclosedcomplete', () => {
       /**
@@ -676,13 +698,7 @@ Hierarchy.prototype = {
    * @returns {string} compiled template as HTML string
    */
   getTemplate(data) {
-    let template;
-
-    if (this.settings.es6Template === null) {
-      template = Tmpl.compile(`{{#dataset}}${$(`#${this.settings.templateId}`).html()}{{/dataset}}`, { dataset: data });
-    } else if (this.settings.es6Template !== null) {
-      return this.settings.es6Template(data);
-    }
+    const template = Tmpl.compile(`{{#dataset}}${$(`#${this.settings.templateId}`).html()}{{/dataset}}`, { dataset: data });
 
     // Init popupmenu after rendered in DOM
     setTimeout(() => {
