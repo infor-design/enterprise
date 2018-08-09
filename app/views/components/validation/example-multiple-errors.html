@@ -76,36 +76,30 @@
     console.log(['States .getErrorMessage() =', $('#states').getErrorMessage() ]);
 
     // only remove the error if it exists
-    if ($('#username-display').getErrorMessage())
-    {
+    if ($('#username-display').getErrorMessage().length > 0) {
       $('#username-display').removeError();
     }
 
     // only remove the error if it exists
-    if ($('#states').getErrorMessage())
-    {
+    if ($('#states').getErrorMessage()) {
       $('#states').removeError();
     }
   });
 
   $('#goto').button().on('click', function () {
-    if ($('#username-display').getErrorMessage())
-    {
+    if ($('#username-display').getErrorMessage().length > 0) {
       // should scroll the element into view at the bottom of the view port
       $('#username-display').scrollIntoView(false);
-    }
-    else if ($('#states').getErrorMessage()) {
+    } else if ($('#states').getErrorMessage().length > 0) {
       // should scroll the element into view at the top of the view port
       $('#states').scrollIntoView(true);
-    }
-    else if ($('#text').getErrorMessage()) {
+    } else if ($('#text').getErrorMessage().length > 0) {
       // since the parameter is not boolean, the default of true should occur
       $('#text').scrollIntoView('stringvalue');
     }
   });
 
-
-  $("#states,#username-display").on('valid error', function (event, validation) {
+  $("#states, #username-display").on('valid error', function (event, validation) {
     console.log([event.currentTarget.id, event.type, validation.field.prop('tagName') ]);
   });
 </script>

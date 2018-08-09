@@ -27,6 +27,7 @@
   "scripts": {
     "start": "npm run build  && node app/server.js",
     "quickstart": "npx grunt demo && node app/server.js",
+    "quickstart:livereload": "npx grunt demo && node app/server.js --livereload",
     "build": "npx grunt",
     "stop": "./scripts/stop.sh",
     "watch": "npm run build -- watch",
@@ -46,10 +47,10 @@
     "webdriver:update": "npx webdriver-manager update --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
-    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
+    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d dist infor-devops-core-soho-us-east-1/sohoxi/4.9.0 -v",
     "release:beta": "release-it minor --preRelease=beta",
-    "release:rc": "release-it minor --preRelease=rc",
-    "release:final": "release-it minor",
+    "release:rc": "release-it --preRelease=rc",
+    "release:final": "release-it",
     "prepublishOnly": "npm run build",
     "test": "npm run mdlint && npm run eslint && npm run functional:ci && npm run e2e:ci"
   },

@@ -82,7 +82,6 @@
 
       input[readonly]:focus {
         color: transparent;
-        text-shadow: 0px 0px 0px #666;
       }
 
       .icon:not(.icon-error),
@@ -181,15 +180,17 @@
       display: none;
     }
 
-    &:focus {
-      box-shadow: none;
-    }
-
     &:disabled + .swatch {
       cursor: default;
       opacity: .6;
     }
   }
+
+  // scss-lint:disable ImportantRule
+  input.colorpicker {
+    box-shadow: none !important;
+  }
+  // scss-lint:enable ImportantRule
 
   .icon-dirty {
     margin: 2px 0 0 3px;

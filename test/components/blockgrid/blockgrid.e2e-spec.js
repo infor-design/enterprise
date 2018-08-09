@@ -140,6 +140,28 @@ describe('Blockgrid example-multiselect tests', () => {
     expect(await element.all(by.css('.block.is-selectable')).get(2).getAttribute('class')).toContain('is-selected');
     expect(await element.all(by.css('.block.is-selectable')).get(3).getAttribute('class')).toContain('is-selected');
   });
+
+  it('Should be able to select at 320px', async () => {
+    const windowSize = await browser.driver.manage().window().getSize();
+    await browser.driver.manage().window().setSize(320, 480);
+    await browser.driver.sleep(config.sleep);
+    const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
+    const blockEl2 = await element.all(by.css('.block.is-selectable')).get(2);
+    const blockgridEl = await element(by.id('blockgrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
+
+    await blockEl1.click();
+    await blockEl2.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element.all(by.css('.is-selected')).get(2)), config.waitsFor);
+
+    expect(await element.all(by.css('.block.is-selectable')).get(1).getAttribute('class')).toContain('is-selected');
+    expect(await element.all(by.css('.block.is-selectable')).get(2).getAttribute('class')).toContain('is-selected');
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    await browser.driver.sleep(config.sleep);
+  });
 });
 
 describe('Blockgrid example-singleselect tests', () => {
@@ -190,5 +212,50 @@ describe('Blockgrid example-text tests', () => {
 
   it('Should have a text in the page', async () => {
     expect(await element(by.css('p')).isPresent()).toBeTruthy();
+  });
+});
+
+describe('Blockgrid example-paging tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/blockgrid/example-paging');
+  });
+
+  it('Should select block, navigate to 2nd page, navigate back, block should still be selected', async () => {
+    const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
+    const firstPageNumEl = await element.all(by.css('.pager-toolbar li')).get(1);
+    const secondPageNumEl = await element.all(by.css('.pager-toolbar li')).get(2);
+    await blockEl1.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-selected'))), config.waitsFor);
+    await secondPageNumEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.block.is-selectable')).get(4)), config.waitsFor);
+    await firstPageNumEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.block.is-selectable')).get(1)), config.waitsFor);
+
+    expect(await element.all(by.css('.block.is-selectable')).get(1).getAttribute('class')).toContain('is-selected');
+  });
+
+  it('Should navigate to 2nd page, navigate back via keyboard', async () => {
+    const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
+    await blockEl1.sendKeys(protractor.Key.TAB);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-selected'))), config.waitsFor);
+    await browser.driver.actions().sendKeys(protractor.Key.SPACE).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.block.is-selected'))), config.waitsFor);
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+    await browser.driver.sleep(config.waitsFor);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.block.is-selectable')).get(1)), config.waitsFor);
+
+    expect(await element.all(by.css('.block.is-selectable')).get(2).getAttribute('class')).toContain('is-selected');
   });
 });
