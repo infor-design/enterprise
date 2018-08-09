@@ -15,7 +15,29 @@
         { "id": "1_3_1", "Name": "Tony Cleveland", "Position": "Records Clerk", "EmploymentType": "C", "Picture": "https://randomuser.me/api/portraits/med/men/6.jpg", "isLeaf": true },
         { "id": "1_3_2", "Name": "Julie Dawes", "Position": "Records Clerk", "EmploymentType": "PT", "Picture": "https://randomuser.me/api/portraits/med/women/5.jpg", "isLeaf": true },
         { "id": "1_3_3", "Name": "Richard Fairbanks", "Position": "Records Clerk", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/men/7.jpg", "isLeaf": true }
-      ]
+      ],
+      "menu" : {
+        "details": [
+          {"key": "Organization Unit", "value": "U.S Headquarters"},
+          {"key": "Position", "value": "Project Manager"},
+          {"key": "Work Phone", "value": "612-555-1212"},
+          {"key": "Location", "value": "St. Paul"},
+          {"key": "Position Family", "value": "ITS"},
+          {"key": "Position Category", "value": "PMO"},
+          {"key": "Position Sub Category", "value": "Some subcategory"},
+          {"key": "Position Level", "value": "Career"},
+          {"key": "Years of Service", "value": "4.33"}
+        ],
+        "actions": [
+          {"value": "Profile", "url": "#", "data": {"test": ["test data"]}},
+          {"value": "Change Pay Rate", "url": "#", "data": {}},
+          {"value": "Add work assignment", "url" : "#", "data": {}},
+          {"value": "Promote", "url" : "#", "data": {}},
+          {"value": "Transfer", "url" : "#", "data": {}},
+          {"value": "Terminate", "url" : "#", "data": {}},
+          {"value": "Update", "url" : "#", "data": {}}
+        ]
+      }
     },
     {
       "id": "1_4",
