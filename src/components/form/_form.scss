@@ -46,3 +46,12 @@
     }
   }
 }
+
+@media (max-width: $breakpoint-tablet-to-desktop - 1) {
+  .form-responsive {
+    .field .checkbox-label,
+    .field .checkbox > label {
+      margin-top: -10px;
+    }
+  }
+}
