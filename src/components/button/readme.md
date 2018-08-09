@@ -80,4 +80,4 @@ All buttons are assumed to include an icon and a text label. An icon can be adde
 ## Workaround for title to display as tooltip on disabled buttons
 
 - Disabled elements do not handle events in most browsers. This necessitates the need for an alternate element to handle the `Tooltip.plugin` which adds functionality that strips the title and renders it as a tooltip on the hover event of the element.
-- Include `<div title="{{desired title/tooltip}}}">{{button content}}</div>` as child of `'<button disabled></button>' to allow hover event to engage tooltip functionality, taking title from inner div and displaying as tooltip.
+- Include `<div title="{{desired title/tooltip}}}">{{button content}}</div>` as child of `<button disabled></button>` to allow hover event to engage tooltip functionality, taking title from inner div and displaying as tooltip.
