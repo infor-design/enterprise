@@ -44,12 +44,12 @@ describe('Tree example-index tests', () => {
   });
 });
 
-describe('Tree bdges tests', () => {
+describe('Tree badges tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tree/example-badges');
   });
 
-  it('Should show bdges with tree nodes', async () => {
+  it('Should show badges with tree nodes', async () => {
     expect(await element.all(by.css('.tree li a[role="treeitem"] .tree-badge')).count()).toBe(5);
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"] .tree-badge')).count()).toBe(4);
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"] .tree-badge.round')).count()).toBe(3);
