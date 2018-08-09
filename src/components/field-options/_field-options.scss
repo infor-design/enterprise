@@ -37,7 +37,7 @@
 }
 
 .field-options {
-  max-width: $field-md;
+  max-width: ($field-md - 40px);
   width: calc(100% - 40px);
 
   &.input-xs {
@@ -219,6 +219,11 @@
     }
   }
 
+  .dropdown,
+  .multiselect {
+    max-width: ($field-md - 40px);
+  }
+
   .searchfield-wrapper {
     box-shadow: none;
 
@@ -233,6 +238,14 @@
     .btn-actions {
       left: -8px;
       width: 36px;
+    }
+  }
+
+  .textarea {
+    width: ($field-md - 40px);
+
+    ~ .btn-actions {
+      left: auto;
     }
   }
 }
@@ -492,6 +505,7 @@ html[dir='rtl'] {
 
     &.textarea {
       ~ .btn-actions {
+        left: 0;
         margin-left: inherit;
         margin-right: -6px;
         right: auto;
@@ -538,7 +552,9 @@ html[dir='rtl'] {
       right: -8px;
     }
 
-    .colorpicker-container {
+    //heremans
+    .colorpicker-container,
+    .textarea {
       ~ .btn-actions {
         //border-radius: top-right | bottom-right | bottom-left | top-left
         border-radius: 0 0 2px 2px;

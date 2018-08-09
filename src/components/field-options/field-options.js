@@ -52,6 +52,8 @@ FieldOptions.prototype = {
       this.targetElem = this.field.find('.fileupload[type="text"]');
     }
 
+    this.field.addClass('is-fieldoptions');
+
     this.fieldParent = this.element.closest('.field').parent();
     this.trigger = this.field.find('.btn-actions');
 
@@ -94,7 +96,6 @@ FieldOptions.prototype = {
     const isCheckbox = this.element.is('.checkbox');
     const isFileupload = this.element.is('.fileupload');
     const isSearchfield = this.element.is('.searchfield');
-    const isSpinbox = this.element.is('.spinbox');
     const isColorpicker = this.element.is('.colorpicker');
     const isRadio = this.element.closest('.radio-group').length > 0;
     const isFieldset = this.element.is('.data') && this.element.closest('.summary-form').length > 0;
@@ -210,7 +211,6 @@ FieldOptions.prototype = {
     }
     // Move trigger(action-button) in to lookup-wrapper
     if (lookup || isColorpicker) {
-      this.field.addClass('is-fieldoptions');
       this.field.on(`click.${COMPONENT_NAME}`, '.lookup-wrapper .trigger, .colorpicker-container .trigger', () => {
         doActive();
       });
@@ -224,7 +224,6 @@ FieldOptions.prototype = {
     }
     // Checkbox add parent css class
     if (isCheckbox) {
-      this.field.addClass('is-fieldoptions');
       this.trigger.addClass('is-checkbox');
     }
     // Bind fileupload events
@@ -236,13 +235,8 @@ FieldOptions.prototype = {
         doActive();
       });
     }
-    // Spinbox add parent css class
-    if (isSpinbox) {
-      this.field.addClass('is-fieldoptions');
-    }
     // Move trigger(action-button) in to searchfield-wrapper
     if (isSearchfield) {
-      this.field.addClass('is-fieldoptions');
       setTimeout(() => {
         this.trigger.add(this.trigger.next('.popupmenu'))
           .appendTo(this.element.closest('.searchfield-wrapper'));
