@@ -489,7 +489,12 @@ Validator.prototype = {
       }
 
       validationType = Validation.ValidationTypes[rule.type] || Validation.ValidationTypes.error;
-      const isInline = field.attr(`data-${validationType.type}-type`) !== 'tooltip';
+      let isInline = field.attr(`data-${validationType.type}-type`) !== 'tooltip';
+
+      // Add tooltip for datagrid date picker
+      if (field.hasClass('datepicker') && field.parent().hasClass('datagrid-filter-wrapper')) {
+        isInline = false;
+      }
 
       if (!result) {
         if (!self.isPlaceholderSupport && (value === placeholder) &&
@@ -611,6 +616,8 @@ Validator.prototype = {
 
     loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
 
+    // Add tooltip for
+
     // Inline messages are now an array
     if (dataMsg && dataMsg === rule.message) {
       // No need to add new message
@@ -715,7 +722,7 @@ Validator.prototype = {
       return;
     }
 
-    const icon = this.showIcon(field, type);
+    const icon = field.siblings('svg.icon') || this.showIcon(field, type);
     let representationField = field;
 
     // Add error classes to pseudo-markup for certain controls
