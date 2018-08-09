@@ -159,8 +159,9 @@ module.exports = {
       ignoreTemplateLiterals: true,
     }],
 
-    // Disallow use of disabled tests (Jasmine)
-    'jasmine/no-disabled-tests': ['off']
+    // Allow same name in different describes
+    "jasmine/no-spec-dupes": [1, "branch"],
+    "jasmine/no-suite-dupes": [1, "branch"],
 
   },
   'globals': {
