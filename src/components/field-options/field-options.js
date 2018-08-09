@@ -44,6 +44,11 @@ FieldOptions.prototype = {
     this.field = this.element.closest('.field, .radio-group');
     this.targetElem = this.element;
 
+    const label = this.field.find('label');
+    if (label) {
+      this.label = label;
+    }
+
     // In some cases, adjust the target element
     if (this.element[0].className.match(/(dropdown|multiselect)/)) {
       this.targetElem = this.element.data('dropdown').pseudoElem;
@@ -89,6 +94,7 @@ FieldOptions.prototype = {
    * @returns {object} The api
    */
   handleEvents() {
+    const self = this;
     const datepicker = this.element.data('datepicker');
     const timepicker = this.element.data('timepicker');
     const dropdown = this.element.data('dropdown');
@@ -173,17 +179,17 @@ FieldOptions.prototype = {
       this.field.removeClass('visible');
       this.field
         .on(`mouseover.${COMPONENT_NAME}`, () => {
-          if (this.element.prop('disabled') || this.element.closest('is-disabled').length) {
+          if (self.element.prop('disabled') || self.element.closest('is-disabled').length) {
             return;
           }
 
-          if (this.field[0].className.indexOf('visible') < 0) {
-            this.field[0].classList.add('visible');
+          if (self.field[0].className.indexOf('visible') < 0) {
+            self.field[0].classList.add('visible');
           }
         })
         .on(`mouseout.${COMPONENT_NAME}`, () => {
-          if (this.field[0].className.indexOf('visible') > -1) {
-            this.field[0].classList.remove('visible');
+          if (self.field[0].className.indexOf('visible') > -1) {
+            self.field[0].classList.remove('visible');
           }
         });
     }

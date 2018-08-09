@@ -248,6 +248,12 @@
       left: auto;
     }
   }
+
+  &.is-disabled {
+    .btn-actions:not(.is-checkbox) {
+      display: none;
+    }
+  }
 }
 
 // Fieldset (Summary Form) =====================================================
