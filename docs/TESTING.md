@@ -1,5 +1,24 @@
 # Tests
 
+## Test naming conventions
+
+- Use plain and proper english
+- Describe what the test is doing or checking
+- Don't re-mention component or page name as thats in the describe of the test
+
+### Describe() Examples
+
+- `Accordion accordion panel tests`
+- `Tabs counts tests`
+
+### It() Examples
+
+- `Should do this when this happens`
+- `Should be possible to xyz`
+- `Should be able to enable`
+- `Should open 5th, 3rd, then 2nd tab, on click`
+- `Should navigate with arrow keys`
+
 ## Running Functional Tests
 
 `npm run functional:ci` to run all tests, and exit immediately
@@ -96,7 +115,7 @@ npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js
 
 ## Working With Visual Regression Tests
 
-A visual regression test will be similar to the following code snippet. But because the tests run on ci in travis we need to mimic the screen shots on that environment. So you'll need to do some setup with docker (that will probably only work well on Mac).
+Create an e2e visual regression test by using the code snippet below as an example.
 
 ```javascript
 // Only test visual regressions on Chrome, and the CI
@@ -123,57 +142,32 @@ if (utils.isChrome() && utils.isCI()) {
 }
 ```
 
-The next instructions are based on following [this guide](https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image) in order to debug Travis. We use the `node_js` [image](https://hub.docker.com/r/travisci/ci-nodejs/)
+Follow [this guide](https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image) in order to debug Travis, and to create baseline images. Use the `node_js` [image](https://hub.docker.com/r/travisci/ci-nodejs/)
 
-Many of the travis commands ran can be found in the [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml).
+After cloning the Enterprise repository, please install, and build manually.
+
+Many of the commands ran can be found in the [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml).
 
 ### Creating Baseline Screenshots
 
-1. Run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the travis ci docker image to mimic the environment. And wait....
-1. Open up the image and go in `docker exec -it travis-debug bash -l`
-1. Switch to the travis user `su - travis`
-1. Go to home you home directory `(`cd ~`)`
-1. Clone ids
+We need to do this process on a machine that is nearly identical to the CI machine.
 
-```sh
-git clone https://github.com/infor-design/enterprise.git
-```
+Copy `.tmp/actual` verified screenshots to the `baseline` folder for testing, locally, and in the Docker container.
 
-1. Run the install commands from `npm install -g grunt-cli && npm install`
-1. May need to update chrome with.
+Open the Docker container shell, navigate to Enterprise repo, and run `npm start`.
 
-```sh
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome*.deb
-```
+For convenience, open another Docker container shell, run `npm test`.
 
-1. Update/Install node.js
-
-```sh
-curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-sudo apt-get install -y nodejs
-```
-
-1. Run the travis commands as per the build
-
-```sh
-npm run quickstart & npm run e2e:ci
-```
-
-1. Push the branch your working on to github and switch to the same branch on the vm
-1. Run the `npm run start` command in the VM on one session.
-1. Run `npm run e2e:ci` on the other session.
-1. Copy the file from the actual folder to the baseline folder `mv /root/enterprise/test/.tmp/actual/radio-init-chrome-1200x800-dpr-1.png /root/enterprise/test/baseline/radio-init-chrome-1200x800-dpr-1.png`
-1. Run the `npm run e2e:ci` again to tests
-1. Commit and push the files
-
-Can also copy `.tmp/actual` verified screenshots to the `baseline` folder for testing, from the Docker container. [Copy](https://docs.docker.com/engine/reference/commandline/cp/) actual screenshots from .tmp/actual/*.png using.
+[Copy](https://docs.docker.com/engine/reference/commandline/cp/) actual screenshots from .tmp/actual/*.png using.
 
 ```sh
 docker cp INSERT_CONTAINER_ID:/home/travis/enterprise/test/.tmp .
 ```
 
 See [https://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container](https://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container) for additional help
+
+Move `.tmp/actual` verified screenshots to the `baseline` folder for testing, locally, and in the Docker container. Open the Docker container shell, navigate to Enterprise repo, and run `npm start`
+For convenience, open another shell under the travis user, and `npm run e2e:ci`.
 
 Once the files are copied to the host machine, check the image for quality, commit, and push.
 
