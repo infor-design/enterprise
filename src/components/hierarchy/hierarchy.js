@@ -466,14 +466,9 @@ Hierarchy.prototype = {
     const s = this.settings;
     const node = domObject.leaf;
     let nodeTopLevel = node.next();
-    const actionButton = node.find('.btn-actions');
 
     // close popupmenu if open
     this.closePopupMenu(node);
-
-    if (actionButton.length !== 0) {
-      actionButton.data('popupmenu').close();
-    }
 
     nodeTopLevel.animateOpen();
     /**
@@ -704,7 +699,7 @@ Hierarchy.prototype = {
     setTimeout(() => {
       const actionButton = $(`#btn-${data.id}`);
       if (actionButton.length !== 0) {
-        actionButton.popupmenu();
+        actionButton.hideFocus().popupmenu();
       }
     }, 1);
 
