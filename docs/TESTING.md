@@ -1,5 +1,28 @@
 # Tests
 
+## Test naming conventions
+
+- Use plain and proper english
+- Describe what the test is doing or checking
+- Don't re-mention component or page name as thats in the describe of the test
+- Use of should is not strictly enforced if if that doesn't make sense to describe the test in plain english
+
+### Describe() Examples
+
+- `Accordion accordion panel tests`
+- `Tabs counts tests`
+
+### It() Examples
+
+- `Should do [x] when [y] happens`
+- `Should be possible to [x]`
+- `Should be able to [x]`
+- `Should open [x] on click`
+- `Should do [x] on [y] key`
+- `Can do [x]`
+- `Can be [x]`
+- `Will do [x] when also doing [y]`
+
 ## Running Functional Tests
 
 `npm run functional:ci` to run all tests, and exit immediately
