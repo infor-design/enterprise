@@ -47,7 +47,7 @@
   }
 }
 
-@media (max-width: $breakpoint-tablet-to-desktop - 1) {
+@include respond-to(tabletup) {
   .form-responsive {
     .field .checkbox-label,
     .field .checkbox > label {
