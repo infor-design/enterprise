@@ -28,6 +28,10 @@ xssUtils.stripTags = function (html, allowed) {
     return '';
   }
 
+  if (typeof html === 'number') {
+    return html;
+  }
+
   const whitelist = ((`${allowed || ''}`)
     .toLowerCase()
     .match(/<[a-z][a-z0-9]*>/g) || [])
@@ -67,6 +71,9 @@ xssUtils.sanitizeHTML = function (html) {
  * @returns {string} the modified value
  */
 xssUtils.ensureAlphaNumeric = function (string) {
+  if (typeof string === 'number') {
+    return string;
+  }
   return this.stripTags(string).replace(/[^a-z0-9-]/gi, '', '');
 };
 
@@ -85,10 +92,9 @@ xssUtils.escapeHTML = function (value) {
       '<': '&lt;',
       '>': '&gt;',
       '"': '&quot;',
-      "'": '&#x27;',
-      '/': '&#x2F;'
+      "'": '&#x27;'
     };
-    const reg = /[&<>"'/]/ig;
+    const reg = /[&<>"']/ig;
     return newValue.replace(reg, match => (map[match]));
   }
   return newValue;

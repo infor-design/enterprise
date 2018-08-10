@@ -49,6 +49,9 @@ describe('Xss Utils', () => {
     result = xssUtils.stripTags('"><script>give_me_your_credit_card()</script>', '<br><br/>');
 
     expect(result).toEqual('">give_me_your_credit_card()');
+
+    // Number test
+    expect(xssUtils.stripTags(6)).toEqual(6);
   });
 
   it('Should remove all html tags', () => {
@@ -135,5 +138,6 @@ describe('Xss Utils', () => {
     result = xssUtils.ensureAlphaNumeric('test-module-1!@%^@!^&@%^&@!&^%@!%^&!@%^&^@%!&');
 
     expect(result).toEqual('test-module-1');
+    expect(xssUtils.ensureAlphaNumeric(6)).toEqual(6);
   });
 });

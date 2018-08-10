@@ -17,21 +17,7 @@
   </div>
 
   <script>
-    function makeId(name) {
-      if (!name) {
-        console.warn('No name for a new tab was provided.')
-        name = '';
-      }
-
-      var stringName = name.toLowerCase().split(' ').join('-');
-
-      var existing = $('[id^="'+ stringName +'"]');
-      if (!existing.length) {
-        return stringName + '-0';
-      }
-
-      return stringName + '-' + existing.length;
-    }
+var id = Soho.utils.uniqueId($('a'), 'tab');
 
     function wrapInPageMarkup(name, content) {
       return '<header class="header is-personalizable">' +
@@ -86,7 +72,7 @@
           // Wrap the content in a page-wrapper and header
           content = wrapInPageMarkup(name, content);
 
-          var id = makeId(name);
+          var id = Soho.utils.uniqueId($('a'), 'tab');
           tabsAPI.add(id, {
             name: name,
             content: content,
