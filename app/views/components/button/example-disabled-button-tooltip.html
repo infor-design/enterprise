@@ -1,0 +1,109 @@
+
+<div class="row">
+  <div class="six columns">
+
+    <span class="label">Primary</span>
+
+    <button class="btn-primary" type="button" title="btn-primary title/tooltip" disabled><div class="disabled-tooltip" title="btn-primary title/tooltip"></div>Action</button><br><br><br>
+
+    <button class="btn-primary" type="button" title="btn-primary svg title/tooltip" disabled>
+      <div class="disabled-tooltip" title="btn-primary svg title/tooltip"></div>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presenatation">
+          <use xlink:href="#icon-alert"></use>
+        </svg>
+        <span>Primary Button</span>
+    </button>
+
+    <br><br><br>
+
+    <span class="label">Secondary</span>
+
+    <button class="btn-secondary" type="button" title="btn-secondary title/tooltip" disabled><div class="disabled-tooltip" title="btn-secondary title/tooltip"></div>Action</button><br><br><br>
+
+    <button class="btn-secondary" type="button" title="btn-secondary svg title/tooltip" disabled>
+      <div class="disabled-tooltip" title="btn-secondary svg title/tooltip"></div>
+      <svg class="icon" focusable="false" aria-hidden="true" role="presenatation">
+        <use xlink:href="#icon-settings"></use>
+      </svg>
+      <span>Secondary Button</span>
+    </button>
+
+    <br><br><br>
+
+    <button class="btn-secondary-border" type="button"  title="btn-secondary-border title/tooltip" disabled>
+      <div class="disabled-tooltip" title="btn-secondary-border title/tooltip"></div>
+      <span>Secondary Border Button</span>
+    </button>
+
+    <br><br><br>
+
+  </div>
+
+  <div class="six columns">
+    <span class="label">Tertiary</span>
+
+    <button type="button" class="btn-tertiary" title="btn-tertiary svg title/tooltip" disabled>
+      <div class="disabled-tooltip" title="btn-tertiary svg title/tooltip"></div>
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use xlink:href="#icon-filter"></use>
+      </svg>
+      <span>Action</span>
+    </button>
+
+    <br><br><br>
+
+    <span class="label">Link</span>
+
+    <button type="button" class="btn btn-link" title="btn-link title/tooltip" disabled>
+      <div class="disabled-tooltip" title="btn-link title/tooltip"></div>
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use xlink:href="#icon-filter"></use>
+      </svg>
+      <span>Action</span>
+    </button>
+
+    <br><br><br>
+
+    <span class="label">Icon</span>
+
+    <button type="button" class="btn-icon" title="btn-icon title/tooltip" disabled>
+      <div class="disabled-tooltip" title="btn-icon title/tooltip"></div>
+      <span>Date</span>
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use xlink:href="#icon-calendar"></use>
+      </svg>
+    </button>
+
+    <br><br><br>
+
+    <span class="label">Menu</span>
+
+    <button type="button" id="test" class="btn-menu" title="btn-menu title/tooltip" disabled>
+      <div class="disabled-tooltip" title="btn-menu title/tooltip"></div>
+      <span>Add Item</span>
+    </button>
+    <ul class="popupmenu is-selectable has-icons">
+      <li><a href="#">Create a form</a></li>
+      <li class="separator"></li>
+      <li><a href="#">Spelling...</a></li>
+      <li><a href="#" disabled aria-disabled="true">Solver...</a></li>
+      <li class="separator"></li>
+      <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+      <li><a href="#">Notification Rules</a></li>
+      <li><a href="#">Protect Sheet Rules</a></li>
+    </ul>
+
+  </div>
+
+  <script>
+    $('#test').on('selected', function (e, args) {
+      console.log(args);
+    });
+  </script>
+
+</div>
+
+
+<script type="text/javascript">
+  $('div[title]').tooltip();
+</script>
