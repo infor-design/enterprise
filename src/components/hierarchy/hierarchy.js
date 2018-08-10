@@ -141,7 +141,7 @@ Hierarchy.prototype = {
       }
     });
 
-    self.element.off('mouseup').on('mouseup', '.leaf', (e) => {
+    self.element.off('dblclick.hierarchy').on('dblclick.hierarchy', '.leaf', (e) => {
       const nodeId = e.currentTarget.id;
       const nodeData = $(`#${nodeId}`).data();
       const dblClickEvent = { event: e, data: nodeData };
