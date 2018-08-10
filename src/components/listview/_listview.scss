@@ -362,6 +362,7 @@
     color: $listview-disabled-color;
     cursor: default;
     -webkit-text-fill-color: $listview-disabled-color;
+    opacity: $listview-disabled-opacity;
 
     * {
       @include unselectable;

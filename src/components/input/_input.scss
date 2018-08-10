@@ -342,7 +342,7 @@ textarea {
   &[disabled],
   &.is-disabled {
     background-color: $input-disabled-bg-color;
-    border: solid 1px $input-disabled-border-color;
+    border: solid 1px $searchfield-disabled-border-color;
     -webkit-text-fill-color: $input-disabled-color;
   }
 

@@ -67,14 +67,14 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
     padding-left: 34px;
     padding-right: 34px;
     @include transition(background-color 300ms $cubic-bezier-ease,
-      border-color 300ms $cubic-bezier-ease);
-      &[disabled] {
-        opacity: $searchfield-disabled-opacity;
+    border-color 300ms $cubic-bezier-ease);
+    &[disabled] {
+      opacity: $searchfield-disabled-opacity;
 
-        ~ svg.icon {
-          fill: $searchfiled-disabled-icon-color;
-        }
+      ~ svg.icon {
+        fill: $searchfield-disabled-icon-color;
       }
+    }
   }
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
@@ -91,6 +91,10 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
       padding-left: 32px;
       width: 100%;
 
+      &[disabled] {
+        border-bottom: 1px solid $input-disabled-border-color;
+      }
+
       &.is-open {
         @include context-searchfield-box-shadow();
       }
@@ -99,6 +103,12 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
         height: 60px;
       }
 
+    }
+
+    &.is-hovered {
+      > .searchfield {
+        border-bottom: 1px solid $input-border-color-hover;
+      }
     }
 
     > .icon {
@@ -197,8 +207,11 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 
   &.is-hovered {
     .btn {
-      border-color: $input-hover-border-color;
+      border-color: $searchfield-hover-border-color;
       color: $input-hover-border-color;
+      &[disabled] {
+        border-color: $input-disabled-border-color-hover;
+      }
 
       .icon {
         fill: $input-hover-border-color;
@@ -206,15 +219,18 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
     }
 
     .searchfield {
-      border-color: $input-hover-border-color;
+      //border-bottom: 1px solid $input-hover-border-color;
       &[disabled] {
-        border-color: $searchfiled-disabled-border-color;
+        border-color: $input-disabled-border-color-hover;
       }
     }
 
     &.has-categories {
       .searchfield {
         border-left-color: transparent;
+        &[disabled] {
+          border-left-color: transparent;
+        }
       }
     }
   }
@@ -264,6 +280,15 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 
     &.has-go-button {
       box-shadow: none;
+    }
+  }
+
+  .btn[disabled] {
+    color: $searchfield-disabled-color;
+    border-color: $input-disabled-border-color;
+    .icon {
+      fill: $searchfield-disabled-icon-color;
+      -webkit-text-fill-color: $searchfield-disabled-icon-color;
     }
   }
 
@@ -322,6 +347,10 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 
       .searchfield {
         border-left: 1px solid $input-border-color;
+
+        &[disabled] {
+          border-left: 1px solid $input-disabled-border-color;
+        }
 
         &:focus {
           box-shadow: none;
@@ -485,3 +514,4 @@ html[dir='rtl'] {
     }
   }
 }
+

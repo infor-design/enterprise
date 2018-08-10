@@ -180,6 +180,9 @@ $input-color: $input-text-color;
 $input-disabled-color: $input-disabled-text-color;
 $input-placeholder-color: $input-placeholder-text-color;
 $input-readonly-color: $input-readonly-text-color;
+$input-disabled-border-color: $graphite03;
+$input-disabled-border-color-hover: $graphite04;
+$input-border-color-hover: $graphite08;
 
 //States
 $error-color: $color-danger;
@@ -233,6 +236,9 @@ $listview-full-width-bg-color: $graphite01;
 $listview-full-width-hover-color: $list-hover-color;
 $listview-full-width-border-color: $graphite03;
 
+$listview-disabled-opacity: 0.5;
+$listview-disabled-icon-color: $input-disabled-color;
+
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
 $listbuilder-bg-color-hover: $graphite02;
@@ -249,6 +255,7 @@ $toolbar-standalone-bg-color: $graphite02;
 $toolbar-standalone-border-color: $graphite03;
 $toolbar-standalone-disabled-color: $graphite08;
 $toolbar-separator-color: $graphite03;
+$toolbar-disabled-icon-color: $graphite03;
 
 // Field Filter
 $fieldfilter-border-side-color: transparent;
@@ -718,8 +725,11 @@ $searchfield-moduletabs-disabled-bg-color: $slate07;
 $searchfield-moduletabs-disabled-border-color: $slate08;
 
 $searchfield-disabled-opacity: .5;
-$searchfiled-disabled-border-color: $graphite03;
-$searchfiled-disabled-icon-color: $graphite03;
+$searchfield-disabled-border-color: $graphite04;
+$searchfield-disabled-icon-color: $graphite03;
+$searchfield-disabled-color: $graphite03;
+$searchfield-hover-border-color: $graphite08;
+$searchfield-disabled-toolbar-icon-color: $searchfield-disabled-icon-color;
 
 //Image Border Color
 $image-border-color: $graphite02;
