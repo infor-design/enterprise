@@ -145,8 +145,11 @@ Hierarchy.prototype = {
       const nodeId = e.currentTarget.id;
       const nodeData = $(`#${nodeId}`).data();
       const dblClickEvent = { event: e, data: nodeData };
+      e.stopPropagation();
+      e.stopImmediatePropagation();
 
       this.element.trigger('dblclick', dblClickEvent);
+      return false;
     });
 
     /**
