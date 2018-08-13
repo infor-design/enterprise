@@ -29,7 +29,7 @@
           {"key": "Years of Service", "value": "4.33"}
         ],
         "actions": [
-          {"value": "Profile", "url": "#", "data": {"test": ["test data"]}},
+          {"value": "Profile", "url": "#", "data": {"id":"Profile","label":"Profile","type":"action","index":1}},
           {"value": "Change Pay Rate", "url": "#", "data": {}},
           {"value": "Add work assignment", "url" : "#", "data": {}},
           {"value": "Promote", "url" : "#", "data": {}},
