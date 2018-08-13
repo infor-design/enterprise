@@ -8,6 +8,32 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
+describe('Contextmenu index tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextmenu/example-index');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should open on click and close on click out', async () => {
+    const popupmenu = await element(by.id('action-popupmenu'));
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+    await browser.driver.sleep(config.waitsFor);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(popupmenu), config.waitsFor);
+
+    expect(await element(by.id('action-popupmenu')).getAttribute('class')).toContain('is-open');
+
+    await browser.actions().click(protractor.Button.Left).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(popupmenu), config.waitsFor);
+
+    expect(await popupmenu.getAttribute('class')).not.toContain('is-open');
+  });
+});
+
 describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable');
