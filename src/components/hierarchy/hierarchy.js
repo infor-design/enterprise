@@ -141,6 +141,15 @@ Hierarchy.prototype = {
       }
     });
 
+    self.element.off('dblclick.hierarchy').on('dblclick.hierarchy', '.leaf', (e) => {
+      const nodeId = e.currentTarget.id;
+      const nodeData = $(`#${nodeId}`).data();
+      const dblClickEvent = { event: e, data: nodeData };
+      e.stopImmediatePropagation();
+
+      this.element.trigger('dblclick', dblClickEvent);
+    });
+
     /**
     * Fires when node is selected
     * @event selected
