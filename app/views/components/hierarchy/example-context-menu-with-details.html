@@ -18,6 +18,10 @@
 
   $('#hierarchy').on('selected', function(event, eventInfo) {
     console.log(event, eventInfo);
+
+    if (eventInfo.isActionEvent) {
+      alert(JSON.stringify(eventInfo.actionReference));
+    }
   });
 </script>
 
