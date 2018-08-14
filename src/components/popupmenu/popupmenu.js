@@ -765,7 +765,10 @@ PopupMenu.prototype = {
         return;
       }
 
-      self.holdingDownClick = true;
+      const allowedOS = ['android', 'ios'];
+      if (allowedOS.indexOf(env.os.name) > -1) {
+        self.holdingDownClick = true;
+      }
 
       doOpen(e);
     }
@@ -1474,7 +1477,6 @@ PopupMenu.prototype = {
         return;
       }
     }
-
 
     const response = function (content) {
       const existingMenuItems = targetMenu.children();
