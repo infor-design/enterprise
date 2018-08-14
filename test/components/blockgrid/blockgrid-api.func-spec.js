@@ -9,7 +9,7 @@ let blockgridObj;
 
 const settings = {
   dataset: [],
-  selectable: false, // false, 'single' or 'multiple' or mixed
+  selectable: 'single', // false, 'single' or 'multiple' or mixed
   paging: false,
   pagesize: 25,
   pagesizes: [10, 25, 50, 75]
@@ -38,6 +38,28 @@ describe('Blockgrid API', () => {
 
   it('Should visible blockgrid', () => {
     expect(document.body.querySelector('.blockgrid')).toBeTruthy();
+  });
+
+  it('Should select block', () => {
+    const firstBlock = $('.block').first();
+    blockgridObj.selectBlock(firstBlock);
+
+    setTimeout(() => {
+      expect(document.body.querySelector('.block')).classList.contains('is-selected').toBeTruthy();
+      expect(document.body.querySelector('.block')).getAttribute('aria-selected').toBeTruthy();
+    }, 2000);
+  });
+
+  it('Should update settings', () => {
+    const firstBlock = $('.block').first();
+    blockgridObj.updated({ selectable: false });
+
+    blockgridObj.selectBlock(firstBlock);
+
+    setTimeout(() => {
+      expect(document.body.querySelector('.block')).classList.contains('is-selected').toBeFalsy();
+      expect(document.body.querySelector('.block')).getAttribute('aria-selected').toBeFalsy();
+    }, 2000);
   });
 
   it('Should have block', () => {
