@@ -43,6 +43,8 @@
         // -------------------------------------------------------------------------------------------------
         request.firstPage = result.firstPage;
         request.lastPage = result.lastPage;
+        request.beginIndex = result.beginIndex;
+        request.endIndex = result.endIndex;
 
         // You can do this but it will cause the header to jog a lot
         // If you need this pre load it would be better to set hidden on the columns object
@@ -83,7 +85,9 @@
         endIndex = beginIndex + request.pagesize;
 
         var result = {
-          data: getData().slice(beginIndex, endIndex),
+          data: getData(),
+          beginIndex: beginIndex,
+          endIndex: endIndex,
           firstPage: beginIndex === 0,
           lastPage: endIndex >= getData().length - 1
         };
