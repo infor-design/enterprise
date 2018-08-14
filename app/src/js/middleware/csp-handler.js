@@ -44,10 +44,12 @@ module.exports = function () {
             'ws://10.0.2.2:35729'
           ],
           'object-src': ['none'],
-          'style-src': [
-            'self',
-            `nonce-${res.opts.nonce}`
-          ], // For more unsafe during migration... ['* data: http://* \'unsafe-inline\''],
+          // Ultimately we want this (see SECURITY.MD)
+          // 'style-src': [
+          //   'self',
+          //   `nonce-${res.opts.nonce}`
+          // ],
+          'style-src': ['* data: http://* \'unsafe-inline\''],
           'font-src': ['self',
             'https://fonts.googleapis.com',
             'https://fonts.gstatic.com'

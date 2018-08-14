@@ -420,14 +420,8 @@ Dropdown.prototype = {
     // Set flags
     listIconItem.isIcon = (listIconItem.icon && listIconItem.icon.length);
 
-    if (listIconItem.specColor && listIconItem.specColor.length) {
-      listIconItem.isSpecColor = true;
-    }
     if (listIconItem.classList && listIconItem.classList.length) {
       listIconItem.isClassList = true;
-    }
-    if (listIconItem.specColorOver && listIconItem.specColorOver.length) {
-      listIconItem.isSpecColorOver = true;
     }
     if (listIconItem.classListOver && listIconItem.classListOver.length) {
       listIconItem.isClassListOver = true;
@@ -438,10 +432,6 @@ Dropdown.prototype = {
       icon: listIconItem.isIcon ? listIconItem.icon : '',
       class: `listoption-icon${listIconItem.isClassList ? ` ${listIconItem.classList}` : ''}`
     });
-
-    if (listIconItem.isSpecColor) {
-      listIconItem.html = listIconItem.html.replace('<svg', (`${'<svg style="fill:'}${listIconItem.specColor};"`));
-    }
 
     self.listIcon.items.push(listIconItem);
   },
@@ -517,18 +507,12 @@ Dropdown.prototype = {
             icon.removeClass(iconRef.classListOver)
               .addClass(iconRef.classList);
           }
-          if (iconRef.isSpecColorOver) {
-            icon.css({ fill: iconRef.specColor });
-          }
         }
         // make it over
         if (targetIcon && li.is(target)) {
           if (iconRef.isClassListOver) {
             targetIcon.removeClass(iconRef.classList);
             targetIcon.addClass(iconRef.classListOver);
-          }
-          if (iconRef.isSpecColorOver) {
-            targetIcon.css({ fill: iconRef.specColorOver });
           }
         }
       });
@@ -568,9 +552,6 @@ Dropdown.prototype = {
       target.changeIcon(icon);
       if (iconRef.isClassList) {
         target.addClass(iconRef.classList);
-      }
-      if (iconRef.isSpecColor) {
-        target.css({ fill: iconRef.specColor });
       }
     }
   },

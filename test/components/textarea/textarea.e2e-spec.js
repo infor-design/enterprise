@@ -13,6 +13,10 @@ describe('Textarea example-index tests', () => {
     await utils.setPage('/components/textarea/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should block input on disabled', async () => {
     const textareaEl = await element(by.id('description-disabled'));
 

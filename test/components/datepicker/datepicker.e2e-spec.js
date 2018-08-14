@@ -10,6 +10,10 @@ describe('Datepicker example-index tests', () => {
     await utils.setPage('/components/datepicker/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should open popup on icon click', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await element(by.css('#date-field-normal + .icon')).click();

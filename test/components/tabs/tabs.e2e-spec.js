@@ -24,6 +24,10 @@ describe('Tabs click example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-index', async () => {
       const tabsEl = await element(by.id('tabs-normal'));

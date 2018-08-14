@@ -25,6 +25,10 @@ describe('Listview example-singleselect tests', () => {
     });
   }
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (!utils.isIE()) {
     xit('Should be accessible on init with no WCAG 2AA violations on example-singleselect', async () => {
       const res = await axePageObjects(browser.params.theme);

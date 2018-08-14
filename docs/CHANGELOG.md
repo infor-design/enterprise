@@ -1,5 +1,14 @@
 # What's New with Enterprise
 
+## v4.10.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.10.0 Fixes
+
+- `[Dropdown]` Minor Breaking Change for Xss reasons we removed the ability to set a custom hex color on icons in the dropdown. You can still pass in one of the alert colors from the colorpallette (fx alert, good, info). This was not even shown in the examples so may not be missed. ([#256](https://github.com/infor-design/enterprise/issues/256))
+
 ## v4.9.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)

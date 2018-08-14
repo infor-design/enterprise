@@ -18,6 +18,10 @@ describe('Autocomplete example-index tests', () => {
     await browser.driver.get(`${browser.baseUrl}/components/autocomplete/example-index?theme=${browser.params.theme}`);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-index', async () => {
       await clickOnAutocomplete();

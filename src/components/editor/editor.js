@@ -1292,6 +1292,12 @@ Editor.prototype = {
             (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
           pastedData = e.originalEvent.clipboardData.getData('text/html');
         }
+        if (types instanceof DOMStringList && types.contains('text/plain')) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+        }
+        if ((typeof types === 'object' && types[0] && types[0] === 'text/plain') && !types[1]) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+        }
       } else {
         paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
         paragraphs = paste.split(/[\r\n]/g);

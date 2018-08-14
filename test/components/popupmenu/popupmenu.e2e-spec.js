@@ -13,6 +13,10 @@ describe('Popupmenu example-selectable tests', () => {
     await utils.setPage('/components/popupmenu/example-selectable');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-selectable', async () => {
       const popupmenuSection = await element(by.id('maincontent'));

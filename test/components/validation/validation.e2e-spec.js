@@ -10,6 +10,10 @@ describe('Validation example-index tests', () => {
     await utils.setPage('/components/validation/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should check a required rule', async () => {
     const emailEl = await element(by.id('email-address-ok'));
     await emailEl.clear();

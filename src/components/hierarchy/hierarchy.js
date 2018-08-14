@@ -82,8 +82,6 @@ Hierarchy.prototype = {
         this.render(s.dataset[0]);
       } else if (s.dataset && s.dataset.children.length > 0) {
         this.render(s.dataset);
-      } else {
-        $(this.element).append('<p style="padding:10px;">No data available</p>');
       }
     }
 
