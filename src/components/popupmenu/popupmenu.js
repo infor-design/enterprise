@@ -270,7 +270,7 @@ PopupMenu.prototype = {
       const audibleSpanId = 'popupmenu-f10-label';
       if ($(`#${audibleSpanId}`).length === 0) {
         this.element.after(`
-          <span style="display:none;" id="${audibleSpanId}">
+          <span class="audible" id="${audibleSpanId}">
             ${Locale.translate('PressShiftF10')}
           </span>
         `);

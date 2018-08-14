@@ -286,7 +286,7 @@
 
       // We do this because folders don't have an associated content panel
       // as they are just links to open the subfolders.
-      var escapedLink = $($.escapeHTML(args.stepLink));
+      var escapedLink = $(Soho.xss.escapeHTML(args.stepLink));
       var hashLoc = escapedLink.attr('href');
 
       var stepId;

@@ -344,10 +344,10 @@ Editor.prototype = {
     this.textarea = this.createTextarea();
 
     // fill the text area with any content that may already exist within the editor DIV
-    this.textarea.text($.sanitizeHTML(this.element.html().toString()));
+    this.textarea.text(xssUtils.sanitizeHTML(this.element.html().toString()));
 
     self.container.on('input.editor keyup.editor', '.editor', debounce(() => {
-      self.textarea.html($.sanitizeHTML(self.element.html().toString()));
+      self.textarea.html(xssUtils.sanitizeHTML(self.element.html().toString()));
       // setting the value via .val doesn't trigger the change event
       self.element.trigger('change');
     }, 500));
@@ -1891,7 +1891,7 @@ Editor.prototype = {
         setTimeout(() => {
           for (let i = 0, l = els.length; i < l; i++) {
             if (els[i].hasAttribute('size')) {
-              els[i].setAttribute('style', `background-color: ${value};`);
+              els[i].style.backgroundColor = value;
               els[i].removeAttribute('size');
             }
           }

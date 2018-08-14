@@ -477,7 +477,7 @@ Tooltip.prototype = {
     }
 
     if (this.settings.closebutton && title && !title.firstElementChild) {
-      const closeBtnX = $(`<button type="button" class="btn-icon l-pull-right" style="margin-top: -9px">${
+      const closeBtnX = $(`<button type="button" class="btn-icon l-pull-right btn-close">${
         $.createIcon({ classes: ['icon-close'], icon: 'close' })
       }<span>Close</span>` +
         '</button>').on('click', () => {

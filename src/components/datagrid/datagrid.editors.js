@@ -856,7 +856,7 @@ const editors = {
         <input id="spinbox-${cell}" name="spinbox-${cell}" type="text" class="spinbox" value="'+ ${value} +'">
         <span class="spinbox-control up">+</span></span>`;
 
-      DOM.append(container, markup, '<label><span><input');
+      DOM.append(container, markup, '<label><span><input>');
       this.input = container.find('input');
 
       if (!column.editorOptions) {

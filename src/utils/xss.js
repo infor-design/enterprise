@@ -136,4 +136,17 @@ xssUtils.htmlEntities = function (string) {
     .replace(/"/g, '&quot;');
 };
 
+/**
+ * Ensure that a link is a local link (relative to the current page)
+ * @private
+ * @param {string} url string to process
+ * @returns {boolean} If it is local or not
+ */
+xssUtils.isUrlLocal = function (url) {
+  const isEmpty = (url === '');
+  return !isEmpty &&
+    ((url[0] === '/' && (url.length === 1 || (url[1] !== '/' && url[1] !== '\\'))) || // "/" or "/foo" but not "//" or "/\"
+    (url.length > 1 && url[0] === '~' && url[1] === '/')); // "~/" or "~/foo"
+};
+
 export { xssUtils };

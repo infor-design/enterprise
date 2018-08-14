@@ -48,7 +48,7 @@
             loadedCategories.push(categoryId || 'fruits');
           })
           .fail(function() {
-            setContent('<div class="accordion-content" style="color: red;"><p>AJAX Error: Couldn\'t find any fruits...</p></div>');
+            setContent('<div class="accordion-content" class="alert01"><p>AJAX Error: Couldn\'t find any fruits...</p></div>');
           });
         return true;
       }

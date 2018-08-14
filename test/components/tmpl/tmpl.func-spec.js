@@ -82,7 +82,7 @@ describe('Tmpl API', () => {
              <a href="#" tabindex="-1">
                 <span>{{{label}}}</span>
                 <small>{{{email}}}</small>
-                <span style="display: none;" class="display-value">{{label}} - {{email}}</span>
+                <span class="hidden display-value">{{label}} - {{email}}</span>
              </a>
            </li>`;
 
@@ -99,7 +99,7 @@ describe('Tmpl API', () => {
     expect(output).toEqual(stringUtils.stripWhitespace(`
         <li id="ac-list-option1"  data-value="al"  role="listitem">
         <a href="#" tabindex="-1"><span><i>A</i>labama</span><small>Alex.Mills@example.com</small>
-        <span style="display: none;" class="display-value">&lt;i&gt;A&lt;/i&gt;labama - Alex.Mills@example.com
+        <span class="hidden display-value">&lt;i&gt;A&lt;/i&gt;labama - Alex.Mills@example.com
         </span></a></li>`));
   });
 
