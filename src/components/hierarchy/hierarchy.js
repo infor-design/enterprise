@@ -141,6 +141,15 @@ Hierarchy.prototype = {
       }
     });
 
+    self.element.off('dblclick.hierarchy').on('dblclick.hierarchy', '.leaf', (e) => {
+      const nodeId = e.currentTarget.id;
+      const nodeData = $(`#${nodeId}`).data();
+      const dblClickEvent = { event: e, data: nodeData };
+      e.stopImmediatePropagation();
+
+      this.element.trigger('dblclick', dblClickEvent);
+    });
+
     /**
     * Fires when node is selected
     * @event selected
@@ -163,6 +172,7 @@ Hierarchy.prototype = {
       const isExpandButton = svgHref ? svgHref.baseVal === '#icon-caret-down' : false;
       const isForward = svgHref ? svgHref.baseVal === '#icon-caret-right' : false;
       const isActions = target.hasClass('btn-actions');
+      const isAction = target.is('a') && target.parent().parent().is('ul.popupmenu');
       let eventType = 'selected';
 
       $('.is-selected').removeClass('is-selected');
@@ -187,6 +197,10 @@ Hierarchy.prototype = {
         hierarchy.buildActionsMenu(nodeData, leaf);
       }
 
+      if (isAction) {
+        eventType = 'action';
+      }
+
       if (isButton && isForward && isNotBack) {
         eventType = 'forward';
       }
@@ -202,6 +216,7 @@ Hierarchy.prototype = {
 
       const eventInfo = {
         data: nodeData,
+        actionReference: isAction ? target.data('actionReference') : null,
         targetInfo,
         eventType,
         isForwardEvent: hierarchy.isForwardEvent(eventType),
@@ -211,6 +226,7 @@ Hierarchy.prototype = {
         isCollapseEvent: hierarchy.isCollapseEvent(),
         isSelectedEvent: hierarchy.isSelectedEvent(),
         isActionsEvent: hierarchy.isActionsEvent(eventType),
+        isActionEvent: hierarchy.isActionEvent(eventType),
         allowLazyLoad: hierarchy.allowLazyLoad(nodeData, eventType)
       };
 
@@ -232,11 +248,15 @@ Hierarchy.prototype = {
 
     if (data.menu.details) {
       popupMenu.addClass('has-detail-fields');
-      template.push(`<div class="detail-fields">${data.menu.details.map(v => `<div class="dt-fields-row"><div class="dt-fields-cell">${v.key}</div><div class="dt-fields-cell">${v.value}</div></div>`).join('')}</div>`);
+      template.push(`<li><div class="detail-fields">${data.menu.details.map(v => `<div class="dt-fields-row"><div class="dt-fields-cell">${v.key}</div><div class="dt-fields-cell">${v.value}</div></div>`).join('')}</div></li>`);
     }
 
     if (data.menu.actions) {
-      template.push(`${data.menu.actions.map(a => `<li><a href="${a.url}">${a.value}</a></li>`).join('')}`);
+      // Ignoring next line. Eslint expects template literals vs string concat.
+      // However template literals break JSON.stringify() in this case
+      // eslint-disable-next-line
+      const items = `${data.menu.actions.map(a => "<li><a href='" + a.url + "' data-action-reference='" + JSON.stringify(a.data) + "'>" + a.value + "</a></li>").join('')}`;
+      template.push(items);
     }
 
     template.forEach((i) => { popupMenu.append(i); });
@@ -310,6 +330,15 @@ Hierarchy.prototype = {
    */
   isActionsEvent(eventType) {
     return eventType === 'actions';
+  },
+
+  /**
+   * @private
+   * @param {string} evenType is action
+   * @returns {boolean} true if action
+   */
+  isActionEvent(evenType) {
+    return evenType === 'action';
   },
 
   /**

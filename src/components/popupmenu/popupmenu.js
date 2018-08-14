@@ -1469,7 +1469,12 @@ PopupMenu.prototype = {
     // Use a different menu, if applicable
     if (DOM.isElement(contextElement) && $(contextElement).is('.popupmenu, .submenu')) {
       targetMenu = $(contextElement);
+      // Skip calling external source if submenu is already open
+      if (contextElement.hasClass('is-open')) {
+        return;
+      }
     }
+
 
     const response = function (content) {
       const existingMenuItems = targetMenu.children();
