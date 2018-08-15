@@ -594,6 +594,17 @@ $toolbarsearchfield-category-empty-width: 51px;
   .toolbar > .toolbar-searchfield-wrapper {
     left: 20px;
     top: 12px;
+    .searchfield {
+      &[disabled] {
+        fill: $searchfield-disabled-toolbar-icon-color;
+        -webkit-text-fill-color: $searchfield-disabled-toolbar-icon-color;
+        opacity: 1;
+
+        ~ svg.icon {
+          fill: $toolbar-disabled-icon-color;
+        }
+      }
+    }
   }
 }
 
@@ -602,6 +613,14 @@ $toolbarsearchfield-category-empty-width: 51px;
 
   .toolbar-searchfield-wrapper.non-collapsible {
     width: $toolbarsearchfield-max-width;
+
+    &.is-hovered {
+      .searchfield {
+        &[disabled] {
+          border-color: $searchfield-disabled-border-color;
+        }
+      }
+    }
 
     // reset all the styling for the searchfield to correctly appear open.
     .searchfield {
@@ -612,6 +631,12 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-text-color;
       font-weight: normal;
       text-transform: none;
+
+      &[disabled] {
+        fill: $searchfield-disabled-toolbar-icon-color;
+        -webkit-text-fill-color: $searchfield-disabled-toolbar-icon-color;
+        opacity: $searchfield-disabled-opacity;
+      }
 
       &::-webkit-input-placeholder {
         @include font-size(14);

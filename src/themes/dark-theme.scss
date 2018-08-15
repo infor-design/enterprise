@@ -146,10 +146,12 @@ $secondary-border-btn-ripple-color: $white;
 
 // Input Fields
 $input-color: $input-text-color;
-$input-disabled-color: $input-disabled-text-color;
+$input-disabled-color: $slate07;
 $input-focus-border-color: $primary-color;
 $input-placeholder-color: $input-placeholder-text-color;
 $input-readonly-color: $input-readonly-text-color;
+$input-disabled-border-color: $slate07;
+$input-disabled-border-color-hover: $slate05;
 
 //States
 $error-color: $alert-red;
@@ -194,6 +196,9 @@ $listview-toolbar-button-icon-selected-color: $primary-color;
 $listview-full-width-bg-color: $slate08;
 $listview-full-width-hover-color: $slate06;
 
+$listview-disabled-opacity: 0.5;
+$listview-disabled-icon-color: $slate07;
+
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
 $listbuilder-bg-color-hover: $slate06;
@@ -206,6 +211,7 @@ $toolbar-standalone-bg-color: $slate06;
 $toolbar-standalone-border-color: $slate05;
 $toolbar-standalone-disabled-color: $slate03;
 $toolbar-separator-color: $slate05;
+$toolbar-disabled-icon-color: $slate07;
 
 // Formatter Toolbar
 $formatter-toolbar-separator-color: $slate04;
@@ -611,6 +617,13 @@ $searchfield-header-border-color: $slate07;
 $searchfield-header-text-color: $white;
 $searchfield-header-placeholder-text-color: $slate04;
 $searchfield-header-icon-color: $header-button-color;
+
+$searchfield-disabled-opacity: .5;
+$searchfield-disabled-border-color: $slate07;
+$searchfield-disabled-icon-color: $slate07;
+$searchfield-disabled-color: $slate07;
+$searchfield-hover-border-color: $slate08;
+$searchfield-disabled-toolbar-icon-color: $searchfield-disabled-icon-color;
 
 //Image Border Color
 $image-border-color: $slate04;

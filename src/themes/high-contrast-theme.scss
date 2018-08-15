@@ -164,9 +164,10 @@ $secondary-border-btn-ripple-color: $azure07;
 
 // Input Fields
 $input-color: $input-text-color;
-$input-disabled-color: $input-disabled-text-color;
+$input-disabled-color: $graphite07;
 $input-placeholder-color: $input-placeholder-text-color;
 $input-readonly-color: $input-readonly-text-color;
+$input-disabled-border-color-hover: $graphite05;
 
 //States
 $error-color: $alert-red;
@@ -213,6 +214,9 @@ $listview-toolbar-button-icon-hover-color: $primary-color;
 $listview-toolbar-button-text-selected-color: $primary-color;
 $listview-toolbar-button-icon-selected-color: $primary-color;
 
+$listview-disabled-opacity: 1;
+$listview-disabled-icon-color: $graphite07;
+
 // Listbuilder
 $listbuilder-bg-color: $input-bg-color;
 $listbuilder-bg-color-hover: $graphite04;
@@ -228,6 +232,7 @@ $toolbar-standalone-bg-color: $graphite01;
 $toolbar-standalone-border-color: $graphite06;
 $toolbar-standalone-disabled-color: $graphite08;
 $toolbar-separator-color: $graphite06;
+$toolbar-disabled-icon-color: $white;
 
 // Field Filter
 $fieldfilter-border-side-color: $input-border-color;
@@ -629,7 +634,7 @@ $searchfield-context-bg: $graphite01;
 $searchfield-context-alt-bg: $white;
 $searchfield-context-border-color: $graphite03;
 $searchfield-context-box-shadow-color: $graphite03;
-$searchfield-context-icon-color: $graphite04;
+$searchfield-context-icon-color: $graphite07;
 $searchfield-context-text-color: $font-color;
 
 $searchfield-card-bg-color: $white;
@@ -642,6 +647,14 @@ $searchfield-header-border-color: $graphite09;
 $searchfield-header-text-color: $white;
 $searchfield-header-placeholder-text-color: $graphite03;
 $searchfield-header-icon-color: $header-button-color;
+
+$searchfield-disabled-opacity: 1;
+$searchfield-disabled-border-color: $graphite08;
+$searchfield-disabled-icon-color: $graphite07;
+$searchfield-disabled-color: $graphite07;
+$button-disabled-opacity: $searchfield-disabled-opacity;
+$searchfield-hover-border-color: $black;
+$searchfield-disabled-toolbar-icon-color: $white;
 
 //Image Border Color
 $image-border-color: $graphite03;
