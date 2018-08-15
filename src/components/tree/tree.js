@@ -991,7 +991,7 @@ Tree.prototype = {
   },
 
   /**
-   * Rearrange the given or default dataset.
+   * Rearrange the given or default dataset. if dataset use `parent` key to arrange nodes
    * @private
    * @param {object} dataset a data object.
    * @returns {object} arranged data object
