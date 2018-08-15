@@ -103,6 +103,7 @@
 
     .icon {
       @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
+      fill: $application-menu-trigger-icon-fill-color;
 
       &:not(.close) {
         left: 18px;
