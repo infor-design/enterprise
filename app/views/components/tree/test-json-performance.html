@@ -71,9 +71,13 @@
   }
   // console.log(sampleData);;
 
+  var elem = $('#json-tree');
   var text = 'Tree rendering time';
+
   console.time(text);
-  $('#json-tree').tree({dataset: sampleData});
+  elem.tree({dataset: sampleData});
   console.timeEnd(text);
+
+  console.log('Number of nodes added:', elem.find('li').length);
 
 </script>
