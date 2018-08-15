@@ -40,35 +40,34 @@ describe('Blockgrid API', () => {
     expect(document.body.querySelector('.blockgrid')).toBeTruthy();
   });
 
-  it('Should select block', () => {
+  it('Should select block', (done) => {
     const firstBlock = $('.block').first();
     blockgridObj.selectBlock(firstBlock);
 
     setTimeout(() => {
-      expect(document.body.querySelector('.block')).classList.contains('is-selected').toBeTruthy();
-      expect(document.body.querySelector('.block')).getAttribute('aria-selected').toBeTruthy();
-    }, 2000);
+      expect(document.body.querySelector('.block').classList.contains('is-selected')).toBeTruthy();
+      expect(document.body.querySelector('.block').getAttribute('aria-selected')).toBeTruthy();
+      done();
+    }, 1000);
   });
 
   it('Should update settings', () => {
-    const firstBlock = $('.block').first();
     blockgridObj.updated({ selectable: false });
 
-    blockgridObj.selectBlock(firstBlock);
-
-    setTimeout(() => {
-      expect(document.body.querySelector('.block')).classList.contains('is-selected').toBeFalsy();
-      expect(document.body.querySelector('.block')).getAttribute('aria-selected').toBeFalsy();
-    }, 2000);
+    expect(blockgridObj.settings.selectable).toEqual(false);
   });
 
   it('Should have block', () => {
     expect(document.body.querySelector('.block')).toBeTruthy();
   });
 
-  it('Should destroy blockgrid', () => {
+  it('Should destroy blockgrid', (done) => {
     blockgridObj.destroy();
+    setTimeout(() => {
+      expect($(blockgridEl).data('blockgrid')).toBeFalsy();
 
-    expect($(blockgridEl).data('blockgrid')).toBeFalsy();
+      blockgridObj = new Blockgrid(blockgridEl, settings);
+      done();
+    }, 1000);
   });
 });
