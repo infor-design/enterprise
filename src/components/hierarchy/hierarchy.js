@@ -235,12 +235,31 @@ Hierarchy.prototype = {
   },
 
   /**
+   * @public
+   * @param eventInfo eventType, target, data, ect..
+   * @param newActions new actions to be appended to the menu
+   */
+  updateActions(eventInfo, updatedActions) {
+    const leaf = $(eventInfo.targetInfo.target).closest('.leaf');
+    const nodeData = eventInfo.data;
+    const popupMenu = $(leaf).find('.popupmenu');
+    const lineItemsToRemove = popupMenu.find('li').not(':eq(0)');
+
+    $(lineItemsToRemove).each((idx, item) => {
+      $(item).remove();
+    });
+
+    nodeData.menu.actions = updatedActions;
+    popupMenu.append(this.getActionMenuItems(nodeData));
+  },
+
+  /**
    * @private
    * @param {object} data associated with leaf
    * @param {leaf} leaf jQuery reference in DOM
    */
   buildActionsMenu(data, leaf) {
-    const popupMenu = leaf.find('.popupmenu');
+    const popupMenu = $(leaf).find('.popupmenu');
     const template = [];
 
     // Reset & rebuild
@@ -252,14 +271,22 @@ Hierarchy.prototype = {
     }
 
     if (data.menu.actions) {
-      // Ignoring next line. Eslint expects template literals vs string concat.
-      // However template literals break JSON.stringify() in this case
-      // eslint-disable-next-line
-      const items = `${data.menu.actions.map(a => "<li><a href='" + a.url + "' data-action-reference='" + JSON.stringify(a.data) + "'>" + a.value + "</a></li>").join('')}`;
-      template.push(items);
+      template.push(this.getActionMenuItems(data));
     }
 
     template.forEach((i) => { popupMenu.append(i); });
+  },
+
+  /**
+   * @private
+   * @param data the data to be iterated
+   * @returns {string} returns list items as a string
+   */
+  getActionMenuItems(data) {
+    // Ignoring next line. Eslint expects template literals vs string concat.
+    // However template literals break JSON.stringify() in this case
+    // eslint-disable-next-line
+    return `${data.menu.actions.map(a => "<li><a href='" + a.url + "' data-action-reference='" + JSON.stringify(a.data) + "'>" + a.value + "</a></li>").join('')}`;
   },
 
   /**

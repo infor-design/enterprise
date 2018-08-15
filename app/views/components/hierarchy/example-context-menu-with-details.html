@@ -19,6 +19,16 @@
   $('#hierarchy').on('selected', function(event, eventInfo) {
     console.log(event, eventInfo);
 
+    // dynamically update the actions menu
+    // replaces existing actions with new actions
+    if (eventInfo.isActionsEvent) {
+      const currentActions = eventInfo.data.menu.actions;
+      const newActions = [{value: 'Delete'}, {value: 'Move'}];
+      const updatedActions = currentActions.concat(newActions);
+
+      $(this).data('hierarchy').updateActions(eventInfo, updatedActions)
+    }
+
     if (eventInfo.isActionEvent) {
       alert(JSON.stringify(eventInfo.actionReference));
     }
