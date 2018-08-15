@@ -235,9 +235,10 @@ Hierarchy.prototype = {
   },
 
   /**
+   * Update existing leaf actions with new actions
    * @public
-   * @param eventInfo eventType, target, data, ect..
-   * @param newActions new actions to be appended to the menu
+   * @param {object} eventInfo eventType, target, data, ect..
+   * @param {array} updatedActions -actions to be appended to the menu
    */
   updateActions(eventInfo, updatedActions) {
     const leaf = $(eventInfo.targetInfo.target).closest('.leaf');
@@ -284,7 +285,7 @@ Hierarchy.prototype = {
 
   /**
    * @private
-   * @param data the data to be iterated
+   * @param {object} data the data to be iterated
    * @returns {string} returns list items as a string
    */
   getActionMenuItems(data) {
