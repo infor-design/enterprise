@@ -262,6 +262,11 @@ Hierarchy.prototype = {
     const popupMenu = $(leaf).find('.popupmenu');
     const template = [];
 
+    // Safety
+    if (data.menu === undefined) {
+      return;
+    }
+
     // Reset & rebuild
     popupMenu.empty();
 
