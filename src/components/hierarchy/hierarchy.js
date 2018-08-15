@@ -141,6 +141,15 @@ Hierarchy.prototype = {
       }
     });
 
+    self.element.off('dblclick.hierarchy').on('dblclick.hierarchy', '.leaf', (e) => {
+      const nodeId = e.currentTarget.id;
+      const nodeData = $(`#${nodeId}`).data();
+      const dblClickEvent = { event: e, data: nodeData };
+      e.stopImmediatePropagation();
+
+      this.element.trigger('dblclick', dblClickEvent);
+    });
+
     /**
     * Fires when node is selected
     * @event selected
@@ -162,6 +171,8 @@ Hierarchy.prototype = {
       const isCollapseButton = svgHref ? svgHref.baseVal === '#icon-caret-up' : false;
       const isExpandButton = svgHref ? svgHref.baseVal === '#icon-caret-down' : false;
       const isForward = svgHref ? svgHref.baseVal === '#icon-caret-right' : false;
+      const isActions = target.hasClass('btn-actions');
+      const isAction = target.is('a') && target.parent().parent().is('ul.popupmenu');
       let eventType = 'selected';
 
       $('.is-selected').removeClass('is-selected');
@@ -181,6 +192,15 @@ Hierarchy.prototype = {
         eventType = 'back';
       }
 
+      if (isActions) {
+        eventType = 'actions';
+        hierarchy.buildActionsMenu(nodeData, leaf);
+      }
+
+      if (isAction) {
+        eventType = 'action';
+      }
+
       if (isButton && isForward && isNotBack) {
         eventType = 'forward';
       }
@@ -196,6 +216,7 @@ Hierarchy.prototype = {
 
       const eventInfo = {
         data: nodeData,
+        actionReference: isAction ? target.data('actionReference') : null,
         targetInfo,
         eventType,
         isForwardEvent: hierarchy.isForwardEvent(eventType),
@@ -204,11 +225,41 @@ Hierarchy.prototype = {
         isExpandEvent: hierarchy.isExpandEvent(),
         isCollapseEvent: hierarchy.isCollapseEvent(),
         isSelectedEvent: hierarchy.isSelectedEvent(),
+        isActionsEvent: hierarchy.isActionsEvent(eventType),
+        isActionEvent: hierarchy.isActionEvent(eventType),
         allowLazyLoad: hierarchy.allowLazyLoad(nodeData, eventType)
       };
 
       leaf.trigger('selected', eventInfo);
     });
+  },
+
+  /**
+   * @private
+   * @param {object} data associated with leaf
+   * @param {leaf} leaf jQuery reference in DOM
+   */
+  buildActionsMenu(data, leaf) {
+    const popupMenu = leaf.find('.popupmenu');
+    const template = [];
+
+    // Reset & rebuild
+    popupMenu.empty();
+
+    if (data.menu.details) {
+      popupMenu.addClass('has-detail-fields');
+      template.push(`<li><div class="detail-fields">${data.menu.details.map(v => `<div class="dt-fields-row"><div class="dt-fields-cell">${v.key}</div><div class="dt-fields-cell">${v.value}</div></div>`).join('')}</div></li>`);
+    }
+
+    if (data.menu.actions) {
+      // Ignoring next line. Eslint expects template literals vs string concat.
+      // However template literals break JSON.stringify() in this case
+      // eslint-disable-next-line
+      const items = `${data.menu.actions.map(a => "<li><a href='" + a.url + "' data-action-reference='" + JSON.stringify(a.data) + "'>" + a.value + "</a></li>").join('')}`;
+      template.push(items);
+    }
+
+    template.forEach((i) => { popupMenu.append(i); });
   },
 
   /**
@@ -269,6 +320,25 @@ Hierarchy.prototype = {
    */
   isSelectedEvent(eventType) {
     return eventType === 'select';
+  },
+
+  /**
+   * Checks if is actions event
+   * @private
+   * @param {string} eventType is actions
+   * @returns {boolean} true if actions event
+   */
+  isActionsEvent(eventType) {
+    return eventType === 'actions';
+  },
+
+  /**
+   * @private
+   * @param {string} evenType is action
+   * @returns {boolean} true if action
+   */
+  isActionEvent(evenType) {
+    return evenType === 'action';
   },
 
   /**
@@ -401,6 +471,19 @@ Hierarchy.prototype = {
   },
 
   /**
+   * Closes popupmenu
+   * @private
+   * @param node leaf containing btn-actions
+   */
+  closePopupMenu(node) {
+    const actionButton = node.find('.btn-actions');
+
+    if (actionButton.length !== 0) {
+      actionButton.data('popupmenu').close();
+    }
+  },
+
+  /**
    * Expand the nodes until nodeId is displayed on the page.
    * @private
    * @param {object} event .
@@ -412,6 +495,9 @@ Hierarchy.prototype = {
     const s = this.settings;
     const node = domObject.leaf;
     let nodeTopLevel = node.next();
+
+    // close popupmenu if open
+    this.closePopupMenu(node);
 
     nodeTopLevel.animateOpen();
     /**
@@ -446,6 +532,9 @@ Hierarchy.prototype = {
     const s = this.settings;
     const node = domObject.leaf;
     let nodeTopLevel = node.next();
+
+    // close popupmenu if open
+    this.closePopupMenu(node);
 
     nodeTopLevel.animateClosed().on('animateclosedcomplete', () => {
       /**
@@ -532,7 +621,7 @@ Hierarchy.prototype = {
       rootNodeHTML.push(multiRootHTML);
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
     } else {
-      const leaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: data });
+      const leaf = this.getTemplate(data);
       rootNodeHTML.push(leaf);
 
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
@@ -627,6 +716,26 @@ Hierarchy.prototype = {
   },
 
   /**
+   * Builds leaf template
+   * @private
+   * @param {object} data leaf data
+   * @returns {string} compiled template as HTML string
+   */
+  getTemplate(data) {
+    const template = Tmpl.compile(`{{#dataset}}${$(`#${this.settings.templateId}`).html()}{{/dataset}}`, { dataset: data });
+
+    // Init popupmenu after rendered in DOM
+    setTimeout(() => {
+      const actionButton = $(`#btn-${data.id}`);
+      if (actionButton.length !== 0) {
+        actionButton.hideFocus().popupmenu();
+      }
+    }, 1);
+
+    return $(template).prop('outerHTML');
+  },
+
+  /**
   * Add the legend from the Settings
   * @private
   * @param {object} element .
@@ -663,7 +772,6 @@ Hierarchy.prototype = {
   */
   createLeaf(nodeData, container) {
     const self = this;
-    const s = this.settings;
     const chartClassName = self.settings.rootClass;
     const chart = $(`.${chartClassName} .chart`, self.container);
     const elClassName = container.attr('class');
@@ -680,7 +788,7 @@ Hierarchy.prototype = {
     function processDataForLeaf(thisNodeData) {
       self.setColor(thisNodeData);
 
-      const leaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: thisNodeData });
+      const leaf = self.getTemplate(thisNodeData);
       let parent = el.length === 1 ? el : container;
       let branchState = thisNodeData.isExpanded || thisNodeData.isExpanded === undefined ? 'branch-expanded' : 'branch-collapsed';
 
@@ -699,7 +807,7 @@ Hierarchy.prototype = {
 
         for (let j = 0, l = thisNodeData.children.length; j < l; j++) {
           self.setColor(thisNodeData.children[j]);
-          const childLeaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: thisNodeData.children[j] });
+          const childLeaf = self.getTemplate(thisNodeData.children[j]);
 
           if (j === thisNodeData.children.length - 1) {
             childrenNodes += `<li>${$(childLeaf)[0].outerHTML}</li>`;

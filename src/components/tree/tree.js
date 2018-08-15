@@ -457,7 +457,7 @@ Tree.prototype = {
   },
 
   /**
-   * Deselects a tree node
+   * Set current node status
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @returns {void}
@@ -469,9 +469,16 @@ Tree.prototype = {
 
     // Not multiselect
     if (!this.isMultiselect) {
-      node.removeClass('is-selected is-partial');
+      const a = node[0];
+      const li = a.parentNode;
       if (data && data.selected) {
-        node.addClass('is-selected');
+        li.classList.add('is-selected');
+        a.classList.add('is-selected');
+        a.setAttribute('aria-selected', true);
+      } else {
+        li.classList.remove('is-selected', 'is-partial');
+        a.classList.remove('is-selected', 'is-partial');
+        a.setAttribute('aria-selected', false);
       }
       return;
     }
@@ -541,7 +548,7 @@ Tree.prototype = {
   },
 
   /**
-   * Changes a node's selected status to its opposite form.
+   * Changes a node's open/close status to its opposite form.
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {boolean} isFirstSkipped - ?
@@ -1236,7 +1243,7 @@ Tree.prototype = {
     entry.id = node.attr('id');
     entry.text = node.find('.tree-text').text();
 
-    if (node.hasClass('is-open')) {
+    if (node.hasClass('is-open') || node.parent('li').hasClass('is-open')) {
       entry.open = true;
     }
 
@@ -1246,6 +1253,10 @@ Tree.prototype = {
 
     if (node.parent().is('.is-selected')) {
       entry.selected = true;
+    }
+
+    if (node.is('.is-disabled')) {
+      entry.disabled = true;
     }
 
     // Icon
