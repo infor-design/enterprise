@@ -11,13 +11,14 @@ const crypto = require('crypto');
 const getJSONFile = require('./src/js/get-json-file');
 
 const app = express();
+app.disable('x-powered-by');
+
 const BASE_PATH = process.env.BASEPATH || '/';
 const packageJSON = getJSONFile('../../../package.json');
 
 app.set('view engine', 'html');
 app.set('views', path.resolve(__dirname, 'views'));
 app.set('basepath', BASE_PATH);
-app.disable('x-powered-by');
 
 mmm.setEngine('hogan.js');
 app.engine('html', mmm.__express);

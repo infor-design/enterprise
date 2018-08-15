@@ -124,8 +124,8 @@ Dropdown.prototype = {
 
     if (!orgId) {
       orgId = this.element.uniqueId('dropdown');
-      this.element[0].setAttribute('id', orgId);
-      this.element.parent().find('label').first()[0].setAttribute('for', orgId);
+      DOM.setAttribute(this.element[0], 'id', orgId);
+      DOM.setAttribute(this.element.parent().find('label').first()[0], 'for', orgId);
     }
 
     if (env.os.name === 'ios' || env.os.name === 'android') {
@@ -2233,13 +2233,14 @@ Dropdown.prototype = {
       }
     }
 
-    const value = option.val();
+    let value = option.val();
     if (!option) {
       return;
     }
 
     if (!li && typeof value === 'string') {
-      li = this.listUl.find(`li[data-val="${value.replace(/"/g, '/quot/')}"]`);
+      value = value.replace(/"/g, '/quot/');
+      li = this.listUl.find(`li[data-val="${value}"]`);
     }
 
     if (option.hasClass('is-disabled') || option.is(':disabled')) {

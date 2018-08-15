@@ -471,7 +471,7 @@ Hierarchy.prototype = {
   /**
    * Closes popupmenu
    * @private
-   * @param node leaf containing btn-actions
+   * @param {object} node leaf containing btn-actions
    */
   closePopupMenu(node) {
     const actionButton = node.find('.btn-actions');

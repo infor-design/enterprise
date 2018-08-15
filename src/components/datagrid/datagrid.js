@@ -6,6 +6,7 @@ import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../../utils/debounced-resize';
 import { xssUtils } from '../../utils/xss';
+import { DOM } from '../../utils/dom';
 
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
@@ -995,11 +996,12 @@ Datagrid.prototype = {
       self.headerTable = self.headerContainer.find('table');
       self.headerTable.width(this.headerTableWidth());
       self.headerColGroup = $(headerColGroup).appendTo(self.headerTable);
-      self.headerRow = $(`<thead>${headerRow}</thead>`).appendTo(self.headerContainer.find('table'));
+      DOM.append(self.headerContainer.find('table'), `<thead>${headerRow}</thead>`, '*');
+      self.headerRow = self.headerContainer.find('thead');
       self.element.prepend(self.headerContainer);
     } else {
       self.headerTable.width(this.headerTableWidth());
-      self.headerRow.html(headerRow);
+      DOM.html(self.headerRow, headerRow, '*');
       self.headerColGroup.html(cols);
     }
 
@@ -2462,7 +2464,7 @@ Datagrid.prototype = {
       self.tableBody.before(self.bodyColGroup);
     }
 
-    self.tableBody.html(tableHtml);
+    DOM.html(self.tableBody, tableHtml, '*');
     self.setVirtualHeight();
     self.setScrollClass();
     self.setupTooltips(forcedTooltip);
@@ -4296,11 +4298,11 @@ Datagrid.prototype = {
     }
 
     if (self.toolbar) {
-      self.toolbar.find('.datagrid-result-count').html(countText);
-      self.toolbar.attr('aria-label', self.toolbar.find('.title').text());
+      DOM.html(self.toolbar.find('.datagrid-result-count'), countText, '<span>');
+      self.toolbar[0].setAttribute('aria-label', self.toolbar.find('.title').text());
       self.toolbar.find('.datagrid-row-count').text(count);
     }
-    self.element.closest('.modal').find('.datagrid-result-count').html(countText);
+    DOM.html(self.element.closest('.modal').find('.datagrid-result-count'), countText, '<span>');
     this.lastCount = count;
 
     this.checkEmptyMessage();

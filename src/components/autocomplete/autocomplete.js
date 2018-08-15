@@ -296,7 +296,6 @@ Autocomplete.prototype = {
     filterResult.forEach((dataset) => {
       if (typeof Tmpl !== 'undefined') {
         const renderedTmpl = Tmpl.compile(self.tmpl, dataset);
-        // self.list.append(xssUtils.sanitizeHTML(renderedTmpl));
         DOM.append(self.list, renderedTmpl, '*');
       }
     });

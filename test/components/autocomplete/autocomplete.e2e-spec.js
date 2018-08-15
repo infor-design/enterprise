@@ -87,11 +87,7 @@ describe('Autocomplete example-index tests', () => {
     });
   }
 
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  xit('Should clear a dirty autocomplete field with `alt + backspace/del`', async () => {
+  xit('Should clear a dirty autocomplete field with `alt + backspace/del`', async () => { //eslint-disable-line
     await clickOnAutocomplete();
     const autocompleteEl = await element(by.css('#autocomplete-default'));
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitsFor);

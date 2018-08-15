@@ -33,7 +33,7 @@
         request = $.get('{{basepath}}api/nav-items');
 
         function setContent(htmlString) {
-          ui.pane.append(htmlString);
+          Soho.DOM.append(ui.pane, htmlString, '<div><span><a>')
           callback();
         }
 

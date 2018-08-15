@@ -146,7 +146,8 @@ xssUtils.isUrlLocal = function (url) {
   const isEmpty = (url === '');
   return !isEmpty &&
     ((url[0] === '/' && (url.length === 1 || (url[1] !== '/' && url[1] !== '\\'))) || // "/" or "/foo" but not "//" or "/\"
-    (url.length > 1 && url[0] === '~' && url[1] === '/')); // "~/" or "~/foo"
+    (url.length > 1 && url[0] === '~' && url[1] === '/')) || // "~/" or "~/foo"
+    (url.length >= 1 && url[0] === '#'); // "#" or "#foo"
 };
 
 export { xssUtils };

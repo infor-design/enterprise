@@ -118,6 +118,24 @@ DOM.append = function append(el, contents, stripTags) {
 };
 
 /**
+ * Set an attribute with an extra check that the object exists.
+ * @param {HTMLElement|SVGElement|jQuery[]} el The element to set the attribute on
+ * @param {string} attribute The attribute name.
+ * @param {string} value The attribute value.
+ */
+DOM.setAttribute = function append(el, attribute, value) {
+  let domEl = el;
+
+  if (el instanceof $ && el.length) {
+    domEl = domEl[0];
+  }
+
+  if (domEl instanceof HTMLElement || domEl instanceof SVGElement) {
+    domEl.setAttribute('attribute', value);
+  }
+};
+
+/**
  * Clean the markup before insertion.
  * @param {string|jQuery} contents The html string or jQuery object.
  * @param {string} stripTags A list of tags to strip to prevent xss, or * for sanitizing and allowing all tags.
@@ -126,7 +144,7 @@ DOM.append = function append(el, contents, stripTags) {
 DOM.xssClean = function xssClean(contents, stripTags) {
   let markup = contents;
 
-  if (stripTags && stripTags === '*') {
+  if (stripTags && stripTags !== '*') {
     markup = xssUtils.stripTags(contents, stripTags);
   }
 

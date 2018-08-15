@@ -35,6 +35,16 @@
 
 [Escaping Info](http://jehiah.cz/a/guide-to-escape-sequences)
 
-## Context Escaping
+## Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
 
-[Escaping Info](http://jehiah.cz/a/guide-to-escape-sequences)
+Something like `elem.html(markup);` will trigger this warning. To address we should use whitelisting for example:
+
+```javascript
+DOM.html(elem, markup, '<span><div>');'
+```
+
+If this cannot be limited to a few types then sanitizing can be used.
+
+```javascript
+DOM.html(elem, markup, '*');'
+```

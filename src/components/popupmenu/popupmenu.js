@@ -1475,7 +1475,6 @@ PopupMenu.prototype = {
       }
     }
 
-
     const response = function (content) {
       const existingMenuItems = targetMenu.children();
 

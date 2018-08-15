@@ -140,4 +140,26 @@ describe('Xss Utils', () => {
     expect(result).toEqual('test-module-1');
     expect(xssUtils.ensureAlphaNumeric(6)).toEqual(6);
   });
+
+  it('Should ensure local urls', () => {
+    expect(xssUtils.isUrlLocal('http://test.com')).toEqual(false);
+
+    // "/" or "/foo" but not "//" or "/\"
+    expect(xssUtils.isUrlLocal('/')).toEqual(true);
+    expect(xssUtils.isUrlLocal('/test.html')).toEqual(true);
+    expect(xssUtils.isUrlLocal('/test')).toEqual(true);
+    expect(xssUtils.isUrlLocal('/test/test.html')).toEqual(true);
+    expect(xssUtils.isUrlLocal('//')).toEqual(false);
+    expect(xssUtils.isUrlLocal('//test')).toEqual(false);
+    expect(xssUtils.isUrlLocal('/\test/test.html')).toEqual(true);
+
+    // "~/" or "~/foo"
+    expect(xssUtils.isUrlLocal('~/')).toEqual(true);
+    expect(xssUtils.isUrlLocal('~/test.html')).toEqual(true);
+    expect(xssUtils.isUrlLocal('~//test/test.html')).toEqual(true);
+
+    // "#" or "#foo"
+    expect(xssUtils.isUrlLocal('#')).toEqual(true);
+    expect(xssUtils.isUrlLocal('#test')).toEqual(true);
+  });
 });

@@ -15,7 +15,10 @@
     //Change locale to one that supports umalqura calendar (Hijri)
     Locale.set('ar-SA').done(function () {
       $('#islamic-date').datepicker().on('change', function () {
-        console.log($(this).val());
+        $('body').toast({
+          'title': 'Change Event Fired',
+          'message': 'Value changed to <span class="text-strong">' + $(this).val() + '</span> '
+        });
       });
     });
   });
