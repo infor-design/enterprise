@@ -222,9 +222,9 @@ Hierarchy.prototype = {
         isForwardEvent: hierarchy.isForwardEvent(eventType),
         isBackEvent: hierarchy.isBackEvent(eventType),
         isAddEvent: hierarchy.isAddEvent(eventType),
-        isExpandEvent: hierarchy.isExpandEvent(),
-        isCollapseEvent: hierarchy.isCollapseEvent(),
-        isSelectedEvent: hierarchy.isSelectedEvent(),
+        isExpandEvent: hierarchy.isExpandEvent(eventType),
+        isCollapseEvent: hierarchy.isCollapseEvent(eventType),
+        isSelectedEvent: hierarchy.isSelectedEvent(eventType),
         isActionsEvent: hierarchy.isActionsEvent(eventType),
         isActionEvent: hierarchy.isActionEvent(eventType),
         allowLazyLoad: hierarchy.allowLazyLoad(nodeData, eventType)
@@ -232,6 +232,33 @@ Hierarchy.prototype = {
 
       leaf.trigger('selected', eventInfo);
     });
+  },
+
+  /**
+   * Manually set selection on a leaf
+   * @public
+   * @param {string} nodeId id used to find leaf
+   */
+  selectLeaf(nodeId) {
+    const leaf = $(`#${nodeId}`);
+    $('.is-selected').removeClass('is-selected');
+    leaf.addClass('is-selected');
+
+    const eventInfo = {
+      data: leaf.data(),
+      actionReference: null,
+      isForwardEvent: false,
+      isBackEvent: false,
+      isAddEvent: false,
+      isExpandEvent: false,
+      isCollapseEvent: false,
+      isSelectedEvent: true,
+      isActionsEvent: false,
+      isActionEvent: false,
+      allowLazyLoad: false
+    };
+
+    leaf.trigger('selected', eventInfo);
   },
 
   /**
@@ -346,13 +373,13 @@ Hierarchy.prototype = {
   },
 
   /**
-   * Check if event is select
+   * Check if event is selected
    * @private
-   * @param {string} eventType is select
-   * @returns {boolean} true if select event
+   * @param {string} eventType is selected
+   * @returns {boolean} true if selected event
    */
   isSelectedEvent(eventType) {
-    return eventType === 'select';
+    return eventType === 'selected';
   },
 
   /**
@@ -506,7 +533,7 @@ Hierarchy.prototype = {
   /**
    * Closes popupmenu
    * @private
-   * @param node leaf containing btn-actions
+   * @param {object} node leaf containing btn-actions
    */
   closePopupMenu(node) {
     const actionButton = node.find('.btn-actions');
