@@ -1,3 +1,4 @@
+{{> includes/svg-inline-refs}}
 <header class="header is-personalizable top-header">
   <div class="toolbar">
     <div class="title">
@@ -36,7 +37,7 @@
           <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-empty-circle"></use>
           </svg>
-          <span class="tree-text">Resume / CV - steo2</span>
+          <span class="tree-text">Resume / CV - step2</span>
         </a>
       </li>
       <li class="js-step">
@@ -289,8 +290,8 @@
 
       var stepId;
 
-      if (hashLoc !== '#') {
-        stepId = $(args.stepLink).attr('href').substring(1);
+      if (hashLoc && hashLoc !== '#') {
+        stepId = hashLoc.substring(1);
       } else {
         stepId = $(args.stepLink).attr('id');
       }
@@ -337,8 +338,8 @@
 
           var panel = $(".step-container");
 
-          $('<div id="information-2" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep2</p></div>"').insertAfter(panel);
-          $('<div id="information-1" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep1</p></div>"').insertAfter(panel);
+          $('<div id="information-2" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep2</p></div>"').appendTo(panel);
+          $('<div id="information-1" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep1</p></div>"').appendTo(panel);
         }
         else
         {
