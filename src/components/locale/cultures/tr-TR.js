@@ -26,7 +26,7 @@ Soho.Locale.addCulture('tr-TR', {
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
       wide: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
-      abbreviated: ['Pa', 'Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct'],
+      abbreviated: ['Par', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'],
       narrow: ['P', 'P', 'S', 'Ç', 'P', 'C', 'C']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide

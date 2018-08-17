@@ -255,7 +255,7 @@ describe('DatePicker API', () => {
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
-      datepickerAPI.calendarApi.showMonth('6', '2018');
+      datepickerAPI.calendarAPI.showMonth('6', '2018');
 
       expect(document.body.querySelectorAll('.monthview-header span')[0].textContent).toEqual('July ');
       expect(document.body.querySelectorAll('.monthview-header span')[1].textContent).toEqual(' 2018');

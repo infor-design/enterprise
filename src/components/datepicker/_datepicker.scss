@@ -28,6 +28,10 @@
     width: $field-full;
   }
 
+  &.input-auto {
+    width: auto;
+  }
+
   &.datetime {
     padding-right: 30px;
     width: auto;

@@ -499,6 +499,12 @@ const Locale = {  // eslint-disable-line
       dateString = dateString.replace(/[\s:.]/g, '/');
     }
 
+    // Extra Check incase month has spaces
+    if (dateFormat.indexOf('MMMM') > -1 && Locale.isRTL() && dateFormat) {
+      const lastIdx = dateString.lastIndexOf('/');
+      dateString = dateString.substr(0, lastIdx - 1).replace('/', ' ') + dateString.substr(lastIdx);
+    }
+
     if (dateFormat.indexOf(' ') === -1 && dateFormat.indexOf('.') === -1 && dateFormat.indexOf('/') === -1 && dateFormat.indexOf('-') === -1) {
       // Remove delimeter for the data string.
       if (dateString.indexOf(' ') !== -1) {
@@ -1288,7 +1294,7 @@ const Locale = {  // eslint-disable-line
     $('svg').each(function () {
       const iconName = $(this).getIconName();
 
-      if (iconName && $.inArray(iconName, icons) !== -1) {
+      if (iconName && $.inArray(iconName, icons) !== -1 && $(this).closest('.monthview').length === 0) {
         $(this).addClass('icon-rtl-rotate');
       }
     });

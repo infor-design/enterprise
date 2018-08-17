@@ -15,7 +15,7 @@ describe('Datepicker example-index tests', () => {
     await element(by.css('#date-field-normal + .icon')).click();
 
     expect(await datepickerEl.getAttribute('class')).toContain('is-open');
-    expect(await element(by.id('calendar-popup')).isDisplayed()).toBe(true);
+    expect(await element(by.id('monthview-popup')).isDisplayed()).toBe(true);
   });
 
   it('Should open popup on keypress(arrow-down)', async () => {
@@ -23,13 +23,13 @@ describe('Datepicker example-index tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     expect(await datepickerEl.getAttribute('class')).toContain('is-open');
-    expect(await element(by.id('calendar-popup')).isDisplayed()).toBe(true);
+    expect(await element(by.id('monthview-popup')).isDisplayed()).toBe(true);
   });
 
   it('Should set todays date from popup to field', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await element(by.css('#date-field-normal + .icon')).click();
-    await element(by.css('#calendar-popup button.is-today')).click();
+    await element(by.css('#monthview-popup button.is-today')).click();
 
     const testDate = new Date();
 
@@ -50,17 +50,17 @@ describe('Datepicker example-index tests', () => {
 
   it('Should be able to select with arrows and enter', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
-    let focusTD = await element(by.css('#calendar-popup td.is-selected'));
+    let focusTD = await element(by.css('#monthview-popup td.is-selected'));
 
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await focusTD.sendKeys(protractor.Key.ARROW_DOWN);
-    focusTD = await element(by.css('#calendar-popup td.is-selected'));
+    focusTD = await element(by.css('#monthview-popup td.is-selected'));
     await focusTD.sendKeys(protractor.Key.ARROW_UP);
-    focusTD = await element(by.css('#calendar-popup td.is-selected'));
+    focusTD = await element(by.css('#monthview-popup td.is-selected'));
     await focusTD.sendKeys(protractor.Key.ARROW_LEFT);
-    focusTD = await element(by.css('#calendar-popup td.is-selected'));
+    focusTD = await element(by.css('#monthview-popup td.is-selected'));
     await focusTD.sendKeys(protractor.Key.ARROW_RIGHT);
-    focusTD = await element(by.css('#calendar-popup td.is-selected'));
+    focusTD = await element(by.css('#monthview-popup td.is-selected'));
     await focusTD.sendKeys(protractor.Key.ENTER);
 
     const testDate = new Date();
@@ -80,7 +80,7 @@ describe('Datepicker Anniversay tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#calendar-popup .is-selected')).click();
+    await element(by.css('#monthview-popup .is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }));
   });
@@ -91,7 +91,7 @@ describe('Datepicker Anniversay tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#calendar-popup .is-selected')).click();
+    await element(by.css('#monthview-popup .is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }));
   });
@@ -102,7 +102,7 @@ describe('Datepicker Anniversay tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#calendar-popup .is-selected')).click();
+    await element(by.css('#monthview-popup .is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.getFullYear().toString());
   });
@@ -113,7 +113,7 @@ describe('Datepicker Anniversay tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#calendar-popup .is-selected')).click();
+    await element(by.css('#monthview-popup .is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
@@ -124,7 +124,7 @@ describe('Datepicker Anniversay tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#calendar-popup .is-selected')).click();
+    await element(by.css('#monthview-popup .is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getMonth() + 1}/${testDate.getDate()}/${testDate.getFullYear()}`);
   });
@@ -141,7 +141,7 @@ describe('Datepicker custom format tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#calendar-popup .is-selected')).click();
+    await element(by.css('#monthview-popup .is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate.getMonth() + 1)}/${testDate.getDate().toString()}/${testDate.getFullYear()}`);
   });
@@ -152,7 +152,7 @@ describe('Datepicker custom format tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#calendar-popup .is-selected')).click();
+    await element(by.css('#monthview-popup .is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getFullYear()}-${testDate.getDate().toString().padStart(2, '0')}-${(testDate.getMonth() + 1).toString().padStart(2, '0')}`);
   });
@@ -163,7 +163,7 @@ describe('Datepicker custom format tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#calendar-popup .is-selected')).click();
+    await element(by.css('#monthview-popup .is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('en-US', { month: 'short' })} ${testDate.getFullYear()}`);
   });
@@ -174,7 +174,7 @@ describe('Datepicker custom format tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#calendar-popup .is-selected')).click();
+    await element(by.css('#monthview-popup .is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate().toString().padStart(2, '0')}/${(testDate.getMonth() + 1).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
   });
@@ -188,13 +188,13 @@ describe('Datepicker disabled date tests', () => {
   it('Should support custom validation', async () => {
     await element(by.css('#date-field + .icon')).click();
 
-    expect(await element.all(by.css('.calendar-table td.is-disabled')).count()).toEqual(12);
-    expect(await element.all(by.css('.calendar-table td:not(.is-disabled)')).count()).toEqual(30);
+    expect(await element.all(by.css('.monthview-table td.is-disabled')).count()).toEqual(12);
+    expect(await element.all(by.css('.monthview-table td:not(.is-disabled)')).count()).toEqual(30);
 
     await element(by.css('.btn-icon.next')).click();
 
-    expect(await element.all(by.css('.calendar-table td.is-disabled')).count()).toEqual(14);
-    expect(await element.all(by.css('.calendar-table td:not(.is-disabled)')).count()).toEqual(28);
+    expect(await element.all(by.css('.monthview-table td.is-disabled')).count()).toEqual(14);
+    expect(await element.all(by.css('.monthview-table td:not(.is-disabled)')).count()).toEqual(28);
   });
 });
 
@@ -211,7 +211,7 @@ describe('Datepicker Modal Test', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     await browser.driver.sleep(config.sleep);
-    const focusTD = await element(by.css('#calendar-popup td.is-selected'));
+    const focusTD = await element(by.css('#monthview-popup td.is-selected'));
     await focusTD.sendKeys(protractor.Key.ESCAPE);
 
     await browser.driver.sleep(config.sleep);
@@ -298,7 +298,7 @@ describe('Datepicker Month Year Changer Tests', () => {
     await lastButtonEl.sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
-    const buttonEl = await element.all(by.css('.calendar-table td:not(.alternate)')).first();
+    const buttonEl = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
     await buttonEl.click();
     await browser.driver.sleep(config.sleep);
 
@@ -319,10 +319,10 @@ describe('Datepicker Range Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     await browser.driver.sleep(config.sleep);
-    const button1El = await element.all(by.css('.calendar-table td:not(.alternate)')).first();
+    const button1El = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
     await button1El.click();
 
-    const button2El = await element.all(by.css('.calendar-table td:not(.alternate)')).last();
+    const button2El = await element.all(by.css('.monthview-table td:not(.alternate)')).last();
     await button2El.click();
 
     const testDate1 = new Date();
@@ -356,7 +356,7 @@ describe('Datepicker Timeformat Tests', () => {
     const datepickerEl = await element(by.id('dp1'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('calendar-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('monthview-popup'))), config.waitsFor);
 
     const todayEl = await element(by.css('button.is-today'));
     await todayEl.click();
@@ -384,7 +384,7 @@ describe('Datepicker Umalqura Tests', () => {
     await utils.setPage('/components/datepicker/example-umalqura');
   });
 
-  it('Should render Umalqura calendar', async () => {
+  it('Should render Umalqura monthview', async () => {
     const datepickerEl = await element(by.id('islamic-date'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
@@ -514,7 +514,7 @@ describe('Datepicker Month Format Tests', () => {
 
 describe('Datepicker Custom Validation Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/test-validation');
+    await utils.setPage('/components/datepicker/example-custom-validation');
   });
 
   it('Should be Able to do custom validation', async () => {

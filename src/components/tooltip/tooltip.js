@@ -236,7 +236,9 @@ Tooltip.prototype = {
     }
 
     if (this.settings.trigger === 'immediate') {
-      toggleTooltipDisplay();
+      timer = setTimeout(() => {
+        toggleTooltipDisplay();
+      }, 1);
     }
 
     const isFocusable = this.settings.trigger === 'focus';

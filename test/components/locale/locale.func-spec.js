@@ -830,4 +830,12 @@ describe('Locale API', () => {
     // Date without spaces, dashes and comma
     expect(Locale.parseDate('20141211', 'yyyyMMdd').getTime()).toEqual(new Date(2014, 11, 11, 0, 0, 0).getTime());
   });
+
+  it('Should parse arabic dates in year pattern', () => {
+    Locale.set('ar-SA');
+
+    // Date with spaces, dashes and comma
+    expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy').getTime()).toEqual(new Date(1439, 11, 1, 0, 0, 0).getTime());
+    Locale.set('en-US');
+  });
 });

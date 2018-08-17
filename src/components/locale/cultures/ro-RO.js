@@ -26,7 +26,7 @@ Soho.Locale.addCulture('ro-RO', {
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
       wide: ['duminică', 'luni', 'marți', 'miercuri', 'joi', 'vineri', 'sâmbătă'],
-      abbreviated: ['Du', 'Lu', 'Ma', 'Mi', 'Jo', 'Vi', 'Sâ'],
+      abbreviated: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm'],
       narrow: ['D', 'L', 'M', 'M', 'J', 'V', 'S']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide

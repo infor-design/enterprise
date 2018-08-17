@@ -43,9 +43,9 @@ describe('DatePicker Aria', () => {
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
-      expect(document.querySelector('#calendar-popup .calendar-table').getAttribute('aria-label')).toEqual('Calendar');
-      expect(document.querySelector('#calendar-popup tbody td.is-selected').getAttribute('aria-label')).toEqual('Tuesday, November 6, 2018');
-      expect(document.querySelector('#calendar-popup tbody td span:not(.alternate)').getAttribute('aria-hidden')).toEqual('true');
+      expect(document.querySelector('#monthview-popup .monthview-table').getAttribute('aria-label')).toEqual('Calendar');
+      expect(document.querySelector('#monthview-popup tbody td.is-selected').getAttribute('aria-label')).toEqual('Tuesday, November 6, 2018');
+      expect(document.querySelector('#monthview-popup tbody td span:not(.alternate) .day-text').getAttribute('aria-hidden')).toEqual('true');
       done();
     }, 100);
   });

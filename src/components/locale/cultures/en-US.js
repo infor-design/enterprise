@@ -27,7 +27,7 @@ Soho.Locale.addCulture('en-US', {
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
       wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      abbreviated: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      abbreviated: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       narrow: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide
@@ -298,6 +298,7 @@ Soho.Locale.addCulture('en-US', {
     SearchFolder: { id: 'SearchFolder', value: 'Search in Folder', comment: 'Search Folder tooltip' },
     SearchList: { id: 'SearchList', value: 'Search List', comment: 'Search List tooltip' },
     Select: { id: 'Select', value: 'Select', comment: 'text describing a select action' },
+    SelectDay: { id: 'SelectDay', value: 'Select a Day', comment: 'Select a day in the calendar picker' },
     Selected: { id: 'Selected', value: 'Selected', comment: 'text describing a selected object' },
     SelectAll: { id: 'SelectAll', value: 'Select All', comment: 'describes the action of selecting all items available in a list' },
     Send: { id: 'Send', value: 'Send', comment: 'Send tooltip' },

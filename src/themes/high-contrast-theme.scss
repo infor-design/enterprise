@@ -733,6 +733,15 @@ $blockgrid-focus-border-color: $primary-color;
 $treemap-title-bg-color: $graphite08;
 $treemap-title-color: $white;
 
+// Calendar
+$calendar-bg-color: $panel-bg-color;
+$calendar-line-color: $graphite09;
+$calendar-selected-border-color: $primary-color;
+$calendar-selected-bg-color: $graphite02;
+$calendar-hover-bg-color: $graphite01;
+$calendar-disabled-bg-color: $graphite02;
+$calendar-disabled-color: $graphite10;
+
 //================================================== //
 // Special Control Overrides
 @import '../core/controls';

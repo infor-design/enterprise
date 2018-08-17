@@ -91,4 +91,19 @@ stringUtils.toBoolean = function capitalize(val) {
   return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
 };
 
+/**
+ * Return the width in pixels, assuming fontsize 14 as a default
+ * @param  {string} text A text string to measure.
+ * @param  {string} fontsize The elements font size (defaults to 14)
+ * @returns {number} The text width.
+ */
+stringUtils.textWidth = function capitalize(text, fontsize = 14) {
+  this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+  const context = this.canvas.getContext('2d');
+  context.font = `${fontsize}px arial`;
+
+  const metrics = context.measureText(text);
+  return Math.round(metrics.width);
+};
+
 export { stringUtils }; //eslint-disable-line

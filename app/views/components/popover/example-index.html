@@ -56,7 +56,14 @@
       y: 10
     },
     title: 'ABC Engine Company',
-    trigger: 'click'
+    trigger: 'click',
+    beforeShow: function () {
+      alert();
+      $('.btn-modal-primary').on('click', function () {
+        $('#tooltip').hide();
+      });
+      return true;
+    }
   };
 
   $('#popover-trigger').popover(POPOVER_OPTIONS);

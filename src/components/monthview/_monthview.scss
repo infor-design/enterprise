@@ -59,7 +59,7 @@
     height: 40px;
     width: 39px;
 
-    span {
+    .day-text {
       @include rem(font-size, 1.4rem);
       border-radius: 50%;
       color: $datepicker-day-color;
@@ -81,7 +81,7 @@
     &.range-next.include-disabled,
     &.range-prev,
     &.range-next {
-      span {
+      .day-text {
         background-color: $datepicker-hover-bg-color;
         position: relative;
         transition: none;
@@ -110,7 +110,7 @@
 
     &.range-prev.include-disabled,
     &.range-prev {
-      span {
+      .day-text {
         border-radius: 50% 0 0 50%;
 
         &::before {
@@ -123,7 +123,7 @@
       &.is-selected {
         z-index: 0;
 
-        span {
+        .day-text {
           border-radius: 50%;
 
           &::before {
@@ -134,7 +134,7 @@
       }
 
       &:last-of-type {
-        span {
+        .day-text {
           border-radius: 50%;
 
           &::before {
@@ -146,7 +146,7 @@
 
     &.range-next.include-disabled,
     &.range-next {
-      span {
+      .day-text {
         border-radius: 0 50% 50% 0;
 
         &::before {
@@ -159,7 +159,7 @@
       &.is-selected {
         z-index: 0;
 
-        span {
+        .day-text {
           border-radius: 50%;
 
           &::before {
@@ -170,7 +170,7 @@
       }
 
       &:first-of-type {
-        span {
+        .day-text {
           border-radius: 50%;
 
           &::before {
@@ -182,7 +182,7 @@
 
     &.range-selection.include-disabled,
     &.range-selection {
-      span {
+      .day-text {
         background-color: $datepicker-selected-bg-color;
         border-radius: 50% 0 0 50%;
         color: $datepicker-selected-color;
@@ -203,14 +203,14 @@
       }
 
       &:hover {
-        span {
+        .day-text {
           background-color: $datepicker-selected-bg-color;
           color: $datepicker-selected-color;
         }
       }
 
       &.is-today {
-        span {
+        .day-text {
           background-color: $datepicker-selected-bg-color;
           color: $datepicker-selected-color;
         }
@@ -225,7 +225,7 @@
       + .range-selection.is-selected,
       &.end-date,
       &:last-of-type {
-        span {
+        .day-text {
           border-radius: 50%;
 
           &::before {
@@ -237,7 +237,7 @@
 
     //Other month color
     &.alternate {
-      span {
+      .day-text {
         color: $datepicker-alternate-month-color;
       }
     }
@@ -245,24 +245,24 @@
     //Today
     &.is-today,
     &.is-today:focus {
-      span {
+      .day-text {
         color: $datepicker-today-color;
         font-weight: bold;
       }
 
       &.is-selected,
-      &.is-selected span {
+      &.is-selected .day-text {
         color: $datepicker-selected-color;
       }
     }
 
     //Selected
-    &:hover span {
+    &:hover .day-text {
       background-color: $datepicker-hover-bg-color;
     }
 
     //Color Coded
-    &.is-colored.is-selected span {
+    &.is-colored.is-selected .day-text {
       height: 34px;
       line-height: 34px;
       margin: 2px;
@@ -273,7 +273,7 @@
     &.is-disabled:active {
       @include unselectable;
 
-      span {
+      .day-text {
         background-color: $datepicker-disabled-bg-color;
         border-radius: 50%;
         color: $datepicker-disabled-color;
@@ -291,7 +291,7 @@
     &.is-selected:hover {
       // color: $datepicker-selected-color;
 
-      span {
+      .day-text {
         background-color: $datepicker-selected-bg-color;
         color: $datepicker-selected-color;
       }
@@ -304,7 +304,7 @@
       -moz-outline-style: none;
     }
 
-    &:active span {
+    &:active .day-text {
       background-color: $datepicker-selected-bg-color;
       color: $datepicker-selected-color;
     }
@@ -339,6 +339,151 @@
       vertical-align: top;
     }
   }
+
+  // Full size calendar
+  &.is-fullsize {
+    .monthview-header {
+      border-bottom: 1px solid $calendar-line-color;
+
+      &.full {
+        .prev {
+          left: 5px;
+          right: initial;
+        }
+
+        .next {
+          left: 36px;
+          right: initial;
+        }
+
+        .datepicker {
+          @include font-size(16);
+          border-color: transparent;
+          box-shadow: none;
+
+          + .icon {
+            height: 14px;
+            margin-left: -22px;
+            top: 9px;
+          }
+
+          &:focus {
+            @include focus-state();
+          }
+
+          &[readonly] {
+            background-color: transparent;
+            color: $input-color;
+            -webkit-text-fill-color: $input-color;
+
+            + .icon {
+              cursor: pointer;
+            }
+          }
+        }
+
+        .monthview-datepicker {
+          margin-left: 45px;
+        }
+
+        .today {
+          @include font-size(12);
+          font-weight: bold;
+          margin-left: 5px;
+          text-decoration: none;
+        }
+      }
+    }
+
+    &.monthview {
+      border: 1px solid  $calendar-line-color;
+      overflow: hidden;
+
+      td {
+        border: 1px solid  $calendar-line-color;
+        border-radius: 0;
+        height: 100px;
+        //min-width: 90px;
+        width: 14.3%;
+
+        &:first-child {
+          border-left: 0;
+        }
+
+        .day-container {
+          display: block;
+          height: 100%;
+          width: 100%;
+        }
+
+        .day-text {
+          border-radius: inherit;
+          left: calc(100% - 25px);
+          position: relative;
+          top: 0;
+          width: 10px;
+        }
+
+        &.is-disabled {
+          background-color: $calendar-disabled-bg-color;
+          opacity: .5;
+
+          .day-text {
+            background-color: transparent;
+            color: $calendar-disabled-color;
+          }
+        }
+
+        &:hover {
+          background-color: $calendar-hover-bg-color;
+          color: $datepicker-day-color;
+
+          .day-text {
+            background-color: transparent;
+            color: $datepicker-day-color;
+          }
+        }
+
+        &:active {
+          background-color: $calendar-hover-bg-color;
+          color: $datepicker-day-color;
+
+          .day-text {
+            background-color: transparent;
+            color: $datepicker-day-color;
+          }
+        }
+
+        &.is-selected {
+          background-color: $calendar-selected-bg-color;
+          box-shadow: inset 0 4px 0 0 $calendar-selected-border-color;
+
+          .day-text {
+            background-color: inherit;
+            color: $datepicker-day-color;
+          }
+        }
+      }
+
+      thead th {
+        padding-bottom: 5px;
+        text-transform: initial;
+      }
+    }
+
+    .monthview-table {
+      border-collapse: collapse;
+      margin: 7px auto 0;
+    }
+  }
+
+  //Hide the buttons on the top
+  &.hide-buttons {
+    .prev,
+    .next {
+      display: none;
+    }
+  }
 }
 
 // Header Area of monthview
@@ -351,7 +496,7 @@
   text-indent: 18px;
 
   button {
-    background-color: $popover-bg-color;
+    background-color: transparent;
     border: 1px solid transparent;
     border-radius: 50%;
     color: transparent;
@@ -392,10 +537,12 @@
     width: 120px;
   }
 
+  // scss-lint:disable IdSelector
   #year-dropdown + .dropdown-wrapper {
     left: 10px;
     width: 80px;
   }
+  // scss-lint:enable IdSelector
 }
 
 //monthview legend
@@ -436,10 +583,12 @@ html[dir='rtl'] {
       padding-right: 15px;
     }
 
+    // scss-lint:disable IdSelector
     #year-dropdown + .dropdown-wrapper {
       left: 0;
       right: 5px;
     }
+    // scss-lint:enable IdSelector
 
     button {
       left: 0;
@@ -456,7 +605,7 @@ html[dir='rtl'] {
 
       &.next {
         left: 30px;
-        margin: 3px 5px 0 0;
+        margin: 3px 5px 0 7px;
         right: auto;
 
         svg {
@@ -473,7 +622,7 @@ html[dir='rtl'] {
     td {
       &.range-prev.include-disabled,
       &.range-prev {
-        span {
+        .day-text {
           border-radius: 0 50% 50% 0;
 
           &::before {
@@ -483,7 +632,7 @@ html[dir='rtl'] {
         }
 
         &.is-selected {
-          span {
+          .day-text {
             border-radius: 50%;
 
             &::before {
@@ -494,7 +643,7 @@ html[dir='rtl'] {
         }
 
         &:last-of-type {
-          span {
+          .day-text {
             border-radius: 50%;
 
             &::before {
@@ -506,7 +655,7 @@ html[dir='rtl'] {
 
       &.range-next.include-disabled,
       &.range-next {
-        span {
+        .day-text {
           border-radius: 50% 0 0 50%;
 
           &::before {
@@ -516,7 +665,7 @@ html[dir='rtl'] {
         }
 
         &.is-selected {
-          span {
+          .day-text {
             border-radius: 50%;
 
             &::before {
@@ -527,7 +676,7 @@ html[dir='rtl'] {
         }
 
         &:first-of-type {
-          span {
+          .day-text {
             border-radius: 50%;
 
             &::before {
@@ -539,7 +688,7 @@ html[dir='rtl'] {
 
       &.range-selection.include-disabled,
       &.range-selection {
-        span {
+        .day-text {
           border-radius: 0 50% 50% 0;
 
           &::before {
@@ -551,7 +700,7 @@ html[dir='rtl'] {
         + .range-selection.is-selected,
         &.end-date,
         &:last-of-type {
-          span {
+          .day-text {
             border-radius: 50%;
 
             &::before {
@@ -559,6 +708,13 @@ html[dir='rtl'] {
             }
           }
         }
+      }
+    }
+
+    &.is-fullsize {
+      td .day-text {
+        left: initial;
+        right: calc(100% - 25px);
       }
     }
   }
@@ -578,11 +734,35 @@ html[dir='rtl'] {
       }
     }
   }
+
+  // Adjust the full header
+  .is-fullsize {
+    .monthview-header.full {
+
+      .prev {
+        left: initial;
+        right: 40px;
+      }
+
+      .next {
+        left: initial;
+        right: 5px;
+      }
+
+      .monthview-datepicker {
+        margin-left: 0;
+        margin-right: 45px;
+      }
+
+      .today {
+        margin-left: 0;
+        margin-right: 5px;
+      }
+    }
+  }
 }
 
 // IE Hack
-.ie9,
-.ie10,
 .ie11 {
 
   .monthview-header {

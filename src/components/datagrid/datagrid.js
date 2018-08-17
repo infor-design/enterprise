@@ -4841,7 +4841,7 @@ Datagrid.prototype = {
         setTimeout(() => {
           const focusElem = $('*:focus');
 
-          if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup, #colorpicker-menu').length &&
+          if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
               self.editor) {
             if (focusElem.is('.spinbox')) {
               return;
