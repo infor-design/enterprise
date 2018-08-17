@@ -84,6 +84,10 @@
       @include unselectable;
       cursor: default;
 
+      .tree-badge {
+        background-color: $tree-disabled-color;
+      }
+
       .tree-text {
         color: $tree-disabled-color;
       }

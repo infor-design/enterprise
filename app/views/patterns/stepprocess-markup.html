@@ -29,7 +29,7 @@
           <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-empty-circle"></use>
           </svg>
-          <span class='tree-text'>Profile and Consent - step 1</span>
+          <span class="tree-text">Profile and Consent - step 1</span>
         </a>
       </li>
       <li class="js-step">
@@ -37,7 +37,7 @@
           <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-empty-circle"></use>
           </svg>
-          <span class="tree-text">Resume / CV - steo2</span>
+          <span class="tree-text">Resume / CV - step2</span>
         </a>
       </li>
       <li class="js-step">
@@ -286,15 +286,12 @@
 
       // We do this because folders don't have an associated content panel
       // as they are just links to open the subfolders.
-      var escapedLink = $(Soho.xss.escapeHTML(args.stepLink));
-      var hashLoc = escapedLink.attr('href');
-
+      var hashLoc = $(args.stepLink).attr('href');
       var stepId;
-
-      if (hashLoc !== '#') {
-        stepId = escapedLink.attr('href').substring(1);
+      if (hashLoc && hashLoc !== '#') {
+        stepId = hashLoc.substring(1);
       } else {
-        stepId = escapedLink.attr('id');
+        stepId = $(args.stepLink).attr('id');
       }
 
       var deferred = $.Deferred();
@@ -339,17 +336,13 @@
 
           var panel = $(".step-container");
 
-          $('<div id="information-2" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep2</p></div>"').insertAfter(panel);
-          $('<div id="information-1" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep1</p></div>"').insertAfter(panel);
+          $('<div id="information-2" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep2</p></div>"').appendTo(panel);
+          $('<div id="information-1" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep1</p></div>"').appendTo(panel);
         }
         else
         {
           deferred.resolve(true);
           $(args.stepElem).attr("visited", "true");
-
-          // **** Need to be able to change icon here *****
-          //    $(e).attr("data-alert-icon", "confirm");
-
         }
 
         if (stepLinkToSelect)
