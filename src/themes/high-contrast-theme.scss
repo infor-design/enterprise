@@ -215,8 +215,8 @@ $listview-toolbar-button-icon-selected-color: $primary-color;
 
 $listview-search-disabled-color: $black;
 $listview-search-disabled-opacity: 0.8;
-$listview-search-disabled-border-color: $slate06;
-$listview-search-disabled-icon-color: $slate06;
+$listview-search-disabled-border-color: $graphite06;
+$listview-search-disabled-icon-color: $graphite06;
 
 // Listbuilder
 $listbuilder-bg-color: $input-bg-color;
@@ -757,4 +757,16 @@ $treemap-title-color: $white;
 // Override contrast text on high contrast
 .datagrid-cell-wrapper .chart-targeted-text {
   color: $white;
+}
+
+// Override disabled border color when in hover state
+.listview-search {
+  .searchfield {
+    &[disabled] {
+      &:hover {
+        border-bottom: 1px solid $graphite06 !important;
+        border-color: transparent;
+      }
+    }
+  }
 }
