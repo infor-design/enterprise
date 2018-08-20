@@ -16,7 +16,7 @@ const clickTabTest = async (index) => {
   expect(await element.all(by.className('tab')).get(index).getAttribute('class')).toContain('is-selected');
 };
 
-fdescribe('Tabs click example-index tests', () => {
+describe('Tabs click example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/example-index');
     const tabsEl = await element(by.id('tabs-normal'));
@@ -255,7 +255,7 @@ describe('Tabs keyboard example-index tests', () => {
   }
 });
 
-describe('Tabs click example-add-tab button tests', () => {
+fdescribe('Tabs click example-add-tab button tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/example-add-tab-button');
     const tabsEl = await element(by.id('tab1'));
