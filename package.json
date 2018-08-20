@@ -116,7 +116,7 @@
     "karma-jasmine": "^1.1.2",
     "karma-mocha-reporter": "^2.2.5",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^3.0.0",
+    "karma-webpack": "^4.0.0-beta.0",
     "load-grunt-tasks": "^4.0.0",
     "markdownlint-cli": "^0.13.0",
     "marked": "^0.3.17",
