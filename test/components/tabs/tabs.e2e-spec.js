@@ -255,7 +255,7 @@ describe('Tabs keyboard example-index tests', () => {
   }
 });
 
-fdescribe('Tabs click example-add-tab button tests', () => {
+describe('Tabs click example-add-tab button tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/example-add-tab-button');
     const tabsEl = await element(by.id('tab1'));
@@ -441,7 +441,7 @@ describe('Tabs ajax as source tests', () => {
   });
 });
 
-fdescribe('Tabs ajax as href tests', () => {
+describe('Tabs ajax as href tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/test-ajax-source-as-tab-href');
     const tabsContainerEl = await element(by.id('ajaxified-tabs-tab-1'));
