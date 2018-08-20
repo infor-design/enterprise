@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Colorpicker example-index tests', () => {
+describe('Colorpicker example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/colorpicker/example-index');
   });
