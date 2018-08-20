@@ -9,7 +9,7 @@ let blockgridObj;
 
 const settings = {
   dataset: [],
-  selectable: false, // false, 'single' or 'multiple' or mixed
+  selectable: 'single', // false, 'single' or 'multiple' or mixed
   paging: false,
   pagesize: 25,
   pagesizes: [10, 25, 50, 75]
@@ -40,13 +40,34 @@ describe('Blockgrid API', () => {
     expect(document.body.querySelector('.blockgrid')).toBeTruthy();
   });
 
+  it('Should select block', (done) => {
+    const firstBlock = $('.block').first();
+    blockgridObj.selectBlock(firstBlock);
+
+    setTimeout(() => {
+      expect(document.body.querySelector('.block').classList.contains('is-selected')).toBeTruthy();
+      expect(document.body.querySelector('.block').getAttribute('aria-selected')).toBeTruthy();
+      done();
+    }, 1000);
+  });
+
+  it('Should update settings', () => {
+    blockgridObj.updated({ selectable: false });
+
+    expect(blockgridObj.settings.selectable).toEqual(false);
+  });
+
   it('Should have block', () => {
     expect(document.body.querySelector('.block')).toBeTruthy();
   });
 
-  it('Should destroy blockgrid', () => {
+  it('Should destroy blockgrid', (done) => {
     blockgridObj.destroy();
+    setTimeout(() => {
+      expect($(blockgridEl).data('blockgrid')).toBeFalsy();
 
-    expect($(blockgridEl).data('blockgrid')).toBeFalsy();
+      blockgridObj = new Blockgrid(blockgridEl, settings);
+      done();
+    }, 1000);
   });
 });
