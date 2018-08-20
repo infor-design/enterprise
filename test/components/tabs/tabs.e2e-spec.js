@@ -16,7 +16,7 @@ const clickTabTest = async (index) => {
   expect(await element.all(by.className('tab')).get(index).getAttribute('class')).toContain('is-selected');
 };
 
-describe('Tabs click example-index tests', () => {
+fdescribe('Tabs click example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/example-index');
     const tabsEl = await element(by.id('tabs-normal'));
@@ -441,7 +441,7 @@ describe('Tabs ajax as source tests', () => {
   });
 });
 
-describe('Tabs ajax as href tests', () => {
+fdescribe('Tabs ajax as href tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/test-ajax-source-as-tab-href');
     const tabsContainerEl = await element(by.id('ajaxified-tabs-tab-1'));
