@@ -452,7 +452,7 @@ describe('Tabs ajax as href tests', () => {
   it('Should be able to activate href tabs', async () => {
     expect(await element(by.id('ajaxified-tabs-tab-1')).getAttribute('innerHTML')).not.toBe('');
 
-    await element.all(by.className('tab')).get(2).click();
+    await element.all(by.id('example-tab-two')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#ajaxified-tabs-tab-2.is-visible'))), config.waitsFor);
 
