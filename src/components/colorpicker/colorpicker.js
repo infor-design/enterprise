@@ -545,6 +545,7 @@ ColorPicker.prototype = {
         a.data('label', s.clearableText).data('value', '').tooltip();
         menu.append(li);
       } else {
+        const li = $('<li></li>');
         $('<a href="#" title="Azure01 #C8E9F4"><span class="swatch" style="background-color: rgb(173 ,216, 235);"></span></a>').appendTo(li).tooltip();
         menu.append(li);
       }
