@@ -78,6 +78,21 @@
 .ios .signin .icon-confirm {
   top: 26.5px !important;
 }
+
+//ios issue in misaligned icon error
+.ios .signin {
+  > #signin {
+    .error-message {
+      .icon-error {
+      top: 0 !important;
+      }
+      & .icon-confirm {
+        top: 0 !important;
+      }
+    }
+  }
+}
+
 // scss-lint:enable ImportantRule
 
 .password-hint {
