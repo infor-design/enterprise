@@ -220,9 +220,9 @@ Hierarchy.prototype = {
         isForwardEvent: hierarchy.isForwardEvent(eventType),
         isBackEvent: hierarchy.isBackEvent(eventType),
         isAddEvent: hierarchy.isAddEvent(eventType),
-        isExpandEvent: hierarchy.isExpandEvent(),
-        isCollapseEvent: hierarchy.isCollapseEvent(),
-        isSelectedEvent: hierarchy.isSelectedEvent(),
+        isExpandEvent: hierarchy.isExpandEvent(eventType),
+        isCollapseEvent: hierarchy.isCollapseEvent(eventType),
+        isSelectedEvent: hierarchy.isSelectedEvent(eventType),
         isActionsEvent: hierarchy.isActionsEvent(eventType),
         isActionEvent: hierarchy.isActionEvent(eventType),
         allowLazyLoad: hierarchy.allowLazyLoad(nodeData, eventType)
@@ -233,13 +233,65 @@ Hierarchy.prototype = {
   },
 
   /**
+   * Manually set selection on a leaf
+   * @public
+   * @param {string} nodeId id used to find leaf
+   */
+  selectLeaf(nodeId) {
+    const leaf = $(`#${nodeId}`);
+    $('.is-selected').removeClass('is-selected');
+    leaf.addClass('is-selected');
+
+    const eventInfo = {
+      data: leaf.data(),
+      actionReference: null,
+      isForwardEvent: false,
+      isBackEvent: false,
+      isAddEvent: false,
+      isExpandEvent: false,
+      isCollapseEvent: false,
+      isSelectedEvent: true,
+      isActionsEvent: false,
+      isActionEvent: false,
+      allowLazyLoad: false
+    };
+
+    leaf.trigger('selected', eventInfo);
+  },
+
+  /**
+   * Update existing leaf actions with new actions
+   * @public
+   * @param {object} eventInfo eventType, target, data, ect..
+   * @param {array} updatedActions -actions to be appended to the menu
+   */
+  updateActions(eventInfo, updatedActions) {
+    const leaf = $(eventInfo.targetInfo.target).closest('.leaf');
+    const nodeData = eventInfo.data;
+    const popupMenu = $(leaf).find('.popupmenu');
+    const lineItemsToRemove = popupMenu.find('li').not(':eq(0)');
+
+    $(lineItemsToRemove).each((idx, item) => {
+      $(item).remove();
+    });
+
+    nodeData.menu.actions = updatedActions;
+    popupMenu.append(this.getActionMenuItems(nodeData));
+  },
+
+  /**
    * @private
    * @param {object} data associated with leaf
    * @param {leaf} leaf jQuery reference in DOM
    */
   buildActionsMenu(data, leaf) {
-    const popupMenu = leaf.find('.popupmenu');
+    const popupMenu = $(leaf).find('.popupmenu');
     const template = [];
+
+    // Safety
+    if (data.menu === undefined) {
+      return;
+    }
 
     // Reset & rebuild
     popupMenu.empty();
@@ -250,14 +302,22 @@ Hierarchy.prototype = {
     }
 
     if (data.menu.actions) {
-      // Ignoring next line. Eslint expects template literals vs string concat.
-      // However template literals break JSON.stringify() in this case
-      // eslint-disable-next-line
-      const items = `${data.menu.actions.map(a => "<li><a href='" + a.url + "' data-action-reference='" + JSON.stringify(a.data) + "'>" + a.value + "</a></li>").join('')}`;
-      template.push(items);
+      template.push(this.getActionMenuItems(data));
     }
 
     template.forEach((i) => { popupMenu.append(i); });
+  },
+
+  /**
+   * @private
+   * @param {object} data the data to be iterated
+   * @returns {string} returns list items as a string
+   */
+  getActionMenuItems(data) {
+    // Ignoring next line. Eslint expects template literals vs string concat.
+    // However template literals break JSON.stringify() in this case
+    // eslint-disable-next-line
+    return `${data.menu.actions.map(a => "<li><a href='" + a.url + "' data-action-reference='" + JSON.stringify(a.data) + "'>" + a.value + "</a></li>").join('')}`;
   },
 
   /**
@@ -311,13 +371,13 @@ Hierarchy.prototype = {
   },
 
   /**
-   * Check if event is select
+   * Check if event is selected
    * @private
-   * @param {string} eventType is select
-   * @returns {boolean} true if select event
+   * @param {string} eventType is selected
+   * @returns {boolean} true if selected event
    */
   isSelectedEvent(eventType) {
-    return eventType === 'select';
+    return eventType === 'selected';
   },
 
   /**

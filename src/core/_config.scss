@@ -233,6 +233,11 @@ $listview-full-width-bg-color: $graphite01;
 $listview-full-width-hover-color: $list-hover-color;
 $listview-full-width-border-color: $graphite03;
 
+$listview-search-disabled-color: $graphite02;
+$listview-search-disabled-opacity: 0.5;
+$listview-search-disabled-border-color: $graphite02;
+$listview-search-disabled-icon-color: $graphite02;
+
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
 $listbuilder-bg-color-hover: $graphite02;
@@ -504,6 +509,7 @@ $application-menu-border-color: $slate05;
 $application-menu-searchfield-icon-color: $slate05;
 $application-menu-searchfield-placeholder-color: $slate05;
 $application-menu-searchfield-text-color: $slate05;
+$application-menu-trigger-icon-fill-color:$trigger-icon-fill-color;
 
 $application-menu-searchfield-icon-active-color: $white;
 $application-menu-searchfield-text-active-color: $white;
