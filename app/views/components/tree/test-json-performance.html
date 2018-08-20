@@ -1,0 +1,83 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var sampleData = [];
+  var sampleMax = { nodes: 1000, level: 3 };
+
+
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function setNodeData(keys, value, obj) {
+    obj = obj || {}
+    keys = typeof keys === 'string' ?
+      keys.match(/\w+/g) : Array.prototype.slice.apply(keys);
+
+    keys.reduce(function(obj, key, index) {
+      if (index === keys.length - 1) {
+        obj[key] = value;
+      } else if (typeof obj[key] === 'object' && obj !== null) {
+        obj[key] = obj[key];
+      } else {
+        obj[key] = {};
+      }
+      return obj[key];
+    }, obj);
+    return obj;
+  }
+
+  function getChildNode(max, level) {
+    level = level > -1 ? level : 0;
+    var data = [];
+    var levelId = '';
+    var levelText = '';
+
+    for (var i = 0; i < level; i++) {
+      levelId += i +'-';
+      levelText += i +' ';
+    }
+
+    for (var i2 = 0; i2 < max; i2++) {
+      var children = getRandomInt(0, sampleMax.level);
+      data.push(setNodeData(['id'], 'node-'+ levelId + i2));
+      setNodeData(['text'], 'Node '+ levelText + i2, data[i2]);
+
+      if (children > 0 && level <= sampleMax.level) {
+        var childrendata = getChildNode(children, (level + 1));
+        setNodeData(['children'], childrendata, data[i2]);
+      }
+    }
+    return data;
+  }
+
+  for (var i = 0; i < sampleMax.nodes; i++) {
+    var children = getRandomInt(0, sampleMax.level);
+    sampleData.push(setNodeData(['id'], 'node-'+ i));
+    setNodeData(['text'], 'Node '+ i, sampleData[i]);
+
+    if (children > 0) {
+      var childrendata = getChildNode(1, 1);
+      setNodeData(['children'], childrendata, sampleData[i]);
+    }
+  }
+  // console.log(sampleData);;
+
+  var elem = $('#json-tree');
+  var text = 'Tree rendering time';
+
+  console.time(text);
+  elem.tree({dataset: sampleData});
+  console.timeEnd(text);
+
+  console.log('Number of nodes added:', elem.find('li').length);
+
+</script>
