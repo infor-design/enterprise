@@ -185,6 +185,15 @@ input::-webkit-inner-spin-button {
   }
 }
 
+// Override for IE to correctly align ".spinbox" as child of  ".field-short"
+.ie {
+  .field-short {
+    .spinbox {
+      height: 25px;
+    }
+  }
+}
+
 //RTL Styles
 html[dir='rtl'] {
   .spinbox-control {
