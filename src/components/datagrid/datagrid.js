@@ -6371,7 +6371,6 @@ Datagrid.prototype = {
         if (!self.editor) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
-        e.preventDefault();
       }
 
       // if column have click function to fire [ie. action button]
