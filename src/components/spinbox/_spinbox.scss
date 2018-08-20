@@ -164,14 +164,24 @@ input::-webkit-inner-spin-button {
   }
 
   .spinbox {
-    height: 26px;
-    margin-bottom: 0;
+    height: auto;
+    line-height: normal; // initial value declaration is 16px from "_typgraphy.scss" at "input.is-firefox"
+    padding: 5px;
   }
 
   .spinbox-control {
     height: inherit;
     padding: 4px 7px;
     width: 25px;
+  }
+}
+
+// Override for iOS to correctly align ".spinbox" as child of  ".field-short"
+.ios {
+  .field-short {
+    .spinbox {
+      padding-top: 6px;
+    }
   }
 }
 
