@@ -3,6 +3,7 @@
 // Other Shared Imports
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
@@ -395,8 +396,7 @@ Line.prototype = {
         const elem = d3.select(this);
         const text = d3.select(this).text();
         const markup = self.settings.xAxis.formatText(text, m);
-
-        elem.html(markup);
+        DOM.html(elem.node(), markup, '<tspan><text><glyph>');
       });
     }
 

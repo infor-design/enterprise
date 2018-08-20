@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { xssUtils } from '../../utils/xss';
@@ -464,7 +465,7 @@ Tooltip.prototype = {
       if (!title) {
         const titleFrag = document.createDocumentFragment();
         title = document.createElement('div');
-        title.innerHTML = this.settings.title;
+        DOM.html(title, this.settings.title, '*');
         title.classList.add('tooltip-title');
         titleFrag.appendChild(title);
         this.tooltip[0].insertBefore(titleFrag, this.tooltip[0].firstChild);

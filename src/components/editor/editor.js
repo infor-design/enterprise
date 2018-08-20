@@ -960,8 +960,8 @@ Editor.prototype = {
     this.restoreSelection(this.savedSelection);
 
     // Fix and Format the Link
-    const originalValue = input[0].value;
-    input.val(xssUtils.stripTags(this.fixLinkFormat(input[0].value)));
+    const cleanValue = xssUtils.stripTags(this.fixLinkFormat(input[0].value));
+    input.val(cleanValue);
 
     // Set selection url/class/target for Link
     this.settings.anchor.url = input.val();
@@ -970,7 +970,7 @@ Editor.prototype = {
     this.settings.anchor.isClickable = this.settings.anchor.showIsClickable ?
       $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
-    const alink = $(`<a data-url="${originalValue}" href="${input.val()}">${input.val()}</a>`);
+    const alink = $(`<a data-url="${cleanValue}" href="${cleanValue}">${cleanValue}</a>`);
 
     if (this.settings.anchor.class && $.trim(this.settings.anchor.class).length) {
       alink.addClass(this.settings.anchor.class);
