@@ -113,6 +113,10 @@ describe('Tabs click example-counts tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-counts', async () => {
       const tabsEl = await element(by.id('tabs-counts'));
@@ -166,6 +170,10 @@ describe('Tabs keyboard example-index tests', () => {
     await element(by.css('body')).sendKeys(protractor.Key.TAB);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-focused')), config.waitsFor));
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
   });
 
   if (utils.isChrome()) {
@@ -261,6 +269,10 @@ describe('Tabs click example-add-tab button tests', () => {
     const tabsEl = await element(by.id('tab1'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -368,6 +380,10 @@ describe('Tabs click example-dropdown-tabs tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-dropdown-tabs', async () => {
       const tabsEl = await element(by.id('tabs-dropdown'));
@@ -407,6 +423,10 @@ describe('Tabs click example-url-hash-change tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should correctly updated url on tab click', async () => {
     await element.all(by.className('tab')).get(1).click();
     await browser.driver
@@ -430,6 +450,10 @@ describe('Tabs ajax as source tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should be able to activate tabs', async () => {
     expect(await element(by.id('tab-one')).getAttribute('innerHTML')).not.toBe('');
 
@@ -449,13 +473,18 @@ describe('Tabs ajax as href tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should be able to activate href tabs', async () => { //eslint-disable-line
-    // this test fails only on ci for no apparent reason
     expect(await element(by.id('ajaxified-tabs-tab-1')).getAttribute('innerHTML')).not.toBe('');
 
     await element.all(by.id('example-tab-two')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#ajaxified-tabs-tab-2.is-visible'))), config.waitsFor);
+
+    await utils.checkForErrors();
 
     expect(await element(by.id('ajaxified-tabs-tab-2')).getAttribute('innerHTML')).not.toBe('');
   });
