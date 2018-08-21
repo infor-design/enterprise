@@ -53,6 +53,7 @@
   }
 
   .hyperlink {
+    @include font-size(12);
     color: $tooltip-color;
 
     &:hover {

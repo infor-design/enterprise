@@ -406,11 +406,8 @@ Tooltip.prototype = {
       contentArea.insertAdjacentHTML('beforebegin', '<div class="arrow"></div>');
     }
 
-    if (typeof this.content === 'string') {
-      contentArea.innerHTML = content;
-    } else {
-      contentArea.innerHTML = content[0].innerHTML;
-    }
+    const tooltipHTML = typeof this.content === 'string' ? content : content[0].innerHTML;
+    DOM.html(contentArea, tooltipHTML, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
   },
 
   /**
