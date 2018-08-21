@@ -5373,7 +5373,7 @@ Datagrid.prototype = {
       dataRowIndex = idx;
     }
 
-    if (!rowNode) {
+    if (!rowNode || (!rowNode.length && s.source)) {
       return;
     }
 
@@ -5386,7 +5386,7 @@ Datagrid.prototype = {
       let rowData;
       const selectNode = function (elem, index, data) {
         // do not add if already exists in selected
-        if (self.isNodeSelected(data)) {
+        if (!data || self.isNodeSelected(data)) {
           return;
         }
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
@@ -5524,6 +5524,17 @@ Datagrid.prototype = {
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     let rows = dataset;
+
+    if (this.settings.groupable) {
+      rows = [];
+      for (let i = 0, l = dataset.length; i < l; i++) {
+        if (dataset[i].values) {
+          for (let i2 = 0, l2 = dataset[i].values.length; i2 < l2; i2++) {
+            rows.push(i2);
+          }
+        }
+      }
+    }
 
     if (this.filterRowRendered) {
       rows = [];
