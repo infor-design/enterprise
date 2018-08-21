@@ -115,11 +115,11 @@ FieldOptions.prototype = {
       (elem || this.element).removeClass('is-focused');
     };
     const doActive = () => {
-      this.element.add(this.trigger).add(this.field).add(this.fieldParent)
+      self.element.add(self.trigger).add(self.field).add(self.fieldParent)
         .addClass('is-active');
     };
     const doUnactive = () => {
-      this.element.add(this.trigger).add(this.field).add(this.fieldParent)
+      self.element.add(self.trigger).add(self.field).add(self.fieldParent)
         .removeClass('is-active');
     };
     const canUnactive = (e) => {
@@ -175,6 +175,11 @@ FieldOptions.prototype = {
     // In desktop environments, the button should only display when the field is in use.
     if (env.features.touch) {
       this.field.addClass('visible');
+      this.trigger.on(`beforeopen.${COMPONENT_NAME}`, () => {
+        doActive();
+      }).on(`close.${COMPONENT_NAME}`, () => {
+        doUnactive();
+      });
     } else {
       this.field.removeClass('visible');
       this.field
@@ -411,6 +416,7 @@ FieldOptions.prototype = {
     ].join(' '));
 
     this.trigger.off([
+      `beforeopen.${COMPONENT_NAME}`,
       `click.${COMPONENT_NAME}`,
       `focusin.${COMPONENT_NAME}`,
       `focusout.${COMPONENT_NAME}`,

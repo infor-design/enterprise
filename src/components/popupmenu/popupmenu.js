@@ -2108,20 +2108,19 @@ PopupMenu.prototype = {
 
     delete this.openedWithTouch;
 
-    if (noFocus) {
+    if (noFocus || !this.settings.returnFocus || env.features.touch) {
       return;
     }
 
-    if (this.settings.returnFocus) {
-      if (typeof this.settings.returnFocus === 'function') {
-        this.settings.returnFocus(this, {
-          triggerElement: this.element[0],
-          menuElement: this.menu[0]
-        });
-      } else {
-        this.element.focus();
-      }
+    if (typeof this.settings.returnFocus === 'function') {
+      this.settings.returnFocus(this, {
+        triggerElement: this.element[0],
+        menuElement: this.menu[0]
+      });
+      return;
     }
+
+    this.element.focus();
   },
 
   /**
