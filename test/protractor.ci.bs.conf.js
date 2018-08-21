@@ -48,7 +48,7 @@ exports.config = {
   multiCapabilities: [
     {
       browserName: 'Chrome',
-      browser_version: '66.0',
+      browser_version: '68.0',
       resolution: '1280x800',
       os_version: '10',
       os: 'Windows',
