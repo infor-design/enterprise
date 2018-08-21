@@ -363,15 +363,15 @@ FieldOptions.prototype = {
           e.stopPropagation();
         }
       });
-
-      this.element
-        .on(`listopened.${COMPONENT_NAME}`, () => {
-          doActive();
-        })
-        .on(`listclosed.${COMPONENT_NAME}`, () => {
-          doUnactive();
-        });
     }
+
+    this.element
+      .on(`listopened.${COMPONENT_NAME}`, () => {
+        doActive();
+      })
+      .on(`listclosed.${COMPONENT_NAME}`, () => {
+        doUnactive();
+      });
 
     return this;
   }, // END: Handle Events -------------------------------------------------
