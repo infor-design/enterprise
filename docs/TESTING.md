@@ -146,7 +146,7 @@ if (utils.isChrome() && utils.isCI()) {
 }
 ```
 
-The next instructions are based on following [this guide](https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image) in order to debug Travis. We use the `node_js` [image](https://hub.docker.com/r/travisci/ci-nodejs/)
+The next instructions are based on following [this guide](https://docs.travis-ci.com/user/common-build-problems/#troubleshooting-locally-in-a-docker-image) in order to debug Travis. We use the `node_js` [image](https://hub.docker.com/r/travisci/ci-nodejs/)
 
 Many of the travis commands ran can be found in the [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml).
 
