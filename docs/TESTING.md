@@ -33,9 +33,13 @@ To develop in watch mode, please run
 
 ## Running Tests Silently for Continuous Integration (CI)
 
+See [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml) for current implementation
+
 ```sh
+npm run build
 npm run functional:ci
-npm quickstart #demo app server needed for e2e:ci
+npm quickstart & #server needed for e2e:ci tests
+sleep 5
 npm run e2e:ci
 ```
 
@@ -53,6 +57,7 @@ Run a specific E2E component locally (Only Chrome or Firefox)
 
 ```sh
 npm start
+#leave the server running, and create a new terminal window in the same directory. Now, run
 env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local:debug
 ```
 
@@ -60,6 +65,7 @@ Isolate your tests then run with the keys in your path.
 
 ```sh
 npm start
+#leave the server running, and create a new terminal window in the same directory. Now, run
 npm run e2e:local:bs
  ```
 
