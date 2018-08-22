@@ -114,13 +114,13 @@ FieldOptions.prototype = {
     const removeFocused = (elem) => {
       (elem || this.element).removeClass('is-focused');
     };
-    const canActive = (e) => {
+    const canActive = () => {
       let r = isFocus(this.element);
       r = datepicker && datepicker.isOpen() ? false : r;
       r = timepicker && timepicker.isOpen() ? false : r;
       r = dropdown && dropdown.isOpen() ? false : r;
       return r;
-    }
+    };
     const doActive = () => {
       self.element.add(self.trigger).add(self.field).add(self.fieldParent)
         .addClass('is-active');
