@@ -307,12 +307,11 @@ Dropdown.prototype = {
       filterMode: this.settings.filterMode
     });
 
-    this.tooltipApi = null;
-
     this.setListIcon();
     this.setDisplayedValues();
     this.setInitial();
     this.setWidth();
+    this.initTooltip();
 
     this.element.triggerHandler('rendered');
 
@@ -488,6 +487,16 @@ Dropdown.prototype = {
     }
 
     self.listIcon.hasIcons = hasIcons;
+  },
+
+  initTooltip() {
+    const opts = this.element.find('option:selected');
+    const optText = this.getOptionText(opts);
+
+    this.tooltipApi = this.pseudoElem.find('span').tooltip({
+      content: optText,
+      trigger: 'hover',
+    });
   },
 
   /**
@@ -2357,13 +2366,8 @@ Dropdown.prototype = {
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
 
       if (this.pseudoElem.find('span').width() >= this.pseudoElem.width()) {
-        const opts = this.element.find('option:selected');
-        const optText = this.getOptionText(opts);
-
-        this.tooltipApi = this.pseudoElem.find('span').tooltip({
-          content: optText,
-          trigger: 'hover',
-        });
+        this.initTooltip();
+        
       } else if (this.tooltipApi) {
         this.tooltipApi.destroy();
       }
