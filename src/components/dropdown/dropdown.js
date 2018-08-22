@@ -489,6 +489,9 @@ Dropdown.prototype = {
     self.listIcon.hasIcons = hasIcons;
   },
 
+  /**
+   * Triggers tooltip in multiselect
+   */
   initTooltip() {
     const opts = this.element.find('option:selected');
     const optText = this.getOptionText(opts);
