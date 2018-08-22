@@ -844,21 +844,6 @@ PopupMenu.prototype = {
         e.stopPropagation();
         self.updated(settings);
       });
-
-    // Media Query Listener to detect a menu closing on mobile devices that change orientation.
-    /*
-    if (window.matchMedia) {
-      this.matchMedia = window.matchMedia('(orientation: landscape)');
-      this.mediaQueryListener = function () {
-        // Match every time.
-        if (!self.menu.hasClass('is-open')) {
-          return;
-        }
-        self.handleCloseEvent();
-      };
-      this.matchMedia.addListener(this.mediaQueryListener);
-    }
-    */
   },
 
   handleKeys() {
@@ -1526,7 +1511,14 @@ PopupMenu.prototype = {
     this.settings.beforeOpen(response, callbackOpts);
   },
 
-  open(e, ajaxReturn) {
+  /**
+   * Opens the popupmenu, including repopulating data and setting up visual delays, if necessary.
+   * @param {jQuery.Event} e the event that caused the menu to open
+   * @param {boolean} ajaxReturn set to true if the open routine should not include a source call
+   * @param {boolean} useDelay set to true if the menu should open on a delay (used in mobile environments where a software keybord is present)
+   * @returns {void}
+   */
+  open(e, ajaxReturn, useDelay) {
     const self = this;
     /**
      * Fires before open.
@@ -1546,6 +1538,16 @@ PopupMenu.prototype = {
       canOpen = this.callSource(e, true);
 
       if (this.settings.beforeOpen) {
+        return;
+      }
+    }
+
+    // If there's no explicit run of this method without this flag, setup a delay and re-run the open method
+    if (!useDelay) {
+      if (env.os.name === 'ios') {
+        setTimeout(() => {
+          self.open(e, ajaxReturn, true);
+        }, 400);
         return;
       }
     }

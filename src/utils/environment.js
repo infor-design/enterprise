@@ -4,6 +4,9 @@ import { breakpoints } from './breakpoints';
 // jQuery Components
 import './debounced-resize.jquery';
 
+// Utility Name
+const UTIL_NAME = 'environment';
+
 /**
  * @class {Environment}
  */
@@ -26,6 +29,7 @@ const Environment = {
     $('html').attr('data-sohoxi-version', SOHO_XI_VERSION);
     this.addBrowserClasses();
     this.addGlobalResize();
+    this.addGlobalEvents();
   },
 
   /**
@@ -126,6 +130,62 @@ const Environment = {
 
     // Also detect whenenver a load or orientation change occurs
     $(window).on('orientationchange load', () => breakpoints.compare());
+  },
+
+  /**
+   * Sets up global UI-specific event handlers
+   * @returns {void}
+   */
+  addGlobalEvents() {
+    const self = this;
+    const body = document.body;
+
+    // On iOS, it's possible to scroll the body tag even if there's a `no-scroll` class attached
+    // This listener persists and will prevent scrolling on the body tag in the event of a `no-scroll`
+    // class, only in iOS environments
+    $(window).on(`scroll.${UTIL_NAME}`, () => {
+      if (self.os.name !== 'ios' || body.className.indexOf('no-scroll') === -1) {
+        return;
+      }
+
+      body.scrollTop = 0;
+    });
+
+    // Prevent zooming on inputs/textareas' `focusin`/`focusout` events.
+    // Some components like Dropdown have this feature built in on their specified elements.
+    // This particular setup prevents zooming on input fields not tied to a component wrapper.
+    $('body').on(`focusin.${UTIL_NAME}`, 'input, textarea', (e) => {
+      const target = e.target;
+      if (target.className.indexOf('dropdown-search') > -1) {
+        return;
+      }
+
+      if (self.os.name === 'ios') {
+        $('head').triggerHandler('disable-zoom');
+      }
+    }).on(`focusout.${UTIL_NAME}`, 'input, textarea', (e) => {
+      const target = e.target;
+      if (target.className.indexOf('dropdown-search') > -1) {
+        return;
+      }
+
+      if (self.os.name === 'ios') {
+        $('head').triggerHandler('enable-zoom');
+      }
+    });
+  },
+
+  /**
+   * Tears down global UI-specific event handlers
+   * @returns {void}
+   */
+  removeGlobalEvents() {
+    $(window).off(`scroll.${UTIL_NAME}`);
+
+    $('body').off([
+      `focusin.${UTIL_NAME}`,
+      `focusout.${UTIL_NAME}`
+    ].join(' '));
   }
 };
 
