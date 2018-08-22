@@ -191,7 +191,7 @@ describe('Timepicker with seconds example tests', () => {
   });
 });
 
-describe('Timepicker Intervals tests', () => { //eslint-disable-line
+describe('Timepicker Intervals tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/example-intervals');
   });

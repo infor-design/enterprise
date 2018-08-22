@@ -1,4 +1,3 @@
-/* eslint-disable */
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
@@ -40,6 +39,7 @@ describe('Datepicker example-index tests', () => {
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
+
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
 
@@ -388,6 +388,7 @@ describe('Datepicker Timeformat Tests', () => {
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
+
     expect(await element(by.id('dp1')).getAttribute('value')).toEqual(`${(testDate.getFullYear())}/${testDate.getMonth() + 1}/${testDate.getDate()} 00:00`);
   });
 
@@ -402,6 +403,7 @@ describe('Datepicker Timeformat Tests', () => {
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
+
     expect(await element(by.id('dp2')).getAttribute('value')).toEqual(`${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} 12:00 AM`);
   });
 });
@@ -447,6 +449,7 @@ describe('Datepicker 12hr Time Tests', () => {
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
+
     expect(value).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('en-US', { month: 'short' })} ${testDate.getFullYear()} 12:00 AM`);
   });
 });
@@ -473,6 +476,7 @@ describe('Datepicker Gregorian SA Tests', () => {
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
+
     expect(await element(by.id('islamic-date')).getAttribute('value')).toEqual(`${testDate.getDate()}/${(testDate.getMonth() + 1).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
   });
 });
