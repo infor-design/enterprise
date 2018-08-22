@@ -373,7 +373,7 @@ describe('Listview example-paging-clientside tests', () => {
 
   it('Should click page "2" in pager-clientside bar, and display new listings', async () => {
     const listviewPagerEl = await element.all(by.css('.pager-toolbar li')).get(2);
-    listviewPagerEl.click();
+    await listviewPagerEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="12"] .listview-heading'))), config.waitsFor);
 
