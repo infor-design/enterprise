@@ -1,6 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../modal/modal';
@@ -48,8 +48,8 @@ Message.prototype = {
     // Create the Markup
     this.message = $('<div class="modal message"></div>');
     this.messageContent = $('<div class="modal-content"></div>');
-    this.title = $(`<h1 class="modal-title" id="message-title">${stringUtils.stripHTML(this.settings.title)}</h1>`).appendTo(this.messageContent).wrap('<div class="modal-header"></div>');
-    this.content = $(`<div class="modal-body"><p class="message" id="message-text">${stringUtils.stripHTML(this.settings.message)}</p></div>`).appendTo(this.messageContent);
+    this.title = $(`<h1 class="modal-title" id="message-title">${xssUtils.stripHTML(this.settings.title)}</h1>`).appendTo(this.messageContent).wrap('<div class="modal-header"></div>');
+    this.content = $(`<div class="modal-body"><p class="message" id="message-text">${xssUtils.stripHTML(this.settings.message)}</p></div>`).appendTo(this.messageContent);
 
     // Append The Content if Passed in
     if (!this.element.is('body')) {

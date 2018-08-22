@@ -14,6 +14,10 @@ describe('Timepicker example-index tests', () => {
     await utils.setPage('/components/timepicker/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-index', async () => {
       const timepickerSection = await element(by.id('maincontent'));

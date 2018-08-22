@@ -270,7 +270,7 @@ PopupMenu.prototype = {
       const audibleSpanId = 'popupmenu-f10-label';
       if ($(`#${audibleSpanId}`).length === 0) {
         this.element.after(`
-          <span style="display:none;" id="${audibleSpanId}">
+          <span class="audible" id="${audibleSpanId}">
             ${Locale.translate('PressShiftF10')}
           </span>
         `);
@@ -553,7 +553,7 @@ PopupMenu.prototype = {
 
     const lis = contextElement.find('li:not(.heading):not(.separator)');
     const menuClassName = contextElement[0].className;
-    const isTranslatable = DOM.classNameHas(menuClassName, 'isTranslatable');
+    const isTranslatable = DOM.hasClassName(menuClassName, 'isTranslatable');
     let hasIcons = false;
 
     lis.each((i, li) => {
@@ -597,7 +597,7 @@ PopupMenu.prototype = {
           submenu = $(submenuWrapper).children('ul')[0];
           submenu.classList.add('popupmenu');
         }
-        if (DOM.classNameHas(li.className, 'submenu')) {
+        if (DOM.hasClassName(li.className, 'submenu')) {
           // Add a span
           if (!span) {
             a.innerHTML = `<span>${a.innerHTML}</span>`;
@@ -613,13 +613,13 @@ PopupMenu.prototype = {
         }
 
         // is-checked
-        if (DOM.classNameHas(li.className, 'is-checked')) {
+        if (DOM.hasClassName(li.className, 'is-checked')) {
           a.setAttribute('role', 'menuitemcheckbox');
           a.setAttribute('aria-checked', true);
         }
 
         // is-not-checked
-        if (DOM.classNameHas(li.className, 'is-not-checked')) {
+        if (DOM.hasClassName(li.className, 'is-not-checked')) {
           li.className = li.className.replace('is-not-checked', '');
           a.setAttribute('role', 'menuitemcheckbox');
           a.removeAttribute('aria-checked');
@@ -1756,7 +1756,7 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   openSubmenu(li, ajaxReturn) {
-    if (DOM.classNameHas(li[0].className, 'is-disabled') || li[0].disabled) {
+    if (DOM.hasClassName(li[0].className, 'is-disabled') || li[0].disabled) {
       return;
     }
 

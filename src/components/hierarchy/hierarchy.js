@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { Tmpl } from '../tmpl/tmpl';
 import { Locale } from '../locale/locale';
 
@@ -82,8 +83,6 @@ Hierarchy.prototype = {
         this.render(s.dataset[0]);
       } else if (s.dataset && s.dataset.children.length > 0) {
         this.render(s.dataset);
-      } else {
-        $(this.element).append('<p style="padding:10px;">No data available</p>');
       }
     }
 
@@ -676,14 +675,14 @@ Hierarchy.prototype = {
     }
 
     if (data.isMultiRoot) {
-      const multiRootHTML = `<div class="leaf multiRoot"><div><h2>${data.multiRootText}</h2></div></div>`;
-
+      let multiRootHTML = `<div class="leaf multiRoot"><div><h2>${data.multiRootText}</h2></div></div>`;
+      multiRootHTML = xssUtils.sanitizeHTML(multiRootHTML);
       rootNodeHTML.push(multiRootHTML);
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
     } else {
-      const leaf = this.getTemplate(data);
+      let leaf = this.getTemplate(data);
+      leaf = xssUtils.sanitizeHTML(leaf);
       rootNodeHTML.push(leaf);
-
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
       this.updateState($('.leaf.root'), true, data);
     }

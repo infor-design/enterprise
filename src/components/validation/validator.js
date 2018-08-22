@@ -464,7 +464,7 @@ Validator.prototype = {
   validate(field, showTooltip, e) {
     field.data(`handleEvent${[(e.type || '')]}`, null);
 
-    if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field[0].hasAttribute('disabled')) {
+    if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field.is(':disabled')) {
       return [];
     }
 

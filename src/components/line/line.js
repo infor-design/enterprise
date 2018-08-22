@@ -3,6 +3,7 @@
 // Other Shared Imports
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
@@ -395,8 +396,7 @@ Line.prototype = {
         const elem = d3.select(this);
         const text = d3.select(this).text();
         const markup = self.settings.xAxis.formatText(text, m);
-
-        elem.html(markup);
+        DOM.html(elem.node(), markup, '<tspan><text><glyph>');
       });
     }
 
@@ -478,12 +478,8 @@ Line.prototype = {
         };
 
         if (self.settings.isBubble || self.settings.isScatterPlot) {
-          content = `${'' +
-            '<div class="chart-swatch" style="min-width: 95px;">' +
-              '<div class="swatch-caption">' +
-                '<span style="background-color:'}${charts.chartColor(lineIdx, 'line', mouseEnterData)};" class="indicator-box"></span>` +
-                `<b>${mouseEnterData.name}</b>` +
-              '</div>';
+          content = `<div class="chart-swatch line"><div class="swatch-caption"><span class="indicator-box"></span>
+            <b>${mouseEnterData.name}</b></div>`;
 
           for (const key in mouseEnterData) {  //eslint-disable-line
             if (mouseEnterData.hasOwnProperty(key)) {  //eslint-disable-line
@@ -499,7 +495,7 @@ Line.prototype = {
                   if (obj2.hasOwnProperty(key2)) {  //eslint-disable-line
                     content += `${'' +
                         '<div class="swatch-row">' +
-                          '<span style="text-transform: capitalize;">'}${labels[key][key2]}</span>` +
+                          '<span class="text-capitalize">'}${labels[key][key2]}</span>` +
                           `<b>${formatValue(valueFormatterString[key2], obj2[key2])}</b>` +
                         '</div>';
                   }
@@ -530,6 +526,12 @@ Line.prototype = {
           tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
           content = tooltipDataCache[i] || tooltipData || mouseEnterData.tooltip || d.tooltip || content || '';
           show();
+
+          // Set the colors
+          const spans = document.querySelectorAll('#svg-tooltip .swatch-caption span');
+          for (let k = 0; k < spans.length; k++) {
+            spans[k].style.backgroundColor = charts.chartColor(k, 'line', mouseEnterData);
+          }
         }
 
         // Circle associated with hovered point

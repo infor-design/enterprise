@@ -169,7 +169,9 @@ Splitter.prototype = {
           const frame = $(iframes[i]);
           // eslint-disable-next-line
           const width = `${parseInt(getComputedStyle(frame.parent()[0]).width, 10) - 40}px`;
-          frame.before(`<div class="overlay" style="opacity: 0; visibility: visible; height: 100%; width: ${width}"></div>`);
+          const overlay = $('<div class="overlay splitter-overlay"></div>');
+          overlay.css('width', width);
+          frame.before(overlay);
         }
       }
     }).on('dragend.splitter', (e, args) => {

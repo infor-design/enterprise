@@ -26,6 +26,10 @@ describe('Searchfield example-index tests', () => {
         .presenceOf(element(by.id(searchfieldId))), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-index', async () => {
       const searchfieldInputEl = await element(by.id(searchfieldId));

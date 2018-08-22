@@ -10,6 +10,10 @@ describe('Blockgrid example-index tests', () => {
     await utils.setPage('/components/blockgrid/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should have a blockgrid', async () => {
     expect(await element(by.className('blockgrid')).isPresent()).toBeTruthy();
   });

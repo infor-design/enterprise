@@ -2,7 +2,7 @@
 
 ## Dev Release
 
-To do a dev release, publish a dated semever to npm.
+To do a dev release, publish a dated semver to npm.
 
 1. Make sure you are on `master` and its clean
 1. Change the `package.json` version to append the date, i.e. `4.7.0-dev.YYYYMMDD`

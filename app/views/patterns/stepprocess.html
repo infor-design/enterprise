@@ -319,7 +319,7 @@
 
     beforeSelectStep: function (args) {
       var deferred = $.Deferred();
-      var $stepLink = $(args.stepLink);
+      var $stepLink = $(Soho.xss.escapeHTML(args.stepLink));
       var $folder = $stepLink.next('.js-step-folder');
       var stepId = $stepLink.attr('href');
 
