@@ -138,17 +138,43 @@ const Environment = {
    */
   addGlobalEvents() {
     const self = this;
-    const body = document.body;
+
+    this.globalMouseActive = 0;
+    this.globalTouchActive = 0;
+
+    // Detect mouse/touch events on the body to help scrolling detection along
+    $('body')
+      .on(`mousedown.${UTIL_NAME}`, () => {
+        ++this.globalMouseActive;
+      })
+      .on(`mouseup.${UTIL_NAME}`, () => {
+        --this.globalMouseActive;
+      })
+      .on(`touchstart.${UTIL_NAME}`, () => {
+        ++this.globalTouchActive;
+      })
+      .on(`touchend.${UTIL_NAME}`, () => {
+        --this.globalTouchActive;
+      });
 
     // On iOS, it's possible to scroll the body tag even if there's a `no-scroll` class attached
     // This listener persists and will prevent scrolling on the body tag in the event of a `no-scroll`
     // class, only in iOS environments
-    $(window).on(`scroll.${UTIL_NAME}`, () => {
-      if (self.os.name !== 'ios' || body.className.indexOf('no-scroll') === -1) {
-        return;
+    $(window).on(`scroll.${UTIL_NAME}`, (e) => {
+      if (self.os.name !== 'ios' || document.body.className.indexOf('no-scroll') === -1) {
+        return true;
       }
 
-      body.scrollTop = 0;
+      // If a mouse button or touch is still active, continue as normal
+      if (this.globalTouchActive || this.globalMouseActive) {
+        return true;
+      }
+
+      e.preventDefault();
+      if (document.body.scrollTop > 0) {
+        document.body.scrollTop = 0;
+      }
+      return false;
     });
 
     // Prevent zooming on inputs/textareas' `focusin`/`focusout` events.
