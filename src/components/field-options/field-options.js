@@ -114,6 +114,13 @@ FieldOptions.prototype = {
     const removeFocused = (elem) => {
       (elem || this.element).removeClass('is-focused');
     };
+    const canActive = (e) => {
+      let r = isFocus(this.element);
+      r = datepicker && datepicker.isOpen() ? false : r;
+      r = timepicker && timepicker.isOpen() ? false : r;
+      r = dropdown && dropdown.isOpen() ? false : r;
+      return r;
+    }
     const doActive = () => {
       self.element.add(self.trigger).add(self.field).add(self.fieldParent)
         .addClass('is-active');
@@ -175,9 +182,15 @@ FieldOptions.prototype = {
     // In desktop environments, the button should only display when the field is in use.
     if (env.features.touch) {
       this.field.addClass('visible');
-      this.trigger.on(`beforeopen.${COMPONENT_NAME}`, () => {
+      this.trigger.on(`beforeopen.${COMPONENT_NAME}`, (e) => {
+        if (!canActive(e)) {
+          return;
+        }
         doActive();
-      }).on(`close.${COMPONENT_NAME}`, () => {
+      }).on(`close.${COMPONENT_NAME}`, (e) => {
+        if (!canUnactive(e)) {
+          return;
+        }
         doUnactive();
       });
     } else {
@@ -329,8 +342,8 @@ FieldOptions.prototype = {
       .on(`selected.${COMPONENT_NAME}`, () => {
         this.popupmenuApi.settings.returnFocus = true;
       })
-      .on(`close.${COMPONENT_NAME}`, (e, isCancelled) => {
-        if (canUnactive(e) && isCancelled) {
+      .on(`close.${COMPONENT_NAME}`, (e) => {
+        if (canUnactive(e)) {
           doUnactive();
         }
       });
