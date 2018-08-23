@@ -36,8 +36,8 @@ To develop in watch mode, please run
 npm run build
 npm run functional:ci
 # start server to test example pages
-npm quickstart &
-sleep 5
+npm quickstart
+# In a new shell
 npm run e2e:ci
 ```
 
@@ -174,17 +174,19 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome*.deb
 ```
 
-1. Update/Install node.js
+1. Update/Install Node.js (nvm should be installed)
 
 ```sh
-curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-sudo apt-get install -y nodejs
+nvm install 10
+nvm use 10
 ```
 
 1. Run the travis commands as per the build
 
 ```sh
-npm run quickstart & npm run e2e:ci
+npm run quickstart
+# In a new shell
+npm run e2e:ci
 ```
 
 1. Push the branch your working on to github and switch to the same branch on the vm
