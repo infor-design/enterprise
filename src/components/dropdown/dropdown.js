@@ -2353,8 +2353,7 @@ Dropdown.prototype = {
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
 
       if (this.pseudoElem.find('span').width() >= this.pseudoElem.width()) {
-        this.setTooltip();
-        
+        this.setTooltip();    
       } else if (this.tooltipApi) {
         this.tooltipApi.destroy();
       }
