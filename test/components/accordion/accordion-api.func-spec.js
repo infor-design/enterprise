@@ -62,7 +62,7 @@ describe('Accordion API', () => {
   });
 
   it('Should check if expanded', () => {
-    let isExpanded = accordionObj.isExpanded(accordionObj.headers[0]);
+    const isExpanded = accordionObj.isExpanded(accordionObj.headers[0]);
 
     expect(isExpanded).toBeFalsy();
   });
