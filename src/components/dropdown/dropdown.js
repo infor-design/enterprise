@@ -311,7 +311,7 @@ Dropdown.prototype = {
     this.setDisplayedValues();
     this.setInitial();
     this.setWidth();
-    this.initTooltip();
+    this.setTooltip();
 
     this.element.triggerHandler('rendered');
 
@@ -492,7 +492,7 @@ Dropdown.prototype = {
   /**
    * Triggers tooltip in multiselect
    */
-  initTooltip() {
+  setTooltip() {
     const opts = this.element.find('option:selected');
     const optText = this.getOptionText(opts);
 
@@ -2369,7 +2369,7 @@ Dropdown.prototype = {
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
 
       if (this.pseudoElem.find('span').width() >= this.pseudoElem.width()) {
-        this.initTooltip();
+        this.setTooltip();
         
       } else if (this.tooltipApi) {
         this.tooltipApi.destroy();
