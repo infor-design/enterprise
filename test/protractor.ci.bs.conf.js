@@ -40,7 +40,7 @@ exports.config = {
     'browserstack.video': true,
     'browserstack.local': false,
     'browserstack.networkLogs': false,
-    'browserstack.timezone': 'America/New_York',
+    'browserstack.timezone': 'New_York',
     build: browserstackBuildID,
     name: `${theme} theme ci:bs e2e tests`,
     project: 'ids-enterprise-e2e-ci'
