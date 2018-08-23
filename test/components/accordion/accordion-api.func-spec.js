@@ -54,4 +54,10 @@ describe('Accordion API', () => {
 
     expect(document.body.querySelector('.accordion.is-disabled')).toBeTruthy();
   });
+
+  it('Should be able to collapse all accordion', () => {
+    accordionObj.collapseAll();
+
+    expect(document.body.querySelector('.accordion.is-expanded')).toBeFalsy();
+  });
 });

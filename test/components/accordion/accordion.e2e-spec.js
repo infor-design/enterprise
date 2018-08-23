@@ -10,18 +10,7 @@ describe('Accordion example-accordion-click-event tests', () => {
     await utils.setPage('/components/accordion/example-accordion-click-event');
   });
 
-  it('Should click accordion be displayed', async () => {
-    expect(await element(by.className('accordion'))).toBeTruthy();
-  });
-
-  it('Should click accordion be expanded', async () => {
-    const buttonEl = await element.all(by.tagName('button')).first();
-    await buttonEl.click();
-
-    expect(await element(by.css('[aria-expanded="true"]'))).toBeTruthy();
-  });
-
-  it('Should accordion click event be shown', async () => {
+  it('Should toast diplay when accordion is clicked', async () => {
     const accordionEl = await element.all(by.className('accordion-header')).first();
 
     await browser.actions().mouseMove(accordionEl).perform();
@@ -31,41 +20,13 @@ describe('Accordion example-accordion-click-event tests', () => {
   });
 });
 
-describe('Accordion example-accordion-lazy-loading tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/accordion/example-accordion-lazy-loading');
-  });
-
-  it('Should lazy accordion be displayed', async () => {
-    expect(await element(by.className('accordion'))).toBeTruthy();
-  });
-
-  it('Should lazy accordion be expanded', async () => {
-    const buttonEl = await element.all(by.tagName('button')).first();
-    await buttonEl.click();
-
-    expect(await element(by.css('[aria-expanded="true"]'))).toBeTruthy();
-  });
-});
-
 describe('Accordion example-accordion-panels tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/accordion/example-accordion-panels');
   });
 
-  it('Should panel accordion be displayed', async () => {
-    expect(await element(by.className('accordion'))).toBeTruthy();
-  });
-
   it('Should accordion have panels', async () => {
     expect(await element(by.className('accordion panel'))).toBeTruthy();
-  });
-
-  it('Should panel accordion be expanded', async () => {
-    const buttonEl = await element.all(by.tagName('button')).first();
-    await buttonEl.click();
-
-    expect(await element(by.css('[aria-expanded="true"]'))).toBeTruthy();
   });
 });
 
@@ -74,15 +35,14 @@ describe('Accordion example-ajax tests', () => {
     await utils.setPage('/components/accordion/example-ajax');
   });
 
-  it('Should ajax accordion be displayed', async () => {
-    expect(await element(by.className('accordion'))).toBeTruthy();
-  });
+  it('Should ajax data is in the headers', async () => {
+    const accordionEl = await element.all(by.className('accordion-header')).first();
+    const testEl = await element.all(by.className('accordion-header')).get(2);
 
-  it('Should ajax accordion be expanded', async () => {
-    const buttonEl = await element.all(by.tagName('button')).first();
-    await buttonEl.click();
+    await browser.actions().mouseMove(accordionEl).perform();
+    await browser.actions().click(accordionEl).perform();
 
-    expect(await element(by.css('[aria-expanded="true"]'))).toBeTruthy();
+    expect(testEl.getText()).toEqual('Apple');
   });
 });
 
@@ -93,10 +53,6 @@ describe('Accordion example-disabled tests', () => {
 
   it('Should accordion be disabled', async () => {
     expect(await element(by.className('is-disabled'))).toBeTruthy();
-  });
-
-  it('Should disabled accordion be displayed', async () => {
-    expect(await element(by.className('accordion is-disabled'))).toBeTruthy();
   });
 });
 
@@ -114,5 +70,33 @@ describe('Accordion example-index tests', () => {
     await buttonEl.click();
 
     expect(await element(by.css('[aria-expanded="true"]'))).toBeTruthy();
+  });
+
+  it('Should keyboard working on focus in accordion ', async () => {
+    const accordionEl = await element.all(by.className('accordion-header')).first();
+
+    await browser.actions().mouseMove(accordionEl).perform();
+    await browser.actions().click(accordionEl).perform();
+
+    expect(await element(by.className('is-focused'))).toBeTruthy();
+
+    await browser.actions().click(accordionEl).perform();
+    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+
+    expect(await element(by.className('is-focused'))).toBeTruthy();
+  });
+
+  it('Should keyboard working on expand in accordion ', async () => {
+    const accordionEl = await element.all(by.className('accordion-header')).first();
+
+    await browser.actions().mouseMove(accordionEl).perform();
+    await browser.actions().click(accordionEl).perform();
+
+    expect(await element(by.className('is-expanded'))).toBeTruthy();
+
+    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+
+    expect(await element(by.className('is-expanded'))).toBeTruthy();
   });
 });
