@@ -38,8 +38,16 @@ describe('Accordion API', () => {
     expect(document.body.querySelector('.btn.hide-focus')).toBeFalsy();
   });
 
-  it('Should be able to enable it', () => {
+  it('Should be able to collapse all accordion', () => {
+    accordionObj.collapseAll();
+
+    expect(document.body.querySelector('.accordion.is-expanded')).toBeFalsy();
+  });
+
+  it('Should be able to enable and disable it', () => {
     accordionObj.disable();
+
+    expect(document.body.querySelector('.accordion.is-disabled')).toBeTruthy();
 
     accordionEl = document.body.querySelector('.accordion.is-disabled');
     accordionObj = new Accordion(accordionEl);
@@ -49,15 +57,13 @@ describe('Accordion API', () => {
     expect(document.body.querySelector('.accordion.is-disabled')).toBeFalsy();
   });
 
-  it('Should be able to disable it', () => {
-    accordionObj.disable();
-
-    expect(document.body.querySelector('.accordion.is-disabled')).toBeTruthy();
+  it('Should accordion have headers', () => {
+    expect(accordionObj.headers).toBeTruthy();
   });
 
-  it('Should be able to collapse all accordion', () => {
-    accordionObj.collapseAll();
+  it('Should check if expanded', () => {
+    let isExpanded = accordionObj.isExpanded(accordionObj.headers[0]);
 
-    expect(document.body.querySelector('.accordion.is-expanded')).toBeFalsy();
+    expect(isExpanded).toBeFalsy();
   });
 });
