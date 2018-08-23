@@ -1422,7 +1422,7 @@ Dropdown.prototype = {
     selectText();
 
     // Set focus back to the element
-    if (env.browser.isIE10 || env.browser.isIE11) {
+    if (env.browser.isIE10() || env.browser.isIE11()) {
       setTimeout(() => {
         input[0].focus();
       }, 0);

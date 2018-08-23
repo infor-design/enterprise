@@ -114,12 +114,19 @@ FieldOptions.prototype = {
     const removeFocused = (elem) => {
       (elem || this.element).removeClass('is-focused');
     };
+    const canActive = () => {
+      let r = isFocus(this.element);
+      r = datepicker && datepicker.isOpen() ? false : r;
+      r = timepicker && timepicker.isOpen() ? false : r;
+      r = dropdown && dropdown.isOpen() ? false : r;
+      return r;
+    };
     const doActive = () => {
-      this.element.add(this.trigger).add(this.field).add(this.fieldParent)
+      self.element.add(self.trigger).add(self.field).add(self.fieldParent)
         .addClass('is-active');
     };
     const doUnactive = () => {
-      this.element.add(this.trigger).add(this.field).add(this.fieldParent)
+      self.element.add(self.trigger).add(self.field).add(self.fieldParent)
         .removeClass('is-active');
     };
     const canUnactive = (e) => {
@@ -175,6 +182,17 @@ FieldOptions.prototype = {
     // In desktop environments, the button should only display when the field is in use.
     if (env.features.touch) {
       this.field.addClass('visible');
+      this.trigger.on(`beforeopen.${COMPONENT_NAME}`, (e) => {
+        if (!canActive(e)) {
+          return;
+        }
+        doActive();
+      }).on(`close.${COMPONENT_NAME}`, (e) => {
+        if (!canUnactive(e)) {
+          return;
+        }
+        doUnactive();
+      });
     } else {
       this.field.removeClass('visible');
       this.field
@@ -324,8 +342,8 @@ FieldOptions.prototype = {
       .on(`selected.${COMPONENT_NAME}`, () => {
         this.popupmenuApi.settings.returnFocus = true;
       })
-      .on(`close.${COMPONENT_NAME}`, (e, isCancelled) => {
-        if (canUnactive(e) && isCancelled) {
+      .on(`close.${COMPONENT_NAME}`, (e) => {
+        if (canUnactive(e)) {
           doUnactive();
         }
       });
@@ -358,15 +376,15 @@ FieldOptions.prototype = {
           e.stopPropagation();
         }
       });
-
-      this.element
-        .on(`listopened.${COMPONENT_NAME}`, () => {
-          doActive();
-        })
-        .on(`listclosed.${COMPONENT_NAME}`, () => {
-          doUnactive();
-        });
     }
+
+    this.element
+      .on(`listopened.${COMPONENT_NAME}`, () => {
+        doActive();
+      })
+      .on(`listclosed.${COMPONENT_NAME}`, () => {
+        doUnactive();
+      });
 
     return this;
   }, // END: Handle Events -------------------------------------------------
@@ -411,6 +429,7 @@ FieldOptions.prototype = {
     ].join(' '));
 
     this.trigger.off([
+      `beforeopen.${COMPONENT_NAME}`,
       `click.${COMPONENT_NAME}`,
       `focusin.${COMPONENT_NAME}`,
       `focusout.${COMPONENT_NAME}`,
