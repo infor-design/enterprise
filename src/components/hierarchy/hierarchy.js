@@ -174,6 +174,8 @@ Hierarchy.prototype = {
       const isAction = target.is('a') && target.parent().parent().is('ul.popupmenu');
       let eventType = 'selected';
 
+      e.stopImmediatePropagation();
+
       $('.is-selected').removeClass('is-selected');
       $(`#${nodeId}`).addClass('is-selected');
 
