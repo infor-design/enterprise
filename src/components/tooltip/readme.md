@@ -72,6 +72,8 @@ Another possible method of defining custom tooltips is to create a hidden HTML e
 </div>
 ```
 
+To prevent Cross-site Scripting (XSS) attacks the tooltip plugin will strip all tags except for the following tags. `<div><p><span><ul><br><svg><use><li><a><abbr><b><i><kbd><small><strong><sub>`
+
 The code above is demoed in the [icons in tooltips example]( ../components/tooltip/example-icon-in-tooltip).
 
 ## Accessibility

@@ -5,7 +5,8 @@ import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../../utils/debounced-resize';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
+import { DOM } from '../../utils/dom';
 
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
@@ -995,11 +996,12 @@ Datagrid.prototype = {
       self.headerTable = self.headerContainer.find('table');
       self.headerTable.width(this.headerTableWidth());
       self.headerColGroup = $(headerColGroup).appendTo(self.headerTable);
-      self.headerRow = $(`<thead>${headerRow}</thead>`).appendTo(self.headerContainer.find('table'));
+      DOM.append(self.headerContainer.find('table'), `<thead>${headerRow}</thead>`, '*');
+      self.headerRow = self.headerContainer.find('thead');
       self.element.prepend(self.headerContainer);
     } else {
       self.headerTable.width(this.headerTableWidth());
-      self.headerRow.html(headerRow);
+      DOM.html(self.headerRow, headerRow, '*');
       self.headerColGroup.html(cols);
     }
 
@@ -2225,7 +2227,7 @@ Datagrid.prototype = {
     const rawValue = obj[field];
     let value = (rawValue || rawValue === 0 || rawValue === false ? rawValue : '');
 
-    value = $.escapeHTML(value);
+    value = xssUtils.escapeHTML(value);
     return value;
   },
 
@@ -2462,7 +2464,7 @@ Datagrid.prototype = {
       self.tableBody.before(self.bodyColGroup);
     }
 
-    self.tableBody.html(tableHtml);
+    DOM.html(self.tableBody, tableHtml, '*');
     self.setVirtualHeight();
     self.setScrollClass();
     self.setupTooltips(forcedTooltip);
@@ -3055,7 +3057,7 @@ Datagrid.prototype = {
       // Get formatted value (without html) so we have accurate string that
       // will display for this cell
       val = self.formatValue(columnDef.formatter, i, null, val, columnDef, row, self);
-      val = stringUtils.stripHTML(val);
+      val = xssUtils.stripHTML(val);
 
       len = val.toString().length;
 
@@ -3063,7 +3065,7 @@ Datagrid.prototype = {
         for (let k = 0; k < row.values.length; k++) {
           let groupVal = this.fieldValue(row.values[k], columnDef.field);
           groupVal = self.formatValue(columnDef.formatter, i, null, groupVal, columnDef, row, self);
-          groupVal = stringUtils.stripHTML(groupVal);
+          groupVal = xssUtils.stripHTML(groupVal);
 
           len = groupVal.toString().length;
           if (len > max) {
@@ -3527,7 +3529,7 @@ Datagrid.prototype = {
           cell.data('tooltip').settings.maxWidth = w;
 
           clonedEl.remove();
-          return stringUtils.stripHTML(text);
+          return xssUtils.stripHTML(text);
         }
 
         clonedEl.remove();
@@ -4296,11 +4298,11 @@ Datagrid.prototype = {
     }
 
     if (self.toolbar) {
-      self.toolbar.find('.datagrid-result-count').html(countText);
-      self.toolbar.attr('aria-label', self.toolbar.find('.title').text());
+      DOM.html(self.toolbar.find('.datagrid-result-count'), countText, '<span>');
+      self.toolbar[0].setAttribute('aria-label', self.toolbar.find('.title').text());
       self.toolbar.find('.datagrid-row-count').text(count);
     }
-    self.element.closest('.modal').find('.datagrid-result-count').html(countText);
+    DOM.html(self.element.closest('.modal').find('.datagrid-result-count'), countText, '<span>');
     this.lastCount = count;
 
     this.checkEmptyMessage();
@@ -5373,7 +5375,7 @@ Datagrid.prototype = {
       dataRowIndex = idx;
     }
 
-    if (!rowNode) {
+    if (!rowNode || (!rowNode.length && s.source)) {
       return;
     }
 
@@ -5386,7 +5388,7 @@ Datagrid.prototype = {
       let rowData;
       const selectNode = function (elem, index, data) {
         // do not add if already exists in selected
-        if (self.isNodeSelected(data)) {
+        if (!data || self.isNodeSelected(data)) {
           return;
         }
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
@@ -5524,6 +5526,17 @@ Datagrid.prototype = {
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     let rows = dataset;
+
+    if (this.settings.groupable) {
+      rows = [];
+      for (let i = 0, l = dataset.length; i < l; i++) {
+        if (dataset[i].values) {
+          for (let i2 = 0, l2 = dataset[i].values.length; i2 < l2; i2++) {
+            rows.push(i2);
+          }
+        }
+      }
+    }
 
     if (this.filterRowRendered) {
       rows = [];
@@ -6369,7 +6382,6 @@ Datagrid.prototype = {
         if (!self.editor) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
-        e.preventDefault();
       }
 
       // if column have click function to fire [ie. action button]
@@ -6616,10 +6628,10 @@ Datagrid.prototype = {
       }
       // Fix: Not sure why, but `input.closest('td')` did not work
       cellNode = this.tableBody.find(`#${input.attr('id')}`).closest('td');
-      newValue = $.escapeHTML(newValue);
+      newValue = xssUtils.escapeHTML(newValue);
     } else {
       cellNode = input.closest('td');
-      newValue = $.escapeHTML(newValue);
+      newValue = xssUtils.escapeHTML(newValue);
     }
 
     // Format Cell again
@@ -7181,7 +7193,7 @@ Datagrid.prototype = {
       }
     }
 
-    coercedVal = $.unescapeHTML(coercedVal);
+    coercedVal = xssUtils.unescapeHTML(coercedVal);
 
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
@@ -7199,7 +7211,7 @@ Datagrid.prototype = {
     }
 
     // update cell value
-    const escapedVal = $.escapeHTML(coercedVal);
+    const escapedVal = xssUtils.escapeHTML(coercedVal);
     const rowIdx = (isTreeGrid ? row + 1 : row);
     const val = (isEditor ? coercedVal : escapedVal);
     formatted = this.formatValue(formatter, rowIdx, cell, val, col, rowData);

@@ -10,6 +10,10 @@ describe('Editor example-index tests', () => {
     await utils.setPage('/components/editor/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should be able to edit in both modes', async () => {
     const elem = await element(by.css('.editor'));
 

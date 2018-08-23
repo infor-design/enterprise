@@ -298,9 +298,14 @@
   }
 
   .add-tab-button {
-    padding: 11px 12px;
+    margin-top: 3px;
+    padding: 6px 0;
     text-align: center;
-    width: 50px;
+    width: 35px;
+
+    span[aria-hidden] {
+      @include font-size(20);
+    }
   }
 
   .more-text {

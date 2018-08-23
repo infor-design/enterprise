@@ -415,49 +415,6 @@ $.copyToClipboard = function (text) { // eslint-disable-line
 };
 
 /**
- * Escapes HTML, replacing special characters with encoded symbols.
- * @private
- * @param {string} value HTML in string form
- * @returns {string} the modified value
- */
-$.escapeHTML = function (value) {
-  let newValue = value;
-  if (typeof value === 'string') {
-    newValue = newValue.replace(/&/g, '&amp;');
-    newValue = newValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-  return newValue;
-};
-
-/**
- * Un-escapes HTML, replacing encoded symbols with special characters.
- * @private
- * @param {string} value HTML in string form
- * @returns {string} the modified value
- */
-$.unescapeHTML = function (value) {
-  let newValue = value;
-  if (typeof value === 'string') {
-    newValue = newValue.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-    newValue = newValue.replace(/&amp;/g, '&');
-  }
-  return newValue;
-};
-
-/**
- * Remove Script tags and all onXXX functions
- * @private
- * @param {string} html HTML in string form
- * @returns {string} the modified value
- */
-$.sanitizeHTML = function (html) {
-  let santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
-  santizedHtml = santizedHtml.replace(/<[^>]+/g, match => match.replace(/(\/|\s)on\w+=(\'|")?[^"]*(\'|")?/g, '')); // eslint-disable-line
-
-  return santizedHtml;
-};
-
-/**
  * Clearable (Shows an X to clear)
  * @private
  */

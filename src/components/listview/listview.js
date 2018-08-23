@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { stringUtils as str } from '../../utils/string';
 import { Tmpl } from '../tmpl/tmpl';
 import { ListFilter } from '../listfilter/listfilter';
@@ -230,7 +231,8 @@ ListView.prototype = {
       if (dataset.length > 0 || this.settings.forceToRenderOnEmptyDs) {
         this.element.html(renderedTmpl);
       } else if (self.emptyMessageContainer) {
-        this.element.empty().append(this.emptyMessageContainer);
+        this.element.empty();
+        DOM.append(this.element, this.emptyMessageContainer[0].outerHTML, '<div><svg><use><span><b>');
       } else if (dataset.length === 0) {
         this.element.html(renderedTmpl || '<ul></ul>');
       }

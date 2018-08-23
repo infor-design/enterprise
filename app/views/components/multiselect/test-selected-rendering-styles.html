@@ -46,7 +46,7 @@
 
     <div class="field">
       <label for="move-selected-to-top-multiselect">Towns using multiselect</label>
-      <select id="move-selected-to-top-multiselect" name="move-selected-to-top-multiselect" class="multiselect" data-init="false" multiple></select>
+      <select id="move-selected-to-top-multiselect" name="move-selected-to-top-multiselect" class="multiselect" data-init="false" multiple="true"></select>
     </div>
 
   </div>
@@ -54,7 +54,7 @@
 
     <div class="field">
       <label for="move-selected-to-top-dropdown">Towns using dropdown</label>
-      <select id="move-selected-to-top-dropdown" name="move-selected-to-top-dropdown" class="multiselect" data-init="false" multiple></select>
+      <select id="move-selected-to-top-dropdown" name="move-selected-to-top-dropdown" class="multiselect" data-init="false" multiple="true"></select>
     </div>
 
   </div>
@@ -65,14 +65,12 @@
 
     function townsSource(response, term) {
       $.getJSON('{{basepath}}api/towns', function(data, term) {
-        console.log(data, term);
         response(data);
       });
     }
 
     function statesSource(response, term) {
       $.getJSON('{{basepath}}api/states', function(data, term) {
-        console.log(data, term);
         response(data);
       });
     }

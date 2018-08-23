@@ -26,7 +26,7 @@
     border-right: 0;
 
     .panel-header {
-      border-bottom: none;
+      border-bottom: 0;
       height: 41px;
       padding-right: 0;
     }
@@ -151,4 +151,10 @@
       line-height: normal;
     }
   }
+}
+
+.splitter-overlay {
+  height: 100%;
+  opacity: .6;
+  visibility: visible;
 }

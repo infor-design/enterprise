@@ -2,6 +2,8 @@ import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { breakpoints } from '../../utils/breakpoints';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
+
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { Locale } from '../locale/locale';
 
@@ -1704,7 +1706,9 @@ SearchField.prototype = {
 
     $('<li class="separator" role="presentation"></li>').appendTo(list);
     const more = $('<li role="presentation"></li>').appendTo(list);
-    this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html(`<span>${Locale.translate('AllResults')} "${val}"</span>`).appendTo(more);
+    this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>')
+      .html(`<span>${Locale.translate('AllResults')} "${xssUtils.ensureAlphaNumeric(val)}"</span>`)
+      .appendTo(more);
   },
 
   /**

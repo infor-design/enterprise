@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
 
 // jQuery components
@@ -961,7 +962,7 @@ Accordion.prototype = {
     const elem = this.getElements(element);
     const adjacentHeaders = elem.header.parent().children();
     const currentIndex = adjacentHeaders.index(elem.header);
-    let target = $(adjacentHeaders.get(currentIndex - 1));
+    let target = $(adjacentHeaders.get(xssUtils.ensureAlphaNumeric(currentIndex) - 1));
 
     if (!adjacentHeaders.length || currentIndex === 0) {
       if (elem.header.parent('.accordion-pane').length) {
@@ -1016,7 +1017,7 @@ Accordion.prototype = {
     const elem = this.getElements(element);
     const adjacentHeaders = elem.header.parent().children();
     const currentIndex = adjacentHeaders.index(elem.header);
-    let target = $(adjacentHeaders.get(currentIndex + 1));
+    let target = $(adjacentHeaders.get(xssUtils.ensureAlphaNumeric(currentIndex) + 1));
 
     if (!adjacentHeaders.length || currentIndex === adjacentHeaders.length - 1) {
       if (elem.header.parent('.accordion-pane').length) {
@@ -1040,7 +1041,7 @@ Accordion.prototype = {
           return this.descend(prevHeader);
         }
       }
-      target = $(adjacentHeaders.get(currentIndex + 2));
+      target = $(adjacentHeaders.get(xssUtils.ensureAlphaNumeric(currentIndex) + 2));
 
       // if no target's available here, we've hit the end and need to wrap around
       if (!target.length) {

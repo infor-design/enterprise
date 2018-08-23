@@ -27,6 +27,11 @@
     $('#hierarchy').on('dblclick', function(event, eventInfo) {
       console.log(event, eventInfo);
     });
+
+    setTimeout(() => {
+      $('#hierarchy').data('hierarchy').selectLeaf("1_3");
+    }, 100);
+
 </script>
 
 

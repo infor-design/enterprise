@@ -638,6 +638,20 @@
     line-height: 16px;
     padding: 9px 10px 9px 40px;
     width: 100%;
+
+    &[disabled] {
+      opacity: $listview-search-disabled-opacity;
+      color: $listview-search-disabled-color;
+      -webkit-text-fill-color: $listview-search-disabled-color;
+
+      &:hover {
+        border-color: $listview-search-disabled-border-color;
+      }
+
+      ~ svg.icon {
+        fill: $listview-search-disabled-icon-color;
+      }
+    }
   }
 
   // Modify the height of the content inside of listview cards

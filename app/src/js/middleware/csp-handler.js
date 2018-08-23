@@ -1,11 +1,16 @@
-const logger = require('../logger');
-
 // Adds a stored "nonce" attribute to all script tags to conform with security policy.
 function addNonceToScript(html, nonce) {
   if (!html || !html.length) {
     return '';
   }
   return html.replace(/<script/ig, `<script nonce="${nonce}"`);
+}
+
+function addNonceToStyle(html, nonce) {
+  if (!html || !html.length) {
+    return '';
+  }
+  return html.replace(/<style/ig, `<style nonce="${nonce}"`);
 }
 
 // Appends "nonce" attributes to script tags inside the response body that match the demoapp's
@@ -15,6 +20,10 @@ module.exports = function () {
     if (!res.opts.csp) {
       next();
       return;
+    }
+
+    if (!res.opts.nonce) {
+      res.opts.nonce = Math.random().toString(12).replace(/[^a-z0-9]+/g, '').substr(0, 8);
     }
 
     res.setPolicy({
@@ -35,6 +44,11 @@ module.exports = function () {
             'ws://10.0.2.2:35729'
           ],
           'object-src': ['none'],
+          // Ultimately we want this (see SECURITY.MD)
+          // 'style-src': [
+          //   'self',
+          //   `nonce-${res.opts.nonce}`
+          // ],
           'style-src': ['* data: http://* \'unsafe-inline\''],
           'font-src': ['self',
             'https://fonts.googleapis.com',
@@ -56,8 +70,8 @@ module.exports = function () {
     res.send = function (...args) {
       // arguments[0] (or `data`) contains the response body
       if (typeof args[0] === 'string') {
-        logger('info', 'adding "nonce" attributes to script tags on this response.');
         args[0] = addNonceToScript(args[0], res.opts.nonce);
+        args[0] = addNonceToStyle(args[0], res.opts.nonce);
       }
       oldSend.apply(res, args);
     };

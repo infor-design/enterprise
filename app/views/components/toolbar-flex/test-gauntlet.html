@@ -292,7 +292,7 @@
     checkShowEyebrow();
 
     function updateText(field, textarea) {
-      textarea.html(field.val());
+      textarea.html(Soho.xss.ensureAlphaNumeric(field.val()));
     }
 
     inputTitleText.on('change.test input.test', function() {
