@@ -18,19 +18,26 @@ describe('Contextmenu index tests', () => {
   });
 
   it('Should open on click and close on click out', async () => {
-    const popupmenu = await element(by.id('action-popupmenu'));
-    await browser.actions().click(protractor.Button.RIGHT).perform();
-    await browser.driver.sleep(config.waitsFor);
+    const textLocation = await element(by.css('#maincontent > div:nth-child(1) > div > p ')).getLocation();
+    await browser.actions()
+      .mouseMove(textLocation)
+      .click(protractor.Button.RIGHT)
+      .perform();
+
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(popupmenu), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
 
     expect(await element(by.id('action-popupmenu')).getAttribute('class')).toContain('is-open');
 
-    await browser.actions().click(protractor.Button.Left).perform();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.invisibilityOf(popupmenu), config.waitsFor);
+    await browser.actions()
+      .mouseMove({ x: 20, y: 80 })
+      .click(protractor.Button.LEFT)
+      .perform();
 
-    expect(await popupmenu.getAttribute('class')).not.toContain('is-open');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
+
+    expect(await element(by.id('action-popupmenu')).getAttribute('class')).not.toContain('is-open');
   });
 });
 
