@@ -320,10 +320,8 @@ ColorPicker.prototype = {
       return;
     }
 
-    if (menu.length) {
-      if (this.isPickerOpen) {
-        return;
-      }
+    if (menu.length && this.isPickerOpen) {
+      return;
     }
 
     // Append Color Menu
