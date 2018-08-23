@@ -320,12 +320,8 @@ ColorPicker.prototype = {
       return;
     }
 
-    if (menu.length) {
-      $(document).trigger($.Event('keydown', { keyCode: 27, which: 27 })); // escape
-
-      if (this.isPickerOpen) {
-        return;
-      }
+    if (menu.length && this.isPickerOpen) {
+      return;
     }
 
     // Append Color Menu
@@ -349,7 +345,6 @@ ColorPicker.prototype = {
     };
 
     // Show Menu
-
     this.element
       .popupmenu(popupmenuOpts)
       .on('open.colorpicker', () => {
