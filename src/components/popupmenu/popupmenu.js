@@ -1646,12 +1646,6 @@ PopupMenu.prototype = {
        * @property {object} this menu instance
        */
       self.element.triggerHandler('open', [self.menu]);
-
-      if (self.settings.trigger === 'rightClick') {
-        self.element.on('click.popupmenu touchend.popupmenu', () => {
-          self.handleCloseEvent();
-        });
-      }
     }, 300);
 
     // Hide on iFrame Clicks - only works if on same domain
