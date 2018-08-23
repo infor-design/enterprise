@@ -20,14 +20,14 @@
 
 <script>
   // Re-invoke this accordion with a source function to set external content on expand
-  $(document).ready(function() {
+  $(function(){
     var loadedCategories = [];
 
     $('#ajax-accordion').accordion({
       source: function(ui, callback) {
         var categoryId = ui.anchor.attr('data-category-id'),
           setContent = function (htmlString) {
-            ui.pane.append(htmlString);
+            ui.pane.append(Soho.xss.stripTags(htmlString, '<div><span><a>'));
             callback();
           },
           isCategory = categoryId || 'fruits';
@@ -48,7 +48,7 @@
             loadedCategories.push(categoryId || 'fruits');
           })
           .fail(function() {
-            setContent('<div class="accordion-content" style="color: red;"><p>AJAX Error: Couldn\'t find any fruits...</p></div>');
+            setContent('<div class="accordion-content" class="alert01"><p>AJAX Error: Couldn\'t find any fruits...</p></div>');
           });
         return true;
       }

@@ -41,9 +41,24 @@ FieldOptions.prototype = {
     this.isFirefox = env.browser.name === 'firefox';
     this.isSafari = env.browser.name === 'safari';
 
-    this.targetElem = this.element;
-    this.hoverElem = this.targetElem;
     this.field = this.element.closest('.field, .radio-group');
+    this.targetElem = this.element;
+
+    const label = this.field.find('label');
+    if (label) {
+      this.label = label;
+    }
+
+    // In some cases, adjust the target element
+    if (this.element[0].className.match(/(dropdown|multiselect)/)) {
+      this.targetElem = this.element.data('dropdown').pseudoElem;
+    }
+    if (this.element[0].className.match(/(fileupload)/)) {
+      this.targetElem = this.field.find('.fileupload[type="text"]');
+    }
+
+    this.field.addClass('is-fieldoptions');
+
     this.fieldParent = this.element.closest('.field').parent();
     this.trigger = this.field.find('.btn-actions');
 
@@ -79,6 +94,7 @@ FieldOptions.prototype = {
    * @returns {object} The api
    */
   handleEvents() {
+    const self = this;
     const datepicker = this.element.data('datepicker');
     const timepicker = this.element.data('timepicker');
     const dropdown = this.element.data('dropdown');
@@ -86,7 +102,6 @@ FieldOptions.prototype = {
     const isCheckbox = this.element.is('.checkbox');
     const isFileupload = this.element.is('.fileupload');
     const isSearchfield = this.element.is('.searchfield');
-    const isSpinbox = this.element.is('.spinbox');
     const isColorpicker = this.element.is('.colorpicker');
     const isRadio = this.element.closest('.radio-group').length > 0;
     const isFieldset = this.element.is('.data') && this.element.closest('.summary-form').length > 0;
@@ -155,22 +170,29 @@ FieldOptions.prototype = {
       this.trigger.css({ top: `${getTriggerTopVal()}px` });
     };
 
-    // Update target element
-    this.targetElem = dropdown ? dropdown.pseudoElem : this.targetElem;
-    this.targetElem = isFileupload ? this.field.find('.fileupload[type="text"]') : this.targetElem;
+    // Set field-options visibility.
+    // In touch environments, the button should always be visible.
+    // In desktop environments, the button should only display when the field is in use.
+    if (env.features.touch) {
+      this.field.addClass('visible');
+    } else {
+      this.field.removeClass('visible');
+      this.field
+        .on(`mouseover.${COMPONENT_NAME}`, () => {
+          if (self.element.prop('disabled') || self.element.closest('is-disabled').length) {
+            return;
+          }
 
-    // Update hover element
-    this.hoverElem = isSpinbox ? this.element.add(this.field.find('.down, .up')) : this.targetElem;
-    this.hoverElem = isColorpicker ? this.element.add(this.field.find('.colorpicker-container, .swatch, .trigger')) : this.hoverElem;
-
-    // Set is-hover for field
-    this.hoverElem
-      .on(`mouseenter.${COMPONENT_NAME}`, () => {
-        this.field.addClass('is-hover');
-      })
-      .on(`mouseleave.${COMPONENT_NAME}`, () => {
-        this.field.removeClass('is-hover');
-      });
+          if (self.field[0].className.indexOf('visible') < 0) {
+            self.field[0].classList.add('visible');
+          }
+        })
+        .on(`mouseout.${COMPONENT_NAME}`, () => {
+          if (self.field[0].className.indexOf('visible') > -1) {
+            self.field[0].classList.remove('visible');
+          }
+        });
+    }
 
     // Adjust stack order for dropdown
     if (dropdown) {
@@ -195,14 +217,12 @@ FieldOptions.prototype = {
     }
     // Move trigger(action-button) in to lookup-wrapper
     if (lookup || isColorpicker) {
-      this.field.addClass('is-fieldoptions');
       this.field.on(`click.${COMPONENT_NAME}`, '.lookup-wrapper .trigger, .colorpicker-container .trigger', () => {
         doActive();
       });
 
       if (isColorpicker) {
         this.element
-          .off(`beforeopen.${COMPONENT_NAME}`)
           .on(`beforeopen.${COMPONENT_NAME}`, () => {
             doActive();
           });
@@ -210,7 +230,6 @@ FieldOptions.prototype = {
     }
     // Checkbox add parent css class
     if (isCheckbox) {
-      this.field.addClass('is-fieldoptions');
       this.trigger.addClass('is-checkbox');
     }
     // Bind fileupload events
@@ -222,13 +241,8 @@ FieldOptions.prototype = {
         doActive();
       });
     }
-    // Spinbox add parent css class
-    if (isSpinbox) {
-      this.field.addClass('is-fieldoptions');
-    }
     // Move trigger(action-button) in to searchfield-wrapper
     if (isSearchfield) {
-      this.field.addClass('is-fieldoptions');
       setTimeout(() => {
         this.trigger.add(this.trigger.next('.popupmenu'))
           .appendTo(this.element.closest('.searchfield-wrapper'));
@@ -254,25 +268,25 @@ FieldOptions.prototype = {
           doUnactive();
         }
       });
-      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${COMPONENT_NAME}`, () => {
         setTriggerCssTop();
       });
     }
     // Radio group - set trigger(action-button) top value and bind events
     if (isRadio) {
       setTriggerCssTop();
-      this.element.find('.radio')
-        .on(`focusin.${COMPONENT_NAME}`, () => {
+      this.element
+        .on(`focusin.${COMPONENT_NAME}`, '.radio', () => {
           const delay = this.isSafari ? 200 : 0;
           addFocused();
           setTimeout(() => {
             doActive();
           }, delay);
         })
-        .on(`focusout.${COMPONENT_NAME}`, () => {
+        .on(`focusout.${COMPONENT_NAME}`, '.radio', () => {
           removeFocused();
         });
-      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${COMPONENT_NAME}`, () => {
         setTriggerCssTop();
       });
     }
@@ -381,15 +395,42 @@ FieldOptions.prototype = {
    * @returns {object} The api
    */
   unbind() {
-    $(document)
-      .add('body')
-      .add(this.field)
-      .add(this.element)
-      .add(this.trigger)
-      .add(this.hoverElem)
-      .add(this.targetElem)
-      .add(this.element.find('.radio'))
-      .off(`.${COMPONENT_NAME}`);
+    this.field.off([
+      `click.${COMPONENT_NAME}`,
+      `mouseover.${COMPONENT_NAME}`,
+      `mouseout.${COMPONENT_NAME}`
+    ].join(' '));
+
+    this.element.off([
+      `beforeopen.${COMPONENT_NAME}`,
+      `change.${COMPONENT_NAME}`,
+      `focusin.${COMPONENT_NAME}`,
+      `focusout.${COMPONENT_NAME}`,
+      `listclosed.${COMPONENT_NAME}`,
+      `listopened.${COMPONENT_NAME}`
+    ].join(' '));
+
+    this.trigger.off([
+      `click.${COMPONENT_NAME}`,
+      `focusin.${COMPONENT_NAME}`,
+      `focusout.${COMPONENT_NAME}`,
+      `selected.${COMPONENT_NAME}`,
+      `close.${COMPONENT_NAME}`
+    ].join(' '));
+
+    this.targetElem.off([
+      `click.${COMPONENT_NAME}`,
+      `keydown.${COMPONENT_NAME}`
+    ].join(' '));
+
+    $('body').off([
+      `resize.${COMPONENT_NAME}`
+    ].join(' '));
+
+    $(document).off([
+      `click.${COMPONENT_NAME}`
+    ].join(' '));
+
     return this;
   },
 

@@ -16,6 +16,32 @@
   }
 }
 
+.colorpicker-min-width {
+  .colorpicker-container {
+    width: auto;
+  }
+}
+
+.colorpicker-input-xs {
+  @extend .input-xs;
+}
+
+.colorpicker-input-sm {
+  @extend .input-sm;
+}
+
+.colorpicker-input-mm {
+  @extend .input-mm;
+}
+
+.colorpicker-input-md {
+  @extend .input-md;
+}
+
+.colorpicker-input-lg {
+  @extend .input-lg;
+}
+
 .colorpicker-container {
   background-color: $input-bg-color;
   border: 1px solid $input-border-color;
@@ -62,9 +88,8 @@
     }
 
     .trigger {
-      margin-left: -15px;
+      margin-left: -5px;
     }
-
   }
 
   &.is-readonly {
@@ -78,6 +103,8 @@
       input[readonly] {
         background-color: $input-bg-color;
         border-color: $input-border-color;
+        color: $input-color;
+        -webkit-text-fill-color: $input-color;
       }
 
       input[readonly]:focus {

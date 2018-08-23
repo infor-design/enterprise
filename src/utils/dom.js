@@ -1,3 +1,4 @@
+import { xssUtils } from './xss';
 
 const DOM = {};
 
@@ -30,7 +31,7 @@ DOM.classNameExists = function classNameExists(element) {
  * @param {string} targetContents the contents that need to exist inside the `classNameString`
  * @returns {boolean} whether or not a className exists
  */
-DOM.classNameHas = function has(classNameString, targetContents) {
+DOM.hasClassName = function has(classNameString, targetContents) {
   return classNameString.indexOf(targetContents) > -1;
 };
 
@@ -96,6 +97,80 @@ DOM.getDimensions = function getDimensions(el) {
   }
 
   return rectObj;
+};
+
+/**
+ * Append content to a DOM element (like jQuery.append)
+ * @param {HTMLElement|SVGElement|jQuery[]} el The element to append to
+ * @param {string|jQuery} contents The html string or jQuery object.
+ * @param {string} stripTags A list of tags to strip to prevent xss, or * for sanitizing and allowing all tags.
+ */
+DOM.append = function append(el, contents, stripTags) {
+  let domEl = el;
+
+  if (el instanceof $ && el.length) {
+    domEl = domEl[0];
+  }
+
+  if (domEl instanceof HTMLElement || domEl instanceof SVGElement) {
+    domEl.insertAdjacentHTML('beforeend', this.xssClean(contents, stripTags));
+  }
+};
+
+/**
+ * Set an attribute with an extra check that the object exists.
+ * @param {HTMLElement|SVGElement|jQuery[]} el The element to set the attribute on
+ * @param {string} attribute The attribute name.
+ * @param {string} value The attribute value.
+ */
+DOM.setAttribute = function append(el, attribute, value) {
+  let domEl = el;
+
+  if (el instanceof $ && el.length) {
+    domEl = domEl[0];
+  }
+
+  if (domEl instanceof HTMLElement || domEl instanceof SVGElement) {
+    domEl.setAttribute('attribute', value);
+  }
+};
+
+/**
+ * Clean the markup before insertion.
+ * @param {string|jQuery} contents The html string or jQuery object.
+ * @param {string} stripTags A list of tags to strip to prevent xss, or * for sanitizing and allowing all tags.
+ * @returns {string} the cleaned up markup
+ */
+DOM.xssClean = function xssClean(contents, stripTags) {
+  let markup = contents;
+
+  if (stripTags && stripTags !== '*') {
+    markup = xssUtils.stripTags(contents, stripTags);
+  }
+
+  if (stripTags === '*') {
+    markup = xssUtils.sanitizeHTML(contents);
+  }
+
+  return markup;
+};
+
+/**
+ * Append content to a DOM element (like jQuery.append)
+ * @param {HTMLElement|SVGElement|jQuery[]} el The element to append to
+ * @param {string|jQuery} contents The html string or jQuery object.
+ * @param {string} stripTags A list of tags to strip to prevent xss, or * for sanitizing and allowing all tags.
+ */
+DOM.html = function html(el, contents, stripTags) {
+  let domEl = el;
+
+  if (el instanceof $ && el.length) {
+    domEl = domEl[0];
+  }
+
+  if (domEl instanceof HTMLElement || domEl instanceof SVGElement) {
+    domEl.innerHTML = this.xssClean(contents, stripTags);
+  }
 };
 
 export { DOM };

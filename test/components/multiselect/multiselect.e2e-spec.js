@@ -31,6 +31,10 @@ describe('Multiselect example-states tests', () => {
     await utils.setPage('/components/multiselect/example-states');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should open multiselect list on click', async () => {
     await clickOnMultiselect();
     await browser.driver

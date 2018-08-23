@@ -10,6 +10,10 @@ describe('CAP jquery context tests', () => {
     await utils.setPage('/components/contextualactionpanel/example-jquery.html');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should open popup on click', async () => {
     await element(by.id('js-contextual-panel')).click();
     await browser.driver.sleep(config.sleep);

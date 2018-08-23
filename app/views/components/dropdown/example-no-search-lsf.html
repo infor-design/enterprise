@@ -73,6 +73,9 @@
 
 <script>
   $('#nosearch-dropdown').on('change', function () {
-    console.log($(this).val());
+    $('body').toast({
+      'title': 'Change Event Fired',
+      'message': 'Value changed to <span class="text-strong">' + $(this).val() + '</span> '
+    });
   });
 </script>

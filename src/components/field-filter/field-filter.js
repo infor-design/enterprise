@@ -94,7 +94,7 @@ FieldFilter.prototype = {
       let id = this.element.attr('id') || this.element.attr('name');
       if (typeof id === 'undefined') {
         id = $.fn.uniqueId('fieldfilter-');
-        this.element.attr('id', id);
+        this.element[0].setAttribute('id', id);
       }
       const ffId = `${id}-ff`;
 
@@ -119,11 +119,13 @@ FieldFilter.prototype = {
       // Find the field filter dropdown
       this.ffdropdown = this.field.find('select.dropdown.field-filter-dropdown');
       this.ffdropdown
-        .attr({ id: ffId, named: ffId })
         .dropdown(s.dropdownOpts)
         .prev('label')
-        .addClass('audible')
-        .attr('for', ffId);
+        .addClass('audible');
+
+      this.ffdropdown[0].setAttribute('id', ffId);
+      this.ffdropdown[0].setAttribute('name', ffId);
+      this.ffdropdown.prev('label')[0].setAttribute('for', ffId);
 
       // Add css classes
       this.field.addClass('fieldfilter-wrapper')

@@ -729,6 +729,8 @@ describe('Locale API', () => {
   });
 
   it('truncate decimals', () => {
+    Locale.set('en-US');
+
     expect(Locale.truncateDecimals('1111111111.11', 2, 2)).toEqual('1111111111.11');
     expect(Locale.truncateDecimals('11111111111.11', 2, 2)).toEqual('11111111111.11');
     expect(Locale.truncateDecimals('1.10', 2, 2)).toEqual('1.10');

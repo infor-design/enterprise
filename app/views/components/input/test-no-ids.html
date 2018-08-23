@@ -319,7 +319,7 @@
       <button class="btn-secondary" name="trigger-busy-dropdown" type="button">Load</button>
     </div>
     <script>
-      $(document).ready(function() {
+      $(function(){
         $('[name="trigger-busy-dropdown"]').click(function(e) {
           e.preventDefault();
           $('[name="busy-dropdown"]').trigger('start');

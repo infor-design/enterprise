@@ -55,11 +55,22 @@ HideFocus.prototype = {
       });
     } else {
       // All other elements (ie. Hyperlinks)
+      const handleMousedown = (e) => {
+        isClick = true;
+        $el.addClass('hide-focus');
+        $el.triggerHandler('hidefocusadd', [e]);
+      };
+      const isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+      if (isTouch) {
+        $el.on('touchstart.hide-focus', (e) => {
+          handleMousedown(e);
+        });
+      }
+
       $el.addClass('hide-focus')
-        .on('mousedown.hide-focus touchstart.hide-focus', (e) => {
-          isClick = true;
-          $el.addClass('hide-focus');
-          $el.triggerHandler('hidefocusadd', [e]);
+        .on('mousedown.hide-focus', (e) => {
+          handleMousedown(e);
         })
         .on('focusin.hide-focus', (e) => {
           if (!isClick && !isFocused) {

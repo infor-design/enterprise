@@ -2,10 +2,11 @@
 
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { ListFilter } from '../listfilter/listfilter';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../../utils/highlight';
@@ -295,14 +296,7 @@ Autocomplete.prototype = {
     filterResult.forEach((dataset) => {
       if (typeof Tmpl !== 'undefined') {
         const renderedTmpl = Tmpl.compile(self.tmpl, dataset);
-        self.list.append($.sanitizeHTML(renderedTmpl));
-      } else {
-        const listItem = $('<li role="listitem"></li>');
-        listItem.attr('id', dataset.listItemId);
-        listItem.attr('data-index', dataset.index);
-        listItem.attr('data-value', dataset.value);
-        listItem.append(`<a href="#" tabindex="-1"><span>${dataset.label}</span></a>`);
-        self.list.append($.sanitizeHTML(listItem));
+        DOM.append(self.list, renderedTmpl, '*');
       }
     });
 
@@ -542,7 +536,7 @@ Autocomplete.prototype = {
       if (deferredStatus === false) {
         return dfd.reject(searchTerm);
       }
-      return dfd.resolve(searchTerm, response);
+      return dfd.resolve(xssUtils.ensureAlphaNumeric(searchTerm), response);
     }
 
     this.loadingTimeout = setTimeout(() => {
@@ -714,7 +708,7 @@ Autocomplete.prototype = {
     this.noSelect = true;
 
     // Update the data for the event
-    ret.label = stringUtils.stripHTML(ret.label);
+    ret.label = xssUtils.stripHTML(ret.label);
 
     // Add these elements for key down vs click consistency
     if (!ret.highlightTarget) {

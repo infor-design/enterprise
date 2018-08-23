@@ -1,6 +1,7 @@
 // Other Shared Imports
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
@@ -391,8 +392,8 @@ CompletionChart.prototype = {
       '</div>';
     }
 
-    html.body.append(html.remaining, html.completed, html.targetline);
-    this.element.append(html.label, html.body);
+    DOM.append(html.body, (html.remaining || '') + (html.completed || '') + (html.targetline || ''), '<div><span><br>');
+    DOM.append(this.element, html.label + html.body.prop('outerHTML'), '<div><span><br>');
 
     cacheElements();
     setJsonData();
