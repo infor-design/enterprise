@@ -53,62 +53,59 @@
 
   </div>
 </header>
-<div id="maincontent" class="page-container scrollable" role="main">
-  <div class="row">
-    <div class="six columns">
-      <h2>Header Test: Gauntlet</h2>
-      <p><a class="hyperlink" href="https://jira.infor.com/browse/SOHO-6434" target="_blank">Related JIRA Ticket</a>. This test demonstrates various configurations of a component header.  Use the controls below to customize the header above.</p>
-    </div>
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Header Test: Gauntlet</h2>
+    <p><a class="hyperlink" href="https://jira.infor.com/browse/SOHO-6434" target="_blank">Related JIRA Ticket</a>. This test demonstrates various configurations of a component header.  Use the controls below to customize the header above.</p>
   </div>
+</div>
+<div class="row">
+  <div class="six columns">
 
-  <div class="row">
-    <div class="six columns">
-
-      <div class="field">
-        <label for="title-name">Header Title Text</label>
-        <input id="title-name" type="text" value="Header Toolbar Gauntlet"/>
-        <button class="btn-icon" id="update-title-name">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-refresh"></use>
-          </svg>
-          <span class="audible">Update Title Text</span>
-        </button>
-      </div>
-
-      <div class="field">
-        <input type="checkbox" class="checkbox" name="eyebrow-toggle" id="eyebrow-toggle"/>
-        <label for="eyebrow-toggle" class="radio-label">Toggle "Eyebrow" Header Text</label>
-      </div>
-
-      <div class="field">
-        <label for="eyebrow-text">Eyebrow Text</label>
-        <input id="eyebrow-text" type="text" value="Extra Info" disabled/>
-      </div>
-
-          <input type="checkbox" class="checkbox" name="title-button-toggle" id="title-button-toggle" checked/>
-          <label for="title-button-toggle" class="radio-label">Toggle App Menu (Title) Button</label>
-          <br />
-
-          <input type="checkbox" class="checkbox" name="searchfield-toggle" id="searchfield-toggle" checked/>
-          <label for="searchfield-toggle" class="radio-label">Toggle Searchfield</label>
-          <br />
-
-          <input type="checkbox" class="checkbox" name="more-button-toggle" id="more-button-toggle" checked/>
-          <label for="more-button-toggle" class="radio-label">Toggle "More Actions" Button</label>
-          <br />
-
-          <input type="checkbox" class="checkbox" name="settings-toggle" id="settings-toggle" checked/>
-          <label for="settings-toggle" class="radio-label">Toggle "Settings" Toolbar Button</label>
-          <br />
-
-          <input type="checkbox" class="checkbox" name="delete-toggle" id="delete-toggle" checked/>
-          <label for="delete-toggle" class="radio-label">Toggle "Delete" Toolbar Button</label>
-          <br />
-
-          <input type="checkbox" class="checkbox" name="filter-toggle" id="filter-toggle" checked/>
-          <label for="filter-toggle" class="radio-label">Toggle "Filter" Toolbar Button</label>
-
+    <div class="field">
+      <label for="title-name">Header Title Text</label>
+      <input id="title-name" type="text" value="Header Toolbar Gauntlet"/>
+      <button class="btn-icon" id="update-title-name">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-refresh"></use>
+        </svg>
+        <span class="audible">Update Title Text</span>
+      </button>
     </div>
+
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="eyebrow-toggle" id="eyebrow-toggle"/>
+      <label for="eyebrow-toggle" class="radio-label">Toggle "Eyebrow" Header Text</label>
+    </div>
+
+    <div class="field">
+      <label for="eyebrow-text">Eyebrow Text</label>
+      <input id="eyebrow-text" type="text" value="Extra Info" disabled/>
+    </div>
+
+    <input type="checkbox" class="checkbox" name="title-button-toggle" id="title-button-toggle" checked/>
+    <label for="title-button-toggle" class="radio-label">Toggle App Menu (Title) Button</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="searchfield-toggle" id="searchfield-toggle" checked/>
+    <label for="searchfield-toggle" class="radio-label">Toggle Searchfield</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="more-button-toggle" id="more-button-toggle" checked/>
+    <label for="more-button-toggle" class="radio-label">Toggle "More Actions" Button</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="settings-toggle" id="settings-toggle" checked/>
+    <label for="settings-toggle" class="radio-label">Toggle "Settings" Toolbar Button</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="delete-toggle" id="delete-toggle" checked/>
+    <label for="delete-toggle" class="radio-label">Toggle "Delete" Toolbar Button</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="filter-toggle" id="filter-toggle" checked/>
+    <label for="filter-toggle" class="radio-label">Toggle "Filter" Toolbar Button</label>
+
   </div>
 </div>
 
@@ -142,7 +139,7 @@
 
     h1Contents += '<span class="page-title">'+ textField.val() +'</span>';
 
-    titleTextElem.html(h1Contents);
+    titleTextElem.html(Soho.xss.sanitizeHTML(h1Contents));
     toolbarElem.triggerHandler('recalculate-buttons');
   }
 

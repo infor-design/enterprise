@@ -22,6 +22,10 @@ describe('Radios example-index tests', () => {
         .presenceOf(element(by.id(radioId))), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-index', async () => {
       const radioIdEl = await element(by.id(radioId));

@@ -28,13 +28,12 @@
         //Define a custom Validator that just fails
         $.fn.validation.rules.customRule = {
         	check: function (value, field, grid) {
-        		console.log(value, field, grid);
             return false;
         	},
         	message: 'Incorrect Input'
         };
-        
-        
+
+
         $.fn.validation.rules.customAsyncRule = {
           check: function (value, field, grid, manageResult, dfd) {
             var result;

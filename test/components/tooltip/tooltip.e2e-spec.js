@@ -11,6 +11,10 @@ describe('Tooltips on icons', () => {
     await utils.setPage('/components/icons/example-tooltips');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('should display when hovering the icon', async () => {
     await browser.actions()
       .mouseMove(await element(by.id('standalone-delete-icon')))

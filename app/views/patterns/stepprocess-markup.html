@@ -29,7 +29,7 @@
           <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-empty-circle"></use>
           </svg>
-          <span class='tree-text'>Profile and Consent - step 1</span>
+          <span class="tree-text">Profile and Consent - step 1</span>
         </a>
       </li>
       <li class="js-step">
@@ -287,9 +287,7 @@
       // We do this because folders don't have an associated content panel
       // as they are just links to open the subfolders.
       var hashLoc = $(args.stepLink).attr('href');
-
       var stepId;
-
       if (hashLoc && hashLoc !== '#') {
         stepId = hashLoc.substring(1);
       } else {
@@ -345,10 +343,6 @@
         {
           deferred.resolve(true);
           $(args.stepElem).attr("visited", "true");
-
-          // **** Need to be able to change icon here *****
-          //    $(e).attr("data-alert-icon", "confirm");
-
         }
 
         if (stepLinkToSelect)

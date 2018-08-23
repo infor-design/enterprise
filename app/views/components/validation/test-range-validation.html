@@ -3,7 +3,7 @@
     <form action="/" method="post">
       <div class="field">
         <label for="range" class="label">Range Validator (Only a number between 10 and 100)</label>
-        <input type="text" name="range" id="range" data-validate="range" data-val-range-min="10" data-val-range-max="100" data-mask="###" data-val-range="Must be between 10 and 100." />
+        <input type="text" name="range" id="range" data-validate="range" data-mask="###"/>
       </div>
     </form>
   </div>
@@ -19,9 +19,9 @@
           return true;
         }
 
-        var min = $(field).attr('data-val-range-min');
-        var max = $(field).attr('data-val-range-max');
-        this.message = $(field).attr('data-val-range');
+        var min = 10;
+        var max = 100;
+        this.message = 'Must be between 10 and 100.';
 
         value = Number(value.replace(',', ''));
         min = Number(min);

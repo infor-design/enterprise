@@ -10,6 +10,10 @@ describe('Tree example-index tests', () => {
     await utils.setPage('/components/tree/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should select on click', async () => {
     const link = await element.all(by.css('a[role="treeitem"]')).first();
 

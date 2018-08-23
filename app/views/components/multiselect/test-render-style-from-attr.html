@@ -17,7 +17,7 @@
 
     <div class="field">
       <label for="move-to-top">Towns</label>
-      <select id="move-to-top" name="move-to-top" class="multiselect" data-init="false" multiple data-move-selected="true"></select>
+      <select id="move-to-top" name="move-to-top" class="multiselect" data-init="false" multiple="true" data-move-selected="true"></select>
     </div>
 
   </div>
@@ -27,7 +27,6 @@
   $('body').on('initialized', function() {
     function townsSource(response, term) {
       $.getJSON('{{basepath}}api/towns', function(data, term) {
-        console.log(data, term);
         response(data);
       });
     }

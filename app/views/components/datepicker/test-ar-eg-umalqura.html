@@ -4,7 +4,7 @@
 
     <div class="field">
       <label for="islamic-date" class="label">Date Picker (ar-EG - umalqura)</label>
-      <input id="islamic-date" data-init="false" class="datepicker" name="islamic-date" type="text">
+      <input id="islamic-date" data-init="false" class="datepicker" name="islamic-date" type="text"/>
     </div>
 
   </div>
@@ -17,7 +17,10 @@
     // But use the optional umalqura calendar in that locale instead
     Locale.set('ar-EG').done(function () {
       $('#islamic-date').datepicker({calendarName: 'islamic-umalqura'}).on('change', function () {
-        console.log($(this).val());
+        $('body').toast({
+          'title': 'Change Event Fired',
+          'message': 'Value changed to <span class="text-strong">' + $(this).val() + '</span> '
+        });
       });
     });
 

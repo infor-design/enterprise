@@ -57,11 +57,6 @@ module.exports = function (app, defaults) {
       logger('info', `Using the ${req.query.font} font`);
     }
 
-    if (req.query.csp) {
-      res.opts.csp = req.query.csp === 'true';
-      res.opts.nonce = Math.random().toString(12).replace(/[^a-z0-9]+/g, '').substr(0, 8);
-    }
-
     let useLiveReload = false;
     process.argv.forEach((val) => {
       if (val === '--livereload') {

@@ -1,7 +1,9 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery components
 import '../place/place.jquery';
@@ -356,7 +358,7 @@ Tooltip.prototype = {
     }
 
     // Store an internal copy of the processed content
-    this.content = $.sanitizeHTML(content);
+    this.content = xssUtils.sanitizeHTML(content);
 
     // Wrap tooltip content in <p> tags if there isn't already one present.
     // Only happens for non-jQuery markup.
@@ -404,11 +406,8 @@ Tooltip.prototype = {
       contentArea.insertAdjacentHTML('beforebegin', '<div class="arrow"></div>');
     }
 
-    if (typeof this.content === 'string') {
-      contentArea.innerHTML = content;
-    } else {
-      contentArea.innerHTML = content[0].innerHTML;
-    }
+    const tooltipHTML = typeof this.content === 'string' ? content : content[0].innerHTML;
+    DOM.html(contentArea, tooltipHTML, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
   },
 
   /**
@@ -463,7 +462,7 @@ Tooltip.prototype = {
       if (!title) {
         const titleFrag = document.createDocumentFragment();
         title = document.createElement('div');
-        title.innerHTML = this.settings.title;
+        DOM.html(title, this.settings.title, '*');
         title.classList.add('tooltip-title');
         titleFrag.appendChild(title);
         this.tooltip[0].insertBefore(titleFrag, this.tooltip[0].firstChild);
@@ -476,7 +475,7 @@ Tooltip.prototype = {
     }
 
     if (this.settings.closebutton && title && !title.firstElementChild) {
-      const closeBtnX = $(`<button type="button" class="btn-icon l-pull-right" style="margin-top: -9px">${
+      const closeBtnX = $(`<button type="button" class="btn-icon l-pull-right btn-close">${
         $.createIcon({ classes: ['icon-close'], icon: 'close' })
       }<span>Close</span>` +
         '</button>').on('click', () => {

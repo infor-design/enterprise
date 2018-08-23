@@ -1894,16 +1894,20 @@ $datagrid-short-row-height: 23px;
         margin-top: -6px;
         width: 100%;
 
+        &.is-focused {
+          box-shadow: none;
+        }
+
         input {
-          padding: 17px 0 8px;
+          padding: 25px 0 8px;
           width: calc(100% - 38px);
         }
 
         .spinbox-control {
           border: 0;
           border-right: 1px solid  $input-focus-border-color;
-          padding: 18px 10px 15px;
-          width: 40px;
+          padding: 18px 10px 31px;
+          width: 36px;
 
           &.up {
             border-left: 1px solid  $input-focus-border-color;
@@ -2574,7 +2578,7 @@ td .btn-actions {
   .icon {
     fill: $trigger-icon-fill-color;
     left: 4px;
-    top: 5px;
+    top: 4px;
     visibility: hidden;
 
     &.icon-search-list {

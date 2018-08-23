@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 
 // The Name of this component.
 const COMPONENT_NAME = 'ListFilter';
@@ -109,7 +110,7 @@ ListFilter.prototype = {
       }
 
       const isString = typeof item === 'string';
-      return (isString ? item : $(item).text());
+      return xssUtils.sanitizeHTML((isString ? item : $(item).text()));
     }
 
     // Iterates through each list item and attempts to find the provided search term.

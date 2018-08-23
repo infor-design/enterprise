@@ -703,6 +703,7 @@ Pager.prototype = {
     const request = {
       activePage: self.activePage,
       pagesize: self.settings.pagesize,
+      indeterminate: self.settings.indeterminate,
       type: op,
       trigger,
       total: self.settings.componentAPI ? self.settings.componentAPI.settings.dataset.length : -1

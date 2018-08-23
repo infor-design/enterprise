@@ -20,7 +20,7 @@
 
 <script>
   // Re-invoke this accordion with a source function to set external content on expand
-  $(document).ready(function() {
+  $(function(){
     var request;
 
     $('#ajax-accordion').accordion({
@@ -33,14 +33,14 @@
         request = $.get('{{basepath}}api/nav-items');
 
         function setContent(htmlString) {
-          ui.pane.append(htmlString);
+          Soho.DOM.append(ui.pane, htmlString, '<div><span><a>')
           callback();
         }
 
         request.done(function(data) {
           setContent(data);
         }).fail(function() {
-          setContent('<div class="accordion-content" style="color: red;"><p>AJAX Error: Couldn\'t find any fruits...</p></div>');
+          setContent('<div class="accordion-content" class="alert01"><p>AJAX Error: Couldn\'t find any fruits...</p></div>');
         });
         return true;
       }

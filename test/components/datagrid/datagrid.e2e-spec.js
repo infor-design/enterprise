@@ -18,6 +18,10 @@ describe('Datagrid example-index tests', () => {
     await element(by.css('body')).sendKeys(protractor.Key.TAB);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should show results', async () => {
     expect(await element(by.className('datagrid-result-count')).getText()).toBe('(7 Results)');
   });

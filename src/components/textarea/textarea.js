@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
 
 // Name of this component
@@ -157,7 +158,7 @@ Textarea.prototype = {
         clone = self.element.clone()
           .addClass('clone')
           .css({ position: 'absolute', zIndex: -10, height: '' })
-          .val(value);
+          .val(xssUtils.sanitizeHTML(value));
 
         self.element.after(clone);
         do {
