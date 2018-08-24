@@ -489,12 +489,10 @@ Dropdown.prototype = {
   setTooltip() {
     const opts = this.element.find('option:selected');
     const optText = this.getOptionText(opts);
-    console.log('optText', optText);
     this.tooltipApi = this.pseudoElem.find('span').tooltip({
       content: optText,
       trigger: 'hover',
     });
-    console.log('this.tooltipApi', this.tooltipApi);
   },
 
   /**
@@ -2356,7 +2354,7 @@ Dropdown.prototype = {
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
 
       if (this.pseudoElem.find('span').width() >= this.pseudoElem.width()) {
-        this.setTooltip();    
+        this.setTooltip();
       } else if (this.tooltipApi) {
         this.tooltipApi.destroy();
       }
