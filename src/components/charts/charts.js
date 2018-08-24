@@ -365,9 +365,11 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
 
     // Change text of legend depends of the width
-    if (innerWidth <= 480) {
+    if (innerWidth <= 480 && series[i].data && series[i].data.legendAbbrName) {
       textBlock.replaceWith(`<span class="chart-legend-item-text">${series[i].data.legendAbbrName}</span>`);
-    } else if (innerWidth >= 481 && innerWidth <= 768) {
+    }
+    if (innerWidth >= 481 && innerWidth <= 768 && series[i].data
+      && series[i].data.legendShortName) {
       textBlock.replaceWith(`<span class="chart-legend-item-text">${series[i].data.legendShortName}</span>`);
     }
   }
