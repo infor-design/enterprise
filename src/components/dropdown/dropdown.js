@@ -313,7 +313,9 @@ Dropdown.prototype = {
     this.setDisplayedValues();
     this.setInitial();
     this.setWidth();
-    this.setTooltip();
+
+    //this.tooltipApi = null;
+    //this.setTooltip();
 
     this.element.triggerHandler('rendered');
 
@@ -487,11 +489,12 @@ Dropdown.prototype = {
   setTooltip() {
     const opts = this.element.find('option:selected');
     const optText = this.getOptionText(opts);
-
+    console.log('optText', optText);
     this.tooltipApi = this.pseudoElem.find('span').tooltip({
       content: optText,
       trigger: 'hover',
     });
+    console.log('this.tooltipApi', this.tooltipApi);
   },
 
   /**
