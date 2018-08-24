@@ -361,7 +361,7 @@ describe('Dropdown example-no-search tests', () => {
     await dropdownPseudoEl.sendKeys('z');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), ''), config.waitsFor);
-    const dropdownHTML = await browser.executeScript('return document.querySelector("div[aria-controls=\'dropdown-list\']").inner');
+    const dropdownHTML = await browser.executeScript('return document.querySelector("div[aria-controls=\'dropdown-list\']").innerHTML');
 
     expect(dropdownHTML).toEqual('<span></span>');
   });
