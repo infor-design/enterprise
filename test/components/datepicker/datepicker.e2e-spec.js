@@ -136,15 +136,10 @@ describe('Datepicker Anniversay tests', () => {
     await element(by.css('#Mdyyyy-date + .icon')).click();
 
     const testDate = new Date();
-<<<<<<< HEAD
-
     await element(by.css('#monthview-popup .is-selected')).click();
-=======
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
-    await element(by.css('#calendar-popup .is-selected')).click();
->>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getMonth() + 1}/${testDate.getDate()}/${testDate.getFullYear()}`);
   });
@@ -160,15 +155,10 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-1 + .icon')).click();
 
     const testDate = new Date();
-<<<<<<< HEAD
-
     await element(by.css('#monthview-popup .is-selected')).click();
-=======
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
-    await element(by.css('#calendar-popup .is-selected')).click();
->>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate.getMonth() + 1)}/${testDate.getDate().toString()}/${testDate.getFullYear()}`);
   });
@@ -178,15 +168,10 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-2 + .icon')).click();
 
     const testDate = new Date();
-<<<<<<< HEAD
-
     await element(by.css('#monthview-popup .is-selected')).click();
-=======
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
-    await element(by.css('#calendar-popup .is-selected')).click();
->>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getFullYear()}-${testDate.getDate().toString().padStart(2, '0')}-${(testDate.getMonth() + 1).toString().padStart(2, '0')}`);
   });
@@ -196,15 +181,10 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-3 + .icon')).click();
 
     const testDate = new Date();
-<<<<<<< HEAD
-
     await element(by.css('#monthview-popup .is-selected')).click();
-=======
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
-    await element(by.css('#calendar-popup .is-selected')).click();
->>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('en-US', { month: 'short' })} ${testDate.getFullYear()}`);
   });
@@ -214,15 +194,10 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-4 + .icon')).click();
 
     const testDate = new Date();
-<<<<<<< HEAD
-
     await element(by.css('#monthview-popup .is-selected')).click();
-=======
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
-    await element(by.css('#calendar-popup .is-selected')).click();
->>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate().toString().padStart(2, '0')}/${(testDate.getMonth() + 1).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
   });
