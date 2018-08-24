@@ -93,6 +93,7 @@ Soho.Locale.addCulture('en-US', {
     CharactersLeft: { id: 'CharactersLeft', value: 'Characters left {0}', comment: 'indicator showing how many more characters you can type.' },
     CharactersMax: { id: 'CharactersMax', value: 'Character count maximum of ', comment: 'indicator showing how many max characters you can type.' },
     ChangeSelection: { id: 'ChangeSelection', value: '. To change the selection use the arrow keys.', comment: 'Audible Text for drop down list help' },
+    ChangeView: { id: 'ChangeView', value: 'Change View', comment: 'Change the current page from a list of options' },
     Checkbox: { id: 'Checkbox', value: 'Checkbox', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Checked', comment: 'Checked tooltip' },
     Clear: { id: 'Clear', value: 'Clear', comment: 'Tooltip for a Clear Action' },

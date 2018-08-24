@@ -376,9 +376,11 @@
             color: $input-color;
             -webkit-text-fill-color: $input-color;
 
+            // scss-lint:disable NestingDepth
             + .icon {
               cursor: pointer;
             }
+            // scss-lint:disable NestingDepth
           }
         }
 
@@ -389,7 +391,7 @@
         .today {
           @include font-size(12);
           font-weight: bold;
-          margin-left: 5px;
+          margin-left: 15px;
           text-decoration: none;
         }
       }
@@ -419,6 +421,7 @@
         .day-text {
           border-radius: inherit;
           left: calc(100% - 25px);
+          margin-bottom: -5px;
           position: relative;
           top: 0;
           width: 10px;
@@ -751,12 +754,17 @@ html[dir='rtl'] {
 
       .monthview-datepicker {
         margin-left: 0;
-        margin-right: 45px;
+        margin-right: 55px;
       }
 
       .today {
         margin-left: 0;
         margin-right: 5px;
+      }
+
+      .td:first-child {
+        border: 1px solid  $calendar-line-color;
+        border-left: 0;
       }
     }
   }

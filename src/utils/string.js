@@ -106,4 +106,16 @@ stringUtils.textWidth = function capitalize(text, fontsize = 14) {
   return Math.round(metrics.width);
 };
 
+/**
+ * Pad a date into a string with zeros added.
+ * @private
+ * @param {number} year The year to use.
+ * @param {number} month The month to use.
+ * @param {number} day The day to use.
+ * @returns {void}
+ */
+stringUtils.padDate = function padDate(year, month, day) {
+  return `0${day}`.slice(-2) + `0${month + 1}`.slice(-2) + year;
+};
+
 export { stringUtils }; //eslint-disable-line

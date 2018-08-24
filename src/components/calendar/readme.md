@@ -7,14 +7,35 @@ demo:
     slug: example-index
 ---
 
-The setup for a datepicker only involves creating an `<input>` with the class `datepicker`. You can optionally set a `placeholder`. The placeholder will get adjusted by the plugin based on the current locale. Remember to always associate a label with the input field. Always use four-digit dates in all locales for short date.
+The setup for a calendar only involves creating a `div` with the class `datepicker`. In that div we add the three sections of the calendar. The first section calendar-events contains an accordion with a filter section and an upcomming events section (functionality to be added soon). The second section is a `div` with `calendar-monthview` this is where the monthview calendar will be rendered. The third section is `div` with `calendar-event-details` this is where the event details will be shown when you click on them.
 
-This plugin works using Locale plugin which provides data for the calendar, including calendar format for [all supported locales](./locale).
+The first pass of the calendar supports basic single day event rendering, filtering and changing months. We will next add better responsiveness, more views, better keyboard support, adding events and editing events.
 
 ```html
-<div class="field">
-  <label for="date-field" class="label">Date Field</label>
-  <input id="date-field" class="datepicker" name="date-field" type="text">
+<div class="calendar" data-init="false">
+  <div class="calendar-events">
+    <div class="accordion" data-options="{'allowOnePane': false}">
+      <div class="accordion-header is-expanded">
+        <a href="#"><span>Legend</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="calendar-event-types accordion-content">
+        </div>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Upcoming Time off</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="calendar-event-upcoming accordion-content">
+          <p>Remix, optimize, "B2B, iterate?" Best-of-breed efficient beta-test; social cutting-edge: rich magnetic tagclouds front-end infomediaries viral authentic incentivize sexy extensible functionalities incentivize. Generate killer authentic grow vertical blogospheres, functionalities ecologies harness, "tag solutions synergies exploit data-driven B2C open-source e-markets optimize create, enhance convergence create." Out-of-the-box strategize best-of-breed back-end, deploy design markets metrics. Content web services enhance leading-edge Cluetrain, deliverables dot-com scalable. User-centric morph, back-end, synthesize mesh, frictionless, exploit next-generation tag portals, e-commerce channels; integrate; recontextualize distributed revolutionize innovative eyeballs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="calendar-monthview">
+  </div>
+  <div class="calendar-event-details">
+  </div>
 </div>
 ```
 
@@ -31,7 +52,7 @@ The Calendar is a very complex control to code for accessibility.
 
 ## Keyboard Shortcuts
 
-- <kbd>Tab</kbd> - like other widgets, the Date Picker widget receives focus to become active by tabbing into it. A second <kbd>Tab</kbd> will take the user out of the date picker widget. Focus is initially placed on today's date when the calendar is opened.
+- <kbd>Tab</kbd> - Tab will work to move you across the calendar, from the filter area to the accordion and into the month header.
 
 ## Upgrading from 3.X
 

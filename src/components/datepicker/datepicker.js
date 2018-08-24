@@ -719,7 +719,6 @@ DatePicker.prototype = {
 
     /**
     * Fires as the calendar popup is opened.
-    *
     * @event listopened
     * @memberof DatePicker
     * @property {object} event - The jquery event object

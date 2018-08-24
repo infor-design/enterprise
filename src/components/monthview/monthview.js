@@ -1,4 +1,5 @@
 import { utils } from '../../utils/utils';
+import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 
 // Settings and Options
@@ -341,6 +342,9 @@ MonthView.prototype = {
 
     if (this.settings.headerStyle === 'full' && this.monthPicker) {
       this.monthPicker.val(Locale.formatDate(new Date(year, month, 1), { date: 'year' }));
+      if (this.monthPicker.data('datepicker')) {
+        this.monthPicker.data('datepicker').setSize();
+      }
     }
 
     this.appendMonthYearPicker(month, year);
@@ -358,6 +362,7 @@ MonthView.prototype = {
     let exDay;
 
     const s = this.settings;
+    this.dayMap = [];
     this.days.find('td').each(function (i) {
       const th = $(this).removeClass('alternate prev-month next-month is-selected range is-today');
       th.removeAttr('aria-selected');
@@ -369,10 +374,12 @@ MonthView.prototype = {
 
         self.setDisabled(th, exYear, exMonth, exDay);
         self.setLegendColor(th, exYear, exMonth, exDay);
+        self.dayMap.push({ key: stringUtils.padDate(exYear, exMonth, exDay), elem: th });
         th.addClass('alternate prev-month').html(`<span class="day-container"><span aria-hidden="true" class="day-text">${exDay}</span></span>`);
       }
 
       if (i >= leadDays && dayCnt <= thisMonthDays) {
+        self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
         th.html(`<span class="day-container"><span aria-hidden="true" class="day-text">${dayCnt}</span></span>`);
 
         // Add Selected Class to Selected Date
@@ -412,6 +419,7 @@ MonthView.prototype = {
         exMonth = (month === 11) ? 0 : month + 1;
         exYear = (month === 11) ? year + 1 : year;
 
+        self.dayMap.push({ key: stringUtils.padDate(exYear, exMonth, exDay), elem: th });
         self.setDisabled(th, exYear, exMonth, exDay);
         self.setLegendColor(th, exYear, exMonth, exDay);
 
@@ -427,6 +435,18 @@ MonthView.prototype = {
     } else {
       row.show();
     }
+
+    /**
+    * Fires as the calendar popup is opened.
+    * @event monthrendered
+    * @memberof MonthView
+    * @property {object} event - The jquery event object
+    * @property {object} args - The event arguments
+    * @property {number} args.year - The rendered year
+    * @property {object} args.elem - The DOM object
+    * @property {object} args.api - The MonthView api
+    */
+    this.element.trigger('monthrendered', { year, month, elem: this.element, api: this });
   },
 
   /**
