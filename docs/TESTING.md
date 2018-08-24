@@ -118,7 +118,7 @@ npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js
 ```
 
 - In Chrome open `chrome://inspect` in a new tab.
-- Click on the 'Target' you will see generated under remote target
+- Click on the 'Open dedicated DevTools for Node', or under 'Target', and under 'Remote Target' click on 'inspect'
 - Hit resume/play on the debugger
 
 ## Working With Visual Regression Tests
