@@ -314,8 +314,8 @@ Dropdown.prototype = {
     this.setInitial();
     this.setWidth();
 
-    //this.tooltipApi = null;
-    //this.setTooltip();
+    this.tooltipApi = null;
+    this.setTooltip();
 
     this.element.triggerHandler('rendered');
 
