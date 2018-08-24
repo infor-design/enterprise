@@ -256,8 +256,7 @@ charts.showTooltip = function (x, y, content, arrow) {
  */
 charts.addLegend = function (series, chartType, settings, container) {
   let i;
-  console.log('series', series);
-  console.log('-->', series[0].data.legendAbbrName);
+  
   if (series.length === 0) {
     return;
   }
@@ -282,8 +281,6 @@ charts.addLegend = function (series, chartType, settings, container) {
 
   width += 55;
   const widthPercent = width / $(container).width() * 100;
-
-  console.log('innerwidth', innerWidth);
 
   for (i = 0; i < series.length; i++) {
     if (!series[i].name) {
