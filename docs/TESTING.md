@@ -2,7 +2,7 @@
 
 ## Test naming conventions
 
-- Use plain, and proper english
+- Use plain, and proper English
 - Describe what the test is testing
 - Component or example page name is on the 'describe' line, do not write it again on the 'it' line
 
@@ -123,7 +123,7 @@ npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js
 
 ## Working With Visual Regression Tests
 
-A visual regression test will be similar to the following code snippet. The tests run on Travis. Locally, in our development environment, we replicate the environment with Docker in order to capture, and compare screenshots on a nearly identical machine.  Below, we provide a guide for setup, and the generation of baseline images.
+A visual regression test will be similar to the following code snippet. The tests run on Travis. Locally, in our development environment, we replicate the environment with Docker in order to capture and compare screenshots on a nearly identical machine.  Below, we provide a guide for the setup and generation of baseline images.
 
 ```javascript
 // Only test visual regressions on Chrome, and the CI
@@ -152,14 +152,14 @@ if (utils.isChrome() && utils.isCI()) {
 
 Follow [this guide](https://docs.travis-ci.com/user/common-build-problems/#troubleshooting-locally-in-a-docker-image) in order to debug Travis. We currently use the `node_js` [image](https://hub.docker.com/r/travisci/ci-nodejs/)
 
-Many of the travis commands ran can be found in the [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml), this will need to replicate inside of your container. This process is outlined below.
+Travis commands can be found in the [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml), this will need to be replicated inside of the container. This process is outlined below.
 
 ### Creating Baseline Screenshots
 
-1. Run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the travis ci docker image to mimic the environment. And wait....
+1. Run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the Travis CI docker image to mimic the environment. And wait....
 1. Open up the image and go in `docker exec -it travis-debug bash -l`
-1. Switch to the travis user `su - travis`
-1. Go to home you home directory `(`cd ~`)`
+1. Switch to the Travis user `su - travis`
+1. Go to your home directory `(`cd ~`)`
 1. Clone IDS Enterprise repo, and navigate to it
 
 ```sh
@@ -189,7 +189,7 @@ npm run quickstart
 npm run e2e:ci
 ```
 
-1. Push the branch your working on to github and switch to the same branch on the vm
+1. Push the branch you're working on to GitHub and switch to the same branch on the vm
 1. Run the `npm run start` command in the VM on one session.
 1. Run `npm run e2e:ci` on the other session.
 1. Copy the file from the actual folder to the baseline folder `mv /root/enterprise/test/.tmp/actual/radio-init-chrome-1200x800-dpr-1.png /root/enterprise/test/baseline/radio-init-chrome-1200x800-dpr-1.png`
