@@ -182,12 +182,12 @@ Trackdirty.prototype = {
         if (!d.icon.is('.icon-dirty')) {
           if (input.is('[type="checkbox"]')) {
             d.rect = this.getAbsolutePosition(label);
-            d.style = ` style="left:${d.rect.left}px; top:${d.rect.top}px;"`;
+            d.style = `left:${d.rect.left}px; top:${d.rect.top}px;`;
           } else if (input.is('.colorpicker') && !Locale.isRTL()) {
             d.rect = this.getAbsolutePosition(input);
-            d.style = ` style="left:${d.rect.left}px; top:${d.rect.top}px;"`;
+            d.style = `left:${d.rect.left}px; top:${d.rect.top}px;`;
           }
-          d.icon = `<span class="icon-dirty${d.class}"${d.style}></span>`;
+          d.icon = `<span class="icon-dirty${d.class}"></span>`;
           d.msg = Locale.translate('MsgDirty') || '';
           d.msg = `<span class="audible msg-dirty">${d.msg}</span>`;
 
@@ -198,6 +198,10 @@ Trackdirty.prototype = {
           if ($(el[0].parentElement).find('.icon-dirty').length === 0) {
             el.before(d.icon);
             label.append(d.msg);
+
+            if (d.style && el.prev('.icon-dirty')[0]) {
+              el.prev('.icon-dirty')[0].style.cssText = d.style;
+            }
           }
 
           // Cache icon and msg

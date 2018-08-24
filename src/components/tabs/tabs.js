@@ -4,6 +4,7 @@ import { DOM } from '../../utils/dom';
 import { breakpoints } from '../../utils/breakpoints';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery components
 import '../../utils/lifecycle';
@@ -397,7 +398,7 @@ Tabs.prototype = {
 
       // If there are tabs present, activate the first one
       if (selected.length) {
-        this.activate(selectedAnchor.attr('href'));
+        this.activate(selectedAnchor.attr('href'), selectedAnchor);
       }
     }
 
@@ -648,7 +649,7 @@ Tabs.prototype = {
         const popupLi = $(this);
         const href = $(anchor).attr('href');
 
-        if (!self.activate(href)) {
+        if (!self.activate(href, $(anchor))) {
           return false;
         }
 
@@ -854,7 +855,7 @@ Tabs.prototype = {
       return true;
     }
 
-    if (!this.activate(href)) {
+    if (!this.activate(href, a)) {
       return true;
     }
     this.changeHash(href);
@@ -1289,7 +1290,7 @@ Tabs.prototype = {
     if ((e.ctrlKey && key === 38) &&
       $.contains(document.activeElement, panel[0])) { // Ctrl + Up Arrow
       e.preventDefault();
-      return this.activate(a.attr('href'));
+      return this.activate(a.attr('href'), a);
     }
 
     return undefined;
@@ -1796,7 +1797,7 @@ Tabs.prototype = {
 
     const a = target.children('a');
     if (tab.is('.is-selected')) {
-      if (!this.activate(a.attr('href'))) {
+      if (!this.activate(a.attr('href'), a)) {
         return target;
       }
       a.focus();
@@ -1823,13 +1824,14 @@ Tabs.prototype = {
   /**
    * Causes a new tab panel to become active.  Will also trigger AJAX calls on unloaded tab panels, if necessary.
    * @param {string} href a string that either matches up to a Tab ID, or an outbound link to grab AJAX content from.
+   * @param {object} anchor in addition to the ref the anchor object may be passed to avoid extra querying.
    * @returns {void}
    */
-  activate(href) {
+  activate(href, anchor) {
     const self = this;
 
     if (self.isURL(href)) {
-      return this.callSource(href, true);
+      return this.callSource(href, anchor, true);
     }
 
     const a = self.getAnchor(href);
@@ -1870,7 +1872,7 @@ Tabs.prototype = {
     function completeActivate(vetoResult) {
       if (targetPanel.length < 1) {
         if (self.settings.source) {
-          self.callSource(href);
+          self.callSource(href, a);
           return true;
         }
       } else {
@@ -1998,12 +2000,13 @@ Tabs.prototype = {
   /**
    * Calls an options-provided source method to fetch content that will be displayed inside a tab.
    * @param {string} href - string representing the target tab to load content under.
+   * @param {object} anchor - Reference to the dom object anchor tag.
    * @param {boolean} isURL detects whether or not the URL is actually an external /
    * call, or an ID for an existing tab in the page.
    * @returns {boolean|$.Deferred} true if source call was successful, false for failure/ignore,
    * or a promise object that will fire callbacks in either "success" or "failure" scenarios.
    */
-  callSource(href, isURL) {
+  callSource(href, anchor, isURL) {
     if ((isURL === undefined || isURL === null || isURL === false) && !this.settings.source) {
       return false;
     }
@@ -2017,17 +2020,16 @@ Tabs.prototype = {
         return;
       }
 
-      htmlContent = $.sanitizeHTML(htmlContent);
+      htmlContent = xssUtils.sanitizeHTML(htmlContent);
 
       // Get a new random tab ID for this tab if one can't be derived from the URL string
       if (isURL) {
-        const anchor = this.tablist.find(`[href="${href}"]`);
         const containerId = this.element[0].id || '';
         const id = anchor.uniqueId('tab', containerId);
 
         href = `#${id}`;
         // Replace the original URL on this anchor now that we've loaded content.
-        anchor.attr('href', href);
+        anchor[0].setAttribute('href', href);
       }
 
       this.createTabPanel(href, htmlContent, true);
@@ -2543,10 +2545,9 @@ Tabs.prototype = {
     // If content is text/string, simply inline it.
     const markup = $(`<div id="${tabId}" class="tab-panel" role="tabpanel"></div>`);
     if (content instanceof $) {
-      markup.append(content);
-    } else {
-      markup[0].innerHTML = content || '';
+      content = content[0];
     }
+    markup[0].innerHTML = content || '';
 
     if (doInsert === true) {
       this.container.append(markup);
@@ -3616,7 +3617,7 @@ Tabs.prototype = {
       }
       targetPosString += `${key}: ${targetPos[key]}px;`;
     });
-    focusStateElem.setAttribute('style', targetPosString);
+    focusStateElem.style.cssText = targetPosString;
 
     const selected = targetClassList.contains('is-selected') ? 'add' : 'remove';
     focusStateElem.classList[selected]('is-selected');

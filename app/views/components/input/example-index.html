@@ -61,7 +61,7 @@
 
     <div class="field">
       <label for="datetime-input">Date Input with Time</label>
-      <input id="datetime-input" name="datetime-input" type="text" placeholder="M/d/yyyy hh:mm am" data-mask data-options='{ "pattern" : "##/##/#### ##:## am", "mode" : "date" }' data-validate="date"/>
+      <input id="datetime-input" name="datetime-input" type="text" placeholder="M/d/yyyy h:mm a" data-mask data-options='{ "patternOptions": { "format": "M/d/yyyy h:mm a" }, "process": "date" }'/>
     </div>
 
     <div class="field">

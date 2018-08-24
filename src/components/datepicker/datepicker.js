@@ -660,7 +660,7 @@ DatePicker.prototype = {
           formatDate(s.range.first.date) + s.range.separator + this.pattern :
           this.pattern + s.range.separator + this.pattern;
       }
-      this.element.attr('placeholder', placeholder);
+      this.element[0].setAttribute('placeholder', placeholder);
     }
   },
 

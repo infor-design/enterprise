@@ -23,6 +23,10 @@ describe('Spinbox example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(element(by.id(spinboxId))), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const spinboxElWrapper = element(by.className('spinbox-wrapper'));

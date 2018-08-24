@@ -103,10 +103,8 @@ Tree.prototype = {
    * @private
   */
   initSelected() {
-    const self = this;
-    this.element.find('li').each(function () {
-      self.setNodeStatus($('a:first', this));
-    });
+    const listItems = [].slice.call(this.element[0].querySelectorAll('li'));
+    listItems.forEach(li => this.setNodeStatus($(li.querySelector('a'))));
   },
 
   /**
@@ -114,7 +112,10 @@ Tree.prototype = {
    * @private
    */
   focusFirst() {
-    this.element.find('a:first').attr('tabindex', '0');
+    const a = this.element[0].querySelector('a');
+    if (a) {
+      a.setAttribute('tabindex', '0');
+    }
   },
 
   /**
@@ -124,7 +125,9 @@ Tree.prototype = {
    * @returns {void}
    */
   setFocus(node) {
-    node.focus().removeClass('hide-focus');
+    node = this.isjQuery(node) ? node[0] : node;
+    node.focus();
+    node.classList.remove('hide-focus');
   },
 
   /**
@@ -135,127 +138,109 @@ Tree.prototype = {
    */
   decorateNode(a) {
     let parentCount = 0;
-    let badgeData = a.attr('data-badge');
-    const alertIcon = a.attr('data-alert-icon');
-    const badge = { elem: $('<span class="tree-badge badge"></span>') };
+    let badgeData = a[0].getAttribute('data-badge');
+    const alertIcon = a[0].getAttribute('data-alert-icon');
     const isParentsDisabled = a.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0;
-    const isDisabled = a.hasClass('is-disabled') || isParentsDisabled;
+    const isDisabled = a[0].classList.contains('is-disabled') || isParentsDisabled;
 
     if (typeof badgeData !== 'undefined') {
       badgeData = utils.parseSettings(a, 'data-badge');
     }
 
     // Set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
-    a.attr({ role: 'treeitem', tabindex: '-1', 'aria-selected': 'false' });
+    a[0].setAttribute('role', 'treeitem');
+    a[0].setAttribute('tabindex', '-1');
+    a[0].setAttribute('aria-selected', 'false');
 
     // Add Aria disabled
     if (isDisabled) {
-      a.addClass('is-disabled').attr('aria-disabled', 'true');
+      a[0].classList.add('is-disabled');
+      a[0].setAttribute('aria-disabled', 'true');
       const childSection = a.next();
 
-      if (childSection.is('ul.is-open')) {
-        $('a', childSection).addClass('is-disabled').attr('aria-disabled', 'true');
-        $('ul', a.parent()).addClass('is-disabled');
+      if (childSection[0] && childSection[0].tagName.toLowerCase() === 'ul' && childSection[0].classList.contains('is-open')) {
+        const childLinks = [].slice.call(childSection[0].querySelectorAll('a'));
+        childLinks.forEach((link) => {
+          link.classList.add('is-disabled');
+          link.setAttribute('aria-disabled', 'true');
+        });
+        const parentUls = [].slice.call(a[0].parentNode.querySelectorAll('ul'));
+        parentUls.forEach(ul => ul.classList.add('is-disabled'));
       }
     }
 
     // ParentCount 'aria-level' to the node's level depth
     parentCount = a.parentsUntil(this.element, 'ul').length - 1;
-    a.attr('aria-level', parentCount + 1);
+    a[0].setAttribute('aria-level', parentCount + 1);
 
-    // SSet the current tree item node position relative to its aria-setsize
+    // Set the current tree item node position relative to its aria-setsize
     const posinset = a.parent().index();
-    a.attr('aria-posinset', posinset + 1);
+    a[0].setAttribute('aria-posinset', posinset + 1);
 
     // Set the current tree item aria-setsize
-    const listCount = a.closest('li').siblings().addBack().length;
-    a.attr('aria-setsize', listCount);
+    const listCount = a.closest('li').siblings().length + 1;
+    a[0].setAttribute('aria-setsize', listCount);
 
     // Set the current tree item node expansion state
-    if (a.next('ul').children().length > 0) {
-      a.attr('aria-expanded', a.next().hasClass('is-open') ? 'true' : 'false');
+    const subNode = a.next('ul');
+    if (subNode[0] && subNode.children().length > 0) {
+      a[0].setAttribute('aria-expanded', subNode[0].classList.contains('is-open') ? 'true' : 'false');
     }
-
-    // Adds role=group' to all subnodes
-    const subNode = a.next();
 
     // Inject Icons
     const text = a.contents().filter(function () {
       return !$(this).is('.tree-badge');// Do not include badge text
     }).text();
 
-    a.text('');
+    a[0].textContent = '';
     if (a.children('svg.icon-tree').length === 0) {
-      a.prepend($.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
+      a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
 
       if (this.settings.useStepUI) {
-        a.prepend($.createIcon({ icon: alertIcon, classes: ['step-alert', `icon-${alertIcon}`] }));
+        a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: alertIcon, classes: ['step-alert', `icon-${alertIcon}`] }));
       }
     }
 
     // Inject checkbox
     if (this.isMultiselect && !this.settings.hideCheckboxes) {
-      a.append('<span class="tree-checkbox"></span>');
+      a[0].insertAdjacentHTML('beforeend', '<span class="tree-checkbox"></span>');
     }
 
     // Inject badge
-    if (badgeData && !badgeData.remove) {
-      badge.text = '';
-
-      if (typeof badgeData.text !== 'undefined') {
-        badge.text = badgeData.text.toString();
-        badge.elem.html(badge.text);
-        if (badge.text.length === 1) {
-          badge.elem.addClass('round');
-        }
-      }
-
-      let badgeStyle = '';
-      if (/info|good|error|alert|pending/i.test(badgeData.type)) {
-        badge.elem.addClass(badgeData.type);
-      } else if (badgeData.type && badgeData.type.charAt(0) === '#' && badgeData.type.length === 7) {
-        badgeStyle = `background-color: ${badgeData.type} !important;`;
-      }
-      if (badgeData.backColor) {
-        badgeStyle = `background-color: ${badgeData.backColor} !important;`;
-      }
-      if (badgeData.foreColor) {
-        badgeStyle += `color: ${badgeData.foreColor} !important;`;
-      }
-
-      badge.elem.attr('style', badgeStyle);
-
-      if (badge.elem.text() !== '') {
-        a.append(badge.elem);
-      }
-      if (badgeData.type && badgeData.type.indexOf('pending') !== -1) {
-        badge.elem.text('');
-      }
+    const badgeHtml = this.getBadgeHtml(badgeData);
+    if (badgeHtml !== '') {
+      a[0].insertAdjacentHTML('beforeend', badgeHtml);
     }
 
-    a.append($('<span class="tree-text"></span>').text(text));
+    const span = document.createElement('span');
+    span.classList.add('tree-text');
+    span.textContent = text;
+    a[0].appendChild(span);
 
-    if (a.is('[class^="icon"]')) {
+    if (this.hasIconClass(a)) {
       // CreateIconPath
-      this.setTreeIcon(a.find('svg.icon-tree'), a.attr('class'));
+      this.setTreeIcon(a.find('svg.icon-tree'), a[0].getAttribute('class'));
     }
 
-    if (subNode.is('ul')) {
-      subNode.attr('role', 'group').parent().addClass('folder');
-      this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
+    // Adds role=group' to all subnodes
+    if (subNode[0] && subNode[0].tagName.toLowerCase() === 'ul') {
+      let aClass = a[0].getAttribute('class');
+      subNode[0].setAttribute('role', 'group');
+      subNode[0].parentNode.classList.add('folder');
+      this.setTreeIcon(a.find('svg.icon-tree'), subNode[0].classList.contains('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
 
-      if (a.attr('class') && a.attr('class').indexOf('open') === -1 && a.attr('class').indexOf('closed') === -1) {
-        a.attr('class', isDisabled ? 'is-disabled' : '');
-        this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
+      if (aClass && aClass.indexOf('open') === -1 && aClass.indexOf('closed') === -1) {
+        a[0].setAttribute('class', isDisabled ? 'is-disabled' : '');
+        this.setTreeIcon(a.find('svg.icon-tree'), subNode[0].classList.contains('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
       }
 
-      if (a.is('[class^="icon"]')) {
-        this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ?
-          a.attr('class') : a.attr('class').replace('open', 'closed'));
+      if (this.hasIconClass(a)) {
+        aClass = a[0].getAttribute('class');
+        this.setTreeIcon(a.find('svg.icon-tree'), subNode[0].classList.contains('is-open') ?
+          aClass : aClass.replace('open', 'closed'));
       }
     }
 
-    a.addClass('hide-focus');
     a.hideFocus();
   },
 
@@ -287,7 +272,7 @@ Tree.prototype = {
       node.addClass('is-open');
       self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.folderIconOpen);
 
-      if (node.prev('a').is('[class^="icon"]')) {
+      if (self.hasIconClass(node.prev('a'))) {
         self.setTreeIcon(node.prev('svg.icon-tree'), node.prev('a').attr('class'));
       }
     });
@@ -308,14 +293,13 @@ Tree.prototype = {
       node.removeClass('is-open');
       self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.folderIconClosed);
 
-      if (node.prev('a').is('[class^="icon"]')) {
+      if (self.hasIconClass(node.prev('a'))) {
         self.setTreeIcon(node.prev('a').find('svg.icon-tree'), node.prev('a').attr('class')
           .replace('open', 'closed')
-          .replace(' hide-focus', '')
-          .replace(' is-selected', ''));
+          .replace(/\s?is-selected/, ''));
       }
 
-      if (node.prev('a').is('[class^="icon"]')) {
+      if (self.hasIconClass(node.prev('a'))) {
         self.setTreeIcon(node.prev('svg.icon-tree'), node.prev('a').attr('class').replace('open', 'closed'));
       }
     });
@@ -385,8 +369,9 @@ Tree.prototype = {
     }
 
     // Set active css class
-    $('li', self.element).removeClass('is-active');
-    node.parent().addClass('is-active');
+    const listItems = [].slice.call(this.element[0].querySelectorAll('li'));
+    listItems.forEach(li => li.classList.remove('is-active'));
+    node[0].parentNode.classList.add('is-active');
 
     setTimeout(() => {
       const jsonData = node.data('jsonData') || {};
@@ -413,6 +398,7 @@ Tree.prototype = {
    */
   selectNode(node, focus) {
     const self = this;
+    const s = this.settings;
 
     if (node.length === 0) {
       return;
@@ -420,8 +406,8 @@ Tree.prototype = {
 
     // Possibly Call the onBeforeSelect
     let result;
-    if (typeof self.settings.onBeforeSelect === 'function') {
-      result = self.settings.onBeforeSelect(node);
+    if (typeof s.onBeforeSelect === 'function') {
+      result = s.onBeforeSelect(node);
       if (result && result.done && typeof result.done === 'function') { // A promise is returned
         result.done((continueSelectNode) => {
           if (continueSelectNode) {
@@ -445,17 +431,26 @@ Tree.prototype = {
    */
   selectNodeFinish(node, focus) {
     const self = this;
-    const aTags = $('a', this.element);
-    aTags.attr('tabindex', '-1');
-    node.attr('tabindex', '0');
+    const links = [].slice.call(this.element[0].querySelectorAll('a'));
+    links.forEach(a => a.setAttribute('tabindex', '-1'));
+    node[0].setAttribute('tabindex', '0');
 
     if (this.isMultiselect) {
-      $('a:not(.is-disabled)', node.parent())
-        .attr('aria-selected', 'true').parent().addClass('is-selected');
+      const links2 = [].slice.call(node[0].parentNode.querySelectorAll('a:not(.is-disabled)'));
+      links2.forEach((a) => {
+        a.setAttribute('aria-selected', 'true');
+        a.classList.add('is-selected');
+        a.parentNode.classList.add('is-selected');
+      });
     } else {
-      aTags.attr('aria-selected', 'false').parent().removeClass('is-selected');
-      aTags.attr('aria-selected', 'false').removeClass('is-selected');
-      node.attr('aria-selected', 'true').parent().addClass('is-selected');
+      links.forEach((a) => {
+        a.setAttribute('aria-selected', 'false');
+        a.classList.remove('is-selected');
+        a.parentNode.classList.remove('is-selected');
+      });
+      node[0].setAttribute('aria-selected', 'true');
+      node[0].classList.add('is-selected');
+      node[0].parentNode.classList.add('is-selected');
     }
 
     this.syncNode(node);
@@ -468,8 +463,9 @@ Tree.prototype = {
     }
 
     // Set active css class
-    $('li', self.element).removeClass('is-active');
-    node.parent().addClass('is-active');
+    const listItems = [].slice.call(this.element[0].querySelectorAll('li'));
+    listItems.forEach(li => li.classList.remove('is-active'));
+    node[0].parentNode.classList.add('is-active');
 
     setTimeout(() => {
       const jsonData = node.data('jsonData') || {};
@@ -488,7 +484,7 @@ Tree.prototype = {
   },
 
   /**
-   * Deselects a tree node
+   * Set current node status
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @returns {void}
@@ -500,37 +496,46 @@ Tree.prototype = {
 
     // Not multiselect
     if (!this.isMultiselect) {
-      node.removeClass('is-selected is-partial');
+      const a = node[0];
+      const li = a.parentNode;
       if (data && data.selected) {
-        node.addClass('is-selected');
+        li.classList.add('is-selected');
+        a.classList.add('is-selected');
+        a.setAttribute('aria-selected', true);
+      } else {
+        li.classList.remove('is-selected', 'is-partial');
+        a.classList.remove('is-selected', 'is-partial');
+        a.setAttribute('aria-selected', false);
       }
       return;
     }
 
     const setStatus = function (thisNodes, isFirstSkipped) {
-      thisNodes.each(function () {
-        const thisNode = $('a:first', this);
-        const parent = thisNode.parent();
-        const status = self.getSelectedStatus(thisNode, isFirstSkipped);
+      thisNodes.forEach((li) => {
+        const a = $(li.querySelector('a'));
+        const status = self.getSelectedStatus(a, isFirstSkipped);
 
         if (status === 'mixed') {
-          parent.removeClass('is-selected is-partial').addClass('is-partial');
+          li.classList.remove('is-selected', 'is-partial');
+          li.classList.add('is-partial');
         } else if (status) {
-          parent.removeClass('is-selected is-partial').addClass('is-selected');
+          li.classList.remove('is-selected', 'is-partial');
+          li.classList.add('is-selected');
         } else {
-          parent.removeClass('is-selected is-partial');
+          li.classList.remove('is-selected', 'is-partial');
         }
-        self.syncNode(thisNode);
+        self.syncNode(a);
       });
     };
 
     // Multiselect
     let isFirstSkipped = false;
-    nodes = node.parent().find('li.folder');
+    nodes = [].slice.call(node[0].parentNode.querySelectorAll('li.folder'));
     setStatus(nodes, isFirstSkipped);
 
     isFirstSkipped = !(!nodes.length && data && !data.selected);
     nodes = node.parentsUntil(this.element, 'li.folder');
+    nodes = [].slice.call(nodes.toArray());
     setStatus(nodes, isFirstSkipped);
   },
 
@@ -572,7 +577,7 @@ Tree.prototype = {
   },
 
   /**
-   * Changes a node's selected status to its opposite form.
+   * Changes a node's open/close status to its opposite form.
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {boolean} isFirstSkipped - ?
@@ -581,11 +586,12 @@ Tree.prototype = {
   toggleNode(node) {
     const next = node.next();
     const self = this;
+    const s = this.settings;
     let result;
-    if (next.is('ul[role="group"]')) {
-      if (next.hasClass('is-open')) {
-        if (typeof self.settings.onCollapse === 'function') {
-          result = self.settings.onCollapse(node);
+    if (next[0] && next[0].tagName.toLowerCase() === 'ul' && next[0].getAttribute('role') === 'group') {
+      if (next[0].classList.contains('is-open')) {
+        if (typeof s.onCollapse === 'function') {
+          result = s.onCollapse(node);
           if (result && result.done && typeof result.done === 'function') { // A promise is returned
             result.done((continueSelectNode) => {
               if (continueSelectNode) {
@@ -599,15 +605,14 @@ Tree.prototype = {
           self.selectNodeFinish(node, focus);
         }
 
-        self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
+        self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), s.folderIconClosed);
 
-        if (node.closest('.folder a').is('[class^="icon"]')) {
+        if (self.hasIconClass(node.closest('.folder a'))) {
           self.setTreeIcon(
             node.closest('.folder a').find('svg.icon-tree'),
             node.closest('.folder a').attr('class')
               .replace('open', 'closed')
-              .replace(' hide-focus', '')
-              .replace(' is-selected', '')
+              .replace(/\s?is-selected/, '')
           );
         }
 
@@ -615,18 +620,18 @@ Tree.prototype = {
 
         if (!self.isMultiselect) {
           self.unSelectedNode(node.parent().find('li.is-selected'), false);
-          node.removeClass('is-selected');
+          node[0].classList.remove('is-selected');
         }
 
         next.one('animateclosedcomplete', () => {
-          next.removeClass('is-open');
+          next[0].classList.remove('is-open');
           self.isAnimating = false;
         }).animateClosed();
 
-        node.attr('aria-expanded', node.attr('aria-expanded') !== 'true');
+        node[0].setAttribute('aria-expanded', node[0].getAttribute('aria-expanded') !== 'true');
       } else {
-        if (typeof self.settings.onExpand === 'function') {
-          result = self.settings.onExpand(node);
+        if (typeof s.onExpand === 'function') {
+          result = s.onExpand(node);
           if (result && result.done && typeof result.done === 'function') { // A promise is returned
             result.done((continueSelectNode) => {
               if (continueSelectNode) {
@@ -642,7 +647,7 @@ Tree.prototype = {
 
         const nodeData = node.data('jsonData');
 
-        if (self.settings.source && nodeData.children && nodeData.children.length === 0) {
+        if (s.source && nodeData.children && nodeData.children.length === 0) {
           const response = function (nodes) {
             const id = nodeData.id;
             const elem = self.findById(id);
@@ -650,7 +655,7 @@ Tree.prototype = {
             // Add DB and UI nodes
             elem.children = nodes;
             self.addChildNodes(elem, node.parent());
-            node.removeClass('is-loading');
+            node[0].classList.remove('is-loading');
             self.loading = false;
 
             // Open
@@ -664,7 +669,7 @@ Tree.prototype = {
           };
 
           const args = { node, data: node.data('jsonData') };
-          node.addClass('is-loading');
+          node[0].classList.add('is-loading');
           self.loading = true;
           self.settings.source(args, response);
 
@@ -682,20 +687,20 @@ Tree.prototype = {
    * @param  {object} node The DOM element.
    */
   accessNode(next, node) {
-    const self = this;
+    const nodeClass = node.attr('class');
 
-    self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconOpen);
+    this.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg.icon-tree'), this.settings.folderIconOpen);
 
-    if (node.is('[class^="icon"]')) {
-      self.setTreeIcon(node.find('svg.icon-tree'), node.attr('class').replace(' hide-focus', '').replace(' is-selected', ''));
+    if (this.hasIconClass(nodeClass)) {
+      this.setTreeIcon(node.find('svg.icon-tree'), nodeClass.replace('is-selected', ''));
     }
 
-    self.isAnimating = true;
+    this.isAnimating = true;
 
     next.one('animateopencomplete', () => {
-      self.isAnimating = false;
+      this.isAnimating = false;
     }).addClass('is-open').css('height', 0).animateOpen();
-    node.attr('aria-expanded', node.attr('aria-expanded') !== 'true');
+    node[0].setAttribute('aria-expanded', node[0].getAttribute('aria-expanded') !== 'true');
   },
 
   /**
@@ -740,6 +745,22 @@ Tree.prototype = {
   },
 
   /**
+   * Check if given value has icon class
+   * @private
+   * @param  {string|object} elemClass class or element has icon class
+   * @returns  {boolean} true if has icon.
+   */
+  hasIconClass(elemClass) {
+    if (typeof elemClass !== 'string') {
+      if (this.isjQuery(elemClass)) {
+        elemClass = elemClass.length > 1 ? elemClass.first()[0] : elemClass[0];
+      }
+      elemClass = elemClass.getAttribute('class');
+    }
+    return elemClass && elemClass.indexOf('icon') > -1;
+  },
+
+  /**
    * Close The Node
    * @private
    * @param  {object} nextTarget The next tree element
@@ -749,13 +770,12 @@ Tree.prototype = {
     const self = this;
     self.setTreeIcon(nodeTarget.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
 
-    if (nodeTarget.closest('.folder a').is('[class^="icon"]')) {
+    if (self.hasIconClass(nodeTarget.closest('.folder a'))) {
       self.setTreeIcon(
         nodeTarget.closest('.folder a').find('svg.icon-tree'),
         nodeTarget.closest('.folder a').attr('class')
           .replace('open', 'closed')
-          .replace(' hide-focus', '')
-          .replace(' is-selected', '')
+          .replace(/\s?is-selected/, '')
       );
     }
 
@@ -790,12 +810,12 @@ Tree.prototype = {
     // On click give clicked element 0 tabindex and 'aria-selected=true', resets all other links
     this.element.on('click.tree', 'a:not(.is-clone)', function (e) {
       const target = $(this);
-      const parent = target.parent();
-      if (!target.is('.is-disabled, .is-loading')) {
+      const parent = this.parentNode;
+      if (!target[0].classList.contains('is-disabled') && !target[0].classList.contains('is-loading')) {
         if (self.isMultiselect) {
-          if ($(e.target).is('.icon') && parent.is('.folder')) {
+          if (e.target.classList.contains('icon') && parent.classList.contains('folder')) {
             self.toggleNode(target);
-          } else if (parent.is('.is-selected, .is-partial')) {
+          } else if (parent.classList.contains('is-selected') || parent.classList.contains('is-partial')) {
             self.unSelectedNode(target, true);
           } else {
             self.selectNode(target, true);
@@ -812,13 +832,12 @@ Tree.prototype = {
     this.element
     // Focus on "a" elements
       .on('focus.tree', 'a', function () {
-        const target = $(this);
-        if (parseInt(target.attr('aria-level'), 10) === 0 && parseInt(target.attr('aria-posinset'), 10) === 1) {
+        if (parseInt(this.getAttribute('aria-level'), 10) === 0 && parseInt(this.getAttribute('aria-posinset'), 10) === 1) {
           // First element if disabled
-          if (target.hasClass('is-disabled')) {
+          if (this.classList.contains('is-disabled')) {
             const e = $.Event('keydown.tree');
             e.keyCode = 40; // move down
-            target.trigger(e);
+            $(this).trigger(e);
             return;// eslint-disable-line
           }
         }
@@ -934,7 +953,7 @@ Tree.prototype = {
 
   /**
    * Handle Loading JSON.
-   * @param {object} dataset - to load.
+   * @param {object} dataset to load.
    * @returns {void}
    */
   loadData(dataset) {// eslint-disable-line
@@ -945,9 +964,23 @@ Tree.prototype = {
     self.element.empty();
 
     self.loading = true;
+    dataset = this.arrangeDataset(dataset);
+    let html = '';
+    self.jsonData = [];
     for (let i = 0, l = dataset.length; i < l; i++) {
-      self.addNode(dataset[i], 'bottom');
+      html += self.getNodeHtml(dataset[i], i);
     }
+    self.element[0].insertAdjacentHTML('beforeend', html);
+    const nodes = [].slice.call(self.element[0].querySelectorAll('a[role="treeitem"]'));
+    nodes.forEach((node, i) => {
+      const a = $(node);
+      const data = self.jsonData[i];
+      a.data('jsonData', data);
+      if (data.selected) {
+        self.selectNode(a, data.focus);
+      }
+    });
+    self.jsonData = undefined;
     self.loading = false;
 
     self.syncDataset(self.element);
@@ -955,6 +988,241 @@ Tree.prototype = {
     self.focusFirst();
     self.attachMenu(self.settings.menuId);
     self.createSortable();
+  },
+
+  /**
+   * Rearrange the given or default dataset. if dataset use `parent` key to arrange nodes
+   * @private
+   * @param {object} dataset a data object.
+   * @returns {object} arranged data object
+   */
+  arrangeDataset(dataset) {
+    if (!this.hasKeyInData('parent', dataset)) {
+      return dataset;
+    }
+
+    dataset = dataset || this.settings.dataset;
+    const arrangedData = JSON.parse(JSON.stringify(dataset));
+
+    // Add given node to parent
+    const addToParent = (node) => {
+      // Add child to given parent
+      const addChild = (parent) => {
+        parent.children = parent.children || [];
+        parent.children.push(node);
+      };
+
+      // Traverse in given data and arrange it
+      const arrange = (data) => {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].id === node.parent) {
+            addChild(data[i]);
+          }
+          if (typeof data[i].children !== 'undefined') {
+            arrange(data[i].children);
+          }
+        }
+      };
+      arrange(arrangedData);
+    };
+
+    // Traverse in given data and add to parent
+    const traverse = (data) => {
+      for (let i = 0; i < data.length; i++) {
+        if (typeof data[i].parent !== 'undefined') {
+          addToParent(data[i]);
+        }
+        if (typeof data[i].children !== 'undefined') {
+          traverse(data[i].children);
+        }
+      }
+    };
+    traverse(dataset);
+
+    // Clean old nodes with parent key
+    const clean = (data, id) => {
+      for (let i = 0; i < data.length; i++) {
+        if (typeof data[i].children !== 'undefined') {
+          clean(data[i].children, data[i].id);
+        }
+        if ((typeof id === 'undefined' && typeof data[i].parent !== 'undefined') ||
+          (typeof id !== 'undefined' && typeof data[i].parent !== 'undefined' && id !== data[i].parent)) {
+          data.splice(i, 1);
+          i--;
+        } else {
+          delete data[i].parent;
+        }
+      }
+    };
+    clean(arrangedData);
+
+    // Set and return the arranged data
+    this.settings.dataset = arrangedData;
+    return arrangedData;
+  },
+
+  /**
+   * Check if given key is exists in dataset.
+   * @private
+   * @param {string} key to check.
+   * @param {object} data to check in.
+   * @returns {boolean} true if key found
+   */
+  hasKeyInData(key, data) {
+    let found = false;
+    data = data || this.settings.dataset;
+
+    /* eslint-disable no-restricted-syntax */
+    const findkey = (obj) => {
+      for (const prop in obj) {
+        if (obj.hasOwnProperty(prop)) {// eslint-disable-line
+          const value = obj[prop];
+          if (typeof value === 'object' && !found) {
+            findkey(value);
+          } else if (key === prop) {
+            found = true;
+          }
+          if (found) {
+            break;
+          }
+        }
+      }
+    };
+    /* eslint-enable no-restricted-syntax */
+
+    for (let i = 0, l = data.length; i < l; i++) {
+      if (found) {
+        break;
+      }
+      findkey(data[i]);
+    }
+    return found;
+  },
+
+  /**
+   * Create html for given json data.
+   * @private
+   * @param {object} data to do html.
+   * @param {number} position for node.
+   * @param {number} level for node.
+   * @param {boolean} isParentsDisabled for node.
+   * @returns {string} created html
+   */
+  getNodeHtml(data, position, level, isParentsDisabled) {
+    level = level || 0;
+    position += 1;
+    const s = this.settings;
+    const isDisabled = isParentsDisabled || data.disabled || false;
+    const a = {
+      id: typeof data.id !== 'undefined' ? ` id="${data.id}"` : '',
+      href: ` href="${typeof data.href !== 'undefined' ? data.href : '#'}"`,
+      expanded: ` aria-expanded="${data.open ? 'true' : 'false'}"`,
+      icon: 'tree-node',
+      alertIcon: '',
+      alertIconAttr: typeof data.alertIcon !== 'undefined' ? ` data-alert-icon="${data.alertIcon}"` : '',
+      text: `<span class="tree-text">${data.text}</span>`,
+      class: ['hide-focus'],
+      ariaDisabled: isDisabled ? 'aria-disabled="true"' : '',
+      checkbox: this.isMultiselect && !this.settings.hideCheckboxes ? '<span class="tree-checkbox"></span>' : '',
+      badge: typeof data.badge === 'object' ? this.getBadgeHtml(data.badge) : ''
+    };
+    this.jsonData.push(data);
+
+    if (s.useStepUI) {
+      a.alertIcon = `<svg class="icon step-alert icon-${data.alertIcon}" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-${data.alertIcon}"></use>`;
+    }
+
+    const isChildren = typeof data.children !== 'undefined';
+    let liClassList = isChildren ? 'folder' : '';
+    liClassList += data.selected ? ' is-selected' : '';
+    if (liClassList !== '') {
+      liClassList += data.open ? ' is-open' : '';
+      liClassList = ` class="${liClassList}"`;
+    }
+    if (isDisabled) {
+      a.class.push('is-disabled');
+    }
+    if (data.icon) {
+      a.icon = data.icon;
+      if (!isChildren || (isChildren && (/open|closed/i.test(data.icon)))) {
+        a.class.push(data.icon);
+      }
+    }
+    if (isChildren) {
+      if (data.open) {
+        a.icon = data.icon && /open|closed/i.test(data.icon) ? data.icon : s.folderIconOpen;
+        isParentsDisabled = isDisabled;
+      } else {
+        a.icon = data.icon && /open|closed/i.test(data.icon) ? data.icon.replace('open', 'closed') : s.folderIconClosed;
+      }
+    }
+    a.icon = `#icon-${a.icon.replace(/^#?icon-?/, '')}`;
+    a.class = ` class="${a.class.join(' ')}"`;
+
+    let html = `
+      <li${liClassList}>
+        <a role="treeitem" aria-selected="false" tabindex="-1"
+          aria-level="${level}"
+          aria-position="${position}"
+          aria-setsize="${position}"
+          ${a.id + a.href + a.class + a.expanded + a.ariaDisabled + a.alertIconAttr}>
+            <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${a.icon}"></use>
+            </svg>${a.checkbox + a.alertIcon + a.badge + a.text}
+        </a>`;
+
+    if (isChildren) {
+      html += `<ul class="folder${data.open ? ' is-open' : ''}" role="group">`;
+      for (let i = 0, l = data.children.length; i < l; i++) {
+        html += this.getNodeHtml(data.children[i], i, (level + 1), isParentsDisabled);
+      }
+      html += '</ul>';
+    }
+    html += '</li>';
+
+    return html;
+  },
+
+  /**
+   * Create badge html.
+   * @private
+   * @param {object} badgeData to do html.
+   * @returns {string} html created
+   */
+  getBadgeHtml(badgeData) {
+    const badge = { html: '', style: '', class: ['badge', 'tree-badge'] };
+
+    if (badgeData && !badgeData.remove) {
+      badge.text = '';
+
+      if (typeof badgeData.text !== 'undefined') {
+        badge.text = badgeData.text.toString();
+        if (badge.text.length === 1) {
+          badge.class.push('round');
+        }
+      }
+
+      if (/info|good|error|alert|pending/i.test(badgeData.type)) {
+        badge.class.push(badgeData.type);
+      } else if (badgeData.type && badgeData.type.charAt(0) === '#' && badgeData.type.length === 7) {
+        badge.style = `background-color: ${badgeData.type} !important;`;
+      }
+      if (badgeData.backColor) {
+        badge.style = `background-color: ${badgeData.backColor} !important;`;
+      }
+      if (badgeData.foreColor) {
+        badge.style += `color: ${badgeData.foreColor} !important;`;
+      }
+      if (badge.style !== '') {
+        badge.style = ` style="${badge.style}"`;
+      }
+      if (badge.text !== '') {
+        if (badgeData.type && badgeData.type.indexOf('pending') !== -1) {
+          badge.text = '';
+        }
+        badge.html = `<span class="${badge.class.join(' ')}"${badge.style}>${badge.text}</span>`;
+      }
+    }
+    return badge.html;
   },
 
   // Functions to Handle Internal Data Store
@@ -1133,36 +1401,38 @@ Tree.prototype = {
     const jsonData = node.data('jsonData');
 
     entry.node = node;
-    entry.id = node.attr('id');
-    entry.text = node.find('.tree-text').text();
+    entry.id = node[0].getAttribute('id');
+    entry.text = node[0].querySelector('.tree-text').textContent;
 
-    if (node.hasClass('is-open')) {
+    const parent = node[0].parentNode;
+
+    if (node[0].classList.contains('is-open') || (parent && parent.tagName.toLowerCase() === 'li') && parent.classList.contains('is-open')) {
       entry.open = true;
     }
 
-    if (node.attr('href')) {
-      entry.href = node.attr('href');
+    if (node[0].getAttribute('href')) {
+      entry.href = node[0].getAttribute('href');
     }
 
-    if (node.parent().is('.is-selected')) {
+    if (node[0].parentNode.classList.contains('is-selected')) {
       entry.selected = true;
     }
 
+    if (node.is('.is-disabled')) {
+      entry.disabled = true;
+    }
+
     // Icon
-    const clazz = node.attr('class');
+    const clazz = node[0].getAttribute('class');
     if (clazz && clazz.indexOf('icon') > -1) {
-      entry.icon = node.attr('class');
+      entry.icon = node[0].getAttribute('class');
     }
 
     if (node.next().is('ul')) {
       const ul = node.next();
       entry.children = [];
-
       ul.children('li').each(function () {
-        const elem = $(this);
-        const tag = elem.find('a:first');
-
-        entry.children.push(self.syncNode(tag));
+        entry.children.push(self.syncNode($(this).find('a:first')));
       });
     }
 
@@ -1182,30 +1452,40 @@ Tree.prototype = {
    * @returns {object} li added
    */
   addNode(nodeData, location) {
-    let li = $('<li></li>');
-    const a = $('<a href="#"></a>').appendTo(li);
     const badgeAttr = typeof nodeData.badge === 'object' ? JSON.stringify(nodeData.badge) : nodeData.badge;
+
+    nodeData.href = typeof nodeData.href !== 'undefined' ? nodeData.href : '#';
 
     location = (!location ? 'bottom' : location); // supports button or top or jquery node
 
-    a.attr({
-      id: nodeData.id,
-      href: nodeData.href,
-      'data-badge': badgeAttr,
-      'data-alert-icon': nodeData.alertIcon
-    }).text(nodeData.text);
+    let a = document.createElement('a');
+    a.setAttribute('id', nodeData.id);
+    a.setAttribute('href', nodeData.href);
+    if (typeof badgeAttr !== 'undefined') {
+      a.setAttribute('data-badge', badgeAttr);
+    }
+    if (typeof nodeData.alertIcon !== 'undefined') {
+      a.setAttribute('data-alert-icon', nodeData.alertIcon);
+    }
 
-    if (nodeData.open) {
-      a.parent().addClass('is-open');
+    if (nodeData.text) {
+      a.textContent = nodeData.text;
     }
 
     if (nodeData.disabled) {
-      a.addClass('is-disabled');
+      a.classList.add('is-disabled');
+    }
+    if (nodeData.icon) {
+      a.classList.add(nodeData.icon);
     }
 
-    if (nodeData.icon) {
-      a.addClass(nodeData.icon);
+    let li = document.createElement('li');
+
+    if (nodeData.open) {
+      li.classList.add('is-open');
     }
+
+    li.appendChild(a);
 
     // Handle Location
     let found = this.loading ? true : this.addToDataset(nodeData, location);
@@ -1216,12 +1496,12 @@ Tree.prototype = {
 
     if (location instanceof jQuery &&
       (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)) {
-      location.append(li);
+      location[0].appendChild(li);
       found = true;
     }
 
     if (location === 'bottom' && (!nodeData.parent || !found)) {
-      this.element.append(li);
+      this.element[0].appendChild(li);
     }
 
     if (location === 'top' && (!nodeData.parent || !found)) {
@@ -1246,12 +1526,16 @@ Tree.prototype = {
         }
         this.addAsChild(nodeData, li);
       }
-      nodeData.node = li.find(`ul li a#${nodeData.id}`);
+      if (this.isjQuery(li)) {
+        nodeData.node = li.find(`ul li a#${nodeData.id}`);
+      }
     } else {
+      li = $(li);
       this.addChildNodes(nodeData, li);
       nodeData.node = li.children('a').first();
     }
 
+    a = $(a);
     this.decorateNode(a);
 
     if (nodeData.selected) {
@@ -1774,18 +2058,23 @@ Tree.prototype = {
 
   // Convert file node to folder type
   convertFileToFolder(node) {
-    const newFolder = $('<ul role="group"></ul>');
+    const newFolder = document.createElement('ul');
+    newFolder.setAttribute('role', 'group');
     const oldData = {
       icon: $('svg.icon-tree', node).getIconName(),
       type: 'file'
     };
-    if (node.is('[class^="icon"]')) {
-      const iconClass = node.attr('class').replace(' hide-focus', '').replace(' is-selected', '');
+    if (this.hasIconClass(node)) {
+      const iconClass = node.attr('class').replace(/\s?is-selected/, '');
       oldData.iconClass = iconClass;
       node.removeClass(iconClass);
     }
     node.data('oldData', oldData);
-    node.parent('li').addClass('folder').append(newFolder);
+    const parent = node[0].parentNode;
+    if (parent && parent.tagName.toLowerCase() === 'li') {
+      parent.classList.add('folder');
+      parent.appendChild(newFolder);
+    }
     this.setTreeIcon($('svg.icon-tree', node), this.settings.folderIconClosed);
   },
 

@@ -37,9 +37,10 @@ exports.config = {
     'browserstack.user': process.env.BROWSERSTACK_USERNAME,
     'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
     'browserstack.debug': true,
-    'browserstack.video' : true,
+    'browserstack.video': true,
     'browserstack.local': false,
-    'browserstack.networkLogs' : false,
+    'browserstack.networkLogs': false,
+    'browserstack.timezone': 'New_York',
     build: browserstackBuildID,
     name: `${theme} theme ci:bs e2e tests`,
     project: 'ids-enterprise-e2e-ci'
@@ -47,7 +48,7 @@ exports.config = {
   multiCapabilities: [
     {
       browserName: 'Chrome',
-      browser_version: '66.0',
+      browser_version: '68.0',
       resolution: '1280x800',
       os_version: '10',
       os: 'Windows',

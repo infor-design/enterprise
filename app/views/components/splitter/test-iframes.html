@@ -1,17 +1,30 @@
+<style>
+  .content {
+    height: 1000px !important;
+  }
+  .iframe-2,
+  .iframe-1 {
+    height: 100% !important;
+    width: calc(100% - 20px) !important;
+  }
+  .iframe-2 {
+    margin-left: 20px !important;
+  }
+</style>
 
 <div class="page-container two-column fixed">
 
   <section class="sidebar" role="main">
-    <div class="content" style="height: 1000px;">
-       <div class="splitter splitter-right" id="splitter-right-1" data-options="{resize: 'end'}"></div>
-        <iframe id="ifrmTree" name="ifrmTree" class="treeFrame" style="height: 100%; width: calc(100% - 20px);" src="http://www.html5.com/"></iframe>
+    <div class="content">
+      <div class="splitter splitter-right" id="splitter-right-1" data-options="{resize: 'end'}"></div>
+      <iframe id="iframe-1" name="iframe-2" class="iframe-1" src=""></iframe>
     </div>
   </section>
 
-  <nav class="main">
-    <div class="content" style="height: 1000px;">
-        <iframe id="ifrmBody" name="ifrmBody" class="bodyFrame" style="height: 100%; width:calc(100% - 20px); margin-left: 20px;" src="https://www.html5rocks.com/en/"></iframe>
+  <section class="main">
+    <div class="content">
+      <iframe id="iframe-2" name="iframe-2" class="iframe-2" src=""></iframe>
     </div>
-  </nav>
+  </section>
 
 </div>

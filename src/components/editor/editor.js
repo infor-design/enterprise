@@ -7,6 +7,7 @@ import { debounce } from '../../utils/debounced-resize';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
 
 const COMPONENT_NAME = 'editor';
 
@@ -343,10 +344,10 @@ Editor.prototype = {
     this.textarea = this.createTextarea();
 
     // fill the text area with any content that may already exist within the editor DIV
-    this.textarea.text($.sanitizeHTML(this.element.html().toString()));
+    this.textarea.text(xssUtils.sanitizeHTML(this.element.html().toString()));
 
     self.container.on('input.editor keyup.editor', '.editor', debounce(() => {
-      self.textarea.html($.sanitizeHTML(self.element.html().toString()));
+      self.textarea.html(xssUtils.sanitizeHTML(self.element.html().toString()));
       // setting the value via .val doesn't trigger the change event
       self.element.trigger('change');
     }, 500));
@@ -493,7 +494,7 @@ Editor.prototype = {
       this.sourceView.addClass('is-focused');
     }).on('blur.editor', (e) => {
       this.sourceView.removeClass('is-focused');
-      this.element.empty().html($.sanitizeHTML(this.textarea.val()));
+      this.element.empty().html(xssUtils.sanitizeHTML(this.textarea.val()));
 
       if (this.element.data('validate')) {
         this.element.data('validate').validate(this.element, true, e);
@@ -930,14 +931,16 @@ Editor.prototype = {
   },
 
   updateCurrentLink(alink) {
-    const emUrl = $(`[name="em-url-${this.id}"]`).val();
-    const emClass = $(`[name="em-class-${this.id}"]`).val();
-    const emTarget = $(`[name="em-target-${this.id}"]`).val();
+    const emUrl = xssUtils.stripTags($(`[name="em-url-${this.id}"]`).val());
+    const emClass = xssUtils.stripTags($(`[name="em-class-${this.id}"]`).val());
+    const emTarget = xssUtils.stripTags($(`[name="em-target-${this.id}"]`).val());
     const emIsClickable = this.settings.anchor.showIsClickable ? $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
-    alink.attr('href', this.fixLinkFormat((emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl)));
-    alink.attr('class', (emClass && $.trim(emClass).length ? emClass : this.settings.anchor.defaultClass));
-    alink.attr('data-url', (emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl).replace('http://', ''));
+    if (alink) {
+      alink[0].setAttribute('href', this.fixLinkFormat((emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl)));
+      alink[0].setAttribute('class', (emClass && $.trim(emClass).length ? emClass : this.settings.anchor.defaultClass));
+      alink[0].setAttribute('data-url', (emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl).replace('http://', ''));
+    }
 
     if (emIsClickable) {
       alink.attr('contenteditable', false);
@@ -957,8 +960,8 @@ Editor.prototype = {
     this.restoreSelection(this.savedSelection);
 
     // Fix and Format the Link
-    const originalValue = input[0].value;
-    input.val(this.fixLinkFormat(input[0].value));
+    const cleanValue = xssUtils.stripTags(this.fixLinkFormat(input[0].value));
+    input.val(cleanValue);
 
     // Set selection url/class/target for Link
     this.settings.anchor.url = input.val();
@@ -967,7 +970,7 @@ Editor.prototype = {
     this.settings.anchor.isClickable = this.settings.anchor.showIsClickable ?
       $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
-    const alink = $(`<a data-url="${originalValue}" href="${input.val()}">${input.val()}</a>`);
+    const alink = $(`<a data-url="${cleanValue}" href="${cleanValue}">${cleanValue}</a>`);
 
     if (this.settings.anchor.class && $.trim(this.settings.anchor.class).length) {
       alink.addClass(this.settings.anchor.class);
@@ -1288,6 +1291,12 @@ Editor.prototype = {
         if ((types instanceof DOMStringList && types.contains('text/html')) ||
             (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
           pastedData = e.originalEvent.clipboardData.getData('text/html');
+        }
+        if (types instanceof DOMStringList && types.contains('text/plain')) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+        }
+        if ((typeof types === 'object' && types[0] && types[0] === 'text/plain') && !types[1]) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
       } else {
         paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
@@ -1790,7 +1799,7 @@ Editor.prototype = {
 
   toggleSource() {
     if (this.sourceViewActive()) {
-      this.element.empty().html($.sanitizeHTML(this.textarea.val()));
+      this.element.empty().html(xssUtils.sanitizeHTML(this.textarea.val()));
       this.element.removeClass('source-view-active hidden');
       this.sourceView.addClass('hidden').removeClass('is-focused');
       this.element.trigger('focus.editor');
@@ -1888,7 +1897,7 @@ Editor.prototype = {
         setTimeout(() => {
           for (let i = 0, l = els.length; i < l; i++) {
             if (els[i].hasAttribute('size')) {
-              els[i].setAttribute('style', `background-color: ${value};`);
+              els[i].style.backgroundColor = value;
               els[i].removeAttribute('size');
             }
           }

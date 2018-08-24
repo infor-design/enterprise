@@ -35,7 +35,9 @@ $('body').on('initialized', function () {
           name: 'Jun',
           value: 8
       }],
-      name: 'Component A'
+      name: 'Component A',
+      legendShortName: 'Comp A',
+      legendAbbrName: 'A'
     }, {
       data: [{
           name: 'Jan',
@@ -56,7 +58,9 @@ $('body').on('initialized', function () {
           name: 'Jun',
           value: 28
       }],
-      name: 'Component B'
+      name: 'Component B',
+      legendShortName: 'Comp B',
+      legendAbbrName: 'B'
     }, {
       data: [{
           name: 'Jan',
@@ -77,7 +81,9 @@ $('body').on('initialized', function () {
           name: 'Jun',
           value: 38
       }],
-      name: 'Component C'
+      name: 'Component C',
+      legendShortName: 'Comp C',
+      legendAbbrName: 'C'
     }];
 
   $('#area-example').chart({type: 'area', dataset: dataset});

@@ -12,6 +12,10 @@ describe('Button example-index tests', () => {
     await utils.setPage('/components/button/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (!utils.isSafari() && !utils.isIE()) {
     it('Should tab to "Primary Button", and animate on enter', async () => {
       const buttonEl = await element.all(by.css('.btn-primary')).get(3);

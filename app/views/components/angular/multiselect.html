@@ -4,7 +4,7 @@
 
       <div class="field">
         <label for="multiselect-id">Multiselect Drop Down</label>
-        <select id="multiselect-id" multiple data-ng-model="selectedValues" data-ng-options="option as option for option in options" data-ng-change="log()" data-multiselect></select>
+        <select id="multiselect-id" multiple data-ng-model="selectedValues" data-ng-options="option as option for option in options" data-multiselect></select>
       </div>
 
       <button type="button" data-ng-click="change()">Change</button>
@@ -21,10 +21,6 @@
       $scope.label = 'Drop Down One';
       $scope.options = ['Option One', 'Option Two', 'Option Three'];
       $scope.selectedValues = ['Option One', 'Option Two', 'Option Three'];
-
-      $scope.log = function () {
-        console.log('Changed to '+ $scope.selectedItem);
-      };
 
       $scope.change = function () {
         $scope.selectedValues = ['Option One'];

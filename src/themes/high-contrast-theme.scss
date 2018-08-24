@@ -213,6 +213,11 @@ $listview-toolbar-button-icon-hover-color: $primary-color;
 $listview-toolbar-button-text-selected-color: $primary-color;
 $listview-toolbar-button-icon-selected-color: $primary-color;
 
+$listview-search-disabled-color: $black;
+$listview-search-disabled-opacity: 0.8;
+$listview-search-disabled-border-color: $graphite06;
+$listview-search-disabled-icon-color: $graphite06;
+
 // Listbuilder
 $listbuilder-bg-color: $input-bg-color;
 $listbuilder-bg-color-hover: $graphite04;
@@ -454,6 +459,7 @@ $accordion-filtered-text-color: $graphite06;
 
 // Application Menu (extends Accoridon)
 $application-menu-border-color: $slate04;
+$application-menu-trigger-icon-fill-color: $slate03;
 
 // Contextual Action Panel
 $contextual-panel-bg: $graphite03;
@@ -762,3 +768,18 @@ $calendar-disabled-color: $graphite10;
 .datagrid-cell-wrapper .chart-targeted-text {
   color: $white;
 }
+<<<<<<< HEAD
+=======
+
+// Override disabled border color when in hover state
+.listview-search {
+  .searchfield {
+    &[disabled] {
+      &:hover {
+        border-bottom: 1px solid $graphite06 !important;
+        border-color: transparent;
+      }
+    }
+  }
+}
+>>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea

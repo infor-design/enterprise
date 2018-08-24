@@ -18,6 +18,10 @@ describe('Dropdown example-index tests', () => {
     await utils.setPage('/components/dropdown/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should open dropdown list on click', async () => {
     await clickOnDropdown();
 

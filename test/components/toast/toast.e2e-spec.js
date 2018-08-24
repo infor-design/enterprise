@@ -11,6 +11,10 @@ describe('Toast example-index tests', () => {
     await utils.setPage('/components/toast/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should button enabled', async () => {
     const buttonEl = await element(by.id('show-toast-message'));
 

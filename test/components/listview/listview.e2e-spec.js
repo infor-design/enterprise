@@ -25,6 +25,10 @@ describe('Listview example-singleselect tests', () => {
     });
   }
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (!utils.isIE()) {
     xit('Should be accessible on init with no WCAG 2AA violations on example-singleselect', async () => {
       const res = await axePageObjects(browser.params.theme);
@@ -207,7 +211,7 @@ describe('Listview example-mixed selection tests', () => {
 
   it('Should select item on click on checkbox', async () => {
     const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .label-text'));
-    listviewItemInputEl.click();
+    await listviewItemInputEl.click();
 
     expect(await element(by.className('is-selected')).isPresent()).toBeTruthy();
     expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();

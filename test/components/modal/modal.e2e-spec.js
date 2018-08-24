@@ -14,6 +14,10 @@ describe('Modal init example-modal tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (!utils.isIE()) {
     it('Should be accessible on init with no WCAG 2AA violations on example-modal', async () => {
       const res = await axePageObjects(browser.params.theme);

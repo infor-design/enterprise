@@ -8,9 +8,48 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
+describe('Contextmenu index tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextmenu/example-index');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should open on click and close on click out', async () => {
+    await browser.driver.manage().window().setSize(1200, 800);
+
+    const textLocation = await element(by.css('#maincontent > div:nth-child(1) > div > p ')).getLocation();
+    await browser.actions()
+      .mouseMove(textLocation)
+      .click(protractor.Button.RIGHT)
+      .perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
+
+    expect(await element(by.id('action-popupmenu')).getAttribute('class')).toContain('is-open');
+
+    await browser.actions()
+      .mouseMove({ x: 20, y: 80 })
+      .click(protractor.Button.LEFT)
+      .perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
+
+    expect(await element(by.id('action-popupmenu')).getAttribute('class')).not.toContain('is-open');
+  });
+});
+
 describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {

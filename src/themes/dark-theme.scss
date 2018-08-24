@@ -194,6 +194,11 @@ $listview-toolbar-button-icon-selected-color: $primary-color;
 $listview-full-width-bg-color: $slate08;
 $listview-full-width-hover-color: $slate06;
 
+$listview-search-disabled-color: $slate04;
+$listview-search-disabled-opacity: 0.5;
+$listview-search-disabled-border-color: $slate05;
+$listview-search-disabled-icon-color: $slate05;
+
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
 $listbuilder-bg-color-hover: $slate06;
@@ -424,6 +429,7 @@ $accordion-disabled-pane-text-color: $slate05;
 
 // Application Menu (extends Accoridon)
 $application-menu-border-color: $slate10;
+$application-menu-trigger-icon-fill-color: $trigger-icon-fill-color;
 
 // Contextual Action Panel
 $contextual-panel-bg: $slate06;

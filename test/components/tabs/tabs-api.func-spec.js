@@ -166,7 +166,8 @@ describe('Tabs API', () => {
 
   it('Should fetch content that will display inside a tab, return a promise', () => {
     const href = 'http://localhost:9876';
-    const externalRes = tabsObj.callSource(href, true);
+    const tabone = jQuery('.tab:nth-of-type(1)');
+    const externalRes = tabsObj.callSource(href, tabone, true);
 
     expect(externalRes).toEqual(jasmine.any(Object));
   });

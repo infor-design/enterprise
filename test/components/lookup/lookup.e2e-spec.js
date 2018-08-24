@@ -11,6 +11,10 @@ describe('Lookup custom button tests', () => {
     await utils.setPage('/components/lookup/example-custom-buttons');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Field should be enabled', async () => {
     const lookupEl = await element(by.id('custom'));
 

@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 
 // Current "theme" string
 let theme = 'light'; //eslint-disable-line
@@ -329,7 +330,7 @@ Personalize.prototype = {
 
     newCss.attr({
       id: originalCss.attr('id'),
-      href: `${themePath}/${exports.theme}-theme${isMin ? '.min' : ''}.css`
+      href: xssUtils.stripTags(`${themePath}/${exports.theme}-theme${isMin ? '.min' : ''}.css`)
     });
     originalCss.removeAttr('id');
     originalCss.after(newCss);
@@ -350,16 +351,9 @@ Personalize.prototype = {
     }
 
     this.pageOverlay = this.pageOverlay ||
-      $(`<div style="background: ${backgroundColor};
-        display: block;
-        height: 100%;
-        left: 0;
-        position: fixed;
-        text-align: center;
-        top: 0;
-        width: 100%;
-        z-index: 10000;"></div>`);
+      $('<div class="personalize-overlay"></div>');
 
+    this.pageOverlay.css('background', backgroundColor);
     $('body').append(this.pageOverlay);
   },
 

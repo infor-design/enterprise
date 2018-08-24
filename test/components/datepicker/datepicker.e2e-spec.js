@@ -10,6 +10,10 @@ describe('Datepicker example-index tests', () => {
     await utils.setPage('/components/datepicker/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should open popup on icon click', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await element(by.css('#date-field-normal + .icon')).click();
@@ -32,6 +36,9 @@ describe('Datepicker example-index tests', () => {
     await element(by.css('#monthview-popup button.is-today')).click();
 
     const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
@@ -64,6 +71,9 @@ describe('Datepicker example-index tests', () => {
     await focusTD.sendKeys(protractor.Key.ENTER);
 
     const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
@@ -90,6 +100,9 @@ describe('Datepicker Anniversay tests', () => {
     await element(by.css('#MMMMd-date + .icon')).click();
 
     const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
 
     await element(by.css('#monthview-popup .is-selected')).click();
 
@@ -123,8 +136,15 @@ describe('Datepicker Anniversay tests', () => {
     await element(by.css('#Mdyyyy-date + .icon')).click();
 
     const testDate = new Date();
+<<<<<<< HEAD
 
     await element(by.css('#monthview-popup .is-selected')).click();
+=======
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    await element(by.css('#calendar-popup .is-selected')).click();
+>>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getMonth() + 1}/${testDate.getDate()}/${testDate.getFullYear()}`);
   });
@@ -140,8 +160,15 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-1 + .icon')).click();
 
     const testDate = new Date();
+<<<<<<< HEAD
 
     await element(by.css('#monthview-popup .is-selected')).click();
+=======
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    await element(by.css('#calendar-popup .is-selected')).click();
+>>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate.getMonth() + 1)}/${testDate.getDate().toString()}/${testDate.getFullYear()}`);
   });
@@ -151,8 +178,15 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-2 + .icon')).click();
 
     const testDate = new Date();
+<<<<<<< HEAD
 
     await element(by.css('#monthview-popup .is-selected')).click();
+=======
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    await element(by.css('#calendar-popup .is-selected')).click();
+>>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getFullYear()}-${testDate.getDate().toString().padStart(2, '0')}-${(testDate.getMonth() + 1).toString().padStart(2, '0')}`);
   });
@@ -162,8 +196,15 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-3 + .icon')).click();
 
     const testDate = new Date();
+<<<<<<< HEAD
 
     await element(by.css('#monthview-popup .is-selected')).click();
+=======
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    await element(by.css('#calendar-popup .is-selected')).click();
+>>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('en-US', { month: 'short' })} ${testDate.getFullYear()}`);
   });
@@ -173,8 +214,15 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-4 + .icon')).click();
 
     const testDate = new Date();
+<<<<<<< HEAD
 
     await element(by.css('#monthview-popup .is-selected')).click();
+=======
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    await element(by.css('#calendar-popup .is-selected')).click();
+>>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate().toString().padStart(2, '0')}/${(testDate.getMonth() + 1).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
   });
@@ -362,6 +410,9 @@ describe('Datepicker Timeformat Tests', () => {
     await todayEl.click();
 
     const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
 
     expect(await element(by.id('dp1')).getAttribute('value')).toEqual(`${(testDate.getFullYear())}/${testDate.getMonth() + 1}/${testDate.getDate()} 00:00`);
   });
@@ -374,6 +425,9 @@ describe('Datepicker Timeformat Tests', () => {
     await todayEl.click();
 
     const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
 
     expect(await element(by.id('dp2')).getAttribute('value')).toEqual(`${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} 12:00 AM`);
   });
@@ -417,8 +471,9 @@ describe('Datepicker 12hr Time Tests', () => {
 
     const value = await element(by.id('datetime-field-time')).getAttribute('value');
     const testDate = new Date();
-    testDate.setHours(12);
+    testDate.setHours(0);
     testDate.setMinutes(0);
+    testDate.setSeconds(0);
 
     expect(value).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('en-US', { month: 'short' })} ${testDate.getFullYear()} 12:00 AM`);
   });
@@ -443,8 +498,9 @@ describe('Datepicker Gregorian SA Tests', () => {
 
     await browser.driver.sleep(config.sleep);
     const testDate = new Date();
-    testDate.setHours(12);
+    testDate.setHours(0);
     testDate.setMinutes(0);
+    testDate.setSeconds(0);
 
     expect(await element(by.id('islamic-date')).getAttribute('value')).toEqual(`${testDate.getDate()}/${(testDate.getMonth() + 1).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
   });

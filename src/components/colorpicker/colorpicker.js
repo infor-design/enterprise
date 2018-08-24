@@ -113,7 +113,7 @@ const COLORPICKER_DEFAULTS = {
     { label: 'Azure', number: '06', value: '368AC0' },
     { label: 'Azure', number: '05', value: '4EA0D1' },
     { label: 'Azure', number: '04', value: '69B5DD' },
-    { label: 'Azure', number: '03', value: '8DC9A6' },
+    { label: 'Azure', number: '03', value: '8DC9E6' },
     { label: 'Azure', number: '02', value: 'ADD8EB' }
   ],
   placeIn: null, // null|'editor'
@@ -320,12 +320,8 @@ ColorPicker.prototype = {
       return;
     }
 
-    if (menu.length) {
-      $(document).trigger($.Event('keydown', { keyCode: 27, which: 27 })); // escape
-
-      if (this.isPickerOpen) {
-        return;
-      }
+    if (menu.length && this.isPickerOpen) {
+      return;
     }
 
     // Append Color Menu
@@ -349,7 +345,6 @@ ColorPicker.prototype = {
     };
 
     // Show Menu
-
     this.element
       .popupmenu(popupmenuOpts)
       .on('open.colorpicker', () => {
@@ -543,6 +538,10 @@ ColorPicker.prototype = {
         const li = $('<li></li>');
         const a = $(`<a href="#" title="${s.clearableText}"><span class="swatch is-empty${isBorderAll ? ' is-border' : ''}"></span></a>`).appendTo(li);
         a.data('label', s.clearableText).data('value', '').tooltip();
+        menu.append(li);
+      } else {
+        const li = $('<li></li>');
+        $('<a href="#" title="Azure01 #C8E9F4"><span class="swatch" style="background-color: rgb(173 ,216, 235);"></span></a>').appendTo(li).tooltip();
         menu.append(li);
       }
 

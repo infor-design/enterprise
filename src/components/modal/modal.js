@@ -358,7 +358,7 @@ Modal.prototype = {
         }).prependTo(btn);
       }
 
-      btn.attr('id', props.id || $.fn.uniqueId('button', 'modal'));
+      btn[0].setAttribute('id', props.id || $.fn.uniqueId('button', 'modal'));
 
       const func = buttons[cnt].click;
 

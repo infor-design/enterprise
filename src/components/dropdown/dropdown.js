@@ -4,6 +4,7 @@ import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { ListFilter } from '../listfilter/listfilter';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../icons/icons.jquery';
@@ -112,6 +113,7 @@ Dropdown.prototype = {
    */
   init() {
     let orgId = this.element.attr('id');
+    orgId = orgId ? xssUtils.stripTags(orgId) : '';
 
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
@@ -120,10 +122,10 @@ Dropdown.prototype = {
     this.timer = null;
     this.filterTerm = '';
 
-    if (orgId === undefined) {
+    if (!orgId) {
       orgId = this.element.uniqueId('dropdown');
-      this.element.attr('id', orgId);
-      this.element.parent().find('label').first().attr('for', orgId);
+      DOM.setAttribute(this.element[0], 'id', orgId);
+      DOM.setAttribute(this.element.parent().find('label').first()[0], 'for', orgId);
     }
 
     if (env.os.name === 'ios' || env.os.name === 'android') {
@@ -418,14 +420,8 @@ Dropdown.prototype = {
     // Set flags
     listIconItem.isIcon = (listIconItem.icon && listIconItem.icon.length);
 
-    if (listIconItem.specColor && listIconItem.specColor.length) {
-      listIconItem.isSpecColor = true;
-    }
     if (listIconItem.classList && listIconItem.classList.length) {
       listIconItem.isClassList = true;
-    }
-    if (listIconItem.specColorOver && listIconItem.specColorOver.length) {
-      listIconItem.isSpecColorOver = true;
     }
     if (listIconItem.classListOver && listIconItem.classListOver.length) {
       listIconItem.isClassListOver = true;
@@ -436,10 +432,6 @@ Dropdown.prototype = {
       icon: listIconItem.isIcon ? listIconItem.icon : '',
       class: `listoption-icon${listIconItem.isClassList ? ` ${listIconItem.classList}` : ''}`
     });
-
-    if (listIconItem.isSpecColor) {
-      listIconItem.html = listIconItem.html.replace('<svg', (`${'<svg style="fill:'}${listIconItem.specColor};"`));
-    }
 
     self.listIcon.items.push(listIconItem);
   },
@@ -515,18 +507,12 @@ Dropdown.prototype = {
             icon.removeClass(iconRef.classListOver)
               .addClass(iconRef.classList);
           }
-          if (iconRef.isSpecColorOver) {
-            icon.css({ fill: iconRef.specColor });
-          }
         }
         // make it over
         if (targetIcon && li.is(target)) {
           if (iconRef.isClassListOver) {
             targetIcon.removeClass(iconRef.classList);
             targetIcon.addClass(iconRef.classListOver);
-          }
-          if (iconRef.isSpecColorOver) {
-            targetIcon.css({ fill: iconRef.specColorOver });
           }
         }
       });
@@ -566,9 +552,6 @@ Dropdown.prototype = {
       target.changeIcon(icon);
       if (iconRef.isClassList) {
         target.addClass(iconRef.classList);
-      }
-      if (iconRef.isSpecColor) {
-        target.css({ fill: iconRef.specColor });
       }
     }
   },
@@ -1439,7 +1422,7 @@ Dropdown.prototype = {
     selectText();
 
     // Set focus back to the element
-    if (env.browser.isIE10 || env.browser.isIE11) {
+    if (env.browser.isIE10() || env.browser.isIE11()) {
       setTimeout(() => {
         input[0].focus();
       }, 0);
@@ -2250,13 +2233,14 @@ Dropdown.prototype = {
       }
     }
 
-    const value = option.val();
+    let value = option.val();
     if (!option) {
       return;
     }
 
     if (!li && typeof value === 'string') {
-      li = this.listUl.find(`li[data-val="${value.replace(/"/g, '/quot/')}"]`);
+      value = value.replace(/"/g, '/quot/');
+      li = this.listUl.find(`li[data-val="${value}"]`);
     }
 
     if (option.hasClass('is-disabled') || option.is(':disabled')) {

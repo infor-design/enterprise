@@ -10,6 +10,10 @@ describe('Colorpicker example-index tests', () => {
     await utils.setPage('/components/colorpicker/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-index', async () => {
       await browser.driver.sleep(config.waitsFor);
