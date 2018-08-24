@@ -2,7 +2,7 @@
 
 ## Test naming conventions
 
-- Use plain, and proper English
+- Use plain and proper English
 - Describe what the test is testing
 - Component or example page name is on the 'describe' line, do not write it again on the 'it' line
 
