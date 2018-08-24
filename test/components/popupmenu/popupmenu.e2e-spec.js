@@ -18,6 +18,8 @@ describe('Contextmenu index tests', () => {
   });
 
   it('Should open on click and close on click out', async () => {
+    await browser.driver.manage().window().setSize(1200, 800);
+
     const textLocation = await element(by.css('#maincontent > div:nth-child(1) > div > p ')).getLocation();
     await browser.actions()
       .mouseMove(textLocation)
