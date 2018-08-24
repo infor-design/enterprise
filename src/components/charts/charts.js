@@ -256,7 +256,8 @@ charts.showTooltip = function (x, y, content, arrow) {
  */
 charts.addLegend = function (series, chartType, settings, container) {
   let i;
-
+  console.log('series', series);
+  console.log('-->', series[0].data.legendAbbrName);
   if (series.length === 0) {
     return;
   }
@@ -281,6 +282,8 @@ charts.addLegend = function (series, chartType, settings, container) {
 
   width += 55;
   const widthPercent = width / $(container).width() * 100;
+
+  console.log('innerwidth', innerWidth);
 
   for (i = 0; i < series.length; i++) {
     if (!series[i].name) {
@@ -363,6 +366,13 @@ charts.addLegend = function (series, chartType, settings, container) {
         .attr('transform', 'translate(10, 10)')
         .attr('d', d3.symbol().size('80').type( () => { return d3.symbols[i]; })) //eslint-disable-line
         .style('fill', hexColor);
+    }
+
+    // Change text of legend depends of the width
+    if (innerWidth <= 480) {
+      textBlock.replaceWith(`<span class="chart-legend-item-text">${series[i].data.legendAbbrName}</span>`);
+    } else if (innerWidth >= 481 && innerWidth <= 768) {
+      textBlock.replaceWith(`<span class="chart-legend-item-text">${series[i].data.legendShortName}</span>`);
     }
   }
 
