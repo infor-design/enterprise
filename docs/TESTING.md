@@ -45,7 +45,7 @@ See [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis
 
 ## Running BrowserStack Tests on Travis Continuous Integration (CI) Server
 
-This will be ran in the evening (EST) in NYC, and tests <http://master-enterprise.demo.design.infor.com> by default
+This will run in the evening (EST) and it tests <http://master-enterprise.demo.design.infor.com> by default
 
 `npm run e2e:ci:bs`
 
