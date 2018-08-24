@@ -363,7 +363,7 @@ describe('Dropdown example-no-search tests', () => {
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), ''), config.waitsFor);
     const dropdownHTML = await browser.executeScript('return document.querySelector("div[aria-controls=\'dropdown-list\']").textContent');
 
-    expect(dropdownHTML).toEqual('');
+    expect(dropdownHTML).toEqual('<span></span>');
   });
 });
 
