@@ -256,7 +256,6 @@ charts.showTooltip = function (x, y, content, arrow) {
  */
 charts.addLegend = function (series, chartType, settings, container) {
   let i;
-  
   if (series.length === 0) {
     return;
   }

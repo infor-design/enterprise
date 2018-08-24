@@ -806,7 +806,9 @@ $blockgrid-focus-border-color: $color-primary;
 $treemap-title-bg-color: $slate06;
 $treemap-title-color: #ffffff;
 
-<<<<<<< HEAD
+// Textarea
+$textarea-size: 362px;
+
 // Calendar
 $calendar-bg-color: $panel-bg-color;
 $calendar-line-color: $graphite02;
@@ -815,10 +817,6 @@ $calendar-selected-bg-color: $graphite01;
 $calendar-hover-bg-color: $graphite01;
 $calendar-disabled-bg-color: $graphite01;
 $calendar-disabled-color: $graphite08;
-=======
-// Textarea
-$textarea-size: 362px;
->>>>>>> 8357b5025cfd9fb0c6178506e14c8668d65607ea
 
 // Breakpoint sizes - Grid
 $breakpoint-phone: 320px;
