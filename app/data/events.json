@@ -1,0 +1,92 @@
+[
+  {
+    "id": "1",
+    "subject": "Discretionary Time Off",
+    "shortSubject": "DTO",
+    "comments": "",
+    "location": "Us Office",
+    "status": "Draft",
+    "starts": "2018-08-22T09:00:00.000Z",
+    "ends": "2018-08-22T13:00:00.000Z",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "2",
+    "subject": "Dentist",
+    "comments": "",
+    "location": "Us Office",
+    "status": "Draft",
+    "starts": "2018-08-22T14:00:00.000Z",
+    "ends": "2018-08-22T18:00:00.000Z",
+    "type": "sick",
+    "isAllDay": "true"
+  },
+  {
+    "id": "3",
+    "subject": "Team Meeting",
+    "comments": "",
+    "location": "Us Office",
+    "status": "",
+    "starts": "2018-08-22T16:00:00.000Z",
+    "ends": "2018-08-22T17:00:00.000Z",
+    "type": "admin",
+    "isAllDay": "true"
+  },
+  {
+    "id": "4",
+    "subject": "Moving Offices",
+    "comments": "",
+    "location": "Us Office",
+    "status": "",
+    "starts": "2018-08-22T16:00:00.000Z",
+    "ends": "2018-08-22T17:00:00.000Z",
+    "type": "admin",
+    "isAllDay": "true"
+  },
+  {
+    "id": "5",
+    "subject": "Scrum",
+    "comments": "",
+    "location": "Us Office",
+    "status": "",
+    "starts": "2018-08-22T18:00:00.000Z",
+    "ends": "2018-08-22T19:00:00.000Z",
+    "type": "admin",
+    "isAllDay": "true"
+  },
+  {
+    "id": "6",
+    "subject": "Discretionary Time Off",
+    "shortSubject": "DTO",
+    "comments": "",
+    "location": "Canada Office",
+    "status": "Approved",
+    "starts": "2018-08-24T10:00:00.000Z",
+    "ends": "2018-08-24T14:00:00.000Z",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "7",
+    "subject": "Team Event",
+    "comments": "",
+    "location": "Manilla Office",
+    "status": "Submitted",
+    "starts": "2018-10-01T16:00:00.000Z",
+    "ends": "2018-10-01T18:00:00.000Z",
+    "type": "team",
+    "isAllDay": "true"
+  },
+  {
+    "id": "8",
+    "subject": "Labour Day",
+    "comments": "",
+    "location": "USA",
+    "status": "Submitted",
+    "starts": "2018-09-03T00:00:00.000Z",
+    "ends": "2018-09-03T24:00:00.000Z",
+    "type": "comp",
+    "isAllDay": "true"
+  }
+]

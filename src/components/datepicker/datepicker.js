@@ -1,6 +1,8 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
+import { MonthView } from '../monthview/monthview';
 import { Environment as env } from '../../utils/environment';
 
 // jQuery Components
@@ -73,6 +75,8 @@ const COMPONENT_NAME = 'datepicker';
  * 'gregorian' or 'islamic-umalqura' as valid values.
  * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
  * implemented https://jira.infor.com/browse/SOHO-3437
+ * @param {boolean} [settings.autoSize=false] If true the field will be sized to the width of the date.
+* @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
  */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
@@ -114,7 +118,9 @@ const DATEPICKER_DEFAULTS = {
     includeDisabled: false // if true range will include disable dates in it
   },
   calendarName: null,
-  useUTC: false
+  useUTC: false,
+  autoSize: false,
+  hideButtons: false
 };
 
 function DatePicker(element, settings) {
@@ -153,6 +159,7 @@ DatePicker.prototype = {
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.conversions = this.currentCalendar.conversions;
     this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
+    this.setSize();
   },
 
   /**
@@ -166,6 +173,21 @@ DatePicker.prototype = {
     } else {
       this.currentCalendar = Locale.calendar();
     }
+  },
+
+  /**
+   * Set size attribute based on current contents
+   * @private
+   * @returns {void}
+   */
+  setSize() {
+    if (!this.settings.autoSize) {
+      return;
+    }
+    const elem = this.element[0];
+    const padding = 45;
+    elem.classList.add('input-auto');
+    elem.style.width = `${stringUtils.textWidth(elem.value, 16) + padding}px`;
   },
 
   /**
@@ -188,11 +210,11 @@ DatePicker.prototype = {
     const s = this.settings;
     const self = this;
     // Handle Keys while popup is open
-    if (elem.is('#calendar-popup')) {
-      elem.off('keydown.datepicker').on('keydown.datepicker', '.calendar-table', (e) => {
+    if (elem.is('#monthview-popup')) {
+      elem.off('keydown.datepicker').on('keydown.datepicker', '.monthview-table', (e) => {
         const key = e.keyCode || e.charCode || 0;
         const cell = $(e.target);
-        const allCell = this.days.find('td:visible');
+        const allCell = this.calendarAPI.days.find('td:visible');
         const allCellLength = allCell.length;
         let idx = null;
         let selector = null;
@@ -200,7 +222,7 @@ DatePicker.prototype = {
         const minDate = new Date(s.disable.minDate);
         const maxDate = new Date(s.disable.maxDate);
 
-        self.validatePrevNext();
+        self.calendarAPI.validatePrevNext();
 
         // Arrow Down: select same day of the week in the next week
         if (key === 40) {
@@ -209,7 +231,7 @@ DatePicker.prototype = {
             idx = allCell.index(e.target) + 7;
             selector = allCell.eq(idx);
             if (idx < allCellLength) {
-              this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+              this.calendarAPI.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
           } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
@@ -232,7 +254,7 @@ DatePicker.prototype = {
             idx = allCell.index(e.target) - 7;
             selector = allCell.eq(idx);
             if (idx > -1) {
-              this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+              this.calendarAPI.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
           } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
@@ -255,7 +277,7 @@ DatePicker.prototype = {
             idx = allCell.index(e.target) - 1;
             selector = allCell.eq(idx);
             if (idx > -1) {
-              this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+              this.calendarAPI.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
           } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
@@ -278,7 +300,7 @@ DatePicker.prototype = {
             idx = allCell.index(e.target) + 1;
             selector = allCell.eq(idx);
             if (idx < allCellLength) {
-              this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+              this.calendarAPI.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
           } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
@@ -390,7 +412,7 @@ DatePicker.prototype = {
             if (!s.range.first || (s.range.first && !s.range.first.date)) {
               allCell.removeClass('is-selected');
             }
-            const d = this.getCellDate(cell);
+            const d = this.calendarAPI.getCellDate(cell);
             this.currentDate = new Date(d.year, d.month, d.day);
             this.insertDate(this.currentDate);
           } else {
@@ -428,7 +450,7 @@ DatePicker.prototype = {
         // Tab closes Date Picker and goes to next field on the modal
         if (key === 9) {
           if (s.range.useRange && $(e.target).is('.next')) {
-            this.days.find('td:visible:last').attr('tabindex', 0).focus();
+            this.calendarAPI.days.find('td:visible:last').attr('tabindex', 0).focus();
           } else {
             this.containFocus(e);
           }
@@ -455,13 +477,13 @@ DatePicker.prototype = {
         const focusedDate = new Date(focusedlabel);
         this.currentDate = new Date(focusedDate.getTime());
       } else if (focused.hasClass('alternate')) {
-        let year = parseInt(this.header.find('.year').text(), 10);
-        let month = parseInt(this.header.find('.month').attr('data-month'), 10);
+        let year = parseInt(this.calendarAPI.header.find('.year').text(), 10);
+        let month = parseInt(this.calendarAPI.header.find('.month').attr('data-month'), 10);
         const day = parseInt(focused.text(), 10);
 
         if (this.settings.showMonthYearPicker) {
-          month = parseInt(this.header.find('.month select').val(), 10);
-          year = parseInt(this.header.find('.year select').val(), 10);
+          month = parseInt(this.calendarAPI.header.find('.month select').val(), 10);
+          year = parseInt(this.calendarAPI.header.find('.year select').val(), 10);
         }
 
         if (focused.hasClass('prev-month')) {
@@ -603,6 +625,8 @@ DatePicker.prototype = {
       }
     }
 
+    maskOptions.processOnInitialize = false;
+
     if (this.isFullMonth) {
       this.pattern = this.settings.dateFormat;
     } else {
@@ -668,47 +692,13 @@ DatePicker.prototype = {
    * @returns {object} element passed in
    */
   activeTabindex(elem, isFocus) {
-    $('td', this.days).removeAttr('tabindex');
+    $('td', this.calendarAPI).removeAttr('tabindex');
     elem.attr('tabindex', 0);
 
     if (isFocus) {
       elem.focus();
     }
     return elem;
-  },
-
-  /**
-   * Validate the Previous and Next Button availability.
-   * @private
-   * @param {string | boolean} isNext to validate the current selected.
-   */
-  validatePrevNext(isNext) {
-    const self = this;
-
-    let currMonth = self.currentMonth;
-    if (isNext !== 'start') {
-      currMonth = isNext ? self.currentMonth + 1 : self.currentMonth - 1;
-    }
-
-    const minDate = new Date(self.settings.disable.minDate);
-    const maxDate = new Date(self.settings.disable.maxDate);
-
-    if (minDate.getFullYear() >= self.currentYear && self.currentYear <= maxDate.getFullYear()) {
-      if (minDate.getMonth() === currMonth) {
-        $('.prev').prop('disabled', true);
-      } else {
-        $('.prev').prop('disabled', false);
-      }
-
-      if (currMonth >= maxDate.getMonth()) {
-        $('.next').prop('disabled', true);
-      } else {
-        $('.next').prop('disabled', false);
-      }
-    } else {
-      $('.prev').prop('disabled', false);
-      $('.next').prop('disabled', false);
-    }
   },
 
   /**
@@ -721,7 +711,7 @@ DatePicker.prototype = {
     const s = this.settings;
     const timeOptions = {};
 
-    if (this.element.is(':disabled') || this.element.attr('readonly')) {
+    if ((this.element.is(':disabled') || this.element.attr('readonly')) && this.element.closest('.monthview').length === 0) {
       return;
     }
 
@@ -729,103 +719,12 @@ DatePicker.prototype = {
 
     /**
     * Fires as the calendar popup is opened.
-    *
     * @event listopened
     * @memberof DatePicker
     * @property {object} event - The jquery event object
     */
     this.element.addClass('is-active is-open').trigger('listopened');
-
-    // Calendar Html in Popups
-    const prevButton = '' +
-      `<button type="button" class="btn-icon prev">
-        ${$.createIcon('caret-left')}
-        <span>${Locale.translate('PreviousMonth')}</span>
-      </button>`;
-
-    const nextButton = '' +
-      `<button type="button" class="btn-icon next">
-        ${$.createIcon('caret-right')}
-        <span>${Locale.translate('NextMonth')}</span>
-      </button>`;
-
-    this.table = $(`<table class="calendar-table" aria-label="${Locale.translate('Calendar')}" role="application"></table>`);
-
-    this.header = $('' +
-      `<div class="calendar-header">
-        <span class="month">november</span>
-        <span class="year">2015</span>
-        ${(Locale.isRTL() ? nextButton + prevButton : prevButton + nextButton)}
-      </div>`);
-
-    this.dayNames = $('' +
-      `<thead>
-        <tr>
-          <th>SU</th>
-          <th>MO</th>
-          <th>TU</th>
-          <th>WE</th>
-          <th>TH</th>
-          <th>FR</th>
-          <th>SA</th>
-        </tr>
-      </thead>`).appendTo(this.table);
-
-    this.days = $('' +
-      `<tbody>
-        <tr>
-          <td class="alternate">26</td>
-          <td class="alternate">27</td>
-          <td class="alternate">28</td>
-          <td class="alternate">29</td>
-          <td class="alternate" >30</td>
-          <td class="alternate">31</td>
-          <td>1</td>
-        </tr><tr>
-          <td>2</td>
-          <td>3</td>
-          <td>4</td>
-          <td>5</td>
-          <td>6</td>
-          <td>7</td>
-          <td>8</td>
-        </tr><tr>
-          <td>9</td>
-          <td>10</td>
-          <td>11</td>
-          <td>12</td>
-          <td>13</td>
-          <td>14</td>
-          <td>15</td>
-        </tr><tr>
-          <td>16</td>
-          <td>17</td>
-          <td>18</td>
-          <td>19</td>
-          <td class="is-today">20</td>
-          <td>21</td>
-          <td>22</td>
-        </tr><tr>
-          <td>23</td>
-          <td>24</td>
-          <td>25</td>
-          <td>26</td>
-          <td>27</td>
-          <td>28</td>
-          <td class="alternate">1</td>
-        </tr><tr>
-          <td class="alternate">2</td>
-          <td class="alternate">3</td>
-          <td class="alternate">4</td>
-          <td class="alternate">5</td>
-          <td class="alternate">6</td>
-          <td class="alternate">7</td>
-          <td class="alternate">8</td>
-        </tr>
-      </tbody>`).appendTo(this.table);
-
     this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
-
     this.footer = $('' +
       `<div class="popup-footer">
         <button type="button" class="cancel btn-tertiary">
@@ -837,13 +736,16 @@ DatePicker.prototype = {
       </div>`);
 
     if (s.hideDays) {
-      this.table = '';
       this.footer = $('' +
         `<div class="popup-footer">
           <button type="button" class="select-month btn-tertiary">
             ${Locale.translate('Select')}
           </button>
         </div>`);
+    }
+
+    if (s.hideButtons) {
+      this.footer = $('');
     }
 
     // Timepicker options
@@ -868,71 +770,7 @@ DatePicker.prototype = {
       }
     }
 
-    this.calendar = $(`<div class="calendar${(s.showTime ? ' is-timepicker' : '')}${(s.hideDays ? ' is-monthyear' : '')}"></div>`)
-      .append(
-        this.header,
-        this.table,
-        (s.showTime ? this.timepickerContainer : ''),
-        this.footer
-      );
-
-    let placementParent = this.element;
-    let placementParentXAlignment = (Locale.isRTL() ? 'right' : 'left');
-    const parent = this.element.parent();
-
-    if (parent.is('.datagrid-cell-wrapper')) {
-      placementParentXAlignment = 'center';
-      placementParent = this.element.next('.icon');
-    }
-
-    const popoverOpts = {
-      content: this.calendar,
-      placementOpts: {
-        parent: placementParent,
-        parentXAlignment: placementParentXAlignment,
-        strategies: ['flip', 'nudge', 'shrink']
-      },
-      placement: 'bottom',
-      popover: true,
-      trigger: 'immediate',
-      tooltipElement: '#calendar-popup'
-    };
-
-    this.trigger.popover(popoverOpts)
-      .off('show.datepicker')
-      .on('show.datepicker', () => {
-        if (env.os.name === 'ios') {
-          $('head').triggerHandler('disable-zoom');
-        }
-
-        // Horizontal view on mobile
-        if (window.innerHeight < 400 && this.popupClosestScrollable) {
-          this.popup.find('.arrow').hide();
-          this.popup.css('min-height', `${(this.popupClosestScrollable[0].scrollHeight + 2)}px`);
-          this.popupClosestScrollable.css('min-height', '375px');
-        }
-
-        // Hide calendar until range to be pre selected
-        if (s.range.useRange &&
-            s.range.first && s.range.first.date &&
-            s.range.second && s.range.second.date) {
-          this.popup.addClass('is-hidden');
-        }
-      })
-      .off('hide.datepicker')
-      .on('hide.datepicker', () => {
-        if (env.os.name === 'ios') {
-          this.trigger.one('hide', () => {
-            $('head').triggerHandler('enable-zoom');
-          });
-        }
-
-        this.popupClosestScrollable.add(this.popup).css('min-height', '');
-        this.closeCalendar();
-      });
-
-    this.handleKeys($('#calendar-popup'));
-    $('.calendar-footer a', this.calendar).button();
+    this.calendarContainer = $('<div class="monthview-container"></div>');
 
     // Show Month
     this.setValueFromField();
@@ -949,7 +787,7 @@ DatePicker.prototype = {
       timeOptions.parentElement = this.timepickerContainer;
       this.time = this.getTimeString(this.currentDate, this.show24Hours);
       this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
-      this.timepickerContainer.find('dropdown').dropdown();
+      this.timepickerContainer.find('.dropdown').dropdown();
 
       this.timepickerContainer.on('change.datepicker', () => {
         this.currentDate = this.setTime(this.currentDate);
@@ -976,26 +814,107 @@ DatePicker.prototype = {
       this.todayDay = this.todayDateIslamic[2];
     }
 
-    this.showMonth(this.currentMonth, this.currentYear);
-    this.popup = $('#calendar-popup');
+    this.settings.month = this.currentMonth;
+    this.settings.year = this.currentYear;
+    this.settings.activeDate = this.currentDate;
+
+    this.settings.activeDateIslamic = this.currentIslamicDate || this.todayDateIslamic;
+    this.settings.isPopup = true;
+    this.settings.headerStyle = 'simple';
+    this.calendarAPI = new MonthView(this.calendarContainer, this.settings);
+    this.calendar = this.calendarAPI.element;
+
+    if (s.showTime) {
+      this.calendar.addClass('is-timepicker');
+    }
+    if (s.hideDays) {
+      this.calendar.addClass('is-monthyear');
+    }
+    this.calendar.append((s.showTime ? this.timepickerContainer : ''), this.footer);
+
+    let placementParent = this.element;
+    let placementParentXAlignment = (Locale.isRTL() ? 'right' : 'left');
+    const parent = this.element.parent();
+
+    if (parent.is('.datagrid-cell-wrapper')) {
+      placementParentXAlignment = 'center';
+      placementParent = this.element.next('.icon');
+    }
+
+    const popoverOpts = {
+      content: this.calendar,
+      placementOpts: {
+        parent: placementParent,
+        parentXAlignment: placementParentXAlignment,
+        strategies: ['flip', 'nudge', 'shrink']
+      },
+      placement: 'bottom',
+      popover: true,
+      trigger: 'immediate',
+      extraClass: 'monthview-popup',
+      tooltipElement: '#monthview-popup',
+      initializeContent: false
+    };
+
+    this.trigger.popover(popoverOpts)
+      .off('show.datepicker')
+      .on('show.datepicker', () => {
+        if (env.os.name === 'ios') {
+          $('head').triggerHandler('disable-zoom');
+        }
+
+        // Horizontal view on mobile
+        if (window.innerHeight < 400 && this.popupClosestScrollable) {
+          this.popup.find('.arrow').hide();
+          this.popup.css('min-height', `${(this.popupClosestScrollable[0].scrollHeight + 2)}px`);
+          this.popupClosestScrollable.css('min-height', '375px');
+        }
+
+        // Hide calendar until range to be pre selected
+        if (s.range.useRange &&
+            s.range.first && s.range.first.date &&
+            s.range.second && s.range.second.date) {
+          this.popup.addClass('is-hidden');
+        }
+
+        if (this.settings.hideButtons) {
+          this.popup.addClass('hide-buttons');
+        }
+      })
+      .off('hide.datepicker')
+      .on('hide.datepicker', () => {
+        if (env.os.name === 'ios') {
+          this.trigger.one('hide', () => {
+            $('head').triggerHandler('enable-zoom');
+          });
+        }
+
+        this.popupClosestScrollable.add(this.popup).css('min-height', '');
+        this.closeCalendar();
+      });
+
+    this.handleKeys($('#monthview-popup'));
+    $('.monthview-footer a', this.calendar).button();
+
+    this.popup = $('#monthview-popup');
     this.popupClosestScrollable = this.popup.closest('.scrollable');
     this.popup.attr('role', 'dialog');
     this.originalDate = this.element.val();
 
     // Calendar Day Events
-    this.days.off('click.datepicker').on('click.datepicker', 'td', function () {
+    this.calendarAPI.days.off('click.datepicker').on('click.datepicker', 'td', function () {
       const td = $(this);
       if (td.hasClass('is-disabled')) {
         self.activeTabindex(td, true);
       } else {
         if (!(s.range.useRange && s.range.first)) {
-          self.days.find('.is-selected').removeClass('is-selected range').removeAttr('aria-selected');
+          self.calendarAPI.days.find('.is-selected').removeClass('is-selected range').removeAttr('aria-selected');
         }
 
         const cell = $(this);
         cell.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true');
 
-        const cellDate = self.getCellDate(cell);
+        const cellDate = self.calendarAPI.getCellDate(cell);
         const day = cellDate.day;
         const month = cellDate.month;
         const year = cellDate.year;
@@ -1023,14 +942,6 @@ DatePicker.prototype = {
       }
     });
 
-    if (s.range.useRange) {
-      this.days
-        .off('mouseover.datepicker')
-        .on('mouseover.datepicker', 'td', function () {
-          self.setRangeOnCell(this);
-        });
-    }
-
     // Calendar Footer Events
     this.footer.off('click.datepicker').on('click.datepicker', 'button', function (e) {
       const btn = $(this);
@@ -1049,8 +960,8 @@ DatePicker.prototype = {
       }
 
       if (btn.hasClass('select-month')) {
-        const year = parseInt(self.header.find('.year select').val(), 10);
-        const month = parseInt(self.header.find('.month select').val(), 10);
+        const year = parseInt(self.calendarAPI.header.find('.year select').val(), 10);
+        const month = parseInt(self.calendarAPI.header.find('.month select').val(), 10);
 
         self.currentDate = new Date(year, month, 1);
 
@@ -1082,142 +993,9 @@ DatePicker.prototype = {
       e.preventDefault();
     });
 
-    // Change Month Events
-    this.header.off('click.datepicker').on('click.datepicker', 'button', function () {
-      const isNext = $(this).is('.next');
-      const range = {};
-
-      if (self.settings.disable.restrictMonths
-        && self.settings.disable.minDate && self.settings.disable.maxDate) {
-        self.validatePrevNext(isNext);
-      }
-
-      if (s.range.useRange) {
-        if (isNext) {
-          range.date = new Date(self.currentYear, (self.currentMonth + 1), (self.days.find('.next-month:visible').length + 1));
-        } else {
-          range.date = new Date(self.currentYear, self.currentMonth, 1);
-          range.date.setDate(range.date.getDate() - (self.days.find('.prev-month:visible').length + 1));
-        }
-      }
-
-      self.showMonth(self.currentMonth + (isNext ? 1 : -1), self.currentYear);
-
-      if (s.range.useRange) {
-        range.formatedDate = Locale.formatDate(range.date, { date: 'full' });
-        range.cell = self.days.find(`[aria-label="${range.formatedDate}"]`);
-        self.setRangeOnCell(s.range.second ? false : range.cell);
-      }
-    });
-
-    if (s.range.useRange) {
-      this.header
-        .off('mouseover.datepicker')
-        .on('mouseover.datepicker', 'button', function () {
-          if (s.range.extra) {
-            self.setRangeOnCell($(this).is('.next') ? s.range.extra.maxCell : s.range.extra.minCell);
-          }
-        })
-        .off('focus.datepicker')
-        .on('focus.datepicker', 'button:not(.hide-focus)', function () {
-          if (s.range.extra) {
-            self.setRangeOnCell($(this).is('.next') ? s.range.extra.maxCell : s.range.extra.minCell);
-          }
-        });
-    }
-
     setTimeout(() => {
       self.setFocusAfterOpen();
-      if (self.settings.disable.restrictMonths
-        && self.settings.disable.minDate && self.settings.disable.maxDate) {
-        self.validatePrevNext('start');
-      }
     }, 50);
-  },
-
-  /**
-   * Set range on given cell -or- current month/year.
-   * @private
-   * @param {object} cell to set range.
-   * @returns {void}
-   */
-  setRangeOnCell(cell) {
-    const self = this;
-    const s = this.settings;
-
-    if (s.range.useRange && s.range.first && !s.range.second) {
-      const first = s.range.first;
-      const extra = s.range.extra;
-      const len = extra.cellLength - 1;
-      const firstCell = first.rowIdx + first.cellIdx + (len * first.rowIdx);
-      cell = $(cell);// First date selected cell element
-
-      if (cell.length && !cell.is('.is-disabled, .is-selected')) {
-        const row = cell.closest('tr');
-        const cellIdx = cell.index();
-        const rowIdx = row.index();
-        const thisCell = rowIdx + cellIdx + (len * rowIdx);
-        const d = self.getCellDate(cell);
-        const cellDate = new Date(d.year, d.month, d.day);
-        const max = this.getDifferenceToDate(s.range.first.date, s.range.maxDays);
-
-        self.days.find('td:visible').each(function (i) {
-          const thisTd = $(this);
-          if (cellDate > s.range.first.date && !s.range.selectBackward &&
-            (!s.range.maxDays || (s.range.maxDays > 0 && cellDate.getTime() <= max.aftertime)) &&
-            ((i > firstCell && i <= thisCell) || (cellDate > extra.max && i <= thisCell))) {
-            thisTd.addClass('range-next');
-          } else if (cellDate < s.range.first.date && !s.range.selectForward &&
-            (!s.range.maxDays || (s.range.maxDays > 0 && cellDate.getTime() >= max.beforetime)) &&
-            ((i < firstCell && i >= thisCell) || (cellDate < extra.min && i >= thisCell))) {
-            thisTd.addClass('range-prev');
-          } else {
-            thisTd.removeClass('range-next range-prev');
-          }
-        });
-      } else if (!cell.length) {
-        self.days.find('td').removeClass('range-next range-prev');
-      }
-    }
-    if (!cell && s.range.second) {
-      self.setRangeSelected();
-    }
-  },
-
-  /**
-   * Get date from given cell.
-   * @private
-   * @param {object} cell to get date.
-   * @returns {object} as: year, month, day
-   */
-  getCellDate(cell) {
-    const s = this.settings;
-    const day = parseInt(cell.text(), 10);
-    let month = parseInt(this.header.find('.month').attr('data-month'), 10);
-    let year = parseInt(this.header.find('.year').text(), 10);
-
-    if (s.showMonthYearPicker) {
-      year = parseInt(this.header.find('.year select').val(), 10);
-      month = parseInt(this.header.find('.month select').val(), 10);
-    }
-
-    if (cell.hasClass('prev-month')) {
-      if (month === 0) {
-        month = 11;
-        year--;
-      } else {
-        month--;
-      }
-    } else if (cell.hasClass('next-month')) {
-      if (month === 11) {
-        month = 0;
-        year++;
-      } else {
-        month++;
-      }
-    }
-
-    return { year, month, day };
   },
 
   /**
@@ -1237,7 +1015,7 @@ DatePicker.prototype = {
    */
   closeCalendar() {
     // Remove range entries
-    const cell = this.days && this.days.length ? this.days.find('td.is-selected') : null;
+    const cell = this.calendarAPI && this.calendarAPI.days.length ? this.calendarAPI.days.find('td.is-selected') : null;
     this.resetRange(cell);
 
     // Close timepicker
@@ -1268,205 +1046,6 @@ DatePicker.prototype = {
   },
 
   /**
-   * Check through the options to see if the date is disabled
-   * @private
-   * @param {string} year to check.
-   * @param {string} month to check.
-   * @param {string} date to check.
-   * @returns {boolean} true if the date is disabled
-   */
-  isDateDisabled(year, month, date) {
-    const s = this.settings;
-    const min = (new Date(s.disable.minDate)).setHours(0, 0, 0, 0);
-    const max = (new Date(s.disable.maxDate)).setHours(0, 0, 0, 0);
-    let d2 = new Date(year, month, date);
-
-    // dayOfWeek
-    if (s.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
-      return true;
-    }
-
-    d2 = d2.setHours(0, 0, 0, 0);
-
-    // min and max
-    if ((d2 <= min) || (d2 >= max)) {
-      return true;
-    }
-
-    // dates
-    if (s.disable.dates.length && typeof s.disable.dates === 'string') {
-      s.disable.dates = [s.disable.dates];
-    }
-
-    for (let i = 0, l = s.disable.dates.length; i < l; i++) {
-      const d = new Date(s.disable.dates[i]);
-      if (d2 === d.setHours(0, 0, 0, 0)) {
-        return true;
-      }
-    }
-
-    return false;
-  },
-
-  /**
-   * Set disable Date
-   * @private
-   * @param {object} elem to set.
-   * @param {string} year to check.
-   * @param {string} month to check.
-   * @param {string} date to check.
-   * @returns {void}
-   */
-  setDisabled(elem, year, month, date) {
-    const s = this.settings;
-    const dateIsDisabled = this.isDateDisabled(year, month, date);
-    elem.removeClass('is-disabled').removeAttr('aria-disabled');
-
-    if ((dateIsDisabled && !s.disable.isEnable) || (!dateIsDisabled && s.disable.isEnable)) {
-      elem
-        .addClass('is-disabled').attr('aria-disabled', 'true')
-        .removeClass('is-selected range').removeAttr('aria-selected');
-    }
-  },
-
-  /**
-   * Add a Legend below the table
-   * @private
-   * @returns {void}
-   */
-  addLegend() {
-    const s = this.settings;
-    if (!s.showLegend) {
-      return;
-    }
-
-    // Remove Legend
-    if (this.legend && this.legend.length) {
-      this.legend.remove();
-    }
-
-    this.legend = $('<div class="calendar-legend"></div>');
-
-    for (let i = 0; i < s.legend.length; i++) {
-      const series = s.legend[i];
-      const item = '' +
-        `<div class="calendar-legend-item">
-          <span class="calendar-legend-swatch" style="background-color: ${this.hexToRgba(series.color, 0.3)}"></span>
-          <span class="calendar-legend-text">${series.name}</span>
-        </div>`;
-
-      this.legend.append(item);
-    }
-    this.table.after(this.legend);
-  },
-
-  /**
-   * Set Color for the Legend settings
-   * @private
-   * @param {object} elem to set.
-   * @param {string} year to check.
-   * @param {string} month to check.
-   * @param {string} date to check.
-   * @returns {void}
-   */
-  setLegendColor(elem, year, month, date) {
-    if (!this.settings.showLegend || !elem[0]) {
-      return;
-    }
-
-    const hex = this.getLegendColor(year, month, date);
-    const self = this;
-
-    elem[0].style.backgroundColor = '';
-    elem.off('mouseenter.legend mouseleave.legend');
-
-    if (hex) {
-      // set color on elem at .3 of provided color as per design
-      elem.addClass('is-colored');
-      elem[0].style.backgroundColor = this.hexToRgba(hex, 0.3);
-
-      const normalColor = self.hexToRgba(hex, 0.3);
-      const hoverColor = self.hexToRgba(hex, 0.7);
-
-      // handle hover states
-      elem.on('mouseenter.legend', function () {
-        const thisElem = $(this);
-        thisElem[0].style.backgroundColor = hoverColor;
-        thisElem.find('span')[0].style.backgroundColor = 'transparent';
-      }).on('mouseleave.legend', function () {
-        const thisElem = $(this);
-        thisElem[0].style.backgroundColor = normalColor;
-        thisElem.find('span')[0].style.backgroundColor = '';
-      });
-    }
-  },
-
-  /**
-   * Convert the provided hex to an RGBA for states
-   * This may be later moved into a colors file along with getLuminousColorShade
-   * @private
-   * @param {string} hex to set.
-   * @param {string} opacity to check.
-   * @returns {string} converted rgba
-   */
-  hexToRgba(hex, opacity) {
-    let c;
-    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-      c = hex.substring(1).split('');
-
-      if (c.length === 3) {
-        c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-      }
-
-      c = `0x${c.join('')}`;
-      // eslint-disable-next-line
-      return `rgba(${[(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',')},${opacity.toString()})`;
-    }
-    return '';
-  },
-
-  /**
-   * Process Color Options to get the date color
-   * @private
-   * @param {string} year .
-   * @param {string} month .
-   * @param {string} date .
-   * @returns {string} date color
-   */
-  /* eslint-disable consistent-return */
-  getLegendColor(year, month, date) {
-    const s = this.settings;
-    if (!s.showLegend) {
-      return;
-    }
-
-    const checkDate = new Date(year, month, date);
-    const checkHours = checkDate.setHours(0, 0, 0, 0);
-
-    for (let i = 0; i < s.legend.length; i++) {
-      const series = s.legend[i];
-
-      // Check Day of week
-      if (series.dayOfWeek && series.dayOfWeek.indexOf(checkDate.getDay()) !== -1) {
-        return series.color;
-      }
-
-      // Check for dates that match
-      if (series.dates) {
-        for (let j = 0; j < series.dates.length; j++) {
-          const d = new Date(series.dates[j]);
-          if (checkHours === d.setHours(0, 0, 0, 0)) {
-            return series.color;
-          }
-        }
-      }
-    }
-
-    return '';
-  },
-  /* eslint-enable consistent-return */
-
-  /**
    * Set focus after opening the calendar
    * @private
    * @returns {void}
@@ -1487,7 +1066,7 @@ DatePicker.prototype = {
         (!s.range.second || s.range.second && !s.range.second.date)) {
         this.setRangeFirstPart(s.range.first.date);
       }
-      this.setRangeSelected();
+      this.calendarAPI.setRangeSelected();
       if (s.range.second && s.range.first.date && s.range.second.date) {
         this.element.val(this.getRangeValue());
       }
@@ -1498,240 +1077,32 @@ DatePicker.prototype = {
   },
 
   /**
-   * Update the calendar to show the month
+   * Set range first part
    * @private
-   * @param {number} month zero based.
-   * @param {number} year .
-   * @param {number} skipYear .
+   * @param {object} date .
    * @returns {void}
    */
-  showMonth(month, year, skipYear) {
-    const self = this;
-    const now = new Date();
-
-    now.setHours(0);
-    now.setMinutes(0);
-    now.setSeconds(0);
-
-    let elementDate = (this.currentDate && this.currentDate.getDate()) ?
-      this.currentDate : now;
-
-    this.setCurrentCalendar();
-
-    if (this.isIslamic) {
-      elementDate = this.currentDateIslamic;
-    }
-
-    if (year.toString().length < 4) {
-      year = new Date().getFullYear();
-    }
-
-    if (month === 12) {
-      year++;
-      month = 0;
-      this.currentMonth = month;
-      this.currentYear = year;
-      this.header.find('.year').text(` ${year}`);
-    }
-
-    if (month < 0) {
-      year--;
-      month = 11;
-      this.currentMonth = month;
-      this.currentYear = year;
-      this.header.find('.year').text(` ${year}`);
-    }
-
-    if (!skipYear) {
-      let days = this.currentCalendar.days.narrow || this.currentCalendar.days.narrow;
-      days = days || this.currentCalendar.days.abbreviated;
-
-      const monthName = this.currentCalendar.months.wide[month];
-
-      this.currentMonth = month;
-      this.currentYear = year;
-
-      // Set the Days of the week
-      const firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
-      this.dayNames.find('th').each(function (i) {
-        $(this).text(days[(i + firstDayofWeek) % 7]);
-      });
-
-      // Localize Month Name
-      this.yearFirst = this.currentCalendar.dateFormat.year && this.currentCalendar.dateFormat.year.substr(1, 1) === 'y';
-      this.header.find('.month').attr('data-month', month).text(`${monthName} `);
-      this.header.find('.year').text(` ${year}`);
-
-      if (this.yearFirst && !this.isIslamic && !Locale.isRTL()) {
-        elementDate.setFullYear(year);
-        const translation = Locale.formatDate(elementDate, { date: 'year' });
-        const justYear = translation.split(' ')[0];
-
-        this.header.find('.year').text(`${justYear} `);
-        this.header.find('.year').insertBefore(this.header.find('.month'));
-      }
-
-      this.appendMonthYearPicker(month, year);
-    }
-
-    // Adjust days of the week
-    // lead days
-    const firstDayOfMonth = this.firstDayOfMonth(year, month);
-    const leadDays = ((firstDayOfMonth - (this.currentCalendar.firstDayofWeek || 0)) + 7) % 7;
-    const lastMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 1 : 0));
-    const thisMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 0 : 1));
-    let nextMonthDayCnt = 1;
-    let dayCnt = 1;
-    let exYear;
-    let exMonth;
-    let exDay;
-
+  setRangeFirstPart(date) {
     const s = this.settings;
-    this.days.find('td').each(function (i) {
-      const th = $(this).removeClass('alternate prev-month next-month is-selected range is-today');
-      th.removeAttr('aria-selected');
+    const dateObj = d => new Date(d.year, d.month, d.day);
+    const labelDate = d => Locale.formatDate(d, { date: 'full' });
+    const minCell = this.calendarAPI.days.find('td:visible:first');
+    const maxCell = this.calendarAPI.days.find('td:visible:last');
+    const label = labelDate(date);
+    const cell = this.calendarAPI.days.find(`[aria-label="${label}"]`);
+    const row = cell.closest('tr');
+    this.currentDate = date;
 
-      if (i < leadDays) {
-        exDay = (lastMonthDays - leadDays) + 1 + i;
-        exMonth = (month === 0) ? 11 : month - 1;
-        exYear = (month === 0) ? year - 1 : year;
-
-        self.setDisabled(th, exYear, exMonth, exDay);
-        self.setLegendColor(th, exYear, exMonth, exDay);
-        th.addClass('alternate prev-month').html(`<span aria-hidden="true">${exDay}</span>`);
-      }
-
-      if (i >= leadDays && dayCnt <= thisMonthDays) {
-        th.html(`<span aria-hidden="true">${dayCnt}</span>`);
-
-        // Add Selected Class to Selected Date
-        if (self.isIslamic) {
-          if (year === elementDate[0] && month === elementDate[1] && dayCnt === elementDate[2]) {
-            th.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true');
-          }
-        } else {
-          const tHours = elementDate.getHours();
-          const tMinutes = elementDate.getMinutes();
-          const tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
-
-          if ((new Date(year, month, dayCnt))
-            .setHours(tHours, tMinutes, tSeconds, 0) === elementDate
-              .setHours(tHours, tMinutes, tSeconds, 0)) { //eslint-disable-line
-            th.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true');
-          }
-        }
-
-        if (dayCnt === self.todayDay && self.currentMonth === self.todayMonth &&
-          self.currentYear === self.todayYear) {
-          th.addClass('is-today');
-        }
-
-        th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), { date: 'full' }));
-
-        self.setDisabled(th, year, month, dayCnt);
-        self.setLegendColor(th, year, month, dayCnt);
-
-        th.attr('role', 'link');
-        dayCnt++;
-        return;
-      }
-
-      if (dayCnt >= thisMonthDays + 1) {
-        exDay = nextMonthDayCnt;
-        exMonth = (month === 11) ? 0 : month + 1;
-        exYear = (month === 11) ? year + 1 : year;
-
-        self.setDisabled(th, exYear, exMonth, exDay);
-        self.setLegendColor(th, exYear, exMonth, exDay);
-
-        th.addClass('alternate next-month').html(`<span aria-hidden="true">${nextMonthDayCnt}</span>`);
-        nextMonthDayCnt++;
-      }
-    });
-
-    // Hide 6th Row if all disabled
-    const row = this.days.find('tr').eq(5);
-    if (row.find('td.alternate').length === 7) {
-      row.hide();
-    } else {
-      row.show();
-    }
-
-    // Add Legend
-    self.addLegend();
-  },
-
-  /**
-   * Append month year picker
-   * @private
-   * @param {number} month .
-   * @param {number} year .
-   * @returns {void}
-   */
-  appendMonthYearPicker(month, year) {
-    const self = this;
-
-    if (!this.settings.showMonthYearPicker) {
-      return;
-    }
-
-    this.header.addClass('is-monthyear');
-
-    let monthDropdown = '' +
-      `<label for="month-dropdown" class="audible">
-        ${Locale.translate('Month')}
-      </label>
-      <select id="month-dropdown" class="dropdown">`;
-
-    const wideMonths = this.currentCalendar.months.wide;
-    // eslint-disable-next-line
-    wideMonths.map(function (monthMap, i) {
-      monthDropdown += `<option ${(i === month ? ' selected ' : '')} value="${i}">${monthMap}</option>`;
-    });
-    monthDropdown += '</select>';
-
-    const monthSpan = this.header.find('.month').empty().append(monthDropdown);
-    monthSpan.find('select.dropdown').dropdown().off('change.datepicker')
-      .on('change.datepicker', function () {
-        const elem = $(this);
-        self.currentMonth = parseInt(elem.val(), 10);
-        self.showMonth(self.currentMonth, self.currentYear, true);
-      });
-
-    let yearDropdown = '' +
-      `<label for="year-dropdown" class="audible">
-        ${Locale.translate('Year')}
-      </label>
-      <select id="year-dropdown" class="dropdown year">`;
-
-    const years = [];
-
-    for (let i = this.settings.advanceMonths; i >= 1; i--) {
-      years.push(parseInt(year, 10) - i);
-    }
-    years.push(year);
-    for (let j = 1; j <= this.settings.advanceMonths; j++) {
-      years.push(parseInt(year, 10) + j);
-    }
-
-    // eslint-disable-next-line
-    years.map(function (yearMap) {
-      yearDropdown += `<option ${(year === yearMap ? ' selected ' : '')} value="${yearMap}">${yearMap}</option>`;
-    });
-    yearDropdown += '</select>';
-
-    const yearSpan = this.header.find('.year').empty().append(yearDropdown);
-    yearSpan.find('select.dropdown').dropdown().off('change.datepicker')
-      .on('change.datepicker', function () {
-        const elem = $(this);
-        self.currentYear = parseInt(elem.val(), 10);
-        self.showMonth(self.currentMonth, self.currentYear, true);
-      });
-
-    if (this.yearFirst) {
-      yearSpan.find('.dropdown-wrapper').css('left', '0');
-      monthSpan.find('.dropdown-wrapper').css('left', '10px');
-    }
+    s.range.first = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
+    s.range.extra = {
+      minCell,
+      maxCell,
+      min: dateObj(this.calendarAPI.getCellDate(minCell)),
+      max: dateObj(this.calendarAPI.getCellDate(maxCell)),
+      cellLength: row.children('td').length
+    };
+    this.calendarAPI.settings.range.first = s.range.first;
+    this.calendarAPI.settings.range.extra = s.range.extra;
   },
 
   /**
@@ -1749,7 +1120,7 @@ DatePicker.prototype = {
 
     // Make sure Calendar is showing that month
     if (this.currentMonth !== month || this.currentYear !== year) {
-      this.showMonth(month, year);
+      this.calendarAPI.showMonth(month, year);
     }
 
     if (!this.isOpen()) {
@@ -1757,7 +1128,7 @@ DatePicker.prototype = {
     }
 
     // Show the Date in the UI
-    const dateTd = this.days.find('td:not(.alternate)').filter(function () {
+    const dateTd = this.calendarAPI.days.find('td:not(.alternate)').filter(function () {
       return $(this).text().toLowerCase() === day;
     });
 
@@ -1779,67 +1150,13 @@ DatePicker.prototype = {
 
       this.setValue(date, true);
       if (s.range.useRange) {
-        this.days.find('.is-selected').removeAttr('aria-selected').removeAttr('tabindex');
+        this.calendarAPI.days.find('.is-selected').removeAttr('aria-selected').removeAttr('tabindex');
       } else {
-        this.days.find('.is-selected').removeClass('is-selected range').removeAttr('aria-selected').removeAttr('tabindex');
+        this.calendarAPI.days.find('.is-selected').removeClass('is-selected range').removeAttr('aria-selected').removeAttr('tabindex');
       }
       dateTd.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr({ 'aria-selected': true });
       this.activeTabindex(dateTd, true);
     }
-  },
-
-  /**
-   * Find first day of the week for a given month
-   * @private
-   * @param {number} year .
-   * @param {number} month .
-   * @returns {number} day
-   */
-  firstDayOfMonth(year, month) {
-    if (this.isIslamic) {
-      const firstDay = this.conversions.toGregorian(year, month, 1);
-      return (firstDay === null ? 1 : firstDay.getDay());
-    }
-    return (new Date(year, month, 1)).getDay();
-  },
-
-  /**
-   * Get islamic year index
-   * @private
-   * @param {number} islamicYear .
-   * @returns {number} index
-   */
-  islamicYearIndex(islamicYear) {
-    const yearIdx = islamicYear - 1318;
-    if (yearIdx < 0 || yearIdx >= this.conversions.yearInfo.length) {
-      return 0; // for an out-of-range year, simply returns 0
-    }
-    return yearIdx;
-  },
-
-  /**
-   * Find the date of the Month (29, 30, 31 ect)
-   * @private
-   * @param {number} year .
-   * @param {number} month .
-   * @returns {number} date
-   */
-  daysInMonth(year, month) {
-    if (this.isIslamic) {
-      let monthLengthBitmap = this.conversions.yearInfo[this.islamicYearIndex(year)][0];
-      let monthDayCount = 0;
-      for (let M = 0; M <= month; M++) {
-        // eslint-disable-next-line
-        monthDayCount = 29 + (monthLengthBitmap & 1);
-        if (M === month) {
-          return monthDayCount;
-        }
-        // eslint-disable-next-line
-        monthLengthBitmap = (monthLengthBitmap >> 1);
-      }
-      return 0;
-    }
-    return (new Date(year, month, 0)).getDate();
   },
 
   /**
@@ -1877,6 +1194,145 @@ DatePicker.prototype = {
         }
       } else {
         this.element.trigger('change').trigger('input');
+      }
+    }
+
+    this.setSize();
+  },
+
+  /**
+   * Set range value to element
+   * @private
+   * @param {object} date .
+   * @param {boolean} isSingleDate .
+   * @returns {void}
+   */
+  setRangeToElem(date, isSingleDate) {
+    const s = this.settings;
+    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
+    const labelDate = d => Locale.formatDate(d, { date: 'full' });
+    let value = formatDate(date);
+    let handled = false;
+
+    // Closed calendar
+    if (!this.isOpen() && !isSingleDate) {
+      handled = true;
+      const d = date || new Date();
+      this.currentMonth = d.getMonth();
+      this.currentYear = d.getFullYear();
+      this.currentDay = d.getDate();
+      this.currentDate = d;
+
+      s.range.first = s.range.first || {};
+      s.range.second = s.range.second || {};
+      s.range.first.date = d;
+      s.range.second.date = d;
+      value = this.getRangeValue();
+    } else {
+      // Opened calendar
+      const label = labelDate(date);
+      let cell = this.calendarAPI.days.find(`[aria-label="${label}"]`);
+      let row = cell.closest('tr');
+
+      if (s.range.second) {
+        this.resetRange(cell);
+      }
+
+      const time = {};
+      if (s.range.first) {
+        time.date = date.getTime();
+        time.firstdate = s.range.first.date.getTime();
+        time.min = this.calendarAPI.getDifferenceToDate(s.range.first.date, s.range.minDays);
+        time.max = this.calendarAPI.getDifferenceToDate(s.range.first.date, s.range.maxDays);
+      }
+
+      if (!s.range.first || isSingleDate) {
+        this.setRangeFirstPart(date);
+        value = this.getRangeValue();
+        this.setPlaceholder();
+      } else if (!s.range.second &&
+        (s.range.selectBackward && time.date > time.firstdate) ||
+        (s.range.selectForward && time.date < time.firstdate) ||
+        ((s.range.maxDays > 0) && (time.date > time.max.aftertime) ||
+        (time.date < time.max.beforetime))) {
+        this.resetRange(cell);
+        this.setRangeFirstPart(date);
+        value = this.getRangeValue();
+        this.setPlaceholder();
+      } else {
+        // Set second part for range
+        handled = true;
+        this.currentDate = date;
+        // minDays
+        if (s.range.minDays > 0) {
+          if (time.date > time.firstdate && time.date < time.min.aftertime) {
+            date = time.min.after;
+          } else if (time.date < time.firstdate && time.date > time.min.beforetime) {
+            date = time.min.before;
+          }
+          cell = this.calendarAPI.days.find(`[aria-label="${label}"]`);
+          row = cell.closest('tr');
+        }
+        if (time.date > time.firstdate) {
+          s.range.second = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
+        } else {
+          s.range.second = s.range.first;
+          s.range.first = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
+        }
+        value = this.getRangeValue();
+      }
+    }
+
+    // Set range value(first only or both parts) on element
+    this.element.val(value);
+
+    // Set data to use in triggerHandler
+    if (!handled) {
+      s.range.data = {
+        value,
+        dates: [s.range.first.date],
+        startDate: s.range.first.date,
+        start: formatDate(s.range.first.date)
+      };
+    } else {
+      s.range.data = {
+        value,
+        dates: this.calendarAPI.getDateRange(s.range.first.date, s.range.second.date),
+        startDate: s.range.first.date,
+        start: formatDate(s.range.first.date),
+        endDate: s.range.second.date,
+        end: formatDate(s.range.second.date)
+      };
+
+      this.closeCalendar();
+      if (this.isFocusAfterClose) {
+        delete this.isFocusAfterClose;
+        this.element.focus();
+      }
+    }
+  },
+
+  /**
+   * Reset range values
+   * @private
+   * @param {object} cell to keep selection.
+   * @returns {void}
+   */
+  resetRange(cell) {
+    if (this.settings.range.useRange) {
+      delete this.settings.range.first;
+      delete this.settings.range.second;
+      delete this.settings.range.extra;
+      if (this.calendarAPI) {
+        delete this.calendarAPI.settings.range.first;
+        delete this.calendarAPI.settings.range.second;
+        delete this.calendarAPI.settings.range.extra;
+      }
+      if (this.calendarAPI && this.calendarAPI.days.length) {
+        this.calendarAPI.days.find('td').removeClass('range range-next range-prev range-selection end-date is-selected');
+      }
+      if (cell) {
+        cell.addClass('is-selected');
       }
     }
   },
@@ -1950,7 +1406,9 @@ DatePicker.prototype = {
       s.range.second.date = parseDate(field.dates[1]);
     }
 
-    this.setRangeSelected();
+    if (this.calendarAPI) {
+      this.calendarAPI.setRangeSelected();
+    }
 
     if (field.isEmpty || (!field.isEmpty && !s.range.data)) {
       const value = formatDate(s.range.first.date);
@@ -2069,7 +1527,10 @@ DatePicker.prototype = {
    */
   setToday() {
     const s = this.settings;
-    this.currentDate = new Date();
+
+    if (!this.currentDate) {
+      this.currentDate = new Date();
+    }
 
     if (this.element.val() === '') {
       this.currentDate.setHours(0);
@@ -2173,278 +1634,6 @@ DatePicker.prototype = {
   },
 
   /**
-   * Reset range values
-   * @private
-   * @param {object} cell to keep selection.
-   * @returns {void}
-   */
-  resetRange(cell) {
-    if (this.settings.range.useRange) {
-      delete this.settings.range.first;
-      delete this.settings.range.second;
-      delete this.settings.range.extra;
-      if (this.days && this.days.length) {
-        this.days.find('td').removeClass('range range-next range-prev range-selection end-date is-selected');
-      }
-      if (cell) {
-        cell.addClass('is-selected');
-      }
-    }
-  },
-
-  /**
-   * Set range selected value
-   * @private
-   * @returns {void}
-   */
-  setRangeSelected() {
-    const self = this;
-    const s = this.settings;
-    const dateObj = d => new Date(d.year, d.month, d.day);
-
-    if (s.range.useRange && s.range.second && s.range.second.date &&
-      this.days && this.days.length) {
-      this.days.find('td').removeClass('range range-next range-prev range-selection end-date is-selected');
-      this.days.find('td:visible').each(function () {
-        const cell = $(this);
-        const isDisabled = cell.is('.is-disabled') && !s.range.includeDisabled;
-        const includeDisabled = cell.is('.is-disabled') && s.range.includeDisabled;
-        const includeDisableClass = includeDisabled ? ' include-disabled' : '';
-        const getTime = (d) => {
-          d = new Date(d);
-          d.setHours(0, 0, 0);
-          return d.getTime();
-        };
-        const date = getTime(dateObj(self.getCellDate(cell)));
-        const d1 = getTime(s.range.first.date);
-        const d2 = getTime(s.range.second.date);
-
-        if ((date === d1 || date === d2) && !isDisabled) {
-          cell.addClass(`is-selected${includeDisableClass}${d1 !== d2 ? ` range-selection${date === d2 ? ' end-date' : ''}` : ''}`);
-        } else if ((date > d1 && date < d2) && !isDisabled) {
-          cell.addClass(`range-selection${includeDisableClass}`);
-        }
-      });
-    }
-  },
-
-  /**
-   * Set range first part
-   * @private
-   * @param {object} date .
-   * @returns {void}
-   */
-  setRangeFirstPart(date) {
-    const s = this.settings;
-    const dateObj = d => new Date(d.year, d.month, d.day);
-    const labelDate = d => Locale.formatDate(d, { date: 'full' });
-    const minCell = this.days.find('td:visible:first');
-    const maxCell = this.days.find('td:visible:last');
-    const label = labelDate(date);
-    const cell = this.days.find(`[aria-label="${label}"]`);
-    const row = cell.closest('tr');
-    this.currentDate = date;
-
-    s.range.first = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
-    s.range.extra = {
-      minCell,
-      maxCell,
-      min: dateObj(this.getCellDate(minCell)),
-      max: dateObj(this.getCellDate(maxCell)),
-      cellLength: row.children('td').length
-    };
-  },
-
-  /**
-   * Set range value to element
-   * @private
-   * @param {object} date .
-   * @param {boolean} isSingleDate .
-   * @returns {void}
-   */
-  setRangeToElem(date, isSingleDate) {
-    const s = this.settings;
-    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
-    const labelDate = d => Locale.formatDate(d, { date: 'full' });
-    let value = formatDate(date);
-    let handled = false;
-
-    // Closed calendar
-    if (!this.isOpen() && !isSingleDate) {
-      handled = true;
-      const d = date || new Date();
-      this.currentMonth = d.getMonth();
-      this.currentYear = d.getFullYear();
-      this.currentDay = d.getDate();
-      this.currentDate = d;
-
-      s.range.first = s.range.first || {};
-      s.range.second = s.range.second || {};
-      s.range.first.date = d;
-      s.range.second.date = d;
-      value = this.getRangeValue();
-    } else {
-      // Opened calendar
-      const label = labelDate(date);
-      let cell = this.days.find(`[aria-label="${label}"]`);
-      let row = cell.closest('tr');
-
-      if (s.range.second) {
-        this.resetRange(cell);
-      }
-
-      const time = {};
-      if (s.range.first) {
-        time.date = date.getTime();
-        time.firstdate = s.range.first.date.getTime();
-        time.min = this.getDifferenceToDate(s.range.first.date, s.range.minDays);
-        time.max = this.getDifferenceToDate(s.range.first.date, s.range.maxDays);
-      }
-
-      if (!s.range.first || isSingleDate) {
-        this.setRangeFirstPart(date);
-        value = this.getRangeValue();
-        this.setPlaceholder();
-      } else if (!s.range.second &&
-        (s.range.selectBackward && time.date > time.firstdate) ||
-        (s.range.selectForward && time.date < time.firstdate) ||
-        ((s.range.maxDays > 0) && (time.date > time.max.aftertime) ||
-        (time.date < time.max.beforetime))) {
-        this.resetRange(cell);
-        this.setRangeFirstPart(date);
-        value = this.getRangeValue();
-        this.setPlaceholder();
-      } else {
-        // Set second part for range
-        handled = true;
-        this.currentDate = date;
-        // minDays
-        if (s.range.minDays > 0) {
-          if (time.date > time.firstdate && time.date < time.min.aftertime) {
-            date = time.min.after;
-          } else if (time.date < time.firstdate && time.date > time.min.beforetime) {
-            date = time.min.before;
-          }
-          cell = this.days.find(`[aria-label="${label}"]`);
-          row = cell.closest('tr');
-        }
-        if (time.date > time.firstdate) {
-          s.range.second = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
-        } else {
-          s.range.second = s.range.first;
-          s.range.first = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
-        }
-        value = this.getRangeValue();
-      }
-    }
-
-    // Set range value(first only or both parts) on element
-    this.element.val(value);
-
-    // Set data to use in triggerHandler
-    if (!handled) {
-      s.range.data = {
-        value,
-        dates: [s.range.first.date],
-        startDate: s.range.first.date,
-        start: formatDate(s.range.first.date)
-      };
-    } else {
-      s.range.data = {
-        value,
-        dates: this.getDateRange(s.range.first.date, s.range.second.date),
-        startDate: s.range.first.date,
-        start: formatDate(s.range.first.date),
-        endDate: s.range.second.date,
-        end: formatDate(s.range.second.date)
-      };
-
-      this.closeCalendar();
-      if (this.isFocusAfterClose) {
-        delete this.isFocusAfterClose;
-        this.element.focus();
-      }
-    }
-  },
-
-  /**
-   * Get array of dates between two dates
-   * @private
-   * @param {object} startDate .
-   * @param {object} endDate .
-   * @param {boolean} includeDisabled .
-   * @returns {array} dates between two dates
-   */
-  getDateRange(startDate, endDate, includeDisabled) {
-    const dates = [];
-    const current = new Date(startDate);
-
-    includeDisabled = typeof includeDisabled !== 'undefined' ? includeDisabled : this.settings.range.includeDisabled;
-
-    while (endDate.getTime() >= current.getTime()) {
-      if (includeDisabled || (!includeDisabled &&
-        !this.isDateDisabled(current.getFullYear(), current.getMonth(), current.getDate()))) {
-        dates.push(new Date(current));
-      }
-      current.setDate(current.getDate() + 1);
-    }
-    return dates;
-  },
-
-  /**
-   * Get difference to given date
-   * @private
-   * @param {object} date .
-   * @param {number} days .
-   * @param {boolean} includeDisabled .
-   * @returns {object} before/after difference to given date
-   */
-  getDifferenceToDate(date, days, includeDisabled) {
-    const difference = {};
-    const move = (d, daystomove, isNext) => {
-      d = new Date(d);
-      while (daystomove > 0) {
-        d.setDate(d.getDate() + (isNext ? 1 : -1));
-        if (includeDisabled || (!includeDisabled &&
-          !this.isDateDisabled(d.getFullYear(), d.getMonth(), d.getDate()))) {
-          daystomove--;
-          difference[isNext ? 'after' : 'before'] = new Date(d);
-        }
-      }
-      if (isNext && difference.after) {
-        difference.aftertime = difference.after.getTime();
-      } else if (difference.before) {
-        difference.beforetime = difference.before.getTime();
-      }
-    };
-    includeDisabled = typeof includeDisabled !== 'undefined' ? includeDisabled : this.settings.range.includeDisabled;
-    move(date, days); // previous
-    move(date, days, true); // next
-    return difference;
-  },
-
-  /**
-   * Get range value to insert in element
-   * @private
-   * @returns {string} range dates to display in element
-   */
-  getRangeValue() {
-    const s = this.settings;
-    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
-    if (s.range.useRange &&
-      s.range.first && s.range.first.date &&
-      s.range.second && s.range.second.date) {
-      return `${formatDate(s.range.first.date) + s.range.separator + formatDate(s.range.second.date)}`;
-    } else if (s.range.useRange &&
-      s.range.first && s.range.first.date) {
-      return s.placeholder ?
-        `${formatDate(s.range.first.date) + s.range.separator + this.pattern}` :
-        formatDate(s.range.first.date);
-    }
-    return '';
-  },
-
-  /**
    * Updates the component instance. Can be used after being passed new settings.
    * @param {object} settings The settings to apply.
    * @returns {object} The api
@@ -2456,6 +1645,28 @@ DatePicker.prototype = {
     return this
       .teardown()
       .init();
+  },
+
+  /**
+   * Get range value to insert in element
+   * @private
+   * @returns {string} range dates to display in element
+   */
+  getRangeValue() {
+    const s = this.settings;
+    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
+
+    if (s.range.useRange &&
+      s.range.first && s.range.first.date &&
+      s.range.second && s.range.second.date) {
+      return `${formatDate(s.range.first.date) + s.range.separator + formatDate(s.range.second.date)}`;
+    } else if (s.range.useRange &&
+      s.range.first && s.range.first.date) {
+      return s.placeholder ?
+        `${formatDate(s.range.first.date) + s.range.separator + this.pattern}` :
+        formatDate(s.range.first.date);
+    }
+    return '';
   },
 
   /**
@@ -2472,7 +1683,9 @@ DatePicker.prototype = {
     this.trigger.remove();
     this.element.attr('data-mask', '');
     this.element.removeAttr('placeholder');
-
+    if (this.calendarAPI) {
+      this.calendarAPI.destroy();
+    }
     if (this.calendar && this.calendar.length) {
       this.calendar.remove();
     }

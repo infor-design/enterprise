@@ -208,6 +208,10 @@ const PLUGIN_MAPPINGS = [
 
   ['stepchart', '.step-chart'],
 
+  ['calendar', '.calendar'],
+
+  ['monthview', '.monthview'],
+
   ['listview'],
 
   // Track Dirty

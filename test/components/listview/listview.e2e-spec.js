@@ -116,7 +116,7 @@ describe('Listview example-multiselect tests', () => {
 
   it('Should select item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
-    listviewItemEl.click();
+    await listviewItemEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
@@ -129,7 +129,7 @@ describe('Listview example-multiselect tests', () => {
 
   it('Should deselect item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
-    listviewItemEl.click();
+    await listviewItemEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
@@ -158,10 +158,10 @@ describe('Listview example-multiselect tests', () => {
   it('Should select two items on click', async () => {
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
     const listviewItemElThree = await element(by.css('li[aria-posinset="3"]'));
-    listviewItemElOne.click();
+    await listviewItemElOne.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-selected'))), config.waitsFor);
-    listviewItemElThree.click();
+    await listviewItemElThree.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="3"].is-selected'))), config.waitsFor);
 

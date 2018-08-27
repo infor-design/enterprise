@@ -699,6 +699,15 @@ $blockgrid-focus-border-color: $primary-color;
 $treemap-title-bg-color: $slate03;
 $treemap-title-color: $slate10;
 
+// Calendar
+$calendar-bg-color: $panel-bg-color;
+$calendar-line-color: $slate05;
+$calendar-selected-border-color: $primary-color;
+$calendar-selected-bg-color: $slate08;
+$calendar-hover-bg-color: $slate08;
+$calendar-disabled-bg-color: $slate08;
+$calendar-disabled-color: $slate04;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;
