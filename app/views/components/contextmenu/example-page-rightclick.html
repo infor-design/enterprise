@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Context Menu Example</h2>
+    <p>Right-click (Long-press on Mobile) anywhere on the page to open a context menu</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <ul id="action-popupmenu" data-init="false" class="popupmenu">
+      <li><a href="#">Cut</a></li>
+      <li><a href="#">Copy</a></li>
+      <li><a href="#">Paste</a></li>
+      <li>
+        <a href="#">Paste Special</a>
+        <ul class="popupmenu">
+          <li><a href="#">Sub Menu 1</a></li>
+          <li><a href="#">Sub Menu 2</a></li>
+          <li class="separator"></li>
+          <li>
+            <a href="#">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-settings"></use>
+              </svg>
+              Settings
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="separator"></li>
+      <li><a href="#">Name and project range</a></li>
+      <li class="is-disabled"><a id='x' href="#" disabled>Insert comment</a></li>
+      <li class="is-disabled"><a href="#" disabled>Insert note</a></li>
+      <li><a href="#">Clear notes</a></li>
+      <li class="separator single-selectable-section"></li>
+      <li class="heading">Additional Options</li>
+      <li class="is-selectable is-checked"><a href="#">Conditional formatting</a></li>
+      <li class="is-selectable"><a href="#">Data validation</a></li>
+      <li class="separator"></li>
+      <li>
+        <a href="#">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          Settings
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').popupmenu({
+    menu: 'action-popupmenu',
+    trigger: 'rightClick'
+  });
+</script>
