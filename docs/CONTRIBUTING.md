@@ -5,10 +5,10 @@ So you're interested in giving us a hand? That's awesome! We've put together som
 There are several ways to get involved, this document covers:
 
 - [Raising Issues/Requests](#reporting-an-issue)
-    - :beetle:[bug reports](#bug-reports)
-    - :bulb:[feature requests](#feature-requests)
+    - :beetle: [bug reports](#bug-reports)
+    - :bulb: [feature requests](#feature-requests)
 - [Contributing to the codebase](#submitting-pull-requests)
-    - :repeat:[submitting pull requests](#pull-requests)
+    - :repeat: [submitting pull requests](#pull-requests)
 - [testing and quality assurance](#testing-and-quality-assurance)
 
 ## Reporting An Issue
@@ -17,7 +17,7 @@ There are several ways to get involved, this document covers:
 
 ### Bug Reports
 
-:beetle: A bug is a _demonstrable problem_ that is caused by the code in the repository. Good bug reports are extremely helpful - thank you :+1:!
+A bug is a _demonstrable problem_ that is caused by the code in the repository. Good bug reports are extremely helpful - thank you!
 
 Guidelines for bug reports:
 
@@ -46,7 +46,7 @@ Guidelines for bug reports:
 
 ### Feature Requests
 
-:bulb: Feature requests are welcome. Before you submit one be sure to have:
+Feature requests are welcome. Before you submit one be sure to have:
 
 1. Does your idea fits with the scope of the project? Might better fit being an app/plugin/extension?
 1. Would anyone else but your team would want this feature?
@@ -54,7 +54,7 @@ Guidelines for bug reports:
 
 ## Submitting Pull Requests
 
-:repeat: Pull requests are awesome. If you're looking to raise a PR for something which doesn't have an open issue,
+Pull requests are awesome. If you're looking to raise a PR for something which doesn't have an open issue,
 please think carefully about [raising an issue](#raising-issues) which your PR can close, especially if you're fixing a bug.
 
 If you'd like to submit a pull request you'll need to do the following:
