@@ -237,14 +237,15 @@ Environment.set();
 /**
  * Workaround until https://github.com/jquery/jquery/issues/2871 is fixed
  */
-jQuery.event.special.touchstart = {
-  setup(_, ns, handle) {
-    if (ns.includes('noPreventDefault')) {
-      this.addEventListener('touchstart', handle, { passive: false });
-    } else {
-      this.addEventListener('touchstart', handle, { passive: true });
+if (Environment.browser.name === 'chrome') {
+  jQuery.event.special.touchstart = {
+    setup(_, ns, handle) {
+      if (ns.includes('noPreventDefault')) {
+        this.addEventListener('touchstart', handle, { passive: false });
+      } else {
+        this.addEventListener('touchstart', handle, { passive: true });
+      }
     }
-  }
-};
-
+  };
+}
 export { Environment };
