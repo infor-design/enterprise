@@ -2,22 +2,22 @@
 
 So you're interested in giving us a hand? That's awesome! We've put together some brief guidelines that should help you get started quickly and easily.
 
-There are several to get involved, this document covers:
+There are several ways to get involved, this document covers:
 
 - [Raising Issues/Requests](#reporting-an-issue)
-    - [bug reports](#bug-reports)
-    - [feature requests](#feature-requests)
+    - :beetle:[bug reports](#bug-reports)
+    - :bulb:[feature requests](#feature-requests)
 - [Contributing to the codebase](#submitting-pull-requests)
-    - [submitting pull requests](#pull-requests)
+    - :repeat:[submitting pull requests](#pull-requests)
 - [testing and quality assurance](#testing-and-quality-assurance)
 
 ## Reporting An Issue
 
 <https://github.com/infor-design/enterprise/issues>
 
-### Bug Reports 🐞
+### Bug Reports
 
-A bug is a _demonstrable problem_ that is caused by the code in the repository. Good bug reports are extremely helpful - thank you :+1:!
+:beetle: A bug is a _demonstrable problem_ that is caused by the code in the repository. Good bug reports are extremely helpful - thank you :+1:!
 
 Guidelines for bug reports:
 
@@ -46,7 +46,7 @@ Guidelines for bug reports:
 
 ### Feature Requests
 
-Feature requests are welcome. Before you submit one be sure to have:
+:bulb: Feature requests are welcome. Before you submit one be sure to have:
 
 1. Does your idea fits with the scope of the project? Might better fit being an app/plugin/extension?
 1. Would anyone else but your team would want this feature?
@@ -54,7 +54,7 @@ Feature requests are welcome. Before you submit one be sure to have:
 
 ## Submitting Pull Requests
 
-Pull requests are awesome. If you're looking to raise a PR for something which doesn't have an open issue,
+:repeat: Pull requests are awesome. If you're looking to raise a PR for something which doesn't have an open issue,
 please think carefully about [raising an issue](#raising-issues) which your PR can close, especially if you're fixing a bug.
 
 If you'd like to submit a pull request you'll need to do the following:
