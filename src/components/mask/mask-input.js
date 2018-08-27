@@ -159,10 +159,10 @@ MaskInput.prototype = {
           return false;
         }
 
-        // in Windows 7 IE11, change event doesn't fire for some unknown reason.
+        // in IE11 or Edge, change event doesn't fire for some unknown reason.
         // Added this for backwards compatility with this OS/Browser combo.
         // See http://jira.infor.com/browse/SOHO-6895
-        if (self._hasChangedValue() && self._isWin7IE11()) {
+        if (self._hasChangedValue() && self._isEdgeIE()) {
           $(self.element).trigger('change');
         }
       }
@@ -314,20 +314,17 @@ MaskInput.prototype = {
     return os === 'android';
   },
 
-  /**
-   * Same as the Android method, but for IE 11 on Windows 7
-   * TODO: deprecate eventually (v4.4.0?)
-   * @private
-   * @returns {boolean} whether or not the current device is running Windows 7
-   *  using the IE11 browser.
-   */
-  _isWin7IE11() {
-    const browser = env && env.browser && env.browser.name ? env.browser.name : '';
-    const version = env.browser.version ? env.browser.version : '';
-    const isWin7 = window.navigator.userAgent.indexOf('Windows NT 6.1') !== -1;
+    /**
+     * Determine if browser is IE11 or Edge
+     * @private
+     * @returns {boolean} whether or not the current device is using IE11
+	 * or Edge
+     */
+    _isEdgeIE: function  _isEdgeIE() {
+      const browser = env && env.browser && env.browser.name ? env.browser.name : '';
 
-    return browser === 'ie' && version === '11' && isWin7;
-  },
+      return browser === 'ie' || browser === 'edge';
+    },
 
   /**
    * Checks the current value of this masked input against it's stored "previousMaskResult"
