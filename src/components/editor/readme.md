@@ -24,7 +24,7 @@ To save and get the data from the `contenteditable` element, you should simply s
 ```html
 <div class="field">
   <span class="label">Comments</span>
-  <div class="editor" role="textbox" aria-multiline="true" aria-label="Comments - Type To Replace Existing Content">
+  <div id="editor" class="editor" role="textbox" aria-multiline="true" aria-label="Comments - Type To Replace Existing Content">
     <p>Embrace <a href="http://en.wikipedia.org/wiki/e-commerce">e-commerce action-items</a>, reintermediate, ecologies paradigms wireless share life-hacks create innovative harness. Evolve solutions rich-clientAPIs synergies harness relationships virtual vertical facilitate end-to-end, wireless, evolve synergistic synergies.</p>
     <p>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, "cross-media exploit infomediaries innovative integrate integrateAJAX-enabled." Killer interactive reinvent, cultivate widgets leverage morph.</p>
   </div>
@@ -37,6 +37,10 @@ To save and get the data from the `contenteditable` element, you should simply s
 - Use `role="textbox`
 - Keyboard shortcuts for all keys are used
 - Add `label` and `aria-label`
+
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
 
 ## Keyboard Shortcuts
 

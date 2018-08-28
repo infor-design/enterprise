@@ -35,6 +35,10 @@ Within the menu itself:
 - Multiple categories can be open at one time.
 - Scrolling within the menu is supported when necessary.
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 In SoHo Xi Controls, the following keyboard shortcuts are implemented in the Application Menu

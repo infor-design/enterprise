@@ -65,6 +65,10 @@ Note that the name should be the same for all stars for it to function correctly
 
 `aubible` labels are added for giving the star information.
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> will enter the rating group

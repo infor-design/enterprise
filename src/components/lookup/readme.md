@@ -78,6 +78,10 @@ grid = $('#product-lookup').lookup({
 
 - The dialog stretches to 90% at smaller breakpoints
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Upgrading from 3.X
 
 - `inforLookup` class changed to `lookup`

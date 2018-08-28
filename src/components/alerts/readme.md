@@ -34,6 +34,10 @@ Also see [Badges](./badges) for more options.
 - The traffic light colors in the Light UI theme is technically a contrast violation, so care should be given not to use the identical colors if styling text near the alerts. The high-contrast theme provides an alternative
 - Make to include an offscreen label even though the element does not get focus. This could be read by the virtual cursor on a screen reader (`class="audible"`)
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 Alert icons and Badges do not have tab stops or keyboard interaction on their own. However, they may be placed in a grid cell or other object that has tab focus.

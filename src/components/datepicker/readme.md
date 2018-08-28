@@ -55,6 +55,10 @@ The Date Picker is a very complex control to code for accessibility.
 - Each calendar item should have an audible label to announce the day of week while arrowing through days
 - For comparison, see a similar [example](http://oaa-accessibility.org/example/15/)
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> - like other widgets, the Date Picker widget receives focus to become active by tabbing into it. A second <kbd>Tab</kbd> will take the user out of the date picker widget. Focus is initially placed on today's date when the calendar is opened.

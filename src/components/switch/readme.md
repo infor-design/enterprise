@@ -28,6 +28,10 @@ A switch element is essentially a specially-styled [checkbox element]( ./checkbo
 
 - Always include a meaningfully described label thats linked correctly to the input field by the `for` and `id` attribute
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> and <kbd>Shift Tab</kbd> navigates in and out of the switch

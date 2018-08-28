@@ -27,3 +27,7 @@ The following classes can be used for form and label alignment.
 - `field-flex` - Makes all the labels and fields inside go into a side by side layout. Yet still work responsively. This can be used for labels input description situations or to force some labels to sit together , similar to compound fields [See Example]( /example-labels)
 - `label-left` - Used to put a label and data label to the left of each other rather than on top. This may be used on some forms but not with editable inputs. [See Example]( /example-labels)
 - `compound-field` - Used to put several fields next to each other in a row. This may be used for related fields like phone + extension [See Example]( /example-forms)
+
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)

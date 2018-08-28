@@ -207,7 +207,7 @@ describe('Tree Methods', () => {
   });
 
   it('Should load given json data and update tree', () => {
-    expect(treeEl.querySelectorAll('a[role="treeitem"]').length).toEqual(52);
+    expect(treeEl.querySelectorAll('a[role="treeitem"]').length).toEqual(43);
 
     const dataset = [
       { id: 'node1', text: 'Node One' },

@@ -42,8 +42,8 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
             </svg>
           </button>
           <ul class="popupmenu">
-            <li><a href="#">Action One</a></li>
-            <li><a href="#">Action Two</a></li>
+            <li><a href="#" id="action-item-one">Action One</a></li>
+            <li><a href="#" id="action-item-two">Action Two</a></li>
           </ul>
 
       </div>
@@ -63,8 +63,8 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
             </svg>
           </button>
           <ul class="popupmenu">
-            <li><a href="#">Action One</a></li>
-            <li><a href="#">Action Two</a></li>
+            <li><a href="#" id="action-item-three">Action One</a></li>
+            <li><a href="#" id="action-item-four">Action Two</a></li>
           </ul>
 
       </div>
@@ -75,6 +75,10 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
   </div>
 </div>
 ```
+
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
 
 ## Keyboard Shortcuts
 

@@ -24,16 +24,16 @@ The class `popupmenu` should be added to the `<ul>` elements at the top and sub-
 Here is an example of a menu button using a popupmenu. This is also described on the menu button page as the components are linked.
 
 ```html
-<button class="btn-menu">
+<button id="btn-menu" class="btn-menu">
   <span>Normal Menu</span>
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
     <use xlink:href="#icon-dropdown"></use>
   </svg>
 </button>
 <ul class="popupmenu">
-  <li><a href="#">Menu Option #1</a></li>
-  <li><a href="#">Menu Option #2</a></li>
-  <li><a href="#">Menu Option #3</a></li>
+  <li><a href="#" id="menu-option-1">Menu Option #1</a></li>
+  <li><a href="#" id="menu-option-2">Menu Option #2</a></li>
+  <li><a href="#" id="menu-option-3">Menu Option #3</a></li>
 </ul>
 ```
 
@@ -47,6 +47,10 @@ Here is an example of a menu button using a popupmenu. This is also described on
 - Checked items get `aria-checked`
 - Set `aria-expanded` when open
 - Anchor elements get `role="menuitem"`
+
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
 
 ## Keyboard Shortcuts
 

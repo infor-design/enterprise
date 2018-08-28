@@ -50,8 +50,12 @@ $.extend($('#mask').data('mask').settings.definitions, {
 A Mask Control is created simply by adding a "data-mask" attribute to any input field. The "data-mask" attribute contains a pattern that will control the allowed text-entry into the input field.
 
 ```html
-<input data-mask="####-####-####-####" />
+<input id="mask" data-mask="####-####-####-####" />
 ```
+
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
 
 ## Keyboard Shortcuts
 

@@ -132,6 +132,10 @@ The SoHo Xi Components' Accordion Plugin will manage the accessibility of an Acc
 - Accordion panes that are collapsed should have `aria-expanded="false"`. Panes that are expanded should have `aria-expanded="true"`.
 - Collapsed Accordion panes should have a `"display: none;"` CSS property on them, to prevent any of the elements inside of the pane that are focusable from receiving keyboard focus.
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> - When focus is on an accordion header a <kbd>Tab</kbd> keystroke will move focus in the following manner:

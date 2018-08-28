@@ -11,3 +11,7 @@ demo:
 
 Filter fields can be added to forms that involve searching to add a customizable list of comparison options (greater than, less than equals, etc).
 You can use this information in addition to the field value to conduct form based searches.
+
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)

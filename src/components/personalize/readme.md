@@ -41,3 +41,7 @@ For reduction of FOUC (flash of unstyled content) run the personalize logic befo
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. Choose colors that pass contrast guidlines. Future we plan on adding a checker to the settings dialog.
+
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)

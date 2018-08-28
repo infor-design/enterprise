@@ -151,6 +151,10 @@ It's possible to create a tab that contains a dropdown menu. In the case of a dr
 </ul>
 ```
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 - <kbd>Down</kbd> and <kbd>Right</kbd> arrows:

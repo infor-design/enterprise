@@ -50,6 +50,10 @@ Required template HTML markup:
 - This component is lacking accessibility
 - Needs, Keyboard, Aria Added or an Alternate view
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Upgrading from 3.X
 
 - This component was very similar in 3.5, just rename `inforHierarchy` to `hierarchy`

@@ -36,6 +36,10 @@ element.arrange({
 
 - Not implemented. This is not the most accessible functionality. Ideally you would provide a alternate method for doing the action. For example for the grid we would add an "order" column where the user can edit the order by typing not just dragging.
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 - Not implemented.

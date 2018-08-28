@@ -38,7 +38,7 @@ For accessibility, the tooltip should be shown when you keyboard onto an element
 If using the [initializer]( ./initialize), any elements with a `title` attribute will be picked up and turned into a tooltip when the element becomes hovered (or tapped in a mobile scenario). It may be needed to reinitialize a component or page section which has been added.
 
 ```html
-<button class="btn" type="button" title="Tooltips Provide Additional Information">
+<button id="btn" class="btn" type="button" title="Tooltips Provide Additional Information">
   Tootltip Button
 </button>
 ```
@@ -50,7 +50,7 @@ The code above is demoed in the [common tooltip example]( ../components/tooltip/
 It's also possible to use inline HTML inside of the `title` attribute:
 
 ```html
-<button class="btn-secondary" type="button" title="<span style='text-align: right; display: inline-block;'><b style='line-height: 1.7em;'>Connected order</b><br>Tooltips Provide <br> <span style="color: #AFDC91;">Additional Information</span>.</span>">
+<button id="btn-secondary" class="btn-secondary" type="button" title="<span style='text-align: right; display: inline-block;'><b style='line-height: 1.7em;'>Connected order</b><br>Tooltips Provide <br> <span style="color: #AFDC91;">Additional Information</span>.</span>">
   Custom HTML Tooltip
 </button>
 ```
@@ -60,7 +60,7 @@ The code above is demoed in the [HTML tooltip example]( ../components/tooltip/ex
 Another possible method of defining custom tooltips is to create a hidden HTML element that will be referenced by its ID attribute.  When defining your `title` attribute on your trigger element, simply place use ID selector instead of the actual content, and the initializer will pick it up:
 
 ```html
-<button class="btn-secondary" type="button" title="#tooltip-id">
+<button id="btn-secondary" class="btn-secondary" type="button" title="#tooltip-id">
   <span>Example</span>
 </button>
 
@@ -81,6 +81,10 @@ The code above is demoed in the [icons in tooltips example]( ../components/toolt
 - `aria-describedby` is added to the related element
 - The tooltip content should be physically add to the DOM right after the input field for the case of validation errors. This is so that a screen reader use can down arrow and reread content in case they missed it.
 - For accessibility the tooltip should be shown when you keyboard onto an element after a short delay
+
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
 
 ## States and Variations
 

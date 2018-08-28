@@ -23,6 +23,10 @@ This example shows how to invoke the trackdirty.
 - Make sure the input has a matching label which is meaningful.
 - Add aria-required for required elements
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Upgrading from 3.X
 
 Be sure to wrap inside of a field div.

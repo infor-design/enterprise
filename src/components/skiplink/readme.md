@@ -24,6 +24,10 @@ Add this at the top of the page, making the `href` point to the `id` of the cont
 
 Skip links are an accessibility feature. Adding one to your page will aid users that use screen readers to navigate over familiar content, like navigation, at the top of the page to main page content.
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 - When you <kbd>Tab</kbd> from the browser bar into the page the skip link will appear on and be focused

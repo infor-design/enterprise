@@ -22,22 +22,26 @@ In addition, a wizard can be used for header navigation. This is a full page pat
     <div class="wizard-header">
       <div class="bar">
         <div class="completed-range"></div>
-        <a href="#" class="tick complete">
+        <a href="#" id="context-apps" class="tick complete">
           <span class="label">Context Apps</span>
         </a>
-        <a href="#" class="tick complete">
+        <a href="#" id="utility-apps" class="tick complete">
           <span class="label">Utility Apps</span>
         </a>
-        <a href="#" class="tick current">
+        <a href="#" id="inbound-config" class="tick current">
           <span class="label">Inbound Configuration</span>
         </a>
-        <a href="#" class="tick">
+        <a href="#" id="oid-mapping" class="tick">
           <span class="label">OID Mapping</span>
         </a>
       </div>
     </div>
   </div>
 ```
+
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
 
 ## Keyboard Shortcuts
 

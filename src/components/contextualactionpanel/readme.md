@@ -68,3 +68,7 @@ The contextual action panel responds similarly to a [modal](./modal), in that it
 ## Upgrading from 3.X
 
 - Did not exist in 3.X, but any complex modals should be changed to use this.
+
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)

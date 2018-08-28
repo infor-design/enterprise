@@ -29,6 +29,10 @@ When initialized with the `$elem.listbuilder()` plugin, you pass in a data set t
 - [ListView](./listview) guidelines apply as this contains a listview
 - [Toolbar](./toolbar) guidelines apply as this contains a toolbar
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Upgrading from 3.X
 
 - This replaces the list view examples with toolbar. We made this a component with some default functionality

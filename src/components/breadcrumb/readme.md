@@ -19,13 +19,13 @@ This control is entirely HTML and CSS, to update you will need to implement the 
 <nav class="breadcrumb">
   <ol aria-label="breadcrumb">
     <li>
-      <a href="#" class="hyperlink hide-focus">Home</a>
+      <a href="#" id="home" class="hyperlink hide-focus">Home</a>
     </li>
     <li>
-      <a href="#" class="hyperlink hide-focus">Second Item</a>
+      <a href="#" id="second-item" class="hyperlink hide-focus">Second Item</a>
     </li>
     <li>
-      <a href="#" class="hyperlink hide-focus">Third Item</a>
+      <a href="#" id="third-item" class="hyperlink hide-focus">Third Item</a>
     </li>
     <li class="current">Fourth Item <span class="audible">Current</span></li>
   </ol>
@@ -36,6 +36,10 @@ This control is entirely HTML and CSS, to update you will need to implement the 
 
 - Add an `aria-label` with the localized term for "breadcrumb"
 - `audible` spans may need to be added to indicate levels
+
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
 
 ## Keyboard Shortcuts
 

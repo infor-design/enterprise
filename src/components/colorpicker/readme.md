@@ -33,6 +33,10 @@ The color picker is consists of a input with class="colorpicker". It can be init
 
 Implemented similar to aria combobox
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> moves focus into the edit field.

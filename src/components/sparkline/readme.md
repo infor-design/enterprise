@@ -44,6 +44,10 @@ $('#sparkline-chart-example-1').chart({type: 'sparkline-dots-n-peak', dataset: s
 
 - Alternate information should be available for the screen reader user.
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Future
 
 - A datagrid formatter for showing this data in lists

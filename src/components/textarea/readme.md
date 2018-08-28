@@ -60,6 +60,10 @@ The supported states are identical to the Text Input Field.
 
 - Width is default 450px but will reduce to fit parent container
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Upgrading from 3.X
 
 - Change class inforLabel to label

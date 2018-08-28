@@ -62,6 +62,10 @@ The contrast and actual colors can be a concern for visibility impaired and colo
 
 You can override the tooltip by passing in a specific tooltip text value.
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd>You can tab into the chart area and through the legend values as each has a focus state.

@@ -47,6 +47,10 @@ Touch and mobile keyboard are supported.
 
 - Focus should remain on the edit field
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 - <kbd>Right</kbd> and <kbd>Up</kbd> arrows increase the value

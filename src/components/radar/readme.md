@@ -54,6 +54,10 @@ The contrast and actual colors can be a concern for visibility impaired and colo
 You can control the size of the radar chart by setting the size of the parent element the radar chart lives in.
 This may include possibly using an inset margin in some cases.
 
+## Testability
+
+- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+
 ## Keyboard Shortcuts
 
 - None
