@@ -4,7 +4,7 @@ module.exports = {
     revision: undefined,
     copyright: `License:
 *
-* The Soho Xi Component Library (the “Runtime”) is made available to you under this Runtime License.
+* The IDS Enterprise Component Library (the “Runtime”) is made available to you under this Runtime License.
 * Infor, Inc. grants you a nonexclusive, non-transferable, non-sublicenseable, and revocable license to use
 * the Runtime within the Application for the sole purpose of enabling the Runtime’s functionality within the
 * Application. You may not, and you may not permit anyone else to, copy, modify, combine with other software,
