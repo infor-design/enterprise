@@ -317,6 +317,10 @@ const Locale = {  // eslint-disable-line
       value = tDate3;
     }
 
+    if (!value) {
+      return undefined;
+    }
+
     // TODO: Can we handle this if (this.dff.state()==='pending')
     const data = this.currentLocale.data;
     let pattern;
