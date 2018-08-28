@@ -604,7 +604,7 @@ Modal.prototype = {
         e.stopPropagation();
         e.preventDefault();
 
-        if ($(target).is(':button')) {
+        if (!target.hasClass('fileupload') && !$(target).is(':input')) {
           this.element.find('.btn-modal-primary:enabled').trigger('click');
         }
       }
