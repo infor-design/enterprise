@@ -604,7 +604,7 @@ Modal.prototype = {
         e.stopPropagation();
         e.preventDefault();
 
-        if (!target.hasClass('fileupload') && !$(target).is(':input')) {
+        if ((!target.hasClass('fileupload') && !$(target).is(':input')) || target.hasClass('colorpicker')) {
           this.element.find('.btn-modal-primary:enabled').trigger('click');
         }
       }
