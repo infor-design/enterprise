@@ -785,8 +785,11 @@ SearchField.prototype = {
         }
 
         self.element.trigger('selected', [a, ret]);
-        self.element.data('popupmenu').close();
-        // e.preventDefault();
+
+        const popup = self.element.data('popupmenu');
+        if (popup) {
+          popup.close();
+        }
         return false;
       });
 
