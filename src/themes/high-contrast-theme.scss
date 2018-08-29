@@ -262,7 +262,7 @@ $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $black;
 $datepicker-hover-bg-color: $graphite04;
 $datepicker-disabled-border-color: $graphite04;
-$datepicker-disabled-bg-color: $graphite02;
+$datepicker-disabled-bg-color: $input-readonly-bg-color;
 $datepicker-disabled-color: $graphite04;
 
 .calendar-table .is-today {
@@ -343,7 +343,7 @@ $switch-unchecked-bar-color: $graphite07;
 $switch-unchecked-border-color: $graphite06;
 $switch-unchecked-color: $slate05;
 $switch-unchecked-pressed-bg-color: $slate04;
-$switch-disabled-bg-color: $graphite02;
+$switch-disabled-bg-color: $input-readonly-bg-color;
 $switch-disabled-border-color: $graphite04;
 $switch-disabled-bar-color: $graphite04;
 $switch-disabled-label-color: $disabled-color;
@@ -518,7 +518,7 @@ $datagrid-required-icon-color: $white;
 
 $datagrid-cell-color: $font-color;
 $datagrid-cell-bg-color: $graphite01;
-$datagrid-cell-readonly-bg-color: $graphite02;
+$datagrid-cell-readonly-bg-color: $input-readonly-bg-color;
 $datagrid-cell-readonly-color: $font-color;
 $datagrid-cell-border-color: $graphite06;
 $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(80, 83, 90, 0.4);
@@ -742,7 +742,7 @@ $calendar-line-color: $graphite09;
 $calendar-selected-border-color: $color-primary;
 $calendar-selected-bg-color: $graphite02;
 $calendar-hover-bg-color: $graphite01;
-$calendar-disabled-bg-color: $graphite02;
+$calendar-disabled-bg-color: $input-readonly-bg-color;
 $calendar-disabled-color: $graphite10;
 
 //================================================== //

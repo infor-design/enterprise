@@ -232,14 +232,14 @@ $listview-full-width-bg-color: $graphite01;
 $listview-full-width-hover-color: $list-hover-color;
 $listview-full-width-border-color: $graphite03;
 
-$listview-search-disabled-color: $graphite02;
+$listview-search-disabled-color: $input-readonly-bg-color;
 $listview-search-disabled-opacity: 0.5;
-$listview-search-disabled-border-color: $graphite02;
-$listview-search-disabled-icon-color: $graphite02;
+$listview-search-disabled-border-color: $input-readonly-bg-color;
+$listview-search-disabled-icon-color: $input-readonly-bg-color;
 
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
-$listbuilder-bg-color-hover: $graphite02;
+$listbuilder-bg-color-hover: $list-hover-color;
 $listbuilder-bg-color-selected: $color-primary;
 $listbuilder-border-color: $input-border-color;
 $listbuilder-border-color-focus: $color-primary;
@@ -270,7 +270,7 @@ $contextual-panel-seperator-bg-color: $graphite04;
 
 // Swaplist
 $swaplist-bg-color: $graphite01;
-$swaplist-bg-color-hover: $graphite02;
+$swaplist-bg-color-hover: $list-hover-color;
 $swaplist-bg-color-selected: $color-primary;
 $swaplist-border-color: $graphite06;
 $swaplist-border-color-hover: $color-primary;
@@ -592,12 +592,12 @@ $datagrid-row-icon-color: $graphite06;
 
 $datagrid-alternate-bg-color: $graphite01;
 $datagrid-alternate-row-hover-color: $graphite02;
-$datagrid-list-header-bg-color: $graphite02;
+$datagrid-list-header-bg-color: $list-hover-color;
 $datagrid-list-header-focus-border-color: $color-primary;
 $datagrid-list-header-box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.4);
 $datagrid-list-header-border-color: $graphite03;
 $datagrid-list-header-color: $graphite06;
-$datagrid-list-header-hover-color: $graphite02;
+$datagrid-list-header-hover-color: $list-hover-color;
 $datagrid-list-row-hover-color: transparent;
 $datagrid-list-sort-icon-color: $graphite03;
 $datagrid-list-sort-icon-hover-color: $graphite05;
