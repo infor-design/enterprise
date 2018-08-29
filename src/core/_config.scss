@@ -73,7 +73,7 @@ $hyperlink-disabled-color: $link-disabled-color;
 $hyperlink-hover-color: $link-hover-color;
 
 // Rules
-$hr-top-color: $graphite03;
+$hr-top-color: $color-default;
 $hr-bottom-color: $white;
 
 // Circle Pager
@@ -288,7 +288,7 @@ $swaplist-text-color-selected: $white;
 //Date Picker
 $datepicker-icon-active-color: $trigger-active-color;
 $datepicker-month-year-color: $graphite10;
-$datepicker-alternate-month-color: $graphite03;
+$datepicker-alternate-month-color: $color-default;
 $datepicker-day-color: $graphite06;
 $datepicker-focus-border-color: $color-primary;
 $datepicker-selected-bg-color: $color-primary;
@@ -308,7 +308,7 @@ $timepicker-disabled-color: $graphite03;
 
 // Color Picker
 $colorpicker-is-empty-bg-color: $white;
-$colorpicker-initial-bg-color: $graphite03;
+$colorpicker-initial-bg-color: $color-default;
 $colorpicker-swatch-border-color: $graphite02;
 $colorpicker-checkmark-one-color: $graphite05;
 $colorpicker-checkmark-two-color: $white;
@@ -599,12 +599,12 @@ $datagrid-list-header-border-color: $graphite03;
 $datagrid-list-header-color: $graphite06;
 $datagrid-list-header-hover-color: $list-hover-color;
 $datagrid-list-row-hover-color: transparent;
-$datagrid-list-sort-icon-color: $graphite03;
+$datagrid-list-sort-icon-color: $color-default;
 $datagrid-list-sort-icon-hover-color: $graphite05;
 $datagrid-header-focus-bg-color: $datagrid-header-bg-color;
 $datagrid-header-focus-border-color: $white;
 $datagrid-list-header-checkbox-border-color: $graphite04;
-$datagrid-list-header-active-color: $graphite03;
+$datagrid-list-header-active-color: $color-default;
 
 $datagrid-filter-border-color: $slate04;
 $datagrid-filter-hover-border-color: $slate02;
@@ -654,16 +654,16 @@ $progress-border-color: $graphite04;
 $progress-bar-bg-color: $color-primary;
 
 //Chart Progress Bar
-$chart-progressbar-bg-color: $graphite03;
+$chart-progressbar-bg-color: $color-default;
 $chart-progressbar-bg-color-dark: $graphite04;
 $chart-progressbar-completed-fill: $emerald07;
 $chart-progressbar-target-fill: $graphite04;
 $chart-progressbar-primary-fill: $color-primary;
 $chart-progressbar-dark-fill: $graphite06;
-$chart-targeted-achievement-bg-color: $graphite03;
+$chart-targeted-achievement-bg-color: $color-default;
 
 //Timeline
-$timeline-indicator-color: $graphite03;
+$timeline-indicator-color: $color-default;
 $timeline-indicator-processing-color: $color-primary;
 $timeline-indicator-complete-color: $color-primary;
 $timeline-line-color: $graphite04;
@@ -671,7 +671,7 @@ $timeline-header-color: $color-primary;
 
 //Wizard
 $wizard-default-bg: $body-bg-color-primary;
-$wizard-bar-bg: $graphite03;
+$wizard-bar-bg: $color-default;
 $wizard-color: $graphite06;
 $wizard-disabled-color: $graphite04;
 $wizard-active-color: $color-primary;
@@ -707,7 +707,7 @@ $searchfield-context-text-color: $font-color;
 
 $searchfield-card-bg-color: $graphite01;
 $searchfield-card-border-color: $graphite02;
-$searchfield-card-icon-color: $graphite03;
+$searchfield-card-icon-color: $color-default;
 $searchfield-card-text-color: $font-color;
 
 $searchfield-header-bg-color: $slate08;
