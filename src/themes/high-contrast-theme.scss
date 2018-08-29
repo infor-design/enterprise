@@ -69,7 +69,7 @@ $hyperlink-color: $azure09;
 $hyperlink-focus-border-color: $azure09;
 $hyperlink-visited-color: $amethyst10;
 $hyperlink-disabled-color: $disabled-color;
-$hyperlink-hover-color: $azure07;
+$hyperlink-hover-color: $color-primary-alt;
 
 // Alert Colors
 $alert-info: $azure09;
@@ -87,7 +87,7 @@ $circlepager-border-color: $graphite06;
 $circlepager-hover-bg-color: $white;
 $circlepager-hover-border-color: $black;
 $circlepager-focus-bg-color: $white;
-$circlepager-focus-border-color: $azure07;
+$circlepager-focus-border-color: $color-primary-alt;
 
 $circlepager-active-bg-color: $primary-color;
 $circlepager-active-border-color: $primary-color;
@@ -152,14 +152,14 @@ $popupmenu-checked-color: $azure09;
 $popupmenu-checked-color-inverse: $azure06;
 
 // Tertiary Buttons
-$tertiary-btn-ripple-color: $azure07;
+$tertiary-btn-ripple-color: $color-primary-alt;
 
 // Secondary with Border
 $secondary-border-btn-color:  $graphite09;
 $secondary-border-btn-border-color: $graphite09;
 $secondary-border-btn-hover-color:  $graphite10;
 $secondary-border-btn-hover-border-color: $graphite10;
-$secondary-border-btn-ripple-color: $azure07;
+$secondary-border-btn-ripple-color: $color-primary-alt;
 
 // Input Fields
 $input-color: $input-text-color;
@@ -177,7 +177,7 @@ $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
 $info-icon-fill: $azure08;
-$selected-bg-color: rgba($azure07, 0.3);
+$selected-bg-color: rgba($color-primary-alt, .3);
 
 // Autocomplete
 $autocomplete-light-text: $graphite05;
@@ -222,7 +222,7 @@ $listbuilder-bg-color: $input-bg-color;
 $listbuilder-bg-color-hover: $graphite04;
 $listbuilder-bg-color-selected: $primary-color;
 $listbuilder-border-color: $input-border-color;
-$listbuilder-border-color-focus: $azure07;
+$listbuilder-border-color-focus: $color-primary-alt;
 $listbuilder-icon-color-hover: $font-color-highcontrast;
 $listbuilder-text-color: $black;
 $listbuilder-input-selection-bg-color: $azure10;
@@ -257,7 +257,7 @@ $datepicker-icon-active-color: $azure09;
 // $datepicker-alternate-month-color: rgba($graphite06, 0.5);
 $datepicker-alternate-month-color: $graphite05;
 $datepicker-day-color: $black;
-$datepicker-focus-border-color: $azure07;
+$datepicker-focus-border-color: $color-primary-alt;
 $datepicker-selected-bg-color: $primary-color;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $black;
@@ -576,7 +576,7 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 // Tree
 $tree-selected-color: $black;
 $tree-selected-bg-color: $graphite04;
-$tree-focus-border-color: $azure07;
+$tree-focus-border-color: $color-primary-alt;
 $tree-active-bg-color: #8fa8b7;
 $tree-icon-color: $graphite09;
 $tree-link-color: $graphite09;
@@ -612,7 +612,7 @@ $wizard-color: $graphite09;
 $wizard-disabled-color: $graphite04;
 $wizard-active-color: $primary-color;
 $wizard-active-text-color: $primary-color;
-$wizard-focus-box-shadow: 0 0 0 1px $azure07;
+$wizard-focus-box-shadow: 0 0 0 1px $color-primary-alt;
 
 //Org Chart
 $hierarchy-line-color: $graphite10;
@@ -691,14 +691,14 @@ $module-tabs-bg-color: $azure09;
 $module-tabs-x-border-color: $azure05;
 $module-tabs-y-border-color: $azure10;
 $module-tabs-inactive-bg-color: $azure10;
-$module-tabs-active-bg-color: $azure07;
+$module-tabs-active-bg-color: $color-primary-alt;
 $module-tabs-hover-bg-color: $azure06;
 $module-tabs-inactive-text-color: rgba($white, 0.85);
 $module-tabs-active-text-color: $white;
 $module-tabs-hover-text-color: $white;
 $module-tabs-disabled-bg-color: $azure06;
 $module-tabs-disabled-x-border-color: $azure04;
-$module-tabs-disabled-y-border-color: $azure07;
+$module-tabs-disabled-y-border-color: $color-primary-alt;
 $module-tabs-disabled-text-color: $azure04;
 
 // Composite Tabs
@@ -720,7 +720,7 @@ $step-chart-totally-completed-bg-color: #80ce4d;
 //Swaplist
 $swaplist-bg-color-hover: $graphite04;
 $swaplist-bg-color-selected: $primary-color;
-$swaplist-border-color-focus: $azure07;
+$swaplist-border-color-focus: $color-primary-alt;
 $swaplist-icon-color: $graphite05;
 $swaplist-icon-color-hover: $font-color-highcontrast;
 $swaplist-border-color-hover: $font-color-highcontrast;

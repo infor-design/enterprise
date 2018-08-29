@@ -9,7 +9,7 @@
 
 // Form Background Color
 $body-bg-color:  $body-bg-color-primary;
-$header-bg-color: $azure07;
+$header-bg-color: $color-primary-alt;
 $subhead-bg-color: $azure08;
 $transparent: transparent;
 
@@ -383,7 +383,7 @@ $focus-color: #cbdce6;
 $focus-shadow: rgba(0, 0, 0, 0.3);
 
 $switch-checked-color: $color-primary;
-$switch-checked-hover-color: $azure07;
+$switch-checked-hover-color: $color-primary-alt;
 $switch-checked-bg-color: $azure03;
 $switch-unchecked-bar-color: $graphite04;
 $switch-unchecked-border-color: $graphite03;
@@ -451,7 +451,7 @@ $modal-btn-border-color: $graphite03;
 $modal-btn-hover-color: $graphite10;
 $modal-btn-primary-color: $color-primary;
 $modal-btn-primary-hover-color: $azure08;
-$modal-btn-primary-disabled-color: $azure07;
+$modal-btn-primary-disabled-color: $color-primary-alt;
 $modal-btn-disabled-color: $graphite06;
 $modal-btn-disabled-opacity: 0.5;
 $modal-color: $graphite06;
@@ -693,7 +693,7 @@ $searchfield-icon-color: $button-link-text-color;
 $searchfield-text-color: $button-link-text-color;
 $searchfield-lighter-bg-color: $graphite01;
 $searchfield-lighter-text-color: $graphite04;
-$searchfield-active-icon-color: $azure07;
+$searchfield-active-icon-color: $color-primary-alt;
 
 $searchfield-alt-bg-color: $white;
 $searchfield-alt-border-color: $graphite01;
@@ -764,14 +764,14 @@ $module-tabs-bg-color: $azure08;
 $module-tabs-x-border-color: $azure06;
 $module-tabs-y-border-color: $azure09;
 $module-tabs-inactive-bg-color: $azure08;
-$module-tabs-active-bg-color: $azure07;
+$module-tabs-active-bg-color: $color-primary-alt;
 $module-tabs-hover-bg-color: $azure10;
 $module-tabs-inactive-text-color: rgba($white, 0.85);
 $module-tabs-active-text-color: $white;
 $module-tabs-hover-text-color: $white;
 $module-tabs-disabled-bg-color: $azure06;
 $module-tabs-disabled-x-border-color: $azure04;
-$module-tabs-disabled-y-border-color: $azure07;
+$module-tabs-disabled-y-border-color: $color-primary-alt;
 $module-tabs-disabled-text-color: $azure04;
 
 // Composite Form Tabs
