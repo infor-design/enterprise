@@ -580,14 +580,14 @@ label,
 
 // Text Selection
 ::selection {
-  background: $primary-color;
+  background: $color-primary;
   color: $inverse-color;
   fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
 }
 
 ::-moz-selection {
-  background: $primary-color;
+  background: $color-primary;
   color: $inverse-color;
   fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;

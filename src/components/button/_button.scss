@@ -773,7 +773,7 @@ html[lang^='fr-'] {
   }
 
   &:focus {
-    box-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $primary-color, $focus-box-shadow;
+    box-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $color-primary, $focus-box-shadow;
   }
 
   &:disabled {

@@ -9,7 +9,7 @@
 }
 
 @mixin searchfield-text-style-hover() {
-  color: $primary-color;
+  color: $color-primary;
   font-weight: $font-weight-bold;
 
   @include font-size(14);
@@ -182,11 +182,11 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
     &.has-focus {
       .btn {
-        border-color: $primary-color;
+        border-color: $color-primary;
       }
 
       .searchfield {
-        border-color: $primary-color;
+        border-color: $color-primary;
       }
     }
 

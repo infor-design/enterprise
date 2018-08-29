@@ -33,7 +33,7 @@ svg.icon-dirty,
 }
 
 .icon-info-field {
-  fill: $primary-color;
+  fill: $color-primary;
 }
 
 .field {
@@ -531,8 +531,8 @@ svg.icon-dirty {
   }
 
   &.checkmark-selected {
-    background-color: $primary-color;
-    border-color: $primary-color;
+    background-color: $color-primary;
+    border-color: $color-primary;
 
     &::after {
       border-color: $inverse-color $inverse-color $inverse-color transparent;

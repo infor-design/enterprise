@@ -44,7 +44,7 @@ $focus-box-shadow-spinbox-up: 0 -3px 3px 0 $focus-box-shadow-color,
   3px 0 3px 0 $focus-box-shadow-color;
 
 // Base Colors
-$primary-color: $color-primary;
+$color-primary: $color-primary;
 $inverse-color: $button-primary-text-color;
 
 // Text Color
@@ -810,7 +810,7 @@ $textarea-size: 362px;
 // Calendar
 $calendar-bg-color: $panel-bg-color;
 $calendar-line-color: $graphite02;
-$calendar-selected-border-color: $primary-color;
+$calendar-selected-border-color: $color-primary;
 $calendar-selected-bg-color: $graphite01;
 $calendar-hover-bg-color: $graphite01;
 $calendar-disabled-bg-color: $graphite01;

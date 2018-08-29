@@ -181,11 +181,11 @@
     }
 
     &:hover:not(:disabled) .icon {
-      fill: $primary-color;
+      fill: $color-primary;
     }
 
     &:active .icon {
-      fill: $primary-color;
+      fill: $color-primary;
     }
 
     &.is-empty,
@@ -241,7 +241,7 @@
 
       &:focus {
         box-shadow: $focus-box-shadow;
-        outline: 1px solid $primary-color;
+        outline: 1px solid $color-primary;
       }
 
       &.is-selected {
