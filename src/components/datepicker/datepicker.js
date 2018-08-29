@@ -1527,10 +1527,7 @@ DatePicker.prototype = {
    */
   setToday() {
     const s = this.settings;
-
-    if (!this.currentDate) {
-      this.currentDate = new Date();
-    }
+    this.currentDate = new Date();
 
     if (this.element.val() === '') {
       this.currentDate.setHours(0);
