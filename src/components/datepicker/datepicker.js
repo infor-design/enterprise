@@ -1528,23 +1528,20 @@ DatePicker.prototype = {
   setToday() {
     const s = this.settings;
     this.currentDate = new Date();
+    this.currentDate.setHours(0);
+    this.currentDate.setMinutes(0);
+    this.currentDate.setSeconds(0);
 
-    if (this.element.val() === '') {
-      this.currentDate.setHours(0);
-      this.currentDate.setMinutes(0);
-      this.currentDate.setSeconds(0);
-    } else {
-      if (this.timepicker && this.timepicker.hourSelect) {
-        this.currentDate.setHours(this.timepicker.hourSelect.val());
-      }
+    if (this.timepicker && this.timepicker.hourSelect) {
+      this.currentDate.setHours(this.timepicker.hourSelect.val());
+    }
 
-      if (this.timepicker && this.timepicker.minuteSelect) {
-        this.currentDate.setMinutes(this.timepicker.minuteSelect.val());
-      }
+    if (this.timepicker && this.timepicker.minuteSelect) {
+      this.currentDate.setMinutes(this.timepicker.minuteSelect.val());
+    }
 
-      if (this.timepicker && this.timepicker.secondSelect) {
-        this.currentDate.setSeconds(this.timepicker.secondSelect.val());
-      }
+    if (this.timepicker && this.timepicker.secondSelect) {
+      this.currentDate.setSeconds(this.timepicker.secondSelect.val());
     }
 
     if (this.isIslamic) {
