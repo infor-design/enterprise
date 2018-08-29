@@ -19,7 +19,7 @@ $header-button-focus-color: rgba($white, 1);
 $header-button-hover-color: rgba($white, 1);
 $header-button-disabled-color: rgba($white, 0.3);
 $header-primary-btn-background-color: $azure05;
-$header-primary-btn-background-hover-color: $azure06;
+$header-primary-btn-background-hover-color: $color-primary;
 $header-text-color: $white;
 $header-disabled-color: $slate05;
 $header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
@@ -144,7 +144,7 @@ $popupmenu-bg-color: $button-primary-text-color;
 $popupmenu-border-color: $graphite03;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-checked-color: $color-primary;
-$popupmenu-checked-color-inverse: $azure06;
+$popupmenu-checked-color-inverse: $color-primary;
 $popupmenu-hover-color: $graphite02;
 
 // Dark UI Popupmenu
@@ -240,7 +240,7 @@ $listview-search-disabled-icon-color: $graphite02;
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
 $listbuilder-bg-color-hover: $graphite02;
-$listbuilder-bg-color-selected: $azure06;
+$listbuilder-bg-color-selected: $color-primary;
 $listbuilder-border-color: $input-border-color;
 $listbuilder-border-color-focus: $color-primary;
 $listbuilder-icon-color-hover: $graphite10;
@@ -271,9 +271,9 @@ $contextual-panel-seperator-bg-color: $graphite04;
 // Swaplist
 $swaplist-bg-color: $graphite01;
 $swaplist-bg-color-hover: $graphite02;
-$swaplist-bg-color-selected: $azure06;
+$swaplist-bg-color-selected: $color-primary;
 $swaplist-border-color: $graphite06;
-$swaplist-border-color-hover: $azure06;
+$swaplist-border-color-hover: $color-primary;
 $swaplist-border-color-focus: $color-primary;
 $swaplist-border-color-card: $graphite03;
 $swaplist-icon-color: $graphite06;
@@ -290,8 +290,8 @@ $datepicker-icon-active-color: $trigger-active-color;
 $datepicker-month-year-color: $graphite10;
 $datepicker-alternate-month-color: $graphite03;
 $datepicker-day-color: $graphite06;
-$datepicker-focus-border-color: $azure06;
-$datepicker-selected-bg-color: $azure06;
+$datepicker-focus-border-color: $color-primary;
+$datepicker-selected-bg-color: $color-primary;
 $datepicker-selected-color: $button-primary-text-color;
 $datepicker-today-color: $graphite10;
 $datepicker-hover-bg-color: $graphite01;
@@ -621,8 +621,8 @@ $datagrid-list-filter-color: $slate10;
 $datagrid-list-filter-hover-color: $slate10;
 $datagrid-list-filter-icon-color: $slate04;
 $datagrid-list-filter-disabled-color: $slate03;
-$datagrid-list-filter-focus-color: $azure06;
-$datagrid-list-filter-active-color: $azure06;
+$datagrid-list-filter-focus-color: $color-primary;
+$datagrid-list-filter-active-color: $color-primary;
 
 $datagrid-rowgroup-header: $graphite01;
 $datagrid-rowgroup-color: $graphite06;
@@ -639,7 +639,7 @@ $tree-selected-bg-color: $graphite02;
 $tree-placeholder-color: $white;
 $tree-isover-bg-color: $azure01;
 $tree-isover-border-color: $azure04;
-$tree-placeholder-bg-color: $azure06;
+$tree-placeholder-bg-color: $color-primary;
 $tree-focus-border-color: $color-primary;
 $tree-active-bg-color: #d7e8f2;
 $tree-icon-color: $graphite06;
@@ -651,7 +651,7 @@ $tree-hover-icon-color: $graphite10;
 //Progress
 $progress-bg-color: transparent;
 $progress-border-color: $graphite04;
-$progress-bar-bg-color: $azure06;
+$progress-bar-bg-color: $color-primary;
 
 //Chart Progress Bar
 $chart-progressbar-bg-color: $graphite03;
@@ -761,7 +761,7 @@ $header-breadcrumb-border-color: $graphite03;
 
 // Module Tabs
 $module-tabs-bg-color: $azure08;
-$module-tabs-x-border-color: $azure06;
+$module-tabs-x-border-color: $color-primary;
 $module-tabs-y-border-color: $azure09;
 $module-tabs-inactive-bg-color: $azure08;
 $module-tabs-active-bg-color: $color-primary-alt;
@@ -769,7 +769,7 @@ $module-tabs-hover-bg-color: $azure10;
 $module-tabs-inactive-text-color: rgba($white, 0.85);
 $module-tabs-active-text-color: $white;
 $module-tabs-hover-text-color: $white;
-$module-tabs-disabled-bg-color: $azure06;
+$module-tabs-disabled-bg-color: $color-primary;
 $module-tabs-disabled-x-border-color: $azure04;
 $module-tabs-disabled-y-border-color: $color-primary-alt;
 $module-tabs-disabled-text-color: $azure04;

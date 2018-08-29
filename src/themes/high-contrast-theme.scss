@@ -21,7 +21,7 @@ $header-button-color: rgba($white, 1);
 $header-button-focus-color: rgba($white, 1);
 $header-button-hover-color: rgba($white, 0.85);
 $header-button-disabled-color: rgba($white, 0.3);
-$header-primary-btn-background-color: $azure06;
+$header-primary-btn-background-color: $color-primary;
 $header-primary-btn-background-hover-color: $azure05;
 $header-disabled-color: $graphite05;
 $header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
@@ -149,7 +149,7 @@ $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-heading-color: $graphite07;
 $popupmenu-hover-color: $graphite04;
 $popupmenu-checked-color: $azure09;
-$popupmenu-checked-color-inverse: $azure06;
+$popupmenu-checked-color-inverse: $color-primary;
 
 // Tertiary Buttons
 $tertiary-btn-ripple-color: $color-primary-alt;
@@ -338,7 +338,7 @@ $checkbox-disabled-select-bg-color: $checkbox-disabled-checked-bg-color;
 
 // Switch
 $switch-checked-color: $primary-color;
-$switch-checked-bg-color: $azure06;
+$switch-checked-bg-color: $color-primary;
 $switch-unchecked-bg-color: $white;
 $switch-unchecked-bar-color: $graphite07;
 $switch-unchecked-border-color: $graphite06;
@@ -692,11 +692,16 @@ $module-tabs-x-border-color: $azure05;
 $module-tabs-y-border-color: $azure10;
 $module-tabs-inactive-bg-color: $azure10;
 $module-tabs-active-bg-color: $color-primary-alt;
+<<<<<<< HEAD
 $module-tabs-hover-bg-color: $azure06;
 $module-tabs-inactive-text-color: rgba($white, 0.85);
+=======
+$module-tabs-hover-bg-color: $color-primary;
+$module-tabs-inactive-text-color: rgba($white, .85);
+>>>>>>> Replacing azure06
 $module-tabs-active-text-color: $white;
 $module-tabs-hover-text-color: $white;
-$module-tabs-disabled-bg-color: $azure06;
+$module-tabs-disabled-bg-color: $color-primary;
 $module-tabs-disabled-x-border-color: $azure04;
 $module-tabs-disabled-y-border-color: $color-primary-alt;
 $module-tabs-disabled-text-color: $azure04;

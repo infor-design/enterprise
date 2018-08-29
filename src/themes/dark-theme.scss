@@ -67,10 +67,10 @@ $font-color-alert: $alert-red;
 
 //The hyperlink Style
 $hyperlink-color: $azure04;
-$hyperlink-focus-border-color: $azure06;
+$hyperlink-focus-border-color: $color-primary;
 $hyperlink-visited-color: $amethyst03;
 $hyperlink-disabled-color: $disabled-color;
-$hyperlink-hover-color: $azure06;
+$hyperlink-hover-color: $color-primary;
 
 // Rules
 $hr-top-color: $slate09;
@@ -100,7 +100,7 @@ $popover-alternate-table-header: $notification-alternate-table-header;
 //Progress
 $progress-bg-color: transparent;
 $progress-border-color: $slate04;
-$progress-bar-bg-color: $azure06;
+$progress-bar-bg-color: $color-primary;
 
 // Tooltips
 $tooltip-bg-color: $white;
@@ -132,9 +132,9 @@ $popupmenu-heading-color: $slate04;
 $popupmenu-bg-color: $slate07;
 $popupmenu-border-color: $slate05;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
-$popupmenu-checked-color: $azure06;
+$popupmenu-checked-color: $color-primary;
 $popupmenu-hover-color: $slate06;
-$popupmenu-checked-color-inverse: $azure06;
+$popupmenu-checked-color-inverse: $color-primary;
 
 // Secondary With Border
 $secondary-border-btn-color:  $slate03;
@@ -533,8 +533,8 @@ $datagrid-list-filter-color: $white;
 $datagrid-list-filter-hover-color: $white;
 $datagrid-list-filter-icon-color: $slate03;
 $datagrid-list-filter-disabled-color: $slate06;
-$datagrid-list-filter-focus-color: $azure06;
-$datagrid-list-filter-active-color: $azure06;
+$datagrid-list-filter-focus-color: $color-primary;
+$datagrid-list-filter-active-color: $color-primary;
 
 $datagrid-rowgroup-header: $slate07;
 $datagrid-rowgroup-color: $font-color;
