@@ -15,7 +15,6 @@
 - `[General]` Internally all of the sass is now extended from [IDS Design tokens]( https://github.com/infor-design/design-system) ([#354](https://github.com/infor-design/enterprise/issues/354))
 - `[Calendar]` Added initial readonly calendar. At the moment the calendar can only render events and has a filtering feature. More will be added next sprint. ([#261](https://github.com/infor-design/enterprise/issues/261))
 
-
 ### v4.10.0 Fixes
 
 - `[Dropdown]` Minor Breaking Change for Xss reasons we removed the ability to set a custom hex color on icons in the dropdown. You can still pass in one of the alert colors from the colorpallette (fx alert, good, info). This was not even shown in the examples so may not be missed. ([#256](https://github.com/infor-design/enterprise/issues/256))
@@ -37,12 +36,9 @@
 - `[Popupmenu]` Fixed low contrast selection icons in high contrast theme. ([#410](https://github.com/infor-design/enterprise/issues/410))
 - `[Header Popupmenu]` Fixed missing focus state. ([#514](https://github.com/infor-design/enterprise/issues/514))
 - `[Datepicker]` When using legends on days, fixed a problem that the hover states are shown incorrectly when changing month. ([#514](https://github.com/infor-design/enterprise/issues/514))
-- `[Listview]` When the search field is disabled, it was not shown with disabled styling, this is fixed.
-([#422](https://github.com/infor-design/enterprise/issues/422))
-- `[Donut]` When having 4 or 2 sliced the tooltip would not show up on some slices. This is fixed.
-([#482](https://github.com/infor-design/enterprise/issues/482))
-- `[Datagrid]` Added a searchExpandableRow option so that you can control if data in expandable rows is searched/expanded.
-([#480](https://github.com/infor-design/enterprise/issues/480))
+- `[Listview]` When the search field is disabled, it was not shown with disabled styling, this is fixed. ([#422](https://github.com/infor-design/enterprise/issues/422))
+- `[Donut]` When having 4 or 2 sliced the tooltip would not show up on some slices. This is fixed. ([#482](https://github.com/infor-design/enterprise/issues/482))
+- `[Datagrid]` Added a searchExpandableRow option so that you can control if data in expandable rows is searched/expanded. ([#480](https://github.com/infor-design/enterprise/issues/480))
 - `[Multiselect]` If more items then fit are selected the tooltip was not showing on initial load, it only showed after changing values. This is fixed. ([#633](https://github.com/infor-design/enterprise/issues/633))
 - `[Tooltip]` An example was added showing how you can show tooltips on disabled buttons. ([#453](https://github.com/infor-design/enterprise/issues/453))
 - `[Modal]` A title with brackets in it was not escaping the text correctly. ([#246](https://github.com/infor-design/enterprise/issues/246))
