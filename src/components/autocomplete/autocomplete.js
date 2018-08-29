@@ -119,11 +119,10 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
 * @param {string} [settings.width=null] Width of the open auto complete menu
 * @param {string} [settings.offset=null] For the open menu, the left or top offset
 * @param {string} [settings.autoSelectFirstItem=false] Whether or not to select he first item in the list to be selected
-* @param {function} [settings.resultsCallback] If defined, does not produce the results of the Autocomplete
-* inside a popupmenu, instead piping them to a process defined inside this callback function.
 * @param {boolean} [settings.highlightMatchedText=true] The highlightMatchText property.
 * @param {function} [settings.highlightCallback] The highlightCallback property.
 * @param {function} [settings.resultIteratorCallback] The resultIteratorCallback property.
+* @param {function} [settings.clearResultsCallback] the clearResultsCallback property.
 * @param {function} [settings.displayResultsCallback] The displayResultsCallback property.
 * @param {function} [settings.searchableTextCallback] The searchableTextCallback property.
 */
@@ -139,6 +138,7 @@ const AUTOCOMPLETE_DEFAULTS = {
   highlightMatchedText: true,
   highlightCallback: DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK,
   resultIteratorCallback: DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK,
+  clearResultsCallback: undefined,
   displayResultsCallback: undefined,
   searchableTextCallback: DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK
 };
@@ -363,11 +363,6 @@ Autocomplete.prototype = {
   },
 
   closeList(dontClosePopup) {
-    const popup = this.element.data('popupmenu');
-    if (!popup) {
-      return;
-    }
-
     // Remove events
     this.list.off([
       `click.${COMPONENT_NAME}`,
@@ -376,11 +371,21 @@ Autocomplete.prototype = {
     ].join(' '));
     this.list.find('a').off(`focus.${COMPONENT_NAME} touchend.${COMPONENT_NAME}`);
 
+    this.element.trigger('listclose');
+
+    if (typeof this.settings.clearResultsCallback === 'function') {
+      this.settings.clearResultsCallback();
+      return;
+    }
+
+    const popup = this.element.data('popupmenu');
+    if (!popup) {
+      return;
+    }
     if (!dontClosePopup) {
       popup.close();
     }
 
-    this.element.trigger('listclose');
     $('#autocomplete-list').parent('.popupmenu-wrapper').remove();
     $('#autocomplete-list').remove();
     this.element.add(this.list).removeClass('is-open is-ontop');
