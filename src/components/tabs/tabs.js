@@ -2666,8 +2666,15 @@ Tabs.prototype = {
     const tab = this.doGetTab(e, tabId);
 
     if (tab.is('.is-selected')) {
-      this.activatePreviousTab(tabId);
+      if (tab.prevAll('li.tab').not('.hidden').length > 0) {
+        this.select($(tab.prevAll('li.tab').not('.hidden')[0]).find('a')[0].hash);
+      } else if (tab.nextAll('li.tab').not('.hidden').length > 0) {
+        this.select($(tab.nextAll('li.tab').not('.hidden')[0]).find('a')[0].hash);
+      }
+    } else {
+      this.select($(this.element.find('li.tab.is-selected')[0]).find('a')[0].hash);
     }
+
     tab.addClass('hidden');
     this.focusBar();
     this.positionFocusState();
@@ -2684,6 +2691,9 @@ Tabs.prototype = {
     const tab = this.doGetTab(e, tabId);
 
     tab.removeClass('hidden');
+
+    this.select($(this.element.find('li.tab.is-selected')[0]).find('a')[0].hash);
+
     this.focusBar();
     this.positionFocusState();
     return this;
