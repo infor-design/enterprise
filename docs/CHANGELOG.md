@@ -5,9 +5,52 @@
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
 - [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
 
+### v4.10.0 Features
+
+- `[General]` Changed the code to pass Veracode scans. The IDS components now pass ISO at 86 rating. The rest of the flaws are mitigated with fixes such as stripping tags. As a result we went fairly aggressive with what we strip. If teams are doing something special we don't have tests for there is potential for customizations being stripped. ([#256](https://github.com/infor-design/enterprise/issues/256))
+- `[Tooltips]` Will now activate on longpress on mobile devices ([#400](https://github.com/infor-design/enterprise/issues/400))
+- `[Contextmenu]` Will now activate on longpress on mobile devices (except when on inputs) ([#245](https://github.com/infor-design/enterprise/issues/245))
+- `[Locale]` Added support for zh-Hant and zh-Hans ([#397](https://github.com/infor-design/enterprise/issues/397))
+- `[Tree]` Greatly improved rendering and expanding performance ([#251](https://github.com/infor-design/enterprise/issues/251))
+- `[General]` Internally all of the sass is now extended from [IDS Design tokens]( https://github.com/infor-design/design-system) ([#354](https://github.com/infor-design/enterprise/issues/354))
+- `[Calendar]` Added initial readonly calendar. At the moment the calendar can only render events and has a filtering feature. More will be added next sprint. ([#261](https://github.com/infor-design/enterprise/issues/261))
+
+
 ### v4.10.0 Fixes
 
 - `[Dropdown]` Minor Breaking Change for Xss reasons we removed the ability to set a custom hex color on icons in the dropdown. You can still pass in one of the alert colors from the colorpallette (fx alert, good, info). This was not even shown in the examples so may not be missed. ([#256](https://github.com/infor-design/enterprise/issues/256))
+- `[Popupmenu]` Fixed a problem in popupmenu, if it was opened in immediate mode, submenus will be cleared of their text when the menu is eventually closed. ([#701](https://github.com/infor-design/enterprise/issues/701))
+- `[Editor]` Fixed xss injection problem on the link dialog ([#257](https://github.com/infor-design/enterprise/issues/257))
+- `[Spinbox]` Fixed a height / alignment issue on spinboxes when used in short height configuration. ([#547](https://github.com/infor-design/enterprise/issues/547))
+- `[Datepicker / Mask]` Fixed an issue in angular that caused using backspace to not save back to the model. ([#51](https://github.com/infor-design/enterprise-ng/issues/51))
+- `[Field Options]` Fixed mobile support so they now work on touch better on IOS and Android. ([#555](https://github.com/infor-design/enterprise-ng/issues/555))
+- `[Tree]` Tree with + and - for the folders was inversed visually. This was fixed, update your svg.html ([#685](https://github.com/infor-design/enterprise-ng/issues/685))
+- `[Modal]` Fixed an alignment issue with the closing X on the top corner ([#662](https://github.com/infor-design/enterprise-ng/issues/662))
+- `[Popupmenu]` Fixed a visual flickering when opening dynamic submenus. ([#588](https://github.com/infor-design/enterprise/issues/588))
+- `[Tree]` Added full unit and functional tests ([#264](https://github.com/infor-design/enterprise/issues/264))
+- `[Lookup]` Added full unit and functional tests ([#344](https://github.com/infor-design/enterprise/issues/344))
+- `[Datagrid]` Added more unit and functional tests ([#242](https://github.com/infor-design/enterprise/issues/242))
+- `[General]` Updated the develop tools and sample app to Node 10. During this we know ignore package.lock.json in .gitignore ([#540](https://github.com/infor-design/enterprise/issues/540))
+- `[Modal]` Allow beforeOpen call back to run optionally whether you have content or not passed back. ([#409](https://github.com/infor-design/enterprise/issues/409))
+- `[Datagrid]` The lookup editor now supports left, right, center align on the column settings. ([#228](https://github.com/infor-design/enterprise/issues/228))
+- `[Mask]` When adding prefixes and suffixes (like % and $) if all the rest of the text is cleared, these will also now be cleared. ([#433](https://github.com/infor-design/enterprise/issues/433))
+- `[Popupmenu]` Fixed low contrast selection icons in high contrast theme. ([#410](https://github.com/infor-design/enterprise/issues/410))
+- `[Header Popupmenu]` Fixed missing focus state. ([#514](https://github.com/infor-design/enterprise/issues/514))
+- `[Datepicker]` When using legends on days, fixed a problem that the hover states are shown incorrectly when changing month. ([#514](https://github.com/infor-design/enterprise/issues/514))
+- `[Listview]` When the search field is disabled, it was not shown with disabled styling, this is fixed.
+([#422](https://github.com/infor-design/enterprise/issues/422))
+- `[Donut]` When having 4 or 2 sliced the tooltip would not show up on some slices. This is fixed.
+([#482](https://github.com/infor-design/enterprise/issues/482))
+- `[Datagrid]` Added a searchExpandableRow option so that you can control if data in expandable rows is searched/expanded.
+([#480](https://github.com/infor-design/enterprise/issues/480))
+- `[Multiselect]` If more items then fit are selected the tooltip was not showing on initial load, it only showed after changing values. This is fixed. ([#633](https://github.com/infor-design/enterprise/issues/633))
+- `[Tooltip]` An example was added showing how you can show tooltips on disabled buttons. ([#453](https://github.com/infor-design/enterprise/issues/453))
+- `[Modal]` A title with brackets in it was not escaping the text correctly. ([#246](https://github.com/infor-design/enterprise/issues/246))
+- `[Modal]` Pressing enter when on inputs such as file upload no longer closes the modal. ([#321](https://github.com/infor-design/enterprise/issues/321))
+- `[Locale]` Sent out translations so things like the Editor New/Same window dialog will be translated in the future. ([#511](https://github.com/infor-design/enterprise/issues/511))
+- `[Nested Datagrid]` Fixed focus issues, the wrong cell in the nest was getting focused. ([#371](https://github.com/infor-design/enterprise/issues/371))
+
+(44 Issues Solved this release, Backlog Enterprise 173, Backlog Ng 44, 565 Functional Tests, 426 e2e Test)
 
 ## v4.9.0
 
