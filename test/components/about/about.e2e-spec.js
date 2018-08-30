@@ -12,7 +12,7 @@ describe('About index tests', () => {
 
   it('Should show the about dialog', async () => {
     const buttonEl = await element(by.id('about-trigger'));
-    buttonEl.click();
+    await buttonEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('about-modal'))), config.waitsFor);
 

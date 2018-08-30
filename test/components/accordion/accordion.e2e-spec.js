@@ -1,5 +1,6 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
+const config = requireHelper('e2e-config');
 
 requireHelper('rejection');
 
@@ -48,13 +49,13 @@ describe('Accordion example-ajax tests', () => {
   });
 
   it('Should ajax data is in the headers', async () => {
-    const accordionEl = await element.all(by.className('accordion-header')).first();
-    const testEl = await element.all(by.className('accordion-header')).get(2);
+    const buttonEl = await element(by.css('#ajax-accordion .accordion-header button'));
+    await buttonEl.click();
 
-    await browser.actions().mouseMove(accordionEl).perform();
-    await browser.actions().click(accordionEl).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child'))), config.waitsFor);
 
-    expect(testEl.getText()).toEqual('Apple');
+    expect(await element(by.css('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child')).getText()).toEqual('Apples');
   });
 });
 

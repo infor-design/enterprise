@@ -337,6 +337,8 @@ describe('Dropdown example-no-search-filtering tests', () => {
         .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), '15'), config.waitsFor);
 
       expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual('15');
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
 
       await dropdownPseudoEl.sendKeys(protractor.Key[keyPressed]);
       await browser.driver

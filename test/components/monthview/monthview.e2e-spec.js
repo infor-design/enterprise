@@ -16,16 +16,16 @@ describe('MonthView index tests', () => {
 
   it('Should be able to change month to next', async () => {
     const nextButton = await element(by.css('button.next'));
-    const monthYear = await element(by.id('monthview-datepicker-field'));
+
+    expect(await nextButton.getText()).toEqual('Next Month');
     const testDate = new Date();
 
-    expect(monthYear.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     await nextButton.click();
     await testDate.setMonth(testDate.getMonth() + 1);
 
-    expect(monthYear.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
-    expect(await nextButton.getText()).toEqual('Next Month');
+    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
   it('Should be able to change month to previous', async () => {

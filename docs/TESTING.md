@@ -84,7 +84,7 @@ Make sure the server is started and run
 ne2e:ci:bs
  ```
 
-NOTE: After running the tests go into https://automate.browserstack.com/ and delete the build for the stats to be accurate.
+NOTE: After running the tests go into [browserstack automate](https://automate.browserstack.com/) and delete the build for the stats to be accurate.
 
 ### Run a specific E2E component on BrowserStack
 
