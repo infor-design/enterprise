@@ -29,9 +29,9 @@
 - `[Tree]` Added full unit and functional tests ([#264](https://github.com/infor-design/enterprise/issues/264))
 - `[Lookup]` Added full unit and functional tests ([#344](https://github.com/infor-design/enterprise/issues/344))
 - `[Datagrid]` Added more unit and functional tests ([#242](https://github.com/infor-design/enterprise/issues/242))
-- `[General]` Updated the develop tools and sample app to Node 10. During this we know ignore package.lock.json in .gitignore ([#540](https://github.com/infor-design/enterprise/issues/540))
-- `[Modal]` Allow beforeOpen call back to run optionally whether you have content or not passed back. ([#409](https://github.com/infor-design/enterprise/issues/409))
-- `[Datagrid]` The lookup editor now supports left, right, center align on the column settings. ([#228](https://github.com/infor-design/enterprise/issues/228))
+- `[General]` Updated the develop tools and sample app to Node 10. During this update we set package-lock.json to be ignored in .gitignore ([#540](https://github.com/infor-design/enterprise/issues/540))
+- `[Modal]` Allow beforeOpen callback to run optionally whether you have content or not passed back. ([#409](https://github.com/infor-design/enterprise/issues/409))
+- `[Datagrid]` The lookup editor now supports left, right, and center align on the column settings. ([#228](https://github.com/infor-design/enterprise/issues/228))
 - `[Mask]` When adding prefixes and suffixes (like % and $) if all the rest of the text is cleared, these will also now be cleared. ([#433](https://github.com/infor-design/enterprise/issues/433))
 - `[Popupmenu]` Fixed low contrast selection icons in high contrast theme. ([#410](https://github.com/infor-design/enterprise/issues/410))
 - `[Header Popupmenu]` Fixed missing focus state. ([#514](https://github.com/infor-design/enterprise/issues/514))
@@ -272,7 +272,7 @@
 - `[Completion Chart]` Added more colors
 - `[Datagrid]` Fixed some misaligned icons on short row height
 - `[Datagrid]` Fixed issue that blank dropdown filter items would not show
-- `[Datagrid]` Added click arguments for more information on editor clicks and call back data
+- `[Datagrid]` Added click arguments for more information on editor clicks and callback data
 - `[Datagrid]` Fixed wrong data on events on second page with expandable row
 - `[Datagrid]` Fixed focus / filter bugs
 - `[Datagrid]` Fixed bug with filter dropdowns on IOS
