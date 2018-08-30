@@ -162,7 +162,7 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.id('dropdown-search')).getAttribute('value')).toEqual('New Jersey');
     });
 
-    xit('Should close an open list and tab to the next element without re-opening', async () => {
+    it('Should close an open list and tab to the next element without re-opening', async () => {
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -324,7 +324,7 @@ describe('Dropdown example-no-search-filtering tests', () => {
   });
 
   // TODO: Figure out why this uses "BACK_SPACE" as the keypress on Ubuntu Linux (TravisCI)
-  if (!utils.isCI()) {
+  if (utils.isChrome()) {
     it('Should clear a previous dropdown selection when pressing DELETE', async () => {
       // On Macs, use "backspace" delete, instead of control keys' delete
       const keyPressed = utils.isMac() ? 'BACK_SPACE' : 'DELETE';

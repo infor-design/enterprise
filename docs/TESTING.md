@@ -67,12 +67,24 @@ npm start
 npm run e2e:local:bs
  ```
 
+### Running BrowserStack tests locally
+
 Update your .zprofile, .bashprofile, .bashrc, or .zshrc
 
 ```sh
 export BROWSERSTACK_USERNAME=<browserstack-username>
 export BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
 ```
+
+You can get this key from the settings page on your browserstack account.
+
+Make sure the server is started and run
+
+```sh
+ne2e:ci:bs
+ ```
+
+NOTE: After running the tests go into https://automate.browserstack.com/ and delete the build for the stats to be accurate.
 
 ### Run a specific E2E component on BrowserStack
 
