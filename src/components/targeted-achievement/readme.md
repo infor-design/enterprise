@@ -43,7 +43,7 @@ var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement
 
 ## Testability
 
-- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

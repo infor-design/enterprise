@@ -21,4 +21,4 @@ All tabs components use the same API.  For details on this component's API, plea
 
 ## Testability
 
-- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

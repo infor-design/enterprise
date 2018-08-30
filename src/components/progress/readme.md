@@ -35,7 +35,7 @@ When the markup is established, you can call the `updated` method or trigger the
 
 ## Testability
 
-- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

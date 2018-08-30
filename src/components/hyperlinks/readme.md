@@ -28,7 +28,7 @@ A hyperlink uses a standard anchor tag element and styles it with CSS. No JS is 
 
 ## Testability
 
-- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

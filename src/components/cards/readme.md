@@ -78,7 +78,7 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
 
 ## Testability
 
-- Please refer to the for further details see the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist)
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

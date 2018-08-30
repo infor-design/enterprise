@@ -1,17 +1,20 @@
 <div class="row">
-  <div class="six columns">
-    <h2>Context Menu Example</h2>
-    <p>Right-click (Long-press on Mobile) anywhere on the page to open a context menu</p>
-  </div>
-</div>
-
-<div class="row">
   <div class="twelve columns">
 
-    <ul id="action-popupmenu" data-init="false" class="popupmenu">
-      <li><a id="cut" href="#">Cut</a></li>
-      <li><a id="copy" href="#">Copy</a></li>
-      <li><a id="paste" href="#">Paste</a></li>
+    <div class="field">
+      <label for="input-menu">Label</label>
+      <input type="text" data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu"/>
+    </div>
+
+    <div class="field">
+      <label for="input-menu2">Label2</label>
+      <input type="text"  data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu2"/>
+    </div>
+
+    <ul id="action-popupmenu" class="popupmenu">
+      <li><a href="#" id="cut">Cut</a></li>
+      <li><a href="#" id="copy">Copy</a></li>
+      <li><a href="#" id="paste">Paste</a></li>
       <li>
         <a id="paste-special" href="#">Paste Special</a>
         <ul class="popupmenu">
@@ -29,10 +32,11 @@
         </ul>
       </li>
       <li class="separator"></li>
-      <li><a id="name-project" href="#">Name and project range</a></li>
-      <li class="is-disabled"><a id="insert-comment" href="#" disabled>Insert comment</a></li>
-      <li class="is-disabled"><a id="insert-note" href="#" disabled>Insert note</a></li>
+      <li><a href="#" id="name-project">Name and project range</a></li>
+      <li class="is-disabled"><a href="#" id="insert-comment" disabled="true">Insert comment</a></li>
+      <li class="is-disabled"><a href="#" id="insert-note" disabled="true">Insert note</a></li>
       <li><a href="#" id="clear-notes">Clear notes</a></li>
+
       <li class="separator single-selectable-section"></li>
       <li class="heading">Additional Options</li>
       <li class="is-selectable is-checked"><a href="#" id="conditional-format">Conditional formatting</a></li>
@@ -49,11 +53,5 @@
     </ul>
 
   </div>
-</div>
 
-<script id="test-script">
-  $('body').popupmenu({
-    menu: 'action-popupmenu',
-    trigger: 'rightClick'
-  });
-</script>
+</div>

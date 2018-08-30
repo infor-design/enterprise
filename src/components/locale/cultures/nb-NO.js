@@ -27,7 +27,7 @@ Soho.Locale.addCulture('nb-NO', {
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
     days: {
       wide: ['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'],
-      abbreviated: ['sø', 'ma', 'ti', 'on', 'to', 'fr', 'lø'],
+      abbreviated: ['søn', 'man', 'tir', 'ons', 'tor', 'fre', 'lør'],
       narrow: ['S', 'M', 'T', 'O', 'T', 'F', 'L']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide and abbreviated

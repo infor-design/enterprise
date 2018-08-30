@@ -542,6 +542,14 @@ Header.prototype = {
   },
 
   /**
+   * @public
+   * Manually remove go-back class from button
+   */
+  removeBackButton() {
+    this.element.find('.go-back').removeClass('go-back');
+  },
+
+  /**
    * Removes a previously-built Breadcrumb structure from the Header.
    * @private
    * @returns {void}

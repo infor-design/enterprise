@@ -18,19 +18,23 @@ describe('Contextmenu index tests', () => {
   });
 
   it('Should open on click and close on click out', async () => {
-    const popupmenu = await element(by.id('action-popupmenu'));
+    let input = await element(by.id('input-menu2'));
+    await browser.actions().mouseMove(input).perform();
     await browser.actions().click(protractor.Button.RIGHT).perform();
-    await browser.driver.sleep(config.waitsFor);
+
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(popupmenu), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
 
     expect(await element(by.id('action-popupmenu')).getAttribute('class')).toContain('is-open');
 
-    await browser.actions().click(protractor.Button.Left).perform();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.invisibilityOf(popupmenu), config.waitsFor);
+    input = await element(by.id('input-menu'));
+    await input.click();
+    await input.sendKeys(protractor.Key.TAB);
 
-    expect(await popupmenu.getAttribute('class')).not.toContain('is-open');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
+
+    expect(await element(by.id('action-popupmenu')).getAttribute('class')).not.toContain('is-open');
   });
 });
 

@@ -51,7 +51,7 @@
           return row.productId + '|' + row.productName;
         },
         match: function (value, row, field, grid) {
-          return ((row.productId + '|' + row.productName) === value);
+          return ((row.productId + '|' + row.productName) !== value);
         },
         options: {
           columns: columns,

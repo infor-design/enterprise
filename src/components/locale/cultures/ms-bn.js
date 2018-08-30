@@ -27,7 +27,7 @@ Soho.Locale.addCulture('ms-bn', {
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
       wide: ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'],
-      abbreviated: ['Ah', 'Is', 'Se', 'Ra', 'Kh', 'Ju', 'Sa'],
+      abbreviated: ['Ahd', 'Isn', 'Sel', 'Rab', 'Kha', 'Jum', 'Sab'],
       narrow: ['A', 'I', 'S', 'R', 'K', 'J', 'S']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide

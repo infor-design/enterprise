@@ -295,7 +295,7 @@ $datepicker-focus-border-color: $azure06;
 $datepicker-selected-bg-color: $azure06;
 $datepicker-selected-color: $button-primary-text-color;
 $datepicker-today-color: $graphite10;
-$datepicker-hover-bg-color: $graphite02;
+$datepicker-hover-bg-color: $graphite01;
 $datepicker-disabled-icon-color: $graphite04;
 $datepicker-disabled-border-color: $graphite03;
 $datepicker-disabled-bg-color: $graphite01;
@@ -808,6 +808,15 @@ $treemap-title-color: #ffffff;
 
 // Textarea
 $textarea-size: 362px;
+
+// Calendar
+$calendar-bg-color: $panel-bg-color;
+$calendar-line-color: $graphite02;
+$calendar-selected-border-color: $primary-color;
+$calendar-selected-bg-color: $graphite01;
+$calendar-hover-bg-color: $graphite01;
+$calendar-disabled-bg-color: $graphite01;
+$calendar-disabled-color: $graphite08;
 
 // Breakpoint sizes - Grid
 $breakpoint-phone: 320px;
