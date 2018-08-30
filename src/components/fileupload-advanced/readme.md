@@ -12,11 +12,15 @@ demo:
 The advanced file upload control just needs a `<div>` with the class `fileupload-advanced` in which to draw its contents.
 
 ```html
-<div class="fileupload-advanced">
+<div id="fileupload-advanced" class="fileupload-advanced">
 </div>
 ```
 
 This is done by using an HTML5 drag and drop feature, so is only supported well on modern browsers, including Internet Explorer 11 or later.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

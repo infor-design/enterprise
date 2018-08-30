@@ -33,6 +33,10 @@ The toast component is made accessible by making an aria live region which means
 
 - Will be placed in the top corner by default.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Upgrading from 3.X
 
 - Replaced `inforSlideInMessage()` so rename that to `toast()`.

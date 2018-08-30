@@ -20,7 +20,7 @@
         <label class="audible" for="test-searchfield">Keyword Search</label>
         <input id="test-searchfield" name="test-searchfield" class="searchfield" data-options="{collapsible: false}" />
 
-        <button type="button" class="btn">
+        <button id="category" type="button" class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-filter"></use>
           </svg>
@@ -36,9 +36,9 @@
           <span class="audible">More Actions</span>
         </button>
         <ul class="popupmenu">
-          <li><a href="#">Option #1</a></li>
-          <li><a href="#">Option #2</a></li>
-          <li><a href="#">Option #3</a></li>
+          <li><a id="option-1" href="#">Option #1</a></li>
+          <li><a id="option-2" href="#">Option #2</a></li>
+          <li><a id="option-3" href="#">Option #3</a></li>
         </ul>
       </div>
     </div>
@@ -51,7 +51,7 @@
         <label class="audible" for="test-searchfield2">Keyword Search</label>
         <input id="test-searchfield2" name="test-searchfield" class="searchfield" data-options="{collapsible: false}" />
 
-        <button type="button" class="btn btn-toggle" title="Show Filter Row" aria-pressed="false">
+        <button id="filter" type="button" class="btn btn-toggle" title="Show Filter Row" aria-pressed="false">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-filter"></use>
           </svg>

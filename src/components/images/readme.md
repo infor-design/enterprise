@@ -30,6 +30,10 @@ This example shows how to invoke a small sized placeholder image.
 
 - For images always use an `alt` tag, which is read by screen readers
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Code Tips
 
 The [example image list pattern]( ../components/images/example-image-list) is created by using a toolbar above the block grid layout.

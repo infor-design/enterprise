@@ -46,6 +46,10 @@ Accessibility work is needed on this component.
 - An aria label should be added so that with a screen reader the user can get the jest of the display.
 - Color along cannot be used as the sole means of displaying status. So with the colors include a text such as: Error, Good ect.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - This is a visual only component.
