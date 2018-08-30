@@ -1544,7 +1544,7 @@ Editor.prototype = {
     }
 
     // Remove "ng-" directives and "ng-" classes
-    s = s.replace(/(ng-\w+-\w+="(.|\n)*?"|ng-\w+="(.|\n)*?"|ng-(\w+-\w+)|ng-(\w+))/g, '');
+    s = s.replace(/\sng-[a-z-]+/, '');
 
     // Remove comments
     s = s.replace(/<!--(.*?)-->/gm, '');
