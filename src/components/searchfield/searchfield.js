@@ -740,6 +740,15 @@ SearchField.prototype = {
       }
     });
 
+    // Setup a listener for the Clearable behavior, if applicable
+    if (self.settings.clearable) {
+      self.element.on(`cleared.${this.id}`, () => {
+        if (self.autocomplete) {
+          self.autocomplete.closeList();
+        }
+      });
+    }
+
     // Override the 'click' listener created by Autocomplete (which overrides the
     // default Popupmenu method) to act differntly when the More Results link is activated.
     self.element.on(`listopen.${this.id}`, (e, items) => {
@@ -748,7 +757,7 @@ SearchField.prototype = {
       // Visual indicator class
       self.wrapper.addClass('popup-is-open');
 
-      list.off('click').on(`click.${this.id}`, 'a', (thisE) => {
+      list.on(`click.${this.id}`, 'a', (thisE) => {
         const a = $(thisE.currentTarget);
         let ret = a.text().trim();
         const isMoreLink = a.hasClass('more-results');
@@ -776,28 +785,27 @@ SearchField.prototype = {
         }
 
         self.element.trigger('selected', [a, ret]);
-        self.element.data('popupmenu').close();
-        // e.preventDefault();
+
+        const popup = self.element.data('popupmenu');
+        if (popup) {
+          popup.close();
+        }
         return false;
       });
 
       // Override the focus event created by the Autocomplete control to make the more link
       // and no-results link blank out the text inside the input.
-      list.find('.more-results, .no-results').off('focus').on(`focus.${this.id}`, function () {
+      list.find('.more-results, .no-results').on(`focus.${this.id}`, function () {
         const anchor = $(this);
         list.find('li').removeClass('is-selected');
         anchor.parent('li').addClass('is-selected');
         self.element.val('');
       });
+    }).on(`listclose.${this.id}`, () => {
+      const list = $('#autocomplete-list');
 
-      // Setup a listener for the Clearable behavior, if applicable
-      if (self.settings.clearable) {
-        self.element.on(`cleared.${this.id}`, () => {
-          if (self.autocomplete) {
-            self.autocomplete.closeList();
-          }
-        });
-      }
+      list.off(`click.${this.id}`);
+      list.off(`focus.${this.id}`);
     });
 
     return this;

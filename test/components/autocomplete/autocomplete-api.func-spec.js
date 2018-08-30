@@ -121,4 +121,25 @@ describe('Autocomplete API', () => {
 
     expect(autocompleteAPI.listIsOpen()).toBeFalsy();
   });
+
+  it('can fire a callback when the autocomplete list closes', () => {
+    let wasCalled = false;
+    function clearResultsCallback() {
+      wasCalled = true;
+    }
+
+    autocompleteAPI.updated({
+      showAllResults: true,
+      clearResultsCallback
+    });
+
+    autocompleteAPI.openList('new', statesData);
+
+    expect(autocompleteAPI.listIsOpen()).toBeTruthy();
+
+    autocompleteAPI.closeList();
+
+    // The `clearResultsCallback` should have been triggered through the autocomplete `closeList()` method.
+    expect(wasCalled).toBeTruthy();
+  });
 });
