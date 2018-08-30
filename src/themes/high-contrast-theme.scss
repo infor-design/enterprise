@@ -96,11 +96,11 @@ $circlepager-active-focus-bg-color: $color-primary;
 $circlepager-active-focus-border-color: $color-primary;
 
 $circlepager-disable-bg-color: transparent;
-$circlepager-disable-border-color: $graphite04;
+$circlepager-disable-border-color: $color-default-alt;
 $circlepager-disable-hover-bg-color: transparent;
-$circlepager-disable-hover-border-color: $graphite04;
+$circlepager-disable-hover-border-color: $color-default-alt;
 $circlepager-disable-focus-bg-color: transparent;
-$circlepager-disable-focus-border-color: $graphite04;
+$circlepager-disable-focus-border-color: $color-default-alt;
 
 // Popovers
 $popover-bg-color: $graphite01;
@@ -146,7 +146,7 @@ $popupmenu-bg-color: $white;
 $popupmenu-border-color: $graphite06;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-heading-color: $graphite07;
-$popupmenu-hover-color: $graphite04;
+$popupmenu-hover-color: $color-default-alt;
 $popupmenu-checked-color: $azure09;
 $popupmenu-checked-color-inverse: $color-primary;
 
@@ -188,19 +188,19 @@ $trigger-icon-fill-light-color: $graphite08;
 $trigger-hover-color: $graphite06;
 $trigger-active-color: $color-primary;
 $trigger-focus-color: $color-primary;
-$trigger-disabled-color: $graphite04;
+$trigger-disabled-color: $color-default-alt;
 
 //List View
 $listview-bg-color: $inverse-color;
 $listview-bg-color-alternate: $graphite02;
-$listview-hover-bg-color: $graphite04;
+$listview-hover-bg-color: $color-default-alt;
 $listview-border-color: $graphite06;
 $listview-color: $black;
 $listview-secondary-color: $graphite09;
 $listview-tertiary-color: $graphite07;
 $listview-disabled-color: $disabled-color;
 $listview-selected-text-color: $font-color-extrahighcontrast;
-$listview-header-bg-color: $graphite04;
+$listview-header-bg-color: $color-default-alt;
 $listview-header-color: $font-color-extrahighcontrast;
 $listview-subhead-color: $graphite06;
 
@@ -218,7 +218,7 @@ $listview-search-disabled-icon-color: $graphite06;
 
 // Listbuilder
 $listbuilder-bg-color: $input-bg-color;
-$listbuilder-bg-color-hover: $graphite04;
+$listbuilder-bg-color-hover: $color-default-alt;
 $listbuilder-bg-color-selected: $color-primary;
 $listbuilder-border-color: $input-border-color;
 $listbuilder-border-color-focus: $color-primary-alt;
@@ -260,18 +260,18 @@ $datepicker-focus-border-color: $color-primary-alt;
 $datepicker-selected-bg-color: $color-primary;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $black;
-$datepicker-hover-bg-color: $graphite04;
-$datepicker-disabled-border-color: $graphite04;
+$datepicker-hover-bg-color: $color-default-alt;
+$datepicker-disabled-border-color: $color-default-alt;
 $datepicker-disabled-bg-color: $input-readonly-bg-color;
-$datepicker-disabled-color: $graphite04;
+$datepicker-disabled-color: $color-default-alt;
 
 .calendar-table .is-today {
   text-decoration: underline;
 }
 
 //Time Picker
-$timepicker-disabled-border-color: $graphite04;
-$timepicker-disabled-color: $graphite04;
+$timepicker-disabled-border-color: $color-default-alt;
+$timepicker-disabled-color: $color-default-alt;
 
 // Color Picker
 $colorpicker-initial-bg-color: $graphite06;
@@ -344,8 +344,8 @@ $switch-unchecked-border-color: $graphite06;
 $switch-unchecked-color: $slate05;
 $switch-unchecked-pressed-bg-color: $slate04;
 $switch-disabled-bg-color: $input-readonly-bg-color;
-$switch-disabled-border-color: $graphite04;
-$switch-disabled-bar-color: $graphite04;
+$switch-disabled-border-color: $color-default-alt;
+$switch-disabled-bar-color: $color-default-alt;
 $switch-disabled-label-color: $disabled-color;
 $switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $color-primary, 0 0 4px 6px rgba(41, 41, 41, 0.3);
 $switch-hover-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -377,13 +377,13 @@ $pager-text-color: $color-primary;
 $pager-selected-color: $font-color-highcontrast;
 $pager-focus-border-color: $input-focus-border-color;
 $pager-hover-color: $font-color-extrahighcontrast;
-$pager-disabled-color: $graphite04;
+$pager-disabled-color: $color-default-alt;
 
 // Slider
 $slider-bg-color: $graphite06;
 $slider-active-bg-color: $color-primary;
 $slider-labels-color: $graphite09;
-$slider-disabled-color: $graphite04;
+$slider-disabled-color: $color-default-alt;
 $slider-disabled-active-bg-color: $graphite06;
 $slider-disabled-labels-color: $graphite05;
 $slider-disabled-handle-color: $graphite06;
@@ -414,7 +414,7 @@ $modal-secondary-color: $graphite09;
 $accordion-bg-color: $graphite01;
 $accordion-border-color: $graphite06;
 $accordion-toplevel-border-color: $slate04;
-$accordion-pane-bg-color: $graphite04;
+$accordion-pane-bg-color: $color-default-alt;
 $accordion-text-color: $graphite09;
 $accordion-text-active-color: $black;
 $accordion-icon-color: $graphite09;
@@ -422,11 +422,11 @@ $accordion-icon-hover-color: $black;
 $accordion-hover-border-color: $black;
 $accordion-hover-text-color: $graphite10;
 
-$accordion-panel-border-color: $graphite04;
+$accordion-panel-border-color: $color-default-alt;
 
 $accordion-alternate-bg-color: $white;
-$accordion-alternate-border-color: $graphite04;
-$accordion-alternate-pane-bg-color: $graphite04;
+$accordion-alternate-border-color: $color-default-alt;
+$accordion-alternate-pane-bg-color: $color-default-alt;
 
 $accordion-inverse-bg-color: $slate08;
 $accordion-inverse-pane-bg-color: $black;
@@ -476,14 +476,14 @@ $rating-hover-color: $color-primary;
 // Tabs
 $tab-text-color: $graphite10;
 $tab-selected-color: $azure09;
-$tab-border-color: $graphite04;
+$tab-border-color: $color-default-alt;
 $tab-hover-color: $font-color-extrahighcontrast;
 
 // Vertical Tabs
 $vertical-tab-text-color: $font-color-extrahighcontrast;
 $vertical-tab-text-hover-color: $font-color-extrahighcontrast;
 $vertical-tab-text-hover-decoration: underline;
-$vertical-tab-bg-hover-color: $graphite04;
+$vertical-tab-bg-hover-color: $color-default-alt;
 $vertical-tab-focus-border-color: $color-primary;
 $vertical-tab-active-text-color: $white;
 $vertical-tab-active-bg-color: $color-primary;
@@ -507,12 +507,12 @@ $datagrid-border-color: $graphite06;
 $datagrid-header-color: #fff;
 $datagrid-header-bg-color: $graphite08;
 $datagrid-nested-header-bg-color: $graphite06;
-$datagrid-nested-header-border-color: $graphite04;
+$datagrid-nested-header-border-color: $color-default-alt;
 $datagrid-header-border-color: $graphite06;
 $datagrid-header-hover-color: $graphite10;
 $datagrid-header-active-color: $graphite08;
 $datagrid-header-checkbox-border-color: $graphite05;
-$datagrid-sort-icon-color: $graphite04;
+$datagrid-sort-icon-color: $color-default-alt;
 $datagrid-sort-icon-sorted-color: $white;
 $datagrid-required-icon-color: $white;
 
@@ -525,20 +525,20 @@ $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(80, 83, 90, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #b3ccdb;
 $datagrid-row-selected-color-dark: #a2bbca;
-$datagrid-row-hover-color: $graphite04;
+$datagrid-row-hover-color: $color-default-alt;
 $datagrid-row-icon-color: $graphite09;
 
 $datagrid-alternate-bg-color: #bdbdbd;
-$datagrid-alternate-row-hover-color: $graphite04;
-$datagrid-list-header-bg-color: $graphite04;
+$datagrid-alternate-row-hover-color: $color-default-alt;
+$datagrid-list-header-bg-color: $color-default-alt;
 
 $datagrid-list-header-focus-border-color: $color-primary;
 $datagrid-list-header-box-shadow: 0 0 4px 1px rgba(80, 83, 90, 0.4);
 $datagrid-list-header-border-color: transparent;
 $datagrid-list-header-color: $graphite10;
-$datagrid-list-header-hover-color: $graphite04;
+$datagrid-list-header-hover-color: $color-default-alt;
 $datagrid-list-row-hover-color: transparent;
-$datagrid-list-sort-icon-color: $graphite04;
+$datagrid-list-sort-icon-color: $color-default-alt;
 $datagrid-list-sort-icon-hover-color: $graphite06;
 $datagrid-header-focus-bg-color: $graphite08;
 $datagrid-header-focus-border-color: $white;
@@ -574,7 +574,7 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
 $tree-selected-color: $black;
-$tree-selected-bg-color: $graphite04;
+$tree-selected-bg-color: $color-default-alt;
 $tree-focus-border-color: $color-primary-alt;
 $tree-active-bg-color: #8fa8b7;
 $tree-icon-color: $graphite09;
@@ -595,7 +595,7 @@ $chart-progressbar-completed-fill: #2f6b0a;
 $chart-progressbar-target-fill: $graphite05;
 $chart-progressbar-primary-fill: $color-primary;
 $chart-progressbar-dark-fill: $graphite08;
-$chart-targeted-achievement-bg-color: $graphite04;
+$chart-targeted-achievement-bg-color: $color-default-alt;
 
 //Timeline
 $timeline-indicator-color: $graphite05;
@@ -608,7 +608,7 @@ $timeline-header-color: $azure09;
 $wizard-default-bg: $body-bg-color;
 $wizard-bar-bg: $graphite06;
 $wizard-color: $graphite09;
-$wizard-disabled-color: $graphite04;
+$wizard-disabled-color: $color-default-alt;
 $wizard-active-color: $color-primary;
 $wizard-active-text-color: $color-primary;
 $wizard-focus-box-shadow: 0 0 0 1px $color-primary-alt;
@@ -632,7 +632,7 @@ $searchfield-context-bg: $graphite01;
 $searchfield-context-alt-bg: $white;
 $searchfield-context-border-color: $graphite03;
 $searchfield-context-box-shadow-color: $graphite03;
-$searchfield-context-icon-color: $graphite04;
+$searchfield-context-icon-color: $color-default-alt;
 $searchfield-context-text-color: $font-color;
 
 $searchfield-card-bg-color: $white;
@@ -668,7 +668,7 @@ $about-text-border-color: $graphite06;
 $about-text-hover-border-color: $black;
 
 // Header Tabs
-$header-tabcontainer-border-color: $graphite04;
+$header-tabcontainer-border-color: $color-default-alt;
 $header-tab-separator: rgba(255, 255, 255, 0.4);
 $header-tab-normal-color: $graphite01;
 $header-tab-hover-color: $inverse-color;
@@ -705,7 +705,7 @@ $composite-tabs-panel-bg-color: $white;
 
 // Splitter
 $splitter-grip-bg-color: $graphite09;
-$splitter-active-bg-color: $graphite04;
+$splitter-active-bg-color: $color-default-alt;
 $splitter-active-grip-bg-color: $black;
 $splitter-box-shadow-color: rgba(37, 120, 169, 0.75);
 
@@ -717,7 +717,7 @@ $step-chart-completed-bg-color: $color-primary;
 $step-chart-totally-completed-bg-color: #80ce4d;
 
 //Swaplist
-$swaplist-bg-color-hover: $graphite04;
+$swaplist-bg-color-hover: $color-default-alt;
 $swaplist-bg-color-selected: $color-primary;
 $swaplist-border-color-focus: $color-primary-alt;
 $swaplist-icon-color: $graphite05;
