@@ -10,6 +10,10 @@ describe('Accordion example-accordion-click-event tests', () => {
     await utils.setPage('/components/accordion/example-accordion-click-event');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should toast diplay when accordion is clicked', async () => {
     const accordionEl = await element.all(by.className('accordion-header')).first();
 
@@ -25,6 +29,10 @@ describe('Accordion example-accordion-panels tests', () => {
     await utils.setPage('/components/accordion/example-accordion-panels');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should accordion have panels', async () => {
     expect(await element(by.className('accordion panel'))).toBeTruthy();
   });
@@ -33,6 +41,10 @@ describe('Accordion example-accordion-panels tests', () => {
 describe('Accordion example-ajax tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/accordion/example-ajax');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
   });
 
   it('Should ajax data is in the headers', async () => {
@@ -51,14 +63,23 @@ describe('Accordion example-disabled tests', () => {
     await utils.setPage('/components/accordion/example-disabled');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should accordion be disabled', async () => {
-    expect(await element(by.className('is-disabled'))).toBeTruthy();
+    expect(await element.all(by.css('.accordion-header.is-disabled')).count()).toEqual(4);
+    expect(await element.all(by.css('.accordion.is-disabled')).count()).toEqual(1);
   });
 });
 
 describe('Accordion example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/accordion/example-index');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
   });
 
   it('Should accordion be displayed', async () => {

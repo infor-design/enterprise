@@ -41,8 +41,12 @@ describe('Calendar index tests', () => {
     await prevButton.click();
     await utils.checkForErrors();
     testDate.setMonth(testDate.getMonth() - 1);
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
 
     expect(monthYear.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+
     expect(await prevButton.getText()).toEqual('Previous Month');
   });
 });
