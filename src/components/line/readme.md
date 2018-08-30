@@ -1,20 +1,29 @@
 ---
 title: Line
 description: This page describes Line.
+demo:
+  pages:
+  - name: Standard Line Chart
+    slug: example-index
+  - name: Labels on Axis
+    slug: example-axis-labels
+  - name: Ticks Adjustment (Less ticks than data points)
+    slug: example-axis-ticks
+  - name: Customize Tooltip
+    slug: example-custom-tooltip
+  - name: Customize Dot Size
+    slug: example-custom-dots
+  - name: Rotate Bottom Labels
+    slug: test-rotate
+  - name: Example showing two line x axis
+    slug: example-two-lines
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
-
-## Configuration Options
-
-1. Line Chart Example [View Example]( ../components/line/example-index)
-2. Labels on Axis [View Example]( ../components/line/example-axis-labels)
-3. Ticks Adjustment (Less ticks than data points) [View Example]( ../components/line/example-axis-ticks)
-4. Customize Tooltip [View Example]( ../components/line/example-custom-tooltip)
-5. Customize Dot Size [View Example]( ../components/line/example-custom-dots)
-6. Set animation speed [View Example]( ../components/line/example-animation)
-7. Rotate Bottom Labels [View Example]( ../components/line/test-rotate)
-8. Example showing Get Selected value [View Example]( ../components/line/example-get-selected)
-9. Example showing Set Selected value [View Example]( ../components/line/example-set-selected)
-10. Example showing two line x axis [View Example]( ../components/line/example-two-lines)
 
 ## Code Example
 
@@ -88,6 +97,10 @@ var dataset = [{
 
 $('#area-example').chart({type: 'line', dataset: dataset});
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

@@ -4,12 +4,19 @@ import { breakpoints } from './breakpoints';
 // jQuery Components
 import './debounced-resize.jquery';
 
+// Utility Name
+const UTIL_NAME = 'environment';
+
 /**
  * @class {Environment}
  */
 const Environment = {
 
   browser: {},
+
+  features: {
+    touch: (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0))
+  },
 
   os: {},
 
@@ -22,6 +29,7 @@ const Environment = {
     $('html').attr('data-sohoxi-version', SOHO_XI_VERSION);
     this.addBrowserClasses();
     this.addGlobalResize();
+    this.addGlobalEvents();
   },
 
   /**
@@ -29,6 +37,7 @@ const Environment = {
    */
   addBrowserClasses() {
     const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const platform = navigator.platform;
     const html = $('html');
     let cssClasses = ''; // User-agent string
 
@@ -44,7 +53,8 @@ const Environment = {
       this.browser.name = 'chrome';
     }
 
-    if (ua.indexOf('Mac OS X') !== -1) {
+    const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
+    if (macosPlatforms.indexOf(platform) > -1 && !/Linux/.test(platform)) {
       cssClasses += 'is-mac ';
       this.os.name = 'Mac OS X';
     }
@@ -101,6 +111,10 @@ const Environment = {
       this.os.name = 'android';
     }
 
+    if (!this.os.name && /Linux/.test(platform)) {
+      this.os.name = 'linux';
+    }
+
     html.addClass(cssClasses);
   },
 
@@ -116,12 +130,121 @@ const Environment = {
 
     // Also detect whenenver a load or orientation change occurs
     $(window).on('orientationchange load', () => breakpoints.compare());
+  },
+
+  /**
+   * Sets up global UI-specific event handlers
+   * @returns {void}
+   */
+  addGlobalEvents() {
+    const self = this;
+
+    this.globalMouseActive = 0;
+    this.globalTouchActive = 0;
+
+    // Detect mouse/touch events on the body to help scrolling detection along
+    $('body')
+      .on(`mousedown.${UTIL_NAME}`, () => {
+        ++this.globalMouseActive;
+      })
+      .on(`mouseup.${UTIL_NAME}`, () => {
+        --this.globalMouseActive;
+      })
+      .on(`touchstart.${UTIL_NAME}`, () => {
+        ++this.globalTouchActive;
+      })
+      .on(`touchend.${UTIL_NAME}`, () => {
+        --this.globalTouchActive;
+      });
+
+    // On iOS, it's possible to scroll the body tag even if there's a `no-scroll` class attached
+    // This listener persists and will prevent scrolling on the body tag in the event of a `no-scroll`
+    // class, only in iOS environments
+    $(window).on(`scroll.${UTIL_NAME}`, (e) => {
+      if (self.os.name !== 'ios' || document.body.className.indexOf('no-scroll') === -1) {
+        return true;
+      }
+
+      // If a mouse button or touch is still active, continue as normal
+      if (this.globalTouchActive || this.globalMouseActive) {
+        return true;
+      }
+
+      e.preventDefault();
+      if (document.body.scrollTop > 0) {
+        document.body.scrollTop = 0;
+      }
+      return false;
+    });
+
+    // Prevent zooming on inputs/textareas' `focusin`/`focusout` events.
+    // Some components like Dropdown have this feature built in on their specified elements.
+    // This particular setup prevents zooming on input fields not tied to a component wrapper.
+    $('body').on(`focusin.${UTIL_NAME}`, 'input, textarea', (e) => {
+      const target = e.target;
+      if (target.className.indexOf('dropdown-search') > -1) {
+        return;
+      }
+
+      if (self.os.name === 'ios') {
+        $('head').triggerHandler('disable-zoom');
+      }
+    }).on(`focusout.${UTIL_NAME}`, 'input, textarea', (e) => {
+      const target = e.target;
+      if (target.className.indexOf('dropdown-search') > -1) {
+        return;
+      }
+
+      if (self.os.name === 'ios') {
+        $('head').triggerHandler('enable-zoom');
+      }
+    });
+  },
+
+  /**
+   * Tears down global UI-specific event handlers
+   * @returns {void}
+   */
+  removeGlobalEvents() {
+    $(window).off(`scroll.${UTIL_NAME}`);
+
+    $('body').off([
+      `focusin.${UTIL_NAME}`,
+      `focusout.${UTIL_NAME}`
+    ].join(' '));
   }
+};
+
+/**
+ * @returns {boolean} whether or not the current browser is IE11
+ */
+Environment.browser.isIE11 = function () {
+  return Environment.browser.name === 'ie' && Environment.browser.version === '11';
+};
+
+/**
+ * @returns {boolean} whether or not the current browser is IE10
+ */
+Environment.browser.isIE10 = function () {
+  return Environment.browser.name === 'ie' && Environment.browser.version === '10';
 };
 
 /**
  * Automatically set up the environment by virtue of including this script
  */
 Environment.set();
+
+/**
+ * Workaround until https://github.com/jquery/jquery/issues/2871 is fixed
+ */
+jQuery.event.special.touchstart = {
+  setup(_, ns, handle) {
+    if (ns.includes('noPreventDefault')) {
+      this.addEventListener('touchstart', handle, { passive: false });
+    } else {
+      this.addEventListener('touchstart', handle, { passive: true });
+    }
+  }
+};
 
 export { Environment };

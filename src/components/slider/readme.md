@@ -1,6 +1,6 @@
 ---
 title: Slider Component
-description: This page describes Slider Component .
+description: This page describes Slider Component.
 demo:
   pages:
   - name: Main Example
@@ -94,6 +94,10 @@ The Slider is fairly complex to make accessible. But generally this can be accom
 - Conditionally use the following ARIA attributes in some situations:
     - `aria-label` - Use in most cases to describe the purpose of the handle (Is it the only one? Is it the lower-value versus the higher handle)
     - `aria-describedby` - When used in conjunction with a [tooltip control](./tooltip), this attribute will be appended to the handle automatically, but in this case the `aria-label` attribute should be removed.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

@@ -6,7 +6,7 @@ demo:
   - name: Org Chart Example
     slug: example-index
   - name: Lazy Loading Example
-    slug: example-lazy-loading
+    slug: example-lazy-load
   - name: Example Paging
     slug: example-paging
   - name: Example Single Manager/Subordinate
@@ -49,6 +49,10 @@ Required template HTML markup:
 
 - This component is lacking accessibility
 - Needs, Keyboard, Aria Added or an Alternate view
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

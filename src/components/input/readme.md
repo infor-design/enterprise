@@ -14,7 +14,7 @@ demo:
   - name: Input Widths (Sm, Md, Lg)
     slug: example-sizes
   - name: Text Area
-    slug: textarea
+    slug: example-textarea
   - name: Clearable Input (With an X)
     slug: example-clearable
   - name: Input with Right Click Context Menu
@@ -89,6 +89,10 @@ A standard Text Input is a basic input element with `type="text"`. Password type
 
 - Make sure the input has a matching `<label>` which is meaningful
 - Add `aria-required` for required elements
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

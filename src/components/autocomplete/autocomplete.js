@@ -2,10 +2,11 @@
 
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { ListFilter } from '../listfilter/listfilter';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../../utils/highlight';
@@ -159,6 +160,7 @@ Autocomplete.prototype = {
     const data = this.element.attr('data-autocomplete');
     if (data && data !== 'source') {
       this.settings.source = data;
+      this.element.removeAttr('data-autocomplete');
     }
 
     const listFilterSettings = {
@@ -284,6 +286,7 @@ Autocomplete.prototype = {
       attachToBody: true,
       autoFocus: false,
       returnFocus: false,
+      triggerSelect: false,
       placementOpts: {
         parent: this.element,
         callback: afterPlaceCallback
@@ -293,20 +296,13 @@ Autocomplete.prototype = {
     filterResult.forEach((dataset) => {
       if (typeof Tmpl !== 'undefined') {
         const renderedTmpl = Tmpl.compile(self.tmpl, dataset);
-        self.list.append($.sanitizeHTML(renderedTmpl));
-      } else {
-        const listItem = $('<li role="listitem"></li>');
-        listItem.attr('id', dataset.listItemId);
-        listItem.attr('data-index', dataset.index);
-        listItem.attr('data-value', dataset.value);
-        listItem.append(`<a href="#" tabindex="-1"><span>${dataset.label}</span></a>`);
-        self.list.append($.sanitizeHTML(listItem));
+        DOM.append(self.list, renderedTmpl, '*');
       }
     });
 
     this.element.addClass('is-open')
       .popupmenu(popupOpts)
-      .on('close.autocomplete', () => {
+      .one('close.autocomplete', () => {
         self.closeList(true);
       });
 
@@ -328,16 +324,16 @@ Autocomplete.prototype = {
     this.element.trigger('populated', [filterResult]).focus();
 
     // Overrides the 'click' listener attached by the Popupmenu plugin
-    self.list.off('click touchend')
-      .on('touchend.autocomplete click.autocomplete', 'a', (e) => {
+    self.list
+      .on(`touchend.${COMPONENT_NAME} click.${COMPONENT_NAME}`, 'a', (e) => {
         self.select(e);
       })
-      .off('focusout.autocomplete').on('focusout.autocomplete', () => {
+      .on(`focusout.${COMPONENT_NAME}`, () => {
         self.checkActiveElement();
       });
 
     // Highlight anchors on focus
-    const all = self.list.find('a').on('focus.autocomplete touchend.autocomplete', function () {
+    const all = self.list.find('a').on(`focus.${COMPONENT_NAME} touchend.${COMPONENT_NAME}`, function () {
       self.highlight($(this), all);
     });
 
@@ -372,11 +368,18 @@ Autocomplete.prototype = {
       return;
     }
 
+    // Remove events
+    this.list.off([
+      `click.${COMPONENT_NAME}`,
+      `touchend.${COMPONENT_NAME}`,
+      `focusout.${COMPONENT_NAME}`
+    ].join(' '));
+    this.list.find('a').off(`focus.${COMPONENT_NAME} touchend.${COMPONENT_NAME}`);
+
     if (!dontClosePopup) {
       popup.close();
     }
 
-    this.currentDataSet = null;
     this.element.trigger('listclose');
     $('#autocomplete-list').parent('.popupmenu-wrapper').remove();
     $('#autocomplete-list').remove();
@@ -533,7 +536,7 @@ Autocomplete.prototype = {
       if (deferredStatus === false) {
         return dfd.reject(searchTerm);
       }
-      return dfd.resolve(searchTerm, response);
+      return dfd.resolve(xssUtils.ensureAlphaNumeric(searchTerm), response);
     }
 
     this.loadingTimeout = setTimeout(() => {
@@ -705,7 +708,7 @@ Autocomplete.prototype = {
     this.noSelect = true;
 
     // Update the data for the event
-    ret.label = stringUtils.stripHTML(ret.label);
+    ret.label = xssUtils.stripHTML(ret.label);
 
     // Add these elements for key down vs click consistency
     if (!ret.highlightTarget) {
@@ -781,7 +784,16 @@ Autocomplete.prototype = {
       popup.destroy();
     }
 
-    this.element.off('keypress.autocomplete focus.autocomplete requestend.autocomplete updated.autocomplete');
+    this.element.off([
+      `focus.${COMPONENT_NAME}`,
+      `focusout.${COMPONENT_NAME}`,
+      `input.${COMPONENT_NAME}`,
+      `keydown.${COMPONENT_NAME}`,
+      `listopen.${COMPONENT_NAME}`,
+      `requestend.${COMPONENT_NAME}`,
+      `resetfilter.${COMPONENT_NAME}`,
+      `updated.${COMPONENT_NAME}`
+    ].join(' '));
     return this;
   },
 
@@ -803,21 +815,20 @@ Autocomplete.prototype = {
     // similar code as dropdown but close enough to be dry
     const self = this;
 
-    this.element.off('updated.autocomplete').on('updated.autocomplete', () => {
-      self.updated();
-    }).off('keydown.autocomplete').on('keydown.autocomplete', (e) => {
-      self.handleAutocompleteKeydown(e);
-    })
-      .off('input.autocomplete')
-      .on('input.autocomplete', (e) => {
+    this.element
+      .on(`updated.${COMPONENT_NAME}`, () => {
+        self.updated();
+      })
+      .on(`keydown.${COMPONENT_NAME}`, (e) => {
+        self.handleAutocompleteKeydown(e);
+      })
+      .on(`input.${COMPONENT_NAME}`, (e) => {
         self.handleAutocompleteInput(e);
       })
-      .off('focus.autocomplete')
-      .on('focus.autocomplete', () => {
+      .on(`focus.${COMPONENT_NAME}`, () => {
         self.handleAutocompleteFocus();
       })
-      .off('focusout.autocomplete')
-      .on('focusout.autocomplete', () => {
+      .on(`focusout.${COMPONENT_NAME}`, () => {
         self.checkActiveElement();
       })
       /**
@@ -827,8 +838,7 @@ Autocomplete.prototype = {
       * @param {object} event - The jquery event object
       * @param {object} ui - The dialog object
       */
-      .off('listopen.autocomplete')
-      .on('listopen.autocomplete', () => {
+      .on(`listopen.${COMPONENT_NAME}`, () => {
         self.handleAfterListOpen();
       })
       /**
@@ -838,8 +848,7 @@ Autocomplete.prototype = {
       * @memberof Autocomplete
       * @param {object} event - The jquery event object
       */
-      .off('resetfilter.autocomplete')
-      .on('resetfilter.autocomplete', () => {
+      .on(`resetfilter.${COMPONENT_NAME}`, () => {
         self.resetFilters();
       });
   }

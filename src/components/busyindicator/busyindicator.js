@@ -220,7 +220,7 @@ BusyIndicator.prototype = {
 
   /**
    * Removes the appended markup and hides any trace of the indicator.
-   * @param {boolean} fromEvent Designates the close is comming from an event (internal)
+   * @param {boolean} fromEvent Designates the close is coming from an event (internal)
    * @returns {void}
    */
   close(fromEvent) {

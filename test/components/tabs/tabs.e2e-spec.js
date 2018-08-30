@@ -24,6 +24,21 @@ describe('Tabs click example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      const tabsEl = await element(by.id('tabs-normal'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-init')).toEqual(0);
+    });
+  }
+
   if (!utils.isIE()) {
     xit('Should be accessible on init with no WCAG 2AA violations on example-index', async () => {
       const res = await axePageObjects(browser.params.theme);
@@ -98,6 +113,21 @@ describe('Tabs click example-counts tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-counts', async () => {
+      const tabsEl = await element(by.id('tabs-counts'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-counts')).toEqual(0);
+    });
+  }
+
   if (!utils.isIE()) {
     xit('Should be accessible on init with no WCAG 2AA violations on example-index', async () => {
       const res = await axePageObjects(browser.params.theme);
@@ -140,6 +170,10 @@ describe('Tabs keyboard example-index tests', () => {
     await element(by.css('body')).sendKeys(protractor.Key.TAB);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-focused')), config.waitsFor));
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
   });
 
   if (utils.isChrome()) {
@@ -237,6 +271,21 @@ describe('Tabs click example-add-tab button tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-add-tab-button', async () => {
+      const tabsEl = await element(by.id('add-capable-tabs'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-add-tab')).toEqual(0);
+    });
+  }
+
   if (!utils.isIE()) {
     xit('Should be accessible on init with no WCAG 2AA violations on example-add-tab-button', async () => {
       const res = await axePageObjects(browser.params.theme);
@@ -331,6 +380,21 @@ describe('Tabs click example-dropdown-tabs tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-dropdown-tabs', async () => {
+      const tabsEl = await element(by.id('tabs-dropdown'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-dropdown')).toEqual(0);
+    });
+  }
+
   it('Should open dropdown tab', async () => {
     await element.all(by.className('tab')).get(1).click();
 
@@ -359,6 +423,10 @@ describe('Tabs click example-url-hash-change tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should correctly updated url on tab click', async () => {
     await element.all(by.className('tab')).get(1).click();
     await browser.driver
@@ -371,5 +439,55 @@ describe('Tabs click example-url-hash-change tests', () => {
       .wait(protractor.ExpectedConditions.urlContains('tab-number-four'), config.waitsFor);
 
     expect(await element.all(by.className('tab')).get(3).getAttribute('class')).toContain('is-selected');
+  });
+});
+
+describe('Tabs ajax as source tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/test-ajax-source-as-string');
+    const tabsContainerEl = await element(by.id('ajaxified-tabs'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to activate tabs', async () => {
+    expect(await element(by.id('tab-one')).getAttribute('innerHTML')).not.toBe('');
+
+    await element.all(by.className('tab')).get(2).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#tab-three.is-visible'))), config.waitsFor);
+
+    expect(await element(by.id('tab-three')).getAttribute('innerHTML')).not.toBe('');
+  });
+});
+
+describe('Tabs ajax as href tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/test-ajax-source-as-tab-href');
+    const tabsContainerEl = await element(by.id('ajaxified-tabs-tab-1'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  xit('Should be able to activate href tabs', async () => { //eslint-disable-line
+    // Cant get this test to work on CI anymore
+    expect(await element(by.id('ajaxified-tabs-tab-1')).getAttribute('innerHTML')).not.toBe('');
+
+    await element.all(by.id('example-tab-two')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#ajaxified-tabs-tab-2.is-visible'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
+
+    await utils.checkForErrors();
+
+    expect(await element(by.id('ajaxified-tabs-tab-2')).getAttribute('innerHTML')).not.toBe('');
   });
 });

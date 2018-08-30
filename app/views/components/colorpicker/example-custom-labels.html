@@ -1,15 +1,26 @@
 <div class="row">
   <div class="twelve columns">
+    <p>Pick from first three color swatch</p><br>
+  </div>
+</div>
 
+<div class="row">
+  <div class="twelve columns">
     <div class="field">
-      <label for="background-color">Color Picker</label>
-      <input class="colorpicker" id="background-color" type="text" value="#488421"
-        data-options="{'uppercase': false, 'colors': [
+      <label for="custom-color">Color Picker (custom color)</label>
+      <input class="colorpicker" id="custom-color" type="text" data-options="{'uppercase': false, 'colors': [
           {label: 'Grape', value: '2578a9', number: '10'},
           {label: 'Blueberry', value: '368ac0', number: '08'},
           {label: 'Banana', value: 'efa836', number: '09'}
         ]}" />
     </div>
-
+    <div class="field">
+      <label for="custom-label">Color Picker (custom label)</label>
+      <input class="colorpicker" id="custom-label" type="text" data-options="{'uppercase': false, 'showLabel': true, 'colors': [
+          {label: 'Grape', value: '2578a9', number: '10'},
+          {label: 'Blueberry', value: '368ac0', number: '08'},
+          {label: 'Banana', value: 'efa836', number: '09'}
+        ]}" />
+    </div>
   </div>
 </div>

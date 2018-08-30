@@ -13,7 +13,7 @@
  *   - JSON files in dist/, zips them, and POSTs them to the specified
  *     ids-website server
  *
- * @example `node ./build/deploy-documentation.js`
+ * @example `node ./scripts/deploy-documentation.js`
  *
  * Flags:
  * --dry-run       - Run the script, skipping POSTing to the api
@@ -128,10 +128,17 @@ hbsRegistrar(handlebars, {
 // -------------------------------------
 //   Main
 // -------------------------------------
-logTaskStart('deploy');
+logTaskStart(`deploying ${packageJson.version}`);
 
 if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
   deployTo = argv.site;
+}
+
+// Failsafe to prevent accidentally uploading dev/beta/rc documentation to
+// production as those semver's will have a dash in them (-dev, -beta, -rc)
+if (packageJson.version.includes('-') && deployTo === 'prod') {
+  console.error(chalk.red('Error!'), `You can NOT deploy documentation for a non-final version to "prod".`);
+  process.exit(0);
 }
 
 const setupPromises = [
@@ -191,7 +198,7 @@ function compileComponents() {
     let compName = '';
 
     glob(`${paths.components}/*/`, (err, componentDirs) => {
-      componentStats.total = componentDirs.length;
+      componentStats.total += componentDirs.length;
 
       componentDirs.forEach(compDir => {
         compName = deriveComponentName(compDir);
@@ -239,6 +246,8 @@ function compileSupportingDocs() {
     const promises = [];
 
     glob(`${paths.docs}/*.md`, (err, files) => {
+      componentStats.total += files.length;
+
       files.forEach(filePath => {
         const fileName = path.basename(filePath, '.md').toLowerCase();
 
@@ -433,7 +442,7 @@ function postZippedBundle() {
 
   const form = new FormData();
   form.append('file', fs.createReadStream(`${paths.idsWebsite.dist}.zip`));
-  form.append('root_path', packageJson.version);
+  form.append('root_path', `ids-enterprise/${packageJson.version}`);
   form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : '');
   form.submit(serverURIs[deployTo], (err, res) => {
     logTaskEnd(`attempt publish to server "${deployTo}"`);
@@ -613,7 +622,7 @@ function zipAndDeploy() {
   // listen for all archive data to be written
   // 'close' event is fired only when a file descriptor is involved
   output.on('close', () => {
-    logTaskAction(`Zipped ${archive.pointer()} total bytes`);
+    logTaskAction('Zipped', `${archive.pointer()} total bytes`);
     logTaskEnd('zip json files');
 
     if (argv.dryRun) {

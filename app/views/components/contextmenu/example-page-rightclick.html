@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Context Menu Example</h2>
+    <p>Right-click (Long-press on Mobile) anywhere on the page to open a context menu</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <ul id="action-popupmenu" data-init="false" class="popupmenu">
+      <li><a id="cut" href="#">Cut</a></li>
+      <li><a id="copy" href="#">Copy</a></li>
+      <li><a id="paste" href="#">Paste</a></li>
+      <li>
+        <a id="paste-special" href="#">Paste Special</a>
+        <ul class="popupmenu">
+          <li><a id="sub-menu-1" href="#">Sub Menu 1</a></li>
+          <li><a id="sub-menu-2" href="#">Sub Menu 2</a></li>
+          <li class="separator"></li>
+          <li>
+            <a id="settings-1" href="#">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-settings"></use>
+              </svg>
+              Settings
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="separator"></li>
+      <li><a href="#">Name and project range</a></li>
+      <li class="is-disabled"><a id="insert-comment" href="#" disabled>Insert comment</a></li>
+      <li class="is-disabled"><a id="insert-notes" href="#" disabled>Insert note</a></li>
+      <li><a id="clear-notes" href="#">Clear notes</a></li>
+      <li class="separator single-selectable-section"></li>
+      <li class="heading">Additional Options</li>
+      <li class="is-selectable is-checked"><a id="conditonal-format" href="#">Conditional formatting</a></li>
+      <li class="is-selectable"><a href="#" id="data-validation">Data validation</a></li>
+      <li class="separator"></li>
+      <li>
+        <a id="settings-2" href="#">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          Settings
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').popupmenu({
+    menu: 'action-popupmenu',
+    trigger: 'rightClick'
+  });
+</script>

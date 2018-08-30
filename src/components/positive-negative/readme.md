@@ -1,6 +1,18 @@
 ---
 title: Positive-Negative Chart
 description: This page describes Positive-Negative Chart.
+demo:
+  pages:
+  - name: Standard Positive/Negative Chart
+    slug: example-index
+  - name: Example showing color patterns
+    slug: example-patterns
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
 
 ## Configuration Options
@@ -103,6 +115,10 @@ $('#positive-negative-example').chart({
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

@@ -1,11 +1,11 @@
 ---
 title: Radar Chart
 description: This page describes Radar Chart.
+demo:
+  pages:
+  - name: Standard Radar Chart
+    slug: example-index
 ---
-
-## Configuration Options
-
-1. Radar Chart Main Example [View Example]( ../components/radar/example-index)
 
 ## Code Example
 
@@ -53,6 +53,10 @@ The contrast and actual colors can be a concern for visibility impaired and colo
 
 You can control the size of the radar chart by setting the size of the parent element the radar chart lives in.
 This may include possibly using an inset margin in some cases.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

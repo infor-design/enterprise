@@ -1,14 +1,13 @@
 ---
 title: Personalize
 description: This page describes Personalize.
+demo:
+  pages:
+  - name: Themes Example
+    slug: example-index?colors=800000
+  - name: Property Page
+    slug: example-settings-page
 ---
-
-## Configuration Options
-
-1. Themes Example [View Example]( ../components/personalize/example-index?colors=800000)
-2. Module Tabs [View Example]( ../patterns/module-tabs?colors=800000)
-3. Sub Headers/Header [View Example](../patterns/builder?colors=800000)
-4. Property Page  [View Example]( ../components/personalize/example-settings-page)
 
 ## Code Example
 
@@ -42,3 +41,7 @@ For reduction of FOUC (flash of unstyled content) run the personalize logic befo
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. Choose colors that pass contrast guidlines. Future we plan on adding a checker to the settings dialog.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

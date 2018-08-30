@@ -57,15 +57,21 @@ module.exports = function (app, defaults) {
       logger('info', `Using the ${req.query.font} font`);
     }
 
-    if (req.query.csp) {
-      res.opts.csp = req.query.csp === 'true';
-      res.opts.nonce = Math.random().toString(12).replace(/[^a-z0-9]+/g, '').substr(0, 8);
-    }
+    let useLiveReload = false;
+    process.argv.forEach((val) => {
+      if (val === '--livereload') {
+        useLiveReload = true;
+      }
+    });
 
     // Disable live reload for IE
-
-    if (req.hostname === '10.0.2.2') {
+    if (req.hostname === '10.0.2.2' && useLiveReload) {
       res.opts.enableLiveReloadVM = true;
+      res.opts.enableLiveReload = false;
+    }
+
+    if (!useLiveReload) {
+      res.opts.enableLiveReloadVM = false;
       res.opts.enableLiveReload = false;
     }
 

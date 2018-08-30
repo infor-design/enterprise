@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { DOM } from '../../utils/dom';
@@ -26,9 +27,11 @@ const COMPONENT_NAME = 'popupmenu';
  * @param {function} [settings.beforeOpen]  Callback that can be used for populating the contents of the menu.
  * @param {string} [settings.ariaListbox=false]   Switches aria to use listbox construct instead of menu construct (internal).
  * @param {string} [settings.eventObj]  Can pass in the event object so you can do a right click with immediate.
+ * @param {string} [settings.triggerSelect]  If false select event will not be triggered.
  * @param {string} [settings.showArrow]  If true you can explicitly set an arrow on the menu.
- * @param {string} [settings.returnFocus]  If set to false, focus will not be
-  returned to the calling element. It usually should be for accessibility purposes.
+ * @param {boolean|function} [settings.returnFocus]  If set to false, focus will not be
+  returned to the calling element. Can also be defined as a callback that can determine how
+  to return focus.  It usually should be for accessibility purposes.
  * @param {object} [settings.placementOpts=new PlacementObject({
    containerOffsetX: 10,
    containerOffsetY: 10,
@@ -49,6 +52,7 @@ const POPUPMENU_DEFAULTS = {
   eventObj: undefined,
   returnFocus: true,
   showArrow: null,
+  triggerSelect: true,
   placementOpts: new PlacementObject({
     containerOffsetX: 10,
     containerOffsetY: 10,
@@ -64,7 +68,6 @@ const POPUPMENU_DEFAULTS = {
 function PopupMenu(element, settings) {
   this.settings = utils.mergeSettings(element, settings, POPUPMENU_DEFAULTS);
   this.element = $(element);
-  this.isOldIe = $('html').is('.ie11, .ie10, .ie9');
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -99,7 +102,7 @@ PopupMenu.prototype = {
    * @returns {boolean} whether or not the reading/writing direction is RTL
    */
   isRTL() {
-    return $('html').attr('dir') === 'rtl';
+    return env.rtl;
   },
 
   /**
@@ -267,7 +270,7 @@ PopupMenu.prototype = {
       const audibleSpanId = 'popupmenu-f10-label';
       if ($(`#${audibleSpanId}`).length === 0) {
         this.element.after(`
-          <span style="display:none;" id="${audibleSpanId}">
+          <span class="audible" id="${audibleSpanId}">
             ${Locale.translate('PressShiftF10')}
           </span>
         `);
@@ -550,7 +553,7 @@ PopupMenu.prototype = {
 
     const lis = contextElement.find('li:not(.heading):not(.separator)');
     const menuClassName = contextElement[0].className;
-    const isTranslatable = DOM.classNameHas(menuClassName, 'isTranslatable');
+    const isTranslatable = DOM.hasClassName(menuClassName, 'isTranslatable');
     let hasIcons = false;
 
     lis.each((i, li) => {
@@ -594,7 +597,7 @@ PopupMenu.prototype = {
           submenu = $(submenuWrapper).children('ul')[0];
           submenu.classList.add('popupmenu');
         }
-        if (DOM.classNameHas(li.className, 'submenu')) {
+        if (DOM.hasClassName(li.className, 'submenu')) {
           // Add a span
           if (!span) {
             a.innerHTML = `<span>${a.innerHTML}</span>`;
@@ -610,13 +613,13 @@ PopupMenu.prototype = {
         }
 
         // is-checked
-        if (DOM.classNameHas(li.className, 'is-checked')) {
+        if (DOM.hasClassName(li.className, 'is-checked')) {
           a.setAttribute('role', 'menuitemcheckbox');
           a.setAttribute('aria-checked', true);
         }
 
         // is-not-checked
-        if (DOM.classNameHas(li.className, 'is-not-checked')) {
+        if (DOM.hasClassName(li.className, 'is-not-checked')) {
           li.className = li.className.replace('is-not-checked', '');
           a.setAttribute('role', 'menuitemcheckbox');
           a.removeAttribute('aria-checked');
@@ -753,13 +756,18 @@ PopupMenu.prototype = {
       e.preventDefault();
 
       if (self.keydownThenClick) {
-        self.keydownThenClick = undefined;
+        delete self.keydownThenClick;
         return;
       }
 
       const btn = isLeftClick === true ? 0 : 2;
       if (e.button > btn || self.element.is(':disabled')) {
         return;
+      }
+
+      const allowedOS = ['android', 'ios'];
+      if (allowedOS.indexOf(env.os.name) > -1) {
+        self.holdingDownClick = true;
       }
 
       doOpen(e);
@@ -777,11 +785,35 @@ PopupMenu.prototype = {
       // Right-Click activation
       if (!leftClick) {
         this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
-        this.element
-          .on('contextmenu.popupmenu', (e) => {
-            disableBrowserContextMenu(e);
-            contextMenuHandler(e);
-          });
+
+        const disallowedOS = ['android', 'ios'];
+        if (disallowedOS.indexOf(env.os.name) === -1) {
+          // Normal desktop operation
+          this.element
+            .on('contextmenu.popupmenu', (e) => {
+              disableBrowserContextMenu(e);
+              contextMenuHandler(e);
+            });
+        } else {
+          // Touch-based operation on a mobile device
+          this.element
+            .on('touchstart.popupmenu', (e) => {
+              // iOS needs this prevented to prevent its own longpress feature in Safari
+              if (env.os.name === 'ios') {
+                e.preventDefault();
+              }
+              $(e.target)
+                .addClass('longpress-target');
+            })
+            .on('touchend.popupmenu', (e) => {
+              $(e.target)
+                .removeClass('longpress-target');
+            })
+            .on('longpress.popupmenu', (e, originalE) => {
+              self.openedWithTouch = true;
+              contextMenuHandler(originalE);
+            });
+        }
       }
     }
 
@@ -812,19 +844,6 @@ PopupMenu.prototype = {
         e.stopPropagation();
         self.updated(settings);
       });
-
-    // Media Query Listener to detect a menu closing on mobile devices that change orientation.
-    if (window.matchMedia) {
-      this.matchMedia = window.matchMedia('(orientation: landscape)');
-      this.mediaQueryListener = function () {
-        // Match every time.
-        if (!self.menu.hasClass('is-open')) {
-          return;
-        }
-        self.close();
-      };
-      this.matchMedia.addListener(this.mediaQueryListener);
-    }
   },
 
   handleKeys() {
@@ -1128,7 +1147,7 @@ PopupMenu.prototype = {
     // Trigger a selected event containing the anchor that was selected
     // If an event object is not passed to `handleItemClick()`, assume it was due to this
     // event being triggered already, making it not necessary to re-trigger it.
-    if (e) {
+    if (e && this.settings.triggerSelect) {
       if (selectionResult.length === 1) {
         selectionResult.push(undefined);
       }
@@ -1228,14 +1247,18 @@ PopupMenu.prototype = {
       return {};
     }
 
-    if (e.pageX || e.pageY) {
+    if (e.changedTouches) {
+      const touch = e.changedTouches[0];
+      x = touch.pageX;
+      y = touch.pageY;
+    } else if (e.pageX || e.pageY) {
       x = e.pageX;
       y = e.pageY;
     } else if (e.clientX || e.clientY) {
       x = e.clientX + document.body.scrollLeft +
-                         document.documentElement.scrollLeft;
+        document.documentElement.scrollLeft;
       y = e.clientY + document.body.scrollTop +
-                         document.documentElement.scrollTop;
+        document.documentElement.scrollTop;
     }
 
     return {
@@ -1434,6 +1457,10 @@ PopupMenu.prototype = {
     // Use a different menu, if applicable
     if (DOM.isElement(contextElement) && $(contextElement).is('.popupmenu, .submenu')) {
       targetMenu = $(contextElement);
+      // Skip calling external source if submenu is already open
+      if (contextElement.hasClass('is-open')) {
+        return;
+      }
     }
 
     const response = function (content) {
@@ -1484,7 +1511,14 @@ PopupMenu.prototype = {
     this.settings.beforeOpen(response, callbackOpts);
   },
 
-  open(e, ajaxReturn) {
+  /**
+   * Opens the popupmenu, including repopulating data and setting up visual delays, if necessary.
+   * @param {jQuery.Event} e the event that caused the menu to open
+   * @param {boolean} ajaxReturn set to true if the open routine should not include a source call
+   * @param {boolean} useDelay set to true if the menu should open on a delay (used in mobile environments where a software keybord is present)
+   * @returns {void}
+   */
+  open(e, ajaxReturn, useDelay) {
     const self = this;
     /**
      * Fires before open.
@@ -1504,6 +1538,16 @@ PopupMenu.prototype = {
       canOpen = this.callSource(e, true);
 
       if (this.settings.beforeOpen) {
+        return;
+      }
+    }
+
+    // If there's no explicit run of this method without this flag, setup a delay and re-run the open method
+    if (!useDelay) {
+      if (env.os.name === 'ios') {
+        setTimeout(() => {
+          self.open(e, ajaxReturn, true);
+        }, 400);
         return;
       }
     }
@@ -1565,6 +1609,11 @@ PopupMenu.prototype = {
           return;
         }
 
+        if (self.holdingDownClick) {
+          delete self.holdingDownClick;
+          return;
+        }
+
         // Click functionality will toggle the menu - otherwise it closes and opens
         if ($(thisE.target).is(self.element)) {
           return;
@@ -1578,7 +1627,7 @@ PopupMenu.prototype = {
       // in desktop environments, close the list on viewport resize
       if (window.orientation === undefined) {
         $('body').on('resize.popupmenu', () => {
-          self.close();
+          self.handleCloseEvent();
         });
       }
 
@@ -1599,12 +1648,6 @@ PopupMenu.prototype = {
        * @property {object} this menu instance
        */
       self.element.triggerHandler('open', [self.menu]);
-
-      if (self.settings.trigger === 'rightClick') {
-        self.element.on('click.popupmenu touchend.popupmenu', () => {
-          self.close();
-        });
-      }
     }, 300);
 
     // Hide on iFrame Clicks - only works if on same domain
@@ -1688,6 +1731,19 @@ PopupMenu.prototype = {
   },
 
   /**
+   * Only allows a menu to close if a key is no longer being pressed
+   * @private
+   * @returns {void}
+   */
+  handleCloseEvent() {
+    if (this.holdingDownClick) {
+      return;
+    }
+
+    this.close();
+  },
+
+  /**
    * Opens a top-level menu item's submenu, if applicable
    * @private
    * @param {jQuery[]} li the list item that needs to be opened.
@@ -1696,7 +1752,7 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   openSubmenu(li, ajaxReturn) {
-    if (DOM.classNameHas(li[0].className, 'is-disabled') || li[0].disabled) {
+    if (DOM.hasClassName(li[0].className, 'is-disabled') || li[0].disabled) {
       return;
     }
 
@@ -1949,10 +2005,6 @@ PopupMenu.prototype = {
 
     this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
 
-    if (this.settings.trigger === 'rightClick') {
-      this.element.off('click.popupmenu touchend.popupmenu');
-    }
-
     $('iframe').each(function () {
       const frame = $(this);
       try {
@@ -1978,7 +2030,6 @@ PopupMenu.prototype = {
       return;
     }
 
-    const self = this;
     const wrapper = this.menu.parent('.popupmenu-wrapper');
     const menu = this.menu.find('.popupmenu');
 
@@ -1994,7 +2045,13 @@ PopupMenu.prototype = {
       wrapper[0].style.width = '';
     }
 
-    this.menu.find('.submenu').off('mouseenter mouseleave').removeClass('is-submenu-open');
+    this.menu.find('.submenu')
+      .off([
+        'mouseenter.popupmenu',
+        'mouseleave.popupmenu'
+      ].join(' '))
+      .removeClass('is-submenu-open');
+
     if (menu[0]) {
       menu[0].style.left = '';
       menu[0].style.top = '';
@@ -2005,8 +2062,23 @@ PopupMenu.prototype = {
     this.menu.find('.is-focused').removeClass('is-focused');
 
     // Close all events
-    $(document).off(`keydown.popupmenu.${this.id} click.popupmenu.${this.id} mousemove.popupmenu.${this.id}`);
-    this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
+    $(document).off([
+      `keydown.popupmenu.${this.id}`,
+      `click.popupmenu.${this.id}`,
+      `mousemove.popupmenu.${this.id}`,
+      `touchend.popupmenu.${self.id}`
+    ].join(' '));
+
+    this.menu.off([
+      'click.popupmenu',
+      'touchend.popupmenu',
+      'touchcancel.popupmenu',
+      'mouseenter.popupmenu',
+      'mouseleave.popupmenu'].join(' '));
+
+    // Get rid of internal flags that check for how the menu was opened
+    delete this.keydownThenClick;
+    delete this.holdingDownClick;
 
     /**
      * Fires when close.
@@ -2023,13 +2095,28 @@ PopupMenu.prototype = {
       this.destroy();
     }
 
-    if (noFocus) {
+    // On text input targets, don't refocus the input if the opening event was called by a touch
+    if (this.element[0].tagName === 'INPUT' && this.openedWithTouch) {
+      this.element.removeClass('longpress-target');
+      delete this.openedWithTouch;
       return;
     }
 
-    if (this.settings.returnFocus) {
-      self.element.removeClass('hide-focus').focus();
+    delete this.openedWithTouch;
+
+    if (noFocus || !this.settings.returnFocus || env.features.touch) {
+      return;
     }
+
+    if (typeof this.settings.returnFocus === 'function') {
+      this.settings.returnFocus(this, {
+        triggerElement: this.element[0],
+        menuElement: this.menu[0]
+      });
+      return;
+    }
+
+    this.element.focus();
   },
 
   /**
@@ -2094,10 +2181,6 @@ PopupMenu.prototype = {
       delete self.wrapperPlace;
     }
     wrapper.off().remove();
-
-    if (this.matchMedia) {
-      this.matchMedia.removeListener(this.mediaQueryListener);
-    }
 
     if (this.menu[0]) {
       $.removeData(this.menu[0], 'trigger');

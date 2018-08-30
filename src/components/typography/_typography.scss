@@ -293,9 +293,11 @@ small,
   text-align: left;
 }
 
+// scss-lint:disable ImportantRule
 .align-text-right {
-  text-align: right;
+  text-align: right !important;
 }
+// scss-lint:disable ImportantRule
 
 .align-text-enter, //typo backwards compat
 .align-text-center {
@@ -309,6 +311,10 @@ small,
 .text-uppercase,
 .uppercase-text {
   text-transform: uppercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
 }
 
 // Flexible Field alignment
@@ -332,6 +338,9 @@ small,
 
   .data-description {
     flex-basis: auto;
+    line-height: 34px;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overflow: auto;
     white-space: nowrap;
   }
 
@@ -362,6 +371,14 @@ small,
 // Label + Data Label
 .label + .data {
   color: $font-color-extrahighcontrast;
+}
+
+// Specifically set Firefox's line-height to be base-16.
+.is-firefox {
+  input,
+  textarea {
+    line-height: 16px;
+  }
 }
 
 //RTL Styles

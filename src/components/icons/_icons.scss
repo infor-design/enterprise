@@ -58,6 +58,8 @@ svg.icon-dirty,
   }
 
   .icon-confirm {
+    height: 15px;
+    margin-top: -2px;
     position: relative;
     right: auto;
     top: auto;
@@ -390,7 +392,7 @@ svg.icon-dirty {
     width: 32px;
 
     span:not(.audible) {
-      background-color: $tertiary-btn-color;
+      background-color: $button-link-text-color;
     }
   }
 }
@@ -564,6 +566,11 @@ svg.icon-dirty {
 //RTL Styles
 html[dir='rtl'] {
   .field {
+    .icon + span {
+      padding-left: 0;
+      padding-right: 5px;
+    }
+
     .icon-error,
     .icon-confirm,
     .icon-alert,

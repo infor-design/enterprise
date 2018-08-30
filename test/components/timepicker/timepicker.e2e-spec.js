@@ -14,6 +14,22 @@ describe('Timepicker example-index tests', () => {
     await utils.setPage('/components/timepicker/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      const timepickerSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(timepickerSection), config.waitsFor);
+      await element(by.css('.timepicker + .icon')).click();
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(timepickerSection, 'timepicker-open')).toEqual(0);
+    });
+  }
+
   it('Should open popup on icon click', async () => {
     await element(by.css('.timepicker + .icon')).click();
 
@@ -184,28 +200,28 @@ describe('Timepicker Intervals tests', () => {
     const timepickerEl = await element(by.id('time-intervals'));
     await element(by.css('.timepicker + .icon')).click();
     let dropdownEl = await element(by.css(ddSelector('hours')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownEl.click();
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
 
-    expect(await dropdownEl.getText()).toEqual('3');
+    expect(await dropdownEl.getText()).toEqual('2');
     dropdownEl = await element(by.css(ddSelector('minutes')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownEl.click();
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
 
-    expect(await dropdownEl.getText()).toEqual('20');
+    expect(await dropdownEl.getText()).toEqual('10');
     dropdownEl = await element(by.css(ddSelector('period')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
+    await dropdownEl.click();
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
 
     expect(await dropdownEl.getText()).toEqual('PM');
     await element(by.css('.set-time')).sendKeys(protractor.Key.SPACE);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(element(by.id('dropdown-list'))), config.waitsFor);
 
-    expect(await timepickerEl.getAttribute('value')).toEqual('3:20 PM');
+    expect(await timepickerEl.getAttribute('value')).toEqual('2:10 PM');
   });
 
   it('Should rounds minutes to the nearest interval', async () => {

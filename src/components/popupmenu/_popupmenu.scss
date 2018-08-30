@@ -3,9 +3,11 @@
 
 // Contains the main popupmenu UL for positioning.
 .popupmenu-wrapper {
+  @include css3(user-select, none);
   display: inline-block;
   left: -9999px;
   position: fixed;
+  -webkit-touch-callout: none;
   z-index: 4000;
 
   .arrow,

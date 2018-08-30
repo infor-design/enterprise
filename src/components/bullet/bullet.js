@@ -77,7 +77,7 @@ Bullet.prototype = {
     // Append the SVG into its parent area.
     let noMarkers = false;
     const parent = this.element.parent();
-    const margin = { top: 30, right: 55, bottom: 35, left: 55 };
+    const margin = { top: 30, right: 35, bottom: 35, left: 40 };
     const width = parent.width() - margin.left - margin.right;
     let height = parent.height() - margin.top - margin.bottom - 30; // 30 for legend
 
@@ -345,7 +345,7 @@ Bullet.prototype = {
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${COMPONENT_NAME}`, () => {
         this.handleResize();
       });
 
@@ -389,8 +389,7 @@ Bullet.prototype = {
     this.element.empty();
 
     return this
-      .teardown()
-      .init();
+      .build();
   },
 
   /**
@@ -400,7 +399,7 @@ Bullet.prototype = {
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME} resize.${COMPONENT_NAME}`);
-    $(window).off(`resize.${COMPONENT_NAME}`);
+    $('body').off(`resize.${COMPONENT_NAME}`);
     return this;
   },
 

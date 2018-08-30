@@ -366,17 +366,20 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
     if (rowCount < dataSet.length) {
       const currentRowData = dataSet[rowCount];
       validateFields(rawVal, self.settings, currentRowData, startColIndex);
-      self.updateRow(rowCount, currentRowData);
     } else {
       const newRowData = {};
       for (let k = 0; k < self.settings.columns.length; k++) {
         newRowData[self.settings.columns[k].field] = '';
       }
       validateFields(rawVal, self.settings, newRowData, startColIndex);
-      self.addRow(newRowData, 'bottom');
+      dataSet.push(newRowData);
     }
     rowCount++;
   }
+
+  self.renderRows();
+  self.syncSelectedUI();
+  self.pagerRefresh('bottom');
 };
 
 export { excel };

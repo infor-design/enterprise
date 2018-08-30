@@ -103,7 +103,7 @@ const PLUGIN_MAPPINGS = [
   ['editor'],
 
   // Tooltips
-  ['tooltip', 'button[title], span[title], .hyperlink[title]'],
+  ['tooltip', 'button[title], span[title], .hyperlink[title], .icon[title]'],
 
   // Tree
   ['tree'],
@@ -207,6 +207,10 @@ const PLUGIN_MAPPINGS = [
   ['popdown', '[data-popdown]'],
 
   ['stepchart', '.step-chart'],
+
+  ['calendar', '.calendar'],
+
+  ['monthview', '.monthview'],
 
   ['listview'],
 
@@ -342,7 +346,7 @@ const PLUGIN_MAPPINGS = [
 
   // Validation on individual fields (Should run last)
   ['validate', '[data-validate]', function (rootElem, pluginName, selector) {
-    matchedItems(rootElem, selector).parentsUntil('form, html').validate();
+    matchedItems(rootElem, selector).closest('form, body').validate();
   }],
 
   // Form validation

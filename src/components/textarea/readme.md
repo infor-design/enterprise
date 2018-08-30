@@ -1,11 +1,11 @@
 ---
 title: Textarea Component
-description: This page describes Textarea Component .
+description: This page describes Textarea Component.
+demo:
+  pages:
+  - name: Main Examples
+    slug: example-index
 ---
-
-## Configuration Details
-
-1. [Text Area  Examples]( ../components/textarea/example-index)
 
 ## Behavior Guidelines
 
@@ -59,6 +59,10 @@ The supported states are identical to the Text Input Field.
 ## Responsive Guidelines
 
 - Width is default 450px but will reduce to fit parent container
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

@@ -53,7 +53,7 @@ module.exports = (req, res, next) => {
   resData = req.query.categoryId ? fruits[req.query.categoryId] : fruits.main;
   if (!resData) {
     resData = '' +
-        '<div class="accordion-content" style="color: red;">' +
+        '<div class="accordion-content" class="alert01">' +
           '<p>Error: Couldn\'t find any fruits...</p>' +
         '</div>';
   }

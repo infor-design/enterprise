@@ -1,17 +1,21 @@
 ---
 title: Validation
 description: This page describes Validation.
+demo:
+  pages:
+  - name: Main Validation Examples
+    slug: example-index
+  - name: Multiple Validation Errors on a Field
+    slug: example-multiple-errors
+  - name: Legacy Short Fields
+    slug: example-short-fields
+  - name: Manually adding an Error
+    slug: example-standalone-error
+  - name: Enabling a Button on Valid
+    slug: example-validation-form
+  - name: Validating on Form Submit
+    slug: example-validation-on-submit
 ---
-
-## Configuration Options
-
-1. Validation Example [View Example]( ../components/validation/example-index)
-1. Disabled Form [View Example]( ../components/validation/example-form-disabled)
-1. Multiple Validation Errors on a Field [View Example]( ../components/validation/example-multiple-errors)
-1. Legacy Short Fields [View Example]( ../components/validation/example-short-fields)
-1. Manually adding an Error [View Example]( ../components/validation/example-standalone-error)
-1. Enabling a Button on Valid [View Example]( ../components/validation/example-validation-form)
-1. Validating on Form Submit [View Example]( ../components/validation/example-validation-on-submit)
 
 ## Code Example - Auto
 
@@ -37,9 +41,17 @@ $('#username-field')
 $('#username-field').removeError()
 ```
 
+## Code Example - Skipping Fields from Validation
+
+Its possible to skip fields that are normally validated from validation. You can do this in one of three ways.
+
+1. Add a class of `disable-validation`  to the input.
+1. Add an attribute of `data-disable-validation="true"` to the input.
+1. Make the input disabled.
+
 ## Validation Types
 
-There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule, but error is used if it is not defined.
+There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule or duplicate messages may appear.
 
 ```javascript
 $.fn.validation.rules.customWarningRule = {
@@ -52,13 +64,13 @@ $.fn.validation.rules.customWarningRule = {
 };
 ```
 
-Each type is style differntly and can be defined if the formValidation passes or errors based on the rules result. This is defined via the errorsForm on the validation type.
+Each type is style differently and can be defined if the formValidation passes or errors based on the rules result. This is defined via the errorsForm on the validation type.
 
 ```javascript
 $.fn.validation.ValidationTypes.alert = { type: 'alert', title: 'Alert', errorsForm: false };
 ```
 
-## Validation Rules
+## Built in Validation Rules
 
 There are a few built in validation rules you can use.
 
@@ -70,6 +82,22 @@ There are a few built in validation rules you can use.
 - `passwordReq` - Checks basic password rules. Must be at least 10 characters which contain at least one lowercase letter. One uppercase letter. One numeric digit and one special character.
 - `time` - Checks that the time is valid in the time picker.
 - `test` - Used for testing only will only be valid if the input === 1 exactly.
+
+## Controlling When Validation Fires
+
+You can control on what events your validation rules fire. Note that if you use multiple events the rule will fire multiple times for all the listed events so this may need to be adjusted for async validation.
+
+You can specify either one set of events to trigger on for all rules as:
+
+```html
+<input id="email" data-validation-events="blur change">
+```
+
+Or you can specify either different events for multiple rules as per as:
+
+```html
+<input id="email" data-validation-events="{'required': 'keydown', 'checkGivenNamesCount': 'keydown change blur'}">
+```
 
 ## Accessibility
 
@@ -83,6 +111,10 @@ There are a few built in validation rules you can use.
 
 - Errors will be read audibly by the API using an aria-alert (polite)
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Upgrading from 3.X
 
-This api is backwards compatible.
+This api is (mostly) backwards compatible.

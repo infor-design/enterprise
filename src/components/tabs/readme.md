@@ -11,8 +11,6 @@ demo:
     slug: example-dismissible-tabs
   - name: Dropdown Tabs
     slug: example-dropdown-tabs
-  - name: "`updateCount()` Demo"
-    slug: example-update-count-api
   - name: "`changeTabOnHashChange` Setting with Callback Demo"
     slug: example-url-hash-change
   - name: "`beforeActivate` Callback example"
@@ -152,6 +150,10 @@ It's possible to create a tab that contains a dropdown menu. In the case of a dr
     </li>
 </ul>
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

@@ -1,14 +1,17 @@
 ---
 title: Mask
 description: This page describes Mask.
+demo:
+  pages:
+  - name: Main Example
+    slug: example-index
+  - name: Common Mask Patterns
+    slug: example-common-patterns
+  - name: Fields with Symbols
+    slug: example-fields-with-symbols
+  - name: The Number Mask Gauntlet
+    slug: test-number-mask-gauntlet
 ---
-
-## Configuration Options
-
-1. Inputs with Masks [View Example]( ../components/mask/example-index)
-2. Common Mask Patterns [View Example]( ../components/mask/example-common-patterns)
-3. Fields with Symbols [View Example]( ../components/mask/example-fields-with-symbols)
-4. Number Mask Gauntlet [View Example]( ../components/mask/test-number-mask-gauntlet)
 
 ## Behavior Guidelines
 
@@ -47,8 +50,12 @@ $.extend($('#mask').data('mask').settings.definitions, {
 A Mask Control is created simply by adding a "data-mask" attribute to any input field. The "data-mask" attribute contains a pattern that will control the allowed text-entry into the input field.
 
 ```html
-<input data-mask="####-####-####-####" />
+<input id="mask" data-mask="####-####-####-####" />
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

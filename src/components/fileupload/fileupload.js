@@ -144,7 +144,7 @@ FileUpload.prototype = {
     */
     this.fileInput.on('change.fileupload', function () {
       if (this.files.length > 0) {
-        self.textInput.val(this.files[0].name);
+        self.textInput.val(this.files[0].name).trigger('change');
         self.svgClose.show().addClass('is-visible');
       } else {
         self.clearUploadFile();

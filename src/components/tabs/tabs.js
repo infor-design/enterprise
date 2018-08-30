@@ -4,6 +4,7 @@ import { DOM } from '../../utils/dom';
 import { breakpoints } from '../../utils/breakpoints';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery components
 import '../../utils/lifecycle';
@@ -397,7 +398,7 @@ Tabs.prototype = {
 
       // If there are tabs present, activate the first one
       if (selected.length) {
-        this.activate(selectedAnchor.attr('href'));
+        this.activate(selectedAnchor.attr('href'), selectedAnchor);
       }
     }
 
@@ -407,9 +408,7 @@ Tabs.prototype = {
 
     this.setOverflow();
 
-    if (this.hasSquareFocusState()) {
-      this.positionFocusState(selectedAnchor);
-    }
+    this.positionFocusState(selectedAnchor);
 
     if (this.hasAnimatedBar()) {
       this.animatedBar.addClass('no-transition');
@@ -443,15 +442,9 @@ Tabs.prototype = {
       auxilaryButtonLocation = this.tablist;
     }
 
-    // Square Focus State
-    if (this.hasSquareFocusState()) {
-      this.focusState = this.element.find('.tab-focus-indicator');
-      if (!this.focusState.length) {
-        this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
-      }
-    } else if (this.focusState && this.focusState.length) {
-      this.focusState.off().remove();
-      this.focusState = undefined;
+    this.focusState = this.element.find('.tab-focus-indicator');
+    if (!this.focusState.length) {
+      this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
     }
 
     // Animated Bar
@@ -656,13 +649,11 @@ Tabs.prototype = {
         const popupLi = $(this);
         const href = $(anchor).attr('href');
 
-        if (!self.activate(href)) {
+        if (!self.activate(href, $(anchor))) {
           return false;
         }
 
-        if (self.hasSquareFocusState()) {
-          self.positionFocusState(a);
-        }
+        self.positionFocusState(a);
 
         if (self.hasAnimatedBar()) {
           self.focusBar(popupLi);
@@ -726,7 +717,7 @@ Tabs.prototype = {
     self.handleResize(true);
 
     // Resize the tab to show the error
-    $('.tab-panel input').on('isvalid.tabs', () => {
+    $('.tab-panel input').on('error.tabs, valid.tabs', () => {
       const currentLi = $('.tab.is-selected');
       self.focusBar(currentLi);
     });
@@ -864,14 +855,12 @@ Tabs.prototype = {
       return true;
     }
 
-    if (!this.activate(href)) {
+    if (!this.activate(href, a)) {
       return true;
     }
     this.changeHash(href);
 
-    if (this.hasSquareFocusState()) {
-      this.focusState.removeClass('is-visible');
-    }
+    this.focusState.removeClass('is-visible');
 
     a.focus();
 
@@ -968,10 +957,8 @@ Tabs.prototype = {
 
     $.removeData(this.moreButton[0], 'focused-by-click');
 
-    if (this.hasSquareFocusState()) {
-      this.focusState.removeClass('is-visible');
-      this.positionFocusState(this.moreButton, focusedByKeyboard);
-    }
+    this.focusState.removeClass('is-visible');
+    this.positionFocusState(this.moreButton, focusedByKeyboard);
   },
 
   /**
@@ -1157,9 +1144,7 @@ Tabs.prototype = {
         this.scrollTabList(focusStateTarget);
       }
 
-      if (self.hasSquareFocusState()) {
-        self.positionFocusState(focusStateTarget, true);
-      }
+      self.positionFocusState(focusStateTarget, true);
     }
 
     return true;
@@ -1305,7 +1290,7 @@ Tabs.prototype = {
     if ((e.ctrlKey && key === 38) &&
       $.contains(document.activeElement, panel[0])) { // Ctrl + Up Arrow
       e.preventDefault();
-      return this.activate(a.attr('href'));
+      return this.activate(a.attr('href'), a);
     }
 
     return undefined;
@@ -1594,14 +1579,6 @@ Tabs.prototype = {
   },
 
   /**
-   * Determines whether or not this tabset's tab list should display a square focus state on a tab.
-   * @returns {boolean} whether or not the square focus state should display.
-   */
-  hasSquareFocusState() {
-    return true;
-  },
-
-  /**
    * Determines whether or not this tabset currently has a "More Tabs" spillover button.
    * @returns {boolean} whether or not the "More Tabs" button is currently displayed.
    */
@@ -1820,7 +1797,7 @@ Tabs.prototype = {
 
     const a = target.children('a');
     if (tab.is('.is-selected')) {
-      if (!this.activate(a.attr('href'))) {
+      if (!this.activate(a.attr('href'), a)) {
         return target;
       }
       a.focus();
@@ -1847,13 +1824,14 @@ Tabs.prototype = {
   /**
    * Causes a new tab panel to become active.  Will also trigger AJAX calls on unloaded tab panels, if necessary.
    * @param {string} href a string that either matches up to a Tab ID, or an outbound link to grab AJAX content from.
+   * @param {object} anchor in addition to the ref the anchor object may be passed to avoid extra querying.
    * @returns {void}
    */
-  activate(href) {
+  activate(href, anchor) {
     const self = this;
 
     if (self.isURL(href)) {
-      return this.callSource(href, true);
+      return this.callSource(href, anchor, true);
     }
 
     const a = self.getAnchor(href);
@@ -1894,7 +1872,7 @@ Tabs.prototype = {
     function completeActivate(vetoResult) {
       if (targetPanel.length < 1) {
         if (self.settings.source) {
-          self.callSource(href);
+          self.callSource(href, a);
           return true;
         }
       } else {
@@ -1937,10 +1915,11 @@ Tabs.prototype = {
       // Update the currently-selected tab
       self.updateAria(a);
       oldTab.add(self.moreButton).removeClass('is-selected');
-
-      if (targetTab[0].classList.contains('tab')) {
-        selectedStateTarget = targetTab;
-        activeStateTarget = targetTab;
+      if (targetTab[0]) {
+        if (targetTab[0].classList.contains('tab')) {
+          selectedStateTarget = targetTab;
+          activeStateTarget = targetTab;
+        }
       }
 
       const ddMenu = targetTab.parents('.popupmenu');
@@ -1960,7 +1939,9 @@ Tabs.prototype = {
       }
       self.focusBar(activeStateTarget);
 
-      selectedStateTarget.addClass('is-selected');
+      if (selectedStateTarget) {
+        selectedStateTarget.addClass('is-selected');
+      }
 
       // Fires a resize on any invoked child toolbars inside the tab panel.
       // Needed to fix issues with Toolbar alignment, since we can't properly detect
@@ -2019,12 +2000,13 @@ Tabs.prototype = {
   /**
    * Calls an options-provided source method to fetch content that will be displayed inside a tab.
    * @param {string} href - string representing the target tab to load content under.
+   * @param {object} anchor - Reference to the dom object anchor tag.
    * @param {boolean} isURL detects whether or not the URL is actually an external /
    * call, or an ID for an existing tab in the page.
    * @returns {boolean|$.Deferred} true if source call was successful, false for failure/ignore,
    * or a promise object that will fire callbacks in either "success" or "failure" scenarios.
    */
-  callSource(href, isURL) {
+  callSource(href, anchor, isURL) {
     if ((isURL === undefined || isURL === null || isURL === false) && !this.settings.source) {
       return false;
     }
@@ -2038,17 +2020,16 @@ Tabs.prototype = {
         return;
       }
 
-      htmlContent = $.sanitizeHTML(htmlContent);
+      htmlContent = xssUtils.sanitizeHTML(htmlContent);
 
       // Get a new random tab ID for this tab if one can't be derived from the URL string
       if (isURL) {
-        const anchor = this.tablist.find(`[href="${href}"]`);
         const containerId = this.element[0].id || '';
         const id = anchor.uniqueId('tab', containerId);
 
         href = `#${id}`;
         // Replace the original URL on this anchor now that we've loaded content.
-        anchor.attr('href', href);
+        anchor[0].setAttribute('href', href);
       }
 
       this.createTabPanel(href, htmlContent, true);
@@ -2564,10 +2545,9 @@ Tabs.prototype = {
     // If content is text/string, simply inline it.
     const markup = $(`<div id="${tabId}" class="tab-panel" role="tabpanel"></div>`);
     if (content instanceof $) {
-      markup.append(content);
-    } else {
-      markup[0].innerHTML = content || '';
+      content = content[0];
     }
+    markup[0].innerHTML = content || '';
 
     if (doInsert === true) {
       this.container.append(markup);
@@ -2819,7 +2799,7 @@ Tabs.prototype = {
 
   /**
    * returns the currently active tab
-   * @returns {jQuery} the currently active tab
+   * @returns {jQuery} the currently active tab anchor
    */
   getActiveTab() {
     const visible = this.panels.filter(':visible');
@@ -2847,7 +2827,7 @@ Tabs.prototype = {
   },
 
   /**
-   * returns a list of all tabs that are currenly in the "More Tabs" overflow menu.
+   * returns a list of all tabs that are currently in the "More..." overflow menu.
    * @returns {jQuery[]} all overflowed tabs
    */
   getOverflowTabs() {
@@ -3038,7 +3018,7 @@ Tabs.prototype = {
   },
 
   /**
-   * Selects a Tab
+   * Builds tab popupmenu
    * @param {string} startingHref a string representing the HTML `href` attribute of the popupmenu item to be selected.
    * @returns {void}
    */
@@ -3158,9 +3138,7 @@ Tabs.prototype = {
     self.moreButton.addClass('popup-is-open');
     self.popupmenu = self.moreButton.data('popupmenu');
 
-    if (self.hasSquareFocusState()) {
-      self.positionFocusState(self.moreButton);
-    }
+    self.positionFocusState(self.moreButton);
 
     function closeMenu() {
       $(this).off('close.tabs selected.tabs');
@@ -3278,7 +3256,7 @@ Tabs.prototype = {
             self.addTabButton.focus();
             return;
           }
-          self.findFirstVisibleTab();
+          self.focusFirstVisibleTab();
         }
       }
 
@@ -3373,7 +3351,7 @@ Tabs.prototype = {
   /**
    * @returns {void}
    */
-  findFirstVisibleTab() {
+  focusFirstVisibleTab() {
     const tabs = this.tablist.children('li:not(.separator):not(.hidden):not(.is-disabled)');
     tabs.eq(0).find('a').focus();
   },
@@ -3507,9 +3485,7 @@ Tabs.prototype = {
    * @returns {void}
    */
   hideFocusState() {
-    if (this.hasSquareFocusState()) {
-      this.focusState.removeClass('is-visible');
-    }
+    this.focusState.removeClass('is-visible');
   },
 
   /**
@@ -3519,10 +3495,6 @@ Tabs.prototype = {
    * @returns {void}
    */
   positionFocusState(target, unhide) {
-    if (!this.hasSquareFocusState()) {
-      return;
-    }
-
     const self = this;
 
     // TODO: Recheck this and improve
@@ -3645,32 +3617,13 @@ Tabs.prototype = {
       }
       targetPosString += `${key}: ${targetPos[key]}px;`;
     });
-    focusStateElem.setAttribute('style', targetPosString);
+    focusStateElem.style.cssText = targetPosString;
 
     const selected = targetClassList.contains('is-selected') ? 'add' : 'remove';
     focusStateElem.classList[selected]('is-selected');
 
     const doHide = unhide === true ? 'add' : 'remove';
     focusStateElem.classList[doHide]('is-visible');
-  },
-
-  /**
-   * @returns {void}
-   */
-  checkFocusedElements() {
-    const self = this;
-    const focusableItems = self.tablist;
-
-    if (this.hasSquareFocusState() &&
-      focusableItems.find('.is-focused').length === 0 &&
-      !self.moreButton.hasClass('is-focused') &&
-      !self.moreButton.hasClass('popup-is-open')) {
-      self.focusState.removeClass('is-visible');
-    }
-
-    if (this.hasAnimatedBar() && focusableItems.find('.is-selected').length === 0 && !self.moreButton.hasClass('is-selected')) {
-      self.defocusBar();
-    }
   },
 
   /**
@@ -3689,7 +3642,7 @@ Tabs.prototype = {
   },
 
   /**
-   * Disables all tabs in the list
+   * Disables all non-active tabs in the list
    * @returns {void}
    */
   disableOtherTabs() {
@@ -3838,7 +3791,7 @@ Tabs.prototype = {
   /**
    * Pass-through for the `remove()` method, which gets used for removing a dismissible tab.
    * @param {string} tabId the ID of the target tab panel
-   * @returns {boolean} ?
+   * @returns {this} component instance
    */
   closeDismissibleTab(tabId) {
     return this.remove(tabId);
@@ -3847,7 +3800,7 @@ Tabs.prototype = {
   /**
    * Tears down this instance of the tabs component by removing events,
    * other components, and extraneous markup.
-   * @returns {this} ?
+   * @returns {this} component instance
    */
   teardown() {
     this.panels.removeAttr('style');
@@ -3923,16 +3876,14 @@ Tabs.prototype = {
       this.tablistContainer.off('mousewheel.tabs');
     }
 
-    if (this.hasSquareFocusState()) {
-      this.focusState.remove();
-      this.focusState = undefined;
-    }
+    this.focusState.remove();
+    this.focusState = undefined;
 
     if (this.hasAnimatedBar()) {
       this.animatedBar.remove();
       this.animatedBar = undefined;
     }
-    $('.tab-panel input').off('isvalid.tabs');
+    $('.tab-panel input').off('error.tabs valid.tabs');
 
     return this;
   },

@@ -7,6 +7,7 @@ import { debounce } from '../../utils/debounced-resize';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
 
 const COMPONENT_NAME = 'editor';
 
@@ -27,8 +28,8 @@ const COMPONENT_NAME = 'editor';
 * @param {boolean} [settings.secondHeader = 'h4'] Allows you to set if the second header inserted is a h3 or
 * h4 element. You should set this to match the structure of the parent page for accessibility
 * @param {string} [settings.pasteAsPlainText = false] If true, when you paste into the editor the element will be unformatted to plain text.
-* @param {string} [settings.anchor = { url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false }] An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},` the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
-* @param {string} [settings.image = { url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg' }] Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
+* @param {string} [settings.anchor = { url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false }] An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false},` the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'NewWindow' or 'SameWindow', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
+* @param {string} [settings.image = { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' }] Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
 * @param {function} [settings.onLinkClick = null] Call back for clicking on links to control link behavior.
 */
 const EDITOR_DEFAULTS = {
@@ -56,9 +57,9 @@ const EDITOR_DEFAULTS = {
   secondHeader: 'h4',
   placeholder: null,
   pasteAsPlainText: false,
-  // anchor > target: 'Same window'|'New window'| any string value
-  anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false },
-  image: { url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg' },
+  // anchor > target: 'SameWindow'|'NewWindow'| any string value
+  anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false },
+  image: { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' },
   onLinkClick: null
 };
 
@@ -95,8 +96,8 @@ Editor.prototype = {
     s.anchor.defaultIsClickable = s.anchor.isClickable;
 
     s.anchor.targets = s.anchor.targets || {
-      'Same window': '',
-      'New window': '_blank'
+      SameWindow: '',
+      NewWindow: '_blank'
     };
 
     $.each(this.settings.anchor.targets, (key, val) => {
@@ -110,7 +111,7 @@ Editor.prototype = {
       if (s.anchor.target && $.trim(s.anchor.target).length) {
         s.anchor.defaultTarget = s.anchor.target;
       } else {
-        s.anchor.defaultTargetText = 'Same window';
+        s.anchor.defaultTargetText = Locale.translate('SameWindow');
         s.anchor.defaultTarget = s.anchor.targets[s.anchor.defaultTargetText];
       }
     }
@@ -301,8 +302,12 @@ Editor.prototype = {
     buttonset += '</div>';
     toolbar += `${buttonset}</div>`;
 
-    this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ?
-      this.element.prev() : this.element);
+    if (this.element.parent().find('.icon-dirty').length) {
+      this.toolbar = $(toolbar).insertBefore(this.element.parent().find('.icon-dirty'));
+    } else {
+      this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ?
+        this.element.prev() : this.element);
+    }
     this.toolbar.toolbar();
 
     // Invoke Tooltips
@@ -339,10 +344,10 @@ Editor.prototype = {
     this.textarea = this.createTextarea();
 
     // fill the text area with any content that may already exist within the editor DIV
-    this.textarea.text(this.element.html().toString());
+    this.textarea.text(xssUtils.sanitizeHTML(this.element.html().toString()));
 
-    self.container.on('input.editor keyup.editor', self.element, debounce(() => {
-      self.textarea.val(self.element.html().toString());
+    self.container.on('input.editor keyup.editor', '.editor', debounce(() => {
+      self.textarea.html(xssUtils.sanitizeHTML(self.element.html().toString()));
       // setting the value via .val doesn't trigger the change event
       self.element.trigger('change');
     }, 500));
@@ -489,7 +494,7 @@ Editor.prototype = {
       this.sourceView.addClass('is-focused');
     }).on('blur.editor', (e) => {
       this.sourceView.removeClass('is-focused');
-      this.element.empty().html($.sanitizeHTML(this.textarea.val()));
+      this.element.empty().html(xssUtils.sanitizeHTML(this.textarea.val()));
 
       if (this.element.data('validate')) {
         this.element.data('validate').validate(this.element, true, e);
@@ -843,7 +848,7 @@ Editor.prototype = {
     let isTargetCustom = true;
 
     $.each(s.anchor.targets, (key, val) => {
-      targetOptions += `<option value="${val}">${key}</option>`;
+      targetOptions += `<option value="${val}">${Locale.translate(key)}</option>`;
       if ((this.settings.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
         isTargetCustom = false;
       }
@@ -926,14 +931,16 @@ Editor.prototype = {
   },
 
   updateCurrentLink(alink) {
-    const emUrl = $(`[name="em-url-${this.id}"]`).val();
-    const emClass = $(`[name="em-class-${this.id}"]`).val();
-    const emTarget = $(`[name="em-target-${this.id}"]`).val();
+    const emUrl = xssUtils.stripTags($(`[name="em-url-${this.id}"]`).val());
+    const emClass = xssUtils.stripTags($(`[name="em-class-${this.id}"]`).val());
+    const emTarget = xssUtils.stripTags($(`[name="em-target-${this.id}"]`).val());
     const emIsClickable = this.settings.anchor.showIsClickable ? $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
-    alink.attr('href', this.fixLinkFormat((emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl)));
-    alink.attr('class', (emClass && $.trim(emClass).length ? emClass : this.settings.anchor.defaultClass));
-    alink.attr('data-url', (emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl).replace('http://', ''));
+    if (alink) {
+      alink[0].setAttribute('href', this.fixLinkFormat((emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl)));
+      alink[0].setAttribute('class', (emClass && $.trim(emClass).length ? emClass : this.settings.anchor.defaultClass));
+      alink[0].setAttribute('data-url', (emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl).replace('http://', ''));
+    }
 
     if (emIsClickable) {
       alink.attr('contenteditable', false);
@@ -953,8 +960,8 @@ Editor.prototype = {
     this.restoreSelection(this.savedSelection);
 
     // Fix and Format the Link
-    const originalValue = input[0].value;
-    input.val(this.fixLinkFormat(input[0].value));
+    const cleanValue = xssUtils.stripTags(this.fixLinkFormat(input[0].value));
+    input.val(cleanValue);
 
     // Set selection url/class/target for Link
     this.settings.anchor.url = input.val();
@@ -963,7 +970,7 @@ Editor.prototype = {
     this.settings.anchor.isClickable = this.settings.anchor.showIsClickable ?
       $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
-    const alink = $(`<a data-url="${originalValue}" href="${input.val()}">${input.val()}</a>`);
+    const alink = $(`<a data-url="${cleanValue}" href="${cleanValue}">${cleanValue}</a>`);
 
     if (this.settings.anchor.class && $.trim(this.settings.anchor.class).length) {
       alink.addClass(this.settings.anchor.class);
@@ -1284,6 +1291,12 @@ Editor.prototype = {
         if ((types instanceof DOMStringList && types.contains('text/html')) ||
             (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
           pastedData = e.originalEvent.clipboardData.getData('text/html');
+        }
+        if (types instanceof DOMStringList && types.contains('text/plain')) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+        }
+        if ((typeof types === 'object' && types[0] && types[0] === 'text/plain') && !types[1]) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
       } else {
         paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
@@ -1786,7 +1799,7 @@ Editor.prototype = {
 
   toggleSource() {
     if (this.sourceViewActive()) {
-      this.element.empty().html($.sanitizeHTML(this.textarea.val()));
+      this.element.empty().html(xssUtils.sanitizeHTML(this.textarea.val()));
       this.element.removeClass('source-view-active hidden');
       this.sourceView.addClass('hidden').removeClass('is-focused');
       this.element.trigger('focus.editor');
@@ -1884,7 +1897,7 @@ Editor.prototype = {
         setTimeout(() => {
           for (let i = 0, l = els.length; i < l; i++) {
             if (els[i].hasAttribute('size')) {
-              els[i].setAttribute('style', `background-color: ${value};`);
+              els[i].style.backgroundColor = value;
               els[i].removeAttribute('size');
             }
           }
@@ -2035,7 +2048,7 @@ Editor.prototype = {
   },
 
   teardown() {
-    this.container.off('input.editor keyup.editor', this.element);
+    this.element.off('input.editor keyup.editor');
     $('html').off('mouseup.editor');
 
     this.destroyToolbar();

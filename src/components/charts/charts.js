@@ -115,12 +115,17 @@ charts.colorRange = ['#2578A9', '#8ED1C6', '#C7B4DB', '#5C5C5C', '#F2BC41', '#76
   '#8DC9E6', '#DB7726', '#317C73', '#EB9D9D', '#737373', '#89BF65', '#C7B4DB',
   '#54A1D3', '#6e5282', '#AFDC91', '#69ADA3', '#EE9A36', '#D8D8D8'];
 
+charts.colorNameRange = ['azure07', 'turquoise03', 'amethyst03', 'graphite06', 'amber05', 'emerald06', 'ruby06',
+  'azure03', 'amber09', 'turquoise08', 'ruby02', 'graphite05', 'emerald05', 'amethyst03',
+  'azure05', 'amethyst08', 'emerald03', 'turquoise06', 'amber07', 'graphite02'];
+
 /**
  * The colors as an array for placement
  * @private
  * @type {array}
  */
 charts.colors = typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorRange) : [];
+charts.colorNames = typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorNameRange) : [];
 
 /**
  * Calculate and return the correct color to use. Fx
@@ -163,8 +168,47 @@ charts.chartColor = function chartColor(i, chartType, data) {
   if (/^(bar-single|column-single)$/.test(chartType)) {
     return '#1D5F8A';
   }
-  if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
+  if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|scatterplot|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
     return this.colors(i);
+  }
+
+  return '';
+};
+
+charts.chartColorName = function chartColor(i, chartType, data) {
+  const specifiedColor = (data && data.color ? data.color : null);
+
+  // Handle passed in colors.
+  if (specifiedColor) {
+    if (specifiedColor === 'error') {
+      return 'alert01';
+    }
+    if (specifiedColor === 'alert') {
+      return 'alert02';
+    }
+    if (specifiedColor === 'alertYellow') {
+      return 'alert03';
+    }
+    if (specifiedColor === 'good') {
+      return 'alert04';
+    }
+    if (specifiedColor === 'neutral') {
+      return 'graphite03';
+    }
+    if (specifiedColor && specifiedColor.indexOf('#') === 0) {
+      return data.color;
+    }
+  }
+
+  // Some configuration by specific chart types
+  if (/^(pie|donut)$/.test(chartType)) {
+    return this.colorNameRange[i];
+  }
+  if (/^(bar-single|column-single)$/.test(chartType)) {
+    return 'azure08';
+  }
+  if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|scatterplot|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
+    return this.colorNames(i);
   }
 
   return '';
@@ -212,7 +256,6 @@ charts.showTooltip = function (x, y, content, arrow) {
  */
 charts.addLegend = function (series, chartType, settings, container) {
   let i;
-
   if (series.length === 0) {
     return;
   }
@@ -253,12 +296,26 @@ charts.addLegend = function (series, chartType, settings, container) {
 
     let seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0"></span>`;
     const hexColor = charts.chartColor(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
+    const colorName = charts.chartColorName(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
-    const color = $(`<span class="chart-legend-color" style="background-color: ${series[i].pattern ? 'transparent' : hexColor}"></span>`);
+    let color = '';
+    if (colorName.substr(0, 1) === '#') {
+      color = $('<span class="chart-legend-color"></span>');
+      if (!series[i].pattern) {
+        color.css('background-color', hexColor);
+      }
+    } else {
+      color = $(`<span class="chart-legend-color ${series[i].pattern ? '' : colorName}"></span>`);
+    }
+
+    if (chartType === 'scatterplot') {
+      color = $('<span class="chart-legend-color"></span>');
+    }
     const textBlock = $(`<span class="chart-legend-item-text">${series[i].name}</span>`);
 
     if (series[i].pattern) {
-      color.append(`<svg width="12" height="12"><rect style="fill: ${hexColor}" mask="url(#${series[i].pattern})" height="12" width="12" /></svg>`);
+      color.append(`<svg width="12" height="12"><rect height="12" width="12" mask="url(#${series[i].pattern})"/></svg>`);
+      color.find('rect').css('fill', hexColor);
     }
 
     if (series[i].percent) {
@@ -267,12 +324,12 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
 
     if (series[i].display && series[i].display === 'block') {
-      seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" style="float: none; display: block; margin: 0 auto; width: ${width}px;"></span>`;
+      seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0"></span>`;
     }
 
     if (isTwoColumn) {
       if (widthPercent > 45 && settings.legendPlacement !== 'right') {
-        seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" style="float: none; display: block; margin: 0 auto; width: ${width}px;"></span>`;
+        seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0"></span>`;
       } else {
         seriesLine = `<span class="chart-legend-item${extraClass} is-two-column" tabindex="0" ></span>`;
       }
@@ -284,6 +341,36 @@ charts.addLegend = function (series, chartType, settings, container) {
       legend.find('.container').append(seriesLine);
     } else {
       legend.append(seriesLine);
+    }
+
+    if ((series[i].display && series[i].display === 'block') || (isTwoColumn && widthPercent > 45 && settings.legendPlacement !== 'right')) {
+      seriesLine.css({
+        float: 'none',
+        display: 'block',
+        margin: '0 auto',
+        width: `${width}px`,
+      });
+    }
+
+    // Add shapes
+    if (chartType === 'scatterplot') {
+      self.svg = d3.select(color[0]).append('svg')
+        .attr('width', '24')
+        .attr('height', '24')
+        .append('path')
+        .attr('class', 'symbol')
+        .attr('transform', 'translate(10, 10)')
+        .attr('d', d3.symbol().size('80').type( () => { return d3.symbols[i]; })) //eslint-disable-line
+        .style('fill', hexColor);
+    }
+
+    // Change text of legend depends of the width
+    if (innerWidth <= 480 && series[i].data && series[i].data.legendAbbrName) {
+      textBlock.replaceWith(`<span class="chart-legend-item-text">${series[i].data.legendAbbrName}</span>`);
+    }
+    if (innerWidth >= 481 && innerWidth <= 768 && series[i].data
+      && series[i].data.legendShortName) {
+      textBlock.replaceWith(`<span class="chart-legend-item-text">${series[i].data.legendShortName}</span>`);
     }
   }
 

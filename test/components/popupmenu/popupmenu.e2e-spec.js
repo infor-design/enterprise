@@ -1,16 +1,64 @@
 const popupmenuPageObject = require('./helpers/popupmenu-page-objects.js');
 
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
+const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
 const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
+describe('Contextmenu index tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextmenu/example-index');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should open on click and close on click out', async () => {
+    let input = await element(by.id('input-menu2'));
+    await browser.actions().mouseMove(input).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
+
+    expect(await element(by.id('action-popupmenu')).getAttribute('class')).toContain('is-open');
+
+    input = await element(by.id('input-menu'));
+    await input.click();
+    await input.sendKeys(protractor.Key.TAB);
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
+
+    expect(await element(by.id('action-popupmenu')).getAttribute('class')).not.toContain('is-open');
+  });
+});
+
 describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable');
   });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-selectable', async () => {
+      const popupmenuSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
+      const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
+      await buttonTriggerEl.click();
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(popupmenuSection, 'popupmenu-single-open')).toEqual(0);
+    });
+  }
 
   it('Should open on click, and close on click', async () => {
     const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
@@ -97,6 +145,19 @@ describe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable-multiple');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-selectable-multiple', async () => {
+      const popupmenuSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
+      const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
+      await buttonTriggerEl.click();
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(popupmenuSection, 'popupmenu-multi-open')).toEqual(0);
+    });
+  }
 
   if (!utils.isIE() && !utils.isSafari()) {
     it('Should select first, and last item on spacebar, arrowing down', async () => {

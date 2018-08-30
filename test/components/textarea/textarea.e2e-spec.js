@@ -13,6 +13,10 @@ describe('Textarea example-index tests', () => {
     await utils.setPage('/components/textarea/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should block input on disabled', async () => {
     const textareaEl = await element(by.id('description-disabled'));
 
@@ -39,13 +43,14 @@ describe('Textarea example-index tests', () => {
     });
   }
 
-  if (utils.isChrome()) {
-    xit('Should not visual regress', async () => {
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
       const textareaEl = await element(by.id('description-max'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(textareaEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkScreen('textarea')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(textareaEl, 'textarea-init')).toEqual(0);
     });
   }
 });
@@ -56,6 +61,8 @@ describe('Textarea size tests', () => {
   });
 
   it('Should support check sizes', async () => {
+    await browser.driver.manage().window().setSize(1200, 800);
+
     const smEl = await element(by.id('sm-textarea-example'));
 
     expect(await smEl.getCssValue('width')).toBe('150px');

@@ -13,6 +13,7 @@ export { debug };
 export { uniqueIdCount, utils } from './utils/utils';
 export { DOM } from './utils/dom';
 export { stringUtils as string } from './utils/string';
+export { xssUtils as xss } from './utils/xss';
 export { breakpoints } from './utils/breakpoints';
 export { Locale } from './components/locale/locale';
 export { Environment as env } from './utils/environment';
@@ -25,6 +26,9 @@ import { renderLoop, RenderLoopItem } from './utils/renderloop';
 
 renderLoop.start();
 export { renderLoop, RenderLoopItem };
+
+// LongPress needs a single instance of itself
+export { longPress } from './behaviors/longpress/longpress';
 
 // Theme/Personalization need single instances of themselves
 export { theme } from './components/personalize/personalize';

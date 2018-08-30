@@ -56,6 +56,12 @@ body.no-scroll {
   height: 100%;
 }
 
+.ios {
+  body.no-scroll {
+    max-height: 100%;
+  }
+}
+
 // Two Column Layout
 .two-column {
   font-size: 0;
@@ -236,6 +242,7 @@ body.no-scroll {
     border-left: 1px solid $graphite02;
     border-right: 1px solid $graphite02;
     width: calc(60% - 3px);
+    background-color: $panel-bg-color;
 
     &.scrollable,
     &.scrollable-y {

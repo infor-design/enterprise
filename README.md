@@ -1,5 +1,8 @@
 # Infor Design System's Enterprise Components
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![npm version](https://badge.fury.io/js/ids-enterprise.svg)](https://badge.fury.io/js/ids-enterprise)
+[![Build Status](https://travis-ci.com/infor-design/enterprise.svg?branch=master)](https://travis-ci.com/infor-design/enterprise)
 [![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=MmgvZ2tsa3pydTRlTklvNG9HZGYvMVlwdWRzWklWVWtXNEFFeVJXSG1raz0tLTZuR0J1Nllxd1pOTVJKaE4zRFVYUkE9PQ==--628ff7dc2ecde8982f3a89ad70cdcf252bdd8fba)](https://www.browserstack.com/automate/public-build/MmgvZ2tsa3pydTRlTklvNG9HZGYvMVlwdWRzWklWVWtXNEFFeVJXSG1raz0tLTZuR0J1Nllxd1pOTVJKaE4zRFVYUkE9PQ==--628ff7dc2ecde8982f3a89ad70cdcf252bdd8fba)
 
 Infor Design System's Enterprise component library is a framework-independent UI library consisting of CSS and JS that provides Infor product development teams, partners, and customers the tools to create user experiences that are approachable, focused, relevant, perceptive.
@@ -40,22 +43,22 @@ The files can then be seen in the folder `./node_modules/ids-enterprise/dist`
 
 ### CDN
 
-You can now get the scripts and CSS from a CDN on AWS. For example, the paths for the 4.3.5 releases would be:
+You can now get the scripts and CSS from a CDN on AWS. For example, the paths for the 4.9.0 releases would be:
 
 ```html
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/js/sohoxi.js
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/js/sohoxi.min.js
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/light-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/light-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/svg/svg.html
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/svg/svg-extended.html
+https://cdn.hookandloop.infor.com/sohoxi/4.9.0/js/sohoxi.js
+https://cdn.hookandloop.infor.com/sohoxi/4.9.0/js/sohoxi.min.js
+https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/dark-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/dark-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/dark-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/dark-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/light-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/light-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.9.0/svg/svg.html
+https://cdn.hookandloop.infor.com/sohoxi/4.9.0/svg/svg-extended.html
 ```
 
-Versions available on CDN are: 4.3.2, 4.3.3, 4.3.4, 4.3.5
+Versions available on CDN are: 4.3.2, 4.3.3, 4.3.4, 4.3.5, 4.7.0, 4.8.0, 4.9.0
 
 Note: There may be a cost involved to using this with Infor's amazon s3 account so keep this in mind when using.
 
@@ -63,9 +66,12 @@ Note: There may be a cost involved to using this with Infor's amazon s3 account 
 
 ### Install pre-requisites
 
-- Install `node` for following the [directions for your OS](http://nodejs.org/)
-- On Windows, you'll need to [install Python](https://www.python.org/downloads/). Make sure the version is at least `2.5.0` but not Python 3.
-- Also on Windows, you should run `git config core.autocrlf false`
+- `[MAC]` We suggest using [nvm](https://github.com/creationix/nvm) to handle the versions.  As its possible that you would need different versions for different projects.
+- `[Windows]` You can use a similar version manager for windows [nvm-windows](https://github.com/coreybutler/nvm-windows). Or use the [node installer](https://nodejs.org/en)
+- `[Windows]` You'll need to [install Python](https://www.python.org/downloads/). Make sure the version is at least `2.5.0`
+- `[Windows]` Run the command `git config core.autocrlf false` to allow our standard of LF for the project.
+
+We are currently pinned to version 10 of node, **so be sure to use that version**. We have a script that tests for this during `npm install`.
 
 ### Clone the repo
 
@@ -74,8 +80,9 @@ Note: There may be a cost involved to using this with Infor's amazon s3 account 
 
 ### Running the app
 
-From within the project folder:
+From within the project folder
 
+- Run `npm install` to get all the dev dependencies
 - Run `npm start` to build and start the web server
 - Make a new terminal window and from within your project folder run `npx grunt watch` to watch for any file changes and rebuild
 - Open up [`localhost:4000`](http://localhost:4000) in a browser to see the local app
@@ -86,7 +93,7 @@ You’ll see documentation pages unless they aren’t generated, then you’ll s
 
 ### Running the tests
 
-Functional tests are the primary way we test the codebase. To run the tests, run `npm run functional:local`.
+Functional tests are the primary way we test the codebase. To run every type of test, run `npm run test`.
 
 ### Editor Plugins
 

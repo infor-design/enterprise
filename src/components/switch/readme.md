@@ -6,7 +6,7 @@ demo:
   - name: Main Switch Example
     slug: example-index
   - name: Alternate Alignment
-    slug: example-alignment)
+    slug: example-alignment
   - name: Two Column Layout
     slug: example-two-columns
 ---
@@ -27,6 +27,10 @@ A switch element is essentially a specially-styled [checkbox element]( ./checkbo
 ## Accessibility
 
 - Always include a meaningfully described label thats linked correctly to the input field by the `for` and `id` attribute
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

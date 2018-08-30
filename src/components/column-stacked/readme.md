@@ -1,18 +1,27 @@
 ---
 title: Column Chart (Stacked)
 description: This page describes Column Chart (Stacked).
+demo:
+  pages:
+  - name: Standard Stacked Column Chart
+    slug: example-index
+  - name: Defaulting Selected Stacks
+    slug: example-selected
+  - name: Single Column Chart
+    slug: example-singular
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Singular Get Selected value
+    slug: example-singular-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
+  - name: Example showing Singular Set Selected value
+    slug: example-singular-set-selected
 ---
 
-## Configuration Options
-
-1. Stacked Column Chart Example [View Example]( ../components/column-stacked/example-index)
-1. Defaulting Selected Stacks [View Example]( ../components/column-stacked/example-selected)
-1. Single Column Chart [View Example]( ../components/column-stacked/example-singular)
-1. Set animation speed [View Example]( ../components/column-stacked/example-animation)
-1. Example showing Get Selected value [View Example]( ../components/column-stacked/example-get-selected)
-1. Example showing Singular Get Selected value [View Example]( ../components/column-stacked/example-singular-get-selected)
-1. Example showing Set Selected value [View Example]( ../components/column-stacked/example-set-selected)
-1. Example showing Singular Set Selected value [View Example]( ../components/column-stacked/example-singular-set-selected)
+## Settings
 
 ### Dataset Settings
 
@@ -86,6 +95,10 @@ $('#bar-grouped-example').chart({type: 'bar-stacked', dataset: dataset,
   }
 });
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

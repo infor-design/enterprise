@@ -1,11 +1,16 @@
 ---
-title: Visibility CSS Classes 
-description: This page describes Visibility CSS Classes .
+title: Visibility CSS Classes
+description: This page describes Visibility CSS Classes.
+demo:
+  pages:
+  - name: All Examples
+    slug: example-index
+  - name: Multiple classes at once
+    slug: example-multiple-visibility-classes
 ---
 
 The Soho visibility classes allow elements to become conditionally visible or hidden based on breakpoint size.  They also provide a way to conveniently change the CSS `display` property on a per-breakpoint basis.
 
-## Configuration Examples
+## Testability
 
-1. [All Examples]( ../components/visibility/example-index)
-2. [Multiple classes at once]( ../components/visibility/example-multiple-visibility-classes)
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

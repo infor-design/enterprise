@@ -194,7 +194,7 @@ Header.prototype = {
 
     this.breadcrumb = this.element.find('.breadcrumb');
     if (!this.breadcrumb.length) {
-      this.breadcrumb = $('<nav class="breadcrumb" role="navigation" style="display: none;"></nav>').appendTo(this.element);
+      this.breadcrumb = $('<nav class="breadcrumb hidden" role="navigation"></nav>').appendTo(this.element);
       this.breadcrumb.on('click', 'a', (e) => {
         self.handleBreadcrumbClick(e);
       });
@@ -449,7 +449,7 @@ Header.prototype = {
     if (this.settings.useBreadcrumb) {
       if (!this.breadcrumb || !this.breadcrumb.length) {
         this.buildBreadcrumb();
-        this.breadcrumb.css({ display: 'block', height: 'auto' });
+        this.breadcrumb.css({ display: 'block', height: 'auto' }).removeClass('hidden');
       } else {
         this.adjustBreadcrumb();
       }
@@ -539,6 +539,14 @@ Header.prototype = {
       // tabindexes and events are all firing on the button
       this.toolbar.element.triggerHandler('updated');
     }
+  },
+
+  /**
+   * @public
+   * Manually remove go-back class from button
+   */
+  removeBackButton() {
+    this.element.find('.go-back').removeClass('go-back');
   },
 
   /**

@@ -86,15 +86,11 @@ function ValidationRules() {
         let valid = true;
 
         valid = field.is(':radio') ? this.isRadioChecked(field) : this.isNotEmpty(value, field);
-
-        if (this.email) {
-          valid = this.email(value);
-        }
-
         return valid;
       },
       message: 'Required',
-      type: 'error'
+      type: 'error',
+      id: 'required'
     },
 
     // date: Validate date, datetime (24hr or 12hr am/pm)
@@ -117,7 +113,8 @@ function ValidationRules() {
         return !(((parsedDate === undefined) && value !== ''));
       },
       message: 'Invalid Date',
-      type: 'error'
+      type: 'error',
+      id: 'date'
     },
 
     // Validate date, disable dates
@@ -128,12 +125,14 @@ function ValidationRules() {
 
         if (value !== '') {
           if (self.rules.date.check(value, field)) { // if valid date
+            const datepickerApi = field.data('datepicker');
+            const options = datepickerApi ? datepickerApi.settings : {};
+            const hasOptions = Object.keys(options).length > 0;
             let d;
             let i;
             let l;
             let min;
             let max;
-            const options = field.data('datepicker').settings;
             let dateObj = value;
             if (typeof dateObj === 'string') {
               let format = options.dateFormat !== 'locale' ?
@@ -146,7 +145,7 @@ function ValidationRules() {
             }
             let d2 = options.useUTC ? Locale.dateToUTC(dateObj) : dateObj;
 
-            if (d2 && options) {
+            if (d2 && hasOptions) {
               min = (options.useUTC ?
                 Locale.dateToUTC(new Date(options.disable.minDate)).setHours(0, 0, 0, 0) :
                 new Date(options.disable.minDate).setHours(0, 0, 0, 0));
@@ -180,8 +179,10 @@ function ValidationRules() {
                 }
               }
             }
-            check = !!(((check && !options.disable.isEnable) ||
-              (!check && options.disable.isEnable)));
+            if (hasOptions) {
+              check = !!(((check && !options.disable.isEnable) ||
+                (!check && options.disable.isEnable)));
+            }
           } else { // Invalid date
             check = false;
             this.message = '';
@@ -191,7 +192,8 @@ function ValidationRules() {
         return check;
       },
       message: 'Unavailable Date',
-      type: 'error'
+      type: 'error',
+      id: 'availableDate'
     },
 
     // Range date
@@ -227,7 +229,8 @@ function ValidationRules() {
         return check;
       },
       message: 'Range Dates',
-      type: 'error'
+      type: 'error',
+      id: 'rangeDate'
     },
 
     email: {
@@ -237,7 +240,9 @@ function ValidationRules() {
 
         return (value.length) ? regex.test(value) : true;
       },
-      message: 'EmailValidation'
+      message: 'EmailValidation',
+      type: 'error',
+      id: 'email'
     },
 
     enableSubmit: {
@@ -254,7 +259,8 @@ function ValidationRules() {
         return true;
       },
       message: '',
-      type: 'error'
+      type: 'error',
+      id: 'enableSubmit'
     },
 
     emailPositive: {
@@ -275,7 +281,8 @@ function ValidationRules() {
         return true;
       },
       message: 'EmailValidation',
-      type: 'error'
+      type: 'error',
+      id: 'emailPositive'
     },
 
     passwordReq: {
@@ -290,7 +297,8 @@ function ValidationRules() {
         return (value.length) ? value.match(regex) : true;
       },
       message: 'PasswordValidation',
-      type: 'error'
+      type: 'error',
+      id: 'passwordReq'
     },
 
     passwordConfirm: {
@@ -301,7 +309,8 @@ function ValidationRules() {
         return (value.length) ? check : true;
       },
       message: 'PasswordConfirmValidation',
-      type: 'error'
+      type: 'error',
+      id: 'passwordConfirm'
     },
 
     time: {
@@ -371,18 +380,18 @@ function ValidationRules() {
         return true;
       },
       message: 'Invalid Time',
-      type: 'error'
+      type: 'error',
+      id: 'time'
     },
 
-    // Test validation function, always returns false
+    // Test validation function which always returns false
     test: {
-
       check(value) {
         return value === '1';
       },
-
       message: 'Value is not valid (test).',
-      type: 'error'
+      type: 'error',
+      id: 'test'
     }
   };
 }

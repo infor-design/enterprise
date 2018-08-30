@@ -1,13 +1,17 @@
 ---
 title: Targeted Achievement Chart
 description: This page describes Targeted Achievement Chart.
+demo:
+  pages:
+  - name: Main Target to Achievement Example (shows 3 examples)
+    slug: example-index
+  - name: Showing Percentage Text
+    slug: example-percent-text
+  - name: Used on a Datagrid
+    slug: example-datagrid
 ---
 
-## Configuration Options
-
-1. Main Target to Achievement Example showing 3 examples [View Example]( ../components/targeted-achievement/example-index)
-2. Grid Example, this chart is available as a formatter.  [View Example]( ../components/datagrid/test-targeted-achievement.html)
-3. Example showing Percent Text [View Example]( ../components/targeted-achievement/example-percent-text)
+## Settings
 
 ### Dataset Settings
 
@@ -36,6 +40,10 @@ var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

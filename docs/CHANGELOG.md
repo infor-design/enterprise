@@ -1,10 +1,126 @@
 # What's New with Enterprise
 
+## v4.10.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.10.0 Fixes
+
+- `[Dropdown]` Minor Breaking Change for Xss reasons we removed the ability to set a custom hex color on icons in the dropdown. You can still pass in one of the alert colors from the colorpallette (fx alert, good, info). This was not even shown in the examples so may not be missed. ([#256](https://github.com/infor-design/enterprise/issues/256))
+
+## v4.9.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.9.0 Features
+
+- `[Datagrid]` Changed the way alerts work on rows. It now no longer requires an extra column. The rowStatus column will now be ignored so can be removed. When an alert / error / info message is added to the row the whole row will highlight. ([Check out the example.](https://bit.ly/2LC33iJ) ([#258](https://github.com/infor-design/enterprise/issues/258))
+- `[Modal]` Added an option `showCloseBtn` which when set to true will show a X button on the top left corner. ([#358](https://github.com/infor-design/enterprise/issues/358))
+- `[Multiselect / Dropdown]` Added the ability to see the search term during ajax requests. ([#267](https://github.com/infor-design/enterprise/issues/267))
+- `[Scatterplot]` Added a scatter plot chart similar to a bubble chart but with shapes. ([Check out the example.](https://bit.ly/2K9N59M) ([#341](https://github.com/infor-design/enterprise/issues/341))
+- `[Toast]` Added an option `allowLink` which when set to true will allow you to specify a `<a>` in the message content to add a link to the message. ([#341](https://github.com/infor-design/enterprise/issues/341))
+
+### v4.9.0 Fixes
+
+- `[Accordion]` Fixed an issue that prevented a right click menu from working on the accordion. ([#238](https://github.com/infor-design/enterprise/issues/238))
+- `[Charts]` Fixed up missing empty states and selection methods so they work on all charts. ([#265](https://github.com/infor-design/enterprise/issues/265))
+- `[Datagrid]` Fixed the performance of pasting from excel. ([#240](https://github.com/infor-design/enterprise/issues/240))
+- `[Datagrid]` The keyword search will now clear when reloading data. ([#307](https://github.com/infor-design/enterprise/issues/307))
+- `[Docs]` Fixed several noted missing pages and broken links in the docs. ([#244](https://github.com/infor-design/enterprise/issues/244))
+- `[Dropdown]` Fixed bug in badges configuration ([#270](https://github.com/infor-design/enterprise/issues/270))
+- `[Flex Layout]` Fixed field-flex to work better on IE ([#252](https://github.com/infor-design/enterprise/issues/252))
+- `[Editor]` Fixed bug that made it impossible to edit the visual tab. ([#478](https://github.com/infor-design/enterprise/issues/478))
+- `[Editor]` Fixed a bug with dirty indicator that caused a messed up layout. ([#241](https://github.com/infor-design/enterprise/issues/241))
+- `[Lookup]` Fixed it so that select will work correctly when filtering. ([#248](https://github.com/infor-design/enterprise/issues/248))
+- `[Header]` Fixed missing `More` tooltip on the header. ([#345](https://github.com/infor-design/enterprise/issues/345))
+- `[Validation]` Added fixes to prevent `error` and `valid` events from going off more than once. ([#237](https://github.com/infor-design/enterprise/issues/237))
+- `[Validation]` Added fixes to make multiple messages work better. There is now a `getMessages()` function that will return all erros on a field as an array. The older `getMessage()` will still return a string. ([#237](https://github.com/infor-design/enterprise/issues/237))
+- `[Validation]` Fixed un-needed event handlers when using fields on a tab. ([#332](https://github.com/infor-design/enterprise/issues/332))
+
+### v4.9.0 Chore & Maintenance
+
+- `[Blockgrid]` Added full test coverage ([#234](https://github.com/infor-design/enterprise/issues/234))
+- `[CAP]` Fixed some examples that would not close ([#283](https://github.com/infor-design/enterprise/issues/283))
+- `[Datepicker]` Added full test coverage ([#243](https://github.com/infor-design/enterprise/issues/243))
+- `[Datagrid]` Fixed an example so that it shows how to clear a dropdown filter. ([#254](https://github.com/infor-design/enterprise/issues/254))
+- `[Docs]` Added TEAMS.MD for collecting info on the teams using ids. If you are not in the list let us know or make a pull request. ([#350](https://github.com/infor-design/enterprise/issues/350))
+- `[Listview]` Fixed some links in the sample app that caused some examples to fail. ([#273](https://github.com/infor-design/enterprise/issues/273))
+- `[Tabs]` Added more test coverage ([#239](https://github.com/infor-design/enterprise/issues/239))
+- `[Toast]` Added full test coverage ([#232](https://github.com/infor-design/enterprise/issues/232))
+- `[Testing]` Added visual regression tests, and more importantly a system for doing them via CI. ([#255](https://github.com/infor-design/enterprise/issues/255))
+
+(34 Issues Solved this release, Backlog Enterprise 158, Backlog Ng 41, 458 Functional Tests, 297 e2e Test)
+
+## v4.8.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.8.0 Features
+
+- `[Datagrid]` Added an example of Nested Datagrids with ([basic nested grid support.](https://bit.ly/2lGKM4a)) ([#SOHO-3474](https://jira.infor.com/browse/SOHO-3474))
+- `[Datagrid]` Added support for async validation. ([#SOHO-7943](https://jira.infor.com/browse/SOHO-7943))
+- `[Export]` Extracted excel export code so it can be run outside the datagrid. ([#SOHO-7246](https://jira.infor.com/browse/SOHO-7246))
+
+### v4.8.0 Fixes
+
+- `[Searchfield / Toolbar Searchfield]` Merged code between them so there is just one component. This reduced code and fixed many bugs. ([#161](https://github.com/infor-design/enterprise/pull/161))
+- `[Datagrid]` Fixed issues using expand row after hiding/showing columns. ([#SOHO-8103](https://jira.infor.com/browse/SOHO-8103))
+- `[Datagrid]` Fixed issue that caused nested grids in expandable rows to hide after hiding/showing columns on the parent grid. ([#SOHO-8102](https://jira.infor.com/browse/SOHO-8102))
+- `[Datagrid]` Added an example showing Math rounding on numeric columns ([#SOHO-5168](https://jira.infor.com/browse/SOHO-5168))
+- `[Datagrid]` Date editors now maintain date format correctly. ([#SOHO-5861](https://jira.infor.com/browse/SOHO-5861))
+- `[Datagrid]` Fixed alignment off sort indicator on centered columns. ([#SOHO-7444](https://jira.infor.com/browse/SOHO-7444))
+- `[Datagrid]` Behavior Change - Sorting clicking now no longer refocuses last cell. ([#SOHO-7682](https://jira.infor.com/browse/SOHO-7682))
+- `[Datagrid]` Fixed formatter error that showed NaN on some number cells. ([#SOHO-7839](https://jira.infor.com/browse/SOHO-7682))
+- `[Datagrid]` Fixed a bug rendering last column in some situations. ([#SOHO-7987](https://jira.infor.com/browse/SOHO-7987))
+- `[Datagrid]` Fixed incorrect data in context menu event. ([#SOHO-7991](https://jira.infor.com/browse/SOHO-7991))
+- `[Dropdown]` Added an onKeyDown option so keys can be overriden. ([#SOHO-4815](https://jira.infor.com/browse/SOHO-4815))
+- `[Slider]` Fixed step slider to work better jumping across steps. ([#SOHO-6271](https://jira.infor.com/browse/SOHO-6271))
+- `[Tooltip]` Will strip tooltip markup to prevent xss. ([#SOHO-6522](https://jira.infor.com/browse/SOHO-6522))
+- `[Contextual Action Panel]` Fixed alignment issue on x icon. ([#SOHO-6612](https://jira.infor.com/browse/SOHO-6612))
+- `[Listview]` Fixed scrollbar size when removing items. ([#SOHO-7402](https://jira.infor.com/browse/SOHO-7402))
+- `[Navigation Popup]` Fixed a bug setting initial selected value. ([#SOHO-7411](https://jira.infor.com/browse/SOHO-7411))
+- `[Grid]` Added a no-margin setting for nested grids with no indentation. ([#SOHO-7495](https://jira.infor.com/browse/SOHO-7495))
+- `[Grid]` Fixed positioning of checkboxes in the grid. ([#SOHO-7979](https://jira.infor.com/browse/SOHO-7979))
+- `[Tabs]` Fixed bug calling add in NG applications. ([#SOHO-7511](https://jira.infor.com/browse/SOHO-7511))
+- `[Listview]` Selected event now contains the dataset row. ([#SOHO-7512](https://jira.infor.com/browse/SOHO-7512))
+- `[Multiselect]` Fixed incorrect showing of delselect button in certain states. ([#SOHO-7535](https://jira.infor.com/browse/SOHO-7535))
+- `[Search]` Fixed bug where highlight search terms where not shown in bold. ([#SOHO-7796](https://jira.infor.com/browse/SOHO-7796))
+- `[Multiselect]` Improved performance on select all. ([#SOHO-7816](https://jira.infor.com/browse/SOHO-7816))
+- `[Spinbox]` Fixed problem where you could arrow up in a readonly spinbox. ([#SOHO-8025](https://jira.infor.com/browse/SOHO-8025))
+- `[Dropdown]` Fixed bug selecting two items with same value. ([#SOHO-8029](https://jira.infor.com/browse/SOHO-8029))
+- `[Modal]` Fixed incorrect enabling of submit on validating modals. ([#SOHO-8042](https://jira.infor.com/browse/SOHO-8042))
+- `[Modal]` Fixed incorrect closing of modal on enter key. ([#SOHO-8059](https://jira.infor.com/browse/SOHO-8059))
+- `[Rating]` Allow decimal values for example 4.3. ([#SOHO-8063](https://jira.infor.com/browse/SOHO-8063))
+- `[Datepicker]` Prevent datepicker from scrolling to the top of the browser. ([#SOHO-8107](https://jira.infor.com/browse/SOHO-8107))
+- `[Tag]` Fixed layout on Right-To-Left. ([#SOHO-8120](https://jira.infor.com/browse/SOHO-8120))
+- `[Listview]` Fixed missing render event. ([#SOHO-8129](https://jira.infor.com/browse/SOHO-8129))
+- `[Angular Datagrid]` Fixed maskOptions input definition. ([#SOHO-8131](https://jira.infor.com/browse/SOHO-8131))
+- `[Datepicker]` Fixed several bugs on the UmAlQura Calendar. ([#SOHO-8147](https://jira.infor.com/browse/SOHO-8147))
+- `[Datagrid]` Fixed bug on expanding and collapsing multiple expandable rows. ([#SOHO-8154](https://jira.infor.com/browse/SOHO-8154))
+- `[Pager]` Fixed focus state clicking page numbers. ([#SOHO-4528](https://jira.infor.com/browse/SOHO-4528))
+- `[SearchField]` Fixed bug initializing search field with text. ([#SOHO-4820](https://jira.infor.com/browse/SOHO-4820))
+- `[ColorPicker]` Fixed bug with incorrect cursor on readonly color picker. ([#SOHO-8030](https://jira.infor.com/browse/SOHO-8030))
+- `[Pie]` Fixed ui glitch on mobile when pressing slices. ([#SOHO-8141](https://jira.infor.com/browse/SOHO-8141))
+
+### v4.8.0 Chore & Maintenance
+
+- `[Npm Package]` Added back sass files in correct folder structure. ([#SOHO-7583](https://jira.infor.com/browse/SOHO-7583))
+- `[Menu Button]` Added button functional and e2e tests ([#SOHO-7600](https://jira.infor.com/browse/SOHO-7600))
+- `[Textarea]` Added Textarea functional and e2e tests ([#SOHO-7929](https://jira.infor.com/browse/SOHO-7929))
+- `[ListFilter]` Added ListFilter functional and e2e tests ([#SOHO-7975](https://jira.infor.com/browse/SOHO-7975))
+- `[Colorpicker]` Added Colorpicker functional and e2e tests ([#SOHO-8078](https://jira.infor.com/browse/SOHO-8078))
+- `[Site / Docs]` Fixed a few broken links ([#SOHO-7993](https://jira.infor.com/browse/SOHO-7993))
+
+(62 Jira Issues Solved this release, Backlog Dev 186, Design 110, Unresolved 349, Test Count 380 Functional, 178 e2e )
+
 ## v4.7.0
 
-[Full Jira Release Notes](https://bit.ly/2HyT3zF)\
-[Npm Package](https://www.npmjs.com/package/ids-enterprise)\
-[Angular Components Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)
+- [Full Jira Release Notes](https://bit.ly/2HyT3zF)
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
 
 ### v4.7.0 Features
 
@@ -65,10 +181,9 @@
 
 ## v4.6.0
 
-[Full Jira Release Notes](https://bit.ly/2jodbem)\
-[Npm Package](http://npm.infor.com)\
-[Angular Components Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)\
-[Example Site](http://usalvlhlpool1.infor.com/4.6.0/components/)
+- [Full Jira Release Notes](https://bit.ly/2jodbem)
+- [Npm Package](http://npm.infor.com)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
 
 ### v4.6.0 Key New Features
 
@@ -152,14 +267,9 @@
 
 ## v4.5.0
 
-[Full Jira Release Notes](https://bit.ly/2GlnGJ1)\
-[Npm Package](http://npm.infor.com)\
-[Angular Components Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)\
-[Example Site](http://usalvlhlpool1.infor.com/4.5.0/components/)
-
 ### v4.5.0 Key New Features
 
-- `[Font]` Experimental new font added from IDS as explained [here](http://bit.ly/2p2sjjZ)
+- `[Font]` Experimental new font added from IDS as explained
 - `[Datagrid]` Added support for pasting from excel
 - `[Datagrid]` Added option to specify which column stretches
 

@@ -1,19 +1,27 @@
 ---
 title: Bar Chart (Stacked)
 description: This page describes Bar Chart (Stacked).
+demo:
+  pages:
+  - name: Standard Stacked Bar Chart
+    slug: example-index
+  - name: 100% Stacked Bar Chart
+    slug: example-stacked-100
+  - name: Colors
+    slug: example-stacked-colors
+  - name: Patterns
+    slug: example-stacked-patterns
+  - name: Formatting Tooltip Data
+    slug: example-stacked-formatter-string
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing defaulting a selected value
+    slug: example-stacked-selected
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
-
-## Configuration Options
-
-1. Stacked bar chart example [View Example]( ../components/bar-stacked/example-index)
-2. 100% Stacked Bar Chart [View Example]( ../components/bar-stacked/example-stacked-100)
-3. Changing Bar Colors [View Example]( ../components/bar-stacked/example-stacked-colors)
-4. Formatting Tooltip Data [View Example]( ../components/bar-stacked/example-stacked-formatter-string)
-5. Patterns [View Example]( ../components/bar-stacked/example-stacked-patterns)
-6. Set animation speed [View Example]( ../components/bar-stacked/example-animation)
-7. Defaulting Selected [View Example]( ../components/bar-stacked/example-stacked-selected)
-8. Example showing Get Selected value [View Example]( ../components/bar-stacked/example-get-selected)
-9. Example showing Set Selected value [View Example]( ../components/bar-stacked/example-set-selected)
 
 ## Code Example
 
@@ -79,6 +87,10 @@ $('#bar-grouped-example').chart({type: 'bar-stacked', dataset: dataset,
   }
 });
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

@@ -8,7 +8,7 @@ const getSpecs = (listSpec) => {
     return listSpec.split(',');
   }
 
-  return ['components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
+  return ['behaviors/**/*.e2e-spec.js', 'components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
 };
 
 exports.config = {
@@ -42,13 +42,16 @@ exports.config = {
   onPrepare: () => {
     global.requireHelper = (filename) => require(`${basePath}/helpers/${filename}.js`);
     browser.ignoreSynchronization = true;
-    browser.protractorImageComparison = new protractorImageComparison({
-      baselineFolder: `${basePath}/baseline`,
-      screenshotPath: `${basePath}/.tmp/`,
-      autoSaveBaseline: false,
-      ignoreAntialiasing: true,
-      debug: false
-    });
+    if (process.env.TRAVIS) {
+      browser.protractorImageComparison = new protractorImageComparison({
+        baselineFolder: `${basePath}/baseline`,
+        screenshotPath: `${basePath}/.tmp/`,
+        autoSaveBaseline: false,
+        ignoreAntialiasing: true,
+        disableCSSAnimation: true,
+        debug: false
+      });
+    }
 
     jasmine.getEnv().addReporter(new SpecReporter({
       spec: { displayStacktrace: false }

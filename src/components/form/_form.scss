@@ -46,3 +46,12 @@
     }
   }
 }
+
+@include respond-to(tabletup) {
+  .form-responsive {
+    .field .checkbox-label,
+    .field .checkbox > label {
+      margin-top: -10px;
+    }
+  }
+}

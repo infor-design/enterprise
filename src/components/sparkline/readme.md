@@ -1,13 +1,15 @@
 ---
 title: Sparklines
 description: This page describes Sparklines.
+demo:
+  pages:
+  - name: Standard Sparkline Chart
+    slug: example-index
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
-
-## Configuration Options
-
-1. Sparklines Main Example [View Example]( ../components/sparkline/example-index)
-2. Example showing Get Selected value [View Example]( ../components/sparkline/example-get-selected)
-3. Example showing Set Selected value [View Example]( ../components/sparkline/example-set-selected)
 
 ## Spark Line Chart Types
 
@@ -41,6 +43,10 @@ $('#sparkline-chart-example-1').chart({type: 'sparkline-dots-n-peak', dataset: s
 ## Accessibility
 
 - Alternate information should be available for the screen reader user.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Future
 

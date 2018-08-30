@@ -14,19 +14,15 @@ const COMPONENT_NAME = 'Validator';
  * Validation Message Defaults
  * @namespace
  * @property {boolean} inline
- * @property {boolean} isAlert
  * @property {string} message
  * @property {string} type
  * @property {boolean} showTooltip
- * @property (boolean) triggerEvents
  */
 const VALIDATION_MESSAGE_DEFAULTS = {
   inline: true,
-  isAlert: false,
   message: '',
   type: 'error',
-  showTooltip: false,
-  triggerEvents: true
+  showTooltip: false
 };
 
 /**
@@ -139,7 +135,7 @@ Validator.prototype = {
     });
 
     // Link on to the current object and perform validation.
-    this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox]').each(function () {
+    this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox], input[type=file]').each(function () {
       const field = $(this);
       const eventAttr = field.attr('data-validation-events');
       const events = self.extractEvents(eventAttr || 'blur.validate change.validate keyup.validate');
@@ -176,10 +172,6 @@ Validator.prototype = {
         thisField.data(`handleEvent${[(e.type || '')]}`, e.handleObj);
 
         setTimeout(() => {
-          if (thisField.attr('data-disable-validation') === 'true' || thisField.hasClass('disable-validation') || thisField[0].style.visibility === 'is-hidden' || !thisField.is(':visible')) {
-            return;
-          }
-
           if (thisField.closest('.modal-engaged').length && !thisField.closest('.modal-body').length) {
             return;
           }
@@ -189,18 +181,19 @@ Validator.prototype = {
       });
     });
 
-    this.inputs.filter('input[type=checkbox]').filter(attribs).on('click.validate', function (e) {
+    this.inputs.filter('input[type=checkbox]').filter(attribs).off('click.validate').on('click.validate', function (e) {
       self.validate($(this), true, e);
     });
 
-    this.inputs.filter(':radio').on('click.validate', function (e) {
-      self.validate($(this), true, e);
+    this.inputs.filter(':radio').off('click.validate').on('click.validate', function (e) {
+      const first = $(this).parent().find('.radio').first();
+      self.validate(first, true, e);
     });
 
     const selects = this.inputs.filter('select').filter(attribs);
 
     if (selects.length) {
-      selects.on('change.validate', function (e) {
+      selects.off('change.validate listopened.validate listclosed.validate').on('change.validate', function (e) {
         self.validate($(this), true, e);
       }).on('listopened.validate', function () {
         const thisField = $(this);
@@ -229,17 +222,21 @@ Validator.prototype = {
 
       selects.filter(function () {
         return $(this).data('dropdown') !== undefined;
-      }).data('dropdown').pseudoElem.on('blur.validate', function (e) {
-        const select = $(this).closest('.field, .field-short').find('select');
-        self.validate(select, true, e);
+      }).each(function () {
+        const pseudoElem = $(this).data('dropdown').pseudoElem;
+        pseudoElem.off('blur.validate').on('blur.validate', function (e) {
+          const select = $(this).closest('.field, .field-short').find('select');
+          self.validate(select, true, e);
+        });
       });
     }
 
     // Attach to Form Submit and Validate
-    if (this.element.is('form')) {
+    if (this.element.is('form') && this.element.attr('data-validate-on')) {
       const submitHandler = function (e) {
         e.stopPropagation();
         e.preventDefault();
+
         self.validateForm((isValid) => {
           self.element.off('submit.validate');
           self.element.triggerHandler('validated', isValid);
@@ -248,7 +245,7 @@ Validator.prototype = {
         });
       };
 
-      this.element.on('submit.validate', submitHandler);
+      this.element.off('submit.validate').on('submit.validate', submitHandler);
     }
   },
 
@@ -304,7 +301,10 @@ Validator.prototype = {
         }
         const isVisible = modalField[0].offsetParent !== null;
         if (modalField.is('.required')) {
-          if ((isVisible || modalField.is('select, :checkbox')) && !modalField.val()) {
+          if (isVisible && modalField.is('.editor') && !modalField.html()) {
+            allValid = false;
+          }
+          if ((isVisible || modalField.is('select, :checkbox')) && !modalField.val() && !modalField.is('.editor')) {
             allValid = false;
           }
         }
@@ -464,6 +464,10 @@ Validator.prototype = {
   validate(field, showTooltip, e) {
     field.data(`handleEvent${[(e.type || '')]}`, null);
 
+    if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field.is(':disabled')) {
+      return [];
+    }
+
     // call the validation function inline on the element
     const self = this;
     const types = self.getTypes(field, e) || [];
@@ -485,13 +489,14 @@ Validator.prototype = {
       }
 
       validationType = Validation.ValidationTypes[rule.type] || Validation.ValidationTypes.error;
+      const isInline = field.attr(`data-${validationType.type}-type`) !== 'tooltip';
 
       if (!result) {
         if (!self.isPlaceholderSupport && (value === placeholder) &&
            (rule.message !== Locale.translate('Required'))) {
           return;
         }
-        self.addMessage(field, rule.message, rule.type, field.attr(`data-${validationType.type}-type`) !== 'tooltip', showResultTooltip, false, true, rule.icon);
+        self.addMessage(field, rule, isInline, showResultTooltip);
         results.push(rule.type);
 
         if (validationType.errorsForm) {
@@ -507,8 +512,8 @@ Validator.prototype = {
           // otherwise "icon-confirm" get misaligned,
           // so for this fix adding and then removing error here
 
-          self.addMessage(field, rule.message, rule.type, rule.inline, showResultTooltip, false, true, rule.icon);// eslint-disable-line
-          self.removeMessage(field, rule.type, true);
+          self.addMessage(field, rule, isInline, showResultTooltip);
+          self.removeMessage(field, rule, true);
           dfrd.resolve();
 
           self.addPositive(field);
@@ -516,37 +521,28 @@ Validator.prototype = {
       }
 
       self.setIconOnParent(field, rule.type);
-      self.validationStatus[type] = result;
+      const loc = self.getField(field);
+      const data = loc.data(`${validationType.type}message`);
 
-      if (self.eventsStatus(types) && type !== 'required' && !self.validationStatus.triggerValid) {
-        self.validationStatus.triggerValid = true;
-        field.triggerHandler('valid', { field, message: '' });
+      if (result && data && data.filter(rules => rules.id === rule.id || rule.message).length > 0) {
+        self.removeMessage(field, rule, true);
       }
-      field.triggerHandler('isvalid', [result]);
+
+      // Test Enabling primary button in modal
+      const modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
+      if (modalBtn.length) {
+        self.setModalPrimaryBtn(field, modalBtn);
+      }
+
+      if (rule.type === 'error') {
+        field.closest('form').triggerHandler('aftervalidate', { field, rule, isValid: result });
+      }
     }
 
-    const validationTypes = Object.keys(Validation.ValidationTypes);
-    validationTypes.forEach((prop) => {
-      validationType = Validation.ValidationTypes[prop];
-      self.removeMessage(field, validationType.type, true);
-      field.removeData(`${validationType.type}message`);
-    });
-
-    self.validationStatus = {};
     for (i = 0, l = types.length; i < l; i++) {
-      self.validationStatus[types[i]] = false;
       rule = Validation.rules[types[i]];
 
       dfd = $.Deferred();
-
-      if (rule.email) {
-        delete rule.email;
-      }
-
-      // Add email validation for input field that is email required.
-      if (field && field[0].getAttribute('data-validate').trim().indexOf('email') > -1) {
-        rule.email = Validation.rules.email.check;
-      }
 
       if (!rule) {
         continue;
@@ -591,39 +587,57 @@ Validator.prototype = {
 
   /**
    * Adds a validation message/icon to a form field.
+   * @private
    * @param {jQuery[]} field the field to be appended
-   * @param {string} message the validation message text
-   * @param {string} type the type of validation (error, alert, info, etc)
+   * @param {object} rule The validation message text
    * @param {boolean} inline whether or not the text should appear inside the input field
    *  (like a placeholder), or underneath the input field
    * @param {boolean} showTooltip whether or not the legacy validation Tooltip will contain the
    * message instead of placing it underneath
-   * @param {boolean} isAlert whether or not this validation message type is "alert"
-   * @param {boolean} triggerEvents whether or not to trigger events
-   * @param {string} icon if type is icon then here pass icon string
    */
-  addMessage(field, message, type, inline, showTooltip, isAlert, triggerEvents = true, icon) {
-    if (message === '') {
+  addMessage(field, rule, inline, showTooltip) {
+    if (rule.message === '') {
       return;
     }
 
-    isAlert = isAlert || false;
+    if (field.is('.dropdown, .multiselect') && $('#dropdown-list').is(':visible')) {
+      return;
+    }
 
     const loc = this.getField(field);
-    const dataMsg = loc.data(`${type}message`);
-    let appendedMsg = message;
-    const validationType = Validation.ValidationTypes[type] || Validation.ValidationTypes.error;
+    let dataMsg = loc.data(`${rule.type}message`);
+    const validationType = Validation.ValidationTypes[rule.type] ||
+      Validation.ValidationTypes.error;
 
-    if (!isAlert) {
-      loc.addClass(type === 'icon' ? 'custom-icon' : type);
+    loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
+
+    // Inline messages are now an array
+    if (dataMsg && dataMsg === rule.message) {
+      // No need to add new message
+      return;
     }
+
+    if (dataMsg &&
+      dataMsg.filter(rules =>
+        (rules.id || rules.message) === (rule.id || rule.message)).length > 0) {
+      // No need to add new message
+      return;
+    }
+
+    let appendedMsg = rule.message;
 
     if (dataMsg) {
-      appendedMsg = (/^\u2022/.test(dataMsg)) ? '' : '\u2022 ';
-      appendedMsg += `${dataMsg}<br>\u2022 ${message}`;
+      for (let i = 0; i < dataMsg.length; i++) {
+        appendedMsg = `\u2022 ${dataMsg[i].message}`;
+      }
+      appendedMsg += `<br>\u2022 ${rule.message}`;
     }
 
-    loc.data(`${validationType.type}message`, appendedMsg);
+    if (!dataMsg) {
+      dataMsg = [];
+    }
+    dataMsg.push({ id: rule.id, message: rule.message, type: rule.type });
+    loc.data(`${validationType.type}message`, dataMsg);
 
     // Add Aria
     if ($.fn.toast !== undefined) {
@@ -640,14 +654,7 @@ Validator.prototype = {
     }
 
     field.data('isValid', false);
-
-    // Disable primary button in modal
-    const modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
-    if (modalBtn.length) {
-      this.setModalPrimaryBtn(field, modalBtn);
-    }
-
-    this.showInlineMessage(field, message, validationType.type, isAlert, triggerEvents, icon);
+    this.showInlineMessage(field, rule);
   },
 
   /**
@@ -697,12 +704,11 @@ Validator.prototype = {
 
   /**
    * Shows an tooltip error
-   *
    * @private
    * @param {jQuery[]} field the field being appended
    * @param {string} message text content containing the validation message.
    * @param {string} type the validation type (error, alert, info, etc)
-   * @param {boolean} showTooltip whther or not to show a tooltip
+   * @param {boolean} showTooltip whether or not to initially show the tooltip
    */
   showTooltipMessage(field, message, type, showTooltip) {
     if (field.is(':radio')) {
@@ -718,6 +724,7 @@ Validator.prototype = {
       representationField = input;
       input.addClass(type === 'icon' ? 'custom-icon' : type);
     }
+    field.closest('.field, .field-short').find('.formatter-toolbar').addClass(type === 'icon' ? 'custom-icon' : type);
 
     let tooltipAPI = icon.data('tooltip');
 
@@ -814,50 +821,49 @@ Validator.prototype = {
    * @private
    *
    * @param {jQuery[]} field the field being modified
-   * @param {string} message text content containing the validation message
+   * @param {string} rule The validation rule data.
    * @param {string} type the validation type (error, warn, info, etc).
-   * @param {boolean} isAlert whether or not the validation type is "alert"
-   * @param {boolean} triggerEvents whether or not to trigger events
    * @param {string} icon if type is icon then here pass icon string
    */
-  showInlineMessage(field, message, type, isAlert, triggerEvents = true, icon) {
-    isAlert = isAlert || false;
-
+  showInlineMessage(field, rule) {
     const loc = this.getField(field);
-    const validationType = Validation.ValidationTypes[type] || Validation.ValidationTypes.error;
-    icon = icon || validationType.icon;
+    const validationType = Validation.ValidationTypes[rule.type] ||
+      Validation.ValidationTypes.error;
+    rule.icon = rule.icon || validationType.icon;
 
     let markup;
-    if (type === 'icon') {
+    if (rule.type === 'icon') {
       markup = '' +
-        `<div class="custom-icon-message">
-          ${$.createIcon({ classes: ['icon-custom'], icon })}
+        `<div class="custom-icon-message" data-rule-id="${rule.id || rule.message}">
+          ${$.createIcon({ classes: ['icon-custom'], icon: rule.icon })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
           </pre>
-          <p class="message-text">${message}</p>
+          <p class="message-text">${rule.message}</p>
         </div>`;
     } else {
       markup = '' +
-        `<div class="${validationType.type}-message">
+        `<div class="${validationType.type}-message" data-rule-id="${rule.id || rule.message}">
           ${$.createIcon({ classes: [`icon-${validationType.type}`], icon: validationType.type })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
           </pre>
-          <p class="message-text">${message}</p>
+          <p class="message-text">${rule.message}</p>
         </div>`;
     }
 
-    if (!isAlert) {
-      loc.addClass(type === 'icon' ? 'custom-icon' : type);
-    }
+    loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
 
-    if (field.is(':radio')) { // Radio button handler
-      this.toggleRadioMessage(field, message, validationType.type, markup, true);
+    if (field.is(':radio')) {
+      this.toggleRadioMessage(field, rule.message, validationType.type, markup, true);
     } else { // All other components
       loc.closest('.field, .field-short').find('.formatter-toolbar').addClass(validationType.type === 'icon' ? 'custom-icon' : validationType.type);
       loc.closest('.field, .field-short').append(markup);
-      loc.closest('.field, .field-short').find('.colorpicker-container').addClass('error');
+      loc.closest('.field, .field-short').find('.colorpicker-container').addClass(validationType.type === 'icon' ? 'custom-icon' : validationType.type);
+    }
+
+    if (field.is('.spinbox')) {
+      loc.closest('.spinbox-wrapper').addClass(validationType.type === 'icon' ? 'custom-icon' : validationType.type);
     }
 
     // Remove positive errors
@@ -865,18 +871,13 @@ Validator.prototype = {
       field.parent().find('.icon-confirm').remove();
     }
 
-    if (!triggerEvents) {
-      return;
-    }
-
     // Trigger an event
-    field.triggerHandler(validationType.type, { field, message });
-    field.closest('form').triggerHandler(validationType.type, { field, message });
+    field.triggerHandler(validationType.type, { field, message: rule.message });
+    field.closest('form').triggerHandler(validationType.type, { field, message: rule.message });
   },
 
   /**
    * Shows an inline error message on a field
-   *
    * @private
    * @param {jQuery[]} field the field being modified
    */
@@ -889,137 +890,165 @@ Validator.prototype = {
   },
 
   /**
-   * Remove the message form the field if there is
-   * one and mark the field valid.
-   *
+   * Remove the message form the field if there is one and mark the field valid, if no other messages.
    * @private
    * @param {jQuery[]} field the field which is having its error removed
-   * @param {string} type the type of message (error, alert, info, etc)
-   * @param {boolean} triggerEvents whether to trigger events
-   */
-  removeMessage(field, type, triggerEvents = true) {
+   * @param {string} rule The validation rule to remove
+   * @param {boolean} triggerEvents If true events will be fired
+  */
+  removeMessage(field, rule, triggerEvents = true) {
+    // see if anything to remove
     const loc = this.getField(field);
-    const isRadio = field.is(':radio');
-    const errorIcon = field.closest('.field, .field-short').find('.icon-error');
-    let tooltipAPI = errorIcon.data('tooltip');
-    const hasTooltip = field.attr(`data-${type}-type`) || !!tooltipAPI;
-    const hasError = field.getMessage({ type: 'error' });
+    const oldData = loc.data(`${rule.type}message`);
+    const ruleId = rule.id || rule.message;
 
-    if (this.inputs) {
-      this.inputs.filter('input, textarea').off('focus.validate');
-    }
-    field.removeClass(`${type} custom-icon`);
-    field.removeData(`${type}message`);
-
-    if (hasTooltip) {
-      tooltipAPI = field.find(`.icon.${type}`).data('tooltip') || tooltipAPI;
-
-      if (tooltipAPI) {
-        tooltipAPI.destroy();
-      }
-      if (field.attr('aria-describedby') === 'validation-tooltip') {
-        field.removeAttr('aria-describedby');
-        $('#validation-tooltip').remove();
-      }
+    if (!rule) {
+      return;
     }
 
-    if (isRadio) {
-      this.toggleRadioMessage(field, '', type);
+    if (rule.type === 'error' && !oldData || oldData.filter(rules => rules.id === ruleId).length === 0) {
+      return;
+    }
+
+    // Remove the message from the array
+    const newData = oldData.filter(rules => rules.id !== ruleId);
+    const noMoreMessages = newData.length === 0;
+
+    if (noMoreMessages) {
+      loc.removeData(`${rule.type}message`);
     } else {
-      field.next(`.icon-${type}`).off('click.validate').remove();
+      loc.data(`${rule.type}message`, newData);
     }
+
+    // Find the message by id and remove
+    field.closest('.field, .field-short').find(`[data-rule-id="${rule.id || rule.message}"]`).remove();
 
     if (field.hasClass('dropdown') || field.hasClass('multiselect')) {
-      field.next().next().removeClass(type); // #shdo
-      field.next().find('div.dropdown').removeClass(type).removeData(`${type}message`);
-      field.parent().find(`.dropdown-wrapper > .icon-${type}`).off('click.validate').remove(); // SVG Error Icon
+      field.parent().find(`.dropdown-wrapper > [data-rule-id="${rule.id || rule.message}"]`).off('click.validate').remove();
     }
 
-    if (!isRadio) {
-      field.next().next(`.icon-${type}`).remove();
-      field.next('.inforCheckboxLabel').next(`.icon-${type}`).remove();
-      field.parent('.field, .field-short').find(`span.${type}`).remove();
-      field.parent().find(`.icon-${type}`).remove();
-      field.off('focus.validate focus.tooltip');
-    }
-
-    if (loc.attr('data-placeholder')) {
-      loc.attr('placeholder', loc.attr('data-placeholder'));
-      loc.removeAttr('data-placeholder');
-    }
-
-    // Remove error classes from pseudo-markup for certain controls
-    if (field.is('.dropdown, .multiselect')) {
-      field.data('dropdown').pseudoElem.removeClass(type).removeAttr('placeholder');
-    }
-
-    if (field.parent().is('.editor-container')) {
-      field.parent().removeClass(`is-${type}`);
-    }
-    field.parent('.colorpicker-container').removeClass('error');
-
-    if (field.closest('.field-fileupload').length > -1) {
-      field.closest('.field-fileupload').find(`input.${type}`).removeClass(type);
-    }
-
-    // Stuff for the inline error
-    field.closest('.field, .field-short').find(`.${type}-message, .custom-icon-message`).remove();
-    field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(`${type} custom-icon`);
-
-    if (type === 'error' && hasError && triggerEvents) {
+    // Trigger valid and remove error / message classes
+    if (noMoreMessages && rule.type === 'error' && triggerEvents) {
       field.triggerHandler('valid', { field, message: '' });
       field.closest('form').triggerHandler('valid', { field, message: '' });
     }
 
-    field.data('isValid', true);
-
-    // Test Enabling primary button in modal
-    const modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
-    if (modalBtn.length) {
-      this.setModalPrimaryBtn(field, modalBtn);
+    if (!noMoreMessages) {
+      return;
     }
-  },
 
-  /**
-   * Check if all given events are true/valid
-   * @param {array} types a list of event types
-   * @returns {boolean} whether or not the types are valid
-   */
-  eventsStatus(types) {
-    let r;
-    const status = this.validationStatus;
+    field.removeClass(`${rule.type} custom-icon`);
+    loc.data('isValid', true);
 
-    if (status) {
-      r = true;
+    if (field.hasClass('dropdown') || field.hasClass('multiselect')) {
+      field.next().next().removeClass(`${rule.type} custom-icon`);
+      field.next().find('div.dropdown').removeClass(`${rule.type} custom-icon`);
+    }
 
-      if (types) {
-        for (let i = 0, l = types.length; i < l; i++) {
-          if (!status[types[i]]) {
-            r = false;
-          }
-        }
-      } else {
-        const statusKeys = Object.prototype.hasOwnProperty.call(status);
-        statusKeys.forEach((key) => {
-          if (!status[key]) {
-            r = false;
-          }
-        });
+    if (field.is(':radio')) {
+      this.toggleRadioMessage(field, '', rule.type, '', false);
+    }
+
+    if (field.hasClass('spinbox')) {
+      field.closest('.spinbox-wrapper').removeClass(`${rule.type} custom-icon`);
+    }
+    if (field.hasClass('colorpicker')) {
+      field.parent('.colorpicker-container').removeClass(rule.type);
+    }
+    if (field.closest('.field-fileupload').length > 0) {
+      field.closest('.field-fileupload').find(`input.${rule.type}`).removeClass(rule.type);
+    }
+
+    // Remove tooltip style message and tooltip
+    if (loc.attr(`data-${rule.type}-type`) === 'tooltip') {
+      const errorIcon = field.closest('.field, .field-short').find('.icon-error');
+      const tooltipAPI = errorIcon.data('tooltip');
+      // Destroy tooltip
+      if (tooltipAPI) {
+        tooltipAPI.destroy();
       }
-    } else {
-      r = false;
+      if (this.inputs) {
+        this.inputs.filter('input, textarea').off('focus.validate');
+      }
+      // Remove icon
+      field.parent().find(`.dropdown-wrapper > .icon-${rule.type}`).off('click.validate').remove(); // SVG Error Icon
+      field.parent().find(`.icon-${rule.type}`).remove();
+      field.next(`.icon-${rule.type}`).off('click.validate').remove();
+      field.parent('.field, .field-short').find(`.icon-${rule.type}`).remove();
+      field.next('.inforCheckboxLabel').next(`.icon-${rule.type}`).remove();
     }
-    return r;
   },
 
   /**
    * Shows an inline error message on a field
-   *
    * @private
    * @param {jQuery[]} field the field being modified
    */
   removePositive(field) {
     $('.icon-confirm', field.parent('.field, .field-short')).remove();
+  },
+
+  /**
+   * Reset all form errors and values
+   * @param {jQuery[]} form The form to reset.
+   */
+  resetForm(form) {
+    const formFields = form.find('input, select, textarea');
+
+    // Clear Errors
+    formFields.removeClass('error');
+    form.find('.error').removeClass('error');
+    form.find('.icon-error').remove();
+    form.find('.icon-confirm').remove();
+    form.find('.error-message').remove();
+
+    // Clear Warnings
+    formFields.removeClass('alert');
+    form.find('.alert').removeClass('alert');
+    form.find('.icon-alert').remove();
+    form.find('.alert-message').remove();
+
+    // Clear Informations
+    formFields.removeClass('info');
+    form.find('.info').removeClass('info');
+    form.find('.icon-info').remove();
+    form.find('.info-message').remove();
+
+    setTimeout(() => {
+      $('#validation-errors').addClass('is-hidden');
+    }, 300);
+
+    // Remove Dirty
+    formFields.data('isDirty', false).removeClass('isDirty');
+    form.find('.isDirty').removeClass('isDirty');
+
+    // reset form data
+    if (form.is('form')) {
+      form[0].reset();
+    }
+  },
+
+  /**
+   * See if any form errors and check for any empty required fields.
+   * @param {jQuery[]} form The form to check.
+   * @returns {boolean} True if the form is valid, false otherwise.
+   */
+  isFormValid(form) {
+    if ($(form).find('.error-message').length > 0) {
+      return false;
+    }
+
+    const formFields = $(form).find('[data-validate*="required"]');
+    for (let i = 0; i < formFields.length; i++) {
+      const field = $(formFields[i]);
+      const value = this.value(field);
+
+      if ((field.is(':visible') || field.is('select')) && !value) {
+        return false;
+      }
+    }
+
+    return true;
   },
 
   /**

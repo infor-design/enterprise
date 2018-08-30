@@ -5,7 +5,8 @@ import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../../utils/debounced-resize';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
+import { DOM } from '../../utils/dom';
 
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
@@ -97,6 +98,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.emptyMessage.title='No Data Available']
  * @param {object}   [settings.emptyMessageinfor='']
  * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
+ * @param {boolean}  [settings.searchExpandableRow=true] If true enable expanding of row on search
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
  * icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
@@ -168,7 +170,8 @@ const DATAGRID_DEFAULTS = {
   onDestroyCell: null,
   onEditCell: null,
   onExpandRow: null,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
+  searchExpandableRow: true
 };
 
 function Datagrid(element, settings) {
@@ -237,9 +240,7 @@ Datagrid.prototype = {
     * @property {object} event - The jquery event object
     * @property {array} ui - An array with references to the domElement, header and pagerBar
     */
-    setTimeout(() => {
-      this.element.trigger('rendered', [this.element, this.headerRow, this.pagerBar]);
-    }, 0);
+    this.element.trigger('rendered', [this.element, this.headerRow, this.pagerBar]);
   },
 
   /**
@@ -247,6 +248,7 @@ Datagrid.prototype = {
   * @private
   */
   initSettings() {
+    this.ignoredColumnById('rowStatus');
     this.sortColumn = { sortField: null, sortAsc: true };
     this.gridCount = $('.datagrid').length + 1;
     this.lastSelectedRow = 0; // Remember index to use shift key
@@ -256,8 +258,30 @@ Datagrid.prototype = {
   },
 
   /**
+  * Ignore given Column from settings.
+  * @private
+  * @param {string} columnId for column to be ignored
+  * @returns {void}
+  */
+  ignoredColumnById(columnId) {
+    const s = this.settings;
+    if (!columnId || !s.columns || (s.columns && !s.columns.length)) {
+      return;
+    }
+    const column = { index: -1 };
+    for (let i = 0, l = s.columns.length; i < l; i++) {
+      if (s.columns[i].id === columnId) {
+        column.index = i;
+      }
+    }
+    if (column.index > -1) {
+      s.columns.splice(column.index, 1);
+    }
+  },
+
+  /**
   * Render or render both the header and row area.
-  * @param {string} isToggleFilter Check if toggle filter row
+  * @param {string} isToggleFilter Check if filterrow type should be passed to the data source request
   */
   render(isToggleFilter) {
     if (isToggleFilter) {
@@ -326,8 +350,8 @@ Datagrid.prototype = {
       self.setEmptyMessage(this.settings.emptyMessage);
     }
 
-    self.settings.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
-    $(self.settings.buttonSelector, self.table).button();
+    self.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
+    $(self.buttonSelector, self.table).button();
   },
 
   /**
@@ -393,7 +417,7 @@ Datagrid.prototype = {
   /**
   * Add a row of data to the grid and dataset.
   * @param {object} data An data row object
-  * @param {string} location Where to add the row. This can be 'top' or leave off for 'bottom'
+  * @param {string} location Where to add the row. This can be 'bottom' or 'top', default is top.
   */
   addRow(data, location) {
     const self = this;
@@ -445,11 +469,12 @@ Datagrid.prototype = {
       * @property {object} args.oldValue - Always an empty object added for consistent api.
       */
       self.element.triggerHandler('addrow', args);
-    }, 10);
+    }, 100);
   },
 
   /**
   * Refresh the pager based on the current page and dataset.
+  * @private
   * @param {object} location Deprecated - Can be set to 'top' or left off for bottom pager.
   */
   pagerRefresh(location) {
@@ -519,6 +544,14 @@ Datagrid.prototype = {
   * @param {object} pagerInfo The pager info object with information like activePage ect.
   */
   updateDataset(dataset, pagerInfo) {
+    if (this.settings.toolbar && this.settings.toolbar.keywordFilter) {
+      const searchField = this.element.parent().find('.toolbar').find('.searchfield');
+      searchField.val('');
+      searchField.parent().removeClass('has-text');
+
+      this.clearFilter();
+    }
+
     this.loadData(dataset, pagerInfo);
   },
 
@@ -830,6 +863,7 @@ Datagrid.prototype = {
 
   /**
    * Test if the group header should be closed and close / open it.
+   * @private
    * @param {boolean} show Hide and show the column group if it should be.
    */
   hideShowColumnGroups(show) {
@@ -914,6 +948,7 @@ Datagrid.prototype = {
 
     for (let j = 0; j < this.settings.columns.length; j++) {
       const column = self.settings.columns[j];
+
       const id = self.uniqueId(`-header-${j}`);
       const isSortable = (column.sortable === undefined ? true : column.sortable);
       const isResizable = (column.resizable === undefined ? true : column.resizable);
@@ -928,7 +963,14 @@ Datagrid.prototype = {
       }${column.reorderable === false ? ' data-reorder="false"' : ''
       }${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''}${isExportable ? 'data-exportable="yes"' : 'data-exportable="no"'}>`;
 
-      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${column.align === undefined ? '' : ` l-${column.align}-text`}"><span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}</span>`;
+      let sortIndicator = '';
+      if (isSortable) {
+        sortIndicator = `${'<div class="sort-indicator">' +
+          '<span class="sort-asc">'}${$.createIcon({ icon: 'dropdown' })}</span>` +
+          `<span class="sort-desc">${$.createIcon({ icon: 'dropdown' })}</div>`;
+      }
+
+      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${column.align === undefined ? '' : ` l-${column.align}-text`}"><span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${column.align === 'center' ? sortIndicator : ''}</span>`;
       cols += `<col${this.columnWidth(column, j)}${column.hidden ? ' class="is-hidden"' : ''}>`;
 
       if (isSelection) {
@@ -939,10 +981,8 @@ Datagrid.prototype = {
         }
       }
 
-      if (isSortable) {
-        headerRow += `${'<div class="sort-indicator">' +
-          '<span class="sort-asc">'}${$.createIcon({ icon: 'dropdown' })}</span>` +
-          `<span class="sort-desc">${$.createIcon({ icon: 'dropdown' })}</div>`;
+      if (isSortable && column.align !== 'center') {
+        headerRow += sortIndicator;
       }
 
       headerRow += `</div>${self.filterRowHtml(column, j)}</th>`;
@@ -956,11 +996,12 @@ Datagrid.prototype = {
       self.headerTable = self.headerContainer.find('table');
       self.headerTable.width(this.headerTableWidth());
       self.headerColGroup = $(headerColGroup).appendTo(self.headerTable);
-      self.headerRow = $(`<thead>${headerRow}</thead>`).appendTo(self.headerContainer.find('table'));
+      DOM.append(self.headerContainer.find('table'), `<thead>${headerRow}</thead>`, '*');
+      self.headerRow = self.headerContainer.find('thead');
       self.element.prepend(self.headerContainer);
     } else {
       self.headerTable.width(this.headerTableWidth());
-      self.headerRow.html(headerRow);
+      DOM.html(self.headerRow, headerRow, '*');
       self.headerColGroup.html(cols);
     }
 
@@ -1119,7 +1160,9 @@ Datagrid.prototype = {
             for (let i = 0; i < col.options.length; i++) {
               const option = col.options[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+              if (option && optionValue) {
+                filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+              }
             }
           }
           filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
@@ -1135,7 +1178,9 @@ Datagrid.prototype = {
             for (let i = 0; i < col.options.length; i++) {
               const option = col.options[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+              if (option && optionValue) {
+                filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+              }
             }
           }
           filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
@@ -1879,7 +1924,11 @@ Datagrid.prototype = {
     return self.filterExpr;
   },
 
-  // Get height for current target in header
+  /**
+  * Get height for current target in header
+  * @private
+  * @returns {number} the height of the rows depending on rowHeight setting.
+  */
   getTargetHeight() {
     const h = this.settings.filterable ?
       { short: 48, medium: 51, normal: 56 } : { short: 20, medium: 28, normal: 35 };
@@ -2161,6 +2210,7 @@ Datagrid.prototype = {
 
   /**
   * Return the value in a field, taking into account nested objects. Fx obj.field.id
+  * @private
   * @param {object} obj The object to use
   * @param {string} field The field as a string fx 'field' or 'obj.field.id'
   * @returns {any} The current value in the field.
@@ -2177,7 +2227,7 @@ Datagrid.prototype = {
     const rawValue = obj[field];
     let value = (rawValue || rawValue === 0 || rawValue === false ? rawValue : '');
 
-    value = $.escapeHTML(value);
+    value = xssUtils.escapeHTML(value);
     return value;
   },
 
@@ -2306,6 +2356,7 @@ Datagrid.prototype = {
       this.sortDataset();
     }
 
+    let forcedTooltip = false;
     for (let i = 0; i < s.dataset.length; i++) {
       // For better performance dont render out of page
       if (s.paging && !s.source) {
@@ -2391,6 +2442,10 @@ Datagrid.prototype = {
 
       tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
       this.recordCount++;
+
+      if (s.dataset[i].rowStatus) {
+        forcedTooltip = true;
+      }
     }
 
     // Append a Summary Row
@@ -2409,10 +2464,10 @@ Datagrid.prototype = {
       self.tableBody.before(self.bodyColGroup);
     }
 
-    self.tableBody.html(tableHtml);
+    DOM.html(self.tableBody, tableHtml, '*');
     self.setVirtualHeight();
     self.setScrollClass();
-    self.setupTooltips();
+    self.setupTooltips(forcedTooltip);
     self.afterRender();
   },
 
@@ -2653,6 +2708,7 @@ Datagrid.prototype = {
 
   /**
    * The default cell formatters thats used when no formatter is provided.
+   * @private
    * @param  {function} formatter The formatter function.
    * @param  {number} row The row index.
    * @param  {number} cell The cell index.
@@ -2680,6 +2736,16 @@ Datagrid.prototype = {
     return formattedValue;
   },
 
+  /**
+   * Return the html markup for the row.
+   * @private
+   * @param  {object} rowData The data to use to render the row
+   * @param  {number} dataRowIdx The row index.
+   * @param  {number} actualIndex The actual data index
+   * @param  {boolean} isGroup If true we are building a group row.
+   * @param  {object} isFooter If true we are building a footer row.
+   * @returns {string} The html used to construct the row.
+   */
   rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter) {
     let isEven = false;
     const self = this;
@@ -2740,13 +2806,20 @@ Datagrid.prototype = {
     isEven = (this.recordCount % 2 === 0);
     const isSelected = this.isNodeSelected(rowData);
     const isActivated = rowData._rowactivated;
+    const rowStatus = { class: '', svg: '', tooltip: '' };
+    if (rowData && rowData.rowStatus) {
+      rowStatus.show = true;
+      rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
+      rowStatus.icon = (rowData.rowStatus.icon === 'confirm') ? '#icon-check' : '#icon-exclamation';
+      rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${rowStatus.icon}"></use></svg>`;
+      rowStatus.tooltip = rowData.rowStatus.tooltip;
+    }
 
     rowHtml = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
               ` data-index="${actualIndex}"${
                 self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
               }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
-              }${isSelected ? ' aria-selected= "true"' : ''
-              } class="datagrid-row${
+              }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
                 isHidden ? ' is-hidden' : ''
               }${isActivated ? ' is-rowactivated' : ''
               }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
@@ -2758,6 +2831,7 @@ Datagrid.prototype = {
 
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
+
       let cssClass = '';
       const defaultFormatter = col.summaryRowFormatter || col.formatter || self.defaultFormatter;
       const formatter = isSummaryRow ? defaultFormatter : col.formatter || self.defaultFormatter;
@@ -2869,7 +2943,7 @@ Datagrid.prototype = {
 
       if (skipColumns > 0) {
         skipColumns -= 1;
-        continue;
+        cssClass += ' is-hidden';
       }
 
       // Run an optional function to calculate a colspan
@@ -2891,16 +2965,26 @@ Datagrid.prototype = {
         }
       }
 
+      // Set rowStatus info
+      if (j !== 0) {
+        rowStatus.class = '';
+        rowStatus.svg = '';
+        rowStatus.tooltip = '';
+      }
+
+      if (rowStatus.class !== '') {
+        cssClass += ' rowstatus-cell';
+      }
+
       rowHtml += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}" ` +
           ` aria-describedby="${self.uniqueId(`-header-${j}`)}"${
             isSelected ? ' aria-selected= "true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
           }${colspan ? ` colspan="${colspan}"` : ''
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
-          }${col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ` title="${rowData.rowStatus.tooltip}"` : ''
+          }${rowStatus.tooltip !== '' ? ` title="${rowStatus.tooltip}"` : ''
           }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
-          }${rowspan || ''
-          }><div class="datagrid-cell-wrapper">`;
+          }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
 
       if (col.contentVisible) {
         const canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
@@ -2953,6 +3037,7 @@ Datagrid.prototype = {
   /**
    * This Function approximates the table auto widthing
    * Except use all column values and compare the text width of the header as max
+   * @private
    * @param  {object} columnDef The column to check.
    * @returns {number} The text width.
    */
@@ -2972,7 +3057,7 @@ Datagrid.prototype = {
       // Get formatted value (without html) so we have accurate string that
       // will display for this cell
       val = self.formatValue(columnDef.formatter, i, null, val, columnDef, row, self);
-      val = stringUtils.stripHTML(val);
+      val = xssUtils.stripHTML(val);
 
       len = val.toString().length;
 
@@ -2980,7 +3065,7 @@ Datagrid.prototype = {
         for (let k = 0; k < row.values.length; k++) {
           let groupVal = this.fieldValue(row.values[k], columnDef.field);
           groupVal = self.formatValue(columnDef.formatter, i, null, groupVal, columnDef, row, self);
-          groupVal = stringUtils.stripHTML(groupVal);
+          groupVal = xssUtils.stripHTML(groupVal);
 
           len = groupVal.toString().length;
           if (len > max) {
@@ -3048,6 +3133,12 @@ Datagrid.prototype = {
     return Math.round(metrics.width + padding); // Add padding and borders
   },
 
+  /**
+   * Return the currently caached table width.
+   * Except use all column values and compare the text width of the header as max
+   * @private
+   * @returns {string} The css width.
+   */
   headerTableWidth() {
     const cacheWidths = this.headerWidths[this.settings.columns.length - 1];
 
@@ -3101,6 +3192,7 @@ Datagrid.prototype = {
   /**
    * Return the width for a column (upfront with no rendering)
    * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
+   * @private
    * @param  {[type]} col The column object to use
    * @param  {[type]} index The column index
    * @returns {void}
@@ -3139,6 +3231,7 @@ Datagrid.prototype = {
   /**
    * Calculate the width for all the columns
    * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
+   * @private
    */
   calculateColumnWidths() {
     for (let i = 0; i < this.settings.columns.length; i++) {
@@ -3150,6 +3243,7 @@ Datagrid.prototype = {
   /**
    * Calculate the width for a column (upfront with no rendering)
    * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
+   * @private
    * @param {object} col The column object to use
    * @param {number} index The column index
    * @returns {void}
@@ -3352,18 +3446,34 @@ Datagrid.prototype = {
     return '';
   },
 
-  // Summary Row Totals use the aggregators
+  /**
+  * Summary Row Totals use the aggregators
+  * @private
+  * @returns {number} the total widths
+  */
   calculateTotals() {
     this.settings.totals = Aggregators.aggregate(this.settings.dataset, this.settings.columns);
     return this.settings.totals;
   },
 
-  // Set unit type (pixel or percent)
+  /**
+  * Set unit type (pixel or percent)
+  * @private
+  * @param  {any} v value to check
+  * @returns {number} the total widths
+  */
   setUnit(v) {
     return v + (/(px|%)/i.test(`${v}`) ? '' : 'px');
   },
 
-  // Content tooltip for rich text editor
+  /**
+  * Setup Content tooltip for the rich text editor
+  * @private
+  * @param  {object} elem The content element.
+  * @param  {number} width The current width.
+  * @param  {object} td The cell node
+  * @returns {void}
+  */
   setupContentTooltip(elem, width, td) {
     if (elem.text().length > 0) {
       const content = elem.clone();
@@ -3389,8 +3499,14 @@ Datagrid.prototype = {
     }
   },
 
-  setupTooltips() {
-    if (!this.settings.enableTooltips) {
+  /**
+   * Setup tooltips on the cells.
+   * @private
+   * @param  {boolean} forced true to show tooltip
+   * @returns {void}
+   */
+  setupTooltips(forced) {
+    if (!this.settings.enableTooltips && !forced) {
       return;
     }
 
@@ -3413,7 +3529,7 @@ Datagrid.prototype = {
           cell.data('tooltip').settings.maxWidth = w;
 
           clonedEl.remove();
-          return stringUtils.stripHTML(text);
+          return xssUtils.stripHTML(text);
         }
 
         clonedEl.remove();
@@ -3432,6 +3548,33 @@ Datagrid.prototype = {
 
       self.setupContentTooltip(elem, width, td);
     });
+
+    // Set rowStatus with error color
+    const cellNodes = [].slice.call(this.table[0].querySelectorAll('td.rowstatus-cell'));
+    cellNodes.forEach((cellNode) => {
+      const rowNode = this.closest(cellNode, el => el.classList.contains('datagrid-row'));
+      const classList = rowNode ? rowNode.classList : {};
+      const isErrorColor = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
+      $(cellNode).tooltip({ placement: 'right', isErrorColor });
+    });
+  },
+
+  /**
+   * Get closest element of a given element by passing callback to
+   * target by class, id, or tag name
+   * Callback usage as:
+   * const elem = this.element[0].querySelector(selectorString);
+   * class: const closestEl = this.closest(elem, el => el.classList.contains('some-class'));
+   * id: const closestEl = this.closest(elem, el => el.id === 'some-id');
+   * tag: const closestEl = this.closest(elem, el => el.tagName.toLowerCase() === 'some-tag');
+   * http://clubmate.fi/jquerys-closest-function-and-pure-javascript-alternatives/
+   * @private
+   * @param  {object} el The element to start from.
+   * @param  {object} fn The callback function.
+   * @returns {object} The closest element.
+   */
+  closest(el, fn) {
+    return el && (fn(el) ? el : this.closest(el.parentNode, fn));
   },
 
   /**
@@ -3456,10 +3599,6 @@ Datagrid.prototype = {
       const col = this.settings.columns[j];
 
       if (col.hidden) {
-        continue;
-      }
-
-      if (col.id && ['selectionCheckbox', 'expander'].indexOf(col.id) > -1) {
         continue;
       }
 
@@ -3798,7 +3937,7 @@ Datagrid.prototype = {
 
     this.settings.columns[idx].hidden = true;
     this.headerNodes().eq(idx).addClass('is-hidden');
-    this.tableBody.find(`td:nth-child(${idx + 1})`).addClass('is-hidden');
+    this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).addClass('is-hidden');
     this.headerColGroup.find('col').eq(idx).addClass('is-hidden');
 
     // Shrink or remove colgroups
@@ -3816,7 +3955,7 @@ Datagrid.prototype = {
         colSpan -= 1;
         for (let i = 0; i < colSpan; i++) {
           idx += colSpan;
-          this.tableBody.find(`td:nth-child(${idx + 1})`).addClass('is-hidden');
+          this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).addClass('is-hidden');
         }
       }
     }
@@ -3837,7 +3976,7 @@ Datagrid.prototype = {
   */
   syncExpandableRowColspan() {
     const visibleColumnCount = this.visibleColumns().length;
-    this.tableBody.find('.datagrid-expandable-row td').attr('colspan', visibleColumnCount);
+    this.tableBody.find('.datagrid-expandable-row > td').attr('colspan', visibleColumnCount);
   },
 
   /**
@@ -3853,7 +3992,7 @@ Datagrid.prototype = {
 
     this.settings.columns[idx].hidden = false;
     this.headerNodes().eq(idx).removeClass('is-hidden');
-    this.tableBody.find(`td:nth-child(${idx + 1})`).removeClass('is-hidden');
+    this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).removeClass('is-hidden');
     this.headerColGroup.find('col').eq(idx).removeClass('is-hidden');
 
     if (this.bodyColGroup) {
@@ -3871,7 +4010,7 @@ Datagrid.prototype = {
         colSpan -= 1;
         for (let i = 0; i < colSpan; i++) {
           idx += colSpan;
-          this.tableBody.find(`td:nth-child(${idx + 1})`).removeClass('is-hidden');
+          this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).removeClass('is-hidden');
         }
       }
     }
@@ -4159,11 +4298,11 @@ Datagrid.prototype = {
     }
 
     if (self.toolbar) {
-      self.toolbar.find('.datagrid-result-count').html(countText);
-      self.toolbar.attr('aria-label', self.toolbar.find('.title').text());
+      DOM.html(self.toolbar.find('.datagrid-result-count'), countText, '<span>');
+      self.toolbar[0].setAttribute('aria-label', self.toolbar.find('.title').text());
       self.toolbar.find('.datagrid-row-count').text(count);
     }
-    self.element.closest('.modal').find('.datagrid-result-count').html(countText);
+    DOM.html(self.element.closest('.modal').find('.datagrid-result-count'), countText, '<span>');
     this.lastCount = count;
 
     this.checkEmptyMessage();
@@ -4365,7 +4504,7 @@ Datagrid.prototype = {
     // Handle Sorting
     this.element
       .off('click.datagrid')
-      .on('click.datagrid', 'th.is-sortable, th.btn-filter', function (e) {
+      .on('click.datagrid', '> .datagrid-header th.is-sortable, > .datagrid-header th.btn-filter', function (e) {
         if ($(e.target).parent().is('.datagrid-filter-wrapper')) {
           return;
         }
@@ -4425,8 +4564,13 @@ Datagrid.prototype = {
       let dataRowIdx = null;
       const target = $(e.target);
 
-      if (target.closest('.datagrid-row-detail').length === 1) {
+      if ($(e.currentTarget).parent().hasClass('.datagrid-row-detail')) {
         return;
+      }
+
+      if (target.parents('td').length > 1) {
+        e.preventDefault(); // stop nested clicks from propagating
+        e.stopPropagation();
       }
 
       /**
@@ -4499,8 +4643,8 @@ Datagrid.prototype = {
           self.settings.dataset[dataRowIdx];
 
         if (elem.hasClass('is-focusable')) {
-          if (!target.is(self.settings.buttonSelector)) {
-            if (!target.parent('button').is(self.settings.buttonSelector)) {
+          if (!target.is(self.buttonSelector)) {
+            if (!target.parent('button').is(self.buttonSelector)) {
               return;
             }
           }
@@ -4699,7 +4843,7 @@ Datagrid.prototype = {
         setTimeout(() => {
           const focusElem = $('*:focus');
 
-          if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup, #colorpicker-menu').length &&
+          if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
               self.editor) {
             if (focusElem.is('.spinbox')) {
               return;
@@ -5106,6 +5250,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   highlightSearchRows(term) {
+    const self = this;
     // Move across all visible cells and rows, highlighting
     this.tableBody.find('tr').each(function () {
       let found = false;
@@ -5114,8 +5259,9 @@ Datagrid.prototype = {
       row.find('td').each(function () {
         const cell = $(this);
         const cellText = cell.text().toLowerCase();
+        const isSearchExpandableRow = self.settings.searchExpandableRow ? true : !row.hasClass('datagrid-expandable-row');
 
-        if (cellText.indexOf(term) > -1) {
+        if (cellText.indexOf(term) > -1 && isSearchExpandableRow) {
           found = true;
           cell.find('*').each(function () {
             if (this.innerHTML === this.textContent) {
@@ -5129,10 +5275,10 @@ Datagrid.prototype = {
         }
       });
 
-      // Hide non matching rows
-      if (!found) {
+      // Hide non matching rows and non detail rows
+      if (!found && !row.find('.datagrid-row-detail').length) {
         row.addClass('is-filtered').hide();
-      } else if (found && row.is('.datagrid-expandable-row') && term !== '') {
+      } else if (self.settings.searchExpandableRow && found && row.is('.datagrid-expandable-row') && term !== '') {
         row.prev().show();
         row.prev().find('.datagrid-expand-btn').addClass('is-expanded');
         row.prev().find('.plus-minus').addClass('active');
@@ -5149,7 +5295,8 @@ Datagrid.prototype = {
 
     for (let i = 0, l = dataset.length; i < l; i++) {
       const idx = this.pagingRowIndex(i);
-      if (this.filterRowRendered) {
+      if (this.filterRowRendered ||
+        (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].keywordSearch)) {
         if (!dataset[i].isFiltered) {
           rows.push(idx);
         }
@@ -5177,6 +5324,9 @@ Datagrid.prototype = {
     this.element.triggerHandler('selected', [this.selectedRows(), 'selectall']);
   },
 
+  /**
+  * Deselect all rows that are currently selected.
+  */
   unSelectAllRows() {
     const selectedRows = this.selectedRows();
     this.dontSyncUi = true;
@@ -5225,7 +5375,7 @@ Datagrid.prototype = {
       dataRowIndex = idx;
     }
 
-    if (!rowNode) {
+    if (!rowNode || (!rowNode.length && s.source)) {
       return;
     }
 
@@ -5238,7 +5388,7 @@ Datagrid.prototype = {
       let rowData;
       const selectNode = function (elem, index, data) {
         // do not add if already exists in selected
-        if (self.isNodeSelected(data)) {
+        if (!data || self.isNodeSelected(data)) {
           return;
         }
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
@@ -5376,6 +5526,17 @@ Datagrid.prototype = {
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     let rows = dataset;
+
+    if (this.settings.groupable) {
+      rows = [];
+      for (let i = 0, l = dataset.length; i < l; i++) {
+        if (dataset[i].values) {
+          for (let i2 = 0, l2 = dataset[i].values.length; i2 < l2; i2++) {
+            rows.push(i2);
+          }
+        }
+      }
+    }
 
     if (this.filterRowRendered) {
       rows = [];
@@ -6079,6 +6240,15 @@ Datagrid.prototype = {
 
       // Tab, Left and Right arrow keys.
       if ([9, 37, 39].indexOf(key) !== -1) {
+        if (key === 9 && self.settings.onKeyDown) {
+          const ret = self.settings.onKeyDown(e);
+          if (ret === false) {
+            e.stopPropagation();
+            e.preventDefault();
+            return;
+          }
+        }
+
         if (key === 9 && !self.settings.actionableMode) {
           return;
         }
@@ -6099,6 +6269,13 @@ Datagrid.prototype = {
             self.setActiveCell(cell);
           } else {
             self.setActiveCell(row, cell);
+          }
+
+          if (key === 9 && self.settings.actionableMode) {
+            self.makeCellEditable(self.activeCell.rowIndex, cell, e);
+            if (self.isContainTextfield(node) && self.notContainTextfield(node)) {
+              self.quickEditMode = true;
+            }
           }
           self.quickEditMode = false;
           handled = true;
@@ -6451,10 +6628,10 @@ Datagrid.prototype = {
       }
       // Fix: Not sure why, but `input.closest('td')` did not work
       cellNode = this.tableBody.find(`#${input.attr('id')}`).closest('td');
-      newValue = $.escapeHTML(newValue);
+      newValue = xssUtils.escapeHTML(newValue);
     } else {
       cellNode = input.closest('td');
-      newValue = $.escapeHTML(newValue);
+      newValue = xssUtils.escapeHTML(newValue);
     }
 
     // Format Cell again
@@ -6700,6 +6877,27 @@ Datagrid.prototype = {
     icon.tooltip({ placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: messages });
   },
 
+  /**
+   * Clear all error for a given cell in a row
+   * @param {number} row The row index.
+   * @param {number} cell The cell index.
+   * @returns {void}
+   */
+  clearAllCellError(row, cell) {
+    const validationTypes = $.fn.validation.ValidationTypes;
+    for (const props in validationTypes) {  // eslint-disable-line
+      const validationType = validationTypes[props];
+      this.clearCellError(row, cell, validationType.type);
+    }
+  },
+
+  /**
+   * Clear a cell with an error of a given type
+   * @param {number} row The row index.
+   * @param {number} cell The cell index.
+   * @param {string} type of error.
+   * @returns {void}
+   */
   clearCellError(row, cell, type) {
     this.clearNonVisibleCellErrors(row, cell, type);
     const rowNode = this.dataRowNode(row);
@@ -6729,33 +6927,50 @@ Datagrid.prototype = {
     }
   },
 
+  /**
+   * Clear a row level all errors, alerts, info messages and dirty indicators
+   * @param {number} row The row index.
+   * @returns {void}
+   */
   clearRowError(row) {
+    const classList = 'error alert rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-confirm';
     const rowNode = this.dataRowNode(row);
 
-    rowNode.removeClass('error alert');
+    rowNode.removeClass(classList);
     this.rowStatus(row, '', '');
+    for (let cell = 0; cell < this.settings.columns.length; cell++) {
+      this.clearAllCellError(row, cell);
+    }
   },
 
+  /**
+   * Clear all errors, alerts, info messages and dirty indicators in entire datagrid.
+   * @returns {void}
+   */
   clearAllErrors() {
-    const self = this;
+    let rowStatus = 0;
+    for (let row = 0; row < this.settings.dataset.length; row++) {
+      if (this.settings.dataset[row].rowStatus) {
+        delete this.settings.dataset[row].rowStatus;
+        rowStatus++;
+      }
+      for (let cell = 0; cell < this.settings.columns.length; cell++) {
+        this.clearAllCellError(row, cell);
+      }
+    }
 
-    this.tableBody.find('td.error').each(function () {
-      const node = $(this);
-      self.clearNodeErrors(node, 'error');
-      self.clearNodeErrors(node, 'dirtyerror');
-    });
-
-    this.tableBody.find('td.alert').each(function () {
-      const node = $(this);
-      self.clearNodeErrors(node, 'alert');
-    });
-
-    this.tableBody.find('td.info').each(function () {
-      const node = $(this);
-      self.clearNodeErrors(node, 'info');
-    });
+    if (rowStatus > 0) {
+      this.render();
+    }
   },
 
+  /**
+   * Remove messages form a cell element.
+   * @private
+   * @param {object} node cell element.
+   * @param {string} type of messages.
+   * @returns {void}
+   */
   clearNodeErrors(node, type) {
     node.removeClass(type).removeAttr(`data-${type}message`);
 
@@ -6769,17 +6984,21 @@ Datagrid.prototype = {
   },
 
   /**
-  * Reset the status on all rows.
+  * Set the row status on a row to none.
   * @returns {void}
   */
   resetRowStatus() {
-    for (let i = 0; i < this.settings.dataset.length; i++) {
-      this.rowStatus(i, '');
+    const errors = this.settings.dataset.filter(row => row.rowStatus);
+    for (let i = 0; i < errors.length; i++) {
+      delete errors[i].rowStatus;
+    }
+    if (errors.length > 0) {
+      this.render();
     }
   },
 
   /**
-  * Get the currently dirty rows.
+  * Return all of the currently dirty rows by row index.
   * @returns {array} An array of dirty rows.
   */
   dirtyRows() {
@@ -6795,12 +7014,12 @@ Datagrid.prototype = {
   },
 
   /**
-  * Show an error on a row.
-  * @param  {number} row The row index.
-  * @param  {string} message The row description.
-  * @param  {string} type The error type.
-  * @returns {void}
-  */
+   * Show an error on a row of a given type.
+   * @param  {number} row The row index.
+   * @param  {string} message The row description.
+   * @param  {string} type The error type.
+   * @returns {void}
+   */
   showRowError(row, message, type) {
     const messageType = type || 'error';
     const rowNode = this.dataRowNode(row);
@@ -6810,10 +7029,10 @@ Datagrid.prototype = {
   },
 
   /**
-  * Validate all visible cells in a row if they have validation on the column
-  * @param  {number} row The row index.
-  * @returns {void}
-  */
+   * Validate all visible cells in a row if they have validation on the column
+   * @param  {number} row The row index.
+   * @returns {void}
+   */
   validateRow(row) {
     for (let i = 0; i < this.settings.columns.length; i++) {
       this.validateCell(row, i);
@@ -6821,10 +7040,9 @@ Datagrid.prototype = {
   },
 
   /**
-  * Validate all rows and cells in the entire gridif they have validation on the column
-  * @param  {number} row The row index.
-  * @returns {void}
-  */
+   * Validate all rows and cells in the entire grid if they have validation on the column
+   * @returns {void}
+   */
   validateAll() {
     for (let j = 0; j < this.settings.dataset.length; j++) {
       for (let i = 0; i < this.settings.columns.length; i++) {
@@ -6834,11 +7052,11 @@ Datagrid.prototype = {
   },
 
   /**
-  * Get the settings for a column by index.
-  * @param  {number} idx The column index.
-  * @param  {boolean} onlyVisible If only the visible columns should be included.
-  * @returns {array} The settings array
-  */
+   * Get the settings for a column by index.
+   * @param  {number} idx The column index.
+   * @param  {boolean} onlyVisible If only the visible columns should be included.
+   * @returns {array} The settings array
+   */
   columnSettings(idx, onlyVisible) {
     let foundColumn = this.settings.columns[idx];
 
@@ -6850,15 +7068,15 @@ Datagrid.prototype = {
   },
 
   /**
-  * Attempt to serialize the value back into the dataset
-  * @private
-  * @param {any} value The new column value
-  * @param {any} oldVal The old column value.
-  * @param {number} col The column definition
-  * @param {number} row  The row index.
-  * @param {number} cell The cell index.
-  * @returns {void}
-  */
+   * Attempt to serialize the value back into the dataset
+   * @private
+   * @param {any} value The new column value
+   * @param {any} oldVal The old column value.
+   * @param {number} col The column definition
+   * @param {number} row  The row index.
+   * @param {number} cell The cell index.
+   * @returns {void}
+   */
   coerceValue(value, oldVal, col, row, cell) {
     let newVal;
 
@@ -6879,12 +7097,12 @@ Datagrid.prototype = {
   },
 
   /**
-  * Update one cell with a specific value
-  * @param {number} row  The row index.
-  * @param {number} cell The cell index.
-  * @param {any} value The value to use.
-  * @returns {void}
-  */
+   * Update one cell with a specific value
+   * @param {number} row  The row index.
+   * @param {number} cell The cell index.
+   * @param {any} value The value to use.
+   * @returns {void}
+   */
   updateCell(row, cell, value) {
     const col = this.columnSettings(cell);
 
@@ -6896,15 +7114,15 @@ Datagrid.prototype = {
   },
 
   /**
-  * Update one cell with a specific value
-  * @private
-  * @param {number} row  The row index.
-  * @param {number} cell The cell index.
-  * @param {any} value The value to use.
-  * @param {boolean} fromApiCall Us from an api call.
-  * @param {boolean} isInline If the editor is an inline value.
-  * @returns {void}
-  */
+   * Update one cell with a specific value
+   * @private
+   * @param {number} row  The row index.
+   * @param {number} cell The cell index.
+   * @param {any} value The value to use.
+   * @param {boolean} fromApiCall Us from an api call.
+   * @param {boolean} isInline If the editor is an inline value.
+   * @returns {void}
+   */
   updateCellNode(row, cell, value, fromApiCall, isInline) {
     let coercedVal;
     let rowNode = this.actualRowNode(row);
@@ -6926,7 +7144,7 @@ Datagrid.prototype = {
       rowNode = this.visualRowNode(row);
       cellNode = rowNode.find('td').eq(cell);
     }
-    const oldVal = (col.field ? rowData[col.field] : '');
+    const oldVal = this.fieldValue(rowData, col.field);
 
     // Coerce/Serialize value if from cell edit
     if (!fromApiCall) {
@@ -6940,21 +7158,42 @@ Datagrid.prototype = {
       coercedVal = value;
     }
 
+    // Remove rowStatus icon
+    if (rowNode.length && rowData && !rowData.rowStatus) {
+      const rowstatusIcon = rowNode.find('svg.icon-rowstatus');
+      if (rowstatusIcon.length) {
+        rowstatusIcon.remove();
+      }
+    }
+
     // Setup/Sync tooltip
     if (cellNode.data('tooltip')) {
       cellNode.data('tooltip').destroy();
     }
 
     // Update the value in the dataset
-    if (col.id === 'rowStatus' && rowData && rowData.rowStatus && rowData.rowStatus.tooltip) {
-      cellNode.attr('title', rowData.rowStatus.tooltip);
-      cellNode.tooltip({
-        placement: 'right',
-        isErrorColor: rowData.rowStatus.icon === 'error' || rowData.rowStatus.icon === 'dirtyerror'
-      });
+    if (cell === 0 && rowData && rowData.rowStatus) {
+      if (rowNode[0] && cellNode[0]) {
+        rowNode[0].classList.add(`rowstatus-row-${rowData.rowStatus.icon}`);
+        cellNode[0].classList.add('rowstatus-cell');
+
+        const svg = cellNode.find('svg.icon-rowstatus');
+
+        if (!svg.length) {
+          const svgIcon = rowData.rowStatus.icon === 'confirm' ? '#icon-check' : '#icon-exclamation';
+          cellNode.prepend(`<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${svgIcon}"></use></svg>`);
+        }
+      }
+      if (rowData.rowStatus.tooltip) {
+        cellNode.attr('title', rowData.rowStatus.tooltip);
+        cellNode.tooltip({
+          placement: 'right',
+          isErrorColor: rowData.rowStatus.icon === 'error' || rowData.rowStatus.icon === 'dirtyerror'
+        });
+      }
     }
 
-    coercedVal = $.unescapeHTML(coercedVal);
+    coercedVal = xssUtils.unescapeHTML(coercedVal);
 
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
@@ -6972,7 +7211,7 @@ Datagrid.prototype = {
     }
 
     // update cell value
-    const escapedVal = $.escapeHTML(coercedVal);
+    const escapedVal = xssUtils.escapeHTML(coercedVal);
     const rowIdx = (isTreeGrid ? row + 1 : row);
     const val = (isEditor ? coercedVal : escapedVal);
     formatted = this.formatValue(formatter, rowIdx, cell, val, col, rowData);
@@ -7007,18 +7246,18 @@ Datagrid.prototype = {
         this.settings.treeDepth[row].node : rowData;
 
       /**
-      * Fires when a cell value is changed via the editor.
-      * @event cellchange
-      * @memberof Datagrid
-      * @property {object} event The jquery event object
-      * @property {object} args Additional arguments
-      * @property {number} args.row An array of selected rows.
-      * @property {number} args.cell An array of selected rows.
-      * @property {HTMLElement} args.target The cell html element that was entered.
-      * @property {any} args.value The cell value.
-      * @property {any} args.oldValue The previous cell value.
-      * @property {object} args.column The column object
-      */
+       * Fires when a cell value is changed via the editor.
+       * @event cellchange
+       * @memberof Datagrid
+       * @property {object} event The jquery event object
+       * @property {object} args Additional arguments
+       * @property {number} args.row An array of selected rows.
+       * @property {number} args.cell An array of selected rows.
+       * @property {HTMLElement} args.target The cell html element that was entered.
+       * @property {any} args.value The cell value.
+       * @property {any} args.oldValue The previous cell value.
+       * @property {object} args.column The column object
+       */
       this.element.trigger('cellchange', args);
       this.wasJustUpdated = true;
 
@@ -7134,7 +7373,7 @@ Datagrid.prototype = {
     }
 
     // Find the cell if it exists
-    self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), (cell)).attr('tabindex', '0');
+    self.activeCell.node = self.cellNode((isGroupRow || rowElem ? rowElem : (rowIndex > -1 ? rowIndex : rowNum)), cell).attr('tabindex', '0');
 
     if (self.activeCell.node && prevCell.node.length === 1) {
       self.activeCell.row = rowNum;
@@ -7227,7 +7466,7 @@ Datagrid.prototype = {
 
   setNextActiveCell(e) {
     const self = this;
-    if (e.type === 'keydown') {
+    if (e.type === 'keydown' && !self.settings.actionableMode) {
       if (this.settings.actionableMode) {
         setTimeout(() => {
           const evt = $.Event('keydown.datagrid');
@@ -7390,6 +7629,7 @@ Datagrid.prototype = {
     if (self.settings.allowOneExpandedRow && self.settings.groupable === null) {
       // collapse any other expandable rows
       const prevExpandRow = self.tableBody.find('tr.is-expanded');
+      const prevExpandButton = prevExpandRow.prev().find('.datagrid-expand-btn');
       const parentRow = prevExpandRow.prev();
       const parentRowIdx = self.actualRowNode(parentRow);
       const parentdataRowIdx = self.dataRowIndex(parentRow);
@@ -7397,11 +7637,11 @@ Datagrid.prototype = {
       if (prevExpandRow.length && expandRow.index() !== prevExpandRow.index()) {
         const prevDetail = prevExpandRow.find('.datagrid-row-detail');
 
-        prevExpandRow.removeClass('is-expanded');
+        prevExpandRow.add(prevExpandButton).removeClass('is-expanded');
         parentRow.removeClass('is-rowactivated');
         parentRow.find('.plus-minus').removeClass('active');
         prevDetail.animateClosed().on('animateclosedcomplete', () => {
-          prevExpandRow.css('display', 'none').removeClass('is-expanded');
+          prevExpandRow.removeClass('is-expanded');
           self.element.triggerHandler('collapserow', [{ grid: self, row: parentRowIdx, detail: prevDetail, item: self.settings.dataset[parentdataRowIdx] }]);
         });
 
@@ -7446,11 +7686,12 @@ Datagrid.prototype = {
       // Optionally Contstrain the width
       expandRow.find('.constrained-width').css('max-width', this.element.outerWidth());
 
+      const eventData = [{ grid: self, row: dataRowIndex, detail, item }];
+      self.element.triggerHandler('expandrow', eventData);
+
       if (self.settings.allowOneExpandedRow) {
         rowElement.addClass('is-rowactivated');
       }
-
-      const eventData = [{ grid: self, row: dataRowIndex, detail, item }];
 
       if (self.settings.onExpandRow) {
         const response = function (markup) {
@@ -7464,8 +7705,6 @@ Datagrid.prototype = {
       } else {
         detail.animateOpen();
       }
-
-      self.element.triggerHandler('expandrow', eventData);
     }
   },
 
@@ -7756,9 +7995,6 @@ Datagrid.prototype = {
       if (searchfield.data('searchfield')) {
         searchfield.data('searchfield').destroy();
       }
-      if (searchfield.data('toolbarsearchfield')) {
-        searchfield.data('toolbarsearchfield').destroy();
-      }
       searchfield.removeData('options');
     }
 
@@ -7788,11 +8024,11 @@ Datagrid.prototype = {
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
-    if (settings.dataset) {
+    if (settings && settings.dataset) {
       this.settings.dataset = settings.dataset;
     }
 
-    if (settings.columns) {
+    if (settings && settings.columns) {
       this.settings.columns = settings.columns;
     }
 

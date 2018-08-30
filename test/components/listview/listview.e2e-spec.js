@@ -14,6 +14,21 @@ describe('Listview example-singleselect tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-singleselect', async () => {
+      const listviewSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(listviewSection), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(listviewSection, 'listview-singleselect-open')).toEqual(0);
+    });
+  }
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (!utils.isIE()) {
     xit('Should be accessible on init with no WCAG 2AA violations on example-singleselect', async () => {
       const res = await axePageObjects(browser.params.theme);
@@ -80,6 +95,17 @@ describe('Listview example-multiselect tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-multiselect', async () => {
+      const listviewSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(listviewSection), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(listviewSection, 'listview-multiselect-open')).toEqual(0);
+    });
+  }
+
   if (!utils.isIE()) {
     xit('Should be accessible on init with no WCAG 2AA violations on example-multiselect page', async () => {
       const res = await axePageObjects(browser.params.theme);
@@ -90,7 +116,7 @@ describe('Listview example-multiselect tests', () => {
 
   it('Should select item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
-    listviewItemEl.click();
+    await listviewItemEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
@@ -103,7 +129,7 @@ describe('Listview example-multiselect tests', () => {
 
   it('Should deselect item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
-    listviewItemEl.click();
+    await listviewItemEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
@@ -132,10 +158,10 @@ describe('Listview example-multiselect tests', () => {
   it('Should select two items on click', async () => {
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
     const listviewItemElThree = await element(by.css('li[aria-posinset="3"]'));
-    listviewItemElOne.click();
+    await listviewItemElOne.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-selected'))), config.waitsFor);
-    listviewItemElThree.click();
+    await listviewItemElThree.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="3"].is-selected'))), config.waitsFor);
 
@@ -185,7 +211,7 @@ describe('Listview example-mixed selection tests', () => {
 
   it('Should select item on click on checkbox', async () => {
     const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .label-text'));
-    listviewItemInputEl.click();
+    await listviewItemInputEl.click();
 
     expect(await element(by.className('is-selected')).isPresent()).toBeTruthy();
     expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
@@ -347,7 +373,7 @@ describe('Listview example-paging-clientside tests', () => {
 
   it('Should click page "2" in pager-clientside bar, and display new listings', async () => {
     const listviewPagerEl = await element.all(by.css('.pager-toolbar li')).get(2);
-    listviewPagerEl.click();
+    await listviewPagerEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="12"] .listview-heading'))), config.waitsFor);
 

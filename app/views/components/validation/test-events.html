@@ -1,0 +1,31 @@
+<form>
+
+  <div class="row">
+    <div class="twelve columns">
+
+      <h2 class="fieldset-title">Validation tests</h2>
+
+       <div class="field">
+        <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
+        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required" />
+      </div>
+
+      <div class="field">
+        <label class="label" for="date-field">Date of Birth</label>
+        <input id="date-field" value="10/31/2014" class="datepicker" name="date-field" type="text" data-validate="required date"/>
+      </div>
+
+    </div>
+  </div>
+
+</form>
+
+<script>
+  $('form').on('valid', function (e, args) {
+    $('body').toast({ title: 'validation', timeout: 20000, message: 'valid event fired' });
+  });
+
+  $('form').on('error', function (e, args) {
+    $('body').toast({ title: 'validation', timeout: 20000, message: 'error event fired' });
+  });
+</script>

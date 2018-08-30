@@ -1,16 +1,21 @@
 ---
 title: Area
 description: This page describes Area.
+demo:
+  pages:
+  - name: Main Example
+    slug: example-index
+  - name: Make the Tooltip Formatted (Currency)
+    slug: example-formatter
+  - name: Set animation speed
+    slug: example-animation
+  - name: Make a slice selected by default
+    slug: example-selected
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
-
-## Configuration Options
-
-1. Area Chart Example [View Example]( ../components/area/example-index)
-2. Make the Tooltip Formatted (Currency) [View Example]( ../components/area/example-formatter)
-3. Set animation speed [View Example]( ../components/area/example-animation)
-4. Make a slice selected by default [View Example]( ../components/area/example-selected)
-5. Example showing Get Selected value [View Example]( ../components/area/example-get-selected)
-6. Example showing Set Selected value [View Example]( ../components/area/example-set-selected)
 
 The area chart is a line chart with the isArea set that adds the fills. See the [line chart api]( ../components/line) for more details.
 
@@ -96,6 +101,10 @@ $('#area-example').chart({type: 'area', dataset: dataset});
 color: '#1a1a1a'
 name: 'Component C'
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

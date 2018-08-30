@@ -4,6 +4,7 @@
 @import '../components/typography/typography';
 @import '../layouts/layouts';
 @import '../components/visibility/visibility';
+@import '../components/personalize/personalize';
 
 // Each Component
 @import '../components/place/place';
@@ -12,6 +13,7 @@
 @import '../components/hyperlinks/hyperlinks';
 @import '../components/images/images';
 @import '../components/cards/cards';
+@import '../components/calendar/calendar';
 @import '../components/input/input';
 @import '../components/grid/grid';
 @import '../components/compositeform/compositeform';
@@ -21,6 +23,7 @@
 @import '../components/tabs/tabs';
 @import '../components/dropdown/dropdown';
 @import '../components/modal/modal';
+@import '../components/monthview/monthview';
 @import '../components/slider/slider';
 @import '../components/popupmenu/popupmenu';
 @import '../components/tooltip/tooltip';
@@ -64,7 +67,7 @@
 @import '../components/wizard/wizard';
 @import '../components/popdown/popdown';
 @import '../components/hierarchy/hierarchy';
-@import '../components/toolbarsearchfield/toolbarsearchfield';
+@import '../components/searchfield/searchfield-toolbar';
 @import '../components/counts/counts';
 @import '../components/splitter/splitter';
 @import '../components/form/form';
@@ -82,6 +85,9 @@
 @import '../components/stepchart/stepchart';
 @import '../components/treemap/treemap';
 @import '../components/line/line';
+
+// Behaviors
+@import '../behaviors/longpress/longpress';
 
 // Patterns
 @import '../components/homepage/homepage';

@@ -1,11 +1,11 @@
 ---
 title: Trackdirty
 description: This page describes Trackdirty.
+demo:
+  pages:
+  - name: Main Example
+    slug: example-index
 ---
-
-## Configuration Details
-
-1. Default Trackdirty Example [View Example]( ../components/trackdirty/example-index)
 
 ## Code Example
 
@@ -22,6 +22,10 @@ This example shows how to invoke the trackdirty.
 
 - Make sure the input has a matching label which is meaningful.
 - Add aria-required for required elements
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

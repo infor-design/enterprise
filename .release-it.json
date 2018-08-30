@@ -10,7 +10,7 @@
     "commitMessage": "Release v%s",
     "tagAnnotation": "Release v%s",
     "beforeStartCommand": "npm run eslint:error-only",
-    "afterReleaseCommand": "npm run documentation --site=prod"
+    "afterReleaseCommand": ""
   },
   "npm": {
     "publish": true,

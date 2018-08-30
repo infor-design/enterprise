@@ -1,17 +1,23 @@
 ---
 title: Pie Chart
 description: This page describes Pie Chart.
+demo:
+  pages:
+  - name: Standard Pie Chart
+    slug: example-index
+  - name: HCM Example
+    slug: example-hcm
+  - name: Tooltips
+    slug: example-tooltip
+  - name: Donut Chart
+    slug: example-donut
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
-
-## Configuration Options
-
-1. Pie Chart Main Example [View Example]( ../components/pie/example-index)
-2. Hcm Example [View Example]( ../components/pie/example-hcm)
-3. Tooltips [View Example]( ../components/pie/example-tooltip)
-4. Donut Chart [View Example]( ../components/donut/example-index)
-5. Set animation speed [View Example]( ../components/pie/example-animation)
-6. Example showing Get Selected value [View Example]( ../components/pie/example-get-selected)
-7. Example showing Set Selected value [View Example]( ../components/pie/example-set-selected)
 
 ## Code Example
 
@@ -51,6 +57,10 @@ You can control the size of the donut chart by setting the size of the parent el
 This may include possibly using an inset margin in some cases.
 
 See also [Donut Chart Example]( ../components/donut/example-index)
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

@@ -55,7 +55,8 @@ Progress.prototype = {
     if (container.data('tooltip')) {
       container.data('tooltip').content = `${value}%`;
     } else {
-      container.attr('title', `${value}%`).tooltip();
+      container[0].setAttribute('title', `${value}%`);
+      container.tooltip();
     }
   },
 

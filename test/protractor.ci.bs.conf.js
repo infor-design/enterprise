@@ -8,10 +8,15 @@ const getSpecs = (listSpec) => {
     return listSpec.split(',');
   }
 
-  return ['components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
+  return ['behaviors/**/*.e2e-spec.js', 'components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
 };
 
 const theme = process.env.ENTERPRISE_THEME || 'light'
+let browserstackBuildID = `${Date.now()} : ${theme} theme: ci:bs e2e`;
+
+if (process.env.TRAVIS_BUILD_NUMBER) {
+  browserstackBuildID = `Travis Build No. ${process.env.TRAVIS_BUILD_NUMBER} : ${theme} theme: ci:bs e2e`;
+}
 
 exports.config = {
   params: {
@@ -29,23 +34,25 @@ exports.config = {
     random: false
   },
   commonCapabilities: {
-    'browserstack.user': process.env.BROWSER_STACK_USERNAME,
-    'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
+    'browserstack.user': process.env.BROWSERSTACK_USERNAME,
+    'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
     'browserstack.debug': true,
-    'browserstack.video' : true,
+    'browserstack.video': true,
     'browserstack.local': false,
-    'browserstack.networkLogs' : false,
-    build: `${theme} theme: ci:bs e2e`,
+    'browserstack.networkLogs': false,
+    'browserstack.timezone': 'New_York',
+    build: browserstackBuildID,
     name: `${theme} theme ci:bs e2e tests`,
     project: 'ids-enterprise-e2e-ci'
   },
   multiCapabilities: [
     {
       browserName: 'Chrome',
-      browser_version: '66.0',
+      browser_version: '68.0',
       resolution: '1280x800',
       os_version: '10',
-      os: 'Windows'
+      os: 'Windows',
+      'browserstack.selenium_version': '3.11.0',
     }
   ],
   onPrepare: () => {

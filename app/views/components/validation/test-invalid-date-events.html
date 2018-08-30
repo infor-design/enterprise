@@ -7,9 +7,6 @@
     </div>
     <span>Only valid year is 2017. minDate = 12/31/2016 and maxDate = 1/1/2018</span>
     <script>
-//      $('body').on('initialized', function () {
-//        $('#date-field').data('datepicker').setValue('05/12/2015', true);
-//      });
       $('#date-field').on('error valid', function(e) {
         console.log(e.type);
       });

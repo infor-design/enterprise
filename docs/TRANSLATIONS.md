@@ -24,6 +24,8 @@ When you get the file back.
 - add any \ in front of ' in the file. This happens on aafrakans fr and ru and uk locales, but can be tested with a linter
 - ensure the spacing is kept in tact.
 - no-NO and nb-NO are copies of each other so copy no-NO to both
+- zh-TW and  zh-Hant are copies of each other so copy zh-TW to both and change the names
+- zh-CN and  zh-Hans are copies of each other so copy zh-TW to both and change the names
 - all the en- ones and es- ones are copies
 
 To add a new translation string and use it in the code add it in the en-US.js

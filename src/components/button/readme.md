@@ -15,6 +15,8 @@ demo:
     slug: example-with-icons
   - name: Toggle Buttons
     slug: example-toggle-button
+  - name: Disabled Button Tooltip
+    slug: example-disabled-button-tooltip.html
 ---
 
 ## Code Example
@@ -31,18 +33,18 @@ There are four types of buttons, all controlled by class.
 All buttons are assumed to include an icon and a text label. An icon can be added by including the SVG icon element and use a span to hold the button text.
 
 ```html
-<button class="btn-primary" type="button" data-automation-id="page-button-primary">Action</button>
+<button class="btn-primary" type="button" id="page-button-primary">Action</button>
 
-<button class="btn-secondary" type="button">Action</button>
+<button class="btn-secondary" type="button" id="page-button-secondary">Action</button>
 
-<button type="button" class="btn-tertiary" data-automation-id="page-button-tertiary">
+<button type="button" class="btn-tertiary" id="page-button-tertiary">
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
     <use xlink:href="#icon-filter"></use>
   </svg>
   <span>Action</span>
 </button>
 
-<button type="button" class="btn-icon" disabled data-automation-id="page-button-icon">
+<button type="button" class="btn-icon" disabled id="page-button-icon">
   <span>Date</span>
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
     <use xlink:href="#icon-calendar"></use>
@@ -62,6 +64,10 @@ All buttons are assumed to include an icon and a text label. An icon can be adde
 
 - Make sure form buttons have a succinctly descriptive value that indicates its purpose
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - <kbd>Spacebar</kbd> or <kbd>Enter</kbd> keys execute the action for that button. If the button activation closes the containing entity or launches another entity, then focus moves to the newly-opened entity. If the button activation does not close or dismiss the containing entity, then focus remains on the button. An example might be an "Apply" or "Recalculate" button.
@@ -74,3 +80,8 @@ All buttons are assumed to include an icon and a text label. An icon can be adde
 
 - Change class `inforFormButton default` to `btn-primary`
 - Change class `inforFormButton` to `btn-secondary`
+
+## Workaround for title to display as tooltip on disabled buttons
+
+- Disabled elements do not handle events in most browsers. This necessitates the need for an alternate element to handle the `Tooltip.plugin` which adds functionality that strips the title and renders it as a tooltip on the hover event of the element.
+- Include `<div title="{{desired title/tooltip}}}">{{button content}}</div>` as child of `<button disabled></button>` to allow hover event to engage tooltip functionality, taking title from inner div and displaying as tooltip.

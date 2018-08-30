@@ -20,6 +20,7 @@ module.exports = [
   'components/button/button.js',
   'components/charts/charts.js',
   'components/colorpicker/colorpicker.js',
+  'components/calendar/calendar.js',
   'components/compositeform/compositeform.js', // pattern?
   'components/contextualactionpanel/contextualactionpanel.js', // pattern?
   'components/datepicker/datepicker.js',
@@ -43,6 +44,7 @@ module.exports = [
   'components/utils/lifecycle.js',
   'components/listview/listview.js',
   'components/listbuilder/listbuilder.js',
+  'components/monthview/monthview.js',
   'components/circlepager/circlepager.js',
   'components/pager/pager.js',
   'components/place/place.js', // behavior?
@@ -70,7 +72,6 @@ module.exports = [
   'components/timepicker/timepicker.js',
   'components/tmpl/tmpl.js', // util?
   'components/toolbar/toolbar.js',
-  'components/toolbarsearchfield/toolbarsearchfield.js',
   'components/tooltip/tooltip.js',
   'components/tree/tree.js',
   'components/validation/validation.js',

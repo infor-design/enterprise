@@ -1,6 +1,18 @@
 ---
 title: Bubble Chart
 description: This page describes Bubble Chart.
+demo:
+  pages:
+  - name: Standard Bubble Chart
+    slug: example-index
+  - name: Defaulting a selected bubble
+    slug: example-selected
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
 
 ## Configuration Options
@@ -11,7 +23,7 @@ description: This page describes Bubble Chart.
 4. Example showing Get Selected value [View Example]( ../components/bubble/example-get-selected)
 5. Example showing Set Selected value [View Example]( ../components/bubble/example-set-selected)
 
-The ubble chart is a line chart with the isBubble set that adds the bubble. Plus the z dimension in the data.
+The bubble chart is a line chart with the isBubble set that adds the bubble. Plus the z dimension in the data.
 See the [line chart api]( ../components/line) for more details.
 
 ## Code Example
@@ -210,9 +222,31 @@ var dataset = [{
 $('#line-example').chart({type: 'bubble', dataset: dataset});
 ```
 
+To control the tooltip contents and formatting you can also provide data on the first series.
+
+```javascript
+name: 'Series 01',
+labels: {
+name: 'Series',
+value: {
+  x: 'Revenue',
+  y: 'Sold',
+  z: 'Market Share'
+}
+},
+// Use d3 Format - only value will be formated
+valueFormatterString: {
+z: '0.0%'
+}
+```
+
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

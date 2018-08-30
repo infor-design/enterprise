@@ -9,12 +9,14 @@ module.exports = function (config) {
       'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
       'dist/js/cultures/en-US.js',
+      'test/behaviors/**/*.func-spec.js',
       'test/components/**/*.func-spec.js'
     ],
     exclude: [
       'node_modules'
     ],
     preprocessors: {
+      '**/behaviors/*/*.js': ['webpack', 'sourcemap'],
       '**/components/*/*.js': ['webpack', 'sourcemap'],
     },
     webpack: {
@@ -44,9 +46,13 @@ module.exports = function (config) {
       }
     },
     webpackMiddleware: {
-      stats: 'errors-only'
+      logLevel: 'error'
     },
-    reporters: ['mocha', 'coverage'],
+    reporters: ['mocha'],
+    mochaReporter: {
+      ignoreSkipped: true,
+    },
+    // reporters: ['mocha', 'coverage'],
     // coverageReporter: {
     //   dir: 'coverage',
     //   reporters: [

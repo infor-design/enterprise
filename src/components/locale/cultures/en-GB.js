@@ -27,7 +27,7 @@ Soho.Locale.addCulture('en-GB', {
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
       wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      abbreviated: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      abbreviated: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       narrow: ['S', 'M', 'Τ', 'W', 'T', 'F', 'S']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide
@@ -38,7 +38,8 @@ Soho.Locale.addCulture('en-GB', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['am', 'pm']
+    dayPeriods: ['am', 'pm'],
+    firstDayofWeek: 1, // Starts on Monday
   }],
   // numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
   currencySign: '£', // (Replace Sign http://www.currencysymbols.in ?)

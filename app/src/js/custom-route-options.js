@@ -22,6 +22,13 @@ module.exports = function customRouteOptions(req, res) {
     customOpts.usebasehref = true;
   }
 
+  // Contextual Action Panel
+  if (url.match(/components\/contextualactionpanel/)) {
+    if (url.match(/partial-/)) {
+      customOpts.layout = 'layout-nofrills'; // No layout for this one on purpose.
+    }
+  }
+
   // Datagrid
   if (url.match(/datagrid-fixed-header/)) {
     customOpts.layout = 'tests/layout-noscroll';
@@ -45,6 +52,11 @@ module.exports = function customRouteOptions(req, res) {
   }
   if (url.match(/place\/scrolling\/container-is-nested/)) {
     customOpts.layout = 'components/place/scrolling/layout-nested';
+  }
+
+  // Searchfield in Headers (needs to load the Header layout)
+  if (url.match(/searchfield\/example-header/)) {
+    customOpts.layout = 'components/header/layout';
   }
 
   // Sign-in Dialog

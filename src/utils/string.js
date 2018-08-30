@@ -45,22 +45,6 @@ stringUtils.containsHTML = function containsHTML(str) {
 };
 
 /**
- * Takes a string and removes html tabs
- * @param {string} str The string to parse
- * @returns {string} The string minus html tags.
- */
-stringUtils.stripHTML = function stripHTML(str) {
-  let newStr = str;
-
-  if (!newStr) {
-    return '';
-  }
-
-  newStr = newStr.replace(/<\/?[^>]+(>|$)/g, '');
-  return newStr;
-};
-
-/**
  * Takes a string containing HTML and strips it of extraneous white space.
  * @param {string} str The string to parse
  * @returns {string} The string minus extraneous white space.
@@ -79,6 +63,43 @@ stringUtils.stripWhitespace = function stripWhitespace(str) {
  */
 stringUtils.capitalize = function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+/**
+ * [capitalize description]
+ * @param  {string} val A text string ("true" or "false") that can be converted to a boolean.
+ * @returns {boolean} true or false
+ */
+stringUtils.toBoolean = function capitalize(val) {
+  const num = +val;
+  return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
+};
+
+/**
+ * Return the width in pixels, assuming fontsize 14 as a default
+ * @param  {string} text A text string to measure.
+ * @param  {string} fontsize The elements font size (defaults to 14)
+ * @returns {number} The text width.
+ */
+stringUtils.textWidth = function capitalize(text, fontsize = 14) {
+  this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+  const context = this.canvas.getContext('2d');
+  context.font = `${fontsize}px arial`;
+
+  const metrics = context.measureText(text);
+  return Math.round(metrics.width);
+};
+
+/**
+ * Pad a date into a string with zeros added.
+ * @private
+ * @param {number} year The year to use.
+ * @param {number} month The month to use.
+ * @param {number} day The day to use.
+ * @returns {void}
+ */
+stringUtils.padDate = function padDate(year, month, day) {
+  return `0${day}`.slice(-2) + `0${month + 1}`.slice(-2) + year;
 };
 
 export { stringUtils }; //eslint-disable-line

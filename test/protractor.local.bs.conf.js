@@ -9,10 +9,16 @@ const getSpecs = (listSpec) => {
     return listSpec.split(',');
   }
 
-  return ['components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
+  return ['behaviors/**/*.e2e-spec.js', 'components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
 };
 
 const theme = process.env.ENTERPRISE_THEME || 'light'
+let browserstackBuildID = `${theme} theme: ci:bs e2e ${Date.now()}`;
+
+if (process.env.TRAVIS_BUILD_NUMBER) {
+  browserstackBuildID = process.env.TRAVIS_BUILD_NUMBER;
+  browserstackBuildID = `${theme} theme: ci:bs e2e ${process.env.TRAVIS_BUILD_NUMBER}`;
+}
 
 exports.config = {
   params: {
@@ -32,12 +38,12 @@ exports.config = {
     random: false
   },
   commonCapabilities: {
-    'browserstack.user': process.env.BROWSER_STACK_USERNAME,
-    'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
+    'browserstack.user': process.env.BROWSERSTACK_USERNAME,
+    'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
     'browserstack.debug': true,
     'browserstack.local': true,
     'browserstack.networkLogs' : true,
-    build: `${theme} theme: local tunnel e2e`,
+    build: browserstackBuildID,
     name: `${theme} theme local tunnel e2e tests`
   },
   multiCapabilities: [
@@ -52,11 +58,11 @@ exports.config = {
     },
     {
       browserName: 'Firefox',
-      browser_version: '60.0',
+      browser_version: '61.0',
       resolution: '1280x800',
       os_version: '10',
       os: 'Windows',
-      'browserstack.geckodriver' : '0.19.1',
+      'browserstack.geckodriver' : '0.21.0',
       'browserstack.selenium_version': '3.11.0',
     },
     {

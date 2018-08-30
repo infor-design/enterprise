@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { stringUtils as str } from '../../utils/string';
 
 // jQuery components
 import '../dropdown/dropdown.jquery';
@@ -23,7 +24,8 @@ const TIMEPICKER_DEFAULTS = function () {
     mode: TIMEPICKER_MODES[0],
     roundToInterval: true,
     parentElement: null,
-    returnFocus: true
+    returnFocus: true,
+    customValidation: false
   };
 };
 
@@ -39,6 +41,7 @@ const TIMEPICKER_DEFAULTS = function () {
  * @property {string} [settings.mode = 'standard']  Can be set to 'standard', 'range',
  * @property {boolean} [settings.roundToInterval = true]  if `false`, does not automatically round user-entered values
  * from the pickers to their nearest interval.
+ * @param {boolean} [settings.customValidation=false] If true the internal validation is disabled.
  * @param {null|jQuery[]} [settings.parentElement] if defined as a jQuery-wrapped element, will be used as the target element.
  * @property {string} [settings.returnFocus = true]  If set to false, focus will not be returned to
  *  the calling element. It usually should be for accessibility purposes.
@@ -103,6 +106,10 @@ TimePicker.prototype = {
     }
 
     this.id = `${this.element.uniqueId('timepicker')}-id`;
+    this.hoursId = `timepicker-hours-${this.id.toString()}`;
+    this.minutesId = `timepicker-minutes-${this.id.toString()}`;
+    this.secondsId = `timepicker-seconds-${this.id.toString()}`;
+    this.periodId = `timepicker-period-${this.id.toString()}`;
 
     if (this.element.is('[data-round-to-interval]')) {
       this.settings.roundToInterval = sanitizeRoundToInterval(this.element.attr('data-round-to-interval'));
@@ -275,7 +282,7 @@ TimePicker.prototype = {
    * @private
    */
   roundMinutes() {
-    if (!this.getBoolean(this.settings.roundToInterval)) {
+    if (!str.toBoolean(this.settings.roundToInterval)) {
       return;
     }
 
@@ -358,12 +365,14 @@ TimePicker.prototype = {
       }
     }
 
-    this.element
-      .attr('data-validate', validation)
-      .attr('data-validation-events', JSON.stringify(events))
-      .mask(maskOptions)
-      .validate()
-      .triggerHandler('updated');
+    if (!this.settings.customValidation) {
+      this.element
+        .attr('data-validate', validation)
+        .attr('data-validation-events', JSON.stringify(events))
+        .mask(maskOptions)
+        .validate()
+        .triggerHandler('updated');
+    }
   },
 
   /**
@@ -388,7 +397,7 @@ TimePicker.prototype = {
     let hourCounter = is24HourFormat ? 0 : 1;
     const maxHourCount = is24HourFormat ? 24 : 13;
 
-    this.hourSelect = $(`<select id="timepicker-hours-${this.id}" data-options="{'noSearch': 'true'}" class="hours dropdown"></select>`);
+    this.hourSelect = $(`<select id="${this.hoursId}" data-options="{'noSearch': 'true'}" class="hours dropdown"></select>`);
 
     while (hourCounter < maxHourCount) {
       selected = '';
@@ -398,13 +407,13 @@ TimePicker.prototype = {
       self.hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
       hourCounter++;
     }
-    timeParts.append($(`<label for="timepicker-hours-${this.id}" class="audible">${Locale.translate('Hours')}</label>`));
+    timeParts.append($(`<label for="${this.hoursId}" class="audible">${Locale.translate('Hours')}</label>`));
     timeParts.append(this.hourSelect);
     timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
 
     // Minutes Picker
     let minuteCounter = 0;
-    this.minuteSelect = $(`<select id="timepicker-minutes-${this.id}" data-options="{'noSearch': 'true'}" class="minutes dropdown"></select>`);
+    this.minuteSelect = $(`<select id="${this.minutesId}" data-options="{'noSearch': 'true'}" class="minutes dropdown"></select>`);
 
     while (minuteCounter <= 59) {
       textValue = minuteCounter < 10 ? `0${minuteCounter}` : minuteCounter;
@@ -423,13 +432,13 @@ TimePicker.prototype = {
       this.minuteSelect.prepend($(`<option selected>${self.initValues.minutes}</option>`));
     }
 
-    timeParts.append($(`<label for="timepicker-minutes-${this.id}" class="audible">${Locale.translate('Minutes')}</label>`));
+    timeParts.append($(`<label for="${this.minutesId}" class="audible">${Locale.translate('Minutes')}</label>`));
     timeParts.append(this.minuteSelect);
 
     // Seconds Picker
     if (hasSeconds) {
       let secondCounter = 0;
-      this.secondSelect = $(`<select id="timepicker-seconds-${this.id}" data-options="{'noSearch': 'true'}" class="seconds dropdown"></select>`);
+      this.secondSelect = $(`<select id="${this.secondsId}" data-options="{'noSearch': 'true'}" class="seconds dropdown"></select>`);
 
       while (secondCounter <= 59) {
         textValue = secondCounter < 10 ? `0${secondCounter}` : secondCounter;
@@ -449,12 +458,12 @@ TimePicker.prototype = {
       }
 
       timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
-      timeParts.append($(`<label for="timepicker-seconds-${this.id}" class="audible">${Locale.translate('Seconds')}</label>`));
+      timeParts.append($(`<label for="${this.secondsId}" class="audible">${Locale.translate('Seconds')}</label>`));
       timeParts.append(this.secondSelect);
     }
 
     if (!is24HourFormat && hasDayPeriods) {
-      this.periodSelect = $(`<select id="timepicker-period-${this.id}" data-options="{'noSearch': 'true'}" class="period dropdown"></select>`);
+      this.periodSelect = $(`<select id="${this.periodId}" data-options="{'noSearch': 'true'}" class="period dropdown"></select>`);
       timeParts.append($('<span class="label colons"></span>'));
       const localeDays = Locale.calendar().dayPeriods;
       let localeCount = 0;
@@ -471,7 +480,7 @@ TimePicker.prototype = {
 
         localeCount++;
       }
-      timeParts.append($(`<label for="timepicker-period-${this.id}" class="audible">${Locale.translate('TimePeriod')}</label>`));
+      timeParts.append($(`<label for="${this.periodId}" class="audible">${Locale.translate('TimePeriod')}</label>`));
       timeParts.append(this.periodSelect);
     }
 
@@ -788,14 +797,14 @@ TimePicker.prototype = {
    * @returns {void}
    */
   setTimeOnField() {
-    const hours = $(`#timepicker-hours-${this.id}`).val() || '';
-    const minutes = $(`#timepicker-minutes-${this.id}`).val() || '';
-    const seconds = $(`#timepicker-seconds-${this.id}`).val() || '';
-    let period = ($(`#timepicker-period-${this.id}`).val() || '').toUpperCase();
+    const hours = $(`#${this.hoursId}`).val() || '';
+    const minutes = $(`#${this.minutesId}`).val() || '';
+    const seconds = $(`#${this.secondsId}`).val() || '';
+    let period = ($(`#${this.periodId}`).val() || '').toUpperCase();
     const sep = this.getTimeSeparator();
     let timeString = `${hours}${sep}${minutes}${this.hasSeconds() ? sep + seconds : ''}`;
 
-    period = (!this.is24HourFormat() && period === '') ? $(`#timepicker-period-${this.id}-shdo`).val() : period;
+    period = (!this.is24HourFormat() && period === '') ? $(`#${this.periodId}-shdo`).val() : period;
     timeString += period ? ` ${Locale.translateDayPeriod(period)}` : '';
 
     /**
@@ -873,10 +882,10 @@ TimePicker.prototype = {
    */
   onPopupHide() {
     if (this.settings.mode === 'standard') {
-      const ddHours = $(`#timepicker-hours-${this.id}`);
-      const ddMinutes = $(`#timepicker-minutes-${this.id}`);
-      const ddSeconds = $(`#timepicker-seconds-${this.id}`);
-      const ddPeriod = $(`#timepicker-period-${this.id}`);
+      const ddHours = $(`#${this.hoursId}`);
+      const ddMinutes = $(`#${this.minutesId}`);
+      const ddSeconds = $(`#${this.secondsId}`);
+      const ddPeriod = $(`#${this.periodId}`);
 
       if (ddHours && ddHours.data('dropdown') &&
         typeof ddHours.data('dropdown').destroy === 'function') {
@@ -978,18 +987,6 @@ TimePicker.prototype = {
    */
   isDisabled() {
     return this.element.prop('disabled');
-  },
-
-  /**
-   * Convert a string to boolean
-   * @private
-   * @param {string} val a text string ("true" or "false") that can be converted to a boolean.
-   * @returns {boolean}
-   */
-  // TODO: Move this to Soho.utils?
-  getBoolean(val) {
-    const num = +val;
-    return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
   },
 
   /**

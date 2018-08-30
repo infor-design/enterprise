@@ -1,5 +1,6 @@
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
+import { xssUtils } from '../../utils/xss';
 
 /**
 * A object containing all the supported UI formatters.
@@ -149,7 +150,7 @@ const formatters = {
       formatted = col.editorOptions.field(item, null, null);
     }
 
-    return `<span class="trigger">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
+    return `<span class="trigger ${col.align === 'right' ? 'align-text-right' : ''}">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
   },
 
   Decimal(row, cell, value, col) {
@@ -289,7 +290,7 @@ const formatters = {
     let classes = 'is-editor';
     classes += col.singleline ? ' is-singleline' : ' datagrid-multiline-text';
     classes += col.contentTooltip ? ' content-tooltip' : '';
-    return `<div class="${classes}">${$.unescapeHTML(formatted)}</div>`;
+    return `<div class="${classes}">${xssUtils.unescapeHTML(formatted)}</div>`;
   },
 
   // Expand / Collapse Button
@@ -448,7 +449,8 @@ const formatters = {
     if (col.inlineEditor) {
       return html;
     }
-    html = `<span class="colorpicker-container trigger dropdown-trigger"><span class="swatch" style="background-color: ${value}"></span><input class="colorpicker" id="colorpicker-${cell}" name="colorpicker-${cell}" type="text" role="combobox" aria-autocomplete="list" value="${value}" aria-describedby="">`;
+    const classList = `swatch${value === '' ? ' is-empty' : ''}`;
+    html = `<span class="colorpicker-container trigger dropdown-trigger"><span class="${classList}" style="background-color: ${value}"></span><input class="colorpicker" id="colorpicker-${cell}" name="colorpicker-${cell}" type="text" role="combobox" aria-autocomplete="list" value="${value}" aria-describedby="">`;
     html += `<span class="trigger">${$.createIcon({ icon: 'dropdown' })}</span></span>`;
 
     return html;
@@ -569,7 +571,7 @@ const formatters = {
       return '<span></span>';
     }
 
-    return `${$.createIcon({ icon: item.rowStatus.icon, classes: ['icon', `icon-${item.rowStatus.icon}`, 'datagrid-alert-icon'] })}<span class="audible">${item.rowStatus.text}</span>`;
+    return `${$.createIcon({ icon: item.rowStatus.icon, classes: ['icon', `icon-${item.rowStatus.icon}`] })}<span class="audible">${item.rowStatus.text}</span>`;
   },
 
   TargetedAchievement(row, cell, value, col) {
