@@ -967,7 +967,6 @@ Dropdown.prototype = {
     }
 
     this.list.addClass('search-mode');
-    this.list.find('.icon').attr('class', 'icon search').changeIcon('search');
     this.searchInput.removeAttr('aria-activedescendant');
 
     this.unhighlightOptions();
