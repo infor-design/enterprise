@@ -526,6 +526,10 @@
 
   > [class^="btn"] {
     @include btn-chevron-style;
+    &:focus:not(.hide-focus) {
+      border-color: transparent;
+      box-shadow: none;
+    }
   }
 
   > [class^="btn"],
@@ -573,8 +577,8 @@
 
   // Selected color scheme
   &.is-focused:not(.hide-focus) {
-    border-color: $accordion-focused-border-color;
-    box-shadow: $focus-box-shadow;
+    border-color: none;
+    box-shadow: none;
   }
 
   &.has-chevron {
