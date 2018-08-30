@@ -34,12 +34,16 @@ The popupmenu markup follows as per the [popupmenu]( ./popupmenu):
   </svg>
 </button>
 <ul class="popupmenu">
-  <li><a href="#">Menu Option #1</a></li>
-  <li><a href="#">Menu Option #2</a></li>
-  <li><a href="#">Menu Option #3</a></li>
+  <li><a href="#" id="menu-option-1">Menu Option #1</a></li>
+  <li><a href="#" id="menu-option-2">Menu Option #2</a></li>
+  <li><a href="#" id="menu-option-3">Menu Option #3</a></li>
 </ul>
 ```
 
 ## Accessibility and Keyboard Shortcuts
 
 See [popupmenu]( ./popupmenu) for details.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

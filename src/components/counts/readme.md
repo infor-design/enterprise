@@ -26,3 +26,7 @@ Instance Counts are simple CSS/HTML components with a `count` and `title` elemen
 
 - Be careful to select a color that passes [WCAG AA or AAA contrast](http://webaim.org/resources/contrastchecker/) with its background
 - Screen readers can access the information via a virtual keyboard. Make sure to augment the labels with `audible` only spans to add additional context if needed
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

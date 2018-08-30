@@ -41,6 +41,10 @@ var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - None

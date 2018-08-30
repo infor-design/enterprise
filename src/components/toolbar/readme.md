@@ -33,15 +33,15 @@ demo:
         Toolbar Title
     </div>
     <div class="buttonset">
-        <button class="btn" type="button">
+        <button id="btn-1" class="btn" type="button">
             <span>Button #1</span>
         </button>
 
-        <button class="btn" type="button">
+        <button id="btn-2" class="btn" type="button">
             <span>Button #2</span>
         </button>
 
-        <button class="btn" type="button">
+        <button id="btn-3" class="btn" type="button">
             <span>Button #3</span>
         </button>
     </div>
@@ -53,8 +53,8 @@ demo:
             <span class="audible">More Actions</span>
         </button>
         <ul class="popupmenu">
-            <li><a href="#">Pre-defined Option #1</a></li>
-            <li><a href="#">Pre-defined Option #2</a></li>
+            <li><a href="#" id="action-item-one">Pre-defined Option #1</a></li>
+            <li><a href="#" id="action-item-two">Pre-defined Option #2</a></li>
         </ul>
     </div>
 </div>
@@ -68,6 +68,10 @@ The best way to force items to always exist inside of the "more actions" menu is
 
 - The toolbar automatically appends the WAI-ARIA role "toolbar" to its base element.
 - There is only ever one element inside of a toolbar at a time that can receive focus. The toolbar allows for navigation among all of its buttons with the arrow keys
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

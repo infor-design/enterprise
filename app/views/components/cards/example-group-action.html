@@ -4,16 +4,16 @@
     <div class="card">
       <div class="card-header">
         <h2 class="card-title">Tasks</h2>
-        <button class="btn-actions" type="button">
+        <button class="btn-actions" type="button" id="btn-1">
           <span class="audible">Actions</span>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-more"></use>
           </svg>
         </button>
         <ul class="popupmenu">
-          <li><a href="#">Add new action item</a></li>
-          <li><a href="#">Regular action</a></li>
-          <li><a href="#">Individual Action</a></li>
+          <li><a href="#" id="add-new-item">Add new action item</a></li>
+          <li><a href="#" id="regular-action">Regular action</a></li>
+          <li><a href="#" id="indv-action">Individual Action</a></li>
         </ul>
       </div>
 
@@ -22,7 +22,7 @@
           <div class="toolbar no-actions-button right-aligned" role="toolbar" aria-label="Card group action toolbar">
             <div class="title">Card group action</div>
             <div class="buttonset">
-              <button type="button" class="btn-icon" title="Filter">
+              <button type="button" class="btn-icon" title="Filter" class="filter">
                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                      <use xlink:href="#icon-filter"></use>
                  </svg>

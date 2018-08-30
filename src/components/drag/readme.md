@@ -19,6 +19,10 @@ $(draggableThing).drag({containment: 'parent'});
 
 Dragging is NOT accessible. Try to provide alternate keyboard friendly ways to do the equivalent functionality.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 None.

@@ -108,3 +108,7 @@ When a field can contain one or more items, use the plural. Example: rather than
 ## Usage
 
 For further font, typography, and grammar usage, see the [Typography guidelines](/guidelines/identity/typography).
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

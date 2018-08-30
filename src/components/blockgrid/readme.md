@@ -46,3 +46,7 @@ Note that tab order should be maintained and not changed with an explicit `tabin
 ## Code Tips
 
 The elements should be the same or very close in size (width/height). Due to constraints the bottom rows are not ideally centered at this time if the counts are not even per row.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

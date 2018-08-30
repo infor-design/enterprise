@@ -33,18 +33,18 @@ There are four types of buttons, all controlled by class.
 All buttons are assumed to include an icon and a text label. An icon can be added by including the SVG icon element and use a span to hold the button text.
 
 ```html
-<button class="btn-primary" type="button" data-automation-id="page-button-primary">Action</button>
+<button class="btn-primary" type="button" id="page-button-primary">Action</button>
 
-<button class="btn-secondary" type="button">Action</button>
+<button class="btn-secondary" type="button" id="page-button-secondary">Action</button>
 
-<button type="button" class="btn-tertiary" data-automation-id="page-button-tertiary">
+<button type="button" class="btn-tertiary" id="page-button-tertiary">
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
     <use xlink:href="#icon-filter"></use>
   </svg>
   <span>Action</span>
 </button>
 
-<button type="button" class="btn-icon" disabled data-automation-id="page-button-icon">
+<button type="button" class="btn-icon" disabled id="page-button-icon">
   <span>Date</span>
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
     <use xlink:href="#icon-calendar"></use>
@@ -63,6 +63,10 @@ All buttons are assumed to include an icon and a text label. An icon can be adde
 ## Accessibility
 
 - Make sure form buttons have a succinctly descriptive value that indicates its purpose
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
