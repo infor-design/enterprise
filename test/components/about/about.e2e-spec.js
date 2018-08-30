@@ -14,7 +14,7 @@ describe('About index tests', () => {
     const buttonEl = await element(by.id('about-trigger'));
     await buttonEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('about-modal'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
 
     expect(await element(by.id('about-modal')).isDisplayed()).toBeTruthy();
   });
