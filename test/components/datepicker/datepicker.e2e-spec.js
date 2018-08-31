@@ -266,6 +266,7 @@ describe('Datepicker Month Year Picker Tests', () => {
     await buttonEl.click();
 
     const testDate = new Date();
+    testDate.setDate(1);
     testDate.setMonth(testDate.getMonth() + 1);
 
     expect(await element(by.id('month-year')).getAttribute('value')).toEqual(`${(testDate.getMonth()).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
@@ -326,6 +327,7 @@ describe('Datepicker Month Year Changer Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     const testDate = new Date();
+    testDate.setDate(1);
     testDate.setMonth(testDate.getMonth() + 1);
 
     expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual(`${(testDate.getMonth())}/1/${testDate.getFullYear()}`);
