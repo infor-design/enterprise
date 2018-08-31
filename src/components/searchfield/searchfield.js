@@ -190,7 +190,7 @@ SearchField.prototype = {
     // NOTE: The `source` setting can be modified due to a conflict between a legacy Soho attribute,
     // `data-autocomplete`, having the same value as jQuery's `$.data('autocomplete')`.
     const autocompleteDataAttr = this.element.attr('data-autocomplete');
-    if (autocompleteDataAttr) {
+    if (autocompleteDataAttr && autocompleteDataAttr !== 'source') {
       this.settings.source = autocompleteDataAttr;
       this.element.removeAttr('data-autocomplete');
       $.removeData(this.element, 'autocomplete');

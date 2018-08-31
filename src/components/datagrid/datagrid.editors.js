@@ -804,7 +804,7 @@ const editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input class="autocomplete datagrid-autocomplete" data-autocomplete="source" />').appendTo(container);
+      this.input = $('<input class="autocomplete datagrid-autocomplete" />').appendTo(container);
 
       if (!column.editorOptions) {
         column.editorOptions = {};
