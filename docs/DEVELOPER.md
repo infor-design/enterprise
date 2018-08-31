@@ -1,6 +1,46 @@
 # Developer Guide
 
-## Running the development project
+## Installing IDS into your project
+
+Before installing IDS for usage in your project, make sure to install its dependencies:
+
+- [jQuery](https://jquery.com/)
+- [D3](https://d3js.org/)
+
+### NPM
+
+You can use NPM (or Yarn) to install from the global NPM registry:
+
+```
+$ npm install --save ids-enterprise@latest
+```
+
+You can also use `ids-enterprise@dev` for a nightly (and potentially unstable) development build.
+
+After installation, the pre-built files are accessible in `./node_modules/ids-enterprise/dist`
+
+### CDN
+
+We now offer the IDS library via CDN. For example, the paths for the 4.10.0 releases would be:
+
+```html
+https://cdn.hookandloop.infor.com/sohoxi/4.10.0/js/sohoxi.js
+https://cdn.hookandloop.infor.com/sohoxi/4.10.0/js/sohoxi.min.js
+https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/dark-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/dark-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/dark-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/dark-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/light-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/light-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.10.0/svg/svg.html
+https://cdn.hookandloop.infor.com/sohoxi/4.10.0/svg/svg-extended.html
+```
+
+Versions available on CDN are: 4.3.2, 4.3.3, 4.3.4, 4.3.5, 4.7.0, 4.8.0, 4.9.0, and 4.10.0.
+
+**Note:** There may be a cost involved to using this with Infor's Amazon S3 account.  Please keep this in mind when using the library this way.
+
+## Running the development server
 
 ### Install pre-requisites
 
@@ -68,3 +108,7 @@ _For VSCode:_
 ## QA Documentation
 
 See [the QA Documentation Checklist](./QA.md).
+
+## Contributing
+
+See our [Contribution Guidelines](./CONTRIBUTING.md).

@@ -11,12 +11,12 @@ For guidelines on when and where to use the components see the [design.infor.com
 
 ## Key Features
 
-- Themes
-- Responsive
-- Touch
-- Retina Ready with SVG icons
-- Globalization / internationalization
-- Security XSS
+- Multiple themes, including a WCAG 2.0 AAA compatible high-contrast theme
+- Responsive components, patterns and layouts
+- Touch-friendly interactions
+- SVG-based iconography compatible with high DPI screens
+- Built-in, extendible localization system
+- Built-in mitigation of XSS exploits
 - 140 Components
 
 ## Browser Support
@@ -29,38 +29,12 @@ We support the latest release and the release previous to the latest (R-1) for b
 | IE11, Edge| R-1| R-1| R-1| R-1
 <!-- markdownlint-enable MD013 MD033 -->
 
-## How to use IDS in your project
-
-### npmjs
-
-To install, run:
+## Installation
 
 ```
-$ npm install --save ids-enterprise
+$ npm install --save ids-enterprise@latest
 ```
-
-The files can then be seen in the folder `./node_modules/ids-enterprise/dist`
-
-### CDN
-
-You can now get the scripts and CSS from a CDN on AWS. For example, the paths for the 4.9.0 releases would be:
-
-```html
-https://cdn.hookandloop.infor.com/sohoxi/4.9.0/js/sohoxi.js
-https://cdn.hookandloop.infor.com/sohoxi/4.9.0/js/sohoxi.min.js
-https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/dark-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/dark-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/dark-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/dark-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/light-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.9.0/css/light-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.9.0/svg/svg.html
-https://cdn.hookandloop.infor.com/sohoxi/4.9.0/svg/svg-extended.html
-```
-
-Versions available on CDN are: 4.3.2, 4.3.3, 4.3.4, 4.3.5, 4.7.0, 4.8.0, 4.9.0, and 4.10.0
-
-**Note:** There may be a cost involved to using this with Infor's Amazon S3 account.  Please keep this in mind when using the library this way.
+For additional usage methods, see [Installing IDS](docs/DEVELOPER.md#installing-ids-into-your-project)
 
 ## Documentation
 
@@ -69,8 +43,7 @@ Versions available on CDN are: 4.3.2, 4.3.3, 4.3.4, 4.3.5, 4.7.0, 4.8.0, 4.9.0, 
 
 ## Contributing
 
-This project is an open source project. Please see the [contribution guidelines for this project](docs/CONTRIBUTING.md).
-
+- [Contribution Guidelines](docs/CONTRIBUTING.md).
 - Use [Github Issues](https://github.com/infor-design/enterprise/issues) to report all requests, bugs, questions, and feature requests.
 - [Review source code changes](https://github.com/infor-design/enterprise/pulls)
 - [Releases, previous and upcoming](https://github.com/infor-design/enterprise/releases).
