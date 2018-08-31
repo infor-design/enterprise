@@ -97,7 +97,7 @@ Additionally, check out our [Coding Standards documentation](./CODING-STANDARDS.
 - modify the `gruntfie.js` to add the new script.
 - add initializer code to `initialize.js` (should be able to bootstrap the page).
 - write the code for the component
-- write functional/e2e tests
+- write functional/e2e tests. See [Testing.md](./TESTING.md) for guidelines/instructions.
 - make sure all tests pass
 - add a `readme.md` file with some basic information about the component.
 - run eslint on all the new JS code.
