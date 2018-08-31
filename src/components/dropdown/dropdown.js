@@ -967,6 +967,7 @@ Dropdown.prototype = {
     }
 
     this.list.addClass('search-mode');
+    this.list.find('.trigger').find('.icon').attr('class', 'icon search').changeIcon('search');
     this.searchInput.removeAttr('aria-activedescendant');
 
     this.unhighlightOptions();
@@ -976,6 +977,8 @@ Dropdown.prototype = {
       return;
     }
 
+    
+    results.removeClass('hidden');
     list.not(results).add(headers).addClass('hidden');
     list.filter(results).each(function (i) {
       const li = $(this);
@@ -989,7 +992,6 @@ Dropdown.prototype = {
       // Highlight Term
       const exp = self.getSearchRegex(term);
       const text = li.text().replace(exp, '<i>$1</i>').trim();
-      li.removeClass('hidden').children('a').html(text);
     });
 
     headers.each(function () {
