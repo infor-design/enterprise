@@ -320,7 +320,7 @@ describe('Dropdown example-no-search-filtering tests', () => {
     expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual('56');
   });
 
-  if (!utils.isBS()) {
+  if (!utils.isBS() && !utils.isCI()) {
     it('Should clear a previous dropdown selection when pressing DELETE', async () => {
       // On Macs, use "backspace" delete, instead of control keys' delete
       const keyPressed = utils.isMac() || utils.isBS() || utils.isCI() ? 'BACK_SPACE' : 'DELETE';
