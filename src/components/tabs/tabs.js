@@ -116,7 +116,7 @@ Tabs.prototype = {
     let moveTabPanelContainer = false;
 
     // Check for a tab panel container immediately after the `.tab-container`
-    // element (default as of Soho Xi 4.3.0)
+    // element (default as of IDS Enterprise 4.3.0)
     tabPanelContainer = this.element.next('.tab-panel-container');
 
     // Auto-detect and move existing tab-panel containers in key areas, if applicable.

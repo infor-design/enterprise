@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /* eslint-disable */
 /* =================================================
- * Soho Xi Minify Process (Uglify-ES Wrapper)
+ * IDS Enterprise Minify Process (Uglify-ES Wrapper)
  * ============================================== */
 const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
 const UglifyJS = require('uglify-es');
 
-// Soho Xi Uglify Configs
+// IDS Enterprise Uglify Configs
 const config = require('./configs/uglify');
 const ENCODING = 'utf-8';
 

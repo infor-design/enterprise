@@ -50,7 +50,7 @@ In Some components' jQuery wrappers (modal, slider, etc), it was previously poss
 $('#myModal').modal('close');
 ```
 
-This was legacy functionality from the `v3.x.x` Soho components, and was sporadically implemented in the Soho Xi components.  For the purposes of cleaning up our
+This was legacy functionality from the `v3.x.x` Soho components, and was sporadically implemented in the IDS Enterprise components.  For the purposes of cleaning up our
 APIs and making us less dependent on jQuery going forward, we've deprecated this functionality.  The best ways to call API methods on components are either directly
 calling the methods off of newly created components:
 
