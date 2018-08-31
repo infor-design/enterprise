@@ -22,6 +22,7 @@ describe('Calendar index tests', () => {
 
     await nextButton.click();
     await utils.checkForErrors();
+    await testDate.setDate(1);
     await testDate.setMonth(testDate.getMonth() + 1);
 
     expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));

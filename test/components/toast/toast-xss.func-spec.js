@@ -16,6 +16,9 @@ describe('Toast XSS Prevention', () => {
     toastAPI.destroy();
     toastAPI = null;
 
+    toastMessageTitleEl.parentNode.removeChild(toastMessageTitleEl);
+    toastMessageContentEl.parentNode.removeChild(toastMessageContentEl);
+
     toastMessageTitleEl = null;
     toastMessageContentEl = null;
   });

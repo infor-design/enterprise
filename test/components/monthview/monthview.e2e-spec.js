@@ -23,6 +23,7 @@ describe('MonthView index tests', () => {
     expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     await nextButton.click();
+    await testDate.setDate(1);
     await testDate.setMonth(testDate.getMonth() + 1);
 
     expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
