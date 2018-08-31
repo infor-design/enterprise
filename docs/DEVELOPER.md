@@ -77,7 +77,7 @@ Finally, in a footer section below the markup on your page, add a `<script>` tag
 </script>
 ```
 
-It's also possible to manually initialize each component you want to use individually:
+It's also possible to manually initialize each individual component:
 
 ```js
   $('#my-button').button();
