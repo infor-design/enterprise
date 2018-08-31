@@ -83,6 +83,8 @@ _For VSCode:_
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 - [EditorConfig](https://github.com/editorconfig/editorconfig-vscode)
 
+Additionally, check out our [Coding Standards documentation](./CODING-STANDARDS.md) for the code standards that will be enforced by these plugins.
+
 ## Guidelines for creating a new IDS Component
 
 - See if it can be done with only css.
