@@ -324,7 +324,7 @@ describe('Dropdown example-no-search-filtering tests', () => {
   });
 
   // TODO: Figure out why this uses "BACK_SPACE" as the keypress on Ubuntu Linux (TravisCI)
-  if (utils.isChrome()) {
+  if (!utils.isCI()) {
     it('Should clear a previous dropdown selection when pressing DELETE', async () => {
       // On Macs, use "backspace" delete, instead of control keys' delete
       const keyPressed = utils.isMac() ? 'BACK_SPACE' : 'DELETE';
