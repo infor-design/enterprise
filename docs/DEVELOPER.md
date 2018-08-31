@@ -7,7 +7,9 @@ Before installing IDS for usage in your project, make sure to install its depend
 - [jQuery](https://jquery.com/)
 - [D3](https://d3js.org/)
 
-### NPM
+### Download IDS
+
+#### NPM
 
 You can use NPM (or Yarn) to install from the global NPM registry:
 
@@ -19,7 +21,7 @@ You can also use `ids-enterprise@dev` for a nightly (and potentially unstable) d
 
 After installation, the pre-built files are accessible in `./node_modules/ids-enterprise/dist`
 
-### CDN
+#### CDN
 
 We now offer the IDS library via CDN. For example, the paths for the 4.10.0 releases would be:
 
@@ -39,6 +41,59 @@ https://cdn.hookandloop.infor.com/sohoxi/4.10.0/svg/svg-extended.html
 Versions available on CDN are: 4.3.2, 4.3.3, 4.3.4, 4.3.5, 4.7.0, 4.8.0, 4.9.0, and 4.10.0.
 
 **Note:** There may be a cost involved to using this with Infor's Amazon S3 account.  Please keep this in mind when using the library this way.
+
+### Adding the library to a project
+
+Include the IDS dependencies and the library itself in your page's `<head>` tag:
+
+```
+<head>
+  <link rel="stylesheeet" href="css/light-theme.min.css" />
+  <script src="js/jquery.min.js"></script>
+  <script src="js/d3.min.js"></script>
+  <script src="js/sohoxi.js"></script>
+</head>
+```
+
+Next, establish some IDS components using the appropriate HTML markup and CSS styles.  For a full list of available components, see our [component documentation](https://design.infor.com/code/ids-enterprise/latest).  Below is an example of what's necessary to create a simple IDS Button component inside of a twelve column layout:
+
+```
+<div class="row">
+  <div class="twelve columns">
+
+    <button id="my-button" class="btn-primary">
+      <span>This is My Button</span>
+    </button>
+
+  </div>
+</div>
+```
+
+Finally, in a footer section below the markup on your page, add a `<script>` tag with some Javascript code that will invoke the Javascript interactions available for each IDS component.  One way to do this is to call the generic Initializer on the `<body>` tag (or whatever block element in which you want to scope IDS):
+
+```
+<script type="text/javascript">
+  $('body').initialize();
+</script>
+```
+
+It's also possible to manually initialize each component you want to use individually:
+
+```
+  $('#my-button').button();
+```
+
+If you've got some specific Javascript code you'd like to run after IDS completely initializes, simply add an event listener for IDS's generic `initialized` event on the `<body>` tag:
+
+```
+<script type="text/javascript">
+  $('body').on('initialized', function () {
+    // extra code runs here
+  });
+</script>
+```
+
+At this point, IDS should be completely setup in your project!
 
 ## Running the development server
 
