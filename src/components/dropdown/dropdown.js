@@ -988,10 +988,6 @@ Dropdown.prototype = {
         self.highlightOption(li);
         selected = true;
       }
-
-      // Highlight Term
-      const exp = self.getSearchRegex(term);
-      const text = li.text().replace(exp, '<i>$1</i>').trim();
     });
 
     headers.each(function () {
