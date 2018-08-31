@@ -175,10 +175,6 @@ describe('Dropdown example-index tests', () => {
 
       // First key press causes the menu to close
       await dropdownSearchEl.sendKeys(protractor.Key.TAB);
-
-      // Second key press causes the focus to shift away
-      await browser.driver.sleep(config.sleep);
-      await element(by.css('div[aria-controls="dropdown-list"]')).sendKeys(protractor.Key.TAB);
       await browser.driver.sleep(config.sleep);
 
       // The Dropdown Pseudo element should no longer have focus
