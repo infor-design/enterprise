@@ -33,6 +33,10 @@ When the markup is established, you can call the `updated` method or trigger the
 - `aria-valuenow` should indicate the current value
 - `aria-maxvalue="100"` should indicate the max value (100%)
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - No Keyboard

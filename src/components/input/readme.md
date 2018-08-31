@@ -90,6 +90,10 @@ A standard Text Input is a basic input element with `type="text"`. Password type
 - Make sure the input has a matching `<label>` which is meaningful
 - Add `aria-required` for required elements
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> and <kbd>Shift Tab</kbd> moves focus into the edit field to/from the next focusable item in the tab order

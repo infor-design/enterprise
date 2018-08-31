@@ -292,10 +292,17 @@
     margin: 25px auto 5px;
   }
 
+  > .modal-buttonset {
+    .btn-close {
+      position: relative;
+      bottom: 0;
+    }
+  }
+
   .btn-close {
     position: absolute;
     right: 0;
-    bottom: 0;
+    top: 0;
 
     .icon {
       width: 16px;

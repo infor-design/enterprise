@@ -236,6 +236,14 @@
   }
 }
 
+//This will force the fade edge to move in the tab list when the button is visible
+.has-more-button.tab-container.horizontal,
+.has-more-button.tab-container.header-tabs {
+  &::after {
+    right: 51px;
+  }
+}
+
 // Common styles between Horizontal and Header tabs
 .tab-container.horizontal,
 .tab-container.header-tabs {
@@ -267,7 +275,7 @@
   // Background fade on the right edge
   // Fade colors are determined by pattern/implementation (see different tab CSS files for definitions)
   &::after {
-    right: 51px; // bleed into the tab list (width of this element + 1 for border)
+    right: 0; // bleed into the tab list (width of this element + 1 for border) & eliminate unncessary white space
   }
 
   &.scrolled-left::after,

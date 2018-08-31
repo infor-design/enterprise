@@ -58,6 +58,10 @@ This may include possibly using an inset margin in some cases.
 
 See also [Donut Chart Example]( ../components/donut/example-index)
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - None
