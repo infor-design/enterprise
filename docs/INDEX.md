@@ -8,7 +8,9 @@ title: Enterprise Components for Infor Design System
 
 ## Usage
 
-Detailed instructions on how to incorporate the Enteprise library can be found in our github [README](https://github.com/infor-design/enterprise/blob/master/README.md).
+Basic IDS Enterprise usage instructions can be found in our Github [README](https://github.com/infor-design/enterprise/blob/master/README.md).
+
+Detailed instructions can be found in the [Developer Documentation](https://github.com/infor-design/enterprise/blob/master/docs/DEVELOPER.md)
 
 ## Development and Contributing to the project
 

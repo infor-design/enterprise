@@ -39,6 +39,7 @@ For additional usage methods, see [Installing IDS](docs/DEVELOPER.md#installing-
 ## Documentation
 
 - [Latest Release Docs](https://design.infor.com/code/ids-enterprise/latest)
+- [Change Log](docs/CHANGELOG.md) (Includes latest release changes)
 - [How to build the documentation from source](docs/DEVELOPER.md#basic-commands)
 
 ## Contributing

@@ -2,35 +2,35 @@
 
 **TODO:** This documentation is VERY out of date and needs fixing.
 
-Test Page:
-<http://usalvlhlpool1.infor.com/4.4.0-rc/components>
-(Note that each control can be accessed on its own url `http://usalvlhlpool1.infor.com/4.4.0-rc/components/<name>` for example:
-`<http://usalvlhlpool1.infor.com/4.4.0-rc/components/slider)`
+## Important Links
 
-Jira: For Reporting Issues..
-<https://github.com/infor-design/enterprise/issues>
+### Demo app
 
-RoadMap:
-<https://docs.google.com/spreadsheets/d/1nxSEfNoKtQ9i3R7hgokj8VTdAJ95J8SXfhJ7IrtrOf0/edit?pli=1#gid=345637423>
+- [Bleeding Edge](http://master-enterprise.demo.design.infor.com/components)
+- [Latest Stable](http://490-enterprise.demo.design.infor.com/components)
 
-Requirements:
-<https://docs.google.com/spreadsheets/d/1Z9mmUZJlAqkCLy8vyie3AjRKUR4SVKuHGyFiQiGm98A/edit?pli=1#gid=989468169>
+### Infor resources
 
-Useful Links:
-<http://accessibility.psu.edu/protocol>
-<http://www.paciellogroup.com/blog/2010/04/html5-and-the-myth-of-wai-aria-redundance/>
+- [IDS Enterprise on Github](https://github.com/infor-design/enterprise/issues) for reporting issues
+- [IDS Roadmap](https://docs.google.com/spreadsheets/d/1nxSEfNoKtQ9i3R7hgokj8VTdAJ95J8SXfhJ7IrtrOf0/edit?pli=1#gid=345637423) (NOTE: needs updating)
+- [Requirements Documentation](https://docs.google.com/spreadsheets/d/1Z9mmUZJlAqkCLy8vyie3AjRKUR4SVKuHGyFiQiGm98A/edit?pli=1#gid=989468169) (NOTE: needs updating)
 
-### Things to Test
+### Useful resources for testing
 
-The controls should be tested in several ways:
+- [Penn State Accessibility/Usability Guidelines](http://accessibility.psu.edu/protocol)
+- [The Myth of WAI-ARIA Redundance](https://developer.paciellogroup.com/blog/2010/04/html5-and-the-myth-of-wai-aria-redundance)
+
+## Things to Test
+
+The components should be tested in several ways:
 
 - Browser Testing - IE11, Edge, Firefox, Safari, Chrome, IOS  (Phone and Tablet), Android (Phone and Tablet), Windows Touch (Surface)
 - Touch Device Support Testing
 - Accessibility Testing according to [WCAG Accessibility Standards](http://www.w3.org/TR/WCAG20/)
-- Developer Testing - Can the Controls be easily coded from the documentation, developer Web Driver.IO tests ect.
+- Developer Testing - Can the Components be easily coded from the documentation, developer Web Driver.IO tests ect.
 - Testing against requirements
 
-### Related Testing Tools
+## Related Testing Tools
 
 - Tester can grab latest code from github (Generally One Month Cycles for versions/QA).
 - tester would go through every Html page example opening it in:  IE11, Edge Firefox, Safari, Chrome, IOS  (Phone and Tablet), Android (Phone and Tablet), Windows Touch (Surface)
