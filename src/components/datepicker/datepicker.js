@@ -1119,7 +1119,7 @@ DatePicker.prototype = {
     const day = (date instanceof Array ? date[2] : date.getDate()).toString();
 
     // Make sure Calendar is showing that month
-    if (this.currentMonth !== month || this.currentYear !== year) {
+    if (this.calendarAPI.currentMonth !== month || this.calendarAPI.currentYear !== year) {
       this.calendarAPI.showMonth(month, year);
     }
 
