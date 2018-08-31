@@ -31,9 +31,10 @@ We support the latest release and the release previous to the latest (R-1) for b
 
 ## Installation
 
+```sh
+npm install --save ids-enterprise@latest
 ```
-$ npm install --save ids-enterprise@latest
-```
+
 For additional usage methods, see [Installing IDS](docs/DEVELOPER.md#installing-ids-into-your-project)
 
 ## Documentation
