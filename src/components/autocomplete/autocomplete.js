@@ -541,7 +541,7 @@ Autocomplete.prototype = {
       if (deferredStatus === false) {
         return dfd.reject(searchTerm);
       }
-      return dfd.resolve(xssUtils.ensureAlphaNumeric(searchTerm), response);
+      return dfd.resolve(xssUtils.stripTags(searchTerm), response);
     }
 
     this.loadingTimeout = setTimeout(() => {
