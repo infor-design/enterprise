@@ -62,3 +62,7 @@ There are several scenarios where the background, border, and text color of a to
 ## Responsive Guidelines
 
 - When activating a toolbar searchfield beneath the phone breakpoint size, it will resize to become the full width of the viewport to make the search text easier to read
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

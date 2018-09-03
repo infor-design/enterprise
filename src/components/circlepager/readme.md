@@ -23,7 +23,7 @@ Use the below markup to create a circle pager, then call `$(elem).circlepager()`
     <div class="slide">
       <div class="slide-content">
         <p>
-          <a href="#" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
+          <a href="#" id="hyperlink-1" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
         $750.00
         </p>
       </div>
@@ -32,7 +32,7 @@ Use the below markup to create a circle pager, then call `$(elem).circlepager()`
     <div class="slide">
       <div class="slide-content">
         <p>
-          <a href="#" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
+          <a href="#" id="hyperlink-2" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
         $750.00
         </p>
       </div>
@@ -41,7 +41,7 @@ Use the below markup to create a circle pager, then call `$(elem).circlepager()`
     <div class="slide">
       <div class="slide-content">
         <p>
-          <a href="#" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
+          <a href="#" id="hyperlink-3" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
         $750.00
         </p>
       </div>
@@ -56,6 +56,10 @@ Use the below markup to create a circle pager, then call `$(elem).circlepager()`
 - [Carousel](https://www.w3.org/WAI/tutorials/carousels/) guidelines apply.
 - We do not auto-move the carousel elements
 - User can <kbd>Tab</kbd> to the circles and activate
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

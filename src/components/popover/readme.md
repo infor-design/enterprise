@@ -54,3 +54,7 @@ $('#popover-trigger').popover({
 ## Accessibility
 
 Focus should always return to the object on which the popover is called from once the popover closes.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
