@@ -75,8 +75,7 @@ Trackdirty.prototype = {
       pos.left += el.scrollLeft;
       pos.top += el.scrollTop;
     });
-    console.log('el.scrollTop;', pos.top);
-    console.log('pos.left', pos.left);
+    
     return { left: pos.left, top: pos.top };
   },
 
