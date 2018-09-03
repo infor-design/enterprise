@@ -58,3 +58,7 @@ In [another configuration]( ../components/timepicker/example-intervals), it's al
   <input id="twentyfour-time-field" class="timepicker" name="twentyfour-time-field" type="text" data-options='{ "minuteInterval": "10", "roundToInterval": "true"}' />
 </div>
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

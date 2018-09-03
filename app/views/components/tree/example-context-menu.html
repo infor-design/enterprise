@@ -19,16 +19,16 @@
 </div>
 
 <ul id="tree-popupmenu" class="popupmenu">
-  <li><a href="#" data-cmd="expand">Expand/Collapse</a></li>
-  <li><a href="#" data-cmd="select">Select</a></li>
-  <li><a href="#" data-cmd="explorer">Explore</a></li>
+  <li><a id="expand" href="#" data-cmd="expand">Expand/Collapse</a></li>
+  <li><a id="select" href="#" data-cmd="select">Select</a></li>
+  <li><a id="explore" href="#" data-cmd="explorer">Explore</a></li>
 </ul>
 
 
 <script>
   var sampleData;
 
-  
+
   sampleData = [{
     "id": "node1",
     "text": "Node One"
@@ -47,7 +47,7 @@
     "children": []
   }];
 
-  
+
 
   //Can refer to the data set here
   $('#json-tree').tree({menuId: 'tree-popupmenu', dataset: sampleDataNoID, source: function (req, response) {

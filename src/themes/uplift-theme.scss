@@ -1,10 +1,13 @@
-// IDS Enterprise - Default Theme - Light with Grey Background
+// IDS Enterprise - Uplift Theme
 //================================================== //
 
-// Standard CSS reset
+// Standard CSS reset stuff here
 @import '../core/reset';
 @import '../core/mixins';
 @import '../core/config';
+
+// IDS-identity vars
+@import '../../node_modules/ids-identity/dist/tokens/web/theme-uplift.sass';
 
 // Core Controls
 @import '../core/controls';

@@ -52,8 +52,8 @@ Displays one or more selectable values. A user can select exactly one value at a
             </select>
           </div>
 
-          <button class="btn-primary" type="submit">Sign in</button>
-          <a class="hyperlink" href="forgotpassword">Forgot Password?</a>
+          <button id="submit" class="btn-primary" type="submit">Sign in</button>
+          <a id="hyperlink" class="hyperlink" href="forgotpassword">Forgot Password?</a>
 
         </form>
     </section>
@@ -74,6 +74,10 @@ Displays one or more selectable values. A user can select exactly one value at a
 ## Accessibility
 
 - Make sure all fields have id's that much the labels.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

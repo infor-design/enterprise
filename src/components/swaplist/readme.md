@@ -48,6 +48,10 @@ $('#example-swaplist-1').swaplist({available: available, selected: selected, tem
 
 - This component is keyboard accessible but not entirely tested for WAI-ARIA and Screen reader support.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> moves in and out of the list boxes and the between the buttons on the toolbars and the adjacent objects

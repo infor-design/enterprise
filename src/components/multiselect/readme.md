@@ -53,6 +53,10 @@ The multi-select list is fairly complex to make accessible. But generally this c
     - `aria-activedescendant` to associate the `<input>` to the active list item. It must be removed if no options are selected
     - `aria-controls` on the input field, containing the ID of the matching dropdown list
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> and <kbd>Shift+Tab</kbd> moves focus into and out of the dropdown. If the list is open, <kbd>Tab</kbd> will close the list, selecting the current item, and move to the next focusable element

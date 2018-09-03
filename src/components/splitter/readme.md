@@ -29,7 +29,7 @@ A div with the class of splitter will become the split handle.
 
   <nav class="sidebar scrollable">
     <div class="content">
-      <div class="splitter"></div>
+      <div id="splitter" class="splitter"></div>
     </div>
   </nav>
 
@@ -39,6 +39,10 @@ A div with the class of splitter will become the split handle.
 ## Accessibility
 
 - This is a presentation only element
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
