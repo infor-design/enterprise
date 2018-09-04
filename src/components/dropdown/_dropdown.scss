@@ -807,6 +807,29 @@ div.dropdown-xs,
       top: 11px;
     }
   }
+  div.dropdown,
+  div.multiselect {
+    > .listoption-icon {
+      top: 9px;
+    }
+    + .icon {
+      top: 4px;
+    }
+  }
+}
+
+//for firefox and android
+.is-firefox,
+.android {
+  div.dropdown,
+  div.multiselect {
+    > .listoption-icon {
+      top: 9px;
+    }
+    + .icon {
+      top: 4px;
+    }
+  }
 }
 
 //RTL Styles
