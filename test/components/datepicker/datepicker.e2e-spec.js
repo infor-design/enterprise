@@ -55,28 +55,29 @@ describe('Datepicker example-index tests', () => {
     expect(await datepickerEl.getAttribute('value')).toEqual('10/31/2014');
   });
 
-  it('Should be able to select with arrows and enter', async () => {
-    const datepickerEl = await element(by.id('date-field-normal'));
-    let focusTD = await element(by.css('#monthview-popup td.is-selected'));
+  if (!utils.isBS()) {
+    it('Should be able to select with arrows and enter', async () => { //eslint-disable-line
+      const datepickerEl = await element(by.id('date-field-normal'));
+      let focusTD = await element(by.css('#monthview-popup td.is-selected'));
+      await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await focusTD.sendKeys(protractor.Key.ARROW_DOWN);
+      focusTD = await element(by.css('#monthview-popup td.is-selected'));
+      await focusTD.sendKeys(protractor.Key.ARROW_UP);
+      focusTD = await element(by.css('#monthview-popup td.is-selected'));
+      await focusTD.sendKeys(protractor.Key.ARROW_LEFT);
+      focusTD = await element(by.css('#monthview-popup td.is-selected'));
+      await focusTD.sendKeys(protractor.Key.ARROW_RIGHT);
+      focusTD = await element(by.css('#monthview-popup td.is-selected'));
+      await focusTD.sendKeys(protractor.Key.ENTER);
 
-    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await focusTD.sendKeys(protractor.Key.ARROW_DOWN);
-    focusTD = await element(by.css('#monthview-popup td.is-selected'));
-    await focusTD.sendKeys(protractor.Key.ARROW_UP);
-    focusTD = await element(by.css('#monthview-popup td.is-selected'));
-    await focusTD.sendKeys(protractor.Key.ARROW_LEFT);
-    focusTD = await element(by.css('#monthview-popup td.is-selected'));
-    await focusTD.sendKeys(protractor.Key.ARROW_RIGHT);
-    focusTD = await element(by.css('#monthview-popup td.is-selected'));
-    await focusTD.sendKeys(protractor.Key.ENTER);
+      const testDate = new Date();
+      testDate.setHours(0);
+      testDate.setMinutes(0);
+      testDate.setSeconds(0);
 
-    const testDate = new Date();
-    testDate.setHours(0);
-    testDate.setMinutes(0);
-    testDate.setSeconds(0);
-
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
-  });
+      expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    });
+  }
 });
 
 describe('Datepicker Anniversay tests', () => {
@@ -266,7 +267,8 @@ describe('Datepicker Month Year Picker Tests', () => {
     await buttonEl.click();
 
     const testDate = new Date();
-    testDate.setMonth(testDate.getMonth() + 1);
+    await testDate.setDate(1);
+    await testDate.setMonth(testDate.getMonth() + 1);
 
     expect(await element(by.id('month-year')).getAttribute('value')).toEqual(`${(testDate.getMonth()).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
   });
@@ -284,7 +286,8 @@ describe('Datepicker Month Year Picker Tests', () => {
     await buttonEl.click();
 
     const testDate = new Date();
-    testDate.setMonth(testDate.getMonth());
+    await testDate.setDate(1);
+    await testDate.setMonth(testDate.getMonth());
 
     expect(await element(by.id('month-year-long')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }));
   });
@@ -326,7 +329,8 @@ describe('Datepicker Month Year Changer Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     const testDate = new Date();
-    testDate.setMonth(testDate.getMonth() + 1);
+    await testDate.setDate(1);
+    await testDate.setMonth(testDate.getMonth() + 1);
 
     expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual(`${(testDate.getMonth())}/1/${testDate.getFullYear()}`);
   });
