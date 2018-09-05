@@ -1546,7 +1546,7 @@ Tree.prototype = {
     return li;
   },
 
-  // Add a node to an exiting node, making it a folder if need be
+  // Add a node to an existing node, making it a folder if need be
   addAsChild(nodeData, li) {
     let ul = li.find('ul').first();
     if (ul.length === 0) {
@@ -2140,6 +2140,20 @@ Tree.prototype = {
     this.element.empty();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
+
+  /**
+   * Disables all nodes in the Tree component
+   * @returns {void}
+   */
+  disable() {
+    const nodes = this.element[0].querySelectorAll('a');
+    nodes.forEach(node => {
+      if ( !(node.classList.contains('is-disabled')) ) {
+        node.classList.add('is-disabled');
+      }
+    })
+  }
+
 };
 
 export { Tree, COMPONENT_NAME };

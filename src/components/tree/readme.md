@@ -31,7 +31,8 @@ demo:
     slug: example-sortable
   - name: Update Node
     slug: example-update-node
----
+  - name: Disable Tree
+  - slug: example-disable
 
 ## Testability
 
