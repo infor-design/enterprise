@@ -167,7 +167,8 @@ Following the process below will safely create baseline images the CI can use du
 1. Push the branch you're working on to GitHub (we'll need it later).
 1. In your terminal, run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the Travis CI docker image to mimic the environment. And wait....
 1. Open up the image and go in `docker exec -it travis-debug bash -l`
-1. Install NVM (first, check https://github.com/creationix/nvm for the latest nvm version)
+1. Install [Node Version Manager (nvm)](https://github.com/creationix/nvm) using the latest version available (check their Github for more info)
+
 ```sh
 wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 ```
