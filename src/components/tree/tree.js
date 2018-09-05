@@ -2148,9 +2148,7 @@ Tree.prototype = {
   disable() {
     const nodes = this.element[0].querySelectorAll('a');
     nodes.forEach(node => {
-      if ( !(node.classList.contains('is-disabled')) ) {
-        node.classList.add('is-disabled');
-      }
+      node.classList.add('is-disabled');
     })
   }
 
