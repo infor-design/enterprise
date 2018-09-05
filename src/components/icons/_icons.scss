@@ -189,13 +189,6 @@ svg.icon-logo {
   width: 34px;
 }
 
-.field-dirty {
-  > .icon-dirty {
-    left: 1px !important;
-    top: 7px !important;
-  }
-}
-
 .icon-dirty {
   @include css3(border-radius, 2px 0 0);
   border-color: $dirty-icon-fill transparent transparent $dirty-icon-fill;
