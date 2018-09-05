@@ -12,6 +12,44 @@ let datagridEl;
 let svgEl;
 let datagridObj;
 
+let data = [];
+const pagingGetData = (page, size) => {
+  const thisData = [];
+  const start = size * (page - 1);
+  const end = start + size;
+  const dataLen = data.length;
+  for (let i = start; i < end && i < dataLen; i++) {
+    thisData.push(data[i]);
+  }
+  return thisData;
+};
+
+const pagingDataSource = (req, res) => {
+  const pagesize = 3;
+  let pagingData = [];
+  if (req.type === 'initial' || req.type === 'first') {
+    req.firstPage = true;
+    req.lastPage = false;
+    pagingData = pagingGetData(1, pagesize);
+  } else if (req.type === 'last') {
+    req.firstPage = false;
+    req.lastPage = true;
+    pagingData = pagingGetData(pagesize, pagesize);
+  } else if (req.type === 'next') {
+    req.firstPage = false;
+    req.lastPage = false;
+    req.activePage++;
+    pagingData = pagingGetData(req.activePage, pagesize);
+  }
+
+  if (req.indeterminate) {
+    req.activePage = -1;
+  }
+
+  req.total = pagesize;
+  res(pagingData, req);
+};
+
 // Define Columns for the Grid.
 const columns = [];
 columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: 100, filterType: 'Text' });
@@ -197,41 +235,38 @@ describe('Datagrid Paging API', () => {
     });
 
     it('test using first paging bar button', (done) => {
-      // build a source function
-      const dataSourceContainer = {
-        dataSource: (request, response) => {
-          request.firstPage = request.type === 'first';
-          request.lastPage = false;
-          response(sampleData, request);
-        }
-      };
-
-      // build a spy to ensure the dataSource is called
+      data = JSON.parse(JSON.stringify(sampleData));
+      const dataSourceContainer = { dataSource: pagingDataSource };
       const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
-
-      // build the dataGrid object with a source option. This should to cause the
-      // source() to be called with a request.type === 'first'
-      const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
+      const options = { columns, paging: true, pagesize: 3, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
-      // wait for any timeouts to complete to ensure the source data is loaded
-      // and the paging bar is rendered
       setTimeout(() => {
-        // get first button and click it
-        const buttonEl = document.body.querySelector('li.pager-first a');
-        const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
-        buttonEl.click();
+        const buttonElNext = document.body.querySelector('li.pager-next a');
+        const buttonClickSpyNext = spyOnEvent(buttonElNext, 'click.button');
+        buttonElNext.click();
 
-        // wait for any timeouts to complete
         setTimeout(() => {
-          expect(buttonClickSpy).toHaveBeenTriggered();
+          expect(buttonClickSpyNext).toHaveBeenTriggered();
 
-          // ensure it's been called with a request.type of 'first'
           expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('first');
-          done();
-        }, 500);
+          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
+
+          const buttonElFirst = document.body.querySelector('li.pager-first a');
+          const buttonClickSpyFirst = spyOnEvent(buttonElFirst, 'click.button');
+          buttonElFirst.click();
+
+          setTimeout(() => {
+            expect(buttonClickSpyFirst).toHaveBeenTriggered();
+
+            expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
+            expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
+            expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('first');
+
+            done();
+          }, 1);
+        }, 1);
       }, 1);
     });
 
@@ -315,41 +350,38 @@ describe('Datagrid Paging API', () => {
     });
 
     it('test using previous paging bar button', (done) => {
-      // build a source function
-      const dataSourceContainer = {
-        dataSource: (request, response) => {
-          request.firstPage = request.type === 'prev';
-          request.lastPage = false;
-          response(sampleData, request);
-        }
-      };
-
-      // build a spy to ensure the dataSource is called
+      data = JSON.parse(JSON.stringify(sampleData));
+      const dataSourceContainer = { dataSource: pagingDataSource };
       const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
-
-      // build the dataGrid object with a source option. This should to cause the
-      // source() to be called with a request.type === 'last'
-      const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
+      const options = { columns, paging: true, pagesize: 3, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
-      // wait for any timeouts to complete to ensure the source data is loaded
-      // and the paging bar is rendered
       setTimeout(() => {
-        // get first button and click it
-        const buttonEl = document.body.querySelector('li.pager-prev a');
-        const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
-        buttonEl.click();
+        const buttonElNext = document.body.querySelector('li.pager-next a');
+        const buttonClickSpyNext = spyOnEvent(buttonElNext, 'click.button');
+        buttonElNext.click();
 
-        // wait for any timeouts to complete
         setTimeout(() => {
-          expect(buttonClickSpy).toHaveBeenTriggered();
+          expect(buttonClickSpyNext).toHaveBeenTriggered();
 
-          // ensure it's been called with a request.type of 'first'
           expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('prev');
-          done();
-        }, 500);
+          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
+
+          const buttonElPrev = document.body.querySelector('li.pager-prev a');
+          const buttonClickSpyPrev = spyOnEvent(buttonElPrev, 'click.button');
+          buttonElPrev.click();
+
+          setTimeout(() => {
+            expect(buttonClickSpyPrev).toHaveBeenTriggered();
+
+            // ensure it's been called with a request.type of 'first'
+            expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
+            expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
+            expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('prev');
+            done();
+          }, 1);
+        }, 1);
       }, 1);
     });
   });
