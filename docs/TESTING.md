@@ -156,7 +156,8 @@ Travis commands can be found in the [.travis.yml](https://github.com/infor-desig
 
 ### Creating Baseline Screenshots
 
-1. Run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the Travis CI docker image to mimic the environment. And wait....
+1. Push the branch you're working on to GitHub (we'll need it later).
+1. In your terminal, run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the Travis CI docker image to mimic the environment. And wait....
 1. Open up the image and go in `docker exec -it travis-debug bash -l`
 1. Install NVM (first, check https://github.com/creationix/nvm for the latest nvm version)
 ```sh
@@ -178,15 +179,23 @@ nvm use 10
 git clone https://github.com/infor-design/enterprise.git
 ```
 
+1. Switch to the branch you pushed to Github earlier.
 1. Run the install commands from `npm install -g grunt-cli && npm install`
-1. May need to update chrome with.
+1. May need to update the version of Chrome on the container:
 
 ```sh
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome*.deb
 ```
 
-1. Run the travis commands as per the build
+1. Build the IDS Components:
+
+```sh
+npx grunt
+```
+
+1. Run the `npm run quickstart` command in your current docker session to run the demoapp.
+1. Open a second session in the docker container, and run `npm run e2e:ci` to start the tests.
 
 ```sh
 npm run quickstart
@@ -194,14 +203,11 @@ npm run quickstart
 npm run e2e:ci
 ```
 
-1. Push the branch you're working on to GitHub and switch to the same branch on the vm
-1. Run the `npm run start` command in the VM on one session.
-1. Run `npm run e2e:ci` on the other session.
 1. Copy the file from the actual folder to the baseline folder `mv /root/enterprise/test/.tmp/actual/radio-init-chrome-1200x800-dpr-1.png /root/enterprise/test/baseline/radio-init-chrome-1200x800-dpr-1.png`
 1. Run the `npm run e2e:ci` again to tests
-1. Commit and push the files
+1. Commit and push the files to your branch
 
-We can also just copy `.tmp/actual/<name-of-test-file.png>` verified screenshots to the `baseline` folder for testing, from the Docker container. [Copy](https://docs.docker.com/engine/reference/commandline/cp/) actual screenshots from .tmp/actual/*.png using.
+We can also just copy `.tmp/actual/<name-of-test-file.png>` verified screenshots to the `baseline` folder for testing, from the Docker container. [Copy](https://docs.docker.com/engine/reference/commandline/cp/) actual screenshots from .tmp/actual/\*.png using.
 
 Or copy them all to your local directory for inspection.
 
