@@ -158,7 +158,19 @@ Travis commands can be found in the [.travis.yml](https://github.com/infor-desig
 
 1. Run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the Travis CI docker image to mimic the environment. And wait....
 1. Open up the image and go in `docker exec -it travis-debug bash -l`
+1. Install NVM (first, check https://github.com/creationix/nvm for the latest nvm version)
+```sh
+wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+```
+
 1. Switch to the Travis user `su - travis`
+1. Update/Install Node.js
+
+```sh
+nvm install 10
+nvm use 10
+```
+
 1. Go to your home directory `(`cd ~`)`
 1. Clone IDS Enterprise repo, and navigate to it
 
@@ -172,13 +184,6 @@ git clone https://github.com/infor-design/enterprise.git
 ```sh
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome*.deb
-```
-
-1. Update/Install Node.js (nvm should be installed)
-
-```sh
-nvm install 10
-nvm use 10
 ```
 
 1. Run the travis commands as per the build
