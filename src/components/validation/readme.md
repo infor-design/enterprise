@@ -90,13 +90,13 @@ You can control on what events your validation rules fire. Note that if you use 
 You can specify either one set of events to trigger on for all rules as:
 
 ```html
-<input  data-validation-events="blur change">
+<input id="email" data-validation-events="blur change">
 ```
 
 Or you can specify either different events for multiple rules as per as:
 
 ```html
-<input data-validation-events="{'required': 'keydown', 'checkGivenNamesCount': 'keydown change blur'}">
+<input id="email" data-validation-events="{'required': 'keydown', 'checkGivenNamesCount': 'keydown change blur'}">
 ```
 
 ## Accessibility
@@ -110,6 +110,10 @@ Or you can specify either different events for multiple rules as per as:
 ```
 
 - Errors will be read audibly by the API using an aria-alert (polite)
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

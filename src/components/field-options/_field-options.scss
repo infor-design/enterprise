@@ -3,6 +3,7 @@
 @mixin trigger-button {
   @include rotate(90);
   //border-radius: top-right | bottom-right | bottom-left | top-left
+  clip-path: inset(0 0 0 0);
   border-radius: 2px 2px 0 0;
   height: 22px;
   left: -10px;
@@ -10,6 +11,7 @@
   min-width: 0;
   min-height: 0;
   opacity: 0;
+  overflow: hidden;
   width: 34px;
 
   &:hover {

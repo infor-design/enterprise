@@ -26,7 +26,7 @@ Even if the user clicks outside of the dialog on the application which invoked t
 The modal will animate from 90% to 100% and at the same time fades in.
 
 ```html
-   <button class="btn" type="button" data-modal="modal-1">Add Context</button>
+   <button id="modal" class="btn" type="button" data-modal="modal-1">Add Context</button>
     <div class="modal" id="modal-1">
       <div class="modal-content">
 
@@ -55,8 +55,8 @@ The modal will animate from 90% to 100% and at the same time fades in.
           </div>
 
           <div class="modal-buttonset">
-            <button type="button" class="btn-modal" style="width:50%">Cancel</button>
-            <button type="button" class="btn-modal-primary" style="width:50%">Submit</button>
+            <button type="button" id="cancel" class="btn-modal" style="width:50%">Cancel</button>
+            <button type="button" id="submit" class="btn-modal-primary" style="width:50%">Submit</button>
           </div>
         </div>
       </div>
@@ -74,6 +74,10 @@ The modal will animate from 90% to 100% and at the same time fades in.
 - `aria-modal` can be added but this is a forward thinking approach, since `aria-modal` isn't actually supported by browsers yet
 - When the dialog is closed, focus should return to the element in the application which had focus before the dialog was invoked. This is usually the control which opened the dialog
 - When a modal dialog opens, focus goes to the first focusable item in the dialog. Determining the first focusable item must take into account elements which receive focus by default (form fields and links) as well as items which may have a `tabindex` attribute with a positive value. If there is no focusable item in the dialog, focus is placed on the dialog container element
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

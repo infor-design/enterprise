@@ -25,6 +25,10 @@ Tags are simple span elements with the class `tag`. They can be mixed in with ot
 
 - Since you should not use color alone to indicate states, this should be either supplemented with offscreen or visual labels near the element explaining the state
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - No keyboard support, but can be added to elements with keyboard support

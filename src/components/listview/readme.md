@@ -59,14 +59,14 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
       </svg>
     </button>
     <ul class="popupmenu">
-      <li><a href="#">Action One</a></li>
-      <li><a href="#">Action Two</a></li>
+      <li><a href="#" id="action-item-one">Action One</a></li>
+      <li><a href="#" id="action-item-two">Action Two</a></li>
     </ul>
   </div>
   <div class="card-content">
     <div class="contextual-toolbar toolbar is-hidden">
       <div class="buttonset">
-        <button class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
+        <button id="btn-tertiary" class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
         <button class="btn-tertiary" id="remove" title="Remove Selected Items" type="button">Remove</button>
       </div>
     </div>
@@ -105,6 +105,10 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
 - The list is 100% of the parent container in height and width so can be used in a widget object or responsive grid object.
 - The list body will expand vertically and horizontally to fill it the size of its parent container.
 - When used in [homepages]( ../components/homepage), special rules apply with sizes.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

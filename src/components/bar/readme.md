@@ -85,6 +85,10 @@ $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
 
 ```
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> You can tab into the chart area and through the legend values as each has a focus state.

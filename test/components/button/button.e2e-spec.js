@@ -7,7 +7,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Button example-index tests', () => {
+describe('Button example-index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/button/example-index');
   });
@@ -16,10 +16,10 @@ describe('Button example-index tests', () => {
     await utils.checkForErrors();
   });
 
-  if (!utils.isSafari() && !utils.isIE()) {
+  if (utils.isChrome()) {
     it('Should tab to "Primary Button", and animate on enter', async () => {
-      const buttonEl = await element.all(by.css('.btn-primary')).get(3);
-      const svgEl = await element.all(by.css('.btn-primary')).get(3).element(by.css('.ripple-effect'));
+      const buttonEl = await element.all(by.css('.btn-primary')).get(0);
+      const svgEl = await element.all(by.css('.btn-primary')).get(0).element(by.css('.ripple-effect'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
       await element(by.css('body')).sendKeys(protractor.Key.TAB);
@@ -32,8 +32,8 @@ describe('Button example-index tests', () => {
     });
 
     it('Should click on "Primary Button", and animate on click', async () => {
-      const buttonEl = await element.all(by.css('.btn-primary')).get(3);
-      const svgEl = await element.all(by.css('.btn-primary')).get(3).element(by.css('.ripple-effect'));
+      const buttonEl = await element.all(by.css('.btn-primary')).get(0);
+      const svgEl = await element.all(by.css('.btn-primary')).get(0).element(by.css('.ripple-effect'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
       await buttonEl.click();
@@ -43,7 +43,7 @@ describe('Button example-index tests', () => {
     });
 
     it('Should click on "Disabled Primary Button", and not animate', async () => {
-      const buttonEl = await element.all(by.css('.btn-primary')).get(2);
+      const buttonEl = await element.all(by.css('.btn-primary')).get(1);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
       await buttonEl.click();

@@ -25,3 +25,7 @@ This example shows how to invoke the place command.
 ```javascript
 $('body').place();
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

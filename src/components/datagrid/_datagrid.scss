@@ -1838,20 +1838,31 @@ $datagrid-short-row-height: 23px;
         // scss-lint:enable NestingDepth
 
         &:focus {
-          box-shadow: none;
+          // scss-lint:disable ImportantRule
+          box-shadow: none !important;
           outline: none;
 
           &.is-not-editable {
             border-color: transparent;
           }
+          // scss-lint:enable ImportantRule
         }
       }
 
       //Drop Down
       .dropdown {
         border: medium none;
-        line-height: inherit;
+        line-height: normal;
         padding: 0 20px;
+        width: calc(100% - 30px);
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+
+      .dropdown-wrapper {
+        margin-top: 4px;
       }
 
       //Text Area
@@ -1867,6 +1878,8 @@ $datagrid-short-row-height: 23px;
       }
 
       .icon {
+        left: auto;
+        top: 5px;
         visibility: visible;
       }
 
@@ -3014,8 +3027,14 @@ html[dir='rtl'] {
       text-align: left;
     }
 
-    td.is-editing .datepicker ~ .icon {
-      margin-right: -8px;
+    td.is-editing {
+      .datepicker ~ .icon {
+        margin-right: -8px;
+      }
+
+      .dropdown-wrapper .icon {
+        left: 14px;
+      }
     }
   }
 
@@ -3029,6 +3048,12 @@ html[dir='rtl'] {
 
     .trigger {
       text-align: right;
+    }
+  }
+
+  .datagrid-dropdown-list {
+    .icon {
+      right: -8px;
     }
   }
 

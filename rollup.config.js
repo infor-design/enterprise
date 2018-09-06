@@ -1,5 +1,5 @@
 // ================================================= /
-// Soho Xi - Rollup Configuration
+// IDS Enterprise - Rollup Configuration
 // ================================================= /
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';

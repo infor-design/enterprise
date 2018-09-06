@@ -88,6 +88,10 @@ A date format can be constructed by adding the needed date and time parts. For e
 
 There are 50 supported locales. [Components](src/components/locale/cultures)
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Upgrading from 3.X
 
 Replaces Globalize utilities.

@@ -55,6 +55,10 @@ This may include possibly using an inset margin in some cases.
 
 See also pie chart
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 None

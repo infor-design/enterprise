@@ -28,6 +28,10 @@ It's possible to keep the area open by default by adding the class `is-expanded`
 </div>
 ```
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - Press <kbd>Tab</kbd> to focus the Expandable Area's link
