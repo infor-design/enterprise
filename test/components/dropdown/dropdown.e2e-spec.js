@@ -135,7 +135,9 @@ describe('Dropdown example-index tests', () => {
     await dropdownSearchEl.click();
     element(by.id('dropdown-search')).clear().sendKeys('Colorado');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-focused i'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-focused'))), config.waitsFor);
+
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.className('is-focused')).getText()).toEqual('Colorado');
   });
