@@ -184,10 +184,10 @@ Trackdirty.prototype = {
         if (!d.icon.is('.icon-dirty')) {
           if (input.is('[type="checkbox"]')) {
             d.rect = this.getAbsolutePosition(label);
-            d.style = `left:${d.rect.left}px; top:${d.rect.top}px`;
+            d.style = `left:${d.rect.left}px; top:${d.rect.top}px;`;
           } else if (input.is('.colorpicker') && !Locale.isRTL()) {
             d.rect = this.getAbsolutePosition(input);
-            d.style = `left:${d.rect.left}px; top:${d.rect.top}px`;
+            d.style = `left:${d.rect.left}px; top:${d.rect.top}px;`;
           }
           d.icon = `<span class="icon-dirty${d.class}"></span>`;
           d.msg = Locale.translate('MsgDirty') || '';
