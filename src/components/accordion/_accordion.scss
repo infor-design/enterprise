@@ -1384,3 +1384,35 @@ html[dir='rtl'] {
     }
   }
 }
+
+//Button for Safari issue
+.is-safari {
+  .accordion-header {
+    > [class^="btn"]:focus:not(.hide-focus) {
+      border-color: transparent;
+      box-shadow: none;
+    }
+  }
+  .accordion-header.has-chevron {
+    > [class^="btn"] {
+      position: absolute;
+      left: 0;
+      height: 45px;
+      width: 100%;
+      margin: 0;
+      padding: 13px 0 28px 13px;
+
+      &:focus:not(.hide-focus) {
+        border-color: transparent;
+        box-shadow: none;
+      }
+
+      .icon.chevron {
+        right: 0;
+        position: absolute;
+        width: 50px;
+        margin-top: 5px;
+      }
+    }
+  }
+}
