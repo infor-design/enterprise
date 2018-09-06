@@ -133,7 +133,7 @@ describe('Dropdown example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
     const dropdownSearchEl = element(by.id('dropdown-search'));
     await dropdownSearchEl.click();
-    element(by.id('dropdown-search')).clear().sendKeys('Colorado');
+    await element(by.id('dropdown-search')).clear().sendKeys('Colorado');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-focused i'))), config.waitsFor);
 
