@@ -6,8 +6,10 @@ const datepickerHTML = require('../../../app/views/components/datepicker/example
 const svg = require('../../../src/components/icons/svg.html');
 
 let datepickerEl;
+let datepickerTimeEl;
 let svgEl;
 let datepickerAPI;
+let datepickerTimeAPI;
 
 describe('DatePicker API', () => {
   beforeEach(() => {
@@ -16,7 +18,8 @@ describe('DatePicker API', () => {
     datepickerAPI = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', datepickerHTML);
-    datepickerEl = document.body.querySelector('.datepicker');
+    datepickerEl = document.getElementById('date-field-normal');
+    datepickerTimeEl = document.getElementById('start-time');
     svgEl = document.body.querySelector('.svg-icons');
 
     Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA']); //eslint-disable-line
@@ -27,6 +30,7 @@ describe('DatePicker API', () => {
     Locale.set('en-US');
 
     datepickerAPI = new DatePicker(datepickerEl);
+    datepickerTimeAPI = new DatePicker(datepickerTimeEl);
   });
 
   afterEach(() => {
@@ -83,6 +87,25 @@ describe('DatePicker API', () => {
   it('Should be able to call setToday and getCurrentDate', () => {
     datepickerAPI.setToday();
     const todayDate = datepickerAPI.getCurrentDate();
+    const testDate = new Date();
+    testDate.setHours(0, 0, 0, 0);
+
+    expect(todayDate.toString()).toEqual(testDate.toString());
+  });
+
+  it('Should be able to call setToday when there is a value', () => {
+    datepickerEl.value = '8/1/2018';
+    datepickerAPI.setToday();
+    const todayDate = datepickerAPI.getCurrentDate();
+    const testDate = new Date();
+    testDate.setHours(0, 0, 0, 0);
+
+    expect(todayDate.toString()).toEqual(testDate.toString());
+  });
+
+  it('Should be able to call setToday with time', () => {
+    datepickerTimeAPI.setToday();
+    const todayDate = datepickerTimeAPI.getCurrentDate();
     const testDate = new Date();
     testDate.setHours(0, 0, 0, 0);
 
