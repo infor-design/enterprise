@@ -32,7 +32,7 @@ demo:
   - name: Update Node
     slug: example-update-node
   - name: Disable Tree
-  - slug: example-disable
+    slug: example-disable
 
 ## Testability
 
