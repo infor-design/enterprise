@@ -20,6 +20,8 @@ if (process.env.TRAVIS_BUILD_NUMBER) {
   browserstackBuildID = `${theme} theme: ci:bs e2e ${process.env.TRAVIS_BUILD_NUMBER}`;
 }
 
+process.env.isBrowserStack = true;
+
 exports.config = {
   params: {
     theme

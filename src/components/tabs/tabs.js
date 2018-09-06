@@ -1776,6 +1776,29 @@ Tabs.prototype = {
   },
 
   /**
+   * Takes a tab ID and activates an adjacent available tab
+   * @param {object} e event object
+   * @param {string} tabId the tab ID
+   */
+  activateAdjacentTab(e, tabId) {
+    const tab = this.doGetTab(e, tabId);
+
+    if (typeof e === 'string') {
+      tabId = e;
+    }
+
+    if (tab.is('.is-selected')) {
+      if (tab.prevAll('li.tab').not('.hidden').not('.is-disabled').length > 0) {
+        this.select($(tab.prevAll('li.tab').not('.hidden').not('.is-disabled')[0]).find('a')[0].hash);
+      } else if (tab.nextAll('li.tab').not('.hidden').length > 0) {
+        this.select($(tab.nextAll('li.tab').not('.hidden').not('.is-disabled')[0]).find('a')[0].hash);
+      }
+    } else {
+      this.select($(this.element.find('li.tab.is-selected')[0]).find('a')[0].hash);
+    }
+  },
+
+  /**
    * Takes a tab ID and returns a jquery object containing the previous available tab
    * If an optional target Tab (li) is provided, use this to perform activation events
    * @param {string} tabId the tab ID
@@ -2665,9 +2688,8 @@ Tabs.prototype = {
   hide(e, tabId) {
     const tab = this.doGetTab(e, tabId);
 
-    if (tab.is('.is-selected')) {
-      this.activatePreviousTab(tabId);
-    }
+    this.activateAdjacentTab(e, tabId);
+
     tab.addClass('hidden');
     this.focusBar();
     this.positionFocusState();
@@ -2684,6 +2706,9 @@ Tabs.prototype = {
     const tab = this.doGetTab(e, tabId);
 
     tab.removeClass('hidden');
+
+    this.select($(this.element.find('li.tab.is-selected')[0]).find('a')[0].hash);
+
     this.focusBar();
     this.positionFocusState();
     return this;
@@ -2698,12 +2723,8 @@ Tabs.prototype = {
   disableTab(e, tabId) {
     const tab = this.doGetTab(e, tabId);
 
-    if (tab.is('.is-selected')) {
-      if (typeof e === 'string') {
-        tabId = e;
-      }
-      this.activatePreviousTab(tabId);
-    }
+    this.activateAdjacentTab(e, tabId);
+
     tab.addClass('is-disabled');
     this.focusBar();
     this.positionFocusState();

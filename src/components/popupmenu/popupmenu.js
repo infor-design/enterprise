@@ -2159,10 +2159,12 @@ PopupMenu.prototype = {
     }
 
     this.menu.find('.submenu').children('a').each((i, item) => {
-      const text = $(item).find('span').text();
+      const spantext = $(item).find('span').text();
+      const text = spantext || $(item).text();
       $(item).find('span, svg').remove();
       $(item).text(text);
     });
+    this.menu.find('.submenu').removeClass('submenu');
 
     function unwrapPopup(menu) {
       const thisWrapper = menu.parent();

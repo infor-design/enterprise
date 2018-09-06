@@ -48,12 +48,7 @@
       // call async function to get first/last/previous/next page of data.
       // -------------------------------------------------------------------------------------------------
       getDataPage(request).then(function(result) {
-        var selectedRow = grid.selectedRows()[0];
         var activatedRow = grid.activatedRow();
-
-        if (selectedRow) {
-          grid.unSelectAllRows();
-        }
 
         var activatedRowIndex = -1;
         if (activatedRow &&
@@ -85,10 +80,6 @@
           activatedRow.length === 1 &&
           activatedRow[0].row > -1) {
           grid.activateRow(activateRowIndex);
-        }
-
-        if (selectedRow) {
-          grid.selectRow(selectedRow.idx);
         }
       });
     }

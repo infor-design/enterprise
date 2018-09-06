@@ -2801,7 +2801,8 @@ Datagrid.prototype = {
     }
 
     const ariaRowindex = ((dataRowIdx + 1) +
-      (self.settings.source ? ((activePage - 1) * self.settings.pagesize) : 0));
+      (self.settings.source && !self.settings.indeterminate ?
+        ((activePage - 1) * self.settings.pagesize) : 0));
 
     isEven = (this.recordCount % 2 === 0);
     const isSelected = this.isNodeSelected(rowData);
@@ -7297,7 +7298,7 @@ Datagrid.prototype = {
   pagingRowIndex(idx) {
     let rowIdx = idx;
 
-    if (this.settings.paging && this.settings.source) {
+    if (this.settings.paging && this.settings.source && !this.settings.indeterminate) {
       rowIdx += ((this.pager.activePage - 1) * this.settings.pagesize);
     }
     return rowIdx;
