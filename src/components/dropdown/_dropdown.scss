@@ -818,9 +818,8 @@ div.dropdown-xs,
   }
 }
 
-//for firefox and android
-.is-firefox,
-.android {
+//for firefox on android
+.is-firefox.android {
   div.dropdown,
   div.multiselect {
     > .listoption-icon {
