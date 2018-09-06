@@ -168,9 +168,31 @@ Travis commands can be found in the [.travis.yml](https://github.com/infor-desig
 
 ### Creating Baseline Screenshots
 
-1. Run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the Travis CI docker image to mimic the environment. And wait....
+In order to create Baseline screenshots, it's necessary to emulate the actual TravisCI environment in which the visual regression testing will take place.  Doing the testing in an environment that's different than the one the images were generated in will create extreme differences in the rendered IDS components, possibly causing false test failures.
+
+Following the process below will safely create baseline images the CI can use during visual regression tests.
+
+#### Setting up the Docker environment
+
+**NOTE:** assuming the technology stack doesn't change between versions, the series of steps outlined here may only need to be performed once.
+
+1. Push the branch you're working on to GitHub (we'll need it later).
+1. In your terminal, run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the Travis CI docker image to mimic the environment. And wait....
 1. Open up the image and go in `docker exec -it travis-debug bash -l`
+1. Install [Node Version Manager (nvm)](https://github.com/creationix/nvm) using the latest version available (check their Github for more info)
+
+```sh
+wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+```
+
 1. Switch to the Travis user `su - travis`
+1. Update/Install Node.js
+
+```sh
+nvm install 10
+nvm use 10
+```
+
 1. Go to your home directory `(`cd ~`)`
 1. Clone IDS Enterprise repo, and navigate to it
 
@@ -178,22 +200,25 @@ Travis commands can be found in the [.travis.yml](https://github.com/infor-desig
 git clone https://github.com/infor-design/enterprise.git
 ```
 
+1. Switch to the branch you pushed to Github earlier.
 1. Run the install commands from `npm install -g grunt-cli && npm install`
-1. May need to update chrome with.
+1. May need to update the version of Chrome on the container:
 
 ```sh
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome*.deb
 ```
 
-1. Update/Install Node.js (nvm should be installed)
+#### Generating a new set of Baseline images
+
+1. Build the IDS Components:
 
 ```sh
-nvm install 10
-nvm use 10
+npx grunt
 ```
 
-1. Run the travis commands as per the build
+1. Run the `npm run quickstart` command in your current docker session to run the demoapp.
+1. Open a second session in the docker container, and run `npm run e2e:ci` to start the tests.
 
 ```sh
 npm run quickstart
@@ -201,14 +226,17 @@ npm run quickstart
 npm run e2e:ci
 ```
 
-1. Push the branch you're working on to GitHub and switch to the same branch on the vm
-1. Run the `npm run start` command in the VM on one session.
-1. Run `npm run e2e:ci` on the other session.
-1. Copy the file from the actual folder to the baseline folder `mv /root/enterprise/test/.tmp/actual/radio-init-chrome-1200x800-dpr-1.png /root/enterprise/test/baseline/radio-init-chrome-1200x800-dpr-1.png`
-1. Run the `npm run e2e:ci` again to tests
-1. Commit and push the files
+Some tests will most likely fail.  These failures are due to visual differences.  These are the images that need to be the new "baseline" images.
 
-We can also just copy `.tmp/actual/<name-of-test-file.png>` verified screenshots to the `baseline` folder for testing, from the Docker container. [Copy](https://docs.docker.com/engine/reference/commandline/cp/) actual screenshots from .tmp/actual/*.png using.
+#### Replacing ALL Baseline images at once
+
+1. Copy the file from the actual folder to the baseline folder `mv /root/enterprise/test/.tmp/actual/radio-init-chrome-1200x800-dpr-1.png /root/enterprise/test/baseline/radio-init-chrome-1200x800-dpr-1.png`
+1. Run the `npm run e2e:ci` again to tests.  Ensure that all the tests pass.
+1. Commit and push the files to your branch.
+
+#### Replacing specific baseline images
+
+We can also just copy `test/.tmp/actual/<name-of-test-file.png>` verified screenshots to the `test/baseline` folder for testing, from the Docker container. [Copy](https://docs.docker.com/engine/reference/commandline/cp/) the new actual screenshots from `test/.tmp/actual/*.png`.
 
 Or copy them all to your local directory for inspection.
 

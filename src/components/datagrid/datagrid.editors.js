@@ -439,8 +439,10 @@ const editors = {
       const self = this;
 
       // Check if isClick or cell touch and just open the list
-      this.input.trigger('openlist');
-      this.input.parent().find('div.dropdown').focus();
+      if (event.type === 'click') {
+        this.input.trigger('openlist');
+      }
+      this.input[0].parentNode.querySelector('div.dropdown').focus();
 
       this.input.off('listclosed').on('listclosed', (e, type) => {
         grid.commitCellEdit(self.input);
@@ -802,7 +804,7 @@ const editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input class="autocomplete datagrid-autocomplete" data-autocomplete="source" />').appendTo(container);
+      this.input = $('<input class="autocomplete datagrid-autocomplete" />').appendTo(container);
 
       if (!column.editorOptions) {
         column.editorOptions = {};
