@@ -2149,6 +2149,7 @@ Tree.prototype = {
     const nodes = this.element[0].querySelectorAll('a');
     nodes.forEach((node) => {
       node.classList.remove('is-disabled');
+      node.removeAttribute('aria-disabled');
     });
   }
 
