@@ -3155,8 +3155,22 @@ html[dir='rtl'] {
 
   .datagrid-header {
     //Push sort indicator over
-    .sort-indicator {
-      margin: auto 3px 0;
+    .datagrid-column-wrapper {
+      &.l-right-text {
+        .sort-indicator {
+          margin: auto 3px 0;
+          position: absolute;
+          right: 0;
+          top: 3px;
+        }
+      }
+
+      &.l-center-text {
+        .sort-indicator {
+          position: absolute;
+          left: 0;
+        }
+      }
     }
 
     .required::after {
