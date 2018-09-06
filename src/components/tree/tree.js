@@ -2140,6 +2140,18 @@ Tree.prototype = {
     this.element.empty();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
+
+  /**
+   * Enables all nodes in the Tree component
+   * @returns {void}
+   */
+  enable() {
+    const nodes = this.element[0].querySelectorAll('a');
+    nodes.forEach(node => {
+      node.classList.remove('is-disabled');
+    });
+  }
+
 };
 
 export { Tree, COMPONENT_NAME };
