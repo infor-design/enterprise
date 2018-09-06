@@ -91,6 +91,10 @@ $('#column-bar-example').chart({type: 'column', dataset: dataset});
 
 The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> You can tab into the chart area and through the legend values as each has a focus state.

@@ -100,30 +100,28 @@ describe('Timepicker 24 Hour tests', () => {
     expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
-  xit('Should pick time from picker and set to field for 24 Hour', async () => {
-    const timepickerEl = await element(by.id('timepicker-24hrs'));
-    await timepickerEl.sendKeys('19:15');
-    await element(by.css('.timepicker + .icon')).click();
-    let dropdownEl = await element(by.css(ddSelector('hours')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
+  if (!utils.isCI() && !utils.isBS()) {
+    it('Should pick time from picker and set to field for 24 Hour', async () => {
+      const timepickerEl = await element(by.id('timepicker-24hrs'));
+      await timepickerEl.sendKeys('19:15');
+      await element(by.css('.timepicker + .icon')).click();
+      let dropdownEl = await element(by.css(ddSelector('hours')));
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
 
-    expect(await dropdownEl.getText()).toEqual('21');
-    dropdownEl = await element(by.css(ddSelector('minutes')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
+      expect(await dropdownEl.getText()).toEqual('20');
+      dropdownEl = await element(by.css(ddSelector('minutes')));
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
 
-    expect(await dropdownEl.getText()).toEqual('25');
-    await element(by.className('set-time')).click();
-    await browser.driver.sleep(config.sleep);
-    await element(by.css('.timepicker + .icon')).click();
+      expect(await dropdownEl.getText()).toEqual('20');
+      await element(by.className('set-time')).click();
+      await browser.driver.sleep(config.sleep);
+      await element(by.css('.timepicker + .icon')).click();
 
-    expect(await element(by.id('timepicker-24hrs')).getAttribute('value')).toEqual('21:25');
-  });
+      expect(await element(by.id('timepicker-24hrs')).getAttribute('value')).toEqual('20:20');
+    });
+  }
 });
 
 describe('Timepicker with seconds example tests', () => {

@@ -35,6 +35,10 @@ The custom-styled file upload is built by making the standard file upload elemen
 
 - Make sure the input has a matching label which describes what you are uploading
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - <kbd>Spacebar</kbd> or <kbd>Enter</kbd> opens the dialog for selection

@@ -313,6 +313,9 @@
 
     span[aria-hidden] {
       @include font-size(20);
+      left: -5px;
+      position: relative;
+      top: -6px;
     }
   }
 

@@ -14,25 +14,32 @@ describe('MonthView index tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to change months', async () => {
+  it('Should be able to change month to next', async () => {
     const nextButton = await element(by.css('button.next'));
-    const prevButton = await element(by.css('button.prev'));
-    const monthDesc = await element(by.css('[data-month]'));
+
+    expect(await nextButton.getText()).toEqual('Next Month');
     const testDate = new Date();
 
-    expect(monthDesc.getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long' }));
+    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     await nextButton.click();
-    testDate.setMonth(testDate.getMonth() + 1);
+    await testDate.setDate(1);
+    await testDate.setMonth(testDate.getMonth() + 1);
 
-    expect(monthDesc.getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long' }));
+    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+  });
+
+  it('Should be able to change month to previous', async () => {
+    const prevButton = await element(by.css('button.prev'));
+    const testDate = new Date();
+
+    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     await prevButton.click();
-    testDate.setMonth(testDate.getMonth() - 1);
+    await testDate.setMonth(testDate.getMonth() - 1);
 
-    expect(monthDesc.getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long' }));
+    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await prevButton.getText()).toEqual('Previous Month');
-    expect(await nextButton.getText()).toEqual('Next Month');
   });
 });
 

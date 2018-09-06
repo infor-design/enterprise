@@ -33,7 +33,7 @@ This is a simple configuration.
 <header class="header is-personalizable">
   <div class="toolbar">
     <div class="title">
-      <button class="btn-icon application-menu-trigger" type="button">
+      <button id="application-menu-trigger" class="btn-icon application-menu-trigger" type="button">
         <span class="audible">Show navigation</span>
         <span class="icon app-header">
           <span class="one"></span>
@@ -51,7 +51,7 @@ This is a simple configuration.
     </div>
 
     <div class="more">
-      <button class="btn-actions" type="button">
+      <button id="btn-more" class="btn-actions" type="button">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-more"></use>
         </svg>
@@ -71,6 +71,10 @@ Adding the class `is-personalizable` allows this element to get the personalizat
 - Use invisible `<labels>` for searchfield and icon buttons
 - Use HTML 5 header elements
 - Use F1 (or F2 if the layout prescribes) for the title element for correct page structure
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

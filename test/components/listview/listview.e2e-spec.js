@@ -39,7 +39,7 @@ describe('Listview example-singleselect tests', () => {
 
   it('Should select one item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
-    listviewItemEl.click();
+    await listviewItemEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 

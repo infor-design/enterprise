@@ -33,6 +33,7 @@
 
       //Init and get the api for the grid
       var pageSize = 10;
+      var lastPage = -1;
 
       grid = $('#datagrid').datagrid({
         columns: columns,
@@ -48,6 +49,9 @@
             //req.activePage = 2;
             return; //Or can ignore and call loadData
           }
+          if (req.type === 'last') {
+            req.activePage = lastPage;
+          }
 
           var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
@@ -60,7 +64,19 @@
           }
 
           $.getJSON(url, function(res) {
+            lastPage = Math.floor(res.total / req.pagesize);
             req.total = res.total;
+
+            if (req.activePage === 1) {
+              req.firstPage = true;
+              req.lastPage = false;
+            } else if (req.activePage >= lastPage) {
+              req.firstPage = false;
+              req.lastPage = true;
+            } else {
+              req.firstPage = false;
+              req.lastPage = false;
+            }
             response(res.data, req);  //Option 1, return paging info here.
           });
 
@@ -72,6 +88,7 @@
       // Option 2: Bi-Pass Source Function
       var url = '{{basepath}}api/compressors?pageNum='+ 2 +'&pageSize='+ pageSize;
       $.getJSON(url, function(res) {
+        lastPage = Math.floor(res.total / pageSize);
         var pageInfo = {total: res.total, activePage: 2, pagesize: pageSize, firstPage: false, lastPage: false};
         grid.data('datagrid').loadData(res.data, pageInfo);
       });
