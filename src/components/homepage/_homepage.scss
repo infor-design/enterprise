@@ -217,8 +217,8 @@
       }
 
       &:focus:not(.hide-focus) {
-        outline-color: $header-button-color;
         box-shadow: $header-focus-box-shadow;
+        outline-color: $header-button-color;
       }
     }
   }
@@ -240,6 +240,7 @@
         // scss-lint:disable UnicodeRule
         &::before {
           @include font-size(20);
+
           color: $panel-border-color;
           content: '\2758';
           display: inline-block;
@@ -261,6 +262,7 @@
 
     .hero-footer-nav-title {
       @include font-size(16);
+
       display: inline-block;
       float: left;
       height: 40px;
@@ -312,15 +314,12 @@
   }
 }
 
-
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .card,
   .widget {
-
     .card-header,
     .widget-header {
-
       &.has-toolbar {
         padding: 0 20px 0 13px;
 

@@ -2,14 +2,15 @@
 //==============================================================================
 @mixin trigger-button {
   @include rotate(90);
+
+  border-radius: 2px 2px 0 0;
   //border-radius: top-right | bottom-right | bottom-left | top-left
   clip-path: inset(0 0 0 0);
-  border-radius: 2px 2px 0 0;
   height: 22px;
   left: -10px;
   line-height: normal;
-  min-width: 0;
   min-height: 0;
+  min-width: 0;
   opacity: 0;
   overflow: hidden;
   width: 34px;
@@ -97,7 +98,7 @@
   // scss-lint:enable ImportantRule
 
   // Clearable =================================================================
-  &[data-clearable="true"] {
+  &[data-clearable='true'] {
     ~ .btn-actions {
       left: -2px;
     }
@@ -489,7 +490,6 @@
 
 // RTL Styles ******************************************************************
 html[dir='rtl'] {
-
   .field-options {
     ~ .icon-confirm {
       left: 40px;
@@ -539,7 +539,7 @@ html[dir='rtl'] {
       }
     }
 
-    &[data-clearable="true"] {
+    &[data-clearable='true'] {
       ~ .btn-actions {
         left: auto;
         right: 27px;

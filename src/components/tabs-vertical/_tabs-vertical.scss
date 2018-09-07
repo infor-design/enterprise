@@ -13,6 +13,7 @@
       @include font-size(14);
       @include css3(user-select, none);
       @include css3(touch-callout, none);
+
       color: $vertical-tab-text-color;
       display: block;
 
@@ -69,6 +70,7 @@
 
 .tab-list-info {
   @include font-size(20);
+
   color: $vertical-tab-text-color;
   padding: 10px 30px;
 
@@ -103,8 +105,8 @@
   // of the vertical tabset (for example, optional title, optional button, etc).
   > .tab-list-container {
     > .tab-list {
-
       @include vertical-tab-style;
+
       > .tab {
         a {
           padding: 10px 30px;
@@ -138,6 +140,7 @@
   // Normal configuration of the tabset can just have '.tab-list' directly inside the vertical tabs container.
   > .tab-list {
     @include vertical-tab-style;
+
     height: 100%;
 
     > .tab {
@@ -173,6 +176,7 @@
 
   .info {
     @include font-size(16);
+
     display: none;
     line-height: 32px;
     padding: 1em;
@@ -201,7 +205,6 @@
 // Also works for placing a set of vertical tabs directly inside of a higher-level '.tab-panel' element
 .page-container,
 .tab-panel {
-
   > .tab-container.vertical {
     height: 100%;
     overflow: auto;

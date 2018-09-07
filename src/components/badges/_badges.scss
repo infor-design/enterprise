@@ -6,11 +6,12 @@
 .badge {
   @include antialiased();
   @include font-size(12);
+
   background-color: $badge-neutral-bg-color;
   border-radius: 15px;
   color: $badge-neutral-color;
   display: inline-block;
-  font-weight: normal;
+  font-weight: $font-weight-normal;
   height: 22px;
   line-height: 22px;
   padding: 0 10px;
@@ -127,7 +128,6 @@
 }
 
 .badge {
-
   &.pending {
     min-height: 22px;
     min-width: 22px;
@@ -151,9 +151,9 @@
       border-left: 1px solid $white;
       content: '';
       height: 24%;
-      left: .75em;
+      left: 0.75em;
       position: absolute;
-      top: .55em;
+      top: 0.55em;
       width: 19.5%;
     }
 
@@ -172,6 +172,7 @@
   &.checked {
     &::after {
       @include css3(transform, scaleX(-1) rotate(135deg));
+
       border-color: $checkbox-arrow-color;
       border-style: solid;
       border-width: 2px 2px 0 0;
@@ -190,7 +191,7 @@
       content: '!';
       display: inline-block;
       font-size: 1.3em;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
       height: 100%;
       left: 0;
       position: absolute;
@@ -226,7 +227,7 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .hyperlink + .tag {
     margin-left: inherit;

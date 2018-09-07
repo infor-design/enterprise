@@ -14,8 +14,8 @@
 }
 
 @mixin auto-width {
-  width: auto;
   min-width: 0;
+  width: auto;
 
   .widget-content,
   .card-content {
@@ -74,6 +74,7 @@
 
   .small-thin-text {
     @include font-size(11);
+
     color: $font-color-lowcontrast;
   }
 
@@ -111,6 +112,7 @@
 
     .title {
       @include font-size(16);
+
       color: $cardlist-header-color;
       -webkit-font-smoothing: antialiased;
       font-weight: 100;
@@ -131,7 +133,7 @@
     }
   }
 
-  [class^="btn"] {
+  [class^='btn'] {
     color: $listview-toolbar-button-text-color;
 
     span {
@@ -191,8 +193,7 @@
   }
 
   &:not(.has-toolbar) {
-
-    > .btn-actions ,
+    > .btn-actions,
     > .btn-expander {
       line-height: normal;
       margin: 0;
@@ -288,7 +289,7 @@
   width: 64px;
 
   img {
-    border-radius: .5rem;
+    border-radius: 0.5rem;
   }
 }
 
@@ -327,7 +328,7 @@
 .empty-actions,
 .empty-info {
   -webkit-font-smoothing: antialiased;
-  font-weight: normal;
+  font-weight: $font-weight-normal;
   line-height: normal;
   text-align: center;
 }
@@ -342,6 +343,7 @@
 .widget-empty-title,
 .empty-title {
   @include font-size(16);
+
   padding: 0 0 20px;
 
   &:first-child {
@@ -353,6 +355,7 @@
 .widget-empty-info,
 .empty-info {
   @include font-size(14);
+
   padding: 0 20px 40px;
 
   &:last-child {
@@ -366,13 +369,10 @@
   padding: 0 0 40px;
 }
 
-
 // RTL Styles
 html[dir='rtl'] {
-
   .card-header,
   .widget-header {
-
     > h2,
     > h1,
     > button {

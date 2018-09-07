@@ -22,8 +22,9 @@
   display: block;
   height: 3px;
   position: absolute;
-  @include css3(transition, background-color .25s ease);
   width: 0;
+
+  @include css3(transition, background-color 0.25s ease);
 }
 
 @mixin tab-after-hover {
@@ -75,6 +76,7 @@
 // (padding/color rules are different for all tabs so they aren't in the generic class)
 .tab {
   @include css3(user-select, none);
+
   cursor: pointer;
   display: inline-block;
   position: relative;
@@ -112,7 +114,8 @@
 
 // Animated Bar
 .animated-bar {
-  @include transition(background-color .25s ease, left .25s ease, right .25s ease, width .25s ease);
+  @include transition(background-color 0.25s ease, left 0.25s ease, right 0.25s ease, width 0.25s ease);
+
   background-color: rgba($tab-selected-color, 0); //background: transparent;
   bottom: 0;
   display: inline-block;
@@ -131,11 +134,13 @@
 // This helps break overflow issues and simplifies the CSS
 .tab-focus-indicator {
   @include tab-outline;
+
   pointer-events: none;
   z-index: 10;
 
   &.is-visible {
     @include tab-outline-focus;
+
     box-shadow: $focus-box-shadow;
   }
 }
@@ -145,7 +150,8 @@
   display: none;
   opacity: 0;
   padding-top: 20px;
-  @include transition(opacity 500ms cubic-bezier(.17, .04, .03, .94));
+
+  @include transition(opacity 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
   &.can-show {
     display: block;
@@ -201,7 +207,7 @@
 // Page containers that directly house '.tab-panel' elements will allow them to fill the height of the container
 // Used in vertical/header/module tabs.
 .page-container > .tab-panel,
-.page-container > .tab-panel-container > .tab-panel  {
+.page-container > .tab-panel-container > .tab-panel {
   height: 0;
   padding-top: 0;
   width: 0;
@@ -220,7 +226,8 @@
 // More Button
 .tab-more,
 .add-tab-button {
-  @include css3(transition, background-color .25s ease);
+  @include css3(transition, background-color 0.25s ease);
+
   cursor: pointer;
   display: inline-block;
   position: absolute;
@@ -255,6 +262,7 @@
   &::after,
   &::before {
     @include transition(width 200ms $cubic-ease);
+
     background-color: transparent;
     content: '';
     display: inline-block;
@@ -292,6 +300,7 @@
   .tab-more,
   .add-tab-button {
     @include font-size(14);
+
     background-color: transparent;
     padding: 16px;
     position: relative;
@@ -313,6 +322,7 @@
 
     span[aria-hidden] {
       @include font-size(20);
+
       left: -5px;
       position: relative;
       top: -6px;
@@ -347,7 +357,8 @@
     }
 
     .tab {
-      @include css3(transition, background-color .25s ease);
+      @include css3(transition, background-color 0.25s ease);
+
       border-radius: 2px 2px 0 0;
       height: inherit;
       padding: 0;
@@ -356,7 +367,7 @@
         margin-right: 10px;
 
         &.is-error {
-          a[role="tab"] {
+          a[role='tab'] {
             padding: 12px 17px 12px 5px;
           }
 
@@ -433,8 +444,8 @@
         .icon {
           height: 16px;
           margin: 0 0 0 -5px;
-          width: 32px;
           position: static;
+          width: 32px;
         }
 
         .icon-error {
@@ -448,8 +459,9 @@
       a {
         @include antialiased();
         @include font-size(14);
+
         color: inherit;
-        font-weight: normal;
+        font-weight: $font-weight-normal;
         text-decoration: none;
 
         > * {
@@ -478,6 +490,7 @@
 
     .separator {
       @include css3(user-select, none);
+
       cursor: default;
       display: inline-block;
       height: 24px;
@@ -488,6 +501,7 @@
 
       &::before {
         @include css3(transition, none);
+
         border-left: 1px solid $tab-border-color;
         content: '';
         display: block;
@@ -499,6 +513,7 @@
 
       &::after {
         @include css3(transition, none);
+
         display: none;
       }
 
@@ -580,7 +595,6 @@
 
 .popupmenu.tab-list-spillover,
 .popupmenu.dropdown-tab {
-
   .icon.icon-error {
     height: 14px;
     // scss-lint:disable ImportantRule
@@ -617,10 +631,8 @@
 .android {
   .popupmenu.tab-list-spillover,
   .popupmenu.dropdown-tab {
-
     li.dismissible {
       > a {
-
         > .icon.close {
           display: inline-block;
           position: absolute;
@@ -636,7 +648,7 @@
 @import '../tabs-module/tabs-module';
 @import '../tabs-multi/multi-tabs';
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   // More Button
   .tab-more,
@@ -668,7 +680,6 @@ html[dir='rtl'] {
 
   .tab-container.horizontal,
   .tab-container.header-tabs {
-
     .tab {
       &:not(.last-child) {
         margin-left: 10px;
@@ -713,7 +724,7 @@ html[dir='rtl'] {
   }
 
   .tab.is-selected a {
-    font-weight: bold;
+    font-weight: $font-weight-bold;
   }
 
   + .tab-panel-container {

@@ -8,12 +8,12 @@
   position: relative;
   width: 100%;
 
-  p[class^="listview-"] {
+  p[class^='listview-'] {
     margin-top: 0;
   }
 
   .bold {
-    font-weight: bold;
+    font-weight: $font-weight-bold;
   }
 
   &:focus {
@@ -24,8 +24,9 @@
   .listview-data {
     @include ellipsis();
     @include font-size(14);
+
     color: $listview-color;
-    font-weight: normal;
+    font-weight: $font-weight-normal;
     overflow-wrap: break-word;
 
     &.hyperlink {
@@ -40,6 +41,7 @@
 
   .listview-heading-lg {
     @include font-size(18);
+
     display: block;
     margin: 8px 0 5px;
     vertical-align: top;
@@ -59,6 +61,7 @@
   .listview-subheading,
   .listview-data-label {
     @include font-size(12);
+
     color: $listview-secondary-color;
     overflow-wrap: break-word;
   }
@@ -86,6 +89,7 @@
 
   .listview-micro {
     @include font-size(12);
+
     color: $listview-tertiary-color;
 
     &::after {
@@ -113,13 +117,14 @@
 
     &.pending::before {
       // scss-lint:disable ImportantRule
-      left: .35em !important;
+      left: 0.35em !important;
       // scss-lint:enable ImportantRule
     }
   }
 
   li {
-    @include transition(background-color .15s ease 0s);
+    @include transition(background-color 0.15s ease 0s);
+
     border: 1px solid transparent;
     border-bottom-color: $listview-border-color;
     color: $listview-color;
@@ -223,8 +228,9 @@
     > a {
       @include ellipsis();
       @include font-size(14);
+
       color: $listview-color;
-      font-weight: normal;
+      font-weight: $font-weight-normal;
       text-decoration: none;
 
       &.hyperlink {
@@ -242,7 +248,7 @@
   i {
     color: $listview-color;
     font-style: normal;
-    font-weight: bold;
+    font-weight: $font-weight-bold;
   }
 
   .days,
@@ -250,6 +256,7 @@
   .day-sign,
   .hour-sign {
     @include font-size(20);
+
     color: $listview-secondary-color;
   }
 
@@ -288,7 +295,7 @@
         top: initial;
       }
     }
- }
+  }
 
   .field {
     float: left;
@@ -321,6 +328,7 @@
 
   p {
     @include font-size(14);
+
     color: $listview-color;
     line-height: 23px;
   }
@@ -348,7 +356,7 @@
   }
 
   // Selection Styling
-  &.is-selectable li ,
+  &.is-selectable li,
   &.is-selectable tr {
     cursor: pointer;
 
@@ -359,12 +367,14 @@
 
   .is-disabled {
     @include unselectable;
+
     color: $listview-disabled-color;
     cursor: default;
     -webkit-text-fill-color: $listview-disabled-color;
 
     * {
       @include unselectable;
+
       color: $listview-disabled-color;
       cursor: default;
       -webkit-text-fill-color: $listview-disabled-color;
@@ -427,7 +437,7 @@
         // scss-lint:disable ImportantRule
         border-color: $listview-disabled-color !important;
         // scss-lint:enable ImportantRule
-        opacity: .5;
+        opacity: 0.5;
       }
     }
 
@@ -473,12 +483,13 @@
   .highlight {
     background-color: transparent;
     color: inherit;
-    font-weight: bold;
+    font-weight: $font-weight-bold;
   }
 
   // Empty message area
   .empty-message {
     @include vertical-align();
+
     margin-top: -20px;
   }
 
@@ -491,11 +502,11 @@
   tr,
   td {
     @include font-size(14);
-    @include transition(background-color .15s ease 0s);
+    @include transition(background-color 0.15s ease 0s);
+
     color: $listview-color;
     padding: 13px 15px;
   }
-
 
   tr {
     border-bottom: 1px solid $listview-border-color;
@@ -516,9 +527,10 @@
 
     th {
       @include font-size(12);
+
       color: $listview-header-color;
       display: table-cell;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
       padding: 15px;
 
       span {
@@ -552,14 +564,15 @@
 
     .icon.plus-minus::before,
     .icon.plus-minus::after {
-      left: .8em;
+      left: 0.8em;
     }
   }
 
   .listview-subheading {
     @include font-size(14);
+
     color: $font-color-lowcontrast;
-    font-weight: bold;
+    font-weight: $font-weight-bold;
     padding-top: 3px;
   }
 
@@ -578,13 +591,15 @@
 
   p {
     @include font-size(16);
+
     color: $font-color-highcontrast;
   }
 
   strong {
     @include font-size(16);
+
     color: $font-color-highcontrast;
-    font-weight: bold;
+    font-weight: $font-weight-bold;
     margin-top: 10px;
   }
 }
@@ -598,7 +613,8 @@
   }
 
   + .listview {
-    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
+    @include css3(transition, height 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
     &.is-toolbar-open {
       height: calc(100% - 40px);
     }
@@ -607,7 +623,6 @@
 
 // Search Toolbar on Listview
 .listview-search {
-
   .searchfield-wrapper {
     background-color: $body-bg-color;
     height: 36px;
@@ -640,8 +655,8 @@
     width: 100%;
 
     &[disabled] {
-      opacity: $listview-search-disabled-opacity;
       color: $listview-search-disabled-color;
+      opacity: $listview-search-disabled-opacity;
       -webkit-text-fill-color: $listview-search-disabled-color;
 
       &:hover {
@@ -676,7 +691,6 @@
 // Tasks
 @media (max-width: 768px) {
   .listview[aria-label='Tasks'] {
-
     .l-pull-right {
       .days,
       .hours {
@@ -706,11 +720,9 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
-
   .listview {
-
     &[aria-label^='Icons'] li {
       padding: 16px 12px 15px;
     }
@@ -729,14 +741,13 @@ html[dir='rtl'] {
       &.pending::before {
         left: auto;
         // scss-lint:disable ImportantRule
-        right: .35em !important;
+        right: 0.35em !important;
         // scss-lint:enable ImportantRule
 
       }
     }
 
     li {
-
       &.error {
         // scss-lint:disable ImportantRule
         border-left: 3px solid $error-color !important;

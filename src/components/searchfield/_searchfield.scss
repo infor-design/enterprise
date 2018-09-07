@@ -3,30 +3,33 @@
 
 @mixin searchfield-text-style() {
   color: $font-color;
-  font-weight: bold;
+  font-weight: $font-weight-bold;
+
   @include font-size(14);
 }
 
 @mixin searchfield-text-style-hover() {
   color: $primary-color;
-  font-weight: bold;
+  font-weight: $font-weight-bold;
+
   @include font-size(14);
 }
 
 @mixin context-searchfield-box-shadow() {
-  box-shadow: 0 3px 5px 0 rgba($searchfield-context-box-shadow-color, .7);
+  box-shadow: 0 3px 5px 0 rgba($searchfield-context-box-shadow-color, 0.7);
 }
 
-$cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
+$cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
 .searchfield-wrapper {
   display: inline-block;
   margin-bottom: 20px;
   position: relative;
+
   @include transition(width 300ms $cubic-bezier-ease,
-    left 300ms $cubic-bezier-ease,
-    right 300ms $cubic-bezier-ease,
-    box-shadow 300ms $cubic-bezier-ease);
+  left 300ms $cubic-bezier-ease,
+  right 300ms $cubic-bezier-ease,
+  box-shadow 300ms $cubic-bezier-ease);
 
   > .icon {
     background-color: rgba($white, 0); // IE 10
@@ -66,8 +69,9 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
   .searchfield {
     padding-left: 34px;
     padding-right: 34px;
+
     @include transition(background-color 300ms $cubic-bezier-ease,
-      border-color 300ms $cubic-bezier-ease);
+    border-color 300ms $cubic-bezier-ease);
   }
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
@@ -260,13 +264,14 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
   // Buttons inside of searchfields
   .btn {
     @include transition(border 300ms $cubic-bezier-ease); // Matches the one on inputs
+
     background-color: transparent;
     border-bottom-right-radius: 0;
     border-color: $input-border-color;
     border-right: 0;
     border-top-right-radius: 0;
     color: $font-color;
-    font-weight: normal;
+    font-weight: $font-weight-normal;
     height: 34px;
     margin: 0;
     min-width: 0;
@@ -355,6 +360,7 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 // Context Searchfield's Popupmenu has alternate styles
 .popupmenu.autocomplete.context {
   @include context-searchfield-box-shadow();
+
   background-color: $searchfield-context-bg;
   border: 0;
   border-top: 1px solid $azure07;
@@ -364,7 +370,7 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .searchfield-wrapper {
     > .icon {
@@ -402,10 +408,10 @@ html[dir='rtl'] {
 
       &:not(.context) {
         .btn {
-          border-top-left-radius: 0;
           border-bottom-left-radius: 0;
-          border-top-right-radius: 3px;
           border-bottom-right-radius: 3px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 3px;
         }
 
         .category:empty {
@@ -413,10 +419,10 @@ html[dir='rtl'] {
         }
 
         .searchfield {
-          border-top-left-radius: 3px;
           border-bottom-left-radius: 3px;
-          border-top-right-radius: 0;
           border-bottom-right-radius: 0;
+          border-top-left-radius: 3px;
+          border-top-right-radius: 0;
         }
 
         &.show-category {
@@ -438,8 +444,8 @@ html[dir='rtl'] {
 
       &.show-category {
         .btn {
-          padding-right: 10px;
           padding-left: 10px;
+          padding-right: 10px;
         }
       }
     }

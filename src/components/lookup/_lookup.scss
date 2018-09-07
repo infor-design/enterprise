@@ -81,7 +81,6 @@
 }
 
 .lookup-modal {
-
   &.lookup-no-search {
     .toolbar {
       margin-bottom: 0;
@@ -171,7 +170,7 @@
       // scss-lint:disable VendorPrefix
       &::-webkit-input-placeholder,
       &::-moz-placeholder,
-        &:-ms-input-placeholder {
+      &:-ms-input-placeholder {
         color: $searchfield-lighter-text-color;
       }
       // scss-lint:disable VendorPrefix
@@ -187,7 +186,6 @@
     z-index: 1;
   }
 }
-
 
 // Short fields
 .field-short {
@@ -217,9 +215,8 @@
   }
 }
 
-//RTL Styles
-html[dir="rtl"] {
-
+// RTL Styles
+html[dir='rtl'] {
   .lookup-wrapper .trigger {
     margin-left: 0;
     margin-right: -33px;

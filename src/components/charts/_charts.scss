@@ -42,6 +42,7 @@
   text {
     @include font-size(12);
     @include antialiased();
+
     fill: $chart-font-color;
   }
 
@@ -112,6 +113,7 @@
 
   &.empty-message {
     @include vertical-align();
+
     margin-top: -20px;
   }
 
@@ -123,7 +125,7 @@
 
   .swatch-caption {
     display: table-caption;
-    margin-bottom: .7em;
+    margin-bottom: 0.7em;
     text-align: center;
 
     .indicator-box {
@@ -232,6 +234,7 @@
   .chart-legend-item-text {
     @include ellipsis;
     @include font-size(12);
+
     color: $chart-font-color;
     width: auto;
   }
@@ -270,7 +273,7 @@
   }
 
   .is-not-selected {
-    opacity: .35;
+    opacity: 0.35;
   }
 }
 
@@ -286,6 +289,7 @@
 
   .label {
     @include font-size(14);
+
     margin-top: 2px;
   }
 
@@ -328,7 +332,7 @@
       // scss-lint:disable ImportantRule
       color: $font-color !important;
       // scss-lint:enable ImportantRule
-      font-weight: normal;
+      font-weight: $font-weight-normal;
       right: unset;
       top: 20px;
     }
@@ -424,7 +428,7 @@
 }
 // scss-lint:enable IdSelector
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .chart-legend {
     margin-left: inherit;
@@ -458,7 +462,6 @@ html[dir='rtl'] {
   // Progess Bar Charts
   .chart-completion-target,
   .chart-completion {
-
     span:not(.audible) {
       left: 2px;
       right: auto;

@@ -3,7 +3,7 @@
 
 // Avoid the FoUC
 // Ranges are styled similarly to their pseudo-markup in size.
-input[type="range"] {
+input[type='range'] {
   height: 4px;
   margin: 20px 4% 35px;
   position: relative;
@@ -19,6 +19,7 @@ input[type="range"] {
 .slider-wrapper {
   background-color: $slider-bg-color;
   position: relative;
+
   @include css3(touch-callout, none);
   @include css3(user-select, none);
 
@@ -129,11 +130,11 @@ input[type="range"] {
     -webkit-user-select: none;
     width: 8px;
 
-    &.complete:after {
+    &.complete::after {
       background-color: $slider-active-bg-color;
     }
 
-    &:after {
+    &::after {
       background-color: $slider-bg-color;
       border-radius: 50%;
       content: '';
@@ -142,7 +143,7 @@ input[type="range"] {
       width: 8px;
     }
 
-    &.inherit:after {
+    &.inherit::after {
       background-color: inherit !important;
     }
 
@@ -158,7 +159,7 @@ input[type="range"] {
   // scss-lint:disable ImportantRule
   &.is-disabled {
     background-color: $slider-disabled-color !important;
-    opacity: .7;
+    opacity: 0.7;
 
     > * {
       cursor: default;
@@ -171,7 +172,7 @@ input[type="range"] {
         color: $slider-disabled-labels-color;
       }
 
-      &:after {
+      &::after {
         background-color: $slider-disabled-color;
       }
 
@@ -207,7 +208,7 @@ input[type="range"] {
         color: $slider-readonly-labels-color;
       }
 
-      &:after {
+      &::after {
         background-color: $slider-readonly-color;
       }
 
@@ -247,8 +248,9 @@ input[type="range"] {
   line-height: 16px;
   position: absolute;
   width: 16px;
-  @include css3(touch-callout, none);
   z-index: 20;
+
+  @include css3(touch-callout, none);
 
   &::after,
   &::before {
@@ -258,9 +260,10 @@ input[type="range"] {
     left: -14px;
     position: absolute;
     top: -14px;
+    z-index: 19;
+
     @include transition(transform 200ms ease 0s);
     @include scale(0);
-    z-index: 19;
   }
 
   // Focus Border
@@ -271,10 +274,11 @@ input[type="range"] {
     content: '';
     height: 30px;
     position: absolute;
-    @include scale(0);
-    @include transition(transform 200ms ease 0s);
     width: 30px;
     z-index: 19;
+
+    @include scale(0);
+    @include transition(transform 200ms ease 0s);
   }
 
   // Transparent BGs
@@ -283,11 +287,12 @@ input[type="range"] {
     border-color: inherit;
     border-radius: 50%;
     content: '';
-    opacity: .1;
+    opacity: 0.1;
     position: absolute;
+    z-index: 19;
+
     @include transition(transform 200ms ease 0s);
     @include scale(0);
-    z-index: 19;
   }
 
   &:focus,
@@ -302,13 +307,14 @@ input[type="range"] {
   &:focus {
     &::before,
     &::after {
-      @include scale(.96);
+      @include scale(0.96);
     }
   }
 
   &:hover,
   &.is-dragging {
     @include css3(transition, none);
+
     box-shadow: $slider-hover-shadow;
   }
 }
@@ -350,8 +356,7 @@ input[type="range"] {
   }
 }
 
-
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .slider-wrapper {
     &.vertical {
@@ -378,14 +383,14 @@ html[dir='rtl'] {
     }
 
     > .tick {
-      &.inherit:after {
+      &.inherit::after {
         background-color: transparent !important;
       }
     }
 
     &.is-disabled {
       > .tick {
-        &:after {
+        &::after {
           background-color: transparent;
         }
       }

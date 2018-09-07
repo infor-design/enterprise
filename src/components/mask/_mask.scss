@@ -1,14 +1,14 @@
 // Mask
 //==================================================/
 
-[data-mask-mode="number"] {
+[data-mask-mode='number'] {
   text-align: right;
 
   &.error {
     padding-right: 10px;
   }
 
-  &[data-error-type="tooltip"].error {
+  &[data-error-type='tooltip'].error {
     padding-right: 32px;
   }
 

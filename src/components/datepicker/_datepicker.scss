@@ -122,9 +122,8 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
-
   .datepicker {
     + .icon,
     + .tooltip-description + .icon {
@@ -161,13 +160,11 @@ html[dir='rtl'] {
 .ie9,
 .ie10,
 .ie11 {
-
   .datepicker + .icon {
     background-color: rgba($white, 0);
   }
 
   .is-monthyear {
-
     .month,
     .year {
       line-height: normal;

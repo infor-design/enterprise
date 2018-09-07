@@ -60,11 +60,11 @@
 
 // Visibility classes for different form factors
 // scss-lint:disable ImportantRule
-[class*="visible-sm-"],
-[class*="visible-md-"],
-[class*="visible-lg-"],
-[class*="visible-xl-"],
-[class*="visible-print-"] {
+[class*='visible-sm-'],
+[class*='visible-md-'],
+[class*='visible-lg-'],
+[class*='visible-xl-'],
+[class*='visible-print-'] {
   display: none !important;
 }
 
