@@ -13,7 +13,7 @@ See the many ESLint [editor integrations](https://eslint.org/docs/user-guide/int
 
 ### Sass Linter
 
-This repo contains a .scss-lint.yml. This also works well with [Atom](https://atom.io/packages/linter-scss-lint) and [VS Code linters](https://marketplace.visualstudio.com/items?itemName=adamwalzer.scss-lint).
+This repo contains a `.stylelintrc file.` You can find plugins for your [code editors here](https://stylelint.io/user-guide/complementary-tools/).
 
 ### Html Linter
 
