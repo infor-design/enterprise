@@ -50,7 +50,7 @@ $inverse-color: $button-primary-text-color;
 // Text Color
 // These are Deprecated. Use "Default, Descriptive, Link, Muted, Alert" ect going forward
 $font-color-extrahighcontrast: $graphite10;
-$font-color-highcontrast: $graphite08;
+$font-color-highcontrast: $color-default-contrast;
 $font-color: $graphite06;
 $font-color-lowcontrast: $color-default-alt;
 $label-color: $graphite06;
@@ -80,7 +80,7 @@ $hr-bottom-color: $white;
 $circlepager-bg-color: transparent;
 $circlepager-border-color: $color-default-alt;
 $circlepager-hover-bg-color: transparent;
-$circlepager-hover-border-color: $graphite08;
+$circlepager-hover-border-color: $color-default-contrast;
 $circlepager-focus-bg-color: transparent;
 $circlepager-focus-border-color: $color-primary;
 
@@ -251,7 +251,7 @@ $listbuilder-input-selection-bg-color: $azure08;
 // Toolbar
 $toolbar-standalone-bg-color: $graphite02;
 $toolbar-standalone-border-color: $graphite03;
-$toolbar-standalone-disabled-color: $graphite08;
+$toolbar-standalone-disabled-color: $color-default-contrast;
 $toolbar-separator-color: $graphite03;
 
 // Field Filter
@@ -560,7 +560,7 @@ $mutlitabs-section-alt-border-color: $graphite02;
 $chart-line-color: $graphite02;
 $chart-line-color-axis: $color-default-alt;
 $chart-font-color: $graphite06;
-$chart-font-color-inverse: $graphite08;
+$chart-font-color-inverse: $color-default-contrast;
 $chart-bar-stroke: $white;
 $chart-arc-stroke: $white;
 
@@ -571,8 +571,8 @@ $datagrid-header-bg-color: $slate06;
 $datagrid-nested-header-bg-color: $slate05;
 $datagrid-nested-header-border-color: $graphite03;
 $datagrid-header-border-color: $graphite03;
-$datagrid-header-hover-color: $graphite08;
-$datagrid-header-active-color: $graphite08;
+$datagrid-header-hover-color: $color-default-contrast;
+$datagrid-header-active-color: $color-default-contrast;
 $datagrid-header-checkbox-border-color: $graphite03;
 $datagrid-sort-icon-color: $color-default-alt;
 $datagrid-sort-icon-sorted-color: $white;
@@ -814,7 +814,7 @@ $calendar-selected-border-color: $color-primary;
 $calendar-selected-bg-color: $graphite01;
 $calendar-hover-bg-color: $graphite01;
 $calendar-disabled-bg-color: $graphite01;
-$calendar-disabled-color: $graphite08;
+$calendar-disabled-color: $color-default-contrast;
 
 // Breakpoint sizes - Grid
 $breakpoint-phone: 320px;
