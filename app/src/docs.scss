@@ -91,12 +91,14 @@ html {
 // Typography
 h1 {
   @include font-size(50);
+
   color: $black;
   line-height: 60px;
 }
 
 h2 {
   @include font-size(26);
+
   color: $black;
   font-weight: 400;
   line-height: 42px;
@@ -104,6 +106,7 @@ h2 {
 
 h3 {
   @include font-size(14);
+
   color: $black;
   letter-spacing: 1.17px;
   line-height: 16px;
@@ -112,6 +115,7 @@ h3 {
 
 h4 {
   @include font-size(14);
+
   color: $black;
 }
 
@@ -120,6 +124,7 @@ ul,
 li,
 code {
   @include font-size(16);
+
   color: $color-font-lighter;
   font-family: $font-family;
   font-weight: 400;
@@ -132,6 +137,7 @@ ol {
 
 a {
   @include font-size(16);
+
   color: $color-main-blue;
   font-weight: $font-weight-normal;
   text-decoration: none;
@@ -167,6 +173,7 @@ pre {
 // Format the Paramaters Label
 p strong {
   @include font-size(16);
+
   font-weight: $font-weight-normal;
   padding-left: 0;
 
@@ -211,6 +218,7 @@ p strong {
 
   .doc-header-link {
     @include font-size(16);
+
     border-bottom: 2px solid transparent;
     color: $black;
     display: inline-block;
@@ -231,6 +239,7 @@ p strong {
 
   .doc-header-secondary-link {
     @include font-size(16);
+
     color: $color-header-grey;
     display: inline-block;
     margin: 29px 18px 29px 18.5px;
@@ -266,7 +275,6 @@ p strong {
 
 // Media Queries for Header Area
 @media (min-width: 0) and (max-width: $breakpoint-wide-tablet - 1) {
-
   .doc-header .doc-header-secondary-links {
     clear: both;
     display: block;
@@ -287,7 +295,6 @@ p strong {
     //background-color: orange;
   }
 }
-
 
 // Pandoc code highlight styles - customized
 // https://github.com/jgm/highlighting-kate/blob/master/css/hk-pyg.css
@@ -310,8 +317,8 @@ table.sourceCode pre {
 }
 
 td.lineNumbers {
-  border-right: 1px solid #aaaaaa;
-  color: #aaaaaa;
+  border-right: 1px solid #aaa;
+  color: #aaa;
   padding-left: 5px;
   padding-right: 5px;
   text-align: right;
@@ -322,7 +329,7 @@ td.sourceCode {
 }
 
 code.sourceCode span.kw {
-  color: #006699;
+  color: #069;
 }
 
 code.sourceCode span.dt {
@@ -359,7 +366,7 @@ code.sourceCode span.ot {
 }
 
 code.sourceCode span.al {
-  color: #ff0000;
+  color: #f00;
 }
 
 code.sourceCode span.fu {
@@ -367,7 +374,7 @@ code.sourceCode span.fu {
 }
 
 code.sourceCode span.er {
-  color: #ff0000;
+  color: #f00;
 }
 
 // Inline Code
@@ -375,9 +382,10 @@ code.sourceCode span.er {
 // scss-lint:disable MergeableSelector
 code {
   @include font-size(14);
+
   background-color: $color-code-bg;
   border: 1px solid #e1e8e8;
-  border-radius: .25rem .25rem 0 0;
+  border-radius: 0.25rem 0.25rem 0 0;
   font-family: $font-family-monospace;
   line-height: 24px;
   padding: 0 4px;
@@ -403,6 +411,7 @@ code {
 
     th {
       @include font-size(16);
+
       font-weight: $font-weight-normal;
       padding: 16px 30px 16px 0;
     }
@@ -418,6 +427,7 @@ code {
 
   td {
     @include font-size(16);
+
     padding-right: 30px;
     vertical-align: middle;
 
