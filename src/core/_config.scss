@@ -49,7 +49,7 @@ $inverse-color: $button-primary-text-color;
 
 // Text Color
 // These are Deprecated. Use "Default, Descriptive, Link, Muted, Alert" ect going forward
-$font-color-extrahighcontrast: $graphite10;
+$font-color-extrahighcontrast: $text-color;
 $font-color-highcontrast: $color-default-contrast;
 $font-color: $graphite06;
 $font-color-lowcontrast: $color-default-alt;
@@ -167,7 +167,7 @@ $tertiary-btn-dark-active-color: $white;
 // Secondary with Border
 $secondary-border-btn-color:  $graphite06;
 $secondary-border-btn-border-color: $color-default-alt;
-$secondary-border-btn-hover-color:  $graphite10;
+$secondary-border-btn-hover-color:  $text-color;
 $secondary-border-btn-hover-border-color: $graphite10;
 $secondary-border-btn-ripple-color: #8dc9e6;
 
@@ -201,7 +201,7 @@ $autocomplete-box-shadow: 0 2px 5px 2px $focus-box-shadow-color;
 $autocomplete-box-shadow-flipped: 0 -2px 5px 2px $focus-box-shadow-color;
 $trigger-icon-fill-color: $graphite06;
 $trigger-icon-fill-light-color: $graphite05;
-$trigger-hover-color: $graphite10;
+$trigger-hover-color: $text-color;
 $trigger-active-color: $color-primary;
 $trigger-focus-color: $color-primary;
 $trigger-disabled-color: $color-default-alt;
@@ -211,7 +211,7 @@ $listview-bg-color: $button-primary-text-color;
 $listview-bg-color-alternate: $graphite01;
 $listview-hover-bg-color: $list-hover-color;
 $listview-border-color: $graphite03;
-$listview-color: $graphite10;
+$listview-color: $text-color;
 $listview-secondary-color: $graphite06;
 $listview-tertiary-color: $color-default-alt;
 $listview-disabled-color: $input-disabled-color;
@@ -243,8 +243,8 @@ $listbuilder-bg-color-hover: $list-hover-color;
 $listbuilder-bg-color-selected: $color-primary;
 $listbuilder-border-color: $input-border-color;
 $listbuilder-border-color-focus: $color-primary;
-$listbuilder-icon-color-hover: $graphite10;
-$listbuilder-text-color: $graphite10;
+$listbuilder-icon-color-hover: $text-color;
+$listbuilder-text-color: $text-color;
 $listbuilder-text-color-selected: $white;
 $listbuilder-input-selection-bg-color: $azure08;
 
@@ -277,23 +277,23 @@ $swaplist-border-color-hover: $color-primary;
 $swaplist-border-color-focus: $color-primary;
 $swaplist-border-color-card: $graphite03;
 $swaplist-icon-color: $graphite06;
-$swaplist-icon-color-hover: $graphite10;
-$swaplist-icon-svg-color: $graphite10;
+$swaplist-icon-color-hover: $text-color;
+$swaplist-icon-svg-color: $text-color;
 $swaplist-icon-svg-color-hover: $black;
 $swaplist-shadow-color: $black;
-$swaplist-title-text-color: $graphite10;
-$swaplist-text-color: $graphite10;
+$swaplist-title-text-color: $text-color;
+$swaplist-text-color: $text-color;
 $swaplist-text-color-selected: $white;
 
 //Date Picker
 $datepicker-icon-active-color: $trigger-active-color;
-$datepicker-month-year-color: $graphite10;
+$datepicker-month-year-color: $text-color;
 $datepicker-alternate-month-color: $color-default;
 $datepicker-day-color: $graphite06;
 $datepicker-focus-border-color: $color-primary;
 $datepicker-selected-bg-color: $color-primary;
 $datepicker-selected-color: $button-primary-text-color;
-$datepicker-today-color: $graphite10;
+$datepicker-today-color: $text-color;
 $datepicker-hover-bg-color: $graphite01;
 $datepicker-disabled-icon-color: $color-default-alt;
 $datepicker-disabled-border-color: $graphite03;
@@ -316,9 +316,9 @@ $colorpicker-popup-bg-color: $white;
 $colorpicker-popup-border-color: $color-default-alt;
 
 // Fileupload
-$fileupload-primary-color: $graphite10;
+$fileupload-primary-color: $text-color;
 $fileupload-secondary-color: $graphite06;
-$fileupload-hover-color: $graphite10;
+$fileupload-hover-color: $text-color;
 $fileupload-completed-color: $emerald08;
 $fileupload-completed-border-color: $emerald08;
 $fileupload-error-color: $color-danger;
@@ -327,7 +327,7 @@ $fileupload-error-border-color: $color-warning;
 $fileupload-border-color: $graphite05;
 $fileupload-droparea-color: $graphite05;
 $fileupload-droparea-bg-color: rgba($graphite02, 0.5);
-$fileupload-droparea-hover-color: $graphite10;
+$fileupload-droparea-hover-color: $text-color;
 $fileupload-droparea-hover-bg-color: $graphite02;
 $fileupload-droparea-hover-border-color: $graphite06;
 $fileupload-droparea-hover-icon-color: $graphite05;
@@ -346,7 +346,7 @@ $fileupload-disabled-color: $graphite03;
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
 $spinbox-button-color: transparent;
-$spinbox-hover-color: $graphite10;
+$spinbox-hover-color: $text-color;
 
 //Skip Link
 $skip-link-border-color: $graphite03;
@@ -360,17 +360,17 @@ $icon-empty-bg-color: $icon-fill;
 //Field Set
 $fieldset-border-top-color: $graphite03;
 $fieldset-border-bottom-color: $button-primary-text-color;
-$fieldset-title-color: $graphite10;
+$fieldset-title-color: $text-color;
 
 // Expandable Area
 $expandable-area-border-color: $graphite03;
-$expandable-area-title-color: $graphite10;
+$expandable-area-title-color: $text-color;
 
 // Cardlist
 $cardlist-bg-color: $button-primary-text-color;
 $cardlist-border-color: $graphite03;
-$cardlist-header-color: $graphite10;
-$cardlist-actions-color: $graphite10;
+$cardlist-header-color: $text-color;
+$cardlist-actions-color: $text-color;
 $cardlist-text-color: $font-color;
 
 // Checkboxes
@@ -407,7 +407,7 @@ $editor-color: $input-color;
 $editor-toolbar-bg-color: $graphite02;
 $editor-middle-border-color: $color-default-alt;
 $editor-btn-color: $graphite06;
-$editor-btn-hover-color: $graphite10;
+$editor-btn-hover-color: $text-color;
 $editor-btn-active-color: $color-primary;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $color-primary, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(54, 138, 192, 0.3);
@@ -448,14 +448,14 @@ $modal-border-color: $graphite03;
 $modal-box-shadow: 0 2px 5px $drop-shadow-depth;
 $modal-btn-color: $graphite06;
 $modal-btn-border-color: $graphite03;
-$modal-btn-hover-color: $graphite10;
+$modal-btn-hover-color: $text-color;
 $modal-btn-primary-color: $color-primary;
 $modal-btn-primary-hover-color: $azure08;
 $modal-btn-primary-disabled-color: $color-primary-alt;
 $modal-btn-disabled-color: $graphite06;
 $modal-btn-disabled-opacity: 0.5;
 $modal-color: $graphite06;
-$modal-primary-color: $graphite10;
+$modal-primary-color: $text-color;
 $modal-secondary-color: $graphite06;
 
 // Accordion
@@ -464,11 +464,11 @@ $accordion-border-color: $graphite02;
 $accordion-toplevel-border-color: $graphite03;
 $accordion-pane-bg-color: $graphite02;
 $accordion-icon-color: $graphite06;
-$accordion-icon-hover-color: $graphite10;
+$accordion-icon-hover-color: $text-color;
 $accordion-text-color: $graphite06;
-$accordion-text-active-color: $graphite10;
+$accordion-text-active-color: $text-color;
 $accordion-hover-border-color: $graphite10;
-$accordion-hover-text-color: $graphite10;
+$accordion-hover-text-color: $text-color;
 
 $accordion-panel-border-color: $graphite02;
 
@@ -578,10 +578,10 @@ $datagrid-sort-icon-color: $color-default-alt;
 $datagrid-sort-icon-sorted-color: $white;
 $datagrid-required-icon-color: $white;
 
-$datagrid-cell-color: $graphite10;
+$datagrid-cell-color: $text-color;
 $datagrid-cell-bg-color: $white;
 $datagrid-cell-readonly-bg-color: $graphite01;
-$datagrid-cell-readonly-color: $graphite10;
+$datagrid-cell-readonly-color: $text-color;
 $datagrid-cell-border-color: $graphite03;
 $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
@@ -634,7 +634,7 @@ $sr-result-bottom-border-color: $hr-top-color;
 $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
-$tree-selected-color: $graphite10;
+$tree-selected-color: $text-color;
 $tree-selected-bg-color: $graphite02;
 $tree-placeholder-color: $white;
 $tree-isover-bg-color: $azure01;
@@ -645,8 +645,8 @@ $tree-active-bg-color: #d7e8f2;
 $tree-icon-color: $graphite06;
 $tree-link-color: $graphite06;
 $tree-disabled-color: $color-default-alt;
-$tree-hover-color: $graphite10;
-$tree-hover-icon-color: $graphite10;
+$tree-hover-color: $text-color;
+$tree-hover-icon-color: $text-color;
 
 //Progress
 $progress-bg-color: transparent;
@@ -736,8 +736,8 @@ $toast-shadow: none; //0 0 5px $drop-shadow-depth;
 $builder-header-bg-color: $slate06;
 
 //About
-$about-header-color: $graphite10;
-$about-text-color: $graphite10;
+$about-header-color: $text-color;
+$about-text-color: $text-color;
 $about-text-border-color: $graphite03;
 $about-text-hover-border-color: $graphite07;
 
