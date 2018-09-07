@@ -988,6 +988,12 @@ Dropdown.prototype = {
         self.highlightOption(li);
         selected = true;
       }
+
+      // Highlight Term
+      const exp = self.getSearchRegex(term);
+      const text = li.text().replace(exp, '<i>$1</i>').trim();
+      const icon = (li.children('a').find('svg').length !== 0) ? li.children('a').find('svg')[0].outerHTML : '';
+      li.children('a').html(icon + text);
     });
 
     headers.each(function () {
