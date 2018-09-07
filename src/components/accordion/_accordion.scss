@@ -1388,30 +1388,26 @@ html[dir='rtl'] {
 //Button for Safari issue
 .is-safari {
   .accordion-header {
-    > [class^="btn"]:focus:not(.hide-focus) {
-      border-color: transparent;
-      box-shadow: none;
-    }
-  }
-  .accordion-header.has-chevron {
-    > [class^="btn"] {
-      position: absolute;
-      left: 0;
-      height: 45px;
-      width: 100%;
-      margin: 0;
-      padding: 13px 0 28px 13px;
-
-      &:focus:not(.hide-focus) {
-        border-color: transparent;
-        box-shadow: none;
-      }
-
-      .icon.chevron {
-        right: 0;
+    &.has-chevron {
+      > [class^="btn"] {
+        height: 45px;
+        left: 0;
+        margin: 0;
+        padding: 13px 0 28px 13px;
         position: absolute;
-        width: 50px;
-        margin-top: 5px;
+        width: 100%;
+
+        &:focus:not(.hide-focus) {
+          border-color: transparent;
+          box-shadow: none;
+        }
+
+        .icon.chevron {
+          margin-top: 5px;
+          position: absolute;
+          right: 0;
+          width: 50px;
+        }
       }
     }
   }
