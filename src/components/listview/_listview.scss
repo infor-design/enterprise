@@ -423,7 +423,7 @@
       }
 
       .listview-selection-checkbox .label-text::before,
-      .listview-selection-checkbox .checkbox:hover label-text::before {
+      .listview-selection-checkbox .checkbox:hover .label-text::before {
         // scss-lint:disable ImportantRule
         border-color: $listview-disabled-color !important;
         // scss-lint:enable ImportantRule
