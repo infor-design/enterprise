@@ -109,13 +109,11 @@
     .drop-area {
       text-align: center;
 
-      // scss-lint:disable ImportantRule
       .icon {
         display: block;
         float: none !important;
         margin: 0 auto !important;
       }
-      // scss-lint:enable ImportantRule
     }
   }
 

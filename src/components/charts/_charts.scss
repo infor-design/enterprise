@@ -284,7 +284,6 @@
 }
 
 .chart-targeted-achievement {
-  // scss-lint:disable ImportantRule
   margin-bottom: 17px !important;
 
   .label {
@@ -309,7 +308,6 @@
   .completed::after {
     content: none !important;
   }
-  // scss-lint:enable ImportantRule
 
   .remaining {
     background: repeating-linear-gradient(
@@ -329,9 +327,8 @@
 
     span {
       @include font-size(14);
-      // scss-lint:disable ImportantRule
+
       color: $font-color !important;
-      // scss-lint:enable ImportantRule
       font-weight: $font-weight-normal;
       right: unset;
       top: 20px;
@@ -409,8 +406,7 @@
   top: -9999999px;
 }
 
-// Temporary fix for SVG Tooltips
-// scss-lint:disable IdSelector
+// Temporary fix for SVG Tooltip
 #svg-tooltip.tooltip {
   &.top,
   &.bottom {
@@ -426,7 +422,6 @@
     }
   }
 }
-// scss-lint:enable IdSelector
 
 // RTL Styles
 html[dir='rtl'] {
@@ -536,9 +531,8 @@ html[dir='rtl'] {
 }
 
 .sparkline-tooltip {
-  // scss-lint:disable ImportantRule
   line-height: 5px !important;
-  // scss-lint:enable ImportantRule
+
   b {
     line-height: 22px;
   }

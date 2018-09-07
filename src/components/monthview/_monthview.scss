@@ -379,11 +379,9 @@
             color: $input-color;
             -webkit-text-fill-color: $input-color;
 
-            // scss-lint:disable NestingDepth
             + .icon {
               cursor: pointer;
             }
-            // scss-lint:disable NestingDepth
           }
         }
 
@@ -545,12 +543,10 @@
     width: 120px;
   }
 
-  // scss-lint:disable IdSelector
   #year-dropdown + .dropdown-wrapper {
     left: 10px;
     width: 80px;
   }
-  // scss-lint:enable IdSelector
 }
 
 //monthview legend
@@ -592,12 +588,10 @@ html[dir='rtl'] {
       padding-right: 15px;
     }
 
-    // scss-lint:disable IdSelector
     #year-dropdown + .dropdown-wrapper {
       left: 0;
       right: 5px;
     }
-    // scss-lint:enable IdSelector
 
     button {
       left: 0;
@@ -626,7 +620,6 @@ html[dir='rtl'] {
     }
   }
 
-  // scss-lint:disable NestingDepth
   .monthview {
     td {
       &.range-prev.include-disabled,
@@ -727,7 +720,6 @@ html[dir='rtl'] {
       }
     }
   }
-  // scss-lint:enable NestingDepth
 
   //Footer Buttons
   .monthview-footer {

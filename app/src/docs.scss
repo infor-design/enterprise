@@ -27,14 +27,11 @@ $color-header-grey: #727272;
 $color-code-bg: #f7f7f9;
 $color-code-border: #e1e8e8;
 
-// scss-lint:disable VendorPrefix
 * {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-// scss-lint:disable VendorPrefix
-
 
 $font-family: 'Source Sans Pro', helvetica, arial;
 $font-family-monospace: 'source code pro', monospace;
@@ -163,12 +160,10 @@ pre {
 }
 
 //Hide Table Of Contents (for now)
-// scss-lint:disable IdSelector
 #table-of-contents,
 #table-of-contents + ul {
   display: none;
 }
-// scss-lint:enable idSelector
 
 // Format the Paramaters Label
 p strong {
@@ -300,7 +295,6 @@ p strong {
 // https://github.com/jgm/highlighting-kate/blob/master/css/hk-pyg.css
 //==================================================//
 
-// scss-lint:disable SelectorFormat, ColorVariable
 table.sourceCode,
 tr.sourceCode,
 td.lineNumbers,
@@ -379,7 +373,6 @@ code.sourceCode span.er {
 
 // Inline Code
 
-// scss-lint:disable MergeableSelector
 code {
   @include font-size(14);
 
@@ -395,11 +388,7 @@ code {
   }
 }
 
-// scss-lint:enable MergeableSelector
-// scss-lint:enable SelectorFormat, ColorVariable
-
 // Tables
-
 .section-table {
   border-collapse: collapse;
   border-spacing: 0;

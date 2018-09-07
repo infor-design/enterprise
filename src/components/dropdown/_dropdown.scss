@@ -182,9 +182,7 @@ div.multiselect {
   }
 
   &:focus {
-    // scss-lint:disable ImportantRule
     border-color: $input-focus-border-color !important;
-    // scss-lint:enable ImportantRule
   }
 
 }
@@ -844,9 +842,7 @@ html[dir='rtl'] {
       left: 8px;
       margin-left: inherit;
       margin-right: -33px;
-      // scss-lint:disable ImportantRule
       right: auto !important;
-      // scss-lint:enable ImportantRule
     }
   }
 
@@ -983,9 +979,7 @@ html[dir='rtl'] {
 
       ~ .icon-error {
         margin-left: inherit;
-        // scss-lint:disable ImportantRule
         margin-right: -38px !important;
-        // scss-lint:enable ImportantRule
       }
     }
 

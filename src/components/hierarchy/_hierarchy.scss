@@ -79,18 +79,14 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
             margin: 0 auto;
             max-width: 36px;
 
-            // scss-lint:disable NestingDepth
             svg {
               fill: $white;
             }
-            // scss-lint:enable NestingDepth
           }
         }
 
         .root {
-          // scss-lint:disable ImportantRule
           margin-left: -30px !important;
-          // scss-lint:enable ImportantRule
           overflow: visible;
           position: relative;
 

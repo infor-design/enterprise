@@ -27,9 +27,7 @@
 
   ~ .icon-error {
     margin-left: -51px;
-    // scss-lint:disable ImportantRule
     right: auto !important;
-    // scss-lint:enable ImportantRule
   }
 
   &.error {
@@ -76,7 +74,6 @@
   background-color: rgba($white, 0);
 }
 
-// scss-lint:disable IdSelector
 #timepicker-period + .dropdown-wrapper {
   .dropdown {
     width: 68px;
@@ -139,9 +136,7 @@
   .modal-buttonset {
     margin: 0;
   }
-
 }
-// scss-lint:enable IdSelector
 
 // Short Fields
 .field-short {
@@ -204,9 +199,7 @@ html[dir='rtl'] {
 
       ~ .icon-error {
         margin-left: inherit;
-        // scss-lint:disable ImportantRule
         margin-right: -38px !important;
-        // scss-lint:enable ImportantRule
       }
     }
   }

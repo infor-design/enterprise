@@ -72,13 +72,11 @@
       border-color: $input-disabled-border-color;
     }
 
-    // scss-lint:disable ImportantRule
     .icon:not(.icon-error),
     .icon:hover {
       cursor: default;
       fill: $trigger-disabled-color !important;
     }
-    // scss-lint:enable ImportantRule
   }
 
   &.color-only {
@@ -120,7 +118,6 @@
 
     }
 
-    // scss-lint:disable ImportantRule
     &.is-focused {
       border-color: $input-focus-border-color !important;
     }
@@ -130,7 +127,6 @@
       cursor: default;
       fill: $trigger-disabled-color;
     }
-    // scss-lint:enable ImportantRule
   }
 
   &.is-open {
@@ -214,11 +210,9 @@
     }
   }
 
-  // scss-lint:disable ImportantRule
   input.colorpicker {
     box-shadow: none !important;
   }
-  // scss-lint:enable ImportantRule
 
   .icon-dirty {
     margin: 2px 0 0 3px;

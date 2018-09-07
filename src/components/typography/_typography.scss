@@ -127,7 +127,6 @@ p {
   color: $font-color-muted;
 }
 
-// scss-lint:disable ImportantRule
 .text-emphasis {
   font-style: italic !important;
 }
@@ -135,7 +134,6 @@ p {
 .text-strong {
   font-weight: $font-weight-bold !important;
 }
-// scss-lint:enable ImportantRule
 
 .text-alert {
   color: $alert-red;
@@ -313,11 +311,9 @@ small,
   text-align: left;
 }
 
-// scss-lint:disable ImportantRule
 .align-text-right {
   text-align: right !important;
 }
-// scss-lint:disable ImportantRule
 
 .align-text-enter, //typo backwards compat
 .align-text-center {

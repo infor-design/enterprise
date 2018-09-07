@@ -68,9 +68,7 @@
   &.error,
   &.error:hover {
     ~ .icon {
-      // scss-lint:disable ImportantRule
       fill: $alert-red !important;
-      // scss-lint:enable ImportantRule
     }
   }
 

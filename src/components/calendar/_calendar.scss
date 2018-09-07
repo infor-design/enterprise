@@ -41,18 +41,15 @@
         padding-bottom: 6px;
         padding-top: 8px;
 
-        // scss-lint:disable ImportantRule
         + .icon {
           top: 7px !important;
         }
-        // scss-lint:enable ImportantRule
       }
 
       .today {
         top: -1px;
       }
 
-      // scss-lint:disable IdSelector
       #calendar-view-changer + .dropdown-wrapper {
         float: right;
         line-height: initial;
@@ -61,7 +58,6 @@
         top: 5px;
         width: 105px;
       }
-      // scss-lint:disable IdSelector
     }
   }
 
@@ -167,7 +163,6 @@
 // RTL Styles
 html[dir='rtl'] {
   .calendar {
-    // scss-lint:disable IdSelector, ImportantRule
     #calendar-view-changer + .dropdown-wrapper {
       float: left !important;
       right: -15px !important;
@@ -176,7 +171,6 @@ html[dir='rtl'] {
     .today {
       margin-right: 15px;
     }
-    // scss-lint:enable IdSelector, ImportantRule
   }
 
   .calendar-event-details {

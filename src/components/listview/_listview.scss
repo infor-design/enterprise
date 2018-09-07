@@ -116,9 +116,7 @@
     position: relative;
 
     &.pending::before {
-      // scss-lint:disable ImportantRule
       left: 0.35em !important;
-      // scss-lint:enable ImportantRule
     }
   }
 
@@ -143,9 +141,7 @@
     }
 
     &:focus {
-      // scss-lint:disable ImportantRule - need for modal dialog (personalization in grid)
       border-color: $primary-color !important;
-      // scss-lint:enable ImportantRule
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
 
@@ -162,9 +158,7 @@
     }
 
     &.error {
-      // scss-lint:disable ImportantRule
       border-left-color: $error-color !important;
-      // scss-lint:enable ImportantRule
 
       .days,
       .hours,
@@ -188,9 +182,7 @@
     }
 
     &.alert {
-      // scss-lint:disable ImportantRule
       border-left-color: $alert-orange !important;
-      // scss-lint:enable ImportantRule
 
       .days,
       .hours,
@@ -200,9 +192,7 @@
       }
 
       .icon-alert {
-        // scss-lint:disable ImportantRule
         fill: $alert-orange !important;
-        // scss-lint:enable ImportantRule
       }
     }
 
@@ -434,9 +424,7 @@
 
       .listview-selection-checkbox .label-text::before,
       .listview-selection-checkbox .checkbox:hover .label-text::before {
-        // scss-lint:disable ImportantRule
         border-color: $listview-disabled-color !important;
-        // scss-lint:enable ImportantRule
         opacity: 0.5;
       }
     }
@@ -454,9 +442,7 @@
     .info > li:hover {
       background-color: transparent;
       border: 0 none;
-      // scss-lint:disable ImportantRule
       padding: 0 !important;
-      // scss-lint:enable ImportantRule
 
     }
 
@@ -714,9 +700,7 @@
   .icon-error,
   .icon-confirm,
   .icon-pending {
-    // scss-lint:disable ImportantRule
     top: 3px !important;
-    // scss-lint:enable ImportantRule
   }
 }
 
@@ -740,19 +724,15 @@ html[dir='rtl'] {
 
       &.pending::before {
         left: auto;
-        // scss-lint:disable ImportantRule
         right: 0.35em !important;
-        // scss-lint:enable ImportantRule
 
       }
     }
 
     li {
       &.error {
-        // scss-lint:disable ImportantRule
         border-left: 3px solid $error-color !important;
         border-right: 0 solid $error-color !important;
-        // scss-lint:enable ImportantRule
         padding: 15px 17px 15px 20px;
       }
 
@@ -838,8 +818,6 @@ html[dir='rtl'] {
   }
 
   .listview-search {
-
-    // scss-lint:disable ImportantRule
     input {
       padding: 11px 40px 7px 10px !important;
     }
@@ -853,7 +831,6 @@ html[dir='rtl'] {
       left: 12px !important;
       right: initial !important;
     }
-    // scss-lint:enable ImportantRule
 
   }
 }

@@ -62,7 +62,6 @@
   }
 
   .demo-typography {
-    // scss-lint:disable ImportantRule
     .row {
       margin-left: 0 !important;
       margin-top: 20px;
@@ -71,7 +70,6 @@
         display: none;
       }
     }
-    // scss-lint:enable ImportantRule
   }
 
 }

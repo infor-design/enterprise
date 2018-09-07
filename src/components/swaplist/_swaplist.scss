@@ -195,7 +195,6 @@
   }
 
   .is-multiselect {
-    // scss-lint:disable NestingDepth
     ul {
       min-height: 100%;
       padding: 5px 0;
@@ -221,7 +220,6 @@
         }
       }
     }
-    // scss-lint:enable NestingDepth
 
     li {
       border: 1px solid transparent;

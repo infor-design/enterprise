@@ -128,9 +128,7 @@ $masthead-button-focus-color: $white;
 
         &.app-drawer {
           left: -6px;
-          // scss-lint:disable ImportantRule
           position: relative !important;
-          // scss-lint:enable ImportantRule
           top: -6px;
         }
       }

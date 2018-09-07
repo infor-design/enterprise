@@ -160,7 +160,6 @@
             fill: $tree-disabled-color;
           }
 
-          // scss-lint:disable NestingDepth
           &:hover {
             color: $tree-disabled-color;
 
@@ -172,7 +171,6 @@
               color: $tree-disabled-color;
             }
           }
-          // scss-lint:enable NestingDepth
         }
       }
     }

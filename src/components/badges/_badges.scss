@@ -25,7 +25,6 @@
     line-height: 21px;
   }
 
-  // scss-lint:disable ImportantRule
   &.error {
     background-color: $error-color;
     color: $badge-error-color !important;
@@ -50,7 +49,6 @@
     background-color: $badge-info-bg-color;
     color: $badge-info-color !important;
   }
-  // scss-lint:enable ImportantRule
 
   &.graphite03,
   &.graphite02 {
@@ -158,9 +156,7 @@
     }
 
     [class*='ie'] &::before {
-      // scss-lint:disable ImportantRule
       left: 3px !important;
-      // scss-lint:enable ImportantRule
       top: 2.5px;
     }
 

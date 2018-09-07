@@ -80,7 +80,6 @@
   }
 
   // Searchfield ===============================================================
-  // scss-lint:disable ImportantRule
   &.searchfield {
     width: calc(100% - 40px) !important;
 
@@ -93,9 +92,7 @@
         opacity: 0;
       }
     }
-
   }
-  // scss-lint:enable ImportantRule
 
   // Clearable =================================================================
   &[data-clearable='true'] {

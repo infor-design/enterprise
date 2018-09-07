@@ -158,9 +158,7 @@ $toolbar-buttonset-height: 40px;
     }
 
     .more {
-      // scss-lint:disable ImportantRule
       display: inline-block !important;
-      // scss-lint:enable ImportantRule
     }
   }
 
@@ -168,9 +166,7 @@ $toolbar-buttonset-height: 40px;
   &.no-actions-button {
     &.has-more-button {
       .more {
-        // scss-lint:disable ImportantRule
         display: none !important;
-        // scss-lint:enable ImportantRule
       }
 
       .buttonset {
@@ -254,9 +250,7 @@ $toolbar-buttonset-height: 40px;
 .contextual-toolbar {
   background-color: $contextual-toolbar-bg-color;
   margin: 0;
-  // scss-lint:disable ImportantRule
   overflow: hidden !important;
-  // scss-lint:enable ImportantRule
   z-index: 20;
 
   // Updated changes from listview button and font sizes

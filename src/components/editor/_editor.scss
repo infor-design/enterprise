@@ -271,9 +271,7 @@
     line-height: normal;
     margin-top: 6px;
     min-width: 18px;
-    // scss-lint:disable ImportantRule
     padding: 0 !important; //overrides some media queries
-    // scss-lint:enable ImportantRule
     text-align: left;
 
     span:not(.audible) {

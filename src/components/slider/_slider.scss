@@ -156,7 +156,6 @@ input[type='range'] {
 
   }
 
-  // scss-lint:disable ImportantRule
   &.is-disabled {
     background-color: $slider-disabled-color !important;
     opacity: 0.7;
@@ -191,9 +190,7 @@ input[type='range'] {
       border-color: $slider-disabled-handle-color !important;
     }
   }
-  // scss-lint:enable ImportantRule
 
-  // scss-lint:disable ImportantRule
   &.is-readonly {
     background-color: $slider-readonly-color !important;
 

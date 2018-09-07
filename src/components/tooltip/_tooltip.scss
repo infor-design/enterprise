@@ -278,9 +278,7 @@
 
 .popover.is-hidden,
 .tooltip.is-hidden {
-  // scss-lint:disable ImportantRule
   opacity: 0 !important;
-  // scss-lint:enable ImportantRule
   visibility: hidden;
 }
 

@@ -46,11 +46,9 @@
   }
 }
 
-// scss-lint:disable ImportantRule
 .no-scroll {
   overflow: hidden !important;
 }
-// scss-lint:enable ImportantRule
 
 body.no-scroll {
   height: 100%;
@@ -85,7 +83,6 @@ body.no-scroll {
     }
   }
 
-  // scss-lint:disable ImportantRule
   > .main {
     border-right: 1px solid $panel-border-color;
     height: 100%;
@@ -96,7 +93,6 @@ body.no-scroll {
       margin-right: 0 !important;
     }
   }
-  // scss-lint:enable ImportantRule
 
   > .sidebar {
     background-color: $body-bg-color;
@@ -344,9 +340,7 @@ body.no-scroll {
       > .main,
       > .sidebar {
         display: block;
-        // scss-lint:disable ImportantRule
-        width: 100%; //Override Inline Css
-        // scss-lint:enable ImportantRule
+        width: 100%; // Override Inline Css
       }
     }
 
@@ -494,7 +488,6 @@ body.no-scroll {
           font-weight: 400;
         }
 
-        // scss-lint:disable VendorPrefix
         &::-moz-placeholder {
           @include font-size(16);
 
@@ -706,9 +699,7 @@ body.no-scroll {
 // Editorial Pattern
 //==============================================================
 .no-transform {
-  // scss-lint:disable ImportantRule
   transform: none !important;
-  // scss-lint:disable ImportantRule
 }
 
 .editorial {

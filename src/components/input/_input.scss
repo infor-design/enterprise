@@ -63,7 +63,6 @@
 
     &:focus {
       // Needed for printing
-      // scss-lint:disable ImportantRule
       border-color: $error-color !important;
       box-shadow: $error-focus-box-shadow !important;
       color: $input-color !important;
@@ -75,7 +74,6 @@
 
     &:focus {
       // Needed for printing
-      // scss-lint:disable ImportantRule
       border-color: $alert-color !important;
       color: $input-color !important;
     }
@@ -86,7 +84,6 @@
 
     &:focus {
       // Needed for printing
-      // scss-lint:disable ImportantRule
       border-color: $confirm-color !important;
       color: $input-color !important;
     }
@@ -97,7 +94,6 @@
 
     &:focus {
       // Needed for printing
-      // scss-lint:disable ImportantRule
       border-color: $info-color !important;
       color: $input-color !important;
     }
@@ -258,9 +254,7 @@
     margin-bottom: 12px;
 
     .inline-checkbox .label-text {
-      // scss-lint:disable ImportantRule
       margin-bottom: 1px !important;
-      // scss-lint:enable ImportantRule
     }
   }
 
@@ -418,7 +412,6 @@ textarea {
 // Print Style Sheet
 @media print {
   // Needed for printing
-  // scss-lint:disable ImportantRule
 
   textarea,
   .textarea-wordcount {
@@ -475,7 +468,6 @@ label,
   opacity: 1;
 }
 
-// scss-lint:disable VendorPrefix
 ::-moz-placeholder {
   @include font-size(14);
 

@@ -3,10 +3,8 @@
 
 @mixin rowstatus($color) {
   td {
-    // scss-lint:disable ImportantRule
     border-bottom: 1px solid $color !important;
     box-shadow: 0 -1px 1px -1px $color;
-    // scss-lint:enable ImportantRule
 
     &:first-child {
       border-left: 1px solid $color;
@@ -172,10 +170,8 @@ $datagrid-short-row-height: 23px;
 
   // States - List Style Datagrid
   &.is-gridlist {
-    // scss-lint:disable ImportantRule
     background-color: transparent !important;
     border: 0;
-    // scss-lint:enable ImportantRule
 
     &.datagrid-alternate-bg-color {
       background-color: $panel-bg-color;
@@ -208,9 +204,7 @@ $datagrid-short-row-height: 23px;
       &:focus {
         background-color: $datagrid-list-header-bg-color;
         box-shadow: $datagrid-list-header-box-shadow;
-        // scss-lint:disable ImportantRule
         outline: 1px solid $datagrid-list-header-focus-border-color !important;
-        // scss-lint:enable ImportantRule
       }
 
       &.is-active {
@@ -240,9 +234,7 @@ $datagrid-short-row-height: 23px;
     }
 
     .datagrid-body {
-      // scss-lint:disable ImportantRule
       background-color: transparent !important;
-      // scss-lint:enable ImportantRule
     }
 
     tr td {
@@ -257,12 +249,10 @@ $datagrid-short-row-height: 23px;
       .is-filterable .datagrid-filter-wrapper {
         input,
         div.dropdown {
-          // scss-lint:disable ImportantRule
           border-color: $datagrid-list-filter-border-color !important;
           color: $datagrid-list-filter-color;
           -webkit-text-fill-color: $datagrid-list-filter-color;
 
-          // scss-lint:disable NestingDepth
           &:disabled,
           &.is-disabled {
             border-color: $datagrid-list-filter-disabled-color !important;
@@ -271,7 +261,6 @@ $datagrid-short-row-height: 23px;
               fill: $datagrid-list-filter-disabled-color !important;
             }
           }
-          // scss-lint:enable NestingDepth
 
           &:focus {
             border-color: $datagrid-list-filter-focus-color !important;
@@ -280,10 +269,8 @@ $datagrid-short-row-height: 23px;
           &:hover:not(:disabled):not(:focus) {
             border-color: $datagrid-list-filter-hover-border-color !important;
           }
-          // scss-lint:enable ImportantRule
         }
 
-        // scss-lint:disable ImportantRule
         .btn-filter {
           .icon,
           .icon-dropdown {
@@ -314,7 +301,6 @@ $datagrid-short-row-height: 23px;
             fill: $datagrid-list-filter-hover-color !important;
           }
         }
-        // scss-lint:enable ImportantRule
       }
     }
   }
@@ -591,7 +577,6 @@ $datagrid-short-row-height: 23px;
         }
 
         //Editing
-        // scss-lint:disable NestingDepth
         &.is-editing {
           .colorpicker-container {
             padding: 4px 15px 0;
@@ -666,7 +651,6 @@ $datagrid-short-row-height: 23px;
           }
 
         }
-        // scss-lint:enable NestingDepth
 
         //validation
         &.error {
@@ -717,9 +701,7 @@ $datagrid-short-row-height: 23px;
 
       .icon-calendar,
       .icon-fileupload {
-        // scss-lint:disable ImportantRule
         left: 0 !important;
-        // scss-lint:enable ImportantRule
       }
 
       .colorpicker-container {
@@ -739,7 +721,6 @@ $datagrid-short-row-height: 23px;
 
     }
 
-    // scss-lint:disable ImportantRule
     .lookup-wrapper {
       padding-left: 14px !important;
       padding-top: 2px !important;
@@ -756,7 +737,6 @@ $datagrid-short-row-height: 23px;
         }
       }
     }
-    // scss-lint:enable ImportantRule
 
     .datagrid-drilldown {
       top: -1px;
@@ -828,11 +808,9 @@ $datagrid-short-row-height: 23px;
           }
         }
 
-        // scss-lint:disable ImportantRule
         .btn {
           top: -3px !important;
         }
-        // scss-lint:disable ImportantRule
 
         .datagrid-expand-btn {
           height: 24px;
@@ -859,12 +837,10 @@ $datagrid-short-row-height: 23px;
         }
 
         .datagrid-alert-icon:not(.icon-dirty) {
-          // scss-lint:disable ImportantRule
           height: 19px;
           margin-left: 0 !important;
           top: 0 !important;
           width: 18px;
-          // scss-lint:enable ImportantRule
         }
 
         .tag {
@@ -911,7 +887,6 @@ $datagrid-short-row-height: 23px;
           top: -2px;
         }
 
-        // scss-lint:disable NestingDepth
         &.datagrid-trigger-cell {
           .icon {
             height: 16px;
@@ -952,10 +927,8 @@ $datagrid-short-row-height: 23px;
             }
           }
         }
-        // scss-lint:enable NestingDepth
 
         //Editing
-        // scss-lint:disable NestingDepth
         &.is-editing {
           &.is-fileupload {
             .trigger,
@@ -1037,7 +1010,6 @@ $datagrid-short-row-height: 23px;
           }
 
         }
-        // scss-lint:enable NestingDepth
 
         //validation
         &.error {
@@ -1133,18 +1105,14 @@ $datagrid-short-row-height: 23px;
     }
 
     .icon-search-list {
-      // scss-lint:disable ImportantRule
       left: -9px !important;
-      // scss-lint:enable ImportantRule
     }
 
     .icon-error,
     .icon-alert,
     .icon-confirm,
     .icon-info {
-      // scss-lint:disable ImportantRule
       margin-left: -29px !important;
-      // scss-lint:enable ImportantRule
     }
 
     .chart-completion-target {
@@ -1202,11 +1170,9 @@ $datagrid-short-row-height: 23px;
 
     &.arrange-dragging {
       td {
-        // scss-lint:disable ImportantRule
         background-color: $datagrid-cell-bg-color !important;
         border-bottom: 1px solid $datagrid-cell-border-color;
         border-top: 1px solid $datagrid-cell-border-color;
-        // scss-lint:enable ImportantRule
 
         &:first-child {
           border-left: 1px solid $datagrid-cell-border-color;
@@ -1265,9 +1231,7 @@ $datagrid-short-row-height: 23px;
       background-color: $datagrid-row-selected-color-dark;
 
       span {
-        // scss-lint:disable ImportantRule
         background-color: transparent !important;
-        // scss-lint:enable ImportantRule
       }
     }
 
@@ -1500,9 +1464,7 @@ $datagrid-short-row-height: 23px;
         }
 
         &:focus {
-          // scss-lint:disable ImportantRule
           border-bottom: 1px solid $hyperlink-hover-color !important;
-          // scss-lint:enable ImportantRule
           //
           &::after {
             border-color: transparent;
@@ -1518,14 +1480,12 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    // scss-lint:disable ImportantRule
     .chart-completion-target {
       height: 25px;
       margin-bottom: 0 !important;
       position: relative;
       top: 8px;
     }
-    // scss-lint:enable ImportantRule
 
     .spinbox-wrapper {
       margin-bottom: 0;
@@ -1792,7 +1752,6 @@ $datagrid-short-row-height: 23px;
           background-color: transparent;
         }
 
-        // scss-lint:disable NestingDepth
         &.fileupload {
           ~ .trigger,
           ~ .trigger-close {
@@ -1827,17 +1786,14 @@ $datagrid-short-row-height: 23px;
           padding-right: 56px;
           text-overflow: ellipsis;
         }
-        // scss-lint:enable NestingDepth
 
         &:focus {
-          // scss-lint:disable ImportantRule
           box-shadow: none !important;
           outline: none;
 
           &.is-not-editable {
             border-color: transparent;
           }
-          // scss-lint:enable ImportantRule
         }
       }
 
@@ -2209,21 +2165,15 @@ $datagrid-short-row-height: 23px;
         width: calc(100% - 5px);
 
         &:hover {
-          // scss-lint:disable ImportantRule
           border-color: $datagrid-filter-hover-border-color !important;
-          // scss-lint:enable ImportantRule
 
           + .icon {
-            // scss-lint:disable ImportantRule
             fill: $datagrid-filter-hover-color !important;
-            // scss-lint:enable ImportantRule
           }
         }
 
         &div:hover:not(:disabled) {
-          // scss-lint:disable ImportantRule
           border-color: $datagrid-filter-hover-border-color !important;
-          // scss-lint:enable ImportantRule
         }
 
         + .icon {
@@ -2282,15 +2232,11 @@ $datagrid-short-row-height: 23px;
 
         &:not(:disabled) + .icon:hover,
         &:hover:not(:disabled) + .icon {
-          // scss-lint:disable ImportantRule
           fill: $datagrid-filter-hover-color !important;
-          // scss-lint:enable ImportantRule
         }
 
         &:disabled + .icon {
-          // scss-lint:disable ImportantRule
           fill: $datagrid-list-filter-disabled-color !important;
-          // scss-lint:enable ImportantRule
           opacity: 0.6;
         }
 
@@ -2314,9 +2260,7 @@ $datagrid-short-row-height: 23px;
         }
 
         .icon-dropdown {
-          // scss-lint:disable ImportantRule
           fill: $datagrid-filter-icon-color !important;
-          // scss-lint:enable ImportantRule
           height: 14px;
           left: -7px;
           position: relative;
@@ -2330,16 +2274,12 @@ $datagrid-short-row-height: 23px;
         }
 
         &.is-open .icon {
-          // scss-lint:disable ImportantRule
           fill: $datagrid-filter-active-color !important;
-          // scss-lint:enable ImportantRule
         }
 
         &:hover:not(.is-open):not(:disabled) {
           .icon {
-            // scss-lint:disable ImportantRule
             fill: $datagrid-filter-hover-color !important;
-            // scss-lint:enable ImportantRule
           }
         }
 
@@ -2347,9 +2287,7 @@ $datagrid-short-row-height: 23px;
           border: 1px solid $datagrid-filter-focus-color;
 
           .icon {
-            // scss-lint:disable ImportantRule
             fill: $datagrid-filter-focus-color !important;
-            // scss-lint:enable ImportantRule
           }
         }
       }
@@ -2778,7 +2716,6 @@ td .btn-actions {
 }
 
 .is-firefox {
-  // scss-lint:disable ImportantRule
   .is-inline.dropdown-wrapper {
     .icon {
       top: 5px !important;
@@ -2808,7 +2745,6 @@ td .btn-actions {
       height: $datagrid-short-header-height;
     }
   }
-  // scss-lint:enable ImportantRule
 
   .datagrid {
     td.is-editing {
@@ -2830,7 +2766,6 @@ td .btn-actions {
 
     &.medium-rowheight {
       td.is-editing {
-        // scss-lint:disable NestingDepth
         .lookup-wrapper {
           margin-top: 4px;
 
@@ -2838,7 +2773,6 @@ td .btn-actions {
             top: calc(50% - 9px);
           }
         }
-        // scss-lint:enable NestingDepth
 
         .datepicker {
           margin-top: 13px;
@@ -2860,13 +2794,11 @@ td .btn-actions {
 
     &.short-rowheight {
       td.is-editing {
-        // scss-lint:disable NestingDepth
         .lookup-wrapper {
           .lookup ~ .trigger .icon {
             top: calc(50% - 5px);
           }
         }
-        // scss-lint:enable NestingDepth
 
         .datepicker {
           margin-top: 8px;
@@ -2923,11 +2855,9 @@ td .btn-actions {
 
   input {
     height: 49px;
-    // scss-lint:disable ImportantRule
     padding-top: 12px !important;
     text-indent: 10px;
     width: 100% !important;
-    // scss-lint:enable ImportantRule
   }
 
   &.short-rowheight {
@@ -2935,9 +2865,7 @@ td .btn-actions {
       height: 30px;
       padding-top: 9px;
       text-indent: 0;
-      // scss-lint:disable ImportantRule
       width: 100% !important;
-      // scss-lint:enable ImportantRule
     }
 
     .trigger .icon {
@@ -2953,9 +2881,7 @@ td .btn-actions {
       height: 40px;
       padding-top: 10px;
       text-indent: 5px;
-      // scss-lint:disable ImportantRule
       width: 100% !important;
-      // scss-lint:enable ImportantRule
     }
 
     .trigger .icon {
@@ -2980,7 +2906,6 @@ td .btn-actions {
   visibility: visible;
 }
 
-// scss-lint:disable ImportantRule
 // RTL Styles
 html[dir='rtl'] {
   .datagrid {
@@ -3006,7 +2931,6 @@ html[dir='rtl'] {
       }
     }
 
-    // scss-lint:disable NestingDepth
     &.short-rowheight {
       tbody {
         .datagrid-rowgroup-header {
@@ -3023,7 +2947,6 @@ html[dir='rtl'] {
         }
       }
     }
-    // scss-lint:enable NestingDepth
 
     td.l-right-text .datagrid-cell-wrapper {
       text-align: left;
@@ -3224,7 +3147,6 @@ html[dir='rtl'] {
     }
   }
 }
-// scss-lint:enable ImportantRule
 
 // Reorder Column styles
 .has-draggable-columns {
@@ -3307,9 +3229,7 @@ html[dir='rtl'] {
 
     &.is-dragging-clone {
       max-width: 125px;
-      // scss-lint:disable ImportantRule
       min-width: 100px !important;
-      // scss-lint:enable ImportantRule
       position: fixed;
       z-index: 2;
 
@@ -3374,11 +3294,9 @@ html[dir='rtl'] {
     }
   }
 
-  // scss-lint:disable ImportantRule
   .datagrid-filter-wrapper .dropdown {
     padding-top: 4px !important;
   }
-  // scss-lint:enable ImportantRule
 }
 
 //Contextual toolbar
@@ -3616,9 +3534,7 @@ html[dir='rtl'] {
   .icon-error,
   .icon-confirm,
   .icon-pending {
-    // scss-lint:disable ImportantRule
     top: 15px !important;
-    // scss-lint:enable ImportantRule
   }
 }
 
@@ -3637,7 +3553,7 @@ html[dir='rtl'] {
           @include css3(transition, none);
         }
       }
-      // scss-lint:disable NestingDepth
+
       &.is-active-row {
         outline: 0;
 
@@ -3661,7 +3577,6 @@ html[dir='rtl'] {
           }
         }
       }
-      // scss-lint:enable NestingDepth
     }
   }
 }

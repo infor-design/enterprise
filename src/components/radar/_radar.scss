@@ -20,7 +20,6 @@
     cursor: pointer;
     -webkit-tap-highlight-color: $transparent;
 
-    // scss-lint:disable ImportantRule
     &.is-selected {
       fill-opacity: 0.45 !important;
     }
@@ -28,7 +27,6 @@
     &.is-not-selected {
       fill-opacity: 0.05 !important;
     }
-    // scss-lint:enable ImportantRule
   }
 
 }

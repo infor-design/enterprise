@@ -149,7 +149,6 @@
 }
 
 // Overrides for smaller break point
-// scss-lint:disable ImportantRule
 @include respond-to(phabletdown) {
   .expandable-area {
     &.has-bottom-border {
@@ -183,7 +182,6 @@
     }
   }
 }
-// scss-lint:enable ImportantRule
 
 .full-width .column:first-child,
 .full-width .columns:first-child {

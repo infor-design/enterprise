@@ -313,7 +313,7 @@
   li.is-disabled,
   li.disabled {
     cursor: default;
-    // scss-lint:disable ImportantRule
+
     a {
       background-color: transparent;
       color: $disabled-color !important;
@@ -323,7 +323,6 @@
     .icon {
       fill: $disabled-color !important;
     }
-    // scss-lint:enable ImportantRule
 
     &:hover {
       background-color: transparent;

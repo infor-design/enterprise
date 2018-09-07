@@ -237,7 +237,6 @@
         height: 40px;
         line-height: 40px;
 
-        // scss-lint:disable UnicodeRule
         &::before {
           @include font-size(20);
 
@@ -248,7 +247,6 @@
           padding-top: 2px;
           vertical-align: top;
         }
-        // scss-lint:enable UnicodeRule
 
         &:first-child::before {
           margin-left: 15px;

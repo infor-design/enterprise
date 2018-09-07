@@ -239,9 +239,7 @@ a.btn-close {
   min-width: auto;
 
   + .separator {
-    // scss-lint:disable ImportantRule
     margin: 3px 3px 0 -10px !important;
-    // scss-lint:enable ImportantRule
 
     + .btn-split-menu {
       margin-left: -3px;

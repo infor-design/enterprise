@@ -158,7 +158,6 @@ input + .busy-indicator-container,
   }
 }
 
-// scss-lint:disable VendorPrefix
 .ie9 {
   .busy-indicator {
     .bar {
@@ -175,7 +174,6 @@ input + .busy-indicator-container,
     }
   }
 }
-// scss-lint:enable VendorPrefix
 
 // bump everything up 1px because Firefox
 .is-firefox {
