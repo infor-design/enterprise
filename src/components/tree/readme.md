@@ -31,6 +31,8 @@ demo:
     slug: example-sortable
   - name: Update Node
     slug: example-update-node
+  - name: Disable Tree
+    slug: example-disable
   - name: Enable Tree
     slug: example-enable
 ---
