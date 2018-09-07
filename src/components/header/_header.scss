@@ -452,10 +452,6 @@ $subheader-height: 60px;
       background-color: $header-breadcrumb-alt-bg-color;
       border-bottom: 1px solid $header-breadcrumb-alt-color;
 
-      &:hidden {
-        border-bottom: 0;
-      }
-
       ol {
         padding: 15px 0;
       }
