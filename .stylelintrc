@@ -18,7 +18,6 @@
     "at-rule-name-case": "lower",
     "at-rule-name-space-after": "always-single-line",
     "at-rule-semicolon-newline-after": "always",
-    "block-closing-brace-empty-line-before": "never",
     "block-closing-brace-newline-after": "always",
     "block-closing-brace-newline-before": "always-multi-line",
     "block-closing-brace-space-before": "always-single-line",
@@ -66,14 +65,12 @@
         ]
       }
     ],
-    "declaration-block-no-redundant-longhand-properties": true,
-    "declaration-block-no-shorthand-property-overrides": true,
+    "declaration-block-no-shorthand-property-overrides": null,
     "declaration-block-semicolon-newline-after": "always-multi-line",
     "declaration-block-semicolon-space-after": "always-single-line",
     "declaration-block-semicolon-space-before": "never",
     "declaration-block-single-line-max-declarations": 1,
     "declaration-block-trailing-semicolon": "always",
-    "declaration-colon-newline-after": "always-multi-line",
     "declaration-colon-space-after": "always-single-line",
     "declaration-colon-space-before": "never",
     "declaration-empty-line-before": [
@@ -90,7 +87,14 @@
       }
     ],
     "font-family-no-duplicate-names": true,
-    "font-weight-notation": "numeric",
+    "font-weight-notation": [
+      "numeric",
+      {
+        "ignore": [
+          "relative"
+        ]
+      }
+    ],
     "function-calc-no-unspaced-operator": true,
     "function-comma-newline-after": "always-multi-line",
     "function-comma-space-after": "always-single-line",
@@ -105,7 +109,7 @@
     "keyframe-declaration-no-important": true,
     "length-zero-no-unit": true,
     "max-empty-lines": 1,
-    "max-nesting-depth": 3,
+    "max-nesting-depth": 10,
     "media-feature-colon-space-after": "always",
     "media-feature-colon-space-before": "never",
     "media-feature-name-case": "lower",
@@ -148,7 +152,7 @@
     "selector-descendant-combinator-no-non-space": true,
     "selector-list-comma-newline-after": "always",
     "selector-list-comma-space-before": "never",
-    "selector-max-compound-selectors": 4,
+    "selector-max-compound-selectors": null,
     "selector-max-empty-lines": 0,
     "selector-max-id": 1,
     "selector-pseudo-class-case": "lower",
@@ -164,7 +168,7 @@
     "string-quotes": "single",
     "unit-case": "lower",
     "unit-no-unknown": true,
-    "unit-whitelist": ["rem", "px", "%", "s", "deg", "ms", "vh"],
+    "unit-whitelist": ["em", "rem", "px", "%", "s", "deg", "ms", "vh"],
     "value-keyword-case": "lower",
     "value-list-comma-newline-after": "always-multi-line",
     "value-list-comma-space-after": "always-single-line",
