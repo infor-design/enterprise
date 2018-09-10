@@ -27,6 +27,7 @@
 
   span:not(.audible) {
     @include font-size(12);
+
     position: absolute;
     right: 2px;
     text-align: right;
@@ -42,6 +43,7 @@
 
   .chart-percent-text {
     @include font-size(14);
+
     cursor: default;
     height: 25px;
     margin-top: -25px;
@@ -99,7 +101,7 @@
     height: 10px;
     margin-top: -10px;
     position: relative;
-    transition: width .2s ease 0s;
+    transition: width 0.2s ease 0s;
     width: 50%;
 
     &.is-empty::after {
@@ -108,7 +110,7 @@
 
     span {
       color: $chart-progressbar-completed-fill;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
 
       &.value,
       &.text {
@@ -187,11 +189,12 @@
     background-color: $chart-progressbar-target-fill;
     height: 10px;
     position: relative;
-    transition: width .5s ease 0s;
+    transition: width 0.5s ease 0s;
     width: 60%;
 
     span {
       @include font-size(12);
+
       color: $font-color;
       position: absolute;
       text-align: right;
@@ -215,12 +218,12 @@
     &.overlap {
       span {
         top: 70px;
-        transition: top .5s ease 0s;
+        transition: top 0.5s ease 0s;
       }
 
       &::after {
         height: 65px;
-        transition: height .5s ease 0s;
+        transition: height 0.5s ease 0s;
       }
     }
   }
@@ -239,7 +242,7 @@
 
   &.overlap {
     margin-bottom: 100px;
-    transition: margin .5s ease 0s;
+    transition: margin 0.5s ease 0s;
   }
 
   .total,
@@ -247,7 +250,6 @@
   .completed,
   .completed-label,
   .target-line {
-
     &.bar {
       &.error-color,
       &.error {
@@ -319,7 +321,7 @@
   .remaining,
   .info {
     .value {
-      font-weight: bold;
+      font-weight: $font-weight-bold;
     }
 
     .error-color,

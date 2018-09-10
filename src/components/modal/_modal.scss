@@ -17,8 +17,8 @@
 }
 
 .modal {
-  @include css3(transform, scale(.9, .9));
-  @include css3(transition, opacity .2s, transform .2s);
+  @include css3(transform, scale(0.9, 0.9));
+  @include css3(transition, opacity 0.2s, transform 0.2s);
   //Added after size calc bottom: 0;
   display: table-cell;
   height: auto;
@@ -33,26 +33,26 @@
 
   &.is-visible {
     @include css3(transform, scale(1, 1));
+
     opacity: 1;
   }
 
   .field {
-
-    [data-error-type="tooltip"] ~ .icon-error,
-    [data-error-type="tooltip"] ~ .icon-confirm {
+    [data-error-type='tooltip'] ~ .icon-error,
+    [data-error-type='tooltip'] ~ .icon-confirm {
       top: -7px;
     }
 
     .dropdown-wrapper {
-      [data-error-type="tooltip"] ~ .icon-error,
-      [data-error-type="tooltip"] ~ .icon-confirm {
+      [data-error-type='tooltip'] ~ .icon-error,
+      [data-error-type='tooltip'] ~ .icon-confirm {
         top: 1px;
       }
     }
 
     &.editor-container {
-      [data-error-type="tooltip"] ~ .icon-error,
-      [data-error-type="tooltip"] ~ .icon-confirm {
+      [data-error-type='tooltip'] ~ .icon-error,
+      [data-error-type='tooltip'] ~ .icon-confirm {
         top: 55px;
       }
     }
@@ -60,8 +60,8 @@
     textarea {
       width: 300px;
 
-      &[data-error-type="tooltip"] ~ .icon-error,
-      &[data-error-type="tooltip"] ~ .icon-confirm {
+      &[data-error-type='tooltip'] ~ .icon-error,
+      &[data-error-type='tooltip'] ~ .icon-confirm {
         top: 20px;
       }
 
@@ -144,7 +144,6 @@
   }
 
   .listview-search {
-
     + .listview {
       max-height: 220px;
       min-height: 220px;
@@ -170,7 +169,6 @@
   }
 
   .alternate-bg {
-
     &.listview {
       background-color: $listview-full-width-bg-color;
 
@@ -192,7 +190,8 @@
 }
 
 .overlay {
-  @include css3(transition, all .2s);
+  @include css3(transition, all 0.2s);
+
   background: $black;
   height: 100%;
   left: 0;
@@ -205,7 +204,7 @@
 }
 
 .modal-engaged .overlay {
-  opacity: .70;
+  opacity: 0.7;
   visibility: visible;
 }
 
@@ -214,19 +213,20 @@
 }
 
 .modal-content {
-  position: relative;
   background: $modal-bg-color;
   border: 1px solid $modal-border-color;
   border-radius: 2px;
   box-shadow: $modal-box-shadow;
   color: $modal-secondary-color;
   margin: 10px;
+  position: relative;
 
   // Messages/Content
   h1 {
     @include font-size(18);
+
     color: $modal-primary-color;
-    font-weight: normal;
+    font-weight: $font-weight-normal;
     -webkit-margin-after: 0;
     text-align: left;
 
@@ -253,8 +253,9 @@
 
   h2 {
     @include font-size(16);
+
     color: $modal-primary-color;
-    font-weight: normal;
+    font-weight: $font-weight-normal;
     -webkit-margin-after: 0;
     text-align: left;
 
@@ -294,8 +295,8 @@
 
   > .modal-buttonset {
     .btn-close {
-      position: relative;
       bottom: 0;
+      position: relative;
     }
   }
 
@@ -356,21 +357,22 @@
 
   button {
     @include font-size(14);
-    @include css3(transition, color .3s ease 0s);
+    @include css3(transition, color 0.3s ease 0s);
+
     border: 1px solid transparent;
     border-left: 1px solid $modal-btn-border-color;
     border-radius: 0;
     color: $modal-btn-color;
     cursor: pointer;
     float: left;
-    font-weight: bold;
-    height: 46px;// [50px-4px] Keep smaller 4px for border to show around on focus
+    font-weight: $font-weight-bold;
+    height: 46px;
     line-height: 46px; // Used same value as height to get accurate measurement of vertical height
     margin-right: 0;
     overflow: hidden;
     position: relative;
     text-align: center;
-    width: 100%;
+    width: 100%;// [50px-4px] Keep smaller 4px for border to show around on focus
 
     &:hover {
       color: $modal-btn-hover-color;
@@ -416,7 +418,7 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .modal-buttonset {
     button {
@@ -460,8 +462,8 @@ html[dir='rtl'] {
     }
 
     .btn-close {
+      left: 0;
       right: auto;
-      left: 0px;
     }
   }
 }

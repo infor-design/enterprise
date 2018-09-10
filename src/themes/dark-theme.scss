@@ -17,33 +17,33 @@ $body-bg-color:  $slate08;
 $header-bg-color: $slate09;
 $subhead-bg-color: $slate06;
 $header-border-color: $slate10;
-$header-button-color: rgba($white, .7);
+$header-button-color: rgba($white, 0.7);
 $header-button-focus-color: rgba($white, 1);
 $header-button-hover-color: rgba($white, 1);
-$header-button-disabled-color: rgba($white, .3);
+$header-button-disabled-color: rgba($white, 0.3);
 $header-disabled-color: $slate05;
-$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, .3);
+$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
 
 $panel-bg-color: $slate07;
 $panel-border-color: $slate05;
-$drop-shadow-depth: rgba(0, 0, 0, .4);
-$focus-box-shadow-color: rgba(141, 201, 230, .3);
+$drop-shadow-depth: rgba(0, 0, 0, 0.4);
+$focus-box-shadow-color: rgba(141, 201, 230, 0.3);
 $focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox: 0 -3px 3px 0 $focus-box-shadow-color,
-                           0 3px 3px 0 $focus-box-shadow-color;
+  0 3px 3px 0 $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox-down: 0 -3px 3px 0 $focus-box-shadow-color,
-                                0 3px 3px 0 $focus-box-shadow-color,
-                                -3px 0 3px 0 $focus-box-shadow-color;
+  0 3px 3px 0 $focus-box-shadow-color,
+  -3px 0 3px 0 $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox-up: 0 -3px 3px 0 $focus-box-shadow-color,
-                                0 3px 3px 0 $focus-box-shadow-color,
-                                3px 0 3px 0 $focus-box-shadow-color;
+  0 3px 3px 0 $focus-box-shadow-color,
+  3px 0 3px 0 $focus-box-shadow-color;
 
 // Base Colors
 $primary-color: $color-primary;
-$inverse-color: #ffffff;
+$inverse-color: #fff;
 
 //The hyperlink Style
 $hyperlink-color: $azure04;
@@ -82,7 +82,6 @@ $circlepager-hover-border-color: $slate02;
 $circlepager-disable-border-color: $slate05;
 $circlepager-disable-hover-border-color: $slate05;
 $circlepager-disable-focus-border-color: $slate05;
-
 
 // Popovers
 $popover-bg-color: $notification-bg-color;
@@ -153,12 +152,12 @@ $input-readonly-color: $input-readonly-text-color;
 
 //States
 $error-color: $alert-red;
-$error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, .3);
+$error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
 $error-icon-fill: $alert-red;
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
 $info-icon-fill: $primary-color;
-$selected-bg-color: rgba($primary-color, .3);
+$selected-bg-color: rgba($primary-color, 0.3);
 
 // Autocomplete
 $autocomplete-light-text: $slate04;
@@ -234,7 +233,7 @@ $datepicker-today-color: $inverse-color;
 $datepicker-hover-bg-color: $slate06;
 $datepicker-disabled-icon-color: $slate05;
 $datepicker-disabled-border-color: $slate05;
-$datepicker-disabled-bg-color: rgba($slate06, .5);
+$datepicker-disabled-bg-color: rgba($slate06, 0.5);
 $datepicker-disabled-color: $slate04;
 
 //Time Picker
@@ -258,10 +257,10 @@ $fileupload-hover-color: $slate02;
 $fileupload-droparea-color: $slate04;
 $fileupload-droparea-hover-color: $slate04;
 $fileupload-droparea-hover-bg-color: $azure09;
-$fileupload-droparea-bg-color: rgba($slate07, .5);
+$fileupload-droparea-bg-color: rgba($slate07, 0.5);
 $fileupload-droparea-hover-bg-color: $slate07;
 $fileupload-droparea-dd-hover-border-color: $primary-color;
-$fileupload-droparea-dd-hover-bg-color: rgba($slate10, .30);
+$fileupload-droparea-dd-hover-bg-color: rgba($slate10, 0.3);
 
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
@@ -340,7 +339,7 @@ $editor-btn-color: $slate03;
 $editor-btn-hover-color: $white;
 $editor-btn-active-color: $primary-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-color, $focus-box-shadow;
-$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, .3);
+$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
 $editor-blockquote-color: $slate04;
 
 // Radio Buttons
@@ -370,7 +369,7 @@ $slider-readonly-active-bg-color: $graphite07;
 $slider-readonly-labels-color: $graphite06;
 $slider-readonly-handle-color: $graphite07;
 $slider-readonly-range-color: $graphite07;
-$slider-hover-shadow: 0 2px 5px 0 rgba($black, .4);
+$slider-hover-shadow: 0 2px 5px 0 rgba($black, 0.4);
 
 //Modal
 $modal-bg-color: $slate07;
@@ -383,10 +382,9 @@ $modal-btn-hover-color: $white;
 $modal-btn-primary-color: $azure04;
 $modal-btn-primary-hover-color: $azure03;
 $modal-btn-disabled-color: $white;
-$modal-btn-disabled-opacity: .3;
+$modal-btn-disabled-opacity: 0.3;
 $modal-primary-color: $white;
 $modal-secondary-color: $slate03;
-
 
 // Accordion
 $accordion-bg-color: $slate08;
@@ -495,7 +493,7 @@ $datagrid-cell-bg-color: $slate08;
 $datagrid-cell-readonly-bg-color: $slate07;
 $datagrid-cell-readonly-color: $white;
 $datagrid-cell-border-color: $slate05;
-$datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(101, 104, 113, .4);
+$datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(101, 104, 113, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #334d60;
 $datagrid-row-selected-color-dark: #3e586c;
@@ -508,7 +506,7 @@ $datagrid-alternate-row-hover-color: $slate06;
 $datagrid-list-header-bg-color: $slate09;
 
 $datagrid-list-header-focus-border-color: $primary-color;
-$datagrid-list-header-box-shadow: 0 0 4px 1px rgba(101, 104, 113, .4);
+$datagrid-list-header-box-shadow: 0 0 4px 1px rgba(101, 104, 113, 0.4);
 $datagrid-list-header-border-color: $slate05;
 $datagrid-list-header-color: $slate03;
 $datagrid-list-header-hover-color: $slate09;
@@ -629,7 +627,6 @@ $toast-header-color: $notification-header-color;
 $toast-text-color: $notification-text-color;
 $toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
 
-
 //Builder Pattern
 $builder-header-bg-color: $slate08;
 
@@ -639,10 +636,9 @@ $about-text-color: $white;
 $about-text-border-color: $slate05;
 $about-text-hover-border-color: $slate03;
 
-
 // Header Tabs
 $header-tabcontainer-border-color: $slate09;
-$header-tab-separator: rgba(255, 255, 255, .4);
+$header-tab-separator: rgba(255, 255, 255, 0.4);
 $header-tab-normal-color: $slate03;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
@@ -665,7 +661,7 @@ $module-tabs-y-border-color: $header-border-color;
 $module-tabs-inactive-bg-color: $header-border-color;
 $module-tabs-active-bg-color: $slate06;
 $module-tabs-hover-bg-color: $slate06;
-$module-tabs-inactive-text-color: rgba($white, .85);
+$module-tabs-inactive-text-color: rgba($white, 0.85);
 $module-tabs-active-text-color: $white;
 $module-tabs-hover-text-color: $white;
 $module-tabs-disabled-bg-color: $slate06;
@@ -680,7 +676,7 @@ $composite-tabs-panel-bg-color: $slate10;
 $splitter-grip-bg-color: $slate03;
 $splitter-active-bg-color: $slate07;
 $splitter-active-grip-bg-color: $white;
-$splitter-box-shadow-color: rgba(54, 138, 192, .75);
+$splitter-box-shadow-color: rgba(54, 138, 192, 0.75);
 
 // Step Chart
 $step-chart-bg-color: $slate07;

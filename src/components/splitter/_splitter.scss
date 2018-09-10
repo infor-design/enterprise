@@ -38,7 +38,8 @@
 }
 
 .splitter {
-  @include transition(background-color 300ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(background-color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
   background-color: inherit;
   cursor: ew-resize;
   height: 100%;
@@ -77,7 +78,6 @@
       transform: rotate(180deg);
     }
   }
-
 
   &.is-dragging {
     box-shadow: -2px 0 3px 0 $splitter-box-shadow-color;
@@ -119,6 +119,7 @@
 
     &::after {
       @include transform(rotate(90deg));
+
       color: $splitter-grip-bg-color;
       content: '⁞';
       display: block;
@@ -147,7 +148,7 @@
 
 .ie {
   .splitter-container {
-    .toolbar .buttonset > [class^="btn"] {
+    .toolbar .buttonset > [class^='btn'] {
       line-height: normal;
     }
   }
@@ -155,6 +156,6 @@
 
 .splitter-overlay {
   height: 100%;
-  opacity: .6;
+  opacity: 0.6;
   visibility: visible;
 }

@@ -6,6 +6,7 @@
 
   input {
     @include opacity(0);
+
     cursor: pointer;
     height: 14px;
     margin: 4px 0 0 1px;
@@ -47,6 +48,7 @@
 
 .rating-text {
   @include font-size(14);
+
   color: $rating-border-color;
   display: inline-block;
   line-height: 20px;
@@ -61,6 +63,7 @@
 .rating .inline .is-filled + svg.icon,
 .rating .is-filled + label > svg.icon {
   @include opacity(1);
+
   fill: $rating-bg-color;
   stroke: $rating-bg-color;
 }
@@ -70,6 +73,7 @@
 .rating input:checked + label > svg.icon,
 .rating .is-half + label > svg.icon {
   @include opacity(1);
+
   fill: $rating-bg-color;
   stroke: transparent;
 }

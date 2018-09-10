@@ -13,13 +13,14 @@
   z-index: 7000;
 
   &.animated {
-    transition: all .2s ease;
+    transition: all 0.2s ease;
   }
 }
 
 // Resize Styling
 .resize-handle {
   @include no-select;
+
   background: transparent none repeat scroll 0 0;
   border: 1px solid $primary-color;
   cursor: e-resize;
@@ -30,8 +31,8 @@
   width: 2px;
 }
 
-[data-sort-exclude="true"] {
-  opacity: .5;
+[data-sort-exclude='true'] {
+  opacity: 0.5;
 }
 
 .arrange-placeholder {

@@ -47,14 +47,12 @@
     }
   }
 
-  // scss-lint:enable ImportantRule
-  //
   //Directional Panes
   &.single {
     display: inline-block;
     height: calc(100% - 30px);
     left: 0;
-    margin: 20px 20px 10px 20px;
+    margin: 20px 20px 10px;
     min-height: 0;
     overflow: auto;
     position: absolute;
@@ -163,7 +161,6 @@
  on different form factors.
  */
 @include respond-to(phabletdown) {
-
   .pane.top,
   .pane.bottom,
   .pane.left,
