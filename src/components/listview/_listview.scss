@@ -141,7 +141,7 @@
     }
 
     &:focus {
-      border-color: $primary-color !important;
+      border-color: $color-primary !important;
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
 
@@ -617,7 +617,7 @@
 
     &.has-focus {
       input {
-        border: 1px solid $primary-color;
+        border: 1px solid $color-primary;
       }
     }
   }
