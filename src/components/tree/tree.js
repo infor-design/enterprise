@@ -2163,7 +2163,7 @@ Tree.prototype = {
     const enablementStates = [];
 
     nodes.forEach((node) => {
-      if ( ( node.classList.contains('is-disabled') ) || ( node.getAttribute('aria-disabled') === true ) ) {
+      if ((node.classList.contains('is-disabled')) || (node.getAttribute('aria-disabled') === true)) {
         enablementStates.push({nodeId: node.id, state: 'disabled'});
       } else {
         enablementStates.push({nodeId: node.id, state: 'enabled'});
@@ -2181,11 +2181,11 @@ Tree.prototype = {
     const nodes = this.element[0].querySelectorAll('a');
 
     // check to prevent error if preserveEnablementState() has not been invoked
-    if ( !(this.settings.originalEnablementState === null) ) {
+    if (!(this.settings.originalEnablementState === null)) {
       nodes.forEach((node) => {
         this.settings.originalEnablementState.forEach((origNode) => {
-          if ( origNode.nodeId === node.id ) {
-            if ( origNode.state === 'disabled' ) {
+          if (origNode.nodeId === node.id) {
+            if (origNode.state === 'disabled') {
               node.classList.add('is-disabled');
               node.setAttribute('aria-disabled', 'true');
             } else {
