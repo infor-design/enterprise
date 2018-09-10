@@ -126,7 +126,7 @@ describe('Textarea example-index tests', () => {
     textareaEl2.click();
 
     const dirtyTrackerEl = await element(by.className('icon-dirty'));
-    
+
     expect(dirtyTrackerEl).toBeTruthy();
   });
 
@@ -135,6 +135,7 @@ describe('Textarea example-index tests', () => {
     textareaEl.clear();
 
     const errorIconEl = await element(by.className('icon-error'));
+
     expect(errorIconEl).toBeTruthy();
   });
 });
