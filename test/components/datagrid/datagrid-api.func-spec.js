@@ -101,7 +101,7 @@ describe('Datagrid API', () => {
   });
 
   it('Should be able to call addRow and removeRow', () => {
-    const iconExclamation = '<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-exclamation"></use></svg>';
+    const iconExclamation = '<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation" title="New"><use xlink:href="#icon-exclamation"></use></svg>';
     datagridObj.addRow({ productId: 'New', productName: 'New' });
 
     expect(document.body.querySelector('tr td').innerHTML).toEqual(`${iconExclamation}<div class="datagrid-cell-wrapper">New</div>`);
