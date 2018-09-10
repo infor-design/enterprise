@@ -205,6 +205,7 @@ Datagrid.prototype = {
     this.isIe9 = html.is('.ie9');
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
+    this.appendTooltip('grid-tooltip');
     this.initSettings();
     this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
     this.removeToolbarOnDestroy = false;
@@ -1011,10 +1012,6 @@ Datagrid.prototype = {
     }
 
     self.syncHeaderCheckbox(this.settings.dataset);
-
-    if (this.settings.enableTooltips) {
-      self.headerRow.find('th[title]').tooltip();
-    }
 
     if (self.settings.columnReorder) {
       self.createDraggableColumns();
@@ -2356,7 +2353,7 @@ Datagrid.prototype = {
       this.sortDataset();
     }
 
-    let forcedTooltip = false;
+    let rowStatusTooltip = false;
     for (let i = 0; i < s.dataset.length; i++) {
       // For better performance dont render out of page
       if (s.paging && !s.source) {
@@ -2411,7 +2408,6 @@ Datagrid.prototype = {
           }
 
           rowData.values = s.dataset[i].values;
-
           tableHtml += self.rowHtml(rowData, this.recordCount, i);
           this.recordCount++;
           self.groupArray.push({ group: i, node: 0 });
@@ -2439,12 +2435,11 @@ Datagrid.prototype = {
       if (s.treeGrid) {
         currentCount = this.recordCount;
       }
-
       tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
       this.recordCount++;
 
       if (s.dataset[i].rowStatus) {
-        forcedTooltip = true;
+        rowStatusTooltip = true;
       }
     }
 
@@ -2467,7 +2462,7 @@ Datagrid.prototype = {
     DOM.html(self.tableBody, tableHtml, '*');
     self.setVirtualHeight();
     self.setScrollClass();
-    self.setupTooltips(forcedTooltip);
+    self.setupTooltips(rowStatusTooltip);
     self.afterRender();
   },
 
@@ -2787,14 +2782,14 @@ Datagrid.prototype = {
 
     // Group Rows
     if (this.settings.groupable && isGroup && !isFooter) {
-      rowHtml = `<tr class="datagrid-rowgroup-header ${isHidden ? '' : 'is-expanded'}" role="rowgroup"><td role="gridcell" colspan="${this.visibleColumns().length}">${
+      rowHtml = `<tr class="datagrid-rowgroup-header${isHidden ? '' : ' is-expanded'}" role="rowgroup"><td role="gridcell" colspan="${this.visibleColumns().length}">${
         Formatters.GroupRow(dataRowIdx, 0, null, null, rowData, this)
       }</td></tr>`;
       return rowHtml;
     }
 
     if (this.settings.groupable && isGroup && isFooter) {
-      rowHtml = `<tr class="datagrid-row datagrid-rowgroup-footer ${isHidden ? '' : 'is-expanded'}" role="rowgroup">${
+      rowHtml = `<tr class="datagrid-row datagrid-rowgroup-footer${isHidden ? '' : ' is-expanded'}" role="rowgroup">${
         Formatters.GroupFooterRow(dataRowIdx, 0, null, null, rowData, this)
       }</tr>`;
       return rowHtml;
@@ -2807,13 +2802,13 @@ Datagrid.prototype = {
     isEven = (this.recordCount % 2 === 0);
     const isSelected = this.isNodeSelected(rowData);
     const isActivated = rowData._rowactivated;
-    const rowStatus = { class: '', svg: '', tooltip: '' };
+    const rowStatus = { class: '', svg: '' };
     if (rowData && rowData.rowStatus) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
       rowStatus.icon = (rowData.rowStatus.icon === 'confirm') ? '#icon-check' : '#icon-exclamation';
-      rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${rowStatus.icon}"></use></svg>`;
-      rowStatus.tooltip = rowData.rowStatus.tooltip;
+      rowStatus.title = (rowData.rowStatus.tooltip !== '') ? ` title="${rowData.rowStatus.tooltip}"` : '';
+      rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"${rowStatus.title}><use xlink:href="${rowStatus.icon}"></use></svg>`;
     }
 
     rowHtml = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
@@ -2970,20 +2965,23 @@ Datagrid.prototype = {
       if (j !== 0) {
         rowStatus.class = '';
         rowStatus.svg = '';
-        rowStatus.tooltip = '';
       }
 
       if (rowStatus.class !== '') {
         cssClass += ' rowstatus-cell';
       }
 
-      rowHtml += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}" ` +
+      // Trim extra spaces
+      if (cssClass !== '') {
+        cssClass = cssClass.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+      }
+
+      rowHtml += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
           ` aria-describedby="${self.uniqueId(`-header-${j}`)}"${
             isSelected ? ' aria-selected= "true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
           }${colspan ? ` colspan="${colspan}"` : ''
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
-          }${rowStatus.tooltip !== '' ? ` title="${rowStatus.tooltip}"` : ''
           }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
           }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
 
@@ -3468,96 +3466,95 @@ Datagrid.prototype = {
   },
 
   /**
-  * Setup Content tooltip for the rich text editor
-  * @private
-  * @param  {object} elem The content element.
-  * @param  {number} width The current width.
-  * @param  {object} td The cell node
-  * @returns {void}
-  */
-  setupContentTooltip(elem, width, td) {
-    if (elem.text().length > 0) {
-      const content = elem.clone();
-
-      elem.tooltip({
-        content,
-        extraClass: 'alternate content-tooltip',
-        placementOpts: {
-          parent: elem,
-          parentXAlignment: 'center',
-          strategies: ['flip', 'nudge', 'shrink']
-        }
-      });
-
-      if (width) {
-        content[0].style.width = width;
-      } else {
-        elem.on('beforeshow.datagrid', () => {
-          elem.off('beforeshow.datagrid');
-          content[0].style.width = `${td[0].offsetWidth}px`;
-        });
-      }
-    }
-  },
-
-  /**
    * Setup tooltips on the cells.
    * @private
-   * @param  {boolean} forced true to show tooltip
+   * @param  {boolean} rowstatus true set tootip with row status
    * @returns {void}
    */
-  setupTooltips(forced) {
-    if (!this.settings.enableTooltips && !forced) {
+  setupTooltips(rowstatus) {
+    if (!rowstatus && !this.settings.enableTooltips) {
       return;
     }
 
     const self = this;
-    // Implement Tooltip on cells with title attribute
-    this.tableBody.find('td[title]').tooltip();
-    this.tableBody.find('a[title]').tooltip();
+    const defaultDelay = 400;
+    let tooltipTimer;
 
-    // Implement Tooltip on cells with ellipsis
-    this.table.find('td.text-ellipsis').tooltip({
-      content() {
-        const cell = $(this);
-        const text = cell.text();
-        const inner = cell.children('.datagrid-cell-wrapper');
-        const element = $(inner[0]);
-        const clonedEl = element.clone().css({ display: 'inline', width: 'auto', visibility: 'hidden' }).appendTo('body');
+    // Set selector
+    const selector = {
+      th: '.datagrid-header th',
+      td: '.datagrid-body tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
+      rowstatus: '.datagrid-body tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
+    };
 
-        if (cell[0] && inner[0] && clonedEl.width() > element.width() - 30 && cell.data('tooltip')) {
-          const w = inner.width();
-          cell.data('tooltip').settings.maxWidth = w;
+    // Selector string
+    if (rowstatus && this.settings.enableTooltips) {
+      selector.str = `${selector.th}, ${selector.td}, ${selector.rowstatus}`;
+    } else if (rowstatus) {
+      selector.str = `${selector.th}, ${selector.rowstatus}`;
+    } else {
+      selector.str = `${selector.th}, ${selector.td}`;
+    }
 
-          clonedEl.remove();
-          return xssUtils.stripHTML(text);
+    // Handle tooltip to show
+    const handleShow = (elem, delay) => {
+      delay = typeof delay === 'undefined' ? defaultDelay : delay;
+      tooltipTimer = setTimeout(() => {
+        const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
+        const width = self.getOuterWidth(elem);
+
+        if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35)))) {
+          self.showTooltip(tooltip);
         }
+      }, delay);
+    };
 
-        clonedEl.remove();
-        return '';
-      }
-    });
+    // Handle tooltip to hide
+    const handleHide = (delay) => {
+      delay = typeof delay === 'undefined' ? defaultDelay : delay;
+      clearTimeout(tooltipTimer);
+      setTimeout(() => {
+        self.hideTooltip();
+      }, delay);
+    };
 
-    // Rich text editor content tooltip
-    this.table.find('td .is-editor.content-tooltip').each(function () {
-      const elem = $(this);
-      const td = elem.closest('td');
-      const cell = td.attr('aria-colindex') - 1;
-      const col = self.columnSettings(cell);
-      const width = col.editorOptions &&
-        col.editorOptions.width ? self.setUnit(col.editorOptions.width) : false;
+    // Bind events
+    this.element
+      .off('mouseenter.gridtooltip', selector.str)
+      .on('mouseenter.gridtooltip', selector.str, function () {
+        handleShow(this);
+      })
+      .off('mouseleave.gridtooltip click.gridtooltip', selector.str)
+      .on('mouseleave.gridtooltip click.gridtooltip', selector.str, () => {
+        handleHide();
+      })
+      .off('longpress.gridtooltip', selector.str)
+      .on('longpress.gridtooltip', selector.str, () => {
+        handleShow(this, 0);
+      })
+      .off('keydown.gridtooltip', selector.str)
+      .on('keydown.gridtooltip', selector.str, function (e) {
+        const key = e.which || e.keyCode || e.charCode || 0;
 
-      self.setupContentTooltip(elem, width, td);
-    });
+        if (e.shiftKey && key === 112) { // Shift + F1
+          handleShow(this, 0);
+        } else if (key === 27) { // Escape
+          handleHide(0);
+        }
+      });
+  },
 
-    // Set rowStatus with error color
-    const cellNodes = [].slice.call(this.table[0].querySelectorAll('td.rowstatus-cell'));
-    cellNodes.forEach((cellNode) => {
-      const rowNode = this.closest(cellNode, el => el.classList.contains('datagrid-row'));
-      const classList = rowNode ? rowNode.classList : {};
-      const isErrorColor = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
-      $(cellNode).tooltip({ placement: 'right', isErrorColor });
-    });
+  /**
+   * Get outerWidth for a given element.
+   * @private
+   * @param  {boolean} element to calculate the outerWidth
+   * @returns {number} computed outerWidth
+   */
+  getOuterWidth(element) {
+    const style = getComputedStyle(element);
+    let width = element.offsetWidth;
+    width += parseInt(style.marginLeft, 10) + parseInt(style.marginRight, 10);
+    return width;
   },
 
   /**
@@ -6065,6 +6062,7 @@ Datagrid.prototype = {
     rowStatus.tooltip = tooltip;
 
     this.updateRow(idx);
+    this.setupTooltips(true);
   },
 
   /**
@@ -6792,13 +6790,23 @@ Datagrid.prototype = {
 
     // Add icon and classes
     node.addClass(type).attr(`data-${type}message`, message);
-    const icon = $($.createIcon({ classes: [`icon-${type}`], icon: type }));
 
     // Add and show tooltip
-    if (node.find(`.icon-${type}`).length === 0) {
-      node.find('.datagrid-cell-wrapper').append(icon);
-      icon.tooltip({ placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: message });
-      icon.data('tooltip').show();
+    let icon = node.find(`.icon-${type}`);
+    if (!icon.length) {
+      const wrapper = node.find('.datagrid-cell-wrapper');
+      wrapper.append($($.createIcon({ classes: [`icon-${type}`], icon: type })));
+      icon = node.find(`.icon-${type}`);
+
+      const tooltip = {
+        forced: true,
+        placement: 'bottom',
+        content: message,
+        isError: type === 'error' || type === 'dirtyerror',
+        wrapper: icon
+      };
+      this.cacheTooltip(icon, tooltip);
+      this.showTooltip(tooltip);
     }
   },
 
@@ -6839,10 +6847,7 @@ Datagrid.prototype = {
       // clear the displayed message
       if (tableerrors && tableerrors.length) {
         icon = tableerrors.find(`.icon-${validationType.type}`);
-        const tooltip = icon.data('tooltip');
-        if (tooltip) {
-          tooltip.hide();
-        }
+        this.hideTooltip();
         tableerrors.find(`.icon-${validationType.type}`).remove();
       }
       return;
@@ -6866,8 +6871,8 @@ Datagrid.prototype = {
     }
     icon = tableerrors.find(`.icon-${type}`);
     if (!icon.length) {
-      icon = $($.createIcon({ classes: [`icon-${type}`], icon: type }));
-      tableerrors.append(icon);
+      tableerrors.append($($.createIcon({ classes: [`icon-${type}`], icon: type })));
+      icon = tableerrors.find(`.icon-${type}`);
     }
 
     if (this.element.hasClass('has-toolbar')) {
@@ -6875,7 +6880,13 @@ Datagrid.prototype = {
       this.toolbar.children('.title').append(tableerrors);
     }
 
-    icon.tooltip({ placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: messages });
+    this.cacheTooltip(icon, {
+      forced: true,
+      placement: 'bottom',
+      content: messages,
+      isError: type === 'error' || type === 'dirtyerror',
+      wrapper: icon
+    });
   },
 
   /**
@@ -6973,15 +6984,15 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearNodeErrors(node, type) {
-    node.removeClass(type).removeAttr(`data-${type}message`);
+    node = node instanceof jQuery ? node[0] : node;
+    node.classList.remove(type);
+    node.removeAttribute(`data-${type}message`);
 
-    const icon = node.find(`.icon-${type}`);
-    const tooltip = icon.data('tooltip');
-
-    if (tooltip) {
-      tooltip.hide();
+    const icon = node.querySelector(`.icon-${type}`);
+    if (icon) {
+      icon.parentNode.removeChild(icon);
+      this.hideTooltip();
     }
-    node.find(`.icon-${type}`).remove();
   },
 
   /**
@@ -7167,18 +7178,16 @@ Datagrid.prototype = {
       }
     }
 
-    // Setup/Sync tooltip
-    if (cellNode.data('tooltip')) {
-      cellNode.data('tooltip').destroy();
-    }
+    // Remove older tooltip data
+    this.removeTooltipData(cellNode);
 
     // Update the value in the dataset
     if (cell === 0 && rowData && rowData.rowStatus) {
+      let svg = cellNode.find('svg.icon-rowstatus');
+
       if (rowNode[0] && cellNode[0]) {
         rowNode[0].classList.add(`rowstatus-row-${rowData.rowStatus.icon}`);
         cellNode[0].classList.add('rowstatus-cell');
-
-        const svg = cellNode.find('svg.icon-rowstatus');
 
         if (!svg.length) {
           const svgIcon = rowData.rowStatus.icon === 'confirm' ? '#icon-check' : '#icon-exclamation';
@@ -7186,10 +7195,14 @@ Datagrid.prototype = {
         }
       }
       if (rowData.rowStatus.tooltip) {
-        cellNode.attr('title', rowData.rowStatus.tooltip);
-        cellNode.tooltip({
+        svg = cellNode.find('svg.icon-rowstatus');
+        const statusIcon = rowData.rowStatus.icon;
+        this.cacheTooltip(svg, {
+          forced: true,
           placement: 'right',
-          isErrorColor: rowData.rowStatus.icon === 'error' || rowData.rowStatus.icon === 'dirtyerror'
+          content: rowData.rowStatus.tooltip,
+          isError: statusIcon === 'error' || statusIcon === 'dirtyerror',
+          wrapper: cellNode
         });
       }
     }
@@ -7370,7 +7383,7 @@ Datagrid.prototype = {
 
     // Hide any cell tooltips (Primarily for validation)
     if (prevCell.cell !== cell || prevCell.row !== row) {
-      $('#tooltip').hide();
+      self.hideTooltip();
     }
 
     // Find the cell if it exists
@@ -7975,10 +7988,281 @@ Datagrid.prototype = {
   },
 
   /**
+   * Reference to the grid tooltip.
+   * @private
+   */
+  tooltip: {},
+
+  /**
+  * Add grid tooltip to the page.
+  * @private
+  * @param {string} extraClass class to add to target uniqueness
+  * @returns {void}
+  */
+  appendTooltip(extraClass) {
+    this.tooltip = document.getElementById('tooltip');
+
+    if (!this.tooltip) {
+      const tooltip = '' +
+        `<div id="tooltip" class="tooltip ${extraClass} is-hidden">
+          <div class="arrow"></div>
+          <div class="tooltip-content"></div>
+        </div>`;
+      document.body.insertAdjacentHTML('beforeend', tooltip);
+
+      this.tooltip = document.getElementById('tooltip');
+
+      if (this.isTouch) {
+        this.tooltip.style.pointerEvents = 'auto';
+        $(this.tooltip).on('touchend.gridtooltip', () => {
+          this.hideTooltip();
+        });
+      }
+    }
+  },
+
+  /**
+   * Cache tooltip content so it can use for more then once
+   * @private
+   * @param  {object} elem The element to be cached.
+   * @param  {object} tooltip Optional to cache given data.
+   * @returns {object} tooltip object.
+   */
+  cacheTooltip(elem, tooltip) {
+    if (typeof tooltip === 'undefined') {
+      const contentTooltip = elem.querySelector('.is-editor.content-tooltip');
+      const aTitle = elem.querySelector('a[title]');
+      const isRowstatus = elem.classList.contains('rowstatus-cell');
+      const isSvg = elem.tagName.toLowerCase() === 'svg';
+      const isTh = elem.tagName.toLowerCase() === 'th';
+      let title;
+
+      tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
+
+      if (isTh) {
+        tooltip.wrapper = elem;
+        tooltip.placement = 'bottom';
+      }
+
+      // Cache rowStatus cell
+      if (isRowstatus || isSvg) {
+        const rowNode = this.closest(elem, el => el.classList.contains('datagrid-row'));
+        const classList = rowNode ? rowNode.classList : [];
+        tooltip.isError = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
+        tooltip.placement = 'right';
+
+        // For nonVisibleCellErrors
+        if (isSvg) {
+          tooltip.wrapper = this.closest(elem, el => el.tagName.toLowerCase() === 'td');
+        }
+      }
+
+      if (contentTooltip) {
+        // Used with rich text editor
+        const cell = elem.getAttribute('aria-colindex') - 1;
+        const col = this.columnSettings(cell);
+        const width = col.editorOptions &&
+          col.editorOptions.width ? this.setUnit(col.editorOptions.width) : false;
+
+        // Width for tooltip can be come from column options
+        contentTooltip.style.width = width || `${elem.offsetWidth}px`;
+        const wrapperHTML = tooltip.wrapper.innerHTML;
+
+        if (xssUtils.stripHTML(wrapperHTML) !== '') {
+          tooltip.content = wrapperHTML;
+          tooltip.extraClassList = ['popover', 'alternate', 'content-tooltip'];
+        }
+      } else if (aTitle) {
+        // Title attribute on links `a`
+        tooltip.content = aTitle.getAttribute('title');
+        aTitle.removeAttribute('title');
+      } else {
+        title = elem.getAttribute('title');
+        if (title) {
+          // Title attribute on current element
+          tooltip.content = title;
+          elem.removeAttribute('title');
+        } else {
+          // Default use wrapper content
+          tooltip.content = xssUtils.stripHTML(tooltip.wrapper.textContent);
+        }
+      }
+
+      if (tooltip.content !== '') {
+        const isEllipsis = elem.classList.contains('text-ellipsis');
+        tooltip.textwidth = xssUtils.textWidth(tooltip.content) + (isEllipsis ? 8 : 0);
+        tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
+        if (title) {
+          tooltip.forced = true;
+        }
+      }
+    }
+
+    elem = elem instanceof jQuery ? elem : $(elem);
+    elem.data('gridtooltip', tooltip);
+    return tooltip;
+  },
+
+  /**
+   * Show Tooltip
+   * @private
+   * @param  {object} [options] for tooltip.
+   * @param  {string} [options.content] The tooltip contents.
+   * @param  {object} [options.wrapper] The parent DOM element.
+   * @param  {boolean} [options.isError] True for if is error color.
+   * @param  {string} [options.placement] 'top'|'right'|'bottom'|'left'.
+   * @param  {array} [options.extraClassList] list of css classes to be added to tooltip.
+   * @returns {void}
+   */
+  showTooltip(options) {
+    this.tooltip = document.getElementById('tooltip');
+    if (this.tooltip) {
+      const tolltipJQ = $(this.tooltip);
+      const tooltipContentEl = this.tooltip.querySelector('.tooltip-content');
+      if (tooltipContentEl) {
+        tooltipContentEl.innerHTML = options.content;
+        this.tooltip.classList.remove('is-hidden', 'top', 'right', 'bottom', 'left');
+        this.tooltip.style.display = '';
+        this.tooltip.classList.add(options.placement || 'top');
+
+        if (options.isError) {
+          this.tooltip.classList.add('is-error');
+        }
+        if (options.extraClassList) {
+          options.extraClassList.map(className => this.tooltip.classList.add(className));
+        }
+
+        const distance = 10;
+        const placeOptions = {
+          x: 0,
+          y: distance,
+          container: this.element.closest('.page-container.scrollable') || $('body'),
+          containerOffsetX: options.wrapper.offsetLeft,
+          containerOffsetY: options.wrapper.offsetTop,
+          parent: $(options.wrapper),
+          placement: options.placement || 'top',
+          strategies: ['flip', 'nudge']
+        };
+        if (placeOptions.placement === 'left' || placeOptions.placement === 'right') {
+          placeOptions.x = distance;
+          placeOptions.y = 0;
+        }
+
+        // If already have place instance
+        if (tolltipJQ.data('place')) {
+          tolltipJQ.data('place').place(placeOptions);
+        } else {
+          tolltipJQ.place(placeOptions);
+          tolltipJQ.data('place').place(placeOptions);
+        }
+
+        tolltipJQ
+          .one('afterplace.gridtooltip', (e, placementObj) => {
+            this.handleAfterPlaceTooltip(e, placementObj);
+          })
+          .on('click.gridtooltip', () => {
+            this.hideTooltip();
+          });
+
+        // Hide the tooltip when the page scrolls.
+        $('body, .scrollable').off('scroll.gridtooltip').on('scroll.gridtooltip', () => {
+          this.hideTooltip();
+        });
+      }
+    }
+  },
+
+  /**
+   * Placement behavior's "afterplace" handler.
+   * @private
+   * @param {jquery.event} e custom `afterPlace` event
+   * @param {placementobject} placementObj object containing placement settings
+   * @returns {void}
+   */
+  handleAfterPlaceTooltip(e, placementObj) {
+    const tooltip = $('#tooltip');
+    if (tooltip[0]) {
+      tooltip.data('place').setArrowPosition(e, placementObj, tooltip);
+      tooltip.triggerHandler('tooltipafterplace', [placementObj]);
+    }
+  },
+
+  /**
+   * Hide the visible tooltip.
+   * @private
+   * @returns {void}
+   */
+  hideTooltip() {
+    if (this.tooltip) {
+      this.tooltip.classList.add('is-hidden');
+      this.tooltip.classList.remove('is-error', 'popover', 'alternate', 'content-tooltip');
+      this.tooltip.style.left = '-999px';
+    }
+
+    // Remove scroll events
+    $('body, .scrollable').off('scroll.gridtooltip', () => {
+      this.hideTooltip();
+    });
+  },
+
+  /**
+   * Remove the tooltip data from given node
+   * @private
+   * @param {object} elem The DOM element to remove data
+   * @returns {void}
+   */
+  removeTooltipData(elem) {
+    elem = elem instanceof jQuery ? elem : $(elem);
+    if (elem.data('gridtooltip')) {
+      $.removeData(elem[0], 'gridtooltip');
+    }
+  },
+
+  /**
+   * Remove the tooltip from the DOM
+   * @private
+   * @returns {void}
+   */
+  removeTooltip() {
+    if (this.tooltip) {
+      const tolltipJQ = $(this.tooltip);
+
+      // Set selector
+      const selector = {
+        th: '.datagrid-header th',
+        td: '.datagrid-body tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
+        rowstatus: '.datagrid-body tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
+      };
+      selector.str = `${selector.th}, ${selector.td}, ${selector.rowstatus}`;
+
+      // Unbind events
+      $('body, .scrollable').off('scroll.gridtooltip');
+      tolltipJQ.off('touchend.gridtooltip');
+      this.element.off('mouseenter.gridtooltip mouseleave.gridtooltip click.gridtooltip longpress.gridtooltip keydown.gridtooltip', selector.str);
+
+      // Remove the place component
+      const placeApi = tolltipJQ.data('place');
+      if (placeApi) {
+        placeApi.destroy();
+      }
+
+      // Remove cached tooltip data
+      const nodes = [].slice.call(this.element[0].querySelectorAll(selector.str));
+      nodes.forEach(node => this.removeTooltipData(node));
+
+      this.tooltip.parentNode.removeChild(this.tooltip);
+    }
+    this.tooltip = undefined;
+  },
+
+  /**
   * Unwrap the grid back to a simple div, and destory all events and pointers.
   * @returns {object} The plugin api for chaining.
   */
   destroy() {
+    // Remove grid tooltip
+    this.removeTooltip();
+
     // UnBind the pager
     if (this.tableBody.data() && this.tableBody.data('pager')) {
       this.tableBody.data('pager').destroy();
