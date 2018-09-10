@@ -3535,12 +3535,19 @@ Datagrid.prototype = {
       .off('keydown.gridtooltip', selector.str)
       .on('keydown.gridtooltip', selector.str, function (e) {
         const key = e.which || e.keyCode || e.charCode || 0;
+        let handle = false;
 
         if (e.shiftKey && key === 112) { // Shift + F1
           handleShow(this, 0);
         } else if (key === 27) { // Escape
+          handle = self.isGridtooltip();
           handleHide(0);
         }
+
+        if (handle) {
+          e.preventDefault();
+        }
+        return !handle;
       });
   },
 
@@ -8156,6 +8163,9 @@ Datagrid.prototype = {
           tolltipJQ.data('place').place(placeOptions);
         }
 
+        // Flag to mark as gridtooltip
+        tolltipJQ.data('gridtooltip', true);
+
         tolltipJQ
           .one('afterplace.gridtooltip', (e, placementObj) => {
             this.handleAfterPlaceTooltip(e, placementObj);
@@ -8194,6 +8204,7 @@ Datagrid.prototype = {
    */
   hideTooltip() {
     if (this.tooltip) {
+      this.removeTooltipData(this.tooltip); // Remove flag as gridtooltip
       this.tooltip.classList.add('is-hidden');
       this.tooltip.classList.remove('is-error', 'popover', 'alternate', 'content-tooltip');
       this.tooltip.style.left = '-999px';
@@ -8203,6 +8214,22 @@ Datagrid.prototype = {
     $('body, .scrollable').off('scroll.gridtooltip', () => {
       this.hideTooltip();
     });
+  },
+
+  /**
+   * Check for tooltip type gridtooltip or component
+   * @private
+   * @returns {boolean} True if is gridtooltip
+   */
+  isGridtooltip() {
+    let isGridtooltipType = false;
+    if (this.tooltip) {
+      const tooltipJQ = this.tooltip instanceof jQuery ? this.tooltip : $(this.tooltip);
+      if (tooltipJQ.data('gridtooltip')) {
+        isGridtooltipType = true;
+      }
+    }
+    return isGridtooltipType;
   },
 
   /**
