@@ -45,6 +45,7 @@
   thead {
     th {
       @include rem(font-size, 1.4rem);
+
       color: $datepicker-day-color;
       margin: 20px;
       text-transform: uppercase;
@@ -61,6 +62,7 @@
 
     .day-text {
       @include rem(font-size, 1.4rem);
+
       border-radius: 50%;
       color: $datepicker-day-color;
       cursor: pointer;
@@ -68,7 +70,7 @@
       height: 36px;
       line-height: 36px;
       margin: 1px;
-      transition: .2s background-color ease;
+      transition: 0.2s background-color ease;
       width: 36px;
     }
 
@@ -247,7 +249,7 @@
     &.is-today:focus {
       .day-text {
         color: $datepicker-today-color;
-        font-weight: bold;
+        font-weight: $font-weight-bold;
       }
 
       &.is-selected,
@@ -358,6 +360,7 @@
 
         .datepicker {
           @include font-size(16);
+
           border-color: transparent;
           box-shadow: none;
 
@@ -376,11 +379,9 @@
             color: $input-color;
             -webkit-text-fill-color: $input-color;
 
-            // scss-lint:disable NestingDepth
             + .icon {
               cursor: pointer;
             }
-            // scss-lint:disable NestingDepth
           }
         }
 
@@ -390,7 +391,8 @@
 
         .today {
           @include font-size(12);
-          font-weight: bold;
+
+          font-weight: $font-weight-bold;
           margin-left: 15px;
           text-decoration: none;
         }
@@ -429,7 +431,7 @@
 
         &.is-disabled {
           background-color: $calendar-disabled-bg-color;
-          opacity: .5;
+          opacity: 0.5;
 
           .day-text {
             background-color: transparent;
@@ -511,7 +513,7 @@
     min-width: 30px;
     position: absolute;
     top: 8px;
-    transition: border-color .3s ease;
+    transition: border-color 0.3s ease;
     width: 30px;
 
     .icon {
@@ -532,6 +534,7 @@
   .month,
   .year {
     @include font-size(18);
+
     color: $datepicker-month-year-color;
   }
 
@@ -540,12 +543,10 @@
     width: 120px;
   }
 
-  // scss-lint:disable IdSelector
   #year-dropdown + .dropdown-wrapper {
     left: 10px;
     width: 80px;
   }
-  // scss-lint:enable IdSelector
 }
 
 //monthview legend
@@ -560,6 +561,7 @@
 
   .monthview-legend-text {
     @include font-size(11);
+
     color: $chart-font-color;
     padding: 0 17px 0 8px;
     position: relative;
@@ -573,7 +575,7 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
 
   // Header Area of monthview
@@ -586,12 +588,10 @@ html[dir='rtl'] {
       padding-right: 15px;
     }
 
-    // scss-lint:disable IdSelector
     #year-dropdown + .dropdown-wrapper {
       left: 0;
       right: 5px;
     }
-    // scss-lint:enable IdSelector
 
     button {
       left: 0;
@@ -620,7 +620,6 @@ html[dir='rtl'] {
     }
   }
 
-  // scss-lint:disable NestingDepth
   .monthview {
     td {
       &.range-prev.include-disabled,
@@ -721,7 +720,6 @@ html[dir='rtl'] {
       }
     }
   }
-  // scss-lint:enable NestingDepth
 
   //Footer Buttons
   .monthview-footer {
@@ -741,7 +739,6 @@ html[dir='rtl'] {
   // Adjust the full header
   .is-fullsize {
     .monthview-header.full {
-
       .prev {
         left: initial;
         right: 40px;
@@ -772,7 +769,6 @@ html[dir='rtl'] {
 
 // IE Hack
 .ie11 {
-
   .monthview-header {
     line-height: normal;
     padding-left: 18px;

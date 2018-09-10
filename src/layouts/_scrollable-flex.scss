@@ -2,9 +2,7 @@
 //================================================== //
 
 .scrollable-flex {
-  // scss-lint:disable ImportantRule
   display: flex !important;
-  // scss-lint:disable ImportantRule
   flex-direction: column;
 
   > * {
@@ -58,10 +56,6 @@
       background-color: $header-breadcrumb-alt-bg-color;
       border-bottom: 1px solid $header-breadcrumb-border-color;
 
-      &:hidden {
-        border-bottom: 0;
-      }
-
       ol {
         padding: 15px 0;
       }
@@ -114,9 +108,7 @@
 
   // Support for list-detail-popup-search-no-split-header
   &.listview {
-    // scss-lint:disable ImportantRule
     height: 100% !important;
-    // scss-lint:enable ImportantRule
 
     + .pager-toolbar {
       height: 100%;

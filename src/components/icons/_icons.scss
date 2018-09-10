@@ -4,7 +4,7 @@
 // Svg Styles
 .icon {
   display: inline-block;
-  fill: $graphite04;
+  fill: $icon-fill;
   height: 18px; //Older ones at 32 but now based on 40
   position: relative;
   width: 22px;
@@ -33,7 +33,7 @@ svg.icon-dirty,
 }
 
 .icon-info-field {
-  fill: $primary-color;
+  fill: $color-primary;
 }
 
 .field {
@@ -65,16 +65,16 @@ svg.icon-dirty,
     top: auto;
   }
 
-  [data-error-type="tooltip"] ~ .icon-error,
-  [data-error-type="tooltip"] ~ .icon-confirm {
+  [data-error-type='tooltip'] ~ .icon-error,
+  [data-error-type='tooltip'] ~ .icon-confirm {
     position: relative;
     right: auto;
     top: -5px;
   }
 
   .dropdown-wrapper {
-    [data-error-type="tooltip"] ~ .icon-error,
-    [data-error-type="tooltip"] ~ .icon-confirm {
+    [data-error-type='tooltip'] ~ .icon-error,
+    [data-error-type='tooltip'] ~ .icon-confirm {
       position: absolute;
       right: 25px;
       top: 1px;
@@ -82,8 +82,8 @@ svg.icon-dirty,
   }
 
   &.editor-container {
-    [data-error-type="tooltip"] ~ .icon-error,
-    [data-error-type="tooltip"] ~ .icon-confirm {
+    [data-error-type='tooltip'] ~ .icon-error,
+    [data-error-type='tooltip'] ~ .icon-confirm {
       position: absolute;
       right: 10px;
       top: 55px;
@@ -91,8 +91,8 @@ svg.icon-dirty,
   }
 
   textarea {
-    &[data-error-type="tooltip"] ~ .icon-error,
-    &[data-error-type="tooltip"] ~ .icon-confirm {
+    &[data-error-type='tooltip'] ~ .icon-error,
+    &[data-error-type='tooltip'] ~ .icon-confirm {
       position: absolute;
       top: 20px;
     }
@@ -127,8 +127,6 @@ svg.icon-dirty,
   }
 }
 
-// scss-lint:disable ImportantRule
-
 .icon-dirtyerror,
 .icon-error {
   fill: $alert-red !important;
@@ -137,7 +135,6 @@ svg.icon-dirty,
 .icon-confirm {
   fill: $confirm-icon-fill !important;
 }
-
 
 .icon-empty-circle,
 .icon-half-empty-circle {
@@ -149,7 +146,7 @@ svg.icon-dirty,
 }
 
 .icon-pending {
-  background: $alert-yellow  !important;
+  background: $alert-yellow !important;
   border: 2px solid $alert-yellow;
   border-radius: 50%;
   fill: $white !important;
@@ -191,15 +188,16 @@ svg.icon-logo {
 
 .icon-dirty {
   @include css3(border-radius, 2px 0 0);
+
   border-color: $dirty-icon-fill transparent transparent $dirty-icon-fill;
   border-style: solid;
   border-width: 4px;
   height: 0;
-  z-index: 1;
   left: 2px;
   margin: 3px 0 0 1px;
   position: absolute;
   width: 0;
+  z-index: 1;
 
   &.is-checked {
     margin: 0;
@@ -207,7 +205,6 @@ svg.icon-logo {
   }
 
   &.dirty-checkbox {
-
     &.is-checked {
       border-width: 4px;
       left: 1px;
@@ -302,12 +299,13 @@ svg.icon-dirty {
   &::before,
   &::after {
     @include css3(transform-origin, 50% 50% 0);
-    @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94) 0s);
+    @include transition(transform 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94) 0s);
+
     background-color: $icon-color;
     border-radius: 2px;
     content: '';
     height: 2px;
-    left: .65em;
+    left: 0.65em;
     position: absolute;
     top: 1.4em;
     width: 14px;
@@ -335,9 +333,10 @@ svg.icon-dirty {
 .icon.app-header {
   span:not(.audible) {
     @include css3(transform-origin, 50% 50% 0);
-    @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94) 0s,
-      left 300ms cubic-bezier(.17, .04, .03, .94),
-      top 300ms cubic-bezier(.17, .04, .03, .94));
+    @include transition(transform 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94) 0s,
+    left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+    top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
     background-color: $icon-color;
     border-radius: 4px;
     height: 2px;
@@ -362,17 +361,18 @@ svg.icon-dirty {
 
   &.go-back {
     span.one {
-      @include css3(transform, rotate(-45deg) translateX(-5.75px) translateY(-2.5px) scaleX(.6));
+      @include css3(transform, rotate(-45deg) translateX(-5.75px) translateY(-2.5px) scaleX(0.6));
     }
 
     span.three {
-      @include css3(transform, rotate(45deg) translateX(-5.75px) translateY(2.5px) scaleX(.6));
+      @include css3(transform, rotate(45deg) translateX(-5.75px) translateY(2.5px) scaleX(0.6));
     }
   }
 
   &.close {
     span.one {
       @include css3(transform, rotate(45deg));
+
       top: 12.5px;
     }
 
@@ -382,12 +382,13 @@ svg.icon-dirty {
 
     span.three {
       @include css3(transform, rotate(-45deg));
+
       top: 12.5px;
     }
   }
 }
 
-[class^="btn"] {
+[class^='btn'] {
   .icon.app-header {
     height: 32px;
     width: 32px;
@@ -399,17 +400,18 @@ svg.icon-dirty {
 }
 
 @mixin app-drawer-box() {
-  display: inline-block;
   background-color: $icon-color;
   border-radius: 1px;
+  display: inline-block;
   height: 4px;
   width: 4px;
+
   @include css3(transform-origin, 50% 50% 0);
-  @include transition(transform 350ms cubic-bezier(.17, .04, .03, .94) 0s,
-    left 350ms cubic-bezier(.17, .04, .03, .94),
-    top 350ms cubic-bezier(.17, .04, .03, .94),
-    height 350ms cubic-bezier(.17, .04, .03, .94),
-    width 350ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(transform 350ms cubic-bezier(0.17, 0.04, 0.03, 0.94) 0s,
+  left 350ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+  top 350ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+  height 350ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+  width 350ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 }
 
 // This icon is presumably 18px x 18px - The dimensions defined reflect this
@@ -418,6 +420,7 @@ svg.icon-dirty {
 
   span:not(.audible) {
     @include app-drawer-box();
+
     padding: 0;
     position: absolute;
   }
@@ -468,7 +471,6 @@ svg.icon-dirty {
   }
 
   &.active {
-
     .one,
     .three,
     .four,
@@ -485,6 +487,7 @@ svg.icon-dirty {
     .two {
       @include css3(transform-origin, 50% 50% 0);
       @include css3(transform, rotate(45deg));
+
       height: 2px;
       left: 8px;
       top: 14px;
@@ -494,16 +497,14 @@ svg.icon-dirty {
     .eight {
       @include css3(transform-origin, 50% 50% 0);
       @include css3(transform, rotate(45deg));
+
       height: 18px;
       left: 16px;
       top: 6px;
       width: 2px;
     }
-
   }
-
 }
-
 
 // Check Mark Ticks
 .icon {
@@ -516,6 +517,7 @@ svg.icon-dirty {
 
     &::after {
       @include css3(transform, scaleX(-1) rotate(135deg));
+
       border-color: $icon-color $icon-color $icon-color transparent;
       border-style: solid;
       border-width: 2px 2px 0 0;
@@ -529,8 +531,8 @@ svg.icon-dirty {
   }
 
   &.checkmark-selected {
-    background-color: $primary-color;
-    border-color: $primary-color;
+    background-color: $color-primary;
+    border-color: $color-primary;
 
     &::after {
       border-color: $inverse-color $inverse-color $inverse-color transparent;
@@ -564,7 +566,7 @@ svg.icon-dirty {
   transform: scaleX(-1);
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .field {
     .icon + span {
@@ -611,11 +613,11 @@ html[dir='rtl'] {
   .icon.app-header {
     &.go-back {
       span.one {
-        @include css3(transform, rotate(45deg) translateX(5.75px) translateY(-2.5px) scaleX(.6));
+        @include css3(transform, rotate(45deg) translateX(5.75px) translateY(-2.5px) scaleX(0.6));
       }
 
       span.three {
-        @include css3(transform, rotate(-45deg) translateX(5.75px) translateY(2.5px) scaleX(.6));
+        @include css3(transform, rotate(-45deg) translateX(5.75px) translateY(2.5px) scaleX(0.6));
       }
     }
   }
@@ -629,6 +631,7 @@ html[dir='rtl'] {
 
   .icon-dirty:not(.dirty-checkbox) {
     @include css3(border-radius, 2px 0 0);
+
     border-color: $dirty-icon-fill $dirty-icon-fill transparent transparent;
     left: auto;
     margin: 1px 1px 0 0;
@@ -642,7 +645,7 @@ html[dir='rtl'] {
 
 .icon-empty-state {
   display: inline-block;
-  fill: $azure06; // Themable Empty Icons
+  fill: $color-primary; // Themable Empty Icons
   height: 65px;
   position: relative;
   width: 65px;
@@ -655,7 +658,7 @@ html[dir='rtl'] {
 // color defs
 
 .icon-empty-offset-color {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 .icon-empty-center-color {

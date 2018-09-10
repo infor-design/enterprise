@@ -46,11 +46,9 @@
   }
 }
 
-// scss-lint:disable ImportantRule
 .no-scroll {
   overflow: hidden !important;
 }
-// scss-lint:enable ImportantRule
 
 body.no-scroll {
   height: 100%;
@@ -85,7 +83,6 @@ body.no-scroll {
     }
   }
 
-  // scss-lint:disable ImportantRule
   > .main {
     border-right: 1px solid $panel-border-color;
     height: 100%;
@@ -96,7 +93,6 @@ body.no-scroll {
       margin-right: 0 !important;
     }
   }
-  // scss-lint:enable ImportantRule
 
   > .sidebar {
     background-color: $body-bg-color;
@@ -217,7 +213,6 @@ body.no-scroll {
 }
 
 .three-column {
-
   .main,
   .sidebar {
     background-color: $inverse-color;
@@ -239,10 +234,10 @@ body.no-scroll {
   }
 
   .main {
+    background-color: $panel-bg-color;
     border-left: 1px solid $graphite02;
     border-right: 1px solid $graphite02;
     width: calc(60% - 3px);
-    background-color: $panel-bg-color;
 
     &.scrollable,
     &.scrollable-y {
@@ -345,9 +340,7 @@ body.no-scroll {
       > .main,
       > .sidebar {
         display: block;
-        // scss-lint:disable ImportantRule
-        width: 100%; //Override Inline Css
-        // scss-lint:enable ImportantRule
+        width: 100%; // Override Inline Css
       }
     }
 
@@ -431,7 +424,8 @@ body.no-scroll {
 }
 
 .page-container {
-  @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(height 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
   bottom: 0;
   font-size: 0;
   height: 100%;
@@ -471,7 +465,8 @@ body.no-scroll {
 
   + .page-container,
   + .application-menu + .page-container {
-    @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
+    @include transition(height 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
     height: calc(100% - 60px);
     margin-top: 60px;
   }
@@ -483,17 +478,19 @@ body.no-scroll {
     .searchfield-wrapper {
       input {
         @include font-size(20);
+
         height: 60px;
         padding: 18px 40px;
 
         &::-webkit-input-placeholder {
           @include font-size(16);
-          font-weight: normal;
+
+          font-weight: 400;
         }
 
-        // scss-lint:disable VendorPrefix
         &::-moz-placeholder {
           @include font-size(16);
+
           line-height: 25px;
         }
 
@@ -603,7 +600,8 @@ body.no-scroll {
 
 //Stands on its own content header - assumes header above it
 .content-container-header {
-  @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(height 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
   height: calc(100% - 60px);
   margin: 30px;
 }
@@ -617,8 +615,9 @@ body.no-scroll {
 
   .title {
     @include font-size(16);
-    padding-top: 5px;
+
     padding-left: 13px;
+    padding-top: 5px;
   }
 
   + .splitter {
@@ -630,13 +629,12 @@ body.no-scroll {
 // Fix font issue on FF
 .is-firefox {
   .panel-header button {
-   padding-top: 2.5px;
+    padding-top: 2.5px;
   }
 }
 
 .masthead {
   + .header.is-sticky {
-
     + .site-content,
     + .site-hero,
     + .application-nav + .site-hero,
@@ -649,7 +647,7 @@ body.no-scroll {
       height: calc(100% - 95px);
     }
 
-    &.has-breadcrumb ,
+    &.has-breadcrumb,
     &.has-tabs {
       + .page-container,
       + .application-menu + .page-container {
@@ -701,9 +699,7 @@ body.no-scroll {
 // Editorial Pattern
 //==============================================================
 .no-transform {
-  // scss-lint:disable ImportantRule
   transform: none !important;
- // scss-lint:disable ImportantRule
 }
 
 .editorial {
@@ -777,8 +773,8 @@ body.no-scroll {
       &:focus,
       &.is-active {
         border-bottom: 0;
-        border-left: 3px solid $primary-color;
-        color: $primary-color;
+        border-left: 3px solid $color-primary;
+        color: $color-primary;
         outline: none;
       }
     }
@@ -897,6 +893,7 @@ body.no-scroll {
 
 .sticky-footer {
   @include font-size(12);
+
   background-color: $body-bg-color;
   bottom: 0;
   left: 50%;
@@ -928,11 +925,11 @@ body.no-scroll {
 }
 
 @include respond-to(phone) {
-
   .builder {
     .main,
     .sidebar {
-      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+      @include transform-transition-list(300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
       position: absolute;
     }
 
@@ -980,7 +977,7 @@ body.no-scroll {
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .two-column {
     .sidebar {

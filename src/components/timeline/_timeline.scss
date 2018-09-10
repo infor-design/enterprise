@@ -57,6 +57,7 @@
 
     > span {
       @include font-size(11);
+
       line-height: 1.5rem;
     }
 
@@ -85,7 +86,7 @@
       display: inline-block;
       height: 0;
       position: absolute;
-      top: .7em;
+      top: 0.7em;
       width: 100%;
     }
   }
@@ -142,7 +143,7 @@
   margin-top: 20px;
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .timeline {
     // vertical line

@@ -41,7 +41,7 @@
     -webkit-tap-highlight-color: $transparent;
 
     &.is-not-selected {
-      opacity: .3;
+      opacity: 0.3;
     }
   }
 
@@ -53,7 +53,6 @@
 
   // Adjust smaller bottom legend for the pie chart
   &.is-mobile {
-
     svg {
       margin-top: -5px;
     }
@@ -67,11 +66,9 @@
       margin-top: -20px;
 
       .chart-legend-item {
-        // scss-lint:disable ImportantRule
         display: inline-block !important;
         padding: 2px 7px;
         width: auto !important;
-        // scss-lint:enable ImportantRule
       }
 
       .chart-legend-color {
@@ -94,7 +91,7 @@
 
 // A bit different tooltip style
 .is-pie.tooltip {
-  font-weight: normal;
+  font-weight: $font-weight-normal;
 
   b {
     display: block;
