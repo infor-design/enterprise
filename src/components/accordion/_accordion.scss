@@ -1388,7 +1388,7 @@ html[dir='rtl'] {
 .is-safari {
   .accordion-header {
     &.has-chevron {
-      > [class^="btn"] {
+      > [class^='btn'] {
         height: 45px;
         left: 0;
         margin: 0;
