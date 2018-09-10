@@ -4,12 +4,14 @@
 .breadcrumb {
   li {
     @include antialiased();
+
     color: $breadcrumb-color;
     display: inline-block;
     list-style: none;
 
     &::after {
       @include font-size(10);
+
       content: '\002F';
       padding: 0 10px;
     }
@@ -22,8 +24,9 @@
     .current,
     &.current {
       @include font-size(12);
+
       color: $breadcrumb-color;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
     }
 
   }
@@ -31,6 +34,7 @@
   .hyperlink {
     @include font-size(12);
     @include antialiased();
+
     color: $breadcrumb-color;
     line-height: 2em;
     text-decoration: none;
@@ -59,7 +63,7 @@
     }
 
     &.current {
-      font-weight: bold;
+      font-weight: $font-weight-bold;
     }
 
     &[disabled] {
@@ -81,11 +85,10 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .breadcrumb {
     li {
-
       &::after {
         content: '\005C';
       }

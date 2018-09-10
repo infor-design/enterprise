@@ -2,10 +2,11 @@
 //================================================== //
 
 .modal.contextual-action-panel {
-  @include css3(transition, opacity .2s, transform .2s);
+  @include css3(transition, opacity 0.2s, transform 0.2s);
 
   &.is-animating {
     @include css3(transform, translate3d(0%, 50%, 0));
+
     opacity: 0;
   }
 
@@ -24,7 +25,6 @@
     padding: 0;
   }
 
-
   .flex-toolbar {
     margin: 0 16px;
   }
@@ -35,6 +35,7 @@
 
     .title {
       @include font-size(18);
+
       height: inherit;
       margin-left: 15px;
     }
@@ -82,7 +83,7 @@
   }
 
   .buttonset {
-    [class^="btn"]:last-child {
+    [class^='btn']:last-child {
       margin-right: 1px;
     }
   }

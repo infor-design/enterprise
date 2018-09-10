@@ -2,17 +2,17 @@
 //================================================== */
 
 // Font Variables
-$font-regular: Helvetica, Arial;
-$font-source-sans: 'Source Sans Pro', Helvetica, Arial;
+$font-regular: helvetica, arial;
+$font-source-sans: 'Source Sans Pro', helvetica, arial;
 
 // Special Fonts for Certain Languages
 $cultures-font-family: (
-  'ar-EG': ('Helvetica', 'Arial', 'Tahoma', 'DejaVu'),
-  'ar-SA': ('Helvetica', 'Arial', 'Tahoma', 'DejaVu'),
-  'ja-JP': ('Helvetica', 'Arial', 'MS PGothic'),
-  'ko-KR': ('Helvetica', 'Arial', 'Batang', 'Gulim'),
-  'zh-CN': ('Helvetica', 'Arial', 'Microsoft YaHei New', '微软雅黑', '宋体', 'SimSun', 'STXihei', '华文细黑'),
-  'zh-tw': ('Helvetica', 'Arial', 'MingLiU')
+  'ar-EG': ('helvetica', 'arial', 'Tahoma', 'DejaVu'),
+  'ar-SA': ('helvetica', 'arial', 'Tahoma', 'DejaVu'),
+  'ja-JP': ('helvetica', 'arial', 'MS PGothic'),
+  'ko-KR': ('helvetica', 'arial', 'Batang', 'Gulim'),
+  'zh-CN': ('helvetica', 'arial', 'Microsoft YaHei New', '微软雅黑', '宋体', 'SimSun', 'STXihei', '华文细黑'),
+  'zh-tw': ('helvetica', 'arial', 'MingLiU')
 );
 
 // Body Sizes and Color
@@ -51,13 +51,15 @@ span,
 ul,
 ol {
   @include antialiased();
-  font-weight: normal;
+
+  font-weight: $font-weight-normal;
   line-height: normal;
 }
 
 h1 {
   @include font-size(18);
   @include rem(line-height, 2.5rem);
+
   color: $font-color-default;
 
   + p {
@@ -68,6 +70,7 @@ h1 {
 h2 {
   @include font-size(16);
   @include rem(line-height, 2rem);
+
   color: $font-color-default;
 
   + p {
@@ -78,17 +81,20 @@ h2 {
 h3 {
   @include font-size(16);
   @include rem(line-height, 2rem);
+
   color: $font-color-default;
 }
 
 h4 {
   @include font-size(16);
   @include rem(line-height, 2rem);
+
   color: $font-color-default;
 }
 
 p {
   @include font-size(14);
+
   color: $font-color-default;
   line-height: 2rem;
 
@@ -121,15 +127,13 @@ p {
   color: $font-color-muted;
 }
 
-// scss-lint:disable ImportantRule
 .text-emphasis {
   font-style: italic !important;
 }
 
 .text-strong {
-  font-weight: bold !important;
+  font-weight: $font-weight-bold !important;
 }
-// scss-lint:enable ImportantRule
 
 .text-alert {
   color: $alert-red;
@@ -162,6 +166,7 @@ a.text-small {
 label,
 .label {
   @include font-size(12);
+
   color: $label-color;
   display: block;
   margin-bottom: 8px;
@@ -177,6 +182,7 @@ label.is-disabled,
 
 .data-description {
   @include font-size(14);
+
   color: $font-color-extrahighcontrast;
   margin-left: 6px;
 }
@@ -184,6 +190,7 @@ label.is-disabled,
 label.side,
 .label.side {
   @include font-size(14);
+
   color: $label-color;
   display: inline-block;
   height: 100%;
@@ -199,6 +206,7 @@ label.side,
   @include rem(line-height, 2.2rem);
   @include font-size(16);
   @include ellipsis();
+
   color: $cardlist-header-color;
   margin-top: 2px;
   max-width: calc(100% - 45px);
@@ -208,6 +216,7 @@ label.side,
   @include font-size(16);
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2rem);
+
   color: $font-color-highcontrast;
 }
 
@@ -216,6 +225,7 @@ small,
   @include font-size(12);
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 1.5rem);
+
   color: $font-color-default;
 }
 
@@ -223,8 +233,9 @@ small,
   @include font-size(11);
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2rem);
+
   color: $alert-red;
-  font-weight: bold;
+  font-weight: $font-weight-bold;
   padding-left: 15px;
 
   &::before {
@@ -241,32 +252,37 @@ small,
 
 .error-text {
   @include font-size(11);
+
   color: $alert01;
-  font-weight: bold;
+  font-weight: $font-weight-bold;
 }
 
 .warning-text {
   @include font-size(11);
+
   color: $alert02;
-  font-weight: bold;
+  font-weight: $font-weight-bold;
 }
 
 .good-text {
   @include font-size(11);
+
   color: $alert04;
-  font-weight: bold;
+  font-weight: $font-weight-bold;
 }
 
 .info-text {
   @include font-size(11);
+
   color: $azure07;
-  font-weight: bold;
+  font-weight: $font-weight-bold;
 }
 
 .small-thin-text {
   @include font-size(10);
+
   color: $font-color;
-  font-weight: bold;
+  font-weight: $font-weight-bold;
 
   + .small-thin-text {
     margin-top: 0;
@@ -275,12 +291,14 @@ small,
 
 .larger-heavy-text {
   @include font-size(14);
+
   color: $font-color-highcontrast;
-  font-weight: bold;
+  font-weight: $font-weight-bold;
 }
 
 .data-large {
   @include font-size(22);
+
   color: $font-color-highcontrast;
   padding-bottom: 2px;
 }
@@ -293,11 +311,9 @@ small,
   text-align: left;
 }
 
-// scss-lint:disable ImportantRule
 .align-text-right {
   text-align: right !important;
 }
-// scss-lint:disable ImportantRule
 
 .align-text-enter, //typo backwards compat
 .align-text-center {
@@ -339,8 +355,8 @@ small,
   .data-description {
     flex-basis: auto;
     line-height: 34px;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
     overflow: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
     white-space: nowrap;
   }
 
@@ -352,11 +368,13 @@ small,
 // Left aligned fields
 .field.label-left {
   @include font-size(14);
+
   display: flex;
   margin: 5px 0;
 
   .label {
     @include font-size(14);
+
     color: $input-color;
     line-height: normal;
     padding-right: 8px;
@@ -381,9 +399,8 @@ small,
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
-
   .alert-text {
     padding-left: inherit;
     padding-right: 15px;

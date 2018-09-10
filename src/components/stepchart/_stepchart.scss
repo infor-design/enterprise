@@ -8,6 +8,7 @@
 
   .step-chart-label {
     @include font-size(14);
+
     display: inline-block;
     line-height: 25px;
     width: 100%;
@@ -15,6 +16,7 @@
 
   .step-chart-label-small {
     @include font-size(11);
+
     float: right;
     line-height: 23px;
     vertical-align: middle;
@@ -56,7 +58,6 @@
 }
 
 html[dir='rtl'] {
-
   .step-chart {
     .step-chart-label-small {
       float: left;

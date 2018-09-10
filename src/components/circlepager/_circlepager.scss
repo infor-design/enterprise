@@ -10,13 +10,13 @@
     left: 0;
     overflow: hidden;
     position: relative;
-    transition: left .3s ease 0s;
+    transition: left 0.3s ease 0s;
 
     > .slide {
       float: left;
       opacity: 0; // Keep initially hidden until loaded
       position: relative;
-      transition: opacity .8s ease 0s;
+      transition: opacity 0.8s ease 0s;
 
       &.is-visible {
         opacity: 1; // Make it visible after loaded
@@ -27,7 +27,6 @@
   .controls {
     display: none;
   }
-
 
   &.is-active {
 

@@ -7,6 +7,7 @@
   + .icon,
   + .tooltip-description + .icon {
     @include css3(user-select, none);
+
     cursor: pointer;
     fill: $trigger-icon-fill-color;
     height: 18px;
@@ -26,9 +27,7 @@
 
   ~ .icon-error {
     margin-left: -51px;
-    // scss-lint:disable ImportantRule
     right: auto !important;
-    // scss-lint:enable ImportantRule
   }
 
   &.error {
@@ -75,7 +74,6 @@
   background-color: rgba($white, 0);
 }
 
-// scss-lint:disable IdSelector
 #timepicker-period + .dropdown-wrapper {
   .dropdown {
     width: 68px;
@@ -100,7 +98,8 @@
 
     .colons {
       @include rem(font-size, 1.4rem);
-      font-weight: bold;
+
+      font-weight: $font-weight-bold;
       min-width: 15px;
 
       &:empty {
@@ -137,9 +136,7 @@
   .modal-buttonset {
     margin: 0;
   }
-
 }
-// scss-lint:enable IdSelector
 
 // Short Fields
 .field-short {
@@ -160,7 +157,7 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .timepicker {
     + .icon,
@@ -202,9 +199,7 @@ html[dir='rtl'] {
 
       ~ .icon-error {
         margin-left: inherit;
-        // scss-lint:disable ImportantRule
         margin-right: -38px !important;
-        // scss-lint:enable ImportantRule
       }
     }
   }

@@ -14,34 +14,34 @@ $subhead-bg-color: $azure08;
 $transparent: transparent;
 
 $header-border-color: $azure08;
-$header-button-color: rgba($white, .7);
+$header-button-color: rgba($white, 0.7);
 $header-button-focus-color: rgba($white, 1);
 $header-button-hover-color: rgba($white, 1);
-$header-button-disabled-color: rgba($white, .3);
+$header-button-disabled-color: rgba($white, 0.3);
 $header-primary-btn-background-color: $azure05;
 $header-primary-btn-background-hover-color: $azure06;
 $header-text-color: $white;
 $header-disabled-color: $slate05;
-$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, .3);
+$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
 
 $panel-bg-color: $white;
 $panel-border-color: $graphite03;
 $panel-header-bg-color: $graphite02;
-$drop-shadow-depth: rgba(0, 0, 0, .2);
+$drop-shadow-depth: rgba(0, 0, 0, 0.2);
 
-$focus-box-shadow-color: rgba(54, 138, 192, .3);
+$focus-box-shadow-color: rgba(54, 138, 192, 0.3);
 $focus-box-shadow-transparent: 0 0 4px 3px transparent; //Should be same size as $focus-box-shadow (only color transparent)
 $focus-box-shadow: 0 0 4px 3px $focus-box-shadow-color;  //Old Style:  0 0 5px rgba(8, 150, 233, .2)
 $focus-box-shadow-spinbox: 0 -3px 3px 0 $focus-box-shadow-color,
-                           0 3px 3px 0 $focus-box-shadow-color;
+  0 3px 3px 0 $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox-down: 0 -3px 3px 0 $focus-box-shadow-color,
-                                0 3px 3px 0 $focus-box-shadow-color,
-                                -3px 0 3px 0 $focus-box-shadow-color;
+  0 3px 3px 0 $focus-box-shadow-color,
+  -3px 0 3px 0 $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox-up: 0 -3px 3px 0 $focus-box-shadow-color,
-                                0 3px 3px 0 $focus-box-shadow-color,
-                                3px 0 3px 0 $focus-box-shadow-color;
+  0 3px 3px 0 $focus-box-shadow-color,
+  3px 0 3px 0 $focus-box-shadow-color;
 
 // Base Colors
 $primary-color: $color-primary;
@@ -97,7 +97,6 @@ $circlepager-disable-hover-bg-color: transparent;
 $circlepager-disable-hover-border-color: $graphite03;
 $circlepager-disable-focus-bg-color: transparent;
 $circlepager-disable-focus-border-color: $graphite03;
-
 
 // Popovers
 $popover-bg-color: $notification-bg-color;
@@ -183,17 +182,17 @@ $input-readonly-color: $input-readonly-text-color;
 
 //States
 $error-color: $color-danger;
-$error-color-transparent: rgba($color-danger, .3);
+$error-color-transparent: rgba($color-danger, 0.3);
 $error-focus-box-shadow:  0 0 4px 2px $error-color-transparent;
 $alert-color: $color-warning;
 $confirm-color: $color-success;
 $info-color: $color-primary;
-$error-bg-color: rgba($color-danger, .1);
+$error-bg-color: rgba($color-danger, 0.1);
 $error-icon-fill: $color-danger;
 $dirty-icon-fill: $color-caution;
 $confirm-icon-fill: $color-success;
 $info-icon-fill: $alert-info;
-$selected-bg-color: rgba($azure01, .7);
+$selected-bg-color: rgba($azure01, 0.7);
 
 // Autocomplete / Triggers
 $autocomplete-light-text: $graphite05;
@@ -264,9 +263,9 @@ $formatter-toolbar-separator-color: $graphite04;
 //Contextual Toolbar
 $contextual-toolbar-bg-color: $color-primary;
 $contextual-toolbar-color: $button-primary-text-color;
-$contextual-toolbar-button-color: rgba($button-primary-text-color, .8);
+$contextual-toolbar-button-color: rgba($button-primary-text-color, 0.8);
 $contextual-toolbar-button-hover-color: rgba($button-primary-text-color, 1);
-$contextual-toolbar-button-disabled-color: rgba($button-primary-text-color, .3);
+$contextual-toolbar-button-disabled-color: rgba($button-primary-text-color, 0.3);
 $contextual-panel-seperator-bg-color: $graphite04;
 
 // Swaplist
@@ -327,14 +326,14 @@ $fileupload-error-hover-color: darken($color-danger, 15%);
 $fileupload-error-border-color: $color-warning;
 $fileupload-border-color: $graphite05;
 $fileupload-droparea-color: $graphite05;
-$fileupload-droparea-bg-color: rgba($graphite02, .5);
+$fileupload-droparea-bg-color: rgba($graphite02, 0.5);
 $fileupload-droparea-hover-color: $graphite10;
 $fileupload-droparea-hover-bg-color: $graphite02;
 $fileupload-droparea-hover-border-color: $graphite06;
 $fileupload-droparea-hover-icon-color: $graphite05;
 $fileupload-droparea-dd-hover-color: $graphite05;
 $fileupload-droparea-dd-hover-border-color: $color-primary;
-$fileupload-droparea-dd-hover-bg-color: rgba(200, 233, 244, .30);
+$fileupload-droparea-dd-hover-bg-color: rgba(200, 233, 244, 0.3);
 $fileupload-status-color: $white;
 $fileupload-status-hover-color: $white;
 $fileupload-cancel-bg-color: $graphite06;
@@ -343,7 +342,6 @@ $fileupload-disabled-icon-color: $graphite04;
 $fileupload-disabled-border-color: $graphite03;
 $fileupload-disabled-bg-color: $graphite01;
 $fileupload-disabled-color: $graphite03;
-
 
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
@@ -382,7 +380,7 @@ $checkbox-disabled-select-bg-color: $checkbox-disabled-checked-bg-color;
 
 // Switch
 $focus-color: #cbdce6;
-$focus-shadow: rgba(0, 0, 0, .3);
+$focus-shadow: rgba(0, 0, 0, 0.3);
 
 $switch-checked-color: $color-primary;
 $switch-checked-hover-color: $azure07;
@@ -412,7 +410,7 @@ $editor-btn-color: $graphite06;
 $editor-btn-hover-color: $graphite10;
 $editor-btn-active-color: $color-primary;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $color-primary, $focus-box-shadow;
-$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(54, 138, 192, .3);
+$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(54, 138, 192, 0.3);
 $editor-blockquote-color: $graphite06;
 
 // Radio Buttons
@@ -442,7 +440,7 @@ $slider-readonly-active-bg-color: $graphite06;
 $slider-readonly-labels-color: $graphite06;
 $slider-readonly-handle-color: $graphite05;
 $slider-readonly-range-color: $graphite04;
-$slider-hover-shadow: 0 2px 5px 0 rgba($black, .2);
+$slider-hover-shadow: 0 2px 5px 0 rgba($black, 0.2);
 
 //Modal
 $modal-bg-color: $white;
@@ -455,7 +453,7 @@ $modal-btn-primary-color: $color-primary;
 $modal-btn-primary-hover-color: $azure08;
 $modal-btn-primary-disabled-color: $azure07;
 $modal-btn-disabled-color: $graphite06;
-$modal-btn-disabled-opacity: .5;
+$modal-btn-disabled-opacity: 0.5;
 $modal-color: $graphite06;
 $modal-primary-color: $graphite10;
 $modal-secondary-color: $graphite06;
@@ -568,7 +566,7 @@ $chart-arc-stroke: $white;
 
 // DataGrid
 $datagrid-border-color: $graphite02;
-$datagrid-header-color: #ffffff;
+$datagrid-header-color: #fff;
 $datagrid-header-bg-color: $slate06;
 $datagrid-nested-header-bg-color: $slate05;
 $datagrid-nested-header-border-color: $graphite03;
@@ -585,7 +583,7 @@ $datagrid-cell-bg-color: $white;
 $datagrid-cell-readonly-bg-color: $graphite01;
 $datagrid-cell-readonly-color: $graphite10;
 $datagrid-cell-border-color: $graphite03;
-$datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(54, 138, 192, .4);
+$datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #d8f0f7;
 $datagrid-row-selected-color-dark: #d4ebf3;
@@ -596,7 +594,7 @@ $datagrid-alternate-bg-color: $graphite01;
 $datagrid-alternate-row-hover-color: $graphite02;
 $datagrid-list-header-bg-color: $graphite02;
 $datagrid-list-header-focus-border-color: $color-primary;
-$datagrid-list-header-box-shadow: 0 0 4px 1px rgba(54, 138, 192, .4);
+$datagrid-list-header-box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.4);
 $datagrid-list-header-border-color: $graphite03;
 $datagrid-list-header-color: $graphite06;
 $datagrid-list-header-hover-color: $graphite02;
@@ -680,9 +678,9 @@ $wizard-active-color: $color-primary;
 $wizard-active-text-color: $color-primary;
 $wizard-focus-box-shadow: 0 0 0 1px $color-primary;
 $wizard-header-color: $white;
-$wizard-header-secondary-color: rgba($white, .4);
-$wizard-header-disabled-color: rgba($white, .3);
-$wizard-header-text-color: rgba($white, .5);
+$wizard-header-secondary-color: rgba($white, 0.4);
+$wizard-header-disabled-color: rgba($white, 0.3);
+$wizard-header-text-color: rgba($white, 0.5);
 $wizard-header-focus-box-shadow: 0 0 0 1px $white;
 
 //Hierarch
@@ -745,8 +743,8 @@ $about-text-hover-border-color: $graphite07;
 
 // Header Tabs
 $header-tabcontainer-border-color: $graphite03;
-$header-tab-separator: rgba(255, 255, 255, .4);
-$header-tab-normal-color: rgba(255, 255, 255, .7);
+$header-tab-separator: rgba(255, 255, 255, 0.4);
+$header-tab-normal-color: rgba(255, 255, 255, 0.7);
 $header-tab-hover-color: $button-primary-text-color;
 $header-tab-selected-color: $graphite01;
 $header-tab-alt-bg-color: $white;
@@ -768,7 +766,7 @@ $module-tabs-y-border-color: $azure09;
 $module-tabs-inactive-bg-color: $azure08;
 $module-tabs-active-bg-color: $azure07;
 $module-tabs-hover-bg-color: $azure10;
-$module-tabs-inactive-text-color: rgba($white, .85);
+$module-tabs-inactive-text-color: rgba($white, 0.85);
 $module-tabs-active-text-color: $white;
 $module-tabs-hover-text-color: $white;
 $module-tabs-disabled-bg-color: $azure06;
@@ -787,7 +785,7 @@ $composite-tabs-panel-bg-color: $white;
 $splitter-grip-bg-color: $graphite06;
 $splitter-active-bg-color: $graphite02;
 $splitter-active-grip-bg-color: $graphite10;
-$splitter-box-shadow-color: rgba(54, 138, 192, .75);
+$splitter-box-shadow-color: rgba(54, 138, 192, 0.75);
 
 // Step Chart
 $step-chart-bg-color: $graphite02;
@@ -804,7 +802,7 @@ $blockgrid-focus-border-color: $color-primary;
 
 // Tree Map
 $treemap-title-bg-color: $slate06;
-$treemap-title-color: #ffffff;
+$treemap-title-color: #fff;
 
 // Textarea
 $textarea-size: 362px;
@@ -838,4 +836,4 @@ $field-lg: $input-width-lg;
 $field-full: 100%;
 
 //Misc
-$cubic-ease: cubic-bezier(.17, .04, .03, .94);
+$cubic-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);

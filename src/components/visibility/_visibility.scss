@@ -1,7 +1,6 @@
 // Visibility Classes - To hide and show at various media
 //================================================== //
 
-// scss-lint:disable ImportantRule
 .show {
   display: block !important;
 }
@@ -10,7 +9,6 @@
   display: none !important;
   visibility: hidden !important;
 }
-// scss-lint:enable ImportantRule
 
 .collapsed {
   visibility: collapse;
@@ -59,12 +57,11 @@
 }
 
 // Visibility classes for different form factors
-// scss-lint:disable ImportantRule
-[class*="visible-sm-"],
-[class*="visible-md-"],
-[class*="visible-lg-"],
-[class*="visible-xl-"],
-[class*="visible-print-"] {
+[class*='visible-sm-'],
+[class*='visible-md-'],
+[class*='visible-lg-'],
+[class*='visible-xl-'],
+[class*='visible-print-'] {
   display: none !important;
 }
 
@@ -163,4 +160,3 @@
     display: none !important;
   }
 }
-// scss-lint:enable ImportantRule
