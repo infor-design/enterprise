@@ -1,17 +1,28 @@
 # Testing
 
-## Test naming conventions
+The IDS components are backed by both functional and end-to-end (e2e) test suites.  When contributing to the IDS enterprise project, before we can accept pull requests we expect that new tests will be provided to prove that new functionality works, and that all existing tests pass.
 
-- Use plain and proper English
-- Describe what the test is testing
-- Component or example page name is on the 'describe' line, do not write it again on the 'it' line
+## Test Stack
 
-### Describe() Examples
+- [Karma](https://karma-runner.github.io/2.0/index.html) test runner for all tests.
+- [Protractor](https://www.protractortest.org/) for controlling e2e tests.
+- [TravisCI](https://travis-ci.com/infor-design/enterprise) for continuous integration (CI).
+- [BrowserStack](https://www.browserstack.com/) for running e2e tests on our various supported environments.
 
-- `Accordion accordion panel tests`
+## Writing Tests
+
+### Naming Conventions for Tests
+
+- Use plain and proper English.
+- Describe what the test is testing.
+- Component and/or example page name should be part of the `describe()` statement.  Do not write it again as part of the `it()` statement.
+
+#### Describe() Examples
+
+- `Accordion panel tests`
 - `Tabs counts tests`
 
-### It() Examples
+#### It() Examples
 
 - `Should do [x] when [y] happens`
 - `Should be possible to [x]`
@@ -24,13 +35,21 @@
 
 ## Running Functional Tests
 
-`npm run functional:ci` to run all tests, and exit immediately
+Functional tests can be run in multiple modes.
 
-To develop in watch mode, please run
+For development purposes, the functional tests can be run in the background continuously, and will watch for file changes.  When files are changed in the project, the tests will rerun and show updated results.  To run the tests this way, use:
 
-`npm run functional:local`
+```sh
+npm run functional:local
+```
 
-## Running Tests Silently for Continuous Integration (CI)
+To do a single test run and exit immediately (which is also what TravisCI does during builds), use:
+
+```sh
+npm run functional:ci
+```
+
+## Running e2e tests silently for continuous integration (CI)
 
 ```sh
 npm run build
@@ -42,12 +61,6 @@ npm run e2e:ci
 ```
 
 See [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml) for current implementation
-
-## Running BrowserStack Tests on Travis Continuous Integration (CI) Server
-
-This will run in the evening (EST) and it tests <http://master-enterprise.demo.design.infor.com> by default
-
-`npm run e2e:ci:bs`
 
 ## Running E2E Tests
 
@@ -78,13 +91,21 @@ export BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
 
 You can get this key from the settings page on your browserstack account.
 
-Make sure the server is started and run
+Make sure the server is started and run:
 
 ```sh
-ne2e:ci:bs
+npm run e2e:ci:bs
  ```
 
-NOTE: After running the tests go into [browserstack automate](https://automate.browserstack.com/) and delete the build for the stats to be accurate.
+**NOTE:** After running the tests go into [BrowserStack Automate](https://automate.browserstack.com/) and delete the build for the stats to be accurate.
+
+### Run e2e tests on BrowserStack
+
+IDS Enterprise is configured for nightly builds of the `master` branch.  This build runs in the evening (EST) and it tests <http://master-enterprise.demo.design.infor.com> by default.  TravisCI runs these with:
+
+```
+npm run e2e:ci:bs
+```
 
 ### Run a specific E2E component on BrowserStack
 
@@ -168,7 +189,7 @@ Travis commands can be found in the [.travis.yml](https://github.com/infor-desig
 
 ### Creating Baseline Screenshots
 
-In order to create Baseline screenshots, it's necessary to emulate the actual TravisCI environment in which the visual regression testing will take place.  Doing the testing in an environment that's different than the one the images were generated in will create extreme differences in the rendered IDS components, possibly causing false test failures.
+In order to create Baseline screenshots, it's necessary to emulate the actual TravisCI environment in which the visual regression testing will take place.  Running the tests in an environment that's different than the one the images were generated against will create extreme differences in the rendered IDS components, possibly causing false test failures.
 
 Following the process below will safely create baseline images the CI can use during visual regression tests.
 
