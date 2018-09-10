@@ -162,7 +162,7 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.id('dropdown-search')).getAttribute('value')).toEqual('New Jersey');
     });
 
-    xit('Should close an open list and tab to the next element without re-opening', async () => { //eslint-disable-line
+    it('Should close an open list and tab to the next element without re-opening', async () => { //eslint-disable-line
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -182,7 +182,7 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.css('.dropdown-search')).isPresent()).toBeFalsy();
     });
 
-    xit('Should not allow the escape key to re-open a closed menu', async () => { //eslint-disable-line
+    it('Should not allow the escape key to re-open a closed menu', async () => { //eslint-disable-line
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
