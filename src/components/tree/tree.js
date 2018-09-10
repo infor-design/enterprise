@@ -2164,9 +2164,9 @@ Tree.prototype = {
 
     nodes.forEach((node) => {
       if ((node.classList.contains('is-disabled')) || (node.getAttribute('aria-disabled') === true)) {
-        enablementStates.push({nodeId: node.id, state: 'disabled'});
+        enablementStates.push({ nodeId: node.id, state: 'disabled' });
       } else {
-        enablementStates.push({nodeId: node.id, state: 'enabled'});
+        enablementStates.push({ nodeId: node.id, state: 'enabled' });
       }
     });
 
