@@ -32,6 +32,7 @@ input::-webkit-inner-spin-button {
 
   > .spinbox-wrapper {
     @include font-size(0);
+
     position: relative;
     vertical-align: top;
   }
@@ -40,6 +41,7 @@ input::-webkit-inner-spin-button {
 .spinbox-control {
   @include css3(user-select, none);
   @include font-size(14);
+
   backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
   background-color: $spinbox-button-color;
   border: 1px solid $input-border-color;
@@ -47,7 +49,7 @@ input::-webkit-inner-spin-button {
   color: $font-color;
   cursor: pointer;
   display: inline-block;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   height: 34px;
   line-height: normal;
   overflow: hidden;
@@ -194,7 +196,7 @@ input::-webkit-inner-spin-button {
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .spinbox-control {
     &.up {

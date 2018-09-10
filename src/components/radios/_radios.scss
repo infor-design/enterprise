@@ -16,6 +16,7 @@
 .inline .radio ~ .label-text,
 .radio + label {
   @include font-size(14);
+
   color: $checkbox-label-color;
   cursor: pointer;
   line-height: 24px;
@@ -46,6 +47,7 @@
 .inline .radio:hover ~ .label-text::before,
 .radio:hover + label::before {
   @include css3(transition, border-color 300ms ease);
+
   border-color: $radio-hover-border-color;
 }
 
@@ -71,7 +73,7 @@
   left: 5px;
   position: absolute;
   top: 8px;
-  transition: all .2s ease 0s;
+  transition: all 0.2s ease 0s;
   width: 4px;
 }
 
@@ -89,12 +91,14 @@
 .inline .radio:not(:checked) ~ .label-text::after,
 .radio:not(:checked) + label::after {
   @include opacity(0);
+
   transform: scale(0);
 }
 
 .inline .radio:checked ~ .label-text::after,
 .radio:checked + label::after {
   @include opacity(1);
+
   transform: scale(1);
 }
 
@@ -161,6 +165,7 @@
 
   legend {
     @include font-size(12);
+
     color: $label-color;
     padding-bottom: 5px;
   }
@@ -222,6 +227,7 @@
 
       .in-label {
         @include font-size(14);
+
         line-height: 25px;
         margin-top: -10px;
       }
@@ -288,9 +294,8 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
-
   .radio {
     margin-left: inherit;
     margin-right: 7px;
@@ -308,11 +313,10 @@ html[dir='rtl'] {
     margin-right: -33px;
   }
 
-
   .inline .radio ~ .label-text::after,
   .radio + label::after {
     left: auto;
-    right: .53em;
+    right: 0.53em;
   }
 
   // Radio Section
@@ -360,7 +364,6 @@ html[dir='rtl'] {
 
 // Short Fields
 .field-short {
-
   .inline .radio ~ .label-text,
   .radio + label {
     margin-bottom: 0;
@@ -390,10 +393,10 @@ html[dir='rtl'] {
 // disabled radio
 .inline .radio.error:disabled ~ .label-text,
 .radio.error:disabled + label {
-  color: rgba($error-color, .4);
+  color: rgba($error-color, 0.4);
 
   &::before {
-    border-color: rgba($error-color, .4);
+    border-color: rgba($error-color, 0.4);
   }
 }
 

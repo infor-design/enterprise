@@ -28,12 +28,13 @@ $toolbar-buttonset-height: 40px;
     vertical-align: middle;
   }
 
-  [class^="btn"] {
+  [class^='btn'] {
     margin: 0;
   }
 
   .buttonset {
     @include no-select();
+
     height: $toolbar-buttonset-height;
     overflow: hidden;
     padding-left: 1px;  //for the focus state
@@ -52,7 +53,7 @@ $toolbar-buttonset-height: 40px;
       }
     }
 
-    > [class^="btn"] {
+    > [class^='btn'] {
       min-width: 34px;
     }
 
@@ -78,6 +79,7 @@ $toolbar-buttonset-height: 40px;
 
   .title {
     @include enable-select();
+
     height: $toolbar-buttonset-height;
     overflow: hidden;
     position: relative;
@@ -101,6 +103,7 @@ $toolbar-buttonset-height: 40px;
   // Container for More Button
   .more {
     @include no-select();
+
     display: none;
     text-align: right;
 
@@ -155,9 +158,7 @@ $toolbar-buttonset-height: 40px;
     }
 
     .more {
-      // scss-lint:disable ImportantRule
       display: inline-block !important;
-      // scss-lint:enable ImportantRule
     }
   }
 
@@ -165,9 +166,7 @@ $toolbar-buttonset-height: 40px;
   &.no-actions-button {
     &.has-more-button {
       .more {
-        // scss-lint:disable ImportantRule
         display: none !important;
-        // scss-lint:enable ImportantRule
       }
 
       .buttonset {
@@ -188,7 +187,7 @@ $toolbar-buttonset-height: 40px;
     border-bottom: 1px solid $toolbar-standalone-border-color;
     padding: 0 1rem;
 
-    [class^="btn"] {
+    [class^='btn'] {
       &[disabled],
       &[disabled]:hover {
         color: $toolbar-standalone-disabled-color;
@@ -205,6 +204,7 @@ $toolbar-buttonset-height: 40px;
   .title {
     @include antialiased();
     @include font-size(16);
+
     color: $font-color-extrahighcontrast;
 
     + .buttonset {
@@ -250,9 +250,7 @@ $toolbar-buttonset-height: 40px;
 .contextual-toolbar {
   background-color: $contextual-toolbar-bg-color;
   margin: 0;
-  // scss-lint:disable ImportantRule
   overflow: hidden !important;
-  // scss-lint:enable ImportantRule
   z-index: 20;
 
   // Updated changes from listview button and font sizes
@@ -264,6 +262,7 @@ $toolbar-buttonset-height: 40px;
 
     .title {
       @include font-size(14);
+
       color: $contextual-toolbar-color;
       height: 42px;
     }
@@ -274,7 +273,7 @@ $toolbar-buttonset-height: 40px;
 
     // EPC: NOTE: Do NOT add different margins and heights to buttons inside of contextual toolbars.
     // Toolbar Overflow Calculation needs buttons to be "shorter" than the buttonset.
-    [class^="btn"] {
+    [class^='btn'] {
       color: $contextual-toolbar-button-color;
       min-width: 0;
       padding: 0 10px;
@@ -349,7 +348,7 @@ $toolbar-buttonset-height: 40px;
     // Show text with icon buttons by using this class.
     // Text will still become invisible on small breakpoint (but still visible to screen readers).
     // See respond-to(tabletdown) below.
-    [class^="btn"] {
+    [class^='btn'] {
       width: auto;
 
       > .icon + span {
@@ -375,9 +374,8 @@ $toolbar-buttonset-height: 40px;
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
-
   .toolbar,
   .formatter-toolbar {
     text-align: right;

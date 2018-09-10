@@ -7,6 +7,7 @@
 
   &::before {
     @include css3(transform, rotate(-45deg));
+
     border-top: 2px solid $alert-red;
     content: '';
     left: $offset;
@@ -71,13 +72,11 @@
       border-color: $input-disabled-border-color;
     }
 
-    // scss-lint:disable ImportantRule
     .icon:not(.icon-error),
     .icon:hover {
       cursor: default;
       fill: $trigger-disabled-color !important;
     }
-    // scss-lint:enable ImportantRule
   }
 
   &.color-only {
@@ -119,7 +118,6 @@
 
     }
 
-    // scss-lint:disable ImportantRule
     &.is-focused {
       border-color: $input-focus-border-color !important;
     }
@@ -129,7 +127,6 @@
       cursor: default;
       fill: $trigger-disabled-color;
     }
-    // scss-lint:enable ImportantRule
   }
 
   &.is-open {
@@ -209,15 +206,13 @@
 
     &:disabled + .swatch {
       cursor: default;
-      opacity: .6;
+      opacity: 0.6;
     }
   }
 
-  // scss-lint:disable ImportantRule
   input.colorpicker {
     box-shadow: none !important;
   }
-  // scss-lint:enable ImportantRule
 
   .icon-dirty {
     margin: 2px 0 0 3px;
@@ -227,7 +222,6 @@
 .popupmenu.colorpicker {
   background-color: $colorpicker-popup-bg-color;
   border-color: $colorpicker-popup-border-color;
-
   margin-left: -33px;
   max-width: 340px;
   min-height: 50px;
@@ -251,7 +245,6 @@
       }
 
       &.is-selected {
-
         &::after {
           @include css3(transform, scaleX(-1) rotate(135deg));
           // border-color: $white $white $white transparent;
@@ -350,9 +343,8 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
-
   .colorpicker-container {
     .swatch {
       left: 0;
