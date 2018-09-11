@@ -73,7 +73,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
           top: 55px;
 
           button {
-            background: $primary-color;
+            background: $color-primary;
             color: $white;
             display: block;
             margin: 0 auto;
@@ -254,7 +254,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     }
 
     .image-placeholder {
-      border: 2px solid $graphite04;
+      border: 2px solid $color-default-alt;
     }
 
     .detail {

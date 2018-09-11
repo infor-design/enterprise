@@ -52,7 +52,7 @@
 
   &.graphite03,
   &.graphite02 {
-    color: $badge-neutral-color;
+    color: $pill-neutral-bg-color;
   }
 
   &.round {
@@ -72,7 +72,7 @@
     }
 
     &:focus:not(.hide-focus) {
-      border-color: $primary-color;
+      border-color: $color-primary;
       box-shadow: $focus-box-shadow;
       outline: none;
       -moz-outline-style: none;
@@ -89,7 +89,7 @@
     padding: 0 10px;
 
     &:focus:not(.hide-focus) {
-      border-color: $primary-color;
+      border-color: $color-primary;
       box-shadow: $focus-box-shadow;
       outline: none;
       -moz-outline-style: none;

@@ -72,7 +72,7 @@ $subheader-height: 60px;
     }
 
     &:focus:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $azure07, 0 0 0 3px $white, $header-focus-box-shadow;
+      box-shadow: 0 0 0 2px $color-primary-alt, 0 0 0 3px $white, $header-focus-box-shadow;
 
       &:active {
         box-shadow: none;

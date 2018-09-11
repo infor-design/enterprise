@@ -773,8 +773,8 @@ body.no-scroll {
       &:focus,
       &.is-active {
         border-bottom: 0;
-        border-left: 3px solid $primary-color;
-        color: $primary-color;
+        border-left: 3px solid $color-primary;
+        color: $color-primary;
         outline: none;
       }
     }
