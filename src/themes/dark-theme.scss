@@ -17,33 +17,33 @@ $body-bg-color:  $slate08;
 $header-bg-color: $slate09;
 $subhead-bg-color: $slate06;
 $header-border-color: $slate10;
-$header-button-color: rgba($white, .7);
+$header-button-color: rgba($white, 0.7);
 $header-button-focus-color: rgba($white, 1);
 $header-button-hover-color: rgba($white, 1);
-$header-button-disabled-color: rgba($white, .3);
+$header-button-disabled-color: rgba($white, 0.3);
 $header-disabled-color: $slate05;
-$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, .3);
+$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
 
 $panel-bg-color: $slate07;
 $panel-border-color: $slate05;
-$drop-shadow-depth: rgba(0, 0, 0, .4);
-$focus-box-shadow-color: rgba(141, 201, 230, .3);
+$drop-shadow-depth: rgba(0, 0, 0, 0.4);
+$focus-box-shadow-color: rgba(141, 201, 230, 0.3);
 $focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox: 0 -3px 3px 0 $focus-box-shadow-color,
-                           0 3px 3px 0 $focus-box-shadow-color;
+  0 3px 3px 0 $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox-down: 0 -3px 3px 0 $focus-box-shadow-color,
-                                0 3px 3px 0 $focus-box-shadow-color,
-                                -3px 0 3px 0 $focus-box-shadow-color;
+  0 3px 3px 0 $focus-box-shadow-color,
+  -3px 0 3px 0 $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox-up: 0 -3px 3px 0 $focus-box-shadow-color,
-                                0 3px 3px 0 $focus-box-shadow-color,
-                                3px 0 3px 0 $focus-box-shadow-color;
+  0 3px 3px 0 $focus-box-shadow-color,
+  3px 0 3px 0 $focus-box-shadow-color;
 
 // Base Colors
-$primary-color: $color-primary;
-$inverse-color: #ffffff;
+$color-primary: $color-primary;
+$inverse-color: #fff;
 
 //The hyperlink Style
 $hyperlink-color: $azure04;
@@ -61,16 +61,16 @@ $signin-title-color: $slate01;
 // New Text Colors
 $font-color-default: $white;
 $font-color-descriptive: $slate03;
-$font-color-hyperlink: $primary-color;
+$font-color-hyperlink: $color-primary;
 $font-color-muted: $slate04;
 $font-color-alert: $alert-red;
 
 //The hyperlink Style
 $hyperlink-color: $azure04;
-$hyperlink-focus-border-color: $azure06;
+$hyperlink-focus-border-color: $color-primary;
 $hyperlink-visited-color: $amethyst03;
 $hyperlink-disabled-color: $disabled-color;
-$hyperlink-hover-color: $azure06;
+$hyperlink-hover-color: $color-primary;
 
 // Rules
 $hr-top-color: $slate09;
@@ -82,7 +82,6 @@ $circlepager-hover-border-color: $slate02;
 $circlepager-disable-border-color: $slate05;
 $circlepager-disable-hover-border-color: $slate05;
 $circlepager-disable-focus-border-color: $slate05;
-
 
 // Popovers
 $popover-bg-color: $notification-bg-color;
@@ -101,7 +100,7 @@ $popover-alternate-table-header: $notification-alternate-table-header;
 //Progress
 $progress-bg-color: transparent;
 $progress-border-color: $slate04;
-$progress-bar-bg-color: $azure06;
+$progress-bar-bg-color: $color-primary;
 
 // Tooltips
 $tooltip-bg-color: $white;
@@ -122,7 +121,7 @@ $badge-error-color: $pill-error-color;
 $badge-alert-color: $pill-alert-color;
 $badge-good-color: $pill-good-color;
 $badge-info-color: $pill-info-color;
-$badge-info-bg-color: $primary-color;
+$badge-info-bg-color: $color-primary;
 $badge-neutral-icon-color: $pill-neutral-icon-color;
 $badge-neutral-hover-icon-color: $pill-neutral-hover-icon-color;
 
@@ -133,9 +132,9 @@ $popupmenu-heading-color: $slate04;
 $popupmenu-bg-color: $slate07;
 $popupmenu-border-color: $slate05;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
-$popupmenu-checked-color: $azure06;
+$popupmenu-checked-color: $color-primary;
 $popupmenu-hover-color: $slate06;
-$popupmenu-checked-color-inverse: $azure06;
+$popupmenu-checked-color-inverse: $color-primary;
 
 // Secondary With Border
 $secondary-border-btn-color:  $slate03;
@@ -147,18 +146,18 @@ $secondary-border-btn-ripple-color: $white;
 // Input Fields
 $input-color: $input-text-color;
 $input-disabled-color: $input-disabled-text-color;
-$input-focus-border-color: $primary-color;
+$input-focus-border-color: $color-primary;
 $input-placeholder-color: $input-placeholder-text-color;
 $input-readonly-color: $input-readonly-text-color;
 
 //States
 $error-color: $alert-red;
-$error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, .3);
+$error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
 $error-icon-fill: $alert-red;
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
-$info-icon-fill: $primary-color;
-$selected-bg-color: rgba($primary-color, .3);
+$info-icon-fill: $color-primary;
+$selected-bg-color: rgba($color-primary, 0.3);
 
 // Autocomplete
 $autocomplete-light-text: $slate04;
@@ -168,8 +167,8 @@ $autocomplete-box-shadow-flipped: 0 -2px 5px 1px $focus-box-shadow-color;
 $trigger-icon-fill-color: $slate03;
 $trigger-icon-fill-light-color: $slate04;
 $trigger-hover-color: $white;
-$trigger-active-color: $primary-color;
-$trigger-focus-color: $primary-color;
+$trigger-active-color: $color-primary;
+$trigger-focus-color: $color-primary;
 $trigger-disabled-color: $slate04;
 
 //List View
@@ -189,8 +188,8 @@ $listview-toolbar-button-text-color: $slate03;
 $listview-toolbar-button-icon-color: $slate03;
 $listview-toolbar-button-text-hover-color: $white;
 $listview-toolbar-button-icon-hover-color: $white;
-$listview-toolbar-button-text-selected-color: $primary-color;
-$listview-toolbar-button-icon-selected-color: $primary-color;
+$listview-toolbar-button-text-selected-color: $color-primary;
+$listview-toolbar-button-icon-selected-color: $color-primary;
 $listview-full-width-bg-color: $slate08;
 $listview-full-width-hover-color: $slate06;
 
@@ -217,24 +216,24 @@ $formatter-toolbar-separator-color: $slate04;
 
 //Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
-$contextual-toolbar-bg-color: $primary-color;
+$contextual-toolbar-bg-color: $color-primary;
 $contextual-panel-seperator-bg-color: $slate03;
 
 // Drop down
-$dropdown-menu-border-color: $primary-color;
+$dropdown-menu-border-color: $color-primary;
 
 // Date Picker
 $datepicker-month-year-color: $inverse-color;
 $datepicker-alternate-month-color: $slate04;
 $datepicker-day-color: $slate03;
-$datepicker-focus-border-color: $primary-color;
-$datepicker-selected-bg-color: $primary-color;
+$datepicker-focus-border-color: $color-primary;
+$datepicker-selected-bg-color: $color-primary;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $inverse-color;
 $datepicker-hover-bg-color: $slate06;
 $datepicker-disabled-icon-color: $slate05;
 $datepicker-disabled-border-color: $slate05;
-$datepicker-disabled-bg-color: rgba($slate06, .5);
+$datepicker-disabled-bg-color: rgba($slate06, 0.5);
 $datepicker-disabled-color: $slate04;
 
 //Time Picker
@@ -258,10 +257,10 @@ $fileupload-hover-color: $slate02;
 $fileupload-droparea-color: $slate04;
 $fileupload-droparea-hover-color: $slate04;
 $fileupload-droparea-hover-bg-color: $azure09;
-$fileupload-droparea-bg-color: rgba($slate07, .5);
+$fileupload-droparea-bg-color: rgba($slate07, 0.5);
 $fileupload-droparea-hover-bg-color: $slate07;
-$fileupload-droparea-dd-hover-border-color: $primary-color;
-$fileupload-droparea-dd-hover-bg-color: rgba($slate10, .30);
+$fileupload-droparea-dd-hover-border-color: $color-primary;
+$fileupload-droparea-dd-hover-bg-color: rgba($slate10, 0.3);
 
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
@@ -308,12 +307,12 @@ $cardlist-header-color: $white;
 $cardlist-actions-color: $slate03;
 
 // Checkboxes
-$checkbox-color: $primary-color;
+$checkbox-color: $color-primary;
 $checkbox-disabled-font-color: $checkbox-disabled-text-color;
 $checkbox-disabled-select-bg-color: $checkbox-disabled-border-color;
 
 // Switch
-$switch-checked-color: $primary-color;
+$switch-checked-color: $color-primary;
 $switch-checked-bg-color: $azure03;
 $switch-unchecked-bg-color: $slate05;
 $switch-unchecked-bar-color: $slate03;
@@ -324,33 +323,33 @@ $switch-disabled-border-color: $slate06;
 $switch-disabled-bg-color: $slate07;
 $switch-disabled-bar-color: $slate06;
 $switch-disabled-label-color: $disabled-color;
-$switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $primary-color;
+$switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $color-primary;
 $switch-hover-box-shadow: 0 2px 5px $drop-shadow-depth;
 
 // Editor
 $editor-bg-color: transparent;
 $editor-border-color: $slate04;
 $editor-hover-border-color: $slate02;
-$editor-focus-border-color: $primary-color;
+$editor-focus-border-color: $color-primary;
 $editor-line-number-color: $slate04;
 $editor-color: $input-color;
 $editor-toolbar-bg-color: $slate06;
 $editor-middle-border-color: $slate04;
 $editor-btn-color: $slate03;
 $editor-btn-hover-color: $white;
-$editor-btn-active-color: $primary-color;
-$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-color, $focus-box-shadow;
-$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, .3);
+$editor-btn-active-color: $color-primary;
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $color-primary, $focus-box-shadow;
+$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
 $editor-blockquote-color: $slate04;
 
 // Radio Buttons
 $radio-hover-border-color: $radio-border-hover-color;
-$radio-selected-color: $primary-color;
+$radio-selected-color: $color-primary;
 $radio-selected-bg-color: $radio-checked-bg-color;
 $radio-disabled-select-bg-color: $radio-disabled-checked-bg-color;
 
 //Pager
-$pager-text-color: $primary-color;
+$pager-text-color: $color-primary;
 $pager-selected-color: $font-color-extrahighcontrast;
 $pager-focus-border-color: $input-focus-border-color;
 $pager-hover-color: $font-color-extrahighcontrast;
@@ -358,7 +357,7 @@ $pager-disabled-color: $slate06;
 
 //Slider
 $slider-bg-color: $slate04;
-$slider-active-bg-color: $primary-color;
+$slider-active-bg-color: $color-primary;
 $slider-labels-color: $slate03;
 $slider-disabled-color: $slate06;
 $slider-disabled-active-bg-color: $slate03;
@@ -370,7 +369,7 @@ $slider-readonly-active-bg-color: $graphite07;
 $slider-readonly-labels-color: $graphite06;
 $slider-readonly-handle-color: $graphite07;
 $slider-readonly-range-color: $graphite07;
-$slider-hover-shadow: 0 2px 5px 0 rgba($black, .4);
+$slider-hover-shadow: 0 2px 5px 0 rgba($black, 0.4);
 
 //Modal
 $modal-bg-color: $slate07;
@@ -383,10 +382,9 @@ $modal-btn-hover-color: $white;
 $modal-btn-primary-color: $azure04;
 $modal-btn-primary-hover-color: $azure03;
 $modal-btn-disabled-color: $white;
-$modal-btn-disabled-opacity: .3;
+$modal-btn-disabled-opacity: 0.3;
 $modal-primary-color: $white;
 $modal-secondary-color: $slate03;
-
 
 // Accordion
 $accordion-bg-color: $slate08;
@@ -414,9 +412,9 @@ $accordion-inverse-text-color: $slate02;
 $accordion-inverse-text-hover-color: $white;
 $accordion-inverse-focus-state-color: $white;
 
-$accordion-focused-text-color: $primary-color;
-$accordion-focused-border-color: $primary-color;
-$accordion-selected-bg-color: $primary-color;
+$accordion-focused-text-color: $color-primary;
+$accordion-focused-border-color: $color-primary;
+$accordion-selected-bg-color: $color-primary;
 $accordion-selected-text-color: $white;
 
 $accordion-highcontrast-text-decoration: none;
@@ -444,11 +442,11 @@ $breadcrumb-disabled-color: $disabled-color;
 // Rating (Stars)
 $rating-bg-color: $amber04;
 $rating-border-color: $slate04;
-$rating-hover-color: $primary-color;
+$rating-hover-color: $color-primary;
 
 // Tabs
 $tab-text-color: $slate02;
-$tab-selected-color: $primary-color;
+$tab-selected-color: $color-primary;
 $tab-border-color: $slate07;
 $tab-hover-color: $font-color-extrahighcontrast;
 
@@ -495,20 +493,20 @@ $datagrid-cell-bg-color: $slate08;
 $datagrid-cell-readonly-bg-color: $slate07;
 $datagrid-cell-readonly-color: $white;
 $datagrid-cell-border-color: $slate05;
-$datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(101, 104, 113, .4);
+$datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(101, 104, 113, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #334d60;
 $datagrid-row-selected-color-dark: #3e586c;
 $datagrid-row-hover-color: $slate06;
 $datagrid-row-icon-color: $slate03;
 
-$datagrid-header-focus-bg-color: $primary-color;
+$datagrid-header-focus-bg-color: $color-primary;
 $datagrid-alternate-bg-color: #414348;
 $datagrid-alternate-row-hover-color: $slate06;
 $datagrid-list-header-bg-color: $slate09;
 
-$datagrid-list-header-focus-border-color: $primary-color;
-$datagrid-list-header-box-shadow: 0 0 4px 1px rgba(101, 104, 113, .4);
+$datagrid-list-header-focus-border-color: $color-primary;
+$datagrid-list-header-box-shadow: 0 0 4px 1px rgba(101, 104, 113, 0.4);
 $datagrid-list-header-border-color: $slate05;
 $datagrid-list-header-color: $slate03;
 $datagrid-list-header-hover-color: $slate09;
@@ -526,8 +524,8 @@ $datagrid-filter-color: $slate10;
 $datagrid-filter-hover-color: $slate10;
 $datagrid-filter-disabled-color: $slate04;
 $datagrid-filter-icon-color: $slate05;
-$datagrid-filter-focus-color: $azure07;
-$datagrid-filter-active-color: $azure07;
+$datagrid-filter-focus-color: $color-primary-alt;
+$datagrid-filter-active-color: $color-primary-alt;
 
 $datagrid-list-filter-border-color: $slate03;
 $datagrid-list-filter-hover-border-color: $white;
@@ -535,8 +533,8 @@ $datagrid-list-filter-color: $white;
 $datagrid-list-filter-hover-color: $white;
 $datagrid-list-filter-icon-color: $slate03;
 $datagrid-list-filter-disabled-color: $slate06;
-$datagrid-list-filter-focus-color: $azure06;
-$datagrid-list-filter-active-color: $azure06;
+$datagrid-list-filter-focus-color: $color-primary;
+$datagrid-list-filter-active-color: $color-primary;
 
 $datagrid-rowgroup-header: $slate07;
 $datagrid-rowgroup-color: $font-color;
@@ -552,7 +550,7 @@ $tree-selected-color: $white;
 $tree-selected-bg-color: $slate06;
 $tree-isover-bg-color: $azure10;
 $tree-isover-border-color: $azure08;
-$tree-focus-border-color: $primary-color;
+$tree-focus-border-color: $color-primary;
 $tree-active-bg-color: #3e586c;
 $tree-icon-color: $slate03;
 $tree-link-color: $slate03;
@@ -565,25 +563,25 @@ $chart-progressbar-bg-color: $slate04;
 $chart-progressbar-bg-color-dark: $slate02;
 $chart-progressbar-completed-fill: $emerald08;
 $chart-progressbar-target-fill: $slate06;
-$chart-progressbar-primary-fill: $primary-color;
-$chart-progressbar-dark-fill: $primary-color;
+$chart-progressbar-primary-fill: $color-primary;
+$chart-progressbar-dark-fill: $color-primary;
 $chart-targeted-achievement-bg-color: $slate05;
 
 //Timeline
 $timeline-indicator-color: $slate03;
-$timeline-indicator-processing-color: $primary-color;
-$timeline-indicator-complete-color: $primary-color;
+$timeline-indicator-processing-color: $color-primary;
+$timeline-indicator-complete-color: $color-primary;
 $timeline-line-color: $slate04;
-$timeline-header-color: $primary-color;
+$timeline-header-color: $color-primary;
 
 //Themable Variables in config.scss
 $wizard-default-bg: $body-bg-color;
 $wizard-bar-bg: $slate04;
 $wizard-color: $slate03;
 $wizard-disabled-color: $slate04;
-$wizard-active-color: $primary-color;
+$wizard-active-color: $color-primary;
 $wizard-active-text-color: $azure04;
-$wizard-focus-box-shadow: 0 0 0 1px $primary-color;
+$wizard-focus-box-shadow: 0 0 0 1px $color-primary;
 
 //Themable Variables in config.scss
 $hierarchy-line-color: $slate04;
@@ -595,7 +593,7 @@ $searchfield-icon-color: $button-link-text-color;
 $searchfield-text-color: $button-link-text-color;
 $searchfield-lighter-bg-color: $slate08;
 $searchfield-lighter-text-color: $slate04;
-$searchfield-active-icon-color: $azure07;
+$searchfield-active-icon-color: $color-primary-alt;
 
 $searchfield-alt-bg-color: $slate07;
 $searchfield-alt-border-color: $slate08;
@@ -629,7 +627,6 @@ $toast-header-color: $notification-header-color;
 $toast-text-color: $notification-text-color;
 $toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
 
-
 //Builder Pattern
 $builder-header-bg-color: $slate08;
 
@@ -639,10 +636,9 @@ $about-text-color: $white;
 $about-text-border-color: $slate05;
 $about-text-hover-border-color: $slate03;
 
-
 // Header Tabs
 $header-tabcontainer-border-color: $slate09;
-$header-tab-separator: rgba(255, 255, 255, .4);
+$header-tab-separator: rgba(255, 255, 255, 0.4);
 $header-tab-normal-color: $slate03;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
@@ -665,7 +661,7 @@ $module-tabs-y-border-color: $header-border-color;
 $module-tabs-inactive-bg-color: $header-border-color;
 $module-tabs-active-bg-color: $slate06;
 $module-tabs-hover-bg-color: $slate06;
-$module-tabs-inactive-text-color: rgba($white, .85);
+$module-tabs-inactive-text-color: rgba($white, 0.85);
 $module-tabs-active-text-color: $white;
 $module-tabs-hover-text-color: $white;
 $module-tabs-disabled-bg-color: $slate06;
@@ -680,20 +676,20 @@ $composite-tabs-panel-bg-color: $slate10;
 $splitter-grip-bg-color: $slate03;
 $splitter-active-bg-color: $slate07;
 $splitter-active-grip-bg-color: $white;
-$splitter-box-shadow-color: rgba(54, 138, 192, .75);
+$splitter-box-shadow-color: rgba(54, 138, 192, 0.75);
 
 // Step Chart
 $step-chart-bg-color: $slate07;
 $step-chart-border-color: $slate05;
 $step-chart-inprogress-bg-color: $ruby02;
-$step-chart-completed-bg-color: $primary-color;
+$step-chart-completed-bg-color: $color-primary;
 $step-chart-totally-completed-bg-color: $alert-green;
 
 // Block Grid
 $blockgrid-selected-bg-color: $selected-bg-color;
 $blockgrid-selected-border-color: $button-default-focus-border-color;
 $blockgrid-hover-color: $listview-hover-bg-color;
-$blockgrid-focus-border-color: $primary-color;
+$blockgrid-focus-border-color: $color-primary;
 
 // Tree Map
 $treemap-title-bg-color: $slate03;
@@ -702,7 +698,7 @@ $treemap-title-color: $slate10;
 // Calendar
 $calendar-bg-color: $panel-bg-color;
 $calendar-line-color: $slate05;
-$calendar-selected-border-color: $primary-color;
+$calendar-selected-border-color: $color-primary;
 $calendar-selected-bg-color: $slate08;
 $calendar-hover-bg-color: $slate08;
 $calendar-disabled-bg-color: $slate08;

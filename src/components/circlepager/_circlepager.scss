@@ -10,13 +10,13 @@
     left: 0;
     overflow: hidden;
     position: relative;
-    transition: left .3s ease 0s;
+    transition: left 0.3s ease 0s;
 
     > .slide {
       float: left;
       opacity: 0; // Keep initially hidden until loaded
       position: relative;
-      transition: opacity .8s ease 0s;
+      transition: opacity 0.8s ease 0s;
 
       &.is-visible {
         opacity: 1; // Make it visible after loaded
@@ -28,14 +28,13 @@
     display: none;
   }
 
-
   &.is-active {
 
     //Next and Previous Buttons
     .btn-next,
     .btn-previous {
       background-color: $graphite10;
-      border: 1px solid $graphite04;
+      border: 1px solid $color-default-alt;
       border-radius: 50%;
       display: none;
       height: 32px;
@@ -48,7 +47,7 @@
       z-index: 1001;
 
       .icon {
-        fill: $graphite04;
+        fill: $icon-fill;
         height: 18px;
         width: 18px;
       }
@@ -152,9 +151,9 @@
 
         &.is-active {
           background-color: $graphite10;
-          border: 1px solid $graphite04;
+          border: 1px solid $color-default-alt;
           border-radius: 2px;
-          color: $graphite04;
+          color: $color-default-alt;
           cursor: default;
           display: inline-block;
           height: auto;
@@ -163,12 +162,12 @@
 
           &:hover {
             background-color: $graphite10;
-            border-color: $graphite04;
+            border-color: $color-default-alt;
           }
 
           &:focus {
             background-color: $graphite10;
-            border-color: $graphite04;
+            border-color: $color-default-alt;
           }
         }
       }

@@ -2,7 +2,6 @@
 //================================================== //
 
 .summary-form {
-
   .field {
     width: 100%;
 
@@ -13,11 +12,12 @@
 
   .label {
     @include font-size(12);
+
     color: $label-color;
     display: block;
     margin: 0;
     max-width: 300px;
-    padding-bottom: .3rem;
+    padding-bottom: 0.3rem;
     vertical-align: top;
   }
 
@@ -30,6 +30,7 @@
 
   .data {
     @include font-size(14);
+
     color: $font-color-extrahighcontrast;
     display: block;
     line-height: 2rem;
@@ -37,7 +38,7 @@
 
     &.cozy {
       line-height: 1rem;
-      margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
     }
   }
 

@@ -3,10 +3,8 @@
 
 @mixin rowstatus($color) {
   td {
-    // scss-lint:disable ImportantRule
     border-bottom: 1px solid $color !important;
     box-shadow: 0 -1px 1px -1px $color;
-    // scss-lint:enable ImportantRule
 
     &:first-child {
       border-left: 1px solid $color;
@@ -172,10 +170,8 @@ $datagrid-short-row-height: 23px;
 
   // States - List Style Datagrid
   &.is-gridlist {
-    // scss-lint:disable ImportantRule
     background-color: transparent !important;
     border: 0;
-    // scss-lint:enable ImportantRule
 
     &.datagrid-alternate-bg-color {
       background-color: $panel-bg-color;
@@ -208,9 +204,7 @@ $datagrid-short-row-height: 23px;
       &:focus {
         background-color: $datagrid-list-header-bg-color;
         box-shadow: $datagrid-list-header-box-shadow;
-        // scss-lint:disable ImportantRule
         outline: 1px solid $datagrid-list-header-focus-border-color !important;
-        // scss-lint:enable ImportantRule
       }
 
       &.is-active {
@@ -240,9 +234,7 @@ $datagrid-short-row-height: 23px;
     }
 
     .datagrid-body {
-      // scss-lint:disable ImportantRule
       background-color: transparent !important;
-      // scss-lint:enable ImportantRule
     }
 
     tr td {
@@ -257,12 +249,10 @@ $datagrid-short-row-height: 23px;
       .is-filterable .datagrid-filter-wrapper {
         input,
         div.dropdown {
-          // scss-lint:disable ImportantRule
           border-color: $datagrid-list-filter-border-color !important;
           color: $datagrid-list-filter-color;
           -webkit-text-fill-color: $datagrid-list-filter-color;
 
-          // scss-lint:disable NestingDepth
           &:disabled,
           &.is-disabled {
             border-color: $datagrid-list-filter-disabled-color !important;
@@ -271,7 +261,6 @@ $datagrid-short-row-height: 23px;
               fill: $datagrid-list-filter-disabled-color !important;
             }
           }
-          // scss-lint:enable NestingDepth
 
           &:focus {
             border-color: $datagrid-list-filter-focus-color !important;
@@ -280,10 +269,8 @@ $datagrid-short-row-height: 23px;
           &:hover:not(:disabled):not(:focus) {
             border-color: $datagrid-list-filter-hover-border-color !important;
           }
-          // scss-lint:enable ImportantRule
         }
 
-        // scss-lint:disable ImportantRule
         .btn-filter {
           .icon,
           .icon-dropdown {
@@ -314,14 +301,12 @@ $datagrid-short-row-height: 23px;
             fill: $datagrid-list-filter-hover-color !important;
           }
         }
-        // scss-lint:enable ImportantRule
       }
     }
   }
 
   //Short and Medium Row height
   &.short-rowheight {
-
     .datagrid-cell-wrapper {
       min-height: $datagrid-short-row-height + 6;
     }
@@ -367,6 +352,7 @@ $datagrid-short-row-height: 23px;
       .handle,
       .is-draggable-target {
         @include font-size(22);
+
         height: $datagrid-short-header-height;
         padding: 0 0 0 2px;
       }
@@ -433,7 +419,6 @@ $datagrid-short-row-height: 23px;
   }
 
   &.medium-rowheight {
-
     .datagrid-cell-wrapper {
       min-height: $datagrid-short-row-height + 6;
     }
@@ -481,7 +466,6 @@ $datagrid-short-row-height: 23px;
     .sort-indicator {
       margin: 1px 0 0 4px;
     }
-
 
     .is-filterable {
       .datagrid-column-wrapper {
@@ -553,6 +537,7 @@ $datagrid-short-row-height: 23px;
 // Grid Styling
 .datagrid {
   @include font-size(14);
+
   background-color: transparent;
   border-collapse: separate;
   border-spacing: 0;
@@ -566,7 +551,6 @@ $datagrid-short-row-height: 23px;
       line-height: $datagrid-medium-row-height;
 
       td {
-
         .datagrid-row-heading {
           margin-top: 25px;
         }
@@ -593,9 +577,7 @@ $datagrid-short-row-height: 23px;
         }
 
         //Editing
-        // scss-lint:disable NestingDepth
         &.is-editing {
-
           .colorpicker-container {
             padding: 4px 15px 0;
           }
@@ -612,7 +594,7 @@ $datagrid-short-row-height: 23px;
             &.lookup {
               width: calc(100% - 21px);
 
-              ~.trigger .icon {
+              ~ .trigger .icon {
                 top: calc(50% - 6px);
                 width: inherit;
               }
@@ -627,7 +609,7 @@ $datagrid-short-row-height: 23px;
               padding: 0 15px;
               width: calc(100% - 26px);
 
-              ~.icon {
+              ~ .icon {
                 left: auto;
                 margin-left: -5px;
                 top: calc(50% - 18px);
@@ -669,7 +651,6 @@ $datagrid-short-row-height: 23px;
           }
 
         }
-        // scss-lint:enable NestingDepth
 
         //validation
         &.error {
@@ -720,9 +701,7 @@ $datagrid-short-row-height: 23px;
 
       .icon-calendar,
       .icon-fileupload {
-        // scss-lint:disable ImportantRule
         left: 0 !important;
-        // scss-lint:enable ImportantRule
       }
 
       .colorpicker-container {
@@ -742,7 +721,6 @@ $datagrid-short-row-height: 23px;
 
     }
 
-    // scss-lint:disable ImportantRule
     .lookup-wrapper {
       padding-left: 14px !important;
       padding-top: 2px !important;
@@ -759,7 +737,6 @@ $datagrid-short-row-height: 23px;
         }
       }
     }
-    // scss-lint:enable ImportantRule
 
     .datagrid-drilldown {
       top: -1px;
@@ -799,7 +776,6 @@ $datagrid-short-row-height: 23px;
   }
 
   &.short-rowheight {
-
     tbody tr {
       line-height: $datagrid-short-row-height;
 
@@ -819,7 +795,6 @@ $datagrid-short-row-height: 23px;
       }
 
       td {
-
         span {
           line-height: $datagrid-short-row-height;
         }
@@ -833,11 +808,9 @@ $datagrid-short-row-height: 23px;
           }
         }
 
-        // scss-lint:disable ImportantRule
         .btn {
           top: -3px !important;
         }
-        // scss-lint:disable ImportantRule
 
         .datagrid-expand-btn {
           height: 24px;
@@ -864,12 +837,10 @@ $datagrid-short-row-height: 23px;
         }
 
         .datagrid-alert-icon:not(.icon-dirty) {
-          // scss-lint:disable ImportantRule
           height: 19px;
           margin-left: 0 !important;
           top: 0 !important;
           width: 18px;
-          // scss-lint:enable ImportantRule
         }
 
         .tag {
@@ -916,9 +887,7 @@ $datagrid-short-row-height: 23px;
           top: -2px;
         }
 
-        // scss-lint:disable NestingDepth
         &.datagrid-trigger-cell {
-
           .icon {
             height: 16px;
             margin-bottom: -1px;
@@ -958,12 +927,9 @@ $datagrid-short-row-height: 23px;
             }
           }
         }
-        // scss-lint:enable NestingDepth
 
         //Editing
-        // scss-lint:disable NestingDepth
         &.is-editing {
-
           &.is-fileupload {
             .trigger,
             .trigger-close {
@@ -1044,7 +1010,6 @@ $datagrid-short-row-height: 23px;
           }
 
         }
-        // scss-lint:enable NestingDepth
 
         //validation
         &.error {
@@ -1118,7 +1083,6 @@ $datagrid-short-row-height: 23px;
       padding: 3px 10px 0;
 
       .colorpicker-container {
-
         .swatch {
           height: 20px;
           width: 20px;
@@ -1141,18 +1105,14 @@ $datagrid-short-row-height: 23px;
     }
 
     .icon-search-list {
-      // scss-lint:disable ImportantRule
       left: -9px !important;
-      // scss-lint:enable ImportantRule
     }
 
     .icon-error,
     .icon-alert,
     .icon-confirm,
     .icon-info {
-      // scss-lint:disable ImportantRule
       margin-left: -29px !important;
-      // scss-lint:enable ImportantRule
     }
 
     .chart-completion-target {
@@ -1170,7 +1130,7 @@ $datagrid-short-row-height: 23px;
     line-height: $datagrid-row-height;
 
     &.is-active-row {
-      outline: 1px solid $primary-color;
+      outline: 1px solid $color-primary;
       outline-offset: -1px;
 
       td {
@@ -1210,11 +1170,9 @@ $datagrid-short-row-height: 23px;
 
     &.arrange-dragging {
       td {
-        // scss-lint:disable ImportantRule
         background-color: $datagrid-cell-bg-color !important;
         border-bottom: 1px solid $datagrid-cell-border-color;
         border-top: 1px solid $datagrid-cell-border-color;
-        // scss-lint:enable ImportantRule
 
         &:first-child {
           border-left: 1px solid $datagrid-cell-border-color;
@@ -1273,15 +1231,12 @@ $datagrid-short-row-height: 23px;
       background-color: $datagrid-row-selected-color-dark;
 
       span {
-        // scss-lint:disable ImportantRule
         background-color: transparent !important;
-        // scss-lint:enable ImportantRule
       }
     }
 
     &.is-clickable,
     &.is-active-row {
-
       td:focus .datagrid-cell-wrapper {
         border-color: transparent;
         box-shadow: none;
@@ -1366,7 +1321,6 @@ $datagrid-short-row-height: 23px;
     }
 
     .tag {
-
       &[class*='azure'] {
         color: $white;
       }
@@ -1393,6 +1347,7 @@ $datagrid-short-row-height: 23px;
 
     .datagrid-cell-wrapper {
       @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
+
       border: 1px solid transparent;
       display: block;
       min-height: $datagrid-row-height + 6;
@@ -1446,7 +1401,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.rowstatus-row-info {
-      @include rowstatus($primary-color);
+      @include rowstatus($color-primary);
     }
 
     &.rowstatus-row-in-progress {
@@ -1476,12 +1431,12 @@ $datagrid-short-row-height: 23px;
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    &:focus ,
+    &:focus,
     &.is-focused {
       box-shadow: $datagrid-cell-focus-box-shadow;
 
       .datagrid-cell-wrapper {
-        border: 1px solid $primary-color;
+        border: 1px solid $color-primary;
       }
     }
 
@@ -1509,9 +1464,7 @@ $datagrid-short-row-height: 23px;
         }
 
         &:focus {
-          // scss-lint:disable ImportantRule
           border-bottom: 1px solid $hyperlink-hover-color !important;
-          // scss-lint:enable ImportantRule
           //
           &::after {
             border-color: transparent;
@@ -1527,14 +1480,12 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    // scss-lint:disable ImportantRule
     .chart-completion-target {
       height: 25px;
       margin-bottom: 0 !important;
       position: relative;
       top: 8px;
     }
-    // scss-lint:enable ImportantRule
 
     .spinbox-wrapper {
       margin-bottom: 0;
@@ -1661,6 +1612,7 @@ $datagrid-short-row-height: 23px;
 
     .hyperlink {
       @include font-size(14);
+
       color: $hyperlink-color;
       display: inline-block;
       margin-top: -1px;
@@ -1679,7 +1631,7 @@ $datagrid-short-row-height: 23px;
     .search-mode {
       i {
         font-style: normal;
-        font-weight: bold;
+        font-weight: $font-weight-bold;
       }
     }
 
@@ -1707,7 +1659,7 @@ $datagrid-short-row-height: 23px;
       position: relative;
 
       .datagrid-cell-wrapper {
-        border: 1px solid $primary-color;
+        border: 1px solid $color-primary;
         left: 0;
         position: absolute;
         text-overflow: initial;
@@ -1774,7 +1726,7 @@ $datagrid-short-row-height: 23px;
             width: 100%;
           }
 
-          ~.trigger .icon {
+          ~ .trigger .icon {
             top: calc(50% - 6px);
             width: inherit;
           }
@@ -1789,7 +1741,7 @@ $datagrid-short-row-height: 23px;
           padding: 0 19px;
           width: calc(100% - 26px);
 
-          ~.icon {
+          ~ .icon {
             left: auto;
             margin-left: -5px;
             top: calc(50% - 16px);
@@ -1800,7 +1752,6 @@ $datagrid-short-row-height: 23px;
           background-color: transparent;
         }
 
-        // scss-lint:disable NestingDepth
         &.fileupload {
           ~ .trigger,
           ~ .trigger-close {
@@ -1826,26 +1777,23 @@ $datagrid-short-row-height: 23px;
           }
         }
 
-        &.fileupload[type="file"] {
+        &.fileupload[type='file'] {
           left: -10000px;
           position: fixed;
         }
 
-        &.fileupload[type="text"] {
+        &.fileupload[type='text'] {
           padding-right: 56px;
           text-overflow: ellipsis;
         }
-        // scss-lint:enable NestingDepth
 
         &:focus {
-          // scss-lint:disable ImportantRule
           box-shadow: none !important;
           outline: none;
 
           &.is-not-editable {
             border-color: transparent;
           }
-          // scss-lint:enable ImportantRule
         }
       }
 
@@ -1980,7 +1928,6 @@ $datagrid-short-row-height: 23px;
     }
 
     &.text-ellipsis {
-
       .datagrid-cell-wrapper {
         cursor: default;
         text-overflow: ellipsis;
@@ -2058,16 +2005,18 @@ $datagrid-short-row-height: 23px;
     .datagrid-header-text {
       @include font-size(12);
       @include no-select();
+
       color: $datagrid-header-color;
       direction: ltr;
       display: table-cell;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
       text-align: left;
       vertical-align: middle;
       white-space: nowrap;
 
       &.required::after {
         @include required-indicator();
+
         color: $datagrid-required-icon-color;
       }
     }
@@ -2150,9 +2099,7 @@ $datagrid-short-row-height: 23px;
 
   //Datagrid filterrow
   .is-filterable {
-
     .datagrid-column-wrapper {
-
       &.l-right-text {
         + .datagrid-filter-wrapper {
           clear: both;
@@ -2203,7 +2150,7 @@ $datagrid-short-row-height: 23px;
         }
       }
 
-      [data-mask-mode="number"] {
+      [data-mask-mode='number'] {
         padding: 3px 7px 2px 3px;
       }
 
@@ -2218,21 +2165,15 @@ $datagrid-short-row-height: 23px;
         width: calc(100% - 5px);
 
         &:hover {
-          // scss-lint:disable ImportantRule
           border-color: $datagrid-filter-hover-border-color !important;
-          // scss-lint:enable ImportantRule
 
           + .icon {
-            // scss-lint:disable ImportantRule
             fill: $datagrid-filter-hover-color !important;
-            // scss-lint:enable ImportantRule
           }
         }
 
         &div:hover:not(:disabled) {
-          // scss-lint:disable ImportantRule
           border-color: $datagrid-filter-hover-border-color !important;
-          // scss-lint:enable ImportantRule
         }
 
         + .icon {
@@ -2291,16 +2232,12 @@ $datagrid-short-row-height: 23px;
 
         &:not(:disabled) + .icon:hover,
         &:hover:not(:disabled) + .icon {
-          // scss-lint:disable ImportantRule
           fill: $datagrid-filter-hover-color !important;
-          // scss-lint:enable ImportantRule
         }
 
         &:disabled + .icon {
-          // scss-lint:disable ImportantRule
           fill: $datagrid-list-filter-disabled-color !important;
-          // scss-lint:enable ImportantRule
-          opacity: .6;
+          opacity: 0.6;
         }
 
       }
@@ -2315,7 +2252,7 @@ $datagrid-short-row-height: 23px;
         width: 34px;
 
         &:disabled {
-          opacity: .6;
+          opacity: 0.6;
 
           .icon {
             fill: $datagrid-filter-disabled-color;
@@ -2323,9 +2260,7 @@ $datagrid-short-row-height: 23px;
         }
 
         .icon-dropdown {
-          // scss-lint:disable ImportantRule
           fill: $datagrid-filter-icon-color !important;
-          // scss-lint:enable ImportantRule
           height: 14px;
           left: -7px;
           position: relative;
@@ -2339,16 +2274,12 @@ $datagrid-short-row-height: 23px;
         }
 
         &.is-open .icon {
-          // scss-lint:disable ImportantRule
           fill: $datagrid-filter-active-color !important;
-          // scss-lint:enable ImportantRule
         }
 
         &:hover:not(.is-open):not(:disabled) {
           .icon {
-            // scss-lint:disable ImportantRule
             fill: $datagrid-filter-hover-color !important;
-            // scss-lint:enable ImportantRule
           }
         }
 
@@ -2356,9 +2287,7 @@ $datagrid-short-row-height: 23px;
           border: 1px solid $datagrid-filter-focus-color;
 
           .icon {
-            // scss-lint:disable ImportantRule
             fill: $datagrid-filter-focus-color !important;
-            // scss-lint:enable ImportantRule
           }
         }
       }
@@ -2371,7 +2300,7 @@ $datagrid-short-row-height: 23px;
 
   //Animating while closing
   &.is-animating {
-    opacity: .2;
+    opacity: 0.2;
   }
 
   td {
@@ -2381,15 +2310,15 @@ $datagrid-short-row-height: 23px;
     border-right: 1px solid $datagrid-cell-border-color;
     padding: 0 20px;
 
-    &:focus ,
+    &:focus,
     &.is-focused {
-      border: 1px solid $primary-color;
+      border: 1px solid $color-primary;
       box-shadow: $focus-box-shadow;
     }
 
     span {
       color: $datagrid-rowgroup-color;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
     }
 
     .icon {
@@ -2415,6 +2344,7 @@ $datagrid-short-row-height: 23px;
 
   .icon {
     @include transition(all 250ms ease);
+
     fill: $datagrid-sort-icon-color;
     height: 18px;
     opacity: 0;
@@ -2423,6 +2353,7 @@ $datagrid-short-row-height: 23px;
 
   .sort-asc > .icon {
     @include css3(transform, rotate(180deg));
+
     left: -2px;
   }
 
@@ -2466,6 +2397,7 @@ $datagrid-short-row-height: 23px;
 .datagrid-row-heading {
   @include font-size(16);
   @include ellipsis();
+
   color: $datagrid-cell-color;
   line-height: 22px;
   padding-top: 6px;
@@ -2473,6 +2405,7 @@ $datagrid-short-row-height: 23px;
 
 .datagrid-row-subheading {
   @include font-size(14);
+
   color: $datagrid-cell-color;
   line-height: 22px;
   margin-top: -4px;
@@ -2480,6 +2413,7 @@ $datagrid-short-row-height: 23px;
 
 .datagrid-row-micro {
   @include font-size(12);
+
   color: $datagrid-cell-color;
   line-height: 2rem;
 }
@@ -2527,6 +2461,7 @@ td .btn-actions {
 //Grid Checkboxes
 .datagrid-checkbox {
   @include font-size(12);
+
   cursor: pointer;
   display: inline-block;
   left: -7px;
@@ -2535,6 +2470,7 @@ td .btn-actions {
 
   &::before {
     @include checkbox-unchecked-before-style;
+
     margin-left: 0;
     top: -4px;
   }
@@ -2547,6 +2483,7 @@ td .btn-actions {
     @include checkbox-checked-after-style;
     @include css3(transform-origin, -11px top 0);
     @include checkbox-animation;
+
     left: 5px;
     margin-top: 0;
     top: 1px;
@@ -2561,8 +2498,9 @@ td .btn-actions {
   }
 
   &.is-partial::after {
-    @include  checkbox-partial-after-style;
+    @include checkbox-partial-after-style;
     @include no-animation();
+
     margin-left: -2px;
     margin-top: -4px;
     top: 2px;
@@ -2570,7 +2508,7 @@ td .btn-actions {
 
 }
 
-[aria-readonly="true"] {
+[aria-readonly='true'] {
   .datagrid-checkbox {
     cursor: default;
   }
@@ -2663,6 +2601,7 @@ td .btn-actions {
 
 .datagrid-checkbox-wrapper {
   @include font-size(12);
+
   position: relative;
 
   & + .datagrid-filter-wrapper {
@@ -2751,6 +2690,7 @@ td .btn-actions {
 
   .datagrid-row-micro-text {
     @include font-size(12);
+
     color: $font-color-lowcontrast;
   }
 
@@ -2763,6 +2703,7 @@ td .btn-actions {
 
 .datagrid-result-count {
   @include font-size(14);
+
   display: inline-block;
   position: relative;
   top: 0;
@@ -2775,7 +2716,6 @@ td .btn-actions {
 }
 
 .is-firefox {
-  // scss-lint:disable ImportantRule
   .is-inline.dropdown-wrapper {
     .icon {
       top: 5px !important;
@@ -2787,7 +2727,7 @@ td .btn-actions {
   }
 
   .datagrid-filter-wrapper .dropdown {
-    padding: 1px 0 2px 5px  !important;
+    padding: 1px 0 2px 5px !important;
   }
 
   .short-rowheight {
@@ -2805,11 +2745,9 @@ td .btn-actions {
       height: $datagrid-short-header-height;
     }
   }
-  // scss-lint:enable ImportantRule
 
   .datagrid {
     td.is-editing {
-
       .datepicker {
         ~ .icon {
           top: calc(50% - 16px);
@@ -2828,7 +2766,6 @@ td .btn-actions {
 
     &.medium-rowheight {
       td.is-editing {
-        // scss-lint:disable NestingDepth
         .lookup-wrapper {
           margin-top: 4px;
 
@@ -2836,7 +2773,6 @@ td .btn-actions {
             top: calc(50% - 9px);
           }
         }
-        // scss-lint:enable NestingDepth
 
         .datepicker {
           margin-top: 13px;
@@ -2858,14 +2794,11 @@ td .btn-actions {
 
     &.short-rowheight {
       td.is-editing {
-        // scss-lint:disable NestingDepth
         .lookup-wrapper {
-
           .lookup ~ .trigger .icon {
             top: calc(50% - 5px);
           }
         }
-        // scss-lint:enable NestingDepth
 
         .datepicker {
           margin-top: 8px;
@@ -2888,6 +2821,7 @@ td .btn-actions {
 
     tbody tr.arrange-dragging td {
       @include font-size(14);
+
       height: $datagrid-row-height;
     }
   }
@@ -2921,11 +2855,9 @@ td .btn-actions {
 
   input {
     height: 49px;
-    // scss-lint:disable ImportantRule
     padding-top: 12px !important;
     text-indent: 10px;
     width: 100% !important;
-    // scss-lint:enable ImportantRule
   }
 
   &.short-rowheight {
@@ -2933,9 +2865,7 @@ td .btn-actions {
       height: 30px;
       padding-top: 9px;
       text-indent: 0;
-      // scss-lint:disable ImportantRule
       width: 100% !important;
-      // scss-lint:enable ImportantRule
     }
 
     .trigger .icon {
@@ -2951,9 +2881,7 @@ td .btn-actions {
       height: 40px;
       padding-top: 10px;
       text-indent: 5px;
-      // scss-lint:disable ImportantRule
       width: 100% !important;
-      // scss-lint:enable ImportantRule
     }
 
     .trigger .icon {
@@ -2963,7 +2891,7 @@ td .btn-actions {
   }
 
   .icon {
-    fill: $graphite10;
+    fill: $text-color;
     margin-top: 9px;
     right: 2px;
 
@@ -2978,8 +2906,7 @@ td .btn-actions {
   visibility: visible;
 }
 
-// scss-lint:disable ImportantRule
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .datagrid {
     //Restore right Border
@@ -3004,7 +2931,6 @@ html[dir='rtl'] {
       }
     }
 
-    // scss-lint:disable NestingDepth
     &.short-rowheight {
       tbody {
         .datagrid-rowgroup-header {
@@ -3021,7 +2947,6 @@ html[dir='rtl'] {
         }
       }
     }
-    // scss-lint:enable NestingDepth
 
     td.l-right-text .datagrid-cell-wrapper {
       text-align: left;
@@ -3167,8 +3092,8 @@ html[dir='rtl'] {
 
       &.l-center-text {
         .sort-indicator {
-          position: absolute;
           left: 0;
+          position: absolute;
         }
       }
     }
@@ -3179,6 +3104,7 @@ html[dir='rtl'] {
 
     .required::before {
       @include required-indicator();
+
       color: $datagrid-required-icon-color;
       left: -2px;
       top: 0;
@@ -3221,7 +3147,6 @@ html[dir='rtl'] {
     }
   }
 }
-// scss-lint:enable ImportantRule
 
 // Reorder Column styles
 .has-draggable-columns {
@@ -3304,9 +3229,7 @@ html[dir='rtl'] {
 
     &.is-dragging-clone {
       max-width: 125px;
-      // scss-lint:disable ImportantRule
       min-width: 100px !important;
-      // scss-lint:enable ImportantRule
       position: fixed;
       z-index: 2;
 
@@ -3341,7 +3264,6 @@ html[dir='rtl'] {
 // Firefox on Mac only
 .is-mac.is-firefox {
   .has-draggable-columns {
-
     th {
       .handle {
         padding: 6px 0 0 7px;
@@ -3372,11 +3294,9 @@ html[dir='rtl'] {
     }
   }
 
-  // scss-lint:disable ImportantRule
   .datagrid-filter-wrapper .dropdown {
     padding-top: 4px !important;
   }
-  // scss-lint:enable ImportantRule
 }
 
 //Contextual toolbar
@@ -3474,7 +3394,6 @@ html[dir='rtl'] {
 
 .card,
 .widget {
-
   .datagrid-container.short-rowheight.paginated {
     height: 100%;
   }
@@ -3561,6 +3480,7 @@ html[dir='rtl'] {
 .content-tooltip {
   &.popover.alternate {
     @include font-size(12);
+
     background-color: $datagrid-cell-bg-color;
     padding-bottom: inherit;
 
@@ -3614,9 +3534,7 @@ html[dir='rtl'] {
   .icon-error,
   .icon-confirm,
   .icon-pending {
-    // scss-lint:disable ImportantRule
     top: 15px !important;
-    // scss-lint:enable ImportantRule
   }
 }
 
@@ -3635,13 +3553,13 @@ html[dir='rtl'] {
           @include css3(transition, none);
         }
       }
-      // scss-lint:disable NestingDepth
+
       &.is-active-row {
         outline: 0;
 
         td {
           .datagrid-cell-wrapper {
-            border-color: $primary-color;
+            border-color: $color-primary;
             border-style: solid;
             border-width: 1px 0;
           }
@@ -3659,7 +3577,6 @@ html[dir='rtl'] {
           }
         }
       }
-      // scss-lint:enable NestingDepth
     }
   }
 }

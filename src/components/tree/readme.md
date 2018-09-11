@@ -35,6 +35,8 @@ demo:
     slug: example-disable
   - name: Enable Tree
     slug: example-enable
+  - name: Preserve and Restore Tree
+    slug: example-preserve-restore
 ---
 
 ## Testability

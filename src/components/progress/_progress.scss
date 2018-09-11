@@ -13,7 +13,8 @@
   width: 100%;
 
   .progress-bar {
-    @include transition(width 300ms cubic-bezier(.17, .04, .03, .94));
+    @include transition(width 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
     background: $progress-bar-bg-color;
     border-radius: 4px;
     height: 6px;
@@ -27,7 +28,7 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .progress {
     .progress-bar {
