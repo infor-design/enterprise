@@ -2,9 +2,9 @@
 //==================================================//
 
 .chart-treemap {
-
   .chart-treemap-node {
     @include font-size(12);
+
     color: $white;
     font-weight: lighter;
     overflow: hidden;
@@ -15,12 +15,14 @@
 
   .chart-treemap-percent {
     @include font-size(16);
+
     display: block;
     padding-top: 2px;
   }
 
   .chart-treemap-title {
     @include font-size(16);
+
     background-color: $treemap-title-bg-color;
     color: $treemap-title-color;
     height: 34px;
@@ -28,7 +30,6 @@
     margin: 20px 20px 0;
     text-align: center;
   }
-
 }
 
 .chart-treemap-container {

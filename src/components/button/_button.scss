@@ -14,16 +14,17 @@ button {
 }
 
 // How all button types will deal with iconography
-[class^="btn"] {
+[class^='btn'] {
   //Fixes an issue about the circle effect coming out of the button.
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
   @include font-size($button-font-size);
-  @include transition(color 300ms cubic-bezier(.17, .04, .03, .94), background-color 300ms cubic-bezier(.17, .04, .03, .94), border 300ms cubic-bezier(.17, .04, .03, .94), box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), background-color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), border 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
   @include antialiased();
+
   color: inherit;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   height: 34px;
   line-height: normal;
   min-width: 100px;
@@ -60,7 +61,7 @@ button {
   }
 
   .icon {
-    @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
+    @include transition(fill 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
   }
 
   &.half-width {
@@ -86,8 +87,7 @@ button {
       }
     }
 
-    &:empty:not(.icon):not(.one):not(.two):not(.three):not(.four)
-    :not(.five):not(.six):not(.seven):not(.eight):not(.nine) {
+    &:empty:not(.icon):not(.one):not(.two):not(.three):not(.four):not(.five):not(.six):not(.seven):not(.eight):not(.nine) {
       display: none;
     }
   }
@@ -188,7 +188,7 @@ button {
 
   .ripple-effect {
     background-color: $white;
-    opacity: .7;
+    opacity: 0.7;
     pointer-events: none;
   }
 
@@ -239,9 +239,7 @@ a.btn-close {
   min-width: auto;
 
   + .separator {
-    // scss-lint:disable ImportantRule
     margin: 3px 3px 0 -10px !important;
-    // scss-lint:enable ImportantRule
 
     + .btn-split-menu {
       margin-left: -3px;
@@ -289,7 +287,7 @@ a.btn-close {
   &:active {
     background-color: $button-default-active-bg-color;
     border: 1px solid $button-default-active-bg-color;
- }
+  }
 
   &:focus {
     border: 1px solid transparent;
@@ -404,7 +402,8 @@ a.btn-close {
 .btn-actions,
 .btn-menu {
   span {
-    &:before, &:after {
+    &::before,
+    &::after {
       content: ' ';
     }
   }
@@ -468,7 +467,7 @@ a.btn-close {
 .btn-close {
   border-radius: 18px;
   height: 36px;
-  margin-top: 0px;
+  margin-top: 0;
   min-height: 36px;
   min-width: 36px;
   padding: 0;
@@ -508,7 +507,7 @@ a.btn-close {
 
   &.has-content {
     .icon {
-      fill: $azure06;
+      fill: $color-primary;
     }
 
     &:hover .icon {
@@ -576,7 +575,8 @@ a.btn-close {
 
     &.chevron {
       @include css3(transform, rotateX(0deg));
-      @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94));
+      @include transition(transform 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
       height: 28px;
       padding-right: 0;
       top: 2px;
@@ -633,11 +633,12 @@ a.btn-close {
 
 @include keyframes(ripple-animation) {
   0% {
-    opacity: .5;
+    opacity: 0.5;
   }
 
   100% {
     @include css3(transform, scale(20));
+
     opacity: 0;
   }
 }
@@ -656,12 +657,12 @@ a.btn-close {
         }
       }
     }
- 	}
+  }
 }
 
 // Short field buttons
 .field-short {
-  [class*="btn"] {
+  [class*='btn'] {
     height: 25px;
     margin-bottom: 10px;
     min-width: 0;
@@ -696,7 +697,7 @@ a.btn-close {
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   button {
     margin-left: 5px;
@@ -709,9 +710,8 @@ html[dir='rtl'] {
   }
 
   // How all button types will deal with iconography
-  [class^="btn"] {
+  [class^='btn'] {
     > .icon {
-
       + span:not(.audible):not(:empty) {
         padding-left: 0;
         padding-right: 5px;
@@ -750,14 +750,15 @@ html[dir='rtl'] {
 
 //Do not allow upper case in french
 html[lang^='fr-'] {
-  [class^="btn"] {
+  [class^='btn'] {
     text-transform: none;
   }
 }
 
 //Special "Ghost" Secondary Border button-font-size
 .btn-secondary-border {
-  @include transition(all 300ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(all 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
   border: 1px solid $secondary-border-btn-border-color;
   border-radius: 2px;
   color: $secondary-border-btn-color;
@@ -772,12 +773,12 @@ html[lang^='fr-'] {
   }
 
   &:focus {
-    box-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $primary-color, $focus-box-shadow;
+    box-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $color-primary, $focus-box-shadow;
   }
 
   &:disabled {
     cursor: default;
-    opacity: .5;
+    opacity: 0.5;
   }
 
   .ripple-effect {
@@ -792,12 +793,12 @@ html[lang^='fr-'] {
 }
 
 .is-mac.is-firefox {
-  [class^="btn"] {
+  [class^='btn'] {
     line-height: 34px;
   }
 
   .field-short {
-    [class^="btn"] {
+    [class^='btn'] {
       line-height: 25px;
     }
   }

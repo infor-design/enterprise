@@ -133,7 +133,7 @@ describe('Dropdown example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
     const dropdownSearchEl = element(by.id('dropdown-search'));
     await dropdownSearchEl.click();
-    element(by.id('dropdown-search')).clear().sendKeys('Colorado');
+    await element(by.id('dropdown-search')).clear().sendKeys('Colorado');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-focused i'))), config.waitsFor);
 
@@ -162,30 +162,27 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.id('dropdown-search')).getAttribute('value')).toEqual('New Jersey');
     });
 
-    xit('Should close an open list and tab to the next element without re-opening', async () => {
+    xit('Should close an open list and tab to the next element without re-opening', async () => { //eslint-disable-line
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
-      await dropdownEl.click();
+
+      await dropdownEl.sendKeys('New');
 
       // Wait for the list to open
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-      const dropdownSearchEl = await element(by.id('dropdown-search'));
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown-search'))), config.waitsFor);
+      const dropdownSearchEl = element(by.css('.dropdown-search'));
 
-      // First key press causes the menu to close
       await dropdownSearchEl.sendKeys(protractor.Key.TAB);
-
-      // Second key press causes the focus to shift away
-      await browser.driver.sleep(config.sleep);
-      await element(by.css('div[aria-controls="dropdown-list"]')).sendKeys(protractor.Key.TAB);
+      await dropdownSearchEl.sendKeys(protractor.Key.TAB);
       await browser.driver.sleep(config.sleep);
 
-      // The Dropdown Pseudo element should no longer have focus
-      expect(await browser.driver.switchTo().activeElement().getAttribute('class')).not.toContain('dropdown');
+      // The List should be closed
+      expect(await element(by.css('.dropdown-search')).isPresent()).toBeFalsy();
     });
 
-    xit('Should not allow the escape key to re-open a closed menu', async () => {
+    xit('Should not allow the escape key to re-open a closed menu', async () => { //eslint-disable-line
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -323,11 +320,10 @@ describe('Dropdown example-no-search-filtering tests', () => {
     expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual('56');
   });
 
-  // TODO: Figure out why this uses "BACK_SPACE" as the keypress on Ubuntu Linux (TravisCI)
-  if (!utils.isCI()) {
+  if (!utils.isBS() && !utils.isCI()) {
     it('Should clear a previous dropdown selection when pressing DELETE', async () => {
       // On Macs, use "backspace" delete, instead of control keys' delete
-      const keyPressed = utils.isMac() ? 'BACK_SPACE' : 'DELETE';
+      const keyPressed = utils.isMac() || utils.isBS() || utils.isCI() ? 'BACK_SPACE' : 'DELETE';
       const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
@@ -337,6 +333,8 @@ describe('Dropdown example-no-search-filtering tests', () => {
         .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), '15'), config.waitsFor);
 
       expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual('15');
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
 
       await dropdownPseudoEl.sendKeys(protractor.Key[keyPressed]);
       await browser.driver

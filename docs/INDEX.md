@@ -6,34 +6,19 @@ title: Enterprise Components for Infor Design System
 
 # Getting Started
 
-To install the enterprise components into your project using NPM, run the following:
+## Usage
 
-```sh
-npm install --save ids-enterprise
-```
+Basic IDS Enterprise usage instructions can be found in our Github [README](https://github.com/infor-design/enterprise/blob/master/README.md).
 
-The files will then be found in `/node_modules/ids-enterprise/dist`.
+Detailed instructions can be found in the [Developer Documentation](https://github.com/infor-design/enterprise/blob/master/docs/DEVELOPER.md)
 
-To install the code for development using `git`, run:
+## Development and Contributing to the project
 
-```sh
-mkdir enterprise
-cd enterprise
-git clone https://github.com/infor-design/enterprise.git .
-```
+- [Developer.md](https://github.com/infor-design/enterprise/blob/master/docs/DEVELOPER.md)
+- [Contributing.md](https://github.com/infor-design/enterprise/blob/master/docs/CONTRIBUTING.md)
+- [Coding-Standards.md](https://github.com/infor-design/enterprise/blob/master/docs/CODING-STANDARDS.md)
 
-Then you just need to install, build, and serve the demo app.
-
-```sh
-npm install
-npm start
-```
-
-Optionally, to see documentation pages for the components instead of directory lists, run:
-
-```sh
-npm run documentation
-```
+You can find our NPM package [here](https://www.npmjs.com/package/ids-enterprise).
 
 ## Recent Changes
 

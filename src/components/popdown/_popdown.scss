@@ -2,13 +2,14 @@
 //================================================== /
 
 .popdown {
-  @include transition(opacity 400ms cubic-bezier(.17, .04, .03, .94),
-    -moz-transform 400ms cubic-bezier(.17, .04, .03, .94),
-    -ms-transform 400ms cubic-bezier(.17, .04, .03, .94),
-    -o-transform 400ms cubic-bezier(.17, .04, .03, .94),
-    -webkit-transform 400ms cubic-bezier(.17, .04, .03, .94),
-    transform 400ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(opacity 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+  -moz-transform 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+  -ms-transform 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+  -o-transform 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+  -webkit-transform 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+  transform 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
   @include css3(transform, translate3d(0, -10%, 0));
+
   background-clip: padding-box;
   background-color: $popupmenu-bg-color;
   border: 1px solid $popupmenu-border-color;
@@ -59,14 +60,15 @@
 
       &::after {
         border-bottom-color: $popupmenu-bg-color;
-        top: -11px !important;
         left: -12px !important;
+        top: -11px !important;
       }
     }
   }
 
   &.visible {
     opacity: 1;
+
     @include css3(transform, translate3d(0, 0%, 0));
 
     &.top {

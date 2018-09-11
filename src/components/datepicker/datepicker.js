@@ -1119,7 +1119,7 @@ DatePicker.prototype = {
     const day = (date instanceof Array ? date[2] : date.getDate()).toString();
 
     // Make sure Calendar is showing that month
-    if (this.currentMonth !== month || this.currentYear !== year) {
+    if (this.calendarAPI.currentMonth !== month || this.calendarAPI.currentYear !== year) {
       this.calendarAPI.showMonth(month, year);
     }
 
@@ -1527,16 +1527,10 @@ DatePicker.prototype = {
    */
   setToday() {
     const s = this.settings;
+    this.currentDate = new Date();
+    this.currentDate.setHours(0, 0, 0, 0);
 
-    if (!this.currentDate) {
-      this.currentDate = new Date();
-    }
-
-    if (this.element.val() === '') {
-      this.currentDate.setHours(0);
-      this.currentDate.setMinutes(0);
-      this.currentDate.setSeconds(0);
-    } else {
+    if (this.element.val() !== '') {
       if (this.timepicker && this.timepicker.hourSelect) {
         this.currentDate.setHours(this.timepicker.hourSelect.val());
       }

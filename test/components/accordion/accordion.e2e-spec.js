@@ -1,5 +1,6 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
+const config = requireHelper('e2e-config');
 
 requireHelper('rejection');
 
@@ -8,6 +9,10 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Accordion example-accordion-click-event tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/accordion/example-accordion-click-event');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
   });
 
   it('Should toast diplay when accordion is clicked', async () => {
@@ -25,6 +30,10 @@ describe('Accordion example-accordion-panels tests', () => {
     await utils.setPage('/components/accordion/example-accordion-panels');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should accordion have panels', async () => {
     expect(await element(by.className('accordion panel'))).toBeTruthy();
   });
@@ -35,14 +44,18 @@ describe('Accordion example-ajax tests', () => {
     await utils.setPage('/components/accordion/example-ajax');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should ajax data is in the headers', async () => {
-    const accordionEl = await element.all(by.className('accordion-header')).first();
-    const testEl = await element.all(by.className('accordion-header')).get(2);
+    const buttonEl = await element(by.css('#ajax-accordion .accordion-header button'));
+    await buttonEl.click();
 
-    await browser.actions().mouseMove(accordionEl).perform();
-    await browser.actions().click(accordionEl).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child'))), config.waitsFor);
 
-    expect(testEl.getText()).toEqual('Apple');
+    expect(await element(by.css('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child')).getText()).toEqual('Apples');
   });
 });
 
@@ -51,14 +64,23 @@ describe('Accordion example-disabled tests', () => {
     await utils.setPage('/components/accordion/example-disabled');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should accordion be disabled', async () => {
-    expect(await element(by.className('is-disabled'))).toBeTruthy();
+    expect(await element.all(by.css('.accordion-header.is-disabled')).count()).toEqual(4);
+    expect(await element.all(by.css('.accordion.is-disabled')).count()).toEqual(1);
   });
 });
 
 describe('Accordion example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/accordion/example-index');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
   });
 
   it('Should accordion be displayed', async () => {

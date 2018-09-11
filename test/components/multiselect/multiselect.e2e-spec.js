@@ -185,8 +185,7 @@ describe('Multiselect example-index tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
     await multiselectEl.click();
-    const multiselectSearchEl = element(by.id('dropdown-search'));
-    await multiselectSearchEl.click();
+    await element(by.id('dropdown-search')).click();
     await browser.driver.switchTo().activeElement().clear();
     await element(by.id('dropdown-search')).sendKeys('Colorado');
     await browser.driver

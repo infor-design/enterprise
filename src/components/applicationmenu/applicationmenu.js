@@ -129,6 +129,9 @@ ApplicationMenu.prototype = {
           item.highlightTarget = 'text';
           return item;
         },
+        clearResultsCallback() {
+          self.accordionAPI.unfilter();
+        },
         displayResultsCallback(results, done) {
           return self.filterResultsCallback(results, done);
         }

@@ -32,7 +32,7 @@
 
     .tab {
       color: $header-tab-normal-color;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
       overflow: hidden;
 
       &::before {
@@ -82,7 +82,7 @@
       &.dismissible {
         .icon {
           fill: $white;
-          opacity: .6;
+          opacity: 0.6;
         }
 
         &:hover,
@@ -154,8 +154,8 @@
     padding: 12px 4px 12px 14px;
   }
 
-// Alternate Header-Tab Backgrounds (Page Context)
-//=================================================
+  // Alternate Header-Tab Backgrounds (Page Context)
+  //=================================================
 
   &.alternate {
     background-color: $header-tab-alt-bg-color;
@@ -183,7 +183,6 @@
     }
 
     > .tab-list-container {
-
       .tab {
         color: $header-tab-alt-normal-color;
 
@@ -263,7 +262,6 @@
 
 // RTL Styles for Header Tabs
 html[dir='rtl'] {
-
   .tab-container.header-tabs {
     padding: 0 20px 0 0;
 
