@@ -279,7 +279,8 @@ MonthView.prototype = {
 
     if (this.isIslamic) {
       if (!this.settings.activeDateIslamic) {
-        this.todayDateIslamic = this.conversions.fromGregorian(new Date());
+        const gregorianDate = new Date();
+        this.todayDateIslamic = this.conversions.fromGregorian(gregorianDate);
         this.settings.activeDateIslamic = [];
         this.settings.activeDateIslamic[0] = this.todayDateIslamic[0];
         this.settings.activeDateIslamic[1] = this.todayDateIslamic[1];
@@ -287,8 +288,7 @@ MonthView.prototype = {
         year = this.settings.activeDateIslamic[0];
         month = this.settings.activeDateIslamic[1];
       }
-
-      elementDate = this.settings.activeDateIslamic;
+      elementDate = this.conversions.fromGregorian(now);
     }
 
     if (year.toString().length < 4) {
