@@ -619,7 +619,8 @@ Validator.prototype = {
 
     if (dataMsg &&
       dataMsg.filter(rules =>
-        (rules.id || rules.message) === (rule.id || rule.message)).length > 0) {
+        (rules.id || rules.message) === (rule.id || rule.message) 
+        && rules.message === rule.message).length > 0) {
       // No need to add new message
       return;
     }
@@ -636,6 +637,18 @@ Validator.prototype = {
     if (!dataMsg) {
       dataMsg = [];
     }
+    
+    // Find the message by id and remove
+    field.closest('.field, .field-short').find('[data-rule-id="' + (rule.id || rule.message) + '"]').remove();
+
+    if (field.hasClass('dropdown') || field.hasClass('multiselect')) {
+      field.parent().find('.dropdown-wrapper > [data-rule-id="' + (rule.id || rule.message) + '"]').off('click.validate').remove();
+    }
+    //Remove the rule if it exists in the dataMsg
+    dataMsg = dataMsg.filter(function (rules) {
+      return rules.id !== rule.id;
+    });
+    
     dataMsg.push({ id: rule.id, message: rule.message, type: rule.type });
     loc.data(`${validationType.type}message`, dataMsg);
 
