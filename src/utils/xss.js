@@ -150,21 +150,4 @@ xssUtils.isUrlLocal = function (url) {
     (url.length >= 1 && url[0] === '#'); // "#" or "#foo"
 };
 
-/**
- * Calculate the width for given text string.
- * @private
- * @param {string} text string to process
- * @param {number} padding value for left + right
- * @param {string} font size and family used with the given text string
- * @returns {number} calculated width
- */
-xssUtils.textWidth = function textWidth(text, padding, font) {
-  this.canvasTW = this.canvasTW || (this.canvasTW = document.createElement('canvas'));
-  const context = this.canvasTW.getContext('2d');
-  context.font = font || '14px arial';
-
-  const metrics = context.measureText(text);
-  return Math.round(metrics.width + (padding || 0));
-};
-
 export { xssUtils };

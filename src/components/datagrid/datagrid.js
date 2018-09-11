@@ -5,6 +5,7 @@ import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../../utils/debounced-resize';
+import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 
@@ -8097,7 +8098,7 @@ Datagrid.prototype = {
 
       if (tooltip.content !== '') {
         const isEllipsis = elem.classList.contains('text-ellipsis');
-        tooltip.textwidth = xssUtils.textWidth(tooltip.content) + (isEllipsis ? 8 : 0);
+        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (isEllipsis ? 8 : 0);
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
         if (title) {
           tooltip.forced = true;
