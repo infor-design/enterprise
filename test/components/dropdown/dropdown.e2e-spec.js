@@ -167,34 +167,30 @@ describe('Dropdown example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
 
-      await dropdownEl.sendKeys('New');
+      await element(by.css('div[aria-controls="dropdown-list"]')).sendKeys('New');
 
       // Wait for the list to open
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown-search'))), config.waitsFor);
-      const dropdownSearchEl = element(by.css('.dropdown-search'));
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
 
-      await dropdownSearchEl.sendKeys(protractor.Key.TAB);
-      await dropdownSearchEl.sendKeys(protractor.Key.TAB);
-      await browser.driver.sleep(config.sleep);
+      // Tab out
+      await browser.actions().sendKeys(protractor.Key.TAB).perform();
 
-      // The List should be closed
-      expect(await element(by.css('.dropdown-search')).isPresent()).toBeFalsy();
+      expect(await element(by.css('div[aria-controls="dropdown-list"]'))).not.toContain('is-open');
     });
 
     it('Should not allow the escape key to re-open a closed menu', async () => { //eslint-disable-line
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
-      await dropdownEl.click();
+      await element(by.css('div[aria-controls="dropdown-list"]')).click();
 
       // Wait for the list to open
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-      const dropdownSearchEl = await element(by.id('dropdown-search'));
 
       // First key press causes the menu to close
-      await dropdownSearchEl.sendKeys(protractor.Key.ESCAPE);
+      await element(by.id('dropdown-search')).sendKeys(protractor.Key.ESCAPE);
 
       // Second key press should do nothing
       await element(by.css('div[aria-controls="dropdown-list"]')).sendKeys(protractor.Key.ESCAPE);

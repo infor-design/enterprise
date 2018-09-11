@@ -16,21 +16,17 @@ describe('Lookup custom button tests', () => {
   });
 
   it('Field should be enabled', async () => {
-    const lookupEl = await element(by.id('custom'));
-
-    expect(await lookupEl.isEnabled()).toBe(true);
+    expect(await element(by.id('custom')).isEnabled()).toBe(true);
   });
 
-  it('Lookup modal should display', async () => {
-    const buttonEl = await element(by.className('trigger'));
-    await buttonEl.click();
+  it('should display', async () => {
+    await element(by.className('trigger')).click();
 
     expect(await element(by.className('modal-content'))).toBeTruthy();
   });
 
-  it('Lookup modal should display with custom buttons', async () => {
-    const buttonEl = await element.all(by.className('trigger')).first();
-    await buttonEl.click();
+  it('should display with custom buttons', async () => {
+    await element.all(by.className('trigger')).first().click();
 
     expect(await element(by.className('btn-modal-primary')).getText()).toEqual('Apply It Now');
   });
@@ -62,7 +58,7 @@ describe('Lookup custom toolbar tests', () => {
     await utils.setPage('/components/lookup/example-custom-toolbar');
   });
 
-  it('Custom toolbar field should be enabled', async () => {
+  it('field should be enabled', async () => {
     const lookupEl = await element(by.id('custom'));
 
     expect(await lookupEl.isEnabled()).toBe(true);
