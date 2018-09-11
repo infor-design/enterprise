@@ -2,7 +2,6 @@
 //================================================== //
 
 .editor-container {
-
   &.is-readonly,
   &.is-disabled {
     .editor {
@@ -52,7 +51,7 @@
     margin-bottom: 0;
     z-index: 20;
 
-    [class^="btn"] {
+    [class^='btn'] {
       border-radius: 2px;
     }
   }
@@ -94,7 +93,7 @@
     }
   }
 
-  .editor[data-error-type='tooltip'] + .audible +  .icon-error {
+  .editor[data-error-type='tooltip'] + .audible + .icon-error {
     left: 100%;
     margin-left: -33px;
     position: absolute;
@@ -106,6 +105,7 @@
 .editor {
   @include font-size(14);
   @include rem(line-height, 2.2rem);
+
   background-color: $editor-bg-color;
   border: 1px solid;
   border-color: $editor-border-color;
@@ -134,6 +134,7 @@
   p {
     @include font-size(14);
     @include rem(line-height, 2.2rem);
+
     color: $editor-color;
     margin-bottom: 15px;
 
@@ -146,6 +147,7 @@
     @include font-size(24);
     @include rem(line-height, 2.4rem);
     @include rem(margin-bottom, 1.5rem);
+
     color: $editor-color;
   }
 
@@ -153,6 +155,7 @@
     @include font-size(18);
     @include rem(line-height, 1.8rem);
     @include rem(margin-bottom, 1.5rem);
+
     color: $editor-color;
   }
 
@@ -161,6 +164,7 @@
     @include rem(line-height, 2.2rem);
     @include rem(margin-left, 2rem);
     @include font-size(14);
+
     color: $input-color;
     list-style: disc;
     margin-bottom: 10px;
@@ -186,6 +190,7 @@
 
   blockquote {
     @include antialiased();
+
     border-left: 3px solid $editor-blockquote-color;
     line-height: 22px;
     margin-bottom: 15px;
@@ -204,11 +209,12 @@
 
   .hyperlink {
     @include font-size(14);
+
     cursor: auto;
     position: static;
     text-decoration: none;
 
-    &[contenteditable="false"] {
+    &[contenteditable='false'] {
       cursor: pointer;
       text-decoration: underline;
     }
@@ -233,8 +239,7 @@
   .buttonset {
     height: 32px;
 
-    [class^="btn"] {
-
+    [class^='btn'] {
       &:first-child {
         margin-left: 16px;
       }
@@ -258,7 +263,7 @@
     }
   }
 
-  [class^="btn"] {
+  [class^='btn'] {
     background-color: $editor-toolbar-bg-color;
     border: 1px solid transparent;
     color: $editor-btn-color;
@@ -266,9 +271,7 @@
     line-height: normal;
     margin-top: 6px;
     min-width: 18px;
-    // scss-lint:disable ImportantRule
     padding: 0 !important; //overrides some media queries
-    // scss-lint:enable ImportantRule
     text-align: left;
 
     span:not(.audible) {
@@ -345,9 +348,10 @@
       width: 85px;
     }
 
-    &[data-action="visual"] {
+    &[data-action='visual'] {
       span {
         @include font-size(16);
+
         margin-left: -1px;
         margin-top: 2px;
       }
@@ -475,6 +479,7 @@
 
 .editor-source {
   @include font-size(14);
+
   border: 1px solid;
   border-color: transparent $editor-border-color $editor-border-color;
   border-radius: 0 0 2px 2px;
@@ -488,10 +493,11 @@
 
   textarea {
     @include font-size(14);
+
     background-color: $editor-bg-color;
     border: 0;
     color: $editor-color;
-    font-weight: normal;
+    font-weight: $font-weight-normal;
     height: 100%;
     line-height: 2.4rem;
     outline: none;
@@ -524,6 +530,7 @@
 
     > li {
       @include font-size(12);
+
       line-height: 2.41rem;
       text-align: center;
     }
@@ -556,6 +563,7 @@
 
 .editor-placeholder::after {
   @include font-size(14);
+
   content: attr(data-placeholder);
   font-weight: 100;
   left: 10px;
@@ -564,7 +572,7 @@
   white-space: pre;
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .editor-container {
     .editor[data-error-type='tooltip'] {

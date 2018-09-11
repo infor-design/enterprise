@@ -56,6 +56,7 @@
   .additional-content {
     @include font-size(14);
     @include antialiased();
+
     color: $about-text-color;
     line-height: normal;
   }

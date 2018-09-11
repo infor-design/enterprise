@@ -4,6 +4,7 @@
 .popover,
 .tooltip {
   @include font-size(12);
+
   background-color: $tooltip-bg-color;
   border: 1px solid $tooltip-border-color;
   border-radius: 2px;
@@ -18,13 +19,12 @@
   position: absolute;
   text-align: left;
   top: -9999px;
-  transition: opacity .4s ease;
+  transition: opacity 0.4s ease;
   white-space: normal;
   z-index: 5010;
 }
 
 .tooltip {
-
   @include word-wrap();
 
   .links-clickable {
@@ -54,6 +54,7 @@
 
   .hyperlink {
     @include font-size(12);
+
     color: $tooltip-color;
 
     &:hover {
@@ -97,6 +98,7 @@
 
   p {
     @include font-size(12);
+
     color: $tooltip-color;
     word-break: normal;
     word-wrap: break-word;
@@ -123,7 +125,7 @@
   }
 
   .action-tooltip {
-    font-weight: bold;
+    font-weight: $font-weight-bold;
   }
 
 }
@@ -276,17 +278,16 @@
 
 .popover.is-hidden,
 .tooltip.is-hidden {
-  // scss-lint:disable ImportantRule
   opacity: 0 !important;
-  // scss-lint:enable ImportantRule
   visibility: hidden;
 }
 
 .tooltip-title {
   @include font-size(16);
+
   border-bottom: 1px solid $popover-separator-color;
   color: $font-color-highcontrast;
-  font-weight: normal;
+  font-weight: $font-weight-normal;
   line-height: 18px;
   margin: 0;
   padding: 10px 20px;

@@ -19,6 +19,7 @@
 .palette-column {
   @include font-size(14);
   @include antialiased();
+
   display: inline-block;
   margin: 10px;
   padding-top: 15px;
@@ -42,6 +43,7 @@
 
   .palette-label {
     @include antialiased();
+
     color: $font-color;
     display: block;
     font-size: 1.6rem;
@@ -69,10 +71,9 @@
   background-color: $white;
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .palette-column {
-
     .palette-label {
       text-align: right;
     }

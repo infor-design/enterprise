@@ -9,11 +9,12 @@
 
   .count {
     @include font-size(22);
+
     border-radius: 50%;
     color: $white;
     display: inline;
     float: left;
-    font-weight: bold;
+    font-weight: $font-weight-bold;
     height: 38px;
     line-height: 40px;
     text-align: center;
@@ -23,12 +24,13 @@
 
   // No Color Class.
   .count[class=count] {
-    background-color: $graphite04;
+    background-color: $color-default-alt;
   }
 
   .title {
     @include font-size(14);
     @include antialiased();
+
     color: $font-color;
     display: inline-block;
     float: left;
@@ -41,7 +43,7 @@
 
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .instance-count {
     .count {

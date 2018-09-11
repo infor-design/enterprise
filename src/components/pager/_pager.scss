@@ -3,6 +3,7 @@
 
 .pager-toolbar {
   @include font-size(14);
+
   height: 38px;
   margin: 10px;
   max-height: 38px;
@@ -59,7 +60,7 @@
 
     &.selected > a {
       color: $pager-selected-color;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
     }
 
     > a {
@@ -75,7 +76,7 @@
       position: relative;
       text-align: center;
       text-decoration: none;
-      transition: all .2s ease;
+      transition: all 0.2s ease;
 
       // Disabled
       &[disabled] {
@@ -88,7 +89,7 @@
       }
 
       .audible {
-        color: $graphite10;
+        color: $text-color;
       }
     }
 
@@ -162,6 +163,7 @@
 // Pager for Tables
 .pager-count {
   @include font-size(14);
+
   display: inline-block;
   line-height: normal;
   vertical-align: top;
@@ -174,6 +176,7 @@
 
   input {
     @include font-size(14);
+
     height: 30px;
     margin: 0 5px;
     padding: 3px 0 !important;
@@ -205,13 +208,14 @@ li + .pager-count {
     margin: -1px;
 
     &:focus {
-      border-color: $primary-color;
+      border-color: $color-primary;
       box-shadow: $focus-box-shadow;
     }
 
     span {
       @include font-size(14);
-      font-weight: normal;
+
+      font-weight: $font-weight-normal;
       line-height: 30px;
       text-transform: none;
     }
@@ -280,7 +284,7 @@ li + .pager-count {
   padding-top: 5px;
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   // Pager for Tables
   .pager-count {
