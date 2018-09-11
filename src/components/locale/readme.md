@@ -86,7 +86,7 @@ A date format can be constructed by adding the needed date and time parts. For e
 
 ## Currently Supported Locales
 
-There are 52 supported locales. See the [component source](https://github.com/infor-design/enterprise/tree/master/src/components/locale/cultures) for an updated list.
+For a list of all the supported components see the [locale component source](https://github.com/infor-design/enterprise/tree/master/src/components/locale/cultures).
 
 ## Testability
 
