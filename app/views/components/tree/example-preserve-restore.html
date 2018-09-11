@@ -7,7 +7,7 @@
         <li>
             <a id="home" href="#">Home</a>
         </li>
-        <li><a id="about-us" href="#">About Us</a></li>
+        <li><a id="about-us" href="#" class="is-disabled" aria-disabled="true">About Us</a></li>
         <li class="is-open mycustom">
             <a id="public-folders" href="#">Public Folders</a>
             <ul class="is-open root">
@@ -18,7 +18,7 @@
                       <a href="#">Leadership</a>
                     </li>
                     <li>
-                      <a id="history" href="#" class="is-disabled hide-focus" disabled>History</a>
+                      <a id="history" href="#" class="is-disabled" aria-disabled="true">History</a>
                     </li>
                     <li>
                       <a id="careers-last" href="#">Careers last</a>
@@ -30,13 +30,13 @@
             </ul>
         </li>
         <li>
-            <a id="icons" href="#">Icons</a>
+            <a id="icons" href="#" class="is-disabled" aria-disabled="true">Icons</a>
             <ul class="root">
               <li>
                 <a id="audio" href="#" class="icon-tree-audio">Audio</a>
               </li>
               <li>
-                <a id="avi" href="#" class="icon-tree-avi">Avi</a>
+                <a id="avi" href="#" class="icon-tree-avi is-disabled" aria-disabled="true">Avi</a>
               </li>
               <li>
                 <a id="bmp" href="#" class="icon-tree-bmp">Bmp</a>
@@ -147,16 +147,25 @@
       <div class="row">
         <div class="six columns">
 
-          <h2>Tree Component: Disable nodes</h2>
+          <h2>Tree Component: Preserve nodes</h2>
 
-          <p>The button below this paragraph disables all nodes in the Tree Component.</p>
+          <p>The buttons below this paragraph respectively preserve or restore all nodes in the Tree Component. Preserve must be clicked prior to Restore if Restore is to operate correctly.</p>
 
           <div class="field">
-            <button type="button" id="disable" class="btn-secondary">
+            <button type="button" id="preserve" class="btn-secondary">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use xlink:href="#icon-alert"></use>
               </svg>
-              <span>Disable Tree Component</span>
+              <span>Preserve</span>
+            </button>
+          </div>
+
+          <div class="field">
+            <button type="button" id="restore" class="btn-secondary">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-alert"></use>
+              </svg>
+              <span>Restore</span>
             </button>
           </div>
 
@@ -171,17 +180,16 @@
 
 <script>
 
-  // button click direct call to method
-  // $('#disable').on('click', () => {
-  //   $('#tree').disable();
-  // });
-
   const tree = $('#tree').tree().data('tree');
+  const preserveBtn = document.getElementById('preserve');
+  const restoreBtn = document.getElementById('restore');
 
-  // method call on tree api
-  $('#disable').on('click', () => {
-    tree.disable();
+  preserveBtn.addEventListener('click', () => {
+    tree.preserveEnablementState();
   });
 
+  restoreBtn.addEventListener('click', () => {
+    tree.restoreEnablementState();
+  });
 
 </script>
