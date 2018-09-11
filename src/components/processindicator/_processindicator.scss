@@ -94,7 +94,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
 // Indicator icons
 .indicator {
-  background-color: $body-bg-color;
+  background-color: $body-bg-color-primary;
   border: 2px solid $indicator-blank;
   border-radius: ($indicator-size / 2);
   display: inline-block;

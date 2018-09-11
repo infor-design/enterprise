@@ -6,8 +6,8 @@
 @import '../core/mixins';
 @import '../core/config';
 
-// IDS-identity vars
-@import '../../node_modules/ids-identity/dist/tokens/web/theme-uplift.sass';
+// IDS-identity token variables
+@import '../../node_modules/ids-identity/dist/tokens/web/theme-uplift';
 
 // Core Controls
 @import '../core/controls';

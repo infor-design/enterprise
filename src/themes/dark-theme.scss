@@ -6,14 +6,14 @@
 @import '../core/mixins';
 @import '../core/config';
 
-// IDS-identity vars
-@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho-dark.sass';
+// IDS-identity token variables
+@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho-dark';
 
-//Override Config
+// Override Config
 //================================================== //
 
 // Form Background Color
-$body-bg-color:  $slate08;
+$body-bg-color-primary:  $slate08;
 $header-bg-color: $slate09;
 $subhead-bg-color: $slate06;
 $header-border-color: $slate10;
@@ -161,7 +161,7 @@ $selected-bg-color: rgba($color-primary, 0.3);
 
 // Autocomplete
 $autocomplete-light-text: $slate04;
-$autocomplete-active-bg-color: $body-bg-color;
+$autocomplete-active-bg-color: $body-bg-color-primary;
 $autocomplete-box-shadow: 0 2px 5px 1px $focus-box-shadow-color;
 $autocomplete-box-shadow-flipped: 0 -2px 5px 1px $focus-box-shadow-color;
 $trigger-icon-fill-color: $slate03;
@@ -265,7 +265,7 @@ $fileupload-droparea-dd-hover-bg-color: rgba($slate10, 0.3);
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
 $spinbox-bg-color: $slate06;
-$spinbox-button-color: $body-bg-color;
+$spinbox-button-color: $body-bg-color-primary;
 
 //Skip Link
 $skip-link-border-color: $slate05;
@@ -307,12 +307,11 @@ $cardlist-header-color: $white;
 $cardlist-actions-color: $slate03;
 
 // Checkboxes
-$checkbox-color: $color-primary;
-$checkbox-disabled-font-color: $checkbox-disabled-text-color;
-$checkbox-disabled-select-bg-color: $checkbox-disabled-border-color;
+$checkbox-disabled-text-color: $checkbox-disabled-text-color;
+$checkbox-disabled-checked-bg-color: $checkbox-disabled-border-color;
 
 // Switch
-$switch-checked-color: $color-primary;
+$radio-checked-color: $color-primary;
 $switch-checked-bg-color: $azure03;
 $switch-unchecked-bg-color: $slate05;
 $switch-unchecked-bar-color: $slate03;
@@ -343,10 +342,10 @@ $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
 $editor-blockquote-color: $slate04;
 
 // Radio Buttons
-$radio-hover-border-color: $radio-border-hover-color;
-$radio-selected-color: $color-primary;
-$radio-selected-bg-color: $radio-checked-bg-color;
-$radio-disabled-select-bg-color: $radio-disabled-checked-bg-color;
+$radio-border-hover-color: $radio-border-hover-color;
+$radio-checked-color: $color-primary;
+$radio-checked-bg-color: $radio-checked-bg-color;
+$radio-disabled-checked-bg-color: $radio-disabled-checked-bg-color;
 
 //Pager
 $pager-text-color: $color-primary;
@@ -575,7 +574,7 @@ $timeline-line-color: $slate04;
 $timeline-header-color: $color-primary;
 
 //Themable Variables in config.scss
-$wizard-default-bg: $body-bg-color;
+$wizard-default-bg: $body-bg-color-primary;
 $wizard-bar-bg: $slate04;
 $wizard-color: $slate03;
 $wizard-disabled-color: $slate04;

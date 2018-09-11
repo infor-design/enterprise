@@ -78,7 +78,7 @@ $busy-indicator-check-color: $inverse-color;
   @include opacity(0.75);
   @include transition(opacity 500ms);
 
-  background-color: $body-bg-color;
+  background-color: $body-bg-color-primary;
   position: absolute;
   visibility: visible;
 
