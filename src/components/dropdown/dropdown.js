@@ -1723,6 +1723,8 @@ Dropdown.prototype = {
           touchPrevented = true;
         }
       });
+
+      e.stopPropagation();
     }
 
     function touchEndCallback(e) {  //eslint-disable-line
