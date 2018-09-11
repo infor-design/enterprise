@@ -75,14 +75,14 @@ describe('Textarea example-index tests', () => {
   it('Should allow copy/paste', async () => {
     const sampleStr = 'Lorem ipsum';
     const textareaEl = await element(by.id('description-max'));
-    
+
     textareaEl.sendKeys(sampleStr);
-    textareaEl.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, "a"));
-    textareaEl.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, "c"));
+    textareaEl.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'a'));
+    textareaEl.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'c'));
 
     const textareaEl2 = await element(by.id('description-dirty'));
 
-    textareaEl2.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, "v"));
+    textareaEl2.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'v'));
 
     expect(textareaEl2.getText()).toEqual(sampleStr);
   });
