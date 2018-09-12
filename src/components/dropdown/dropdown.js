@@ -2038,11 +2038,15 @@ Dropdown.prototype = {
   handleBlur() {
     const self = this;
 
+    /*
     if (this.isOpen()) {
       this.timer = setTimeout(() => {
         self.closeList('cancel');
       }, 40);
     }
+    */
+
+    self.closeList('cancel');
 
     return true;
   },
