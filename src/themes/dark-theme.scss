@@ -50,7 +50,7 @@ $focus-box-shadow-spinbox-up: 0 -3px 3px 0 $focus-box-shadow-color,
 $color-primary: $color-primary;
 $inverse-color: #fff;
 
-//The hyperlink Style
+// The hyperlink Style
 $hyperlink-color: $azure04;
 
 // Text Color
@@ -70,7 +70,7 @@ $font-color-hyperlink: $color-primary;
 $font-color-muted: $slate04;
 $font-color-alert: $alert-red;
 
-//The hyperlink Style
+// The hyperlink Style
 $hyperlink-color: $azure04;
 $hyperlink-focus-border-color: $color-primary;
 $hyperlink-visited-color: $amethyst03;
@@ -102,7 +102,7 @@ $popover-alternate-arrow-color: $notification-alternate-arrow-color;
 $popover-alternate-title-bg-color: $notification-alternate-title-bg-color;
 $popover-alternate-table-header: $notification-alternate-table-header;
 
-//Progress
+// Progress
 $progress-bg-color: transparent;
 $progress-border-color: $slate04;
 $progress-bar-bg-color: $color-primary;
@@ -155,7 +155,7 @@ $input-focus-border-color: $color-primary;
 $input-placeholder-color: $input-placeholder-text-color;
 $input-readonly-color: $input-readonly-text-color;
 
-//States
+// States
 $error-color: $alert-red;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
 $error-icon-fill: $alert-red;
@@ -176,7 +176,7 @@ $trigger-active-color: $color-primary;
 $trigger-focus-color: $color-primary;
 $trigger-disabled-color: $slate04;
 
-//List View
+// List View
 $listview-bg-color: $slate07;
 $listview-bg-color-alternate: $slate08;
 $listview-hover-bg-color: $slate06;
@@ -219,7 +219,7 @@ $toolbar-separator-color: $slate05;
 // Formatter Toolbar
 $formatter-toolbar-separator-color: $slate04;
 
-//Contextual Toolbar
+// Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
 $contextual-toolbar-bg-color: $color-primary;
 $contextual-panel-seperator-bg-color: $slate03;
@@ -241,7 +241,7 @@ $datepicker-disabled-border-color: $slate05;
 $datepicker-disabled-bg-color: rgba($slate06, 0.5);
 $datepicker-disabled-color: $slate04;
 
-//Time Picker
+// Time Picker
 $timepicker-disabled-icon-color: $slate05;
 $timepicker-disabled-border-color: $slate05;
 $timepicker-disabled-color: $slate04;
@@ -267,17 +267,17 @@ $fileupload-droparea-hover-bg-color: $slate07;
 $fileupload-droparea-dd-hover-border-color: $color-primary;
 $fileupload-droparea-dd-hover-bg-color: rgba($slate10, 0.3);
 
-//Spinbox
+// Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
 $spinbox-bg-color: $slate06;
 $spinbox-button-color: $body-bg-color-primary;
 
-//Skip Link
+// Skip Link
 $skip-link-border-color: $slate05;
 $skip-link-bg-color: $slate07;
 $skip-link-color: $azure04;
 
-//Swaplist
+// Swaplist
 $swaplist-bg-color-hover: $slate06;
 $swaplist-border-color-card: $slate05;
 $swaplist-icon-color: $slate03;
@@ -288,7 +288,7 @@ $swaplist-border-color-hover: $white;
 $swaplist-title-text-color: $white;
 $swaplist-text-color: $white;
 
-//Mast Head
+// Mast Head
 $masthead-bg-color: $header-bg-color;
 $masthead-border-color: $slate08;
 
@@ -296,7 +296,7 @@ $masthead-border-color: $slate08;
 $icon-color: $slate03;
 $icon-empty-bg-color: $font-color-lowcontrast;
 
-//Field Set
+// Field Set
 $fieldset-border-top-color: $slate06;
 $fieldset-border-bottom-color: transparent;
 $fieldset-title-color: $font-color-highcontrast;
@@ -352,14 +352,14 @@ $radio-checked-color: $color-primary;
 $radio-checked-bg-color: $radio-checked-bg-color;
 $radio-disabled-checked-bg-color: $radio-disabled-checked-bg-color;
 
-//Pager
+// Pager
 $pager-text-color: $color-primary;
 $pager-selected-color: $font-color-extrahighcontrast;
 $pager-focus-border-color: $input-focus-border-color;
 $pager-hover-color: $font-color-extrahighcontrast;
 $pager-disabled-color: $slate06;
 
-//Slider
+// Slider
 $slider-bg-color: $slate04;
 $slider-active-bg-color: $color-primary;
 $slider-labels-color: $slate03;
@@ -375,7 +375,7 @@ $slider-readonly-handle-color: $graphite07;
 $slider-readonly-range-color: $graphite07;
 $slider-hover-shadow: 0 2px 5px 0 rgba($black, 0.4);
 
-//Modal
+// Modal
 $modal-bg-color: $slate07;
 $modal-border-color: $slate05;
 $modal-box-shadow: 0 2px 5px $drop-shadow-depth;
@@ -438,7 +438,7 @@ $contextual-panel-bg: $slate06;
 $contextual-panel-border-color: $slate05;
 $contextual-panel-color: $slate02;
 
-//BreadCrumb
+// BreadCrumb
 $breadcrumb-color: $slate03;
 $breadcrumb-hover-color: $slate03;
 $breadcrumb-disabled-color: $disabled-color;
@@ -466,12 +466,12 @@ $vertical-tab-panel-bg-color: $slate08;
 $vertical-tab-sidebar-bg-color: $slate07;
 $vertical-tab-sidebar-border-color: $slate05;
 
-//Multi-tabs
+// Multi-tabs
 $mutlitabs-section-border-color: $slate07;
 $mutlitabs-section-alt-bg-color: $black;
 $mutlitabs-section-alt-border-color: $slate09;
 
-//Charts
+// Charts
 $chart-line-color: $slate04;
 $chart-line-color-axis: $slate03;
 $chart-font-color: $slate01;
@@ -542,7 +542,7 @@ $datagrid-list-filter-active-color: $color-primary;
 
 $datagrid-rowgroup-header: $slate07;
 $datagrid-rowgroup-color: $font-color;
-$datagrid-empty-bg-color: #414247; //$datagrid-cell-bg-color
+$datagrid-empty-bg-color: #414247; // $datagrid-cell-bg-color
 
 // Search Results
 $sr-masthead-text-color: $font-color;
@@ -562,7 +562,7 @@ $tree-disabled-color: $slate05;
 $tree-hover-color: $white;
 $tree-hover-icon-color: $white;
 
-//Chart Progress Bar
+// Chart Progress Bar
 $chart-progressbar-bg-color: $slate04;
 $chart-progressbar-bg-color-dark: $slate02;
 $chart-progressbar-completed-fill: $emerald08;
@@ -571,14 +571,14 @@ $chart-progressbar-primary-fill: $color-primary;
 $chart-progressbar-dark-fill: $color-primary;
 $chart-targeted-achievement-bg-color: $slate05;
 
-//Timeline
+// Timeline
 $timeline-indicator-color: $slate03;
 $timeline-indicator-processing-color: $color-primary;
 $timeline-indicator-complete-color: $color-primary;
 $timeline-line-color: $slate04;
 $timeline-header-color: $color-primary;
 
-//Themable Variables in config.scss
+// Themable Variables in config.scss
 $wizard-default-bg: $body-bg-color-primary;
 $wizard-bar-bg: $slate04;
 $wizard-color: $slate03;
@@ -587,7 +587,7 @@ $wizard-active-color: $color-primary;
 $wizard-active-text-color: $azure04;
 $wizard-focus-box-shadow: 0 0 0 1px $color-primary;
 
-//Themable Variables in config.scss
+// Themable Variables in config.scss
 $hierarchy-line-color: $slate04;
 
 // Searchfield Colors
@@ -620,21 +620,21 @@ $searchfield-header-text-color: $white;
 $searchfield-header-placeholder-text-color: $slate04;
 $searchfield-header-icon-color: $header-button-color;
 
-//Image Border Color
+// Image Border Color
 $image-border-color: $slate04;
 $image-background-color: $slate04;
 
-//Toast
+// Toast
 $toast-bg-color: $notification-bg-color;
 $toast-border-color: $notification-border-color;
 $toast-header-color: $notification-header-color;
 $toast-text-color: $notification-text-color;
-$toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
+$toast-shadow: none; // 0 0 5px rgba(255, 255, 255, .2);
 
-//Builder Pattern
+// Builder Pattern
 $builder-header-bg-color: $slate08;
 
-//About
+// About
 $about-header-color: $white;
 $about-text-color: $white;
 $about-text-border-color: $slate05;
@@ -708,7 +708,7 @@ $calendar-hover-bg-color: $slate08;
 $calendar-disabled-bg-color: $slate08;
 $calendar-disabled-color: $slate04;
 
-//Multi Select
+// Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;
 }
