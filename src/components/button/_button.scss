@@ -163,7 +163,7 @@ button {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $button-primary-bg-color, $focus-box-shadow;
+      box-shadow: 0 0 0 2px $body-bg-color-primary, 0 0 0 3px $button-primary-bg-color, $focus-box-shadow;
     }
 
     &:active {
@@ -293,7 +293,7 @@ a.btn-close {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $button-default-focus-border-color, $focus-box-shadow;
+      box-shadow: 0 0 0 2px $body-bg-color-primary, 0 0 0 3px $button-default-focus-border-color, $focus-box-shadow;
     }
 
     &:active {
@@ -773,7 +773,7 @@ html[lang^='fr-'] {
   }
 
   &:focus {
-    box-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $color-primary, $focus-box-shadow;
+    box-shadow: 0 0 0 1px $body-bg-color-primary, 0 0 0 2px $color-primary, $focus-box-shadow;
   }
 
   &:disabled {

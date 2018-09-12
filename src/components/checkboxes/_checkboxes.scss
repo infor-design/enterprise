@@ -27,13 +27,13 @@
 }
 
 @mixin checkbox-checked-before-style {
-  background-color: $checkbox-color;
-  border-color: $checkbox-color;
+  background-color: $checkbox-checked-bg-color;
+  border-color: $checkbox-checked-bg-color;
 }
 
 @mixin checkbox-checked-disabled-before-style {
-  background-color: $checkbox-disabled-select-bg-color;
-  border-color: $checkbox-disabled-select-bg-color;
+  background-color: $checkbox-disabled-checked-bg-color;
+  border-color: $checkbox-disabled-checked-bg-color;
 }
 
 @mixin checkbox-checked-after-style {
@@ -153,7 +153,7 @@ label.inline .checkbox:disabled ~ .label-text,
 input.checkbox:disabled + label,
 input.checkbox:disabled + input[type='hidden'] + label,
 span.checkbox > input:disabled + label {
-  color: $checkbox-disabled-font-color;
+  color: $checkbox-disabled-text-color;
   cursor: default;
 }
 

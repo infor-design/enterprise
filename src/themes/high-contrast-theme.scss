@@ -4,16 +4,21 @@
 // Standard CSS reset
 @import '../core/reset';
 @import '../core/mixins';
+
+// Enterprise colors
+@import '../components/colors/colorpalette';
+
+// ids-identity token vars
+@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho-high-contrast';
+
+// Local vars
 @import '../core/config';
 
-// IDS-identity vars
-@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho-high-contrast.sass';
-
-//Override Config
+// Override Config
 //================================================== //
 
 // Form Background Color
-$body-bg-color:  $graphite03;
+$body-bg-color-primary:  $graphite03;
 $header-bg-color: $azure09;
 $subhead-bg-color: $azure08;
 $header-border-color: $slate10;
@@ -180,7 +185,7 @@ $selected-bg-color: rgba($color-primary-alt, 0.3);
 
 // Autocomplete
 $autocomplete-light-text: $graphite05;
-$autocomplete-active-bg-color: $body-bg-color;
+$autocomplete-active-bg-color: $body-bg-color-primary;
 $autocomplete-box-shadow: 0 2px 5px 2px $focus-box-shadow-color;
 $autocomplete-box-shadow-flipped: 0 -2px 5px 2px $focus-box-shadow-color;
 $trigger-icon-fill-color: $graphite09;
@@ -330,13 +335,8 @@ $cardlist-border-color: $graphite06;
 $cardlist-header-color: $black;
 $cardlist-actions-color: $graphite09;
 
-// Checkboxes
-$checkbox-color: $color-primary;
-$checkbox-disabled-font-color: $checkbox-disabled-text-color;
-$checkbox-disabled-select-bg-color: $checkbox-disabled-checked-bg-color;
-
 // Switch
-$switch-checked-color: $color-primary;
+$radio-checked-color: $color-primary;
 $switch-checked-bg-color: $color-primary;
 $switch-unchecked-bg-color: $white;
 $switch-unchecked-bar-color: $graphite07;
@@ -367,10 +367,10 @@ $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(41, 41, 41, 0.3);
 $editor-blockquote-color: $graphite07;
 
 // Radio Buttons
-$radio-hover-border-color: $radio-border-hover-color;
-$radio-selected-color: $color-primary;
-$radio-selected-bg-color: $radio-checked-bg-color;
-$radio-disabled-select-bg-color: $radio-disabled-checked-bg-color;
+$radio-border-hover-color: $radio-border-hover-color;
+$radio-checked-color: $color-primary;
+$radio-checked-bg-color: $radio-checked-bg-color;
+$radio-disabled-checked-bg-color: $radio-disabled-checked-bg-color;
 
 // Pager
 $pager-text-color: $color-primary;
@@ -489,7 +489,7 @@ $vertical-tab-active-text-color: $white;
 $vertical-tab-active-bg-color: $color-primary;
 
 $vertical-tab-panel-bg-color: $panel-bg-color;
-$vertical-tab-sidebar-bg-color: $body-bg-color;
+$vertical-tab-sidebar-bg-color: $body-bg-color-primary;
 $vertical-tab-sidebar-border-color: $graphite06;
 
 //Multi-tabs
@@ -605,7 +605,7 @@ $timeline-line-color: $graphite05;
 $timeline-header-color: $azure09;
 
 //Wizard
-$wizard-default-bg: $body-bg-color;
+$wizard-default-bg: $body-bg-color-primary;
 $wizard-bar-bg: $graphite06;
 $wizard-color: $graphite09;
 $wizard-disabled-color: $color-default-alt;
