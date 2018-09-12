@@ -1,4 +1,4 @@
-import { Button, BusyIndicator } from '../../../src/components/busyindicator/busyindicator';
+import { BusyIndicator } from '../../../src/components/busyindicator/busyindicator';
 
 const busyindicatorHTML = require('../../../app/views/components/busyindicator/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');

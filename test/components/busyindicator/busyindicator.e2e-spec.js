@@ -27,213 +27,213 @@ describe('Busy Indicator example-index tests', () => {
 });
 
 describe('Busy Indicator example-custom-loading-text tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/example-custom-loading-text');
-    });
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/example-custom-loading-text');
+  });
 
-    it('Should display busy indicator with custom text', async () => {
-        const buttonEl = await element(by.id('submit'));
-        await buttonEl.click();
+  it('Should display busy indicator with custom text', async () => {
+    const buttonEl = await element(by.id('submit'));
+    await buttonEl.click();
 
-        const customTextEl = await element(by.className('busy-indicator-container')).element(by.tagName('span'));
+    const customTextEl = await element(by.className('busy-indicator-container')).element(by.tagName('span'));
 
-        expect(customTextEl.getText()).toEqual('Hang Tough, Skippy...');
-    });
+    expect(customTextEl.getText()).toEqual('Hang Tough, Skippy...');
+  });
 });
 
 describe('Busy Indicator example-inputs tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/example-inputs');
-    });
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/example-inputs');
+  });
 
-    it('Should display busy indicator inside input', async () => {
-        const inputLoadBtn = await element(by.id('trigger-busy-input'));       
+  it('Should display busy indicator inside input', async () => {
+    const inputLoadBtn = await element(by.id('trigger-busy-input'));
 
-        await inputLoadBtn.click();
+    await inputLoadBtn.click();
 
-        const fieldEl = await element.all(by.className('field')).get(0);
-        
-        expect(await fieldEl.element(by.className('busy-indicator-container'))).toBeTruthy();
+    const fieldEl = await element.all(by.className('field')).get(0);
 
-        // const ec = protractor.ExpectedConditions;
-        // await browser.driver.wait(ec.not(ec.visibilityOf(element(by.className('busy-indicator-container')))), config.waitsFor);
+    expect(await fieldEl.element(by.className('busy-indicator-container'))).toBeTruthy();
 
-        // expect(await fieldEl.element(by.className('busy-indicator-container'))).toBeFalsy();
-    });
+    // const ec = protractor.ExpectedConditions;
+    // await browser.driver.wait(ec.not(ec.visibilityOf(element(by.className('busy-indicator-container')))), config.waitsFor);
 
-    it('Should display busy indicator inside dropdown', async () => {        
-        const dropdownLoadBtn = await element(by.id('trigger-busy-dropdown'));
-        
-        await dropdownLoadBtn.click();
+    // expect(await fieldEl.element(by.className('busy-indicator-container'))).toBeFalsy();
+  });
 
-        const fieldEl = await element.all(by.className('field')).get(1);
+  it('Should display busy indicator inside dropdown', async () => {
+    const dropdownLoadBtn = await element(by.id('trigger-busy-dropdown'));
 
-        expect(await fieldEl.element(by.className('busy-indicator-container'))).toBeTruthy();
+    await dropdownLoadBtn.click();
 
-        // await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.className('busy-indicator-container'))), config.waitsFor);
+    const fieldEl = await element.all(by.className('field')).get(1);
 
-        // expect(await fieldEl.element(by.className('busy-indicator-container'))).toBeFalsy();
-    });
+    expect(await fieldEl.element(by.className('busy-indicator-container'))).toBeTruthy();
+
+    // await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.className('busy-indicator-container'))), config.waitsFor);
+
+    // expect(await fieldEl.element(by.className('busy-indicator-container'))).toBeFalsy();
+  });
 });
 
 describe('Busy Indicator example-non-blocking tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/example-non-blocking');
-    });
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/example-non-blocking');
+  });
 
-    it('Should display non-blocking busy indicator', async () => {
-        const startBtn = await element(by.id('busy-start-trigger'));
-        await startBtn.click();
+  it('Should display non-blocking busy indicator', async () => {
+    const startBtn = await element(by.id('busy-start-trigger'));
+    await startBtn.click();
 
-        // Check difference between blocking and non-blocking
-    });
+    // Check difference between blocking and non-blocking
+  });
 });
 
 describe('Busy Indicator test-ajax-calls tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/test-ajax-calls');
-    });
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/test-ajax-calls');
+  });
 
-    it('Should display busy indicator while waiting for Ajax response', async () => {
-        const autocompleteEl = await element(by.id('autocomplete-busy'));
-        await autocompleteEl.sendKeys(protractor.Key.NUMPAD1);
+  it('Should display busy indicator while waiting for Ajax response', async () => {
+    const autocompleteEl = await element(by.id('autocomplete-busy'));
+    await autocompleteEl.sendKeys(protractor.Key.NUMPAD1);
 
-        const fieldEl = await element.all(by.className('field')).get(0);
+    const fieldEl = await element.all(by.className('field')).get(0);
 
-        expect(await fieldEl.element(by.className('busy-indicator-container'))).toBeTruthy();
-    });
+    expect(await fieldEl.element(by.className('busy-indicator-container'))).toBeTruthy();
+  });
 });
 
 describe('Busy Indicator test-block-entire-ui tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/test-block-entire-ui');
-    });
-    
-    it('Should block entire UI', async () => {
-        const buttonEl = await element(by.id('submit'));
-        await buttonEl.click();
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/test-block-entire-ui');
+  });
 
-        const addressEl = await element(by.id('busy-field-address'));
-        addressEl.sendKeys(protractor.Key.NUMPAD1);
+  it('Should block entire UI', async () => {
+    const buttonEl = await element(by.id('submit'));
+    await buttonEl.click();
 
-        expect(addressEl.getText()).not.toEqual('1');
-    });
+    const addressEl = await element(by.id('busy-field-address'));
+    addressEl.sendKeys(protractor.Key.NUMPAD1);
+
+    expect(addressEl.getText()).not.toEqual('1');
+  });
 });
 
 describe('Busy Indicator test-block-specific-area tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/test-block-specific-area');
-    });
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/test-block-specific-area');
+  });
 
-    it('Should block specific area', async () => {
-        const startBtn = await element(by.id('busy-start-trigger'));
-        const completeBtn = await element(by.id('busy-complete-trigger'));
-        const specificEl = await element(by.id('standalone-busy'));
+  it('Should block specific area', async () => {
+    const startBtn = await element(by.id('busy-start-trigger'));
+    // const completeBtn = await element(by.id('busy-complete-trigger'));
+    const specificEl = await element(by.id('standalone-busy'));
 
-        await startBtn.click();
+    await startBtn.click();
 
-        expect(await specificEl.element(by.className('busy-indicator-container'))).toBeTruthy();
+    expect(await specificEl.element(by.className('busy-indicator-container'))).toBeTruthy();
 
-        // await browser.actions().click(completeBtn).perform();
+    // await browser.actions().click(completeBtn).perform();
 
-        // expect(await specificEl.element(by.className('busy-indicator-container'))).toBeFalsy();
-    });
+    // expect(await specificEl.element(by.className('busy-indicator-container'))).toBeFalsy();
+  });
 });
 
 describe('Busy Indicator test-block-whole-page tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/test-block-whole-page tests');
-    });
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/test-block-whole-page tests');
+  });
 
-    it('Should block whole page', async () => {
-        const busyindicatorEl = await element(by.css('#maincontent > .busy-indicator-container'));
+  it('Should block whole page', async () => {
+    const busyindicatorEl = await element(by.css('#maincontent > .busy-indicator-container'));
 
-        expect(busyindicatorEl).toBeTruthy();
-    });    
+    expect(busyindicatorEl).toBeTruthy();
+  });
 });
 
 describe('Busy Indicator test-contained-in-font-size-0 tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/test-contained-in-font-size-0');
-    });
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/test-contained-in-font-size-0');
+  });
 
-    it('Should display normal font', async () => {
-        const startBtn = await element(by.id('busy-start-trigger'));
-        await startBtn.click();
+  it('Should display normal font', async () => {
+    const startBtn = await element(by.id('busy-start-trigger'));
+    await startBtn.click();
 
-        const fontSize = element(by.className('busy-indicator-container')).element(by.tagName('span')).getCssValue('font-size');
+    const fontSize = element(by.className('busy-indicator-container')).element(by.tagName('span')).getCssValue('font-size');
 
-        expect(fontSize).not.toEqual(0);
-    });
+    expect(fontSize).not.toEqual(0);
+  });
 });
 
 describe('Busy Indicator test-delayed-display tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/test-delayed-display');
-    });
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/test-delayed-display');
+  });
 
-    it('Should be displayed after a short delay', async () => {
-        const buttonEl = await element(by.id('submit'));
-        await buttonEl.click();
+  it('Should be displayed after a short delay', async () => {
+    const buttonEl = await element(by.id('submit'));
+    await buttonEl.click();
 
-        await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('busy-indicator-container'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('busy-indicator-container'))), config.waitsFor);
 
-        expect(await element(by.className('busy-indicator-container'))).toBeTruthy();
-    });
+    expect(await element(by.className('busy-indicator-container'))).toBeTruthy();
+  });
 });
 
 describe('Busy Indicator test-inside-tab tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/test-inside-tab');
-    });    
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/test-inside-tab');
+  });
 
-    it('Should be displayed inside tab', async () => {
-        const startBtn = await element(by.id('busy-start-trigger'));
-        await startBtn.click();
+  it('Should be displayed inside tab', async () => {
+    const startBtn = await element(by.id('busy-start-trigger'));
+    await startBtn.click();
 
-        const tabEl = await element(by.id('tabs-normal-contracts'));
+    const tabEl = await element(by.id('tabs-normal-contracts'));
 
-        expect(await element(by.className('busy-indicator-container'))).toBeTruthy();
-    });
+    expect(await tabEl.element(by.className('busy-indicator-container'))).toBeTruthy();
+  });
 });
 
 describe('Busy Indicator test-nested tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/test-nested');
-    });  
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/test-nested');
+  });
 
-    it('Should display nested busy indicators', async () => {
-        const nestedStartBtn = await element(by.id('nested-busy-start-trigger'));
-        const buttonEl = await element(by.id('submit'));
+  it('Should display nested busy indicators', async () => {
+    const nestedStartBtn = await element(by.id('nested-busy-start-trigger'));
+    const buttonEl = await element(by.id('submit'));
 
-        await nestedStartBtn.click();
-        await buttonEl.click();
+    await nestedStartBtn.click();
+    await buttonEl.click();
 
-        const nestedStandaloneEl = await element(by.id('nested-busy-standalone'));
+    const nestedStandaloneEl = await element(by.id('nested-busy-standalone'));
 
-        expect(await nestedStandaloneEl.element(by.className('busy-indicator-container'))).toBeTruthy();
+    expect(await nestedStandaloneEl.element(by.className('busy-indicator-container'))).toBeTruthy();
 
-        const nestedBusyIndicatorEl = await element.all(by.css('.busy-indicator-container'));
+    const nestedBusyIndicatorEl = await element.all(by.css('.busy-indicator-container'));
 
-        expect(nestedBusyIndicatorEl.length).toEqual(2);
-    });
+    expect(nestedBusyIndicatorEl.length).toEqual(2);
+  });
 });
 
 describe('Busy Indicator test-update tests', () => {
-    beforeEach(async () => {
-        await utils.setPage('/components/busyindicator/test-update');
-    });  
+  beforeEach(async () => {
+    await utils.setPage('/components/busyindicator/test-update');
+  });
 
-    it('Should update busy indicator text', async () => {
-        const buttonEl = await element(by.id('submit'));
-        
-        await buttonEl.click();
+  it('Should update busy indicator text', async () => {
+    const buttonEl = await element(by.id('submit'));
 
-        const customTextEl = await element(by.className('busy-indicator-container')).element(by.tagName('span'));        
+    await buttonEl.click();
 
-        const EC = protractor.ExpectedConditions;
-        browser.wait(EC.textToBePresentInElement(customTextEl, 'New Text 1'), 5000);
+    const customTextEl = await element(by.className('busy-indicator-container')).element(by.tagName('span'));
 
-        expect(customTextEl.getText()).toEqual('New Text 1');
-    });
+    const EC = protractor.ExpectedConditions;
+    browser.wait(EC.textToBePresentInElement(customTextEl, 'New Text 1'), 5000);
+
+    expect(customTextEl.getText()).toEqual('New Text 1');
+  });
 });
