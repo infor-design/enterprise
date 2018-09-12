@@ -180,7 +180,7 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.css('div[aria-controls="dropdown-list"]'))).not.toContain('is-open');
     });
 
-    fit('Should not allow the escape key to re-open a closed menu', async () => { //eslint-disable-line
+    it('Should not allow the escape key to re-open a closed menu', async () => { //eslint-disable-line
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
 
       await browser.driver
