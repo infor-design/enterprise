@@ -2141,7 +2141,7 @@ Tree.prototype = {
     this.element.empty();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
-
+  
   /**
    * Disables all nodes in the Tree component
    * @returns {void}
@@ -2151,6 +2151,18 @@ Tree.prototype = {
     nodes.forEach((node) => {
       node.classList.add('is-disabled');
       node.setAttribute('aria-disabled', 'true');
+    });
+  },
+
+  /**
+   * Enables all nodes in the Tree component
+   * @returns {void}
+   */
+  enable() {
+    const nodes = this.element[0].querySelectorAll('a');
+    nodes.forEach((node) => {
+      node.classList.remove('is-disabled');
+      node.removeAttribute('aria-disabled');
     });
   },
 
