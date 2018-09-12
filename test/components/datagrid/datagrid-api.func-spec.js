@@ -204,8 +204,8 @@ describe('Datagrid API', () => {
         expect(document.body.querySelector('#tooltip')).toBeTruthy();
         expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
         done();
-      }, 400);
-    }, 400);
+      }, 500);
+    }, 500);
   });
 
   it('Should be able to show tooltip on either text cut off or not', (done) => {
@@ -224,7 +224,7 @@ describe('Datagrid API', () => {
       expect(document.body.querySelector('#tooltip')).toBeTruthy();
       expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
       done();
-    }, 400);
+    }, 500);
   });
 
   it('Should be able to shown tooltip rowStatus', (done) => {
@@ -237,7 +237,7 @@ describe('Datagrid API', () => {
       expect(document.body.querySelector('#tooltip.is-error')).toBeFalsy();
       expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
       done();
-    }, 400);
+    }, 500);
   });
 
   it('Should be able to shown tooltip rowStatus error', (done) => {
@@ -250,6 +250,6 @@ describe('Datagrid API', () => {
       expect(document.body.querySelector('#tooltip.is-error')).toBeTruthy();
       expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
       done();
-    }, 400);
+    }, 500);
   });
 });
