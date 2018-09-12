@@ -1184,7 +1184,7 @@ $datagrid-short-row-height: 23px;
       height: $datagrid-row-height + 7;
 
       td {
-        background-color: $body-bg-color;
+        background-color: $body-bg-color-primary;
       }
     }
 
@@ -2030,7 +2030,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &.is-checked::before {
-        border: 1px solid $checkbox-color;
+        border: 1px solid $checkbox-border-color;
       }
     }
 
