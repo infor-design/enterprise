@@ -126,7 +126,7 @@ describe('DatePicker API', () => {
 
     const converted = datepickerAPI.conversions.fromGregorian(testDate);
 
-    expect(datepickerEl.value).toEqual(`${converted[0]}/${converted[1] + 1}/${converted[2].toString().length === 1 ? `0${converted[2]}` : converted[2]}`);
+    expect(datepickerEl.value).toEqual(`${converted[0]}/${(`${converted[1] + 1}`).padStart(2, '0')}/${(`${converted[2]}`).padStart(2, '0')}`);
   });
 
   it('Should set internal format', () => {
