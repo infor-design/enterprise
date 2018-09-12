@@ -4,10 +4,15 @@
 // Standard CSS reset stuff here
 @import '../core/reset';
 @import '../core/mixins';
-@import '../core/config';
 
-// IDS-identity token variables
+// Enterprise colors
+@import '../components/colors/colorpalette';
+
+// ids-identity token vars
 @import '../../node_modules/ids-identity/dist/tokens/web/theme-uplift';
+
+// Local vars
+@import '../core/config';
 
 // Core Controls
 @import '../core/controls';

@@ -4,10 +4,15 @@
 // Standard CSS reset
 @import '../core/reset';
 @import '../core/mixins';
-@import '../core/config';
 
-// IDS-identity token variables
+// Enterprise color palette
+@import '../components/colors/colorpalette';
+
+// ids-identity token vars
 @import '../../node_modules/ids-identity/dist/tokens/web/theme-soho-dark';
+
+// Local vars
+@import '../core/config';
 
 // Override Config
 //================================================== //
