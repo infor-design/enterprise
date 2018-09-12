@@ -181,8 +181,6 @@ describe('Dropdown example-index tests', () => {
     });
 
     fit('Should not allow the escape key to re-open a closed menu', async () => { //eslint-disable-line
-      debugger;
-
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
 
       await browser.driver
@@ -190,20 +188,19 @@ describe('Dropdown example-index tests', () => {
       await element(by.css('div[aria-controls="dropdown-list"]')).click();
 
       // Wait for the menu to be present
-      // await browser.driver.sleep(100);
-      // await element(by.css('ul[role="listbox"]')).isPresent();
-
-      await browser.driver
-        .wait(EC.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      // NOTE: Need to fix this once setTimeouts are removed (Github #794)
+      // await browser.driver
+      //  .wait(EC.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      await browser.driver.sleep(100);
 
       // First key press causes the menu to close
       await element(by.css('#dropdown-search')).sendKeys(protractor.Key.ESCAPE);
 
       // Wait for the menu to disappear
-      // await browser.driver.sleep(100);
-      // await EC.not(element(by.css('ul[role="listbox"]')).isPresent());
-      await browser.driver
-        .wait(EC.invisibilityOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      // NOTE: Need to fix this once setTimeouts are removed (Github #794)
+      // await browser.driver
+      //   .wait(EC.invisibilityOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      await browser.driver.sleep(100);
 
       // Second key press should do nothing
       await element(by.css('div[aria-controls="dropdown-list"]')).sendKeys(protractor.Key.ESCAPE);
