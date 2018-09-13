@@ -189,7 +189,10 @@
   }
 
   .accordion {
-    width: 300px;
+    @media (min-width: $breakpoint-phone + 1px) {
+      max-width: 100%;
+      width: 300px;
+    }
   }
 }
 
