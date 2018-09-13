@@ -7467,7 +7467,7 @@ Datagrid.prototype = {
 
   setNextActiveCell(e) {
     const self = this;
-    if (e.type === 'keydown' && !self.settings.actionableMode) {
+    if (e.type === 'keydown') {
       if (this.settings.actionableMode) {
         setTimeout(() => {
           const evt = $.Event('keydown.datagrid');
