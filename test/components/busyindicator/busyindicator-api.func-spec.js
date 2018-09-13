@@ -1,76 +1,78 @@
-import { BusyIndicator } from '../../../src/components/busyindicator/busyindicator';
-
 const busyindicatorHTML = require('../../../app/views/components/busyindicator/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
 
 let busyindicatorEl;
-let svgEl;
 let busyindicatorObj;
 
 describe('Busy Indicator API', () => {
   beforeEach(() => {
     busyindicatorEl = null;
-    svgEl = null;
-    busyindicatorObj = null;
-    document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', busyindicatorHTML);
-    busyindicatorEl = document.body.querySelector('.busy-indicator');
-    svgEl = document.body.querySelector('.svg-icons');
-    busyindicatorEl.classList.add('no-init');
-    busyindicatorObj = new BusyIndicator(busyindicatorEl);
+
+    busyindicatorEl = $('#busy-form');
+
+    busyindicatorObj = busyindicatorEl.data('busyindicator');
   });
 
   afterEach(() => {
-    busyindicatorObj.destroy();
-    busyindicatorEl.parentNode.removeChild(busyindicatorEl);
-    svgEl.parentNode.removeChild(svgEl);
+    if (busyindicatorObj) {
+      busyindicatorObj.destroy();
+    }
   });
 
-  it('Should be defined on jQuery object', () => {
-    expect(busyindicatorObj).toEqual(jasmine.any(Object));
-  });
-
-  it('Should destroy busy indicator', (done) => {
-    const spyEvent = spyOnEvent(busyindicatorEl, 'start.busyindicator');
-    busyindicatorObj.destroy();
-
-    const buttonEl = document.body.querySelector('#submit');
+  it('Should destroy busy indicator', () => {
+    const buttonEl = $('#submit');
     buttonEl.click();
 
     setTimeout(() => {
-      expect(spyEvent).not.toHaveBeenTriggered();
-      done();
-    }, 500);
+      busyindicatorObj.destroy();
 
-    expect($(busyindicatorEl).data('busyindicator')).toBeFalsy();
+      expect(busyindicatorObj).toBeFalsy();
+    }, 1000);
   });
 
-  it('Should set settings', () => {
-    const settings = {
-      blockUI: true,
-      text: null,
-      displayDelay: 1000,
-      timeToComplete: 0,
-      transparentOverlay: false,
-      overlayOnly: false
-    };
+  it('Should display busy indicator when triggering "start.busyindicator"', () => {
+    busyindicatorEl.trigger('start.busyindicator');
 
-    expect(busyindicatorObj.settings).toEqual(settings);
+    setTimeout(() => {
+      expect(document.body.querySelector('.busy-indicator')).toBeTruthy();
+    }, 1000);
   });
 
-  it('Should update settings via parameter', () => {
-    const settings = {
-      blockUI: false,
-      text: null,
-      displayDelay: 1000,
-      timeToComplete: 0,
-      transparentOverlay: false,
-      overlayOnly: false
-    };
+  it('Should hide busy indicator when triggerring "complete.busyindicator"', () => {
+    const buttonEl = $('#submit');
+    buttonEl.click();
 
-    busyindicatorObj.init();
-    busyindicatorObj.updated(settings);
+    setTimeout(() => {
+      busyindicatorEl.trigger('complete.busyindicator');
 
-    expect(busyindicatorObj.settings.blockUI).toEqual(settings.blockUI);
+      expect(document.body.querySelector('.busy-indicator')).toBeFalsy();
+    });
+  });
+
+  it('Should update text of busy indicator', () => {
+    const buttonEl = $('#submit');
+    buttonEl.click();
+
+    let customText = '';
+
+    setTimeout(() => {
+      customText = 'Custom Text';
+      busyindicatorObj.updated({ text: customText });
+    }, 1000);
+
+    setTimeout(() => {
+      const customTextEl = $('.busy-indicator-container > span');
+
+      expect(customTextEl.text()).toEqual(customText);
+    }, 2000);
+  });
+
+  it('Should return correct value for isActive', () => {
+    const buttonEl = $('#submit');
+    buttonEl.click();
+
+    setTimeout(() => {
+      expect(busyindicatorObj.isActive()).toEqual(true);
+    }, 1000);
   });
 });
