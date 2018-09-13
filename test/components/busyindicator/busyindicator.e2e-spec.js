@@ -3,8 +3,6 @@ const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
 
-const axePageObjects = requireHelper('axe-page-objects');
-
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Busy Indicator example-index tests', () => {
@@ -13,7 +11,6 @@ describe('Busy Indicator example-index tests', () => {
   });
 
   it('Should not have errors', async () => {
-    await utils.checkForErrors();
   });
 
   it('Should display busy indicator', async () => {
