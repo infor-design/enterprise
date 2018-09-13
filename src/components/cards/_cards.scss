@@ -244,7 +244,7 @@
 
     &.card-group-action,
     &.widget-group-action {
-      background-color: $body-bg-color;
+      background-color: $body-bg-color-primary;
       border: 1px solid transparent;
       border-bottom-color: $listview-border-color;
     }
@@ -278,7 +278,7 @@
   }
 
   &.alternate {
-    background-color: $body-bg-color;
+    background-color: $body-bg-color-primary;
   }
 
 }

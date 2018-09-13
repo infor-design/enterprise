@@ -48,7 +48,7 @@
 .radio:hover + label::before {
   @include css3(transition, border-color 300ms ease);
 
-  border-color: $radio-hover-border-color;
+  border-color: $radio-border-hover-color;
 }
 
 .inline .radio ~ .label-text,
@@ -65,8 +65,8 @@
 
 .inline .radio ~ .label-text::after,
 .radio + label::after {
-  background-color: $radio-selected-bg-color;
-  border: 2px solid $radio-selected-bg-color;
+  background-color: $radio-checked-bg-color;
+  border: 2px solid $radio-checked-bg-color;
   border-radius: 50%;
   content: '';
   height: 4px;
@@ -83,8 +83,8 @@
 
 .inline .radio:checked ~ .label-text::before,
 .radio:checked + label::before {
-  background-color: $radio-selected-color;
-  border: 1px solid $radio-selected-color;
+  background-color: $radio-checked-color;
+  border: 1px solid $radio-checked-color;
 }
 
 // checked mark aspect changes
@@ -119,8 +119,8 @@
 
 .inline .radio:disabled:checked ~ .label-text::before,
 .radio:disabled:checked + label::after {
-  background-color: $radio-disabled-select-bg-color;
-  border: 2px solid $radio-disabled-select-bg-color;
+  background-color: $radio-disabled-checked-bg-color;
+  border: 2px solid $radio-disabled-checked-bg-color;
 }
 
 .inline .radio:disabled ~ .label-text,

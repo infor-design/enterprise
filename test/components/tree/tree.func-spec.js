@@ -585,4 +585,19 @@ describe('Tree Methods', () => {
     expect(icon).toEqual('#icon-tree-node');
     expect(children.length).toEqual(1);
   });
+
+  it('Should not detect any non-disabled tree nodes', () => {
+    const count = treeEl.querySelectorAll('li a[role="treeitem"]').length;
+    treeObj.disable();
+    const countDisabled = treeEl.querySelectorAll('li a[role="treeitem"].is-disabled').length;
+
+    expect(countDisabled).toEqual(count);
+  });
+
+  it('Should not detect any disabled tree nodes', () => {
+    treeObj.enable();
+    const countDisabled = treeEl.querySelectorAll('li a[role="treeitem"].is-disabled').length;
+
+    expect(countDisabled).toEqual(0);
+  });
 });
