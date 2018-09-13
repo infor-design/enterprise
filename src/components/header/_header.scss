@@ -291,7 +291,7 @@ $subheader-height: 60px;
     }
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $button-default-focus-border-color, $focus-box-shadow;
+      box-shadow: 0 0 0 1px $body-bg-color-primary, 0 0 0 2px $button-default-focus-border-color, $focus-box-shadow;
     }
   }
 }

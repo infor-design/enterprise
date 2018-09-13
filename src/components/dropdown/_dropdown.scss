@@ -219,7 +219,7 @@ div.multiselect {
 
   // Enables certain mobile-specific settings
   &.mobile {
-    background-color: $body-bg-color;
+    background-color: $body-bg-color-primary;
   }
 
   &.is-ontop {
@@ -517,7 +517,7 @@ div.multiselect {
 }
 
 .dropdown-search {
-  background-color: $body-bg-color;
+  background-color: $body-bg-color-primary;
   border: 0;
   border-bottom: 1px solid $dropdown-menu-separator-border-color;
   border-radius: 0;
