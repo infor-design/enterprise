@@ -2,6 +2,7 @@ const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
+const EC = protractor.ExpectedConditions;
 
 const axePageObjects = requireHelper('axe-page-objects');
 
@@ -162,46 +163,53 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.id('dropdown-search')).getAttribute('value')).toEqual('New Jersey');
     });
 
-    xit('Should close an open list and tab to the next element without re-opening', async () => { //eslint-disable-line
+    it('Should close an open list and tab to the next element without re-opening', async () => { //eslint-disable-line
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
 
-      await dropdownEl.sendKeys('New');
-
-      // Wait for the list to open
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown-search'))), config.waitsFor);
-      const dropdownSearchEl = element(by.css('.dropdown-search'));
-
-      await dropdownSearchEl.sendKeys(protractor.Key.TAB);
-      await dropdownSearchEl.sendKeys(protractor.Key.TAB);
-      await browser.driver.sleep(config.sleep);
-
-      // The List should be closed
-      expect(await element(by.css('.dropdown-search')).isPresent()).toBeFalsy();
-    });
-
-    xit('Should not allow the escape key to re-open a closed menu', async () => { //eslint-disable-line
-      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
-      await dropdownEl.click();
+      await element(by.css('div[aria-controls="dropdown-list"]')).sendKeys('New');
 
       // Wait for the list to open
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-      const dropdownSearchEl = await element(by.id('dropdown-search'));
+
+      // Tab out
+      await browser.actions().sendKeys(protractor.Key.TAB).perform();
+
+      expect(await element(by.css('div[aria-controls="dropdown-list"]'))).not.toContain('is-open');
+    });
+
+    it('Should not allow the escape key to re-open a closed menu', async () => { //eslint-disable-line
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+
+      await browser.driver
+        .wait(EC.presenceOf(dropdownEl), config.waitsFor);
+      await element(by.css('div[aria-controls="dropdown-list"]')).click();
+
+      // Wait for the menu to be present
+      // NOTE: Need to fix this once setTimeouts are removed (Github #794)
+      // await browser.driver
+      //  .wait(EC.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      await browser.driver.sleep(100);
 
       // First key press causes the menu to close
-      await dropdownSearchEl.sendKeys(protractor.Key.ESCAPE);
+      await element(by.css('#dropdown-search')).sendKeys(protractor.Key.ESCAPE);
+
+      // Wait for the menu to disappear
+      // NOTE: Need to fix this once setTimeouts are removed (Github #794)
+      // await browser.driver
+      //   .wait(EC.invisibilityOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      await browser.driver.sleep(100);
 
       // Second key press should do nothing
       await element(by.css('div[aria-controls="dropdown-list"]')).sendKeys(protractor.Key.ESCAPE);
-      await browser.driver.sleep(config.sleep);
+
+      // Sleep for a short period of time, because we're not sure if the menu will be present or not
+      await browser.driver.sleep(100);
 
       // The Dropdown Pseudo element should no longer have focus
-      expect(await browser.driver.switchTo().activeElement().getAttribute('class')).not.toContain('is-open');
+      expect(await element(by.css('div[aria-controls="dropdown-list"]')).getAttribute('class')).not.toContain('is-open');
     });
   }
 });
