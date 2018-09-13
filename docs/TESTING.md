@@ -103,7 +103,7 @@ npm run e2e:ci:bs
 
 IDS Enterprise is configured for nightly builds of the `master` branch.  This build runs in the evening (EST) and it tests <http://master-enterprise.demo.design.infor.com> by default.  TravisCI runs these with:
 
-```
+```sh
 npm run e2e:ci:bs
 ```
 
