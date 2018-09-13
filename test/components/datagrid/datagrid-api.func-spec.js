@@ -179,35 +179,6 @@ describe('Datagrid API', () => {
     expect(text).toEqual('test');
   });
 
-  it('Should be able to show tooltip on text cut off', (done) => {
-    datagridObj.destroy();
-    columns[1].width = 500;
-    datagridObj = new Datagrid(datagridEl, {
-      dataset: data,
-      columns,
-      enableTooltips: true
-    });
-    let td = document.body.querySelector('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]');
-    $(td).trigger('mouseover');
-
-    setTimeout(() => {
-      expect(document.body.querySelector('#tooltip')).toBeTruthy();
-      expect(document.body.querySelector('#tooltip.is-hidden')).toBeTruthy();
-
-      $(td).trigger('mouseout');
-      columns[1].width = 100;
-      datagridObj.updateColumns(columns);
-      td = document.body.querySelector('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]');
-      $(td).trigger('mouseover');
-
-      setTimeout(() => {
-        expect(document.body.querySelector('#tooltip')).toBeTruthy();
-        expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
-        done();
-      }, 500);
-    }, 500);
-  });
-
   it('Should be able to show tooltip on either text cut off or not', (done) => {
     datagridObj.destroy();
     columns[1].width = 500;

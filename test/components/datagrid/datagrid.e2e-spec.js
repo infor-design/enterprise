@@ -91,3 +91,33 @@ describe('Datagrid contextmenu tests', () => {
     expect(await element(by.css('#grid-actions-menu .submenu ul > li:nth-child(1)')).isDisplayed()).toBeTruthy();
   });
 });
+
+describe('Datagrid tooltip tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-tooltips');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show tooltip on text cut off', async () => {
+    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="4"] td[aria-colindex="9"]'))).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.tooltip'))), config.waitsFor);
+    let tooltip = await element(by.id('tooltip'));
+
+    expect(await tooltip.getAttribute('class')).toContain('is-hidden');
+
+    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="5"] td[aria-colindex="9"]'))).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.tooltip'))), config.waitsFor);
+    tooltip = await element(by.id('tooltip'));
+
+    expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
+  });
+});
