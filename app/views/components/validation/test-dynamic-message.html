@@ -1,0 +1,51 @@
+<form>
+  <div class="row">
+    <div class="twelve columns">
+      <h2 class="fieldset-title">Validation tests</h2>
+      <div class="field">
+        <label class="label required" for="dropdown-field">Dropdown Field</label>
+        <select id="dropdown-field" data-validate="required customDynamicRule" name="dropdown-field" class="dropdown">
+          <option value=""></option>
+          <option value="AL">Alabama</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District Of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          </select>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+  $(function() {
+    $.fn.validation.rules.customDynamicRule = {
+      check: function (value, field) {
+        var pass = false;
+        if (value === 'HI') {
+          pass = true;
+        }
+        $.fn.validation.rules['customDynamicRule'].message = 'The State, \u0027' + value + '\u0027, has additional postal costs.';
+        return pass;
+      },
+      message: 'Dynamic error message',
+  	  type: 'error',
+      id: 'customDynamicRule'
+    };
+
+    $('form').on('valid', function (e, args) {
+      console.log('valid event', e, args);
+    });
+
+    $('form').on('error', function (e, args) {
+      console.log('error event', e, args);
+    });
+  });
+</script>
