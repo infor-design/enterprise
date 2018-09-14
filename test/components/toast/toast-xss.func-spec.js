@@ -30,10 +30,14 @@ describe('Toast XSS Prevention', () => {
 
     // Clean up any previous toasts
     const toastContainer = document.querySelector('#toast-container');
-    toastContainer.parentNode.removeChild(toastContainer);
+    if (toastContainer) {
+      toastContainer.parentNode.removeChild(toastContainer);
+    }
 
-    toastAPI.destroy();
-    toastAPI = null;
+    if (toastAPI) {
+      toastAPI.destroy();
+      toastAPI = null;
+    }
     toastAPI = new Toast(toastEl, {
       title: dangerousToastTitle,
       message: dangerousToastMsg,
