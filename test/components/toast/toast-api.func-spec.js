@@ -10,6 +10,17 @@ describe('Toast API', () => {
     toastEl = document.body;
     toastObj = null;
 
+    // Clean up any previous toasts
+    const toastContainer = document.querySelector('#toast-container');
+    if (toastContainer) {
+      toastContainer.parentNode.removeChild(toastContainer);
+    }
+
+    if (toastObj) {
+      toastObj.destroy();
+      toastObj = null;
+    }
+
     const toastTitle = 'Toast Title';
     const toastMessage = 'Toast Message';
 
@@ -24,6 +35,11 @@ describe('Toast API', () => {
     toastEl = null;
 
     toastObj.destroy();
+
+    const toastContainer = document.querySelector('#toast-container');
+    if (toastContainer) {
+      toastContainer.parentNode.removeChild(toastContainer);
+    }
   });
 
   it('Should be defined', () => {
