@@ -823,7 +823,7 @@ Editor.prototype = {
             self.createLink($(`[name="em-url-${self.id}"]`, this));
           }
         } else {
-          self.insertImage($('#image').val());
+          self.insertImage($(`#image-${self.id}`).val());
         }
       });
 
@@ -909,8 +909,8 @@ Editor.prototype = {
         </div>
         <div class="modal-body">
           <div class="field">
-            <label for="image">${Locale.translate('Url')}</label>
-            <input id="image" name="image" type="text" value="${this.settings.image.url}">
+            <label for="image-${this.id}">${Locale.translate('Url')}</label>
+            <input id="image-${this.id}" name="image-${this.id}" type="text" value="${this.settings.image.url}">
           </div>
           <div class="modal-buttonset">
             <button type="button" class="btn-modal btn-cancel">
