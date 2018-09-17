@@ -20,7 +20,7 @@ html {
   font-size: 62.5%;
 
   body {
-    background-color: $body-bg-color;
+    background-color: $body-bg-color-primary;
     color: $font-color-default;
     font-family: $font-regular;
     font-size: 1rem;
@@ -274,7 +274,7 @@ small,
 .info-text {
   @include font-size(11);
 
-  color: $azure07;
+  color: $color-primary-alt;
   font-weight: $font-weight-bold;
 }
 

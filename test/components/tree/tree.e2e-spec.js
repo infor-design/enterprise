@@ -217,3 +217,27 @@ describe('Tree select-multiple tests', () => {
     expect(await element.all(by.css('.tree li.folder')).get(0).all(by.css('a[role="treeitem"].is-disabled')).count()).toBe(1);
   });
 });
+
+describe('Tree disable all nodes test', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tree/example-disable');
+  });
+
+  it('Should not detect any non-disabled tree nodes', async () => {
+    const count = await element.all(by.css('.tree li a[role="treeitem"]')).count();
+
+    await element(by.id('disable')).click();
+    expect(await element.all(by.css('.tree li a[role="treeitem"].is-disabled')).count()).toBe(count);
+  });
+});
+
+describe('Tree enable all nodes test', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tree/example-enable');
+  });
+
+  it('Should not detect any disabled tree nodes', async () => {
+    await element(by.id('enable')).click();
+    expect(await element.all(by.css('.tree li a[role="treeitem"].is-disabled')).count()).toBe(0);
+  });
+});

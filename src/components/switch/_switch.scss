@@ -88,8 +88,8 @@
   //Checked Styling - Toggle Handle
   input:checked ~ .label-text::after,
   input:checked ~ label::after {
-    background: $switch-checked-color;
-    border-color: $switch-checked-color;
+    background: $radio-checked-color;
+    border-color: $radio-checked-color;
     left: 15px;
   }
 
@@ -106,7 +106,7 @@
   input:not(:disabled):checked:focus ~ .label-text::after,
   input:not(:disabled):checked:active ~ label::after,
   input:not(:disabled):checked:focus ~ label::after {
-    background-color: $switch-checked-color;
+    background-color: $radio-checked-color;
   }
 
   input:not(:disabled):checked:hover ~ .label-text::after,

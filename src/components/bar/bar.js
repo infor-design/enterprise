@@ -450,7 +450,7 @@ Bar.prototype = {
             for (j = 0, l = data.length; j < l; j++) {
               hexColor = charts.chartColor(j, 'bar', legendMap[j]);
               content += `<div class="swatch-row">
-                    <div class="swatch-color"}${setPattern(legendMap[j].pattern, hexColor)}</div>
+                    <div class="swatch-color">${setPattern(legendMap[j].pattern, hexColor)}</div>
                   <span>${data[j].name}</span><b>${format(data[j].value)}</b>
                 </div>`;
             }

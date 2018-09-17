@@ -33,6 +33,10 @@ demo:
     slug: example-update-node
   - name: Disable Tree
     slug: example-disable
+  - name: Enable Tree
+    slug: example-enable
+  - name: Preserve and Restore Tree
+    slug: example-preserve-restore
 ---
 
 ## Testability

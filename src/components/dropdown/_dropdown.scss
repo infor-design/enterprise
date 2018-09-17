@@ -219,7 +219,7 @@ div.multiselect {
 
   // Enables certain mobile-specific settings
   &.mobile {
-    background-color: $body-bg-color;
+    background-color: $body-bg-color-primary;
   }
 
   &.is-ontop {
@@ -517,7 +517,7 @@ div.multiselect {
 }
 
 .dropdown-search {
-  background-color: $body-bg-color;
+  background-color: $body-bg-color-primary;
   border: 0;
   border-bottom: 1px solid $dropdown-menu-separator-border-color;
   border-radius: 0;
@@ -818,11 +818,13 @@ div.dropdown-xs,
       top: 11px;
     }
   }
+
   div.dropdown,
   div.multiselect {
     > .listoption-icon {
       top: 9px;
     }
+
     + .icon {
       top: 4px;
     }
@@ -836,6 +838,7 @@ div.dropdown-xs,
     > .listoption-icon {
       top: 9px;
     }
+
     + .icon {
       top: 4px;
     }

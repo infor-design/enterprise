@@ -1,21 +1,19 @@
 <div id="maincontent" class="two-column page-container scrollable" role="main">
-
-  <nav class="sidebar scrollable-y" role="complementary">
+   <nav class="sidebar scrollable-y" role="complementary">
     <div class="content darker">
-
-      <ul role="tree" id="tree" aria-label="Asset Types" class="tree">
+       <ul role="tree" id="tree" aria-label="Asset Types" class="tree">
         <li>
             <a id="home" href="#">Home</a>
         </li>
-        <li><a id="about-us" href="#">About Us</a></li>
+        <li><a id="about-us" href="#" class="is-disabled">About Us</a></li>
         <li class="is-open mycustom">
-            <a id="public-folders" href="#">Public Folders</a>
+            <a id="public-folders" href="#" class="is-disabled">Public Folders</a>
             <ul class="is-open root">
               <li class="is-open">
-                  <a id="leadership" href="#">Leadership</a>
+                  <a id="leadership" href="#" class="is-disabled">Leadership</a>
                   <ul class="is-open">
                     <li>
-                      <a href="#">Leadership</a>
+                      <a href="#" class="is-disabled">Leadership</a>
                     </li>
                     <li>
                       <a id="history" href="#" class="is-disabled hide-focus" disabled>History</a>
@@ -25,12 +23,12 @@
                     </li>
                   </ul>
               </li>
-              <li><a id="history2" href="#">History2</a></li>
+              <li><a id="history" href="#">History</a></li>
               <li><a id="careers" href="#">Careers</a></li>
             </ul>
         </li>
         <li>
-            <a id="icons" href="#">Icons</a>
+            <a id="icons" href="#" class="is-disabled">Icons</a>
             <ul class="root">
               <li>
                 <a id="audio" href="#" class="icon-tree-audio">Audio</a>
@@ -127,61 +125,47 @@
               </li>
             </ul>
         </li>
-
-        <li>
-          <a id="blog" href="#">Blog</a>
+         <li>
+          <a id="blog" href="#" class="is-disabled">Blog</a>
         </li>
-
-        <li>
-          <a id="contact" href="#">Contact</a>
+         <li>
+          <a id="contact" href="#" class="is-disabled">Contact</a>
         </li>
       </ul>
-
-    </div>
+     </div>
   </nav>
-
-  <section class="main scrollable-y" role="main">
-
-    <div class="content">
-
-      <div class="row">
+   <section class="main scrollable-y" role="main">
+     <div class="content">
+       <div class="row">
         <div class="six columns">
-
-          <h2>Tree Component: Disable nodes</h2>
-
-          <p>The button below this paragraph disables all nodes in the Tree Component.</p>
-
-          <div class="field">
-            <button type="button" id="disable" class="btn-secondary">
+           <h2>Tree Component: Enable nodes</h2>
+           <p>The button below this paragraph enables all nodes in the Tree Component.</p>
+           <div class="field">
+            <button type="button" id="enable" class="btn-secondary">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use xlink:href="#icon-alert"></use>
               </svg>
-              <span>Disable Tree Component</span>
+              <span>Enable Tree Component</span>
             </button>
           </div>
-
-        </div>
+         </div>
       </div>
+     </div>
+   </section>
+ </div>
 
-    </div>
-
-  </section>
-
-</div>
-
-<script>
+ <script>
 
   // button click direct call to method
-  // $('#disable').on('click', () => {
-  //   $('#tree').disable();
+  // $('#enable').on('click', () => {
+  //   $('#tree').enable();
   // });
 
   const tree = $('#tree').tree().data('tree');
 
   // method call on tree api
-  $('#disable').on('click', () => {
-    tree.disable();
+  $('#enable').on('click', () => {
+    tree.enable();
   });
 
-
-</script>
+ </script>
