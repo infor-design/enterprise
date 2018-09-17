@@ -37,9 +37,9 @@ describe('Busy Indicator example-custom-loading-text tests', () => {
     const buttonEl = await element(by.id('submit'));
     await buttonEl.click();
 
-    const customTextEl = await element(by.className('busy-indicator-container')).element(by.tagName('span')).getText();
+    const customTextEl = await element(by.className('busy-indicator-container')).element(by.tagName('span'));
 
-    expect(customTextEl).toEqual('Hang Tough, Skippy...');
+    expect(customTextEl.getText()).toEqual('Hang Tough, Skippy...');
   });
 });
 
