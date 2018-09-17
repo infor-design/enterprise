@@ -4,7 +4,7 @@
     <div>
       <% if (typeof nested === 'undefined') { %>
       <h2 id='<%- slug(section.namespace) %>'>
-        <%- section.name %> Code Specs
+        API Details
       </h2>
       <% } %>
       <% if (section.context && section.context.github) { %>
