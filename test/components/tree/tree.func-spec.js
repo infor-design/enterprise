@@ -604,23 +604,22 @@ describe('Tree Methods', () => {
   it('Should preserve and restore enablement states of all nodes', () => {
     const nodeArray = [];
     treeEl.querySelectorAll('li a[role="treeitem"]').forEach((node) => {
-      nodeArray.push({nodeId: node.id, state: node.classList.contains('is-disabled') ? 'disabled' : 'enabled'});
+      nodeArray.push({ nodeId: node.id, state: node.classList.contains('is-disabled') ? 'disabled' : 'enabled' });
     });
     const preserveArray = treeObj.preserveEnablementState();
     expect(nodeArray.length).toEqual(preserveArray.length);
-    for (var i = 0; i < nodeArray.length; i++) {
+    for (let i = 0; i < nodeArray.length; i++) {
       expect(nodeArray[i].state).toBe(preserveArray[i].state);
     }
 
     treeObj.restoreEnablementState();
     const newNodeArray = [];
     treeEl.querySelectorAll('li a[role="treeitem"]').forEach((node) => {
-      newNodeArray.push({nodeId: node.id, state: node.classList.contains('is-disabled') ? 'disabled' : 'enabled'});
+      newNodeArray.push({ nodeId: node.id, state: node.classList.contains('is-disabled') ? 'disabled' : 'enabled' });
     });
     expect(nodeArray.length).toEqual(newNodeArray.length);
-    for (var i = 0; i < nodeArray.length; i++) {
-      expect(nodeArray[i].state).toBe(newNodeArray[i].state);
+    for (let j = 0; j < nodeArray.length; j++) {
+      expect(nodeArray[j].state).toBe(newNodeArray[j].state);
     }
   });
-
 });
