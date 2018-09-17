@@ -2182,7 +2182,8 @@ Tree.prototype = {
       }
     });
 
-    return this.settings.originalEnablementState = enablementStates;
+    this.settings.originalEnablementState = enablementStates;
+    return enablementStates;
   },
 
   /**
