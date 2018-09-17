@@ -404,5 +404,6 @@ RenderLoop.prototype = {
 
 // Setup a single instance of RenderLoop for export.
 const renderLoop = new RenderLoop();
+renderLoop.start();
 
 export { RenderLoopItem, renderLoop };

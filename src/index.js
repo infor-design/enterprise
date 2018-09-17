@@ -22,10 +22,7 @@ export { Environment as env } from './utils/environment';
 export { base } from './utils/base';
 
 // Renderloop needs a single instance of itself
-import { renderLoop, RenderLoopItem } from './utils/renderloop';
-
-renderLoop.start();
-export { renderLoop, RenderLoopItem };
+export { renderLoop, RenderLoopItem } from './utils/renderloop';
 
 // LongPress needs a single instance of itself
 export { longPress } from './behaviors/longpress/longpress';
