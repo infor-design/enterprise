@@ -56,87 +56,70 @@ describe('Textarea example-index tests', () => {
 
   it('Should allow maximum of 90 characters', async () => {
     const charStr90 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ';
-    const textareaEl = await element(by.id('description-max'));
-    textareaEl.sendKeys(charStr90);
+    await element(by.id('description-max')).sendKeys(charStr90);
 
-    expect(textareaEl.getText()).toEqual(charStr90);
+    expect(element(by.id('description-max')).getText()).toEqual(charStr90);
   });
 
   it('Should show validation message if more than/equal to 90 characters', async () => {
     const charStr90 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ';
-    const textareaEl = await element(by.id('description-max'));
-    textareaEl.sendKeys(charStr90);
+    await element(by.id('description-max')).sendKeys(charStr90);
 
-    expect(textareaEl.getText()).toEqual(charStr90);
+    expect(element(by.id('description-max')).getText()).toEqual(charStr90);
 
-    expect(await element(by.className('textarea-wordcount'))).toBeTruthy();
+    expect(element(by.className('textarea-wordcount'))).toBeTruthy();
   });
 
   it('Should allow copy/paste', async () => {
     const sampleStr = 'Lorem ipsum';
-    const textareaEl = await element(by.id('description-max'));
 
-    textareaEl.sendKeys(sampleStr);
-    textareaEl.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'a'));
-    textareaEl.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'c'));
+    await element(by.id('description-max')).sendKeys(sampleStr);
+    await element(by.id('description-max')).sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'a'));
+    await element(by.id('description-max')).sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'c'));
 
-    const textareaEl2 = await element(by.id('description-dirty'));
+    await element(by.id('description-dirty')).sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'v'));
 
-    textareaEl2.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'v'));
-
-    expect(textareaEl2.getText()).toEqual(sampleStr);
+    expect(element(by.id('description-dirty')).getText()).toEqual(sampleStr);
   });
 
   it('Should allow special characters', async () => {
     const specChars = '¤¶§Çüéâôûÿ£¥';
-    const textareaEl = await element(by.id('description-max'));
-    textareaEl.sendKeys(specChars);
+    await element(by.id('description-max')).sendKeys(specChars);
 
-    expect(textareaEl.getText()).toEqual(specChars);
+    expect(element(by.id('description-max')).getText()).toEqual(specChars);
   });
 
   it('Should display textbox label correctly', async () => {
-    const fieldEl = await element.all(by.className('field')).get(0);
-
-    expect(fieldEl.getAttribute('color')).toEqual('#5c5c5c');
-    expect(fieldEl.getAttribute('margin-bottom')).toEqual('8px');
-    expect(fieldEl.getAttribute('font-size')).toEqual('1.2em');
+    expect(element.all(by.className('field')).get(0).getAttribute('color')).toEqual('#5c5c5c');
+    expect(element.all(by.className('field')).get(0).getAttribute('margin-bottom')).toEqual('8px');
+    expect(element.all(by.className('field')).get(0).getAttribute('font-size')).toEqual('1.2em');
   });
 
   it('Should enable scrollbar when multiple lines of text is in field box', async () => {
-    const textareaEl = await element(by.id('description-max'));
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
 
-    textareaEl.sendKeys(protractor.Key.ENTER);
-    textareaEl.sendKeys(protractor.Key.ENTER);
-    textareaEl.sendKeys(protractor.Key.ENTER);
-    textareaEl.sendKeys(protractor.Key.ENTER);
-    textareaEl.sendKeys(protractor.Key.ENTER);
-    textareaEl.sendKeys(protractor.Key.ENTER);
-    textareaEl.sendKeys(protractor.Key.ENTER);
-    textareaEl.sendKeys(protractor.Key.ENTER);
-
-    expect(textareaEl.getAttribute('scrollHeight')).toBeGreaterThan(textareaEl.getAttribute('height'));
+    expect(element(by.id('description-max')).getAttribute('scrollHeight')).toBeGreaterThan(await element(by.id('description-max')).getAttribute('height'));
   });
 
   it('Should display dirty tracker if text area is updated and unfocused', async () => {
-    const textareaEl = await element(by.id('description-dirty'));
-    textareaEl.sendKeys('1');
+    await element(by.id('description-dirty')).sendKeys('1');
 
-    const textareaEl2 = await element(by.id('description-max'));
-    textareaEl2.click();
+    await element(by.id('description-max')).click();
 
-    const dirtyTrackerEl = await element(by.className('icon-dirty'));
-
-    expect(dirtyTrackerEl).toBeTruthy();
+    expect(element(by.className('icon-dirty'))).toBeTruthy();
   });
 
   it('Should display required error message if text area is empty', async () => {
-    const textareaEl = await element(by.id('description-error'));
-    textareaEl.clear();
+    await element(by.id('description-error')).clear();
 
-    const errorIconEl = await element(by.className('icon-error'));
-
-    expect(errorIconEl).toBeTruthy();
+    expect(element(by.className('icon-error'))).toBeTruthy();
   });
 });
 
