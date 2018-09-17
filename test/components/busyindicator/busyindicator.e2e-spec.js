@@ -39,7 +39,7 @@ describe('Busy Indicator example-custom-loading-text tests', () => {
 
     const customTextEl = await element(by.className('busy-indicator-container')).element(by.tagName('span'));
 
-    expect(await customTextEl.getText()).toEqual('Hang Tough, Skippy...');
+    expect(customTextEl.getText()).toEqual('Hang Tough, Skippy...');
   });
 });
 
@@ -108,7 +108,7 @@ describe('Busy Indicator test-block-entire-ui tests', () => {
     const addressEl = await element(by.id('busy-field-address'));
     await addressEl.sendKeys(protractor.Key.NUMPAD1);
 
-    expect(await addressEl.getText()).not.toEqual('1');
+    expect(addressEl.getText()).not.toEqual('1');
   });
 });
 
@@ -249,6 +249,6 @@ describe('Busy Indicator test-update tests', () => {
     const EC = protractor.ExpectedConditions;
     browser.wait(EC.textToBePresentInElement(customTextEl, 'New Text 1'), 5000);
 
-    expect(await customTextEl.getText()).toEqual('New Text 1');
+    expect(customTextEl.getText()).toEqual('New Text 1');
   });
 });
