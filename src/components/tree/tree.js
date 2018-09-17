@@ -2141,7 +2141,7 @@ Tree.prototype = {
     this.element.empty();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
-  
+
   /**
    * Disables all nodes in the Tree component
    * @returns {void}
@@ -2168,7 +2168,7 @@ Tree.prototype = {
 
   /**
    * Preserves all nodes' enablement states in the Tree component
-   * @returns {void}
+   * @returns {array} of node objects containing attributes nodeId and state (enablement state)
    */
   preserveEnablementState() {
     const nodes = this.element[0].querySelectorAll('a');
@@ -2182,7 +2182,7 @@ Tree.prototype = {
       }
     });
 
-    this.settings.originalEnablementState = enablementStates;
+    return this.settings.originalEnablementState = enablementStates;
   },
 
   /**

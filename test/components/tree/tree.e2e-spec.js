@@ -241,3 +241,20 @@ describe('Tree enable all nodes test', () => {
     expect(await element.all(by.css('.tree li a[role="treeitem"].is-disabled')).count()).toBe(0);
   });
 });
+
+describe('Tree preserve and restore all nodes test', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tree/example-preserve-restore');
+  });
+
+  it('Should preserve and restore enablement states of all nodes', async () => {
+    const countDisabled = await element.all(by.css('.tree li a[role="treeitem"].is-disabled')).count();
+    const countTotal = await element.all(by.css('.tree li a[role="treeitem"]')).count();
+
+    await element(by.id('preserve')).click();
+    await element(by.id('restore')).click();
+
+    expect(await element.all(by.css('.tree li a[role="treeitem"].is-disabled')).count()).toEqual(countDisabled);
+    expect(await element.all(by.css('.tree li a[role="treeitem"]')).count()).toEqual(countTotal);
+  });
+});
