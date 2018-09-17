@@ -407,8 +407,9 @@ body.no-scroll {
 // Makes the internal content section of the page a scrollable <div>
 // Use this in conjunction with a "no-scroll" class on the body tag
 .scrollable {
-  overflow: auto;
   -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+  overflow-y: scroll;
 }
 
 .scrollable-x {
