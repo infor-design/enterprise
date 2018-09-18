@@ -2,9 +2,10 @@
 title: Application Menu
 description: This page describes Application Menu.
 demo:
-  pages:
+  embedded:
   - name: Default About Example
     slug: example-index
+  pages:
   - name: Different Header Types Event Demo
     slug: example-different-header-types
   - name: As Shown on the Soho Site

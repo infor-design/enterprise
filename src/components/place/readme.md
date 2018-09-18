@@ -2,7 +2,7 @@
 title: Place
 description: This page describes Place.
 demo:
-  pages:
+  embedded:
   - name: Place by Coordinate
     slug: test-coordinates
   - name: Place by Relative Parent

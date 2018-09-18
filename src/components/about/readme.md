@@ -2,9 +2,10 @@
 title: About
 description: This page describes About.
 demo:
-  pages:
+  embedded:
   - name: Default About Example
     slug: example-index
+  pages:
   - name: Close Event Demo
     slug: test-close-event
 ---

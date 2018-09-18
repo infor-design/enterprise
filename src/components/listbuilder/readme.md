@@ -2,7 +2,7 @@
 title: ListBuilder
 description: This page describes ListBuilder.
 demo:
-  pages:
+  embedded:
   - name: Default List Builder Example
     slug: example-index
 ---

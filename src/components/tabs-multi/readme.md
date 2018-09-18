@@ -2,9 +2,10 @@
 title: Tabs-multi
 description: This page describes Tabs-multi.
 demo:
-  pages:
+  embedded:
   - name: Default tabs-multi example
     slug: example-index
+  pages:
   - name: test masthead
     slug: test-masthead
   - name: test side by side

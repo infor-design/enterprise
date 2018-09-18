@@ -2,9 +2,10 @@
 title: Button
 description: This page describes Button.
 demo:
-  pages:
+  embedded:
   - name: Form Buttons
     slug: example-index
+  pages:
   - name: 100% Width Button
     slug: example-100-percent
   - name: Button on an `<a>` tag

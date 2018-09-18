@@ -2,9 +2,9 @@
 title: Typography
 description: This page describes Typography .
 demo:
-  pages:
-    - name: Main Example Page
-      slug: example-index
+  embedded:
+  - name: Main Example Page
+    slug: example-index
 ---
 
 ## Font family

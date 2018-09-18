@@ -2,9 +2,10 @@
 title: Toolbar Searchfield
 description: This page describes Toolbar Searchfield .
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index.html
+  pages:
   - name: Alternate In-Page Style
     slug: example-alternate-style.html
   - name: "`collapsibleOnMobile` Setting Demo"

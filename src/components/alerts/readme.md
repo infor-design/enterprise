@@ -2,9 +2,10 @@
 title: Alerts
 description: This page describes Alerts.
 demo:
-  pages:
+  embedded:
   - name: Alerts (Icons)
     slug: example-index
+  pages:
   - name: Alerts (Badges)
     slug: example-index
 ---

@@ -2,7 +2,7 @@
 title: Counts
 description: This page describes Counts.
 demo:
-  pages:
+  embedded:
   - name: Counts - Of an Instance
     slug: example-instance-count
   - name: Counts - Of an Object

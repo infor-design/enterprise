@@ -2,9 +2,10 @@
 title: Text Input
 description: This page describes Text Input.
 demo:
-  pages:
+  embedded:
   - name: Text Input Examples
     slug: example-index
+  pages:
   - name: Inputs with Action Menus
     slug: example-actions
   - name: Inputs with Info message under

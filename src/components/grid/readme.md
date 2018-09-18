@@ -2,9 +2,10 @@
 title: Grid
 description: This page describes Grid.
 demo:
-  pages:
+  embedded:
   - name: 12 Column Responsive Grid
     slug: example-index
+  pages:
   - name: Simplified Responsive Grid
     slug: example-simplified
   - name: Inputs in the Responsive Grid

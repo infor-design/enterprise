@@ -2,9 +2,10 @@
 title: Completion Chart
 description: This page describes Completion Chart.
 demo:
-  pages:
+  embedded:
   - name: Standard Completion Chart Example
     slug: example-index
+  pages:
   - name: All Completion Chart Examples
     slug: example-variations
   - name: Range of Colors for Completion Chart

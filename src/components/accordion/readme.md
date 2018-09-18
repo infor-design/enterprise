@@ -2,9 +2,10 @@
 title: Accordion
 description: This page describes Accordion.
 demo:
-  pages:
+  embedded:
   - name: Basic Accordion
     slug: example-index
+  pages:
   - name: Accordion Panels
     slug: example-accordion-panels
 ---

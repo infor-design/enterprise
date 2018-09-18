@@ -2,9 +2,10 @@
 title: Dropdown
 description: This page describes Dropdown.
 demo:
-  pages:
+  embedded:
   - name: Default Dropdown Example
     slug: example-index
+  pages:
   - name: Clearable Dropdown
     slug: example-clearable
   - name: Updating the Contents

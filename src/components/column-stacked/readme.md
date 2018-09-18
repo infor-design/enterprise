@@ -2,9 +2,10 @@
 title: Column Chart (Stacked)
 description: This page describes Column Chart (Stacked).
 demo:
-  pages:
+  embedded:
   - name: Standard Stacked Column Chart
     slug: example-index
+  pages:
   - name: Defaulting Selected Stacks
     slug: example-selected
   - name: Single Column Chart
