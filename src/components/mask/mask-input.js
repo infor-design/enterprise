@@ -97,7 +97,9 @@ MaskInput.prototype = {
           // Check for an instance of a Datepicker/Timepicker Component, and grab the date format
           const datepicker = $(this.element).data('datepicker');
           if ($.fn.datepicker && $(this.element).data('datepicker')) {
-            this.settings.patternOptions.format = datepicker.settings.dateFormat;
+            if (!this.settings.patternOptions) {
+              this.settings.patternOptions.format = datepicker.settings.dateFormat;
+            }
           }
           this.settings.pattern = masks.dateMask;
           break;
