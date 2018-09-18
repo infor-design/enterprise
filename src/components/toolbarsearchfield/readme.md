@@ -36,7 +36,7 @@ This is a specific component wrapper for searchfield components that reside insi
 
 ## Keyboard Shortcuts
 
-- <kbd>Shift + Left</kbd> and <kbd>Shift + Up<kbd> or <kbd>Shift + Right</kbd> and <kbd>Shift + Down</kbd> arrows - When focused on a toolbar searchfield, the focused element is wrapped inside of a [toolbar]( ./toolbar) element, which has its own rules that govern navigation with the arrow keys.  These shortcuts help the user navigate a toolbar while leaving movement of the text cursor to be controlled with the arrow keys
+- <kbd>Shift + Left</kbd> and <kbd>Shift + Up</kbd> or <kbd>Shift + Right</kbd> and <kbd>Shift + Down</kbd> arrows - When focused on a toolbar searchfield, the focused element is wrapped inside of a [toolbar]( ./toolbar) element, which has its own rules that govern navigation with the arrow keys.  These shortcuts help the user navigate a toolbar while leaving movement of the text cursor to be controlled with the arrow keys
 - <kbd>Alt + Del</kbd> - On a `clearable` searchfield, pressing this will clear its contents.
 
 ## States and Variations
