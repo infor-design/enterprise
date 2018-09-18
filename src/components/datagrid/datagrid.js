@@ -748,7 +748,7 @@ Datagrid.prototype = {
   * @param {number} idx The index of the column group
   * @param {boolean} show Did we show or hide the col.
   */
-  updateColumnGroup(idx, show) {
+  updateColumnGroup() {
     const colGroups = this.settings.columnGroups;
     if (!this.originalColGroups) {
       this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
@@ -769,128 +769,124 @@ Datagrid.prototype = {
       return;
     }
 
-    let cnt = 0;
-    let lastSpanIdx = -1;
-    let skipNext = 0;
-
-    // Update the data object
-    for (let i = 0; i < colGroups.length; i++) {
-      if (skipNext > 0) {
-        if (idx === i && !show) {
-          colGroups[lastSpanIdx].colspan -= 1;
-          this.settings.columns[i].isSpanned = true;
-        }
-        skipNext -= 1;
-      }
-
-      if (idx === cnt || idx === 1 && i === 1) {
-        if (colGroups[i].colspan === 1 && !show) {
-          colGroups[i].hidden = true;
-        }
-
-        if (colGroups[i].colspan > 1 && !show) {
-          this.settings.columns[i].isSpanned = true;
-          colGroups[i].colspan -= 1;
-        }
-
-        // have to re-render here
-        if (this.settings.columns[i].isSpanned && show) {
-          this.settings.columnGroups = JSON.parse(JSON.stringify(this.originalColGroups));
-          this.render();
-        }
-
-        if (colGroups[i].colspan === 1 && show) {
-          delete colGroups[i].hidden;
-        }
-
-        if (colGroups[i].colspan > 1 && show) {
-          colGroups[i].colspan += 1;
-        }
-      }
-      cnt += colGroups[i].colspan;
-
-      if (colGroups[i].colspan > 1) {
-        lastSpanIdx = i;
-        skipNext = colGroups[i].colspan - 1;
-      }
-    }
-
     // Update the dom
     if (!this.colGroups) {
       return;
     }
 
-    const headGroups = this.colGroups.find('th').toArray();
-    cnt = 0;
-    lastSpanIdx = 0;
-    skipNext = 0;
-    for (let i = 0; i < headGroups.length; i++) {
-      const elem = headGroups[i];
-      const colspan = parseInt(elem.getAttribute('colspan'), 10);
-      cnt += colspan;
+    const headGroups = [].slice.call(this.colGroups[0].querySelectorAll('th'));
+    const columns = this.settings.columns;
+    const columnsLen = columns.length;
+    const visibleColumnsLen = this.visibleColumns().length;
+    const groups = colGroups.map(group => parseInt(group.colspan, 10));
+    const getGroupsTotal = () => groups.reduce((a, b) => a + b, 0);
+    const getDiff = () => {
+      const groupsTotal = getGroupsTotal();
+      return groupsTotal > columnsLen ? groupsTotal - columnsLen : columnsLen - groupsTotal;
+    };
 
-      if (skipNext > 0) {
-        if (idx === i && !show) {
-          headGroups[lastSpanIdx].setAttribute('colspan', headGroups[lastSpanIdx].getAttribute('colspan') - 1);
+    const groupsTotal = getGroupsTotal();
+    let diff;
+    if (groupsTotal > columnsLen) {
+      let move = true;
+      for (let i = groups.length - 1; i >= 0 && move; i--) {
+        diff = getDiff();
+        if (groups[i] >= diff) {
+          groups[i] -= diff;
+          move = false;
+        } else {
+          groups[i] = 0;
         }
-        skipNext -= 1;
-      }
-
-      if (idx === cnt - colspan || idx === 1 && i === 1) {
-        if (colspan === 1 && !show) {
-          elem.classList.add('hidden');
-        }
-
-        if (colspan > 1 && !show) {
-          elem.setAttribute('colspan', colspan - 1);
-        }
-
-        if (colspan === 1 && show) {
-          elem.classList.remove('hidden');
-        }
-
-        if (colspan > 1 && show) {
-          elem.setAttribute('colspan', colspan + 1);
-        }
-      }
-
-      if (colspan > 1) {
-        lastSpanIdx = i;
-        skipNext = colspan - 1;
       }
     }
 
-    this.hideShowColumnGroups(show);
+    let i = 0;
+    let total = 0;
+    groups.forEach((groupColspan, k) => {
+      let colspan = groupColspan;
+      for (let l = i + groupColspan; i < l; i++) {
+        if (i < columnsLen && columns[i].hidden) {
+          colspan--;
+        }
+      }
+
+      if (colspan > 0) {
+        total += colspan;
+      }
+
+      const groupHeaderEl = headGroups[k];
+      groupHeaderEl.setAttribute('colspan', colspan > 0 ? colspan : 1);
+
+      if ((colGroups[k].hidden || colspan < 1)) {
+        groupHeaderEl.classList.add('hidden');
+      } else {
+        groupHeaderEl.classList.remove('hidden');
+      }
+    });
+
+    if (total < visibleColumnsLen) {
+      const groupHeaderEl = headGroups[headGroups.length - 1];
+      diff = visibleColumnsLen - total;
+      groupHeaderEl.setAttribute('colspan', diff > 0 ? diff : 1);
+    }
   },
 
   /**
-   * Test if the group header should be closed and close / open it.
-   * @private
-   * @param {boolean} show Hide and show the column group if it should be.
-   */
-  hideShowColumnGroups(show) {
-    if (!this.colGroups) {
+  * Update group headers after column reorder/dragged.
+  * @private
+  * @param {number} indexFrom The column index dragged from.
+  * @param {number} indexTo The column index dragged to.
+  * @returns {void}
+  */
+  updateGroupHeadersAfterColumnReorder(indexFrom, indexTo) {
+    const colGroups = this.settings.columnGroups;
+    if (!colGroups) {
       return;
     }
 
-    const headGroups = this.colGroups.find('th').toArray();
-    const allEmpty = $(headGroups).filter(':not(.hidden)').text() === '';
+    if (!this.originalColGroups) {
+      this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
+    }
 
-    let cnt = 0;
-    for (let i = 0; i < headGroups.length; i++) {
-      const elem = headGroups[i];
-      const colspan = parseInt(elem.getAttribute('colspan'), 10);
-      cnt += colspan;
+    const headGroups = [].slice.call(this.colGroups[0].querySelectorAll('th'));
+    const colspans = { fromGroup: null, toGroup: null, index: 0, groupIndex: 0 };
 
-      // Find up to the index
-      if (i === headGroups.length - 1 && headGroups.length === cnt && !show && allEmpty) {
-        this.colGroups.addClass('hidden');
-        this.element.removeClass('has-group-headers');
+    headGroups.forEach((group) => {
+      const colspan = parseInt(group.getAttribute('colspan'), 10);
+      const end = colspans.index + (colspan > -1 ? colspan : 0);
+
+      for (; colspans.index < end; colspans.index++) {
+        if (colspans.index === indexFrom) {
+          colspans.fromGroup = group;
+          colspans.fromColspan = colspan;
+          colspans.fromGroupIndex = colspans.groupIndex;
+        } else if (colspans.index === indexTo) {
+          colspans.toGroup = group;
+          colspans.toColspan = colspan;
+          colspans.toGroupIndex = colspans.groupIndex;
+        }
       }
+      colGroups[colspans.groupIndex].colspan = colspan;
+      colspans.groupIndex++;
+    });
 
-      if (i === headGroups.length - 1 && headGroups.length === cnt && show && !allEmpty) {
-        this.colGroups.removeClass('hidden');
-        this.element.addClass('has-group-headers');
+    let newColspan;
+    if (colspans.fromGroup !== null) {
+      newColspan = colspans.fromColspan > 1 ? colspans.fromColspan - 1 : 0;
+      if (newColspan > 0) {
+        colspans.fromGroup.setAttribute('colspan', newColspan);
+        colGroups[colspans.fromGroupIndex].colspan = newColspan;
+      } else {
+        colGroups.splice(colspans.fromGroupIndex, 1);
+      }
+    }
+    if (colspans.toGroup !== null) {
+      newColspan = colspans.toColspan + 1;
+      if (newColspan > 0) {
+        colspans.toGroup.setAttribute('colspan', newColspan);
+        colGroups[colspans.toGroupIndex].colspan = newColspan;
+      } else {
+        colGroups.splice(colspans.toGroupIndex, 1);
       }
     }
   },
@@ -928,20 +924,56 @@ Datagrid.prototype = {
     if (colGroups) {
       this.element.addClass('has-group-headers');
 
-      let total = 0;
+      const columns = this.settings.columns;
+      const columnsLen = columns.length;
+      const visibleColumnsLen = this.visibleColumns().length;
+      const groups = colGroups.map(group => parseInt(group.colspan, 10));
+      const getGroupsTotal = () => groups.reduce((a, b) => a + b, 0);
+      const getDiff = () => {
+        const groupsTotal = getGroupsTotal();
+        return groupsTotal > columnsLen ? groupsTotal - columnsLen : columnsLen - groupsTotal;
+      };
 
       headerRow += '<tr role="row" class="datagrid-header-groups">';
 
-      for (let k = 0; k < colGroups.length; k++) {
-        const hiddenStr = colGroups[k].hidden || this.settings.columns[k].hidden ? 'class="hidden"' : '';
-        total += parseInt(colGroups[k].colspan, 10);
-        uniqueId = self.uniqueId(`-header-group-${k}`);
-
-        headerRow += `<th ${hiddenStr}colspan="${colGroups[k].colspan}" id="${uniqueId}"><div class="datagrid-column-wrapper "><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+      const groupsTotal = getGroupsTotal();
+      let diff;
+      if (groupsTotal > columnsLen) {
+        let move = true;
+        for (let i = groups.length - 1; i >= 0 && move; i--) {
+          diff = getDiff();
+          if (groups[i] >= diff) {
+            groups[i] -= diff;
+            move = false;
+          } else {
+            groups[i] = 0;
+          }
+        }
       }
 
-      if (total < this.visibleColumns().length) {
-        headerRow += `<th colspan="${this.visibleColumns().length - total}"></th>`;
+      let i = 0;
+      let total = 0;
+      groups.forEach((groupColspan, k) => {
+        let colspan = groupColspan;
+        for (let l = i + groupColspan; i < l; i++) {
+          if (i < columnsLen && columns[i].hidden) {
+            colspan--;
+          }
+        }
+        const hiddenStr = colGroups[k].hidden || colspan < 1 ? ' class="hidden"' : '';
+        const colspanStr = ` colspan="${colspan > 0 ? colspan : 1}"`;
+        uniqueId = self.uniqueId(`-header-group-${k}`);
+        if (colspan > 0) {
+          total += colspan;
+        }
+
+        headerRow += `<th${hiddenStr}${colspanStr} id="${uniqueId}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+      });
+
+      if (total < visibleColumnsLen) {
+        diff = visibleColumnsLen - total;
+        const colspanStr = ` colspan="${diff > 0 ? diff : 1}"`;
+        headerRow += `<th${colspanStr}></th>`;
       }
       headerRow += '</tr><tr>';
     } else {
@@ -1009,7 +1041,6 @@ Datagrid.prototype = {
 
     if (colGroups && self.headerRow) {
       self.colGroups = self.headerRow.find('.datagrid-header-groups');
-      self.hideShowColumnGroups();
     }
 
     self.syncHeaderCheckbox(this.settings.dataset);
@@ -1923,14 +1954,51 @@ Datagrid.prototype = {
   },
 
   /**
+  * Get extra top position for current target in header
+  * @private
+  * @returns {number} the extra top position of the rows depending on rowHeight setting.
+  */
+  getExtraTop() {
+    const s = this.settings;
+    const topPositions = {
+      default: { short: 0, medium: 0, normal: 0 },
+      filterable: { short: 0, medium: 0, normal: 0 },
+      group: { short: -25, medium: -30, normal: -39 },
+      groupFilterable: { short: -29, medium: -30, normal: -41 }
+    };
+    let extraTop = 0;
+    if (s.columnGroups) {
+      extraTop = s.filterable ?
+        topPositions.groupFilterable[s.rowHeight] : topPositions.group[s.rowHeight];
+    } else {
+      extraTop = s.filterable ?
+        topPositions.filterable[s.rowHeight] : topPositions.default[s.rowHeight];
+    }
+    return extraTop;
+  },
+
+  /**
   * Get height for current target in header
   * @private
   * @returns {number} the height of the rows depending on rowHeight setting.
   */
   getTargetHeight() {
-    const h = this.settings.filterable ?
-      { short: 48, medium: 51, normal: 56 } : { short: 20, medium: 28, normal: 35 };
-    return h[this.settings.rowHeight];
+    const s = this.settings;
+    const heights = {
+      default: { short: 20, medium: 28, normal: 35 },
+      filterable: { short: 48, medium: 51, normal: 56 },
+      group: { short: 46, medium: 56, normal: 74 },
+      groupFilterable: { short: 78, medium: 84, normal: 99 }
+    };
+    let height = 0;
+    if (s.columnGroups) {
+      height = s.filterable ?
+        heights.groupFilterable[s.rowHeight] : heights.group[s.rowHeight];
+    } else {
+      height = s.filterable ?
+        heights.filterable[s.rowHeight] : heights.default[s.rowHeight];
+    }
+    return height;
   },
 
   /**
@@ -1957,6 +2025,7 @@ Datagrid.prototype = {
       let clone = null;
       let headerPos = null;
       let offPos = null;
+      let extraTopPos = 0;
       const handle = $(this);
       const header = handle.parent();
 
@@ -1976,6 +2045,7 @@ Datagrid.prototype = {
 
             self.setDraggableColumnTargets();
 
+            extraTopPos = self.getExtraTop();
             headerPos = header.position();
             offPos = { top: (pos.top - headerPos.top), left: (pos.left - headerPos.left) };
 
@@ -2009,7 +2079,7 @@ Datagrid.prototype = {
                   showTarget.addClass('is-over');
                   rect = target.el[0].getBoundingClientRect();
                   showTarget[0].style.left = `${parseInt(rect.left, 10)}px`;
-                  showTarget[0].style.top = `${parseInt(rect.top, 10) + 1}px`;
+                  showTarget[0].style.top = `${(parseInt(rect.top, 10) + 1) + extraTopPos}px`;
                 }
               }
             }
@@ -2051,6 +2121,7 @@ Datagrid.prototype = {
                 indexFrom = tempArray[self.draggableStatus.startIndex] || 0;
                 indexTo = tempArray[self.draggableStatus.endIndex] || 0;
 
+                self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
                 self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
                 self.updateColumns(self.settings.columns);
               }
@@ -2096,7 +2167,7 @@ Datagrid.prototype = {
         dropArea: {
           x1: pos.left - extra,
           x2: pos.left + target.outerWidth() + extra,
-          y1: pos.top - extra,
+          y1: (pos.top - extra) + self.getExtraTop(),
           y2: pos.top + target.outerHeight() + extra
         }
       });
@@ -3424,7 +3495,7 @@ Datagrid.prototype = {
   * @returns {void}
   */
   calculateRowspan(value, row, col) {
-    let cnt = 0;
+    let total = 0;
     let min = null;
 
     if (!col.rowspan) {
@@ -3433,17 +3504,14 @@ Datagrid.prototype = {
 
     for (let i = 0; i < this.settings.dataset.length; i++) {
       if (value === this.settings.dataset[i][col.field]) {
-        cnt++;
+        total++;
         if (min === null) {
           min = i;
         }
       }
     }
 
-    if (row === min) {
-      return ` rowspan ="${cnt}"`;
-    }
-    return '';
+    return row === min ? ` rowspan ="${total}"` : '';
   },
 
   /**
@@ -3925,8 +3993,9 @@ Datagrid.prototype = {
     }
 
     if (this.originalColumns) {
-      this.updateColumns(this.originalColumns);
-      this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
+      const columnGroups = this.settings.columnGroups && this.originalColGroups ?
+        this.originalColGroups : null;
+      this.updateColumns(this.originalColumns, columnGroups);
     }
   },
 
@@ -3947,7 +4016,7 @@ Datagrid.prototype = {
     this.headerColGroup.find('col').eq(idx).addClass('is-hidden');
 
     // Shrink or remove colgroups
-    this.updateColumnGroup(idx, false);
+    this.updateColumnGroup();
 
     if (this.bodyColGroup) {
       this.bodyColGroup.find('col').eq(idx).addClass('is-hidden');
@@ -4006,7 +4075,7 @@ Datagrid.prototype = {
     }
 
     // Shrink or add colgroups
-    this.updateColumnGroup(idx, true);
+    this.updateColumnGroup();
 
     // Handle colSpans if present on the column
     if (this.hasColSpans) {

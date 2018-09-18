@@ -22,7 +22,8 @@
       data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
-      //Define Columns for the Grid.
+      // Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Text});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
@@ -32,15 +33,23 @@
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
       columns.push({ id: 'action', name: 'Action Item', field: 'action'});
 
-      //Init and get the api for the grid
+      // Init and get the api for the grid
       $('#datagrid').datagrid({
         columns: columns,
-        columnGroups: [{colspan: 3, id: 'group1', name: 'Column Group One'}, {colspan: 4, id: 'group2', name: 'Column Group Two'}], //Numeric Column Span Groups
+
+        // Numeric Column Span Groups (3 + 1 + 5 === 9)
+        columnGroups: [
+          { colspan: 3, id: 'group1', name: 'Column Group One' },
+          { colspan: 1, id: 'group2', name: 'Column Group Two' },
+          { colspan: 2, id: 'group3', name: 'Column Group Three' },
+          { colspan: 3, id: 'group4', name: 'Column Group four' }
+        ],
         dataset: data,
         columnReorder: true,
         saveColumns: false,
         filterable: true,
-        toolbar: {title: 'Groups', actions: true, personalize: true, results: true, resetLayout: true}
+        selectable: 'multiple',
+        toolbar: { title: 'Groups', actions: true, personalize: true, results: true, resetLayout: true }
       });
 
  });
