@@ -1854,7 +1854,7 @@ Tree.prototype = {
                 startWidth: a.outerWidth()
               };
     
-	          self.element.triggerHandler('dragstart', { data: self.sortable });
+              self.element.triggerHandler('dragstart', { data: self.sortable });
               e.preventDefault();
               e.stopImmediatePropagation();
             })
