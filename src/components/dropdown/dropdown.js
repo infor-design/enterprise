@@ -970,6 +970,10 @@ Dropdown.prototype = {
     this.list.find('.trigger').find('.icon').attr('class', 'icon search').changeIcon('search');
     this.searchInput.removeAttr('aria-activedescendant');
 
+    if(self.listIcon.hasIcons) {
+      this.list.find('svg').last().changeIcon('icon-empty-circle');
+    }
+
     this.unhighlightOptions();
 
     if (!results || !results.length && !term) {
@@ -1029,6 +1033,7 @@ Dropdown.prototype = {
     const icon = $.getBaseURL(isMobile ? 'close' : 'dropdown');
 
     this.list.removeClass('search-mode');
+    this.list.removeClass('.dropdown-search');  
     this.list.find('.icon').attr('class', cssClass) // needs to be 'attr' here because .addClass() doesn't work with SVG
       .changeIcon(icon);
 
@@ -1057,6 +1062,10 @@ Dropdown.prototype = {
 
     lis.removeClass('hidden');
     this.position();
+
+    if(this.list.find('input').css('padding-left')) {
+      this.list.find('input').css('padding-left', '12px');
+    }
   },
 
   /**
@@ -1386,7 +1395,7 @@ Dropdown.prototype = {
         self.open(filter);
         return;
       }
-
+ 
       filter();
     }, self.settings.delay);
   },
