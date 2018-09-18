@@ -2141,7 +2141,7 @@ Tree.prototype = {
     this.element.empty();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
-  
+
   /**
    * Disables all nodes in the Tree component
    * @returns {void}

@@ -227,6 +227,7 @@ describe('Tree disable all nodes test', () => {
     const count = await element.all(by.css('.tree li a[role="treeitem"]')).count();
 
     await element(by.id('disable')).click();
+
     expect(await element.all(by.css('.tree li a[role="treeitem"].is-disabled')).count()).toBe(count);
   });
 });
@@ -238,6 +239,7 @@ describe('Tree enable all nodes test', () => {
 
   it('Should not detect any disabled tree nodes', async () => {
     await element(by.id('enable')).click();
+
     expect(await element.all(by.css('.tree li a[role="treeitem"].is-disabled')).count()).toBe(0);
   });
 });

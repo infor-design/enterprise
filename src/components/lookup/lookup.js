@@ -356,9 +356,8 @@ Lookup.prototype = {
       }, {
         text: Locale.translate('Apply'),
         click(e, modal) {
-          const selectedRows = self.grid.selectedRows();
           modal.close();
-          self.insertRows(selectedRows);
+          self.insertRows(self.grid.selectedRows());
         },
         isDefault: true
       }];
@@ -477,7 +476,7 @@ Lookup.prototype = {
 
     self.grid = lookupGrid.data('datagrid');
     if (!this.settings.title && self.modal) {
-      self.modal.element.find('.title').remove();
+      self.modal.element.find('.title').not('.selection-count').remove();
     }
 
     const hasKeywordSearch = this.settings.options && this.settings.options.toolbar &&
@@ -502,6 +501,16 @@ Lookup.prototype = {
     const val = self.element.val();
     if (val) {
       self.selectGridRows(val);
+    }
+
+    // Restore selected rows when pages change
+    if (this.settings.options.source) {
+      lookupGrid.off('afterrender.lookup').on('afterrender.lookup', () => {
+        const fieldVal = self.element.val();
+        if (fieldVal) {
+          self.selectGridRows(fieldVal);
+        }
+      });
     }
 
     if (this.settings.options) {
@@ -542,6 +551,11 @@ Lookup.prototype = {
       for (let i = 0; i < selectedIds.length; i++) {
         this.selectRowByValue(this.settings.field, selectedIds[i]);
       }
+
+      // There are rows selected off page. Update the count.
+      if (this.grid && selectedIds.length > this.grid.selectedRows().length) {
+        this.modal.element.find('.contextual-toolbar .selection-count').text(`${selectedIds.length} ${Locale.translate('Selected')}`);
+      }
       return;
     }
 
@@ -559,25 +573,36 @@ Lookup.prototype = {
       return;
     }
 
-    const data = this.settings.options.dataset;
+    const data = this.settings.options.source ?
+      this.grid.settings.dataset :
+      this.settings.options.dataset;
     const selectedRows = [];
 
+    // in this case we will recall on source - server side paging
+    if (!data) {
+      return;
+    }
+
     for (let i = 0; i < data.length; i++) {
+      let isMatch = false;
       if (typeof this.settings.match === 'function') {
         if (this.settings.match(value, data[i], this.element, this.grid)) {
-          selectedRows.push(i);
+          isMatch = true;
         }
-
-        continue;
       }
 
-      if (data[i][field] === value) {
-        selectedRows.push(i);
+      if (data[i][field].toString() === value.toString()) {
+        isMatch = true;
+      }
+
+      if (isMatch) {
+        const rowIndex = this.grid.settings.source ? this.grid.actualRowIndex(this.grid.tableBody.find('tr').eq(i)) : i;
+        selectedRows.push(rowIndex);
       }
     }
 
-    if (this.grid) {
-      this.grid.selectedRows(selectedRows);
+    if (this.grid && selectedRows.length > 0) {
+      this.grid.selectRows(selectedRows);
     }
   },
 
