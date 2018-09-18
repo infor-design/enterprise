@@ -1919,7 +1919,7 @@ Tree.prototype = {
                 });
               }
 
-              self.element.triggerHandler('dragend', {data: self.sortable});			  
+              self.element.triggerHandler('dragend', { data: self.sortable });                     			  
 
               // Sync dataset and ui
               self.syncDataset(self.element);
