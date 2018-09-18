@@ -30,6 +30,7 @@
 
     .subtitle {
       @include font-size(16);
+
       margin-bottom: 10px;
       margin-top: 0;
     }
@@ -43,7 +44,6 @@
 
 @include respond-to(tabletdown) {
   .object-summary {
-
     .summary {
       width: 65%;
     }
@@ -52,7 +52,6 @@
 
 @include respond-to(phone) {
   .object-summary {
-
     .image,
     .summary {
       display: block;

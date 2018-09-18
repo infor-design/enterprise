@@ -41,18 +41,15 @@
         padding-bottom: 6px;
         padding-top: 8px;
 
-        // scss-lint:disable ImportantRule
         + .icon {
           top: 7px !important;
         }
-        // scss-lint:enable ImportantRule
       }
 
       .today {
         top: -1px;
       }
 
-      // scss-lint:disable IdSelector
       #calendar-view-changer + .dropdown-wrapper {
         float: right;
         line-height: initial;
@@ -61,13 +58,12 @@
         top: 5px;
         width: 105px;
       }
-      // scss-lint:disable IdSelector
     }
   }
 
   // The details section
   .calendar-event-details {
-    background-color: $body-bg-color;
+    background-color: $body-bg-color-primary;
     border-left: 1px solid $calendar-line-color;
     display: inline-block;
     height: 100%;
@@ -82,8 +78,9 @@
   // A calendar event
   .calendar-event {
     @include font-size(11);
+
     background-color: $azure02;
-    border-left: 5px solid $azure07;
+    border-left: 5px solid $color-primary-alt;
     border-radius: 3px;
     color: $font-color-extrahighcontrast;
     cursor: pointer;
@@ -138,6 +135,7 @@
 
   .calendar-event-more {
     @include font-size(11);
+
     color: $font-color-extrahighcontrast;
     cursor: pointer;
     display: block;
@@ -165,7 +163,6 @@
 // RTL Styles
 html[dir='rtl'] {
   .calendar {
-    // scss-lint:disable IdSelector, ImportantRule
     #calendar-view-changer + .dropdown-wrapper {
       float: left !important;
       right: -15px !important;
@@ -174,7 +171,6 @@ html[dir='rtl'] {
     .today {
       margin-right: 15px;
     }
-    // scss-lint:enable IdSelector, ImportantRule
   }
 
   .calendar-event-details {

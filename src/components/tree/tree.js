@@ -20,7 +20,8 @@ const TREE_DEFAULTS = {
   sortable: false, // Allow nodes to be sortable
   onBeforeSelect: null,
   onExpand: null,
-  onCollapse: null
+  onCollapse: null,
+  originalEnablementState: null
 };
 
 /**
@@ -1546,7 +1547,7 @@ Tree.prototype = {
     return li;
   },
 
-  // Add a node to an exiting node, making it a folder if need be
+  // Add a node to an existing node, making it a folder if need be
   addAsChild(nodeData, li) {
     let ul = li.find('ul').first();
     if (ul.length === 0) {
@@ -2140,6 +2141,75 @@ Tree.prototype = {
     this.element.empty();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
+  
+  /**
+   * Disables all nodes in the Tree component
+   * @returns {void}
+   */
+  disable() {
+    const nodes = this.element[0].querySelectorAll('a');
+    nodes.forEach((node) => {
+      node.classList.add('is-disabled');
+      node.setAttribute('aria-disabled', 'true');
+    });
+  },
+
+  /**
+   * Enables all nodes in the Tree component
+   * @returns {void}
+   */
+  enable() {
+    const nodes = this.element[0].querySelectorAll('a');
+    nodes.forEach((node) => {
+      node.classList.remove('is-disabled');
+      node.removeAttribute('aria-disabled');
+    });
+  },
+
+  /**
+   * Preserves all nodes' enablement states in the Tree component
+   * @returns {void}
+   */
+  preserveEnablementState() {
+    const nodes = this.element[0].querySelectorAll('a');
+    const enablementStates = [];
+
+    nodes.forEach((node) => {
+      if ((node.classList.contains('is-disabled')) || (node.getAttribute('aria-disabled') === true)) {
+        enablementStates.push({ nodeId: node.id, state: 'disabled' });
+      } else {
+        enablementStates.push({ nodeId: node.id, state: 'enabled' });
+      }
+    });
+
+    this.settings.originalEnablementState = enablementStates;
+  },
+
+  /**
+   * Restores all nodes' original enablement states in the Tree component
+   * @returns {void}
+   */
+  restoreEnablementState() {
+    const nodes = this.element[0].querySelectorAll('a');
+
+    // check to prevent error if preserveEnablementState() has not been invoked
+    if (!(this.settings.originalEnablementState === null)) {
+      nodes.forEach((node) => {
+        this.settings.originalEnablementState.forEach((origNode) => {
+          if (origNode.nodeId === node.id) {
+            if (origNode.state === 'disabled') {
+              node.classList.add('is-disabled');
+              node.setAttribute('aria-disabled', 'true');
+            } else {
+              node.classList.remove('is-disabled');
+              node.removeAttribute('aria-disabled');
+            }
+          }
+        });
+      });
+    }
+  }
+
 };
 
 export { Tree, COMPONENT_NAME };

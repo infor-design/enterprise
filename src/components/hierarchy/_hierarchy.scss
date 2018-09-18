@@ -20,7 +20,6 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
   padding: 20px;
 
   .branch-collapsed {
-
     > ul * {
       display: none;
     }
@@ -28,6 +27,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
 
   legend {
     @include font-size(14);
+
     margin: 20px 40px;
 
     li {
@@ -52,16 +52,16 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     margin: 0 auto;
 
     li {
-      @include transition(all 200ms cubic-bezier(.17, .04, .03, .94));
+      @include transition(all 200ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
     }
 
     .chart {
       position: relative;
 
       &.display-for-paging {
-
         &::after {
           @include hierarchy-vertical-line;
+
           height: calc(100% - 124px);
           left: 0;
           top: 38px;
@@ -73,24 +73,20 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
           top: 55px;
 
           button {
-            background: $primary-color;
+            background: $color-primary;
             color: $white;
             display: block;
             margin: 0 auto;
             max-width: 36px;
 
-            // scss-lint:disable NestingDepth
             svg {
               fill: $white;
             }
-            // scss-lint:enable NestingDepth
           }
         }
 
         .root {
-          // scss-lint:disable ImportantRule
           margin-left: -30px !important;
-          // scss-lint:enable ImportantRule
           overflow: visible;
           position: relative;
 
@@ -114,7 +110,6 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
       }
 
       &.has-back {
-
         &::after {
           height: calc(100% - 170px);
           left: 0;
@@ -180,7 +175,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
 
     // Remove the last node if its expandable
     .chart:not(.has-single-child) > .sub-level > li.branch-expanded:last-child::after {
-      background-color: $body-bg-color;
+      background-color: $body-bg-color-primary;
       content: '';
       height: 100%;
       left: 13px;
@@ -199,10 +194,9 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     border-left: 5px solid $graphite06;
     border-radius: 2px;
     cursor: pointer;
+    display: flex;
     height: $hierarchy-node-height;
     position: relative;
-    display: flex;
-
     width: $hierarchy-node-width;
 
     &.azure08 {
@@ -260,21 +254,22 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     }
 
     .image-placeholder {
-      border: 2px solid $graphite04;
+      border: 2px solid $color-default-alt;
     }
 
     .detail {
+      flex-grow: 1;
       margin-left: 20px;
       margin-right: 10px;
       max-width: 178px;
       overflow: hidden;
       text-align: left;
-      flex-grow: 1;
     }
 
     .heading {
       @include ellipsis();
       @include font-size(16);
+
       color: $font-color-extrahighcontrast;
       line-height: 20px;
       margin-top: 8px;
@@ -283,6 +278,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     .subheading {
       @include ellipsis();
       @include font-size(14);
+
       color: $listview-color;
       line-height: 20px;
       margin-top: 0;
@@ -291,6 +287,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     .micro {
       @include ellipsis();
       @include font-size(12);
+
       color: $listview-color;
       line-height: 18px;
       margin-top: 0;
@@ -310,6 +307,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
   //Adjust size for buttons
   ul > li > .leaf {
     width: 315px;
+
     .btn-actions,
     .btn-expand,
     .btn-collapse {
@@ -336,6 +334,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     //draw a line down
     &::after {
       @include hierarchy-vertical-line;
+
       bottom: 0;
       height: 50%;
       left: 50%;
@@ -349,6 +348,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
       //draw a line up
       &::before {
         @include hierarchy-vertical-line;
+
         height: 32px;
         left: 50%;
         top: 0;
@@ -366,6 +366,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     //draw a line down
     &::after {
       @include hierarchy-vertical-line;
+
       height: 100%;
       left: 50%;
       top: 0;
@@ -492,7 +493,8 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
   .popupmenu.has-detail-fields + .arrow {
     border-bottom-color: $slate08;
   }
-  .popupmenu.has-detail-fields + .arrow:after {
+
+  .popupmenu.has-detail-fields + .arrow::after {
     border-bottom-color: $slate08;
   }
 
@@ -505,19 +507,20 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     }
 
     .dt-fields-cell:first-child {
-      text-align: right;
+      opacity: 0.7;
       padding-right: 8px;
-      opacity: .7;
-      &:after {
+      text-align: right;
+
+      &::after {
         content: ':';
       }
     }
 
     .dt-fields-cell {
       color: $white;
+      display: table-cell;
       font-size: 1.2rem;
       line-height: 1.4rem;
-      display: table-cell;
     }
   }
 }
@@ -559,7 +562,6 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     }
 
     + .sub-level {
-
       .leaf::before {
         background-color: transparent;
         border-bottom: 1px solid $hierarchy-line-color;
@@ -654,7 +656,6 @@ html[dir='rtl'] {
         float: right;
       }
     }
-
 
     // A node in the tree
     .leaf {
