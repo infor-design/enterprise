@@ -41,7 +41,7 @@
   <% if (section.since) { %><div>Since: <%- section.since %></div><% }%>
 
   <% if (section.params.length) { %>
-    <table>
+    <table class="jsdoc-parameters">
       <caption class="jsdoc-section--heading">Parameters</caption>
       <colgroup>
         <col width='30%' />
