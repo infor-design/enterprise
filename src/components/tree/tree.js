@@ -1393,7 +1393,8 @@ Tree.prototype = {
     });
 
     this.settings.dataset = json;
-	this.element.triggerHandler('datasetupdated', {selectedData: this.settings.dataset});
+    this.element.triggerHandler('datasetupdated', { selectedData: this.settings.dataset });
+	
   },
 
   // Sync a node with its dataset 'record'
@@ -1852,8 +1853,8 @@ Tree.prototype = {
                 startFolderNode: a.closest('ul').prev('a'),
                 startWidth: a.outerWidth()
               };
-			  self.element.triggerHandler('dragstart', {data: self.sortable});
-
+    
+	          self.element.triggerHandler('dragstart', { data: self.sortable });
               e.preventDefault();
               e.stopImmediatePropagation();
             })
