@@ -1394,7 +1394,6 @@ Tree.prototype = {
 
     this.settings.dataset = json;
     this.element.triggerHandler('datasetupdated', { selectedData: this.settings.dataset });
-	
   },
 
   // Sync a node with its dataset 'record'
