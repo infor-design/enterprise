@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="add-context">Open Modal</button><br/><br/>
+
+    <div class="modal" id="modal-1">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title">Add Context</h1>
+        </div>
+
+        <div class="modal-body">
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type" name="type">
+              <option value="1">Context #1</option>
+              <option value="2">Context #2</option>
+              <option value="3">Context #3</option>
+              <option value="4">Context #4</option>
+              <option value="5">Context #5</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="accordion" data-demo-set-links="true" data-options="{'allowOnePane': false}">
+              <div class="accordion-header">
+                <a href="#"><span>Accordion Header</span></a>
+              </div>
+              <div class="accordion-pane">
+                <div class="accordion-content">
+                  <p>Remix, optimize, "B2B, iterate?" Best-of-breed efficient beta-test; social cutting-edge: rich magnetic
+                    tagclouds front-end infomediaries viral authentic incentivize sexy extensible functionalities incentivize.
+                    Generate killer authentic grow vertical blogospheres, functionalities ecologies harness, "tag solutions
+                    synergies exploit data-driven B2C open-source e-markets optimize create, enhance convergence create."
+                    Out-of-the-box strategize best-of-breed back-end, deploy design markets metrics. Content web services
+                    enhance leading-edge Cluetrain, deliverables dot-com scalable. User-centric morph, back-end, synthesize
+                    mesh, frictionless, exploit next-generation tag portals, e-commerce channels; integrate; recontextualize
+                    distributed revolutionize innovative eyeballs.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal" style="width:50%;">Cancel</button>
+            <button type="button" class="btn-modal-primary" style="width:50%;">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var modals = {
+    'add-context': {
+      'title': 'Add Context',
+      'id': 'modal-1',
+      'content': $('#modal-1')
+    }
+  },
+
+    setModal = function (opt) {
+      opt = $.extend({
+        buttons: [{
+          text: 'Cancel',
+          click: function (e, modal) {
+            modal.close();
+          }
+        }, {
+          text: 'Save',
+          click: function (e, modal) {
+            modal.close();
+          },
+          validate: false,
+          isDefault: true
+        }]
+      }, opt);
+
+      $('body').modal(opt);
+    };
+
+  $('#add-context').on('click', function () {
+    setModal(modals[this.id]);
+  });
+
+</script>
