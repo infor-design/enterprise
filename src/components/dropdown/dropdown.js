@@ -970,7 +970,7 @@ Dropdown.prototype = {
     this.list.find('.trigger').find('.icon').attr('class', 'icon search').changeIcon('search');
     this.searchInput.removeAttr('aria-activedescendant');
 
-    if(self.listIcon.hasIcons) {
+    if (self.listIcon.hasIcons) {
       this.list.find('svg').last().changeIcon('icon-empty-circle');
     }
 
@@ -1063,7 +1063,7 @@ Dropdown.prototype = {
     lis.removeClass('hidden');
     this.position();
 
-    if(this.list.find('input').css('padding-left')) {
+    if (this.list.find('input').css('padding-left')) {
       this.list.find('input').css('padding-left', '12px');
     }
   },
