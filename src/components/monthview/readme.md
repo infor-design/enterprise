@@ -2,9 +2,10 @@
 title: MonthView
 description: This page describes MonthView.
 demo:
-  pages:
+  embedded:
   - name: Full Page MonthView Example
     slug: example-index
+  pages:
   - name: Disabling Weeks/Days
     slug: example-disable-weeks
   - name: Restricting Month Selection

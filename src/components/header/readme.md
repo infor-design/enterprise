@@ -2,9 +2,10 @@
 title: Header
 description: This page describes Header.
 demo:
-  pages:
+  embedded:
   - name: Default Header Example
     slug: example-index
+  pages:
   - name: Disabled Buttons On Header
     slug: example-disabled-buttons
   - name: Eyebrow Style (Emphasis on the ID)

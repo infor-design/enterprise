@@ -2,17 +2,14 @@
 title: Icons
 description:
 demo:
-  pages:
+  embedded:
   - name: Basic Icons
     slug: example-index
+  pages:
   - name: Extended Icon Set
     slug: example-extended
-  - name: Alert Icons
-    slug: example-index
   - name: Tree Folder Icons
     slug: example-tree
-  - name: Tree Icons
-    slug: example-index
   - name: Empty Widget Icons
     slug: example-empty-widgets
   - name: Grid Filter Drop Down Menu Icons

@@ -2,9 +2,10 @@
 title: Popover Component
 description: This page describes Popover Component .
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Simple Popover Content
     slug: example-simple
   - name: Complex Form Layout Inside Popover

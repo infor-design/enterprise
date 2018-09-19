@@ -2,9 +2,10 @@
 title: Color Palette
 description:
 demo:
-  pages:
+  embedded:
   - name: Full Color Palette
     slug: example-index
+  pages:
   - name: Color Variables (Badges)
     slug: example-color-vars
 ---

@@ -2,9 +2,10 @@
 title: Busy Indicator
 description: This page describes Busy Indicator.
 demo:
-  pages:
+  embedded:
   - name: Busy Form Example
     slug: example-index
+  pages:
   - name: Busy Input Elements
     slug: example-inputs
   - name: Non Blocking Busy Indicator

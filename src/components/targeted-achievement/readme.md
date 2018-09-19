@@ -2,9 +2,10 @@
 title: Targeted Achievement Chart
 description: This page describes Targeted Achievement Chart.
 demo:
-  pages:
+  embedded:
   - name: Main Target to Achievement Example (shows 3 examples)
     slug: example-index
+  pages:
   - name: Showing Percentage Text
     slug: example-percent-text
   - name: Used on a Datagrid

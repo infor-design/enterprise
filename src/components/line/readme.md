@@ -2,9 +2,10 @@
 title: Line
 description: This page describes Line.
 demo:
-  pages:
+  embedded:
   - name: Standard Line Chart
     slug: example-index
+  pages:
   - name: Labels on Axis
     slug: example-axis-labels
   - name: Ticks Adjustment (Less ticks than data points)

@@ -2,7 +2,7 @@
 title: Arrange
 description: This page describes Arrange.
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
 ---

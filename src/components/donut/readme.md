@@ -2,9 +2,10 @@
 title: Donut Chart
 description: This page describes Donut Chart.
 demo:
-  pages:
+  embedded:
   - name: Standard Donut Chart
     slug: example-index
+  pages:
   - name: Showing Slices as Alerts
     slug: example-alerts
   - name: With a Right Click Menu

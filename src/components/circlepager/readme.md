@@ -2,9 +2,10 @@
 title: Circle Pager
 description: This page describes Circle Pager.
 demo:
-  pages:
+  embedded:
   - name: Default Circle Pager Example
     slug: example-index
+  pages:
   - name: Circle Pager on a Form
     slug: example-form
   - name: Circle Pager with more than one item per slide

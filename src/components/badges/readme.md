@@ -2,9 +2,10 @@
 title: Badges
 description: This page describes Badges.
 demo:
-  pages:
+  embedded:
   - name: Default Badge Example
     slug: example-index
+  pages:
   - name: Additional Badges
     slug: example-additional-badges
 ---

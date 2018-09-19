@@ -2,9 +2,10 @@
 title: Bubble Chart
 description: This page describes Bubble Chart.
 demo:
-  pages:
+  embedded:
   - name: Standard Bubble Chart
     slug: example-index
+  pages:
   - name: Defaulting a selected bubble
     slug: example-selected
   - name: Set animation speed

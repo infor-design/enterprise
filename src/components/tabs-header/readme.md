@@ -2,9 +2,10 @@
 title: Header Tabs
 description: This page describes Header Tabs .
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Alternate Styling
     slug: example-alternate
   - name: Add Tab Button

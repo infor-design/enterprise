@@ -2,7 +2,7 @@
 title: Drag Behavior
 description: This page describes Drag Behavior.
 demo:
-  pages:
+  embedded:
   - name: Basic Drag Examples
     slug: example-index
 ---

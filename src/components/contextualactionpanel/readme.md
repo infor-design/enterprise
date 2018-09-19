@@ -2,9 +2,10 @@
 title: Contextual Action Panel
 description: This page describes Contextual Action Panel.
 demo:
-  pages:
+  embedded:
   - name: Default CAP Example
     slug: example-index
+  pages:
   - name: CAP using jQuery Object for Content
     slug: example-jquery
   - name: CAP using Inline Markup for Content
