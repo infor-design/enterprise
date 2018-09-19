@@ -204,7 +204,7 @@ describe('Lookup (custom toolbar)', () => {
   });
 });
 
-fdescribe('Lookup multiselect serverside paging tests', () => { //eslint-disable-line
+describe('Lookup multiselect serverside paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-multiselect-paging-serverside');
   });

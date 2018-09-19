@@ -505,7 +505,7 @@ Lookup.prototype = {
 
     // Restore selected rows when pages change
     if (this.settings.options.source) {
-      lookupGrid.off('afterrender.lookup').on('afterrender.lookup', () => {
+      lookupGrid.off('afterpaging.lookup').on('afterpaging.lookup', () => {
         const fieldVal = self.element.val();
         if (fieldVal) {
           self.selectGridRows(fieldVal);
