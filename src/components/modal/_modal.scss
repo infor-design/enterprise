@@ -187,6 +187,13 @@
       border-right-color: transparent;
     }
   }
+
+  .accordion {
+    @media (min-width: $breakpoint-phone + 1px) {
+      max-width: 100%;
+      width: 300px;
+    }
+  }
 }
 
 .overlay {

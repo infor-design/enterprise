@@ -489,7 +489,7 @@ function removeTrailingSlash(uri) {
  * Console.log statistics from the build
  */
 function statsConclusion() {
-  logTaskEnd('deploy');
+  logTaskEnd(`deploying ${packageJson.version}`);
   // did not use multiline string for formatting reasons
   let str = '';
   str += `\nComponents ${chalk.green('converted')}:  ${componentStats.numConverted}/${componentStats.total}`;

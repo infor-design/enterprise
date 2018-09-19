@@ -822,7 +822,7 @@ div.dropdown-xs,
   div.dropdown,
   div.multiselect {
     > .listoption-icon {
-      top: 9px;
+      top: 11px;
     }
 
     + .icon {
@@ -832,15 +832,17 @@ div.dropdown-xs,
 }
 
 //for firefox on android
-.is-firefox.android {
-  div.dropdown,
-  div.multiselect {
-    > .listoption-icon {
-      top: 9px;
-    }
+.is-firefox {
+  &.android {
+    div.dropdown,
+    div.multiselect {
+      > .listoption-icon {
+        top: 12px;
+      }
 
-    + .icon {
-      top: 4px;
+      + .icon {
+        top: 4px;
+      }
     }
   }
 }
