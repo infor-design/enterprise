@@ -29,10 +29,20 @@
  */
 
 const argv = require('yargs').argv;
+const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
 
 const logger = require('./logger');
+
+const SRC_DIR = path.join(__dirname, '..', 'src');
+const TEST_ARGS = [
+  'button',
+  'input',
+  'mask',
+  'listview',
+  'popupmenu'
+];
 
 /*
 const requiredComponents = [];
@@ -72,10 +82,16 @@ function checkLibType(type) {
  * @param {string} type the type of libary file
  * @returns {string} a valid ES6 `import` statement
  */
-function writeJSImportStatement(libFile, type) {
+function writeJSImportStatement(libFile, libFolder, type) {
   const constructorName = capitalize(libFile, type);
   type = checkLibType(type);
-  return `import { ${constructorName} } from '../src/${type}/${libFile}/${libFile}';`;
+  libFile = libFile.toLowerCase();
+  if (!libFolder) {
+    libFolder = libFile;
+  } else {
+    libFolder = libFolder.toLowerCase();
+  }
+  return `import { ${constructorName} } from '${SRC_DIR}/${type}/${libFile}/${libFile}';`;
 }
 
 /**
@@ -84,41 +100,109 @@ function writeJSImportStatement(libFile, type) {
  * @param {string} type the type of libary file
  * @returns {string} a valid SASS `@import` statement
  */
-function writeSassImportStatement(libFile, type) {
+function writeSassImportStatement(libFile, libFolder, type) {
   type = checkLibType(type);
-  return `@import '../src/${type}/${libFile}/${libFile}';`;
+  libFile = libFile.toLowerCase();
+  if (!libFolder) {
+    libFolder = libFile;
+  } else {
+    libFolder = libFolder.toLowerCase();
+  }
+  return `@import '${SRC_DIR}/${type}/${libFolder}/${libFile}';`;
 }
 
 /**
- * Gets a complete list of files inside the source code directory.
- * @returns {Promise} resolved once filesystem is read
+ * Wraps `fs.readdir` and does a recursive file search
+ * @param {string} root ?
+ * @param {function} filter ?
+ * @param {array} files ?
+ * @param {string} prefix ?
+ * @returns {array} of found files
  */
-function getSourceFolderContents() {
-  const srcDir = path.join(__dirname, '..', 'src');
-  return new Promise((resolve, reject) => {
-    fs.readdir(srcDir, (err, items) => {
-      if (err) {
-        reject(new Error(err.message));
-        return;
-      }
+function read(root, filter, files, prefix) {
+  prefix = prefix || '';
+  files = files || [];
+  filter = filter || function (x) {
+    return x[0] !== '.' && !x.endsWith('.md');
+  };
 
-      resolve(items);
-    });
+  const dir = path.join(root, prefix);
+  if (!fs.existsSync(dir)) {
+    return files;
+  }
+
+  if (fs.statSync(dir).isDirectory()) {
+    fs.readdirSync(dir)
+      .filter((name, index) => filter(name, index, dir))
+      .forEach((name) => {
+        read(root, filter, files, path.join(prefix, name));
+      });
+  } else {
+    files.push(prefix);
+  }
+
+  return files;
+}
+
+function searchFileNames(files, term) {
+  const results = [];
+  if (!Array.isArray(files) || !files.length || !term) {
+    return results;
+  }
+
+  files.forEach((file) => {
+    if (file.indexOf(term) > -1) {
+      results.push(file);
+    }
   });
+
+  return results;
 }
 
 // -------------------------------------
 //   Main
 // -------------------------------------
 
-let buildOutput;
+let buildOutput = `\n${chalk.red.bold('IDS Enterprise Custom Builder')}\n\n`;
 
 // Scan source code directories
-getSourceFolderContents().then((items) => {
-  items.forEach((item) => {
-    buildOutput += `${item}\n`;
-  });
+const items = read(SRC_DIR);
 
-  logger(buildOutput);
-  debugger;
+const jsMatches = [];
+const jQueryMatches = [];
+const sassMatches = [];
+TEST_ARGS.forEach((arg) => {
+  const results = searchFileNames(items, arg);
+  results.forEach((result) => {
+    let renderTarget = jsMatches;
+    if (result.indexOf('.jquery') > -1) {
+      renderTarget = jQueryMatches;
+    }
+    if (result.endsWith('.scss')) {
+      renderTarget = sassMatches;
+    }
+    if (renderTarget.indexOf(result) > -1) {
+      return;
+    }
+    renderTarget.push(result);
+  });
 });
+
+buildOutput += `${chalk.cyan('JS Source Code:')}\n`;
+jsMatches.forEach((item) => {
+  buildOutput += `${item}\n`;
+});
+buildOutput += '\n';
+
+buildOutput += `${chalk.cyan('jQuery Source Code:')}\n`;
+jQueryMatches.forEach((item) => {
+  buildOutput += `${item}\n`;
+});
+buildOutput += '\n';
+
+buildOutput += `${chalk.cyan('SASS Source Code:')}\n`;
+sassMatches.forEach((item) => {
+  buildOutput += `${item}\n`;
+});
+
+process.stdout.write(buildOutput);
