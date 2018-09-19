@@ -478,10 +478,6 @@
       }
     }
   }
-
-  > .accordion-content {
-    padding-left: 20px;
-  }
 }
 
 .accordion-content {
@@ -826,7 +822,7 @@
 }
 
 .accordion-content {
-  padding: 14px 0;
+  padding: 15px 0 15px 20px;
 }
 
 // RTL Styles
