@@ -848,46 +848,23 @@ Datagrid.prototype = {
       this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
     }
 
-    const headGroups = [].slice.call(this.colGroups[0].querySelectorAll('th'));
-    const colspans = { fromGroup: null, toGroup: null, index: 0, groupIndex: 0 };
+    const groups = colGroups.map(group => parseInt(group.colspan, 10));
+    const changed = { from: null, to: null, total: 0 };
 
-    headGroups.forEach((group) => {
-      const colspan = parseInt(group.getAttribute('colspan'), 10);
-      const end = colspans.index + (colspan > -1 ? colspan : 0);
+    groups.forEach((colspan, i) => {
+      changed.total += colspan;
 
-      for (; colspans.index < end; colspans.index++) {
-        if (colspans.index === indexFrom) {
-          colspans.fromGroup = group;
-          colspans.fromColspan = colspan;
-          colspans.fromGroupIndex = colspans.groupIndex;
-        } else if (colspans.index === indexTo) {
-          colspans.toGroup = group;
-          colspans.toColspan = colspan;
-          colspans.toGroupIndex = colspans.groupIndex;
-        }
+      if (changed.total > indexFrom && changed.from === null) {
+        changed.from = i;
       }
-      colGroups[colspans.groupIndex].colspan = colspan;
-      colspans.groupIndex++;
+      if (changed.total > indexTo && changed.to === null) {
+        changed.to = i;
+      }
     });
 
-    let newColspan;
-    if (colspans.fromGroup !== null) {
-      newColspan = colspans.fromColspan > 1 ? colspans.fromColspan - 1 : 0;
-      if (newColspan > 0) {
-        colspans.fromGroup.setAttribute('colspan', newColspan);
-        colGroups[colspans.fromGroupIndex].colspan = newColspan;
-      } else {
-        colGroups.splice(colspans.fromGroupIndex, 1);
-      }
-    }
-    if (colspans.toGroup !== null) {
-      newColspan = colspans.toColspan + 1;
-      if (newColspan > 0) {
-        colspans.toGroup.setAttribute('colspan', newColspan);
-        colGroups[colspans.toGroupIndex].colspan = newColspan;
-      } else {
-        colGroups.splice(colspans.toGroupIndex, 1);
-      }
+    if (changed.from !== changed.to) {
+      colGroups[changed.from].colspan -= 1;
+      colGroups[changed.to].colspan += 1;
     }
   },
 
