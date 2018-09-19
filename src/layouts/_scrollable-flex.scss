@@ -104,6 +104,10 @@
 
   .datagrid-container {
     height: 100%;
+
+    &.paginated {
+      height: calc(100% - 40px);
+    }
   }
 
   // Support for list-detail-popup-search-no-split-header
