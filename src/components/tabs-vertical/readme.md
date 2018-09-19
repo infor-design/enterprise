@@ -2,9 +2,10 @@
 title: Vertical Tabs
 description: This page describes Vertical Tabs .
 demo:
-  pages:
+  embedded:
   - name: Independent Column Scrolling
     slug: example-independent-scrolling
+  pages:
   - name: Vertical Tabs as outbound links
     slug: example-outbound-links-page1
   - name: Responsive Setting (changes to header tabs)

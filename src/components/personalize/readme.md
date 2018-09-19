@@ -2,9 +2,10 @@
 title: Personalize
 description: This page describes Personalize.
 demo:
-  pages:
+  embedded:
   - name: Themes Example
     slug: example-index?colors=800000
+  pages:
   - name: Property Page
     slug: example-settings-page
 ---

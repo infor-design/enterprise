@@ -2,9 +2,10 @@
 title: Blockgrid
 description: This page describes Blockgrid.
 demo:
-  pages:
+  embedded:
   - name: Blockgrid with images
     slug: example-index
+  pages:
   - name: Blockgrid with image and text
     slug: example-text
   - name: Blockgrid with single selection

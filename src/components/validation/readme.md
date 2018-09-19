@@ -2,9 +2,10 @@
 title: Validation
 description: This page describes Validation.
 demo:
-  pages:
+  embedded:
   - name: Main Validation Examples
     slug: example-index
+  pages:
   - name: Multiple Validation Errors on a Field
     slug: example-multiple-errors
   - name: Legacy Short Fields

@@ -2,7 +2,7 @@
 title: Context Menu
 description: This page describes Context Menu .
 demo:
-  pages:
+  embedded:
   - name: Context Menu on an Input
     slug: example-index
 ---

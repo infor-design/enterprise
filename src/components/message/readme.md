@@ -2,7 +2,7 @@
 title: Message
 description: This page describes Message.
 demo:
-  pages:
+  embedded:
   - name: Message Examples
     slug: example-index
 ---

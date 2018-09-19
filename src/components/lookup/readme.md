@@ -2,9 +2,10 @@
 title: Lookup
 description: This page describes Lookup.
 demo:
-  pages:
+  embedded:
   - name: Default Lookup
     slug: example-index
+  pages:
   - name: Multiselect Lookup
     slug: example-multiselect
   - name: Lookup with Paging

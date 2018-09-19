@@ -2,7 +2,7 @@
 title: Calendar
 description: This page describes Calendar.
 demo:
-  pages:
+  embedded:
   - name: Full Page Calendar Example
     slug: example-index
 ---

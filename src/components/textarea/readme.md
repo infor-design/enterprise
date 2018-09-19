@@ -2,7 +2,7 @@
 title: Textarea Component
 description: This page describes Textarea Component.
 demo:
-  pages:
+  embedded:
   - name: Main Examples
     slug: example-index
 ---

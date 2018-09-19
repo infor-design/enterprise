@@ -2,9 +2,10 @@
 title: Autocomplete
 description: This page describes Autocomplete.
 demo:
-  pages:
+  embedded:
   - name: Default Autocomplete
     slug: example-index
+  pages:
   - name: Ajax Autocomplete
     slug: example-ajax
   - name: Ajax as a Function Autocomplete

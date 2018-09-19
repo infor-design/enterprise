@@ -2,7 +2,7 @@
 title: Trackdirty
 description: This page describes Trackdirty.
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
 ---

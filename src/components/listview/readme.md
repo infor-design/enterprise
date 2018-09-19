@@ -5,9 +5,10 @@ system:
   category: blocks
   name: data-list
 demo:
-  pages:
+  embedded:
   - name: Default Listview Example
     slug: example-index
+  pages:
   - name: Alternate Row Colors
     slug: example-alternate-row-color
   - name: Multiple Selection

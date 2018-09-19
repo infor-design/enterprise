@@ -2,9 +2,10 @@
 title: Column Chart (Grouped)
 description: This page describes Column Chart (Grouped).
 demo:
-  pages:
+  embedded:
   - name: Standard Grouped Column Chart
     slug: example-index
+  pages:
   - name: Default a Selected Group
     slug: example-selected
   - name: Handle negative values
