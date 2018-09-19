@@ -24,25 +24,27 @@ export { base } from './utils/base';
 // Renderloop needs a single instance of itself
 export { renderLoop, RenderLoopItem } from './utils/renderloop';
 
-// LongPress needs a single instance of itself
-export { longPress } from './behaviors/longpress/longpress';
-
 // Theme/Personalization need single instances of themselves
 export { theme } from './components/personalize/personalize';
 export { personalization } from './components/personalize/personalize.bootstrap';
 export * from './components/personalize/personalize.hooks';
 
-export { masks } from './components/mask/masks';
-export { Validation } from './components/validation/validation';
-
 // Behaviors ================================== /
 export { behaviors };
+
+// LongPress needs a single instance of itself
+export { longPress } from './behaviors/longpress/longpress';
+
 export { Place } from './components/place/place';
-export { Initialize } from './components/initialize/initialize';
+//export { Initialize } from './components/initialize/initialize';
 export { ListFilter } from './components/listfilter/listfilter';
 export { Tmpl } from './components/tmpl/tmpl';
 
-// Needed for Datagrid (Previous Globals) ====== /
+// Component Rules Libraries ================================== /
+// These contain modifiable rules for specific components that must be present
+// before their Components are loaded.
+export { masks } from './components/mask/masks';
+export { Validation } from './components/validation/validation';
 export { Formatters } from './components/datagrid/datagrid.formatters';
 export { Editors } from './components/datagrid/datagrid.editors';
 export { GroupBy } from './components/datagrid/datagrid.groupby';

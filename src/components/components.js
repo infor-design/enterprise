@@ -6,6 +6,8 @@
 export { Button } from './button/button';
 export { Hyperlink } from './hyperlinks/hyperlinks';
 export { Icon } from './icons/icons';
+export { MaskInput } from './mask/mask-input';
+export { PopupMenu } from './popupmenu/popupmenu';
 
 // Molecules
 export { Accordion } from './accordion/accordion';
@@ -15,7 +17,6 @@ export { Bar } from './bar/bar';
 export { Blockgrid } from './blockgrid/blockgrid';
 export { Bullet } from './bullet/bullet';
 export { BusyIndicator } from './busyindicator/busyindicator';
-export { Calendar } from './calendar/calendar';
 export { ColorPicker } from './colorpicker/colorpicker';
 export { Column } from './column/column';
 export { CompletionChart } from './completion-chart/completion-chart';
@@ -26,17 +27,14 @@ export { Dropdown } from './dropdown/dropdown';
 export { EmptyMessage } from './emptymessage/emptymessage';
 export { ExpandableArea } from './expandablearea/expandablearea';
 export { Modal } from './modal/modal';
-export { MonthView } from './monthview/monthview';
 export { About } from './about/about';
 export { Line } from './line/line';
 export { ListBuilder } from './listbuilder/listbuilder';
 export { ListView } from './listview/listview';
-export { MaskInput } from './mask/mask-input';
 export { Message } from './message/message';
 export { MultiSelect } from './multiselect/multiselect';
 export { Pager } from './pager/pager';
 export { Pie } from './pie/pie';
-export { PopupMenu } from './popupmenu/popupmenu';
 export { Popdown } from './popdown/popdown';
 export { Radar } from './radar/radar';
 export { SearchField } from './searchfield/searchfield';
@@ -60,8 +58,10 @@ export { Wizard } from './wizard/wizard';
 export { Zoom } from './zoom/zoom';
 
 // Oraganisms
+export { Calendar } from './calendar/calendar';
 export { CompositeForm } from './compositeform/compositeform';
 export { Datagrid } from './datagrid/datagrid';
 export { Header } from './header/header';
 export { Lookup } from './lookup/lookup';
+export { MonthView } from './monthview/monthview';
 export { MultiTabs } from './tabs-multi/multi-tabs';

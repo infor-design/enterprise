@@ -13,6 +13,8 @@ import './personalize/personalize.jquery';
 import './button/button.jquery';
 import './hyperlinks/hyperlinks.jquery';
 import './icons/icons.jquery';
+import './mask/mask-input.jquery';
+import './popupmenu/popupmenu.jquery';
 
 // Molecules
 import './about/about.jquery';
@@ -40,14 +42,12 @@ import './fileupload-advanced/fileupload-advanced.jquery';
 import './homepage/homepage.jquery';
 import './listbuilder/listbuilder.jquery';
 import './listview/listview.jquery';
-import './mask/mask-input.jquery';
 import './message/message.jquery';
 import './modal/modal.jquery';
 import './monthview/monthview.jquery';
 import './multiselect/multiselect.jquery';
 import './pager/pager.jquery';
 import './progress/progress.jquery';
-import './popupmenu/popupmenu.jquery';
 import './popdown/popdown.jquery';
 import './rating/rating.jquery';
 import './searchfield/searchfield.jquery';
