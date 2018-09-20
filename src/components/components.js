@@ -6,8 +6,10 @@
 export { Button } from './button/button';
 export { Hyperlink } from './hyperlinks/hyperlinks';
 export { Icon } from './icons/icons';
+export { ListFilter } from './listfilter/listfilter';
 export { MaskInput } from './mask/mask-input';
 export { PopupMenu } from './popupmenu/popupmenu';
+export { Tmpl } from './tmpl/tmpl';
 
 // Molecules
 export { Accordion } from './accordion/accordion';

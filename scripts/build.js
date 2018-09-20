@@ -44,6 +44,31 @@ const TEST_ARGS = [
   'popupmenu'
 ];
 
+// Some parts of the lib need to be loaded in a specific order.
+// These rules govern the order of specific file names inside specific lib folders.
+const locationBuckets = [
+  'core',
+  'behaviors',
+  'rules',
+  'foundational',
+  'mid-level',
+  'complex',
+  'layouts',
+  'patterns'
+];
+const customLocations = {
+  mask: {
+    masks: 'rules',
+    'mask-api': 'foundational',
+    'mask-input': 'foundational'
+  },
+  validation: {
+    validation: 'rules',
+    'validation.utils': 'foundational',
+    validator: 'foundational',
+  }
+};
+
 /*
 const requiredComponents = [];
 const behaviors = [];

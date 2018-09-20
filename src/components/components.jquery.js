@@ -1,14 +1,6 @@
 // All desired Soho jQuery-based components ==================== /
 // TODO: Make this file auto-generated for custom builds?
 
-// behaviors
-// TODO: separate this more logically?
-import '../utils/highlight';
-import './arrange/arrange.jquery';
-import './drag/drag.jquery';
-import './place/place.jquery';
-import './personalize/personalize.jquery';
-
 // Atoms
 import './button/button.jquery';
 import './hyperlinks/hyperlinks.jquery';

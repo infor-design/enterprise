@@ -1,8 +1,5 @@
 /* eslint-disable import/first */
-
 import * as debug from './utils/debug';
-import * as behaviors from './utils/behaviors';
-import './components/initialize/initialize.jquery';
 
 // Core ======================================= /
 // NOTE: Every item in the "Core" section is required for running the Soho library properly.
@@ -29,26 +26,22 @@ export { theme } from './components/personalize/personalize';
 export { personalization } from './components/personalize/personalize.bootstrap';
 export * from './components/personalize/personalize.hooks';
 
+// Explicitly import the initializer (which is considered "core").
+// This implicitly imports all jQuery-specific IDS component constructors.
+import './behaviors/initialize/initialize.jquery';
+
+// =========================================================
+// The below lines are automatically changed during a custom build
+// to point to temporary, customized source code files.
+// =========================================================
+
 // Behaviors ================================== /
-export { behaviors };
-
-// LongPress needs a single instance of itself
-export { longPress } from './behaviors/longpress/longpress';
-
-export { Place } from './components/place/place';
-//export { Initialize } from './components/initialize/initialize';
-export { ListFilter } from './components/listfilter/listfilter';
-export { Tmpl } from './components/tmpl/tmpl';
+export * from './behaviors/behaviors';
 
 // Component Rules Libraries ================================== /
 // These contain modifiable rules for specific components that must be present
 // before their Components are loaded.
-export { masks } from './components/mask/masks';
-export { Validation } from './components/validation/validation';
-export { Formatters } from './components/datagrid/datagrid.formatters';
-export { Editors } from './components/datagrid/datagrid.editors';
-export { GroupBy } from './components/datagrid/datagrid.groupby';
-export { excel } from './utils/excel';
+export * from './core/rules';
 
 // Components ================================= /
 import * as components from './components/components';
