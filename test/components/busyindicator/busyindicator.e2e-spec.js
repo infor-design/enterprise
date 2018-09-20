@@ -101,7 +101,7 @@ describe('Busy Indicator test-block-entire-ui tests', () => {
   it('Should block entire UI', async () => {
     const buttonEl = await element(by.id('submit'));
     await buttonEl.click();
-    
+
     browser.actions()
       .mouseMove(element(by.tagName('body')), { x: 170, y: 235 })
       .click()
@@ -247,6 +247,6 @@ describe('Busy Indicator test-update tests', () => {
     const EC = protractor.ExpectedConditions;
     browser.wait(EC.textToBePresentInElement(customTextEl, 'New Text 1'), config.waitsFor);
 
-    expect(customTextEl.getAttribute('textContent')).toEqual('New Text 1');
+    expect(await customTextEl.getAttribute('textContent')).toEqual('New Text 1');
   });
 });

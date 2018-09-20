@@ -12,6 +12,10 @@ describe('Busy Indicator API', () => {
     busyindicatorEl = $('#busy-form');
 
     busyindicatorObj = busyindicatorEl.data('busyindicator');
+
+    window.reload = () => {
+      console.log('mock redirect'); //eslint-disable-line
+    };
   });
 
   afterEach(() => {
@@ -23,6 +27,9 @@ describe('Busy Indicator API', () => {
     if (busyindicatorContainerEl) {
       busyindicatorContainerEl.parentNode.removeChild(busyindicatorContainerEl);
     }
+
+    const rowEl = document.body.querySelector('.row');
+    rowEl.parentNode.removeChild(rowEl);
   });
 
   it('Should return correct value for isActive', () => {
