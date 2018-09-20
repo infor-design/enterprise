@@ -1,4 +1,4 @@
-/* eslint no-continue: "off" */
+/* eslint-disable no-continue: "off, no-underscore-dangle */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
@@ -499,7 +499,7 @@ Lookup.prototype = {
     // Mark selected rows
     lookupGrid.off('selected.lookup');
     const val = self.element.val();
-    if (val) {
+    if (val && !this.settings.options.source) {
       self.selectGridRows(val);
     }
 
@@ -539,21 +539,48 @@ Lookup.prototype = {
    */
   selectGridRows(val) {
     const selectedId = val;
+    let adjust = false;
 
     if (!val) {
       return;
     }
 
+    if (this.grid && this.settings.options.source) {
+      for (let k = 0; k < this.grid._selectedRows.length; k++) {
+        if (isNaN(this.grid._selectedRows[k].idx)) {
+          this.grid._selectedRows.splice(k, 1);
+        }
+      }
+    }
+
     // Multi Select
     if (selectedId.indexOf(this.settings.delimiter) > 1) {
       const selectedIds = selectedId.split(this.settings.delimiter);
+      let isFound = false;
 
       for (let i = 0; i < selectedIds.length; i++) {
-        this.selectRowByValue(this.settings.field, selectedIds[i]);
+        isFound = this.selectRowByValue(this.settings.field, selectedIds[i]);
+
+        if (this.grid && this.settings.options.source && !isFound) {
+          const data = {};
+          let foundInData = false;
+          for (let j = 0; j < this.grid._selectedRows.length; j++) {
+            if (this.grid._selectedRows[j].data[this.settings.field].toString() ===
+              selectedIds[i].toString()) {
+              foundInData = true;
+            }
+          }
+
+          if (!foundInData) {
+            data[this.settings.field] = selectedIds[i];
+            this.grid._selectedRows.push({ data });
+          }
+          adjust = true;
+        }
       }
 
       // There are rows selected off page. Update the count.
-      if (this.grid && selectedIds.length > this.grid.selectedRows().length) {
+      if (adjust) {
         this.modal.element.find('.contextual-toolbar .selection-count').text(`${selectedIds.length} ${Locale.translate('Selected')}`);
       }
       return;
@@ -566,11 +593,11 @@ Lookup.prototype = {
    * Find the row and select it based on select value / function / field value
    * @param {string} field the ID of the field whose value is to be returned.
    * @param {string} value the value to set.
-   * @returns {void}
+   * @returns {boolean} True if the id is found.
    */
   selectRowByValue(field, value) {
     if (!this.settings.options) {
-      return;
+      return false;
     }
 
     const data = this.settings.options.source ?
@@ -580,7 +607,7 @@ Lookup.prototype = {
 
     // in this case we will recall on source - server side paging
     if (!data) {
-      return;
+      return false;
     }
 
     for (let i = 0; i < data.length; i++) {
@@ -603,7 +630,9 @@ Lookup.prototype = {
 
     if (this.grid && selectedRows.length > 0) {
       this.grid.selectRows(selectedRows);
+      return true;
     }
+    return false;
   },
 
   /**
