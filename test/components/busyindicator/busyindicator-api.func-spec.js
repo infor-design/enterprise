@@ -6,6 +6,7 @@ let busyindicatorObj;
 describe('Busy Indicator API', () => {
   beforeEach(() => {
     busyindicatorEl = null;
+    busyindicatorObj = null;
     document.body.insertAdjacentHTML('afterbegin', busyindicatorHTML);
 
     busyindicatorEl = $('#busy-form');
@@ -24,23 +25,21 @@ describe('Busy Indicator API', () => {
     }
   });
 
-  it('Should destroy busy indicator', () => {
+  it('Should return correct value for isActive', () => {
     const buttonEl = $('#submit');
     buttonEl.click();
 
     setTimeout(() => {
-      busyindicatorObj.destroy();
-
-      expect(busyindicatorObj).toBeFalsy();
-    }, 100);
+      expect(busyindicatorObj.isActive()).toEqual(true);
+    }, 500);
   });
 
   it('Should display busy indicator when triggering "start.busyindicator"', () => {
     busyindicatorEl.trigger('start.busyindicator');
 
     setTimeout(() => {
-      expect(document.body.querySelector('.busy-indicator')).toBeTruthy();
-    }, 100);
+      expect(document.body.querySelector('.busy-indicator-container')).toBeTruthy();
+    }, 500);
   });
 
   it('Should hide busy indicator when triggerring "complete.busyindicator"', () => {
@@ -51,33 +50,32 @@ describe('Busy Indicator API', () => {
       busyindicatorEl.trigger('complete.busyindicator');
 
       expect(document.body.querySelector('.busy-indicator')).toBeFalsy();
-    }, 100);
+    }, 500);
   });
 
   it('Should update text of busy indicator', () => {
     const buttonEl = $('#submit');
     buttonEl.click();
 
-    let customText = '';
-
     setTimeout(() => {
-      customText = 'Custom Text';
-      busyindicatorObj.updated({ text: customText });
-    }, 100);
+      busyindicatorObj.updated({ text: 'Custom Text' });
+    }, 500);
 
     setTimeout(() => {
       const customTextEl = $('.busy-indicator-container > span');
 
-      expect(customTextEl.text()).toEqual(customText);
-    }, 200);
+      expect(customTextEl.text()).toEqual('Custom Text');
+    }, 1000);
   });
 
-  it('Should return correct value for isActive', () => {
+  it('Should destroy busy indicator', () => {
     const buttonEl = $('#submit');
     buttonEl.click();
 
     setTimeout(() => {
-      expect(busyindicatorObj.isActive()).toEqual(true);
-    }, 100);
+      busyindicatorObj.destroy();
+
+      expect(busyindicatorObj).toBeFalsy();
+    }, 500);
   });
 });
