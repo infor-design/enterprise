@@ -2,7 +2,7 @@
 title: Process Indicator
 description: This page describes Process Indicator .
 demo:
-  pages:
+  embedded:
   - name: Main Process Indicator Example
     slug: example-index
 ---

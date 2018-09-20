@@ -2,9 +2,10 @@
 title: Field Filter
 description: This page describes Field Filter.
 demo:
-  pages:
+  embedded:
   - name: Default Field Filter Example
     slug: example-index
+  pages:
   - name: Filter Example with Datepicker
     slug: example-datepicker
 ---

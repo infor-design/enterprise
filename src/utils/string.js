@@ -102,4 +102,21 @@ stringUtils.padDate = function padDate(year, month, day) {
   return `0${day}`.slice(-2) + `0${month + 1}`.slice(-2) + year;
 };
 
+/**
+ * Calculate the width for given text string.
+ * @private
+ * @param {string} text string to process
+ * @param {number} padding value for left + right
+ * @param {string} font size and family used with the given text string
+ * @returns {number} calculated width
+ */
+stringUtils.textWidth = function textWidth(text, padding, font) {
+  this.canvasTW = this.canvasTW || (this.canvasTW = document.createElement('canvas'));
+  const context = this.canvasTW.getContext('2d');
+  context.font = font || '14px arial';
+
+  const metrics = context.measureText(text);
+  return Math.round(metrics.width + (padding || 0));
+};
+
 export { stringUtils }; //eslint-disable-line

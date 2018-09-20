@@ -478,10 +478,6 @@
       }
     }
   }
-
-  > .accordion-content {
-    padding-left: 20px;
-  }
 }
 
 .accordion-content {
@@ -670,7 +666,7 @@
 
   // Visible accordion panes force a border to show up on the next accordion header for visual separation
   &.is-expanded {
-    padding: 5px 0;
+    padding: 0;
 
     + .accordion-header:not(.is-focused):not(.is-selected),
     + .accordion-content {
@@ -826,7 +822,7 @@
 }
 
 .accordion-content {
-  padding: 14px 0;
+  padding: 15px 0 15px 20px;
 }
 
 // RTL Styles

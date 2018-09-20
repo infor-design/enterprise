@@ -2,9 +2,10 @@
 title: Bullet Chart
 description: This page describes Bullet Chart.
 demo:
-  pages:
+  embedded:
   - name: Standard Bullet Chart
     slug: example-index
+  pages:
   - name: Shows Grouping a Series of Related Bullet Charts
     slug: example-data-group
   - name: Shows a Bullet Chart with Positive and Negative Values

@@ -5,6 +5,7 @@ import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../../utils/debounced-resize';
+import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 
@@ -205,6 +206,7 @@ Datagrid.prototype = {
     this.isIe9 = html.is('.ie9');
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
+    this.appendTooltip('grid-tooltip');
     this.initSettings();
     this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
     this.removeToolbarOnDestroy = false;
@@ -746,7 +748,7 @@ Datagrid.prototype = {
   * @param {number} idx The index of the column group
   * @param {boolean} show Did we show or hide the col.
   */
-  updateColumnGroup(idx, show) {
+  updateColumnGroup() {
     const colGroups = this.settings.columnGroups;
     if (!this.originalColGroups) {
       this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
@@ -767,129 +769,102 @@ Datagrid.prototype = {
       return;
     }
 
-    let cnt = 0;
-    let lastSpanIdx = -1;
-    let skipNext = 0;
-
-    // Update the data object
-    for (let i = 0; i < colGroups.length; i++) {
-      if (skipNext > 0) {
-        if (idx === i && !show) {
-          colGroups[lastSpanIdx].colspan -= 1;
-          this.settings.columns[i].isSpanned = true;
-        }
-        skipNext -= 1;
-      }
-
-      if (idx === cnt || idx === 1 && i === 1) {
-        if (colGroups[i].colspan === 1 && !show) {
-          colGroups[i].hidden = true;
-        }
-
-        if (colGroups[i].colspan > 1 && !show) {
-          this.settings.columns[i].isSpanned = true;
-          colGroups[i].colspan -= 1;
-        }
-
-        // have to re-render here
-        if (this.settings.columns[i].isSpanned && show) {
-          this.settings.columnGroups = JSON.parse(JSON.stringify(this.originalColGroups));
-          this.render();
-        }
-
-        if (colGroups[i].colspan === 1 && show) {
-          delete colGroups[i].hidden;
-        }
-
-        if (colGroups[i].colspan > 1 && show) {
-          colGroups[i].colspan += 1;
-        }
-      }
-      cnt += colGroups[i].colspan;
-
-      if (colGroups[i].colspan > 1) {
-        lastSpanIdx = i;
-        skipNext = colGroups[i].colspan - 1;
-      }
-    }
-
     // Update the dom
     if (!this.colGroups) {
       return;
     }
 
-    const headGroups = this.colGroups.find('th').toArray();
-    cnt = 0;
-    lastSpanIdx = 0;
-    skipNext = 0;
-    for (let i = 0; i < headGroups.length; i++) {
-      const elem = headGroups[i];
-      const colspan = parseInt(elem.getAttribute('colspan'), 10);
-      cnt += colspan;
+    const headGroups = [].slice.call(this.colGroups[0].querySelectorAll('th'));
+    const columns = this.settings.columns;
+    const columnsLen = columns.length;
+    const visibleColumnsLen = this.visibleColumns().length;
+    const groups = colGroups.map(group => parseInt(group.colspan, 10));
+    const getGroupsTotal = () => groups.reduce((a, b) => a + b, 0);
+    const getDiff = () => {
+      const groupsTotal = getGroupsTotal();
+      return groupsTotal > columnsLen ? groupsTotal - columnsLen : columnsLen - groupsTotal;
+    };
 
-      if (skipNext > 0) {
-        if (idx === i && !show) {
-          headGroups[lastSpanIdx].setAttribute('colspan', headGroups[lastSpanIdx].getAttribute('colspan') - 1);
+    const groupsTotal = getGroupsTotal();
+    let diff;
+    if (groupsTotal > columnsLen) {
+      let move = true;
+      for (let i = groups.length - 1; i >= 0 && move; i--) {
+        diff = getDiff();
+        if (groups[i] >= diff) {
+          groups[i] -= diff;
+          move = false;
+        } else {
+          groups[i] = 0;
         }
-        skipNext -= 1;
-      }
-
-      if (idx === cnt - colspan || idx === 1 && i === 1) {
-        if (colspan === 1 && !show) {
-          elem.classList.add('hidden');
-        }
-
-        if (colspan > 1 && !show) {
-          elem.setAttribute('colspan', colspan - 1);
-        }
-
-        if (colspan === 1 && show) {
-          elem.classList.remove('hidden');
-        }
-
-        if (colspan > 1 && show) {
-          elem.setAttribute('colspan', colspan + 1);
-        }
-      }
-
-      if (colspan > 1) {
-        lastSpanIdx = i;
-        skipNext = colspan - 1;
       }
     }
 
-    this.hideShowColumnGroups(show);
+    let i = 0;
+    let total = 0;
+    groups.forEach((groupColspan, k) => {
+      let colspan = groupColspan;
+      for (let l = i + groupColspan; i < l; i++) {
+        if (i < columnsLen && columns[i].hidden) {
+          colspan--;
+        }
+      }
+
+      if (colspan > 0) {
+        total += colspan;
+      }
+
+      const groupHeaderEl = headGroups[k];
+      groupHeaderEl.setAttribute('colspan', colspan > 0 ? colspan : 1);
+
+      if ((colGroups[k].hidden || colspan < 1)) {
+        groupHeaderEl.classList.add('hidden');
+      } else {
+        groupHeaderEl.classList.remove('hidden');
+      }
+    });
+
+    if (total < visibleColumnsLen) {
+      const groupHeaderEl = headGroups[headGroups.length - 1];
+      diff = visibleColumnsLen - total;
+      groupHeaderEl.setAttribute('colspan', diff > 0 ? diff : 1);
+    }
   },
 
   /**
-   * Test if the group header should be closed and close / open it.
-   * @private
-   * @param {boolean} show Hide and show the column group if it should be.
-   */
-  hideShowColumnGroups(show) {
-    if (!this.colGroups) {
+  * Update group headers after column reorder/dragged.
+  * @private
+  * @param {number} indexFrom The column index dragged from.
+  * @param {number} indexTo The column index dragged to.
+  * @returns {void}
+  */
+  updateGroupHeadersAfterColumnReorder(indexFrom, indexTo) {
+    const colGroups = this.settings.columnGroups;
+    if (!colGroups) {
       return;
     }
 
-    const headGroups = this.colGroups.find('th').toArray();
-    const allEmpty = $(headGroups).filter(':not(.hidden)').text() === '';
+    if (!this.originalColGroups) {
+      this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
+    }
 
-    let cnt = 0;
-    for (let i = 0; i < headGroups.length; i++) {
-      const elem = headGroups[i];
-      const colspan = parseInt(elem.getAttribute('colspan'), 10);
-      cnt += colspan;
+    const groups = colGroups.map(group => parseInt(group.colspan, 10));
+    const changed = { from: null, to: null, total: 0 };
 
-      // Find up to the index
-      if (i === headGroups.length - 1 && headGroups.length === cnt && !show && allEmpty) {
-        this.colGroups.addClass('hidden');
-        this.element.removeClass('has-group-headers');
+    groups.forEach((colspan, i) => {
+      changed.total += colspan;
+
+      if (changed.total > indexFrom && changed.from === null) {
+        changed.from = i;
       }
-
-      if (i === headGroups.length - 1 && headGroups.length === cnt && show && !allEmpty) {
-        this.colGroups.removeClass('hidden');
-        this.element.addClass('has-group-headers');
+      if (changed.total > indexTo && changed.to === null) {
+        changed.to = i;
       }
+    });
+
+    if (changed.from !== changed.to) {
+      colGroups[changed.from].colspan -= 1;
+      colGroups[changed.to].colspan += 1;
     }
   },
 
@@ -926,20 +901,56 @@ Datagrid.prototype = {
     if (colGroups) {
       this.element.addClass('has-group-headers');
 
-      let total = 0;
+      const columns = this.settings.columns;
+      const columnsLen = columns.length;
+      const visibleColumnsLen = this.visibleColumns().length;
+      const groups = colGroups.map(group => parseInt(group.colspan, 10));
+      const getGroupsTotal = () => groups.reduce((a, b) => a + b, 0);
+      const getDiff = () => {
+        const groupsTotal = getGroupsTotal();
+        return groupsTotal > columnsLen ? groupsTotal - columnsLen : columnsLen - groupsTotal;
+      };
 
       headerRow += '<tr role="row" class="datagrid-header-groups">';
 
-      for (let k = 0; k < colGroups.length; k++) {
-        const hiddenStr = colGroups[k].hidden || this.settings.columns[k].hidden ? 'class="hidden"' : '';
-        total += parseInt(colGroups[k].colspan, 10);
-        uniqueId = self.uniqueId(`-header-group-${k}`);
-
-        headerRow += `<th ${hiddenStr}colspan="${colGroups[k].colspan}" id="${uniqueId}"><div class="datagrid-column-wrapper "><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+      const groupsTotal = getGroupsTotal();
+      let diff;
+      if (groupsTotal > columnsLen) {
+        let move = true;
+        for (let i = groups.length - 1; i >= 0 && move; i--) {
+          diff = getDiff();
+          if (groups[i] >= diff) {
+            groups[i] -= diff;
+            move = false;
+          } else {
+            groups[i] = 0;
+          }
+        }
       }
 
-      if (total < this.visibleColumns().length) {
-        headerRow += `<th colspan="${this.visibleColumns().length - total}"></th>`;
+      let i = 0;
+      let total = 0;
+      groups.forEach((groupColspan, k) => {
+        let colspan = groupColspan;
+        for (let l = i + groupColspan; i < l; i++) {
+          if (i < columnsLen && columns[i].hidden) {
+            colspan--;
+          }
+        }
+        const hiddenStr = colGroups[k].hidden || colspan < 1 ? ' class="hidden"' : '';
+        const colspanStr = ` colspan="${colspan > 0 ? colspan : 1}"`;
+        uniqueId = self.uniqueId(`-header-group-${k}`);
+        if (colspan > 0) {
+          total += colspan;
+        }
+
+        headerRow += `<th${hiddenStr}${colspanStr} id="${uniqueId}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+      });
+
+      if (total < visibleColumnsLen) {
+        diff = visibleColumnsLen - total;
+        const colspanStr = ` colspan="${diff > 0 ? diff : 1}"`;
+        headerRow += `<th${colspanStr}></th>`;
       }
       headerRow += '</tr><tr>';
     } else {
@@ -1007,14 +1018,9 @@ Datagrid.prototype = {
 
     if (colGroups && self.headerRow) {
       self.colGroups = self.headerRow.find('.datagrid-header-groups');
-      self.hideShowColumnGroups();
     }
 
     self.syncHeaderCheckbox(this.settings.dataset);
-
-    if (this.settings.enableTooltips) {
-      self.headerRow.find('th[title]').tooltip();
-    }
 
     if (self.settings.columnReorder) {
       self.createDraggableColumns();
@@ -1925,14 +1931,51 @@ Datagrid.prototype = {
   },
 
   /**
+  * Get extra top position for current target in header
+  * @private
+  * @returns {number} the extra top position of the rows depending on rowHeight setting.
+  */
+  getExtraTop() {
+    const s = this.settings;
+    const topPositions = {
+      default: { short: 0, medium: 0, normal: 0 },
+      filterable: { short: 0, medium: 0, normal: 0 },
+      group: { short: -25, medium: -30, normal: -39 },
+      groupFilterable: { short: -29, medium: -30, normal: -41 }
+    };
+    let extraTop = 0;
+    if (s.columnGroups) {
+      extraTop = s.filterable ?
+        topPositions.groupFilterable[s.rowHeight] : topPositions.group[s.rowHeight];
+    } else {
+      extraTop = s.filterable ?
+        topPositions.filterable[s.rowHeight] : topPositions.default[s.rowHeight];
+    }
+    return extraTop;
+  },
+
+  /**
   * Get height for current target in header
   * @private
   * @returns {number} the height of the rows depending on rowHeight setting.
   */
   getTargetHeight() {
-    const h = this.settings.filterable ?
-      { short: 48, medium: 51, normal: 56 } : { short: 20, medium: 28, normal: 35 };
-    return h[this.settings.rowHeight];
+    const s = this.settings;
+    const heights = {
+      default: { short: 20, medium: 28, normal: 35 },
+      filterable: { short: 48, medium: 51, normal: 56 },
+      group: { short: 46, medium: 56, normal: 74 },
+      groupFilterable: { short: 78, medium: 84, normal: 99 }
+    };
+    let height = 0;
+    if (s.columnGroups) {
+      height = s.filterable ?
+        heights.groupFilterable[s.rowHeight] : heights.group[s.rowHeight];
+    } else {
+      height = s.filterable ?
+        heights.filterable[s.rowHeight] : heights.default[s.rowHeight];
+    }
+    return height;
   },
 
   /**
@@ -1959,6 +2002,7 @@ Datagrid.prototype = {
       let clone = null;
       let headerPos = null;
       let offPos = null;
+      let extraTopPos = 0;
       const handle = $(this);
       const header = handle.parent();
 
@@ -1978,6 +2022,7 @@ Datagrid.prototype = {
 
             self.setDraggableColumnTargets();
 
+            extraTopPos = self.getExtraTop();
             headerPos = header.position();
             offPos = { top: (pos.top - headerPos.top), left: (pos.left - headerPos.left) };
 
@@ -2011,7 +2056,7 @@ Datagrid.prototype = {
                   showTarget.addClass('is-over');
                   rect = target.el[0].getBoundingClientRect();
                   showTarget[0].style.left = `${parseInt(rect.left, 10)}px`;
-                  showTarget[0].style.top = `${parseInt(rect.top, 10) + 1}px`;
+                  showTarget[0].style.top = `${(parseInt(rect.top, 10) + 1) + extraTopPos}px`;
                 }
               }
             }
@@ -2053,6 +2098,7 @@ Datagrid.prototype = {
                 indexFrom = tempArray[self.draggableStatus.startIndex] || 0;
                 indexTo = tempArray[self.draggableStatus.endIndex] || 0;
 
+                self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
                 self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
                 self.updateColumns(self.settings.columns);
               }
@@ -2098,7 +2144,7 @@ Datagrid.prototype = {
         dropArea: {
           x1: pos.left - extra,
           x2: pos.left + target.outerWidth() + extra,
-          y1: pos.top - extra,
+          y1: (pos.top - extra) + self.getExtraTop(),
           y2: pos.top + target.outerHeight() + extra
         }
       });
@@ -2356,7 +2402,7 @@ Datagrid.prototype = {
       this.sortDataset();
     }
 
-    let forcedTooltip = false;
+    let rowStatusTooltip = false;
     for (let i = 0; i < s.dataset.length; i++) {
       // For better performance dont render out of page
       if (s.paging && !s.source) {
@@ -2411,7 +2457,6 @@ Datagrid.prototype = {
           }
 
           rowData.values = s.dataset[i].values;
-
           tableHtml += self.rowHtml(rowData, this.recordCount, i);
           this.recordCount++;
           self.groupArray.push({ group: i, node: 0 });
@@ -2439,12 +2484,11 @@ Datagrid.prototype = {
       if (s.treeGrid) {
         currentCount = this.recordCount;
       }
-
       tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
       this.recordCount++;
 
       if (s.dataset[i].rowStatus) {
-        forcedTooltip = true;
+        rowStatusTooltip = true;
       }
     }
 
@@ -2467,7 +2511,7 @@ Datagrid.prototype = {
     DOM.html(self.tableBody, tableHtml, '*');
     self.setVirtualHeight();
     self.setScrollClass();
-    self.setupTooltips(forcedTooltip);
+    self.setupTooltips(rowStatusTooltip);
     self.afterRender();
   },
 
@@ -2787,14 +2831,14 @@ Datagrid.prototype = {
 
     // Group Rows
     if (this.settings.groupable && isGroup && !isFooter) {
-      rowHtml = `<tr class="datagrid-rowgroup-header ${isHidden ? '' : 'is-expanded'}" role="rowgroup"><td role="gridcell" colspan="${this.visibleColumns().length}">${
+      rowHtml = `<tr class="datagrid-rowgroup-header${isHidden ? '' : ' is-expanded'}" role="rowgroup"><td role="gridcell" colspan="${this.visibleColumns().length}">${
         Formatters.GroupRow(dataRowIdx, 0, null, null, rowData, this)
       }</td></tr>`;
       return rowHtml;
     }
 
     if (this.settings.groupable && isGroup && isFooter) {
-      rowHtml = `<tr class="datagrid-row datagrid-rowgroup-footer ${isHidden ? '' : 'is-expanded'}" role="rowgroup">${
+      rowHtml = `<tr class="datagrid-row datagrid-rowgroup-footer${isHidden ? '' : ' is-expanded'}" role="rowgroup">${
         Formatters.GroupFooterRow(dataRowIdx, 0, null, null, rowData, this)
       }</tr>`;
       return rowHtml;
@@ -2807,13 +2851,13 @@ Datagrid.prototype = {
     isEven = (this.recordCount % 2 === 0);
     const isSelected = this.isNodeSelected(rowData);
     const isActivated = rowData._rowactivated;
-    const rowStatus = { class: '', svg: '', tooltip: '' };
+    const rowStatus = { class: '', svg: '' };
     if (rowData && rowData.rowStatus) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
       rowStatus.icon = (rowData.rowStatus.icon === 'confirm') ? '#icon-check' : '#icon-exclamation';
-      rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${rowStatus.icon}"></use></svg>`;
-      rowStatus.tooltip = rowData.rowStatus.tooltip;
+      rowStatus.title = (rowData.rowStatus.tooltip !== '') ? ` title="${rowData.rowStatus.tooltip}"` : '';
+      rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"${rowStatus.title}><use xlink:href="${rowStatus.icon}"></use></svg>`;
     }
 
     rowHtml = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
@@ -2970,20 +3014,23 @@ Datagrid.prototype = {
       if (j !== 0) {
         rowStatus.class = '';
         rowStatus.svg = '';
-        rowStatus.tooltip = '';
       }
 
       if (rowStatus.class !== '') {
         cssClass += ' rowstatus-cell';
       }
 
-      rowHtml += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}" ` +
+      // Trim extra spaces
+      if (cssClass !== '') {
+        cssClass = cssClass.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+      }
+
+      rowHtml += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
           ` aria-describedby="${self.uniqueId(`-header-${j}`)}"${
             isSelected ? ' aria-selected= "true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
           }${colspan ? ` colspan="${colspan}"` : ''
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
-          }${rowStatus.tooltip !== '' ? ` title="${rowStatus.tooltip}"` : ''
           }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
           }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
 
@@ -3425,7 +3472,7 @@ Datagrid.prototype = {
   * @returns {void}
   */
   calculateRowspan(value, row, col) {
-    let cnt = 0;
+    let total = 0;
     let min = null;
 
     if (!col.rowspan) {
@@ -3434,17 +3481,14 @@ Datagrid.prototype = {
 
     for (let i = 0; i < this.settings.dataset.length; i++) {
       if (value === this.settings.dataset[i][col.field]) {
-        cnt++;
+        total++;
         if (min === null) {
           min = i;
         }
       }
     }
 
-    if (row === min) {
-      return ` rowspan ="${cnt}"`;
-    }
-    return '';
+    return row === min ? ` rowspan ="${total}"` : '';
   },
 
   /**
@@ -3468,96 +3512,102 @@ Datagrid.prototype = {
   },
 
   /**
-  * Setup Content tooltip for the rich text editor
-  * @private
-  * @param  {object} elem The content element.
-  * @param  {number} width The current width.
-  * @param  {object} td The cell node
-  * @returns {void}
-  */
-  setupContentTooltip(elem, width, td) {
-    if (elem.text().length > 0) {
-      const content = elem.clone();
-
-      elem.tooltip({
-        content,
-        extraClass: 'alternate content-tooltip',
-        placementOpts: {
-          parent: elem,
-          parentXAlignment: 'center',
-          strategies: ['flip', 'nudge', 'shrink']
-        }
-      });
-
-      if (width) {
-        content[0].style.width = width;
-      } else {
-        elem.on('beforeshow.datagrid', () => {
-          elem.off('beforeshow.datagrid');
-          content[0].style.width = `${td[0].offsetWidth}px`;
-        });
-      }
-    }
-  },
-
-  /**
    * Setup tooltips on the cells.
    * @private
-   * @param  {boolean} forced true to show tooltip
+   * @param  {boolean} rowstatus true set tootip with row status
    * @returns {void}
    */
-  setupTooltips(forced) {
-    if (!this.settings.enableTooltips && !forced) {
+  setupTooltips(rowstatus) {
+    if (!rowstatus && !this.settings.enableTooltips) {
       return;
     }
 
     const self = this;
-    // Implement Tooltip on cells with title attribute
-    this.tableBody.find('td[title]').tooltip();
-    this.tableBody.find('a[title]').tooltip();
+    const defaultDelay = 400;
+    let tooltipTimer;
 
-    // Implement Tooltip on cells with ellipsis
-    this.table.find('td.text-ellipsis').tooltip({
-      content() {
-        const cell = $(this);
-        const text = cell.text();
-        const inner = cell.children('.datagrid-cell-wrapper');
-        const element = $(inner[0]);
-        const clonedEl = element.clone().css({ display: 'inline', width: 'auto', visibility: 'hidden' }).appendTo('body');
+    // Set selector
+    const selector = {
+      th: '.datagrid-header th',
+      td: '.datagrid-body tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
+      rowstatus: '.datagrid-body tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
+    };
 
-        if (cell[0] && inner[0] && clonedEl.width() > element.width() - 30 && cell.data('tooltip')) {
-          const w = inner.width();
-          cell.data('tooltip').settings.maxWidth = w;
+    // Selector string
+    if (rowstatus && this.settings.enableTooltips) {
+      selector.str = `${selector.th}, ${selector.td}, ${selector.rowstatus}`;
+    } else if (rowstatus) {
+      selector.str = `${selector.th}, ${selector.rowstatus}`;
+    } else {
+      selector.str = `${selector.th}, ${selector.td}`;
+    }
 
-          clonedEl.remove();
-          return xssUtils.stripHTML(text);
+    // Handle tooltip to show
+    const handleShow = (elem, delay) => {
+      delay = typeof delay === 'undefined' ? defaultDelay : delay;
+      tooltipTimer = setTimeout(() => {
+        const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
+        const width = self.getOuterWidth(elem);
+
+        if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35)))) {
+          self.showTooltip(tooltip);
+        }
+      }, delay);
+    };
+
+    // Handle tooltip to hide
+    const handleHide = (delay) => {
+      delay = typeof delay === 'undefined' ? defaultDelay : delay;
+      clearTimeout(tooltipTimer);
+      setTimeout(() => {
+        self.hideTooltip();
+      }, delay);
+    };
+
+    // Bind events
+    this.element
+      .off('mouseenter.gridtooltip', selector.str)
+      .on('mouseenter.gridtooltip', selector.str, function () {
+        handleShow(this);
+      })
+      .off('mouseleave.gridtooltip click.gridtooltip', selector.str)
+      .on('mouseleave.gridtooltip click.gridtooltip', selector.str, () => {
+        handleHide();
+      })
+      .off('longpress.gridtooltip', selector.str)
+      .on('longpress.gridtooltip', selector.str, () => {
+        handleShow(this, 0);
+      })
+      .off('keydown.gridtooltip', selector.str)
+      .on('keydown.gridtooltip', selector.str, function (e) {
+        const key = e.which || e.keyCode || e.charCode || 0;
+        let handle = false;
+
+        if (e.shiftKey && key === 112) { // Shift + F1
+          handleShow(this, 0);
+        } else if (key === 27) { // Escape
+          handle = self.isGridtooltip();
+          handleHide(0);
         }
 
-        clonedEl.remove();
-        return '';
-      }
-    });
+        if (handle) {
+          e.preventDefault();
+        }
+        return !handle;
+      });
+  },
 
-    // Rich text editor content tooltip
-    this.table.find('td .is-editor.content-tooltip').each(function () {
-      const elem = $(this);
-      const td = elem.closest('td');
-      const cell = td.attr('aria-colindex') - 1;
-      const col = self.columnSettings(cell);
-      const width = col.editorOptions &&
-        col.editorOptions.width ? self.setUnit(col.editorOptions.width) : false;
-
-      self.setupContentTooltip(elem, width, td);
-    });
-
-    // Set rowStatus with error color
-    const cellNodes = [].slice.call(this.table[0].querySelectorAll('td.rowstatus-cell'));
-    cellNodes.forEach((cellNode) => {
-      const rowNode = this.closest(cellNode, el => el.classList.contains('datagrid-row'));
-      const classList = rowNode ? rowNode.classList : {};
-      const isErrorColor = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
-      $(cellNode).tooltip({ placement: 'right', isErrorColor });
-    });
+  /**
+   * Get outerWidth for a given element.
+   * @private
+   * @param  {boolean} element to calculate the outerWidth
+   * @returns {number} computed outerWidth
+   */
+  getOuterWidth(element) {
+    const style = getComputedStyle(element);
+    let width = element.offsetWidth;
+    width += parseInt(style.marginLeft, 10) + parseInt(style.marginRight, 10);
+    return width;
   },
 
   /**
@@ -3920,8 +3970,9 @@ Datagrid.prototype = {
     }
 
     if (this.originalColumns) {
-      this.updateColumns(this.originalColumns);
-      this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
+      const columnGroups = this.settings.columnGroups && this.originalColGroups ?
+        this.originalColGroups : null;
+      this.updateColumns(this.originalColumns, columnGroups);
     }
   },
 
@@ -3942,7 +3993,7 @@ Datagrid.prototype = {
     this.headerColGroup.find('col').eq(idx).addClass('is-hidden');
 
     // Shrink or remove colgroups
-    this.updateColumnGroup(idx, false);
+    this.updateColumnGroup();
 
     if (this.bodyColGroup) {
       this.bodyColGroup.find('col').eq(idx).addClass('is-hidden');
@@ -4001,7 +4052,7 @@ Datagrid.prototype = {
     }
 
     // Shrink or add colgroups
-    this.updateColumnGroup(idx, true);
+    this.updateColumnGroup();
 
     // Handle colSpans if present on the column
     if (this.hasColSpans) {
@@ -6065,6 +6116,7 @@ Datagrid.prototype = {
     rowStatus.tooltip = tooltip;
 
     this.updateRow(idx);
+    this.setupTooltips(true);
   },
 
   /**
@@ -6792,13 +6844,23 @@ Datagrid.prototype = {
 
     // Add icon and classes
     node.addClass(type).attr(`data-${type}message`, message);
-    const icon = $($.createIcon({ classes: [`icon-${type}`], icon: type }));
 
     // Add and show tooltip
-    if (node.find(`.icon-${type}`).length === 0) {
-      node.find('.datagrid-cell-wrapper').append(icon);
-      icon.tooltip({ placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: message });
-      icon.data('tooltip').show();
+    let icon = node.find(`.icon-${type}`);
+    if (!icon.length) {
+      const wrapper = node.find('.datagrid-cell-wrapper');
+      wrapper.append($($.createIcon({ classes: [`icon-${type}`], icon: type })));
+      icon = node.find(`.icon-${type}`);
+
+      const tooltip = {
+        forced: true,
+        placement: 'bottom',
+        content: message,
+        isError: type === 'error' || type === 'dirtyerror',
+        wrapper: icon
+      };
+      this.cacheTooltip(icon, tooltip);
+      this.showTooltip(tooltip);
     }
   },
 
@@ -6839,10 +6901,7 @@ Datagrid.prototype = {
       // clear the displayed message
       if (tableerrors && tableerrors.length) {
         icon = tableerrors.find(`.icon-${validationType.type}`);
-        const tooltip = icon.data('tooltip');
-        if (tooltip) {
-          tooltip.hide();
-        }
+        this.hideTooltip();
         tableerrors.find(`.icon-${validationType.type}`).remove();
       }
       return;
@@ -6866,8 +6925,8 @@ Datagrid.prototype = {
     }
     icon = tableerrors.find(`.icon-${type}`);
     if (!icon.length) {
-      icon = $($.createIcon({ classes: [`icon-${type}`], icon: type }));
-      tableerrors.append(icon);
+      tableerrors.append($($.createIcon({ classes: [`icon-${type}`], icon: type })));
+      icon = tableerrors.find(`.icon-${type}`);
     }
 
     if (this.element.hasClass('has-toolbar')) {
@@ -6875,7 +6934,13 @@ Datagrid.prototype = {
       this.toolbar.children('.title').append(tableerrors);
     }
 
-    icon.tooltip({ placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: messages });
+    this.cacheTooltip(icon, {
+      forced: true,
+      placement: 'bottom',
+      content: messages,
+      isError: type === 'error' || type === 'dirtyerror',
+      wrapper: icon
+    });
   },
 
   /**
@@ -6973,15 +7038,15 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearNodeErrors(node, type) {
-    node.removeClass(type).removeAttr(`data-${type}message`);
+    node = node instanceof jQuery ? node[0] : node;
+    node.classList.remove(type);
+    node.removeAttribute(`data-${type}message`);
 
-    const icon = node.find(`.icon-${type}`);
-    const tooltip = icon.data('tooltip');
-
-    if (tooltip) {
-      tooltip.hide();
+    const icon = node.querySelector(`.icon-${type}`);
+    if (icon) {
+      icon.parentNode.removeChild(icon);
+      this.hideTooltip();
     }
-    node.find(`.icon-${type}`).remove();
   },
 
   /**
@@ -7167,18 +7232,16 @@ Datagrid.prototype = {
       }
     }
 
-    // Setup/Sync tooltip
-    if (cellNode.data('tooltip')) {
-      cellNode.data('tooltip').destroy();
-    }
+    // Remove older tooltip data
+    this.removeTooltipData(cellNode);
 
     // Update the value in the dataset
     if (cell === 0 && rowData && rowData.rowStatus) {
+      let svg = cellNode.find('svg.icon-rowstatus');
+
       if (rowNode[0] && cellNode[0]) {
         rowNode[0].classList.add(`rowstatus-row-${rowData.rowStatus.icon}`);
         cellNode[0].classList.add('rowstatus-cell');
-
-        const svg = cellNode.find('svg.icon-rowstatus');
 
         if (!svg.length) {
           const svgIcon = rowData.rowStatus.icon === 'confirm' ? '#icon-check' : '#icon-exclamation';
@@ -7186,10 +7249,14 @@ Datagrid.prototype = {
         }
       }
       if (rowData.rowStatus.tooltip) {
-        cellNode.attr('title', rowData.rowStatus.tooltip);
-        cellNode.tooltip({
+        svg = cellNode.find('svg.icon-rowstatus');
+        const statusIcon = rowData.rowStatus.icon;
+        this.cacheTooltip(svg, {
+          forced: true,
           placement: 'right',
-          isErrorColor: rowData.rowStatus.icon === 'error' || rowData.rowStatus.icon === 'dirtyerror'
+          content: rowData.rowStatus.tooltip,
+          isError: statusIcon === 'error' || statusIcon === 'dirtyerror',
+          wrapper: cellNode
         });
       }
     }
@@ -7370,7 +7437,7 @@ Datagrid.prototype = {
 
     // Hide any cell tooltips (Primarily for validation)
     if (prevCell.cell !== cell || prevCell.row !== row) {
-      $('#tooltip').hide();
+      self.hideTooltip();
     }
 
     // Find the cell if it exists
@@ -7467,7 +7534,7 @@ Datagrid.prototype = {
 
   setNextActiveCell(e) {
     const self = this;
-    if (e.type === 'keydown' && !self.settings.actionableMode) {
+    if (e.type === 'keydown') {
       if (this.settings.actionableMode) {
         setTimeout(() => {
           const evt = $.Event('keydown.datagrid');
@@ -7975,10 +8042,301 @@ Datagrid.prototype = {
   },
 
   /**
+   * Reference to the grid tooltip.
+   * @private
+   */
+  tooltip: {},
+
+  /**
+  * Add grid tooltip to the page.
+  * @private
+  * @param {string} extraClass class to add to target uniqueness
+  * @returns {void}
+  */
+  appendTooltip(extraClass) {
+    this.tooltip = document.getElementById('tooltip');
+
+    if (!this.tooltip) {
+      const tooltip = '' +
+        `<div id="tooltip" class="tooltip ${extraClass} is-hidden">
+          <div class="arrow"></div>
+          <div class="tooltip-content"></div>
+        </div>`;
+      document.body.insertAdjacentHTML('beforeend', tooltip);
+
+      this.tooltip = document.getElementById('tooltip');
+
+      if (this.isTouch) {
+        this.tooltip.style.pointerEvents = 'auto';
+        $(this.tooltip).on('touchend.gridtooltip', () => {
+          this.hideTooltip();
+        });
+      }
+    }
+  },
+
+  /**
+   * Cache tooltip content so it can use for more then once
+   * @private
+   * @param  {object} elem The element to be cached.
+   * @param  {object} tooltip Optional to cache given data.
+   * @returns {object} tooltip object.
+   */
+  cacheTooltip(elem, tooltip) {
+    if (typeof tooltip === 'undefined') {
+      const contentTooltip = elem.querySelector('.is-editor.content-tooltip');
+      const aTitle = elem.querySelector('a[title]');
+      const isRowstatus = elem.classList.contains('rowstatus-cell');
+      const isSvg = elem.tagName.toLowerCase() === 'svg';
+      const isTh = elem.tagName.toLowerCase() === 'th';
+      let title;
+
+      tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
+
+      if (isTh) {
+        tooltip.wrapper = elem;
+        tooltip.placement = 'bottom';
+      }
+
+      // Cache rowStatus cell
+      if (isRowstatus || isSvg) {
+        const rowNode = this.closest(elem, el => el.classList.contains('datagrid-row'));
+        const classList = rowNode ? rowNode.classList : [];
+        tooltip.isError = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
+        tooltip.placement = 'right';
+
+        // For nonVisibleCellErrors
+        if (isSvg) {
+          tooltip.wrapper = this.closest(elem, el => el.tagName.toLowerCase() === 'td');
+        }
+      }
+
+      if (contentTooltip) {
+        // Used with rich text editor
+        const cell = elem.getAttribute('aria-colindex') - 1;
+        const col = this.columnSettings(cell);
+        const width = col.editorOptions &&
+          col.editorOptions.width ? this.setUnit(col.editorOptions.width) : false;
+
+        // Width for tooltip can be come from column options
+        contentTooltip.style.width = width || `${elem.offsetWidth}px`;
+        const wrapperHTML = tooltip.wrapper.innerHTML;
+
+        if (xssUtils.stripHTML(wrapperHTML) !== '') {
+          tooltip.content = wrapperHTML;
+          tooltip.extraClassList = ['popover', 'alternate', 'content-tooltip'];
+        }
+      } else if (aTitle) {
+        // Title attribute on links `a`
+        tooltip.content = aTitle.getAttribute('title');
+        aTitle.removeAttribute('title');
+      } else {
+        title = elem.getAttribute('title');
+        if (title) {
+          // Title attribute on current element
+          tooltip.content = title;
+          elem.removeAttribute('title');
+        } else {
+          // Default use wrapper content
+          tooltip.content = xssUtils.stripHTML(tooltip.wrapper.textContent);
+        }
+      }
+
+      if (tooltip.content !== '') {
+        const isEllipsis = elem.classList.contains('text-ellipsis');
+        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (isEllipsis ? 8 : 0);
+        tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
+        if (title) {
+          tooltip.forced = true;
+        }
+      }
+    }
+
+    elem = elem instanceof jQuery ? elem : $(elem);
+    elem.data('gridtooltip', tooltip);
+    return tooltip;
+  },
+
+  /**
+   * Show Tooltip
+   * @private
+   * @param  {object} [options] for tooltip.
+   * @param  {string} [options.content] The tooltip contents.
+   * @param  {object} [options.wrapper] The parent DOM element.
+   * @param  {boolean} [options.isError] True for if is error color.
+   * @param  {string} [options.placement] 'top'|'right'|'bottom'|'left'.
+   * @param  {array} [options.extraClassList] list of css classes to be added to tooltip.
+   * @returns {void}
+   */
+  showTooltip(options) {
+    this.tooltip = document.getElementById('tooltip');
+    if (this.tooltip) {
+      const tolltipJQ = $(this.tooltip);
+      const tooltipContentEl = this.tooltip.querySelector('.tooltip-content');
+      if (tooltipContentEl) {
+        tooltipContentEl.innerHTML = options.content;
+        this.tooltip.classList.remove('is-hidden', 'top', 'right', 'bottom', 'left');
+        this.tooltip.style.display = '';
+        this.tooltip.classList.add(options.placement || 'top');
+
+        if (options.isError) {
+          this.tooltip.classList.add('is-error');
+        }
+        if (options.extraClassList) {
+          options.extraClassList.map(className => this.tooltip.classList.add(className));
+        }
+
+        const distance = 10;
+        const placeOptions = {
+          x: 0,
+          y: distance,
+          container: this.element.closest('.page-container.scrollable') || $('body'),
+          containerOffsetX: options.wrapper.offsetLeft,
+          containerOffsetY: options.wrapper.offsetTop,
+          parent: $(options.wrapper),
+          placement: options.placement || 'top',
+          strategies: ['flip', 'nudge']
+        };
+        if (placeOptions.placement === 'left' || placeOptions.placement === 'right') {
+          placeOptions.x = distance;
+          placeOptions.y = 0;
+        }
+
+        // If already have place instance
+        if (tolltipJQ.data('place')) {
+          tolltipJQ.data('place').place(placeOptions);
+        } else {
+          tolltipJQ.place(placeOptions);
+          tolltipJQ.data('place').place(placeOptions);
+        }
+
+        // Flag to mark as gridtooltip
+        tolltipJQ.data('gridtooltip', true);
+
+        tolltipJQ
+          .one('afterplace.gridtooltip', (e, placementObj) => {
+            this.handleAfterPlaceTooltip(e, placementObj);
+          })
+          .on('click.gridtooltip', () => {
+            this.hideTooltip();
+          });
+
+        // Hide the tooltip when the page scrolls.
+        $('body, .scrollable').off('scroll.gridtooltip').on('scroll.gridtooltip', () => {
+          this.hideTooltip();
+        });
+      }
+    }
+  },
+
+  /**
+   * Placement behavior's "afterplace" handler.
+   * @private
+   * @param {jquery.event} e custom `afterPlace` event
+   * @param {placementobject} placementObj object containing placement settings
+   * @returns {void}
+   */
+  handleAfterPlaceTooltip(e, placementObj) {
+    const tooltip = $('#tooltip');
+    if (tooltip[0]) {
+      tooltip.data('place').setArrowPosition(e, placementObj, tooltip);
+      tooltip.triggerHandler('tooltipafterplace', [placementObj]);
+    }
+  },
+
+  /**
+   * Hide the visible tooltip.
+   * @private
+   * @returns {void}
+   */
+  hideTooltip() {
+    if (this.tooltip) {
+      this.removeTooltipData(this.tooltip); // Remove flag as gridtooltip
+      this.tooltip.classList.add('is-hidden');
+      this.tooltip.classList.remove('is-error', 'popover', 'alternate', 'content-tooltip');
+      this.tooltip.style.left = '-999px';
+    }
+
+    // Remove scroll events
+    $('body, .scrollable').off('scroll.gridtooltip', () => {
+      this.hideTooltip();
+    });
+  },
+
+  /**
+   * Check for tooltip type gridtooltip or component
+   * @private
+   * @returns {boolean} True if is gridtooltip
+   */
+  isGridtooltip() {
+    let isGridtooltipType = false;
+    if (this.tooltip) {
+      const tooltipJQ = this.tooltip instanceof jQuery ? this.tooltip : $(this.tooltip);
+      if (tooltipJQ.data('gridtooltip')) {
+        isGridtooltipType = true;
+      }
+    }
+    return isGridtooltipType;
+  },
+
+  /**
+   * Remove the tooltip data from given node
+   * @private
+   * @param {object} elem The DOM element to remove data
+   * @returns {void}
+   */
+  removeTooltipData(elem) {
+    elem = elem instanceof jQuery ? elem : $(elem);
+    if (elem.data('gridtooltip')) {
+      $.removeData(elem[0], 'gridtooltip');
+    }
+  },
+
+  /**
+   * Remove the tooltip from the DOM
+   * @private
+   * @returns {void}
+   */
+  removeTooltip() {
+    if (this.tooltip) {
+      const tolltipJQ = $(this.tooltip);
+
+      // Set selector
+      const selector = {
+        th: '.datagrid-header th',
+        td: '.datagrid-body tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
+        rowstatus: '.datagrid-body tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
+      };
+      selector.str = `${selector.th}, ${selector.td}, ${selector.rowstatus}`;
+
+      // Unbind events
+      $('body, .scrollable').off('scroll.gridtooltip');
+      tolltipJQ.off('touchend.gridtooltip');
+      this.element.off('mouseenter.gridtooltip mouseleave.gridtooltip click.gridtooltip longpress.gridtooltip keydown.gridtooltip', selector.str);
+
+      // Remove the place component
+      const placeApi = tolltipJQ.data('place');
+      if (placeApi) {
+        placeApi.destroy();
+      }
+
+      // Remove cached tooltip data
+      const nodes = [].slice.call(this.element[0].querySelectorAll(selector.str));
+      nodes.forEach(node => this.removeTooltipData(node));
+
+      this.tooltip.parentNode.removeChild(this.tooltip);
+    }
+    this.tooltip = undefined;
+  },
+
+  /**
   * Unwrap the grid back to a simple div, and destory all events and pointers.
   * @returns {object} The plugin api for chaining.
   */
   destroy() {
+    // Remove grid tooltip
+    this.removeTooltip();
+
     // UnBind the pager
     if (this.tableBody.data() && this.tableBody.data('pager')) {
       this.tableBody.data('pager').destroy();

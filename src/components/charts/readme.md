@@ -2,7 +2,7 @@
 title: Charts
 description: This page describes Charts.
 demo:
-  pages:
+  embedded:
   - name: Using Patterns on Chart Colors
     slug: example-chart-patterns
   - name: How to Hide / Show a Chart

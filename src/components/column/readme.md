@@ -2,9 +2,10 @@
 title: Column Chart
 description: This page describes Column Chart.
 demo:
-  pages:
+  embedded:
   - name: Standard Column Chart
     slug: example-index
+  pages:
   - name: Column Chart with Legend
     slug: example-legend
   - name: Balance Widget

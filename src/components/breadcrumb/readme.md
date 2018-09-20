@@ -2,9 +2,10 @@
 title: Breadcrumb
 description: This page describes Breadcrumb.
 demo:
-  pages:
+  embedded:
   - name: Default Breadcrumb Example
     slug: example-index
+  pages:
   - name: Breadcrumb with current item a link
     slug: example-current-as-link
 ---

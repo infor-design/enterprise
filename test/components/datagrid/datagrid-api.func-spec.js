@@ -101,7 +101,7 @@ describe('Datagrid API', () => {
   });
 
   it('Should be able to call addRow and removeRow', () => {
-    const iconExclamation = '<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-exclamation"></use></svg>';
+    const iconExclamation = '<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation" title="New"><use xlink:href="#icon-exclamation"></use></svg>';
     datagridObj.addRow({ productId: 'New', productName: 'New' });
 
     expect(document.body.querySelector('tr td').innerHTML).toEqual(`${iconExclamation}<div class="datagrid-cell-wrapper">New</div>`);
@@ -177,5 +177,50 @@ describe('Datagrid API', () => {
     text = document.body.querySelectorAll('tbody tr')[1].querySelector('td').innerText.replace(/(\r\n\t|\n|\r\t)/gm, '');
 
     expect(text).toEqual('test');
+  });
+
+  it('Should be able to show tooltip on either text cut off or not', (done) => {
+    datagridObj.destroy();
+    columns[1].width = 500;
+    columns[1].tooltip = 'Some tolltip data';
+    datagridObj = new Datagrid(datagridEl, {
+      dataset: data,
+      columns,
+      enableTooltips: true
+    });
+    const td = document.body.querySelector('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]');
+    $(td).trigger('mouseover');
+
+    setTimeout(() => {
+      expect(document.body.querySelector('#tooltip')).toBeTruthy();
+      expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
+      done();
+    }, 500);
+  });
+
+  it('Should be able to shown tooltip rowStatus', (done) => {
+    datagridObj.rowStatus(0, 'info', 'Info');
+    const rowstatusIcon = document.body.querySelector('tbody tr[aria-rowindex="1"] td[aria-colindex="1"] .icon-rowstatus');
+    $(rowstatusIcon).trigger('mouseover');
+
+    setTimeout(() => {
+      expect(document.body.querySelector('#tooltip')).toBeTruthy();
+      expect(document.body.querySelector('#tooltip.is-error')).toBeFalsy();
+      expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
+      done();
+    }, 500);
+  });
+
+  it('Should be able to shown tooltip rowStatus error', (done) => {
+    datagridObj.rowStatus(0, 'error', 'Error');
+    const rowstatusIcon = document.body.querySelector('tbody tr[aria-rowindex="1"] td[aria-colindex="1"] .icon-rowstatus');
+    $(rowstatusIcon).trigger('mouseover');
+
+    setTimeout(() => {
+      expect(document.body.querySelector('#tooltip')).toBeTruthy();
+      expect(document.body.querySelector('#tooltip.is-error')).toBeTruthy();
+      expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
+      done();
+    }, 500);
   });
 });

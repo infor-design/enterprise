@@ -1393,7 +1393,7 @@ Accordion.prototype = {
       const type = getElementType(element);
 
       // Trigger a document click since we stop propgation, to close any open menus/popups.
-      $('body').children().not('.application-menu').closeChildren();
+      $('body').children().not('.application-menu, .modal-page-container').closeChildren();
 
       return self[`handle${type}Click`](e, element);
     }

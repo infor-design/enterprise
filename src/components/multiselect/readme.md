@@ -2,9 +2,10 @@
 title: Multi-Select
 description:
 demo:
-  pages:
+  embedded:
   - name: Multiselect
     slug: example-index
+  pages:
   - name: Clear All
     slug: example-clear-all
   - name: Ajax

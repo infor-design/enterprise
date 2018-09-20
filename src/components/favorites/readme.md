@@ -2,7 +2,7 @@
 title: Favorites
 description: This page describes Favorites.
 demo:
-  pages:
+  embedded:
   - name: Default Favorites Example
     slug: example-index
 ---

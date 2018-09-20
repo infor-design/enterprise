@@ -2,9 +2,10 @@
 title: Field Options
 description: This page describes Field Options.
 demo:
-  pages:
+  embedded:
   - name: Default Field Options Example
     slug: example-index
+  pages:
   - name: Fieldset Example
     slug: example-fieldset
 ---

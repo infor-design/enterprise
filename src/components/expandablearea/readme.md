@@ -2,9 +2,10 @@
 title: Expandable Area
 description: This page describes Expandable Area .
 demo:
-  pages:
+  embedded:
   - name: Default Expandable Area Example
     slug: example-index
+  pages:
   - name: Custom Link Text Demo
     slug: example-custom-text
 ---

@@ -2,9 +2,10 @@
 title: Field Set
 description: This page describes Field Set.
 demo:
-  pages:
+  embedded:
   - name: Default Fieldset Example
     slug: example-index
+  pages:
   - name: 50/50 Fieldset Example
     slug: example-50-50
   - name: Example Showing Input Fields

@@ -2,9 +2,10 @@
 title: Bar Chart
 description: This page describes Bar Chart.
 demo:
-  pages:
+  embedded:
   - name: Standard Bar Chart
     slug: example-index
+  pages:
   - name: Example with More Elements and Longer Text
     slug: example-alignment
   - name: Example showing how to set Colors

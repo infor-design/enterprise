@@ -28,6 +28,16 @@ describe('Toast XSS Prevention', () => {
     const dangerousToastTitle = 'Application Message <script>alert("GOTCHA!");</script>';
     const dangerousToastMsg = 'This is a potentially dangerous Toast message. <script>alert("GOTCHA!");</script>';
 
+    // Clean up any previous toasts
+    const toastContainer = document.querySelector('#toast-container');
+    if (toastContainer) {
+      toastContainer.parentNode.removeChild(toastContainer);
+    }
+
+    if (toastAPI) {
+      toastAPI.destroy();
+      toastAPI = null;
+    }
     toastAPI = new Toast(toastEl, {
       title: dangerousToastTitle,
       message: dangerousToastMsg,

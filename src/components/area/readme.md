@@ -2,9 +2,10 @@
 title: Area
 description: This page describes Area.
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
+  pages:
   - name: Make the Tooltip Formatted (Currency)
     slug: example-formatter
   - name: Set animation speed

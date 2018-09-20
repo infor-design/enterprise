@@ -2,7 +2,7 @@
 title: Progress Indicator
 description: This page describes Progress Indicator.
 demo:
-  pages:
+  embedded:
   - name: Default Progress Indicator Example
     slug: example-index
 ---

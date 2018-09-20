@@ -1529,10 +1529,11 @@ Dropdown.prototype = {
       this.list.find(`.dropdown-option[data-val="${this.previousActiveDescendant.replace(/"/g, '/quot/')}"]`) :
       this.list.find('.is-selected');
     const self = this;
-    let touchPrevented = false;
     const threshold = 10;
     let isEmpty = true;
     let pos;
+
+    this.touchPrevented = false;
 
     if (current.length > 0) {
       isEmpty = true;
@@ -1657,6 +1658,10 @@ Dropdown.prototype = {
     self.list
       .removeClass('dropdown-tall')
       .on('touchend.list click.list', 'li', function (e) {
+        if (self.touchPrevented) {
+          return;
+        }
+
         const itemSelected = self.selectListItem($(this));
         e.preventDefault();
         if (!itemSelected) {
@@ -1686,7 +1691,7 @@ Dropdown.prototype = {
     // Ignores Scrolling on Mobile, and will not close the list if accessing an item within the list
     function scrollDocument(e) {
       const focus = $('*:focus'); // dont close on timepicker arrow down and up
-      if (touchPrevented || isDropdownElement($(e.target)) || focus.is('.timepicker')) {
+      if (self.touchPrevented || isDropdownElement($(e.target)) || focus.is('.timepicker')) {
         return;
       }
       self.closeList('cancel');
@@ -1697,10 +1702,10 @@ Dropdown.prototype = {
 
     function clickDocument(e) {
       const target = $(e.target);
-      if (touchPrevented || (isDropdownElement(target) && !target.is('.icon'))) {
+      if (self.touchPrevented || (isDropdownElement(target) && !target.is('.icon'))) {
         e.preventDefault();
 
-        touchPrevented = false;
+        self.touchPrevented = false;
         return;
       }
 
@@ -1708,7 +1713,7 @@ Dropdown.prototype = {
     }
 
     function touchStartCallback(e) {
-      touchPrevented = false;
+      self.touchPrevented = false;
 
       pos = {
         x: e.originalEvent.touches[0].pageX,
@@ -1723,7 +1728,7 @@ Dropdown.prototype = {
 
         if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
             (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
-          touchPrevented = true;
+          self.touchPrevented = true;
         }
       });
     }
@@ -1732,7 +1737,8 @@ Dropdown.prototype = {
       $(document).off('touchmove.dropdown');
       e.preventDefault();
 
-      if (touchPrevented) {
+      if (self.touchPrevented) {
+        e.stopPropagation();
         return false;
       }
 
@@ -1798,7 +1804,8 @@ Dropdown.prototype = {
       // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
       const ulHeight = parseInt(window.getComputedStyle(self.listUl[0]).height, 10);
       const listHeight = parseInt(window.getComputedStyle(self.list[0]).height, 10);
-      const searchInputHeight = 34;
+      const searchInputHeight = $(this).hasClass('dropdown-short') ? 24 : 34;
+
       if (ulHeight + searchInputHeight > listHeight) {
         self.listUl[0].style.height = `${listHeight - searchInputHeight}px`;
       }
@@ -2038,11 +2045,15 @@ Dropdown.prototype = {
   handleBlur() {
     const self = this;
 
+    /*
     if (this.isOpen()) {
       this.timer = setTimeout(() => {
         self.closeList('cancel');
       }, 40);
     }
+    */
+
+    self.closeList('cancel');
 
     return true;
   },

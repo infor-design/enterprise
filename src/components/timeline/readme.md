@@ -2,7 +2,7 @@
 title: Timeline Component
 description: This page describes Timeline Component .
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
 ---

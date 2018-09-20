@@ -2,7 +2,7 @@
 title: Tag Component
 description: This page describes Tag Component .
 demo:
-  pages:
+  embedded:
   - name: Common Tag Examples
     slug: example-index
 ---
