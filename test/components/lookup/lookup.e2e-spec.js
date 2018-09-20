@@ -203,3 +203,47 @@ describe('Lookup (custom toolbar)', () => {
     expect(await element(by.className('has-more-button'))).toBeTruthy();
   });
 });
+
+describe('Lookup multiselect serverside paging tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/lookup/example-multiselect-paging-serverside');
+  });
+
+  it('Paging lookup should be able to select a value', async () => {
+    const buttonEl = await element.all(by.className('trigger')).first();
+    const lookupEl = await element(by.id('product-lookup'));
+
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('datagrid-cell-wrapper'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+
+    await element(by.css('.btn-modal-primary')).click();
+
+    expect(await lookupEl.getAttribute('value')).toEqual('214220,214221');
+  });
+
+  it('Paging lookup should be able to go the next page and select', async () => {
+    const buttonEl = await element.all(by.className('trigger')).first();
+    const lookupEl = await element(by.id('product-lookup'));
+
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('datagrid-cell-wrapper'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('pager-next'))), config.waitsFor);
+    await element(by.className('pager-next')).click();
+
+    expect(await element(by.name('pager-pageno')).getAttribute('value')).toEqual('2');
+
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+
+    await element(by.css('.btn-modal-primary')).click();
+
+    expect(await lookupEl.getAttribute('value')).toEqual('214220,214221,214225,214226');
+  });
+});
