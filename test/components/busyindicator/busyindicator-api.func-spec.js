@@ -10,22 +10,12 @@ describe('Busy Indicator API', () => {
     document.body.insertAdjacentHTML('afterbegin', busyindicatorHTML);
 
     busyindicatorEl = $('#busy-form');
-
     busyindicatorObj = busyindicatorEl.data('busyindicator');
-
-    window.reload = () => {
-      console.log('mock redirect'); //eslint-disable-line
-    };
   });
 
   afterEach(() => {
     if (busyindicatorObj) {
       busyindicatorObj.destroy();
-    }
-
-    const busyindicatorContainerEl = document.body.querySelector('.busy-indicator-container');
-    if (busyindicatorContainerEl) {
-      busyindicatorContainerEl.parentNode.removeChild(busyindicatorContainerEl);
     }
 
     const rowEl = document.body.querySelector('.row');
@@ -38,7 +28,7 @@ describe('Busy Indicator API', () => {
 
     setTimeout(() => {
       expect(busyindicatorObj.isActive()).toEqual(true);
-    }, 500);
+    }, 0);
   });
 
   it('Should display busy indicator when triggering "start.busyindicator"', () => {
@@ -46,7 +36,7 @@ describe('Busy Indicator API', () => {
 
     setTimeout(() => {
       expect(document.body.querySelector('.busy-indicator-container')).toBeTruthy();
-    }, 500);
+    }, 0);
   });
 
   it('Should hide busy indicator when triggerring "complete.busyindicator"', () => {
@@ -57,7 +47,7 @@ describe('Busy Indicator API', () => {
       busyindicatorEl.trigger('complete.busyindicator');
 
       expect(document.body.querySelector('.busy-indicator')).toBeFalsy();
-    }, 500);
+    }, 0);
   });
 
   it('Should update text of busy indicator', () => {
@@ -65,14 +55,15 @@ describe('Busy Indicator API', () => {
     buttonEl.click();
 
     setTimeout(() => {
-      busyindicatorObj.updated({ text: 'Custom Text' });
-    }, 500);
+      busyindicatorObj.updated({ text: 'Custom Text 1' });
+    }, 0);
 
     setTimeout(() => {
       const customTextEl = $('.busy-indicator-container > span');
 
-      expect(customTextEl.text()).toEqual('Custom Text');
-    }, 1000);
+      expect(customTextEl.text()).toEqual('Custom Text 1');
+      busyindicatorObj.destroy();
+    }, 0);
   });
 
   it('Should destroy busy indicator', () => {
@@ -83,6 +74,6 @@ describe('Busy Indicator API', () => {
       busyindicatorObj.destroy();
 
       expect(busyindicatorObj).toBeFalsy();
-    }, 500);
+    }, 0);
   });
 });

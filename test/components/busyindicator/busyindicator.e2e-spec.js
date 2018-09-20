@@ -242,11 +242,8 @@ describe('Busy Indicator test-update tests', () => {
   it('Should update busy indicator text', async () => {
     await element(by.id('submit')).click();
 
-    const customTextEl = await element(by.css('.busy-indicator-container>span'));
+    browser.wait(protractor.ExpectedConditions.textToBePresentInElement(await element(by.css('#busy-form .busy-indicator-container>span')), 'New Text 1'), config.waitsFor);
 
-    const EC = protractor.ExpectedConditions;
-    browser.wait(EC.textToBePresentInElement(customTextEl, 'New Text 1'), config.waitsFor);
-
-    expect(await customTextEl.getAttribute('textContent')).toEqual('New Text 1');
+    expect(await element(by.css('#busy-form .busy-indicator-container>span'))).toEqual('New Text 1');
   });
 });
