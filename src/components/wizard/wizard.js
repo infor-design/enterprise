@@ -250,11 +250,11 @@ Wizard.prototype = {
     /**
      * Fires before a step is activated/pressed. You can cancel selection by returning a 'beforeactivate'
      * handler as 'false'
-    * @event beforeactivate
-    * @memberof Datagrid
-    * @property {object} event - The jquery event object
-    * @property {HTMLElement} tick - The tick (link) that was activated.
-    */
+     * @event beforeactivate
+     * @memberof Wizard
+     * @property {object} event - The jquery event object
+     * @property {HTMLElement} tick - The tick (link) that was activated.
+     */
     const canNav = this.element.triggerHandler('beforeactivate', [tick]);
     if (canNav === false) {
       return this;
@@ -271,21 +271,21 @@ Wizard.prototype = {
     /**
      * Fires while a step is activated/pressed.
      * handler as 'false'
-    * @event activated
-    * @memberof Datagrid
-    * @property {object} event - The jquery event object
-    * @property {HTMLElement} tick - The tick (link) that was activated.
-    */
+     * @event activated
+     * @memberof Wizard
+     * @property {object} event - The jquery event object
+     * @property {HTMLElement} tick - The tick (link) that was activated.
+     */
     this.element.trigger('activated', [tick]);
 
     /**
      * Fires after a step is activated/pressed. And the new Dom is loaded.
      * handler as 'false'
-    * @event activated
-    * @memberof Datagrid
-    * @property {object} event - The jquery event object
-    * @property {HTMLElement} tick - The tick (link) that was activated.
-    */
+     * @event afteractivated
+     * @memberof Wizard
+     * @property {object} event - The jquery event object
+     * @property {HTMLElement} tick - The tick (link) that was activated.
+     */
     setTimeout(() => {
       self.element.trigger('afteractivated', [tick]);
     }, 300);
