@@ -17,6 +17,11 @@ describe('Busy Indicator API', () => {
     if (busyindicatorObj) {
       busyindicatorObj.destroy();
     }
+
+    const busyindicatorContainerEl = document.body.querySelector('.busy-indicator-container');
+    if (busyindicatorContainerEl) {
+      busyindicatorContainerEl.parentNode.removeChild(busyindicatorContainerEl);
+    }
   });
 
   it('Should destroy busy indicator', () => {
@@ -27,7 +32,7 @@ describe('Busy Indicator API', () => {
       busyindicatorObj.destroy();
 
       expect(busyindicatorObj).toBeFalsy();
-    }, 1000);
+    }, 100);
   });
 
   it('Should display busy indicator when triggering "start.busyindicator"', () => {
@@ -35,7 +40,7 @@ describe('Busy Indicator API', () => {
 
     setTimeout(() => {
       expect(document.body.querySelector('.busy-indicator')).toBeTruthy();
-    }, 1000);
+    }, 100);
   });
 
   it('Should hide busy indicator when triggerring "complete.busyindicator"', () => {
@@ -46,7 +51,7 @@ describe('Busy Indicator API', () => {
       busyindicatorEl.trigger('complete.busyindicator');
 
       expect(document.body.querySelector('.busy-indicator')).toBeFalsy();
-    });
+    }, 100);
   });
 
   it('Should update text of busy indicator', () => {
@@ -58,13 +63,13 @@ describe('Busy Indicator API', () => {
     setTimeout(() => {
       customText = 'Custom Text';
       busyindicatorObj.updated({ text: customText });
-    }, 1000);
+    }, 100);
 
     setTimeout(() => {
       const customTextEl = $('.busy-indicator-container > span');
 
       expect(customTextEl.text()).toEqual(customText);
-    }, 2000);
+    }, 200);
   });
 
   it('Should return correct value for isActive', () => {
@@ -73,6 +78,6 @@ describe('Busy Indicator API', () => {
 
     setTimeout(() => {
       expect(busyindicatorObj.isActive()).toEqual(true);
-    }, 1000);
+    }, 100);
   });
 });

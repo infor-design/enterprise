@@ -34,12 +34,9 @@ describe('Busy Indicator example-custom-loading-text tests', () => {
   });
 
   it('Should display busy indicator with custom text', async () => {
-    const buttonEl = await element(by.id('submit'));
-    await buttonEl.click();
+    await element(by.id('submit')).click();
 
-    const customTextEl = await element(by.className('busy-indicator-container')).element(by.tagName('span'));
-
-    expect(customTextEl.getText()).toEqual('Hang Tough, Skippy...');
+    expect(await element(by.className('busy-indicator-container')).element(by.tagName('span')).getAttribute('textContent')).toEqual('Hang Tough, Skippy...');
   });
 });
 
@@ -104,11 +101,16 @@ describe('Busy Indicator test-block-entire-ui tests', () => {
   it('Should block entire UI', async () => {
     const buttonEl = await element(by.id('submit'));
     await buttonEl.click();
+    
+    browser.actions()
+      .mouseMove(element(by.tagName('body')), { x: 170, y: 235 })
+      .click()
+      .perform();
 
-    const addressEl = await element(by.id('busy-field-address'));
-    await addressEl.sendKeys(protractor.Key.NUMPAD1);
+    const bodyEl = await element(by.tagName('body'));
+    await bodyEl.sendKeys(protractor.Key.NUMPAD1);
 
-    expect(addressEl.getText()).not.toEqual('1');
+    expect(await await element(by.id('busy-field-address')).getAttribute('value')).not.toEqual('1');
   });
 });
 
@@ -160,9 +162,7 @@ describe('Busy Indicator test-contained-in-font-size-0 tests', () => {
     const startBtn = await element(by.id('busy-start-trigger'));
     await startBtn.click();
 
-    const fontSize = element(by.className('busy-indicator-container')).element(by.tagName('span')).getCssValue('font-size');
-
-    expect(fontSize).not.toEqual(0);
+    expect(await element(by.css('.busy-indicator-container > span')).getCssValue('font-size')).not.toEqual(0);
   });
 });
 
@@ -240,15 +240,13 @@ describe('Busy Indicator test-update tests', () => {
   });
 
   it('Should update busy indicator text', async () => {
-    const buttonEl = await element(by.id('submit'));
+    await element(by.id('submit')).click();
 
-    await buttonEl.click();
-
-    const customTextEl = await element(by.className('busy-indicator-container')).element(by.tagName('span'));
+    const customTextEl = await element(by.css('.busy-indicator-container>span'));
 
     const EC = protractor.ExpectedConditions;
-    browser.wait(EC.textToBePresentInElement(customTextEl, 'New Text 1'), 5000);
+    browser.wait(EC.textToBePresentInElement(customTextEl, 'New Text 1'), config.waitsFor);
 
-    expect(customTextEl.getText()).toEqual('New Text 1');
+    expect(customTextEl.getAttribute('textContent')).toEqual('New Text 1');
   });
 });
