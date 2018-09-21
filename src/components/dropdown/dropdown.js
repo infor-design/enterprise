@@ -948,6 +948,7 @@ Dropdown.prototype = {
 
     const self = this;
     let selected = false;
+    let noIcons = false;
     const list = $('.dropdown-option', this.listUl);
     const headers = $('.group-label', this.listUl);
     let results;
@@ -968,11 +969,7 @@ Dropdown.prototype = {
 
     this.list.addClass('search-mode');
     this.list.find('.trigger').find('.icon').attr('class', 'icon search').changeIcon('search');
-    this.searchInput.removeAttr('aria-activedescendant');
-
-    if (self.listIcon.hasIcons) {
-      this.list.find('svg').last().changeIcon('icon-empty-circle');
-    }
+    this.searchInput.removeAttr('aria-activedescendant'); 
 
     this.unhighlightOptions();
 
@@ -997,6 +994,11 @@ Dropdown.prototype = {
       const exp = self.getSearchRegex(term);
       const text = li.text().replace(exp, '<i>$1</i>').trim();
       const icon = (li.children('a').find('svg').length !== 0) ? li.children('a').find('svg')[0].outerHTML : '';
+
+      if (!icon) {
+        noIcons = true;
+      }
+
       li.children('a').html(icon + text);
     });
 
@@ -1009,6 +1011,14 @@ Dropdown.prototype = {
 
     term = '';
     this.position();
+
+    if (noIcons) {
+      if (this.list.find('input').css('padding-left')) {
+        this.list.find('input').css('padding-left', '12px');
+      }
+    } else {
+      this.list.find('svg').last().changeIcon('icon-empty-circle');
+    }
   },
 
   /**
@@ -1032,8 +1042,7 @@ Dropdown.prototype = {
     const cssClass = `icon${isMobile ? ' close' : ''}`;
     const icon = $.getBaseURL(isMobile ? 'close' : 'dropdown');
 
-    this.list.removeClass('search-mode');
-    this.list.removeClass('.dropdown-search');  
+    this.list.removeClass('search-mode'); 
     this.list.find('.icon').attr('class', cssClass) // needs to be 'attr' here because .addClass() doesn't work with SVG
       .changeIcon(icon);
 
