@@ -1393,7 +1393,7 @@ Tree.prototype = {
     });
 
     this.settings.dataset = json;
-    this.element.triggerHandler('rendered', { selectedData: this.settings.dataset });
+    this.element.triggerHandler('rendered', { data: this.settings.dataset });
   },
 
   // Sync a node with its dataset 'record'
@@ -1853,7 +1853,7 @@ Tree.prototype = {
                 startWidth: a.outerWidth()
               };
     
-              self.element.triggerHandler('dragstart', { data: self.sortable });
+              self.element.triggerHandler('dragstart', self.sortable);
               e.preventDefault();
               e.stopImmediatePropagation();
             })
@@ -1919,7 +1919,7 @@ Tree.prototype = {
                 });
               }
 
-              self.element.triggerHandler('dragend', { data: self.sortable });
+              self.element.triggerHandler('dragend', self.sortable);
               // Sync dataset and ui
               self.syncDataset(self.element);
               if (self.isMultiselect) {
