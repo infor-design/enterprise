@@ -1,8 +1,7 @@
 // All desired Soho components ==================== /
 // Atomic Design: http://bradfrost.com/blog/post/atomic-web-design/
-// TODO: Make this file auto-generated for custom builds?
 
-// Atoms
+// Foundational ====/
 export { Button } from './button/button';
 export { Hyperlink } from './hyperlinks/hyperlinks';
 export { Icon } from './icons/icons';
@@ -11,7 +10,7 @@ export { MaskInput } from './mask/mask-input';
 export { PopupMenu } from './popupmenu/popupmenu';
 export { Tmpl } from './tmpl/tmpl';
 
-// Molecules
+// Mid ====/
 export { Accordion } from './accordion/accordion';
 export { ApplicationMenu } from './applicationmenu/applicationmenu';
 export { Autocomplete } from './autocomplete/autocomplete';
@@ -59,7 +58,7 @@ export { Validator } from './validation/validator';
 export { Wizard } from './wizard/wizard';
 export { Zoom } from './zoom/zoom';
 
-// Oraganisms
+// Complex ====/
 export { Calendar } from './calendar/calendar';
 export { CompositeForm } from './compositeform/compositeform';
 export { Datagrid } from './datagrid/datagrid';

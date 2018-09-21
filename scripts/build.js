@@ -30,53 +30,76 @@
 
 const argv = require('yargs').argv;
 const chalk = require('chalk');
+const del = require('del');
 const fs = require('fs');
 const path = require('path');
 
 const logger = require('./logger');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
+const TEMP_DIR = path.join(__dirname, '..', 'temp');
+const filePaths = {
+  js: {
+    behaviors: path.join(SRC_DIR, 'behaviors', 'behaviors.js'),
+    components: path.join(SRC_DIR, 'components', 'components.js'),
+    index: path.join(SRC_DIR, 'index.js'),
+    patterns: path.join(SRC_DIR, 'patterns', 'patterns.js'),
+  },
+  jQuery: {
+    behaviors: path.join(SRC_DIR, 'behaviors', 'behaviors.jquery.js'),
+    components: path.join(SRC_DIR, 'components', 'components.jquery.js'),
+    patterns: path.join(SRC_DIR, 'patterns', 'patterns.jquery.js'),
+  },
+  sass: {
+    themes: {
+      dark: path.join(SRC_DIR, 'themes', 'dark-theme.scss'),
+      'high-contrast': path.join(SRC_DIR, 'themes', 'high-contrast-theme.scss'),
+      light: path.join(SRC_DIR, 'themes', 'light-theme.scss'),
+      uplift: path.join(SRC_DIR, 'themes', 'uplift-theme.scss'),
+    }
+  }
+};
+
+const searchTerms = {
+  complex: '// Complex ====/',
+  foundational: '// Foundational ====/',
+  mid: '// Mid ====/'
+};
+
+// TOOD: Replace with command line args
 const TEST_ARGS = [
   'button',
   'input',
   'mask',
   'listview',
-  'popupmenu'
+  'list-detail',
+  'longpress',
+  'popupmenu',
+  'tabs'
 ];
 
-// Some parts of the lib need to be loaded in a specific order.
-// These rules govern the order of specific file names inside specific lib folders.
-const locationBuckets = [
-  'core',
-  'behaviors',
-  'rules',
-  'foundational',
-  'mid-level',
-  'complex',
-  'layouts',
-  'patterns'
-];
+// All incoming scanned source code is labeled as "components" by default.
+// If the source code folder shows up as a property here, it will be moved to a different
+// bucket.
 const customLocations = {
-  mask: {
-    masks: 'rules',
-    'mask-api': 'foundational',
-    'mask-input': 'foundational'
-  },
-  validation: {
-    validation: 'rules',
-    'validation.utils': 'foundational',
-    validator: 'foundational',
-  }
+  masks: 'rules',
+  'mask-api': 'foundational',
+  'mask-input': 'foundational',
+  'tabs-multi': 'complex',
+  validation: 'rules',
+  'validation.utils': 'foundational',
+  validator: 'foundational'
 };
 
-/*
-const requiredComponents = [];
-const behaviors = [];
-
-if (!argv.components) {
-
-}
-*/
+const buckets = {
+  behaviors: [],
+  rules: [],
+  foundational: [],
+  mid: [],
+  complex: [],
+  layouts: [],
+  patterns: []
+};
 
 // -------------------------------------
 //   Functions
@@ -91,12 +114,33 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+/**
+ * @param {string} str incoming string containing a file path
+ * @returns {string} a string containing just a filename
+ */
+function getFileName(str) {
+  const lastSlash = str.lastIndexOf(path.sep);
+  if (lastSlash === -1 || lastSlash === (str.length - 1)) {
+    return str;
+  }
+  return str.slice(lastSlash + 1);
+}
+
+/**
+ * @param {string} str containing a file name
+ * @returns {string} the library name
+ */
+function getLibFromFileName(str) {
+  const dot = str.indexOf('.');
+  return str.substring(0, dot);
+}
+
 // Checks the type of library.
 // Sets to `components` if it's not a valid one.
-const libTypes = ['behaviors', 'components', 'layouts', 'patterns', 'utils'];
+const libTypes = ['components', 'behaviors', 'layouts', 'patterns', 'utils'];
 function checkLibType(type) {
   if (libTypes.indexOf(type) < 0) {
-    type = libTypes[1];
+    type = libTypes[0];
   }
   return type;
 }
@@ -137,6 +181,37 @@ function writeSassImportStatement(libFile, libFolder, type) {
 }
 
 /**
+ * @param {array} dirs an array of strings representing directories
+ * @returns {void}
+ */
+function createDirs(dirs) {
+  dirs.forEach((dir) => {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+      logger('info', `Created directory "${dir}"`);
+    }
+  });
+}
+
+/**
+ * "cleans" all the folders used by this script
+ * @returns {Promise} that resolves when the `del` library completes its task
+ */
+function cleanAll() {
+  const filesToDel = [
+    `${TEMP_DIR}/*.js`,
+    `${TEMP_DIR}/*.scss`
+  ];
+
+  return del(filesToDel)
+    .catch(err => logger('error', `Error: ${err}`))
+    .then(() => {
+      logger('success', `Cleaned directory "${TEMP_DIR}"`);
+      createDirs([TEMP_DIR]);
+    });
+}
+
+/**
  * Wraps `fs.readdir` and does a recursive file search
  * @param {string} root ?
  * @param {function} filter ?
@@ -169,6 +244,11 @@ function read(root, filter, files, prefix) {
   return files;
 }
 
+/**
+ * @param {array} files incoming file list
+ * @param {string} term used for filtering the file list
+ * @returns {array} a filtered version of the incoming array
+ */
 function searchFileNames(files, term) {
   const results = [];
   if (!Array.isArray(files) || !files.length || !term) {
@@ -184,50 +264,152 @@ function searchFileNames(files, term) {
   return results;
 }
 
+/**
+ * Gets a copy of the standard `index.js` file.
+ * @returns {string} containig the imported file.
+ */
+function getFileContents(filePath) {
+  return fs.readFileSync(filePath, 'utf8');
+}
+
+/**
+ * @param {string} str the string to search
+ * @param {string} term the term to find
+ * @returns {number} the location index of the search term, plus the term's length
+ */
+function getFurthestIndexOf(str, term) {
+  return str.indexOf(term) + term.length;
+}
+
+/**
+ * Sort Locations
+ * @param {array} files incoming list of file paths
+ */
+function sortLocations(files) {
+  const matchStr = libTypes.slice(1).join('|');
+  const matchRegex = new RegExp(matchStr, 'g');
+  const locationKeys = Object.keys(customLocations);
+
+  const componentsJSFile = getFileContents(filePaths.js.components);
+  const startOfMid = getFurthestIndexOf(componentsJSFile, searchTerms.mid);
+  const startOfComplex = getFurthestIndexOf(componentsJSFile, searchTerms.complex);
+
+  files.forEach((file) => {
+    let match = file.match(matchRegex);
+    // No match === 'component' type.  In this case, further sort the sub-component type
+    if (!match) {
+      const fileName = getFileName(file);
+      const lib = getLibFromFileName(fileName);
+
+      // If the `lib` is defined with a custom location in this script,
+      // prefer the bucket associated with it.
+      if (locationKeys[lib]) {
+        const bucketKey = customLocations[locationKeys[lib]];
+        const bucket = buckets[bucketKey];
+        if (Array.isArray(bucket)) {
+          bucket.push(file);
+          return;
+        }
+      }
+
+      // Scan the `components.js` file for the location of this lib's name,
+      // and determine its bucket placement based on its index,
+      // compared to the headers' index in that file.
+      const indexInJSFile = componentsJSFile.indexOf(lib);
+      let targetBucket = buckets.foundational;
+      if (indexInJSFile > startOfComplex) {
+        targetBucket = buckets.complex;
+      } else if (indexInJSFile > startOfMid) {
+        targetBucket = buckets.mid;
+      }
+
+      targetBucket.push(file);
+      return;
+    }
+
+    // Use first result
+    match = match[0];
+    try {
+      buckets[match].push(file);
+    } catch (e) {
+      throw new Error(`Sort Error: ${e}`);
+    }
+  });
+
+  debugger;
+}
+
 // -------------------------------------
 //   Main
 // -------------------------------------
 
-let buildOutput = `\n${chalk.red.bold('IDS Enterprise Custom Builder')}\n\n`;
+logger(null, `\n${chalk.red.bold('IDS Enterprise Custom Builder')}\n`);
 
-// Scan source code directories
-const items = read(SRC_DIR);
+let buildOutput = '\n';
 
-const jsMatches = [];
-const jQueryMatches = [];
-const sassMatches = [];
-TEST_ARGS.forEach((arg) => {
-  const results = searchFileNames(items, arg);
-  results.forEach((result) => {
-    let renderTarget = jsMatches;
-    if (result.indexOf('.jquery') > -1) {
-      renderTarget = jQueryMatches;
-    }
-    if (result.endsWith('.scss')) {
-      renderTarget = sassMatches;
-    }
-    if (renderTarget.indexOf(result) > -1) {
-      return;
-    }
-    renderTarget.push(result);
+// Reset all build folders to a `cleaned` state.
+cleanAll().then(() => {
+  // Scan source code directories
+  const items = read(SRC_DIR);
+
+  // Build several lists of component source code files that match what was requested
+  const jsMatches = [];
+  const jQueryMatches = [];
+  const sassMatches = [];
+  TEST_ARGS.forEach((arg) => {
+    const results = searchFileNames(items, arg);
+    results.forEach((result) => {
+      let renderTarget = jsMatches;
+      if (result.indexOf('.jquery') > -1) {
+        renderTarget = jQueryMatches;
+      }
+      if (result.endsWith('.scss')) {
+        renderTarget = sassMatches;
+      }
+      if (renderTarget.indexOf(result) > -1) {
+        return;
+      }
+      renderTarget.push(result);
+    });
   });
-});
 
-buildOutput += `${chalk.cyan('JS Source Code:')}\n`;
-jsMatches.forEach((item) => {
-  buildOutput += `${item}\n`;
-});
-buildOutput += '\n';
+  buildOutput += `${chalk.cyan('JS Source Code:')}\n`;
+  jsMatches.forEach((item) => {
+    buildOutput += `${item}\n`;
+  });
+  buildOutput += '\n';
 
-buildOutput += `${chalk.cyan('jQuery Source Code:')}\n`;
-jQueryMatches.forEach((item) => {
-  buildOutput += `${item}\n`;
-});
-buildOutput += '\n';
+  buildOutput += `${chalk.cyan('jQuery Source Code:')}\n`;
+  jQueryMatches.forEach((item) => {
+    buildOutput += `${item}\n`;
+  });
+  buildOutput += '\n';
 
-buildOutput += `${chalk.cyan('SASS Source Code:')}\n`;
-sassMatches.forEach((item) => {
-  buildOutput += `${item}\n`;
-});
+  buildOutput += `${chalk.cyan('SASS Source Code:')}\n`;
+  sassMatches.forEach((item) => {
+    buildOutput += `${item}\n`;
+  });
 
-process.stdout.write(buildOutput);
+  // Pull in the standard `index.js` file and create a custom version that links
+  // out to other JS files that will import slimmed-down lists of components.
+  // Saves to the `temp/` folder.
+  let indexjs = getFileContents(filePaths.js.index);
+  indexjs = indexjs
+    .replace(/('\.\/)/g, '\'../src/')
+    .replace('../src/behaviors/behaviors', '\'./behaviors')
+    .replace('../src/core/rules', '\'./rules')
+    .replace('../src/components/components', '\'./components')
+    .replace('../src/patterns/patterns', '\'./patterns');
+  fs.writeFileSync(path.join(TEMP_DIR, 'index.js'), indexjs);
+
+  // Create customized lists of JS components for this bundle
+  sortLocations(jsMatches);
+
+  // TODO: Pull in the standard `_controls.sass` and create a custom version
+  // that links out to other SASS files that will import slimmed-down lists of components.
+  // Saves to the `temp/` folder.
+
+  process.stdout.write(buildOutput);
+
+  debugger;
+});

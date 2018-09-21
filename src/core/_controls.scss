@@ -1,18 +1,12 @@
-// Required
-@import '../components/breakpoints/breakpoints';
-@import '../components/icons/icons';
-@import '../components/images/images';
-@import '../layouts/layouts';
-@import '../components/personalize/personalize';
-@import '../components/typography/typography';
-@import '../components/visibility/visibility';
+// Required ====/
+@import './required';
 
-// Optional Behaviors
+// Behaviors ====/
 @import '../components/drag/drag';
 @import '../components/place/place';
 @import '../behaviors/longpress/longpress';
 
-// Foundational Components
+// Foundational ====/
 @import '../components/badges/badges';
 @import '../components/breadcrumb/breadcrumb';
 @import '../components/button/button';
@@ -25,7 +19,7 @@
 @import '../components/skiplink/skiplink';
 @import '../components/switch/switch';
 
-// Mid-level Components
+// Mid-level ====/
 @import '../components/about/about';
 @import '../components/accordion/accordion';
 @import '../components/applicationmenu/applicationmenu';
@@ -73,7 +67,7 @@
 @import '../components/tree/tree';
 @import '../components/wizard/wizard';
 
-// Complex Components
+// Complex ====/
 @import '../components/calendar/calendar';
 @import '../components/compositeform/compositeform';
 @import '../components/contextualactionpanel/contextualactionpanel';
@@ -81,7 +75,7 @@
 @import '../components/editor/editor';
 @import '../components/monthview/monthview';
 
-// Charts
+// Charts ====/
 @import '../components/charts/charts'; // Base
 @import '../components/bar/bar';
 @import '../components/bullet/bullet';
@@ -93,7 +87,7 @@
 @import '../components/treemap/treemap';
 @import '../components/line/line';
 
-// Patterns
+// Patterns ====/
 @import '../patterns/builder';
 @import '../patterns/call-to-action-container';
 @import '../patterns/card-deck';
@@ -106,7 +100,7 @@
 @import '../components/signin/signin';
 @import '../patterns/stepprocess/stepprocess';
 
-// Layouts
+// Layouts ====/
 @import '../layouts/object-summary';
 @import '../layouts/panes';
 @import '../layouts/scrollable-flex';

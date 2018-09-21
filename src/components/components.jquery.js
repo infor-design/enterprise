@@ -1,14 +1,14 @@
 // All desired Soho jQuery-based components ==================== /
 // TODO: Make this file auto-generated for custom builds?
 
-// Atoms
+// Foundational ====/
 import './button/button.jquery';
 import './hyperlinks/hyperlinks.jquery';
 import './icons/icons.jquery';
 import './mask/mask-input.jquery';
 import './popupmenu/popupmenu.jquery';
 
-// Molecules
+// Mid ====/
 import './about/about.jquery';
 import './accordion/accordion.jquery';
 import './applicationmenu/applicationmenu.jquery';
@@ -68,7 +68,7 @@ import './validation/validation.utils';
 import './wizard/wizard.jquery';
 import './zoom/zoom.jquery';
 
-// Organisms
+// Complex ====/
 import './datagrid/datagrid.jquery';
 import './header/header.jquery';
 import './lookup/lookup.jquery';
