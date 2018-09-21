@@ -48,7 +48,7 @@ describe('Blockgrid API', () => {
       expect(document.body.querySelector('.block').classList.contains('is-selected')).toBeTruthy();
       expect(document.body.querySelector('.block').getAttribute('aria-selected')).toBeTruthy();
       done();
-    }, 1000);
+    }, 100);
   });
 
   it('Should update settings', () => {
@@ -68,6 +68,6 @@ describe('Blockgrid API', () => {
 
       blockgridObj = new Blockgrid(blockgridEl, settings);
       done();
-    }, 1000);
+    }, 100);
   });
 });
