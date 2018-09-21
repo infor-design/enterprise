@@ -85,7 +85,8 @@
   &.lookup-no-search {
     .toolbar {
       margin-bottom: 0;
-      margin-top: -40px;
+      margin-top: -32px;
+      vertical-align: top;
     }
 
     .modal-header {
@@ -119,6 +120,13 @@
         padding-top: 10px;
       }
     }
+  }
+
+  .contextual-toolbar {
+    left: -2px;
+    margin: 0 !important;
+    top: 5px;
+    width: calc(100% + 4px);
   }
 
   .modal-body-wrapper {

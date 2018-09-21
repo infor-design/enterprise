@@ -1816,7 +1816,8 @@ Dropdown.prototype = {
       // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
       const ulHeight = parseInt(window.getComputedStyle(self.listUl[0]).height, 10);
       const listHeight = parseInt(window.getComputedStyle(self.list[0]).height, 10);
-      const searchInputHeight = 34;
+      const searchInputHeight = $(this).hasClass('dropdown-short') ? 24 : 34;
+
       if (ulHeight + searchInputHeight > listHeight) {
         self.listUl[0].style.height = `${listHeight - searchInputHeight}px`;
       }

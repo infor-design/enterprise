@@ -2,9 +2,10 @@
 title: Pager
 description: This page describes Pager.
 demo:
-  pages:
+  embedded:
   - name: Paging a List (Ul)
     slug: example-index
+  pages:
   - name: Paging on the Listview Component
     slug: example-paging
   - name: Paging on the Datagrid Component

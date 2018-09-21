@@ -2,9 +2,10 @@
 title: Visibility CSS Classes
 description: This page describes Visibility CSS Classes.
 demo:
-  pages:
+  embedded:
   - name: All Examples
     slug: example-index
+  pages:
   - name: Multiple classes at once
     slug: example-multiple-visibility-classes
 ---

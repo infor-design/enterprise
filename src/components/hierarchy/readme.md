@@ -2,9 +2,10 @@
 title: Hierarchy
 description: This page describes Hierarchy.
 demo:
-  pages:
+  embedded:
   - name: Org Chart Example
     slug: example-index
+  pages:
   - name: Lazy Loading Example
     slug: example-lazy-load
   - name: Example Paging

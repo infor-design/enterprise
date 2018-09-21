@@ -2,9 +2,10 @@
 title: Step Chart
 description: This page describes Step Chart.
 demo:
-  pages:
+  embedded:
   - name: Standard Step Chart
     slug: example-index
+  pages:
   - name: Custom Colors
     slug: example-colors
 ---

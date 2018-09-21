@@ -2,9 +2,10 @@
 title: Toast Component
 description: This page describes Toast Component .
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Demo of all Positions
     slug: example-positions
 ---

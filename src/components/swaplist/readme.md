@@ -2,9 +2,10 @@
 title: Swaplist Component
 description: This page describes Swaplist Component .
 demo:
-  pages:
+  embedded:
   - name: Main Swaplist Example
     slug: example-index.html
+  pages:
   - name: Swaplist with Selected Items
     slug: example-selected.html
   - name: Swaplist with Filter/Search

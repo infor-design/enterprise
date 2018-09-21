@@ -2,9 +2,10 @@
 title: Scatter Plot Chart
 description: This page describes Scatter Plot Chart.
 demo:
-  pages:
+  embedded:
   - name: Standard Scatter Plot Chart
     slug: example-index
+  pages:
   - name: Defaulting a selected plot item
     slug: example-selected
   - name: Set animation speed

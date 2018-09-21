@@ -2,9 +2,10 @@
 title: Wizard Component
 description: This page describes Wizard Component .
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Disabled Tick Clicks
     slug: example-in-page
   - name: Programmatic Tick Selection

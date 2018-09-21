@@ -2,7 +2,7 @@
 title: Favorites
 description: This page describes Favorites.
 demo:
-  pages:
+  embedded:
   - name: Breakpoint Event Change Detection
     slug: example-change-detection
 ---

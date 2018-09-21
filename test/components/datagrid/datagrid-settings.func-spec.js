@@ -62,6 +62,7 @@ describe('Datagrid Settings', () => {
       rowHeight: 'normal',
       selectable: false,
       selectChildren: true,
+      allowSelectAcrossPages: null,
       groupable: null,
       spacerColumn: false,
       stretchColumn: 'last',

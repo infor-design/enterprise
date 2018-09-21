@@ -2,9 +2,10 @@
 title: Switch Component
 description: This page describes Switch Component .
 demo:
-  pages:
+  embedded:
   - name: Main Switch Example
     slug: example-index
+  pages:
   - name: Alternate Alignment
     slug: example-alignment
   - name: Two Column Layout

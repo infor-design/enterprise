@@ -2,9 +2,10 @@
 title: Sparklines
 description: This page describes Sparklines.
 demo:
-  pages:
+  embedded:
   - name: Standard Sparkline Chart
     slug: example-index
+  pages:
   - name: Example showing Get Selected value
     slug: example-get-selected
   - name: Example showing Set Selected value

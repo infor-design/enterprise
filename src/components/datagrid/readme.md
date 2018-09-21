@@ -2,9 +2,10 @@
 title: Datagrid
 description: This page describes Datagrid .
 demo:
-  pages:
+  embedded:
   - name: Simple Datagrid Example
     slug: example-index
+  pages:
   - name: Alternate Row Shading
     slug: example-alternate-row-shading.html
   - name: Drilldown Formatter

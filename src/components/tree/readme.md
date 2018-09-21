@@ -2,9 +2,10 @@
 title: Tree Component
 description: This page describes Tree Component .
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Add Node
     slug: example-add-node
   - name: Ajax

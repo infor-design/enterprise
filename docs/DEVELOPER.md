@@ -101,7 +101,7 @@ At this point, IDS should be completely setup in your project!
 
 #### Node.js
 
-![Node.js Version](https://img.shields.io/badge/node-%3E%3D%2010.9.0-green.svg);  
+![Node.js Version](https://img.shields.io/badge/node-%3E%3D%2010.9.0-green.svg);
 
 All of our build tools run in [Node.JS](https://nodejs.org/en/). We are currently pinned to version 10 of node, **so be sure to use that version**. We have a script that tests for this during `npm install`. You'll also need all the requirements [node-gyp](https://github.com/nodejs/node-gyp#installation) suggests installing for your operating system.
 
@@ -110,6 +110,12 @@ All of our build tools run in [Node.JS](https://nodejs.org/en/). We are currentl
 Our project uses [Git](https://git-scm.com/) for version control.  Any pull requests made to IDS Enterprise will need to be done in a new branch cut from our latest `master` branch.  See the [Git Workflow documentation](./GIT-WORKFLOW.md) for more information.
 
 ### Getting started
+
+If using windows the default for linebreaks is CRLF. This project uses LF. In order to configure this for windows you can run the following command before cloning.
+
+```sh
+git config core.autocrlf false
+```
 
 Use the following to clone our repo and install dependencies:
 

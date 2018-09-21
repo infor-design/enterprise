@@ -2,13 +2,16 @@
 title: Lookup
 description: This page describes Lookup.
 demo:
-  pages:
+  embedded:
   - name: Default Lookup
     slug: example-index
+  pages:
   - name: Multiselect Lookup
     slug: example-multiselect
-  - name: Lookup with Paging
+  - name: Lookup with Paging (Client Side)
     slug: example-paging
+  - name: Multiselect Lookup with Paging (Server Side)
+    slug: example-multiselect-paging-serverside
   - name: Lookup with Filter
     slug: example-filter-row
   - name: Editable Lookup

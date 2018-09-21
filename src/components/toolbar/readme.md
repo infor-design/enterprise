@@ -2,9 +2,10 @@
 title: Toolbar
 description: This page describes Toolbar.
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Title + All Icon Buttons
     slug: example-all-icon-buttons
   - name: Title + All Text-Only Buttons

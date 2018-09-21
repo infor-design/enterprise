@@ -2,9 +2,10 @@
 title: Cards
 description: This page describes Cards.
 demo:
-  pages:
+  embedded:
   - name: Simple Card Example
     slug: example-index
+  pages:
   - name: Expandable Card
     slug: example-expandable
   - name: Full Page Width Cards

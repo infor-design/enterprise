@@ -2,7 +2,7 @@
 title: Hyperlinks
 description: This page describes Hyperlinks.
 demo:
-  pages:
+  embedded:
   - name: Default Hyperlink Example
     slug: example-index
 ---
