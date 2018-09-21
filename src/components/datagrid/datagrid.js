@@ -8251,7 +8251,7 @@ Datagrid.prototype = {
   showTooltip(options) {
     this.tooltip = document.getElementById('tooltip');
     if (this.tooltip) {
-      const toooltip = $(this.tooltip);
+      const tooltip = $(this.tooltip);
       const tooltipContentEl = this.tooltip.querySelector('.tooltip-content');
       if (tooltipContentEl) {
         tooltipContentEl.innerHTML = options.content;
@@ -8283,17 +8283,17 @@ Datagrid.prototype = {
         }
 
         // If already have place instance
-        if (toooltip.data('place')) {
-          toooltip.data('place').place(placeOptions);
+        if (tooltip.data('place')) {
+          tooltip.data('place').place(placeOptions);
         } else {
-          toooltip.place(placeOptions);
-          toooltip.data('place').place(placeOptions);
+          tooltip.place(placeOptions);
+          tooltip.data('place').place(placeOptions);
         }
 
         // Flag to mark as gridtooltip
-        toooltip.data('gridtooltip', true);
+        tooltip.data('gridtooltip', true);
 
-        toooltip
+        tooltip
           .one('afterplace.gridtooltip', (e, placementObj) => {
             this.handleAfterPlaceTooltip(e, placementObj);
           })
@@ -8379,7 +8379,7 @@ Datagrid.prototype = {
    */
   removeTooltip() {
     if (this.tooltip) {
-      const toooltip = $(this.tooltip);
+      const tooltip = $(this.tooltip);
 
       // Set selector
       const selector = {
@@ -8391,11 +8391,11 @@ Datagrid.prototype = {
 
       // Unbind events
       $('body, .scrollable').off('scroll.gridtooltip');
-      toooltip.off('touchend.gridtooltip');
+      tooltip.off('touchend.gridtooltip');
       this.element.off('mouseenter.gridtooltip mouseleave.gridtooltip click.gridtooltip longpress.gridtooltip keydown.gridtooltip', selector.str);
 
       // Remove the place component
-      const placeApi = toooltip.data('place');
+      const placeApi = tooltip.data('place');
       if (placeApi) {
         placeApi.destroy();
       }
