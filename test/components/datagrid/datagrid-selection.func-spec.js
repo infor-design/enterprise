@@ -348,4 +348,34 @@ describe('Datagrid Selection API', () => {
       }, 1);
     }, 1);
   });
+
+  it('Should allow an array in selectRows', (done) => {
+    datagridObj.destroy();
+    const options = { columns, selectable: 'multiple', paging: true, pagesize: 5 };
+    datagridObj = new Datagrid(datagridEl, options);
+
+    expect(datagridObj.selectedRows().length).toEqual(0);
+    datagridObj.selectRows([1, 4]);
+
+    setTimeout(() => {
+      expect(datagridObj.selectedRows().length).toEqual(2);
+      datagridObj.unSelectAllRows();
+      done();
+    }, 1);
+  });
+
+  it('Should allow a number in selectRows', (done) => {
+    datagridObj.destroy();
+    const options = { columns, selectable: 'multiple', paging: true, pagesize: 5 };
+    datagridObj = new Datagrid(datagridEl, options);
+
+    expect(datagridObj.selectedRows().length).toEqual(0);
+    datagridObj.selectRows(1);
+
+    setTimeout(() => {
+      expect(datagridObj.selectedRows().length).toEqual(1);
+      datagridObj.unSelectAllRows();
+      done();
+    }, 1);
+  });
 });

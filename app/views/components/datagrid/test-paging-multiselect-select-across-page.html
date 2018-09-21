@@ -75,7 +75,9 @@
         paging: true,
         editable: false,
         selectable: 'multiple',
-        pagesize: 10,
+        allowSelectAcrossPages: true,
+        pagesize: 5,
+        pagesizes: [5, 10, 15, 20],
         source: function(req, response) {
           var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
@@ -93,9 +95,9 @@
             response(res.data, req);
           });
         },
-        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false, keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
       }).on('selected', function (e, args, action) {
-        console.log(args, action);
+        console.log(action, args);
       });
 
   });

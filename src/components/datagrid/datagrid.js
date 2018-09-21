@@ -40,7 +40,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {array}    [settings.columns=[]] An array of columns (see column options)
  * @param {array}    [settings.dataset=[]] An array of data objects
  * @param {boolean}  [settings.columnReorder=false] Allow Column reorder
- * @param {boolean}  [settings.saveColumns=false] Save Column Reorder and resize
+ * @param {boolean}  [settings.saveColumns=false] Save Column Reorder and resize, this is deprecated, use saveUserSettings
  * @param {object}   [settings.saveUserSettings]
  * @param {object}   [settings.saveUserSettings.columns=true]
  * @param {object}   [settings.saveUserSettings.rowHeight=true]
@@ -57,7 +57,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.headerMenuId=null] Id of the menu to use for a header right click context menu
  * @param {string}   [settings.headerMenuSelected=false] Callback for the header level context menu
  * @param {string}   [settings.headerMenuBeforeOpen=false] Callback for the header level beforeopen menu event
- * @param {string}   [settings.uniqueId=null] Unique ID to use as local storage reference and internal variable names
+ * @param {string}   [settings.uniqueId=null] Unique DOM ID to use as local storage reference and internal variable names
  * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (short, medium or normal)
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
@@ -66,6 +66,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends toolbar features fx..
  * @param {boolean}  [settings.selectChildren=true] Can prevent selecting of all child nodes on multiselect `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
+ * @param {boolean}  [settings.allowSelectAcrossPages=null] Makes it possible to save selections when changing pages on server side paging. You may want to also use showSelectAllCheckBox: false
  * @param {boolean}  [settings.initializeToolbar=true] Set to false if you will initialize the toolbar yourself
  * @param {boolean}  [settings.paging=false] Enable paging mode
  * @param {number}   [settings.pagesize=25] Number of rows per page
@@ -97,7 +98,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {Function} [settings.onExpandRow=null] A callback function that fires when expanding rows. To be used. when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
  * @param {object}   [settings.emptyMessage]
  * @param {object}   [settings.emptyMessage.title='No Data Available']
- * @param {object}   [settings.emptyMessageinfor='']
+ * @param {object}   [settings.emptyMessage.info='']
  * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
  * @param {boolean}  [settings.searchExpandableRow=true] If true enable expanding of row on search
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
@@ -131,6 +132,7 @@ const DATAGRID_DEFAULTS = {
   rowHeight: 'normal', // (short, medium or normal)
   selectable: false, // false, 'single' or 'multiple' or 'siblings'
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
+  allowSelectAcrossPages: null,
   groupable: null,
   spacerColumn: false,
   stretchColumn: 'last',
@@ -223,7 +225,7 @@ Datagrid.prototype = {
     this.filterRowRendered = false; // Flag used to determine if the header is rendered or not.
     this.scrollLeft = 0;
     this.scrollTop = 0;
-
+    this._selectedRows = [];
     this.restoreColumns();
     this.restoreUserSettings();
     this.appendToolbar();
@@ -529,11 +531,10 @@ Datagrid.prototype = {
   * Remove all selected rows from the grid and dataset.
   */
   removeSelected() {
-    const self = this;
-    const selectedRows = this.selectedRows();
+    this._selectedRows.sort((a, b) => a.idx > b.idx);
 
-    for (let i = selectedRows.length - 1; i >= 0; i--) {
-      self.removeRow(selectedRows[i].idx, true);
+    for (let i = this._selectedRows.length - 1; i >= 0; i--) {
+      this.removeRow(this._selectedRows[i].idx, true);
     }
     this.pagerRefresh();
     this.syncSelectedUI();
@@ -2568,39 +2569,51 @@ Datagrid.prototype = {
     }
 
     // Set UI elements after dataload
-    setTimeout(() => {
-      if (!self.settings.source) {
-        self.displayCounts();
-        self.checkEmptyMessage();
-      }
+    if (!self.settings.source) {
+      self.displayCounts();
+      self.checkEmptyMessage();
+    }
 
-      self.setAlternateRowShading();
-      self.createDraggableRows();
+    self.setAlternateRowShading();
+    self.createDraggableRows();
 
-      if (!self.activeCell || !self.activeCell.node) {
-        self.activeCell = { node: self.cellNode(0, 0, true).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0 };
-      }
+    if (!self.activeCell || !self.activeCell.node) {
+      self.activeCell = { node: self.cellNode(0, 0, true).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0 };
+    }
 
-      if (self.activeCell.isFocused) {
-        self.setActiveCell(self.activeCell.row, self.activeCell.cell);
-      }
+    if (self.activeCell.isFocused) {
+      self.setActiveCell(self.activeCell.row, self.activeCell.cell);
+    }
 
-      // Update Selected Rows Across Page
-      if (self.settings.paging && self.settings.source) {
-        self.syncSelectedUI();
-      }
+    // Deselect rows when changing pages
+    if (self.settings.paging && self.settings.source && !self.settings.allowSelectAcrossPages) {
+      self._selectedRows = [];
+      self.syncSelectedUI();
+    }
 
-      /**
-      * Fires after the entire grid is rendered.
-      * @event rowremove
-      * @memberof Datagrid
-      * @property {object} event The jquery event object
-      * @property {HTMLElement} body Object table body area
-      * @property {HTMLElement} header Object table header area
-      * @property {HTMLElement} pager Object pager body area
-      */
-      self.element.trigger('afterrender', { body: self.tableBody, header: self.headerRow, pager: self.pagerBar });
-    }, 100);
+    // Restore selected rows when pages change
+    if (self.settings.paging && self.settings.source && self.settings.allowSelectAcrossPages) {
+      self.syncSelectedRows();
+      self.syncSelectedUI();
+    }
+
+    // Restore selected rows when pages change for single select
+    if (self.settings.paging && !self.settings.source &&
+      self.settings.allowSelectAcrossPages === null) {
+      self.syncSelectedRows();
+      self.syncSelectedUI();
+    }
+
+    /**
+    * Fires after the entire grid is rendered.
+    * @event rowremove
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {HTMLElement} body Object table body area
+    * @property {HTMLElement} header Object table header area
+    * @property {HTMLElement} pager Object pager body area
+    */
+    self.element.trigger('afterrender', { body: self.tableBody, header: self.headerRow, pager: self.pagerBar });
   },
 
   /**
@@ -3691,6 +3704,7 @@ Datagrid.prototype = {
 
   /**
    * Save the columns to local storage
+   * @deprecated Use saveUserSettings, will remove this in a few versions (4.10.0)
    * @returns {void}
    */
   saveColumns() {
@@ -4318,11 +4332,15 @@ Datagrid.prototype = {
 
     // Update Selected
     if (self.contextualToolbar && self.contextualToolbar.length) {
-      self.contextualToolbar.find('.selection-count').text(`${self.selectedRows().length} ${Locale.translate('Selected')}`);
+      self.contextualToolbar.find('.selection-count').text(`${self._selectedRows.length} ${Locale.translate('Selected')}`);
     }
 
     if (totals && totals !== -1) {
       count = totals;
+    }
+
+    if (!totals && this.settings.source) {
+      count = this.lastCount;
     }
 
     let countText;
@@ -4330,10 +4348,6 @@ Datagrid.prototype = {
       countText = `(${Locale.formatNumber(count - self.filteredCount, { style: 'integer' })} of ${Locale.formatNumber(count, { style: 'integer' })} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
     } else {
       countText = `(${Locale.formatNumber(count, { style: 'integer' })} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
-    }
-
-    if (!totals && this.settings.source) {
-      count = this.lastCount;
     }
 
     if (self.settings.resultsText) {
@@ -5140,6 +5154,16 @@ Datagrid.prototype = {
       });
     }
 
+    if (this.settings.toolbar && this.settings.toolbar.contextualToolbar) {
+      const contextualToolbar = `
+        <div class="contextual-toolbar datagrid-contextual-toolbar toolbar is-hidden">
+          <div class="title selection-count">1 Selected</div>
+        </div>`;
+
+      this.element.before(contextualToolbar);
+      this.contextualToolbar = this.element.prev('.contextual-toolbar');
+    }
+
     this.toolbar = toolbar;
     this.element.addClass('has-toolbar');
   },
@@ -5373,22 +5397,22 @@ Datagrid.prototype = {
     * @property {object} args.item The current sort column.
     * @property {object} args.originalEvent The original event object.
     */
-    this.element.triggerHandler('selected', [this.selectedRows(), 'selectall']);
+    this.element.triggerHandler('selected', [this._selectedRows, 'selectall']);
   },
 
   /**
   * Deselect all rows that are currently selected.
   */
   unSelectAllRows() {
-    const selectedRows = this.selectedRows();
     this.dontSyncUi = true;
-    for (let i = 0, l = selectedRows.length; i < l; i++) {
-      const idx = this.pagingRowIndex(selectedRows[i].idx);
+
+    for (let i = this._selectedRows.length - 1; i >= 0; i--) {
+      const idx = this.pagingRowIndex(this._selectedRows[i].idx);
       this.unselectRow(idx, true, true);
     }
     this.dontSyncUi = false;
     this.syncSelectedUI();
-    this.element.triggerHandler('selected', [this.selectedRows(), 'deselectall']);
+    this.element.triggerHandler('selected', [this._selectedRows, 'deselectall']);
   },
 
   /**
@@ -5403,6 +5427,36 @@ Datagrid.prototype = {
   },
 
   /**
+   * Select a row node on the UI
+   * @param {object} elem The row node to select
+   * @param {number} index The row index to select
+   * @param {object} data The object attached to the row
+   * @param {boolean} force Dont check if already selected
+   * @returns {void}
+   */
+  selectNode(elem, index, data, force) {
+    let checkbox = null;
+    const self = this;
+
+    // do not add if already exists in selected
+    if ((!data || self.isNodeSelected(data)) && !force) {
+      return;
+    }
+    checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
+    elem.addClass(`is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`).attr('aria-selected', 'true')
+      .find('td').attr('aria-selected', 'true');
+
+    if (checkbox.length > 0) {
+      checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+        .addClass('is-checked').attr('aria-checked', 'true');
+    }
+
+    if (data) {
+      data._selected = true;
+    }
+  },
+
+  /**
    * Toggle selection on a single row
    * @param {number} idx The row index to select
    * @param {boolean} nosync Do sync the header
@@ -5413,7 +5467,6 @@ Datagrid.prototype = {
     let rowNode = null;
     let dataRowIndex;
     const self = this;
-    let checkbox = null;
     const s = this.settings;
 
     if (idx === undefined || idx === -1 || !s.selectable) {
@@ -5431,28 +5484,12 @@ Datagrid.prototype = {
       return;
     }
 
-    const selectedRows = this.selectedRows();
-    if (s.selectable === 'single' && selectedRows.length > 0) {
-      this.unselectRow(selectedRows[0].idx, true, true);
+    if (s.selectable === 'single' && this._selectedRows.length > 0) {
+      this.unselectRow(this._selectedRows[0].idx, true, true);
     }
 
     if (!rowNode.hasClass('is-selected')) {
       let rowData;
-      const selectNode = function (elem, index, data) {
-        // do not add if already exists in selected
-        if (!data || self.isNodeSelected(data)) {
-          return;
-        }
-        checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
-        elem.addClass(`is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`).attr('aria-selected', 'true')
-          .find('td').attr('aria-selected', 'true');
-
-        if (checkbox.length > 0) {
-          checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-            .addClass('is-checked').attr('aria-checked', 'true');
-        }
-        data._selected = true;
-      };
 
       if (s.treeGrid) {
         if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
@@ -5465,7 +5502,7 @@ Datagrid.prototype = {
             // Allow select node if selectChildren is true or only first node
             // if selectChildren is false
             if (s.selectChildren || (!s.selectChildren && i === 0)) {
-              selectNode(elem, index, data);
+              self.selectNode(elem, index, data);
             }
           });
         } else if (s.selectable === 'siblings') {
@@ -5489,12 +5526,12 @@ Datagrid.prototype = {
             // Allow select node if selectChildren is true or only first node
             // if selectChildren is false
             if (s.selectChildren || (!s.selectChildren && i === 0)) {
-              selectNode(elem, index, data);
+              self.selectNode(elem, index, data);
             }
           });
         } else { // Default to Single element selection
           rowData = s.treeDepth[self.pager && s.source ? rowNode.index() : idx].node;
-          selectNode(rowNode, idx, rowData);
+          self.selectNode(rowNode, idx, rowData);
         }
         self.setNodeStatus(rowNode);
       } else {
@@ -5502,9 +5539,30 @@ Datagrid.prototype = {
         if (s.groupable) {
           const gData = self.groupArray[idx];
           rowData = s.dataset[gData.group].values[gData.node];
+          const actualIdx = self.actualPagingRowIndex(idx);
+          this._selectedRows.push({
+            idx: actualIdx,
+            rowData,
+            elem: self.dataRowNode(actualIdx),
+            group: s.dataset[gData.group]
+          });
         }
-        selectNode(rowNode, dataRowIndex, rowData);
+        self.selectNode(rowNode, dataRowIndex, rowData);
         self.lastSelectedRow = idx;// Rememeber index to use shift key
+      }
+
+      // Append data to selectedRows
+      if (!s.groupable) {
+        const actualIdx = self.actualPagingRowIndex(idx);
+
+        this._selectedRows.push({
+          idx: actualIdx,
+          data: rowData,
+          elem: self.visualRowNode(actualIdx),
+          page: this.pager ? this.pager.activePage : 1,
+          pagingIdx: idx,
+          pagesize: this.settings.pagesize
+        });
       }
     }
 
@@ -5513,7 +5571,7 @@ Datagrid.prototype = {
     }
 
     if (!noTrigger) {
-      this.element.triggerHandler('selected', [this.selectedRows(), 'select']);
+      this.element.triggerHandler('selected', [this._selectedRows, 'select']);
     }
   },
 
@@ -5539,15 +5597,19 @@ Datagrid.prototype = {
   * @returns {void}
   */
   syncHeaderCheckbox(rows) {
+    if (!this.headerRow) {
+      return;
+    }
+
     const headerCheckbox = this.headerRow.find('.datagrid-checkbox');
     const rowsLength = rows.length;
-    const selectedRowsLength = this.selectedRows().length;
+    const selectedRowsLength = this._selectedRows.length;
     const status = headerCheckbox.data('selected');
 
     // Do not run if checkbox in same state
     if ((selectedRowsLength !== rowsLength &&
           selectedRowsLength > 0 && status === 'partial') ||
-            (selectedRowsLength === rowsLength && status === 'all') ||
+            (selectedRowsLength === rowsLength && status === 'all' && selectedRowsLength !== 0) ||
               (selectedRowsLength === 0 && status === 'none')) {
       return;
     }
@@ -5566,6 +5628,37 @@ Datagrid.prototype = {
     if (selectedRowsLength === 0) {
       headerCheckbox.data('selected', 'none')
         .removeClass('is-checked is-partial');
+    }
+  },
+
+  /**
+   * Mark selected rows on the page as selected
+   * @private
+   * @returns {void}
+   */
+  syncSelectedRows() {
+    let idx = null;
+
+    for (let i = 0; i < this._selectedRows.length; i++) {
+      if (this._selectedRows[i].page === this.pager.activePage) {
+        idx = this._selectedRows[i].idx;
+        this.selectNode(this.visualRowNode(idx), idx, this.settings.dataset[idx], true);
+      }
+      // Check for rows that changed page
+      idx = this._selectedRows[i].pagingIdx;
+      if (this._selectedRows[i].pagesize !== this.settings.pagesize && this.settings.dataset[idx]) {
+        this.selectNode(this.visualRowNode(idx), idx, this.settings.dataset[idx], true);
+        this._selectedRows[i].pagesize = this.settings.pagesize;
+        this._selectedRows[i].idx = idx;
+        this._selectedRows[i].page = this.pager.activePage;
+      }
+
+      if (this._selectedRows[i].pagesize !== this.settings.pagesize &&
+        !this.settings.dataset[idx]) {
+        this._selectedRows[i].idx = idx % this.settings.pagesize;
+        this._selectedRows[i].page = Math.round(idx / this.settings.pagesize) + 1;
+        this._selectedRows[i].pagesize = this.settings.pagesize;
+      }
     }
   },
 
@@ -5606,13 +5699,11 @@ Datagrid.prototype = {
       return;
     }
 
-    const selectedRows = this.selectedRows();
-
-    if (selectedRows.length === 0) {
+    if (this._selectedRows.length === 0) {
       this.contextualToolbar.animateClosed();
     }
 
-    if (selectedRows.length > 0 && this.contextualToolbar.height() === 0) {
+    if (this._selectedRows.length > 0 && this.contextualToolbar.height() === 0) {
       this.contextualToolbar.css('display', 'block').one('animateopencomplete.datagrid', function () {
         $(this).triggerHandler('recalculate-buttons');
       }).animateOpen();
@@ -5759,7 +5850,7 @@ Datagrid.prototype = {
     if (isSingle && row.hasClass('is-selected')) {
       this.unselectRow(rowIndex);
       this.displayCounts();
-      return this.selectedRows(); // eslint-disable-line
+      return this._selectedRows; // eslint-disable-line
     }
 
     if (row.hasClass('is-selected')) {
@@ -5770,7 +5861,7 @@ Datagrid.prototype = {
 
     this.displayCounts();
 
-    return this.selectedRows(); // eslint-disable-line
+    return this._selectedRows; // eslint-disable-line
   },
 
   /**
@@ -5794,6 +5885,13 @@ Datagrid.prototype = {
       const removeSelected = function (node) {
         delete node._selected;
         self.selectedRowCount--;
+
+        for (let i = 0; i < self._selectedRows.length; i++) {
+          if (self._selectedRows[i].idx === index) {
+            self._selectedRows.splice(i, 1);
+            break;
+          }
+        }
       };
       checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
       elem.removeClass('is-selected hide-selected-color').removeAttr('aria-selected')
@@ -5865,7 +5963,7 @@ Datagrid.prototype = {
     }
 
     if (!noTrigger) {
-      self.element.triggerHandler('selected', [self.selectedRows(), 'deselect']);
+      self.element.triggerHandler('selected', [self._selectedRows, 'deselect']);
     }
   },
 
@@ -5962,34 +6060,7 @@ Datagrid.prototype = {
    * @returns {array} An array containing the selected rows
    */
   selectedRows() {
-    const self = this;
-    const s = self.settings;
-    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
-    const selectedRows = [];
-    let idx = -1;
-
-    for (let i = 0, data; i < dataset.length; i++) {
-      if (s.groupable) {
-        for (let k = 0; k < dataset[i].values.length; k++) {
-          idx++;
-          data = dataset[i].values[k];
-          if (self.isNodeSelected(data)) {
-            selectedRows.push({
-              idx,
-              data,
-              elem: self.dataRowNode(idx),
-              group: dataset[i]
-            });
-          }
-        }
-      } else {
-        data = s.treeGrid ? dataset[i].node : dataset[i];
-        if (self.isNodeSelected(data)) {
-          selectedRows.push({ idx: i, data, elem: self.visualRowNode(i) });
-        }
-      }
-    }
-    return selectedRows;
+    return this._selectedRows;
   },
 
   /**
@@ -6008,17 +6079,18 @@ Datagrid.prototype = {
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     let gIdx = idx;
 
-    // As of 4.3.3, return the rows that have _selected = true
-    let selectedRows = this.selectedRows();
+    if (typeof row === 'number') {
+      row = [row];
+    }
 
     if (!row || row.length === 0) {
-      return selectedRows;
+      return this._selectedRows;
     }
 
     if (isSingle) {
       // Unselect
-      if (selectedRows.length) {
-        this.unselectRow(selectedRows[0].idx, true, true);
+      if (this._selectedRows.length) {
+        this.unselectRow(this._selectedRows[0].idx, true, true);
       }
 
       // Select - may be passed array or int
@@ -6049,17 +6121,16 @@ Datagrid.prototype = {
       }
     }
 
-    selectedRows = this.selectedRows();
     this.displayCounts();
 
     if (!nosync) {
       this.syncSelectedUI();
     }
     if (!selectAll) {
-      this.element.triggerHandler('selected', [selectedRows, 'select']);
+      this.element.triggerHandler('selected', [this._selectedRows, 'select']);
     }
 
-    return selectedRows;
+    return this._selectedRows;
   },
 
   /**
@@ -7367,6 +7438,15 @@ Datagrid.prototype = {
 
     if (this.settings.paging && this.settings.source && !this.settings.indeterminate) {
       rowIdx += ((this.pager.activePage - 1) * this.settings.pagesize);
+    }
+    return rowIdx;
+  },
+
+  actualPagingRowIndex(idx) {
+    let rowIdx = idx;
+
+    if (this.settings.paging && this.settings.source && !this.settings.indeterminate) {
+      rowIdx -= ((this.pager.activePage - 1) * this.settings.pagesize);
     }
     return rowIdx;
   },
