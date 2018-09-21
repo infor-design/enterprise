@@ -1,3 +1,5 @@
+import { BusyIndicator } from '../../../src/components/busyindicator/busyindicator';
+
 const busyindicatorHTML = require('../../../app/views/components/busyindicator/example-index.html');
 
 let busyindicatorEl;
@@ -9,8 +11,8 @@ describe('Busy Indicator API', () => {
     busyindicatorObj = null;
     document.body.insertAdjacentHTML('afterbegin', busyindicatorHTML);
 
-    busyindicatorEl = $('#busy-form');
-    busyindicatorObj = busyindicatorEl.data('busyindicator');
+    busyindicatorEl = document.body.querySelector('#busy-form');
+    busyindicatorObj = new BusyIndicator(busyindicatorEl);
   });
 
   afterEach(() => {
@@ -22,58 +24,67 @@ describe('Busy Indicator API', () => {
     rowEl.parentNode.removeChild(rowEl);
   });
 
-  it('Should return correct value for isActive', () => {
-    const buttonEl = $('#submit');
-    buttonEl.click();
+  it('Should be defined on jQuery object', () => {
+    expect(busyindicatorObj).toEqual(jasmine.any(Object));
+  });
+
+  it('Should return correct value for isActive', (done) => {
+    busyindicatorObj.activate();
 
     setTimeout(() => {
       expect(busyindicatorObj.isActive()).toEqual(true);
-    }, 0);
+      done();
+    }, 1000);
   });
 
-  it('Should display busy indicator when triggering "start.busyindicator"', () => {
-    busyindicatorEl.trigger('start.busyindicator');
+  it('Should display busy indicator when triggering "start.busyindicator"', (done) => {
+    busyindicatorObj.activate();
 
     setTimeout(() => {
       expect(document.body.querySelector('.busy-indicator-container')).toBeTruthy();
-    }, 0);
+      done();
+    }, 1000);
   });
 
-  it('Should hide busy indicator when triggerring "complete.busyindicator"', () => {
-    const buttonEl = $('#submit');
-    buttonEl.click();
+  it('Should hide busy indicator when triggering complete/close', (done) => {
+    busyindicatorObj.activate();
 
     setTimeout(() => {
-      busyindicatorEl.trigger('complete.busyindicator');
+      busyindicatorObj.close(true);
 
-      expect(document.body.querySelector('.busy-indicator')).toBeFalsy();
-    }, 0);
+      setTimeout(() => {
+        expect(document.querySelector('.busy-indicator-container')).toBeFalsy();
+        done();
+      }, 1000);
+    }, 1000);
   });
 
-  it('Should update text of busy indicator', () => {
-    const buttonEl = $('#submit');
-    buttonEl.click();
+  it('Should update text of busy indicator', (done) => {
+    busyindicatorObj.activate();
 
     setTimeout(() => {
       busyindicatorObj.updated({ text: 'Custom Text 1' });
-    }, 0);
+    }, 1000);
 
     setTimeout(() => {
       const customTextEl = $('.busy-indicator-container > span');
 
       expect(customTextEl.text()).toEqual('Custom Text 1');
       busyindicatorObj.destroy();
-    }, 0);
+      done();
+    }, 1000);
   });
 
-  it('Should destroy busy indicator', () => {
-    const buttonEl = $('#submit');
-    buttonEl.click();
+  it('Should destroy busy indicator', (done) => {
+    busyindicatorObj.activate();
 
     setTimeout(() => {
       busyindicatorObj.destroy();
 
-      expect(busyindicatorObj).toBeFalsy();
-    }, 0);
+      setTimeout(() => {
+        expect(document.querySelector('.busy-indicator-container')).toBeFalsy();
+        done();
+      }, 1000);
+    }, 1000);
   });
 });

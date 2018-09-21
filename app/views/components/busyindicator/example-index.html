@@ -1,6 +1,6 @@
 <div class="row">
   <div class="one-half column">
-    <div class="busy" data-options="{ 'displayDelay': 100, 'timeToComplete': 4000 }">
+    <div class="busy" id="busy-form" data-options="{ 'displayDelay': 100, 'timeToComplete': 4000 }">
       <div class="field">
         <label for="busy-field-name">Name</label>
         <input type="text" id="busy-field-name" name="busy-field-name" value="" />
@@ -23,7 +23,7 @@
 <script>
   $(function() {
     $('#submit').click(function(e) {
-      $('.busy').trigger('start.busyindicator');
+      $('#busy-form').trigger('start.busyindicator');
     });
   });
 </script>

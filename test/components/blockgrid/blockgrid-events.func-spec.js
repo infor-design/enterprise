@@ -108,7 +108,7 @@ describe('Blockgrid Mixed Selection Events', () => {
     setTimeout(() => {
       expect(spyEvent).toHaveBeenTriggered();
       done();
-    }, 1000);
+    }, 100);
   });
 
   it('Should trigger "deactivated" event', (done) => {
@@ -120,6 +120,6 @@ describe('Blockgrid Mixed Selection Events', () => {
     setTimeout(() => {
       expect(spyEvent).toHaveBeenTriggered();
       done();
-    }, 1000);
+    }, 100);
   });
 });

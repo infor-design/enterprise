@@ -361,6 +361,7 @@ BusyIndicator.prototype = {
    * @returns {void}
    */
   destroy() {
+    this.close(true);
     this.element.off('start.busyindicator complete.busyindicator afterstart.busyindicator aftercomplete.busyindicator updated.busyindicator');
     $.removeData(this.element[0], COMPONENT_NAME);
   },
