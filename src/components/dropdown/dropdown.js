@@ -1012,10 +1012,8 @@ Dropdown.prototype = {
     term = '';
     this.position();
 
-    if (noIcons) {
-      if (this.list.find('input').css('padding-left')) {
-        this.list.find('input').css('padding-left', '12px');
-      }
+    if (noIcons && this.list.find('input').css('padding-left')) {
+      this.list.find('input').addClass('no-icon-padding');
     } else {
       this.list.find('svg').last().changeIcon('icon-empty-circle');
     }
@@ -1073,7 +1071,7 @@ Dropdown.prototype = {
     this.position();
 
     if (this.list.find('input').css('padding-left')) {
-      this.list.find('input').css('padding-left', '12px');
+      this.list.find('input').addClass('no-icon-padding');
     }
   },
 
