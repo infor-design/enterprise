@@ -63,7 +63,7 @@ Tree.prototype = {
     this.setupEvents();
 
     if (this.loadData(this.settings.dataset) === -1) {
-      this.syncDataset(this.element);
+      this.syncDataset();
       this.initSelected();
       this.focusFirst();
       this.attachMenu(this.settings.menuId);
@@ -984,7 +984,7 @@ Tree.prototype = {
     self.jsonData = undefined;
     self.loading = false;
 
-    self.syncDataset(self.element);
+    self.syncDataset();
     self.initSelected();
     self.focusFirst();
     self.attachMenu(self.settings.menuId);
@@ -1379,70 +1379,92 @@ Tree.prototype = {
     return prev;
   },
 
-  // Sync the tree with the underlying dataset
+  /**
+   * Sync the tree with the underlying dataset
+   * @private
+   * @param {object} node the jQuery element to sync (Optional)
+   * @returns {void}
+   */
   syncDataset(node) {
     const json = [];
     const self = this;
+    node = node || this.element;
 
-    node.children('li').each(function () {
-      const elem = $(this);
-      const tag = elem.find('a:first');
-
-      const entry = self.syncNode(tag);
-      json.push(entry);
+    const items = [].slice.call(node.children('li').toArray());
+    items.forEach((li) => {
+      json.push(self.syncNode(li.querySelector('a')));
     });
 
     this.settings.dataset = json;
   },
 
-  // Sync a node with its dataset 'record'
+  /**
+   * Sync a node with its dataset record
+   * @private
+   * @param {object} node The node to sync (jQuery or DOM element)
+   * @returns {object} synced node data
+   */
   syncNode(node) {
-    let entry = {};
     const self = this;
-    const jsonData = node.data('jsonData');
+    const nodeJQ = this.isjQuery(node) ? node : $(node);
+    node = nodeJQ[0];
+    const parent = node.parentNode;
+    const hasClass = (el, className) => el.classList.contains(className);
 
-    entry.node = node;
-    entry.id = node[0].getAttribute('id');
-    entry.text = node[0].querySelector('.tree-text').textContent;
+    let entry = {
+      node: nodeJQ,
+      id: node.getAttribute('id'),
+      text: node.querySelector('.tree-text').textContent
+    };
 
-    const parent = node[0].parentNode;
-
-    if (node[0].classList.contains('is-open') || (parent && parent.tagName.toLowerCase() === 'li') && parent.classList.contains('is-open')) {
+    // Is folder open
+    if (hasClass(node, 'is-open') ||
+        (parent && parent.tagName.toLowerCase() === 'li') && hasClass(parent, 'is-open')) {
       entry.open = true;
     }
 
-    if (node[0].getAttribute('href')) {
-      entry.href = node[0].getAttribute('href');
+    // Href
+    const href = node.getAttribute('href');
+    if (href) {
+      entry.href = href;
     }
 
-    if (node[0].parentNode.classList.contains('is-selected')) {
+    // Selected
+    if (hasClass(parent, 'is-selected')) {
       entry.selected = true;
     }
 
-    if (node.is('.is-disabled')) {
+    // Disabled
+    if (hasClass(node, 'is-disabled')) {
       entry.disabled = true;
     }
 
     // Icon
-    const clazz = node[0].getAttribute('class');
-    if (clazz && clazz.indexOf('icon') > -1) {
-      entry.icon = node[0].getAttribute('class');
+    const classAttribute = node.getAttribute('class');
+    if (classAttribute && classAttribute.indexOf('icon') > -1) {
+      entry.icon = classAttribute;
     }
 
-    if (node.next().is('ul')) {
-      const ul = node.next();
+    // Children
+    const ul = nodeJQ.next();
+    if (ul[0] && ul[0].tagName.toLowerCase() === 'ul') {
       entry.children = [];
-      ul.children('li').each(function () {
-        entry.children.push(self.syncNode($(this).find('a:first')));
+
+      const items = [].slice.call(ul.children('li').toArray());
+      items.forEach((li) => {
+        entry.children.push(self.syncNode(li.querySelector('a')));
       });
     }
 
+    // Merge json data
+    const jsonData = nodeJQ.data('jsonData');
     if (jsonData) {
       delete jsonData.selected;
+      delete jsonData.children;
       entry = $.extend({}, jsonData, entry);
     }
 
-    node.data('jsonData', entry);
+    nodeJQ.data('jsonData', entry);
     return entry;
   },
 
@@ -1695,7 +1717,7 @@ Tree.prototype = {
     }
 
     if (nodeData.node) {
-      this.syncDataset(this.element);
+      this.syncDataset();
     }
 
     if (nodeData.children) {
@@ -1740,7 +1762,7 @@ Tree.prototype = {
     if (!elem) {
       return;
     }
-    this.syncDataset(this.element);
+    this.syncDataset();
   },
 
   // Attach Context Menus
@@ -1918,7 +1940,7 @@ Tree.prototype = {
               }
 
               // Sync dataset and ui
-              self.syncDataset(self.element);
+              self.syncDataset();
               if (self.isMultiselect) {
                 self.initSelected();
               }
