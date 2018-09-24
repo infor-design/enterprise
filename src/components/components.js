@@ -7,10 +7,12 @@ export { Hyperlink } from './hyperlinks/hyperlinks';
 export { Icon } from './icons/icons';
 export { ListFilter } from './listfilter/listfilter';
 export { MaskInput } from './mask/mask-input';
+export { Modal } from './modal/modal';
 export { PopupMenu } from './popupmenu/popupmenu';
 export { Tmpl } from './tmpl/tmpl';
 
 // Mid ====/
+export { About } from './about/about';
 export { Accordion } from './accordion/accordion';
 export { ApplicationMenu } from './applicationmenu/applicationmenu';
 export { Autocomplete } from './autocomplete/autocomplete';
@@ -27,8 +29,6 @@ export { DatePicker } from './datepicker/datepicker';
 export { Dropdown } from './dropdown/dropdown';
 export { EmptyMessage } from './emptymessage/emptymessage';
 export { ExpandableArea } from './expandablearea/expandablearea';
-export { Modal } from './modal/modal';
-export { About } from './about/about';
 export { Line } from './line/line';
 export { ListBuilder } from './listbuilder/listbuilder';
 export { ListView } from './listview/listview';

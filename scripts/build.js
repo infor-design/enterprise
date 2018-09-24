@@ -38,26 +38,41 @@ const logger = require('./logger');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
+const RELATIVE_SRC_DIR = path.join('..', 'src');
+const RELATIVE_TEMP_DIR = path.join('..', 'temp');
+
 const filePaths = {
-  js: {
-    behaviors: path.join(SRC_DIR, 'behaviors', 'behaviors.js'),
-    components: path.join(SRC_DIR, 'components', 'components.js'),
-    index: path.join(SRC_DIR, 'index.js'),
-    patterns: path.join(SRC_DIR, 'patterns', 'patterns.js'),
+  src: {
+    js: {
+      behaviors: path.join(SRC_DIR, 'behaviors', 'behaviors.js'),
+      components: path.join(SRC_DIR, 'components', 'components.js'),
+      index: path.join(SRC_DIR, 'index.js'),
+      patterns: path.join(SRC_DIR, 'patterns', 'patterns.js'),
+    },
+    jQuery: {
+      behaviors: path.join(SRC_DIR, 'behaviors', 'behaviors.jquery.js'),
+      components: path.join(SRC_DIR, 'components', 'components.jquery.js'),
+      patterns: path.join(SRC_DIR, 'patterns', 'patterns.jquery.js'),
+    },
+    sass: {
+      themes: {
+        dark: path.join(SRC_DIR, 'themes', 'dark-theme.scss'),
+        'high-contrast': path.join(SRC_DIR, 'themes', 'high-contrast-theme.scss'),
+        light: path.join(SRC_DIR, 'themes', 'light-theme.scss'),
+        uplift: path.join(SRC_DIR, 'themes', 'uplift-theme.scss'),
+      }
+    }
   },
-  jQuery: {
-    behaviors: path.join(SRC_DIR, 'behaviors', 'behaviors.jquery.js'),
-    components: path.join(SRC_DIR, 'components', 'components.jquery.js'),
-    patterns: path.join(SRC_DIR, 'patterns', 'patterns.jquery.js'),
-  },
-  sass: {
-    themes: {
-      dark: path.join(SRC_DIR, 'themes', 'dark-theme.scss'),
-      'high-contrast': path.join(SRC_DIR, 'themes', 'high-contrast-theme.scss'),
-      light: path.join(SRC_DIR, 'themes', 'light-theme.scss'),
-      uplift: path.join(SRC_DIR, 'themes', 'uplift-theme.scss'),
+  target: {
+    js: {
+      behaviors: path.join(TEMP_DIR, 'behaviors.js'),
+      components: path.join(TEMP_DIR, 'components.js'),
+      index: path.join(TEMP_DIR, 'index.js'),
+      patterns: path.join(TEMP_DIR, 'patterns.js'),
+      rules: path.join(TEMP_DIR, 'rules.js')
     }
   }
+
 };
 
 const searchTerms = {
@@ -75,7 +90,8 @@ const TEST_ARGS = [
   'list-detail',
   'longpress',
   'popupmenu',
-  'tabs'
+  'tabs',
+  'validation'
 ];
 
 // All incoming scanned source code is labeled as "components" by default.
@@ -83,14 +99,16 @@ const TEST_ARGS = [
 // bucket.
 const customLocations = {
   masks: 'rules',
-  'mask-api': 'foundational',
+  'mask-api': '',
   'mask-input': 'foundational',
   'tabs-multi': 'complex',
   validation: 'rules',
-  'validation.utils': 'foundational',
+  'validation.utils': '',
   validator: 'foundational'
 };
 
+// Storage buckets for relevant file paths.
+// These get used for generating import/export statements
 const buckets = {
   behaviors: [],
   rules: [],
@@ -115,6 +133,27 @@ function capitalize(str) {
 }
 
 /**
+ * Converts a library file's name to a matching string that will be
+ * used to target an imported/exported library constructor.  This happens by replacing
+ * filenames that use dashes followed by lowercase letters, to uppercase letters.
+ * @param {string} str incoming string representing a filename
+ * @returns {string} containing a matching constructor
+ */
+function replaceDashesWithCaptials(str) {
+  str = capitalize(str);
+
+  const matches = str.match(/(-\w)+/g);
+  if (!matches) {
+    return str;
+  }
+
+  matches.forEach((match) => {
+    str = str.replace(match, capitalize(match.replace('-', '')));
+  });
+  return str;
+}
+
+/**
  * @param {string} str incoming string containing a file path
  * @returns {string} a string containing just a filename
  */
@@ -135,6 +174,18 @@ function getLibFromFileName(str) {
   return str.substring(0, dot);
 }
 
+/**
+ * @param {string} str containing a file name
+ * @returns {string} the library path without the filename
+ */
+function getPath(str) {
+  const lastSlash = str.lastIndexOf(path.sep);
+  if (lastSlash === -1 || lastSlash === (str.length - 1)) {
+    return str;
+  }
+  return str.substring(0, lastSlash + 1);
+}
+
 // Checks the type of library.
 // Sets to `components` if it's not a valid one.
 const libTypes = ['components', 'behaviors', 'layouts', 'patterns', 'utils'];
@@ -148,36 +199,42 @@ function checkLibType(type) {
 /**
  * Returns a string representing a valid Javascript ES6 `import` statement
  * @param {string} libFile the target library file
- * @param {string} type the type of libary file
+ * @param {string} libFolder the target library folder
  * @returns {string} a valid ES6 `import` statement
  */
-function writeJSImportStatement(libFile, libFolder, type) {
-  const constructorName = capitalize(libFile, type);
-  type = checkLibType(type);
+function sanitizeLibFile(libFile, libFolder) {
   libFile = libFile.toLowerCase();
   if (!libFolder) {
     libFolder = libFile;
   } else {
     libFolder = libFolder.toLowerCase();
   }
-  return `import { ${constructorName} } from '${SRC_DIR}/${type}/${libFile}/${libFile}';`;
+  return libFile;
+}
+
+/**
+ * Returns a string representing a valid Javascript ES6 `import` statement
+ * @param {string} libFile the target library file
+ * @param {string} libPath the target library folder
+ * @param {boolean} isExport if true, export statement is used instead.
+ * @returns {string} a valid ES6 `import` statement
+ */
+function writeJSImportStatement(libFile, libPath, isExport) {
+  const constructorName = replaceDashesWithCaptials(libFile);
+  libFile = sanitizeLibFile(libFile, libPath);
+  const command = isExport ? 'export' : 'import';
+  return `${command} { ${constructorName} } from '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
 }
 
 /**
  * Returns a string representing a valid SASS `@import` statement
  * @param {string} libFile the target library file
- * @param {string} type the type of libary file
+ * @param {string} libPath the target libary folder
  * @returns {string} a valid SASS `@import` statement
  */
-function writeSassImportStatement(libFile, libFolder, type) {
-  type = checkLibType(type);
-  libFile = libFile.toLowerCase();
-  if (!libFolder) {
-    libFolder = libFile;
-  } else {
-    libFolder = libFolder.toLowerCase();
-  }
-  return `@import '${SRC_DIR}/${type}/${libFolder}/${libFile}';`;
+function writeSassImportStatement(libFile, libPath) {
+  libFile = sanitizeLibFile(libFile, libPath);
+  return `@import '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
 }
 
 /**
@@ -290,7 +347,7 @@ function sortLocations(files) {
   const matchRegex = new RegExp(matchStr, 'g');
   const locationKeys = Object.keys(customLocations);
 
-  const componentsJSFile = getFileContents(filePaths.js.components);
+  const componentsJSFile = getFileContents(filePaths.src.js.components);
   const startOfMid = getFurthestIndexOf(componentsJSFile, searchTerms.mid);
   const startOfComplex = getFurthestIndexOf(componentsJSFile, searchTerms.complex);
 
@@ -303,13 +360,13 @@ function sortLocations(files) {
 
       // If the `lib` is defined with a custom location in this script,
       // prefer the bucket associated with it.
-      if (locationKeys[lib]) {
-        const bucketKey = customLocations[locationKeys[lib]];
+      if (locationKeys.indexOf(lib) !== -1) {
+        const bucketKey = customLocations[lib];
         const bucket = buckets[bucketKey];
         if (Array.isArray(bucket)) {
           bucket.push(file);
-          return;
         }
+        return;
       }
 
       // Scan the `components.js` file for the location of this lib's name,
@@ -329,14 +386,90 @@ function sortLocations(files) {
 
     // Use first result
     match = match[0];
+
+    // Ignore `utils` type for components
+    if (match === 'utils') {
+      return;
+    }
+
     try {
       buckets[match].push(file);
     } catch (e) {
       throw new Error(`Sort Error: ${e}`);
     }
   });
+}
 
-  debugger;
+/**
+ *
+ */
+function renderBucketsToFile(key) {
+  let fileContents = '';
+  const bucket = buckets[key];
+  if (!Array.isArray(bucket)) {
+    throw new Error(`No bucket with name "${key}" exists.`);
+  }
+
+  bucket.forEach((srcFilePath) => {
+    const fileName = getFileName(srcFilePath);
+    const filePath = getPath(srcFilePath);
+    const lib = getLibFromFileName(fileName);
+
+    let useImportStatement = true;
+    //if (false) {
+    //  useImportStatement = false;
+    //}
+
+    // TODO: make this not always export
+    const statement = writeJSImportStatement(lib, filePath, useImportStatement);
+    fileContents += `${statement}\n`;
+  });
+
+  return fileContents;
+}
+
+/**
+ *
+ */
+function renderTargetJSFile(key, targetFilePath) {
+  let targetFile = '';
+
+  if (key === 'index') {
+    // Pull in the standard `index.js` file and create a custom version that links
+    // out to other JS files that will import slimmed-down lists of components.
+    // Saves to the `temp/` folder.
+    targetFile = getFileContents(filePaths.src.js.index);
+    targetFile = targetFile
+      .replace(/('\.\/)/g, '\'../src/')
+      .replace('../src/behaviors/behaviors', './behaviors')
+      .replace('../src/core/rules', './rules')
+      .replace('../src/components/components', './components')
+      .replace('../src/patterns/patterns', './patterns');
+  } else if (key === 'components') {
+    // 'component' source code files are comprised of three buckets that need to
+    // be written to the target file in a specific order.
+    const componentBuckets = ['foundational', 'mid', 'complex'];
+    componentBuckets.forEach((thisBucket) => {
+      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += renderBucketsToFile(thisBucket);
+    });
+  } else {
+    // All other buckets simply get rendered directly
+    targetFile += renderBucketsToFile(key, targetFile);
+  }
+
+  fs.writeFileSync(targetFilePath, targetFile);
+}
+
+/**
+ * Renders all available target files.
+ * @returns {void}
+ */
+function renderTargetFiles() {
+  const jsEntryPoints = Object.keys(filePaths.target.js);
+  jsEntryPoints.forEach((filePathKey) => {
+    renderTargetJSFile(filePathKey, filePaths.target.js[filePathKey]);
+  });
 }
 
 // -------------------------------------
@@ -390,20 +523,9 @@ cleanAll().then(() => {
     buildOutput += `${item}\n`;
   });
 
-  // Pull in the standard `index.js` file and create a custom version that links
-  // out to other JS files that will import slimmed-down lists of components.
-  // Saves to the `temp/` folder.
-  let indexjs = getFileContents(filePaths.js.index);
-  indexjs = indexjs
-    .replace(/('\.\/)/g, '\'../src/')
-    .replace('../src/behaviors/behaviors', '\'./behaviors')
-    .replace('../src/core/rules', '\'./rules')
-    .replace('../src/components/components', '\'./components')
-    .replace('../src/patterns/patterns', '\'./patterns');
-  fs.writeFileSync(path.join(TEMP_DIR, 'index.js'), indexjs);
-
   // Create customized lists of JS components for this bundle
   sortLocations(jsMatches);
+  renderTargetFiles();
 
   // TODO: Pull in the standard `_controls.sass` and create a custom version
   // that links out to other SASS files that will import slimmed-down lists of components.
