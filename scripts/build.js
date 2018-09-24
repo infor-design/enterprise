@@ -39,7 +39,6 @@ const logger = require('./logger');
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
 const RELATIVE_SRC_DIR = path.join('..', 'src');
-const RELATIVE_TEMP_DIR = path.join('..', 'temp');
 
 const filePaths = {
   src: {
@@ -108,6 +107,40 @@ const customLocations = {
   validation: 'rules',
   'validation.utils': '',
   validator: 'foundational'
+};
+
+// Map for converting certain filenames to a dash-based string
+// TODO: actually rename these files and better organize the source code. (see #833)
+const dashSeparatedFileNames = {
+  applicationmenu: 'application-menu',
+  busyindicator: 'busy-indicator',
+  circlepager: 'circle-pager',
+  colorpicker: 'color-picker',
+  compositeform: 'composite-form',
+  contextualactionpanel: 'contextual-action-panel',
+  datepicker: 'date-picker',
+  emptymessage: 'empty-message',
+  expandablearea: 'expandable-area',
+  fileupload: 'file-upload',
+  fileuploadadvanced: 'file-upload-advanced',
+  listbuilder: 'list-builder',
+  listfilter: 'list-filter',
+  listview: 'list-view',
+  monthview: 'month-view',
+  multiselect: 'multi-select',
+  popupmenu: 'popup-menu',
+  searchfield: 'search-field',
+  signin: 'sign-in',
+  stepchart: 'step-chart',
+  swaplist: 'swap-list',
+  multitabs: 'tabs-multi', // (change)
+  timepicker: 'time-picker',
+  toolbarsearchfield: '' // don't actually include this one, cancel it out
+};
+
+const lowercaseConstructorNames = {
+  longpress: 'longPress',
+  renderloop: 'renderLoop'
 };
 
 // Storage buckets for relevant file paths.
@@ -213,7 +246,18 @@ function sanitizeLibFile(libFile, libFolder) {
  * @returns {string} a valid ES6 `import` statement
  */
 function writeJSImportStatement(libFile, libPath, isExport) {
-  const constructorName = replaceDashesWithCaptials(libFile);
+  // (Temporarily) replace the filename with one that dash-separates the words
+  // until we fix this later (see #833):
+  let constructorName;
+  if (dashSeparatedFileNames[libFile]) {
+    constructorName = dashSeparatedFileNames[libFile];
+    constructorName = replaceDashesWithCaptials(constructorName);
+  } else if (lowercaseConstructorNames[libFile]) {
+    constructorName = lowercaseConstructorNames[libFile];
+  } else {
+    constructorName = replaceDashesWithCaptials(libFile);
+  }
+
   libFile = sanitizeLibFile(libFile, libPath);
   const command = isExport ? 'export' : 'import';
   return `${command} { ${constructorName} } from '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
