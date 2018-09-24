@@ -94,6 +94,9 @@ const TEST_ARGS = [
   'validation'
 ];
 
+// Library types
+const libTypes = ['components', 'behaviors', 'layouts', 'patterns', 'utils'];
+
 // All incoming scanned source code is labeled as "components" by default.
 // If the source code folder shows up as a property here, it will be moved to a different
 // bucket.
@@ -184,16 +187,6 @@ function getPath(str) {
     return str;
   }
   return str.substring(0, lastSlash + 1);
-}
-
-// Checks the type of library.
-// Sets to `components` if it's not a valid one.
-const libTypes = ['components', 'behaviors', 'layouts', 'patterns', 'utils'];
-function checkLibType(type) {
-  if (libTypes.indexOf(type) < 0) {
-    type = libTypes[0];
-  }
-  return type;
 }
 
 /**
@@ -323,7 +316,8 @@ function searchFileNames(files, term) {
 
 /**
  * Gets a copy of the standard `index.js` file.
- * @returns {string} containig the imported file.
+ * @param {string} filePath the target file to be read.
+ * @returns {string} containing the imported file.
  */
 function getFileContents(filePath) {
   return fs.readFileSync(filePath, 'utf8');
@@ -401,9 +395,11 @@ function sortLocations(files) {
 }
 
 /**
- *
+ * Writes the contents of a single file bucket to a string, for being appended to a file
+ * @param {string} key the target file bucket
+ * @returns {string} formatted, multi-line, containing all relevant ES6-based import/export statements
  */
-function renderBucketsToFile(key) {
+function renderImportsToString(key) {
   let fileContents = '';
   const bucket = buckets[key];
   if (!Array.isArray(bucket)) {
@@ -429,7 +425,11 @@ function renderBucketsToFile(key) {
 }
 
 /**
- *
+ * Writes a JS file containing regular ES6 Imports (not jQuery)
+ * @private
+ * @param {string} key the file path bucket to use
+ * @param {string} targetFilePath the path of the file that will be written
+ * @returns {void}
  */
 function renderTargetJSFile(key, targetFilePath) {
   let targetFile = '';
@@ -451,11 +451,11 @@ function renderTargetJSFile(key, targetFilePath) {
     const componentBuckets = ['foundational', 'mid', 'complex'];
     componentBuckets.forEach((thisBucket) => {
       targetFile += `// ${capitalize(thisBucket)} ====/\n`;
-      targetFile += renderBucketsToFile(thisBucket);
+      targetFile += renderImportsToString(thisBucket);
     });
   } else {
     // All other buckets simply get rendered directly
-    targetFile += renderBucketsToFile(key, targetFile);
+    targetFile += renderImportsToString(key, targetFile);
   }
 
   fs.writeFileSync(targetFilePath, targetFile);
@@ -532,6 +532,4 @@ cleanAll().then(() => {
   // Saves to the `temp/` folder.
 
   process.stdout.write(buildOutput);
-
-  debugger;
 });
