@@ -8,14 +8,19 @@ demo:
     pages:
     - name: Loading events with Ajax
       slug: example-ajax-events
+    - name: Loading a specific month and year
+      slug: example-specific-month
 ---
 
-The setup for a calendar only involves creating a `div` with the class `datepicker`. In that div we add the three sections of the calendar. The first section calendar-events contains an accordion with a filter section and an upcomming events section (functionality to be added soon). The second section is a `div` with `calendar-monthview` this is where the monthview calendar will be rendered. The third section is `div` with `calendar-event-details` this is where the event details will be shown when you click on them.
+The setup for a calendar only involves creating a `div` with the class `calendar`. In that div we add the three sections of the calendar. The first section calendar-events contains an accordion with a filter section and an upcoming events section (functionality to be added soon). The second section is a `div` with `calendar-monthview` this is where the monthview calendar will be rendered. The third section is `div` with `calendar-event-details` this is where the event details will be shown when you click on them.
 
-The first pass of the calendar supports basic single day event rendering, filtering and changing months. We will next add better responsiveness, more views, better keyboard support, adding events and editing events.
+The first pass of the calendar added basic single day event rendering, filtering and changing months.
+The second pass of the calendar added events that span months, icon support, ajax support, selection and month change events, and a readonly details template.
+
+We will next add better responsiveness, better keyboard support, adding events and editing events.
 
 ```html
-<div class="calendar" data-init="false">
+<div class="calendar">
   <div class="calendar-events">
     <div class="accordion" data-options="{'allowOnePane': false}">
       <div class="accordion-header is-expanded">
@@ -60,6 +65,8 @@ The calendar runs off events, which are an array of objects. An example of an ev
 "isAllDay": "true"
 }
 ```
+
+The following fields are used.
 
 - id - a unique event id
 - subject - the event subject, which will be displayed on the calendar

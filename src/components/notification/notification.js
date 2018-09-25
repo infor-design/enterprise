@@ -17,11 +17,11 @@ const NOTIFICATION_DEFAULTS = {
  * @class Notification
  * @param {string} element The plugin element for the constuctor
  * @param {string} [settings] The settings element.
- * @param {string} [settings.message] The main text message to show in the alert.
- * @param {string} [settings.type] The message type, this influences the icon and color. Types: Error, Alert, Confirm, Positive
- * @param {string} [settings.parent] The settings element.
- * @param {string} [settings.link] The url to use for the link
- * @param {string} [settings.linkText] The text to show in the link.
+ * @param {string} [settings.message] The text message to show in the notification.
+ * @param {string} [settings.type] The message type, this influences the icon and color, possible types are 'error', 'alert', 'info' and 'confirm'
+ * @param {string} [settings.parent] The jQuery selector to find where to insert the message into (prepended). By default this will appear under the .header on the page.
+ * @param {string} [settings.link] The url to use for the hyperlink
+ * @param {string} [settings.linkText] The text to show in the hyperlink. Leave empty for no link.
  */
 function Notification(element, settings) {
   this.settings = utils.mergeSettings(element, settings, NOTIFICATION_DEFAULTS);
@@ -54,7 +54,7 @@ Notification.prototype = {
        <use xlink:href="#icon-${this.settings.type}"></use>
     </svg>
     <span class="notification-text">${this.settings.message}</span>
-    <a class="notification-link" href="${this.settings.link}">${this.settings.linkText}</a>
+    ${this.settings.linkText ? `<a class="notification-link" href="${this.settings.link}">${this.settings.linkText}</a>` : ''}
     <button type="text" class="notification-close"><svg class="icon" focusable="false" aria-hidden="true" role="presentation">
        <use xlink:href="#icon-close"></use>
     </svg><span class="audible">${Locale.translate('Close')}</span></button>`;
