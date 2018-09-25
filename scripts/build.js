@@ -46,11 +46,13 @@ const filePaths = {
       behaviors: path.join(SRC_DIR, 'behaviors', 'behaviors.js'),
       components: path.join(SRC_DIR, 'components', 'components.js'),
       index: path.join(SRC_DIR, 'index.js'),
+      initialize: path.join(SRC_DIR, 'behaviors', 'initialize', 'initialize.js'),
       patterns: path.join(SRC_DIR, 'patterns', 'patterns.js'),
     },
     jQuery: {
       behaviors: path.join(SRC_DIR, 'behaviors', 'behaviors.jquery.js'),
       components: path.join(SRC_DIR, 'components', 'components.jquery.js'),
+      initialize: path.join(SRC_DIR, 'behaviors', 'initialize', 'initialize.jquery.js'),
       patterns: path.join(SRC_DIR, 'patterns', 'patterns.jquery.js'),
     },
     sass: {
@@ -68,12 +70,14 @@ const filePaths = {
       behaviors: path.join(TEMP_DIR, 'behaviors.js'),
       components: path.join(TEMP_DIR, 'components.js'),
       index: path.join(TEMP_DIR, 'index.js'),
+      initialize: path.join(TEMP_DIR, 'initialize.js'),
       patterns: path.join(TEMP_DIR, 'patterns.js'),
       rules: path.join(TEMP_DIR, 'rules.js')
     },
     jQuery: {
       behaviors: path.join(TEMP_DIR, 'behaviors.jquery.js'),
       components: path.join(TEMP_DIR, 'components.jquery.js'),
+      initialize: path.join(TEMP_DIR, 'initialize.jquery.js'),
       patterns: path.join(TEMP_DIR, 'patterns.jquery.js')
     },
     sass: {
@@ -163,6 +167,7 @@ const dashSeparatedFileNames = {
 };
 
 const lowercaseConstructorNames = {
+  masks: 'masks',
   longpress: 'longPress',
   renderloop: 'renderLoop'
 };
@@ -556,7 +561,15 @@ function renderTargetJSFile(key, targetFilePath) {
       .replace('../src/behaviors/behaviors', './behaviors')
       .replace('../src/core/rules', './rules')
       .replace('../src/components/components', './components')
-      .replace('../src/patterns/patterns', './patterns');
+      .replace('../src/patterns/patterns', './patterns')
+      .replace('../src/behaviors/initialize/initialize.jquery', './initialize.jquery');
+  } else if (key === 'initialize') {
+    targetFile = getFileContents(filePaths.src.js.initialize);
+    targetFile = targetFile
+      .replace(/('\.\.\/)((?!\.))/g, '\'./')
+      .replace(/('\.\.\/\.\.\/)/g, '\'../src/')
+      .replace('../src/components/components.jquery', './components.jquery')
+      .replace('../src/patterns/patterns.jquery', './patterns.jquery');
   } else if (key === 'components') {
     // 'component' source code files are comprised of three buckets that need to
     // be written to the target file in a specific order.
@@ -594,6 +607,8 @@ function renderTargetJQueryFile(key, targetFilePath) {
       targetFile += renderImportsToString(thisBucket, type);
       targetFile += '\n';
     });
+  } else if (key === 'initialize') {
+    targetFile = getFileContents(filePaths.src.jQuery.initialize);
   } else {
     // All other buckets simply get rendered directly
     targetFile += renderImportsToString(key, type);
@@ -655,7 +670,8 @@ function renderTargetFiles() {
   });
 
   sassThemes.forEach((filePathKey) => {
-    renderPromises.push(renderTargetSassFile(filePathKey, filePaths.target.sass.themes[filePathKey]));
+    const p = renderTargetSassFile(filePathKey, filePaths.target.sass.themes[filePathKey]);
+    renderPromises.push(p);
   });
   renderPromises.push(renderTargetSassFile('components', filePaths.target.sass.controls));
 

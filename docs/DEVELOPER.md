@@ -95,6 +95,20 @@ If you've got some specific Javascript code you'd like to run after IDS complete
 
 At this point, IDS should be completely setup in your project!
 
+## Building the component bundles
+
+To manually build the contents of the distributable folder (`dist/`), run the following:
+
+```sh
+npm run build
+```
+
+It's also possible to run a custom build of IDS with your choice of components.  The custom bundler can be run with:
+
+```sh
+node ./scripts/build && rollup -c --customBuild --components=button,input,masks,popupmenu,listview && grunt sass:custom
+```
+
 ## Running the development server
 
 ### Install pre-requisites
