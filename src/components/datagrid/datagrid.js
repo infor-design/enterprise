@@ -1540,7 +1540,9 @@ Datagrid.prototype = {
 
       for (let i = 0; i < conditions.length; i++) {
         const columnDef = self.columnById(conditions[i].columnId)[0];
-        let rowValue = rowData ? rowData[columnDef.field] : self.fieldValue(rowData, columnDef.field);
+
+        let rowValue = rowData ? rowData[columnDef.field] :
+          self.fieldValue(rowData, columnDef.field);
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();
         let rangeData = null;
@@ -2845,19 +2847,21 @@ Datagrid.prototype = {
     depth = d;
 
     // Setup if this row will be hidden or not
-    for (let i = 0; i < self.settings.treeDepth.length; i++) {
-      const treeDepthItem = self.settings.treeDepth[i];
+    if (self.settings.treeDepth && self.settings.treeDepth.length) {
+      for (let i = 0; i < self.settings.treeDepth.length; i++) {
+        const treeDepthItem = self.settings.treeDepth[i];
 
-      if (rowData.id === treeDepthItem.node.id) {
-        d2 = treeDepthItem;
+        if (rowData.id === treeDepthItem.node.id) {
+          d2 = treeDepthItem;
 
-        if (d !== d2.depth && d > d2.depth) {
-          d = d2.depth;
-          depth = d;
-          isHidden = !d2.node.expanded;
+          if (d !== d2.depth && d > d2.depth) {
+            d = d2.depth;
+            depth = d;
+            isHidden = !d2.node.expanded;
+          }
+
+          break;
         }
-
-        break;
       }
     }
 
