@@ -243,9 +243,17 @@ function sanitizeLibFile(libFile, libFolder) {
  * @param {string} libFile the target library file
  * @param {string} libPath the target library folder
  * @param {boolean} isExport if true, export statement is used instead.
+ * @param {boolean} noConstructor if true, don't import a constructor and import all file contents
  * @returns {string} a valid ES6 `import` statement
  */
-function writeJSImportStatement(libFile, libPath, isExport) {
+function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
+  libFile = sanitizeLibFile(libFile, libPath);
+  const command = isExport ? 'export' : 'import';
+
+  if (noConstructor) {
+    return `${command} '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
+  }
+
   // (Temporarily) replace the filename with one that dash-separates the words
   // until we fix this later (see #833):
   let constructorName;
@@ -258,8 +266,6 @@ function writeJSImportStatement(libFile, libPath, isExport) {
     constructorName = replaceDashesWithCaptials(libFile);
   }
 
-  libFile = sanitizeLibFile(libFile, libPath);
-  const command = isExport ? 'export' : 'import';
   return `${command} { ${constructorName} } from '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
 }
 
@@ -455,13 +461,13 @@ function renderImportsToString(key) {
     const filePath = getPath(srcFilePath);
     const lib = getLibFromFileName(fileName);
 
-    let useImportStatement = true;
-    //if (false) {
-    //  useImportStatement = false;
-    //}
+    let useExportStatement = true;
+    if (false) {
+      useExportStatement = false;
+    }
 
     // TODO: make this not always export
-    const statement = writeJSImportStatement(lib, filePath, useImportStatement);
+    const statement = writeJSImportStatement(lib, filePath, useExportStatement);
     fileContents += `${statement}\n`;
   });
 
@@ -473,7 +479,7 @@ function renderImportsToString(key) {
  * @private
  * @param {string} key the file path bucket to use
  * @param {string} targetFilePath the path of the file that will be written
- * @returns {void}
+ * @returns {Promise} containing the results of the file write
  */
 function renderTargetJSFile(key, targetFilePath) {
   let targetFile = '';
@@ -502,18 +508,28 @@ function renderTargetJSFile(key, targetFilePath) {
     targetFile += renderImportsToString(key, targetFile);
   }
 
-  fs.writeFileSync(targetFilePath, targetFile);
+  return fs.writeFile(targetFilePath, targetFile, (err) => {
+    if (err) {
+      logger('error', `${err}`);
+      return;
+    }
+    logger('success', `"${targetFilePath}" saved!`);
+  });
 }
 
 /**
  * Renders all available target files.
- * @returns {void}
+ * @returns {Promise} containing all file writes.
  */
 function renderTargetFiles() {
   const jsEntryPoints = Object.keys(filePaths.target.js);
+  const renderPromises = [];
+
   jsEntryPoints.forEach((filePathKey) => {
-    renderTargetJSFile(filePathKey, filePaths.target.js[filePathKey]);
+    renderPromises.push(renderTargetJSFile(filePathKey, filePaths.target.js[filePathKey]));
   });
+
+  return Promise.all(renderPromises);
 }
 
 // -------------------------------------
@@ -566,6 +582,9 @@ cleanAll().then(() => {
   sassMatches.forEach((item) => {
     buildOutput += `${item}\n`;
   });
+  buildOutput += '\n';
+
+  process.stdout.write(buildOutput);
 
   // Create customized lists of JS components for this bundle
   sortLocations(jsMatches);
@@ -575,5 +594,5 @@ cleanAll().then(() => {
   // that links out to other SASS files that will import slimmed-down lists of components.
   // Saves to the `temp/` folder.
 
-  process.stdout.write(buildOutput);
+
 });
