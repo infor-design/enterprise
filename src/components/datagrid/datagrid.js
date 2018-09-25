@@ -1540,7 +1540,7 @@ Datagrid.prototype = {
 
       for (let i = 0; i < conditions.length; i++) {
         const columnDef = self.columnById(conditions[i].columnId)[0];
-        let rowValue = self.fieldValue(rowData, columnDef.field);
+        let rowValue = rowData ? rowData[columnDef.field] : self.fieldValue(rowData, columnDef.field);
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();
         let rangeData = null;
@@ -1760,10 +1760,30 @@ Datagrid.prototype = {
       let dataSetLen;
 
       if (this.settings.treeGrid) {
-        dataset = this.settings.treeDepth;
+        dataset = this.settings.dataset;
+
+        const checkChildNodes = function (nodeData) {
+          for (let j = 0; j < nodeData.length; j++) {
+            const childNode = nodeData[j];
+
+            isFiltered = !checkRow(childNode);
+
+            if (!isFiltered) {
+              break;
+            } else if (childNode.children && childNode.children.length) {
+              checkChildNodes(childNode.children);
+            }
+          }
+        };
+
         for (i = 0, len = dataset.length; i < len; i++) {
-          isFiltered = !checkRow(dataset[i].node);
-          dataset[i].node.isFiltered = isFiltered;
+          isFiltered = !checkRow(dataset[i]);
+
+          if (isFiltered && dataset[i].children && dataset[i].children.length) {
+            checkChildNodes(dataset[i].children);
+          }
+
+          dataset[i].isFiltered = isFiltered;
         }
       } else if (this.settings.groupable) {
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
@@ -2825,11 +2845,19 @@ Datagrid.prototype = {
     depth = d;
 
     // Setup if this row will be hidden or not
-    for (let i = dataRowIdx; i >= 0 && d > 1 && !isHidden; i--) {
-      d2 = self.settings.treeDepth[i];
-      if (d !== d2.depth && d > d2.depth) {
-        d = d2.depth;
-        isHidden = !d2.node.expanded;
+    for (let i = 0; i < self.settings.treeDepth.length; i++) {
+      const treeDepthItem = self.settings.treeDepth[i];
+
+      if (rowData.id === treeDepthItem.node.id) {
+        d2 = treeDepthItem;
+
+        if (d !== d2.depth && d > d2.depth) {
+          d = d2.depth;
+          depth = d;
+          isHidden = !d2.node.expanded;
+        }
+
+        break;
       }
     }
 

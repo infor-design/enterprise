@@ -366,15 +366,15 @@ const formatters = {
 
   // Tree Expand / Collapse Button and Paddings
   Tree(row, cell, value, col, item, api) {
-    const isOpen = item.expanded;
-    const depth = api.settings.treeDepth[row] ? api.settings.treeDepth[row].depth : 0;
+    const isOpen = item ? item.expanded : true;
+    const depth = item && item.depth ? item.depth : 0;
     const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}>
       <span class="icon plus-minus ${(isOpen ? ' active' : '')}"></span>
       <span class="audible">${Locale.translate('ExpandCollapse')}</span>
       </button>${(value ? `<span> ${value}</span>` : '')}`;
     const node = `<span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}> ${value}</span>`;
 
-    return (item[col.children ? col.children : 'children'] ? button : node);
+    return (item && item[col.children ? col.children : 'children'] ? button : node);
   },
 
   // Badge / Tags and Visual Indictors
