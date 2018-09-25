@@ -97,12 +97,15 @@ const searchTerms = {
 
 // TOOD: Replace with command line args
 const TEST_ARGS = [
+  'builder',
   'button',
   'input',
   'mask',
   'listview',
   'list-detail',
   'longpress',
+  'object-summary',
+  'panes',
   'popupmenu',
   'tabs',
   'validation'
@@ -118,7 +121,13 @@ const customLocations = {
   masks: 'rules',
   'mask-api': '',
   'mask-input': 'foundational',
+  _tabs: 'mid',
+  '_tabs-horizontal': 'mid',
+  '_tabs-vertical': 'mid',
   'tabs-multi': 'complex',
+  '_multi-tabs': 'complex',
+  '_tabs-module': 'complex',
+  '_tabs-header': 'complex',
   validation: 'rules',
   'validation.utils': '',
   validator: 'foundational'
@@ -555,6 +564,7 @@ function renderTargetJSFile(key, targetFilePath) {
     componentBuckets.forEach((thisBucket) => {
       targetFile += `// ${capitalize(thisBucket)} ====/\n`;
       targetFile += renderImportsToString(thisBucket, type);
+      targetFile += '\n';
     });
   } else {
     // All other buckets simply get rendered directly
@@ -582,6 +592,7 @@ function renderTargetJQueryFile(key, targetFilePath) {
     componentBuckets.forEach((thisBucket) => {
       targetFile += `// ${capitalize(thisBucket)} ====/\n`;
       targetFile += renderImportsToString(thisBucket, type);
+      targetFile += '\n';
     });
   } else {
     // All other buckets simply get rendered directly
@@ -603,9 +614,7 @@ function renderTargetSassFile(key, targetFilePath) {
   const type = 'scss';
 
   if (key === 'components') {
-    targetFile = `// Required ====/
-      @import './required';
-    `;
+    targetFile = '// Required ====/\n@import \'./required\';\n\n';
 
     // 'component' source code files are comprised of three buckets that need to
     // be written to the target file in a specific order.
@@ -613,10 +622,9 @@ function renderTargetSassFile(key, targetFilePath) {
     componentBuckets.forEach((thisBucket) => {
       targetFile += `// ${capitalize(thisBucket)} ====/\n`;
       targetFile += renderImportsToString(thisBucket, type);
+      targetFile += '\n';
     });
-
-    targetFile += `// These controls must come last
-      @import '../components/colors/colors';`;
+    targetFile += '// These controls must come last\n@import \'../components/colors/colors\';\n';
   } else {
     // All other keys are "theme" entry points that just need their linked paths corrected.
     const themeFile = getFileContents(path.join(SRC_DIR, 'themes', `${key}.scss`));
