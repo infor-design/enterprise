@@ -1396,6 +1396,7 @@ Tree.prototype = {
     });
 
     this.settings.dataset = json;
+    this.element.triggerHandler('rendered', { data: this.settings.dataset });
   },
 
   /**
@@ -1873,7 +1874,8 @@ Tree.prototype = {
                 startFolderNode: a.closest('ul').prev('a'),
                 startWidth: a.outerWidth()
               };
-
+    
+              self.element.triggerHandler('dragstart', self.sortable);
               e.preventDefault();
               e.stopImmediatePropagation();
             })
@@ -1939,6 +1941,7 @@ Tree.prototype = {
                 });
               }
 
+              self.element.triggerHandler('dragend', self.sortable);
               // Sync dataset and ui
               self.syncDataset();
               if (self.isMultiselect) {
