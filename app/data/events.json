@@ -3,7 +3,7 @@
     "id": "1",
     "subject": "Discretionary Time Off",
     "shortSubject": "DTO",
-    "comments": "",
+    "comments": "Short getaway",
     "location": "Us Office",
     "status": "Draft",
     "starts": "2018-08-22T09:00:00.000Z",
@@ -14,7 +14,7 @@
   {
     "id": "2",
     "subject": "Dentist",
-    "comments": "",
+    "comments": "Quick check-up",
     "location": "Us Office",
     "status": "Draft",
     "starts": "2018-08-22T14:00:00.000Z",
@@ -25,9 +25,8 @@
   {
     "id": "3",
     "subject": "Team Meeting",
-    "comments": "",
+    "comments": "Discuss fiscal year goals",
     "location": "Us Office",
-    "status": "",
     "starts": "2018-08-22T16:00:00.000Z",
     "ends": "2018-08-22T17:00:00.000Z",
     "type": "admin",
@@ -36,9 +35,8 @@
   {
     "id": "4",
     "subject": "Moving Offices",
-    "comments": "",
+    "comments": "Moving from floor 6 to 7",
     "location": "Us Office",
-    "status": "",
     "starts": "2018-08-22T16:00:00.000Z",
     "ends": "2018-08-22T17:00:00.000Z",
     "type": "admin",
@@ -47,9 +45,8 @@
   {
     "id": "5",
     "subject": "Scrum",
-    "comments": "",
+    "comments": "What are you working on? Any blockers?",
     "location": "Us Office",
-    "status": "",
     "starts": "2018-08-22T18:00:00.000Z",
     "ends": "2018-08-22T19:00:00.000Z",
     "type": "admin",
@@ -59,7 +56,7 @@
     "id": "6",
     "subject": "Discretionary Time Off",
     "shortSubject": "DTO",
-    "comments": "",
+    "comments": "Personal time",
     "location": "Canada Office",
     "status": "Approved",
     "starts": "2018-08-24T10:00:00.000Z",
@@ -70,9 +67,9 @@
   {
     "id": "7",
     "subject": "Team Event",
-    "comments": "",
+    "comments": "Bowling and BBQ",
     "location": "Manilla Office",
-    "status": "Submitted",
+    "status": "Approved",
     "starts": "2018-10-01T16:00:00.000Z",
     "ends": "2018-10-01T18:00:00.000Z",
     "type": "team",
@@ -81,12 +78,41 @@
   {
     "id": "8",
     "subject": "Labour Day",
-    "comments": "",
+    "comments": "US Holiday",
     "location": "USA",
-    "status": "Submitted",
-    "starts": "2018-09-03T00:00:00.000Z",
-    "ends": "2018-09-03T24:00:00.000Z",
+    "status": "Approved",
+    "starts": "2018-09-03T23:59:59.000Z",
+    "ends": "2018-09-03T23:59:59.000Z",
     "type": "comp",
+    "isAllDay": "true"
+  },
+  {
+    "id": "9",
+    "subject": "Autumn Foliage Trip",
+    "comments": "Annual Autumn Foliage Trip",
+    "status": "Pending",
+    "icon": "icon-clock",
+    "starts": "2018-10-22T09:00:00.000Z",
+    "ends": "2018-10-24T13:00:00.000Z",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "10",
+    "subject": "Birthday Off",
+    "comments": "Taking my birthday off",
+    "starts": "2018-10-12T09:00:00.000Z",
+    "ends": "2018-10-12T13:00:00.000Z",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "11",
+    "subject": "Mexico Trip",
+    "comments": "I week vacation in mexico",
+    "starts": "2018-11-01T23:59:59.000Z",
+    "ends": "2018-11-14T23:59:59.000Z",
+    "type": "dto",
     "isAllDay": "true"
   }
 ]

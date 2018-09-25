@@ -1,0 +1,88 @@
+// Notification
+//================================================== //
+
+.notification {
+  height: 0;
+  position: relative;
+  z-index: 1;
+
+  .notification-text {
+    @include font-size(14);
+
+    color: $font-color;
+    line-height: 40px;
+    margin-left: 25px;
+    position: relative;
+    width: auto;
+  }
+
+  .notification-link {
+    @include font-size(14);
+
+    color: $font-color;
+    font-weight: 300;
+    padding-left: 5px;
+    text-decoration: none;
+
+    &:hover {
+      color: $font-color-highcontrast;
+      text-decoration: underline;
+    }
+  }
+
+  .icon {
+    left: 15px;
+  }
+
+  .notification-close {
+    cursor: pointer;
+    float: right;
+    left: -30px;
+    position: relative;
+    top: 13px;
+
+    .icon {
+      color: $icon-fill;
+      height: 15px;
+      width: 15px;
+    }
+
+    &:hover .icon {
+      fill: $text-color;
+    }
+
+    &:active .icon {
+      fill: $font-color-extrahighcontrast;
+    }
+  }
+
+  &.error {
+    background-color: rgba(244, 188, 188, 0.2);
+  }
+
+  &.alert {
+    background-color: rgba(251, 233, 191, 0.4);
+  }
+
+  &.confirm {
+    background-color: rgba(213, 246, 192, 0.4);
+  }
+
+  &.info {
+    background-color: rgba(203, 235, 244, 0.2);
+  }
+}
+
+@include respond-to(phablet) {
+  .notification-link {
+    display: none;
+  }
+
+  .notification-text {
+    display: inline-block;
+    max-width: 77%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

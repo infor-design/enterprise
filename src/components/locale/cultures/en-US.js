@@ -260,6 +260,7 @@ Soho.Locale.addCulture('en-US', {
     PasswordValidation: { id: 'PasswordValidation', value: '<strong>Password must</strong><br>Be at least 10 characters long<br>Have at least one upper case character<br>Have at least one lower case character<br>Contain one special character<br>Not contain your username<br>Can not be a Previously used password<br>', comment: 'Password validation requirements' },
     PasswordConfirmValidation: { id: 'PasswordConfirmValidation', value: 'Password must match', comment: 'Password Confirm validation' },
     Peak: { id: 'Peak', value: 'Peak', comment: 'the max or peak value in a chart' },
+    Pending: { id: 'Pending', value: 'Pending', comment: 'An event or task is pending' },
     PersonalizeColumns: { id: 'PersonalizeColumns', value: 'Personalize Columns', comment: 'Customize Columns in a Grid' },
     Plan: { id: 'Plan', value: 'Plan', comment: 'As in type of vacation plan' },
     Platform: { id: 'Platform', value: 'Platform', comment: 'The users operating system i.e. mac, windows' },

@@ -99,7 +99,7 @@ stringUtils.textWidth = function capitalize(text, fontsize = 14) {
  * @returns {void}
  */
 stringUtils.padDate = function padDate(year, month, day) {
-  return `0${day}`.slice(-2) + `0${month + 1}`.slice(-2) + year;
+  return year + `0${month + 1}`.slice(-2) + `0${day}`.slice(-2);
 };
 
 /**

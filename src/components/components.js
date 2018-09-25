@@ -34,6 +34,7 @@ export { ListView } from './listview/listview';
 export { MaskInput } from './mask/mask-input';
 export { Message } from './message/message';
 export { MultiSelect } from './multiselect/multiselect';
+export { Notification } from './notification/notification';
 export { Pager } from './pager/pager';
 export { Pie } from './pie/pie';
 export { PopupMenu } from './popupmenu/popupmenu';

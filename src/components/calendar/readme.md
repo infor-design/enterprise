@@ -5,6 +5,9 @@ demo:
   embedded:
   - name: Full Page Calendar Example
     slug: example-index
+    pages:
+    - name: Loading events with Ajax
+      slug: example-ajax-events
 ---
 
 The setup for a calendar only involves creating a `div` with the class `datepicker`. In that div we add the three sections of the calendar. The first section calendar-events contains an accordion with a filter section and an upcomming events section (functionality to be added soon). The second section is a `div` with `calendar-monthview` this is where the monthview calendar will be rendered. The third section is `div` with `calendar-event-details` this is where the event details will be shown when you click on them.
@@ -38,6 +41,36 @@ The first pass of the calendar supports basic single day event rendering, filter
   </div>
 </div>
 ```
+
+## Event Data
+
+The calendar runs off events, which are an array of objects. An example of an event is..
+
+```JSON
+{
+"id": "1",
+"subject": "Discretionary Time Off",
+"shortSubject": "DTO",
+"comments": "",
+"location": "Us Office",
+"status": "Draft",
+"starts": "2018-08-22T09:00:00.000Z",
+"ends": "2018-10-22T13:00:00.000Z",
+"type": "dto",
+"isAllDay": "true"
+}
+```
+
+- id - a unique event id
+- subject - the event subject, which will be displayed on the calendar
+- shortSubject - if the subject is long, the shortSubject will be used to display on the calendar, the longer subject will show in the event details.
+- comments - any additional comments that will be shown in the event details
+- location - a location for the event that will be shown in the event details
+- status - a text status that will be shown in the event details (with optional icon on the calendar)
+- starts - the date/time when the event starts
+- starts - the date/time when the event ends
+- type - the eventType key, this must have a match in the eventTypes array
+- isAllDay - determines if the event is all day or not
 
 ## Accessibility
 
