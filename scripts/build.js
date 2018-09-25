@@ -69,6 +69,11 @@ const filePaths = {
       index: path.join(TEMP_DIR, 'index.js'),
       patterns: path.join(TEMP_DIR, 'patterns.js'),
       rules: path.join(TEMP_DIR, 'rules.js')
+    },
+    jQuery: {
+      behaviors: path.join(TEMP_DIR, 'behaviors.jquery.js'),
+      components: path.join(TEMP_DIR, 'components.jquery.js'),
+      patterns: path.join(TEMP_DIR, 'patterns.jquery.js')
     }
   }
 
@@ -206,7 +211,7 @@ function getFileName(str) {
  * @returns {string} the library name
  */
 function getLibFromFileName(str) {
-  const dot = str.indexOf('.');
+  const dot = str.lastIndexOf('.');
   return str.substring(0, dot);
 }
 
@@ -385,13 +390,14 @@ function getFurthestIndexOf(str, term) {
 /**
  * Sort Locations
  * @param {array} files incoming list of file paths
+ * @param {string} srcFilePath path of the original component index file to use for sorting
  */
-function sortLocations(files) {
+function sortFilesIntoBuckets(files, srcFilePath) {
   const matchStr = libTypes.slice(1).join('|');
   const matchRegex = new RegExp(matchStr, 'g');
   const locationKeys = Object.keys(customLocations);
 
-  const componentsJSFile = getFileContents(filePaths.src.js.components);
+  const componentsJSFile = getFileContents(srcFilePath);
   const startOfMid = getFurthestIndexOf(componentsJSFile, searchTerms.mid);
   const startOfComplex = getFurthestIndexOf(componentsJSFile, searchTerms.complex);
 
@@ -447,27 +453,49 @@ function sortLocations(files) {
 /**
  * Writes the contents of a single file bucket to a string, for being appended to a file
  * @param {string} key the target file bucket
+ * @param {string} type determines the type of file to include (see the types array inside)
  * @returns {string} formatted, multi-line, containing all relevant ES6-based import/export statements
  */
-function renderImportsToString(key) {
+function renderImportsToString(key, type) {
   let fileContents = '';
   const bucket = buckets[key];
   if (!Array.isArray(bucket)) {
     throw new Error(`No bucket with name "${key}" exists.`);
   }
 
+  const types = ['js', 'jquery', 'scss'];
+  if (!type || types.indexOf(type) < 0) {
+    type = types[0];
+  }
+
   bucket.forEach((srcFilePath) => {
     const fileName = getFileName(srcFilePath);
     const filePath = getPath(srcFilePath);
-    const lib = getLibFromFileName(fileName);
 
-    let useExportStatement = true;
-    if (false) {
-      useExportStatement = false;
+    let ext = `.${type}`;
+    if (type === 'jquery') {
+      ext = `.${type}.js`;
     }
 
-    // TODO: make this not always export
-    const statement = writeJSImportStatement(lib, filePath, useExportStatement);
+    // Don't write import/export statements for files that don't match
+    // the type of index file we're creating.
+    if (!fileName.endsWith(ext)) {
+      return;
+    }
+    if (type === 'js' && fileName.indexOf('jquery') > -1) {
+      return;
+    }
+
+    const lib = getLibFromFileName(fileName);
+
+    let statement = '';
+    if (type === 'scss') {
+      statement = writeSassImportStatement(lib, filePath, true);
+    } else if (type === 'jquery') {
+      statement = writeJSImportStatement(lib, filePath, false, true);
+    } else {
+      statement = writeJSImportStatement(lib, filePath, true);
+    }
     fileContents += `${statement}\n`;
   });
 
@@ -483,6 +511,7 @@ function renderImportsToString(key) {
  */
 function renderTargetJSFile(key, targetFilePath) {
   let targetFile = '';
+  const type = 'js';
 
   if (key === 'index') {
     // Pull in the standard `index.js` file and create a custom version that links
@@ -501,11 +530,44 @@ function renderTargetJSFile(key, targetFilePath) {
     const componentBuckets = ['foundational', 'mid', 'complex'];
     componentBuckets.forEach((thisBucket) => {
       targetFile += `// ${capitalize(thisBucket)} ====/\n`;
-      targetFile += renderImportsToString(thisBucket);
+      targetFile += renderImportsToString(thisBucket, type);
     });
   } else {
     // All other buckets simply get rendered directly
-    targetFile += renderImportsToString(key, targetFile);
+    targetFile += renderImportsToString(key, type);
+  }
+
+  return fs.writeFile(targetFilePath, targetFile, (err) => {
+    if (err) {
+      logger('error', `${err}`);
+      return;
+    }
+    logger('success', `"${targetFilePath}" saved!`);
+  });
+}
+
+/**
+ * Writes a JS file containing regular jQuery-based `import` statements
+ * @private
+ * @param {string} key the file path bucket to use
+ * @param {string} targetFilePath the path of the file that will be written
+ * @returns {Promise} containing the results of the file write
+ */
+function renderTargetJQueryFile(key, targetFilePath) {
+  let targetFile = '';
+  const type = 'jquery';
+
+  if (key === 'components') {
+    // 'component' source code files are comprised of three buckets that need to
+    // be written to the target file in a specific order.
+    const componentBuckets = ['foundational', 'mid', 'complex'];
+    componentBuckets.forEach((thisBucket) => {
+      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += renderImportsToString(thisBucket, type);
+    });
+  } else {
+    // All other buckets simply get rendered directly
+    targetFile += renderImportsToString(key, type);
   }
 
   return fs.writeFile(targetFilePath, targetFile, (err) => {
@@ -523,10 +585,15 @@ function renderTargetJSFile(key, targetFilePath) {
  */
 function renderTargetFiles() {
   const jsEntryPoints = Object.keys(filePaths.target.js);
+  const jQueryEntryPoints = Object.keys(filePaths.target.jQuery);
   const renderPromises = [];
 
   jsEntryPoints.forEach((filePathKey) => {
     renderPromises.push(renderTargetJSFile(filePathKey, filePaths.target.js[filePathKey]));
+  });
+
+  jQueryEntryPoints.forEach((filePathKey) => {
+    renderPromises.push(renderTargetJQueryFile(filePathKey, filePaths.target.jQuery[filePathKey]));
   });
 
   return Promise.all(renderPromises);
@@ -587,7 +654,10 @@ cleanAll().then(() => {
   process.stdout.write(buildOutput);
 
   // Create customized lists of JS components for this bundle
-  sortLocations(jsMatches);
+  sortFilesIntoBuckets(jsMatches, filePaths.src.js.components);
+  sortFilesIntoBuckets(jQueryMatches, filePaths.src.jQuery.components);
+
+  debugger;
   renderTargetFiles();
 
   // TODO: Pull in the standard `_controls.sass` and create a custom version
