@@ -102,6 +102,11 @@ div.multiselect {
     text-overflow: ellipsis;
     vertical-align: top;
     width: inhert;
+
+    &:empty:before {
+      content:attr(data-placeholder-text);
+    }
+
   }
 
   > .listoption-icon {

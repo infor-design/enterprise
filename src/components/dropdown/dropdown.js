@@ -868,8 +868,8 @@ Dropdown.prototype = {
     }
 
     if (this.element.attr('placeholder')) {
-      this.pseudoElem.attr('placeholder', this.element.attr('placeholder'));
-      this.element.removeAttr('placeholder');
+      // set placeholder text on pseudoElem SPAN el
+      this.pseudoElem.find('span').attr('data-placeholder-text', this.element.attr('placeholder'));
     }
   },
 
