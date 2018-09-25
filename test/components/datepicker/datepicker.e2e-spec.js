@@ -56,7 +56,7 @@ describe('Datepicker example-index tests', () => {
   });
 
   if (!utils.isBS()) {
-    it('Should be able to select with arrows and enter', async () => { //eslint-disable-line
+    it('Should be able to select with arrows and enter', async () => {
       const datepickerEl = await element(by.id('date-field-normal'));
       let focusTD = await element(by.css('#monthview-popup td.is-selected'));
       await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);

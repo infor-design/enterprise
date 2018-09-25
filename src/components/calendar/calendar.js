@@ -12,8 +12,8 @@ const COMPONENT_NAME_DEFAULTS = {
     { id: 'example', label: 'Example', color: 'emerald07', checked: true, click: () => {} },
   ],
   events: [],
-  month: null,
-  year: null,
+  month: new Date().getMonth(),
+  year: new Date().getFullYear(),
   showViewChanger: true,
   onRenderMonth: null,
   template: null
@@ -95,12 +95,13 @@ Calendar.prototype = {
    */
   renderMonthView() {
     this.monthViewContainer = document.querySelector('.calendar .calendar-monthview');
+
     this.monthView = new MonthView(this.monthViewContainer, {
-      month: this.settings.month,
-      year: this.settings.year,
       onRenderMonth: this.settings.onRenderMonth,
       onSelected: this.settings.onSelected,
-      selectable: true
+      selectable: true,
+      month: this.settings.month,
+      year: this.settings.year
     });
     this.monthViewHeader = document.querySelector('.calendar .monthview-header');
     this.renderEvents();
@@ -146,7 +147,7 @@ Calendar.prototype = {
       return;
     }
 
-    this.eventTypeContainer = document.querySelector('.calendar-event-details');
+    this.eventDetailsContainer = document.querySelector('.calendar-event-details');
 
     // create a copy of the template
     if (this.settings.template instanceof $) {
@@ -166,7 +167,7 @@ Calendar.prototype = {
     event.typeLabel = this.getEventTypeLabel(event.type);
 
     const renderedTmpl = Tmpl.compile(this.settings.template, { event });
-    this.eventTypeContainer.innerHTML = renderedTmpl;
+    this.eventDetailsContainer.innerHTML = renderedTmpl;
   },
 
   /**
@@ -174,9 +175,9 @@ Calendar.prototype = {
    * @private
    */
   clearEventDetails() {
-    this.eventTypeContainer = document.querySelector('.calendar-event-details');
-    if (this.eventTypeContainer) {
-      this.eventTypeContainer.innerHTML = '';
+    this.eventDetailsContainer = document.querySelector('.calendar-event-details');
+    if (this.eventDetailsContainer) {
+      this.eventDetailsContainer.innerHTML = '';
     }
   },
 
@@ -446,6 +447,8 @@ Calendar.prototype = {
     this.element.off(`updated.${COMPONENT_NAME}`);
     this.element.off(`monthrendered.${COMPONENT_NAME}`);
     this.element.off(`change.${COMPONENT_NAME}`);
+    $(this.monthViewContainer).off();
+
     return this;
   },
 
@@ -454,9 +457,15 @@ Calendar.prototype = {
    * @private
    */
   destroy() {
-    this.eventTypeContainer.innerHTML = '';
-    this.monthViewContainer.innerHTML = '';
-
+    if (this.eventTypeContainer) {
+      this.eventTypeContainer.innerHTML = '';
+    }
+    if (this.monthViewContainer) {
+      this.monthViewContainer.innerHTML = '';
+    }
+    if (this.eventDetailsContainer) {
+      this.eventDetailsContainer.innerHTML = '';
+    }
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   }

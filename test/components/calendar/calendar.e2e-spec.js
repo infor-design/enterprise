@@ -91,3 +91,51 @@ describe('Calendar ajax loading tests', () => {
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(2);
   });
 });
+
+describe('Calendar specific month tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar/example-specific-month');
+    const dateField = await element(by.id('monthview-datepicker-field'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
+  });
+
+  it('Should render correctly', async () => {
+    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
+    await utils.checkForErrors();
+
+    const testDate = new Date();
+    await testDate.setDate(1);
+    await testDate.setMonth(9);
+
+    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+  });
+
+  it('should display a tooltip when hovering an event', async () => {
+    await browser.actions()
+      .mouseMove(await element.all(by.css('.calendar-event.emerald.event-day-start')).first())
+      .perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
+
+    expect(await element(by.id('tooltip')).getText()).toEqual('Autumn Foliage Trip (Pending)');
+  });
+
+  it('should render icons on events', async () => {
+    expect(await element.all(by.css('.calendar-event.emerald.event-day-start .icon')).count()).toEqual(1);
+  });
+
+  it('should allow event to span days', async () => {
+    expect(await element.all(by.css('.calendar-event.emerald.event-day-start')).count()).toEqual(2);
+    expect(await element.all(by.css('.calendar-event.emerald.event-day-span')).count()).toEqual(9);
+    expect(await element.all(by.css('.calendar-event.emerald.event-day-end')).count()).toEqual(2);
+  });
+
+  it('should show events on click', async () => {
+    await element.all(by.cssContainingText('.monthview-table td', '1')).first().click();
+
+    expect(await element(by.css('.calendar-event-header')).getText()).toEqual('Team Event');
+    expect(await element(by.css('.calendar-event-body')).getText()).toBeTruthy();
+  });
+});

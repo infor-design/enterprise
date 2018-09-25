@@ -400,7 +400,7 @@ MonthView.prototype = {
 
           if ((new Date(year, month, dayCnt))
             .setHours(tHours, tMinutes, tSeconds, 0) === elementDate
-              .setHours(tHours, tMinutes, tSeconds, 0)) { //eslint-disable-line
+            .setHours(tHours, tMinutes, tSeconds, 0)) {
             th.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true');
           }
         }
