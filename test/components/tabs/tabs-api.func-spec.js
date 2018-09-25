@@ -392,7 +392,7 @@ describe('Tabs API', () => {
       // Teardown interferes with afterEach script, so we restore Tabs instance
       tabsObj = new Tabs(tabsEl);
       done();
-    }, 1000);
+    }, 100);
   });
 
   it('Should destroy tabs', (done) => {
@@ -406,6 +406,6 @@ describe('Tabs API', () => {
       // Teardown interferes with afterEach script, so we restore Tabs instance
       tabsObj = new Tabs(tabsEl);
       done();
-    }, 1000);
+    }, 100);
   });
 });

@@ -32,10 +32,10 @@
       form.trigger('start.busyindicator');
 
       var i = 0;
-      setInterval(function () {
+      setTimeout(function () {
         i++;
-        form.data('busyindicator').updated({ text: 'New Text ' + i});
-      }, 2000);
+        form.data('busyindicator').updated({ text: 'New Text 1'});
+      }, 0);
     });
 
   });
