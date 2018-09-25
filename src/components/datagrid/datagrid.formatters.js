@@ -365,7 +365,7 @@ const formatters = {
   },
 
   // Tree Expand / Collapse Button and Paddings
-  Tree(row, cell, value, col, item, api) {
+  Tree(row, cell, value, col, item) {
     const isOpen = item ? item.expanded : true;
     const depth = item && item.depth ? item.depth : 0;
     const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}>
