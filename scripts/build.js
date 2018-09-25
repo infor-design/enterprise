@@ -54,11 +54,12 @@ const filePaths = {
       patterns: path.join(SRC_DIR, 'patterns', 'patterns.jquery.js'),
     },
     sass: {
+      controls: path.join(SRC_DIR, 'core', '_controls.scss'),
       themes: {
-        dark: path.join(SRC_DIR, 'themes', 'dark-theme.scss'),
-        'high-contrast': path.join(SRC_DIR, 'themes', 'high-contrast-theme.scss'),
-        light: path.join(SRC_DIR, 'themes', 'light-theme.scss'),
-        uplift: path.join(SRC_DIR, 'themes', 'uplift-theme.scss'),
+        'dark-theme': path.join(SRC_DIR, 'themes', 'dark-theme.scss'),
+        'high-contrast-theme': path.join(SRC_DIR, 'themes', 'high-contrast-theme.scss'),
+        'light-theme': path.join(SRC_DIR, 'themes', 'light-theme.scss'),
+        'uplift-theme': path.join(SRC_DIR, 'themes', 'uplift-theme.scss'),
       }
     }
   },
@@ -74,6 +75,15 @@ const filePaths = {
       behaviors: path.join(TEMP_DIR, 'behaviors.jquery.js'),
       components: path.join(TEMP_DIR, 'components.jquery.js'),
       patterns: path.join(TEMP_DIR, 'patterns.jquery.js')
+    },
+    sass: {
+      controls: path.join(TEMP_DIR, '_controls.scss'),
+      themes: {
+        'dark-theme': path.join(TEMP_DIR, 'dark-theme.scss'),
+        'high-contrast-theme': path.join(TEMP_DIR, 'high-contrast-theme.scss'),
+        'light-theme': path.join(TEMP_DIR, 'light-theme.scss'),
+        'uplift-theme': path.join(TEMP_DIR, 'uplift-theme.scss')
+      }
     }
   }
 
@@ -503,6 +513,20 @@ function renderImportsToString(key, type) {
 }
 
 /**
+ * @private
+ * @returns {Promise} results of `fs.writeFile()`
+ */
+function writeFile(targetFilePath, targetFile) {
+  return fs.writeFile(targetFilePath, targetFile, (err) => {
+    if (err) {
+      logger('error', `${err}`);
+      return;
+    }
+    logger('success', `"${targetFilePath}" saved!`);
+  });
+}
+
+/**
  * Writes a JS file containing regular ES6 Imports (not jQuery)
  * @private
  * @param {string} key the file path bucket to use
@@ -537,13 +561,7 @@ function renderTargetJSFile(key, targetFilePath) {
     targetFile += renderImportsToString(key, type);
   }
 
-  return fs.writeFile(targetFilePath, targetFile, (err) => {
-    if (err) {
-      logger('error', `${err}`);
-      return;
-    }
-    logger('success', `"${targetFilePath}" saved!`);
-  });
+  return writeFile(targetFilePath, targetFile);
 }
 
 /**
@@ -570,13 +588,44 @@ function renderTargetJQueryFile(key, targetFilePath) {
     targetFile += renderImportsToString(key, type);
   }
 
-  return fs.writeFile(targetFilePath, targetFile, (err) => {
-    if (err) {
-      logger('error', `${err}`);
-      return;
-    }
-    logger('success', `"${targetFilePath}" saved!`);
-  });
+  return writeFile(targetFilePath, targetFile);
+}
+
+/**
+ * Writes a SASS file containing `import` statements for other components
+ * @private
+ * @param {string} key the file path bucket to use
+ * @param {string} targetFilePath the path of the file that will be written
+ * @returns {Promise} containing the results of the file write
+ */
+function renderTargetSassFile(key, targetFilePath) {
+  let targetFile = '';
+  const type = 'scss';
+
+  if (key === 'components') {
+    targetFile = `// Required ====/
+      @import './required';
+    `;
+
+    // 'component' source code files are comprised of three buckets that need to
+    // be written to the target file in a specific order.
+    const componentBuckets = ['foundational', 'mid', 'complex', 'patterns', 'layouts'];
+    componentBuckets.forEach((thisBucket) => {
+      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += renderImportsToString(thisBucket, type);
+    });
+
+    targetFile += `// These controls must come last
+      @import '../components/colors/colors';`;
+  } else {
+    // All other keys are "theme" entry points that just need their linked paths corrected.
+    const themeFile = getFileContents(path.join(SRC_DIR, 'themes', `${key}.scss`));
+    targetFile = themeFile
+      .replace(/('\.\.\/)((?!\.))/g, '\'../src/') // replaces anything pointing to a source code file
+      .replace(/(\.\.\/)\1/g, '../'); // fixes the node_modules link to IDS Identity
+  }
+
+  return writeFile(targetFilePath, targetFile);
 }
 
 /**
@@ -586,6 +635,7 @@ function renderTargetJQueryFile(key, targetFilePath) {
 function renderTargetFiles() {
   const jsEntryPoints = Object.keys(filePaths.target.js);
   const jQueryEntryPoints = Object.keys(filePaths.target.jQuery);
+  const sassThemes = Object.keys(filePaths.target.sass.themes);
   const renderPromises = [];
 
   jsEntryPoints.forEach((filePathKey) => {
@@ -595,6 +645,11 @@ function renderTargetFiles() {
   jQueryEntryPoints.forEach((filePathKey) => {
     renderPromises.push(renderTargetJQueryFile(filePathKey, filePaths.target.jQuery[filePathKey]));
   });
+
+  sassThemes.forEach((filePathKey) => {
+    renderPromises.push(renderTargetSassFile(filePathKey, filePaths.target.sass.themes[filePathKey]));
+  });
+  renderPromises.push(renderTargetSassFile('components', filePaths.target.sass.controls));
 
   return Promise.all(renderPromises);
 }
@@ -656,6 +711,7 @@ cleanAll().then(() => {
   // Create customized lists of JS components for this bundle
   sortFilesIntoBuckets(jsMatches, filePaths.src.js.components);
   sortFilesIntoBuckets(jQueryMatches, filePaths.src.jQuery.components);
+  sortFilesIntoBuckets(sassMatches, filePaths.src.sass.controls);
 
   debugger;
   renderTargetFiles();
