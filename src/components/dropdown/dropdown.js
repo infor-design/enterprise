@@ -895,7 +895,14 @@ Dropdown.prototype = {
     }
 
     if (e.ctrlKey) {
-      return false;
+      if (this.settings.onKeyDown) {
+        const ret = this.settings.onKeyDown(e);
+        if (ret === false) {
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }
+      }
     }
 
     return true;
