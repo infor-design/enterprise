@@ -969,7 +969,7 @@ Dropdown.prototype = {
 
     this.list.addClass('search-mode');
     this.list.find('.trigger').find('.icon').attr('class', 'icon search').changeIcon('search');
-    this.searchInput.removeAttr('aria-activedescendant'); 
+    this.searchInput.removeAttr('aria-activedescendant');
 
     this.unhighlightOptions();
 
@@ -978,7 +978,6 @@ Dropdown.prototype = {
       return;
     }
 
-    
     results.removeClass('hidden');
     list.not(results).add(headers).addClass('hidden');
     list.filter(results).each(function (i) {
@@ -1012,10 +1011,12 @@ Dropdown.prototype = {
     term = '';
     this.position();
 
+    if (this.list.find('svg').length > 2) {
+      this.list.find('svg').last().changeIcon('icon-empty-circle');
+    }
+
     if (noIcons && this.list.find('input').css('padding-left')) {
       this.list.find('input').addClass('no-icon-padding');
-    } else {
-      this.list.find('svg').last().changeIcon('icon-empty-circle');
     }
   },
 
@@ -1040,7 +1041,7 @@ Dropdown.prototype = {
     const cssClass = `icon${isMobile ? ' close' : ''}`;
     const icon = $.getBaseURL(isMobile ? 'close' : 'dropdown');
 
-    this.list.removeClass('search-mode'); 
+    this.list.removeClass('search-mode');
     this.list.find('.icon').attr('class', cssClass) // needs to be 'attr' here because .addClass() doesn't work with SVG
       .changeIcon(icon);
 
@@ -1069,6 +1070,10 @@ Dropdown.prototype = {
 
     lis.removeClass('hidden');
     this.position();
+
+    if (this.list.find('svg').length === 2) {
+      this.list.find('svg').last().remove();
+    }
 
     if (this.list.find('input').css('padding-left')) {
       this.list.find('input').addClass('no-icon-padding');
@@ -1405,7 +1410,7 @@ Dropdown.prototype = {
         self.open(filter);
         return;
       }
- 
+
       filter();
     }, self.settings.delay);
   },
