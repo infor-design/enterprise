@@ -603,7 +603,7 @@ Tree.prototype = {
    * Changes a node's open/close status to its opposite form.
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
-   * @param {object} e jqyery event
+   * @param {object} e jquery event
    * @returns {void}
    */
   toggleNode(node, e) {
