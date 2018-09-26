@@ -28,8 +28,10 @@
  * - Complex Components
  */
 
-const argv = require('yargs').argv;
+const commandLineArgs = require('yargs').argv;
+
 const chalk = require('chalk');
+const { spawn } = require('child_process');
 const del = require('del');
 const fs = require('fs');
 const path = require('path');
@@ -93,13 +95,16 @@ const filePaths = {
 
 };
 
+// These search terms are used when scanning existing index files to determine
+// a component's placement in a generated file.
 const searchTerms = {
   complex: '// Complex ====/',
   foundational: '// Foundational ====/',
   mid: '// Mid ====/'
 };
 
-// TOOD: Replace with command line args
+/*
+// These are test arguments that can be used in place of command line arguments during debugging
 const TEST_ARGS = [
   'builder',
   'button',
@@ -114,6 +119,7 @@ const TEST_ARGS = [
   'tabs',
   'validation'
 ];
+*/
 
 // Library types
 const libTypes = ['components', 'behaviors', 'layouts', 'patterns', 'utils'];
@@ -185,7 +191,7 @@ const buckets = {
 };
 
 // -------------------------------------
-//   Functions
+// Functions
 // -------------------------------------
 
 /**
@@ -385,9 +391,14 @@ function searchFileNames(files, term) {
   }
 
   files.forEach((file) => {
-    if (file.indexOf(term) > -1) {
-      results.push(file);
+    if (file.indexOf(term) === -1) {
+      return;
     }
+
+    // TODO: More granular sorting of component names (see #850).
+    // fx: "builder" should not also match "listbuilder"
+
+    results.push(file);
   });
 
   return results;
@@ -528,6 +539,8 @@ function renderImportsToString(key, type) {
 
 /**
  * @private
+ * @param {string} targetFilePath the path of the file that will be written
+ * @param {string} targetFile the contents of the file to be written
  * @returns {Promise} results of `fs.writeFile()`
  */
 function writeFile(targetFilePath, targetFile) {
@@ -629,7 +642,7 @@ function renderTargetSassFile(key, targetFilePath) {
   const type = 'scss';
 
   if (key === 'components') {
-    targetFile = '// Required ====/\n@import \'./required\';\n\n';
+    targetFile = '// Required ====/\n@import \'../src/core/required\';\n\n';
 
     // 'component' source code files are comprised of three buckets that need to
     // be written to the target file in a specific order.
@@ -639,13 +652,14 @@ function renderTargetSassFile(key, targetFilePath) {
       targetFile += renderImportsToString(thisBucket, type);
       targetFile += '\n';
     });
-    targetFile += '// These controls must come last\n@import \'../components/colors/colors\';\n';
+    targetFile += '// These controls must come last\n@import \'../src/components/colors/colors\';\n';
   } else {
     // All other keys are "theme" entry points that just need their linked paths corrected.
     const themeFile = getFileContents(path.join(SRC_DIR, 'themes', `${key}.scss`));
     targetFile = themeFile
       .replace(/('\.\.\/)((?!\.))/g, '\'../src/') // replaces anything pointing to a source code file
-      .replace(/(\.\.\/)\1/g, '../'); // fixes the node_modules link to IDS Identity
+      .replace(/(\.\.\/)\1/g, '../') // fixes the node_modules link to IDS Identity
+      .replace('../src/core/controls', './controls');
   }
 
   return writeFile(targetFilePath, targetFile);
@@ -679,15 +693,29 @@ function renderTargetFiles() {
 }
 
 // -------------------------------------
-//   Main
+// Main
 // -------------------------------------
 
 logger(null, `\n${chalk.red.bold('IDS Enterprise Custom Builder')}\n`);
 
-let buildOutput = '\n';
+let buildOutput = '';
 
-// Reset all build folders to a `cleaned` state.
+if (!commandLineArgs.components) {
+  logger(null, 'No component arguments were provided to the custom builder.  Exiting...');
+  process.exit(0);
+}
+
+// Convert command line args to a usable list of components
+const requestedComponents = commandLineArgs.components.split(',');
+
 cleanAll().then(() => {
+  // Display a list of requested components to the console
+  let componentList = `\n${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
+  requestedComponents.forEach((comp) => {
+    componentList += `- ${comp}\n`;
+  });
+  logger(null, componentList);
+
   // Scan source code directories
   const items = read(SRC_DIR);
 
@@ -695,7 +723,9 @@ cleanAll().then(() => {
   const jsMatches = [];
   const jQueryMatches = [];
   const sassMatches = [];
-  TEST_ARGS.forEach((arg) => {
+
+  // Search the stored list of source files for each term
+  requestedComponents.forEach((arg) => {
     const results = searchFileNames(items, arg);
     results.forEach((result) => {
       let renderTarget = jsMatches;
@@ -737,12 +767,51 @@ cleanAll().then(() => {
   sortFilesIntoBuckets(jQueryMatches, filePaths.src.jQuery.components);
   sortFilesIntoBuckets(sassMatches, filePaths.src.sass.controls);
 
-  debugger;
-  renderTargetFiles();
+  renderTargetFiles().then(() => {
+    const buildProcesses = [];
+    let rollupBuildLog = '';
+    let sassBuildLog = '';
 
-  // TODO: Pull in the standard `_controls.sass` and create a custom version
-  // that links out to other SASS files that will import slimmed-down lists of components.
-  // Saves to the `temp/` folder.
+    if (jsMatches.length || jQueryMatches.length) {
+      const jsBuildPromise = new Promise((resolve, reject) => {
+        const rollup = spawn('rollup', ['-c', '--customBuild', `--components=${commandLineArgs.components}`]);
+        rollup.stdout.on('data', (data) => {
+          rollupBuildLog += `${data}\n`;
+        });
+        rollup.on('exit', (code) => {
+          if (code !== 0) {
+            reject(new Error(`Rollup build exited with error code (${code})`));
+          }
+          resolve();
+        });
+      });
 
+      buildProcesses.push(jsBuildPromise);
+    }
 
+    if (sassMatches.length) {
+      const sassBuildPromise = new Promise((resolve, reject) => {
+        const nodeSass = spawn('grunt', ['build:sass', `--components=${commandLineArgs.components}`]);
+        nodeSass.stdout.on('data', (data) => {
+          sassBuildLog += `${data}\n`;
+        });
+        nodeSass.on('exit', (code) => {
+          if (code !== 0) {
+            reject(new Error(`Sass build exited with error code (${code})`));
+          }
+          resolve();
+        });
+      });
+      buildProcesses.push(sassBuildPromise);
+    }
+
+    Promise.all(buildProcesses).then(() => {
+      process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}`);
+      process.exit(0);
+    }).catch((reason) => {
+      logger('error', `${reason}`);
+      process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}`);
+      process.exit(1);
+    });
+  });
 });

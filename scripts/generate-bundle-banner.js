@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /* eslint-disable import/no-extraneous-dependencies, import/no-unresolved */
 const fs = require('fs');
 const path = require('path');
