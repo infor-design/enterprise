@@ -31,6 +31,7 @@ const COMPONENT_NAME = 'editor';
 * @param {string} [settings.anchor = { url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false }] An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false},` the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'NewWindow' or 'SameWindow', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
 * @param {string} [settings.image = { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' }] Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
 * @param {function} [settings.onLinkClick = null] Call back for clicking on links to control link behavior.
+* @param {function} [settings.showHtmlView = false] If set to true, editor should be displayed in HTML view initialy.
 */
 const EDITOR_DEFAULTS = {
   buttons: {
@@ -60,7 +61,8 @@ const EDITOR_DEFAULTS = {
   // anchor > target: 'SameWindow'|'NewWindow'| any string value
   anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false },
   image: { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' },
-  onLinkClick: null
+  onLinkClick: null,
+  showHtmlView: false
 };
 
 function Editor(element, settings) {
@@ -120,6 +122,11 @@ Editor.prototype = {
     if (this.element.hasClass('is-readonly')) {
       this.readonly();
     }
+
+    if (this.settings.showHtmlView) {
+      this.toggleSource();
+    }
+
     return this;
   },
 
@@ -338,7 +345,7 @@ Editor.prototype = {
 
   initTextarea() {
     const self = this;
-    if (this.textarea) {
+    if (this.textarea && !this.settings.showHtmlView) {
       return this;
     }
     this.textarea = this.createTextarea();
