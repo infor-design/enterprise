@@ -71,27 +71,23 @@
     columns.push({ id: 'status', name: 'Status', align: 'left', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'confirm', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
 
-    //Get some data via ajax
-    //var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
-
-    //$.getJSON(url, function(res) {
-        //Init and get the api for the grid
-        grid = $('#datagrid').datagrid({
-          columns: columns,
-          columnReorder: true,
-          dataset: data,
-          paging: true,
-          pagesize: 10,
-          pagesizes: [5, 10, 15],
-          filterable: true,
-          saveUserSettings: {columns: true,
-             rowHeight: true,
-             sortOrder: true,
-             pagesize: true,
-             activePage: true,
-             filter: true},
-          toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
-        });
-
+    //Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      columnReorder: true,
+      dataset: data,
+      paging: true,
+      pagesize: 10,
+      pagesizes: [5, 10, 15],
+      filterable: true,
+      saveUserSettings: {columns: true,
+         rowHeight: true,
+         sortOrder: true,
+         pagesize: true,
+         activePage: true,
+         filter: true},
+      toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
     });
+
+  });
 </script>
