@@ -1848,9 +1848,13 @@ Datagrid.prototype = {
 
       input.val(conditions[i].value);
 
-      if (input.is('select') && conditions[i].value instanceof Array) {
-        for (let j = 0; j < conditions[i].value.length; j++) {
-          input.find(`option[value="${conditions[i].value[j]}"]`).prop('selected', true);
+      if (input.is('select')) {
+        if (conditions[i].value instanceof Array) {
+          for (let j = 0; j < conditions[i].value.length; j++) {
+            input.find(`option[value="${conditions[i].value[j]}"]`).prop('selected', true);
+          }
+        } else {
+          input.find(`option[value="${conditions[i].value}"]`).prop('selected', true);
         }
         input.trigger('updated');
       }
