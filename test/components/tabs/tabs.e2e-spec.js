@@ -477,8 +477,7 @@ describe('Tabs ajax as href tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to activate href tabs', async () => { //eslint-disable-line
-    // Cant get this test to work on CI anymore
+  it('Should be able to activate href tabs', async () => {
     expect(await element(by.id('ajaxified-tabs-tab-1')).getAttribute('innerHTML')).not.toBe('');
 
     await element.all(by.id('example-tab-two')).click();
@@ -515,12 +514,12 @@ describe('Tabs click example-activated-event tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(beforeActivateEl), config.waitsFor);
 
-    expect(beforeActivateEl.getText()).toContain('beforeActivate');
+    expect(await beforeActivateEl.getText()).toContain('beforeActivate');
 
     const activateEl = await element.all(by.css('.toast-title')).get(1);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(activateEl), config.waitsFor);
 
-    expect(activateEl.getText()).toContain('activated');
+    expect(await activateEl.getText()).toContain('activated');
   });
 });
