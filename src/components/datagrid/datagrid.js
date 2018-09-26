@@ -1701,7 +1701,7 @@ Datagrid.prototype = {
             isMatch = !(rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
             break;
           case 'is-empty':
-            isMatch = (rowValue === '');
+            isMatch = (rowValueStr === '');
             break;
           case 'is-not-empty':
             isMatch = (rowValue !== '');
