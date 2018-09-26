@@ -1874,7 +1874,7 @@ Tree.prototype = {
                 startFolderNode: a.closest('ul').prev('a'),
                 startWidth: a.outerWidth()
               };
-    
+
               self.element.triggerHandler('dragstart', self.sortable);
               e.preventDefault();
               e.stopImmediatePropagation();

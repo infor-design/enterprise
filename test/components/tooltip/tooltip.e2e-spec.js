@@ -6,7 +6,24 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Tooltips on icons', () => {
+describe('Tooltips index page tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tooltip/example-index');
+  });
+
+  it('should display when hovering the icon', async () => {
+    await browser.actions()
+      .mouseMove(await element(by.id('tooltip-btn')))
+      .perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
+
+    expect(await element(by.id('tooltip')).getText()).toEqual('Tooltips Provide Additional Information');
+  });
+});
+
+describe('Tooltips on icon tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/icons/example-tooltips');
   });
@@ -15,13 +32,14 @@ describe('Tooltips on icons', () => {
     await utils.checkForErrors();
   });
 
-  it('should display when hovering the icon', async () => {
+  it('should display a tooltip when hovering a button', async () => {
     await browser.actions()
       .mouseMove(await element(by.id('standalone-delete-icon')))
       .perform();
 
-    await browser.driver.sleep(config.sleep);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
 
-    expect(await element(by.css('.tooltip')).getText()).toEqual('Send to Trashcan');
+    expect(await element(by.id('tooltip')).getText()).toEqual('Send to Trashcan');
   });
 });

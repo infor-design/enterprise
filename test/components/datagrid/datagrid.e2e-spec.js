@@ -435,7 +435,7 @@ describe('Datagrid paging multiselect tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
-    element(by.css('.pager-next')).click();
+    await element(by.css('.pager-next')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
@@ -470,7 +470,7 @@ describe('Datagrid paging client side multiselect tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
-    element(by.css('.pager-next')).click();
+    await element(by.css('.pager-next')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
