@@ -5279,7 +5279,7 @@ Datagrid.prototype = {
         value = value.toLowerCase();
 
         // Strip any html markup that might be in the formatted value
-        value = value.replace(/(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig, '');
+        value = value.replace(/(<([^>]+)>)|(amp;)|(&lt;([^>]+)&gt;)/ig, '');
 
         return value.indexOf(filterExpr.value) > -1;
       };
