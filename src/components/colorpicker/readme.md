@@ -2,9 +2,10 @@
 title: Color Picker
 description: This page describes Color Picker.
 demo:
-  pages:
+  embedded:
   - name: Color Picker Example
     slug: example-index
+  pages:
   - name: Showing Custom Colors
     slug: example-custom-labels
   - name: Showing Label on Select

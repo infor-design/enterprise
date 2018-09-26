@@ -2,9 +2,10 @@
 title: Bar Chart (Stacked)
 description: This page describes Bar Chart (Stacked).
 demo:
-  pages:
+  embedded:
   - name: Standard Stacked Bar Chart
     slug: example-index
+  pages:
   - name: 100% Stacked Bar Chart
     slug: example-stacked-100
   - name: Colors

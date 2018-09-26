@@ -2,9 +2,10 @@
 title: Radio Buttons
 description: This page describes Radio Buttons.
 demo:
-  pages:
+  embedded:
   - name: Radio Button Example
     slug: example-index
+  pages:
   - name: Horizontal Radio Button Example
     slug: example-horizontal
   - name: Dirty Flag

@@ -2,9 +2,10 @@
 title: Slider Component
 description: This page describes Slider Component.
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
+  pages:
   - name: Range Example (Two Handles)
     slug: example-range
   - name: Steps

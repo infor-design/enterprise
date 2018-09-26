@@ -2,7 +2,7 @@
 title: Radar Chart
 description: This page describes Radar Chart.
 demo:
-  pages:
+  embedded:
   - name: Standard Radar Chart
     slug: example-index
 ---

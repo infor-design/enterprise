@@ -2,9 +2,10 @@
 title: Composite Form Pattern
 description: This page describes Composite Form Pattern.
 demo:
-  pages:
+  embedded:
   - name: Default Composite Form Example
     slug: example-index
+  pages:
   - name: Composite Form With No Summary Area
     slug: example-no-summary
 ---

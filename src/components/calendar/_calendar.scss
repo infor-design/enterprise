@@ -89,12 +89,62 @@
     margin: 0 2px 3px;
     width: calc(100% - 4px);
 
+    //Event spanning
+    &.event-day-start {
+      border-radius: 3px 0 0 3px;
+      padding-right: 4px;
+      width: calc(100% - 1px);
+    }
+
+    &.event-day-span {
+      border-left: 0 !important;
+      border-radius: 0;
+      margin: 0;
+      width: 100%;
+      z-index: 1;
+
+      .calendar-event-icon {
+        display: none;
+      }
+
+      .calendar-event-title {
+        display: none;
+      }
+    }
+
+    &.event-day-end {
+      border-left: 0 !important;
+      border-radius: 0 3px 3px 0;
+      margin-left: 0;
+      width: calc(100% - 2px);
+      z-index: 1;
+
+      .calendar-event-icon {
+        display: none;
+      }
+
+      .calendar-event-title {
+        display: none;
+      }
+    }
+
     .calendar-event-content {
       overflow: hidden;
       padding: 3px 1px;
       position: relative;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .calendar-event-icon {
+      width: 20px;
+
+      .icon {
+        fill: $font-color;
+        height: 12px;
+        vertical-align: top;
+        width: 13px;
+      }
     }
 
     &.ruby {
@@ -143,6 +193,70 @@
     margin: 4px 10px;
     text-align: left;
     width: auto;
+  }
+}
+
+// Calendar Event Details section
+.calendar-event-detail {
+  background-color: $calendar-bg-color;
+  height: 100%;
+}
+
+.calendar-event-header {
+  @include font-size(18);
+
+  color: $white;
+  display: block;
+  height: 48px;
+  line-height: 48px;
+  overflow: hidden;
+  padding: 0 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &.ruby {
+    background-color: $ruby06;
+  }
+
+  &.amber {
+    background-color: $amber06;
+  }
+
+  &.emerald {
+    background-color: $emerald06;
+  }
+
+  &.azure {
+    background-color: $azure06;
+  }
+
+  &.turquoise {
+    background-color: $turquoise06;
+  }
+
+  &.amethyst {
+    background-color: $amethyst06;
+  }
+
+  &.slate {
+    background-color: $slate06;
+  }
+
+  &.graphite {
+    background-color: $graphite06;
+  }
+}
+
+.calendar-event-body {
+  margin: 20px;
+
+  .data {
+    @include font-size(12);
+  }
+
+  .icon {
+    margin-bottom: -3px;
+    margin-top: -2px;
   }
 }
 

@@ -2,9 +2,10 @@
 title: MenuButton Component
 description: This page describes MenuButton Component .
 demo:
-  pages:
+  embedded:
   - name: Simple Menu Button
     slug: example-index
+  pages:
   - name: Menu Button Events
     slug: example-events
   - name: Submenus

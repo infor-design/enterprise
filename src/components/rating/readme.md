@@ -2,9 +2,10 @@
 title: Rating
 description: This page describes Rating.
 demo:
-  pages:
+  embedded:
   - name: Rating Example
     slug: example-index
+  pages:
   - name: Readonly Example
     slug: example-readonly
   - name: Rounding Decimals Up Example

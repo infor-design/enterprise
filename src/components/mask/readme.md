@@ -2,9 +2,10 @@
 title: Mask
 description: This page describes Mask.
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
+  pages:
   - name: Common Mask Patterns
     slug: example-common-patterns
   - name: Fields with Symbols

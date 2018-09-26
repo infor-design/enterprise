@@ -1,0 +1,42 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" id="addnode-tree" aria-label="Asset Types" class="tree" data-init="false">
+      <li class="is-open">
+        <a href="#" id="public">Public Folders</a>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script>
+
+  var elem = $('#addnode-tree').tree({
+    sortable: true
+  });
+
+  //Add at Root
+  var api = elem.data('tree');
+
+  api.addNode({text: 'New Item 1', id: 'new1', exta: "some-data1"});
+  api.addNode({text: 'New Item 2', id: 'new2', exta: "some-data2", "children": [{
+    "id": "node3", extastuff: "some-data3",
+    "text": "Node 2.1"
+  }, {
+    "id": "node4",
+    "text": "Node 2.2",
+    "children": [{
+      "id": "node5",
+      "text": " Node 2.2.1",
+      "icon": "icon-tree-chart",
+      "testdata": "some-test-data",
+      "children": [{
+        "id": "node6",
+        "text": "Node 2.2.1.1",
+        "icon": "icon-tree-chart"
+      }]
+    }]
+  }]});
+
+</script>

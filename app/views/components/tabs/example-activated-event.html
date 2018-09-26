@@ -57,13 +57,26 @@
       }
 
       $('body').toast({
-        title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + anchorId + '</span> triggered!',
+        title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + anchorId + '</span> [activated] triggered!',
         message: 'The "<b>'+ anchorName +'</b>" tab was clicked or triggered!'
       });
     }).on('beforeactivated.test', function(e, anchor) {
-      console.log('x');
-    });
+      var color = 'red',
+        anchorName, anchorId;
 
-    console.log('y');
+      if (!anchor) {
+        anchorName = '[undefined anchor name]';
+        anchorId = '[undefined anchor id]';
+        color = '#1111aa';
+      } else {
+        anchorName = anchor.text().trim();
+        anchorId = anchor.attr('href');
+      }
+      
+      $('body').toast({
+        title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + anchorId + '</span> [beforeActivate] triggered!',
+        message: 'The "<b>'+ anchorName +'</b>" tab was clicked or triggered!'
+      });
+    });
   });
 </script>

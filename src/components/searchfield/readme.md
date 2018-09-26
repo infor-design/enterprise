@@ -2,9 +2,10 @@
 title: Searchfield
 description: This page describes Searchfield.
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index.html
+  pages:
   - name: Context Search Style
     slug: example-context-search-style.html
   - name: Different Template

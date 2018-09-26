@@ -34,6 +34,7 @@ export { ListBuilder } from './listbuilder/listbuilder';
 export { ListView } from './listview/listview';
 export { Message } from './message/message';
 export { MultiSelect } from './multiselect/multiselect';
+export { Notification } from './notification/notification';
 export { Pager } from './pager/pager';
 export { Pie } from './pie/pie';
 export { Popdown } from './popdown/popdown';

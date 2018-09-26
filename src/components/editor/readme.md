@@ -2,9 +2,10 @@
 title: Editor (Rich Text)
 description: This page describes Editor (Rich Text).
 demo:
-  pages:
+  embedded:
   - name: Default Rich Text Editor Example
     slug: example-index
+  pages:
   - name: Customize Buttons
     slug: example-customize-buttons
   - name: Back Color Button (Experimental - Limited Browser Support)

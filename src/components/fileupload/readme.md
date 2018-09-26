@@ -2,9 +2,10 @@
 title: File Upload
 description: This page describes File Upload.
 demo:
-  pages:
+  embedded:
   - name: Default File Upload Example
     slug: example-index
+  pages:
   - name: Advanced File Upload Example
     slug: example-index
   - name: Limit File Types

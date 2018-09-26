@@ -2,9 +2,10 @@
 title: Tooltip Component
 description: This page describes Tooltip Component .
 demo:
-  pages:
+  embedded:
   - name: Default Tooltip Example
     slug: example-index
+  pages:
   - name: Tooltip with an Icon
     slug: example-icon-in-tooltip
   - name: Functioning URL inside of a Tooltip

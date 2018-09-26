@@ -2,9 +2,10 @@
 title: Tabs Component
 description: This page describes Tabs Component .
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Tabs With Counts
     slug: example-counts
   - name: Dismissible Tabs

@@ -42,7 +42,59 @@
   $('body').one('initialized', function () {
     $('.calendar').calendar({
       eventTypes: eventTypes,
-      events: events
+      events: events,
+      template: 'tmpl-readonly'
     });
   });
 </script>
+
+{{={{{ }}}=}}
+<script id="tmpl-readonly" type="text/html">
+  <div class="calendar-event-detail">
+    {{#event}}
+      <span class="calendar-event-header {{color}}">{{subject}}</span>
+      <div class="calendar-event-body">
+        <div class="field">
+          <span class="label">Status</span>
+          <span class="data">
+            {{status}}
+            {{#icon}}
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation" data-status="Pending"><use xlink:href="#{{icon}}"></use></svg>
+            {{/icon}}
+          </span>
+        </div>
+        <div class="field">
+          <span class="label">Date</span>
+          <span class="data">
+            {{startsLong}} to {{endsLong}}
+          </span>
+        </div>
+        <div class="field">
+          <span class="label">Event Type</span>
+          <span class="data">
+            {{typeLabel}}
+          </span>
+        </div>
+        <div class="field">
+          <span class="label">Comments</span>
+          <span class="data">
+            {{comments}}
+          </span>
+        </div>
+      </div>
+    {{/event}}
+  </div>
+</script>
+
+<!--
+"id": "1",
+"subject": "Discretionary Time Off",
+"shortSubject": "DTO",
+"comments": "",
+"location": "Us Office",
+"status": "Draft",
+"starts": "2018-08-22T09:00:00.000Z",
+"ends": "2018-08-22T13:00:00.000Z",
+"type": "dto",
+"isAllDay": "true"
+-->

@@ -867,9 +867,9 @@ Dropdown.prototype = {
       this.pseudoElem.next('svg').hide();
     }
 
+    // set placeholder text on pseudoElem span element
     if (this.element.attr('placeholder')) {
-      this.pseudoElem.attr('placeholder', this.element.attr('placeholder'));
-      this.element.removeAttr('placeholder');
+      this.pseudoElem.find('span').attr('data-placeholder-text', this.element.attr('placeholder'));
     }
   },
 
@@ -895,7 +895,14 @@ Dropdown.prototype = {
     }
 
     if (e.ctrlKey) {
-      return false;
+      if (this.settings.onKeyDown) {
+        const ret = this.settings.onKeyDown(e);
+        if (ret === false) {
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }
+      }
     }
 
     return true;
@@ -1804,7 +1811,8 @@ Dropdown.prototype = {
       // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
       const ulHeight = parseInt(window.getComputedStyle(self.listUl[0]).height, 10);
       const listHeight = parseInt(window.getComputedStyle(self.list[0]).height, 10);
-      const searchInputHeight = 34;
+      const searchInputHeight = $(this).hasClass('dropdown-short') ? 24 : 34;
+
       if (ulHeight + searchInputHeight > listHeight) {
         self.listUl[0].style.height = `${listHeight - searchInputHeight}px`;
       }

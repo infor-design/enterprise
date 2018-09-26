@@ -2,9 +2,10 @@
 title: HomePage
 description: This page describes HomePage.
 demo:
-  pages:
+  embedded:
   - name: Example of Empty HomePage Layout
     slug: example-index
+  pages:
   - name: Example of HomePage filled with Sample Data
     slug: example-filled
   - name: 4 Column Layout

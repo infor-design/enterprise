@@ -93,11 +93,9 @@
             response(res.data, req);
           });
         },
-        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false, keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
       }).on('selected', function (e, args, action) {
-        if (args[0]) {
-          console.log(action, args.length, args[0].idx);
-        }
+        console.log(args, action);
       });
 
   });

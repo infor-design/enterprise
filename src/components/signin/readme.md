@@ -2,9 +2,10 @@
 title: Signin Component
 description: This page describes Signin Component .
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
+  pages:
   - name: Remember Me Example
     slug: example-remember-me
   - name: Customer Designed Sign in Page
