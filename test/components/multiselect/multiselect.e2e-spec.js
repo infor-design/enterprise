@@ -311,3 +311,13 @@ describe('Multiselect typeahead-reloading tests', () => {
     });
   }
 });
+
+describe('Multiselect placeholder tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/multiselect/example-placeholder');
+  });
+
+  it('Show a placeholder', async () => {
+    expect(await element(by.css('[data-placeholder-text]')).isDisplayed()).toBeTruthy();
+  });
+});

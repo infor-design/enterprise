@@ -418,3 +418,13 @@ describe('Dropdown typeahead-reloading tests', () => {
     });
   }
 });
+
+describe('Dropdown placeholder tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/example-placeholder');
+  });
+
+  it('Show a placeholder', async () => {
+    expect(await element(by.css('[data-placeholder-text]')).isDisplayed()).toBeTruthy();
+  });
+});

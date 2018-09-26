@@ -867,9 +867,9 @@ Dropdown.prototype = {
       this.pseudoElem.next('svg').hide();
     }
 
+    // set placeholder text on pseudoElem span element
     if (this.element.attr('placeholder')) {
-      this.pseudoElem.attr('placeholder', this.element.attr('placeholder'));
-      this.element.removeAttr('placeholder');
+      this.pseudoElem.find('span').attr('data-placeholder-text', this.element.attr('placeholder'));
     }
   },
 
