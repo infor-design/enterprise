@@ -26,6 +26,9 @@ export { theme } from './components/personalize/personalize';
 export { personalization } from './components/personalize/personalize.bootstrap';
 export * from './components/personalize/personalize.hooks';
 
+// jQuery constructor for Personalize is required
+import './components/personalize/personalize.jquery';
+
 // Explicitly import the initializer (which is considered "core").
 // This implicitly imports all jQuery-specific IDS component constructors.
 import './behaviors/initialize/initialize.jquery';
