@@ -482,7 +482,7 @@ describe('Tabs ajax as href tests', () => {
 
     await element.all(by.id('example-tab-two')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#ajaxified-tabs-tab-2.is-visible'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#ajaxified-tabs-tab-2[aria-selected="true"]'))), config.waitsFor);
     await browser.driver.sleep(config.waitsFor);
 
     await utils.checkForErrors();
