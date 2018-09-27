@@ -106,7 +106,7 @@ describe('Tabs vertical click example-responsive tests', () => {
 describe('Tabs vertical click test-nested-regular-tabs tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs-vertical/test-nested-regular-tabs');
-    const tabsEl = await element(by.id('tabs-vertical'));
+    const tabsEl = await element(by.id('page-one-tab-two'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
