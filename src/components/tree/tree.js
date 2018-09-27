@@ -9,7 +9,7 @@ import '../../utils/animations';
 // The name of this component.
 const COMPONENT_NAME = 'tree';
 
-// The Component Defaults
+// The Component Defaults.
 const TREE_DEFAULTS = {
   selectable: 'single', // ['single'|'multiple']
   hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
