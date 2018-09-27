@@ -805,6 +805,8 @@ body.no-scroll {
 
 // Banner Detail Pattern
 .page-container {
+  @include font-size(16);
+
   .banner-detail {
     min-height: 100%;
     position: relative;
