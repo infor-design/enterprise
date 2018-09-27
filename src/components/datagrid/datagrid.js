@@ -2833,9 +2833,8 @@ Datagrid.prototype = {
     let rowHtml = '';
     let d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0;
     let depth = null;
-    let d2;
     let j = 0;
-    let isHidden;
+    let isHidden = false;
     let skipColumns;
 
     if (!rowData) {
@@ -2852,13 +2851,19 @@ Datagrid.prototype = {
         const treeDepthItem = self.settings.treeDepth[i];
 
         if (rowData.id === treeDepthItem.node.id) {
-          d2 = treeDepthItem;
-
-          if (d !== d2.depth && d > d2.depth) {
-            d = d2.depth;
-            depth = d;
-            isHidden = !d2.node.expanded;
+          let parentNode = null;
+          for (let ii = i; ii >= 0; ii--) {
+            if (self.settings.treeDepth[ii].node.depth < treeDepthItem.node.depth) {
+              parentNode = self.settings.treeDepth[ii];
+              break;
+            }
           }
+
+          if (parentNode && parentNode.node.expanded !== undefined && !parentNode.node.expanded) {
+            isHidden = true;
+          }
+
+          depth = treeDepthItem.depth;
 
           break;
         }
