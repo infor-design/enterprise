@@ -115,7 +115,7 @@ describe('Tabs vertical click test-nested-regular-tabs tests', () => {
     const tabElTrigger = await element(by.css('a[href="#page-one-tab-two"]'));
     await tabElTrigger.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#page-one-tab-two.tab-panel'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#page-one-tab-two.tab-panel'))), config.waitsFor);
 
     expect(await element(by.css('#page-one-tab-two.tab-panel')).getAttribute('class')).toContain('can-show');
     expect(await element(by.css('#page-one-tab-two.tab-panel')).getAttribute('class')).toContain('is-visible');
