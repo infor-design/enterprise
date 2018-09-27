@@ -1564,7 +1564,7 @@ Datagrid.prototype = {
           rowValue = self.formatValue(fmt, i, id, rowValue, columnDef, rowData, self);
 
           // Strip any html markup that might be in the formatters
-          const rex = /(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig;
+          const rex = /(<([^>]+)>)|(amp;)|(&lt;([^>]+)&gt;)/ig;
           rowValue = rowValue.replace(rex, '').trim().toLowerCase();
 
           rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
@@ -5344,7 +5344,7 @@ Datagrid.prototype = {
         if (cellText.indexOf(term) > -1 && isSearchExpandableRow) {
           found = true;
           cell.find('*').each(function () {
-            if (this.innerHTML === this.textContent) {
+            if (this.innerHTML.replace('&amp;', '&') === this.textContent) {
               const contents = this.textContent;
               const node = $(this);
               const exp = new RegExp(`(${term})`, 'i');
