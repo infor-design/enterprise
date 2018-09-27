@@ -772,6 +772,18 @@ cleanAll().then(() => {
     let rollupBuildLog = '';
     let sassBuildLog = '';
 
+    // Copy vendor libs/dependencies
+    const copyPromise = new Promise((resolve, reject) => {
+      const copy = spawn('npx', ['grunt', 'copy:main']);
+      copy.on('exit', (code) => {
+        if (code !== 0) {
+          reject(new Error(`Copy exited with error code (${code})`));
+        }
+        resolve();
+      });
+    });
+    buildProcesses.push(copyPromise);
+
     if (jsMatches.length || jQueryMatches.length) {
       const jsBuildPromise = new Promise((resolve, reject) => {
         const rollup = spawn('rollup', ['-c', '--customBuild', `--components=${commandLineArgs.components}`]);
