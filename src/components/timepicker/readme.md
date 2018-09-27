@@ -2,9 +2,10 @@
 title: Timepicker Component
 description: This page describes Timepicker Component .
 demo:
-  pages:
+  embedded:
   - name: Default Example
     slug: example-index
+  pages:
   - name: 24-Hour (Military) Time
     slug: example-24-hour
   - name: Rounded Minute Intervals

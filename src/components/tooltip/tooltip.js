@@ -517,15 +517,19 @@ Tooltip.prototype = {
 
     if (this.settings.beforeShow && !ajaxReturn) {
       const response = function (content) {
+        if (typeof content === 'boolean' && !content) {
+          return;
+        }
+        self.content = content;
         self.show({ content }, true);
       };
 
       if (typeof this.settings.beforeShow === 'string') {
-        window[this.settings.beforeShow](response);
+        window[this.settings.beforeShow](response, this.element);
         return;
       }
 
-      this.settings.beforeShow(response);
+      this.settings.beforeShow(response, this.element);
       return;
     }
 

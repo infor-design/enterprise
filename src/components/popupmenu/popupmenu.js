@@ -734,6 +734,12 @@ PopupMenu.prototype = {
     }
 
     function doOpen(e) {
+      if (self.element.hasClass('is-disabled')) {
+        e.stopPropagation();
+        e.preventDefault();
+        return;
+      }
+
       const rightClick = self.settings.trigger === 'rightClick';
 
       e.stopPropagation();

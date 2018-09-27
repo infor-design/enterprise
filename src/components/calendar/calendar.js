@@ -2,6 +2,7 @@ import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { MonthView } from '../monthview/monthview';
 import { Locale } from '../locale/locale';
+import { Tmpl } from '../tmpl/tmpl';
 
 // Settings and Options
 const COMPONENT_NAME = 'calendar';
@@ -11,7 +12,11 @@ const COMPONENT_NAME_DEFAULTS = {
     { id: 'example', label: 'Example', color: 'emerald07', checked: true, click: () => {} },
   ],
   events: [],
-  showViewChanger: true
+  month: new Date().getMonth(),
+  year: new Date().getFullYear(),
+  showViewChanger: true,
+  onRenderMonth: null,
+  template: null
 };
 
 /**
@@ -21,7 +26,12 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} [settings] The settings element.
  * @param {array} [settings.eventTypes] An array of objects with data for the event types.
  * @param {array} [settings.events] An array of objects with data for the events.
- * @param {array} [settings.showViewChanger] If false the dropdown to change views will not be shown.
+ * @param {array} [settings.month] Initial month to show.
+ * @param {array} [settings.year] Initial year to show.
+ * @param {boolean} [settings.showViewChanger] If false the dropdown to change views will not be shown.
+ * @param {function} [settings.onRenderMonth] Fires when a month is rendered, allowing you to pass back events or event types to show.
+ * @param {function} [settings.onSelected] Fires when a month day is clicked. Allowing you to do something.
+ * @param {string} [settings.template] The ID of the template used for the events. This template will be used for editing events.
  */
 function Calendar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -85,7 +95,14 @@ Calendar.prototype = {
    */
   renderMonthView() {
     this.monthViewContainer = document.querySelector('.calendar .calendar-monthview');
-    this.monthView = new MonthView(this.monthViewContainer, {});
+
+    this.monthView = new MonthView(this.monthViewContainer, {
+      onRenderMonth: this.settings.onRenderMonth,
+      onSelected: this.settings.onSelected,
+      selectable: true,
+      month: this.settings.month,
+      year: this.settings.year
+    });
     this.monthViewHeader = document.querySelector('.calendar .monthview-header');
     this.renderEvents();
     return this;
@@ -115,9 +132,59 @@ Calendar.prototype = {
   },
 
   /**
+   * Render or re-render the events details section, using on the readonly or default eventTemplate
+   * @param {string} eventId The event id
+   * @private
+   */
+  renderEventDetails(eventId) {
+    if (typeof Tmpl !== 'object' || !this.settings.template || !this.settings.events) {
+      return;
+    }
+
+    // Find the event data
+    const eventData = this.settings.events.filter(event => event.id === eventId);
+    if (!eventData) {
+      return;
+    }
+
+    this.eventDetailsContainer = document.querySelector('.calendar-event-details');
+
+    // create a copy of the template
+    if (this.settings.template instanceof $) {
+      this.settings.template = `${this.settings.template.html()}`;
+    } else if (typeof this.settings.template === 'string') {
+      // If a string doesn't contain HTML elments,
+      // assume it's an element ID string and attempt to select with jQuery
+      if (!stringUtils.containsHTML(this.settings.template)) {
+        this.settings.template = $(`#${this.settings.template}`).html();
+      }
+    }
+
+    const event = eventData[0];
+    event.color = this.getEventTypeColor(event.type);
+    event.startsLong = Locale.formatDate(event.starts, { date: 'long' });
+    event.endsLong = Locale.formatDate(event.ends, { date: 'long' });
+    event.typeLabel = this.getEventTypeLabel(event.type);
+
+    const renderedTmpl = Tmpl.compile(this.settings.template, { event });
+    this.eventDetailsContainer.innerHTML = renderedTmpl;
+  },
+
+  /**
+   * Clear all contents from the event details area.
+   * @private
+   */
+  clearEventDetails() {
+    this.eventDetailsContainer = document.querySelector('.calendar-event-details');
+    if (this.eventDetailsContainer) {
+      this.eventDetailsContainer.innerHTML = '';
+    }
+  },
+
+  /**
    * Get the currently unchecked filter types
    * @returns {array} The active types.
-  * @private
+   * @private
    */
   filterEventTypes() {
     const checkboxes = this.eventTypeContainer.querySelectorAll('.checkbox');
@@ -134,11 +201,18 @@ Calendar.prototype = {
 
   /**
    * Render/ReRender the events attached to the settings.
+   * @param {boolean} isCallback Will be set to true when a callback occurs
    * @returns {object} The Calendar prototype, useful for chaining.
    */
-  renderEvents() {
+  renderEvents(isCallback) {
+    if (this.settings.onRenderMonth && !isCallback) {
+      this.callOnRenderMonth();
+      return this;
+    }
+
     const self = this;
     const filters = this.filterEventTypes();
+
     this.visibleEvents = [];
     this.removeAllEvents();
 
@@ -148,19 +222,44 @@ Calendar.prototype = {
         continue;
       }
 
+      // Check for events starting on this day , or only on this day.
       const startDate = new Date(event.starts);
       const startKey = stringUtils.padDate(
         startDate.getFullYear(),
         startDate.getMonth(),
-        startDate.getDate()
+        startDate.getDate(),
       );
-      const container = self.monthView.dayMap.filter(day => day.key === startKey);
 
-      if (container.length === 1) {
-        const color = self.getColorFromStyles(event.type);
-        self.appendEvent(container[0].elem[0], event, color);
+      // Check for events extending onto this day
+      const endDate = new Date(event.ends);
+      const endKey = stringUtils.padDate(
+        endDate.getFullYear(),
+        endDate.getMonth(),
+        endDate.getDate()
+      );
+
+      const days = self.monthView.dayMap.filter(day => day.key >= startKey && day.key <= endKey);
+
+      // Event is only on this day
+      if (days.length === 1) {
+        const color = self.getEventTypeColor(event.type);
+        self.appendEvent(days[0].elem[0], event, color, 'event-day-start-end');
+      }
+
+      // Event extends multiple days
+      if (days.length > 1) {
+        const color = self.getEventTypeColor(event.type);
+        for (let l = 0; l < days.length; l++) {
+          let cssClass = l === 0 ? 'event-day-start' : 'event-day-span';
+
+          if (days.length - 1 === l) {
+            cssClass = 'event-day-end';
+          }
+          self.appendEvent(days[l].elem[0], event, color, cssClass);
+        }
       }
     }
+
     return this;
   },
 
@@ -177,9 +276,10 @@ Calendar.prototype = {
    * @param {object} container The container to append to
    * @param {object} event The event data object.
    * @param {string} color The color to shade
+   * @param {string} type Type of event, can be event-day-start, event-day-start-end, event-day-span, event-day-end
    * @returns {object} The Calendar prototype, useful for chaining.
    */
-  appendEvent(container, event, color) {
+  appendEvent(container, event, color, type) {
     let node;
     const eventCnt = container.querySelectorAll('.calendar-event').length;
 
@@ -204,9 +304,32 @@ Calendar.prototype = {
     }
 
     node = document.createElement('a');
-    node.classList.add('calendar-event', color);
-    node.innerHTML = `<div class="calendar-event-content"><span class="calendar-event-title">${event.shortSubject || event.subject}</span></div>`;
+    node.classList.add('calendar-event', color, type);
+    node.setAttribute('data-id', event.id);
+
+    node.innerHTML = `<div class="calendar-event-content">
+      ${event.icon ? `<span class="calendar-event-icon"><svg class="icon" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use xlink:href="#${event.icon}"></use></svg></span>` : ''}
+      <span class="calendar-event-title">${event.shortSubject || event.subject}</span>
+    </div>`;
     container.querySelector('.day-container').appendChild(node);
+
+    // Show the full text if cut off
+    if (!event.shortSubject) {
+      node.setAttribute('title', event.subject);
+      $(node).tooltip({
+        beforeShow: (response, ui) => {
+          const title = ui[0].querySelector('.calendar-event-title');
+          const icon = ui[0].querySelector('.calendar-event-icon');
+          const iconStatus = icon ? icon.querySelector('.icon').getAttribute('data-status') : '';
+
+          if (title.offsetWidth > ui[0].scrollWidth - (icon ? icon.offsetWidth : 0)) {
+            response(`${title.innerText}${iconStatus ? ` (${Locale.translate(iconStatus, false)})` : ''}`);
+            return;
+          }
+          response(false);
+        }
+      });
+    }
 
     this.visibleEvents.push({ id: event.id, type: event.type, elem: node });
     return this;
@@ -214,21 +337,40 @@ Calendar.prototype = {
 
   /**
    * Find the matching type and get the color.
-   * @param {object} type The type to find.
+   * @param {object} id The eventType id to find.
    * @param {object} event The event data object.
    * @returns {object} The Calendar prototype, useful for chaining.
    */
-  getColorFromStyles(type) {
+  getEventTypeColor(id) {
     let color = 'azure';
-    if (!type) {
+    if (!id) {
       return color;
     }
 
-    const eventInfo = this.settings.eventTypes.filter(eventType => eventType.id === type);
+    const eventInfo = this.settings.eventTypes.filter(eventType => eventType.id === id);
     if (eventInfo.length === 1) {
       color = eventInfo[0].color || 'azure';
     }
     return color;
+  },
+
+  /**
+   * Find the matching type and get the color.
+   * @param {object} id The eventType id to find.
+   * @param {object} event The event data object.
+   * @returns {object} The Calendar prototype, useful for chaining.
+   */
+  getEventTypeLabel(id) {
+    let type = '';
+    if (!id) {
+      return type;
+    }
+
+    const eventInfo = this.settings.eventTypes.filter(eventType => eventType.id === id);
+    if (eventInfo.length === 1) {
+      type = eventInfo[0].label;
+    }
+    return type;
   },
 
   /**
@@ -237,21 +379,53 @@ Calendar.prototype = {
    * @private
    */
   handleEvents() {
-    const self = this;
-
     this.element.on(`updated.${COMPONENT_NAME}`, () => {
-      self.updated();
+      this.updated();
     });
 
     this.element.on(`monthrendered.${COMPONENT_NAME}`, () => {
-      self.renderEvents();
+      this.renderEvents();
     });
 
     this.element.on(`change.${COMPONENT_NAME}`, '.checkbox', () => {
-      self.renderEvents();
+      this.renderEvents(true);
+    });
+
+    $(this.monthViewContainer).on(`selected.${COMPONENT_NAME}`, (e, args) => {
+      const dayEl = args.node;
+      const dayEvents = dayEl.querySelectorAll('.calendar-event');
+
+      if (!dayEvents || dayEvents.length === 0) {
+        this.clearEventDetails();
+        return;
+      }
+
+      for (let i = 0; i < dayEvents.length; i++) {
+        this.renderEventDetails(dayEvents[i].getAttribute('data-id'));
+      }
     });
 
     return this;
+  },
+
+  /**
+   * Handle updated settings and values.
+   * @private
+   */
+  callOnRenderMonth() {
+    const self = this;
+
+    function response(events, eventTypes) {
+      if (eventTypes && eventTypes.length > 0) {
+        self.settings.eventTypes = eventTypes;
+        self.renderEventTypes();
+      }
+      if (events && events.length > 0) {
+        self.settings.events = events;
+        self.renderEvents(true);
+      }
+    }
+    this.settings.onRenderMonth(this.element, response);
   },
 
   /**
@@ -272,7 +446,9 @@ Calendar.prototype = {
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     this.element.off(`monthrendered.${COMPONENT_NAME}`);
-    this.element.off(`click.${COMPONENT_NAME}`);
+    this.element.off(`change.${COMPONENT_NAME}`);
+    $(this.monthViewContainer).off();
+
     return this;
   },
 
@@ -281,9 +457,15 @@ Calendar.prototype = {
    * @private
    */
   destroy() {
-    this.eventTypeContainer.innerHTML = '';
-    this.monthViewContainer.innerHTML = '';
-
+    if (this.eventTypeContainer) {
+      this.eventTypeContainer.innerHTML = '';
+    }
+    if (this.monthViewContainer) {
+      this.monthViewContainer.innerHTML = '';
+    }
+    if (this.eventDetailsContainer) {
+      this.eventDetailsContainer.innerHTML = '';
+    }
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   }

@@ -2,9 +2,10 @@
 title: Datepicker
 description: This page describes Datepicker.
 demo:
-  pages:
+  embedded:
   - name: Simple Date Picker Example
     slug: example-index
+  pages:
   - name: Anniversary Format (Month, Year)
     slug: example-anniversay-format
   - name: Date Picker With Legend

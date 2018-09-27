@@ -730,9 +730,7 @@ Pager.prototype = {
           * @property {object} event - The jquery event object
           * @property {object} pagingInfo - The paging info object
           */
-          setTimeout(() => {
-            self.element.trigger('afterpaging', pagingInfo);
-          }, 1);
+          self.element.trigger('afterpaging', pagingInfo);
         };
 
         if (self.settings.componentAPI.sortColumn && self.settings.componentAPI.sortColumn.sortId) {

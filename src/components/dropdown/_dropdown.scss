@@ -102,6 +102,12 @@ div.multiselect {
     text-overflow: ellipsis;
     vertical-align: top;
     width: inhert;
+
+    &:empty::before {
+      color: $input-placeholder-color;
+      content: attr(data-placeholder-text);
+      -webkit-text-fill-color: $input-placeholder-color;
+    }
   }
 
   > .listoption-icon {
@@ -822,7 +828,7 @@ div.dropdown-xs,
   div.dropdown,
   div.multiselect {
     > .listoption-icon {
-      top: 9px;
+      top: 11px;
     }
 
     + .icon {
@@ -832,15 +838,17 @@ div.dropdown-xs,
 }
 
 //for firefox on android
-.is-firefox.android {
-  div.dropdown,
-  div.multiselect {
-    > .listoption-icon {
-      top: 9px;
-    }
+.is-firefox {
+  &.android {
+    div.dropdown,
+    div.multiselect {
+      > .listoption-icon {
+        top: 12px;
+      }
 
-    + .icon {
-      top: 4px;
+      + .icon {
+        top: 4px;
+      }
     }
   }
 }

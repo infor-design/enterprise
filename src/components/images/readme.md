@@ -2,9 +2,10 @@
 title: Images
 description: This page describes Images.
 demo:
-  pages:
+  embedded:
   - name: Image Sizes and Placeholders
     slug: example-index
+  pages:
   - name: A Pattern showing a toolbar over a list of Images
     slug: example-image-list
   - name: People Photos and initials

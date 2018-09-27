@@ -2,9 +2,10 @@
 title: Bar Chart (Grouped)
 description: This page describes Bar Chart (Grouped).
 demo:
-  pages:
+  embedded:
   - name: Standard Grouped Bar Chart
     slug: example-index
+  pages:
   - name: Example showing defaulting a selected value
     slug: example-selected
   - name: Example showing with negative values

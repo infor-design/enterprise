@@ -37,7 +37,9 @@ const COMPONENT_NAME_DEFAULTS = {
     selectForward: false, // Only in forward direction
     selectBackward: false, // Only in backward direction
     includeDisabled: false // if true range will include disable dates in it
-  }
+  },
+  selectable: true,
+  onSelected: null
 };
 
 /**
@@ -85,6 +87,8 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {array} [settings.legend]  Legend Build up
  * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
  * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
+ * @param {boolean} [settings.selectable=false] If true the month days can be clicked to select
+ * @param {boolean} [settings.onSelected=false] Call back that fires when a month day is clicked.
  */
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -376,11 +380,13 @@ MonthView.prototype = {
         self.setLegendColor(th, exYear, exMonth, exDay);
         self.dayMap.push({ key: stringUtils.padDate(exYear, exMonth, exDay), elem: th });
         th.addClass('alternate prev-month').html(`<span class="day-container"><span aria-hidden="true" class="day-text">${exDay}</span></span>`);
+        th.data('key', stringUtils.padDate(exYear, exMonth, exDay));
       }
 
       if (i >= leadDays && dayCnt <= thisMonthDays) {
         self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
         th.html(`<span class="day-container"><span aria-hidden="true" class="day-text">${dayCnt}</span></span>`);
+        th.data('key', stringUtils.padDate(year, month, dayCnt));
 
         // Add Selected Class to Selected Date
         if (self.isIslamic) {
@@ -394,7 +400,7 @@ MonthView.prototype = {
 
           if ((new Date(year, month, dayCnt))
             .setHours(tHours, tMinutes, tSeconds, 0) === elementDate
-              .setHours(tHours, tMinutes, tSeconds, 0)) { //eslint-disable-line
+            .setHours(tHours, tMinutes, tSeconds, 0)) {
             th.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true');
           }
         }
@@ -424,6 +430,7 @@ MonthView.prototype = {
         self.setLegendColor(th, exYear, exMonth, exDay);
 
         th.addClass('alternate next-month').html(`<span class="day-container"><span aria-hidden="true" class="day-text">${nextMonthDayCnt}</span></span>`);
+        th.data('key', stringUtils.padDate(exYear, exMonth, exDay));
         nextMonthDayCnt++;
       }
     });
@@ -821,6 +828,32 @@ MonthView.prototype = {
         self.showTodaysMonth();
       });
     }
+
+    // Allow dates to be selected
+    if (self.settings.selectable) {
+      self.element.addClass('is-selectable').off('click.monthview-day').on('click.monthview-day', 'td', (e) => {
+        const node = e.currentTarget;
+        const data = $(e.currentTarget).data();
+        const key = data.key;
+
+        const args = {
+          node,
+          key,
+          day: parseInt(key.substr(6, 2), 10),
+          month: parseInt(key.substr(4, 2), 10),
+          year: parseInt(key.substr(0, 4), 10)
+        };
+
+        self.element.trigger('selected', args);
+        if (self.settings.onSelected) {
+          self.settings.onSelected(node, args);
+        }
+
+        self.element.find('td.is-selected').removeClass('is-selected');
+        $(node).addClass('is-selected');
+      });
+    }
+
     return this;
   },
 
@@ -837,6 +870,10 @@ MonthView.prototype = {
     }
 
     this.showMonth(todayDate.getMonth(), todayDate.getFullYear());
+
+    if (this.settings.selectable) {
+      this.element.find('td.is-selected').trigger('click.monthview-day');
+    }
   },
 
   /**

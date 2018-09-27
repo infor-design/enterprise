@@ -3,10 +3,6 @@ title: Locale
 description: This page describes Locale.
 ---
 
-## Configuration Options
-
-1. Simple Number Example [View Example]( ../components/locale/test-locale)
-
 ## Code Example - Initializing
 
 The Locale component is used in many of the components to handle localization  18n use cases. The current locale api handles: number conversion, translation, Right To Left, Arabic Calendar, and Gregorian Calendar.

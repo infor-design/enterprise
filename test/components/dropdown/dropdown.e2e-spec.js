@@ -180,7 +180,7 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.css('div[aria-controls="dropdown-list"]'))).not.toContain('is-open');
     });
 
-    it('Should not allow the escape key to re-open a closed menu', async () => { //eslint-disable-line
+    it('Should not allow the escape key to re-open a closed menu', async () => {
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
 
       await browser.driver
@@ -417,4 +417,14 @@ describe('Dropdown typeahead-reloading tests', () => {
       expect(await element(by.css('.dropdown span')).getText()).toEqual('New Jersey');
     });
   }
+});
+
+describe('Dropdown placeholder tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/example-placeholder');
+  });
+
+  it('Show a placeholder', async () => {
+    expect(await element(by.css('[data-placeholder-text]')).isDisplayed()).toBeTruthy();
+  });
 });

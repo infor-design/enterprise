@@ -2,9 +2,10 @@
 title: Splitter Component
 description: This page describes Splitter Component .
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
+  pages:
   - name: Splitter Element in Left Pane
     slug: example-splitter-left
   - name: Events

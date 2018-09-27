@@ -2,9 +2,10 @@
 title: File Upload Advanced
 description: This page describes File Upload Advanced.i
 demo:
-  pages:
+  embedded:
   - name: Advanced File Upload Example
     slug: example-index
+  pages:
   - name: Default File Upload Example
     slug: example-index
 ---

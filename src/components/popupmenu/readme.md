@@ -2,7 +2,7 @@
 title: Popupmenu Component
 description: This page describes Popupmenu Component .
 demo:
-  pages:
+  embedded:
   - name: Popupmenu as a Menu Button
     slug: example-menubutton
   - name: Popupmenu with multiselect

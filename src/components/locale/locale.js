@@ -38,9 +38,11 @@ const Locale = {  // eslint-disable-line
       html.removeAttr('dir');
     }
 
-    if (!Locale.isRTL()) { // Will remove it after flipping
-      $('body').removeClass('busy-loading-locale');
+    // ICONS: Right to Left Direction
+    if (this.isRTL()) {
+      Locale.flipIconsHorizontally();
     }
+    $('body').removeClass('busy-loading-locale');
   },
 
   /**
@@ -1317,12 +1319,6 @@ $(() => {
   setTimeout(() => {
     if (Locale && !Locale.cultureInHead() && !Locale.currentLocale.name) {
       Locale.set('en-US');
-    }
-
-    // ICONS: Right to Left Direction
-    if (Locale && Locale.isRTL()) {
-      Locale.flipIconsHorizontally();
-      $('body').removeClass('busy-loading-locale');
     }
   }, 50);
 });

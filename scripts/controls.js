@@ -45,6 +45,7 @@ module.exports = [
   'components/listview/listview.js',
   'components/listbuilder/listbuilder.js',
   'components/monthview/monthview.js',
+  'components/notification/notification.js',
   'components/circlepager/circlepager.js',
   'components/pager/pager.js',
   'components/place/place.js', // behavior?

@@ -2,9 +2,10 @@
 title: Treemap
 description: This page describes treemap.
 demo:
-  pages:
+  embedded:
   - name: Treemap Main Example
     slug: example-index
+  pages:
   - name: Treemap Nesting Example
     slug: example-nested
 ---

@@ -2,9 +2,10 @@
 title: Pie Chart
 description: This page describes Pie Chart.
 demo:
-  pages:
+  embedded:
   - name: Standard Pie Chart
     slug: example-index
+  pages:
   - name: HCM Example
     slug: example-hcm
   - name: Tooltips

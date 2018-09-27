@@ -2,9 +2,10 @@
 title: Checkboxes
 description: This page describes Checkboxes.
 demo:
-  pages:
+  embedded:
   - name: Default Checkbox Example
     slug: example-index
+  pages:
   - name: Checkbox Groups
     slug: example-checkbox-groups
   - name: Horizontal Checkbox Group

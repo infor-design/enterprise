@@ -24,6 +24,15 @@
   <main class="ids-container">
     <h1>{{component.title}}</h1>
     <p>{{component.description}}</p>
+    <h2>Embedded Links (iframes on ids)</h2>
+    <ul>
+      {{#each component.demo.embedded}}
+        <li>
+          <a href="../components/{{../component.slug}}/{{slug}}">{{name}}</a>
+        </li>
+      {{/each}}
+    </ul>
+    <h2>External links</h2>
     <ul>
       {{#each component.demo.pages}}
         <li>

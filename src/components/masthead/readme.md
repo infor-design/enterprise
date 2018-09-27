@@ -2,7 +2,7 @@
 title: Masthead
 description: This page describes Masthead.
 demo:
-  pages:
+  embedded:
   - name: Default Masthead Example
     slug: example-index
 ---

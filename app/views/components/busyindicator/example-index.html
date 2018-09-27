@@ -1,8 +1,6 @@
-
 <div class="row">
   <div class="one-half column">
-
-    <form id="busy-form" class="busy" action="#" method="POST" data-options="{ 'displayDelay': 100, 'timeToComplete': 4000 }">
+    <div class="busy" id="busy-form" data-options="{ 'displayDelay': 100, 'timeToComplete': 4000 }">
       <div class="field">
         <label for="busy-field-name">Name</label>
         <input type="text" id="busy-field-name" name="busy-field-name" value="" />
@@ -16,20 +14,16 @@
         <input type="text" id="busy-field-cats" name="busy-field-cats" value="" />
       </div>
       <div class="field">
-        <button type="submit" id="submit" class="btn-primary">Submit</button>
+        <button type="text" id="submit" class="btn-primary">Submit</button>
       </div>
-    </form>
+    </div>
   </div>
-
 </div>
 
 <script>
-  $(function(){
-
-    $('#busy-form button[type="submit"]').click(function(e) {
-      e.preventDefault();
+  $(function() {
+    $('#submit').click(function(e) {
       $('#busy-form').trigger('start.busyindicator');
     });
-
   });
 </script>

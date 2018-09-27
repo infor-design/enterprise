@@ -2,7 +2,7 @@
 title: Skiplink Component
 description: This page describes Skiplink Component .
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
 ---
