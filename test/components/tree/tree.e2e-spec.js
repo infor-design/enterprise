@@ -183,15 +183,21 @@ describe('Tree select-multiple tests', () => {
     await element.all(by.css('.tree li.folder')).get(2).all(by.css('a[role="treeitem"] .icon-tree')).get(0)
       .click();
 
-    expect(await element.all(by.css('.tree li.folder')).get(2).getAttribute('class')).toContain('is-selected');
-    expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(33);
+    expect(await element.all(by.css('.tree li.folder')).get(2).getAttribute('class')).toContain('is-open');
+    expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(1);
     await element.all(by.css('.tree li.folder')).get(2).all(by.css('a[role="treeitem"]')).get(1)
       .click();
 
     expect(await element.all(by.css('.tree li.folder')).get(2).getAttribute('class')).not.toContain('is-selected');
     expect(await element.all(by.css('.tree li.folder')).get(2).getAttribute('class')).toContain('is-partial');
-    expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(31);
+    expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(2);
     await element.all(by.css('.tree li.folder')).get(2).all(by.css('a[role="treeitem"]')).get(1)
+      .click();
+
+    expect(await element.all(by.css('.tree li.folder')).get(2).getAttribute('class')).not.toContain('is-selected');
+    expect(await element.all(by.css('.tree li.folder')).get(2).getAttribute('class')).not.toContain('is-partial');
+    expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(1);
+    await element.all(by.css('.tree li.folder')).get(2).all(by.css('a[role="treeitem"]')).get(0)
       .click();
 
     expect(await element.all(by.css('.tree li.folder')).get(2).getAttribute('class')).toContain('is-selected');

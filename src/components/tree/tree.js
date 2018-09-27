@@ -9,7 +9,7 @@ import '../../utils/animations';
 // The name of this component.
 const COMPONENT_NAME = 'tree';
 
-// The Component Defaults
+// The Component Defaults.
 const TREE_DEFAULTS = {
   selectable: 'single', // ['single'|'multiple']
   hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
@@ -138,6 +138,8 @@ Tree.prototype = {
    * @returns {void}
    */
   decorateNode(a) {
+    a = this.isjQuery(a) ? a : $(a);
+
     let parentCount = 0;
     let badgeData = a[0].getAttribute('data-badge');
     const alertIcon = a[0].getAttribute('data-alert-icon');
@@ -253,6 +255,10 @@ Tree.prototype = {
    * @returns {void}
    */
   setTreeIcon(svg, icon) {
+    if (!svg || typeof icon !== 'string') {
+      return;
+    }
+    svg = this.isjQuery(svg) ? svg : $(svg);
     // Replace all "icon-", "hide-focus", "\s? - all spaces if any" with nothing
     const iconStr = icon.replace(/#?icon-|hide-focus|\s?/gi, '');
     svg.changeIcon(iconStr);
@@ -428,9 +434,25 @@ Tree.prototype = {
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {boolean} focus - if defined, causes the node to become focused.
+   * @param {object} e - jquery event.
    * @returns {void}
    */
-  selectNodeFinish(node, focus) {
+  selectNodeFinish(node, focus, e) {
+    // Don't do selection for toggle type only
+    if (this.isMultiselect && e) {
+      if (e.type === 'click' || e.type === 'touch') {
+        if (e.target.classList.contains('icon') &&
+          node[0].parentNode.classList.contains('folder')) {
+          return;
+        }
+      } else if (e.type === 'keydown') {
+        const charCode = e.charCode || e.keyCode;
+        if (charCode === 37 || charCode === 39) {
+          return;
+        }
+      }
+    }
+
     const self = this;
     const links = [].slice.call(this.element[0].querySelectorAll('a'));
     links.forEach(a => a.setAttribute('tabindex', '-1'));
@@ -581,10 +603,10 @@ Tree.prototype = {
    * Changes a node's open/close status to its opposite form.
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
-   * @param {boolean} isFirstSkipped - ?
+   * @param {object} e jquery event
    * @returns {void}
    */
-  toggleNode(node) {
+  toggleNode(node, e) {
     const next = node.next();
     const self = this;
     const s = this.settings;
@@ -596,14 +618,14 @@ Tree.prototype = {
           if (result && result.done && typeof result.done === 'function') { // A promise is returned
             result.done((continueSelectNode) => {
               if (continueSelectNode) {
-                self.selectNodeFinish(node, focus);
+                self.selectNodeFinish(node, focus, e);
               }
             });
           } else if (result) { // Boolean is returned instead of a promise
-            self.selectNodeFinish(node, focus);
+            self.selectNodeFinish(node, focus, e);
           }
         } else { // No Callback specified
-          self.selectNodeFinish(node, focus);
+          self.selectNodeFinish(node, focus, e);
         }
 
         self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), s.folderIconClosed);
@@ -636,14 +658,14 @@ Tree.prototype = {
           if (result && result.done && typeof result.done === 'function') { // A promise is returned
             result.done((continueSelectNode) => {
               if (continueSelectNode) {
-                self.selectNodeFinish(node, focus);
+                self.selectNodeFinish(node, focus, e);
               }
             });
           } else if (result) { // Boolean is returned instead of a promise
-            self.selectNodeFinish(node, focus);
+            self.selectNodeFinish(node, focus, e);
           }
         } else { // No Callback specified
-          self.selectNodeFinish(node, focus);
+          self.selectNodeFinish(node, focus, e);
         }
 
         const nodeData = node.data('jsonData');
@@ -815,7 +837,7 @@ Tree.prototype = {
       if (!target[0].classList.contains('is-disabled') && !target[0].classList.contains('is-loading')) {
         if (self.isMultiselect) {
           if (e.target.classList.contains('icon') && parent.classList.contains('folder')) {
-            self.toggleNode(target);
+            self.toggleNode(target, e);
           } else if (parent.classList.contains('is-selected') || parent.classList.contains('is-partial')) {
             self.unSelectedNode(target, true);
           } else {
@@ -823,7 +845,7 @@ Tree.prototype = {
           }
         } else {
           self.selectNode(target, true);
-          self.toggleNode(target);
+          self.toggleNode(target, e);
         }
         e.stopPropagation();
       }
@@ -879,10 +901,10 @@ Tree.prototype = {
             prev = target.next().find('a:first');
             self.setFocus(prev);
           } else {
-            self.toggleNode(target);
+            self.toggleNode(target, e);
           }
         } else if (target.next().hasClass('is-open')) {
-          self.toggleNode(target);
+          self.toggleNode(target, e);
         } else {
           prev = target.closest('.folder').find('a:first');
           self.setFocus(prev);
@@ -895,7 +917,7 @@ Tree.prototype = {
       if (charCode === 39) {
         if (Locale.isRTL()) {
           if (target.next().hasClass('is-open')) {
-            self.toggleNode(target);
+            self.toggleNode(target, e);
           } else {
             next = target.closest('.folder').find('a:first');
             self.setFocus(next);
@@ -904,7 +926,7 @@ Tree.prototype = {
           next = target.next().find('a:first');
           self.setFocus(next);
         } else {
-          self.toggleNode(target);
+          self.toggleNode(target, e);
           self.setFocus(target);
         }
         e.stopPropagation();
@@ -1570,44 +1592,59 @@ Tree.prototype = {
     return li;
   },
 
-  // Add a node to an existing node, making it a folder if need be
+  /**
+   * Add a node to an existing node, making it a folder if need be
+   * @private
+   * @param {object} nodeData data for node to be added.
+   * @param {object} li parent node to add node.
+   * @returns {void}
+   */
   addAsChild(nodeData, li) {
-    let ul = li.find('ul').first();
-    if (ul.length === 0) {
-      ul = $('<ul></ul>').appendTo(li);
-      ul.addClass('folder');
+    li = this.isjQuery(li) ? li[0] : li;
+    let ul = li.querySelector('ul');
+    if (!ul) {
+      li.insertAdjacentHTML('beforeend', '<ul class="folder"></ul>');
+      ul = li.querySelector('ul');
     }
 
-    ul.addClass(nodeData.open ? 'is-open' : '');
-    this.decorateNode(li.find('a').first());
+    if (nodeData.open) {
+      ul.classList.add('is-open');
+    }
+
+    this.decorateNode(li.querySelector('a'));
 
     nodeData.parent = '';
-    this.addNode(nodeData, ul);
+    this.addNode(nodeData, $(ul));
   },
 
-  // Add the children for the specified node element
+  /**
+   * Add the children for the specified node element,
+   * and if `nodeData.children` not passed will remove current children from node
+   * @private
+   * @param {object} nodeData data for children to be added.
+   * @param {object} li parent node to add children.
+   * @returns {void}
+   */
   addChildNodes(nodeData, li) {
-    const self = this;
-    let ul = li.find('ul');
+    li = this.isjQuery(li) ? li[0] : li;
+    let ul = li.querySelector('ul');
 
     if (!nodeData.children) {
-      ul.remove();
+      if (ul) {
+        ul.parentNode.removeChild(ul);
+      }
       return;
     }
 
-    if (ul.length === 0) {
-      ul = $('<ul></ul>').appendTo(li);
-      ul.addClass(nodeData.open ? 'is-open' : '');
-      ul.addClass('folder');
+    if (!ul) {
+      li.insertAdjacentHTML('beforeend', `<ul class="folder${nodeData.open ? ' is-open' : ''}"></ul>`);
+      ul = li.querySelector('ul');
     }
 
-    ul.empty();
+    ul.innerHTML = '';
 
     if (nodeData.children) {
-      for (let i = 0, l = nodeData.children.length; i < l; i++) {
-        const elem = nodeData.children[i];
-        self.addNode(elem, ul);
-      }
+      nodeData.children.forEach(elem => this.addNode(elem, $(ul)));
     }
   },
 
@@ -1627,59 +1664,55 @@ Tree.prototype = {
    * @returns {void}
    */
   updateNode(nodeData) {
-    // Find the node in the dataset and ui and sync it
-    let elem = this.findById(nodeData.id);
-
-    // Passed in the node element
-    if (nodeData.node) {
-      elem = {};
-      elem.node = nodeData.node;
-    }
-
-    if (!elem) {
+    // Passed in the node element or find the node in the dataset and ui and sync it
+    const elem = nodeData.node ? { node: nodeData.node } : this.findById(nodeData.id);
+    if (!elem || !elem.node[0]) {
       return;
     }
 
-    const parent = elem.node.parent();
+    const parent = elem.node[0].parentNode;
+    const nodetext = elem.node[0].querySelector('.tree-text');
     const isDisabled = this.isTrue(nodeData.disabled) || this.isFalse(nodeData.enabled);
     const isEnabled = this.isTrue(nodeData.enabled) || this.isFalse(nodeData.disabled);
 
     // Update badge
     if (nodeData.badge) {
-      let badge = elem.node.find('.tree-badge:first');
-      // Add badge if not exists
-      if (!badge.length && !nodeData.badge.remove) {
-        if (!nodeData.badge.remove && typeof nodeData.badge.text !== 'undefined' && $.trim(nodeData.badge.text) !== '') {
-          $('<span class="tree-badge badge"></span>').insertBefore(elem.node.find('.tree-text:first'));
-          badge = elem.node.find('.tree-badge:first');
+      let badge = elem.node[0].querySelector('.tree-badge');
+      if (!badge && !nodeData.badge.remove) {
+        if (typeof nodeData.badge.text !== 'undefined' && $.trim(nodeData.badge.text) !== '') {
+          const newBadge = document.createElement('span');
+          newBadge.classList.add('tree-badge', 'badge');
+          nodetext.parentNode.insertBefore(newBadge, nodetext);
+          badge = elem.node[0].querySelector('.tree-badge');
         }
       }
       // Make update changes
-      if (badge.length) {
+      if (badge) {
         if (typeof nodeData.badge.text !== 'undefined') {
           nodeData.badge.text = nodeData.badge.text.toString();
-          badge.text(nodeData.badge.text).removeClass('round');
+          badge.textContent = nodeData.badge.text;
+          badge.classList.remove('round');
           if (nodeData.badge.text.length === 1) {
-            badge.addClass('round');
+            badge.classList.add('round');
           }
         }
         if (typeof nodeData.badge.type !== 'undefined') {
-          badge.removeClass('info good error alert pending');
+          badge.classList.remove('info', 'good', 'error', 'alert', 'pending');
           if (/info|good|error|alert|pending/i.test(nodeData.badge.type)) {
-            badge.addClass(nodeData.badge.type);
-          } else if (nodeData.type && nodeData.badge.type.charAt(0) === '#' && nodeData.badge.type.length === 7) {
-            badge.elem.css('background-color', nodeData.badge.type);
+            badge.classList.add(nodeData.badge.type);
+          } else if (nodeData.badge.type.charAt(0) === '#' && nodeData.badge.type.length === 7) {
+            badge.style.backgroundColor = nodeData.badge.type;
           }
 
           if (nodeData.badge.type.indexOf('pending') !== -1) {
-            badge.text('');
+            badge.textContent = '';
           }
         }
         elem.badge = nodeData.badge;
 
         // Remove badge
         if (this.parseBool(nodeData.badge.remove)) {
-          badge.remove();
+          badge.parentNode.removeChild(badge);
           if (typeof elem.badge !== 'undefined') {
             delete elem.badge;
           }
@@ -1688,20 +1721,28 @@ Tree.prototype = {
     }
 
     if (nodeData.text) {
-      elem.node.find('.tree-text').first().text(nodeData.text);
+      nodetext.textContent = nodeData.text;
       elem.text = nodeData.text;
     }
 
     if (nodeData.icon) {
-      this.setTreeIcon(elem.node.find('svg.icon-tree').first(), nodeData.icon);
+      this.setTreeIcon(elem.node[0].querySelector('svg.icon-tree'), nodeData.icon);
       elem.icon = nodeData.icon;
+    } else if (nodeData.children && nodeData.children.length &&
+      !parent.classList.contains('folder')) {
+      this.convertFileToFolder(elem.node);
     }
 
     if (isDisabled) {
-      elem.node.addClass('is-disabled').attr('aria-disabled', 'true');
+      elem.node[0].classList.add('is-disabled');
+      elem.node[0].setAttribute('aria-disabled', 'true');
 
-      if (parent.is('.folder.is-open')) {
-        $('a, ul[role=group]', parent).addClass('is-disabled').attr('aria-disabled', 'true');
+      if (parent.classList.contains('folder') && parent.classList.contains('is-open')) {
+        const nodes = [].slice.call(parent.querySelectorAll('a, ul[role=group]'));
+        nodes.forEach((node) => {
+          node.classList.add('is-disabled');
+          node.setAttribute('aria-disabled', 'true');
+        });
       }
     }
 
@@ -1709,10 +1750,15 @@ Tree.prototype = {
       const isParentsDisabled = elem.node.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0;
 
       if (!isParentsDisabled) {
-        elem.node.removeClass('is-disabled').removeAttr('aria-disabled');
+        elem.node[0].classList.remove('is-disabled');
+        elem.node[0].removeAttribute('aria-disabled');
 
-        if (parent.is('.folder.is-open')) {
-          $('a, ul[role=group]', parent).removeClass('is-disabled').removeAttr('aria-disabled');
+        if (parent.classList.contains('folder') && parent.classList.contains('is-open')) {
+          const nodes = [].slice.call(parent.querySelectorAll('a, ul[role=group]'));
+          nodes.forEach((node) => {
+            node.classList.remove('is-disabled');
+            node.removeAttribute('aria-disabled');
+          });
         }
       }
     }
@@ -1728,6 +1774,7 @@ Tree.prototype = {
         this.removeChildren(nodeData, parent);
       }
     }
+    this.createSortable();
   },
 
   // Performs the usual Boolean coercion with the exception of
@@ -1736,13 +1783,22 @@ Tree.prototype = {
     return !(/^(false|0)$/i).test(b) && !!b;
   },
 
-  // Delete children nodes
+  /**
+   * Delete children nodes
+   * @private
+   * @param {object} nodeData data for icon to be replaced.
+   * @param {object} li parent node to delete children.
+   * @returns {void}
+   */
   removeChildren(nodeData, li) {
-    const ul = li.find('ul');
+    li = this.isjQuery(li) ? li[0] : li;
+    const ul = li.querySelector('ul');
 
-    this.setTreeIcon(li.find('svg.icon-tree').first(), (nodeData.icon || 'icon-tree-node'));
-    li.removeClass('folder is-open');
-    ul.remove();
+    this.setTreeIcon(li.querySelector('svg.icon-tree'), (nodeData.icon || 'icon-tree-node'));
+    li.classList.remove('folder', 'is-open');
+    if (ul) {
+      ul.parentNode.removeChild(ul);
+    }
   },
 
   /**
@@ -1807,7 +1863,11 @@ Tree.prototype = {
     });
   },
 
-  // Create sortable
+  /**
+   * Create sortable.
+   * @private
+   * @returns {void}
+   */
   createSortable() {
     if (!this.settings.sortable) {
       return;
@@ -1818,12 +1878,14 @@ Tree.prototype = {
     let interval;
     let doDrag;
 
-    self.targetArrow = self.element.prev('.tree-drag-target-arrow');
-    self.linkSelector = 'a:not(.is-dragging-clone, .is-disabled)';
+    self.targetArrow = self.element[0].previousElementSibling;
+    self.linkSelector = 'a:not(.is-dragging-clone):not(.is-disabled)';
 
-    if (!self.targetArrow.length) {
-      $('<div class="tree-drag-target-arrow"></div>').insertBefore(self.element);
-      self.targetArrow = self.element.prev('.tree-drag-target-arrow');
+    if (!self.targetArrow || (self.targetArrow && !self.targetArrow.classList.contains('tree-drag-target-arrow'))) {
+      const div = document.createElement('div');
+      div.classList.add('tree-drag-target-arrow');
+      self.element[0].parentNode.insertBefore(div, self.element[0]);
+      self.targetArrow = self.element[0].previousElementSibling;
     }
 
     function isReady() {
@@ -1831,8 +1893,14 @@ Tree.prototype = {
       if (!self.loading) {
         clearInterval(interval);
 
-        $(self.linkSelector, self.element).each(function () {
-          const a = $(this);
+        const links = [].slice.call(self.element[0].querySelectorAll(self.linkSelector));
+        links.forEach((link) => {
+          const a = $(link);
+
+          // Quit if already binded with `drag`
+          if (a.data('drag')) {
+            return;
+          }
 
           // Don't drag with folder icon, save for toggle nodes
           a.on('mousedown.tree', (e) => {
@@ -1841,7 +1909,8 @@ Tree.prototype = {
             if (e.which === 3) {
               doDrag = false;
             } else {
-              doDrag = $(e.target).is('.icon') ? !a.parent().is('.folder') : true;
+              doDrag = e.target.classList.contains('icon') ?
+                !link.parentNode.classList.contains('folder') : true;
             }
           })
 
@@ -1855,23 +1924,28 @@ Tree.prototype = {
             // Drag start =======================================
             .on('dragstart.tree', (e, pos, thisClone) => {
               if (!thisClone || !doDrag) {
-                a.removeClass('is-dragging');
+                link.classList.remove('is-dragging');
                 if (thisClone) {
-                  thisClone.remove();
+                  thisClone[0].parentNode.removeChild(thisClone[0]);
                 }
                 return;
               }
               clone = thisClone;
-              clone.removeAttr('id').addClass('is-dragging-clone');
-              clone.find('.tree-checkbox, .tree-badge').remove();
+              clone[0].removeAttribute('id');
+              clone[0].classList.add('is-dragging-clone');
 
+              const items = [].slice.call(clone[0].querySelectorAll('.tree-checkbox, .tree-badge'));
+              items.forEach(node => node.parentNode.removeChild(node));
+
+              const startUl = a.closest('ul');
               self.sortable = {
                 // Do not use index from each loop, get updated index on drag start
                 startIndex: $(self.linkSelector, self.element).index(a),
                 startNode: a,
                 startIcon: $('svg.icon-tree', a).getIconName(),
-                startUl: a.closest('ul'),
-                startFolderNode: a.closest('ul').prev('a'),
+                startUl,
+                startLi: a.closest('li'),
+                startFolderNode: startUl.prev('a'),
                 startWidth: a.outerWidth()
               };
 
@@ -1893,8 +1967,9 @@ Tree.prototype = {
 
             // Drag end =========================================
             .on('dragend.tree', (e, pos) => {
-              self.targetArrow.hide();
-              $(self.linkSelector, self.element).removeClass('is-over');
+              self.targetArrow.style.display = 'none';
+              const items = [].slice.call(self.element[0].querySelectorAll(self.linkSelector));
+              items.forEach(node => node.classList.remove('is-over'));
 
               if (!clone || !self.sortable.overDirection) {
                 return;
@@ -1907,19 +1982,19 @@ Tree.prototype = {
 
               // Over
               if (self.sortable.overDirection === 'over') {
-                if (!end.is('.folder')) {
+                if (!end[0].classList.contains('folder')) {
                   self.convertFileToFolder(self.sortable.overNode);
                 }
-                $('ul:first', end).append(start);
-                if (!end.is('.is-open')) {
-                  self.toggleNode(self.sortable.overNode);
+                end[0].querySelector('ul').appendChild(start[0]);
+                if (!end[0].classList.contains('is-open')) {
+                  self.toggleNode(self.sortable.overNode, e);
                 }
               } else if (self.sortable.overDirection === 'up') {
                 // Up
                 start.insertBefore(end);
               } else if (self.sortable.overDirection === 'down') {
                 // Down
-                if (end.is('.is-open')) {
+                if (end[0].classList.contains('is-open') && end[0].classList.contains('folder')) {
                   $('ul:first', end).prepend(start);
                 } else {
                   start.insertAfter(end);
@@ -1927,19 +2002,14 @@ Tree.prototype = {
               }
 
               // Restore file type
-              if ($('li', self.sortable.startUl).length === 0 &&
+              if (!self.sortable.startUl[0].querySelector('li') &&
                 !!self.sortable.startFolderNode.data('oldData') &&
                   self.sortable.startFolderNode.data('oldData').type === 'file') {
                 self.convertFolderToFile(self.sortable.startFolderNode);
               }
 
               // Fix: On windows 10 with IE-11 icons disappears
-              if (self.isIe11) {
-                start.find('.icon-tree').each(function () {
-                  const svg = $(this);
-                  self.setTreeIcon(svg, svg.find('use').attr('xlink:href'));
-                });
-              }
+              utils.fixSVGIcons(start);
 
               self.element.triggerHandler('dragend', self.sortable);
               // Sync dataset and ui
@@ -1955,9 +2025,16 @@ Tree.prototype = {
     interval = setInterval(isReady, 10);
   },
 
-  // Set actions while drag over
+  /**
+   * Set actions while drag over.
+   * @private
+   * @param {object} clone node.
+   * @param {object} pos node positions to compare.
+   * @returns {void}
+   */
   setDragOver(clone, pos) {
     const self = this;
+    const cloneSvg = clone[0].querySelector('svg.icon-tree');
     const treeRec = self.element[0].getBoundingClientRect();
     let extra = 20;
     let exMargin;
@@ -1980,8 +2057,8 @@ Tree.prototype = {
       self.sortable.overIndex = null;
       self.sortable.overDirection = null;
 
-      self.targetArrow.hide();
-      self.setTreeIcon($('svg.icon-tree', clone), 'icon-cancel');
+      self.targetArrow.style.display = 'none';
+      self.setTreeIcon(cloneSvg, 'icon-cancel');
     };
 
     // Moving inside tree
@@ -1989,35 +2066,35 @@ Tree.prototype = {
         pos.top < (treeRec.bottom + extra) &&
         pos.left > (treeRec.left - extra - self.sortable.startWidth) &&
         pos.left < (treeRec.left + treeRec.height + extra)) {
-      links = $(self.linkSelector, self.element);
       extra = 2;
+      links = [].slice.call(self.element[0].querySelectorAll(self.linkSelector));
 
-      for (let i = 0, l = links.length; i < l; i++) {
+      links.forEach((link, i) => {
         direction = null;
-        rec = links[i].getBoundingClientRect();
+        rec = link.getBoundingClientRect();
 
         // Moving on/around node range
         if (pos.top > rec.top - extra && pos.top < rec.bottom + extra) {
-          a = $(links[i]);
+          a = $(link);
 
           // Moving on/around node has parents as same node need to rearrange
           // Cannot rearrange parents to child
           isParentsStartNode = !!a.parentsUntil(self.element, '.folder')
             .filter(function () {
-              return $('a:first', this).is(self.sortable.startNode);
+              return $('a:first', this).is(self.sortable.startNode) && self.sortable.startLi.is('.folder');
             }).length;
           if (isParentsStartNode) {
             outOfRange();
-            continue;
+            return;
           }
 
-          li = a.parent();
+          li = link.parentNode;
           left = rec.left;
           ul = a.closest('ul');
-          exMargin = parseInt(li[0].style.marginTop, 10) > 0 ? 2 : 0;
+          exMargin = parseInt(li.style.marginTop, 10) > 0 ? 2 : 0;
           isBeforeStart = ((i - 1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
           isAfterSttart = ((i + 1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
-          links.removeClass('is-over');
+          links.forEach(node => node.classList.remove('is-over'));
 
           // Apply actions
           /* eslint-disable no-loop-func */
@@ -2028,23 +2105,23 @@ Tree.prototype = {
             }
 
             // Reset icon
-            self.setTreeIcon($('svg.icon-tree', clone), self.sortable.startIcon);
+            self.setTreeIcon(cloneSvg, self.sortable.startIcon);
 
             // Over
             if (direction === 'over') {
-              self.targetArrow.hide();
-              if (!a.is('.is-disabled')) {
-                a.addClass('is-over');
+              self.targetArrow.style.display = 'none';
+              if (!link.classList.contains('is-disabled')) {
+                link.classList.add('is-over');
               }
             } else {
               // Up -or- Down
-              links.removeClass('is-over');
+              links.forEach(node => node.classList.remove('is-over'));
               top = (direction === 'up') ?
-                (rec.top - 1.5 - (li.is('.is-active') ? 3 : 0)) :
-                (rec.bottom + (li.next().is('.is-active') ? -1 : 1.5) + exMargin);
-              self.targetArrow[0].style.left = `${left}px`;
-              self.targetArrow[0].style.top = `${top}px`;
-              self.targetArrow.show();
+                (rec.top - 1.5 - (li.classList.contains('is-active') ? 3 : 0)) :
+                (rec.bottom + (li.nextElementSibling && li.nextElementSibling.classList.contains('is-active') ? -1 : 1.5) + exMargin);
+              self.targetArrow.style.left = `${left}px`;
+              self.targetArrow.style.top = `${top}px`;
+              self.targetArrow.style.display = 'block';
             }
 
             // Set changes
@@ -2075,7 +2152,7 @@ Tree.prototype = {
           }
           doAction(direction);
         }
-      }
+      });
     } else {
       // Out side from tree area
       outOfRange();
