@@ -481,6 +481,8 @@ describe('Tabs ajax as href tests', () => {
     expect(await element(by.id('ajaxified-tabs-tab-1')).getAttribute('innerHTML')).not.toBe('');
 
     await element.all(by.id('example-tab-two')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('#ajaxified-tabs-tab-2.is-visible'))), config.waitsFor);
 
     expect(await element(by.id('ajaxified-tabs-tab-2')).getAttribute('innerHTML')).not.toBe('');
   });
