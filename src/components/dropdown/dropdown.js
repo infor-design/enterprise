@@ -948,7 +948,7 @@ Dropdown.prototype = {
 
     const self = this;
     let selected = false;
-    let noIcons = false;
+    let hasIcons = false;
     const list = $('.dropdown-option', this.listUl);
     const headers = $('.group-label', this.listUl);
     let results;
@@ -994,8 +994,8 @@ Dropdown.prototype = {
       const text = li.text().replace(exp, '<i>$1</i>').trim();
       const icon = (li.children('a').find('svg').length !== 0) ? li.children('a').find('svg')[0].outerHTML : '';
 
-      if (!icon) {
-        noIcons = true;
+      if (icon) {
+        hasIcons = true;
       }
 
       li.children('a').html(icon + text);
@@ -1015,7 +1015,7 @@ Dropdown.prototype = {
       this.list.find('svg').last().changeIcon('icon-empty-circle');
     }
 
-    if (noIcons && this.list.find('input').css('padding-left')) {
+    if (!hasIcons && this.list.find('input').css('padding-left')) {
       this.list.find('input').addClass('no-icon-padding');
     }
   },
