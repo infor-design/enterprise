@@ -1,0 +1,51 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button type="submit" id="update" class="btn-primary">update</button><br /><br />
+
+    <ul role="tree" id="addnode-tree" aria-label="Asset Types" class="tree" data-init="false">
+      <li class="is-open">
+        <a href="#" id="public">Public Folders</a>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var btnUpdate = $('#update');
+  var elem = $('#addnode-tree');
+
+  // Initialize and cache `Tree` api
+  var api = elem.tree({ sortable: true }).data('tree');
+
+  // Add nodes
+  api.addNode({text: 'New Item 1', id: 'new1', exta: "some-data1"});
+  api.addNode({text: 'New Item 2', id: 'new2', exta: "some-data2", "children": [{
+    "id": "node3", extastuff: "some-data3",
+    "text": "Node 2.1"
+  }, {
+    "id": "node4",
+    "text": "Node 2.2",
+    "children": [{
+      "id": "node5",
+      "text": " Node 2.2.1",
+      "icon": "icon-tree-chart",
+      "testdata": "some-test-data",
+      "children": [{
+        "id": "node6",
+        "text": "Node 2.2.1.1",
+        "icon": "icon-tree-chart"
+      }]
+    }]
+  }]});
+
+// Update Node
+  btnUpdate.on('click', function () {
+    api.updateNode({node: $('#public'), text: 'New Public', children: [
+      {text: 'New Public Item 1', id: 'newpublic1'},
+      {text: 'New Public Item 2', id: 'newpublic2'}
+    ]});
+    btnUpdate.disable();
+  });
+</script>
