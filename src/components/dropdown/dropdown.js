@@ -123,7 +123,7 @@ Dropdown.prototype = {
     this.filterTerm = '';
 
     if (!orgId) {
-      orgId = this.element.uniqueId('dropdown');
+      orgId = utils.uniqueId(this.element, 'dropdown');
       DOM.setAttribute(this.element[0], 'id', orgId);
       DOM.setAttribute(this.element.parent().find('label').first()[0], 'for', orgId);
     }

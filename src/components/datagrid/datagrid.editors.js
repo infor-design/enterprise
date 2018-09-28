@@ -521,7 +521,8 @@ const editors = {
       allowedTypes: '*' // restrict file types(ie. 'jpg|png|gif') ['*' all types]
     });
     const fileExtensions = s.allowedTypes.split(/[\s|]+/g);
-    let id = $.fn.uniqueId(`fileupload-${row}-${cell}-`);
+    let id = utils.uniqueId(this, `fileupload-${row}-${cell}-`);
+
     let multiple = s.useMultiple ? ' multiple' : '';
     let disabled = s.isDisabled ? ' disabled' : '';
     let types = '';

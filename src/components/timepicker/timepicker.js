@@ -105,7 +105,7 @@ TimePicker.prototype = {
       return $.inArray(value, modes) > -1 ? value : TIMEPICKER_DEFAULTS().mode;
     }
 
-    this.id = `${this.element.uniqueId('timepicker')}-id`;
+    this.id = `${utils.uniqueId(this.element, 'timepicker')}-id`;
     this.hoursId = `timepicker-hours-${this.id.toString()}`;
     this.minutesId = `timepicker-minutes-${this.id.toString()}`;
     this.secondsId = `timepicker-seconds-${this.id.toString()}`;
