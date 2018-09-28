@@ -948,9 +948,9 @@ Dropdown.prototype = {
 
     const self = this;
     let selected = false;
-    let hasIcons = false;
     const list = $('.dropdown-option', this.listUl);
     const headers = $('.group-label', this.listUl);
+    let hasIcons = false;
     let results;
 
     if (!list.length || !this.list || this.list && !this.list.length) {
@@ -1011,12 +1011,8 @@ Dropdown.prototype = {
     term = '';
     this.position();
 
-    if (this.list.find('svg').length > 2) {
+    if (hasIcons && this.list.find('svg').length > 2) {
       this.list.find('svg').last().changeIcon('icon-empty-circle');
-    }
-
-    if (!hasIcons && this.list.find('input').css('padding-left')) {
-      this.list.find('input').addClass('no-icon-padding');
     }
   },
 
@@ -1037,26 +1033,21 @@ Dropdown.prototype = {
       return;
     }
 
-    const isMobile = this.isMobile();
-    const cssClass = `icon${isMobile ? ' close' : ''}`;
-    const icon = $.getBaseURL(isMobile ? 'close' : 'dropdown');
-
     this.list.removeClass('search-mode');
-    this.list.find('.icon').attr('class', cssClass) // needs to be 'attr' here because .addClass() doesn't work with SVG
-      .changeIcon(icon);
-
-    function stripHtml(obj) {
-      if (!obj[0]) {
-        return '';
-      }
-
-      return obj[0].textContent || obj[0].innerText;
-    }
-
     const lis = this.listUl.find('li');
+    let hasIcons = false;
     lis.removeAttr('style').each(function () {
       const a = $(this).children('a');
-      a.text(stripHtml(a));
+      const li = $(this);
+
+      const text = a.text();
+      const icon = (li.children('a').find('svg').length !== 0) ? li.children('a').find('svg')[0].outerHTML : '';
+
+      if (icon) {
+        hasIcons = true;
+      }
+
+      a.html(icon + text);
     });
 
     // Adjust height / top position
@@ -1071,12 +1062,12 @@ Dropdown.prototype = {
     lis.removeClass('hidden');
     this.position();
 
-    if (this.list.find('svg').length === 2) {
-      this.list.find('svg').last().remove();
+    if (hasIcons && this.list.find('svg').length > 2) {
+      this.list.find('svg').last().changeIcon('icon-empty-circle');
     }
 
-    if (this.list.find('input').css('padding-left')) {
-      this.list.find('input').addClass('no-icon-padding');
+    if (this.list.find('svg').length === 2) {
+      this.list.find('svg').last().remove();
     }
   },
 
