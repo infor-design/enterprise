@@ -47,7 +47,7 @@
 - `[Accordion]` Fixed styling issue on safari. ([#282](https://github.com/infor-design/enterprise/issues/282))
 - `[Dropdown]` Fixed a bug on mobile devices, where the list would close on scrolling. ([#656](https://github.com/infor-design/enterprise/issues/656))
 
-### v4.9.0 Chore & Maintenance
+### v4.11.0 Chore & Maintenance
 
 - `[Textarea]` Added additional test coverage. ([#337](https://github.com/infor-design/enterprise/issues/337))
 - `[Tree]` Added additional test coverage. ([#752](https://github.com/infor-design/enterprise/issues/752))
