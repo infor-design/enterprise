@@ -10,7 +10,6 @@
 - `[General]` It is not possible to make custom builds. To include exactly which components you use. ([#417](https://github.com/infor-design/enterprise/issues/417))
 - `[Calendar]` Added more features including: a readonly view, ability for events to span days, tooltips and notifications ([#417](https://github.com/infor-design/enterprise/issues/417))
 - `[Lookup]` Added the ability to select across pages, even when doing server side paging. ([#375](https://github.com/infor-design/enterprise/issues/375))
-- `[Uplift Theme]` Added the ability to change theme to "uplift". The design of this theme is still in progress. ([#690](https://github.com/infor-design/enterprise/issues/690))
 - `[Datagrid]` Improved tooltip performance, and now tooltips show on cells that are not fully displayed. ([#447](https://github.com/infor-design/enterprise/issues/447))
 
 ### v4.11.0 Fixes
