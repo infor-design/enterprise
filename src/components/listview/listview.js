@@ -99,6 +99,7 @@ ListView.prototype = {
     const card = this.element.closest('.card, .widget');
     const selectable = this.element.attr('data-selectable');
     const selectOnFocus = this.element.attr('data-select-onfocus');
+    self.highLightList = [];
 
     if (selectable && selectable.length) {
       this.settings.selectable = selectable;
@@ -497,36 +498,46 @@ ListView.prototype = {
     }
 
     const list = this.element.find('li, tbody > tr');
+    this.element.find('li, tbody > tr').remove();
+
+    if (this.highLightList.length) {
+      this.resetSearch(this.highLightList);
+    }
+
     const term = searchfield.val();
     let results;
-
-    this.resetSearch();
 
     if (term && term.length) {
       results = this.listfilter.filter(list, term);
     }
 
     if (!results || !results.length && !term) {
+      this.element.find('ul').html(list);
       return;
     }
 
     list.not(results).addClass('hidden');
+    this.highLightList = list.filter(results);
     list.filter(results).each(function (i) {
       const li = $(this);
       li.attr('tabindex', i === 0 ? '0' : '-1');
       li.highlight(term);
     });
 
+    this.element.find('ul').html(list);
     this.renderPager();
   },
 
   /**
    * Reset the current search parameters and highlight.
    * @private
+   * @param {object} list The list of items in view
    * @returns {void}
    */
-  resetSearch() {
-    const list = this.element.find('li, tbody > tr');
+  resetSearch(list) {
+    if (!list) {
+      list = this.element.find('li, tbody > tr');
+    }
 
     list.removeClass('hidden').each(function () {
       $(this).unhighlight();
