@@ -566,6 +566,10 @@ div.multiselect {
   }
 }
 
+.no-icon-padding {
+  padding-left: 12px !important;
+}
+
 .dropdown.error {
   border-color: $error-color;
 
