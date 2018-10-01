@@ -1764,16 +1764,22 @@ Datagrid.prototype = {
       if (this.settings.treeGrid) {
         dataset = this.settings.dataset;
 
-        const checkChildNodes = function (nodeData) {
+        const checkChildNodes = function (nodeData, parentNode) {
           for (let j = 0; j < nodeData.length; j++) {
             const childNode = nodeData[j];
 
-            isFiltered = !checkRow(childNode);
+            if (isFiltered) {
+              isFiltered = !checkRow(childNode);
+            }
 
-            if (!isFiltered) {
-              break;
-            } else if (childNode.children && childNode.children.length) {
-              checkChildNodes(childNode.children);
+            childNode.isFiltered = !checkRow(childNode);
+
+            if (parentNode && !childNode.isFiltered) {
+              parentNode.isFiltered = false;
+            }
+
+            if (childNode.children && childNode.children.length) {
+              checkChildNodes(childNode.children, childNode);
             }
           }
         };
@@ -1781,7 +1787,7 @@ Datagrid.prototype = {
         for (i = 0, len = dataset.length; i < len; i++) {
           isFiltered = !checkRow(dataset[i]);
 
-          if (isFiltered && dataset[i].children && dataset[i].children.length) {
+          if (dataset[i].children && dataset[i].children.length) {
             checkChildNodes(dataset[i].children);
           }
 
@@ -2852,15 +2858,24 @@ Datagrid.prototype = {
 
         if (rowData.id === treeDepthItem.node.id) {
           let parentNode = null;
+          let currentDepth = 0;
           for (let ii = i; ii >= 0; ii--) {
-            if (self.settings.treeDepth[ii].node.depth < treeDepthItem.node.depth) {
+            currentDepth = self.settings.treeDepth[ii].node.depth < currentDepth ||
+            currentDepth === 0 ? self.settings.treeDepth[ii].node.depth : currentDepth;
+            if (currentDepth < treeDepthItem.node.depth) {
               parentNode = self.settings.treeDepth[ii];
-              break;
+
+              if (parentNode.node.isExpanded !== undefined && !parentNode.node.isExpanded
+                || currentDepth === 1) {
+                break;
+              }
             }
           }
 
           if (parentNode && parentNode.node.expanded !== undefined && !parentNode.node.expanded) {
             isHidden = true;
+          } else {
+            isHidden = rowData.isFiltered;
           }
 
           depth = treeDepthItem.depth;
@@ -2915,7 +2930,8 @@ Datagrid.prototype = {
                 self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
               }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
               }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
-                isHidden ? ' is-hidden' : ''
+                isHidden ? ' is-hidden' : ''}${
+                rowData.isFiltered ? ' is-filtered' : ''
               }${isActivated ? ' is-rowactivated' : ''
               }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
               }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
@@ -7744,7 +7760,9 @@ Datagrid.prototype = {
             const nodeLevel = parseInt(node.attr('aria-level'), 10);
 
             if (nodeLevel === (lev + 1)) {
-              node.removeClass('is-hidden');
+              if (!node.hasClass('is-filtered')) {
+                node.removeClass('is-hidden');
+              }
 
               if (node.is('.datagrid-tree-parent')) {
                 const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
