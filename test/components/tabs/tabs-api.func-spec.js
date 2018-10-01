@@ -15,22 +15,25 @@ describe('Tabs API', () => {
     tabsPanelEl = null;
     svgEl = null;
     tabsObj = null;
+
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', tabsHTML);
+
     tabsEl = document.body.querySelector('.tab-container');
     rowEl = document.body.querySelector('.row');
     tabsPanelEl = document.body.querySelector('.tab-panel-container');
     svgEl = document.body.querySelector('.svg-icons');
     tabsEl.classList.add('no-init');
+
     tabsObj = new Tabs(tabsEl);
   });
 
   afterEach(() => {
     tabsObj.destroy();
-    tabsEl.parentNode.removeChild(tabsEl);
-    rowEl.parentNode.removeChild(rowEl);
     tabsPanelEl.parentNode.removeChild(tabsPanelEl);
+    tabsEl.parentNode.removeChild(tabsEl);
     svgEl.parentNode.removeChild(svgEl);
+    rowEl.parentNode.removeChild(rowEl);
   });
 
   it('Should be defined on jQuery object', () => {
