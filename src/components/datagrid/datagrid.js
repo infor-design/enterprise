@@ -5397,10 +5397,10 @@ Datagrid.prototype = {
         if (cellText.indexOf(term) > -1 && isSearchExpandableRow) {
           found = true;
           cell.find('*').each(function () {
-            if (this.innerHTML.replace('&amp;', '&') === this.textContent) {
+            if (xssUtils.unescapeHTML(this.innerHTML) === this.textContent) {
               const contents = this.textContent;
               const node = $(this);
-              const exp = new RegExp(`(${term})`, 'i');
+              const exp = new RegExp(`(${stringUtils.escapeRegExp(term)})`, 'gi');
 
               node.addClass('search-mode').html(contents.replace(exp, '<i>$1</i>'));
             }
