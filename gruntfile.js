@@ -12,20 +12,9 @@ module.exports = function (grunt) {
   const compress = require('./scripts/configs/compress.js');
   const meta = require('./scripts/configs/meta.js');
   const clean = require('./scripts/configs/clean.js');
-  const dependencyBuilder = require('./scripts/dependencybuilder.js');
-  const strBanner = require('./scripts/strbanner.js');
-  const controls = require('./scripts/controls.js');
   const run = require('./scripts/configs/run.js');
 
-  let selectedControls = dependencyBuilder(grunt);
-  let bannerText = '/**\n* IDS Enterprise Components v<%= pkg.version %>\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n* <%= meta.copyright %>\n*/\n';
-
-  if (selectedControls) {
-    const bannerList = strBanner(selectedControls);
-    bannerText = `/**\n* IDS Enterprise Components v<%= pkg.version %>\n* ${bannerList}\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n* <%= meta.copyright %>\n*/ \n`;
-  } else {
-    selectedControls = controls;
-  }
+  const bannerText = require('./scripts/generate-bundle-banner');
 
   const config = {
     pkg: grunt.file.readJSON('package.json'),
