@@ -144,6 +144,17 @@ ListFilter.prototype = {
         }
       }
 
+      if (self.settings.filterMode === 'keyword') {
+        const keywords = term.split(' ');
+        for (let i = 0; i < keywords.length; i++) {
+          const keyword = keywords[i];
+          if (text.toLowerCase().indexOf(keyword) >= 0) {
+            match = true;
+            break;
+          }
+        }
+      }
+
       // assume filtered server side
       if (self.settings.filterMode === null) {
         match = true;
