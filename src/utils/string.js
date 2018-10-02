@@ -126,7 +126,7 @@ stringUtils.textWidth = function textWidth(text, padding, font) {
  * @returns {string} string after escaping.
  */
 stringUtils.escapeRegExp = function escapeRegExp(s) {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); //$& whole matched string
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& whole matched string
 };
 
 export { stringUtils }; //eslint-disable-line
