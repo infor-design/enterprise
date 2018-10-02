@@ -4045,6 +4045,8 @@ Datagrid.prototype = {
         this.originalColGroups : null;
       this.updateColumns(this.originalColumns, columnGroups);
     }
+
+    this.clearFilter();
   },
 
   /**
