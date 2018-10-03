@@ -324,6 +324,11 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
         width: 24px;
       }
     }
+
+    .btn-actions svg {
+      height: 20px;
+      width: 20px;
+    }
   }
 
   //The Top Level Node

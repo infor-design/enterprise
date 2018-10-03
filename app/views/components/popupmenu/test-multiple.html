@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="twelve columns">
+
+      <button id="popdown-destroy" class="btn" type="button">
+        <span>Destroy</span>
+      </button>
+
+    <div class="field" id="field1">
+      <label for="input-menu">Label</label>
+      <input type="text" value="Right Click Me" id="input-menu"/>
+    </div>
+
+    <div class="field" id="field2">
+      <label for="input-menu2">Label2</label>
+      <input type="text" value="Right Click Me" id="input-menu2"/>
+    </div>
+
+    <ul id="action-popupmenu" class="popupmenu">
+      <li><a href="#">Cut</a></li>
+      <li><a href="#">Copy</a></li>
+      <li><a href="#">Paste</a></li>
+      <li>
+        <a href="#">Paste Special</a>
+        <ul class="popupmenu">
+          <li><a href="#">Sub Menu 1</a></li>
+          <li><a href="#">Sub Menu 2</a></li>
+          <li class="separator"></li>
+          <li>
+            <a href="#">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-settings"></use>
+              </svg>
+              Settings
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="separator"></li>
+      <li><a href="#">Name and project range</a></li>
+      <li class="is-disabled"><a id='x' href="#" disabled>Insert comment</a></li>
+      <li class="is-disabled"><a href="#" disabled>Insert note</a></li>
+      <li><a href="#">Clear notes</a></li>
+      <li class="separator single-selectable-section"></li>
+      <li class="heading">Additional Options</li>
+      <li class="is-selectable is-checked"><a href="#">Conditional formatting</a></li>
+      <li class="is-selectable"><a href="#">Data validation</a></li>
+      <li class="separator"></li>
+      <li>
+        <a href="#">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          Settings
+        </a>
+      </li>
+    </ul>
+
+  </div>
+
+  <script>
+    // Like Angular
+    const contextMenu = $('#input-menu');
+    contextMenu.popupmenu({trigger:'rightClick', menu: "action-popupmenu"})
+    const contextMenuApi = contextMenu.data('popupmenu');
+
+    const contextMenu2 = $('#input-menu2')
+    contextMenu2.popupmenu({trigger:'rightClick', menu: "action-popupmenu"});
+    const contextMenuApi2 = contextMenu2.data('popupmenu');
+
+    const popupMenu = $('#action-popupmenu');
+    popupMenu.popupmenu();
+    const popupMenuApi = popupMenu.data('popupmenu');
+
+    $('#popdown-destroy').click(() => {
+      contextMenu.off();
+      contextMenuApi.destroy();
+      contextMenu.parent().remove();
+    });
+  </script>
+
+</div>

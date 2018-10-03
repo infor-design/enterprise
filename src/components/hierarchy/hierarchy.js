@@ -783,11 +783,11 @@ Hierarchy.prototype = {
    * @returns {string} compiled template as HTML string
    */
   getTemplate(data) {
-    const template = Tmpl.compile(`{{#dataset}}${$(`#${this.settings.templateId}`).html()}{{/dataset}}`, { dataset: data });
+    const template = Tmpl.compile(`{{#dataset}}${$(`#${xssUtils.stripTags(this.settings.templateId)}`).html()}{{/dataset}}`, { dataset: data });
 
     // Init popupmenu after rendered in DOM
     setTimeout(() => {
-      const actionButton = $(`#btn-${data.id}`);
+      const actionButton = $(`#btn-${xssUtils.stripTags(data.id)}`);
       if (actionButton.length !== 0) {
         actionButton.hideFocus().popupmenu();
       }
@@ -891,11 +891,11 @@ Hierarchy.prototype = {
       for (let i = 0, l = nodeData.length; i < l; i++) {
         const isLast = (i === (nodeData.length - 1));
         processDataForLeaf(nodeData[i], isLast);
-        self.updateState($(`#${nodeData[i].id}`), false, nodeData[i]);
+        self.updateState($(`#${xssUtils.stripTags(nodeData[i].id)}`), false, nodeData[i]);
       }
     } else {
       processDataForLeaf(nodeData, true);
-      self.updateState($(`#${nodeData.id}`), false, nodeData);
+      self.updateState($(`#${xssUtils.stripTags(nodeData.id)}`), false, nodeData);
     }
   },
 
