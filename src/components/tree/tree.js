@@ -849,6 +849,12 @@ Tree.prototype = {
         }
         e.stopPropagation();
       }
+
+      if (self.popupEl && self.popupEl.data('popupmenu')) {
+        self.popupEl.data('popupmenu').close();
+        self.popupEl = null;
+      }
+
       return false; // Prevent Click from Going to Top
     });
 
@@ -1833,7 +1839,7 @@ Tree.prototype = {
     this.element.off('contextmenu.tree').on('contextmenu.tree', 'a', function (e) {
       const node = $(this);
       e.preventDefault();
-      $(e.currentTarget).popupmenu({ menuId, eventObj: e, trigger: 'immediate', attachToBody: true }).off('selected').on('selected', (event, args) => {
+      self.popupEl = $(e.currentTarget).popupmenu({ menuId, eventObj: e, trigger: 'immediate', attachToBody: true }).off('selected').on('selected', (event, args) => {
         /**
         * Fires when the an attached context menu item is selected.
         *
