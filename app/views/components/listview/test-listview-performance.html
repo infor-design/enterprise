@@ -17,7 +17,8 @@
             <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="gridfilter" data-options="{clearable: true}">
           </div>
 
-          <div class="listview" id="task-listview" data-init="false"></div>
+          <!-- <div class="listview" id="task-listview" data-init="false"></div> -->
+          <div class="listview" id="search-listview" data-options="{template: 'names-tmpl', source: '{{basepath}}api/names', searchable: true}"></div>
         </div>
       </div>
   
@@ -25,25 +26,24 @@
   </div>
   
   {{={{{ }}}=}}
-  <script id="task-tmpl" type="text/html">
+  <script id="names-tmpl" type="text/html">
     <ul>
       {{#dataset}}
         <li>
-          <p class="listview-heading">Task #{{task}}</p>
-          <p class="listview-subheading">{{desc}} </p>
-          <p class="listview-micro">Sample: {{sample}}</p>
+          <p class="listview-heading">#{{id}}</p>
+          <p class="listview-subheading">{{name}} </p>
+          <p class="listview-micro">{{email}}</p>
         </li>
       {{/dataset}}
     </ul>
   </script>
   
-  <script>
+  <!-- <script>
     $('body').on('initialized', function() {
       var data = [];
   
-      for (var i = 0; i < 4000; i++) {
-        let task = Math.floor((Math.random() * 100) + 1);
-        data.push({task: task, desc: task, sample: task});
+      for (var i = 1; i <= 4000; i++) {
+        data.push({task: i, desc: i, sample: i});
       }
   
       this.listview = $('#task-listview').listview({
@@ -53,4 +53,4 @@
         searchable: true
       });
     });
-  </script>
+  </script> -->
