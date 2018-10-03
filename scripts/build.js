@@ -28,7 +28,13 @@
  * - Complex Components
  */
 
-const commandLineArgs = require('yargs').argv;
+const commandLineArgs = require('yargs')
+  .option('verbose', {
+    alias: 'v',
+    describe: 'Include extraneous logging information',
+    default: false
+  })
+  .argv;
 
 const chalk = require('chalk');
 const { spawn } = require('child_process');
@@ -323,7 +329,9 @@ function createDirs(dirs) {
   dirs.forEach((dir) => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
-      logger('info', `Created directory "${dir}"`);
+      if (commandLineArgs.verbose) {
+        logger('info', `Created directory "${dir}"`);
+      }
     }
   });
 }
@@ -341,7 +349,9 @@ function cleanAll() {
   return del(filesToDel)
     .catch(err => logger('error', `Error: ${err}`))
     .then(() => {
-      logger('success', `Cleaned directory "${TEMP_DIR}"`);
+      if (commandLineArgs.verbose) {
+        logger('success', `Cleaned directory "${TEMP_DIR}"`);
+      }
       createDirs([TEMP_DIR]);
     });
 }
@@ -549,7 +559,9 @@ function writeFile(targetFilePath, targetFile) {
       logger('error', `${err}`);
       return;
     }
-    logger('success', `"${targetFilePath}" saved!`);
+    if (commandLineArgs.verbose) {
+      logger('success', `"${targetFilePath}" saved!`);
+    }
   });
 }
 
@@ -696,7 +708,7 @@ function renderTargetFiles() {
 // Main
 // -------------------------------------
 
-logger(null, `\n${chalk.red.bold('IDS Enterprise Custom Builder')}\n`);
+logger(null, `\n${chalk.red.bold('=====   IDS Enterprise Custom Builder   =====')}\n`);
 
 let buildOutput = '';
 
@@ -710,7 +722,7 @@ const requestedComponents = commandLineArgs.components.split(',');
 
 cleanAll().then(() => {
   // Display a list of requested components to the console
-  let componentList = `\n${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
+  let componentList = `${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
   requestedComponents.forEach((comp) => {
     componentList += `- ${comp}\n`;
   });
@@ -742,24 +754,25 @@ cleanAll().then(() => {
     });
   });
 
-  buildOutput += `${chalk.cyan('JS Source Code:')}\n`;
-  jsMatches.forEach((item) => {
-    buildOutput += `${item}\n`;
-  });
-  buildOutput += '\n';
+  if (commandLineArgs.verbose) {
+    buildOutput += `${chalk.cyan('JS Source Code:')}\n`;
+    jsMatches.forEach((item) => {
+      buildOutput += `${item}\n`;
+    });
+    buildOutput += '\n';
 
-  buildOutput += `${chalk.cyan('jQuery Source Code:')}\n`;
-  jQueryMatches.forEach((item) => {
-    buildOutput += `${item}\n`;
-  });
-  buildOutput += '\n';
+    buildOutput += `${chalk.cyan('jQuery Source Code:')}\n`;
+    jQueryMatches.forEach((item) => {
+      buildOutput += `${item}\n`;
+    });
+    buildOutput += '\n';
 
-  buildOutput += `${chalk.cyan('SASS Source Code:')}\n`;
-  sassMatches.forEach((item) => {
-    buildOutput += `${item}\n`;
-  });
-  buildOutput += '\n';
-
+    buildOutput += `${chalk.cyan('SASS Source Code:')}\n`;
+    sassMatches.forEach((item) => {
+      buildOutput += `${item}\n`;
+    });
+    buildOutput += '\n';
+  }
   process.stdout.write(buildOutput);
 
   // Create customized lists of JS components for this bundle
@@ -818,11 +831,16 @@ cleanAll().then(() => {
     }
 
     Promise.all(buildProcesses).then(() => {
-      process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}`);
+      if (commandLineArgs.verbose) {
+        process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}`);
+      }
+      logger('success', 'IDS Custom Build was successfully completed!');
       process.exit(0);
     }).catch((reason) => {
+      if (commandLineArgs.verbose) {
+        process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}`);
+      }
       logger('error', `${reason}`);
-      process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}`);
       process.exit(1);
     });
   });
