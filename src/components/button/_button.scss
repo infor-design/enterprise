@@ -421,6 +421,10 @@ a.btn-close {
   }
 }
 
+.btn {
+  padding: 0 15px;
+}
+
 .btn-tertiary,
 .btn-menu {
   // Dark Ui on Light UI
@@ -456,7 +460,7 @@ a.btn-close {
   }
 }
 
-.btn {
+.btn-default-padding {
   padding: 0 15px;
 }
 
