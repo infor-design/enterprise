@@ -42,7 +42,7 @@ CompletionChart.prototype = {
   /**
    * Do initialization, build up and / or add events ect.
    * @private
-   * @returns {object} The bullet chart prototype for chaining.
+   * @returns {object} The completion chart prototype for chaining.
    */
   init() {
     // Do initialization. Build or Events ect
@@ -332,8 +332,8 @@ CompletionChart.prototype = {
 
       html.label = `<b class="label name">${name}</b>
       <b class="label info ${bColor} colored">
-      <span class="value ${bColor}" style="color: ${styleColor};">${styleValue}</span>
-      <span class="text ${bColor}" style="color: ${styleColor};">${infoText}</span>
+      <span class="value ${bColor}" ${styleColor ? `style="color:${styleColor}` : ''}">${styleValue}</span>
+      <span class="text ${bColor}" ${styleColor ? `style="color:${styleColor}` : ''}">${infoText}</span>
       </b>`;
     }
 
