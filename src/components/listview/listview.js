@@ -488,36 +488,68 @@ ListView.prototype = {
    * @returns {void}
    */
   filter(searchfield) {
+    const startTime = Date.now();
+    const timeIt = msg => {
+      const timePassed = Date.now() - startTime
+      console.log(msg,`: ${timePassed}ms`);
+    };
+
+    console.log('START filter()');
+
     if (!searchfield) {
       return;
     }
 
-    if (searchfield instanceof HTMLElement) {
-      searchfield = $(searchfield);
-    }
+    // Guarentee its a jquery obj
+    searchfield = $(searchfield);
 
-    const list = this.element.find('li, tbody > tr');
-    const term = searchfield.val();
-    let results;
+    // Get the search string and trim whitespace
+    const searchFieldVal = searchfield.val().trim();
 
-    this.resetSearch();
-
-    if (term && term.length) {
-      results = this.listfilter.filter(list, term);
-    }
-
-    if (!results || !results.length && !term) {
+    // Make sure there is a search term...and its not the
+    // same as the previous term
+    if (searchFieldVal.length === 0 || this.searchTerm === searchFieldVal) {
+      timeIt('END searchfield was empty or nothing changed');
       return;
     }
 
+    // Set a global "searchTerm" and get the list of elements
+    this.searchTerm = searchfield.val();
+    const list = this.element.find('li, tbody > tr');
+    timeIt('--> got the list of elements');
+
+
+    this.resetSearch();
+    timeIt('--> called resetSearch()');
+
+
+    // Filter the results
+    let results = this.listfilter.filter(list, this.searchTerm);
+    timeIt('--> filtered the results');
+
+
+    // Check for the jquery object to have a length
+    if (results.length === 0) {
+      timeIt('--> no results found');
+    }
+
+    // Hide elements that aren't in the results array
     list.not(results).addClass('hidden');
-    list.filter(results).each(function (i) {
-      const li = $(this);
-      li.attr('tabindex', i === 0 ? '0' : '-1');
-      li.highlight(term);
+    timeIt('--> hid non-matche elements');
+
+    // Search on the results array
+    // (no need to re-filter like before that I can see)
+    results.each(function (i, elem) {
+      $(elem)
+        .attr('tabindex', i === 0 ? '0' : '-1')
+        .highlight(this.searchTerm);
     });
+    timeIt('--> .each() through and highlight search term');
 
     this.renderPager();
+    timeIt('--> called renderPager()');
+
+    timeIt('DONE');
   },
 
   /**
