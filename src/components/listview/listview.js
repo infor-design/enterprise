@@ -252,7 +252,7 @@ ListView.prototype = {
     const isMultiselect = (this.settings.selectable === 'multiple' || this.settings.selectable === 'mixed');
 
     // Set Initial Tab Index
-    first.attr('tabindex', 0);
+    this.focusItem = first.attr('tabindex', 0);
 
     // Let the link be focus'd
     if (!this.settings.selectable && first.find('a').length === 1) {
@@ -277,7 +277,6 @@ ListView.prototype = {
         if (self.settings.showCheckboxes) {
           // For mixed selection mode primarily append a checkbox object
           item.prepend('<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox"><input tabindex="-1" type="checkbox" class="checkbox"><span class="label-text">&nbsp;</span></label>');
-          // TODO: item.find('.checkbox').attr('tabindex', '-1');
         }
       }
 
@@ -512,10 +511,7 @@ ListView.prototype = {
     // Filter the results and highlight things
     const results = this.listfilter
       .filter(list, this.searchTerm)
-      .highlight(this.searchTerm)
-      .each((i, elem) => {
-        $(elem).attr('tabindex', i === 0 ? '0' : '-1');
-      });
+      .highlight(this.searchTerm);
 
     // Hide elements that aren't in the results array
     list.not(results).addClass('hidden');
@@ -547,8 +543,10 @@ ListView.prototype = {
       return;
     }
 
-    item.siblings().removeAttr('tabindex');
-    item.attr('tabindex', 0).focus();
+    if (this.focusItem) {
+      this.focusItem.removeAttr('tabindex');
+    }
+    this.focusItem = item.attr('tabindex', 0).focus();
 
     if (!this.settings.selectable && item.find('a').length === 1) {
       item.find('a').focus();
@@ -756,7 +754,9 @@ ListView.prototype = {
 
     // focus
     if (!li.is('[tabindex="0"]')) {
-      li.siblings().removeAttr('tabindex');
+      if (this.focusItem) {
+        this.focusItem.removeAttr('tabindex');
+      }
       li.attr('tabindex', 0);
     }
 
