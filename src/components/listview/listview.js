@@ -99,6 +99,9 @@ ListView.prototype = {
     const card = this.element.closest('.card, .widget');
     const selectable = this.element.attr('data-selectable');
     const selectOnFocus = this.element.attr('data-select-onfocus');
+    self.lastSearchTerm = '';
+    self.lastSearchList = [];
+    self.filteredList = [];
 
     if (selectable && selectable.length) {
       this.settings.selectable = selectable;
@@ -496,21 +499,56 @@ ListView.prototype = {
       searchfield = $(searchfield);
     }
 
-    const list = this.element.find('li, tbody > tr');
+    let list = [];
     const term = searchfield.val();
     let results;
+    let hasPop = false;
 
-    this.resetSearch();
+    if (!this.lastSearchTerm) {
+      this.lastSearchTerm = term;
+    } else if (this.lastSearchTerm === term) {
+      return;
+    }
+
+    if (term === '' || this.filteredList.length === 0) {
+      list = this.element.find('li, tbody > tr');
+      this.lastSearchList = list;
+
+      this.filteredList = [];
+      this.resetSearch();
+    } else if (term.indexOf(this.lastSearchTerm) !== -1 && this.lastSearchList.length) {
+      list = this.lastSearchList;
+      this.resetSearch(list);
+    } else {
+      list = this.filteredList[term.length - 1];
+      this.lastSearchList = list;
+
+      this.resetSearch(list);
+      this.filteredList.pop();
+      hasPop = true;
+    }
+
+    this.lastSearchTerm = term;
 
     if (term && term.length) {
       results = this.listfilter.filter(list, term);
+      this.lastSearchList = results;
+      if (!hasPop) {
+        if (!results.length) {
+          const finalResults = this.filteredList[this.filteredList.length - 1];
+          this.filteredList.push(finalResults);
+          this.lastSearchList = finalResults;
+        } else {
+          this.filteredList.push(results);
+        }
+      }
     }
 
     if (!results || !results.length && !term) {
       return;
     }
 
-    list.not(results).addClass('hidden');
+    list.not(results).hide();
     list.filter(results).each(function (i) {
       const li = $(this);
       li.attr('tabindex', i === 0 ? '0' : '-1');
@@ -523,12 +561,20 @@ ListView.prototype = {
   /**
    * Reset the current search parameters and highlight.
    * @private
+   * @param {object} list The list of items in view
    * @returns {void}
    */
-  resetSearch() {
-    const list = this.element.find('li, tbody > tr');
+  resetSearch(list) {
+    if (!list) {
+      list = this.element.find('li, tbody > tr');
+    }
 
-    list.removeClass('hidden').each(function () {
+    list.show();
+    // list.removeClass('hidden').each(function () {
+    //   $(this).unhighlight();
+    // });
+
+    list.each(function () {
       $(this).unhighlight();
     });
   },
