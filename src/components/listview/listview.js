@@ -511,10 +511,11 @@ ListView.prototype = {
 
     // Filter the results and highlight things
     let results = this.listfilter
-      .filter(list, this.searchTerm).each(function (i, elem) {
-      $(elem)
-        .attr('tabindex', i === 0 ? '0' : '-1')
-        .highlight(this.searchTerm);
+      .filter(list, this.searchTerm)
+      .each((i, elem) => {
+        $(elem)
+          .attr('tabindex', i === 0 ? '0' : '-1')
+          .highlight(this.searchTerm);
     });
 
     // Hide elements that aren't in the results array
