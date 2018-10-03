@@ -488,19 +488,10 @@ ListView.prototype = {
    * @returns {void}
    */
   filter(searchfield) {
-    const startTime = Date.now();
-    const timeIt = msg => {
-      const timePassed = Date.now() - startTime
-      console.log(msg,`: ${timePassed}ms`);
-    };
-
-    console.log('START filter()');
-
     if (!searchfield) {
       return;
     }
 
-    // Guarentee its a jquery obj
     searchfield = $(searchfield);
 
     // Get the search string and trim whitespace
@@ -508,48 +499,28 @@ ListView.prototype = {
 
     // Make sure there is a search term...and its not the
     // same as the previous term
-    if (searchFieldVal.length === 0 || this.searchTerm === searchFieldVal) {
-      timeIt('END searchfield was empty or nothing changed');
+    if (searchFieldVal.length < 2 || this.searchTerm === searchFieldVal) {
       return;
     }
 
     // Set a global "searchTerm" and get the list of elements
     this.searchTerm = searchfield.val();
     const list = this.element.find('li, tbody > tr');
-    timeIt('--> got the list of elements');
-
 
     this.resetSearch();
-    timeIt('--> called resetSearch()');
 
-
-    // Filter the results
-    let results = this.listfilter.filter(list, this.searchTerm);
-    timeIt('--> filtered the results');
-
-
-    // Check for the jquery object to have a length
-    if (results.length === 0) {
-      timeIt('--> no results found');
-    }
-
-    // Hide elements that aren't in the results array
-    list.not(results).addClass('hidden');
-    timeIt('--> hid non-matche elements');
-
-    // Search on the results array
-    // (no need to re-filter like before that I can see)
-    results.each(function (i, elem) {
+    // Filter the results and highlight things
+    let results = this.listfilter
+      .filter(list, this.searchTerm).each(function (i, elem) {
       $(elem)
         .attr('tabindex', i === 0 ? '0' : '-1')
         .highlight(this.searchTerm);
     });
-    timeIt('--> .each() through and highlight search term');
+
+    // Hide elements that aren't in the results array
+    list.not(results).addClass('hidden');
 
     this.renderPager();
-    timeIt('--> called renderPager()');
-
-    timeIt('DONE');
   },
 
   /**
@@ -1273,7 +1244,6 @@ ListView.prototype = {
       this.searchfield
         .off('contents-checked.searchable-listview')
         .on('contents-checked.searchable-listview', function (e) {
-          console.log("We should probably have a timed delay or a 2 character minimum so it doesn't run on every keystroke");
           self.handleSearch(e, $(this));
         });
     }
