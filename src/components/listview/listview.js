@@ -1273,6 +1273,7 @@ ListView.prototype = {
       this.searchfield
         .off('contents-checked.searchable-listview')
         .on('contents-checked.searchable-listview', function (e) {
+          console.log("We should probably have a timed delay or a 2 character minimum so it doesn't run on every keystroke");
           self.handleSearch(e, $(this));
         });
     }
