@@ -514,7 +514,7 @@ ListView.prototype = {
       .filter(list, this.searchTerm)
       .highlight(this.searchTerm)
       .each((i, elem) => {
-        $(elem).attr('tabindex', i === 0 ? '0' : '-1')
+        $(elem).attr('tabindex', i === 0 ? '0' : '-1');
       });
 
     // Hide elements that aren't in the results array
