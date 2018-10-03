@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { Environment as env } from '../../utils/environment';
 
 const COMPONENT_NAME = 'about';
 
@@ -117,6 +118,7 @@ About.prototype = {
     if (this.settings.deviceSpecs) {
       const specs = this.getDeviceSpecs();
       const text = `<span class="browser">${Locale.translate('Browser')} : ${specs.browser}</span><br>
+        <span class="device">${Locale.translate('Device')} : ${env.os.name}</span><br>
         <span class="platform">${Locale.translate('Platform')} : ${specs.os}</span><br>
         <span class="locale">${Locale.translate('Locale')} : ${specs.locale}</span><br>
         <span class="cookiesEnabled">${Locale.translate('CookiesEnabled')} : ${specs.cookiesEnabled}</span><br>`;
