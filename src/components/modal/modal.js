@@ -594,14 +594,19 @@ Modal.prototype = {
     $(this.element).on('keypress.modal', (e) => {
       const target = $(e.target);
 
-      if (target.is('editor, .searchfield, textarea, :button') || target.closest('.tab-list').length || $('#dropdown-list').length) {
+      if (target.is('.editor, .searchfield, textarea, :button') || target.closest('.tab-list').length || $('#dropdown-list').length) {
         return;
       }
 
       if (e.which === 13 && this.isOnTop() &&
           !target.closest('form').find(':submit').length &&
           this.element.find('.btn-modal-primary:enabled').length) {
-        return;
+        e.stopPropagation();
+        e.preventDefault();
+
+        if ((!target.hasClass('fileupload') && !$(target).is(':input')) || target.hasClass('colorpicker')) {
+          this.element.find('.btn-modal-primary:enabled').trigger('click');
+        }
       }
     });
 
