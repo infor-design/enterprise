@@ -34,6 +34,16 @@ const commandLineArgs = require('yargs')
     describe: 'Include extraneous logging information',
     default: false
   })
+  .option('dry-run', {
+    alias: 'd',
+    describe: 'Run the script, skipping creation of files',
+    default: false
+  })
+  .option('test-mode', {
+    alias: 'T',
+    describe: 'Run the script with preset components',
+    default: false
+  })
   .argv;
 
 const chalk = require('chalk');
@@ -109,7 +119,6 @@ const searchTerms = {
   mid: '// Mid ====/'
 };
 
-/*
 // These are test arguments that can be used in place of command line arguments during debugging
 const TEST_ARGS = [
   'builder',
@@ -125,7 +134,6 @@ const TEST_ARGS = [
   'tabs',
   'validation'
 ];
-*/
 
 // Library types
 const libTypes = ['components', 'behaviors', 'layouts', 'patterns', 'utils'];
@@ -551,6 +559,23 @@ function renderImportsToString(key, type) {
  * @private
  * @param {string} targetFilePath the path of the file that will be written
  * @param {string} targetFile the contents of the file to be written
+ * @returns {void}
+ */
+function logFileResults(targetFilePath, targetFile) {
+  if (commandLineArgs.verbose) {
+    logger(null, `Output for "${chalk.yellow(targetFilePath)}\n"`);
+    logger(null, `${targetFile}\n`);
+    return;
+  }
+
+  const kbLength = (Buffer.byteLength(targetFile, 'utf8') / 1024).toFixed(2);
+  logger('success', `File "${chalk.yellow(targetFilePath)}\n" generated (${kbLength} KB) `);
+}
+
+/**
+ * @private
+ * @param {string} targetFilePath the path of the file that will be written
+ * @param {string} targetFile the contents of the file to be written
  * @returns {Promise} results of `fs.writeFile()`
  */
 function writeFile(targetFilePath, targetFile) {
@@ -559,9 +584,7 @@ function writeFile(targetFilePath, targetFile) {
       logger('error', `${err}`);
       return;
     }
-    if (commandLineArgs.verbose) {
-      logger('success', `"${targetFilePath}" saved!`);
-    }
+    logFileResults(targetFilePath, targetFile);
   });
 }
 
@@ -609,6 +632,14 @@ function renderTargetJSFile(key, targetFilePath) {
     targetFile += renderImportsToString(key, type);
   }
 
+  if (commandLineArgs.dryRun) {
+    const dryPromise = new Promise((resolve) => {
+      logFileResults(targetFilePath, targetFile);
+      resolve();
+    });
+    return dryPromise;
+  }
+
   return writeFile(targetFilePath, targetFile);
 }
 
@@ -637,6 +668,14 @@ function renderTargetJQueryFile(key, targetFilePath) {
   } else {
     // All other buckets simply get rendered directly
     targetFile += renderImportsToString(key, type);
+  }
+
+  if (commandLineArgs.dryRun) {
+    const dryPromise = new Promise((resolve) => {
+      logFileResults(targetFilePath, targetFile);
+      resolve();
+    });
+    return dryPromise;
   }
 
   return writeFile(targetFilePath, targetFile);
@@ -674,11 +713,20 @@ function renderTargetSassFile(key, targetFilePath) {
       .replace('../src/core/controls', './controls');
   }
 
+  if (commandLineArgs.dryRun) {
+    const dryPromise = new Promise((resolve) => {
+      logFileResults(targetFilePath, targetFile);
+      resolve();
+    });
+    return dryPromise;
+  }
+
   return writeFile(targetFilePath, targetFile);
 }
 
 /**
  * Renders all available target files.
+ * @param {string} log the log file to write actions to
  * @returns {Promise} containing all file writes.
  */
 function renderTargetFiles() {
@@ -692,7 +740,8 @@ function renderTargetFiles() {
   });
 
   jQueryEntryPoints.forEach((filePathKey) => {
-    renderPromises.push(renderTargetJQueryFile(filePathKey, filePaths.target.jQuery[filePathKey]));
+    const p = renderTargetJQueryFile(filePathKey, filePaths.target.jQuery[filePathKey]);
+    renderPromises.push(p);
   });
 
   sassThemes.forEach((filePathKey) => {
@@ -711,18 +760,23 @@ function renderTargetFiles() {
 logger(null, `\n${chalk.red.bold('=====   IDS Enterprise Custom Builder   =====')}\n`);
 
 let buildOutput = '';
+let requestedComponents;
 
 if (!commandLineArgs.components) {
-  logger(null, 'No component arguments were provided to the custom builder.  Exiting...');
-  process.exit(0);
-}
+  if (!commandLineArgs.testMode) {
+    logger(null, 'No component arguments were provided to the custom builder.  Exiting...');
+    process.exit(0);
+  }
 
-// Convert command line args to a usable list of components
-const requestedComponents = commandLineArgs.components.split(',');
+  // "Test mode" uses presets for included components
+  requestedComponents = TEST_ARGS;
+} else {
+  requestedComponents = commandLineArgs.components.split(',');
+}
 
 cleanAll().then(() => {
   // Display a list of requested components to the console
-  let componentList = `${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
+  let componentList = `${(commandLineArgs.verbose ? '\n' : '')}${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
   requestedComponents.forEach((comp) => {
     componentList += `- ${comp}\n`;
   });
@@ -773,7 +827,10 @@ cleanAll().then(() => {
     });
     buildOutput += '\n';
   }
-  process.stdout.write(buildOutput);
+
+  if (!commandLineArgs.dryRun) {
+    process.stdout.write(buildOutput);
+  }
 
   // Create customized lists of JS components for this bundle
   sortFilesIntoBuckets(jsMatches, filePaths.src.js.components);
@@ -781,9 +838,14 @@ cleanAll().then(() => {
   sortFilesIntoBuckets(sassMatches, filePaths.src.sass.controls);
 
   renderTargetFiles().then(() => {
+    if (commandLineArgs.dryRun) {
+      logger('success', 'Completed dry run!');
+      process.exit(0);
+    }
+
     const buildProcesses = [];
-    let rollupBuildLog = '';
-    let sassBuildLog = '';
+    let rollupBuildLog = `\n${chalk.red('===== JS Build Output (Rollup) =====')}\n\n`;
+    let sassBuildLog = `\n${chalk.red('===== Sass Build Output (Node-Sass) =====')}\n\n`;
 
     // Copy vendor libs/dependencies
     const copyPromise = new Promise((resolve, reject) => {
@@ -801,7 +863,10 @@ cleanAll().then(() => {
       const jsBuildPromise = new Promise((resolve, reject) => {
         const rollup = spawn('rollup', ['-c', '--customBuild', `--components=${commandLineArgs.components}`]);
         rollup.stdout.on('data', (data) => {
-          rollupBuildLog += `${data}\n`;
+          rollupBuildLog += data.toString('utf8');
+        });
+        rollup.stderr.on('data', (data) => {
+          rollupBuildLog += data.toString('utf8');
         });
         rollup.on('exit', (code) => {
           if (code !== 0) {
@@ -818,7 +883,10 @@ cleanAll().then(() => {
       const sassBuildPromise = new Promise((resolve, reject) => {
         const nodeSass = spawn('grunt', ['build:sass', `--components=${commandLineArgs.components}`]);
         nodeSass.stdout.on('data', (data) => {
-          sassBuildLog += `${data}\n`;
+          sassBuildLog += data.toString('utf8');
+        });
+        nodeSass.stderr.on('data', (data) => {
+          sassBuildLog += data.toString('utf8');
         });
         nodeSass.on('exit', (code) => {
           if (code !== 0) {
@@ -832,13 +900,13 @@ cleanAll().then(() => {
 
     Promise.all(buildProcesses).then(() => {
       if (commandLineArgs.verbose) {
-        process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}`);
+        process.stdout.write(`${rollupBuildLog}${sassBuildLog}\n`);
       }
       logger('success', 'IDS Custom Build was successfully completed!');
       process.exit(0);
     }).catch((reason) => {
       if (commandLineArgs.verbose) {
-        process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}`);
+        process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}\n`);
       }
       logger('error', `${reason}`);
       process.exit(1);
