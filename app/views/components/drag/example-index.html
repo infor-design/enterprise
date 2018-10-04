@@ -1,50 +1,55 @@
+<style>
+  .drag-container {
+    height: 100px;
+  }
 
-<div class="row">
+  .drag-box {
+    border: 1px solid #bdbdbd;
+    position: absolute; 
+    width:50px; 
+    height:50px; 
+    background:#ffffff;
+  }
+
+  .left-340 {
+    left: 340px;
+  }
+
+  .left-395 {
+    left: 395px;
+  }
+</style>
+
+<div class="row drag-container">
   <div class="twelve columns">
-
     <span class="label">Draggable - Free</span>
-    <div class="draggable" style="border: 1px solid #bdbdbd;position:absolute; top:40px; width:50px; height:50px; background:#ffffff;">Free</div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div class="draggable drag-box">Free</div>
+  </div>
+</div>
 
+<div class="row drag-container">
+  <div class="twelve columns">
     <span class="label">Draggable - Clone</span>
-    <div class="draggable clone" style="border: 1px solid #bdbdbd;position:absolute; top:155px; width:50px; height:50px; background:#ffffff;">Clone</div>
+    <div class="draggable clone drag-box">Clone</div>
+  </div>
+</div>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+<div class="row drag-container">
+  <div class="twelve columns">
+    <span class="label">Draggable - Only on X or Y axis</span>
+    <div class="draggable x-only drag-box">X Only</div>
+  </div>
+</div>
 
-    <span class="label">Draggable - only on x or y axis</span>
-    <div class="draggable x-only" style="border: 1px solid #bdbdbd;position:absolute; top:265px; width:50px; height:50px; background:#ffffff;">X Only</div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <span class="label">Draggable - with collision detection</span>
-    <div id="one" class="draggable x-only collision" style="border: 1px solid #bdbdbd; position:absolute; top: 393px; width:50px; height:50px; background:#ffffff;">Left</div>
-    <div id="two" class="draggable x-only collision" style="border: 1px solid #bdbdbd; position:absolute; left: 285px; top: 393px; width:50px; height:50px; background:#ffffff;">Right</div>
-
-
+<div class="row drag-container">
+  <div class="twelve columns">
+    <span class="label">Draggable - with Collision Detection</span>
+    <div id="one" class="draggable x-only collision drag-box left-340">Left</div>
+    <div id="two" class="draggable x-only collision drag-box left-395">Right</div>
   </div>
 </div>
 
 <script>
-
   $('.draggable.x-only.collision').drag({axis: 'x', containment: 'parent', obstacle: '.collision'});
 
   $('.draggable.x-only').drag({axis: 'x', containment: 'parent'});
@@ -59,6 +64,4 @@
     }).on('dragend', function () {
       console.log('dragend')
     });
-
-
 </script>
