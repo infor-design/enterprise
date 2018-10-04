@@ -29,7 +29,7 @@
     "quickstart": "npx grunt demo && node app/server.js",
     "quickstart:livereload": "npx grunt demo && node app/server.js --livereload",
     "build": "npx grunt",
-    "build:custom": "node ./scripts/build",
+    "build:custom": "npx grunt clean:dist && node ./scripts/build",
     "stop": "./scripts/stop.sh",
     "watch": "npm run build -- watch",
     "stylelint:demo": "npx stylelint 'app/src/**/*.scss'",
