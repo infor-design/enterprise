@@ -29,6 +29,7 @@ const COMPONENT_NAME = 'listview';
  * @param {number} [settings.pagesize=10] If paging is activated, sets the number of listview items available per page
  * @param {string} [settings.pagingType='list'] The paging type to use, this can be 'list', 'table' or 'firstlast'
  * @param {boolean} [settings.searchable=false] If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+ * @param {boolean} [settings.highlight=true] If false the highlighting of text when using searchable is disabled. You may want to disable this on larger lists.
  * @param {string|boolean} [settings.selectable='single'] selection mode, can be false, 'single', 'multiple' or 'mixed'
  * @param {boolean} [settings.selectOnFocus=true] If true the first item in the list will be selected as it is focused.
  * @param {boolean} [settings.showCheckboxes=true] If false will not show checkboxes used with multiple selection mode only
@@ -50,6 +51,7 @@ const LISTVIEW_DEFAULTS = {
   pagesize: 10,
   pagingType: 'list',
   searchable: false,
+  highlight: true,
   selectable: 'single',
   selectOnFocus: true,
   showCheckboxes: true,
@@ -496,6 +498,11 @@ ListView.prototype = {
     // Get the search string and trim whitespace
     const searchFieldVal = searchfield.val().trim();
 
+    // Clear
+    if (!searchFieldVal) {
+      this.resetSearch();
+    }
+
     // Make sure there is a search term...and its not the
     // same as the previous term
     if (searchFieldVal.length < 2 || this.searchTerm === searchFieldVal) {
@@ -510,8 +517,11 @@ ListView.prototype = {
 
     // Filter the results and highlight things
     const results = this.listfilter
-      .filter(list, this.searchTerm)
-      .highlight(this.searchTerm);
+      .filter(list, this.searchTerm);
+
+    if (this.settings.highlight) {
+      results.highlight(this.searchTerm);
+    }
 
     // Hide elements that aren't in the results array
     list.not(results).addClass('hidden');
@@ -527,9 +537,13 @@ ListView.prototype = {
   resetSearch() {
     const list = this.element.find('li, tbody > tr');
 
-    list.removeClass('hidden').each(function () {
-      $(this).unhighlight();
-    });
+    list.removeClass('hidden');
+
+    if (this.settings.highlight) {
+      list.each(function () {
+        $(this).unhighlight();
+      });
+    }
   },
 
   /**

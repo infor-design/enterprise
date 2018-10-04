@@ -13,16 +13,27 @@
 
       <div class="card-content">
         <div class="listview-search">
-          <label class="audible" for="gridfilter">Search</label>
-          <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="gridfilter" data-options="{clearable: true}"/>
+          <label class="audible" for="searchfield">Search</label>
+          <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="searchfield" data-options="{clearable: true}"/>
         </div>
-
-        <div class="listview" id="search-listview" data-options="{template: 'names-tmpl', source: '{{basepath}}api/names', searchable: true, highlight: false}"></div>
+        <div class="listview" id="big-listview" data-init="false"></div>
       </div>
     </div>
 
   </div>
 </div>
+
+<script>
+  $.getJSON('{{basepath}}api/names', function(res) {
+    $('#big-listview').listview({
+      template: $('#names-tmpl').html(),
+      dataset: res,
+      paging: true,
+      pagesize: 500,
+      searchable: true
+    });
+  });
+</script>
 
 {{={{{ }}}=}}
 <script id="names-tmpl" type="text/html">
