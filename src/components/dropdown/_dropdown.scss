@@ -821,11 +821,11 @@ div.dropdown-xs,
 .ios {
   .dropdown-list.multiple li {
     &::before {
-      top: 6px;
+      top: 0;
     }
 
     &.is-selected::after {
-      top: 11px;
+      top: 8px;
     }
   }
 
