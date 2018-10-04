@@ -170,6 +170,9 @@
     }
   }
 
+  &.line .swatch-caption b {
+    display: inline-block;
+  }
 }
 
 .chart-tooltip-total {
