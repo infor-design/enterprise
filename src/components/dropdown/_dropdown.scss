@@ -821,7 +821,7 @@ div.dropdown-xs,
 .ios {
   .dropdown-list.multiple li {
     &::before {
-      top: 0px;
+      top: 0;
     }
 
     &.is-selected::after {
