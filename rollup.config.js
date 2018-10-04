@@ -41,7 +41,7 @@ const config = {
 // Use auto-generated build entry points for Rollup.
 // NOTE: The IDS Custom build system must have generated files into the `/temp` folder
 // before this can run.
-if (commandLineArgs.customBuild) {
+if (commandLineArgs.components) {
   config.input = 'temp/index.js';
 }
 
