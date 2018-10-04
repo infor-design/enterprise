@@ -63,7 +63,7 @@ ToolbarSearchfield.prototype = {
   build() {
     // Used for managing events that are bound to $(document)
     if (!this.id) {
-      this.id = this.element.uniqueId('toolbar-searchfield');
+      this.id = utils.uniqueId(this.element, 'toolbar-searchfield');
     }
 
     // Build the searchfield element
