@@ -44,6 +44,16 @@ const commandLineArgs = require('yargs')
     describe: 'Run the script with preset components',
     default: false
   })
+  .option('disable-css', {
+    alias: 'c',
+    describe: 'Disables the build process for CSS',
+    default: false
+  })
+  .option('disable-js', {
+    alias: 'j',
+    describe: 'Disables the build process for JS',
+    default: false
+  })
   .argv;
 
 const chalk = require('chalk');
@@ -800,10 +810,18 @@ function runBuildProcesses(requested, jsMatches, jQueryMatches, sassMatches) {
 
   // Copy vendor libs/dependencies
   const copyPromise = runBuildProcess('npx', ['grunt', 'copy:main']);
-  if (!isCustom || (jsMatches.length || jQueryMatches.length)) {
+
+  // Build JS
+  if (commandLineArgs.disableJs) {
+    logger('alert', 'Ignoring build process for JS');
+  } else if (!isCustom || (jsMatches.length || jQueryMatches.length)) {
     jsBuildPromise = runBuildProcess('rollup', rollupArgs);
   }
-  if (!isCustom || sassMatches.length) {
+
+  // Build CSS
+  if (commandLineArgs.disableCss) {
+    logger('alert', 'Ignoring build process for CSS');
+  } else if (!isCustom || sassMatches.length) {
     sassBuildPromise = runBuildProcess('grunt', sassArgs);
   }
 
