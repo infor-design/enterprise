@@ -346,9 +346,10 @@ function createDirs(dirs) {
 
 /**
  * "cleans" all the folders used by this script
+ * @param {boolean} buildTempDir if true, re-builds the `temp/` directory
  * @returns {Promise} that resolves when the `del` library completes its task
  */
-function cleanAll() {
+function cleanAll(buildTempDir) {
   const filesToDel = [
     `${TEMP_DIR}/*.js`,
     `${TEMP_DIR}/*.scss`
@@ -359,6 +360,9 @@ function cleanAll() {
     .then(() => {
       if (commandLineArgs.verbose) {
         logger('success', `Cleaned directory "${TEMP_DIR}"`);
+      }
+      if (!buildTempDir) {
+        return;
       }
       createDirs([TEMP_DIR]);
     });
@@ -774,7 +778,7 @@ if (!commandLineArgs.components) {
   requestedComponents = commandLineArgs.components.split(',');
 }
 
-cleanAll().then(() => {
+cleanAll(true).then(() => {
   // Display a list of requested components to the console
   let componentList = `${(commandLineArgs.verbose ? '\n' : '')}${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
   requestedComponents.forEach((comp) => {
@@ -902,12 +906,16 @@ cleanAll().then(() => {
       if (commandLineArgs.verbose) {
         process.stdout.write(`${rollupBuildLog}${sassBuildLog}\n`);
       }
-      logger('success', 'IDS Custom Build was successfully completed!');
-      process.exit(0);
+      cleanAll().then(() => {
+        logger(null, '\n');
+        logger('success', 'IDS Custom Build was successfully completed!');
+        process.exit(0);
+      });
     }).catch((reason) => {
       if (commandLineArgs.verbose) {
-        process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}\n`);
+        process.stdout.write(`${rollupBuildLog}${sassBuildLog}\n`);
       }
+      logger(null, '\n');
       logger('error', `${reason}`);
       process.exit(1);
     });
