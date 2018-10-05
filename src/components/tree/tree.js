@@ -1029,15 +1029,17 @@ Tree.prototype = {
 
     // Add given node to parent
     const addToParent = (node) => {
+      let arranged = false;
       // Add child to given parent
       const addChild = (parent) => {
         parent.children = parent.children || [];
         parent.children.push(node);
+        arranged = true;
       };
 
       // Traverse in given data and arrange it
       const arrange = (data) => {
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length && !arranged; i++) {
           if (data[i].id === node.parent) {
             addChild(data[i]);
           }
