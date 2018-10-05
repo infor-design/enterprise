@@ -107,7 +107,11 @@
     padding: 0;
 
     .buttonset {
-      width: calc(100%);
+      width: 100%;
+    }
+
+    &.do-resize .buttonset {
+      width: 100%;
     }
 
     &.has-more-button .buttonset {

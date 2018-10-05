@@ -8,6 +8,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 import { xssUtils } from '../../utils/xss';
+import { DOM } from '../../utils/dom';
 
 const COMPONENT_NAME = 'editor';
 
@@ -1469,6 +1470,7 @@ Editor.prototype = {
 
             // Working with list
             // Start with "<li"
+            let pasteHtml = '';
             if (/(^(\s+?)?<li)/ig.test(html)) {
               // Pasted data starts and ends with "li" tag
               if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) { // ends with "</li>"
@@ -1476,11 +1478,11 @@ Editor.prototype = {
                 if (!thisNode.is('li')) {
                   html = `<ul>${html}</ul>`;
                 }
-                thisNode.replaceWith(html);
+                pasteHtml = html;
               } else if (thisNode.is('li')) {
                 // Missing at the end "</li>" tag
                 // Pasting on "li" node
-                thisNode.replaceWith(`${html}</li>`);
+                pasteHtml = `${html}</li>`;
               } else {
                 // Not pasting on "li" node
 
@@ -1488,9 +1490,9 @@ Editor.prototype = {
                 str = (html.match(/<\/ul|<\/ol/gi) || []);
                 // Pasted data contains "ul or ol" tags
                 if (str.length) {
-                  thisNode.replaceWith(html);
+                  pasteHtml = html;
                 } else {
-                  thisNode.replaceWith(`${html}</li></ul>`);
+                  pasteHtml = `${html}</li></ul>`;
                 }
               }
             } else if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) {
@@ -1498,7 +1500,7 @@ Editor.prototype = {
 
               // Pasting on "li" node
               if (thisNode.is('li')) {
-                thisNode.replaceWith(`<li>${html}`);
+                pasteHtml = `<li>${html}`;
               } else {
                 str = (html.match(/<ul|<ol/gi) || []);
                 // Pasted data contains "ul or ol" tags
@@ -1507,8 +1509,12 @@ Editor.prototype = {
                 } else {
                   html = `<ul>${html}</ul>`;
                 }
-                thisNode.replaceWith(html);
+                pasteHtml = html;
               }
+            }
+
+            if (pasteHtml) {
+              DOM.html(thisNode, pasteHtml, '*');
             }
 
             // Default case
