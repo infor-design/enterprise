@@ -14,8 +14,6 @@ demo:
     slug: example-states
 ---
 
-### Events
-
 The MultiSelect Component allows selecting multiple items from a list. Multiselect inherits from dropdown so please refer to [dropdown](../dropdown) for more API details and events.
 
 ## Code Example
