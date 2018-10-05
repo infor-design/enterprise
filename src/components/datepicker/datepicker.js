@@ -1481,7 +1481,8 @@ DatePicker.prototype = {
       self.setValue(Locale.parseDate(self.element.val().trim(), self.pattern, false));
     }
 
-    if (s.range.useRange && s.range.first.date && !s.range.second.date) {
+    if (s.range.useRange && s.range.first && s.range.first.date
+      && s.range.second && !s.range.second.date) {
       this.setRangeToElem(this.currentDate, true);
     }
   },
