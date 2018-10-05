@@ -23,6 +23,7 @@ const MULTISELECT_DEFAULTS = {
 /**
  * The MultiSelect Component allows selecting multiple items from a list
  * @class MultiSelect
+ * @borrows MultiSelect as Dropdown
  * @constructor
  * @param {jQuery[]|HTMLElement} element the base element
  * @param {object} [settings] incoming settings
