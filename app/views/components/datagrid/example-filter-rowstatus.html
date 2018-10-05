@@ -31,12 +31,10 @@
                          {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
 
       var testSource1 = function(response) {
-        console.log(this, this.sourceArguments);
         response(statuses);
       }
 
       var testSource2 = function(response) {
-        console.log(this, this.sourceArguments);
         response(activities);
       }
 

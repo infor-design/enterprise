@@ -4,7 +4,6 @@ import { DOM } from '../../utils/dom';
 import { breakpoints } from '../../utils/breakpoints';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
-import { xssUtils } from '../../utils/xss';
 
 // jQuery components
 import '../../utils/lifecycle';
@@ -2570,7 +2569,7 @@ Tabs.prototype = {
     if (content instanceof $) {
       content = content[0];
     }
-    markup[0].innerHTML = content || '';
+    DOM.html(markup[0], content || '', '*');
 
     if (doInsert === true) {
       this.container.append(markup);
