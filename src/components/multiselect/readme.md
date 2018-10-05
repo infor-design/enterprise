@@ -78,3 +78,7 @@ The Multi-Select Dropdown should always be preceded by a label element.
 ## Upgrading from 3.X
 
 In 3.x there was no separate Multi-Select element.
+
+### Events
+
+The MultiSelect Component allows selecting multiple items from a list. Multiselect inherits from dropdown so please refer to [dropdown](../dropdown) for more API details and events.
