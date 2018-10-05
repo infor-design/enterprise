@@ -477,17 +477,46 @@ describe('Tabs ajax as href tests', () => {
     await utils.checkForErrors();
   });
 
-  xit('Should be able to activate href tabs', async () => { //eslint-disable-line
-    // Cant get this test to work on CI anymore
+  xit('Should be able to activate href tabs', async () => {
     expect(await element(by.id('ajaxified-tabs-tab-1')).getAttribute('innerHTML')).not.toBe('');
 
     await element.all(by.id('example-tab-two')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#ajaxified-tabs-tab-2.is-visible'))), config.waitsFor);
-    await browser.driver.sleep(config.waitsFor);
-
-    await utils.checkForErrors();
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('#ajaxified-tabs-tab-2.is-visible'))), config.waitsFor);
 
     expect(await element(by.id('ajaxified-tabs-tab-2')).getAttribute('innerHTML')).not.toBe('');
+  });
+});
+
+describe('Tabs click example-activated-event tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/example-activated-event');
+    const tabsContainerEl = await element(by.id('tabs'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to call activate and beforeActivate in tabs', async () => { //eslint-disable-line
+    const opportunitiesEl = await element.all(by.css('.tab-list li')).get(2);
+
+    await browser.actions().mouseMove(opportunitiesEl).perform();
+    await browser.actions().click(opportunitiesEl).perform();
+    await opportunitiesEl.click();
+
+    const beforeActivateEl = await element.all(by.css('.toast-title')).get(0);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(beforeActivateEl), config.waitsFor);
+
+    expect(await beforeActivateEl.getText()).toContain('beforeActivate');
+
+    const activateEl = await element.all(by.css('.toast-title')).get(1);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(activateEl), config.waitsFor);
+
+    expect(await activateEl.getText()).toContain('activated');
   });
 });

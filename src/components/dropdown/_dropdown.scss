@@ -102,6 +102,12 @@ div.multiselect {
     text-overflow: ellipsis;
     vertical-align: top;
     width: inhert;
+
+    &:empty::before {
+      color: $input-placeholder-color;
+      content: attr(data-placeholder-text);
+      -webkit-text-fill-color: $input-placeholder-color;
+    }
   }
 
   > .listoption-icon {
@@ -560,6 +566,10 @@ div.multiselect {
   }
 }
 
+.no-icon-padding {
+  padding-left: 12px !important;
+}
+
 .dropdown.error {
   border-color: $error-color;
 
@@ -811,11 +821,11 @@ div.dropdown-xs,
 .ios {
   .dropdown-list.multiple li {
     &::before {
-      top: 6px;
+      top: 0;
     }
 
     &.is-selected::after {
-      top: 11px;
+      top: 8px;
     }
   }
 

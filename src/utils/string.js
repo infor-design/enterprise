@@ -99,7 +99,7 @@ stringUtils.textWidth = function capitalize(text, fontsize = 14) {
  * @returns {void}
  */
 stringUtils.padDate = function padDate(year, month, day) {
-  return `0${day}`.slice(-2) + `0${month + 1}`.slice(-2) + year;
+  return year + `0${month + 1}`.slice(-2) + `0${day}`.slice(-2);
 };
 
 /**
@@ -117,6 +117,16 @@ stringUtils.textWidth = function textWidth(text, padding, font) {
 
   const metrics = context.measureText(text);
   return Math.round(metrics.width + (padding || 0));
+};
+
+/**
+ * Escape  user input to be treated as literal string with regular expressions
+ * @private
+ * @param {string} s string to process.
+ * @returns {string} string after escaping.
+ */
+stringUtils.escapeRegExp = function escapeRegExp(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& whole matched string
 };
 
 export { stringUtils }; //eslint-disable-line

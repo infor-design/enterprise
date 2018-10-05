@@ -1,9 +1,10 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { Locale } from '../locale/locale';
+import { Locale } from '../../components/locale/locale';
 
 // jQuery components
-import '../components.jquery';
+import '../behaviors.jquery';
+import '../../components/components.jquery';
 import '../../patterns/patterns.jquery';
 
 // The name of this component

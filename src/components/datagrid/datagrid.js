@@ -1540,7 +1540,9 @@ Datagrid.prototype = {
 
       for (let i = 0; i < conditions.length; i++) {
         const columnDef = self.columnById(conditions[i].columnId)[0];
-        let rowValue = self.fieldValue(rowData, columnDef.field);
+
+        let rowValue = rowData ? rowData[columnDef.field] :
+          self.fieldValue(rowData, columnDef.field);
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();
         let rangeData = null;
@@ -1564,7 +1566,7 @@ Datagrid.prototype = {
           rowValue = self.formatValue(fmt, i, id, rowValue, columnDef, rowData, self);
 
           // Strip any html markup that might be in the formatters
-          const rex = /(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig;
+          const rex = /(<([^>]+)>)|(amp;)|(&lt;([^>]+)&gt;)/ig;
           rowValue = rowValue.replace(rex, '').trim().toLowerCase();
 
           rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
@@ -1699,7 +1701,7 @@ Datagrid.prototype = {
             isMatch = !(rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
             break;
           case 'is-empty':
-            isMatch = (rowValue === '');
+            isMatch = (rowValueStr === '');
             break;
           case 'is-not-empty':
             isMatch = (rowValue !== '');
@@ -1760,10 +1762,36 @@ Datagrid.prototype = {
       let dataSetLen;
 
       if (this.settings.treeGrid) {
-        dataset = this.settings.treeDepth;
+        dataset = this.settings.dataset;
+
+        const checkChildNodes = function (nodeData, parentNode) {
+          for (let j = 0; j < nodeData.length; j++) {
+            const childNode = nodeData[j];
+
+            if (isFiltered) {
+              isFiltered = !checkRow(childNode);
+            }
+
+            childNode.isFiltered = !checkRow(childNode);
+
+            if (parentNode && !childNode.isFiltered) {
+              parentNode.isFiltered = false;
+            }
+
+            if (childNode.children && childNode.children.length) {
+              checkChildNodes(childNode.children, childNode);
+            }
+          }
+        };
+
         for (i = 0, len = dataset.length; i < len; i++) {
-          isFiltered = !checkRow(dataset[i].node);
-          dataset[i].node.isFiltered = isFiltered;
+          isFiltered = !checkRow(dataset[i]);
+
+          if (dataset[i].children && dataset[i].children.length) {
+            checkChildNodes(dataset[i].children);
+          }
+
+          dataset[i].isFiltered = isFiltered;
         }
       } else if (this.settings.groupable) {
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
@@ -1848,9 +1876,13 @@ Datagrid.prototype = {
 
       input.val(conditions[i].value);
 
-      if (input.is('select') && conditions[i].value instanceof Array) {
-        for (let j = 0; j < conditions[i].value.length; j++) {
-          input.find(`option[value="${conditions[i].value[j]}"]`).prop('selected', true);
+      if (input.is('select')) {
+        if (conditions[i].value instanceof Array) {
+          for (let j = 0; j < conditions[i].value.length; j++) {
+            input.find(`option[value="${conditions[i].value[j]}"]`).prop('selected', true);
+          }
+        } else {
+          input.find(`option[value="${conditions[i].value}"]`).prop('selected', true);
         }
         input.trigger('updated');
       }
@@ -2811,9 +2843,8 @@ Datagrid.prototype = {
     let rowHtml = '';
     let d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0;
     let depth = null;
-    let d2;
     let j = 0;
-    let isHidden;
+    let isHidden = false;
     let skipColumns;
 
     if (!rowData) {
@@ -2825,11 +2856,36 @@ Datagrid.prototype = {
     depth = d;
 
     // Setup if this row will be hidden or not
-    for (let i = dataRowIdx; i >= 0 && d > 1 && !isHidden; i--) {
-      d2 = self.settings.treeDepth[i];
-      if (d !== d2.depth && d > d2.depth) {
-        d = d2.depth;
-        isHidden = !d2.node.expanded;
+    if (self.settings.treeDepth && self.settings.treeDepth.length) {
+      for (let i = 0; i < self.settings.treeDepth.length; i++) {
+        const treeDepthItem = self.settings.treeDepth[i];
+
+        if (rowData.id === treeDepthItem.node.id) {
+          let parentNode = null;
+          let currentDepth = 0;
+          for (let ii = i; ii >= 0; ii--) {
+            currentDepth = self.settings.treeDepth[ii].node.depth < currentDepth ||
+            currentDepth === 0 ? self.settings.treeDepth[ii].node.depth : currentDepth;
+            if (currentDepth < treeDepthItem.node.depth) {
+              parentNode = self.settings.treeDepth[ii];
+
+              if (parentNode.node.isExpanded !== undefined && !parentNode.node.isExpanded
+                || currentDepth === 1) {
+                break;
+              }
+            }
+          }
+
+          if (parentNode && parentNode.node.expanded !== undefined && !parentNode.node.expanded) {
+            isHidden = true;
+          } else {
+            isHidden = rowData.isFiltered;
+          }
+
+          depth = treeDepthItem.depth;
+
+          break;
+        }
       }
     }
 
@@ -2878,7 +2934,8 @@ Datagrid.prototype = {
                 self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
               }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
               }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
-                isHidden ? ' is-hidden' : ''
+                isHidden ? ' is-hidden' : ''}${
+                rowData.isFiltered ? ' is-filtered' : ''
               }${isActivated ? ' is-rowactivated' : ''
               }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
               }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
@@ -3988,6 +4045,8 @@ Datagrid.prototype = {
         this.originalColGroups : null;
       this.updateColumns(this.originalColumns, columnGroups);
     }
+
+    this.clearFilter();
   },
 
   /**
@@ -5275,7 +5334,7 @@ Datagrid.prototype = {
         value = value.toLowerCase();
 
         // Strip any html markup that might be in the formatted value
-        value = value.replace(/(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig, '');
+        value = value.replace(/(<([^>]+)>)|(amp;)|(&lt;([^>]+)&gt;)/ig, '');
 
         return value.indexOf(filterExpr.value) > -1;
       };
@@ -5340,10 +5399,10 @@ Datagrid.prototype = {
         if (cellText.indexOf(term) > -1 && isSearchExpandableRow) {
           found = true;
           cell.find('*').each(function () {
-            if (this.innerHTML === this.textContent) {
+            if (xssUtils.unescapeHTML(this.innerHTML) === this.textContent) {
               const contents = this.textContent;
               const node = $(this);
-              const exp = new RegExp(`(${term})`, 'i');
+              const exp = new RegExp(`(${stringUtils.escapeRegExp(term)})`, 'gi');
 
               node.addClass('search-mode').html(contents.replace(exp, '<i>$1</i>'));
             }
@@ -7707,7 +7766,9 @@ Datagrid.prototype = {
             const nodeLevel = parseInt(node.attr('aria-level'), 10);
 
             if (nodeLevel === (lev + 1)) {
-              node.removeClass('is-hidden');
+              if (!node.hasClass('is-filtered')) {
+                node.removeClass('is-hidden');
+              }
 
               if (node.is('.datagrid-tree-parent')) {
                 const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;

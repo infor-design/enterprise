@@ -99,11 +99,20 @@ module.exports = function (grunt) {
   ]);
 
   // SASS/CSS Build Task
-  grunt.registerTask('build:sass', [
-    'sass',
-    'cssmin',
-    'usebanner'
-  ]);
+  grunt.registerTask('build:sass', () => {
+    const comps = grunt.option('components');
+    if (comps) {
+      grunt.log.writeln(`Compiling custom CSS library with components "${comps}"...`);
+      // TODO: Fix the bundle banners to show all proper meta-data (See #856)
+      // bannerText = require('./scripts/generate-bundle-banner');
+      // grunt.config.set('banner', bannerText);
+      grunt.task.run('sass:custom');
+    } else {
+      grunt.task.run('sass:dist');
+    }
+    grunt.task.run('cssmin');
+    grunt.task.run('usebanner');
+  });
 
   // Zip dist folder for download from the git releases page.
   grunt.registerTask('zip-dist', [

@@ -90,9 +90,16 @@ If you are unsure, just ask someone on the team so you don't have to redo your b
 
 1. **Push your changes to your remote repository.**  Use `git push {remote} {branch}` to push your changes to your branch on the remote repository.
 
-1. **[Create a pull request](https://help.github.com/articles/creating-a-pull-request/)** to the proper branch
-- Normal changes get merged into `master`
-- Version specific changes need to go into that specific version branch
+1. **[Create a pull request](https://help.github.com/articles/creating-a-pull-request/)**
+    1. Request to the proper branch
+        - Normal changes get merged into `master`
+        - Version specific changes need to go into that specific version branch
+    1. The pull request title should follow this format:
+        - `{Issue Number} - Brief description of fix`
+        - e.g. `100 - Fixed a typo for such and such`
+    1. If you are doing a patch and requesting into a version branch, the title should look like
+        - `{Issue Number} - Brief description of fix [v{the version branch}]`
+        - e.g. `100 - Fixed a type for such and such [v4.9.x]`
 
 See [help.github.com](https://help.github.com/) for further information.
 

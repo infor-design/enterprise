@@ -93,7 +93,7 @@ FieldFilter.prototype = {
       // Set element id
       let id = this.element.attr('id') || this.element.attr('name');
       if (typeof id === 'undefined') {
-        id = $.fn.uniqueId('fieldfilter-');
+        id = utils.uniqueId(this.element, 'fieldfilter-');
         this.element[0].setAttribute('id', id);
       }
       const ffId = `${id}-ff`;
