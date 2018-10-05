@@ -302,8 +302,9 @@
   padding-right: 32px;
 
   & + .icon.close {
-    margin-left: -30px;
+    margin-left: -27px;
     right: auto;
+    top: -2px;
 
     &:hover {
       fill: $trigger-hover-color;
