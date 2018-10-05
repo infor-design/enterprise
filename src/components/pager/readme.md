@@ -10,7 +10,7 @@ demo:
     slug: example-paging
   - name: Paging on the Datagrid Component
     slug: example-paging
-  - name: Circle Pager Component
+  - name: Paging on the Circle Pager Component
     slug: example-index
 ---
 

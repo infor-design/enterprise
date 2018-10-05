@@ -308,21 +308,21 @@ describe('Listview example-paging tests', () => {
   }
 
   it('Should click page "2" in pager bar, and display new listings', async () => {
-    const listviewPagerEl = await element.all(by.css('.pager-toolbar li')).get(2);
+    const listviewPagerEl = await element.all(by.css('.pager-toolbar li.pager-no')).get(1);
     await listviewPagerEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="4"] .listview-heading'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="12"] .listview-heading'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-posinset="4"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
+    expect(await element(by.css('li[aria-posinset="12"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
   });
 
   it('Should click page next icon in pager bar, and display correct listings', async () => {
     const listviewPagerNextEl = await element(by.css('.pager-next'));
     await listviewPagerNextEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="4"] .listview-heading'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="12"] .listview-heading'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-posinset="4"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
+    expect(await element(by.css('li[aria-posinset="12"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
   });
 
   it('Should click page next two times, then prev once, and display correct listings', async () => {
@@ -330,12 +330,11 @@ describe('Listview example-paging tests', () => {
     const listviewPagerNextEl = await element(by.css('.pager-next'));
     await listviewPagerNextEl.click();
     await listviewPagerNextEl.click();
-    await listviewPagerNextEl.click();
     await listviewPagerPrevEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="7"] .listview-heading'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="15"] .listview-heading'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-posinset="7"] .listview-heading')).getText()).toContain('Beechtree Dr. Resurfacing');
+    expect(await element(by.css('li[aria-posinset="15"] .listview-heading')).getText()).toContain('Beechtree Dr. Resurfacing');
   });
 });
 
