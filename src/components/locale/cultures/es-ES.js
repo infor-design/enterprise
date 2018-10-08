@@ -366,7 +366,7 @@ Soho.Locale.addCulture('es-ES', {
     UseEnter: { id: 'UseEnter', value: '. Para la búsqueda utilice Entrar o Flecha abajo.', comment: 'Instructional comments for screen readers' },
     User: { id: 'User', value: 'Usuario', comment: 'User tooltip' },
     UserProfile: { id: 'UserProfile', value: 'Perfil de usuario', comment: 'User Profile tooltip' },
-    Version: { id: 'Version', value: 'SOHO Versión', comment: 'Version of SOHO' },
+    Version: { id: 'Version', value: 'IDS Versión', comment: 'Version of IDS' },
     VerticalMiddleAlign: { id: 'VerticalMiddleAlign', value: 'Alinear verticalmente en centro', comment: 'Vertical Align tooltip' },
     ViewSource: { id: 'ViewSource', value: 'Ver código fuente', comment: 'Toggle the source view in the editor' },
     ViewVisual: { id: 'ViewVisual', value: 'Ver resultado visual', comment: 'Toggle the visual view in the editor' },

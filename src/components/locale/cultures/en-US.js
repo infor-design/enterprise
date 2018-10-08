@@ -372,7 +372,7 @@ Soho.Locale.addCulture('en-US', {
     UseEnter: { id: 'UseEnter', value: '. Use enter or down arrow to lookup.', comment: 'Instructional comments for screen readers' },
     User: { id: 'User', value: 'User', comment: 'User tooltip' },
     UserProfile: { id: 'UserProfile', value: 'User Profile', comment: 'User Profile tooltip' },
-    Version: { id: 'Version', value: 'SOHO Version', comment: 'Version of SOHO' },
+    Version: { id: 'Version', value: 'IDS Version', comment: 'Version of IDS' },
     VerticalMiddleAlign: { id: 'VerticalMiddleAlign', value: 'Vertical Align Center', comment: 'Vertical Align tooltip' },
     ViewSource: { id: 'ViewSource', value: 'View Source', comment: 'Toggle the source view in the editor' },
     ViewVisual: { id: 'ViewVisual', value: 'View Visual', comment: 'Toggle the visual view in the editor' },
