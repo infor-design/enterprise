@@ -19,6 +19,7 @@ const Environment = {
   },
 
   os: {},
+  devicespecs: {},
 
   rtl: $('html').attr('dir') === 'rtl',
 
@@ -30,6 +31,7 @@ const Environment = {
     this.addBrowserClasses();
     this.addGlobalResize();
     this.addGlobalEvents();
+    this.addDeviceSpecs();
   },
 
   /**
@@ -116,6 +118,125 @@ const Environment = {
     }
 
     html.addClass(cssClasses);
+  },
+
+  addDeviceSpecs() {
+    const unknown = '-';
+    const nAppVer = navigator.appVersion;
+    const nUAgent = navigator.userAgent;
+    let browser = navigator.appName;
+    let version = ` ${parseFloat(navigator.appVersion)}`;
+    let majorVersion = parseInt(navigator.appVersion, 10);
+    let nameOffset;
+    let verOffset;
+    let ix;
+
+    if ((verOffset = nUAgent.indexOf('Opera')) !== -1) { //eslint-disable-line
+      browser = 'Opera';
+      version = nUAgent.substring(verOffset + 6);
+      if ((verOffset = nUAgent.indexOf('Version')) !== -1) { //eslint-disable-line
+        version = nUAgent.substring(verOffset + 8);
+      }
+    }
+    if ((verOffset = nUAgent.indexOf('OPR')) !== -1) { //eslint-disable-line
+      browser = 'Opera';
+      version = nUAgent.substring(verOffset + 4);
+    } else if ((verOffset = nUAgent.indexOf('Edge')) !== -1) { //eslint-disable-line
+      browser = 'Microsoft Edge';
+      version = nUAgent.substring(verOffset + 5);
+    } else if ((verOffset = nUAgent.indexOf('MSIE')) !== -1) { //eslint-disable-line
+      browser = 'Microsoft Internet Explorer';
+      version = nUAgent.substring(verOffset + 5);
+    } else if ((verOffset = nUAgent.indexOf('Chrome')) !== -1) { //eslint-disable-line
+      browser = 'Chrome';
+      version = nUAgent.substring(verOffset + 7);
+    } else if ((verOffset = nUAgent.indexOf('Safari')) !== -1) { //eslint-disable-line
+      browser = 'Safari';
+      version = nUAgent.substring(verOffset + 7);
+      if ((verOffset = nUAgent.indexOf('Version')) !== -1) { //eslint-disable-line
+        version = nUAgent.substring(verOffset + 8);
+      }
+    } else if ((verOffset = nUAgent.indexOf('Firefox')) !== -1) { //eslint-disable-line
+      browser = 'Firefox';
+      version = nUAgent.substring(verOffset + 8);
+    } else if (nUAgent.indexOf('Trident/') !== -1) { //eslint-disable-line
+      browser = 'Microsoft Internet Explorer';
+      version = nUAgent.subString(nUAgent.indexOf('rv:') + 3);
+    } else if ((nameOffset = nUAgent.lastIndexOf(' ') + 1) < (verOffset = nUAgent.lastIndexOf('/'))) { //eslint-disable-line
+      browser = nUAgent.substring(nameOffset, verOffset);
+      version = nUAgent.substring(verOffset + 1);
+      if (browser.toLowerCase() === browser.toUpperCase()) {
+        browser = navigator.appName;
+      }
+    }
+    // Trim the version string
+    if ((ix = version.indexOf(';')) !== -1) version = version.substring(0, ix); //eslint-disable-line
+    if ((ix = version.indexOf(' ')) !== -1) version = version.substring(0, ix); //eslint-disable-line
+    if ((ix = version.indexOf(')')) !== -1) version = version.substring(0, ix); //eslint-disable-line
+
+    majorVersion = ` ${parseInt(version, 10)}`;
+    if (isNaN(majorVersion)) {
+      version = ` ${parseFloat(navigator.appVersion)}`;
+      majorVersion = parseInt(navigator.appVersion, 10);
+    }
+
+    // mobile version
+    const mobile = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nAppVer);
+
+    let os = unknown;
+
+    const clientStrings = [
+      { s: 'Windows 10', r: /(Windows 10.0|Windows NT 10.0)/ },
+      { s: 'Windows 8.1', r: /(Windows 8.1|Windows NT 6.3)/ },
+      { s: 'Windows 8', r: /(Windows 8|Windows NT 6.2)/ },
+      { s: 'Windows 7', r: /(Windows 7|Windows NT 6.1)/ },
+      { s: 'Android', r: /Android/ },
+      { s: 'Open BSD', r: /OpenBSD/ },
+      { s: 'Sun OS', r: /SunOS/ },
+      { s: 'Linux', r: /(Linux|X11)/ },
+      { s: 'iOS', r: /(iPhone|iPad|iPod)/ },
+      { s: 'Mac OS X', r: /Mac OS X/ },
+      { s: 'Mac OS', r: /(MacPPC|MacIntel|Mac_PowerPC|Macintosh)/ },
+      { s: 'UNIX', r: /UNIX/ }
+    ];
+
+    for (const id in clientStrings) { //eslint-disable-line
+      const cs = clientStrings[id];
+      if (cs.r.test(nUAgent)) {
+        os = cs.s;
+        break;
+      }
+    }
+
+    let osVersion = unknown;
+
+    if (/Windows/.test(os)) {
+      osVersion = /Windows (.*)/.exec(os)[1];
+    }
+
+    switch (os) { //eslint-disable-line
+      case 'Mac OS X':
+        osVersion = /Mac OS X (10[\.\_\d]+)/.exec(nUAgent)[1].replace(/\_/g, '.'); //eslint-disable-line
+        break;
+
+      case 'Android':
+        osVersion = /Android ([\.\_\d]+)/.exec(nUAgent)[1]; //eslint-disable-line
+        break;
+
+      case 'iOS':
+        osVersion = /OS (\d+)_?(\d+)?/.exec(nUAgent); //eslint-disable-line
+        osVersion = `${osVersion[1]}.${osVersion[2]}.${(osVersion[3] | 0)}`; //eslint-disable-line
+        break;
+    }
+
+    this.devicespecs = {
+      currentBrowser: browser,
+      browserVersion: version,
+      browserMajorVersion: majorVersion,
+      isMobile: mobile,
+      os,
+      currentOSVersion: osVersion
+    };
   },
 
   /**
