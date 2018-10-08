@@ -28,7 +28,33 @@
  * - Complex Components
  */
 
-const commandLineArgs = require('yargs').argv;
+const commandLineArgs = require('yargs')
+  .option('verbose', {
+    alias: 'v',
+    describe: 'Include extraneous logging information',
+    default: false
+  })
+  .option('dry-run', {
+    alias: 'd',
+    describe: 'Run the script, skipping creation of files',
+    default: false
+  })
+  .option('test-mode', {
+    alias: 'T',
+    describe: 'Run the script with preset components',
+    default: false
+  })
+  .option('disable-css', {
+    alias: 'c',
+    describe: 'Disables the build process for CSS',
+    default: false
+  })
+  .option('disable-js', {
+    alias: 'j',
+    describe: 'Disables the build process for JS',
+    default: false
+  })
+  .argv;
 
 const chalk = require('chalk');
 const { spawn } = require('child_process');
@@ -103,7 +129,6 @@ const searchTerms = {
   mid: '// Mid ====/'
 };
 
-/*
 // These are test arguments that can be used in place of command line arguments during debugging
 const TEST_ARGS = [
   'builder',
@@ -119,7 +144,6 @@ const TEST_ARGS = [
   'tabs',
   'validation'
 ];
-*/
 
 // Library types
 const libTypes = ['components', 'behaviors', 'layouts', 'patterns', 'utils'];
@@ -323,16 +347,19 @@ function createDirs(dirs) {
   dirs.forEach((dir) => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
-      logger('info', `Created directory "${dir}"`);
+      if (commandLineArgs.verbose) {
+        logger('info', `Created directory "${dir}"`);
+      }
     }
   });
 }
 
 /**
  * "cleans" all the folders used by this script
+ * @param {boolean} buildTempDir if true, re-builds the `temp/` directory
  * @returns {Promise} that resolves when the `del` library completes its task
  */
-function cleanAll() {
+function cleanAll(buildTempDir) {
   const filesToDel = [
     `${TEMP_DIR}/*.js`,
     `${TEMP_DIR}/*.scss`
@@ -341,7 +368,12 @@ function cleanAll() {
   return del(filesToDel)
     .catch(err => logger('error', `Error: ${err}`))
     .then(() => {
-      logger('success', `Cleaned directory "${TEMP_DIR}"`);
+      if (commandLineArgs.verbose) {
+        logger('success', `Cleaned directory "${TEMP_DIR}"`);
+      }
+      if (!buildTempDir) {
+        return;
+      }
       createDirs([TEMP_DIR]);
     });
 }
@@ -541,15 +573,33 @@ function renderImportsToString(key, type) {
  * @private
  * @param {string} targetFilePath the path of the file that will be written
  * @param {string} targetFile the contents of the file to be written
+ * @returns {void}
+ */
+function logFileResults(targetFilePath, targetFile) {
+  if (!commandLineArgs.verbose) {
+    return;
+  }
+  const kbLength = (Buffer.byteLength(targetFile, 'utf8') / 1024).toFixed(2);
+  logger('success', `File "${chalk.yellow(targetFilePath)}\n" generated (${kbLength} KB)`);
+}
+
+/**
+ * Wraps `fs.writeFile()` with actual async
+ * @private
+ * @param {string} targetFilePath the path of the file that will be written
+ * @param {string} targetFile the contents of the file to be written
  * @returns {Promise} results of `fs.writeFile()`
  */
 function writeFile(targetFilePath, targetFile) {
-  return fs.writeFile(targetFilePath, targetFile, (err) => {
-    if (err) {
-      logger('error', `${err}`);
-      return;
-    }
-    logger('success', `"${targetFilePath}" saved!`);
+  return new Promise((resolve, reject) => {
+    fs.writeFile(targetFilePath, targetFile, (err) => {
+      if (err) {
+        logger('error', `${err}`);
+        reject(err);
+      }
+      logFileResults(targetFilePath, targetFile);
+      resolve();
+    });
   });
 }
 
@@ -667,20 +717,26 @@ function renderTargetSassFile(key, targetFilePath) {
 
 /**
  * Renders all available target files.
+ * @param {boolean} isNormalBuild returns an empty promise chain if this is a normal build
  * @returns {Promise} containing all file writes.
  */
-function renderTargetFiles() {
+function renderTargetFiles(isNormalBuild) {
+  const renderPromises = [];
+  if (isNormalBuild) {
+    return Promise.all([]);
+  }
+
   const jsEntryPoints = Object.keys(filePaths.target.js);
   const jQueryEntryPoints = Object.keys(filePaths.target.jQuery);
   const sassThemes = Object.keys(filePaths.target.sass.themes);
-  const renderPromises = [];
 
   jsEntryPoints.forEach((filePathKey) => {
     renderPromises.push(renderTargetJSFile(filePathKey, filePaths.target.js[filePathKey]));
   });
 
   jQueryEntryPoints.forEach((filePathKey) => {
-    renderPromises.push(renderTargetJQueryFile(filePathKey, filePaths.target.jQuery[filePathKey]));
+    const p = renderTargetJQueryFile(filePathKey, filePaths.target.jQuery[filePathKey]);
+    renderPromises.push(p);
   });
 
   sassThemes.forEach((filePathKey) => {
@@ -692,138 +748,207 @@ function renderTargetFiles() {
   return Promise.all(renderPromises);
 }
 
+/**
+ * Runs a single build process
+ * @param {string} terminalCommand the base terminal command
+ * @param {array} terminalArgs series of command arguments
+ * @returns {Promise} resolves the process's log
+ */
+function runBuildProcess(terminalCommand, terminalArgs) {
+  if (!terminalCommand) {
+    throw new Error(`"${terminalCommand}" must be a valid terminal command`);
+  }
+  if (!Array.isArray(terminalArgs)) {
+    terminalArgs = [];
+  }
+
+  return new Promise((resolve, reject) => {
+    const buildProcess = spawn(terminalCommand, terminalArgs);
+    let log = '';
+    buildProcess.stdout.on('data', (data) => {
+      log += data.toString('utf8');
+    });
+    buildProcess.stderr.on('data', (data) => {
+      log += data.toString('utf8');
+    });
+    buildProcess.on('exit', (code) => {
+      if (code !== 0) {
+        reject(new Error(`Rollup build exited with error code (${code})`));
+      }
+      resolve(log);
+    });
+  });
+}
+
+/**
+ * Runs all relevant build processes
+ * @private
+ * @param {array} requested the search terms that were requested
+ * @param {array} jsMatches base Javascript matches
+ * @param {array} jQueryMatches jQuery matches
+ * @param {array} sassMatches Sass matches
+ * @returns {Promise} containing results of all build processes
+ */
+function runBuildProcesses(requested, jsMatches, jQueryMatches, sassMatches) {
+  let jsBuildPromise;
+  let sassBuildPromise;
+  let isCustom = false;
+  let hasCustom = '';
+  const rollupArgs = ['-c'];
+  const sassArgs = ['build:sass'];
+
+  // if Requested
+  if (Array.isArray(requested) && requested.length) {
+    isCustom = true;
+    const componentsArg = `--components=${requested.join(',')}`;
+    hasCustom = ' with custom entry points';
+    rollupArgs.push(componentsArg);
+    sassArgs.push(componentsArg);
+  }
+
+  logger(`\nRunning build processes${hasCustom}...\n`);
+
+  // Copy vendor libs/dependencies
+  const copyPromise = runBuildProcess('npx', ['grunt', 'copy:main']);
+
+  // Build JS
+  if (commandLineArgs.disableJs) {
+    logger('alert', 'Ignoring build process for JS');
+  } else if (!isCustom || (jsMatches.length || jQueryMatches.length)) {
+    jsBuildPromise = runBuildProcess('rollup', rollupArgs);
+  }
+
+  // Build CSS
+  if (commandLineArgs.disableCss) {
+    logger('alert', 'Ignoring build process for CSS');
+  } else if (!isCustom || sassMatches.length) {
+    sassBuildPromise = runBuildProcess('grunt', sassArgs);
+  }
+
+  return Promise.all([copyPromise, jsBuildPromise, sassBuildPromise]);
+}
+
+/**
+ * Handles a successful build
+ * @param {array} logs contains the logs of all the build processes
+ * @returns {Promise} resulting in a successful process exit
+ */
+function buildSuccess(logs) {
+  if (commandLineArgs.verbose) {
+    logger(null, `\n${chalk.red('===== JS Build Output (Rollup) =====')}`);
+    logger(null, `${logs[1]}\n`);
+    logger(null, `${chalk.red('===== Sass Build Output (Node-Sass) =====')}`);
+    logger(null, `${logs[2]}`);
+  }
+
+  return cleanAll().then(() => {
+    logger('success', `IDS Build was successfully created in "${chalk.yellow('dist/')}"`);
+    process.exit(0);
+  });
+}
+
+/**
+ * Handles a failed build
+ * @param {string} reason the reason the buold failed
+ * @returns {void}
+ */
+function buildFailure(reason) {
+  logger('error', `${reason}`);
+  process.exit(1);
+}
+
 // -------------------------------------
 // Main
 // -------------------------------------
 
-logger(null, `\n${chalk.red.bold('IDS Enterprise Custom Builder')}\n`);
+logger(`\n${chalk.red.bold('=========   IDS Enterprise Builder   =========')}\n`);
 
-let buildOutput = '';
+let requestedComponents = [];
+let normalBuild = false;
 
 if (!commandLineArgs.components) {
-  logger(null, 'No component arguments were provided to the custom builder.  Exiting...');
-  process.exit(0);
+  if (commandLineArgs.testMode) {
+    // "Test mode" uses presets for included components
+    requestedComponents = TEST_ARGS;
+  } else {
+    normalBuild = true;
+    logger('alert', 'No component arguments were provided.  A full component bundle will be created.');
+  }
+} else {
+  requestedComponents = commandLineArgs.components.split(',');
 }
 
-// Convert command line args to a usable list of components
-const requestedComponents = commandLineArgs.components.split(',');
-
-cleanAll().then(() => {
-  // Display a list of requested components to the console
-  let componentList = `\n${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
-  requestedComponents.forEach((comp) => {
-    componentList += `- ${comp}\n`;
-  });
-  logger(null, componentList);
-
-  // Scan source code directories
-  const items = read(SRC_DIR);
-
-  // Build several lists of component source code files that match what was requested
+cleanAll(true).then(() => {
   const jsMatches = [];
   const jQueryMatches = [];
   const sassMatches = [];
 
-  // Search the stored list of source files for each term
-  requestedComponents.forEach((arg) => {
-    const results = searchFileNames(items, arg);
-    results.forEach((result) => {
-      let renderTarget = jsMatches;
-      if (result.indexOf('.jquery') > -1) {
-        renderTarget = jQueryMatches;
-      }
-      if (result.endsWith('.scss')) {
-        renderTarget = sassMatches;
-      }
-      if (renderTarget.indexOf(result) > -1) {
-        return;
-      }
-      renderTarget.push(result);
+  if (!normalBuild) {
+    // Display a list of requested components to the console
+    let componentList = `${(commandLineArgs.verbose ? '\n' : '')}${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
+    requestedComponents.forEach((comp) => {
+      componentList += `- ${comp}\n`;
     });
-  });
+    logger(componentList);
 
-  buildOutput += `${chalk.cyan('JS Source Code:')}\n`;
-  jsMatches.forEach((item) => {
-    buildOutput += `${item}\n`;
-  });
-  buildOutput += '\n';
+    // Scan source code directories
+    const items = read(SRC_DIR);
 
-  buildOutput += `${chalk.cyan('jQuery Source Code:')}\n`;
-  jQueryMatches.forEach((item) => {
-    buildOutput += `${item}\n`;
-  });
-  buildOutput += '\n';
-
-  buildOutput += `${chalk.cyan('SASS Source Code:')}\n`;
-  sassMatches.forEach((item) => {
-    buildOutput += `${item}\n`;
-  });
-  buildOutput += '\n';
-
-  process.stdout.write(buildOutput);
-
-  // Create customized lists of JS components for this bundle
-  sortFilesIntoBuckets(jsMatches, filePaths.src.js.components);
-  sortFilesIntoBuckets(jQueryMatches, filePaths.src.jQuery.components);
-  sortFilesIntoBuckets(sassMatches, filePaths.src.sass.controls);
-
-  renderTargetFiles().then(() => {
-    const buildProcesses = [];
-    let rollupBuildLog = '';
-    let sassBuildLog = '';
-
-    // Copy vendor libs/dependencies
-    const copyPromise = new Promise((resolve, reject) => {
-      const copy = spawn('npx', ['grunt', 'copy:main']);
-      copy.on('exit', (code) => {
-        if (code !== 0) {
-          reject(new Error(`Copy exited with error code (${code})`));
+    // Search the stored list of source files for each term
+    requestedComponents.forEach((arg) => {
+      const results = searchFileNames(items, arg);
+      results.forEach((result) => {
+        let renderTarget = jsMatches;
+        if (result.indexOf('.jquery') > -1) {
+          renderTarget = jQueryMatches;
         }
-        resolve();
+        if (result.endsWith('.scss')) {
+          renderTarget = sassMatches;
+        }
+        if (renderTarget.indexOf(result) > -1) {
+          return;
+        }
+        renderTarget.push(result);
       });
     });
-    buildProcesses.push(copyPromise);
 
-    if (jsMatches.length || jQueryMatches.length) {
-      const jsBuildPromise = new Promise((resolve, reject) => {
-        const rollup = spawn('rollup', ['-c', '--customBuild', `--components=${commandLineArgs.components}`]);
-        rollup.stdout.on('data', (data) => {
-          rollupBuildLog += `${data}\n`;
-        });
-        rollup.on('exit', (code) => {
-          if (code !== 0) {
-            reject(new Error(`Rollup build exited with error code (${code})`));
-          }
-          resolve();
-        });
+    if (commandLineArgs.verbose) {
+      logger(`${chalk.cyan('JS Source Code:')}`);
+      jsMatches.forEach((item) => {
+        logger('bullet', `${item}`);
       });
 
-      buildProcesses.push(jsBuildPromise);
-    }
-
-    if (sassMatches.length) {
-      const sassBuildPromise = new Promise((resolve, reject) => {
-        const nodeSass = spawn('grunt', ['build:sass', `--components=${commandLineArgs.components}`]);
-        nodeSass.stdout.on('data', (data) => {
-          sassBuildLog += `${data}\n`;
-        });
-        nodeSass.on('exit', (code) => {
-          if (code !== 0) {
-            reject(new Error(`Sass build exited with error code (${code})`));
-          }
-          resolve();
-        });
+      logger(`${chalk.cyan('jQuery Source Code:')}`);
+      jQueryMatches.forEach((item) => {
+        logger('bullet', `${item}`);
       });
-      buildProcesses.push(sassBuildPromise);
+
+      logger(`${chalk.cyan('Sass Source Code:')}`);
+      sassMatches.forEach((item) => {
+        logger('bullet', `${item}`);
+      });
+      process.stdout.write('\n');
+    } else {
+      logger(`${chalk.cyan('JS Source Code:')} ${jsMatches.length} files`);
+      logger(`${chalk.cyan('jQuery Source Code:')} ${jQueryMatches.length} files`);
+      logger(`${chalk.cyan('Sass Source Code:')} ${sassMatches.length} files`);
     }
 
-    Promise.all(buildProcesses).then(() => {
-      process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}`);
+    // Create customized lists of JS components for this bundle
+    sortFilesIntoBuckets(jsMatches, filePaths.src.js.components);
+    sortFilesIntoBuckets(jQueryMatches, filePaths.src.jQuery.components);
+    sortFilesIntoBuckets(sassMatches, filePaths.src.sass.controls);
+  }
+
+  renderTargetFiles(normalBuild).then(() => {
+    if (commandLineArgs.dryRun) {
+      process.stdout.write('\n');
+      logger('success', `Completed dry run!  Generated files are avaiable in the "${chalk.yellow('temp/')}" folder.`);
       process.exit(0);
-    }).catch((reason) => {
-      logger('error', `${reason}`);
-      process.stdout.write(`${rollupBuildLog}\n${sassBuildLog}`);
-      process.exit(1);
-    });
+    }
+
+    runBuildProcesses(requestedComponents, jsMatches, jQueryMatches, sassMatches)
+      .catch(buildFailure)
+      .then(buildSuccess);
   });
 });

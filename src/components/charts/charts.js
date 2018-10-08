@@ -1,5 +1,7 @@
 import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
+import { DOM } from '../../utils/dom';
 
 const charts = {};
 
@@ -15,7 +17,7 @@ charts.isIEEdge = env.browser.name === 'edge';
  * @returns {object} Object with the height and width.
  */
 charts.tooltipSize = function tooltipSize(content) {
-  this.tooltip.find('.tooltip-content').html(content);
+  DOM.html(this.tooltip.find('.tooltip-content'), content, '*');
   return { height: this.tooltip.outerHeight(), width: this.tooltip.outerWidth() };
 };
 
@@ -230,7 +232,7 @@ charts.showTooltip = function (x, y, content, arrow) {
 
   this.tooltip[0].style.left = `${x}px`;
   this.tooltip[0].style.top = `${y}px`;
-  this.tooltip.find('.tooltip-content').html(content);
+  DOM.html(this.tooltip.find('.tooltip-content'), content, '*');
 
   this.tooltip.removeClass('bottom top left right').addClass(arrow);
   this.tooltip.removeClass('is-hidden');
@@ -311,7 +313,7 @@ charts.addLegend = function (series, chartType, settings, container) {
     if (chartType === 'scatterplot') {
       color = $('<span class="chart-legend-color"></span>');
     }
-    const textBlock = $(`<span class="chart-legend-item-text">${series[i].name}</span>`);
+    const textBlock = $(`<span class="chart-legend-item-text">${xssUtils.stripTags(series[i].name)}</span>`);
 
     if (series[i].pattern) {
       color.append(`<svg width="12" height="12"><rect height="12" width="12" mask="url(#${series[i].pattern})"/></svg>`);

@@ -1,0 +1,41 @@
+<form>
+
+  <div class="row">
+    <div class="twelve columns">
+
+      <h2 class="fieldset-title">Form Reset Test</h2>
+
+       <div class="field">
+        <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
+        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required email" value="someone@someplace.com"/>
+      </div>
+
+      <div class="field">
+        <label class="required" for="credit-card">Credit Card <span class="audible">Required</span></label>
+        <input type="text" id="credit-card" name="credit-card" data-validate="required" value="xxxx-xxxx-xxxx-xxxx"/>
+      </div>
+
+      <div class="field">
+        <label class="required" for="credit-code">Code <span class="audible">Required</span></label>
+        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-validate="required" value="10" data-mask-mode="number"/>
+      </div>
+
+      <button type="button" id="reset" class="btn-secondary">Reset Form</button>
+    </div>
+  </div>
+
+</form>
+
+<script>
+  $('form').on('valid', function (e, args) {
+    console.log('valid event', e, args);
+  });
+
+  $('form').on('error', function (e, args) {
+    console.log('error event', e, args);
+  });
+
+  $('#reset').on('click', function (e, args) {
+    $('body').resetForm();
+  });
+</script>

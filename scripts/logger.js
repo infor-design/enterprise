@@ -33,9 +33,12 @@ function pad(n) {
 
 // Simple wrapper for `console.log`
 function logger(type, msg) {
-  msg = msg || '';
-
-  if (!type) {
+  if (!type && !msg) {
+    type = logTypes[0];
+    msg = msg || '';
+  }
+  if (!msg) {
+    msg = type;
     type = logTypes[0];
   }
 
@@ -61,6 +64,9 @@ function logger(type, msg) {
       break;
     case 'skip':
       prefix = chalk.cyan(NDASH) + pad(2);
+      break;
+    case 'bullet':
+      prefix = chalk.gray(NDASH) + pad(2);
       break;
     case 'info':
       prefix = chalk.blue(INFO_I) + pad(2);
