@@ -2048,7 +2048,7 @@ Tabs.prototype = {
       // Get a new random tab ID for this tab if one can't be derived from the URL string
       if (isURL) {
         const containerId = this.element[0].id || '';
-        const id = anchor.uniqueId('tab', containerId);
+        const id = utils.uniqueId(anchor, 'tab', containerId);
 
         href = `#${id}`;
         // Replace the original URL on this anchor now that we've loaded content.

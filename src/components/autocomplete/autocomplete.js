@@ -82,6 +82,16 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
   // Easy match for 'contains'-style filterMode.
   if (options.filterMode === 'contains') {
     targetProp = targetProp.replace(new RegExp('(' + options.term + ')', 'ig'), '<i>$1</i>');
+  } else if (options.filterMode === 'keyword') {
+    // Handle "keyword" filterMode
+    const keywords = options.term.split(' ');
+    for (let i = 0; i < keywords.length; i++) {
+      const keyword = keywords[i];
+
+      if (keyword) {
+        targetProp = targetProp.replace(new RegExp('(' + keyword + ')', 'ig'), '<i>$1</i>');
+      }
+    }
   } else {
     // Handle "startsWith" filterMode highlighting a bit differently.
     const originalItem = targetProp;
@@ -550,6 +560,7 @@ Autocomplete.prototype = {
       }
 
       buffer = field.val();
+
       if (buffer === '') {
         if (self.element.data('popupmenu')) {
           self.element.data('popupmenu').close();
@@ -581,6 +592,64 @@ Autocomplete.prototype = {
         done(buffer, sourceData, true);
       } else if (!self.settings.source) {
         dfd.reject(buffer);
+      } else if (self.settings.filterMode === 'keyword') {
+        let keywordData = [];
+        const mergeData = function (data) {
+          if (keywordData.length === 0) {
+            keywordData = data;
+          } else {
+            // Check for duplicate entries
+            for (let i = 0; i < data.length; i++) {
+              const dataItem = data[i];
+
+              let isExists = false;
+
+              for (let ii = 0; ii < keywordData.length; ii++) {
+                const keywordItem = keywordData[ii];
+
+                for (let iii = 0; iii < Object.getOwnPropertyNames(keywordItem).length; iii++) {
+                  const dataPropVal = dataItem[Object.getOwnPropertyNames(dataItem)[iii]];
+                  const keywordPropVal = keywordItem[Object.getOwnPropertyNames(keywordItem)[iii]];
+
+                  if (dataPropVal === keywordPropVal) {
+                    isExists = true;
+                    break;
+                  }
+                }
+              }
+
+              if (!isExists) {
+                keywordData.push(dataItem);
+              }
+            }
+          }
+        };
+
+        const doneData = function (data) {
+          mergeData(data);
+
+          done(buffer, keywordData, true);
+        };
+
+        const keywords = buffer.split(' ');
+        if (keywords[keywords.length - 1] === '') {
+          keywords.splice(-1, 1);
+        }
+
+        for (let i = 0; i < keywords.length; i++) {
+          const keyword = keywords[i];
+
+          if (keyword.length > 0) {
+            const sourceURL = self.settings.source.toString();
+            const request = $.getJSON(sourceURL + keyword);
+
+            if (i < keywords.length - 1) {
+              request.done(mergeData).fail(mergeData);
+            } else {
+              request.done(doneData).fail(doneData);
+            }
+          }
+        }
       } else {
         // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
         const sourceURL = self.settings.source.toString();

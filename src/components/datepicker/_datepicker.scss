@@ -98,8 +98,7 @@
 }
 
 // Popup Adjustments
-.monthview-popup {
-  border-radius: 2px;
+.monthview-popup.popover {
   max-width: inherit;
 
   .tooltip-content {

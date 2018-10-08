@@ -178,7 +178,7 @@ SearchField.prototype = {
   build() {
     // Used for managing events that are bound to $(document)
     if (!this.id) {
-      this.id = this.element.uniqueId(COMPONENT_NAME);
+      this.id = utils.uniqueId(this.element, COMPONENT_NAME);
     }
 
     this.label = this.element.prev('label, .label');
@@ -355,7 +355,7 @@ SearchField.prototype = {
           </button>
         `);
       }
-      this.goButton.attr('id', this.goButton.uniqueId('searchfield-go-button-'));
+      this.goButton.attr('id', utils.uniqueId(this.goButton, 'searchfield-go-button-'));
       this.wrapper.addClass('has-go-button');
       this.element.after(this.goButton);
     } else {

@@ -1,5 +1,64 @@
 # What's New with Enterprise
 
+## v4.11.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.11.0 Features
+
+- `[General]` It is not possible to make custom builds. To include exactly which components you use. ([#417](https://github.com/infor-design/enterprise/issues/417))
+- `[Calendar]` Added more features including: a readonly view, ability for events to span days, tooltips and notifications ([#417](https://github.com/infor-design/enterprise/issues/417))
+- `[Lookup]` Added the ability to select across pages, even when doing server side paging. ([#375](https://github.com/infor-design/enterprise/issues/375))
+- `[Datagrid]` Improved tooltip performance, and now tooltips show on cells that are not fully displayed. ([#447](https://github.com/infor-design/enterprise/issues/447))
+
+### v4.11.0 Fixes
+
+- `[Dropdown]` The onKeyDown callback was not firing if CTRL key is used. This is fixed. ([#793](https://github.com/infor-design/enterprise/issues/793))
+- `[Tree]` Added a small feature to preserve the tree node states on reload. ([#792](https://github.com/infor-design/enterprise/issues/792))
+- `[Tree]` Added a disable/enable method to disable/enable the whole tree. ([#752](https://github.com/infor-design/enterprise/issues/752))
+- `[App Menu]` Fixed a bug clearing the search filter box. ([#702](https://github.com/infor-design/enterprise/issues/702))
+- `[Column Chart]` Added a yAxis option, you can use to format the yAxis in custom ways. ([#627](https://github.com/infor-design/enterprise/issues/627))
+- `[General]` More fixes to use external ids tokens ([#708](https://github.com/infor-design/enterprise/issues/708))
+- `[Datagrid]` Fixed an error calling selectRows with an integer. ([#756](https://github.com/infor-design/enterprise/issues/756))
+- `[Tree]` Fixed a bug that caused newly added rows to not be draggable. ([#618](https://github.com/infor-design/enterprise/issues/618))
+- `[Dropdown / Multiselect]` Fixed the ability to have a placeholder. ([#832](https://github.com/infor-design/enterprise/issues/832))
+- `[Datagrid]` Fixed a bug that caused dropdown filters to not save on reload of page (saveUserSettings) ([#791](https://github.com/infor-design/enterprise/issues/791))
+- `[Dropdown]` Fixed unneeded scrollbar . ([#786](https://github.com/infor-design/enterprise/issues/786))
+- `[Tree]` Added drag events and events for when the data is changed. ([#801](https://github.com/infor-design/enterprise/issues/801))
+- `[Datepicker]` Fixed a bug updating settings , where time was not changing correctly. ([#305](https://github.com/infor-design/enterprise/issues/305))
+- `[Tree]` Fixed a bug where the underlying dataset was not synced up. ([#718](https://github.com/infor-design/enterprise/issues/718))
+- `[Lookup]` Fixed incorrect text color. ([#762](https://github.com/infor-design/enterprise/issues/762))
+- `[Editor]` Fixed duplicate ID's on the popup dialogs. ([#746](https://github.com/infor-design/enterprise/issues/746))
+- `[Dropdown]` Fixed misalignment of icons on IOS. ([#657](https://github.com/infor-design/enterprise/issues/657))
+- `[Demos]` Fixed a bug that caused RTL pages to sometimes load blank. ([#814](https://github.com/infor-design/enterprise/issues/814))
+- `[Modal]` Fixed a bug that caused the modal to close when clicking an accordion on the modal. ([#747](https://github.com/infor-design/enterprise/issues/747))
+- `[Tree]` Added a restoreOriginalState method to set the tree back to its original state. ([#751](https://github.com/infor-design/enterprise/issues/751))
+- `[Datagrid]` Added an example for nested datagrid, with scrolling. ([#172](https://github.com/infor-design/enterprise/issues/172))
+- `[Datagrid]` Fixed column alignment issues on grouped column examples. ([#147](https://github.com/infor-design/enterprise/issues/147))
+- `[Datagrid]` Fixed bugs when dragging and resizing grouped columns. ([#374](https://github.com/infor-design/enterprise/issues/374))
+- `[Validation]` Fixed a bug that caused validations with changing messages to not go away on correction. ([#640](https://github.com/infor-design/enterprise/issues/640))
+- `[Datagrid]` Fixed bugs in actionable mode (enter was not moving down). ([#788](https://github.com/infor-design/enterprise/issues/788))
+- `[Bar Charts]` Fixed bug that caused tooltips to occasionally not show up. ([#739](https://github.com/infor-design/enterprise/issues/739))
+- `[Dirty]` Fixed appearance on high contrast theme. ([#692](https://github.com/infor-design/enterprise/issues/692))
+- `[Locale]` Fixed incorrect date time format. ([#608](https://github.com/infor-design/enterprise/issues/608))
+- `[Dropdown]` Fixed bug where filtering did not work with CAPS lock on. ([#608](https://github.com/infor-design/enterprise/issues/608))
+- `[Accordion]` Fixed styling issue on safari. ([#282](https://github.com/infor-design/enterprise/issues/282))
+- `[Dropdown]` Fixed a bug on mobile devices, where the list would close on scrolling. ([#656](https://github.com/infor-design/enterprise/issues/656))
+
+### v4.11.0 Chore & Maintenance
+
+- `[Textarea]` Added additional test coverage. ([#337](https://github.com/infor-design/enterprise/issues/337))
+- `[Tree]` Added additional test coverage. ([#752](https://github.com/infor-design/enterprise/issues/752))
+- `[Busy Indicator]` Added additional test coverage. ([#233](https://github.com/infor-design/enterprise/issues/233))
+- `[Docs]` Added additional information for developers on how to use IDS. ([#721](https://github.com/infor-design/enterprise/issues/721))
+- `[Docs]` Added Id's and test notes to all pages. ([#259](https://github.com/infor-design/enterprise/issues/259))
+- `[Docs]` Fixed issues on the wizard docs. ([#824](https://github.com/infor-design/enterprise/issues/824))
+- `[Accordion]` Added additional test coverage. ([#516](https://github.com/infor-design/enterprise/issues/516))
+- `[General]` Added sass linter (stylelint). ([#767](https://github.com/infor-design/enterprise/issues/767))
+
+(53 Issues Solved this release, Backlog Enterprise 170, Backlog Ng 41, 587 Functional Tests, 458 e2e Test)
+
 ## v4.10.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)

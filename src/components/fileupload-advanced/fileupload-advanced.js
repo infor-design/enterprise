@@ -103,7 +103,7 @@ FileUploadAdvanced.prototype = {
     // Browse files option
     if (s.showBrowseButton) {
       let types = '';
-      const id = $.fn.uniqueId('fileupload-adv-');
+      const id = utils.uniqueId(this.element, 'fileupload-adv-');
       const fileExtensions = s.allowedTypes.split(/[\s|]+/g);
       let isExtra = s.maxFilesInProcess > 1 ? ' multiple' : '';
       isExtra += s.isDisabled ? ' disabled' : '';

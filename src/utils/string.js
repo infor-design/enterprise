@@ -119,4 +119,14 @@ stringUtils.textWidth = function textWidth(text, padding, font) {
   return Math.round(metrics.width + (padding || 0));
 };
 
+/**
+ * Escape  user input to be treated as literal string with regular expressions
+ * @private
+ * @param {string} s string to process.
+ * @returns {string} string after escaping.
+ */
+stringUtils.escapeRegExp = function escapeRegExp(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& whole matched string
+};
+
 export { stringUtils }; //eslint-disable-line

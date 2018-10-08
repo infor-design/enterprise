@@ -86,7 +86,8 @@ Editor.prototype = {
     this.isFirefox = env.browser.name === 'firefox';
 
     this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
-    this.id = `${this.element.uniqueId('editor')}-id`;
+    this.id = `${utils.uniqueId(this.element, 'editor')}-id`;
+
     this.container = this.element.parent('.field, .field-short').addClass('editor-container');
 
     s.anchor = $.extend({}, EDITOR_DEFAULTS.anchor, s.anchor);

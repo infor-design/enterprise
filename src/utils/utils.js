@@ -186,10 +186,6 @@ utils.uniqueId = function (element, className, prefix, suffix) {
   return str;
 };
 
-$.fn.uniqueId = function (className, prefix, suffix) {
-  return utils.uniqueId(this, className, prefix, suffix);
-};
-
 /**
  * Grabs an attribute from an HTMLElement containing stringified JSON syntax,
  * and interprets it into options.

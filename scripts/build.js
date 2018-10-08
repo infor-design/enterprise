@@ -63,7 +63,7 @@ const filePaths = {
         'dark-theme': path.join(SRC_DIR, 'themes', 'dark-theme.scss'),
         'high-contrast-theme': path.join(SRC_DIR, 'themes', 'high-contrast-theme.scss'),
         'light-theme': path.join(SRC_DIR, 'themes', 'light-theme.scss'),
-        'uplift-theme': path.join(SRC_DIR, 'themes', 'uplift-theme.scss'),
+        // 'uplift-theme': path.join(SRC_DIR, 'themes', 'uplift-theme.scss'),
       }
     }
   },
@@ -88,7 +88,7 @@ const filePaths = {
         'dark-theme': path.join(TEMP_DIR, 'dark-theme.scss'),
         'high-contrast-theme': path.join(TEMP_DIR, 'high-contrast-theme.scss'),
         'light-theme': path.join(TEMP_DIR, 'light-theme.scss'),
-        'uplift-theme': path.join(TEMP_DIR, 'uplift-theme.scss')
+        // 'uplift-theme': path.join(TEMP_DIR, 'uplift-theme.scss')
       }
     }
   }

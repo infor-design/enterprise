@@ -10,6 +10,7 @@
 
   &.chart-completion {
     margin-bottom: 25px;
+    margin-top: 5px;
 
     .completed {
       background-color: $turquoise06;
@@ -188,6 +189,7 @@
   .target {
     background-color: $chart-progressbar-target-fill;
     height: 10px;
+    margin-top: 8px;
     position: relative;
     transition: width 0.5s ease 0s;
     width: 60%;
@@ -316,7 +318,6 @@
 
 }
 
-// TODO - Fix this.
 .completion-chart {
   .remaining,
   .info {
