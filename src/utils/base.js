@@ -37,9 +37,9 @@ Base.prototype = {
     }
 
     if (hash) {
-      // absolute links
-      if (hash.indexOf('/') === 0) {
-        return window.location.origin + hash;
+      // absolute links / local IDs
+      if (hash.indexOf('/') === 0 || hash.indexOf('#') === 0) {
+        return hash;
       }
 
       hash = (hash.indexOf('#') === -1 ? '#' : '') + hash;
