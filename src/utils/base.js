@@ -9,7 +9,6 @@
  */
 function Base(element) {
   this.element = $(element);
-  this.url = this.getCurrentURL();
   return this;
 }
 
@@ -19,9 +18,26 @@ Base.prototype = {
    * @private
    * @returns {string} current page URL
    */
-  getCurrentURL() {
+  get url() {
     return window.location.href
       .replace(window.location.hash, '');
+  },
+
+  /**
+   * @private
+   * @returns {string} the base tag's `href` attribute
+   */
+  get href() {
+    return this.element[0].getAttribute('href');
+  },
+
+  /**
+   * @private
+   * @deprecated as of v4.12.x, use `this.url` instead
+   * @returns {string} current page URL
+   */
+  getCurrentURL() {
+    return this.url;
   },
 
   /**
@@ -31,14 +47,16 @@ Base.prototype = {
    * @returns {string} the current URL prepended with the Base Tag's ref, if necessary
    */
   getBaseURL(hash) {
-    // If no base tag exists, just return the hash provided.
-    if (!this.element.length) {
+    // If no valid base tag exists, just return the hash provided.
+    if (!this.element.length || (!this.href || this.href === '/')) {
+      if (!hash) {
+        return '';
+      }
       return hash;
     }
 
     if (hash) {
-      // absolute links / local IDs
-      if (hash.indexOf('/') === 0 || hash.indexOf('#') === 0) {
+      if (hash.indexOf('/') === 0) {
         return hash;
       }
 
