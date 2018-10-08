@@ -245,15 +245,37 @@
       outline: none;
     }
 
+    &.has-status {
+
+      .icon {
+        left: -6px;
+        margin-left: 5px;
+        margin-right: 4px;
+        top: auto;
+      }
+    }
+
     &.is-error {
       color: $error-color;
 
       .icon {
         fill: $error-color;
-        left: -6px;
-        margin-left: 5px;
-        margin-right: 4px;
-        top: auto;
+      }
+    }
+
+    &.is-warning {
+      color: $alert-color;
+
+      .icon {
+        fill: $alert-color;
+      }
+    }
+
+    &.is-success {
+      color: $confirm-color;
+
+      .icon {
+        fill: $confirm-color;
       }
     }
   }
@@ -449,7 +471,7 @@ html[dir='rtl'] {
       padding-left: 20px;
       text-align: right;
 
-      &.is-error {
+      &.has-status {
         svg {
           left: auto;
           margin-left: 10px;
