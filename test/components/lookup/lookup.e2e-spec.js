@@ -79,6 +79,8 @@ describe('Lookup', () => {
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('lookup-datagrid'))), config.waitsFor);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
 
+    await browser.driver.sleep(301);
+
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
 
     await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
