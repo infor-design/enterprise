@@ -72,11 +72,11 @@ describe('Lookup', () => {
     expect(await lookupEl.getAttribute('value')).toEqual('2241202');
   });
 
-  it('should be able to validate', async () => {
+  fit('should be able to validate', async () => { //eslint-disable-line
     const lookupEl = await element(by.id('product-lookup'));
     await element.all(by.className('trigger')).first().click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
 
     await browser.driver.sleep(301);
@@ -88,7 +88,7 @@ describe('Lookup', () => {
     await element.all(by.id('product-lookup')).clear();
     await element.all(by.id('product-lookup')).sendKeys(protractor.Key.TAB);
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.message-text'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.message-text'))), config.waitsFor);
 
     expect(await element(by.css('.message-text')).getText()).toBe('Required');
     expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
