@@ -154,6 +154,14 @@
       multiAPI = multitabs.data('multitabs');
     });
 
+    // Only enable `rightClick` menu on desktop for this demo.
+    if (!Soho.env.features.touch) {
+      multitabs.popupmenu({
+        trigger: 'rightClick',
+        menu: 'action-popupmenu'
+      });
+    }
+
     // Use mouseover/click to store reference to the target tabset
     multitabs.on('click.test, mouseover.test', function(e) {
       currentTabset = $(e.target);
@@ -163,15 +171,6 @@
 
       $('#tabset-name').text(currentTabset.children('.tab-container').attr('id'));
     });
-
-
-    // Only enable `rightClick` menu on desktop for this demo.
-    if(!Soho.env.features.touch) {
-      multitabs.popupmenu({
-        trigger: 'rightClick',
-        menu: 'action-popupmenu'
-      });
-    }
 
 
     // Simple Tab Removal
