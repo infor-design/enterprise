@@ -788,6 +788,7 @@ PopupMenu.prototype = {
           });
       }
 
+
       // Right-Click activation
       if (!leftClick) {
         this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
@@ -805,9 +806,6 @@ PopupMenu.prototype = {
           this.element
             .on('touchstart.popupmenu', (e) => {
               // iOS needs this prevented to prevent its own longpress feature in Safari
-              if (e.target.hasClass('tab-more')) {
-                self.open(e);
-              }
               if (env.os.name === 'ios') {
                 e.preventDefault();
               }
