@@ -57,7 +57,7 @@ describe('Lookup', () => {
     const lookupEl = await element(by.id('product-lookup'));
     await element.all(by.className('trigger')).first().click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
@@ -66,7 +66,7 @@ describe('Lookup', () => {
     await browser.driver.sleep(301);
     await element.all(by.className('trigger')).first().click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('2241202');
@@ -95,7 +95,7 @@ describe('Lookup', () => {
 
     await element.all(by.className('trigger')).first().click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
@@ -307,7 +307,7 @@ describe('Lookup custom matching tests', () => {
 
     await buttonEl.click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
 
     await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
@@ -316,7 +316,7 @@ describe('Lookup custom matching tests', () => {
     expect(await lookupEl.getAttribute('value')).toEqual('2142201|Compressor');
     await buttonEl.click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(3) td:nth-child(1)')).click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('2342203|Compressor');
@@ -332,10 +332,10 @@ describe('Lookup modal tests', () => {
     const buttonEl = await element.all(by.className('btn-secondary')).first();
     await buttonEl.click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('modal-1-text'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('modal-1-text'))), config.waitsFor);
     await element(by.css('#modal-1-text .trigger')).click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
 
     const lookupEl = await element(by.id('product-lookup'));
@@ -345,7 +345,7 @@ describe('Lookup modal tests', () => {
     expect(await lookupEl.getAttribute('value')).toEqual('2142201|Compressor');
     await element(by.css('#modal-1-text .trigger')).click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
     await browser.driver.sleep(301);
 
