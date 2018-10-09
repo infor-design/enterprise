@@ -32,6 +32,22 @@ describe('Bar Chart example-index tests', () => {
   });
 });
 
+describe('Bar Chart RTL example-index tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar/example-index?locale=ar-SA');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be in RTL', async () => {
+    const htmlEl = await element(by.css('html'));
+
+    expect(await htmlEl.getAttribute('dir')).toMatch('rtl');
+  });
+});
+
 describe('Bar Chart example-selected tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/example-selected');
