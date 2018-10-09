@@ -72,7 +72,7 @@ describe('Lookup', () => {
     expect(await lookupEl.getAttribute('value')).toEqual('2241202');
   });
 
-  fit('should be able to validate', async () => { //eslint-disable-line
+  it('should be able to validate', async () => {
     const lookupEl = await element(by.id('product-lookup'));
     await element.all(by.className('trigger')).first().click();
 
