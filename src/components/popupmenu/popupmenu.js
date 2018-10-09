@@ -788,7 +788,6 @@ PopupMenu.prototype = {
           });
       }
 
-
       // Right-Click activation
       if (!leftClick) {
         this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
