@@ -118,6 +118,27 @@ describe('Datagrid multiselect tests', () => {
 
     expect(await element.all(by.css('.datagrid-row')).count()).toEqual(5);
   });
+
+  it('Should work with sort', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)')).click();
+
+    expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
+
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
+
+    expect(await element(by.css('.selection-count')).getText()).toEqual('3 Selected');
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(3);
+
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(6) td:nth-child(2)')).click();
+
+    expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
+  });
 });
 
 describe('Datagrid page size selector tests', () => {
@@ -172,6 +193,26 @@ describe('Datagrid single select tests', () => {
 
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-selected');
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+  });
+
+  it('Should work with sort', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).getText()).toEqual('2142201');
+
+    // Sort
+    await element(by.css('#datagrid .datagrid-header th:nth-child(4)')).click();
+    await element(by.css('#datagrid .datagrid-header th:nth-child(4)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).getText()).toEqual('2142201');
+
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).getText()).toEqual('2642205');
   });
 });
 
