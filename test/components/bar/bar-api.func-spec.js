@@ -42,10 +42,10 @@ describe('Bar API', () => {
     barEl = document.body.querySelector('.chart-container');
     svgEl = document.body.querySelector('.svg-icons');
 
-    Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA']);
-    Locale.addCulture('en-US', Soho.Locale.cultures['en-US']);
+    Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA']); //eslint-disable-line
+    Locale.addCulture('en-US', Soho.Locale.cultures['en-US']); //eslint-disable-line
     Locale.set('en-US');
-    Soho.Locale.set('en-US');
+    Soho.Locale.set('en-US'); //eslint-disable-line
 
     barObj = new Bar(barEl, settings);
   });
