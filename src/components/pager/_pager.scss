@@ -5,8 +5,9 @@
   @include font-size(14);
 
   height: 38px;
-  margin: 10px;
+  margin: 5px 10px;
   max-height: 38px;
+  padding-top: 4px;
   text-align: center;
 
   > * {
@@ -19,7 +20,7 @@
     overflow: hidden;
     width: auto;
 
-    &:hover {
+    &.pager-no:hover {
       > a {
         border-bottom: 1px solid $pager-text-color;
 
@@ -29,30 +30,16 @@
       }
     }
 
-    &.is-focused {
-      > a {
-        border: 1px solid $pager-text-color;
-        box-shadow: $focus-box-shadow;
-
-        &[disabled] {
-          border: 1px solid transparent;
-        }
-      }
-
-      &.selected,
-      &.selected:hover {
-        > a {
-          border-bottom: 1px solid $pager-text-color;
-        }
-      }
+    > a:focus {
+      border: 1px solid $pager-text-color;
+      box-shadow: $focus-box-shadow;
     }
 
-    &.pager-prev,
-    &.pager-last,
-    &.pager-first,
-    &.pager-next {
-      &:not(.is-focused):hover {
-        > a {
+    &.selected:hover {
+      > a {
+        border-bottom: 1px solid $pager-text-color;
+
+        &:focus {
           border-bottom: 1px solid transparent;
         }
       }
@@ -116,7 +103,6 @@
     .pager-pagesize {
       padding: 0;
     }
-
   }
 
 }
@@ -201,11 +187,9 @@ li + .pager-count {
 
 .pager-pagesize {
   float: right;
-  padding: 2px;// Keep 2px padding around for border to show around on focus
 
   .btn-menu {
     height: 30px;
-    margin: -1px;
 
     &:focus {
       border-color: $color-primary;
@@ -216,14 +200,14 @@ li + .pager-count {
       @include font-size(14);
 
       font-weight: $font-weight-normal;
-      line-height: 30px;
+      line-height: 27px;
       text-transform: none;
     }
 
     .icon {
       height: 18px;
-      margin-left: -2px;
-      margin-right: 2px;
+      margin-right: -2px;
+      margin-top: 1px;
       width: 18px;
     }
   }

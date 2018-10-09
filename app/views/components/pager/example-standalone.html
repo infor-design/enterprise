@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="six columns">
+      <div class="pager-container">
+      </div>
+  </div>
+  <div class="six columns">
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="toggle-pagesize" id="toggle-pagesize"/>
+      <label for="toggle-pagesize" class="checkbox-label">Show Page Size Selector</label>
+    </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="toggle-first-button" id="toggle-first-button"/>
+      <label for="toggle-first-button" class="checkbox-label">Hide First Button</label>
+    </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="disable-first-button" id="disable-first-button"/>
+      <label for="disable-first-button" class="checkbox-label">Disable First Button</label>
+    </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="toggle-previous-button" id="toggle-previous-button"/>
+      <label for="toggle-previous-button" class="checkbox-label">Hide Previous Button</label>
+    </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="disable-previous-button" id="disable-previous-button"/>
+      <label for="disable-previous-button" class="checkbox-label">Disable Previous Button</label>
+    </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="toggle-next-button" id="toggle-next-button"/>
+      <label for="toggle-next-button" class="checkbox-label">Hide Next Button</label>
+    </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="disable-next-button" id="disable-next-button"/>
+      <label for="disable-next-button" class="checkbox-label">Disable Next Button</label>
+    </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="toggle-last-button" id="toggle-last-button"/>
+      <label for="toggle-last-button" class="checkbox-label">Hide Last Button</label>
+    </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="disable-last-button" id="disable-last-button"/>
+      <label for="disable-last-button" class="checkbox-label">Disable Last Button</label>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var api = $('.pager-container').pager({
+      type: 'standalone',
+      pagesize: 10,
+      showPageSizeSelector: false,
+      showFirstButton: true,
+      enableFirstButton: true,
+      showPreviousButton: true,
+      enablePreviousButton: true,
+      showNextButton: true,
+      enableNextButton: true,
+      showLastButton: true,
+      enableLastButton: true,
+      onFirstPage: function (elem, args) {
+        console.log(elem, args);
+      },
+      onPreviousPage: function (elem, args) {
+        console.log(elem, args);
+      },
+      onNextPage: function (elem, args) {
+        console.log(elem, args);
+      },
+      onLastPage: function (elem, args) {
+        console.log(elem, args);
+      },
+      onPageSizeChange: function (elem, args) {
+        console.log(elem, args);
+      },
+      firstPageTooltip: 'Custom First Tooltip',
+      previousPageTooltip: 'Custom Previous Tooltip',
+      nextPageTooltip: 'Custom Next Tooltip',
+      lastPageTooltip: 'Custom Last Tooltip'
+    }).on('firstpage', function (e, args) {
+      console.log(args);
+    }).on('previouspage', function (e, args) {
+      console.log(args);
+    }).on('nextpage', function (e, args) {
+      console.log(args);
+    }).on('lastpage', function (e, args) {
+      console.log(args);
+    }).data('pager');
+
+    //TODO: Make func tests for these (api.updated calls)
+    // Add functionality to toggle the pager items such as hasPageSizeChooser, hasFirstButton
+    $('#toggle-pagesize').on('change.test', function() {
+      var isChecked = this.checked;
+      api.updated({showPageSizeSelector: isChecked}); //maps to hasPageSizeChooser
+      if (isChecked) {
+        api.updated({pagesizes: [10, 20, 30, 40]});
+      }
+    });
+
+    $('#toggle-first-button').on('change.test', function() {
+      var isChecked = !this.checked;
+      api.updated({showFirstButton: isChecked});
+    });
+
+    $('#disable-first-button').on('change.test', function() {
+      var isChecked = !this.checked;
+      api.updated({enableFirstButton: isChecked});
+    });
+
+    $('#toggle-previous-button').on('change.test', function() {
+      var isChecked = !this.checked;
+      api.updated({showPreviousButton: isChecked});
+    });
+
+    $('#disable-previous-button').on('change.test', function() {
+      var isChecked = !this.checked;
+      api.updated({enablePreviousButton: isChecked});
+    });
+
+    $('#toggle-next-button').on('change.test', function() {
+      var isChecked = !this.checked;
+      api.updated({showNextButton: isChecked});
+    });
+
+    $('#disable-next-button').on('change.test', function() {
+      var isChecked = !this.checked;
+      api.updated({enableNextButton: isChecked});
+    });
+
+    $('#toggle-last-button').on('change.test', function() {
+      var isChecked = !this.checked;
+      api.updated({showLastButton: isChecked});
+    });
+
+    $('#disable-last-button').on('change.test', function() {
+      var isChecked = !this.checked;
+      api.updated({enableLastButton: isChecked});
+    });
+
+    // Add functionality to trigger the pager events of the items
+  });
+</script>

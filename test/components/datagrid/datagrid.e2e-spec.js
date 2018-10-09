@@ -410,7 +410,7 @@ describe('Datagrid paging multiselect across pages', () => {
     await element(by.css('.pager-prev')).click();
 
     await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1).is-selected'))), config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
   });
@@ -473,20 +473,20 @@ describe('Datagrid paging client side multiselect tests', () => {
     await element(by.css('.pager-next')).click();
 
     await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tr:nth-child(1) td[aria-colindex="2"]'))), config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev')).click();
 
     await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1).is-selected'))), config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
   });
 });
 
-describe('Datagrid paging clientside single select tests', () => {
+describe('Datagrid paging clientside single select tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-single');
 
