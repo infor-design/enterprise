@@ -77,7 +77,7 @@ describe('Bar Chart example-hide-legend tests', () => {
     const chartEl = await element(by.css('.chart-legend'));
 
     const resultEl = await browser.driver
-    .wait(protractor.ExpectedConditions.invisibilityOf(chartEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.invisibilityOf(chartEl), config.waitsFor);
 
     expect(await resultEl).toBe(true);
   });

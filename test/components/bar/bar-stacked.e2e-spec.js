@@ -1,5 +1,4 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
-const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 
 requireHelper('rejection');
@@ -67,6 +66,6 @@ describe('Stacked Bar Chart example-colors', () => {
     const sGroupEl = await element.all(by.css('.series-group')).get(1);
     const barEl = await sGroupEl.element(by.css('.bar.series-0'));
 
-    expect(await barEl.getCssValue('fill')).toBe('rgb(146, 121, 166)');;
+    expect(await barEl.getCssValue('fill')).toBe('rgb(146, 121, 166)');
   });
 });
