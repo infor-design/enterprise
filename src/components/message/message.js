@@ -110,12 +110,12 @@ Message.prototype = {
 
     if (this.settings.status === 'error') {
       this.title.addClass('has-status is-error').prepend($.createIconElement('error'));
-    } else if (this.settings.status === 'warning') {
-      this.title.addClass('has-status is-warning').prepend($.createIconElement('alert'));
-    } else if (this.settings.status === 'success') {
-      this.title.addClass('has-status is-success').prepend($.createIconElement('confirm'));
+    } else if (this.settings.status === 'alert') {
+      this.title.addClass('has-status is-alert').prepend($.createIconElement('alert'));
+    } else if (this.settings.status === 'confirm') {
+      this.title.addClass('has-status is-confirm').prepend($.createIconElement('confirm'));
     } else {
-      this.title.removeClass('has-status', 'is-error', 'is-warning', 'is-success').find('svg').remove();
+      this.title.removeClass('has-status is-error is-alert is-confirm').find('svg').remove();
     }
   },
 
