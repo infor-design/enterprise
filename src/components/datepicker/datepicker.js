@@ -784,7 +784,7 @@ DatePicker.prototype = {
         this.currentDate.setHours(0);
         this.currentDate.setMinutes(0);
         this.currentDate.setSeconds(0);
-      } else {
+      } else if (this.element.val() === '') {
         const d = new Date();
         if (Math.ceil(d.getMinutes() / 5) * 5 === 60) {
           this.currentDate.setHours(d.getHours() + 1 > 12 ? 0 : d.getHours() + 1);
