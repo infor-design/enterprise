@@ -73,7 +73,7 @@ describe('Bar Chart example-hide-legend tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should legends not be visible', async () => {
+  it('Should not have visible legends', async () => {
     const chartEl = await element(by.css('.chart-legend'));
 
     const resultEl = await browser.driver
@@ -92,7 +92,7 @@ describe('Bar Chart example-patterns tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should bar have patterns', async () => {
+  it('Should have patterns on bar', async () => {
     const fBarEl = await element(by.css('.bar.series-0'));
     const sBarEl = await element(by.css('.bar.series-1'));
 
@@ -111,19 +111,19 @@ describe('Bar Chart example-colors', () => {
     await utils.checkForErrors();
   });
 
-  it('Should first bar is blue', async () => {
+  it('Should detect that first bar is blue', async () => {
     const blueEl = await element(by.css('.bar.series-0'));
 
     expect(await blueEl.getCssValue('fill')).toBe('rgb(29, 95, 138)');
   });
 
-  it('Should second bar is green', async () => {
+  it('Should detect that second bar is green', async () => {
     const blueEl = await element(by.css('.bar.series-1'));
 
     expect(await blueEl.getCssValue('fill')).toBe('rgb(142, 209, 198)');
   });
 
-  it('Should third bar is violet', async () => {
+  it('Should detect that third bar is violet', async () => {
     const blueEl = await element(by.css('.bar.series-2'));
 
     expect(await blueEl.getCssValue('fill')).toBe('rgb(146, 121, 166)');

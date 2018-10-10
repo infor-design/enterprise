@@ -20,13 +20,13 @@ describe('Grouped Bar Chart example-index tests', () => {
     expect(await namesEl).toBe(3);
   });
 
-  it('Should have a bar groups', async () => {
+  it('Should have bar groups', async () => {
     const groupEl = await element.all(by.css('.group .series-group')).count();
 
     expect(await groupEl).toBe(3);
   });
 
-  it('Should be highlighted when selected', async () => {
+  it('Should highlight when selected', async () => {
     const fGroupEl = await element.all(by.css('.group .series-group')).get(0);
 
     await fGroupEl.click();

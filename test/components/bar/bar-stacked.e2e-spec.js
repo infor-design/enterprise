@@ -20,7 +20,7 @@ describe('Stacked Bar Chart example-index tests', () => {
     expect(await namesEl).toBe(3);
   });
 
-  it('Should have a bar groups', async () => {
+  it('Should have bar groups', async () => {
     const groupEl = await element.all(by.css('.group .series-group')).count();
 
     expect(await groupEl).toBe(2);
@@ -32,7 +32,7 @@ describe('Stacked Bar Chart example-index tests', () => {
     expect(await barEl).toBeTruthy();
   });
 
-  it('Should be highlighted when selected', async () => {
+  it('Should highlight when selected', async () => {
     const fGroupEl = await element.all(by.css('.series-group')).get(0);
     const fBarEl = await fGroupEl.element(by.css('.bar.series-0'));
     const sGroupEl = await element.all(by.css('.series-group')).get(1);

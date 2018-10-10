@@ -51,7 +51,11 @@ describe('Bar API', () => {
   });
 
   afterEach(() => {
+    const rowEl = document.body.querySelector('.row');
+
     barObj.destroy();
+    
+    rowEl.parentNode.removeChild(rowEl);
     barEl.parentNode.removeChild(barEl);
     svgEl.parentNode.removeChild(svgEl);
   });
@@ -85,7 +89,7 @@ describe('Bar API', () => {
     expect(barObj.getSelected()).toBeTruthy();
   });
 
-  it('Should updated settings of bar', () => {
+  it('Should update settings of bar', () => {
     const newSettings = {
       dataset: [
         {
