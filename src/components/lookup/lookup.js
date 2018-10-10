@@ -284,8 +284,12 @@ Lookup.prototype = {
 
     self.createModal();
     self.element.trigger('open', [self.modal, self.grid]);
-
     self.modal.element.find('.btn-actions').removeClass('is-selected');
+
+    // Set tabindex on first row
+    if (self.grid) {
+      self.grid.cellNode(0, 0, true).attr('tabindex', '0');
+    }
 
     // Fix: IE-11 more button was not showing
     const thisMoreBtn = self.modal.element.find('.toolbar .more > .btn-actions');
@@ -618,7 +622,8 @@ Lookup.prototype = {
         }
       }
 
-      if (data[i][field].toString() === value.toString()) {
+      if (typeof this.settings.match !== 'function' &&
+        data[i][field].toString() === value.toString()) {
         isMatch = true;
       }
 
@@ -654,6 +659,12 @@ Lookup.prototype = {
       }
 
       value += (i !== 0 ? this.settings.delimiter : '') + currValue;
+
+      // Clear _selected tag
+      const idx = this.selectedRows[i].idx;
+      if (this.settings.options.dataset) {
+        delete this.settings.options.dataset[idx]._selected;
+      }
     }
 
     /**
