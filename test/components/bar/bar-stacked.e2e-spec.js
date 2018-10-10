@@ -55,14 +55,14 @@ describe('Stacked Bar Chart example-colors', () => {
     await utils.checkForErrors();
   });
 
-  it('Should first bar is green', async () => {
+  it('Should detect that first bar is green', async () => {
     const fGroupEl = await element.all(by.css('.series-group')).get(0);
     const barEl = await fGroupEl.element(by.css('.bar.series-0'));
 
     expect(await barEl.getCssValue('fill')).toBe('rgb(142, 209, 198)');
   });
 
-  it('Should second bar is violet', async () => {
+  it('Should detect that second bar is violet', async () => {
     const sGroupEl = await element.all(by.css('.series-group')).get(1);
     const barEl = await sGroupEl.element(by.css('.bar.series-0'));
 
