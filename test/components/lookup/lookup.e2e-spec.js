@@ -52,6 +52,46 @@ describe('Lookup', () => {
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
   });
+
+  it('should be able to reselect', async () => {
+    const lookupEl = await element(by.id('product-lookup'));
+    await element.all(by.className('trigger')).first().click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    expect(await lookupEl.getAttribute('value')).toEqual('2142201');
+
+    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+    await browser.driver.sleep(301);
+    await element.all(by.className('trigger')).first().click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+
+    expect(await lookupEl.getAttribute('value')).toEqual('2241202');
+  });
+
+  it('should be able to validate', async () => {
+    const lookupEl = await element(by.id('product-lookup'));
+
+    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+    await browser.driver.sleep(301);
+    await element.all(by.id('product-lookup')).clear();
+    await element.all(by.id('product-lookup')).sendKeys(protractor.Key.TAB);
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.message-text'))), config.waitsFor);
+
+    expect(await element(by.css('.message-text')).getText()).toBe('Required');
+    expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
+
+    await element.all(by.className('trigger')).first().click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    expect(await lookupEl.getAttribute('value')).toEqual('2142201');
+  });
 });
 
 describe('Lookup (editable)', () => {
@@ -245,5 +285,62 @@ describe('Lookup multiselect serverside paging tests', () => {
     await element(by.css('.btn-modal-primary')).click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('214220,214221,214225,214226');
+  });
+});
+
+describe('Lookup custom matching tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/lookup/test-custom-matching');
+  });
+
+  it('Paging lookup should work with custom matching', async () => {
+    const buttonEl = await element.all(by.className('trigger')).first();
+    const lookupEl = await element(by.id('product-lookup'));
+
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+    await browser.driver.sleep(301);
+
+    expect(await lookupEl.getAttribute('value')).toEqual('2142201|Compressor');
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(3) td:nth-child(1)')).click();
+
+    expect(await lookupEl.getAttribute('value')).toEqual('2342203|Compressor');
+  });
+});
+
+describe('Lookup modal tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/lookup/test-modal-lookup');
+  });
+
+  it('Paging lookup should work on a modal', async () => {
+    const buttonEl = await element.all(by.className('btn-secondary')).first();
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('modal-1-text'))), config.waitsFor);
+    await element(by.css('#modal-1-text .trigger')).click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    const lookupEl = await element(by.id('product-lookup'));
+
+    await browser.driver.sleep(301);
+
+    expect(await lookupEl.getAttribute('value')).toEqual('2142201|Compressor');
+    await element(by.css('#modal-1-text .trigger')).click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await browser.driver.sleep(301);
+
+    expect(await lookupEl.getAttribute('value')).toEqual('2241202|Different Compressor');
   });
 });
