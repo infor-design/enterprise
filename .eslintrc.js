@@ -163,6 +163,8 @@ module.exports = {
     // Allow same name in different describes
     "jasmine/no-spec-dupes": [1, "branch"],
     "jasmine/no-suite-dupes": [1, "branch"],
+    // Allow toHaveBeenCalledWith
+    "jasmine/prefer-toHaveBeenCalledWith": ['off']
   },
   'globals': {
     'd3': false,
