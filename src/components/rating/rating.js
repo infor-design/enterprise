@@ -55,7 +55,7 @@ Rating.prototype = {
    * @returns {number} current value
    */
   val(value) {
-    if (!value) {
+    if (value === '' || isNaN(value) || Math.sign(value) === -1) {
       return this.currentValue;
     }
 
@@ -83,7 +83,7 @@ Rating.prototype = {
         input.addClass('is-half').next(svgSelector).find('svg').changeIcon('star-half');
       }
     }
-    if (chkIdx <= 0) {
+    if (chkIdx <= 0 && value > 0) {
       $(this.allInputs[0]).prop('checked', true);
     }
 
