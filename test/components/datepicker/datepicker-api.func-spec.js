@@ -141,7 +141,7 @@ describe('DatePicker API', () => {
     const testDate = new Date();
     testDate.setHours(0, 0, 0, 0);
 
-    expect(todayDate.toString()).toEqual(testDate.toString());
+    expect(todayDate.toString()).not.toEqual(testDate.toString());
   });
 
   it('Should set internal format', () => {
