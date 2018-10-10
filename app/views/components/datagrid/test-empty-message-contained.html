@@ -30,7 +30,11 @@
         selectable: 'single',
         editable: true,
         //emptyMessage: {title: 'No Stock Found', 'info': 'Could not find any stock data matching the results', icon: 'icon-empty-generic', button: {id: 'test', text: 'Reload'}},
-        emptyMessage: {title: 'No Stock Found', icon: 'icon-empty-generic'},
+        emptyMessage: {
+          title: 'No Stock Found',
+          icon: 'icon-empty-generic',
+          button: { id: 'test', text: 'Retry', click: () => { alert('emptyMessage button click event invoked'); } }
+        },
         toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
       })
 

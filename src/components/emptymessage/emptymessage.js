@@ -78,6 +78,10 @@ EmptyMessage.prototype = {
         '</div>').appendTo(this.element);
     }
 
+    if (opts.button.click) {
+      this.element.on('click', opts.button.click);
+    }
+
     return this;
   },
 
