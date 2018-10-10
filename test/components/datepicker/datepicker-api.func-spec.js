@@ -133,6 +133,17 @@ describe('DatePicker API', () => {
     expect(datepickerEl.value).toEqual(`${converted[0]}/${(`${converted[1] + 1}`).padStart(2, '0')}/${(`${converted[2]}`).padStart(2, '0')}`);
   });
 
+  it('Should be able to set setTimeToMidnight to false', () => {
+    datepickerTimeAPI.destroy();
+    datepickerTimeAPI = new DatePicker(datepickerEl, { setTimeToMidnight: false });
+    datepickerTimeAPI.setToday();
+    const todayDate = datepickerTimeAPI.getCurrentDate();
+    const testDate = new Date();
+    testDate.setHours(0, 0, 0, 0);
+
+    expect(todayDate.toString()).toEqual(testDate.toString());
+  });
+
   it('Should set internal format', () => {
     datepickerAPI.setFormat();
 
