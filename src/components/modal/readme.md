@@ -6,6 +6,12 @@ demo:
   - name: Modal Example
     slug: example-index
   pages:
+  - name: Accordian Modal
+    slug: example-accordion-modal
+  - name: Before Open
+    slug: example-before-open
+  - name: Close Button
+    slug: example-close-btn
   - name: Modal Event Handlers
     slug: example-events
   - name: Supplying Full Modal content
