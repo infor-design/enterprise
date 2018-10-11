@@ -307,9 +307,10 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
  * @param {string} fileName The desired export filename in the download.
  * @param {string} customDs An optional customized version of the data to use.
  * @param {string} self The grid api to use (if customDs is not used)
+ * @param {string} separator (optional) If user's machine is configured for a locale with alternate default seperator.
  * @returns {void}
  */
-excel.exportToCsv = function (fileName, customDs, self) {
+excel.exportToCsv = function (fileName, customDs, self, separator = 'sep=,') {
   const formatCsv = function (table) {
     const csv = [];
     const rows = [].slice.call(table[0].querySelectorAll('tr'));
@@ -319,6 +320,7 @@ excel.exportToCsv = function (fileName, customDs, self) {
       cols.forEach(col => rowContent.push(col.textContent.replace(/\r?\n|\r/g, '').replace(/"/g, '""').trim()));
       csv.push(rowContent.join('","'));
     });
+    csv.unshift([`${separator}`]);
     return `"${csv.join('"\n"')}"`;
   };
 
