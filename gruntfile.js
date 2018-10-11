@@ -10,9 +10,7 @@ module.exports = function (grunt) {
   const cssmin = require('./scripts/configs/cssmin.js');
   const usebanner = require('./scripts/configs/usebanner.js');
   const compress = require('./scripts/configs/compress.js');
-  const meta = require('./scripts/configs/meta.js');
   const clean = require('./scripts/configs/clean.js');
-  const run = require('./scripts/configs/run.js');
 
   const bannerText = require('./scripts/generate-bundle-banner');
 
@@ -42,12 +40,10 @@ module.exports = function (grunt) {
     chokidar,
     clean,
     sass,
-    meta,
     copy,
     cssmin,
     usebanner,
-    compress,
-    run
+    compress
   ));
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
