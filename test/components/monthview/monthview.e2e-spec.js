@@ -1,5 +1,7 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
+const config = require('../../helpers/e2e-config.js');
+
 requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
@@ -70,6 +72,8 @@ describe('MonthView disable month selection tests', () => {
   });
 
   it('Should disable specified days', async () => {
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.monthview-table td.is-disabled'))), config.waitsFor);
+
     expect(await element.all(by.css('.monthview-table td.is-disabled')).first().getText()).toEqual('1');
   });
 

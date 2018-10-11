@@ -18,7 +18,7 @@
  * Flags:
  * --dry-run       - Run the script, skipping POSTing to the api
  * --site=[server] - Deploy to specific server:
- *                   [local, local_debug, staging, prod]
+ *                   [local, localDebug, staging, prod]
  *                   Note: If there is no flag, it'll deploy to "static"
  *
  * --test-mode     - Run the script on a few components

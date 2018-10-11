@@ -121,19 +121,10 @@
   }
 
   li {
-    @include transition(background-color 0.15s ease 0s);
-
     border: 1px solid transparent;
     border-bottom-color: $listview-border-color;
     color: $listview-color;
     padding: 16px 20px 15px;
-
-    &::after {
-      clear: both;
-      content: '';
-      display: inline-block;
-      position: absolute;
-    }
 
     &:hover {
       background-color: $listview-hover-bg-color;
@@ -144,10 +135,6 @@
       border-color: $color-primary !important;
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
-
-      + li {
-        border-top-color: transparent;
-      }
     }
 
     &.error,
@@ -488,7 +475,6 @@
   tr,
   td {
     @include font-size(14);
-    @include transition(background-color 0.15s ease 0s);
 
     color: $listview-color;
     padding: 13px 15px;

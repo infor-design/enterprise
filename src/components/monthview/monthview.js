@@ -1,6 +1,7 @@
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
 
 // Settings and Options
 const COMPONENT_NAME = 'monthview';
@@ -332,7 +333,7 @@ MonthView.prototype = {
 
     // Localize Month Name
     this.yearFirst = this.currentCalendar.dateFormat.year && this.currentCalendar.dateFormat.year.substr(1, 1) === 'y';
-    this.header.find('.month').attr('data-month', month).text(`${monthName} `);
+    this.header.find('.month').attr('data-month', month).text(`${xssUtils.stripTags(monthName)} `);
     this.header.find('.year').text(` ${year}`);
 
     if (this.yearFirst && !this.isIslamic && !Locale.isRTL()) {
@@ -379,13 +380,13 @@ MonthView.prototype = {
         self.setDisabled(th, exYear, exMonth, exDay);
         self.setLegendColor(th, exYear, exMonth, exDay);
         self.dayMap.push({ key: stringUtils.padDate(exYear, exMonth, exDay), elem: th });
-        th.addClass('alternate prev-month').html(`<span class="day-container"><span aria-hidden="true" class="day-text">${exDay}</span></span>`);
+        th.addClass('alternate prev-month').html(`<span class="day-container"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(exDay)}</span></span>`);
         th.data('key', stringUtils.padDate(exYear, exMonth, exDay));
       }
 
       if (i >= leadDays && dayCnt <= thisMonthDays) {
         self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
-        th.html(`<span class="day-container"><span aria-hidden="true" class="day-text">${dayCnt}</span></span>`);
+        th.html(`<span class="day-container"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(dayCnt)}</span></span>`);
         th.data('key', stringUtils.padDate(year, month, dayCnt));
 
         // Add Selected Class to Selected Date

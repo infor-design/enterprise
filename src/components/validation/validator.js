@@ -1045,6 +1045,11 @@ Validator.prototype = {
     if (form.is('form')) {
       form[0].reset();
     }
+
+    const validationTypes = $.fn.validation.ValidationTypes;
+    Object.keys(validationTypes).forEach((validationType) => {
+      formFields.removeData(`${validationType}message`);
+    });
   },
 
   /**
