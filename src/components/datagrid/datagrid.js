@@ -5601,7 +5601,7 @@ Datagrid.prototype = {
           const actualIdx = self.actualPagingRowIndex(idx);
           this._selectedRows.push({
             idx: actualIdx,
-            rowData,
+            data: rowData,
             elem: self.dataRowNode(actualIdx),
             group: s.dataset[gData.group]
           });
@@ -8000,6 +8000,54 @@ Datagrid.prototype = {
 
     if (!this.settings.disableClientSort) {
       this.settings.dataset.sort(sort);
+    }
+
+    // Resync the _selectedRows array
+    if (this.settings.selectable) {
+      this.syncDatasetWithSelectedRows();
+    }
+  },
+
+  /**
+  * Sync the dataset._selected elements with the _selectedRows array
+  * @private
+  */
+  syncDatasetWithSelectedRows() {
+    this._selectedRows = [];
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    let idx = -1;
+
+    for (let i = 0, data; i < dataset.length; i++) {
+      if (s.groupable) {
+        for (let k = 0; k < dataset[i].values.length; k++) {
+          idx++;
+          data = dataset[i].values[k];
+          if (this.isNodeSelected(data)) {
+            this._selectedRows.push({
+              idx,
+              data,
+              elem: this.dataRowNode(idx),
+              group: dataset[i],
+              page: this.pager ? this.pager.activePage : 1,
+              pagingIdx: idx,
+              pagesize: this.settings.pagesize
+            });
+          }
+        }
+      } else {
+        data = s.treeGrid ? dataset[i].node : dataset[i];
+        if (this.isNodeSelected(data)) {
+          this._selectedRows.push({
+            idx: i,
+            data,
+            elem: this.visualRowNode(i),
+            pagesize: this.settings.pagesize,
+            page: this.pager ? this.pager.activePage : 1,
+            pagingIdx: idx
+          });
+        }
+      }
     }
   },
 
