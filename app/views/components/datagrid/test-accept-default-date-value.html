@@ -1,0 +1,116 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  "use strict" 
+  $('body').ready(function() {
+    var localeData = {
+      language: 'de',
+      englishName: 'German (Germany)',
+      nativeName: 'Deutsch (Deutschland)',
+      direction: 'left-to-right',
+      calendars: [{
+        name: 'gregorian',
+        dateFormat: {
+            'separator': '.',
+          'timeSeparator': ':',
+          'short': 'dd.MM.yyyy',
+          'medium': 'dd.MM.yyyy',
+          'long': 'd. MMMM yyyy',
+          'full': 'EEEE, d. MMMM y',
+          'month': 'd. MMMM',
+          'year': 'MMMM yyyy',
+          'timestamp': 'HH:mm:ss',
+          'datetime': 'dd.MM.yyyy HH:mm'
+        },
+        days: {
+          wide: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+          abbreviated: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr','Sa'],
+          narrow: ['S', 'M', 'D', 'M', 'D', 'F', 'S']
+        },
+        months: {
+          wide: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+          abbreviated: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
+        },
+        timeFormat: 'HH:mm',
+        dayPeriods: ['vorm.', 'nachm.']
+      }]
+    };
+
+    Locale.setCurrentLocale('de-DE', localeData);
+
+    var grid, columns = [], data = [];
+
+    // Define Some Sample Data
+    data.push({ 
+      id: 1, 
+      productId: undefined, 
+      productName: 'Compressor', 
+      activity:  'Assemble Paint', 
+      orderDate: '2018-10-01T00:00:00'});
+    data.push({ 
+      id: 2, 
+      productId: 2241202, 
+      productName: '1 Different Compressor', 
+      activity:  'Inspect and Repair',
+      orderDate: '2017-11-03T00:00:00'});
+    data.push({ 
+      id: 2, 
+      productId: 2241203, 
+      productName: '2 Different Compressors', 
+      activity:  'Assemble and Repair',
+      orderDate: 'N/A'});    
+
+    //Define Columns for the Grid.
+    columns.push({ 
+      id: 'id', 
+      name: 'Id', 
+      field: 'id', 
+      formatter: Formatters.Readonly});
+    columns.push({ 
+      id: 'productId', 
+      name: 'Product Id', 
+      field: 'productId', 
+      formatter: Formatters.Readonly});
+    columns.push({ 
+      id: 'productName', 
+      name: 'Product Name', 
+      field: 'productName',  
+      formatter: Formatters.Hyperlink});
+    columns.push({ 
+      id: 'activity', 
+      name: 'Activity', 
+      field: 'activity', 
+      formatter: Formatters.Dropdown});
+    columns.push({ 
+      id: 'orderDate', 
+      name: 'Order Date', 
+      field: 'orderDate', 
+      formatter: Formatters.Date,
+      width: 150});
+
+    //Init and get the api for the grid
+    var api = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      filterable: true,
+      selectable: 'single',
+      editable: true,
+      toolbar: {
+        title: 'Filterable Datagrid', 
+        filterRow: true, 
+        results: true,
+        dateFilter: false, 
+        keywordFilter: false, 
+        actions: true, 
+        views: false, 
+        rowHeight: true, 
+        collapsibleFilter: false
+      }
+    });
+  });
+</script>
