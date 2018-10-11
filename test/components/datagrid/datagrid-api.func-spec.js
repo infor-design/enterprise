@@ -1,5 +1,6 @@
 import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
+import { Editors } from '../../../src/components/datagrid/datagrid.editors';
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -14,14 +15,20 @@ let datagridObj;
 
 // Define Columns for the Grid.
 const columns = [];
-columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: 100, filterType: 'Text' });
-columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, filterType: 'Text' });
-columns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true, filterType: 'Text' });
+columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander, filterType: 'text' });
+columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'Text', editor: Editors.Input }); //eslint-disable-line
+columns.push({ id: 'activity', name: 'Activity', field: 'activity', readonly: true, filterType: 'Text' });
 columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden', filterType: 'Text' });
-columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' } });
+columns.push({ id: 'price', align: 'right', name: 'Actual Price', readonly: true, field: 'price', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' } });
 columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent' } });
 columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
-columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, filterType: 'Text', formatter: Formatters.Text });
+columns.push({ id: 'phone', name: 'Phone', field: 'phone', isEditable: () => {return true}, filterType: 'Text', formatter: Formatters.Text, validate: 'required', required: true, editor: Editors.Input }); //eslint-disable-line
+
+const rowTemplate = `<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div>
+  <div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>
+  <p class="datagrid-row-micro-text">{{{sku}}}</p>
+  <span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span>
+  <a class="hyperlink" href="https://design.infor.com/" target="_blank" >Read more</a>`;
 
 describe('Datagrid API', () => {
   const Locale = window.Soho.Locale;
@@ -222,5 +229,277 @@ describe('Datagrid API', () => {
       expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
       done();
     }, 500);
+  });
+
+  it('Should be able to get the column info by id', () => {
+    let columnInfo = datagridObj.columnById('orderDate')[0];
+
+    expect(columnInfo.name).toEqual('Order Date');
+    expect(columnInfo.dateFormat).toEqual('M/d/yyyy');
+
+    columnInfo = datagridObj.columnById('activity')[0];
+
+    expect(columnInfo.name).toEqual('Activity');
+    expect(columnInfo.reorderable).toEqual(true);
+  });
+
+  it('Should be able to get the column index by id', () => {
+    let idx = datagridObj.columnIdxById('orderDate');
+
+    expect(idx).toEqual(6);
+
+    idx = datagridObj.columnIdxById('activity');
+
+    expect(idx).toEqual(2);
+  });
+
+  it('Should be able to check if a cell is editable', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, {
+      dataset: data,
+      columns,
+      editable: true
+    });
+
+    // Test Column readonly property
+    let isEditable = datagridObj.isCellEditable(0, 2);
+
+    expect(isEditable).toEqual(false);
+
+    // Test column with editor
+    isEditable = datagridObj.isCellEditable(0, 1);
+
+    expect(isEditable).toEqual(true);
+
+    // Test column with nothing specified
+    isEditable = datagridObj.isCellEditable(0, 0);
+
+    expect(isEditable).toEqual(false);
+
+    // Test column with isEditable function specified
+    isEditable = datagridObj.isCellEditable(0, datagridObj.columnIdxById('phone'));
+
+    expect(isEditable).toEqual(true);
+  });
+
+  it('Should be able to validate required on a cell', (done) => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, {
+      dataset: data,
+      columns,
+      editable: true
+    });
+
+    const spyEvent = spyOnEvent($('#datagrid'), 'cellerror');
+    datagridObj.validateCell(0, 7);
+    datagridObj.validateCell(1, 7);
+
+    setTimeout(() => {
+      expect(spyEvent).toHaveBeenTriggered();
+      expect(document.querySelectorAll('td.error').length).toEqual(2);
+
+      datagridObj.clearCellError(0, 7, 'error');
+
+      expect(document.querySelectorAll('td.error').length).toEqual(1);
+
+      datagridObj.clearAllCellError(1, 7);
+
+      expect(document.querySelectorAll('td.error').length).toEqual(0);
+      done();
+    }, 100);
+  });
+
+  it('Should be able to show and then clear a row error', () => {
+    datagridObj.showRowError(1, 'Test Error', 'error');
+    datagridObj.showRowError(2, 'Test Error', 'alert');
+
+    expect(document.querySelectorAll('tr.alert').length).toEqual(1);
+    expect(document.querySelectorAll('tr.error').length).toEqual(1);
+    expect(document.querySelectorAll('.icon-rowstatus').length).toEqual(2);
+
+    datagridObj.clearAllErrors();
+
+    expect(document.querySelectorAll('tr.alert').length).toEqual(0);
+    expect(document.querySelectorAll('tr.error').length).toEqual(0);
+    expect(document.querySelectorAll('.icon-rowstatus').length).toEqual(0);
+
+    datagridObj.showRowError(1, 'Test Error', 'error');
+    datagridObj.showRowError(2, 'Test Error', 'alert');
+    datagridObj.clearRowError(1);
+
+    expect(document.querySelectorAll('tr.alert').length).toEqual(1);
+    expect(document.querySelectorAll('tr.error').length).toEqual(0);
+    expect(document.querySelectorAll('.icon-rowstatus').length).toEqual(1);
+
+    datagridObj.clearAllErrors();
+  });
+
+  it('Should be able to reset row status', () => {
+    datagridObj.showRowError(1, 'Test Error', 'error');
+    datagridObj.showRowError(2, 'Test Error', 'alert');
+
+    expect(document.querySelectorAll('tr.alert').length).toEqual(1);
+    expect(document.querySelectorAll('tr.error').length).toEqual(1);
+    expect(document.querySelectorAll('.icon-rowstatus').length).toEqual(2);
+
+    datagridObj.resetRowStatus();
+
+    expect(document.querySelectorAll('tr.alert').length).toEqual(0);
+    expect(document.querySelectorAll('tr.error').length).toEqual(0);
+    expect(document.querySelectorAll('.icon-rowstatus').length).toEqual(0);
+  });
+
+  it('Should be able to get dirty rows', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, {
+      dataset: data,
+      columns,
+      editable: true,
+      showDirty: true
+    });
+
+    document.querySelector('tr:nth-child(1) td:nth-child(2)').click();
+    document.querySelector('tr:nth-child(1) td:nth-child(2) input').value = 'Test';
+    document.querySelector('tr:nth-child(2) td:nth-child(2)').click();
+
+    expect(document.querySelectorAll('.rowstatus-row-dirty').length).toEqual(1);
+    expect(document.querySelectorAll('.icon-rowstatus').length).toEqual(1);
+
+    datagridObj.resetRowStatus();
+
+    expect(document.querySelectorAll('.rowstatus-row-dirty').length).toEqual(0);
+    expect(document.querySelectorAll('.icon-rowstatus').length).toEqual(0);
+  });
+
+  it('Should be able to validate rows', (done) => {
+    datagridObj.validateRow();
+
+    expect(document.querySelectorAll('td.error').length).toEqual(0);
+
+    datagridObj.validateRow(1);
+
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, {
+      dataset: data,
+      columns,
+      editable: true
+    });
+
+    datagridObj.validateRow();
+
+    expect(document.querySelectorAll('td.error').length).toEqual(0);
+
+    datagridObj.validateRow(1);
+    setTimeout(() => {
+      expect(document.querySelectorAll('td.error').length).toEqual(1);
+      expect(document.querySelector('td.error').getAttribute('data-errormessage')).toEqual('[Required]');
+      datagridObj.clearAllErrors();
+      done();
+    });
+  });
+
+  it('Should be able to validate all rows', (done) => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, {
+      dataset: data,
+      columns,
+      editable: true
+    });
+
+    datagridObj.validateAll();
+
+    setTimeout(() => {
+      expect(document.querySelectorAll('td.error').length).toEqual(4);
+      datagridObj.clearAllErrors();
+      done();
+    });
+  });
+
+  it('Should be able to get column settings', () => {
+    const settings = datagridObj.columnSettings(6);
+
+    expect(settings.id).toEqual('orderDate');
+    expect(settings.dateFormat).toEqual('M/d/yyyy');
+    expect(settings.field).toEqual('orderDate');
+  });
+
+  it('Should be able to update a cell with the api', () => {
+    datagridObj.updateCell(1, 1, 'Test');
+
+    document.querySelector('tr:nth-child(1) td:nth-child(2)').click();
+
+    expect(document.querySelector('tr:nth-child(2) td:nth-child(2)').innerText.substr(0, 4)).toEqual('Test');
+  });
+
+  it('Should be able to set an active cell', () => {
+    datagridObj.setActiveCell(1, 0);
+
+    expect(document.activeElement.innerText.substr(0, 3)).toEqual('200');
+  });
+
+  it('Should be able to toggle an expandable row', (done) => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, {
+      dataset: data,
+      columns,
+      rowTemplate
+    });
+
+    const spyEvent = spyOnEvent($(datagridEl), 'expandrow');
+    const spyEventCollapse = spyOnEvent($(datagridEl), 'collapserow');
+
+    expect(document.querySelectorAll('.datagrid-expand-btn').length).toEqual(7);
+    document.querySelector('.datagrid-expand-btn:nth-child(1)').click();
+
+    setTimeout(() => {
+      expect(document.querySelector('.datagrid-expandable-row').classList.contains('is-expanded')).toBeTruthy();
+      expect(spyEvent).toHaveBeenTriggered();
+
+      setTimeout(() => {
+        document.querySelector('.datagrid-expand-btn:nth-child(1)').click();
+
+        expect(spyEventCollapse).toHaveBeenTriggered();
+        done();
+      }, 300);
+    }, 300);
+  });
+
+  it('Should be able to toggle an expandable row with the api', (done) => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, {
+      dataset: data,
+      columns,
+      rowTemplate
+    });
+
+    const spyEvent = spyOnEvent($(datagridEl), 'expandrow');
+    const spyEventCollapse = spyOnEvent($(datagridEl), 'collapserow');
+
+    expect(document.querySelectorAll('.datagrid-expand-btn').length).toEqual(7);
+    datagridObj.toggleRowDetail(0);
+
+    setTimeout(() => {
+      expect(document.querySelector('.datagrid-expandable-row').classList.contains('is-expanded')).toBeTruthy();
+      expect(spyEvent).toHaveBeenTriggered();
+
+      setTimeout(() => {
+        datagridObj.toggleRowDetail(0);
+
+        expect(spyEventCollapse).toHaveBeenTriggered();
+        done();
+      }, 300);
+    }, 300);
+  });
+
+  it('Should be able to set the sort column', () => {
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 10)).toEqual('Compressor');
+
+    datagridObj.setSortColumn('productName', false);
+
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 15)).toEqual('Some Compressor');
+
+    datagridObj.setSortColumn('productName', true);
+
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 15)).toEqual('Air Compressors');
   });
 });
