@@ -76,7 +76,8 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
  * implemented https://jira.infor.com/browse/SOHO-3437
  * @param {boolean} [settings.autoSize=false] If true the field will be sized to the width of the date.
-* @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
+ * @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
+ * @param {boolean} [settings.setTimeToMidnight=false] If true current time will be set to 12:00 midnight
  */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
@@ -120,7 +121,8 @@ const DATEPICKER_DEFAULTS = {
   calendarName: null,
   useUTC: false,
   autoSize: false,
-  hideButtons: false
+  hideButtons: false,
+  setTimeToMidnight: false
 };
 
 function DatePicker(element, settings) {
@@ -778,10 +780,25 @@ DatePicker.prototype = {
     // Set timepicker
     if (this.settings.showTime) {
       // Set to 12:00
-      if (this.element.val() === '' && this.currentDate && this.currentDate.getDate()) {
+      if (this.settings.setTimeToMidnight) {
         this.currentDate.setHours(0);
         this.currentDate.setMinutes(0);
         this.currentDate.setSeconds(0);
+      } else if (this.element.val() === '') {
+        const d = new Date();
+        if (Math.ceil(d.getMinutes() / 5) * 5 === 60) {
+          this.currentDate.setHours(d.getHours() + 1 > 12 ? 0 : d.getHours() + 1);
+          this.currentDate.setMinutes(0);
+        } else {
+          this.currentDate.setHours(d.getHours());
+          this.currentDate.setMinutes(Math.ceil(d.getMinutes() / 5) * 5);
+        }
+
+        if (this.currentDate.getMinutes() === d.getMinutes()) {
+          this.currentDate.setSeconds(Math.ceil(d.getSeconds() / 5) * 5);
+        } else {
+          this.currentDate.setSeconds(0);
+        }
       }
 
       timeOptions.parentElement = this.timepickerContainer;
@@ -1532,16 +1549,43 @@ DatePicker.prototype = {
     this.currentDate.setHours(0, 0, 0, 0);
 
     if (this.element.val() !== '') {
+      const elemDateVal = new Date(this.element.val());
       if (this.timepicker && this.timepicker.hourSelect) {
-        this.currentDate.setHours(this.timepicker.hourSelect.val());
+        const hourVal = this.timepicker.preiodSelect.val() === 'PM' ? parseInt(this.timepicker.hourSelect.val(), 10) + 12 : this.timepicker.hourSelect.val();
+        this.currentDate.setHours(hourVal);
+      } else {
+        this.currentDate.setHours(elemDateVal.getHours());
       }
 
       if (this.timepicker && this.timepicker.minuteSelect) {
         this.currentDate.setMinutes(this.timepicker.minuteSelect.val());
+      } else {
+        this.currentDate.setMinutes(elemDateVal.getMinutes());
       }
 
       if (this.timepicker && this.timepicker.secondSelect) {
         this.currentDate.setSeconds(this.timepicker.secondSelect.val());
+      } else {
+        this.currentDate.setSeconds(elemDateVal.getSeconds());
+      }
+    } else if (this.settings.setTimeToMidnight) {
+      this.currentDate.setMinutes(0);
+      this.currentDate.setMinutes(0);
+      this.currentDate.setSeconds(0);
+    } else {
+      const d = new Date();
+      if (Math.ceil(d.getMinutes() / 5) * 5 === 60) {
+        this.currentDate.setHours(d.getHours() + 1 > 12 ? 1 : d.getHours() + 1);
+        this.currentDate.setMinutes(0);
+      } else {
+        this.currentDate.setHours(d.getHours());
+        this.currentDate.setMinutes(Math.ceil(d.getMinutes() / 5) * 5);
+      }
+
+      if (this.currentDate.getMinutes() === d.getMinutes()) {
+        this.currentDate.setSeconds(Math.ceil(d.getSeconds() / 5) * 5);
+      } else {
+        this.currentDate.setSeconds(0);
       }
     }
 

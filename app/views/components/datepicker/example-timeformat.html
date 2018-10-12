@@ -19,11 +19,13 @@ $('body').on('initialized', function () {
   $('#dp1').datepicker({
     dateFormat: 'yyyy/M/d',
     timeFormat: 'HH:mm',
-    showTime: true
+    showTime: true,
+    setTimeToMidnight: true
   });
 
   $('#dp2').datepicker({
-    showTime: true
+    showTime: true,
+    setTimeToMidnight: true
   });
 });
 </script>

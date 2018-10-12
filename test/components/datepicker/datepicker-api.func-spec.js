@@ -85,6 +85,8 @@ describe('DatePicker API', () => {
   });
 
   it('Should be able to call setToday and getCurrentDate', () => {
+    datepickerAPI.destroy();
+    datepickerAPI = new DatePicker(datepickerEl, { setTimeToMidnight: true });
     datepickerAPI.setToday();
     const todayDate = datepickerAPI.getCurrentDate();
     const testDate = new Date();
@@ -104,6 +106,8 @@ describe('DatePicker API', () => {
   });
 
   it('Should be able to call setToday with time', () => {
+    datepickerTimeAPI.destroy();
+    datepickerTimeAPI = new DatePicker(datepickerEl, { setTimeToMidnight: true });
     datepickerTimeAPI.setToday();
     const todayDate = datepickerTimeAPI.getCurrentDate();
     const testDate = new Date();
@@ -115,7 +119,7 @@ describe('DatePicker API', () => {
   it('Should be able to call setToday and getCurrentDate in Umalqura', () => {
     datepickerAPI.destroy();
     Locale.set('ar-SA');
-    datepickerAPI = new DatePicker(datepickerEl);
+    datepickerAPI = new DatePicker(datepickerEl, { setTimeToMidnight: true });
     datepickerAPI.setToday();
 
     const todayDate = datepickerAPI.getCurrentDate();
@@ -127,6 +131,17 @@ describe('DatePicker API', () => {
     const converted = datepickerAPI.conversions.fromGregorian(testDate);
 
     expect(datepickerEl.value).toEqual(`${converted[0]}/${(`${converted[1] + 1}`).padStart(2, '0')}/${(`${converted[2]}`).padStart(2, '0')}`);
+  });
+
+  it('Should be able to set setTimeToMidnight to false', () => {
+    datepickerTimeAPI.destroy();
+    datepickerTimeAPI = new DatePicker(datepickerEl, { setTimeToMidnight: false });
+    datepickerTimeAPI.setToday();
+    const todayDate = datepickerTimeAPI.getCurrentDate();
+    const testDate = new Date();
+    testDate.setHours(0, 0, 0, 0);
+
+    expect(todayDate.toString()).not.toEqual(testDate.toString());
   });
 
   it('Should set internal format', () => {
