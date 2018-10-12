@@ -2538,7 +2538,6 @@ Tabs.prototype = {
       }
     }
 
-    console.log(prevLi);
     this.focusBar(prevLi);
     a.focus();
 
