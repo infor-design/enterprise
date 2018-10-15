@@ -27,7 +27,7 @@ function getCustomSpecs(type) {
     fileName = 'tests-e2e.txt';
   }
 
-  const filePath = path.resolve(__dirname, '..', '..', 'dist', 'tests', fileName);
+  const filePath = path.resolve(__dirname, '..', '..', 'dist', 'log', fileName);
 
   // If there is no custom specs file,
   const specs = fs.readFileSync(filePath, 'utf8');

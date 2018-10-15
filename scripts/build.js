@@ -118,9 +118,11 @@ const filePaths = {
         // 'uplift-theme': path.join(TEMP_DIR, 'uplift-theme.scss')
       }
     },
-    tests: {
+    log: {
+      components: path.join(TEMP_DIR, 'components.txt'),
       e2e: path.join(TEMP_DIR, 'tests-e2e.txt'),
       functional: path.join(TEMP_DIR, 'tests-functional.txt'),
+      source: path.join(TEMP_DIR, 'source.txt')
     }
   }
 
@@ -220,6 +222,14 @@ const buckets = {
   'test-e2e': [],
   'test-func': []
 };
+
+// Component List file output
+let componentList = '';
+
+// Source code matches
+const jsMatches = [];
+const jQueryMatches = [];
+const sassMatches = [];
 
 // -------------------------------------
 // Functions
@@ -725,7 +735,7 @@ function renderTargetSassFile(key, targetFilePath) {
 /**
  * @private
  * @param {string} type functional, e2e
- * @returns {Promise}
+ * @returns {Promise} representing the written test manifest file
  */
 function renderTestManifest(type) {
   let targetFile = '';
@@ -738,7 +748,60 @@ function renderTestManifest(type) {
     targetFile += `${test}\n`;
   });
 
-  return writeFile(filePaths.target.tests[type], targetFile);
+  return writeFile(filePaths.target.log[type], targetFile);
+}
+
+/**
+ * Renders a list of components that were requested
+ * @private
+ * @returns {Promise} representing the written components list
+ */
+function renderComponentList() {
+  return writeFile(filePaths.target.log.components, componentList);
+}
+
+/**
+ * Renders a list of source code matched
+ * @private
+ * @returns {Promise} representing the source code list
+ */
+function renderSourceCodeList() {
+  let targetFile = '';
+
+  function logEmpty() {
+    targetFile += '\n';
+    if (commandLineArgs.verbose) {
+      process.stdout.write('\n');
+    }
+  }
+
+  function logHeaderToBoth(str) {
+    targetFile += `${str}\n`;
+    if (commandLineArgs.verbose) {
+      logger(`${chalk.cyan(str)}`);
+    }
+  }
+
+  function logItemToBoth(item) {
+    targetFile += `- ${item}\n`;
+    if (commandLineArgs.verbose) {
+      logger('bullet', `${item}`);
+    }
+  }
+
+  logHeaderToBoth('JS Source Code:');
+  jsMatches.forEach(item => logItemToBoth(item));
+  logEmpty();
+
+  logHeaderToBoth('jQuery Source Code:');
+  jQueryMatches.forEach(item => logItemToBoth(item));
+  logEmpty();
+
+  logHeaderToBoth('Sass Source Code:');
+  sassMatches.forEach(item => logItemToBoth(item));
+  logEmpty();
+
+  return writeFile(filePaths.target.log.source, targetFile);
 }
 
 /**
@@ -771,6 +834,7 @@ function renderTargetFiles(isNormalBuild) {
   });
   renderPromises.push(renderTargetSassFile('components', filePaths.target.sass.controls));
 
+  renderPromises.push(renderComponentList(), renderSourceCodeList());
   renderPromises.push(renderTestManifest('functional'));
   renderPromises.push(renderTestManifest('e2e'));
 
@@ -813,12 +877,9 @@ function runBuildProcess(terminalCommand, terminalArgs) {
  * Runs all relevant build processes
  * @private
  * @param {array} requested the search terms that were requested
- * @param {array} jsMatches base Javascript matches
- * @param {array} jQueryMatches jQuery matches
- * @param {array} sassMatches Sass matches
  * @returns {Promise} containing results of all build processes
  */
-function runBuildProcesses(requested, jsMatches, jQueryMatches, sassMatches) {
+function runBuildProcesses(requested) {
   const buildPromises = [];
   let isCustom = false;
   let hasCustom = '';
@@ -911,17 +972,14 @@ if (!commandLineArgs.components) {
 }
 
 cleanAll(true).then(() => {
-  const jsMatches = [];
-  const jQueryMatches = [];
-  const sassMatches = [];
-
   if (!normalBuild) {
     // Display a list of requested components to the console
-    let componentList = `${(commandLineArgs.verbose ? '\n' : '')}${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
+    let loggedComponentList = `${(commandLineArgs.verbose ? '\n' : '')}${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
     requestedComponents.forEach((comp) => {
-      componentList += `- ${comp}\n`;
+      componentList += `${comp}\n`;
+      loggedComponentList += `- ${comp}\n`;
     });
-    logger(componentList);
+    logger(loggedComponentList);
 
     // Scan source code directories
     const items = read(SRC_DIR);
@@ -956,23 +1014,8 @@ cleanAll(true).then(() => {
       });
     });
 
-    if (commandLineArgs.verbose) {
-      logger(`${chalk.cyan('JS Source Code:')}`);
-      jsMatches.forEach((item) => {
-        logger('bullet', `${item}`);
-      });
-
-      logger(`${chalk.cyan('jQuery Source Code:')}`);
-      jQueryMatches.forEach((item) => {
-        logger('bullet', `${item}`);
-      });
-
-      logger(`${chalk.cyan('Sass Source Code:')}`);
-      sassMatches.forEach((item) => {
-        logger('bullet', `${item}`);
-      });
-      process.stdout.write('\n');
-    } else {
+    // Only log the results if we're not in verbose mode.
+    if (!commandLineArgs.verbose) {
       logger(`${chalk.cyan('JS Source Code:')} ${jsMatches.length} files`);
       logger(`${chalk.cyan('jQuery Source Code:')} ${jQueryMatches.length} files`);
       logger(`${chalk.cyan('Sass Source Code:')} ${sassMatches.length} files`);
