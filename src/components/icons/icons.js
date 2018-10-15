@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { base } from '../../utils/base';
 import { utils } from '../../utils/utils';
 
 // component name
@@ -81,7 +82,7 @@ Icon.prototype = {
    * @returns {string} a version of this icon's definition prefixed with the current base tag's URL.
    */
   getBasedUseTag() {
-    return $.getBaseURL(`#icon-${this.settings.use}`);
+    return base.getBaseURL(`#icon-${this.settings.use}`);
   },
 
   /**
