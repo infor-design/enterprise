@@ -72,6 +72,10 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
           position: relative;
           top: 55px;
 
+          @media only screen and (max-width: $breakpoint-big-phone - 30px) and (min-width: $breakpoint-phone) {
+            left: -175px;
+          }
+
           button {
             background: $color-primary;
             color: $white;
@@ -308,6 +312,10 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
   ul > li > .leaf {
     width: 315px;
 
+    @media only screen and (max-width: $breakpoint-big-phone - 30px) and (min-width: $breakpoint-phone) {
+      width: 200px;
+    }
+
     .btn-actions,
     .btn-expand,
     .btn-collapse {
@@ -402,6 +410,10 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
       overflow: visible;
       position: relative;
 
+      @media only screen and (max-width: $breakpoint-big-phone - 30px) and (min-width: $breakpoint-phone) {
+        margin: 0 0 20px 20px;
+      }
+
       &::after {
         border-top: $hierarchy-line-width solid $hierarchy-line-color;
         content: '';
@@ -411,6 +423,10 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
         top: 50%;
         width: 50%;
         z-index: -1;
+
+        @media only screen and (max-width: $breakpoint-big-phone - 30px) and (min-width: $breakpoint-phone) {
+          left: -25px;
+        }
       }
     }
   }
