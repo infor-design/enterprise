@@ -1,15 +1,20 @@
 /* eslint-disable no-underscore-dangle */
 const csp = require('express-csp');
 const express = require('express');
+const csrf = require('csurf');
+const session = require('express-session');
 const extend = require('extend'); // equivalent of $.extend()
 const mmm = require('mmm');
 const path = require('path');
 const utils = require('./src/js/utils');
+const crypto = require('crypto');
 const getJSONFile = require('./src/js/get-json-file');
 
 const app = express();
+app.disable('x-powered-by');
+
 const BASE_PATH = process.env.BASEPATH || '/';
-const packageJSON = getJSONFile('../../../ids-enterprise/package.json');
+const packageJSON = getJSONFile('../../../package.json');
 
 app.set('view engine', 'html');
 app.set('views', path.resolve(__dirname, 'views'));
@@ -35,6 +40,23 @@ app.use(express.static(path.resolve(__dirname, '..', 'dist'), { // project-level
   etag: false
 }));
 
+const token = crypto.randomBytes(64).toString('hex');
+
+app.use(session({
+  secret: token,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: false,
+    secure: false
+  }
+}));
+app.use(csrf());
+app.use((req, res, next) => {
+  res.locals._csrf = req.csrfToken();
+  next();
+});
+
 // Create the express router with the same settings as the app.
 const router = express.Router({
   strict: true
@@ -48,7 +70,7 @@ const DEFAULT_RESPONSE_OPTS = {
   layout: 'layout',
   locale: 'en-US',
   title: 'SoHo XI',
-  headerHambuger: false,
+  headerHamburger: false,
   basepath: BASE_PATH,
   version: packageJSON.version,
   csp: true,
@@ -76,7 +98,7 @@ const sendGeneratedDocPage = require('./src/js/routes/docs');
 //  Main Routing and Param Handling
 // ======================================
 router.get('/', (req, res, next) => {
-  res.redirect(`${BASE_PATH}kitchen-sink`);
+  res.render('kitchen-sink', res.opts);
   next();
 });
 
@@ -89,7 +111,7 @@ router.get('/index', (req, res, next) => {
     sendGeneratedDocPage(opts, req, res, next);
   }
 
-  res.redirect(`${BASE_PATH}kitchen-sink`);
+  res.render('kitchen-sink', res.opts);
 });
 
 router.get('/kitchen-sink', (req, res, next) => {
@@ -112,6 +134,7 @@ router.get('/performance-tests', (req, res, next) => {
 // ======================================
 //  Components Routes
 // ======================================
+app.use('/behaviors', generalRoute);
 app.use('/components', generalRoute);
 app.use('/patterns', generalRoute);
 app.use('/examples', generalRoute);

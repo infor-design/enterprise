@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Dropdown Test: 'Change' Event</h2>
+    <p>
+      The scenario involves a `single-select` dropdown that contains options that will always have a unique value,
+      but may (under some circumstances) have matching text labels. If we select an option from the list,
+      and then select a second option with a different value, but a matching text label,
+      the dropdown component does not (as far as we can tell) detect that the selected value has been changed,
+      and thus does not perform logic that would normally be executed when a change occurs (updating the model
+      or triggering associated events).
+      See <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-8029" target="_blank"> for more details.</a>
+    </p>
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="dropdown">Event</label>
+      <select id="dropdown" class="dropdown">
+        <option value="">&nbsp;</option>
+        <option value="1">One</option>
+        <option value="2">One</option>
+        <option value="3">One</option>
+        <option value="4">One</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('#dropdown').on('change', function (e) {
+    $('body').toast({
+      'title': 'Change Event Fired',
+      'message': 'Value changed to <span class="text-strong">' + $(this).val() + '</span> '
+    });
+  });
+</script>

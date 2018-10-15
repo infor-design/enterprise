@@ -174,6 +174,18 @@ $.fn.chart = function (settings) {
       this.data('chart', chartComponent); // Compatibility
       break;
     }
+    case 'scatterplot': {
+      settings.isScatterPlot = true;
+      instance = this.data(LINE_NAME);
+      if (instance) {
+        instance.updated(settings);
+        return this;
+      }
+      const chartComponent = new Line(this, settings);
+      this.data(LINE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
+      break;
+    }
     case 'column':
     case 'column-grouped':
     case 'positive-negative':

@@ -5,6 +5,7 @@
   @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
   @include antialiased();
   @include font-size(14);
+
   -webkit-appearance: none;
   background-color: $input-bg-color;
   border: 1px solid $input-border-color;
@@ -62,7 +63,6 @@
 
     &:focus {
       // Needed for printing
-      // scss-lint:disable ImportantRule
       border-color: $error-color !important;
       box-shadow: $error-focus-box-shadow !important;
       color: $input-color !important;
@@ -74,7 +74,6 @@
 
     &:focus {
       // Needed for printing
-      // scss-lint:disable ImportantRule
       border-color: $alert-color !important;
       color: $input-color !important;
     }
@@ -85,7 +84,6 @@
 
     &:focus {
       // Needed for printing
-      // scss-lint:disable ImportantRule
       border-color: $confirm-color !important;
       color: $input-color !important;
     }
@@ -96,7 +94,6 @@
 
     &:focus {
       // Needed for printing
-      // scss-lint:disable ImportantRule
       border-color: $info-color !important;
       color: $input-color !important;
     }
@@ -106,6 +103,7 @@
 // Required Indicator
 @mixin required-indicator() {
   @include font-size(18);
+
   color: $error-color;
   content: '*';
   display: inline-block;
@@ -128,6 +126,7 @@
 
 @mixin inline-control($controls) {
   $exclude-controls: '';
+
   @each $control in $controls {
     $exclude-controls: $exclude-controls + ':not(.#{$control})';
   }
@@ -150,6 +149,7 @@
 .field .checkbox-label,
 .field .checkbox > label {
   @include font-size(14);
+
   color: $checkbox-label-color;
   display: inline-block;
   margin-bottom: 0;
@@ -163,7 +163,6 @@
 
 // Two Connected Fields
 .compound-field {
-
   > .field,
   > .field-short {
     clear: both;
@@ -255,9 +254,7 @@
     margin-bottom: 12px;
 
     .inline-checkbox .label-text {
-      // scss-lint:disable ImportantRule
       margin-bottom: 1px !important;
-      // scss-lint:enable ImportantRule
     }
   }
 
@@ -267,28 +264,6 @@
 
   &.l-pull-left {
     margin-right: 20px;
-  }
-
-  &.percent,
-  &.currency {
-
-    &::before,
-    &::after {
-      @include font-size(14);
-      display: inline-block;
-      position: absolute;
-      top: 32px;
-    }
-  }
-
-  &.currency::before {
-    content: attr(data-currency-symbol);
-    left: 10px;
-  }
-
-  &.percent::before {
-    content: attr(data-currency-symbol);
-    left: 10px;
   }
 
   &.top-padding {
@@ -323,12 +298,13 @@
   }
 }
 
-[data-clearable="true"] {
+[data-clearable='true'] {
   padding-right: 32px;
 
   & + .icon.close {
-    margin-left: -30px;
+    margin-left: -27px;
     right: auto;
+    top: -2px;
 
     &:hover {
       fill: $trigger-hover-color;
@@ -339,7 +315,7 @@
 .is-disabled {
   .icon.close {
     cursor: default;
-    opacity: .5;
+    opacity: 0.5;
   }
 }
 
@@ -386,10 +362,11 @@ textarea {
 // Text Area
 textarea {
   @include rem(line-height, 2rem);
+
   min-height: 90px;
   overflow: auto;
   padding: 10px;
-  width: 362px;
+  width: $textarea-size;
 
   &.resizable {
     resize: vertical;
@@ -421,7 +398,7 @@ textarea {
 
   display: block;
   min-height: auto;
-  width: 362px;
+  width: $textarea-size;
 
   &.almost-empty {
     color: $error-color;
@@ -436,7 +413,6 @@ textarea {
 // Print Style Sheet
 @media print {
   // Needed for printing
-  // scss-lint:disable ImportantRule
 
   textarea,
   .textarea-wordcount {
@@ -446,12 +422,13 @@ textarea {
   .textarea-print {
     display: inline-block !important;
     height: auto;
-    width: 362px;
+    width: auto;
   }
 }
 
 .inline {
   $controls: ('busy', 'colorpicker', 'datepicker', 'switch', 'lookup', 'searchfield', 'timepicker, radio');
+
   @include inline-control-label($controls);
   @include inline-control($controls);
 
@@ -470,7 +447,6 @@ textarea {
 // Required Indicator
 label,
 .label {
-
   &.required {
     &:not(.inline)::after {
       @include required-indicator();
@@ -486,25 +462,27 @@ label,
 // Placeholder - Inline help
 ::-webkit-input-placeholder {
   @include font-size(14);
+
   color: $input-placeholder-color;
-  font-weight: normal;
+  font-weight: $font-weight-normal;
   line-height: 16px;
   opacity: 1;
 }
 
-// scss-lint:disable VendorPrefix
 ::-moz-placeholder {
   @include font-size(14);
+
   color: $input-placeholder-color;
-  font-weight: normal;
+  font-weight: $font-weight-normal;
   line-height: 16px;
   opacity: 1;
 }
 
 :-ms-input-placeholder {
   @include font-size(14);
+
   color: $input-placeholder-color;
-  font-weight: normal;
+  font-weight: $font-weight-normal;
   line-height: 16px;
   opacity: 1;
 }
@@ -603,14 +581,14 @@ label,
 
 // Text Selection
 ::selection {
-  background: $primary-color;
+  background: $color-primary;
   color: $inverse-color;
   fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
 }
 
 ::-moz-selection {
-  background: $primary-color;
+  background: $color-primary;
   color: $inverse-color;
   fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
@@ -633,6 +611,7 @@ label,
 
   input {
     @include font-size(12);
+
     margin-bottom: 0;
     padding: 5px;
     resize: none;
@@ -696,7 +675,6 @@ label,
   width: $field-mm;
 }
 
-
 .input-sm,
 .colorpicker-container .input-sm.colorpicker,
 .field-short .input-sm {
@@ -716,7 +694,9 @@ label,
 //Info Field
 .field-info {
   $icon-width: 15px;
+
   @include font-size(12);
+
   display: block;
   line-height: 1.2rem;
   margin-bottom: 12px;
@@ -756,6 +736,7 @@ label,
   $icon-width: 14px;
 
   @include font-size(12);
+
   color: $error-color;
   display: block;
   line-height: 1.2rem;
@@ -786,6 +767,7 @@ label,
   $icon-width: 14px;
 
   @include font-size(12);
+
   color: $alert-color;
   display: block;
   line-height: 1.2rem;
@@ -816,6 +798,7 @@ label,
   $icon-width: 14px;
 
   @include font-size(12);
+
   color: $confirm-color;
   display: block;
   line-height: 1.2rem;
@@ -847,6 +830,7 @@ label,
   $icon-width: 14px;
 
   @include font-size(12);
+
   color: $info-color;
   display: block;
   line-height: 1.2rem;
@@ -891,7 +875,7 @@ label,
     width: calc(100% - 40px);
 
     &.textarea {
-      max-width: 362px;
+      max-width: $textarea-size;
 
       ~ .btn-tertiary {
         margin-left: 2px;
@@ -987,7 +971,7 @@ label,
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .field-info,
   .error-message {
@@ -1028,17 +1012,17 @@ html[dir='rtl'] {
     text-align: left;
   }
 
-  [data-mask-mode="number"].spinbox {
+  [data-mask-mode='number'].spinbox {
     text-align: center;
   }
 
-  [data-clearable="true"] {
-    padding-right: 10px;
+  [data-clearable='true'] {
     padding-left: 32px;
+    padding-right: 10px;
 
     & + .icon.close {
-      right: auto;
       margin-right: -30px;
+      right: auto;
     }
   }
 
@@ -1076,7 +1060,6 @@ html[dir='rtl'] {
   }
 
   .compound-field {
-
     > .field,
     > .field-short {
       .error-message .message-text {

@@ -2,7 +2,7 @@
 title: Masthead
 description: This page describes Masthead.
 demo:
-  pages:
+  embedded:
   - name: Default Masthead Example
     slug: example-index
 ---
@@ -15,7 +15,7 @@ The masthead can be added to applications when not running inside mingle to add 
 <section class="masthead" role="banner">
   <div class="toolbar no-actions-button" data-options="{maxVisibleButtons: 6}">
     <div class="title">
-      <button type="button" class="masthead-icon">
+      <button type="button" id="masthead-icon" class="masthead-icon">
         <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-logo"></use>
         </svg>
@@ -26,34 +26,34 @@ The masthead can be added to applications when not running inside mingle to add 
 
     <div class="buttonset">
 
-      <button type="button" class="btn" title="Show User">
+      <button type="button" id="show-user" class="btn" title="Show User">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-user"></use>
         </svg>
         <span class="audible">User</span>
       </button>
 
-      <button type="button" class="btn">
+      <button type="button" id="share" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-mingle-share"></use>
         </svg>
         <span class="audible">Share</span>
       </button>
 
-      <button type="button" class="btn btn-menu">
+      <button type="button" id="bookmark" class="btn btn-menu">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-bookmark-filled"></use>
         </svg>
         <span class="audible">Bookmark</span>
       </button>
       <ul class="popupmenu has-icons">
-        <li><a href="#">Option 1</a></li>
-        <li><a href="#">Option 2</a></li>
+        <li><a href="#" id="option-1">Option 1</a></li>
+        <li><a href="#" id="option-2">Option 2</a></li>
       </ul>
 
-      <input class="searchfield" />
+      <input id="searchfield" class="searchfield" />
 
-      <button type="button" class="btn">
+      <button type="button" id="btn" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-expand-app-tray"></use>
         </svg>
@@ -67,8 +67,12 @@ The masthead can be added to applications when not running inside mingle to add 
 
 ## Accessibility
 
--  Use the `role="banner"` Landmark role
--  Should use html5 section or nav type
+- Use the `role="banner"` Landmark role
+- Should use html5 section or nav type
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

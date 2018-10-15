@@ -1,0 +1,80 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Stacked Column Chart Title &mdash; Format y-axis as integer</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-bar-stacked-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var dataset = [{
+    data: [
+      { name: 'Jan', value: 1.2 },
+      { name: 'Feb', value: 1.1 },
+      { name: 'Mar', value: 1.4 },
+      { name: 'Apr', value: 1 },
+      { name: 'May', value: 1.4 },
+      { name: 'Jun', value: .8 },
+      { name: 'Jul', value: .7 },
+      { name: 'Aug', value: 1 },
+      { name: 'Sep', value: .9 },
+      { name: 'Oct', value: .8 },
+      { name: 'Nov', value: 1 },
+      { name: 'Dec', value: .6 }
+    ],
+    name: '2018'
+  }, {
+    data: [
+      { name: 'Jan', value: 2.2 },
+      { name: 'Feb', value: 2.1 },
+      { name: 'Mar', value: 2.4 },
+      { name: 'Apr', value: 2 },
+      { name: 'May', value: 2.4 },
+      { name: 'Jun', value: 2.8 },
+      { name: 'Jul', value: 2.7 },
+      { name: 'Aug', value: 2 },
+      { name: 'Sep', value: 2.9 },
+      { name: 'Oct', value: 2.8 },
+      { name: 'Nov', value: 2 },
+      { name: 'Dec', value: 2.6 }
+    ],
+    name: '2017'
+  }, {
+    data: [
+      { name: 'Jan', value: 3.2 },
+      { name: 'Feb', value: 3.1 },
+      { name: 'Mar', value: 3.4 },
+      { name: 'Apr', value: 3 },
+      { name: 'May', value: 3.4 },
+      { name: 'Jun', value: 3.8 },
+      { name: 'Jul', value: 3.7 },
+      { name: 'Aug', value: 3 },
+      { name: 'Sep', value: 3.9 },
+      { name: 'Oct', value: 3.8 },
+      { name: 'Nov', value: 3 },
+      { name: 'Dec', value: 3.6 }
+    ],
+    name: '2016'
+  }];
+
+    $('#column-bar-stacked-example').chart({
+      type: 'column-stacked',
+      dataset: dataset,
+      yAxis: {
+        ticks: {
+          number: 4, // Tip: round max data value
+          format: 'd'
+        }
+      }
+    });
+});
+</script>

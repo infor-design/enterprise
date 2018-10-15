@@ -1,0 +1,294 @@
+//* Calendar
+//================================================== *
+
+.calendar {
+  background-color: $calendar-bg-color;
+  display: inline-block;
+  height: 100%;
+  overflow: auto;
+  vertical-align: top;
+  width: 100%;
+
+  // The event container
+  .calendar-events {
+    border-top: 1px solid $calendar-line-color;
+    display: inline-block;
+    vertical-align: top;
+    width: 220px;
+
+    .accordion-header a {
+      @include font-size(16);
+    }
+  }
+
+  // Changes to the monthview container
+  .calendar-monthview {
+    width: calc(100% - 440px);
+
+    .monthview-table {
+      table-layout: fixed;
+    }
+
+    .monthview-header {
+      height: 46px;
+
+      button {
+        top: 9px;
+      }
+
+      .datepicker {
+        margin-top: 5px;
+        padding-bottom: 6px;
+        padding-top: 8px;
+
+        + .icon {
+          top: 7px !important;
+        }
+      }
+
+      .today {
+        top: -1px;
+      }
+
+      #calendar-view-changer + .dropdown-wrapper {
+        float: right;
+        line-height: initial;
+        position: relative;
+        right: 15px;
+        top: 5px;
+        width: 105px;
+      }
+    }
+  }
+
+  // The details section
+  .calendar-event-details {
+    background-color: $body-bg-color-primary;
+    border-left: 1px solid $calendar-line-color;
+    display: inline-block;
+    height: 100%;
+    vertical-align: top;
+    width: 220px;
+  }
+
+  .calendar-event-types {
+    margin-bottom: -3px;
+  }
+
+  // A calendar event
+  .calendar-event {
+    @include font-size(11);
+
+    background-color: $azure02;
+    border-left: 5px solid $color-primary-alt;
+    border-radius: 3px;
+    color: $font-color-extrahighcontrast;
+    cursor: pointer;
+    display: block;
+    height: 18px;
+    margin: 0 2px 3px;
+    width: calc(100% - 4px);
+
+    //Event spanning
+    &.event-day-start {
+      border-radius: 3px 0 0 3px;
+      padding-right: 4px;
+      width: calc(100% - 1px);
+    }
+
+    &.event-day-span {
+      border-left: 0 !important;
+      border-radius: 0;
+      margin: 0;
+      width: 100%;
+      z-index: 1;
+
+      .calendar-event-icon {
+        display: none;
+      }
+
+      .calendar-event-title {
+        display: none;
+      }
+    }
+
+    &.event-day-end {
+      border-left: 0 !important;
+      border-radius: 0 3px 3px 0;
+      margin-left: 0;
+      width: calc(100% - 2px);
+      z-index: 1;
+
+      .calendar-event-icon {
+        display: none;
+      }
+
+      .calendar-event-title {
+        display: none;
+      }
+    }
+
+    .calendar-event-content {
+      overflow: hidden;
+      padding: 3px 1px;
+      position: relative;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .calendar-event-icon {
+      width: 20px;
+
+      .icon {
+        fill: $font-color;
+        height: 12px;
+        vertical-align: top;
+        width: 13px;
+      }
+    }
+
+    &.ruby {
+      background-color: $ruby02;
+      border-left: 5px solid $ruby07;
+    }
+
+    &.amber {
+      background-color: $amber03;
+      border-left: 5px solid $amber07;
+    }
+
+    &.emerald {
+      background-color: $emerald03;
+      border-left: 5px solid $emerald07;
+    }
+
+    &.turquoise {
+      background-color: $turquoise03;
+      border-left: 5px solid $turquoise07;
+    }
+
+    &.amethyst {
+      background-color: $amethyst03;
+      border-left: 5px solid $amethyst07;
+    }
+
+    &.slate {
+      background-color: $slate03;
+      border-left: 5px solid $slate07;
+    }
+
+    &.graphite {
+      background-color: $graphite03;
+      border-left: 5px solid $graphite07;
+    }
+  }
+
+  .calendar-event-more {
+    @include font-size(11);
+
+    color: $font-color-extrahighcontrast;
+    cursor: pointer;
+    display: block;
+    height: 18px;
+    margin: 4px 10px;
+    text-align: left;
+    width: auto;
+  }
+}
+
+// Calendar Event Details section
+.calendar-event-detail {
+  background-color: $calendar-bg-color;
+  height: 100%;
+}
+
+.calendar-event-header {
+  @include font-size(18);
+
+  color: $white;
+  display: block;
+  height: 48px;
+  line-height: 48px;
+  overflow: hidden;
+  padding: 0 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &.ruby {
+    background-color: $ruby06;
+  }
+
+  &.amber {
+    background-color: $amber06;
+  }
+
+  &.emerald {
+    background-color: $emerald06;
+  }
+
+  &.azure {
+    background-color: $azure06;
+  }
+
+  &.turquoise {
+    background-color: $turquoise06;
+  }
+
+  &.amethyst {
+    background-color: $amethyst06;
+  }
+
+  &.slate {
+    background-color: $slate06;
+  }
+
+  &.graphite {
+    background-color: $graphite06;
+  }
+}
+
+.calendar-event-body {
+  margin: 20px;
+
+  .data {
+    @include font-size(12);
+  }
+
+  .icon {
+    margin-bottom: -3px;
+    margin-top: -2px;
+  }
+}
+
+// Responsive Styles
+@include respond-to(phabletdown) {
+  .calendar {
+    .calendar-events,
+    .calendar-event-details {
+      display: none;
+    }
+
+    .calendar-monthview {
+      width: 100%;
+    }
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .calendar {
+    #calendar-view-changer + .dropdown-wrapper {
+      float: left !important;
+      right: -15px !important;
+    }
+
+    .today {
+      margin-right: 15px;
+    }
+  }
+
+  .calendar-event-details {
+    border-left: 0;
+    border-right: 1px solid $calendar-line-color;
+  }
+}

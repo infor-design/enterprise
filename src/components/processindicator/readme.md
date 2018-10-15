@@ -2,7 +2,7 @@
 title: Process Indicator
 description: This page describes Process Indicator .
 demo:
-  pages:
+  embedded:
   - name: Main Process Indicator Example
     slug: example-index
 ---
@@ -31,3 +31,7 @@ Here is an example of a compact process indicator. There are several classes in 
 </div>
 
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

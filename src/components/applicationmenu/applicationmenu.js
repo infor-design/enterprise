@@ -115,6 +115,7 @@ ApplicationMenu.prototype = {
           '<input id="application-menu-searchfield" class="searchfield" /></div>').prependTo(this.element);
       }
 
+      this.element.addClass('has-searchfield');
       const self = this;
       this.searchfield.searchfield({
         clearable: true,
@@ -127,6 +128,9 @@ ApplicationMenu.prototype = {
         resultIteratorCallback(item) {
           item.highlightTarget = 'text';
           return item;
+        },
+        clearResultsCallback() {
+          self.accordionAPI.unfilter();
         },
         displayResultsCallback(results, done) {
           return self.filterResultsCallback(results, done);
@@ -678,7 +682,7 @@ ApplicationMenu.prototype = {
     });
 
     $(document).on('open-applicationmenu', () => {
-      self.openMenu();
+      self.openMenu(undefined, true);
     }).on('close-applicationmenu', () => {
       self.closeMenu();
     });

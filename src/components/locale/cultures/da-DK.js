@@ -24,10 +24,11 @@ Soho.Locale.addCulture('da-DK', {
       timestamp: 'HH.mm.ss',
       datetime: 'dd/MM/yyyy HH.mm'
     }, // Infered short + short gregorian/dateTimeFormats
-    // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
+    // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
+    // standalone abbreviated (3 digit mostly)
     days: {
       wide: ['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'],
-      abbreviated: ['sø', 'ma', 'ti', 'on', 'to', 'fr', 'lø'],
+      abbreviated: ['søn', 'man', 'tir', 'ons', 'tor', 'fre', 'lør'],
       narrow: ['S', 'M', 'T', 'O', 'T', 'F', 'L']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide

@@ -1,12 +1,11 @@
 // Bar Chart
 //==================================================//
 
-
 .chart-container {
-
   .bar,
   .arc {
     cursor: pointer;
+    -webkit-tap-highlight-color: $transparent;
   }
 
   .arc {
@@ -19,11 +18,8 @@
     stroke-width: 1px;
   }
 
-  &.bar-chart {
-    .chart-legend {
-      margin-top: 5px;
-    }
-
+  &.bar-chart-grouped .chart-legend {
+    margin-top: 5px;
   }
 }
 

@@ -2,7 +2,7 @@
 title: Counts
 description: This page describes Counts.
 demo:
-  pages:
+  embedded:
   - name: Counts - Of an Instance
     slug: example-instance-count
   - name: Counts - Of an Object
@@ -15,7 +15,6 @@ Use the icon types `icon-alert`, `icon-confirm`, `icon-dirty`, `icon-error`, `ic
 
 Instance Counts are simple CSS/HTML components with a `count` and `title` element. You can use any of the colors in the [pallette]( ./colors).
 
-
 ```html
 <div class="instance-count ">
   <span class="count emerald07">40</span>
@@ -25,5 +24,9 @@ Instance Counts are simple CSS/HTML components with a `count` and `title` elemen
 
 ## Accessibility
 
--   Be careful to select a color that passes [WCAG AA or AAA contrast](http://webaim.org/resources/contrastchecker/) with its background
--   Screen readers can access the information via a virtual keyboard. Make sure to augment the labels with `audible` only spans to add additional context if needed
+- Be careful to select a color that passes [WCAG AA or AAA contrast](http://webaim.org/resources/contrastchecker/) with its background
+- Screen readers can access the information via a virtual keyboard. Make sure to augment the labels with `audible` only spans to add additional context if needed
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

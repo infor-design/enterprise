@@ -76,7 +76,7 @@ Splitter.prototype = {
     this.docBody = $('body');
     this.isSplitterRightSide = splitter.is('.splitter-right') || (s.axis === 'x' && s.side === 'right');
     this.isSplitterHorizontal = splitter.is('.splitter-horizontal') || s.axis === 'y';
-    s.uniqueId = this.uniqueId();
+    s.uniqueId = utils.uniqueId(this.element, 'splitter');
 
     if (this.isSplitterRightSide) {
       const thisPrev = thisSide.prev();
@@ -169,7 +169,9 @@ Splitter.prototype = {
           const frame = $(iframes[i]);
           // eslint-disable-next-line
           const width = `${parseInt(getComputedStyle(frame.parent()[0]).width, 10) - 40}px`;
-          frame.before(`<div class="overlay" style="opacity: 0; visibility: visible; height: 100%; width: ${width}"></div>`);
+          const overlay = $('<div class="overlay splitter-overlay"></div>');
+          overlay.css('width', width);
+          frame.before(overlay);
         }
       }
     }).on('dragend.splitter', (e, args) => {
@@ -260,16 +262,6 @@ Splitter.prototype = {
     // Adjust Left and Right Side
     this.leftSide[0].style.width = `${w}px`;
     splitter[0].style.left = `${(w - 1)}px`;
-  },
-
-  /**
-   * Preferably use the id, but if none that make one based on the url and count
-   * @private
-   * @returns {string} uniqueId
-   */
-  uniqueId() {
-    return this.element.attr('id') ||
-      `${window.location.pathname.split('/').pop()}-splitter-${$('.splitter').length}`;
   },
 
   /**

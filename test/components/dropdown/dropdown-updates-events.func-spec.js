@@ -39,10 +39,11 @@ describe('Dropdown updates, events', () => {
       multiple: false,
       noSearch: false,
       placementOpts: null,
-      reloadSourceOnOpen: false,
+      reload: 'none',
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {}
+      sourceArguments: {},
+      onKeyDown: null
     };
 
     expect(dropdownObj.settings).toEqual(settings);
@@ -60,10 +61,11 @@ describe('Dropdown updates, events', () => {
       multiple: false,
       noSearch: false,
       placementOpts: null,
-      reloadSourceOnOpen: false,
+      reload: 'none',
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {}
+      sourceArguments: {},
+      onKeyDown: null
     };
 
     dropdownObj.updated();
@@ -85,14 +87,24 @@ describe('Dropdown updates, events', () => {
       multiple: false,
       noSearch: false,
       placementOpts: null,
-      reloadSourceOnOpen: false,
+      reload: 'none',
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {}
+      sourceArguments: {},
+      onKeyDown: null
     };
     dropdownObj.updated(settings);
 
     expect(dropdownObj.settings).toEqual(settings);
+  });
+
+  it('Should convert legacy settings', () => {
+    const settings = {
+      reloadSourceOnOpen: false // removed in v4.9.0 in favor of `reload`
+    };
+    dropdownObj.updated(settings);
+
+    expect(dropdownObj.settings.reload).toEqual('none');
   });
 
   it('Should trigger "has-updated" event', () => {
@@ -110,7 +122,8 @@ describe('Dropdown updates, events', () => {
       reloadSourceOnOpen: false,
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {}
+      sourceArguments: {},
+      onKeyDown: null
     };
 
     const spyEvent = spyOnEvent('.dropdown', 'has-updated');
@@ -125,5 +138,39 @@ describe('Dropdown updates, events', () => {
 
     expect(searchInput[0].value).toBe('New Jersey');
     done();
+  });
+
+  it('should trigger change event on click', () => {
+    const spyEvent = spyOnEvent('select.dropdown', 'change');
+    dropdownObj.open();
+    document.body.querySelectorAll('.dropdown-option')[0].click();
+
+    expect(spyEvent).toHaveBeenTriggered();
+  });
+
+  it('should trigger change event on duplicate label', () => {
+    // Make some dup labels
+    const options = document.body.querySelectorAll('option');
+    options[0].innerText = 'Dup';
+    options[1].innerText = 'Dup';
+
+    // Try to select them and make sure you always get an event
+    const spyEvent = spyOnEvent('select.dropdown', 'change');
+    dropdownObj.updated();
+    dropdownObj.open();
+    document.body.querySelectorAll('.dropdown-option')[0].click();
+
+    expect(spyEvent).toHaveBeenTriggered();
+
+    document.body.querySelectorAll('.dropdown-option')[1].click();
+
+    expect(spyEvent).toHaveBeenTriggered();
+
+    // Set back the output
+    options[0].innerText = 'Alabama';
+    options[1].innerText = 'Alaska';
+    dropdownObj.updated();
+    dropdownObj.open();
+    document.body.querySelectorAll('.dropdown-option')[0].click();
   });
 });

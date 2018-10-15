@@ -55,12 +55,12 @@ Rating.prototype = {
    * @returns {number} current value
    */
   val(value) {
-    if (!value) {
+    if (value === '' || isNaN(value) || Math.sign(value) === -1) {
       return this.currentValue;
     }
 
     this.currentValue = parseFloat(value, 10);
-    const chkIdx = Math.round(this.currentValue);
+    const chkIdx = Math.floor(this.currentValue);
 
     for (let i = 0, l = this.allInputs.length; i < l; i++) {
       const input = $(this.allInputs[i]);
@@ -79,11 +79,11 @@ Rating.prototype = {
         input.prop('checked', true);
       }
 
-      if (chkIdx !== this.currentValue && i + 1 === chkIdx) {
+      if (chkIdx !== this.currentValue && i === chkIdx) {
         input.addClass('is-half').next(svgSelector).find('svg').changeIcon('star-half');
       }
     }
-    if (chkIdx <= 0) {
+    if (chkIdx <= 0 && value > 0) {
       $(this.allInputs[0]).prop('checked', true);
     }
 

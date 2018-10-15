@@ -26,7 +26,8 @@ Soho.Locale.addCulture('ar-SA', {
       }, // Infered short + short gregorian/dateTimeFormats
       days: {
         wide: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
-        abbreviated: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س']
+        abbreviated: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+        narrow: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س']
       },
       months: {
         wide: ['محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'],
@@ -250,7 +251,7 @@ Soho.Locale.addCulture('ar-SA', {
       dateFormat: {
         separator: '/', // Infered
         timeSeparator: ':',
-        short: 'd/MM//yyyy', // use four digit year
+        short: 'd/MM/yyyy', // use four digit year
         medium: 'dd/MM/yyyy',
         long: 'd MMMM، yyyy',
         full: 'EEEE، d MMMM، yyyy',

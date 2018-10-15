@@ -2,9 +2,10 @@
 title: Toolbar
 description: This page describes Toolbar.
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Title + All Icon Buttons
     slug: example-all-icon-buttons
   - name: Title + All Text-Only Buttons
@@ -28,36 +29,36 @@ demo:
 ## Code Example
 
 ```html
-  <div class="toolbar">
+<div class="toolbar">
     <div class="title">
-      Toolbar Title
+        Toolbar Title
     </div>
     <div class="buttonset">
-      <button class="btn" type="button">
-        <span>Button #1</span>
-      </button>
+        <button id="btn-1" class="btn" type="button">
+            <span>Button #1</span>
+        </button>
 
-      <button class="btn" type="button">
-        <span>Button #2</span>
-      </button>
+        <button id="btn-2" class="btn" type="button">
+            <span>Button #2</span>
+        </button>
 
-      <button class="btn" type="button">
-        <span>Button #3</span>
-      </button>
+        <button id="btn-3" class="btn" type="button">
+            <span>Button #3</span>
+        </button>
     </div>
     <div class="more">
-      <button class="btn-actions" type="button">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-more"></use>
-        </svg>
-        <span class="audible">More Actions</span>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Pre-defined Option #1</a></li>
-        <li><a href="#">Pre-defined Option #2</a></li>
-      </ul>
+        <button class="btn-actions" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-more"></use>
+            </svg>
+            <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+            <li><a href="#" id="action-item-one">Pre-defined Option #1</a></li>
+            <li><a href="#" id="action-item-two">Pre-defined Option #2</a></li>
+        </ul>
     </div>
-  </div>
+</div>
 ```
 
 ## Implementation Tips
@@ -69,11 +70,15 @@ The best way to force items to always exist inside of the "more actions" menu is
 - The toolbar automatically appends the WAI-ARIA role "toolbar" to its base element.
 - There is only ever one element inside of a toolbar at a time that can receive focus. The toolbar allows for navigation among all of its buttons with the arrow keys
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> moves focus to the first enabled toolbar item
 - A second <kbd>Tab</kbd> moves focus out of the toolbar
-- <kbd>Left<kdb> and <kbd>Right</kbd> keys navigate among the enabled items in the toolbar
+- <kbd>Left</kdb> and <kbd>Right</kbd> keys navigate among the enabled items in the toolbar
 
 ## States and Variations
 

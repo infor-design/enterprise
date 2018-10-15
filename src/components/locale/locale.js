@@ -38,9 +38,11 @@ const Locale = {  // eslint-disable-line
       html.removeAttr('dir');
     }
 
-    if (!Locale.isRTL()) { // Will remove it after flipping
-      $('body').removeClass('busy-loading-locale');
+    // ICONS: Right to Left Direction
+    if (this.isRTL()) {
+      Locale.flipIconsHorizontally();
     }
+    $('body').removeClass('busy-loading-locale');
   },
 
   /**
@@ -148,7 +150,7 @@ const Locale = {  // eslint-disable-line
       'es-US', 'et-EE', 'fi-FI', 'fr-CA', 'fr-FR', 'he-IL', 'hi-IN', 'hr-HR',
       'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
       'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
-      'uk-UA', 'vi-VN', 'zh-CN', 'zh-TW'];
+      'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'];
 
     if (allLocales.indexOf(locale) === -1) {
       locale = defaults.filter(a => a.lang === lang);
@@ -317,6 +319,10 @@ const Locale = {  // eslint-disable-line
       value = tDate3;
     }
 
+    if (!value) {
+      return undefined;
+    }
+
     // TODO: Can we handle this if (this.dff.state()==='pending')
     const data = this.currentLocale.data;
     let pattern;
@@ -331,12 +337,26 @@ const Locale = {  // eslint-disable-line
       pattern = cal.dateFormat[attribs.date];
     }
 
-    const day = value.getDate();
-    const month = value.getMonth();
-    const year = value.getFullYear();
+    let day = value.getDate();
+    let month = value.getMonth();
+    let year = value.getFullYear();
     const mins = value.getMinutes();
     const hours = value.getHours();
     const seconds = value.getSeconds();
+
+    if (cal && cal.conversions) {
+      if (attribs.fromGregorian) {
+        const islamicParts = cal.conversions.fromGregorian(value);
+        day = islamicParts[2];
+        month = islamicParts[1];
+        year = islamicParts[0];
+      } else if (attribs.toGregorian) {
+        const gregorianDate = cal.conversions.toGregorian(year, month, day);
+        day = gregorianDate.getDate();
+        month = gregorianDate.getMonth();
+        year = gregorianDate.getFullYear();
+      }
+    }
 
     // Special
     pattern = pattern.replace('ngày', 'nnnn');
@@ -485,14 +505,31 @@ const Locale = {  // eslint-disable-line
       dateString = dateString.replace(/[\s:.]/g, '/');
     }
 
+    // Extra Check incase month has spaces
+    if (dateFormat.indexOf('MMMM') > -1 && Locale.isRTL() && dateFormat) {
+      const lastIdx = dateString.lastIndexOf('/');
+      dateString = dateString.substr(0, lastIdx - 1).replace('/', ' ') + dateString.substr(lastIdx);
+    }
+
     if (dateFormat.indexOf(' ') === -1 && dateFormat.indexOf('.') === -1 && dateFormat.indexOf('/') === -1 && dateFormat.indexOf('-') === -1) {
+      // Remove delimeter for the data string.
+      if (dateString.indexOf(' ') !== -1) {
+        dateString = dateString.split(' ').join('');
+      } else if (dateString.indexOf('.') !== -1) {
+        dateString = dateString.split('.').join('');
+      } else if (dateString.indexOf('/') !== -1) {
+        dateString = dateString.split('/').join('');
+      } else if (dateString.indexOf('-') !== -1) {
+        dateString = dateString.split('-').join('');
+      }
+
       let lastChar = dateFormat[0];
       let newFormat = '';
       let newDateString = '';
 
       for (i = 0, l = dateFormat.length; i < l; i++) {
-        newFormat += (dateFormat[i] !== lastChar ? `/${dateFormat[i]}` : dateFormat[i]);
         newDateString += (dateFormat[i] !== lastChar ? `/${dateString[i]}` : dateString[i]);
+        newFormat += (dateFormat[i] !== lastChar ? `/${dateFormat[i]}` : dateFormat[i]);
 
         if (i > 1) {
           lastChar = dateFormat[i];
@@ -821,16 +858,19 @@ const Locale = {  // eslint-disable-line
     if (options && options.style === 'currency') {
       const sign = options && options.currencySign ? options.currencySign :
         this.currentLocale.data.currencySign;
-      const format = options && options.currencyFormat ? options.currencyFormat :
+      let format = options && options.currencyFormat ? options.currencyFormat :
         this.currentLocale.data.currencyFormat;
 
+      if (!format) {
+        format = '¤#,##0.00'; // default to en-us
+      }
       curFormat = format.replace('¤', sign);
     }
 
     if (options && options.style === 'percent') {
-      const percentSign = this.currentLocale.data.numbers.percentSign;
+      const percentSign = !this.currentLocale.data.numbers ? '%' : this.currentLocale.data.numbers.percentSign;
 
-      percentFormat = this.currentLocale.data.numbers.percentFormat;
+      percentFormat = !this.currentLocale.data.numbers ? '#,##0 %' : this.currentLocale.data.numbers.percentFormat;
       percentFormat = percentFormat.replace('¤', percentSign);
     }
 
@@ -890,8 +930,14 @@ const Locale = {  // eslint-disable-line
   },
 
   decimalPlaces(number) {
-    const result = /^-?[0-9]+\.([0-9]+)$/.exec(number);
-    return result === null ? 0 : result[1].length;
+    if (Math.floor(number) === number) {
+      return 0;
+    }
+
+    if (number.toString().indexOf('.') === -1) {
+      return 0;
+    }
+    return number.toString().split('.')[1].length || 0;
   },
 
   truncateDecimals(number, minDigits, maxDigits, round) {
@@ -991,7 +1037,8 @@ const Locale = {  // eslint-disable-line
    */
   translateDayPeriod(period) {
     if (/am|pm|AM|PM/i.test(period)) {
-      return Locale.calendar().dayPeriods[/AM|am/i.test(period) ? 0 : 1];
+      const periods = this.calendar().dayPeriods || ['AM', 'PM'];
+      return periods[/AM|am/i.test(period) ? 0 : 1];
     }
     return period;
   },
@@ -1019,7 +1066,8 @@ const Locale = {  // eslint-disable-line
         timestamp: 'h:mm:ss a',
         datetime: 'M/d/yyyy h:mm a'
       },
-      timeFormat: 'HH:mm:ss'
+      timeFormat: 'HH:mm:ss',
+      dayPeriods: ['AM', 'PM']
     };
   },
 
@@ -1258,7 +1306,7 @@ const Locale = {  // eslint-disable-line
     $('svg').each(function () {
       const iconName = $(this).getIconName();
 
-      if (iconName && $.inArray(iconName, icons) !== -1) {
+      if (iconName && $.inArray(iconName, icons) !== -1 && $(this).closest('.monthview').length === 0) {
         $(this).addClass('icon-rtl-rotate');
       }
     });
@@ -1271,12 +1319,6 @@ $(() => {
   setTimeout(() => {
     if (Locale && !Locale.cultureInHead() && !Locale.currentLocale.name) {
       Locale.set('en-US');
-    }
-
-    // ICONS: Right to Left Direction
-    if (Locale && Locale.isRTL()) {
-      Locale.flipIconsHorizontally();
-      $('body').removeClass('busy-loading-locale');
     }
   }, 50);
 });

@@ -2,9 +2,10 @@
 title: Images
 description: This page describes Images.
 demo:
-  pages:
+  embedded:
   - name: Image Sizes and Placeholders
     slug: example-index
+  pages:
   - name: A Pattern showing a toolbar over a list of Images
     slug: example-image-list
   - name: People Photos and initials
@@ -28,7 +29,11 @@ This example shows how to invoke a small sized placeholder image.
 
 ## Accessibility
 
--  For images always use an `alt` tag, which is read by screen readers
+- For images always use an `alt` tag, which is read by screen readers
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Code Tips
 
@@ -36,4 +41,4 @@ The [example image list pattern]( ../components/images/example-image-list) is cr
 
 ## Upgrading from 3.X
 
--   Block grid / Image List partially replaces the carousel in 3.x
+- Block grid / Image List partially replaces the carousel in 3.x

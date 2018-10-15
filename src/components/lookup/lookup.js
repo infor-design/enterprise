@@ -1,4 +1,4 @@
-/* eslint no-continue: "off" */
+/* eslint-disable no-continue: "off, no-underscore-dangle */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
@@ -284,8 +284,12 @@ Lookup.prototype = {
 
     self.createModal();
     self.element.trigger('open', [self.modal, self.grid]);
-
     self.modal.element.find('.btn-actions').removeClass('is-selected');
+
+    // Set tabindex on first row
+    if (self.grid) {
+      self.grid.cellNode(0, 0, true).attr('tabindex', '0');
+    }
 
     // Fix: IE-11 more button was not showing
     const thisMoreBtn = self.modal.element.find('.toolbar .more > .btn-actions');
@@ -356,9 +360,8 @@ Lookup.prototype = {
       }, {
         text: Locale.translate('Apply'),
         click(e, modal) {
-          const selectedRows = self.grid.selectedRows();
           modal.close();
-          self.insertRows(selectedRows);
+          self.insertRows(self.grid.selectedRows());
         },
         isDefault: true
       }];
@@ -431,8 +434,8 @@ Lookup.prototype = {
       search.data('searchfield').destroy();
     }
 
-    if (search.data() && search.data('toolbarsearchfield')) {
-      search.data('toolbarsearchfield').destroy();
+    if (search.data() && search.data('searchfield')) {
+      search.data('searchfield').destroy();
       search.removeData();
     }
     search = null;
@@ -477,7 +480,7 @@ Lookup.prototype = {
 
     self.grid = lookupGrid.data('datagrid');
     if (!this.settings.title && self.modal) {
-      self.modal.element.find('.title').remove();
+      self.modal.element.find('.title').not('.selection-count').remove();
     }
 
     const hasKeywordSearch = this.settings.options && this.settings.options.toolbar &&
@@ -500,8 +503,18 @@ Lookup.prototype = {
     // Mark selected rows
     lookupGrid.off('selected.lookup');
     const val = self.element.val();
-    if (val) {
+    if (val && !this.settings.options.source) {
       self.selectGridRows(val);
+    }
+
+    // Restore selected rows when pages change
+    if (this.settings.options.source) {
+      lookupGrid.off('afterpaging.lookup').on('afterpaging.lookup', () => {
+        const fieldVal = self.element.val();
+        if (fieldVal) {
+          self.selectGridRows(fieldVal);
+        }
+      });
     }
 
     if (this.settings.options) {
@@ -530,17 +543,49 @@ Lookup.prototype = {
    */
   selectGridRows(val) {
     const selectedId = val;
+    let adjust = false;
 
     if (!val) {
       return;
     }
 
+    if (this.grid && this.settings.options.source) {
+      for (let k = 0; k < this.grid._selectedRows.length; k++) {
+        if (isNaN(this.grid._selectedRows[k].idx)) {
+          this.grid._selectedRows.splice(k, 1);
+        }
+      }
+    }
+
     // Multi Select
     if (selectedId.indexOf(this.settings.delimiter) > 1) {
       const selectedIds = selectedId.split(this.settings.delimiter);
+      let isFound = false;
 
       for (let i = 0; i < selectedIds.length; i++) {
-        this.selectRowByValue(this.settings.field, selectedIds[i]);
+        isFound = this.selectRowByValue(this.settings.field, selectedIds[i]);
+
+        if (this.grid && this.settings.options.source && !isFound) {
+          const data = {};
+          let foundInData = false;
+          for (let j = 0; j < this.grid._selectedRows.length; j++) {
+            if (this.grid._selectedRows[j].data[this.settings.field].toString() ===
+              selectedIds[i].toString()) {
+              foundInData = true;
+            }
+          }
+
+          if (!foundInData) {
+            data[this.settings.field] = selectedIds[i];
+            this.grid._selectedRows.push({ data });
+          }
+          adjust = true;
+        }
+      }
+
+      // There are rows selected off page. Update the count.
+      if (adjust) {
+        this.modal.element.find('.contextual-toolbar .selection-count').text(`${selectedIds.length} ${Locale.translate('Selected')}`);
       }
       return;
     }
@@ -552,33 +597,47 @@ Lookup.prototype = {
    * Find the row and select it based on select value / function / field value
    * @param {string} field the ID of the field whose value is to be returned.
    * @param {string} value the value to set.
-   * @returns {void}
+   * @returns {boolean} True if the id is found.
    */
   selectRowByValue(field, value) {
     if (!this.settings.options) {
-      return;
+      return false;
     }
 
-    const data = this.settings.options.dataset;
+    const data = this.settings.options.source ?
+      this.grid.settings.dataset :
+      this.settings.options.dataset;
     const selectedRows = [];
 
+    // in this case we will recall on source - server side paging
+    if (!data) {
+      return false;
+    }
+
     for (let i = 0; i < data.length; i++) {
+      let isMatch = false;
       if (typeof this.settings.match === 'function') {
         if (this.settings.match(value, data[i], this.element, this.grid)) {
-          selectedRows.push(i);
+          isMatch = true;
         }
-
-        continue;
       }
 
-      if (data[i][field] === value) {
-        selectedRows.push(i);
+      if (typeof this.settings.match !== 'function' &&
+        data[i][field].toString() === value.toString()) {
+        isMatch = true;
+      }
+
+      if (isMatch) {
+        const rowIndex = this.grid.settings.source ? this.grid.actualRowIndex(this.grid.tableBody.find('tr').eq(i)) : i;
+        selectedRows.push(rowIndex);
       }
     }
 
-    if (this.grid) {
-      this.grid.selectedRows(selectedRows);
+    if (this.grid && selectedRows.length > 0) {
+      this.grid.selectRows(selectedRows);
+      return true;
     }
+    return false;
   },
 
   /**
@@ -600,6 +659,12 @@ Lookup.prototype = {
       }
 
       value += (i !== 0 ? this.settings.delimiter : '') + currValue;
+
+      // Clear _selected tag
+      const idx = this.selectedRows[i].idx;
+      if (this.settings.options.dataset) {
+        delete this.settings.options.dataset[idx]._selected;
+      }
     }
 
     /**

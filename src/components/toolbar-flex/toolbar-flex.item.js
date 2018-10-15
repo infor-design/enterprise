@@ -6,7 +6,12 @@ const COMPONENT_NAME = 'toolbarflexitem';
 
 // Filters out hyperlinks that are part of menu/action button components
 function hyperlinkFilter(elem) {
-  return $(elem).parents('.popupmenu').length < 1;
+  if (elem.nodeName !== 'A') {
+    throw new Error('Unspecified error occured');
+  }
+
+  const wrapped = $(elem);
+  return wrapped.parents('.popupmenu').length < 1;
 }
 
 // Toolbar Focusable Element Selectors.
@@ -424,7 +429,7 @@ ToolbarFlexItem.prototype = {
 
     if (this.type === 'actionbutton') {
       $element.on(`beforeopen.${COMPONENT_NAME}`, this.handleActionButtonBeforeOpen.bind(this));
-      $('body').on(`resize.${COMPONENT_NAME}`, this.handleActionButtonResize.bind(this));
+      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, this.handleActionButtonResize.bind(this));
     }
 
     $element.on(`focus.${COMPONENT_NAME}`, this.handleFocus.bind(this));

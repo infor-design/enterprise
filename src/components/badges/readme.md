@@ -2,9 +2,10 @@
 title: Badges
 description: This page describes Badges.
 demo:
-  pages:
+  embedded:
   - name: Default Badge Example
     slug: example-index
+  pages:
   - name: Additional Badges
     slug: example-additional-badges
 ---
@@ -21,9 +22,13 @@ A badge is a CSS only component that uses a `<span>` with the class `badge`. In 
 
 ## Accessibility
 
--   The traffic light colors are accessibility violations for contrast, however, the high contrast theme provides an alternative that passes. In addition, in context text should be used as color alone cannot provide the meaning. 
--   An audible span (`class="audible"`) should always be included for accessibility, it should describe the alert status and/or count value in a meaningful way to a non-visual user.
+- The traffic light colors are accessibility violations for contrast, however, the high contrast theme provides an alternative that passes. In addition, in context text should be used as color alone cannot provide the meaning.
+- An audible span (`class="audible"`) should always be included for accessibility, it should describe the alert status and/or count value in a meaningful way to a non-visual user.
 
 ## Keyboard Shortcuts
 
 Badges do not have tab stops and have no keyboard interaction on their own, but they may be placed in a grid cell or object that has tab focus.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

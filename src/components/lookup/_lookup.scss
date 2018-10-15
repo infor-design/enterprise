@@ -28,6 +28,7 @@
       background-color: $input-bg-color;
       border: 1px solid $input-border-color;
       color: $input-color;
+      -webkit-text-fill-color: $input-color;
 
       &:not([disabled]) + .trigger {
         cursor: pointer;
@@ -81,11 +82,11 @@
 }
 
 .lookup-modal {
-
   &.lookup-no-search {
     .toolbar {
       margin-bottom: 0;
-      margin-top: -40px;
+      margin-top: -32px;
+      vertical-align: top;
     }
 
     .modal-header {
@@ -97,24 +98,39 @@
     border-bottom: 0;
   }
 
+  .datagrid-result-count {
+    top: -2px;
+  }
+
   .toolbar {
     margin-bottom: 15px;
     padding: 0;
 
     .buttonset {
-      width: calc(100%);
+      width: 100%;
+    }
+
+    &.do-resize .buttonset {
+      width: 100%;
     }
 
     &.has-more-button .buttonset {
       margin-bottom: 10px;
       overflow: visible;
       padding-top: 7px;
-      width: calc(100% - 44px);
+      width: calc(100% - 44px) !important;
 
       + .more {
         padding-top: 10px;
       }
     }
+  }
+
+  .contextual-toolbar {
+    left: -2px;
+    margin: 0 !important;
+    top: 5px;
+    width: calc(100% + 4px);
   }
 
   .modal-body-wrapper {
@@ -155,20 +171,16 @@
   }
 
   .toolbar-searchfield-wrapper.non-collapsible {
-    // scss-lint:disable ImportantRule
     width: 100% !important;
-    // scss-lint:enable ImportantRule
 
     input {
       background-color: $searchfield-lighter-bg-color;
 
-      // scss-lint:disable VendorPrefix
       &::-webkit-input-placeholder,
       &::-moz-placeholder,
-        &:-ms-input-placeholder {
+      &:-ms-input-placeholder {
         color: $searchfield-lighter-text-color;
       }
-      // scss-lint:disable VendorPrefix
 
     }
   }
@@ -181,7 +193,6 @@
     z-index: 1;
   }
 }
-
 
 // Short fields
 .field-short {
@@ -211,9 +222,8 @@
   }
 }
 
-//RTL Styles
-html[dir="rtl"] {
-
+// RTL Styles
+html[dir='rtl'] {
   .lookup-wrapper .trigger {
     margin-left: 0;
     margin-right: -33px;

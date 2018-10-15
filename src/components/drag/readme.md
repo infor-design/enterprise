@@ -1,11 +1,11 @@
 ---
 title: Drag Behavior
 description: This page describes Drag Behavior.
+demo:
+  embedded:
+  - name: Basic Drag Examples
+    slug: example-index
 ---
-
-## Configuration Options
-
-1. Drag Examples [View Example]( ../components/drag/example-index)
 
 ## Code Example
 
@@ -17,8 +17,11 @@ $(draggableThing).drag({containment: 'parent'});
 
 ## Accessibility
 
-- Dragging is NOT accessible. Try to provide alternate keyboard friendly ways to do the equivalent functionality.
+Dragging is NOT accessible. Try to provide alternate keyboard friendly ways to do the equivalent functionality.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
@@ -26,4 +29,4 @@ None.
 
 ## Upgrading from 3.X
 
-- The 3.X project had two drag components. This replaces both.
+The 3.X project had two drag components. This replaces both.

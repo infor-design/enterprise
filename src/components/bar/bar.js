@@ -132,19 +132,26 @@ Bar.prototype = {
     const tooltipData = self.settings.tooltip;
 
     let maxBarHeight = 30;
-    const legendHeight = 40;
-    const gapBetweenGroups = 0.5; // As of one bar height (barHeight * 0.5)
+    const legendHeight = 30;
+    const gapBetweenGroups = 0.6; // Makes it one bar in height (barHeight * 0.5)
     const isViewSmall = this.element.parent().width() < 450;
+    let dataset = this.settings.dataset;
 
     const margins = {
-      top: self.settings.isStacked ? 30 : 20,
+      top: 20,
       left: 30,
       right: 30,
-      bottom: 30 // 30px plus size of the bottom axis (20)
+      bottom: dataset.length === 1 ? 5 : 30
     };
 
-    let dataset = this.settings.dataset;
     this.element.addClass('bar-chart');
+    if (this.settings.isGrouped) {
+      this.element.addClass('bar-chart-grouped');
+    }
+
+    if (this.settings.isStacked) {
+      this.element.addClass('bar-chart-stacked');
+    }
 
     // Handle Empty Data Set
     if (dataset.length === 0) {
@@ -404,9 +411,7 @@ Bar.prototype = {
         let shape = d3.select(this);
         const setPattern = function (pattern, hexColor2) {
           return !pattern || !hexColor2 ? '' :
-            `${'<svg width="12" height="12">' +
-            '<rect style="fill: '}${hexColor2}" mask="url(#${pattern})" height="12" width="12" />` +
-          '</svg>';
+            `<svg width="12" height="12"><rect mask="url(#${pattern})" height="12" width="12" /></svg>`;
         };
 
         const show = function (xPosS, yPosS, isTooltipBottom) {
@@ -432,13 +437,11 @@ Bar.prototype = {
                 total += dataset[k][i].x;
                 totals[k] = dataset[k][i].x;
               }
-              content += `${'' +
-                '<div class="swatch-row">' +
-                  '<div style="background-color:'}${series[j].pattern ? 'transparent' : hexColor};">${
-                setPattern(series[j].pattern, hexColor)
-              }</div>` +
-                  `<span>${series[j].name}</span><b> ${isFormatter ? format(totals[j]) : (`${Math.round((totals[j] / total) * 100)}%`)} </b>` +
-                '</div>';
+              content += `<div class="swatch-row">
+                  <div class="swatch-color">${setPattern(series[j].pattern, hexColor)}</div>
+                  <span>${series[j].name}</span>
+                  <b> ${isFormatter ? format(totals[j]) : (`${Math.round((totals[j] / total) * 100)}%`)} </b>
+                </div>`;
             }
           } else {
             if (mid > 1) {
@@ -446,13 +449,10 @@ Bar.prototype = {
             }
             for (j = 0, l = data.length; j < l; j++) {
               hexColor = charts.chartColor(j, 'bar', legendMap[j]);
-              content += `${'' +
-                '<div class="swatch-row">' +
-                  '<div style="background-color:'}${legendMap[j].pattern ? 'transparent' : hexColor};">${
-                setPattern(legendMap[j].pattern, hexColor)
-              }</div>` +
-                  `<span>${data[j].name}</span><b>${format(data[j].value)}</b>` +
-                '</div>';
+              content += `<div class="swatch-row">
+                    <div class="swatch-color">${setPattern(legendMap[j].pattern, hexColor)}</div>
+                  <span>${data[j].name}</span><b>${format(data[j].value)}</b>
+                </div>`;
             }
           }
           content += '</div>';
@@ -487,6 +487,29 @@ Bar.prototype = {
         } else {
           content = tooltipDataCache[i] || tooltipData || d.tooltip || content || '';
           show(xPosS, yPosS, isTooltipBottom);
+
+          // set inline colors
+          if (self.settings.isStacked) {
+            for (j = 0, l = dataset.length; j < l; j++) {
+              hexColor = charts.chartColor(j, 'bar', series[j]);
+
+              const row = $('#svg-tooltip').find('.swatch-row').eq(j);
+              if (!series[j].pattern) {
+                row.find('div').css('background-color', hexColor);
+              }
+              row.find('rect').css('fill', hexColor);
+            }
+          } else {
+            for (j = 0, l = data.length; j < l; j++) {
+              hexColor = charts.chartColor(j, 'bar', legendMap[j]);
+
+              const row = $('#svg-tooltip').find('.swatch-row').eq(j);
+              if (!legendMap[j].pattern) {
+                row.find('div').css('background-color', hexColor);
+              }
+              row.find('rect').css('fill', hexColor);
+            }
+          }
         }
       })
       .on('mouseleave', () => {
@@ -746,8 +769,8 @@ Bar.prototype = {
     this.element.empty();
 
     return this
-      .teardown()
-      .init();
+      .build()
+      .element.trigger('rendered', [this.svg]);
   },
 
   /**
@@ -757,7 +780,7 @@ Bar.prototype = {
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
-    $(window).off(`resize.${COMPONENT_NAME}`);
+    $('body').off(`resize.${COMPONENT_NAME}`);
     return this;
   },
 

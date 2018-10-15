@@ -7,7 +7,7 @@
   }
 
   > .icon,
-  > [class^="btn"] {
+  > [class^='btn'] {
     margin-left: $icon-margin;
 
     + a {
@@ -43,6 +43,8 @@
     }
   }
 }
+
+/* stylelint-disable max-nesting-depth,selector-max-compound-selectors */
 
 .accordion {
   background-color: transparent;
@@ -108,8 +110,7 @@
       }
 
       > .icon,
-      > [class^="btn"] {
-
+      > [class^='btn'] {
         + a {
           padding-left: 0;
         }
@@ -203,7 +204,7 @@
           fill: $accordion-selected-text-color;
         }
 
-        > [class^="btn"] {
+        > [class^='btn'] {
           .icon {
             fill: $accordion-selected-text-color;
 
@@ -220,7 +221,7 @@
           }
         }
 
-        [class^="btn"]:focus {
+        [class^='btn']:focus {
           box-shadow: none;
 
           &:not(.hide-focus) {
@@ -241,9 +242,11 @@
         > a {
           color: $accordion-filtered-text-color !important;
         }
+
         > .icon {
           fill: $accordion-filtered-text-color !important;
         }
+
         > .btn > .icon {
           &::before,
           &::after {
@@ -320,8 +323,8 @@
         }
 
         .accordion-content {
-          color: $accordion-text-color;
           border-bottom-color: $accordion-alternate-pane-bg-color;
+          color: $accordion-text-color;
         }
       }
     }
@@ -346,7 +349,7 @@
           }
         }
 
-        > [class^="btn"] {
+        > [class^='btn'] {
           &:focus:not(.hide-focus) {
             border-color: $accordion-inverse-focus-state-color;
             box-shadow: $focus-box-shadow;
@@ -385,7 +388,7 @@
             }
           }
 
-          > [class^="btn"] {
+          > [class^='btn'] {
             &:focus:not(.hide-focus) {
               border-color: $accordion-selected-text-color;
               box-shadow: $focus-box-shadow;
@@ -475,10 +478,6 @@
       }
     }
   }
-
-  > .accordion-content {
-    padding-left: 20px;
-  }
 }
 
 .accordion-content {
@@ -511,9 +510,10 @@
 
   a {
     color: inherit;
-    @include font-size(14);
     text-decoration: none;
     text-overflow: ellipsis;
+
+    @include font-size(14);
   }
 
   > a {
@@ -524,11 +524,11 @@
     width: calc(100% - 1px);
   }
 
-  > [class^="btn"] {
+  > [class^='btn'] {
     @include btn-chevron-style;
   }
 
-  > [class^="btn"],
+  > [class^='btn'],
   > .icon {
     + a {
       padding-left: 0;
@@ -578,7 +578,7 @@
   }
 
   &.has-chevron {
-    > [class^="btn"] {
+    > [class^='btn'] {
       padding: 0;
     }
 
@@ -599,7 +599,7 @@
     pointer-events: none;
 
     span.audible {
-      color: #ffffff !important;
+      color: #fff !important;
     }
 
     a {
@@ -658,14 +658,15 @@
 
 // Level 1 Accordion Pane
 .accordion-pane {
-  @include transition(padding 300ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(padding 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
   height: 0;
   overflow: hidden;
   padding: 0;
 
   // Visible accordion panes force a border to show up on the next accordion header for visual separation
   &.is-expanded {
-    padding: 5px 0;
+    padding: 0;
 
     + .accordion-header:not(.is-focused):not(.is-selected),
     + .accordion-content {
@@ -677,6 +678,7 @@
     color: $accordion-text-color;
     overflow-x: visible;
   }
+
   @include left-align-cascade-styles-pane(20px, 40px, 40px);
 
   // These rules allow the accordion to expand
@@ -696,7 +698,7 @@
       padding: 8px 0 8px 20px;
     }
 
-    > [class^="btn"],
+    > [class^='btn'],
     > .icon {
       margin-left: 14px;
 
@@ -706,7 +708,7 @@
       }
     }
 
-    > [class^="btn"] {
+    > [class^='btn'] {
       height: 25px;
       width: 20px;
 
@@ -721,14 +723,14 @@
     }
 
     &.list-item {
-
       &::before {
         color: $accordion-icon-color;
         content: '\25cf';
         display: inline-block;
-        @include font-size(12);
         padding: 8px 10px 8px 21px;
         vertical-align: middle;
+
+        @include font-size(12);
       }
 
       a {
@@ -770,8 +772,8 @@
 
   // Level 2 Accordion Pane
   .accordion-pane {
-    padding: 0;
     border-bottom-color: transparent;
+    padding: 0;
 
     @include left-align-cascade-styles-pane(59px, 59px, 40px);
 
@@ -784,7 +786,6 @@
     .accordion-pane {
       @include left-align-cascade-styles-pane(78px, 78px, 59px);
 
-
       // Level 4 Accordion Header
       .accordion-header {
         @include left-align-cascade-styles-header(59px, 53px, 78px, 60px);
@@ -793,7 +794,6 @@
       // Level 4 Accordion Pane
       .accordion-pane {
         @include left-align-cascade-styles-pane(97px, 97px, 78px);
-
 
         // Level 5 Accordion Header
         .accordion-header {
@@ -822,14 +822,12 @@
 }
 
 .accordion-content {
-  padding: 14px 0;
+  padding: 15px 0 15px 20px;
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
-
   .accordion {
-
     > .accordion-content {
       padding-left: auto;
       padding-right: 20px;
@@ -837,7 +835,7 @@ html[dir='rtl'] {
 
     // Level 1
     .accordion-header {
-      -webkit-font-feature-settings: "ccmp" 0;
+      -webkit-font-feature-settings: 'ccmp' 0;
 
       > a {
         padding-left: 0;
@@ -845,8 +843,7 @@ html[dir='rtl'] {
       }
 
       > .icon,
-      > [class^="btn"] {
-
+      > [class^='btn'] {
         + a {
           padding-right: 0;
         }
@@ -877,7 +874,7 @@ html[dir='rtl'] {
         }
 
         > .icon,
-        > [class^="btn"] {
+        > [class^='btn'] {
           margin-left: 3px;
           margin-right: 14px;
 
@@ -925,7 +922,7 @@ html[dir='rtl'] {
           }
 
           > .icon,
-          > [class^="btn"] {
+          > [class^='btn'] {
             margin-left: 3px;
             margin-right: 34px;
 
@@ -972,7 +969,7 @@ html[dir='rtl'] {
             }
 
             > .icon,
-            > [class^="btn"] {
+            > [class^='btn'] {
               margin-left: 3px;
               margin-right: 53px;
 
@@ -1019,7 +1016,7 @@ html[dir='rtl'] {
               }
 
               > .icon,
-              > [class^="btn"] {
+              > [class^='btn'] {
                 margin-left: 3px;
                 margin-right: 72px;
 
@@ -1066,7 +1063,7 @@ html[dir='rtl'] {
                 }
 
                 > .icon,
-                > [class^="btn"] {
+                > [class^='btn'] {
                   margin-left: 3px;
                   margin-right: 92px;
 
@@ -1107,8 +1104,7 @@ html[dir='rtl'] {
         }
 
         > .icon,
-        > [class^="btn"] {
-
+        > [class^='btn'] {
           + a {
             padding-right: 0;
           }
@@ -1119,8 +1115,6 @@ html[dir='rtl'] {
         .accordion-content {
           padding-right: 54px;
         }
-
-
 
         &.has-icons {
           .accordion-header.no-icon > a {
@@ -1145,7 +1139,7 @@ html[dir='rtl'] {
           }
 
           > .icon,
-          > [class^="btn"] {
+          > [class^='btn'] {
             margin-left: 3px;
             margin-right: 30px;
 
@@ -1189,7 +1183,7 @@ html[dir='rtl'] {
             }
 
             > .icon,
-            > [class^="btn"] {
+            > [class^='btn'] {
               margin-left: 3px;
               margin-right: 49px;
 
@@ -1233,7 +1227,7 @@ html[dir='rtl'] {
               }
 
               > .icon,
-              > [class^="btn"] {
+              > [class^='btn'] {
                 margin-left: 3px;
                 margin-right: 68px;
 
@@ -1277,7 +1271,7 @@ html[dir='rtl'] {
                 }
 
                 > .icon,
-                > [class^="btn"] {
+                > [class^='btn'] {
                   margin-left: 3px;
                   margin-right: 87px;
 
@@ -1321,7 +1315,7 @@ html[dir='rtl'] {
                   }
 
                   > .icon,
-                  > [class^="btn"] {
+                  > [class^='btn'] {
                     margin-left: 3px;
                     margin-right: 106px;
 
@@ -1356,12 +1350,13 @@ html[dir='rtl'] {
     }
   }
 }
+/* stylelint-enable max-nesting-depth,selector-max-compound-selectors */
 
 // Dirty Hack because Firefox never lines things up right
 // These rules vertically "center" the plus-minus icon in
 .is-firefox {
   .accordion-header {
-    > [class^="btn"] {
+    > [class^='btn'] {
       .icon.plus-minus {
         &::before,
         &::after {
@@ -1373,12 +1368,40 @@ html[dir='rtl'] {
 
   .accordion-pane {
     .accordion-header {
-      > [class^="btn"] {
+      > [class^='btn'] {
         .icon.plus-minus {
           &::before,
           &::after {
             top: 9px;
           }
+        }
+      }
+    }
+  }
+}
+
+//Button for Safari issue
+.is-safari {
+  .accordion-header {
+    &.has-chevron {
+      > [class^='btn'] {
+        height: 45px;
+        left: 0;
+        margin: 0;
+        padding: 13px 0 28px 13px;
+        position: absolute;
+        width: 100%;
+
+        &:focus:not(.hide-focus) {
+          border-color: transparent;
+          box-shadow: none;
+        }
+
+        .icon.chevron {
+          margin-top: 5px;
+          position: absolute;
+          right: 0;
+          width: 50px;
         }
       }
     }

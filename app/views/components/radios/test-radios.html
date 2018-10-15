@@ -20,11 +20,11 @@
       <label for="formOption2" class="radio-label" tabindex="-1">Fish</label><br>
       <input type="radio" name="formOptions" value="beef" class="radio" id="formOption3">
       <label for="formOption3" class="radio-label" tabindex="-1">Beef</label><br>
-      <button class="btn-primary" type="submit">(Don't Actually) Submit</button>
+      <button class="btn-primary" type="submit" id="submit">(Don't Actually) Submit</button>
     </form>
 
     <script>
-    $(document).ready(function() {
+    $(function(){
       //needed for the form serialization test
       $('#radio-serialization-test').on('submit', function(e) {
         e.preventDefault();

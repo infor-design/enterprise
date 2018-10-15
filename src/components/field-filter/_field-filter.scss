@@ -7,7 +7,8 @@ $dd-width: 55px;
 }
 
 .field.fieldfilter-wrapper {
-  .dropdown-wrapper {
+  div:first-of-type {
+    height: 34px;
     margin-right: -1px;
     vertical-align: top;
 
@@ -75,6 +76,30 @@ $dd-width: 55px;
       width: el-width(100%);
     }
   }
+
+  .dropdown-xs {
+    width: el-width($field-xs);
+  }
+
+  .dropdown-sm {
+    width: el-width($field-sm);
+  }
+
+  .dropdown-mm {
+    width: el-width($field-mm);
+  }
+
+  .dropdown-md {
+    width: el-width($field-md);
+  }
+
+  .dropdown-lg {
+    width: el-width($field-lg);
+  }
+
+  .dropdown-full {
+    width: el-width(100%);
+  }
 }
 
 // Opened Dropdown list
@@ -97,7 +122,7 @@ $dd-width: 55px;
 // RTL Styles ******************************************************************
 html[dir='rtl'] {
   .field.fieldfilter-wrapper {
-    .dropdown-wrapper {
+    div:first-of-type {
       margin-left: -1px;
       margin-right: inherit;
 

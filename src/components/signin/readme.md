@@ -2,9 +2,10 @@
 title: Signin Component
 description: This page describes Signin Component .
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
+  pages:
   - name: Remember Me Example
     slug: example-remember-me
   - name: Customer Designed Sign in Page
@@ -52,8 +53,8 @@ Displays one or more selectable values. A user can select exactly one value at a
             </select>
           </div>
 
-          <button class="btn-primary" type="submit">Sign in</button>
-          <a class="hyperlink" href="forgotpassword">Forgot Password?</a>
+          <button id="submit" class="btn-primary" type="submit">Sign in</button>
+          <a id="hyperlink" class="hyperlink" href="forgotpassword">Forgot Password?</a>
 
         </form>
     </section>
@@ -69,11 +70,15 @@ Displays one or more selectable values. A user can select exactly one value at a
 - Sigin uses a form to fire the form submit on enter.
 - Turn off autocomplete for better security.
 - Consider two factor authentication.
-- The forgot password page is also a pattern you can use. See page [the forgot password page ](../patterns/forgotpassword.html) and the [the forgot password sent page ](../patterns/forgotpassword-sent.html)
+- The forgot password page is also a pattern you can use. See page [the forgot password page](../patterns/forgotpassword.html) and the [the forgot password sent page](../patterns/forgotpassword-sent.html)
 
 ## Accessibility
 
--  Make sure all fields have id's that much the labels.
+- Make sure all fields have id's that much the labels.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

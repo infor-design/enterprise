@@ -2,13 +2,16 @@
 title: Lookup
 description: This page describes Lookup.
 demo:
-  pages:
+  embedded:
   - name: Default Lookup
     slug: example-index
+  pages:
   - name: Multiselect Lookup
     slug: example-multiselect
-  - name: Lookup with Paging
+  - name: Lookup with Paging (Client Side)
     slug: example-paging
+  - name: Multiselect Lookup with Paging (Server Side)
+    slug: example-multiselect-paging-serverside
   - name: Lookup with Filter
     slug: example-filter-row
   - name: Editable Lookup
@@ -23,9 +26,9 @@ demo:
 
 ## Behavior Guidelines
 
--   To distinguish between single and multi-select situations, use checkboxes in multi-select lists.
--   The height of a multi-select list can grow up to 3 lines to accommodate multiple entries. After this point, scrolling should be available.
--   In some situations (such as when a lookup is used in a filter row in a table), the field height is fixed and cannot expand to show multiple selections. Include a design approach for multi-select dropdowns in this scenario.
+- To distinguish between single and multi-select situations, use checkboxes in multi-select lists.
+- The height of a multi-select list can grow up to 3 lines to accommodate multiple entries. After this point, scrolling should be available.
+- In some situations (such as when a lookup is used in a filter row in a table), the field height is fixed and cannot expand to show multiple selections. Include a design approach for multi-select dropdowns in this scenario.
 
 ## Code Example
 
@@ -61,25 +64,29 @@ grid = $('#product-lookup').lookup({
 
 ## Accessibility
 
--   This is a very complex control and interaction and is not currently accessible to screen readers
--   It does work with keyboard however
+- This is a very complex control and interaction and is not currently accessible to screen readers
+- It does work with keyboard however
 
 ## Keyboard Shortcuts
 
--   <kbd>Tab</kbd> and <kbd>Shift Tab</kbd> moves focus into the field to/from the next focusable item in the tab order
--   <kbd>Down Arrow</kbd> opens the dialog
--   <kbd>Esc</kbd> cancels and closes the open dialog
--   <kbd>Tab</kbd> and <kbd>Shift Tab</kbd> when the dialog is open, tab will move around the items, for example, from the search to the data grid
--   <kbd>Down</kbd> and <kbd>Up Arrow</kbd> when focus is on the grid in the dialog this moves the focus up and down on the rows
--   <kbd>Space</kbd> toggle selection on the current row if multiselect. If single select, the row is selected and inserted
--   <kbd>Enter</kbd> if focus is on the grid in the lookup and if single select, the current row will be selected. If multiselect then all the selected rows will be inserted
+- <kbd>Tab</kbd> and <kbd>Shift Tab</kbd> moves focus into the field to/from the next focusable item in the tab order
+- <kbd>Down Arrow</kbd> opens the dialog
+- <kbd>Esc</kbd> cancels and closes the open dialog
+- <kbd>Tab</kbd> and <kbd>Shift Tab</kbd> when the dialog is open, tab will move around the items, for example, from the search to the data grid
+- <kbd>Down</kbd> and <kbd>Up Arrow</kbd> when focus is on the grid in the dialog this moves the focus up and down on the rows
+- <kbd>Space</kbd> toggle selection on the current row if multiselect. If single select, the row is selected and inserted
+- <kbd>Enter</kbd> if focus is on the grid in the lookup and if single select, the current row will be selected. If multiselect then all the selected rows will be inserted
 
 ## Responsive Guidelines
 
--   The dialog stretches to 90% at smaller breakpoints
+- The dialog stretches to 90% at smaller breakpoints
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 
--   `inforLookup` class changed to `lookup`
--   Initialization options and API is different
--   Use events rather than callbacks
+- `inforLookup` class changed to `lookup`
+- Initialization options and API is different
+- Use events rather than callbacks

@@ -324,6 +324,10 @@ Spinbox.prototype = {
       return;
     }
 
+    if (this.isReadonly()) {
+      return;
+    }
+
     // If the keycode got this far, it's an arrow key, HOME, or END.
     switch (key) {
       case 35: // End key sets the spinbox to its minimum value
@@ -542,7 +546,7 @@ Spinbox.prototype = {
     const max = this.element.attr('max');
 
     val = this.checkForNumeric(val);
-    this.element.attr('aria-valuenow', val || '0');
+    this.element[0].setAttribute('aria-valuenow', val || '0');
 
     // Toggle min/max buttons
     this.setIsDisabled(this.buttons.up, (val !== '' && max && val >= max) ? 'disable' : 'enable');

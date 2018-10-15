@@ -97,7 +97,9 @@ MaskInput.prototype = {
           // Check for an instance of a Datepicker/Timepicker Component, and grab the date format
           const datepicker = $(this.element).data('datepicker');
           if ($.fn.datepicker && $(this.element).data('datepicker')) {
-            this.settings.patternOptions.format = datepicker.settings.dateFormat;
+            if (!this.settings.patternOptions && !this.settings.patternOptions.format) {
+              this.settings.patternOptions.format = datepicker.settings.dateFormat;
+            }
           }
           this.settings.pattern = masks.dateMask;
           break;
@@ -159,10 +161,10 @@ MaskInput.prototype = {
           return false;
         }
 
-        // in Windows 7 IE11, change event doesn't fire for some unknown reason.
+        // in IE11 or Edge, change event doesn't fire for some unknown reason.
         // Added this for backwards compatility with this OS/Browser combo.
         // See http://jira.infor.com/browse/SOHO-6895
-        if (self._hasChangedValue() && self._isWin7IE11()) {
+        if (self._hasChangedValue() && self._isEdgeIE()) {
           $(self.element).trigger('change');
         }
       }
@@ -245,7 +247,11 @@ MaskInput.prototype = {
     }
 
     // Use the piped value, if applicable.
-    const finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
+    let finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
+    const patternOptions = this.settings.patternOptions;
+    if (finalValue !== '' && patternOptions && patternOptions.suffix && finalValue.indexOf(patternOptions.suffix) < 0) {
+      finalValue += this.settings.patternOptions.suffix;
+    }
 
     // Setup values for getting corrected caret position
     // TODO: Improve this by eliminating the need for an extra settings object.
@@ -311,18 +317,14 @@ MaskInput.prototype = {
   },
 
   /**
-   * Same as the Android method, but for IE 11 on Windows 7
-   * TODO: deprecate eventually (v4.4.0?)
+   * Determine if browser is IE11 or Edge
    * @private
    * @returns {boolean} whether or not the current device is running Windows 7
    *  using the IE11 browser.
    */
-  _isWin7IE11() {
+  _isEdgeIE() {
     const browser = env && env.browser && env.browser.name ? env.browser.name : '';
-    const version = env.browser.version ? env.browser.version : '';
-    const isWin7 = window.navigator.userAgent.indexOf('Windows NT 6.1') !== -1;
-
-    return browser === 'ie' && version === '11' && isWin7;
+    return browser === 'ie' || browser === 'edge';
   },
 
   /**

@@ -38,9 +38,49 @@
 
   .slices path {
     cursor: pointer;
+    -webkit-tap-highlight-color: $transparent;
 
     &.is-not-selected {
-      opacity: .3;
+      opacity: 0.3;
+    }
+  }
+
+  &.has-right-legend .chart-legend {
+    border-top: 0;
+    margin: 0;
+    width: 30%;
+  }
+
+  // Adjust smaller bottom legend for the pie chart
+  &.is-mobile {
+    svg {
+      margin-top: -5px;
+    }
+
+    .chart-legend {
+      align-items: center;
+      border-top: 0;
+      display: flex;
+      height: 85px;
+      margin-left: 0;
+      margin-top: -20px;
+
+      .chart-legend-item {
+        display: inline-block !important;
+        padding: 2px 7px;
+        width: auto !important;
+      }
+
+      .chart-legend-color {
+        height: 15px;
+        top: 1px;
+        width: 15px;
+      }
+
+      .chart-legend-item-text {
+        position: relative;
+        top: 3px;
+      }
     }
   }
 }
@@ -51,7 +91,7 @@
 
 // A bit different tooltip style
 .is-pie.tooltip {
-  font-weight: normal;
+  font-weight: $font-weight-normal;
 
   b {
     display: block;

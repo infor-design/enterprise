@@ -2,9 +2,10 @@
 title: Wizard Component
 description: This page describes Wizard Component .
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Disabled Tick Clicks
     slug: example-in-page
   - name: Programmatic Tick Selection
@@ -22,22 +23,26 @@ In addition, a wizard can be used for header navigation. This is a full page pat
     <div class="wizard-header">
       <div class="bar">
         <div class="completed-range"></div>
-        <a href="#" class="tick complete">
+        <a href="#" id="context-apps" class="tick complete">
           <span class="label">Context Apps</span>
         </a>
-        <a href="#" class="tick complete">
+        <a href="#" id="utility-apps" class="tick complete">
           <span class="label">Utility Apps</span>
         </a>
-        <a href="#" class="tick current">
+        <a href="#" id="inbound-config" class="tick current">
           <span class="label">Inbound Configuration</span>
         </a>
-        <a href="#" class="tick">
+        <a href="#" id="oid-mapping" class="tick">
           <span class="label">OID Mapping</span>
         </a>
       </div>
     </div>
   </div>
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
@@ -49,7 +54,7 @@ In addition, a wizard can be used for header navigation. This is a full page pat
 
 States apply to the individual steps of a wizard:
 
--   Available
--   Completed (Available + Completed)
--   Partially Completed (Available + Started + Not fully completed)
--   Disabled/Unavailable (Cannot be accessed until all previous steps are completed)
+- Available
+- Completed (Available + Completed)
+- Partially Completed (Available + Started + Not fully completed)
+- Disabled/Unavailable (Cannot be accessed until all previous steps are completed)

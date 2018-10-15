@@ -1,12 +1,14 @@
 ---
-title: Step Chart  
+title: Step Chart
 description: This page describes Step Chart.
+demo:
+  embedded:
+  - name: Standard Step Chart
+    slug: example-index
+  pages:
+  - name: Custom Colors
+    slug: example-colors
 ---
-
-## Configuration Options
-
-1. Step Chart Examples in a Card/Widget [View Example]( ../components/stepchart/example-index)
-1. Custom Colors [View Example]( ../components/stepchart/example-colors)
 
 ## Behavior Guidelines
 
@@ -18,7 +20,7 @@ description: This page describes Step Chart.
 You can initialize a step chart by putting a simple div in the page with data-options which contain any of the above options.
 
 ```html
-<div class="step-chart" data-options="{steps: 7, completed: 2, inProgress: 3, iconType: 'icon-error', extraText: '2 Days Overdue'}">
+<div id="manual" class="step-chart" data-options="{steps: 7, completed: 2, inProgress: 3, iconType: 'icon-error', extraText: '2 Days Overdue'}">
 </div>
 ```
 
@@ -37,6 +39,10 @@ $('#manual').stepchart({
 - The step chart infor is displayed via the text "N of N Complete" which the user can read with a screen reader.
 - The rest of the chart
 - Colors are AA compliant and adapt to AAA on hey contrast version
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

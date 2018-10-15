@@ -2,9 +2,10 @@
 title: About
 description: This page describes About.
 demo:
-  pages:
+  embedded:
   - name: Default About Example
     slug: example-index
+  pages:
   - name: Close Event Demo
     slug: test-close-event
 ---
@@ -20,8 +21,6 @@ $('body').about({
   version: 'ver. 1.0.0',
   content: '<p>Fashionable application for fashionable customers.</p>'
 });
-
-
 ```
 
 ## Accessibility
@@ -31,6 +30,10 @@ $('body').about({
 ## Code Tips
 
 The about component example by default adds the current year's copyright, and useful browser info. This should be useful info for support situations. Don't make your contents of the modal too overloaded with info. Also About dialogs do not need to be overly prominent in your application (for example as a splash screen). The typical placement is in a top level actions button menu item.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

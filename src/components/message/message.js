@@ -1,6 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../modal/modal';
@@ -14,7 +14,7 @@ const COMPONENT_NAME = 'message';
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
  * @param {string} [settings.title='Message Title']  Title text or content shown in the message
- * @param {boolean} [settings.isError=false]  If true, will show title styled as an error with an error icon
+ * @param {string} [settings.status='']  Pass a status to style icon and title color ('error', 'alert', 'confirm')
  * @param {string} [settings.message='Message Summary']  The message content or text
  * @param {number} [settings.width='auto']  Pass a specific with or defaults to auto
  * @param {object} [settings.buttons=null]  Array of buttons to add to the message (see modal examples as well)
@@ -23,7 +23,7 @@ const COMPONENT_NAME = 'message';
  */
 const MESSAGE_DEFAULTS = {
   title: 'Message Title',
-  isError: false,
+  status: '',
   message: 'Message Summary',
   width: 'auto',
   buttons: null,
@@ -48,8 +48,8 @@ Message.prototype = {
     // Create the Markup
     this.message = $('<div class="modal message"></div>');
     this.messageContent = $('<div class="modal-content"></div>');
-    this.title = $(`<h1 class="modal-title" id="message-title">${stringUtils.stripHTML(this.settings.title)}</h1>`).appendTo(this.messageContent).wrap('<div class="modal-header"></div>');
-    this.content = $(`<div class="modal-body"><p class="message" id="message-text">${stringUtils.stripHTML(this.settings.message)}</p></div>`).appendTo(this.messageContent);
+    this.title = $(`<h1 class="modal-title" id="message-title">${xssUtils.stripHTML(this.settings.title)}</h1>`).appendTo(this.messageContent).wrap('<div class="modal-header"></div>');
+    this.content = $(`<div class="modal-body"><p class="message" id="message-text">${xssUtils.stripHTML(this.settings.message)}</p></div>`).appendTo(this.messageContent);
 
     // Append The Content if Passed in
     if (!this.element.is('body')) {
@@ -108,10 +108,14 @@ Message.prototype = {
       }
     });
 
-    if (this.settings.isError) {
-      this.title.addClass('is-error').prepend($.createIconElement('error'));
+    if (this.settings.status === 'error') {
+      this.title.addClass('has-status is-error').prepend($.createIconElement('error'));
+    } else if (this.settings.status === 'alert') {
+      this.title.addClass('has-status is-alert').prepend($.createIconElement('alert'));
+    } else if (this.settings.status === 'confirm') {
+      this.title.addClass('has-status is-confirm').prepend($.createIconElement('confirm'));
     } else {
-      this.title.removeClass('is-error').find('svg').remove();
+      this.title.removeClass('has-status is-error is-alert is-confirm').find('svg').remove();
     }
   },
 

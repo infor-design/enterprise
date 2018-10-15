@@ -114,8 +114,9 @@ Popdown.prototype = {
     }
 
     // aria-controls for the trigger element
-    this.trigger.attr('aria-controls', this.id);
-
+    if (this.trigger) {
+      this.trigger[0].setAttribute('aria-controls', this.id);
+    }
     return this;
   },
 

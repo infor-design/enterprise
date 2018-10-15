@@ -1,0 +1,25 @@
+{
+  "dry-run": false,
+  "requireCleanWorkingDir": true,
+  "non-interactive": false,
+  "verbose": false,
+  "pkgFiles": ["package.json"],
+  "increment": "patch",
+  "buildCommand": "npm run build && npm run zip-dist",
+  "src": {
+    "commitMessage": "Release v%s",
+    "tagAnnotation": "Release v%s",
+    "beforeStartCommand": "npm run eslint:error-only",
+    "afterReleaseCommand": ""
+  },
+  "npm": {
+    "publish": true,
+    "tag": "latest"
+  },
+  "github": {
+    "release": true,
+    "releaseName": "v%s",
+    "tokenRef": "GITHUB_ACCESS_TOKEN",
+    "assets": "dist.zip"
+  }
+}

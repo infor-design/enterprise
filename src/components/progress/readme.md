@@ -2,7 +2,7 @@
 title: Progress Indicator
 description: This page describes Progress Indicator.
 demo:
-  pages:
+  embedded:
   - name: Default Progress Indicator Example
     slug: example-index
 ---
@@ -28,22 +28,26 @@ When the markup is established, you can call the `updated` method or trigger the
 
 ## Accessibility
 
--   `aria-labelledby` should point to the manditory text `<label>`
--   `role="progressbar"` indicates the role of the progress bar
--   `aria-valuenow` should indicate the current value
--   `aria-maxvalue="100"` should indicate the max value (100%)
+- `aria-labelledby` should point to the manditory text `<label>`
+- `role="progressbar"` indicates the role of the progress bar
+- `aria-valuenow` should indicate the current value
+- `aria-maxvalue="100"` should indicate the max value (100%)
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
--   No Keyboard
+- No Keyboard
 
 ## Responsive Guidelines
 
--   Will size to parent container
+- Will size to parent container
 
 ## Upgrading from 3.X
 
--   Much simpler API then before.
--   Instead of calling `inforProgressIndicator`, simply place the noted structure in the DOM
--   Set the `data-value` attribute and trigger `updated` to update
--   Now required to insert the elements in the DOM
+- Much simpler API then before.
+- Instead of calling `inforProgressIndicator`, simply place the noted structure in the DOM
+- Set the `data-value` attribute and trigger `updated` to update
+- Now required to insert the elements in the DOM

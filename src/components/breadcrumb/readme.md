@@ -2,9 +2,10 @@
 title: Breadcrumb
 description: This page describes Breadcrumb.
 demo:
-  pages:
+  embedded:
   - name: Default Breadcrumb Example
     slug: example-index
+  pages:
   - name: Breadcrumb with current item a link
     slug: example-current-as-link
 ---
@@ -19,13 +20,13 @@ This control is entirely HTML and CSS, to update you will need to implement the 
 <nav class="breadcrumb">
   <ol aria-label="breadcrumb">
     <li>
-      <a href="#" class="hyperlink hide-focus">Home</a>
+      <a href="#" id="home" class="hyperlink hide-focus">Home</a>
     </li>
     <li>
-      <a href="#" class="hyperlink hide-focus">Second Item</a>
+      <a href="#" id="second-item" class="hyperlink hide-focus">Second Item</a>
     </li>
     <li>
-      <a href="#" class="hyperlink hide-focus">Third Item</a>
+      <a href="#" id="third-item" class="hyperlink hide-focus">Third Item</a>
     </li>
     <li class="current">Fourth Item <span class="audible">Current</span></li>
   </ol>
@@ -34,15 +35,19 @@ This control is entirely HTML and CSS, to update you will need to implement the 
 
 ## Accessibility
 
--   Add an `aria-label` with the localized term for "breadcrumb"
--   `audible` spans may need to be added to indicate levels
+- Add an `aria-label` with the localized term for "breadcrumb"
+- `audible` spans may need to be added to indicate levels
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
--   <kbd>Tab</kbd> moves focus to the link. A second <kbd>tab</kbd> moves focus to the next focusable item.
--   <kbd>Space</kbd> or <kbd>Enter</kbd> executes the link.
+- <kbd>Tab</kbd> moves focus to the link. A second <kbd>tab</kbd> moves focus to the next focusable item.
+- <kbd>Space</kbd> or <kbd>Enter</kbd> executes the link.
 
 ## Upgrading from 3.X
 
--   "Collapsing Lists" is Deprecated
--   Markup entirely changed, see updated example
+- "Collapsing Lists" is Deprecated
+- Markup entirely changed, see updated example

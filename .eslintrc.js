@@ -158,10 +158,13 @@ module.exports = {
       ignoreStrings: true,
       ignoreTemplateLiterals: true,
     }],
-
     // Disallow use of disabled tests (Jasmine)
-    'jasmine/no-disabled-tests': ['off']
-
+    'jasmine/no-disabled-tests': ['off'],
+    // Allow same name in different describes
+    "jasmine/no-spec-dupes": [1, "branch"],
+    "jasmine/no-suite-dupes": [1, "branch"],
+    // Allow toHaveBeenCalledWith
+    "jasmine/prefer-toHaveBeenCalledWith": ['off']
   },
   'globals': {
     'd3': false,

@@ -2,9 +2,10 @@
 title: HomePage
 description: This page describes HomePage.
 demo:
-  pages:
+  embedded:
   - name: Example of Empty HomePage Layout
     slug: example-index
+  pages:
   - name: Example of HomePage filled with Sample Data
     slug: example-filled
   - name: 4 Column Layout
@@ -47,10 +48,14 @@ See also the [Cards](./cards) documentation for widget structure.
 
 - The component respects element tab order which is important between the main containers
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
--   <kbd>Tab</kbd> Moves between the card sections
+- <kbd>Tab</kbd> Moves between the card sections
 
 ## Upgrading from 3.X
 
--  Replaces the Tiles layout and is not compatible
+- Replaces the Tiles layout and is not compatible

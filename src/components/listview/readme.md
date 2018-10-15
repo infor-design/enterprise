@@ -5,9 +5,10 @@ system:
   category: blocks
   name: data-list
 demo:
-  pages:
+  embedded:
   - name: Default Listview Example
     slug: example-index
+  pages:
   - name: Alternate Row Colors
     slug: example-alternate-row-color
   - name: Multiple Selection
@@ -27,10 +28,10 @@ demo:
 ---
 ## Behavior Guidelines
 
--   Lists may be single or multiple selected
--   You can have a fixed list toolbar on top, which may contain a title and filtering/search options
--   You can have a contextual action toolbar for selected items
--   Paging may be supported in the future
+- Lists may be single or multiple selected
+- You can have a fixed list toolbar on top, which may contain a title and filtering/search options
+- You can have a contextual action toolbar for selected items
+- Paging may be supported in the future
 
 ## Code Example
 
@@ -59,14 +60,14 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
       </svg>
     </button>
     <ul class="popupmenu">
-      <li><a href="#">Action One</a></li>
-      <li><a href="#">Action Two</a></li>
+      <li><a href="#" id="action-item-one">Action One</a></li>
+      <li><a href="#" id="action-item-two">Action Two</a></li>
     </ul>
   </div>
   <div class="card-content">
     <div class="contextual-toolbar toolbar is-hidden">
       <div class="buttonset">
-        <button class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
+        <button id="btn-tertiary" class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
         <button class="btn-tertiary" id="remove" title="Remove Selected Items" type="button">Remove</button>
       </div>
     </div>
@@ -84,21 +85,21 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
 
 ## States and Variations
 
--   Hover
--   Selected
--   Focus
--   Disabled
+- Hover
+- Selected
+- Focus
+- Disabled
 
 ## Accessibility
 
--   Lists must have keyboard support
--   Lists should have role="listbox"
--   The aria tag aria-activedescendant should point to the active item's id
--   The attribute aria-posinset should point to the position index for each item starting at 1
--   The attribute aria-setsize - should be the list count
--   The attribute aria-disabled should be added to any disabled items
--   The aria-selected tag should be added to any selected entries
--   For multiselect note that aria-selected = "true" will set on the selected elements.
+- Lists must have keyboard support
+- Lists should have role="listbox"
+- The aria tag aria-activedescendant should point to the active item's id
+- The attribute aria-posinset should point to the position index for each item starting at 1
+- The attribute aria-setsize - should be the list count
+- The attribute aria-disabled should be added to any disabled items
+- The aria-selected tag should be added to any selected entries
+- For multiselect note that aria-selected = "true" will set on the selected elements.
 
 ## Responsive Guidelines
 
@@ -106,7 +107,11 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
 - The list body will expand vertically and horizontally to fill it the size of its parent container.
 - When used in [homepages]( ../components/homepage), special rules apply with sizes.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Upgrading from 3.X
 
--   Single select roughly replaces the inforListBox component.
--   Multiselect is a new construct, however it replaces the listbox with checkboxes construct.
+- Single select roughly replaces the inforListBox component.
+- Multiselect is a new construct, however it replaces the listbox with checkboxes construct.

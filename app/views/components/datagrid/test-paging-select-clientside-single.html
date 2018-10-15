@@ -1,0 +1,43 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="datagrid">
+
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+         var grid,
+          columns = [],
+          data = [];
+
+        //Define Columns for the Grid.
+        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly });
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink });
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity' });
+
+        var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
+
+        $.getJSON(url, function(res) {
+
+            //Init and get the api for the grid
+            grid = $('#datagrid').datagrid({
+              dataset: res.data,
+              columns: columns,
+              editable: true,
+              selectable: 'single',
+              paging: true,
+              pagesize: 10,
+              pagesizes: [5, 10, 25, 50]
+            }).on('selected', function (e, args) {
+              console.log(args);
+            });
+        });
+
+  });
+
+</script>

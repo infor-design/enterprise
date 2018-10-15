@@ -2,9 +2,10 @@
 title: Cards
 description: This page describes Cards.
 demo:
-  pages:
+  embedded:
   - name: Simple Card Example
     slug: example-index
+  pages:
   - name: Expandable Card
     slug: example-expandable
   - name: Full Page Width Cards
@@ -42,8 +43,8 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
             </svg>
           </button>
           <ul class="popupmenu">
-            <li><a href="#">Action One</a></li>
-            <li><a href="#">Action Two</a></li>
+            <li><a href="#" id="action-item-one">Action One</a></li>
+            <li><a href="#" id="action-item-two">Action Two</a></li>
           </ul>
 
       </div>
@@ -63,8 +64,8 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
             </svg>
           </button>
           <ul class="popupmenu">
-            <li><a href="#">Action One</a></li>
-            <li><a href="#">Action Two</a></li>
+            <li><a href="#" id="action-item-three">Action One</a></li>
+            <li><a href="#" id="action-item-four">Action Two</a></li>
           </ul>
 
       </div>
@@ -76,6 +77,10 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
 </div>
 ```
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - The header contains a toolbar. Arrow keys should be used between buttons on the toolbars
@@ -83,4 +88,4 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
 
 ## Responsive Guidelines
 
--   Either fluid based on parent grid, or uses masonry style layout
+- Either fluid based on parent grid, or uses masonry style layout

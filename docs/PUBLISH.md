@@ -1,64 +1,73 @@
-# Dev Ops and Release Publishing Tasks and Notes
+# Release Enterprise
 
-## Check Published npm Tags
+## Dev Release
 
-```bash
-npm info ids-enterprise dist-tags
-npm view ids-enterprise versions
+To do a dev release, publish a dated semver to npm.
+
+1. Make sure you are on `master` and its clean
+1. Change the `package.json` version to append the date, i.e. `4.7.0-dev.YYYYMMDD`
+1. Save the `package.json` file (**DO NOT** commit it)
+1. `npm publish --tag=dev`
+1. Undo the version change/reset your branch
+
+## Production Release (tagged)
+
+### Documentation
+
+- Verify the [changelog](/changelog) is up-to-date
+
+### Make sure you have [credential] setup in .gitconfig  (Windows Users Only)
+
+Try adding this into your git config
+
+```yaml
+[credential]
+    helper = wincred
 ```
 
-## Delete a npm Tag
+or via console
 
-```bash
-npm dist-tag rm ids-enterprise tagname
+```sh
+git config --global credential.helper wincred
 ```
 
-## Merge a fix to a branch
+### Make sure you have a GITHUB_ACCESS_TOKEN configured
 
-```bash
-git checkout 4.7.x
-git cherry-pick 802b102fda5420a0f714d9d0efa5eff635fe77d9
-git push
-git checkout master
-```
+- Get a token <https://github.com/settings/tokens>
+    - click the `Generate new token` button
+    - click ONLY the repo scope
+    - scroll to the bottom and click the `Generate token` button
+    - NOTE: Save your token somewhere so it doesn't get lost.
+- Set your environment variable from your command window
+    - (mac) `export GITHUB_ACCESS_TOKEN="<your token here>"`
+    - (windows) `set GITHUB_ACCESS_TOKEN="<your token here>"`
 
-## Steps for Cutting a Release
+## Release
 
-## Documentation
-* Check ChangeLog.md is updated (we will soon use github change log)
-* Create new version in Jira and mark current as released https://jira.infor.com/plugins/servlet/project-config/SOHO/versions
-* Generate Release Notes http://bit.ly/2w6X8Xw
+1. Make sure you have release-it installed (`npm install release-it -g`)
+1. Checkout the release branch and `git pull --tags`
+    - Set the master branch to the next minor dev version. For example if we made branch `4.9.x`, then the `master` package.json version should now be changed to `4.10.0-dev`
+1. Run a release cmd:
+    - `npm run release:beta` - beta
+    - `npm run release:rc` - release candidate normally the final testing branch before the release
+    - `npm run release:final` - the release itself
+    - **Always** verify the release version when the script asks. You MAY have to use a different release-it command than what we provide with the NPM script.
+1. Deploy the demo app for the semver
 
-## Git Operations
-* Edit version `ids-enterprise/package.json` (from 4.7.0-rc to 4.7.0 as an example)
-* Push a PR
-* Check for Last PR's https://github.com/infor-design/enterprise/pulls and make sure all merged
-* Merge  4.7.0-rc (the rc branch) back onto the 4.7.x (branch) - Using a PR
-* Git Tag the release from https://github.com/infor-design/enterprise/releases
-* Delete any rc branches and all feature/bug fix branches https://github.com/infor-design/enterprise/branches
+For a final release, finish with:
 
-## Update version in ids-enterprise-ng
-* https://github.com/infor-design/enterprise-ng
-* Edit version in `ids-package.json`
-* Check for Last PR's https://github.com/infor-design/enterprise-ng/pulls and merge
-* Merge  4.7.0-rc (the rc branch) back onto the 4.7.x (branch) - Using a PR
-* Git Tag the release from https://github.com/infor-design/enterprise-ng/releases
-* Delete the rc branch and all feature/bug fix branches https://github.com/infor-design/enterprise-ng/branches
-
-
-## Test Npm packages
-```
-npm view ids-enterprise versions
-npm view ids-enterprise-angular versions
-
-npm info ids-enterprise-angular dist-tags
-npm info ids-enterprise dist-tags
-```
+1. Publish/upload the documentation to design.infor.com:
+    - `export DOCS_API_KEY={API KEY}`
+    - `npm run documentation -- --site=prod`
+1. Manually merge the version branch into `master`. Do **NOT** use a pull request. (You will need github push permissions for this)
+1. If needed, use a pull request to set the `master` branch's package.json version to the proper "dev" version
+    - i.e. if we just released `4.7.0`, master should be be `4.8.0-dev`
+1. Deploy the demo app for the specific releases's semver AS "LATEST"
 
 ## Setup tools for AWS CDN Publish
 
-- Also install AWS for testing and configuring http://docs.aws.amazon.com/cli/latest/userguide/installing.html
-- Once installed run aws configure to enter the keys in the right spot http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+- Also install AWS for testing and configuring <http://docs.aws.amazon.com/cli/latest/userguide/installing.html>
+- Once installed run aws configure to enter the keys in the right spot <http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html>
 
 ## Deploy to AWS
 

@@ -13,12 +13,12 @@
  *   - JSON files in dist/, zips them, and POSTs them to the specified
  *     ids-website server
  *
- * @example `node ./build/deploy-documentation.js`
+ * @example `node ./scripts/deploy-documentation.js`
  *
  * Flags:
  * --dry-run       - Run the script, skipping POSTing to the api
  * --site=[server] - Deploy to specific server:
- *                   [local, local_debug, staging, prod]
+ *                   [local, localDebug, staging, prod]
  *                   Note: If there is no flag, it'll deploy to "static"
  *
  * --test-mode     - Run the script on a few components
@@ -97,7 +97,7 @@ const serverURIs = {
   staging: 'https://staging.design.infor.com/api/docs/',
   prod: 'https://design.infor.com/api/docs/'
 };
-const packageJson = require(`${rootPath}/ids-enterprise/package.json`);
+const packageJson = require(`${rootPath}/package.json`);
 const testComponents = [
   'button',
   'datagrid'
@@ -128,10 +128,17 @@ hbsRegistrar(handlebars, {
 // -------------------------------------
 //   Main
 // -------------------------------------
-logTaskStart('deploy');
+logTaskStart(`deploying ${packageJson.version}`);
 
 if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
   deployTo = argv.site;
+}
+
+// Failsafe to prevent accidentally uploading dev/beta/rc documentation to
+// production as those semver's will have a dash in them (-dev, -beta, -rc)
+if (packageJson.version.includes('-') && deployTo === 'prod') {
+  console.error(chalk.red('Error!'), `You can NOT deploy documentation for a non-final version to "prod".`);
+  process.exit(0);
 }
 
 const setupPromises = [
@@ -191,7 +198,7 @@ function compileComponents() {
     let compName = '';
 
     glob(`${paths.components}/*/`, (err, componentDirs) => {
-      componentStats.total = componentDirs.length;
+      componentStats.total += componentDirs.length;
 
       componentDirs.forEach(compDir => {
         compName = deriveComponentName(compDir);
@@ -239,6 +246,8 @@ function compileSupportingDocs() {
     const promises = [];
 
     glob(`${paths.docs}/*.md`, (err, files) => {
+      componentStats.total += files.length;
+
       files.forEach(filePath => {
         const fileName = path.basename(filePath, '.md').toLowerCase();
 
@@ -286,7 +295,7 @@ function cleanAll() {
       console.error(chalk.red('Error!'), err);
     })
     .then(() => {
-      logTaskAction('Cleaned', paths.idsWebsite.dist.replace(rootPath, '.'));
+      logTaskAction('Cleaned', `${deployTo} directories`);
       createDirs([
         paths.idsWebsite.root,
         paths.idsWebsite.dist,
@@ -480,7 +489,7 @@ function removeTrailingSlash(uri) {
  * Console.log statistics from the build
  */
 function statsConclusion() {
-  logTaskEnd('deploy');
+  logTaskEnd(`deploying ${packageJson.version}`);
   // did not use multiline string for formatting reasons
   let str = '';
   str += `\nComponents ${chalk.green('converted')}:  ${componentStats.numConverted}/${componentStats.total}`;
@@ -613,7 +622,7 @@ function zipAndDeploy() {
   // listen for all archive data to be written
   // 'close' event is fired only when a file descriptor is involved
   output.on('close', () => {
-    logTaskAction(`Zipped ${archive.pointer()} total bytes`);
+    logTaskAction('Zipped', `${archive.pointer()} total bytes`);
     logTaskEnd('zip json files');
 
     if (argv.dryRun) {

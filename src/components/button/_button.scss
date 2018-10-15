@@ -14,16 +14,17 @@ button {
 }
 
 // How all button types will deal with iconography
-[class^="btn"] {
+[class^='btn'] {
   //Fixes an issue about the circle effect coming out of the button.
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
   @include font-size($button-font-size);
-  @include transition(color 300ms cubic-bezier(.17, .04, .03, .94), background-color 300ms cubic-bezier(.17, .04, .03, .94), border 300ms cubic-bezier(.17, .04, .03, .94), box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), background-color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), border 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
   @include antialiased();
+
   color: inherit;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   height: 34px;
   line-height: normal;
   min-width: 100px;
@@ -60,7 +61,7 @@ button {
   }
 
   .icon {
-    @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
+    @include transition(fill 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
   }
 
   &.half-width {
@@ -86,8 +87,7 @@ button {
       }
     }
 
-    &:empty:not(.icon):not(.one):not(.two):not(.three):not(.four)
-    :not(.five):not(.six):not(.seven):not(.eight):not(.nine) {
+    &:empty:not(.icon):not(.one):not(.two):not(.three):not(.four):not(.five):not(.six):not(.seven):not(.eight):not(.nine) {
       display: none;
     }
   }
@@ -106,6 +106,17 @@ button {
     padding-left: 0;
     padding-right: 0;
   }
+
+  &[disabled],
+  &[disabled]:hover {
+    .disabled-tooltip {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
 }
 
 .btn-primary,
@@ -116,35 +127,35 @@ button {
 
 // standard, primary, destructive
 .btn-primary {
-  background-color: $primary-btn-bg-color;
-  border: 1px solid $primary-btn-bg-color;
-  color: $primary-btn-color;
+  background-color: $button-primary-bg-color;
+  border: 1px solid $button-primary-bg-color;
+  color: $button-primary-text-color;
 
   &.btn {
-    color: $primary-btn-color;
+    color: $button-primary-text-color;
   }
 
   .icon {
-    fill: $primary-btn-color;
+    fill: $button-primary-text-color;
   }
 
   // In case both are specified
   &.btn {
-    color: $primary-btn-color;
+    color: $button-primary-text-color;
   }
 
   &:hover {
-    background-color: $primary-btn-hover-bg-color;
-    border: 1px solid $primary-btn-hover-bg-color;
+    background-color: $button-primary-hover-bg-color;
+    border: 1px solid $button-primary-hover-bg-color;
 
     &.btn {
-      color: $primary-btn-color;
+      color: $button-primary-text-color;
     }
   }
 
   &:active {
-    background-color: $primary-btn-active-bg-color;
-    border: 1px solid $primary-btn-active-bg-color;
+    background-color: $button-primary-active-bg-color;
+    border: 1px solid $button-primary-active-bg-color;
     box-shadow: none;
   }
 
@@ -152,23 +163,23 @@ button {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color, $focus-box-shadow;
+      box-shadow: 0 0 0 2px $body-bg-color-primary, 0 0 0 3px $button-primary-bg-color, $focus-box-shadow;
     }
 
     &:active {
-      background-color: $primary-btn-active-bg-color;
+      background-color: $button-primary-active-bg-color;
       box-shadow: none;
     }
   }
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $primary-btn-disabled-bg-color;
-    border-color: $primary-btn-disabled-border-color;
+    background-color: $button-primary-disabled-bg-color;
+    border-color: $button-primary-disabled-border-color;
     box-shadow: none;
-    color: $primary-btn-disabled-color;
+    color: $button-primary-text-color;
     cursor: default;
-    opacity: $primary-btn-disabled-opacity;
+    opacity: $button-disabled-opacity;
 
     .icon {
       fill: $white;
@@ -177,23 +188,23 @@ button {
 
   .ripple-effect {
     background-color: $white;
-    opacity: .7;
+    opacity: 0.7;
     pointer-events: none;
   }
 
   &.btn-menu {
-    color: $primary-btn-color;
+    color: $button-primary-text-color;
 
     .icon {
-      fill: $primary-btn-color;
+      fill: $button-primary-text-color;
     }
 
     &:hover,
     &.is-open {
-      color: $primary-btn-color;
+      color: $button-primary-text-color;
 
       .icon {
-        fill: $primary-btn-color;
+        fill: $button-primary-text-color;
       }
     }
 
@@ -205,7 +216,8 @@ a.btn-icon,
 a.btn-primary,
 a.btn-secondary,
 a.btn-tertiary,
-a.btn-menu {
+a.btn-menu,
+a.btn-close {
   display: inline-block;
   line-height: 31px;
   margin-bottom: -2px;
@@ -227,9 +239,7 @@ a.btn-menu {
   min-width: auto;
 
   + .separator {
-    // scss-lint:disable ImportantRule
     margin: 3px 3px 0 -10px !important;
-    // scss-lint:enable ImportantRule
 
     + .btn-split-menu {
       margin-left: -3px;
@@ -252,7 +262,8 @@ a.btn-menu {
   a.btn-primary,
   a.btn-secondary,
   a.btn-tertiary,
-  a.btn-menu {
+  a.btn-menu,
+  a.btn-close {
     line-height: 32px;
     margin-bottom: -3px;
   }
@@ -260,45 +271,45 @@ a.btn-menu {
 
 // Secondary Button
 .btn-secondary {
-  background-color: $btn-bg-color;
-  border: 1px solid $btn-bg-color;
-  color: $btn-color;
+  background-color: $button-default-bg-color;
+  border: 1px solid $button-default-bg-color;
+  color: $button-default-text-color;
 
   .icon {
-    fill: $btn-color;
+    fill: $button-default-text-color;
   }
 
   &:hover {
-    background-color: $btn-hover-bg-color;
-    border: 1px solid $btn-hover-bg-color;
+    background-color: $button-default-hover-bg-color;
+    border: 1px solid $button-default-hover-bg-color;
   }
 
   &:active {
-    background-color: $btn-active-bg-color;
-    border: 1px solid $btn-active-bg-color;
- }
+    background-color: $button-default-active-bg-color;
+    border: 1px solid $button-default-active-bg-color;
+  }
 
   &:focus {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color, $focus-box-shadow;
+      box-shadow: 0 0 0 2px $body-bg-color-primary, 0 0 0 3px $button-default-focus-border-color, $focus-box-shadow;
     }
 
     &:active {
-      background-color: $btn-active-bg-color;
+      background-color: $button-default-active-bg-color;
       box-shadow: none;
     }
   }
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $btn-disabled-bg-color;
-    border: 1px solid $btn-disabled-border-color;
+    background-color: $button-default-disabled-bg-color;
+    border: 1px solid $button-default-disabled-border-color;
     box-shadow: none;
-    color: $btn-disabled-color;
+    color: $button-default-disabled-text-color;
     cursor: default;
-    opacity: $btn-disabled-opacity;
+    opacity: $button-disabled-opacity;
   }
 
   .ripple-effect {
@@ -307,18 +318,18 @@ a.btn-menu {
 
   // Menu Button Form
   &.btn-menu {
-    color: $btn-color;
+    color: $button-default-text-color;
 
     .icon {
-      fill: $btn-color;
+      fill: $button-default-text-color;
     }
 
     &:hover,
     &.is-open {
-      color: $btn-color;
+      color: $button-default-text-color;
 
       .icon {
-        fill: $btn-color;
+        fill: $button-default-text-color;
       }
     }
   }
@@ -329,28 +340,29 @@ a.btn-menu {
 .btn,
 .btn-tertiary,
 .btn-icon,
+.btn-close,
 .btn-actions,
 .btn-menu {
   border: 1px solid transparent;
   border-radius: 2px;
   box-shadow: none;
-  color: $tertiary-btn-color;
+  color: $button-link-text-color;
   overflow: hidden;
 
   &:hover {
-    color: $tertiary-btn-hover-color;
+    color: $button-link-hover-text-color;
 
     .icon {
-      fill: $tertiary-btn-hover-color;
+      fill: $button-link-hover-text-color;
     }
   }
 
   &:active {
-    color: $tertiary-btn-active-color;
+    color: $button-link-active-text-color;
   }
 
   &:focus:not(.hide-focus) {
-    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $btn-focus-bg-color, $focus-box-shadow;
+    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $button-default-focus-bg-color, $focus-box-shadow;
 
     &:active {
       box-shadow: none;
@@ -359,12 +371,12 @@ a.btn-menu {
 
   &[disabled],
   &[disabled]:hover {
-    color: $tertiary-btn-disabled-color;
+    color: $button-link-disabled-text-color;
     cursor: default;
-    opacity: $tertiary-btn-disabled-opacity;
+    opacity: $button-disabled-opacity;
 
     .icon {
-      fill: $tertiary-btn-disabled-color;
+      fill: $button-link-disabled-text-color;
     }
   }
 
@@ -373,7 +385,7 @@ a.btn-menu {
   }
 
   .icon {
-    fill: $tertiary-btn-color;
+    fill: $button-link-text-color;
   }
 
   .ripple-effect {
@@ -390,7 +402,8 @@ a.btn-menu {
 .btn-actions,
 .btn-menu {
   span {
-    &:before, &:after {
+    &::before,
+    &::after {
       content: ' ';
     }
   }
@@ -400,10 +413,10 @@ a.btn-menu {
 .btn-menu,
 .btn-actions {
   &.is-open {
-    color: $tertiary-btn-open-color;
+    color: $button-link-open-text-color;
 
     .icon {
-      fill: $tertiary-btn-open-color;
+      fill: $button-link-open-text-color;
     }
   }
 }
@@ -454,7 +467,7 @@ a.btn-menu {
 .btn-close {
   border-radius: 18px;
   height: 36px;
-  margin-top: 0px;
+  margin-top: 0;
   min-height: 36px;
   min-width: 36px;
   padding: 0;
@@ -494,7 +507,7 @@ a.btn-menu {
 
   &.has-content {
     .icon {
-      fill: $azure06;
+      fill: $color-primary;
     }
 
     &:hover .icon {
@@ -562,7 +575,8 @@ a.btn-menu {
 
     &.chevron {
       @include css3(transform, rotateX(0deg));
-      @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94));
+      @include transition(transform 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
       height: 28px;
       padding-right: 0;
       top: 2px;
@@ -590,13 +604,13 @@ a.btn-menu {
 
   &:active {
     .icon {
-      fill: $tertiary-btn-active-color;
+      fill: $button-link-active-text-color;
     }
 
     .plus-minus {
       &::before,
       &::after {
-        background-color: $tertiary-btn-active-color;
+        background-color: $button-link-active-text-color;
       }
     }
   }
@@ -609,21 +623,22 @@ a.btn-menu {
 
 .btn-toggle {
   &.is-pressed {
-    color: $primary-btn-bg-color !important;
+    color: $button-primary-bg-color !important;
 
     svg {
-      fill: $primary-btn-bg-color !important;
+      fill: $button-primary-bg-color !important;
     }
   }
 }
 
 @include keyframes(ripple-animation) {
   0% {
-    opacity: .5;
+    opacity: 0.5;
   }
 
   100% {
     @include css3(transform, scale(20));
+
     opacity: 0;
   }
 }
@@ -642,12 +657,12 @@ a.btn-menu {
         }
       }
     }
- 	}
+  }
 }
 
 // Short field buttons
 .field-short {
-  [class*="btn"] {
+  [class*='btn'] {
     height: 25px;
     margin-bottom: 10px;
     min-width: 0;
@@ -682,7 +697,7 @@ a.btn-menu {
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   button {
     margin-left: 5px;
@@ -695,11 +710,11 @@ html[dir='rtl'] {
   }
 
   // How all button types will deal with iconography
-  [class^="btn"] {
+  [class^='btn'] {
     > .icon {
-
       + span:not(.audible):not(:empty) {
-        padding-right: 10px;
+        padding-left: 0;
+        padding-right: 5px;
       }
 
       + * + span {
@@ -735,14 +750,15 @@ html[dir='rtl'] {
 
 //Do not allow upper case in french
 html[lang^='fr-'] {
-  [class^="btn"] {
+  [class^='btn'] {
     text-transform: none;
   }
 }
 
 //Special "Ghost" Secondary Border button-font-size
 .btn-secondary-border {
-  @include transition(all 300ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(all 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
   border: 1px solid $secondary-border-btn-border-color;
   border-radius: 2px;
   color: $secondary-border-btn-color;
@@ -757,12 +773,12 @@ html[lang^='fr-'] {
   }
 
   &:focus {
-    box-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $primary-color, $focus-box-shadow;
+    box-shadow: 0 0 0 1px $body-bg-color-primary, 0 0 0 2px $color-primary, $focus-box-shadow;
   }
 
   &:disabled {
     cursor: default;
-    opacity: .5;
+    opacity: 0.5;
   }
 
   .ripple-effect {
@@ -777,12 +793,12 @@ html[lang^='fr-'] {
 }
 
 .is-mac.is-firefox {
-  [class^="btn"] {
+  [class^='btn'] {
     line-height: 34px;
   }
 
   .field-short {
-    [class^="btn"] {
+    [class^='btn'] {
       line-height: 25px;
     }
   }

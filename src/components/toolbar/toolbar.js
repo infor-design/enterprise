@@ -1,12 +1,12 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../button/button.jquery';
 import '../popupmenu/popupmenu.jquery';
-import '../toolbarsearchfield/toolbarsearchfield.jquery';
+import '../searchfield/searchfield.jquery';
 import '../tooltip/tooltip.jquery';
 
 // Component Name
@@ -151,6 +151,7 @@ Toolbar.prototype = {
       this.more = $('<button class="btn-actions" type="button"></button>')
         .html(`${$.createIcon({ icon: 'more' })
         }<span class="audible">${Locale.translate('MoreActions')}</span>`)
+        .attr('title', Locale.translate('More'))
         .appendTo(moreContainer);
     }
 
@@ -189,7 +190,7 @@ Toolbar.prototype = {
 
         if (!sf.data('searchfield')) {
           const searchfieldOpts = $.extend({}, utils.parseSettings(sf[0]));
-          sf.toolbarsearchfield(searchfieldOpts);
+          sf.searchfield(searchfieldOpts);
         }
       });
     }
@@ -534,7 +535,7 @@ Toolbar.prototype = {
       popupLiText = item.text();
     }
 
-    return stringUtils.stripHTML(popupLiText);
+    return xssUtils.stripHTML(popupLiText);
   },
 
   /**
@@ -1521,8 +1522,8 @@ Toolbar.prototype = {
 
     if (this.buttonset.children('.searchfield-wrapper').length) {
       const searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');
-      if (searchFields.data('toolbarsearchfield')) {
-        searchFields.data('toolbarsearchfield').destroy();
+      if (searchFields.data('searchfield')) {
+        searchFields.data('searchfield').destroy();
       }
     }
 

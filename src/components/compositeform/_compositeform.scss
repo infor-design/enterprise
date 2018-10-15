@@ -77,7 +77,6 @@
   // Responsive Mode (more columns)
   //=================================================
   &.is-in-responsive-mode {
-
     > .scrollable-flex-content {
       > .tab-container {
         height: 40px;
@@ -131,10 +130,10 @@
   }
 
   .expandable-footer {
-    margin-top: 10px !important;
     margin-bottom: 12px !important;
-    margin-right: 18px;
     margin-left: 18px;
+    margin-right: 18px;
+    margin-top: 10px !important;
   }
 }
 

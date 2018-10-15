@@ -6,38 +6,38 @@
 
        <div class="field">
         <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
-        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required " placeholder="someone@someplace.com" value="someone@someplace.com">
+        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required" placeholder="someone@someplace.com" value="someone@someplace.com"/>
       </div>
 
       <div class="field">
         <label class="required" for="credit-card">Credit Card <span class="audible">Required</span></label>
-        <input type="text" id="credit-card" name="credit-card" data-validate="required customInformationRule" placeholder="0000-0000-0000-0000" class="new-mask" data-options='{ "pattern" : "####-####-####-####" }'>
+        <input type="text" id="credit-card" name="credit-card" data-validate="required" placeholder="0000-0000-0000-0000" class="new-mask" data-options="{ 'pattern' : '####-####-####-####' }"/>
       </div>
 
       <div class="field hidden">
         <label class="required" for="hidden-credit-card">Credit Card <span class="audible">Required</span></label>
-        <input type="text" id="hidden-credit-card" name="hidden-credit-card" data-validate="required" value="xxxx-xxxx-xxxx-xxxx">
+        <input type="text" id="hidden-credit-card" name="hidden-credit-card" data-validate="required" value="xxxx-xxxx-xxxx-xxxx"/>
       </div>
 
       <div class="field">
         <label for="credit-code">Code</label>
-        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-validate="customWarningRule" data-mask="###" data-mask-mode="number">
+        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-validate="customWarningRule" data-mask="###" data-mask-mode="number"/>
       </div>
 
       <div class="field">
-          <input class="checkbox" id="checkbox2" checked="" type="checkbox">
+          <input class="checkbox" id="checkbox2" checked="" type="checkbox"/>
           <label for="checkbox2" class="checkbox-label">Test Checkbox</label>
       </div>
 
       <div class="field">
         <label class="required" for="credit-code2">Code <span class="audible">Required</span></label>
-        <input type="text" id="credit-code2" class="input-xs" name="credit-code2" data-validate="required" data-mask="###" data-mask-mode="number">
+        <input type="text" id="credit-code2" class="input-xs" name="credit-code2" data-validate="required" data-mask="###" data-mask-mode="number"/>
       </div>
 
       <div class="field">
         <label class="required label" for="states">States</label>
         <select id="states" data-validate="required" name="states" class="dropdown">
-          <option value="" selected>&nbsp;</option>
+          <option value="" selected="true">&nbsp;</option>
           <option value="AL" >Alabama</option>
           <option value="DE">Delaware</option>
           <option value="DC">District Of Columbia</option>
@@ -55,11 +55,10 @@
 
       <div class="field">
         <span class="label required">Editor <span class="audible">Required</span></span>
-        <div class="editor" data-validate="required">
-        </div>
+        <div class="editor" data-validate="required">Test String</div>
       </div>
 
-      <button type="submit" id="test1" class="btn-primary" disabled>Submit</button>
+      <button type="submit" id="submit" class="btn-primary" disabled="true">Submit</button>
     </form>
 
     <script>
@@ -102,27 +101,16 @@
             return;
           }
 
-          // Do some stuff other than highlighting what's required and obviously cancel the submit.
+        }).on('aftervalidate', function (e, args) {
+          var api = $(this).data('validate');
 
-        }).on('error', function (e, args) {
-          console.log('error',args);
-          $('#test1').prop('disabled', true);
-        }).on('valid', function (e, args) {
-          console.log('Form Corrected',args);
-          $('#test1').prop('disabled', false);
-        }).on('isvalid', function (e, args) {
-          console.log('isvalid',args);
-          ///$('#test1').prop('disabled', false);
+          if (api.isFormValid($(this))) {
+            console.log('Form Corrected', args);
+            $('#submit').prop('disabled', false);
+          } else {
+            $('#submit').prop('disabled', true);
+          }
         });
-
-        $('input, select, .editor').on('error', function (e, args) {
-          console.log('error', args);
-        }).on('valid', function (e, args) {
-          console.log('valid', args);
-        }).on('isvalid', function (e, args) {
-          console.log('isvalid', args);
-        });
-
       });
     </script>
   </div>

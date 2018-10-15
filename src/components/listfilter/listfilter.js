@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 
 // The Name of this component.
 const COMPONENT_NAME = 'ListFilter';
@@ -15,9 +16,6 @@ const filterModes = ['startsWith', 'contains'];
  * @param {object} [settings] incoming settings
  * @param {boolean} [settings.caseSensitive=false]  Set to true if searches ARE case sensitive
  * @param {string} [settings.filterMode='startsWith']  Type of search can current be either 'startsWith' or 'contains'
- * @param {boolean} [settings.highlightMatchedText=false]  Inserts markup that appears to highlight text
- * @param {function} [settings.highlightCallback]  If defined, will execute this code for highlighting text
- * instead of the built-in highlighting code
  * @param {function} [settings.searchableTextCallback] If defined, will take each
   filterable item passed and return user-defined, searchable text content
  */
@@ -25,8 +23,6 @@ const filterModes = ['startsWith', 'contains'];
 const LISTFILTER_DEFAULTS = {
   caseSensitive: false,
   filterMode: filterModes[0],
-  highlightMatchedText: false,
-  highlightCallback: null,
   searchableTextCallback: undefined
 };
 
@@ -114,7 +110,7 @@ ListFilter.prototype = {
       }
 
       const isString = typeof item === 'string';
-      return (isString ? item : $(item).text());
+      return xssUtils.sanitizeHTML((isString ? item : $(item).text()));
     }
 
     // Iterates through each list item and attempts to find the provided search term.
@@ -148,6 +144,22 @@ ListFilter.prototype = {
         }
       }
 
+      if (self.settings.filterMode === 'keyword') {
+        const keywords = term.split(' ');
+        for (let i = 0; i < keywords.length; i++) {
+          const keyword = keywords[i];
+          if (text.toLowerCase().indexOf(keyword) >= 0) {
+            match = true;
+            break;
+          }
+        }
+      }
+
+      // assume filtered server side
+      if (self.settings.filterMode === null) {
+        match = true;
+      }
+
       if (match) {
         items.push(item);
       }
@@ -160,6 +172,11 @@ ListFilter.prototype = {
     // with the relevant results.
     if (isJQuery) {
       items = $(items);
+    }
+
+    // If we're not dealing with jQuery, an empty array shouldn't be returned.
+    if (!isJQuery && !items.length) {
+      return false;
     }
 
     return items;

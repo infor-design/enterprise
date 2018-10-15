@@ -2,10 +2,11 @@
 
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { ListFilter } from '../listfilter/listfilter';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../../utils/highlight';
@@ -81,6 +82,16 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
   // Easy match for 'contains'-style filterMode.
   if (options.filterMode === 'contains') {
     targetProp = targetProp.replace(new RegExp('(' + options.term + ')', 'ig'), '<i>$1</i>');
+  } else if (options.filterMode === 'keyword') {
+    // Handle "keyword" filterMode
+    const keywords = options.term.split(' ');
+    for (let i = 0; i < keywords.length; i++) {
+      const keyword = keywords[i];
+
+      if (keyword) {
+        targetProp = targetProp.replace(new RegExp('(' + keyword + ')', 'ig'), '<i>$1</i>');
+      }
+    }
   } else {
     // Handle "startsWith" filterMode highlighting a bit differently.
     const originalItem = targetProp;
@@ -118,11 +129,10 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
 * @param {string} [settings.width=null] Width of the open auto complete menu
 * @param {string} [settings.offset=null] For the open menu, the left or top offset
 * @param {string} [settings.autoSelectFirstItem=false] Whether or not to select he first item in the list to be selected
-* @param {function} [settings.resultsCallback] If defined, does not produce the results of the Autocomplete
-* inside a popupmenu, instead piping them to a process defined inside this callback function.
 * @param {boolean} [settings.highlightMatchedText=true] The highlightMatchText property.
 * @param {function} [settings.highlightCallback] The highlightCallback property.
 * @param {function} [settings.resultIteratorCallback] The resultIteratorCallback property.
+* @param {function} [settings.clearResultsCallback] the clearResultsCallback property.
 * @param {function} [settings.displayResultsCallback] The displayResultsCallback property.
 * @param {function} [settings.searchableTextCallback] The searchableTextCallback property.
 */
@@ -138,6 +148,7 @@ const AUTOCOMPLETE_DEFAULTS = {
   highlightMatchedText: true,
   highlightCallback: DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK,
   resultIteratorCallback: DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK,
+  clearResultsCallback: undefined,
   displayResultsCallback: undefined,
   searchableTextCallback: DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK
 };
@@ -159,6 +170,7 @@ Autocomplete.prototype = {
     const data = this.element.attr('data-autocomplete');
     if (data && data !== 'source') {
       this.settings.source = data;
+      this.element.removeAttr('data-autocomplete');
     }
 
     const listFilterSettings = {
@@ -251,6 +263,8 @@ Autocomplete.prototype = {
       });
     }
 
+    this.currentDataSet = modifiedFilterResults;
+
     // If a "resultsCallback" method is defined, pipe the filtered items to that method and skip
     // building a popupmenu.
     if (typeof this.settings.displayResultsCallback === 'function') {
@@ -282,6 +296,7 @@ Autocomplete.prototype = {
       attachToBody: true,
       autoFocus: false,
       returnFocus: false,
+      triggerSelect: false,
       placementOpts: {
         parent: this.element,
         callback: afterPlaceCallback
@@ -291,20 +306,13 @@ Autocomplete.prototype = {
     filterResult.forEach((dataset) => {
       if (typeof Tmpl !== 'undefined') {
         const renderedTmpl = Tmpl.compile(self.tmpl, dataset);
-        self.list.append($.sanitizeHTML(renderedTmpl));
-      } else {
-        const listItem = $('<li role="listitem"></li>');
-        listItem.attr('id', dataset.listItemId);
-        listItem.attr('data-index', dataset.index);
-        listItem.attr('data-value', dataset.value);
-        listItem.append(`<a href="#" tabindex="-1"><span>${dataset.label}</span></a>`);
-        self.list.append($.sanitizeHTML(listItem));
+        DOM.append(self.list, renderedTmpl, '*');
       }
     });
 
     this.element.addClass('is-open')
       .popupmenu(popupOpts)
-      .on('close.autocomplete', () => {
+      .one('close.autocomplete', () => {
         self.closeList(true);
       });
 
@@ -326,16 +334,16 @@ Autocomplete.prototype = {
     this.element.trigger('populated', [filterResult]).focus();
 
     // Overrides the 'click' listener attached by the Popupmenu plugin
-    self.list.off('click touchend')
-      .on('touchend.autocomplete click.autocomplete', 'a', (e) => {
-        self.select(e, filterResult);
+    self.list
+      .on(`touchend.${COMPONENT_NAME} click.${COMPONENT_NAME}`, 'a', (e) => {
+        self.select(e);
       })
-      .off('focusout.autocomplete').on('focusout.autocomplete', () => {
+      .on(`focusout.${COMPONENT_NAME}`, () => {
         self.checkActiveElement();
       });
 
     // Highlight anchors on focus
-    const all = self.list.find('a').on('focus.autocomplete touchend.autocomplete', function () {
+    const all = self.list.find('a').on(`focus.${COMPONENT_NAME} touchend.${COMPONENT_NAME}`, function () {
       self.highlight($(this), all);
     });
 
@@ -365,16 +373,29 @@ Autocomplete.prototype = {
   },
 
   closeList(dontClosePopup) {
+    // Remove events
+    this.list.off([
+      `click.${COMPONENT_NAME}`,
+      `touchend.${COMPONENT_NAME}`,
+      `focusout.${COMPONENT_NAME}`
+    ].join(' '));
+    this.list.find('a').off(`focus.${COMPONENT_NAME} touchend.${COMPONENT_NAME}`);
+
+    this.element.trigger('listclose');
+
+    if (typeof this.settings.clearResultsCallback === 'function') {
+      this.settings.clearResultsCallback();
+      return;
+    }
+
     const popup = this.element.data('popupmenu');
     if (!popup) {
       return;
     }
-
     if (!dontClosePopup) {
       popup.close();
     }
 
-    this.element.trigger('listclose');
     $('#autocomplete-list').parent('.popupmenu-wrapper').remove();
     $('#autocomplete-list').remove();
     this.element.add(this.list).removeClass('is-open is-ontop');
@@ -443,7 +464,7 @@ Autocomplete.prototype = {
         e.stopPropagation();
         e.preventDefault();
         self.noSelect = true;
-        self.select(highlighted, this.currentDataSet);
+        self.select(highlighted);
       } else {
         self.closeList();
       }
@@ -530,7 +551,7 @@ Autocomplete.prototype = {
       if (deferredStatus === false) {
         return dfd.reject(searchTerm);
       }
-      return dfd.resolve(searchTerm, response);
+      return dfd.resolve(xssUtils.stripTags(searchTerm), response);
     }
 
     this.loadingTimeout = setTimeout(() => {
@@ -539,6 +560,7 @@ Autocomplete.prototype = {
       }
 
       buffer = field.val();
+
       if (buffer === '') {
         if (self.element.data('popupmenu')) {
           self.element.data('popupmenu').close();
@@ -570,6 +592,64 @@ Autocomplete.prototype = {
         done(buffer, sourceData, true);
       } else if (!self.settings.source) {
         dfd.reject(buffer);
+      } else if (self.settings.filterMode === 'keyword') {
+        let keywordData = [];
+        const mergeData = function (data) {
+          if (keywordData.length === 0) {
+            keywordData = data;
+          } else {
+            // Check for duplicate entries
+            for (let i = 0; i < data.length; i++) {
+              const dataItem = data[i];
+
+              let isExists = false;
+
+              for (let ii = 0; ii < keywordData.length; ii++) {
+                const keywordItem = keywordData[ii];
+
+                for (let iii = 0; iii < Object.getOwnPropertyNames(keywordItem).length; iii++) {
+                  const dataPropVal = dataItem[Object.getOwnPropertyNames(dataItem)[iii]];
+                  const keywordPropVal = keywordItem[Object.getOwnPropertyNames(keywordItem)[iii]];
+
+                  if (dataPropVal === keywordPropVal) {
+                    isExists = true;
+                    break;
+                  }
+                }
+              }
+
+              if (!isExists) {
+                keywordData.push(dataItem);
+              }
+            }
+          }
+        };
+
+        const doneData = function (data) {
+          mergeData(data);
+
+          done(buffer, keywordData, true);
+        };
+
+        const keywords = buffer.split(' ');
+        if (keywords[keywords.length - 1] === '') {
+          keywords.splice(-1, 1);
+        }
+
+        for (let i = 0; i < keywords.length; i++) {
+          const keyword = keywords[i];
+
+          if (keyword.length > 0) {
+            const sourceURL = self.settings.source.toString();
+            const request = $.getJSON(sourceURL + keyword);
+
+            if (i < keywords.length - 1) {
+              request.done(mergeData).fail(mergeData);
+            } else {
+              request.done(doneData).fail(doneData);
+            }
+          }
+        }
       } else {
         // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
         const sourceURL = self.settings.source.toString();
@@ -612,6 +692,12 @@ Autocomplete.prototype = {
     }, 10);
   },
 
+  /**
+   * Highlights (and focuses) an Autocomplete list option
+   * @param {jQuery} anchor the anchor to be highlighted
+   * @param {jQuery[]} [allAnchors=null] optional list of anchors to deselect when the new one becomes selected.
+   * @returns {void}
+   */
   highlight(anchor, allAnchors) {
     let text = anchor.text().trim();
 
@@ -628,10 +714,16 @@ Autocomplete.prototype = {
     this.element.val(text).focus();
   },
 
+  /**
+   * Selects an Autocomplete result.
+   * @param {jQuery|jQuery.Event} anchorOrEvent either a reference to a jQuery-wrapped HTMLElement, or a jQuery Event object with a target.
+   * @param {object[]} [items=this.currentDataSet] an array of objects representing autocomplete options.
+   * @returns {object} contains information about the selected item.
+   */
   select(anchorOrEvent, items) {
     let a;
     let li;
-    let ret;
+    let ret = {};
     let isEvent = false;
 
     // Initial Values
@@ -648,26 +740,40 @@ Autocomplete.prototype = {
     }
 
     li = a.parent('li');
-    ret = a.text().trim();
     const dataIndex = li.attr('data-index');
     const dataValue = li.attr('data-value');
 
     this.element.attr('aria-activedescendant', li.attr('id'));
 
-    if (items && items.length) {
-      // If the data-index attr is supplied, use it to get the item
-      // (since two items could have same value)
-      if (dataIndex) {
-        ret = items[parseInt(dataIndex, 10)];
-      } else if (dataValue) {
-        // Otherwise use data-value to get the item (a custom template may not supply data-index)
-        for (let i = 0, value; i < items.length; i++) {
+    if (!items || !items.length) {
+      items = this.currentDataSet;
+    }
+
+    // If the data-index attr is supplied, use it to get the item
+    // (since two items could have same value)
+    if (dataIndex) {
+      ret = items[parseInt(dataIndex, 10)];
+    } else if (dataValue) {
+      // Otherwise use data-value to get the item (a custom template may not supply data-index)
+      for (let i = 0, value; i < items.length; i++) {
+        if (typeof items[i] === 'object' && items[i].value !== undefined) {
           value = items[i].value.toString();
-          if (value === dataValue) {
+        } else {
+          value = items[i].toString();
+        }
+
+        if (value === dataValue) {
+          if (typeof items[i] === 'object') {
             ret = items[i];
           }
+          ret.value = value;
         }
       }
+    }
+
+    // Use the label as the value, if we're not working from a true dataset
+    if (!ret.value || !ret.value.length === 0) {
+      ret.value = a.text().trim();
     }
 
     this.closeList();
@@ -676,7 +782,7 @@ Autocomplete.prototype = {
     this.noSelect = true;
 
     // Update the data for the event
-    ret.label = stringUtils.stripHTML(ret.label);
+    ret.label = xssUtils.stripHTML(ret.label);
 
     // Add these elements for key down vs click consistency
     if (!ret.highlightTarget) {
@@ -686,6 +792,13 @@ Autocomplete.prototype = {
       ret.hasValue = true;
     }
 
+    /**
+    *  Fires when an element is selected from the list.
+    *
+    * @event selected
+    * @memberof Autocomplete
+    * @param {array} args An array containing the link and the return object.
+    */
     this.element
       .trigger('selected', [a, ret])
       .focus();
@@ -694,7 +807,7 @@ Autocomplete.prototype = {
       anchorOrEvent.preventDefault();
     }
 
-    return false;
+    return ret;
   },
 
   /*
@@ -745,7 +858,16 @@ Autocomplete.prototype = {
       popup.destroy();
     }
 
-    this.element.off('keypress.autocomplete focus.autocomplete requestend.autocomplete updated.autocomplete');
+    this.element.off([
+      `focus.${COMPONENT_NAME}`,
+      `focusout.${COMPONENT_NAME}`,
+      `input.${COMPONENT_NAME}`,
+      `keydown.${COMPONENT_NAME}`,
+      `listopen.${COMPONENT_NAME}`,
+      `requestend.${COMPONENT_NAME}`,
+      `resetfilter.${COMPONENT_NAME}`,
+      `updated.${COMPONENT_NAME}`
+    ].join(' '));
     return this;
   },
 
@@ -767,21 +889,20 @@ Autocomplete.prototype = {
     // similar code as dropdown but close enough to be dry
     const self = this;
 
-    this.element.off('updated.autocomplete').on('updated.autocomplete', () => {
-      self.updated();
-    }).off('keydown.autocomplete').on('keydown.autocomplete', (e) => {
-      self.handleAutocompleteKeydown(e);
-    })
-      .off('input.autocomplete')
-      .on('input.autocomplete', (e) => {
+    this.element
+      .on(`updated.${COMPONENT_NAME}`, () => {
+        self.updated();
+      })
+      .on(`keydown.${COMPONENT_NAME}`, (e) => {
+        self.handleAutocompleteKeydown(e);
+      })
+      .on(`input.${COMPONENT_NAME}`, (e) => {
         self.handleAutocompleteInput(e);
       })
-      .off('focus.autocomplete')
-      .on('focus.autocomplete', () => {
+      .on(`focus.${COMPONENT_NAME}`, () => {
         self.handleAutocompleteFocus();
       })
-      .off('focusout.autocomplete')
-      .on('focusout.autocomplete', () => {
+      .on(`focusout.${COMPONENT_NAME}`, () => {
         self.checkActiveElement();
       })
       /**
@@ -791,8 +912,7 @@ Autocomplete.prototype = {
       * @param {object} event - The jquery event object
       * @param {object} ui - The dialog object
       */
-      .off('listopen.autocomplete')
-      .on('listopen.autocomplete', () => {
+      .on(`listopen.${COMPONENT_NAME}`, () => {
         self.handleAfterListOpen();
       })
       /**
@@ -802,8 +922,7 @@ Autocomplete.prototype = {
       * @memberof Autocomplete
       * @param {object} event - The jquery event object
       */
-      .off('resetfilter.autocomplete')
-      .on('resetfilter.autocomplete', () => {
+      .on(`resetfilter.${COMPONENT_NAME}`, () => {
         self.resetFilters();
       });
   }

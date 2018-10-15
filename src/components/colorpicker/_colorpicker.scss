@@ -7,6 +7,7 @@
 
   &::before {
     @include css3(transform, rotate(-45deg));
+
     border-top: 2px solid $alert-red;
     content: '';
     left: $offset;
@@ -14,6 +15,32 @@
     right: $offset;
     top: calc(50% - 1px);
   }
+}
+
+.colorpicker-min-width {
+  .colorpicker-container {
+    width: auto;
+  }
+}
+
+.colorpicker-input-xs {
+  @extend .input-xs;
+}
+
+.colorpicker-input-sm {
+  @extend .input-sm;
+}
+
+.colorpicker-input-mm {
+  @extend .input-mm;
+}
+
+.colorpicker-input-md {
+  @extend .input-md;
+}
+
+.colorpicker-input-lg {
+  @extend .input-lg;
 }
 
 .colorpicker-container {
@@ -45,13 +72,11 @@
       border-color: $input-disabled-border-color;
     }
 
-    // scss-lint:disable ImportantRule
     .icon:not(.icon-error),
     .icon:hover {
       cursor: default;
       fill: $trigger-disabled-color !important;
     }
-    // scss-lint:enable ImportantRule
   }
 
   &.color-only {
@@ -62,9 +87,8 @@
     }
 
     .trigger {
-      margin-left: -15px;
+      margin-left: -5px;
     }
-
   }
 
   &.is-readonly {
@@ -78,6 +102,12 @@
       input[readonly] {
         background-color: $input-bg-color;
         border-color: $input-border-color;
+        color: $input-color;
+        -webkit-text-fill-color: $input-color;
+      }
+
+      input[readonly]:focus {
+        color: transparent;
       }
 
       .icon:not(.icon-error),
@@ -88,7 +118,6 @@
 
     }
 
-    // scss-lint:disable ImportantRule
     &.is-focused {
       border-color: $input-focus-border-color !important;
     }
@@ -98,7 +127,6 @@
       cursor: default;
       fill: $trigger-disabled-color;
     }
-    // scss-lint:enable ImportantRule
   }
 
   &.is-open {
@@ -153,11 +181,11 @@
     }
 
     &:hover:not(:disabled) .icon {
-      fill: $primary-color;
+      fill: $color-primary;
     }
 
     &:active .icon {
-      fill: $primary-color;
+      fill: $color-primary;
     }
 
     &.is-empty,
@@ -176,14 +204,14 @@
       display: none;
     }
 
-    &:focus {
-      box-shadow: none;
-    }
-
     &:disabled + .swatch {
       cursor: default;
-      opacity: .6;
+      opacity: 0.6;
     }
+  }
+
+  input.colorpicker {
+    box-shadow: none !important;
   }
 
   .icon-dirty {
@@ -194,7 +222,6 @@
 .popupmenu.colorpicker {
   background-color: $colorpicker-popup-bg-color;
   border-color: $colorpicker-popup-border-color;
-
   margin-left: -33px;
   max-width: 340px;
   min-height: 50px;
@@ -214,11 +241,10 @@
 
       &:focus {
         box-shadow: $focus-box-shadow;
-        outline: 1px solid $primary-color;
+        outline: 1px solid $color-primary;
       }
 
       &.is-selected {
-
         &::after {
           @include css3(transform, scaleX(-1) rotate(135deg));
           // border-color: $white $white $white transparent;
@@ -251,7 +277,7 @@
   }
 
   .swatch {
-    background-color: $graphite04;
+    background-color: $color-default-alt;
     display: block;
     height: 20px;
     width: 20px;
@@ -317,9 +343,8 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
-
   .colorpicker-container {
     .swatch {
       left: 0;

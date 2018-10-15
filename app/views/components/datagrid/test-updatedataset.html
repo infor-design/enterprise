@@ -5,6 +5,9 @@
   <div class="twelve columns">
     <div id="datagrid2"></div>
   </div>
+  <div class="twelve columns">
+    <button class='btn-primary' id="load-dataset">Load Data Set</button>
+  </div>
 </div>
 
 <script>
@@ -38,10 +41,29 @@
       }
     ];
 
-    $('#datagrid1').datagrid({ columns, dataset });
+    const dataset2 = [{
+        activity: 'Assemble Paint',
+        quantity: 5
+      }, {
+        activity: 'Inspect and Repair',
+        quantity: 6
+      }, {
+        activity: 'Inspect and Repair',
+        quantity: 7
+      }
+    ];
 
-    // rendering with this method will not correctly size the fields
-    $('#datagrid2').datagrid({ columns }).data('datagrid').updateDataset(dataset);
+    // $('#datagrid1').datagrid({ columns, dataset });
+
+    $('#datagrid1').datagrid({
+        columns: columns,
+        dataset: dataset,
+        toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true, results: true, keywordFilter: true, actions: true, rowHeight: true}
+      });
+
+    $('#load-dataset').click(function() {
+      $('#datagrid1').datagrid({ columns }).data('datagrid').updateDataset(dataset2);
+    });
   });
 
 </script>

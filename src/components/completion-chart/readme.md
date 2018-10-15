@@ -1,13 +1,18 @@
 ---
 title: Completion Chart
 description: This page describes Completion Chart.
+demo:
+  embedded:
+  - name: Standard Completion Chart Example
+    slug: example-index
+  pages:
+  - name: All Completion Chart Examples
+    slug: example-variations
+  - name: Range of Colors for Completion Chart
+    slug: example-colors
 ---
 
 ## Configuration Options
-
-1. Simple Completion Chart Example [View Example]( ../components/completion-chart/example-index)
-2. All Completion Chart Examples [View Example]( ../components/completion-chart/example-variations)
-3. Range of Colors for Completion Chart [View Example]( ../components/completion-chart/example-colors)
 
 Format used the [D3 formatter (v3)](https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format)
 
@@ -42,6 +47,10 @@ Accessibility work is needed on this component.
 - An aria label should be added so that with a screen reader the user can get the jest of the display.
 - Color along cannot be used as the sole means of displaying status. So with the colors include a text such as: Error, Good ect.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - This is a visual only component.
@@ -52,8 +61,8 @@ Accessibility work is needed on this component.
 
 ## Responsive Guidelines
 
--   Will size to the parent's withd
+- Will size to the parent's withd
 
 ## Upgrading from 3.X
 
--   This did not exist but may be confused with the progress bar in 3.6
+- This did not exist but may be confused with the progress bar in 3.6

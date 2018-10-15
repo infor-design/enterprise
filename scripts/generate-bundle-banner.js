@@ -1,22 +1,68 @@
+#!/usr/bin/env node
 /* eslint-disable import/no-extraneous-dependencies, import/no-unresolved */
 const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
-const cp = require('child_process');
-const pjson = require('../ids-enterprise/package.json');
+const childProcess = require('child_process');
+const pjson = require('../package.json');
+const args = require('yargs').argv;
 
-let commitHash = '';
+const projectName = 'IDS Enterprise Components';
+const commitHash = childProcess.execSync('git rev-parse HEAD') || '';
 
-const license = fs.readFileSync(path.join(__dirname, '..', 'LICENSE'), ['utf-8']);
+function prependLines(str, prepender) {
+  prepender = prepender || '';
+  const strArr = str.split('\n');
+  // eslint-disable-next-line
+  for (let x in strArr) {
+    strArr[x] = `${prepender}${strArr[x].trim()}`;
+  }
+  return strArr.join('\n');
+}
 
-commitHash = cp.execSync('git rev-parse HEAD');
+/**
+ * Generate the IDS Bundle Banner
+ * @param {boolean} useComments if true, prepends comment syntax around the banner lines
+ * @returns {string} containing the bundle banner
+ */
+function render(useComments) {
+  const startComment = useComments ? '/** ' : '';
+  const comment = useComments ? ' *  ' : '';
+  const endComment = useComments ? ' */ ' : '';
+  const date = `Date: ${moment().format('DD/MM/YYYY, h:mm:ss a')}`;
+  const revision = `Revision: ${commitHash}`.trim();
+  let isCustom = '';
+  let componentsArgs;
+  let componentsList = '';
 
-const version2 = `Soho XI Controls v${pjson.version}`;
-const date = `Date: ${moment().format('DD/MM/YYYY, h:mm:ss a')}`;
-const revision = `Revision: ${commitHash}`;
+  // Grabs a list of included components (optional)
+  if (args.components) {
+    isCustom = ' (custom)';
+    componentsArgs = args.components.split(',');
 
-module.exports = `${version2}\n${
-  date}\n${
-  revision}\n` +
-  `\n${
-    license}\n`;
+    componentsList += 'Custom bundle containing the following components:';
+    componentsArgs.forEach((comp) => {
+      componentsList += `\n${comment} - ${comp}`;
+    });
+    componentsList += `\n${comment}`;
+  }
+
+  // Project Name and Version Headline
+  const headline = `${projectName} - v${pjson.version}${isCustom}`;
+
+  // Prepend comments to each line of the license
+  let license = fs.readFileSync(path.join(__dirname, '..', 'LICENSE'), 'utf8');
+  license = prependLines(license, comment);
+
+  return `${startComment}\n${
+    comment}${headline}\n${
+    comment}${date}\n${
+    comment}${revision}\n${
+    comment}\n${
+    comment}${componentsList}\n${
+    license}\n${
+    endComment}`;
+}
+
+// default export is just the string (backwards compat)
+module.exports = render(true);

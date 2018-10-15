@@ -175,7 +175,7 @@ Blockgrid.prototype = {
       allBlocks.removeClass('is-activated');
 
       /**
-      * Fires when a block is selected
+      * Fires when a block is deactivated
       *
       * @event deactivated
       * @memberof Blockgrid
@@ -183,7 +183,7 @@ Blockgrid.prototype = {
       * @property {object} ui - The dialog object
       */
       /**
-      * Fires when a block is unselected
+      * Fires when a block is activated
       *
       * @event activated
       * @memberof Blockgrid
@@ -211,7 +211,7 @@ Blockgrid.prototype = {
     /**
     * Fires when a block is unselected
     *
-    * @event unselected
+    * @event deselected
     * @memberof Blockgrid
     * @property {object} event - The jquery event object
     * @property {object} ui - The dialog object
@@ -256,9 +256,13 @@ Blockgrid.prototype = {
       this.settings.dataset = settings.dataset;
     }
 
-    return this
-      .teardown()
-      .init();
+    this.element.empty();
+    if (this.element[0].classList.contains('paginated')) {
+      this.element.data('pager').renderPages('initial');
+    }
+    this.build();
+
+    return this;
   },
 
   /**

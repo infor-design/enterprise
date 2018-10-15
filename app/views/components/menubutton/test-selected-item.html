@@ -1,16 +1,16 @@
 
 <div class="row top-padding">
   <div class="twelve columns">
-    <button type="button" class="btn-menu" data-init="false" id='test-btn-menu'>
-      <span>Theme</span>
+    <button type="button" class="btn-menu" data-init="false" id="test-btn-menu">
+      <span>Options</span>
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use xlink:href="#icon-dropdown"></use>
       </svg>
     </button>
     <ul class="popupmenu is-selectable">
-      <li class="is-checked"><a href="#" data-theme="light-theme">Light</a></li>
-      <li><a href="#" data-theme="dark-theme">Dark</a></li>
-      <li><a href="#" data-theme="high-contrast-theme">High Contrast</a></li>
+      <li class="is-checked"><a href="#">Option One</a></li>
+      <li><a href="#">Option Two</a></li>
+      <li><a href="#">Option Three</a></li>
   </ul>
   </div>
 </div>
@@ -26,7 +26,7 @@
       console.log(args);
     });
 
-    //Get Selected Item anytime
+    // Get selected item by class
     console.log($('#test-btn-menu').data('popupmenu').menu.find('.is-checked'));
   });
 </script>

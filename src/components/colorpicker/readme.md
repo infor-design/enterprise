@@ -1,19 +1,22 @@
 ---
 title: Color Picker
 description: This page describes Color Picker.
+demo:
+  embedded:
+  - name: Color Picker Example
+    slug: example-index
+  pages:
+  - name: Showing Custom Colors
+    slug: example-custom-labels
+  - name: Showing Label on Select
+    slug: example-show-label
+  - name: Different Sized Colorpickers
+    slug: example-sizes
 ---
-
-## Configuration Options
-
-1. Color Picker Example [View Example]( ../components/colorpicker/example-index)
-2. Showing Custom Colors [View Example]( ../components/colorpicker/example-custom-labels)
-2. Select the label not the Hex [View Example]( ../components/colorpicker/example-show-label)
-4. Test States [View Test]( ../components/colorpicker/test-states)
-5. Test it works on a Modal [View Test]( ../components/colorpicker/test-modal)
 
 ## Code Example
 
-The color picker is made from a text input with class="colorpicker". It can be initialized manually or via the page initializer. Once initialized it functions similar to a dropdown except that the list is showing colors in a pallette / swatch. A tooltip shows the hex code to be inserted. After selecting the hex code is inserted.
+The color picker is consists of a input with class="colorpicker". It can be initialized manually or with the page initializer. Once initialized it functions similar to a dropdown except that the list is showing color a color pallet in the popup. A tooltip shows the hex code to be inserted. After selecting the hex code is inserted.
 
 ```html
 <div class="field">
@@ -24,12 +27,16 @@ The color picker is made from a text input with class="colorpicker". It can be i
 
 ## Behavior Guidelines
 
--   The Color Picker only supports colors within a pre-configured palette (specified by the developer). Users cannot manually enter values, but can only select from the Color Picker.
--   Some use cases require the ability to clear selection (i.e., remove color/restore default color).
+- The Color Picker only supports colors within a pre-configured palette (specified by the developer). Users cannot manually enter values, but can only select from the Color Picker.
+- Some use cases require the ability to clear selection (i.e., remove color/restore default color).
 
 ## Accessibility
 
--   Implemented similar to aria combobox
+Implemented similar to aria combobox
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
@@ -41,15 +48,15 @@ The color picker is made from a text input with class="colorpicker". It can be i
 
 ## States and Variations
 
--   Disabled
--   Focus
+- Disabled
+- Focus
 
 ## Responsive Guidelines
 
--   Follows form guidelines
+Follows form guidelines
 
 ## Upgrading from 3.X
 
--   inforColorPicker class renamed to colorpicker
--   Plugin renamed from .inforColorPicker() to .colorpicker()
--   Options mode, and title depricated (never used)
+- inforColorPicker class renamed to colorpicker
+- Plugin renamed from .inforColorPicker() to .colorpicker()
+- Options mode, and title depricated (never used)

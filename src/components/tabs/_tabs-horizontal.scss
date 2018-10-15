@@ -3,23 +3,25 @@
 
 $horizontal-tabs-height: 40px;
 
+.has-more-button.tab-container.horizontal {
+  &::after {
+    background-image: linear-gradient(
+      to right,
+      rgba($body-bg-color-primary, 0),
+      rgba($body-bg-color-primary, 1)
+    );
+    height: ($horizontal-tabs-height - 1px);
+  }
+}
+
 .tab-container.horizontal {
   border-bottom: 1px solid $tab-border-color;
 
   &::before {
     background-image: linear-gradient(
       to right,
-      rgba($body-bg-color, 1),
-      rgba($body-bg-color, 0)
-    );
-    height: ($horizontal-tabs-height - 1px);
-  }
-
-  &::after {
-    background-image: linear-gradient(
-      to right,
-      rgba($body-bg-color, 0),
-      rgba($body-bg-color, 1)
+      rgba($body-bg-color-primary, 1),
+      rgba($body-bg-color-primary, 0)
     );
     height: ($horizontal-tabs-height - 1px);
   }
@@ -50,7 +52,6 @@ $horizontal-tabs-height: 40px;
   }
 
   > .tab-list-container {
-
     .icon:not(.icon-error) {
       fill: $tab-text-color;
     }
@@ -83,6 +84,7 @@ $horizontal-tabs-height: 40px;
   .tab-more,
   .add-tab-button {
     @include font-size(14);
+
     background-color: transparent;
     color: $tab-text-color;
     line-height: 12px;
@@ -117,7 +119,7 @@ $horizontal-tabs-height: 40px;
     padding: 12px 4px 11px 14px;
 
     &::before {
-      background-color: rgba($tab-border-color, .8);
+      background-color: rgba($tab-border-color, 0.8);
       content: '';
       display: inline-block;
       height: 30px;
@@ -134,7 +136,6 @@ $horizontal-tabs-height: 40px;
 
   // Displays the Big Numbers over top of each title
   &.has-counts {
-
     .tab {
       a {
         padding: 11px 11px 10px;
@@ -172,21 +173,20 @@ $horizontal-tabs-height: 40px;
 
 // RTL Styles
 html[dir='rtl'] {
-
   .tab-container.horizontal {
     &::before {
       background-image: linear-gradient(
         to left,
-        rgba($body-bg-color, 1),
-        rgba($body-bg-color, 0)
+        rgba($body-bg-color-primary, 1),
+        rgba($body-bg-color-primary, 0)
       );
     }
 
     &::after {
       background-image: linear-gradient(
         to left,
-        rgba($body-bg-color, 0),
-        rgba($body-bg-color, 1)
+        rgba($body-bg-color-primary, 0),
+        rgba($body-bg-color-primary, 1)
       );
     }
 

@@ -2,9 +2,10 @@
 title: Spinbox Component
 description: This page describes Spinbox Component .
 demo:
-  pages:
+  embedded:
   - name: Main
     slug: example-index
+  pages:
   - name: Configured with Range Limits
     slug: example-range-limits
   - name: Configured with Step Intervals of 3
@@ -46,6 +47,10 @@ Touch and mobile keyboard are supported.
 ## Accessibility
 
 - Focus should remain on the edit field
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

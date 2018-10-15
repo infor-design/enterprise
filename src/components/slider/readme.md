@@ -1,10 +1,11 @@
 ---
 title: Slider Component
-description: This page describes Slider Component .
+description: This page describes Slider Component.
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
+  pages:
   - name: Range Example (Two Handles)
     slug: example-range
   - name: Steps
@@ -84,16 +85,20 @@ The Slider is fairly complex to make accessible. But generally this can be accom
 - Make sure the above keyboard shortcuts are used
 - Make sure that there is a label which matches both the input and any shadow element inputs and identifies the field and is correctly matched using the label for to the input id.
 - Use the following ARIA tags on all slider handles/thumbs (the clickable/touchable part of the slider):
-  - `role="slider"`
-  - `aria-orientation="horizontal"` or `"vertical"`, to match the control's orientation.
-  - `aria-valuemin` - the lowest possible numeric value on the slider.
-  - `aria-valuemax` - the highest possible numeric value on the slider.
-  - `aria-valuenow` - the current numeric value of the slider. This should dynamically update whenever the handle value is changed.
-  - `aria-valuetext` - If there is a word or phrase associated with the current slider value, it should be duplicated in this attribute so it will be read by a screen reader. This should update in sync with `aria-valuenow`.
-  - `tabindex` - set to zero if not using focusable HTML elements, or set to -1 if the handle is disabled.
+    - `role="slider"`
+    - `aria-orientation="horizontal"` or `"vertical"`, to match the control's orientation.
+    - `aria-valuemin` - the lowest possible numeric value on the slider.
+    - `aria-valuemax` - the highest possible numeric value on the slider.
+    - `aria-valuenow` - the current numeric value of the slider. This should dynamically update whenever the handle value is changed.
+    - `aria-valuetext` - If there is a word or phrase associated with the current slider value, it should be duplicated in this attribute so it will be read by a screen reader. This should update in sync with `aria-valuenow`.
+    - `tabindex` - set to zero if not using focusable HTML elements, or set to -1 if the handle is disabled.
 - Conditionally use the following ARIA attributes in some situations:
-  - `aria-label` - Use in most cases to describe the purpose of the handle (Is it the only one? Is it the lower-value versus the higher handle)
-  - `aria-describedby` - When used in conjunction with a [tooltip control](./tooltip), this attribute will be appended to the handle automatically, but in this case the `aria-label` attribute should be removed.
+    - `aria-label` - Use in most cases to describe the purpose of the handle (Is it the only one? Is it the lower-value versus the higher handle)
+    - `aria-describedby` - When used in conjunction with a [tooltip control](./tooltip), this attribute will be appended to the handle automatically, but in this case the `aria-label` attribute should be removed.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

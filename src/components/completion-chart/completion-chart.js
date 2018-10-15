@@ -1,6 +1,7 @@
 // Other Shared Imports
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
@@ -41,7 +42,7 @@ CompletionChart.prototype = {
   /**
    * Do initialization, build up and / or add events ect.
    * @private
-   * @returns {object} The bullet chart prototype for chaining.
+   * @returns {object} The completion chart prototype for chaining.
    */
   init() {
     // Do initialization. Build or Events ect
@@ -331,8 +332,8 @@ CompletionChart.prototype = {
 
       html.label = `<b class="label name">${name}</b>
       <b class="label info ${bColor} colored">
-      <span class="value ${bColor}" style="color: ${styleColor};">${styleValue}</span>
-      <span class="text ${bColor}" style="color: ${styleColor};">${infoText}</span>
+      <span class="value ${bColor}" ${styleColor ? `style="color:${styleColor}` : ''}">${styleValue}</span>
+      <span class="text ${bColor}" ${styleColor ? `style="color:${styleColor}` : ''}">${infoText}</span>
       </b>`;
     }
 
@@ -391,8 +392,8 @@ CompletionChart.prototype = {
       '</div>';
     }
 
-    html.body.append(html.remaining, html.completed, html.targetline);
-    this.element.append(html.label, html.body);
+    DOM.append(html.body, (html.remaining || '') + (html.completed || '') + (html.targetline || ''), '<div><span><br>');
+    DOM.append(this.element, html.label + html.body.prop('outerHTML'), '<div><span><br>');
 
     cacheElements();
     setJsonData();

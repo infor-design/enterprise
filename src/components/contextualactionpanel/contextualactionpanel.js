@@ -16,6 +16,7 @@ const COMPONENT_NAME = 'contextualactionpanel';
 * @param {boolean} [settings.initializeContent = true] Initialize content before opening with defaults.
 * @param {string} [settings.trigger = 'click'] Can be 'click' or 'immediate'.
 * @param {boolean} [settings.centerTitle = false] If true the title will be centered.
+* @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
 */
 const CONTEXTUALACTIONPANEL_DEFAULTS = {
   id: `contextual-action-modal-${parseInt($('.modal').length, 10) + 1}`,
@@ -25,7 +26,7 @@ const CONTEXTUALACTIONPANEL_DEFAULTS = {
   initializeContent: true, // initialize content before opening
   trigger: 'click',
   showCloseButton: false,
-  centerTitle: true
+  centerTitle: false
 };
 
 function ContextualActionPanel(element, settings) {
@@ -57,6 +58,12 @@ ContextualActionPanel.prototype = {
   */
   setup() {
     this.panel = this.element.next('.contextual-action-panel');
+
+    // Handle case with popup triggered from a menu
+    if (this.element.closest('.popupmenu').length === 1) {
+      this.panel = this.element.closest('.popupmenu').next('.contextual-action-panel');
+    }
+
     if (this.panel[0]) {
       this.panel[0].style.display = 'none';
     }
@@ -111,10 +118,15 @@ ContextualActionPanel.prototype = {
     let children;
     let isIframe = false;
     let contents;
+    let hasSearchfield = false;
+    let predefined = true;
 
+    // Invoke Icons
     this.panel.find('svg').icon();
 
-    if (this.panel.find('.modal-content').length === 0) {
+    // Get a reference to `.modal-content`
+    const modalContent = this.panel.find('.modal-content');
+    if (modalContent.length === 0) {
       children = this.panel.children();
       if (children.is('iframe')) {
         contents = children.contents();
@@ -128,43 +140,94 @@ ContextualActionPanel.prototype = {
       }
     }
 
-    if (this.panel.find('.modal-header').length === 0) {
-      this.header = $('<div class="modal-header"></div>');
-      this.header.insertBefore(this.panel.find('.modal-body'));
+    // Build/reference the header
+    let modalHeader = this.panel.find('.modal-header');
+    if (modalHeader.length === 0) {
+      modalHeader = $('<div class="modal-header"></div>');
+      modalHeader.insertBefore(this.panel.find('.modal-body'));
+    }
+    this.header = modalHeader;
 
-      if (!this.toolbar) {
-        this.toolbar = this.panel.find('.toolbar, .flex-toolbar');
+    // Detect existence of buttonset for later
+    let buttonset = this.panel.find('.toolbar .buttonset, .flex-toolbar .buttonset');
+
+    // Build/reference the CAP header toolbar
+    if (!this.toolbar) {
+      this.toolbar = this.panel.find('.toolbar, .flex-toolbar');
+    }
+    if (!this.toolbar.length) {
+      predefined = false;
+      if (this.settings.buttons) {
+        this.settings.buttons.forEach((button) => {
+          if (button.type === 'input') {
+            hasSearchfield = true;
+          }
+        });
       }
 
-      if (!this.toolbar.length) {
-        this.toolbar = $(this.settings.centerTitle ? '<div class="flex-toolbar"></div>' : '<div class="toolbar"></div>');
-      }
+      if (this.settings.title && this.settings.centerTitle) {
+        const toolbarSearchfieldSection = hasSearchfield ? '<div class="toolbar-section search"></div>' : '';
+        const toolbarHTML = `<div class="flex-toolbar">
+          <div class="toolbar-section static"></div>
+          <div class="toolbar-section title center-text">
+            <h2>${this.settings.title}</h2>
+          </div>
+          ${toolbarSearchfieldSection}
+          <div class="toolbar-section buttonset static"></div>
+        </div>`;
 
-      this.toolbar.appendTo(this.header);
+        this.toolbar = $(toolbarHTML);
+      } else if (!buttonset.length) {
+        const toolbarCSSClass = this.settings.useFlexToolbar ? 'flex-toolbar' : 'toolbar';
+        const toolbarTitleSection = this.settings.useFlexToolbar ? `<div class="toolbar-section title"><h2>${this.settings.title}</h2></div>` : '';
+        const toolbarButtonsetCSSClass = this.settings.useFlexToolbar ? 'toolbar-section buttonset' : 'buttonset';
+        const toolbarButtonsetSection = `<div class="${toolbarButtonsetCSSClass}"></div>`;
+        const toolbarSearchfieldSection = this.settings.useFlexToolbar && hasSearchfield ? '<div class="toolbar-section search"></div>' : '';
+        const toolbarHTML = `<div class="${toolbarCSSClass}">
+          ${toolbarTitleSection}
+          ${toolbarSearchfieldSection}
+          ${toolbarButtonsetSection}
+        </div>`;
+
+        const toolbar = $(toolbarHTML);
+        toolbar.appendTo(this.panel.find('.modal-header'));
+        this.toolbar = toolbar;
+        buttonset = toolbar.children('.buttonset');
+      }
+    }
+    this.toolbar.appendTo(this.header);
+
+    // Only add certain elements if a Toolbar was generated with JS-options
+    // and not by HTML markup.
+    if (!predefined) {
+      if (!buttonset || !buttonset.length && !this.settings.centerTitle) {
+        buttonset = $('<div class="toolbar-section buttonset"></div>');
+        buttonset.appendTo(this.toolbar);
+      }
 
       let toolbarTitle = this.toolbar.find('.title');
+      if (!toolbarTitle.length) {
+        const centerTextCSS = this.settings.centerTitle ? ' center-text' : '';
+        toolbarTitle = $(`
+          <div class="toolbar-section title${centerTextCSS}">
+            <h2>${this.settings.title}</h2>
+          </div>
+        `);
 
-      if (!toolbarTitle.length && this.settings.centerTitle) {
-        toolbarTitle = $(`<div class="toolbar-section"></div><div class="toolbar-section title center-text"><h2>${this.settings.title}</h2></div><div class="toolbar-section"></div>`);
-        this.toolbar.prepend(toolbarTitle);
+        if (buttonset) {
+          toolbarTitle.insertBefore(buttonset);
+        } else {
+          this.toolbar.prepend(toolbarTitle);
+        }
       }
 
       if (!toolbarTitle.length) {
-        toolbarTitle = $(`<div class="title">${this.settings.title}</div>`);
+        toolbarTitle = $(`
+          <div class="title">
+            ${this.settings.title}
+          </div>
+        `);
         this.toolbar.prepend(toolbarTitle);
-      }
-
-      if (this.settings.showCloseButton) {
-        this.closer = $('<div class="close-button"><button class="btn" type="button"><svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></use></svg><span>Close</span></button></div>');
-        this.closer.appendTo(this.header);
-
-        this.toolbar.addClass('has-close-button');
-      }
-
-      let toolbarButtonset = this.toolbar.find('.buttonset');
-      if (!toolbarButtonset.length && !this.settings.centerTitle) {
-        toolbarButtonset = $('<div class="buttonset"></div>');
-        toolbarButtonset.insertAfter(toolbarTitle);
       }
     }
 
@@ -180,22 +243,42 @@ ContextualActionPanel.prototype = {
 
     this.panel.modal({
       buttons: this.settings.buttons,
-      useFlexToolbar: true,
+      centerTitle: this.settings.centerTitle,
+      useFlexToolbar: this.settings.useFlexToolbar,
       trigger: (this.settings.trigger ? this.settings.trigger : 'click')
     });
 
     this.buttons = this.panel.find('.buttonset').children('button');
-    this.closeButton = this.panel.find('.modal-header').find('.close-button').children('button');
 
-    if (!this.toolbar) {
-      this.toolbar = this.panel.find('.toolbar');
+    this.closeButton = this.panel.find('.modal-header').find('.btn-close, [name="close"], button.close-button');
+    if (!predefined && this.settings.showCloseButton && !this.closeButton.length) {
+      this.closeButton = $(`
+        <button class="btn-close" type="button">
+          <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-close"></use>
+          </svg>
+          <span>Close</span>
+        </button>
+      `);
+
+      if (!this.settings.useFlexToolbar) {
+        const CAPToolbarButton = $('<div class="close-button"></div>').append(this.closeButton);
+        this.header.append(CAPToolbarButton);
+      } else {
+        const standaloneSection = $('<div class="toolbar-section static"></div>').append(this.closeButton);
+        const more = this.toolbar.find('.toolbar-section.more');
+        standaloneSection.after(more.length ? more : buttonset);
+      }
     }
 
-    if (this.toolbar.length && this.toolbar.is('.toolbar')) {
+    if (this.closeButton.length) {
+      this.toolbar.addClass('has-close-button');
+    }
+
+    if (this.toolbar.is('.toolbar')) {
       this.toolbar.toolbar();
     }
-
-    if (this.toolbar.length && this.toolbar.is('.flex-toolbar')) {
+    if (this.toolbar.is('.flex-toolbar')) {
       this.toolbar.toolbarflex();
     }
 
@@ -265,18 +348,10 @@ ContextualActionPanel.prototype = {
         self.teardown();
       });
 
-    if (self.settings.showCloseButton) {
-      self.panel.find('.modal-header').find('.close-button').children('button')
-        .on('click.contextualactionpanel', () => {
-          self.handleToolbarSelected();
-        });
-    }
-
-    if (self.toolbar) {
-      self.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
-        .on('click.contextualactionpanel', () => {
-          self.handleToolbarSelected();
-        });
+    if (self.closeButton && self.closeButton.length) {
+      self.closeButton.on('click.contextualactionpanel', () => {
+        self.handleToolbarSelected();
+      });
     }
 
     return this;
@@ -323,9 +398,9 @@ ContextualActionPanel.prototype = {
 
     self.element.removeAttr('data-modal');
 
-    if (self.settings.showCloseButton) {
-      self.panel.find('.modal-header').find('.close-button').children('button')
-        .off('click.contextualactionpanel');
+    if (self.closeButton && self.closeButton.length) {
+      self.closeButton.off('click.contextualactionpanel');
+      delete self.closeButton;
     }
 
     // Trigger an afterclose event on the Contextual Action Panel's trigger element

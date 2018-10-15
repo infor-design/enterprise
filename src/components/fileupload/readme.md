@@ -2,9 +2,10 @@
 title: File Upload
 description: This page describes File Upload.
 demo:
-  pages:
+  embedded:
   - name: Default File Upload Example
     slug: example-index
+  pages:
   - name: Advanced File Upload Example
     slug: example-index
   - name: Limit File Types
@@ -33,17 +34,21 @@ The custom-styled file upload is built by making the standard file upload elemen
 
 ## Accessibility
 
--   Make sure the input has a matching label which describes what you are uploading
+- Make sure the input has a matching label which describes what you are uploading
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
--   <kbd>Spacebar</kbd> or <kbd>Enter</kbd> opens the dialog for selection
--   <kbd>Tab</kbd> causes the input to get focus
--   <kbd>Shift + Tab</kbd> reverses the direction of the tab order. Once in the input, a <kbd>Shift + Tab</kbd> will take the user to the previous focusable element in the tab order
+- <kbd>Spacebar</kbd> or <kbd>Enter</kbd> opens the dialog for selection
+- <kbd>Tab</kbd> causes the input to get focus
+- <kbd>Shift + Tab</kbd> reverses the direction of the tab order. Once in the input, a <kbd>Shift + Tab</kbd> will take the user to the previous focusable element in the tab order
 
 ## Upgrading from 3.X
 
--   Replace any calls to `inforFileField()` with `.fileupload()`
--   Replace class `inforLabel` with `label`
--   Replace class `inforFileField` with `fileupload`
--   Make sure the `<label>` wraps the `<input>` element
+- Replace any calls to `inforFileField()` with `.fileupload()`
+- Replace class `inforLabel` with `label`
+- Replace class `inforFileField` with `fileupload`
+- Make sure the `<label>` wraps the `<input>` element

@@ -16,7 +16,7 @@
         <input type="text" id="busy-field-cats" name="busy-field-cats" value="" />
       </div>
       <div class="field">
-        <button type="submit" class="btn-primary">Submit</button>
+        <button type="submit" id="submit" class="btn-primary">Submit</button>
       </div>
     </form>
   </div>
@@ -24,7 +24,7 @@
 </div>
 
 <script>
-  $(document).ready(function() {
+  $(function(){
     var form = $('#busy-form');
 
     $('#busy-form button[type="submit"]').click(function(e) {
@@ -32,10 +32,10 @@
       form.trigger('start.busyindicator');
 
       var i = 0;
-      setInterval(function () {
+      setTimeout(function () {
         i++;
-        form.data('busyindicator').updated({ text: 'New Text ' + i});
-      }, 2000);
+        form.data('busyindicator').updated({ text: 'New Text 1'});
+      }, 0);
     });
 
   });

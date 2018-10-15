@@ -2,7 +2,7 @@
 title: Tag Component
 description: This page describes Tag Component .
 demo:
-  pages:
+  embedded:
   - name: Common Tag Examples
     slug: example-index
 ---
@@ -23,21 +23,25 @@ Tags are simple span elements with the class `tag`. They can be mixed in with ot
 
 ## Accessibility
 
--   Since you should not use color alone to indicate states, this should be either supplemented with offscreen or visual labels near the element explaining the state
+- Since you should not use color alone to indicate states, this should be either supplemented with offscreen or visual labels near the element explaining the state
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
--   No keyboard support, but can be added to elements with keyboard support
+- No keyboard support, but can be added to elements with keyboard support
 
 ## States and Variations
 
--   Dismissible
--   Clickable
+- Dismissible
+- Clickable
 
 ## Responsive Guidelines
 
--   Takes responsiveness from the parent container
+- Takes responsiveness from the parent container
 
 ## Upgrading from 3.X
 
--   In 3.x badges and tags were used interchangeably. These now have separated usages that should be reconsidered
+- In 3.x badges and tags were used interchangeably. These now have separated usages that should be reconsidered

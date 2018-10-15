@@ -221,8 +221,7 @@ Treemap.prototype = {
 
     this.element.empty();
     return this
-      .teardown()
-      .init();
+      .build();
   },
 
   /**
@@ -232,7 +231,7 @@ Treemap.prototype = {
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
-    $(window).off(`resize.${COMPONENT_NAME}`);
+    $('body').off(`resize.${COMPONENT_NAME}`);
     return this;
   },
 

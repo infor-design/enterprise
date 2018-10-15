@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="twelve columns">
+      <h2 class="fieldset-title">ListView  - 4000 Items</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Tasks</h2>
+      </div>
+
+      <div class="card-content">
+        <div class="listview-search">
+          <label class="audible" for="gridfilter">Search</label>
+          <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="gridfilter" data-options="{clearable: true}"/>
+        </div>
+
+        <div class="listview" id="search-listview" data-options="{template: 'names-tmpl', source: '{{basepath}}api/names', searchable: true, highlight: false}"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{{={{{ }}}=}}
+<script id="names-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      <li>
+        <p class="listview-heading">#{{id}}</p>
+        <p class="listview-subheading">{{name}} </p>
+        <p class="listview-micro">{{email}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>

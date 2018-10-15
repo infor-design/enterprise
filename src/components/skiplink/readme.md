@@ -2,7 +2,7 @@
 title: Skiplink Component
 description: This page describes Skiplink Component .
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
 ---
@@ -23,6 +23,10 @@ Add this at the top of the page, making the `href` point to the `id` of the cont
 ## Accessibility
 
 Skip links are an accessibility feature. Adding one to your page will aid users that use screen readers to navigate over familiar content, like navigation, at the top of the page to main page content.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

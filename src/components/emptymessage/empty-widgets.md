@@ -1,5 +1,5 @@
 ---
-title: Empty Widgets  
+title: Empty Widgets
 description: This page describes Empty Widgets.
 ---
 
@@ -9,10 +9,10 @@ description: This page describes Empty Widgets.
 
 ### Html Sections
 
--   `card-empty-icon` -  If true will contain one of the icons from the [icon list](http://git.infor.com/projects/SOHO/repos/controls/browse/components/empty-widgets/svg-empty.html)
--   `card-empty-title` -  If true chart will not resize / update when resizing the page.
--   `card-empty-info` -  If true chart will not resize / update when resizing the page.
--   `card-empty-actions` -  If adding this section will contain some actions a person can do to resolve the empty situation such as reload ect. Should be preferably one action.
+- `card-empty-icon` -  If true will contain one of the icons from the [icon list](http://git.infor.com/projects/SOHO/repos/controls/browse/components/empty-widgets/svg-empty.html)
+- `card-empty-title` -  If true chart will not resize / update when resizing the page.
+- `card-empty-info` -  If true chart will not resize / update when resizing the page.
+- `card-empty-actions` -  If adding this section will contain some actions a person can do to resolve the empty situation such as reload ect. Should be preferably one action.
 
 ```html
 <div class="card-content">

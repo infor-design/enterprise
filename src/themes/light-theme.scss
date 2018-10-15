@@ -1,9 +1,17 @@
-// Soho Xi - Default Theme with Grey Background
+// IDS Enterprise - Default Theme - Light with Grey Background
 //================================================== //
 
-// Standard CSS reset stuff here
+// Standard CSS reset
 @import '../core/reset';
 @import '../core/mixins';
+
+// Enterprise color palette
+@import '../components/colors/colorpalette';
+
+// ids-identity token vars
+@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho';
+
+// Local vars
 @import '../core/config';
 
 // Core Controls

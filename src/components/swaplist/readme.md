@@ -2,9 +2,10 @@
 title: Swaplist Component
 description: This page describes Swaplist Component .
 demo:
-  pages:
+  embedded:
   - name: Main Swaplist Example
     slug: example-index.html
+  pages:
   - name: Swaplist with Selected Items
     slug: example-selected.html
   - name: Swaplist with Filter/Search
@@ -48,6 +49,10 @@ $('#example-swaplist-1').swaplist({available: available, selected: selected, tem
 
 - This component is keyboard accessible but not entirely tested for WAI-ARIA and Screen reader support.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> moves in and out of the list boxes and the between the buttons on the toolbars and the adjacent objects
@@ -66,10 +71,10 @@ The individual components (list boxes, move/reorganize controls) take the follow
 
 ## Responsive Guidelines
 
--   The swap list will be 50/50 size of the parent. On smaller break points the two lists (or 3) will stack to 100%
+- The swap list will be 50/50 size of the parent. On smaller break points the two lists (or 3) will stack to 100%
 
 ## Upgrading from 3.X
 
--   Replace `.inforSwapList()` with `.swaplist()` in the javascript
--   The `available` and `selected` options are the same
--   You must now pass markup as a template and place the markup in the DOM
+- Replace `.inforSwapList()` with `.swaplist()` in the javascript
+- The `available` and `selected` options are the same
+- You must now pass markup as a template and place the markup in the DOM

@@ -19,30 +19,31 @@ const STEPPROCESS_DEFAULTS = {
   stepFolder: '.js-step-folder',
   btnPrev: '.js-step-link-prev',
   btnNext: '.js-step-link-next',
+  btnSaveClose: '.js-btn-save-changes',
   beforeSelectStep: null,
 };
 
 /**
-* A Stepprocess/wizard control
-*
-* @class Stepprocess
-* @param {string} element The component element.
-* @param {string} [settings] The component settings.
-* @param {boolean} [settings.linearProgression = false] The Main Application Name to display
+ * A Stepprocess/wizard control
+ *
+ * @class Stepprocess
+ * @param {string} element The component element.
+ * @param {string} [settings] The component settings.
+ * @param {boolean} [settings.linearProgression = false] The Main Application Name to display
  in the header. (Defaults to false)
-* @param {string} [settings.folderIconOpen = 'caret-up'] A specific folder open icon. (Defaults to 'caret-up')
-* @param {string} [settings.folderIconClosed =  'caret-down'] A specific folder close icon. (Defaults to 'caret-down')
-* @param {boolean} [settings.stepList = '#step-list'] Determines whether or not to display device
+ * @param {string} [settings.folderIconOpen = 'caret-up'] A specific folder open icon. (Defaults to 'caret-up')
+ * @param {string} [settings.folderIconClosed =  'caret-down'] A specific folder close icon. (Defaults to 'caret-down')
+ * @param {boolean} [settings.stepList = '#step-list'] Determines whether or not to display device
  information (Browser, Platform, Locale, Cookies Enabled).
-* @param {string} [settings.stepLi = '.js-step'] jQuery selector for the step elements.
-* @param {boolean} [settings.stepLink =  '.js-step-link'] jQuery selector for the step link elements.
-* @param {string} [settings.stepFolder = '.js-step-folder'] jQuery selector for the step folder elements.
-* @param {string} [settings.btnPrev = '.js-step-link-prev'] jQuery selector for the previous step button.
-* @param {string} [settings.btnNext = '.js-step-link-prev'] jQuery selector for the next step button.
-* @param {function} [settings.beforeSelectStep] A callback (function or promise)
+ * @param {string} [settings.stepLi = '.js-step'] jQuery selector for the step elements.
+ * @param {boolean} [settings.stepLink =  '.js-step-link'] jQuery selector for the step link elements.
+ * @param {string} [settings.stepFolder = '.js-step-folder'] jQuery selector for the step folder elements.
+ * @param {string} [settings.btnPrev = '.js-step-link-prev'] jQuery selector for the previous step button.
+ * @param {string} [settings.btnNext = '.js-step-link-prev'] jQuery selector for the next step button.
+ * @param {function} [settings.beforeSelectStep] A callback (function or promise)
  that gives args: stepLink (the step link element) and isStepping
-  (whether we are prev/next'ing or not).
-*/
+ (whether we are prev/next'ing or not).
+ */
 function Stepprocess(element, settings) {
   this.settings = utils.mergeSettings(element, settings, STEPPROCESS_DEFAULTS);
 
@@ -326,8 +327,8 @@ Stepprocess.prototype = {
 
     // Move into children at bottom
     if (prevStepJq.is('.folder.is-open') &&
-        prevStepJq.find('ul.is-open a').length &&
-        !prevStepJq.find('ul.is-disabled').length) {
+      prevStepJq.find('ul.is-open a').length &&
+      !prevStepJq.find('ul.is-disabled').length) {
       prev = prevStepJq.find(`ul.is-open ${s.stepLink}:last`);
     }
 
@@ -385,9 +386,13 @@ Stepprocess.prototype = {
    * @returns {void}
    */
   goToNextStep() {
-    const stepLink = this.getNextStep();
+    const self = this;
+    const stepLink = self.getNextStep();
     if (stepLink.length) {
-      this.selectStep(stepLink, 'next');
+      self.selectStep(stepLink, 'next');
+    } else if (typeof self.settings.beforeSelectStep === 'function') {
+      const args = { isStepping: 'next' };
+      self.settings.beforeSelectStep(args);
     }
   },
 
@@ -417,7 +422,7 @@ Stepprocess.prototype = {
     this.stepListJq.on('focus.stepprocess', s.stepLink, function () {
       const target = $(this);
       if ((parseInt(target.attr('aria-level'), 10) === 0) &&
-          (parseInt(target.attr('aria-posinset'), 10) === 1)) {
+        (parseInt(target.attr('aria-posinset'), 10) === 1)) {
         // First element if disabled
         if (target.hasClass('is-disabled')) {
           const e = $.Event('keydown.stepprocess');
@@ -676,13 +681,13 @@ Stepprocess.prototype = {
 
     setTimeout(() => {
       /**
-      * Fires when selected step link.
-      * @event selected
-      * @memberof Stepprocess
-      * @type {object}
-      * @property {object} event - The jquery event object
-      * @property {object} stepLink element
-      */
+       * Fires when selected step link.
+       * @event selected
+       * @memberof Stepprocess
+       * @type {object}
+       * @property {object} event - The jquery event object
+       * @property {object} stepLink element
+       */
       self.element.triggerHandler('selected', stepLink);
     }, 0);
   },

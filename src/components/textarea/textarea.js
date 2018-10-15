@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
 
 // Name of this component
@@ -157,7 +158,7 @@ Textarea.prototype = {
         clone = self.element.clone()
           .addClass('clone')
           .css({ position: 'absolute', zIndex: -10, height: '' })
-          .val(value);
+          .val(xssUtils.sanitizeHTML(value));
 
         self.element.after(clone);
         do {
@@ -225,9 +226,7 @@ Textarea.prototype = {
       }
     }
 
-    if (self.printarea && length < max) {
-      self.printarea.text(self.element.val());
-    }
+    self.printarea.text(self.element.val());
   },
 
   /**
@@ -287,12 +286,7 @@ Textarea.prototype = {
   },
 
   /**
-   *  This component fires the following events.
-   * @fires Textarea#events
-   * @param {object} keyup  Fires when the button is clicked (if enabled).
-   * @param {object} focus  Fires when the menu is focused.
-   * @param {object} keypress  Fires when pressing a key.
-   * @param {object} blur  Fires when leaving the field.
+   * Handle key events for functionality like counter and autoGrow.
    */
   handleEvents() {
     const self = this;

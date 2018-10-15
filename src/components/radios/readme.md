@@ -2,11 +2,12 @@
 title: Radio Buttons
 description: This page describes Radio Buttons.
 demo:
-  pages:
+  embedded:
   - name: Radio Button Example
     slug: example-index
+  pages:
   - name: Horizontal Radio Button Example
-    slug: example-index
+    slug: example-horizontal
   - name: Dirty Flag
     slug: test-dirty
   - name: Validation
@@ -38,6 +39,7 @@ Displays one or more selectable values. A user can select exactly one value at a
 
 - Make sure each item has a unique id that does not change across versions of your software.
 - If you think that your id may change you can also use an optional automation-id for test teams to target your elements. This should not change or future test scripts may break unexpectedly.
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Implementation Tips
 
@@ -50,11 +52,11 @@ Displays one or more selectable values. A user can select exactly one value at a
 
 ## Keyboard Shortcuts
 
--  <kbd>Tab</kbd> Will enter the radio group
--  <kbd>Shit + Tab</kbd> Will exit the radio group
--  <kbd>Down/Right</kbd> Changes the select to the next/previous element.
--  <kbd>Up/Left</kbd> Changes the select to the next/previous element.
--  <kbd>Space bar</kbd> Can work to select with limitations.
+- <kbd>Tab</kbd> Will enter the radio group
+- <kbd>Shit + Tab</kbd> Will exit the radio group
+- <kbd>Down/Right</kbd> Changes the select to the next/previous element.
+- <kbd>Up/Left</kbd> Changes the select to the next/previous element.
+- <kbd>Space bar</kbd> Can work to select with limitations.
 
 ## States and Variations
 

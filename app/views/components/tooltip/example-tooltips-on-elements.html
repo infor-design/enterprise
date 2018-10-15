@@ -6,37 +6,40 @@
 
       <div class="field-short">
         <label for="email-address-ok">Email Address</label>
-        <input type="text" id="email-address-ok" name="email-address-ok">
+        <input type="text" id="email-address-ok" name="email-address-ok"/>
       </div>
 
       <div class="field-short">
         <label for="firstlastname">First and Last Name</label>
-        <input type="text" id="firstlastname" name="firstlastname">
+        <input type="text" id="firstlastname" name="firstlastname"/>
 
-        <button class="btn-secondary" type="button" id="fbutton">
-          <span>tooltip here</span>
-        </button>
+        <span>
+          <button class="btn-secondary" type="button" id="fbutton">
+            <span>tooltip here</span>
+          </button>
+        </span>
+
       </div>
 
       <div class="field-short">
         <label for="credit-card">Credit Card</label>
-        <input type="text" id="credit-card" name="credit-card" value="xxxx-xxxx-xxxx-xxxx"  >
+        <input type="text" id="credit-card" name="credit-card" value="xxxx-xxxx-xxxx-xxxx" />
       </div>
 
       <div class="field-short">
         <label for="credit-code">Code</label>
-        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-mask-mode="number"  >
+        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-mask-mode="number"/>
       </div>
 
       <div class="field-short">
         <label for="credit-code2">Code</label>
-        <input type="text" id="credit-code2" class="input-xs lookup" name="credit-code2"  data-mask-mode="number" >
+        <input type="text" id="credit-code2" class="input-xs lookup" name="credit-code2"  data-mask-mode="number"/>
       </div>
 
       <div class="field-short">
         <label for="states" class="label">States</label>
         <select id="states" name="states" class="dropdown" >
-          <option value="" selected>&nbsp;</option>
+          <option value="" selected="true">&nbsp;</option>
           <option value="AL" >Alabama</option>
           <option value="DE">Delaware</option>
           <option value="DC">District Of Columbia</option>
@@ -54,10 +57,10 @@
 
       <div class="field-short">
         <span class="label">Editor</span>
-        <div class="editor" ></div>
+        <div class="editor"></div>
       </div>
 
-      <button type="submit" id = 'test1' class="btn-primary">Submit</button>
+      <button type="submit" id="test1" class="btn-primary">Submit</button>
     </form>
 
   </div>
@@ -74,7 +77,7 @@
       title: 'Enter your name',
       content: 'Enter your name',
       trigger: 'hover',
-      parentElement: $('#fbutton')
+      parentElement: $('#fbutton').parent()
     });
 
     $('#credit-card').tooltip({

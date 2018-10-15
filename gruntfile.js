@@ -6,30 +6,18 @@ module.exports = function (grunt) {
 
   const sass = require('./scripts/configs/sass.js');
   const chokidar = require('./scripts/configs/watch.js');
-  const amdHeader = require('./scripts/configs/amdHeader.js');
   const copy = require('./scripts/configs/copy.js');
   const cssmin = require('./scripts/configs/cssmin.js');
   const usebanner = require('./scripts/configs/usebanner.js');
   const compress = require('./scripts/configs/compress.js');
   const meta = require('./scripts/configs/meta.js');
   const clean = require('./scripts/configs/clean.js');
-  const dependencyBuilder = require('./scripts/dependencybuilder.js');
-  const strBanner = require('./scripts/strbanner.js');
-  const controls = require('./scripts/controls.js');
   const run = require('./scripts/configs/run.js');
 
-  let selectedControls = dependencyBuilder(grunt);
-  let bannerText = '/**\n* IDS Enterprise Components v<%= pkg.version %>\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n* <%= meta.copyright %>\n*/\n';
-
-  if (selectedControls) {
-    const bannerList = strBanner(selectedControls);
-    bannerText = `/**\n* IDS Enterprise Components v<%= pkg.version %>\n* ${bannerList}\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n* <%= meta.copyright %>\n*/ \n`;
-  } else {
-    selectedControls = controls;
-  }
+  const bannerText = require('./scripts/generate-bundle-banner');
 
   const config = {
-    pkg: grunt.file.readJSON('ids-enterprise/package.json'),
+    pkg: grunt.file.readJSON('package.json'),
     banner: bannerText,
     exec: {
       rollup: {
@@ -55,7 +43,6 @@ module.exports = function (grunt) {
     clean,
     sass,
     meta,
-    amdHeader,
     copy,
     cssmin,
     usebanner,
@@ -70,11 +57,9 @@ module.exports = function (grunt) {
   // - Cleans up
   // - Builds
   // - Updates local documentation
-  // - Zips
   grunt.registerTask('default', [
     'clean',
-    'build',
-    'compress'
+    'build'
   ]);
 
   // Main build task (Gets everything)
@@ -103,17 +88,24 @@ module.exports = function (grunt) {
   ]);
 
   // SASS/CSS Build Task
-  grunt.registerTask('build:sass', [
-    'sass',
-    'cssmin',
-    'usebanner'
-  ]);
+  grunt.registerTask('build:sass', () => {
+    const comps = grunt.option('components');
+    if (comps) {
+      grunt.log.writeln(`Compiling custom CSS library with components "${comps}"...`);
+      // TODO: Fix the bundle banners to show all proper meta-data (See #856)
+      // bannerText = require('./scripts/generate-bundle-banner');
+      // grunt.config.set('banner', bannerText);
+      grunt.task.run('sass:custom');
+    } else {
+      grunt.task.run('sass:dist');
+    }
+    grunt.task.run('cssmin');
+    grunt.task.run('usebanner');
+  });
 
-  // Publish for NPM
-  grunt.registerTask('packup', [
-    'default',
-    'clean:publish',
-    'copy:publish'
+  // Zip dist folder for download from the git releases page.
+  grunt.registerTask('zip-dist', [
+    'compress'
   ]);
 
   // Watch Task

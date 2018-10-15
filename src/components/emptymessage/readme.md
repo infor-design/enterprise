@@ -2,9 +2,10 @@
 title: Empty Message
 description: This page describes Empty Message .
 demo:
-  pages:
+  embedded:
   - name: Simple Empty Message
     slug: example-index
+  pages:
   - name: Widget Examples
     slug: example-widgets
 ---
@@ -18,3 +19,7 @@ $('.empty-message').emptymessage({
 });
 
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

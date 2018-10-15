@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { Tmpl } from '../tmpl/tmpl';
 import { Locale } from '../locale/locale';
 
@@ -82,8 +83,6 @@ Hierarchy.prototype = {
         this.render(s.dataset[0]);
       } else if (s.dataset && s.dataset.children.length > 0) {
         this.render(s.dataset);
-      } else {
-        $(this.element).append('<p style="padding:10px;">No data available</p>');
       }
     }
 
@@ -141,6 +140,15 @@ Hierarchy.prototype = {
       }
     });
 
+    self.element.off('dblclick.hierarchy').on('dblclick.hierarchy', '.leaf', (e) => {
+      const nodeId = e.currentTarget.id;
+      const nodeData = $(`#${nodeId}`).data();
+      const dblClickEvent = { event: e, data: nodeData };
+      e.stopImmediatePropagation();
+
+      this.element.trigger('dblclick', dblClickEvent);
+    });
+
     /**
     * Fires when node is selected
     * @event selected
@@ -161,7 +169,12 @@ Hierarchy.prototype = {
       const svgHref = target.find('use').prop('href');
       const isCollapseButton = svgHref ? svgHref.baseVal === '#icon-caret-up' : false;
       const isExpandButton = svgHref ? svgHref.baseVal === '#icon-caret-down' : false;
+      const isForward = svgHref ? svgHref.baseVal === '#icon-caret-right' : false;
+      const isActions = target.hasClass('btn-actions');
+      const isAction = target.is('a') && target.parent().parent().is('ul.popupmenu');
       let eventType = 'selected';
+
+      e.stopImmediatePropagation();
 
       $('.is-selected').removeClass('is-selected');
       $(`#${nodeId}`).addClass('is-selected');
@@ -180,6 +193,19 @@ Hierarchy.prototype = {
         eventType = 'back';
       }
 
+      if (isActions) {
+        eventType = 'actions';
+        hierarchy.buildActionsMenu(nodeData, leaf);
+      }
+
+      if (isAction) {
+        eventType = 'action';
+      }
+
+      if (isButton && isForward && isNotBack) {
+        eventType = 'forward';
+      }
+
       // Is right click event
       if (e.which === 3) {
         eventType = 'rightClick';
@@ -191,17 +217,130 @@ Hierarchy.prototype = {
 
       const eventInfo = {
         data: nodeData,
+        actionReference: isAction ? target.data('actionReference') : null,
         targetInfo,
         eventType,
+        isForwardEvent: hierarchy.isForwardEvent(eventType),
+        isBackEvent: hierarchy.isBackEvent(eventType),
         isAddEvent: hierarchy.isAddEvent(eventType),
-        isExpandEvent: hierarchy.isExpandEvent(),
-        isCollapseEvent: hierarchy.isCollapseEvent(),
-        isSelectedEvent: hierarchy.isSelectedEvent(),
+        isExpandEvent: hierarchy.isExpandEvent(eventType),
+        isCollapseEvent: hierarchy.isCollapseEvent(eventType),
+        isSelectedEvent: hierarchy.isSelectedEvent(eventType),
+        isActionsEvent: hierarchy.isActionsEvent(eventType),
+        isActionEvent: hierarchy.isActionEvent(eventType),
         allowLazyLoad: hierarchy.allowLazyLoad(nodeData, eventType)
       };
 
       leaf.trigger('selected', eventInfo);
     });
+  },
+
+  /**
+   * Manually set selection on a leaf
+   * @public
+   * @param {string} nodeId id used to find leaf
+   */
+  selectLeaf(nodeId) {
+    const leaf = $(`#${nodeId}`);
+    $('.is-selected').removeClass('is-selected');
+    leaf.addClass('is-selected');
+
+    const eventInfo = {
+      data: leaf.data(),
+      actionReference: null,
+      isForwardEvent: false,
+      isBackEvent: false,
+      isAddEvent: false,
+      isExpandEvent: false,
+      isCollapseEvent: false,
+      isSelectedEvent: true,
+      isActionsEvent: false,
+      isActionEvent: false,
+      allowLazyLoad: false
+    };
+
+    leaf.trigger('selected', eventInfo);
+  },
+
+  /**
+   * Update existing leaf actions with new actions
+   * @public
+   * @param {object} eventInfo eventType, target, data, ect..
+   * @param {array} updatedActions -actions to be appended to the menu
+   */
+  updateActions(eventInfo, updatedActions) {
+    const leaf = $(eventInfo.targetInfo.target).closest('.leaf');
+    const nodeData = eventInfo.data;
+    const popupMenu = $(leaf).find('.popupmenu');
+    const lineItemsToRemove = popupMenu.find('li').not(':eq(0)');
+
+    $(lineItemsToRemove).each((idx, item) => {
+      $(item).remove();
+    });
+
+    nodeData.menu.actions = updatedActions;
+    popupMenu.append(this.getActionMenuItems(nodeData));
+  },
+
+  /**
+   * @private
+   * @param {object} data associated with leaf
+   * @param {leaf} leaf jQuery reference in DOM
+   */
+  buildActionsMenu(data, leaf) {
+    const popupMenu = $(leaf).find('.popupmenu');
+    const template = [];
+
+    // Safety
+    if (data.menu === undefined) {
+      return;
+    }
+
+    // Reset & rebuild
+    popupMenu.empty();
+
+    if (data.menu.details) {
+      popupMenu.addClass('has-detail-fields');
+      template.push(`<li><div class="detail-fields">${data.menu.details.map(v => `<div class="dt-fields-row"><div class="dt-fields-cell">${v.key}</div><div class="dt-fields-cell">${v.value}</div></div>`).join('')}</div></li>`);
+    }
+
+    if (data.menu.actions) {
+      template.push(this.getActionMenuItems(data));
+    }
+
+    template.forEach((i) => { popupMenu.append(i); });
+  },
+
+  /**
+   * @private
+   * @param {object} data the data to be iterated
+   * @returns {string} returns list items as a string
+   */
+  getActionMenuItems(data) {
+    // Ignoring next line. Eslint expects template literals vs string concat.
+    // However template literals break JSON.stringify() in this case
+    // eslint-disable-next-line
+    return `${data.menu.actions.map(a => "<li><a href='" + a.url + "' data-action-reference='" + JSON.stringify(a.data) + "'>" + a.value + "</a></li>").join('')}`;
+  },
+
+  /**
+   * Check if event is back
+   * @private
+   * @param {string} eventType is back
+   * @returns {boolean} true if back event
+   */
+  isBackEvent(eventType) {
+    return eventType === 'back';
+  },
+
+  /**
+   * Check if event is forward
+   * @private
+   * @param {string} eventType is forward
+   * @returns {boolean} true if forward event
+   */
+  isForwardEvent(eventType) {
+    return eventType === 'forward';
   },
 
   /**
@@ -235,13 +374,32 @@ Hierarchy.prototype = {
   },
 
   /**
-   * Check if event is select
+   * Check if event is selected
    * @private
-   * @param {string} eventType is select
-   * @returns {boolean} true if select event
+   * @param {string} eventType is selected
+   * @returns {boolean} true if selected event
    */
   isSelectedEvent(eventType) {
-    return eventType === 'select';
+    return eventType === 'selected';
+  },
+
+  /**
+   * Checks if is actions event
+   * @private
+   * @param {string} eventType is actions
+   * @returns {boolean} true if actions event
+   */
+  isActionsEvent(eventType) {
+    return eventType === 'actions';
+  },
+
+  /**
+   * @private
+   * @param {string} evenType is action
+   * @returns {boolean} true if action
+   */
+  isActionEvent(evenType) {
+    return evenType === 'action';
   },
 
   /**
@@ -374,6 +532,19 @@ Hierarchy.prototype = {
   },
 
   /**
+   * Closes popupmenu
+   * @private
+   * @param {object} node leaf containing btn-actions
+   */
+  closePopupMenu(node) {
+    const actionButton = node.find('.btn-actions');
+
+    if (actionButton.length !== 0) {
+      actionButton.data('popupmenu').close();
+    }
+  },
+
+  /**
    * Expand the nodes until nodeId is displayed on the page.
    * @private
    * @param {object} event .
@@ -385,6 +556,9 @@ Hierarchy.prototype = {
     const s = this.settings;
     const node = domObject.leaf;
     let nodeTopLevel = node.next();
+
+    // close popupmenu if open
+    this.closePopupMenu(node);
 
     nodeTopLevel.animateOpen();
     /**
@@ -419,6 +593,9 @@ Hierarchy.prototype = {
     const s = this.settings;
     const node = domObject.leaf;
     let nodeTopLevel = node.next();
+
+    // close popupmenu if open
+    this.closePopupMenu(node);
 
     nodeTopLevel.animateClosed().on('animateclosedcomplete', () => {
       /**
@@ -500,14 +677,14 @@ Hierarchy.prototype = {
     }
 
     if (data.isMultiRoot) {
-      const multiRootHTML = `<div class="leaf multiRoot"><div><h2>${data.multiRootText}</h2></div></div>`;
-
+      let multiRootHTML = `<div class="leaf multiRoot"><div><h2>${data.multiRootText}</h2></div></div>`;
+      multiRootHTML = xssUtils.sanitizeHTML(multiRootHTML);
       rootNodeHTML.push(multiRootHTML);
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
     } else {
-      const leaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: data });
+      let leaf = this.getTemplate(data);
+      leaf = xssUtils.sanitizeHTML(leaf);
       rootNodeHTML.push(leaf);
-
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
       this.updateState($('.leaf.root'), true, data);
     }
@@ -584,7 +761,7 @@ Hierarchy.prototype = {
   */
   isSingleChildWithChildren() {
     const s = this.settings;
-    if (s.dataset && s.dataset[0].children) {
+    if (s.dataset && (s.dataset[0] && s.dataset[0].children)) {
       let i = s.dataset[0].children.length;
       let count = 0;
 
@@ -597,6 +774,26 @@ Hierarchy.prototype = {
       return count === 1;
     }
     return false;
+  },
+
+  /**
+   * Builds leaf template
+   * @private
+   * @param {object} data leaf data
+   * @returns {string} compiled template as HTML string
+   */
+  getTemplate(data) {
+    const template = Tmpl.compile(`{{#dataset}}${$(`#${xssUtils.stripTags(this.settings.templateId)}`).html()}{{/dataset}}`, { dataset: data });
+
+    // Init popupmenu after rendered in DOM
+    setTimeout(() => {
+      const actionButton = $(`#btn-${xssUtils.stripTags(data.id)}`);
+      if (actionButton.length !== 0) {
+        actionButton.hideFocus().popupmenu();
+      }
+    }, 1);
+
+    return $(template).prop('outerHTML');
   },
 
   /**
@@ -636,7 +833,6 @@ Hierarchy.prototype = {
   */
   createLeaf(nodeData, container) {
     const self = this;
-    const s = this.settings;
     const chartClassName = self.settings.rootClass;
     const chart = $(`.${chartClassName} .chart`, self.container);
     const elClassName = container.attr('class');
@@ -653,7 +849,7 @@ Hierarchy.prototype = {
     function processDataForLeaf(thisNodeData) {
       self.setColor(thisNodeData);
 
-      const leaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: thisNodeData });
+      const leaf = self.getTemplate(thisNodeData);
       let parent = el.length === 1 ? el : container;
       let branchState = thisNodeData.isExpanded || thisNodeData.isExpanded === undefined ? 'branch-expanded' : 'branch-collapsed';
 
@@ -672,7 +868,7 @@ Hierarchy.prototype = {
 
         for (let j = 0, l = thisNodeData.children.length; j < l; j++) {
           self.setColor(thisNodeData.children[j]);
-          const childLeaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: thisNodeData.children[j] });
+          const childLeaf = self.getTemplate(thisNodeData.children[j]);
 
           if (j === thisNodeData.children.length - 1) {
             childrenNodes += `<li>${$(childLeaf)[0].outerHTML}</li>`;
@@ -695,11 +891,11 @@ Hierarchy.prototype = {
       for (let i = 0, l = nodeData.length; i < l; i++) {
         const isLast = (i === (nodeData.length - 1));
         processDataForLeaf(nodeData[i], isLast);
-        self.updateState($(`#${nodeData[i].id}`), false, nodeData[i]);
+        self.updateState($(`#${xssUtils.stripTags(nodeData[i].id)}`), false, nodeData[i]);
       }
     } else {
       processDataForLeaf(nodeData, true);
-      self.updateState($(`#${nodeData.id}`), false, nodeData);
+      self.updateState($(`#${xssUtils.stripTags(nodeData.id)}`), false, nodeData);
     }
   },
 

@@ -320,12 +320,8 @@ ColorPicker.prototype = {
       return;
     }
 
-    if (menu.length) {
-      $(document).trigger($.Event('keydown', { keyCode: 27, which: 27 })); // escape
-
-      if (this.isPickerOpen) {
-        return;
-      }
+    if (menu.length && this.isPickerOpen) {
+      return;
     }
 
     // Append Color Menu
@@ -335,6 +331,7 @@ ColorPicker.prototype = {
       ariaListbox: true,
       menuId: 'colorpicker-menu',
       trigger: 'immediate',
+      attachToBody: true,
       placementOpts: {
         containerOffsetX: 10,
         containerOffsetY: 10,
@@ -348,7 +345,6 @@ ColorPicker.prototype = {
     };
 
     // Show Menu
-
     this.element
       .popupmenu(popupmenuOpts)
       .on('open.colorpicker', () => {
@@ -462,7 +458,12 @@ ColorPicker.prototype = {
    * @returns {string} the translated text color
    */
   translateColorLabel(colorText) {
-    return Locale.translate(colorText, true);
+    if (!colorText) {
+      return '';
+    }
+    const translatedText = Locale.translate(colorText, true);
+    return typeof translatedText === 'string' ?
+      Locale.translate(colorText, true) : colorText;
   },
 
   /**
@@ -538,6 +539,10 @@ ColorPicker.prototype = {
         const a = $(`<a href="#" title="${s.clearableText}"><span class="swatch is-empty${isBorderAll ? ' is-border' : ''}"></span></a>`).appendTo(li);
         a.data('label', s.clearableText).data('value', '').tooltip();
         menu.append(li);
+      } else {
+        const li = $('<li></li>');
+        $('<a href="#" title="Azure01 #C8E9F4"><span class="swatch" style="background-color: rgb(173 ,216, 235);"></span></a>').appendTo(li).tooltip();
+        menu.append(li);
       }
 
       $('body').append(menu);
@@ -599,9 +604,7 @@ ColorPicker.prototype = {
     }
 
     /* eslint-disable no-bitwise */
-    return `rgb(${n & 0xFF},
-      ${(n & 0xFF00) >> 8},
-      ${(n & 0xFF0000) >> 16})`;
+    return `rgb(${n & 0xFF}, ${(n & 0xFF00) >> 8}, ${(n & 0xFF0000) >> 16})`;
     /* eslint-disable no-console */
   },
 

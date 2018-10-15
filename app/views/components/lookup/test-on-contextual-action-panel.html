@@ -15,13 +15,20 @@ Contextual Action Panel (Uses Markup)
 </button>
 <div class="contextual-action-panel">
 <div class="toolbar">
-  <div class="title"></div>
+  <div class="title">Company Information</div>
   <div class="buttonset">
-    <button type="button" class="btn-icon btn-close has-text" >
+    <button class="btn" type="button">
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-save"></use>
+      </svg>
+      <span>Save</span>
+    </button>
+    <div class="separator"></div>
+    <button name="close" class="btn" type="button">
+      <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
         <use xlink:href="#icon-close"></use>
       </svg>
-      <span class="audible">Close</span>
+      <span>Close</span>
     </button>
   </div>
 </div>

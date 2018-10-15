@@ -1,0 +1,100 @@
+<div class="calendar" data-init="false">
+  <div class="calendar-events">
+    <div class="accordion" data-options="{'allowOnePane': false}">
+      <div class="accordion-header is-expanded">
+        <a href="#"><span>Legend</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="calendar-event-types accordion-content">
+        </div>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Upcoming Time off</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="calendar-event-upcoming accordion-content">
+          <p>Remix, optimize, "B2B, iterate?" Best-of-breed efficient beta-test; social cutting-edge: rich magnetic tagclouds front-end infomediaries viral authentic incentivize sexy extensible functionalities incentivize. Generate killer authentic grow vertical blogospheres, functionalities ecologies harness, "tag solutions synergies exploit data-driven B2C open-source e-markets optimize create, enhance convergence create." Out-of-the-box strategize best-of-breed back-end, deploy design markets metrics. Content web services enhance leading-edge Cluetrain, deliverables dot-com scalable. User-centric morph, back-end, synthesize mesh, frictionless, exploit next-generation tag portals, e-commerce channels; integrate; recontextualize distributed revolutionize innovative eyeballs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="calendar-monthview">
+
+  </div>
+  <div class="calendar-event-details">
+
+  </div>
+</div>
+
+<script>
+  // Get the Event Type and Events to show in the calendar
+  var eventTypes = [];
+  var events = [];
+
+  $.getJSON('{{basepath}}api/event-types', function(res) {
+    eventTypes = res;
+  });
+
+  $.getJSON('{{basepath}}api/events', function(res) {
+    events = res;
+  });
+
+  $('body').one('initialized', function () {
+    $('.calendar').calendar({
+      eventTypes: eventTypes,
+      events: events,
+      template: 'tmpl-readonly'
+    });
+  });
+</script>
+
+{{={{{ }}}=}}
+<script id="tmpl-readonly" type="text/html">
+  <div class="calendar-event-detail">
+    {{#event}}
+      <span class="calendar-event-header {{color}}">{{subject}}</span>
+      <div class="calendar-event-body">
+        <div class="field">
+          <span class="label">Status</span>
+          <span class="data">
+            {{status}}
+            {{#icon}}
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation" data-status="Pending"><use xlink:href="#{{icon}}"></use></svg>
+            {{/icon}}
+          </span>
+        </div>
+        <div class="field">
+          <span class="label">Date</span>
+          <span class="data">
+            {{startsLong}} to {{endsLong}}
+          </span>
+        </div>
+        <div class="field">
+          <span class="label">Event Type</span>
+          <span class="data">
+            {{typeLabel}}
+          </span>
+        </div>
+        <div class="field">
+          <span class="label">Comments</span>
+          <span class="data">
+            {{comments}}
+          </span>
+        </div>
+      </div>
+    {{/event}}
+  </div>
+</script>
+
+<!--
+"id": "1",
+"subject": "Discretionary Time Off",
+"shortSubject": "DTO",
+"comments": "",
+"location": "Us Office",
+"status": "Draft",
+"starts": "2018-08-22T09:00:00.000Z",
+"ends": "2018-08-22T13:00:00.000Z",
+"type": "dto",
+"isAllDay": "true"
+-->

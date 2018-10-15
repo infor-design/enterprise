@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h2 class="fieldset-title">Example Form</h2>
+    <form id="test-form" autocomplete="off" data-validate-on="submit">
+
+      <div class="field">
+        <label class="required" for="credit-code">Code <span class="audible">Required</span></label>
+        <input type="text" id="credit-code" class="input-xs" name="credit-code" data-validate="customAsyncRule required" data-mask="###" data-mask-mode="number"/>
+      </div>
+
+    </form>
+
+    <script>
+      $(function() {
+        $.fn.validation.rules.customAsyncRule = {
+          check: function (value, field, manageResult, dfd) {
+            var result;
+            //do some sort of back end request...
+            $.ajax({
+              url: "{{basepath}}api/compressors",
+              dataType: "json",
+              timeout: 5000,
+              success: function (data) {
+                result = (value == "1"  || value =="" ? false : true); //normally would check some result on the ajax call.. contrived.
+                manageResult(result, true, 'customAsyncRule', dfd);
+              },
+              error: function (req, status, error) {
+                result = false;
+                $.fn.validation.rules.customAsyncRule.message = req.responseText;
+                manageResult(result, true, 'customAsyncRule', dfd);
+              },
+              async: true
+            });
+          },
+          message: 'Async Error',
+		      type: 'error',
+          async: true
+        };
+
+        $('#test-form').on('error change', function (e, args) {
+          console.log('error',args);
+          $('#test1').prop('disabled', true);
+        }).on('valid', function (e, args) {
+          console.log('Form Corrected',args);
+          $('#test1').prop('disabled', false);
+        });
+
+        $('input, select, .editor').on('error', function (e, args) {
+          console.log('error', args);
+        }).on('valid', function (e, args) {
+          console.log('valid', args);
+        });
+
+      });
+    </script>
+  </div>
+</div>

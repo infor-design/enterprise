@@ -1,7 +1,7 @@
 // File Upload
 //================================================== //
 .field-fileupload {
-  input[type="text"] {
+  input[type='text'] {
     padding-right: 56px;
     text-overflow: ellipsis;
   }
@@ -49,24 +49,33 @@
   input {
     &.fileupload-background-transparent {
       background-color: transparent;
+      color: $input-color;
       padding-right: 50px;
+      -webkit-text-fill-color: $input-color;
       text-overflow: ellipsis;
 
       &.readonly {
         background-color: $input-readonly-bg-color;
+        color: $input-readonly-color;
+        -webkit-text-fill-color: $input-readonly-color;
+      }
+
+      &[disabled] {
+        background-color: $input-disabled-bg-color;
+        color: $input-disabled-color;
+        -webkit-text-fill-color: $input-disabled-color;
       }
     }
   }
 
   // Make this flow offscreen
-  label.fileupload input[type="file"],
-  input.fileupload[type="file"] {
+  label.fileupload input[type='file'],
+  input.fileupload[type='file'] {
     left: -10000px;
     position: fixed;
 
     &:disabled + span:not(.audible),
     &:disabled + label.fileupload {
-
       svg {
         fill: $input-disabled-border-color;
       }
@@ -100,13 +109,11 @@
     .drop-area {
       text-align: center;
 
-      // scss-lint:disable ImportantRule
       .icon {
         display: block;
         float: none !important;
         margin: 0 auto !important;
       }
-      // scss-lint:enable ImportantRule
     }
   }
 
@@ -192,16 +199,17 @@
 
         span {
           @include font-size(14);
+
           margin-left: -2.5px;
           margin-right: -2.5px;
           padding: 5px;
         }
 
-        input[type="file"] {
-          height: .1px;
+        input[type='file'] {
+          height: 0.1px;
           opacity: 0;
           overflow: hidden;
-          width: .1px;
+          width: 0.1px;
           z-index: -1;
         }
       }
@@ -212,6 +220,7 @@
         &:active::after,
         &:focus::after {
           border-color: transparent;
+          box-shadow: none;
         }
       }
 
@@ -254,7 +263,6 @@
 
     .file-row,
     .progress-row {
-
       .status-icon,
       .description,
       .size,
@@ -267,6 +275,7 @@
       .description,
       .size {
         @include font-size(14);
+
         color: $fileupload-secondary-color;
         height: 34px;
         line-height: 34px;
@@ -393,6 +402,7 @@
       // Area for each file error
       div.msg {
         @include font-size(14);
+
         clear: both;
         padding: 0 10px;
       }
@@ -400,6 +410,7 @@
       // Area for general error
       span.msg {
         @include font-size(14);
+
         display: inline-block;
         padding: 10px 10px 10px 0;
         width: calc(100% - 36px);
@@ -424,7 +435,7 @@
 // RTL Styles
 html[dir='rtl'] {
   .field-fileupload {
-    input[type="text"] {
+    input[type='text'] {
       padding-left: 56px;
       padding-right: 8px;
     }
@@ -441,8 +452,8 @@ html[dir='rtl'] {
     }
 
     // Make this flow offscreen
-    label.fileupload input[type="file"],
-    input.fileupload[type="file"] {
+    label.fileupload input[type='file'],
+    input.fileupload[type='file'] {
       left: auto;
       right: -10000px;
     }

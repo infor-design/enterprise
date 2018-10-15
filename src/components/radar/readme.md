@@ -1,46 +1,48 @@
 ---
 title: Radar Chart
 description: This page describes Radar Chart.
+demo:
+  embedded:
+  - name: Standard Radar Chart
+    slug: example-index
 ---
-
-## Configuration Options
-
-1. Radar Chart Main Example [View Example]( ../components/radar/example-index)
 
 ## Code Example
 
 This example shows how to invoke a pie bar chart with a dataset controlling the values.
 
 ```javascript
-  var radarData = [{
-      data: [
-			  [ // Resource
-          {name: 'Procedure Assistance', value: 3},
-          {name: 'Personnel Training', value: 2},
-          {name: 'Patient Support', value: 1},
-          {name: 'Patient Care', value: 0},
-          {name: 'Paperwork Admin', value: 1},
-          {name: 'Equipment Management', value: 3},
-          {name: 'Data Analysis', value: 4},
-          {name: 'Compliance', value: 4},
-          {name: 'Community Support', value: 2},
-          {name: 'Assess and Diagnose', value: 4}
-        ],[ // Position
-          {name: 'Procedure Assistance', value: 5},
-          {name: 'Personnel Training', value: 4},
-          {name: 'Patient Support', value: 3},
-          {name: 'Patient Care', value: 5},
-          {name: 'Paperwork Admin', value: 3},
-          {name: 'Equipment Management', value: 4},
-          {name: 'Data Analysis', value: 5},
-          {name: 'Compliance', value: 4},
-          {name: 'Community Support', value: 5},
-          {name: 'Assess and Diagnose', value: 3}
+var radarData = [{
+    data: [
+        [   // Resource
+            {name: 'Procedure Assistance', value: 3},
+            {name: 'Personnel Training', value: 2},
+            {name: 'Patient Support', value: 1},
+            {name: 'Patient Care', value: 0},
+            {name: 'Paperwork Admin', value: 1},
+            {name: 'Equipment Management', value: 3},
+            {name: 'Data Analysis', value: 4},
+            {name: 'Compliance', value: 4},
+            {name: 'Community Support', value: 2},
+            {name: 'Assess and Diagnose', value: 4}
+        ],
+        [   // Position
+            {name: 'Procedure Assistance', value: 5},
+            {name: 'Personnel Training', value: 4},
+            {name: 'Patient Support', value: 3},
+            {name: 'Patient Care', value: 5},
+            {name: 'Paperwork Admin', value: 3},
+            {name: 'Equipment Management', value: 4},
+            {name: 'Data Analysis', value: 5},
+            {name: 'Compliance', value: 4},
+            {name: 'Community Support', value: 5},
+            {name: 'Assess and Diagnose', value: 3}
+            ]
         ]
-			]
-    }];
+    ]
+}];
 
-  $('#radar-chart-example').chart({type: 'radar', dataset: radarData, showAxisLabels: false});
+$('#radar-chart-example').chart({type: 'radar', dataset: radarData, showAxisLabels: false});
 ```
 
 ## Accessibility
@@ -52,10 +54,14 @@ The contrast and actual colors can be a concern for visibility impaired and colo
 You can control the size of the radar chart by setting the size of the parent element the radar chart lives in.
 This may include possibly using an inset margin in some cases.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
 - None
 
 ## Upgrading from 3.X
 
--   The radar chart was added in 4.4.0
+- The radar chart was added in 4.4.0

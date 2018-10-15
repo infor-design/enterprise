@@ -1,8 +1,8 @@
 // Color Variables
 //================================================== //
 
-$white: #ffffff;
-$black: #000000;
+$white: #fff;
+$black: #000;
 
 $azure01: #c8e9f4;
 $azure02: #addbeb;
@@ -73,7 +73,7 @@ $emerald10: #397514;
 $graphite01: #f0f0f0;
 $graphite02: #d8d8d8;
 $graphite03: #bdbdbd;
-$graphite04: #999999;
+$graphite04: #999;
 $graphite05: #737373;
 $graphite06: #5c5c5c;
 $graphite07: #454545;
@@ -93,36 +93,36 @@ $slate09: #212224;
 $slate10: #1c1819;
 
 $alert-red: #e84f4f;
-$alert-bg-red: rgba(232, 79, 79, .10);
+$alert-bg-red: rgba(232, 79, 79, 0.1);
 $alert-orange: #ff9426;
-$alert-bg-orange: rgba(255, 148, 38, .10);
+$alert-bg-orange: rgba(255, 148, 38, 0.1);
 $alert-yellow: #ffd726;
 $alert-green: #80ce4d;
-$alert-bg-green: rgba(128, 206, 77, .10);
+$alert-bg-green: rgba(128, 206, 77, 0.1);
 $alert-info: $azure06;
-$alert-bg-info: rgba(54, 138, 192, .10);
+$alert-bg-info: rgba(54, 138, 192, 0.1);
 $alert-neutral: #dbdbdb;
 
-$alert01: #e84f4f;
-$alert02: #ff9426;
-$alert03: #ffd726;
-$alert04: #80ce4d;
+$alert01: $alert-red;
+$alert02: $alert-orange;
+$alert03: $alert-yellow;
+$alert04: $alert-green;
 
 // Generate Color Classes for The Sass Variables
 $color-names: ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09 ruby10
- amber01 amber02 amber03 amber04 amber05 amber06 amber07 amber08 amber09 amber10
- emerald01 emerald02 emerald03 emerald04 emerald05 emerald06 emerald07 emerald08 emerald09 emerald10
- azure01 azure02 azure03 azure04 azure05 azure06 azure07 azure08 azure09 azure10
- turquoise01 turquoise02 turquoise03 turquoise04 turquoise05 turquoise06 turquoise07 turquoise08 turquoise09 turquoise10
- amethyst01 amethyst02 amethyst03 amethyst04 amethyst05 amethyst06 amethyst07 amethyst08 amethyst09 amethyst10
- graphite01 graphite02 graphite03 graphite04 graphite05 graphite06 graphite07 graphite08 graphite09 graphite10
- slate01 slate02 slate03 slate04 slate05 slate06 slate07 slate08 slate09 slate10 alert01 alert02 alert03 alert04;
+  amber01 amber02 amber03 amber04 amber05 amber06 amber07 amber08 amber09 amber10
+  emerald01 emerald02 emerald03 emerald04 emerald05 emerald06 emerald07 emerald08 emerald09 emerald10
+  azure01 azure02 azure03 azure04 azure05 azure06 azure07 azure08 azure09 azure10
+  turquoise01 turquoise02 turquoise03 turquoise04 turquoise05 turquoise06 turquoise07 turquoise08 turquoise09 turquoise10
+  amethyst01 amethyst02 amethyst03 amethyst04 amethyst05 amethyst06 amethyst07 amethyst08 amethyst09 amethyst10
+  graphite01 graphite02 graphite03 graphite04 graphite05 graphite06 graphite07 graphite08 graphite09 graphite10
+  slate01 slate02 slate03 slate04 slate05 slate06 slate07 slate08 slate09 slate10 alert01 alert02 alert03 alert04;
 
 $color-vars: $ruby01 $ruby02 $ruby03 $ruby04 $ruby05 $ruby06 $ruby07 $ruby08 $ruby09 $ruby10
- $amber01 $amber02 $amber03 $amber04 $amber05 $amber06 $amber07 $amber08 $amber09 $amber10
- $emerald01 $emerald02 $emerald03 $emerald04 $emerald05 $emerald06 $emerald07 $emerald08 $emerald09 $emerald10
- $azure01 $azure02 $azure03 $azure04 $azure05 $azure06 $azure07 $azure08 $azure09 $azure10
- $turquoise01 $turquoise02 $turquoise03 $turquoise04 $turquoise05 $turquoise06 $turquoise07 $turquoise08 $turquoise09 $turquoise10
- $amethyst01 $amethyst02 $amethyst03 $amethyst04 $amethyst05 $amethyst06 $amethyst07 $amethyst08 $amethyst09 $amethyst10
- $graphite01 $graphite02 $graphite03 $graphite04 $graphite05 $graphite06 $graphite07 $graphite08 $graphite09 $graphite10
- $slate01 $slate02 $slate03 $slate04 $slate05 $slate06 $slate07 $slate08 $slate09 $slate10 $alert01 $alert02 $alert03 $alert04;
+  $amber01 $amber02 $amber03 $amber04 $amber05 $amber06 $amber07 $amber08 $amber09 $amber10
+  $emerald01 $emerald02 $emerald03 $emerald04 $emerald05 $emerald06 $emerald07 $emerald08 $emerald09 $emerald10
+  $azure01 $azure02 $azure03 $azure04 $azure05 $azure06 $azure07 $azure08 $azure09 $azure10
+  $turquoise01 $turquoise02 $turquoise03 $turquoise04 $turquoise05 $turquoise06 $turquoise07 $turquoise08 $turquoise09 $turquoise10
+  $amethyst01 $amethyst02 $amethyst03 $amethyst04 $amethyst05 $amethyst06 $amethyst07 $amethyst08 $amethyst09 $amethyst10
+  $graphite01 $graphite02 $graphite03 $graphite04 $graphite05 $graphite06 $graphite07 $graphite08 $graphite09 $graphite10
+  $slate01 $slate02 $slate03 $slate04 $slate05 $slate06 $slate07 $slate08 $slate09 $slate10 $alert01 $alert02 $alert03 $alert04;

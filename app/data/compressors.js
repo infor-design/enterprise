@@ -1,5 +1,6 @@
 // Data Grid Paging Example
-// Example Call: http://localhost:4000/compressors?pageNum=1&sort=productId&pageSize=100
+// Example Call:
+// http://localhost:4000/api/compressors?pageNum=1&pageSize=10&sortField=productId&sortAsc=false
 module.exports = (req, res, next) => {
   const products = [];
   const productsAll = [];
@@ -95,6 +96,10 @@ module.exports = (req, res, next) => {
 
   if (req.query.sortField) {
     productsAll.sort(sortBy(req.query.sortField, (req.query.sortAsc === 'true'), a => a.toString().toUpperCase()));
+  }
+
+  if (req.query.sortId) {
+    productsAll.sort(sortBy(req.query.sortId, (req.query.sortAsc === 'true'), a => a.toString().toUpperCase()));
   }
 
   for (i = start; i < end && i < total; i++) {

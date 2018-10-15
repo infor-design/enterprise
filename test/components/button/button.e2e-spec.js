@@ -7,27 +7,19 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Button example-index tests', () => {
+describe('Button example-index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/button/example-index');
   });
 
-  if (!utils.isSafari() && !utils.isIE()) {
-    if (utils.isChrome() && browser.params.theme === 'light') {
-      it('Should mouseover "Primary Button", and change background-color', async () => {
-        const buttonEl = await element.all(by.css('.btn-primary')).get(3);
-        await browser.driver
-          .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
-        await browser.driver.actions().mouseMove(buttonEl).perform();
-        await browser.driver.sleep(config.sleep);
-        // Value returned will be as the browser interprets it, tricky to form a proper assertion
-        expect(await buttonEl.getCssValue('background-color')).toBe('rgba(37, 120, 169, 1)');
-      });
-    }
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
 
+  if (utils.isChrome()) {
     it('Should tab to "Primary Button", and animate on enter', async () => {
-      const buttonEl = await element.all(by.css('.btn-primary')).get(3);
-      const svgEl = await element.all(by.css('.btn-primary')).get(3).element(by.css('.ripple-effect'));
+      const buttonEl = await element.all(by.css('.btn-primary')).get(0);
+      const svgEl = await element.all(by.css('.btn-primary')).get(0).element(by.css('.ripple-effect'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
       await element(by.css('body')).sendKeys(protractor.Key.TAB);
@@ -40,8 +32,8 @@ describe('Button example-index tests', () => {
     });
 
     it('Should click on "Primary Button", and animate on click', async () => {
-      const buttonEl = await element.all(by.css('.btn-primary')).get(3);
-      const svgEl = await element.all(by.css('.btn-primary')).get(3).element(by.css('.ripple-effect'));
+      const buttonEl = await element.all(by.css('.btn-primary')).get(0);
+      const svgEl = await element.all(by.css('.btn-primary')).get(0).element(by.css('.ripple-effect'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
       await buttonEl.click();
@@ -51,7 +43,7 @@ describe('Button example-index tests', () => {
     });
 
     it('Should click on "Disabled Primary Button", and not animate', async () => {
-      const buttonEl = await element.all(by.css('.btn-primary')).get(2);
+      const buttonEl = await element.all(by.css('.btn-primary')).get(1);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
       await buttonEl.click();
@@ -204,23 +196,23 @@ describe('Button example-with-icons tests', () => {
     const buttonEl = await element(by.id('menu-button-alone'));
     await buttonEl.click();
 
-    expect(buttonEl.getAttribute('class')).toContain('is-open');
-
+    expect(await buttonEl.getAttribute('class')).toContain('is-open');
     expect(await element(by.css('button#menu-button-alone[aria-haspopup="true"]')).isDisplayed()).toBe(true);
   });
 
-  if (utils.isChrome()) {
-    xit('Should not visual regress', async () => {
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
       const buttonEl = await element(by.id('menu-button-alone'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkScreen('buttonPage')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(buttonEl, 'button-init')).toEqual(0);
     });
   }
 
   if (!utils.isIE()) {
-    xit('Should be accessible on click with no WCAG 2AA violations', async () => {
+    it('Should be accessible on click with no WCAG 2AA violations', async () => {
       const buttonEl = await element(by.id('menu-button-alone'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
@@ -245,4 +237,59 @@ describe('Button example-toggle-button tests', () => {
 
     expect(await buttonEl.getAttribute('aria-pressed')).toBe('false');
   });
+});
+
+describe('Button example-100-percent tests', () => {
+  let windowSize = {};
+  beforeEach(async () => {
+    await utils.setPage('/components/button/example-100-percent');
+    windowSize = await browser.driver.manage().window().getSize();
+  });
+
+  afterEach(async () => {
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    await browser.driver.sleep(config.sleep);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should tab onto button, show focus, and not visual regress', async () => {
+      const buttonElContainer = await element(by.id('maincontent'));
+      await element(by.id('one-hundred')).sendKeys(protractor.Key.TAB);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(buttonElContainer, 'button-width-focus')).toEqual(0);
+    });
+
+    it('Should not visual regress on example-100-percent at 1280px', async () => {
+      await browser.driver.manage().window().setSize(1280, 800);
+      await browser.driver.sleep(config.sleep);
+      const buttonElContainer = await element(by.id('maincontent'));
+
+      expect(await browser.protractorImageComparison.checkElement(buttonElContainer, 'button-width-1280')).toEqual(0);
+    });
+
+    it('Should not visual regress on example-100-percent at 768px', async () => {
+      await browser.driver.manage().window().setSize(768, 1024);
+      await browser.driver.sleep(config.sleep);
+      const buttonElContainer = await element(by.id('maincontent'));
+
+      expect(await browser.protractorImageComparison.checkElement(buttonElContainer, 'button-width-768')).toEqual(0);
+    });
+
+    it('Should not visual regress on example-100-percent at 500px', async () => {
+      await browser.driver.manage().window().setSize(500, 600);
+      await browser.driver.sleep(config.sleep);
+      const buttonElContainer = await element(by.id('maincontent'));
+
+      expect(await browser.protractorImageComparison.checkElement(buttonElContainer, 'button-width-500')).toEqual(0);
+    });
+
+    it('Should not visual regress on example-100-percent at 320px', async () => {
+      await browser.driver.manage().window().setSize(320, 480);
+      await browser.driver.sleep(config.sleep);
+      const buttonElContainer = await element(by.id('maincontent'));
+
+      expect(await browser.protractorImageComparison.checkElement(buttonElContainer, 'button-width-320')).toEqual(0);
+    });
+  }
 });

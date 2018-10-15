@@ -17,7 +17,7 @@
          <div id="modal-add-context" style="display: none;">
             <div class="field">
                <label for="context-type">Type</label>
-               <select class="dropdown-lg" id="context-type" name="context-type" onchange="update()">
+               <select class="dropdown-lg" id="context-type" name="context-type">
                   <option value="">Change Me</option>
                   <option value="2">This Value Shows More Content</option>
                </select>
@@ -102,6 +102,8 @@
 
       // Initial update of view
       update();
+
+      $('#context-type').on('change', function() {update()});
    </script>
 </div>
 </div>

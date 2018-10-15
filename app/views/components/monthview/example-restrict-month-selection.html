@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('.monthview').monthview({
+      month: 3,
+      year: 2018,
+      disable: {
+        restrictMonths: true,
+        minDate: '04/01/2018',
+        maxDate: '06/30/2018'
+      }
+    });
+  });
+</script>

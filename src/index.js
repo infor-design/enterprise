@@ -1,18 +1,16 @@
 /* eslint-disable import/first */
-
 import * as debug from './utils/debug';
-import * as behaviors from './utils/behaviors';
-import './components/initialize/initialize.jquery';
 
 // Core ======================================= /
 // NOTE: Every item in the "Core" section is required for running the Soho library properly.
 // The Soho team will not support any custom builds where these packages are not included.
 // ============================================ /
-export { version } from '../ids-enterprise/package.json';
+export { version } from '../package.json';
 export { debug };
 export { uniqueIdCount, utils } from './utils/utils';
 export { DOM } from './utils/dom';
 export { stringUtils as string } from './utils/string';
+export { xssUtils as xss } from './utils/xss';
 export { breakpoints } from './utils/breakpoints';
 export { Locale } from './components/locale/locale';
 export { Environment as env } from './utils/environment';
@@ -21,30 +19,32 @@ export { Environment as env } from './utils/environment';
 export { base } from './utils/base';
 
 // Renderloop needs a single instance of itself
-import { renderLoop, RenderLoopItem } from './utils/renderloop';
-
-renderLoop.start();
-export { renderLoop, RenderLoopItem };
+export { renderLoop, RenderLoopItem } from './utils/renderloop';
 
 // Theme/Personalization need single instances of themselves
 export { theme } from './components/personalize/personalize';
 export { personalization } from './components/personalize/personalize.bootstrap';
 export * from './components/personalize/personalize.hooks';
 
-export { masks } from './components/mask/masks';
-export { Validation } from './components/validation/validation';
+// jQuery constructor for Personalize is required
+import './components/personalize/personalize.jquery';
+
+// Explicitly import the initializer (which is considered "core").
+// This implicitly imports all jQuery-specific IDS component constructors.
+import './behaviors/initialize/initialize.jquery';
+
+// =========================================================
+// The below lines are automatically changed during a custom build
+// to point to temporary, customized source code files.
+// =========================================================
 
 // Behaviors ================================== /
-export { behaviors };
-export { Place } from './components/place/place';
-export { Initialize } from './components/initialize/initialize';
-export { ListFilter } from './components/listfilter/listfilter';
-export { Tmpl } from './components/tmpl/tmpl';
+export * from './behaviors/behaviors';
 
-// Needed for Datagrid (Previous Globals) ====== /
-export { Formatters } from './components/datagrid/datagrid.formatters';
-export { Editors } from './components/datagrid/datagrid.editors';
-export { GroupBy } from './components/datagrid/datagrid.groupby';
+// Component Rules Libraries ================================== /
+// These contain modifiable rules for specific components that must be present
+// before their Components are loaded.
+export * from './core/rules';
 
 // Components ================================= /
 import * as components from './components/components';

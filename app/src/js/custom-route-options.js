@@ -13,13 +13,20 @@ module.exports = function customRouteOptions(req, res) {
   // Application Menu
   if (url.match(/components\/applicationmenu/)) {
     if (url.indexOf('/list') === -1) {
-      customOpts.headerHambuger = true;
+      customOpts.headerHamburger = true;
     }
   }
 
   // Base Tag
   if (url.match(/components\/base-tag/)) {
     customOpts.usebasehref = true;
+  }
+
+  // Contextual Action Panel
+  if (url.match(/components\/contextualactionpanel/)) {
+    if (url.match(/partial-/)) {
+      customOpts.layout = 'layout-nofrills'; // No layout for this one on purpose.
+    }
   }
 
   // Datagrid
@@ -45,6 +52,11 @@ module.exports = function customRouteOptions(req, res) {
   }
   if (url.match(/place\/scrolling\/container-is-nested/)) {
     customOpts.layout = 'components/place/scrolling/layout-nested';
+  }
+
+  // Searchfield in Headers (needs to load the Header layout)
+  if (url.match(/searchfield\/example-header/)) {
+    customOpts.layout = 'components/header/layout';
   }
 
   // Sign-in Dialog

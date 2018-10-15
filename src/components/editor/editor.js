@@ -7,6 +7,8 @@ import { debounce } from '../../utils/debounced-resize';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
+import { DOM } from '../../utils/dom';
 
 const COMPONENT_NAME = 'editor';
 
@@ -27,9 +29,10 @@ const COMPONENT_NAME = 'editor';
 * @param {boolean} [settings.secondHeader = 'h4'] Allows you to set if the second header inserted is a h3 or
 * h4 element. You should set this to match the structure of the parent page for accessibility
 * @param {string} [settings.pasteAsPlainText = false] If true, when you paste into the editor the element will be unformatted to plain text.
-* @param {string} [settings.anchor = { url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false }] An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},` the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
-* @param {string} [settings.image = { url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg' }] Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
+* @param {string} [settings.anchor = { url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false }] An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false},` the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'NewWindow' or 'SameWindow', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
+* @param {string} [settings.image = { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' }] Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
 * @param {function} [settings.onLinkClick = null] Call back for clicking on links to control link behavior.
+* @param {function} [settings.showHtmlView = false] If set to true, editor should be displayed in HTML view initialy.
 */
 const EDITOR_DEFAULTS = {
   buttons: {
@@ -41,6 +44,7 @@ const EDITOR_DEFAULTS = {
       'separator', 'quote', 'orderedlist', 'unorderedlist',
       'separator', 'anchor',
       'separator', 'image',
+      'separator', 'clearFormatting',
       'separator', 'source'
     ],
     source: [
@@ -56,10 +60,11 @@ const EDITOR_DEFAULTS = {
   secondHeader: 'h4',
   placeholder: null,
   pasteAsPlainText: false,
-  // anchor > target: 'Same window'|'New window'| any string value
-  anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false },
-  image: { url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg' },
-  onLinkClick: null
+  // anchor > target: 'SameWindow'|'NewWindow'| any string value
+  anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false },
+  image: { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' },
+  onLinkClick: null,
+  showHtmlView: false
 };
 
 function Editor(element, settings) {
@@ -83,7 +88,8 @@ Editor.prototype = {
     this.isFirefox = env.browser.name === 'firefox';
 
     this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
-    this.id = `${this.element.uniqueId('editor')}-id`;
+    this.id = `${utils.uniqueId(this.element, 'editor')}-id`;
+
     this.container = this.element.parent('.field, .field-short').addClass('editor-container');
 
     s.anchor = $.extend({}, EDITOR_DEFAULTS.anchor, s.anchor);
@@ -95,8 +101,8 @@ Editor.prototype = {
     s.anchor.defaultIsClickable = s.anchor.isClickable;
 
     s.anchor.targets = s.anchor.targets || {
-      'Same window': '',
-      'New window': '_blank'
+      SameWindow: '',
+      NewWindow: '_blank'
     };
 
     $.each(this.settings.anchor.targets, (key, val) => {
@@ -110,7 +116,7 @@ Editor.prototype = {
       if (s.anchor.target && $.trim(s.anchor.target).length) {
         s.anchor.defaultTarget = s.anchor.target;
       } else {
-        s.anchor.defaultTargetText = 'Same window';
+        s.anchor.defaultTargetText = Locale.translate('SameWindow');
         s.anchor.defaultTarget = s.anchor.targets[s.anchor.defaultTargetText];
       }
     }
@@ -119,6 +125,11 @@ Editor.prototype = {
     if (this.element.hasClass('is-readonly')) {
       this.readonly();
     }
+
+    if (this.settings.showHtmlView) {
+      this.toggleSource();
+    }
+
     return this;
   },
 
@@ -301,8 +312,12 @@ Editor.prototype = {
     buttonset += '</div>';
     toolbar += `${buttonset}</div>`;
 
-    this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ?
-      this.element.prev() : this.element);
+    if (this.element.parent().find('.icon-dirty').length) {
+      this.toolbar = $(toolbar).insertBefore(this.element.parent().find('.icon-dirty'));
+    } else {
+      this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ?
+        this.element.prev() : this.element);
+    }
     this.toolbar.toolbar();
 
     // Invoke Tooltips
@@ -333,16 +348,16 @@ Editor.prototype = {
 
   initTextarea() {
     const self = this;
-    if (this.textarea) {
+    if (this.textarea && !this.settings.showHtmlView) {
       return this;
     }
     this.textarea = this.createTextarea();
 
     // fill the text area with any content that may already exist within the editor DIV
-    this.textarea.text(this.element.html().toString());
+    this.textarea.text(xssUtils.sanitizeHTML(this.element.html().toString()));
 
-    self.container.on('input.editor keyup.editor', self.element, debounce(() => {
-      self.textarea.val(self.element.html().toString());
+    self.container.on('input.editor keyup.editor', '.editor', debounce(() => {
+      self.textarea.html(xssUtils.sanitizeHTML(self.element.html().toString()));
       // setting the value via .val doesn't trigger the change event
       self.element.trigger('change');
     }, 500));
@@ -390,6 +405,7 @@ Editor.prototype = {
       u: 85, // {Ctrl + U} underline
       h3: 51, // {Ctrl + 3} h3
       h4: 52, // {Ctrl + 4} h4
+      space: 32, // {Ctrl + Space} Clear Formatting
       sv: 192 // {Ctrl + ~} toggle source -or- visualview
     };
 
@@ -455,6 +471,9 @@ Editor.prototype = {
           this.triggerClick(e, 'underline');
           e.preventDefault();
           break;
+        case keys.space:
+          this.triggerClick(e, 'clearFormatting');
+          break;
         case keys.sv:
           this.triggerClick(e, currentElement === this.element ? 'source' : 'visual');
           break;
@@ -489,7 +508,7 @@ Editor.prototype = {
       this.sourceView.addClass('is-focused');
     }).on('blur.editor', (e) => {
       this.sourceView.removeClass('is-focused');
-      this.element.empty().html($.sanitizeHTML(this.textarea.val()));
+      this.element.empty().html(xssUtils.sanitizeHTML(this.textarea.val()));
 
       if (this.element.data('validate')) {
         this.element.data('validate').validate(this.element, true, e);
@@ -669,6 +688,8 @@ Editor.prototype = {
 
       justifyRight: `<button type="button" class="btn" title="${Locale.translate('JustifyRight')}" data-action="justifyRight" >${buttonLabels.justifyRight}</button>`,
 
+      clearFormatting: `<button type="button" class="btn" title="${Locale.translate('ClearFormatting')}" data-action="clearFormatting" >${buttonLabels.clearFormatting}</button>`,
+
       source: `<button type="button" class="btn" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
 
       visual: `<button type="button" class="btn" title="${Locale.translate('ViewVisual')}" data-action="visual" >${buttonLabels.visual}</button>`
@@ -703,6 +724,7 @@ Editor.prototype = {
       justifyLeft: this.getIcon('JustifyLeft', 'left-text-align'),
       justifyCenter: this.getIcon('JustifyCenter', 'center-text'),
       justifyRight: this.getIcon('JustifyRight', 'right-text-align'),
+      clearFormatting: this.getIcon('clearFormatting', 'clear-formatting'),
       source: this.getIcon('ViewSource', 'html', 'html-icon'),
       visual: this.getIcon('ViewSource', 'visual', 'visual-icon')
     };
@@ -818,7 +840,7 @@ Editor.prototype = {
             self.createLink($(`[name="em-url-${self.id}"]`, this));
           }
         } else {
-          self.insertImage($('#image').val());
+          self.insertImage($(`#image-${self.id}`).val());
         }
       });
 
@@ -843,7 +865,7 @@ Editor.prototype = {
     let isTargetCustom = true;
 
     $.each(s.anchor.targets, (key, val) => {
-      targetOptions += `<option value="${val}">${key}</option>`;
+      targetOptions += `<option value="${val}">${Locale.translate(key)}</option>`;
       if ((this.settings.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
         isTargetCustom = false;
       }
@@ -904,8 +926,8 @@ Editor.prototype = {
         </div>
         <div class="modal-body">
           <div class="field">
-            <label for="image">${Locale.translate('Url')}</label>
-            <input id="image" name="image" type="text" value="${this.settings.image.url}">
+            <label for="image-${this.id}">${Locale.translate('Url')}</label>
+            <input id="image-${this.id}" name="image-${this.id}" type="text" value="${this.settings.image.url}">
           </div>
           <div class="modal-buttonset">
             <button type="button" class="btn-modal btn-cancel">
@@ -926,14 +948,16 @@ Editor.prototype = {
   },
 
   updateCurrentLink(alink) {
-    const emUrl = $(`[name="em-url-${this.id}"]`).val();
-    const emClass = $(`[name="em-class-${this.id}"]`).val();
-    const emTarget = $(`[name="em-target-${this.id}"]`).val();
+    const emUrl = xssUtils.stripTags($(`[name="em-url-${this.id}"]`).val());
+    const emClass = xssUtils.stripTags($(`[name="em-class-${this.id}"]`).val());
+    const emTarget = xssUtils.stripTags($(`[name="em-target-${this.id}"]`).val());
     const emIsClickable = this.settings.anchor.showIsClickable ? $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
-    alink.attr('href', this.fixLinkFormat((emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl)));
-    alink.attr('class', (emClass && $.trim(emClass).length ? emClass : this.settings.anchor.defaultClass));
-    alink.attr('data-url', (emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl).replace('http://', ''));
+    if (alink) {
+      alink[0].setAttribute('href', this.fixLinkFormat((emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl)));
+      alink[0].setAttribute('class', (emClass && $.trim(emClass).length ? emClass : this.settings.anchor.defaultClass));
+      alink[0].setAttribute('data-url', (emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl).replace('http://', ''));
+    }
 
     if (emIsClickable) {
       alink.attr('contenteditable', false);
@@ -953,8 +977,8 @@ Editor.prototype = {
     this.restoreSelection(this.savedSelection);
 
     // Fix and Format the Link
-    const originalValue = input[0].value;
-    input.val(this.fixLinkFormat(input[0].value));
+    const cleanValue = xssUtils.stripTags(this.fixLinkFormat(input[0].value));
+    input.val(cleanValue);
 
     // Set selection url/class/target for Link
     this.settings.anchor.url = input.val();
@@ -963,7 +987,7 @@ Editor.prototype = {
     this.settings.anchor.isClickable = this.settings.anchor.showIsClickable ?
       $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
-    const alink = $(`<a data-url="${originalValue}" href="${input.val()}">${input.val()}</a>`);
+    const alink = $(`<a data-url="${cleanValue}" href="${cleanValue}">${cleanValue}</a>`);
 
     if (this.settings.anchor.class && $.trim(this.settings.anchor.class).length) {
       alink.addClass(this.settings.anchor.class);
@@ -1285,6 +1309,12 @@ Editor.prototype = {
             (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
           pastedData = e.originalEvent.clipboardData.getData('text/html');
         }
+        if (types instanceof DOMStringList && types.contains('text/plain')) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+        }
+        if ((typeof types === 'object' && types[0] && types[0] === 'text/plain') && !types[1]) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+        }
       } else {
         paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
         paragraphs = paste.split(/[\r\n]/g);
@@ -1448,6 +1478,7 @@ Editor.prototype = {
 
             // Working with list
             // Start with "<li"
+            let pasteHtml = '';
             if (/(^(\s+?)?<li)/ig.test(html)) {
               // Pasted data starts and ends with "li" tag
               if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) { // ends with "</li>"
@@ -1455,11 +1486,11 @@ Editor.prototype = {
                 if (!thisNode.is('li')) {
                   html = `<ul>${html}</ul>`;
                 }
-                thisNode.replaceWith(html);
+                pasteHtml = html;
               } else if (thisNode.is('li')) {
                 // Missing at the end "</li>" tag
                 // Pasting on "li" node
-                thisNode.replaceWith(`${html}</li>`);
+                pasteHtml = `${html}</li>`;
               } else {
                 // Not pasting on "li" node
 
@@ -1467,9 +1498,9 @@ Editor.prototype = {
                 str = (html.match(/<\/ul|<\/ol/gi) || []);
                 // Pasted data contains "ul or ol" tags
                 if (str.length) {
-                  thisNode.replaceWith(html);
+                  pasteHtml = html;
                 } else {
-                  thisNode.replaceWith(`${html}</li></ul>`);
+                  pasteHtml = `${html}</li></ul>`;
                 }
               }
             } else if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) {
@@ -1477,7 +1508,7 @@ Editor.prototype = {
 
               // Pasting on "li" node
               if (thisNode.is('li')) {
-                thisNode.replaceWith(`<li>${html}`);
+                pasteHtml = `<li>${html}`;
               } else {
                 str = (html.match(/<ul|<ol/gi) || []);
                 // Pasted data contains "ul or ol" tags
@@ -1486,8 +1517,12 @@ Editor.prototype = {
                 } else {
                   html = `<ul>${html}</ul>`;
                 }
-                thisNode.replaceWith(html);
+                pasteHtml = html;
               }
+            }
+
+            if (pasteHtml) {
+              DOM.html(thisNode, pasteHtml, '*');
             }
 
             // Default case
@@ -1531,7 +1566,7 @@ Editor.prototype = {
     }
 
     // Remove "ng-" directives and "ng-" classes
-    s = s.replace(/(ng-\w+-\w+="(.|\n)*?"|ng-\w+="(.|\n)*?"|ng-(\w+-\w+)|ng-(\w+))/g, '');
+    s = s.replace(/\sng-[a-z-]+/, '');
 
     // Remove comments
     s = s.replace(/<!--(.*?)-->/gm, '');
@@ -1759,6 +1794,8 @@ Editor.prototype = {
         this.modals.image.data('modal').open();
       } else if (action === 'foreColor' || action === 'backColor') {
         this.colorpickerActions(action);
+      } else if (action === 'clearFormatting') {
+        this.clearFormatting();
       } else if (action === 'source' || action === 'visual') {
         this.toggleSource();
       } else {
@@ -1786,7 +1823,7 @@ Editor.prototype = {
 
   toggleSource() {
     if (this.sourceViewActive()) {
-      this.element.empty().html($.sanitizeHTML(this.textarea.val()));
+      this.element.empty().html(xssUtils.sanitizeHTML(this.textarea.val()));
       this.element.removeClass('source-view-active hidden');
       this.sourceView.addClass('hidden').removeClass('is-focused');
       this.element.trigger('focus.editor');
@@ -1809,6 +1846,166 @@ Editor.prototype = {
       this.textarea.focus();
     }
     this.switchToolbars();
+  },
+
+  /**
+   * Function to clear formatting on selected area.
+   * @private
+   * @returns {void}
+   */
+  clearFormatting() {
+    const parentEl = this.getSelectionParentElement();
+    let parentTag = parentEl.tagName;
+    let align = {};
+
+    // Function to get text-align value if found
+    const getTextAlign = () => {
+      const isFound = el => el && el.style && el.style.textAlign !== '';
+      let elem = parentEl;
+      let found = isFound(elem);
+      let max = 9999;
+      while (!found && max > 0) {
+        max--;
+        elem = elem ? elem.parentNode : null;
+        found = elem && elem === this.element[0] || isFound(elem);
+      }
+      const r = { found: elem && elem !== parentEl && elem !== this.element[0] };
+      if (r.found) {
+        r.elem = elem;
+        r.textAlign = elem.style.textAlign;
+      }
+      return r;
+    };
+
+    // Clear other formated tags.
+    const clearFormatedTags = () => {
+      const replaceTag = (elem) => {
+        const parent = elem.parentNode;
+        const p = document.createElement('p');
+        p.innerHTML = elem.innerHTML;
+        parent.replaceChild(p, elem);
+      };
+      if (this.parentElements.indexOf(parentTag) > -1) {
+        if (parentTag !== 'p') {
+          replaceTag(parentEl);
+        }
+      } else {
+        this.parentElements.forEach((el) => {
+          if (el !== 'p') {
+            const nodes = [].slice.call(parentEl.querySelectorAll(el));
+            nodes.forEach(node => replaceTag(node));
+          }
+        });
+      }
+    };
+
+    // Clear all lists belongs to selection area
+    const clearLists = () => {
+      const normalizeList = (list) => {
+        const items = [].slice.call(list.querySelectorAll('li'));
+        if (items.length > 0) {
+          const fragment = document.createDocumentFragment();
+          items.forEach((item) => {
+            const textNode = document.createTextNode(item.textContent);
+            fragment.appendChild(textNode);
+            fragment.appendChild(document.createElement('br'));
+          });
+          const target = items[0].parentNode;
+          target.parentNode.insertBefore(fragment, target.nextSibling);
+          target.parentNode.removeChild(target);
+        }
+      };
+      if (parentTag === 'li') {
+        normalizeList(parentEl.parentNode);
+      } else if (/ul|ol/.test(parentTag)) {
+        normalizeList(parentEl);
+      } else {
+        const lists = [].slice.call(parentEl.parentNode.querySelectorAll('ul, ol'));
+        lists.forEach(list => normalizeList(list));
+      }
+    };
+
+    // Check if selection contains given node
+    const containsNodeInSelection = (node) => {
+      const sel = window.getSelection();
+      let r = false;
+      if (this.isIe11) {
+        const rangeAt = sel.getRangeAt(0);
+        const range = document.createRange();
+        range.selectNode(node);
+        const s2s = rangeAt.compareBoundaryPoints(Range.START_TO_END, range);
+        const s2e = rangeAt.compareBoundaryPoints(Range.START_TO_START, range);
+        const e2s = rangeAt.compareBoundaryPoints(Range.END_TO_START, range);
+        const e2e = rangeAt.compareBoundaryPoints(Range.END_TO_END, range);
+        r = ((s2s !== s2e) || (e2s !== e2e) || (s2s !== e2e));
+      } else {
+        r = sel.containsNode(node, true);
+      }
+      return r;
+    };
+
+    // Convert hyperlinks to plain text in selected area.
+    const hyperlinksToText = () => {
+      const toText = (a) => {
+        const parent = a.parentNode;
+        const text = a.firstChild;
+        parent.insertBefore(text, a);
+        parent.removeChild(a);
+        parent.normalize();
+      };
+      if (parentTag === 'a') {
+        toText(parentEl);
+      } else {
+        const links = [].slice.call(parentEl.querySelectorAll('a'));
+        links.forEach((a) => {
+          if (containsNodeInSelection(a)) {
+            toText(a);
+          }
+        });
+      }
+    };
+
+    if (parentEl && parentTag) {
+      parentTag = parentTag.toLowerCase();
+      align = getTextAlign();
+      clearLists();
+      clearFormatedTags();
+      hyperlinksToText();
+    }
+
+    // Some browser (IE, Firefox) use attr 'align' instead style `text-align`
+    parentEl.removeAttribute('align');
+    document.execCommand('removeFormat', false, null);
+
+    // Restore style `text-align`, some browser (chrome, safari) clear `text-align` on parent node with command `removeFormat`
+    if (align.found) {
+      align.elem.style.textAlign = align.textAlign;
+    }
+  },
+
+  /**
+   * Get selection parent element.
+   * @private
+   * @returns {object} parent element.
+   */
+  getSelectionParentElement() {
+    let parentEl = null;
+    let sel;
+    if (window.getSelection) {
+      sel = window.getSelection();
+      if (sel.rangeCount) {
+        parentEl = sel.getRangeAt(0).commonAncestorContainer;
+        if (parentEl.nodeType !== 1) {
+          parentEl = parentEl.parentNode;
+        }
+      }
+    } else {
+      sel = document.selection;
+      if (sel && sel.type !== 'Control') {
+        parentEl = sel.createRange().parentElement();
+      }
+    }
+    return parentEl;
   },
 
   // Set ['foreColor'|'backColor'] button icon color in toolbar
@@ -1854,37 +2051,20 @@ Editor.prototype = {
         }
       } else {
         // [action: backColor] - for Chrome/Firefox/Safari
-        // Get selection parent element
-        const getSelectionParentElement = function () {
-          let parentEl = null;
-          let sel;
-          if (window.getSelection) {
-            sel = window.getSelection();
-            if (sel.rangeCount) {
-              parentEl = sel.getRangeAt(0).commonAncestorContainer;
-              if (parentEl.nodeType !== 1) {
-                parentEl = parentEl.parentNode;
-              }
-            }
-          } else if ((sel = document.selection) && sel.type !== 'Control') {// eslint-disable-line
-            parentEl = sel.createRange().parentElement();
-          }
-          return parentEl;
-        };
 
         // FIX: "backColor" - Chrome/Firefox/Safari
         // some reason font/span node not get inserted with "backColor"
         // so use "fontSize" command to add node, then remove size attribute
         // this fix will conflict with combination of font size & background color
         document.execCommand('fontSize', false, '2');
-        const parent = getSelectionParentElement().parentNode;
+        const parent = this.getSelectionParentElement().parentNode;
         const els = parent.getElementsByTagName('font');
 
         // Using timeout, firefox not executes with current call stack
         setTimeout(() => {
           for (let i = 0, l = els.length; i < l; i++) {
             if (els[i].hasAttribute('size')) {
-              els[i].setAttribute('style', `background-color: ${value};`);
+              els[i].style.backgroundColor = value;
               els[i].removeAttribute('size');
             }
           }
@@ -2035,7 +2215,7 @@ Editor.prototype = {
   },
 
   teardown() {
-    this.container.off('input.editor keyup.editor', this.element);
+    this.element.off('input.editor keyup.editor');
     $('html').off('mouseup.editor');
 
     this.destroyToolbar();

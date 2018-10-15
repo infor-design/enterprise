@@ -1,10 +1,6 @@
 ---
 title: List Filter
 description: This page describes List Filter.
-demo:
-  pages:
-  - name: Multiselect Filter Types
-    slug: test-filter-types
 ---
 
 ## Code Example
@@ -22,3 +18,7 @@ var term = 'search for me';
 results = this.listfilter.filter(list, term);
 
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

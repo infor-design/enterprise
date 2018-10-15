@@ -29,32 +29,6 @@ $.fn.bindFirst = function (name, fn) {
 export let uniqueIdCount = 0; // eslint-disable-line
 
 /**
- * Generates a unique ID for an element based on the element's configuration, any
- * Soho components that are generated against it, and provided prefixes/suffixes.
- * @private
- * @param {string} [className] CSS classname (will be interpreted automatically
- *  if it's not provided)
- * @param {string} [prefix] optional prefix
- * @param {string} [suffix] optional suffix
- * @returns {string} the compiled uniqueID
- */
-$.fn.uniqueId = function (className, prefix, suffix) {
-  const predefinedId = $(this).attr('id');
-
-  if (predefinedId && $(`#${predefinedId}`).length < 2) {
-    return predefinedId;
-  }
-
-  prefix = (!prefix ? '' : `${prefix}-`);
-  suffix = (!suffix ? '' : `-${suffix}`);
-  className = (!className ? $(this).attr('class') : className);
-
-  const str = prefix + className + uniqueIdCount + suffix;
-  uniqueIdCount += 1;
-  return str;
-};
-
-/**
  * Detect whether or not a text string represents a valid CSS property.  This check
  * includes an attempt at checking for vendor-prefixed versions of the CSS property
  * provided.
@@ -186,6 +160,33 @@ $.fn.listEvents = function () {
 const utils = {};
 
 /**
+ * Generates a unique ID for an element based on the element's configuration, any
+ * Soho components that are generated against it, and provided prefixes/suffixes.
+ * @private
+ * @param {HTMLElement} element the element being used for uniqueId capture
+ * @param {string} [className] CSS classname (will be interpreted automatically
+ *  if it's not provided)
+ * @param {string} [prefix] optional prefix
+ * @param {string} [suffix] optional suffix
+ * @returns {string} the compiled uniqueID
+ */
+utils.uniqueId = function (element, className, prefix, suffix) {
+  const predefinedId = element.id;
+
+  if (predefinedId && $(`#${predefinedId}`).length < 2) {
+    return predefinedId;
+  }
+
+  prefix = (!prefix ? '' : `${prefix}-`);
+  suffix = (!suffix ? '' : `-${suffix}`);
+  className = (!className ? Array.from(element.classList).join('-') : className);
+
+  const str = `${prefix}${className}-${uniqueIdCount}${suffix}`;
+  uniqueIdCount += 1;
+  return str;
+};
+
+/**
  * Grabs an attribute from an HTMLElement containing stringified JSON syntax,
  * and interprets it into options.
  * @private
@@ -288,6 +289,40 @@ $.fn.parseOptions = function (element, attr) {
 };
 
 /**
+ * Performs the usual Boolean coercion with the exception of the strings "false"
+ * (case insensitive) and "0"
+ * @private
+ * @param {boolean|string|number} b the value to be checked
+ * @returns {boolean} whether or not the value passed coerces to true.
+ */
+utils.coerceToBoolean = function (b) {
+  return !(/^(false|0)$/i).test(b) && !!b;
+};
+
+/**
+ * Coerces all properties inside of a settings object to a boolean.
+ * @param {Object} settings incoming settings
+ * @param {String[]} [targetPropsArr=undefined] optional array of specific settings keys to target.
+ *  If no keys are provided, all keys will be targeted.
+ * @returns {Object} modified settings.
+ */
+utils.coerceSettingsToBoolean = function (settings, targetPropsArr) {
+  if (!targetPropsArr || !Array.isArray(targetPropsArr)) {
+    Object.keys(settings).forEach((key) => {
+      targetPropsArr.push(key);
+    });
+  }
+
+  let i;
+  let l;
+  for (i = 0, l = targetPropsArr.length; i < l; i++) {
+    settings[targetPropsArr[i]] = utils.coerceToBoolean(settings[targetPropsArr[i]]);
+  }
+
+  return settings;
+};
+
+/**
  * Timer - can be used for play/pause or stop for given time.
  * Use as new instance [ var timer = new $.fn.timer(function() {}, 6000); ]
  * then can be listen events as:
@@ -376,49 +411,6 @@ $.copyToClipboard = function (text) { // eslint-disable-line
 };
 
 /**
- * Escapes HTML, replacing special characters with encoded symbols.
- * @private
- * @param {string} value HTML in string form
- * @returns {string} the modified value
- */
-$.escapeHTML = function (value) {
-  let newValue = value;
-  if (typeof value === 'string') {
-    newValue = newValue.replace(/&/g, '&amp;');
-    newValue = newValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-  return newValue;
-};
-
-/**
- * Un-escapes HTML, replacing encoded symbols with special characters.
- * @private
- * @param {string} value HTML in string form
- * @returns {string} the modified value
- */
-$.unescapeHTML = function (value) {
-  let newValue = value;
-  if (typeof value === 'string') {
-    newValue = newValue.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-    newValue = newValue.replace(/&amp;/g, '&');
-  }
-  return newValue;
-};
-
-/**
- * Remove Script tags and all onXXX functions
- * @private
- * @param {string} html HTML in string form
- * @returns {string} the modified value
- */
-$.sanitizeHTML = function (html) {
-  let santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
-  santizedHtml = santizedHtml.replace(/<[^>]+/g, match => match.replace(/(\/|\s)on\w+=(\'|")?[^"]*(\'|")?/g, '')); // eslint-disable-line
-
-  return santizedHtml;
-};
-
-/**
  * Clearable (Shows an X to clear)
  * @private
  */
@@ -426,10 +418,31 @@ $.fn.clearable = function () {
   const self = this;
   this.element = $(this);
 
-  // Create an X icon button styles in icons.scss
-  this.xButton = $.createIconElement({ classes: 'close is-empty', icon: 'close' }).icon();
+  const COMPONENT_NAME = 'clearable';
 
-  // Create a function
+  // Create an X icon button styles in icons.scss
+  this.xButton = this.element.find('.icon.close').first();
+  if (!this.xButton || !this.xButton.length) {
+    this.xButton = $.createIconElement({ classes: 'close is-empty', icon: 'close' }).icon();
+  }
+
+  // Clears the contents of the base element
+  this.clear = function () {
+    self.element.val('').trigger('change').focus().trigger('cleared');
+    self.checkContents();
+  };
+
+  // Event listener for the xButton's `keydown` event
+  this.handleKeydown = function (e) {
+    const key = e.key;
+
+    if (key === 'Enter' || (e.altKey && (key === 'Delete' || key === 'Backspace'))) {
+      e.preventDefault();
+      self.clear();
+    }
+  };
+
+  // Checks the contents of the base element (presumably an input field) for empty
   this.checkContents = function () {
     const text = self.element.val();
     if (!text || !text.length) {
@@ -443,18 +456,29 @@ $.fn.clearable = function () {
 
   // Add the button to field parent
   this.xButton.insertAfter(self.element);
+  this.xButton[0].tabIndex = 0;
+  this.xButton[0].setAttribute('focusable', true);
 
   // Handle Events
   this.xButton
-    .off()
-    .on('click.clearable', () => {
-      self.element.val('').trigger('change').focus().trigger('cleared');
+    .off([
+      `click.${COMPONENT_NAME}`,
+      `keydown.${COMPONENT_NAME}`
+    ].join(' '))
+    .on('click.clearable', this.clear)
+    .on('keydown.clearable', this.handleKeydown);
+
+  const elemEvents = [
+    `blur.${COMPONENT_NAME}`,
+    `change.${COMPONENT_NAME}`,
+    `keyup.${COMPONENT_NAME}`
+  ].join(' ');
+
+  this.element
+    .off(elemEvents)
+    .on(elemEvents, () => {
       self.checkContents();
     });
-
-  this.element.on('change.clearable, blur.clearable, keyup.clearable', () => {
-    self.checkContents();
-  });
 
   // Set initial state
   this.checkContents();
@@ -604,20 +628,39 @@ utils.fixSVGIcons = function fixSVGIcons(rootElement) {
     return;
   }
 
+  const xlinkNS = 'http://www.w3.org/1999/xlink';
+
+  // Handle jQuery
   if (rootElement instanceof $) {
     if (!rootElement.length) {
       return;
     }
 
-    rootElement = rootElement[0];
+    if (rootElement.length === 1) {
+      rootElement = rootElement[0];
+    } else {
+      rootElement.each((i, elem) => {
+        fixSVGIcons(elem);
+      });
+      return;
+    }
+  }
+
+  // Handle NodeList in an IE-friendly way
+  // https://developer.mozilla.org/en-US/docs/Web/API/NodeList#Example
+  if (rootElement instanceof NodeList) {
+    Array.prototype.forEach.call(rootElement, (elem) => {
+      fixSVGIcons(elem);
+    });
+    return;
   }
 
   setTimeout(() => {
     const uses = rootElement.getElementsByTagName('use');
     for (let i = 0; i < uses.length; i++) {
-      const attr = uses[i].getAttribute('xlink:href');
-      uses[i].setAttribute('xlink:href', 'x');
-      uses[i].setAttribute('xlink:href', attr);
+      const attr = uses[i].getAttributeNS(xlinkNS, 'href');
+      uses[i].setAttributeNS(xlinkNS, 'href', 'x');
+      uses[i].setAttributeNS(xlinkNS, 'href', attr);
     }
   }, 1);
 };

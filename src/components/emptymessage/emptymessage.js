@@ -76,6 +76,10 @@ EmptyMessage.prototype = {
             `<span>${opts.button.text}</span>` +
           '</button>' +
         '</div>').appendTo(this.element);
+
+      if (opts.button.click) {
+        this.element.on('click', opts.button.click);
+      }
     }
 
     return this;

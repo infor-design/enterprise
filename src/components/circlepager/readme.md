@@ -2,9 +2,10 @@
 title: Circle Pager
 description: This page describes Circle Pager.
 demo:
-  pages:
+  embedded:
   - name: Default Circle Pager Example
     slug: example-index
+  pages:
   - name: Circle Pager on a Form
     slug: example-form
   - name: Circle Pager with more than one item per slide
@@ -23,7 +24,7 @@ Use the below markup to create a circle pager, then call `$(elem).circlepager()`
     <div class="slide">
       <div class="slide-content">
         <p>
-          <a href="#" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
+          <a href="#" id="hyperlink-1" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
         $750.00
         </p>
       </div>
@@ -32,7 +33,7 @@ Use the below markup to create a circle pager, then call `$(elem).circlepager()`
     <div class="slide">
       <div class="slide-content">
         <p>
-          <a href="#" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
+          <a href="#" id="hyperlink-2" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
         $750.00
         </p>
       </div>
@@ -41,7 +42,7 @@ Use the below markup to create a circle pager, then call `$(elem).circlepager()`
     <div class="slide">
       <div class="slide-content">
         <p>
-          <a href="#" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
+          <a href="#" id="hyperlink-3" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
         $750.00
         </p>
       </div>
@@ -53,15 +54,19 @@ Use the below markup to create a circle pager, then call `$(elem).circlepager()`
 
 ## Accessibility
 
--   [Carousel](https://www.w3.org/WAI/tutorials/carousels/) guidelines apply.
+- [Carousel](https://www.w3.org/WAI/tutorials/carousels/) guidelines apply.
 - We do not auto-move the carousel elements
 - User can <kbd>Tab</kbd> to the circles and activate
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
--   <kbd>Tab</kbd> to move through the pages
--   <kbd>Enter</kbd> to activate a page
+- <kbd>Tab</kbd> to move through the pages
+- <kbd>Enter</kbd> to activate a page
 
 ## Upgrading from 3.X
 
--   Replaces `.inforCarousel()` in a more limited fashion
+- Replaces `.inforCarousel()` in a more limited fashion

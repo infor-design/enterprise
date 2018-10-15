@@ -13,26 +13,34 @@
     .dot {
       cursor: pointer;
       stroke: transparent;
+      -webkit-tap-highlight-color: $transparent;
     }
 
     .line-group .line {
       cursor: pointer;
+      -webkit-tap-highlight-color: $transparent;
     }
 
     .area {
-      opacity: .2;
+      opacity: 0.2;
       pointer-events: none;
     }
 
     .is-not-selected {
-      opacity: .35;
+      opacity: 0.35;
     }
   }
 }
 
-.line-chart:not(.bubble) {
+.line-chart:not(.bubble):not(.scatterplot) {
   .x.axis .tick line {  //small line that shows up on the x axis
     visibility: hidden;
+  }
+}
+
+.line-chart.scatterplot {
+  .chart-legend-color {
+    top: -2px;
   }
 }
 

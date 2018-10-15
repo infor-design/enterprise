@@ -19,6 +19,7 @@
 
     .heading {
       @include font-size(18);
+
       color: $font-color-extrahighcontrast;
       display: table-cell;
       height: 60px;
@@ -27,6 +28,7 @@
 
       small {
         @include font-size(14);
+
         display: block;
         margin: 2px 0 0;
         padding: 0;
@@ -112,8 +114,9 @@
 
         span {
           display: inline-block;
-          @include font-size(14);
           max-width: 80%;
+
+          @include font-size(14);
         }
 
         .tree-text {
@@ -212,7 +215,7 @@
   .step-process-container {
     .main,
     .sidebar {
-      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+      @include transform-transition-list(300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
     }
 
     .main .btn-toggle-steps {
@@ -224,7 +227,8 @@
     }
 
     .toolbar-collapsible {
-      @include transition(margin-top 300ms cubic-bezier(.17, .04, .03, .94));
+      @include transition(margin-top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
       position: absolute;
       top: 0;
       width: 100%;
@@ -257,14 +261,16 @@
     .main,
     .sidebar {
       $this-height: calc(100% - #{$header-height});
-      position: absolute;
+
       height: $this-height;
-      min-height: $this-height !important;
       height: 100%;
+      min-height: $this-height !important;
+      position: absolute;
     }
 
     .sidebar {
       @include css3(transform, translateX(0));
+
       display: block !important;
 
       .tree {
@@ -283,6 +289,7 @@
     &.phone-hide-steps {
       .main {
         @include css3(transform, translateX(0));
+
         width: 100%;
       }
 
@@ -296,8 +303,8 @@
     }
 
     .js-step-links-scroll {
-      top: $header-height;
       padding-top: $header-height;
+      top: $header-height;
     }
 
     .js-step-container-scroll {
@@ -305,16 +312,16 @@
     }
 
     .phone-action-bar {
-      position: absolute;
       bottom: 0;
+      position: absolute;
       width: 100%;
 
       button {
         border-radius: 0;
         display: inline-block;
         height: $header-height;
-        width: 50%;
         margin: 0;
+        width: 50%;
       }
     }
   }
@@ -340,7 +347,6 @@ html[dir='rtl'] {
         }
       }
 
-
       li {
         > a {
           padding: 15px 45px 15px 60px;
@@ -349,9 +355,9 @@ html[dir='rtl'] {
         .icon {
           // Position new alert icon for step "status"
           &.step-alert {
+            left: auto;
             margin-left: 15px;
             margin-right: 0;
-            left: auto;
             right: 15px;
           }
         }

@@ -1,13 +1,16 @@
 ---
-title: Splitter Component 
+title: Splitter Component
 description: This page describes Splitter Component .
+demo:
+  embedded:
+  - name: Main Example
+    slug: example-index
+  pages:
+  - name: Splitter Element in Left Pane
+    slug: example-splitter-left
+  - name: Events
+    slug: example-events
 ---
-
-## Configuration Examples
-
-1. Main [View Example](../components/splitter/example-index)
-2. Splitter Element in Left Pane [View Example](../components/splitter/example-splitter-left)
-3. Events [View Example](../components/splitter/example-events)
 
 ## Code Example
 
@@ -27,7 +30,7 @@ A div with the class of splitter will become the split handle.
 
   <nav class="sidebar scrollable">
     <div class="content">
-      <div class="splitter"></div>
+      <div id="splitter" class="splitter"></div>
     </div>
   </nav>
 
@@ -37,6 +40,10 @@ A div with the class of splitter will become the split handle.
 ## Accessibility
 
 - This is a presentation only element
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

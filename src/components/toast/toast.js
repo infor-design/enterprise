@@ -1,6 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils, math } from '../../utils/utils';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { Locale } from '../../../src/components/locale/locale';
 
@@ -14,7 +14,8 @@ const TOAST_DEFAULTS = {
   position: 'top right',
   audibleOnly: false,
   progressBar: true,
-  timeout: 6000
+  timeout: 6000,
+  allowLink: false
 };
 
 /**
@@ -31,6 +32,7 @@ const TOAST_DEFAULTS = {
  * @param {boolean} [settings.progressBar = true] causes the toast to have a visible progress bar that will be completely
  * disappeared when the toast should be removed.
  * @param {number} [settings.timeout = 6000] the amount of time the toast should be present on-screen.
+ * @param {boolean} [settings.allowLink = false] if true, allows user to put links in the toast message.
  */
 function Toast(element, settings) {
   this.element = $(element);
@@ -63,11 +65,18 @@ Toast.prototype = {
     let isPausePlay = false;
     let percentage = 100;
     let container = $('#toast-container');
-    const toast = $(`
+    let toast = $(`
       <div class="toast">
-        <span class="toast-title">${stringUtils.stripHTML(settings.title)}</span>
-        <span class="toast-message">${stringUtils.stripHTML(settings.message)}</span>
+        <span class="toast-title">${xssUtils.stripHTML(settings.title)}</span>
+        <span class="toast-message">${xssUtils.stripHTML(settings.message)}</span>
       </div>`);
+    if (settings.allowLink) {
+      toast = $(`
+        <div class="toast">
+          <span class="toast-title">${xssUtils.stripHTML(settings.title)}</span>
+          <span class="toast-message">${xssUtils.stripTags(settings.message, '<a>')}</span>
+        </div>`);
+    }
     const closeBtn = $(`
       <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
         ${$.createIcon('close')}

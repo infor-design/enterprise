@@ -6,6 +6,8 @@ import { utils } from '../../utils/utils';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
+import '../emptymessage/emptymessage.jquery';
+
 // Settings and Options
 const COMPONENT_NAME = 'pie';
 
@@ -19,8 +21,6 @@ const COMPONENT_NAME = 'pie';
  * @param {object} [settings] The component settings.
  * @param {array} [settings.dataset] The data to use in the line/area/bubble.
  * @param {boolean} [settings.isDonut=false] If true it renders as a donut chart.
- * @param {number} [settings.animationSpeed=600] Controls the animation speed
- * @param {boolean|string} [settings.animate=true] true|false - will do or not do the animation and 'initial' will do only first time the animation.
  * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page. There is tooltip values provided.
   It will not be shown. If you still want lines at the lower breakpoint you can set this to true
  * @param {boolean} [settings.hideCenterLabel=false] If false the center label will not be shown.
@@ -30,6 +30,7 @@ const COMPONENT_NAME = 'pie';
  * @param {string} [settings.line.show='value'] Controls the line value, this can be value, label or percent or custom function.
  * @param {string} [settings.line.formatter='.0f'] The d3.formatter string.
  * @param {boolean} [settings.showLegend=true] If false the legend will not be shown.
+ * @param {boolean} [settings.showMobile=false] If true the chart is better formed to fit in a single widget.
  * @param {string} [settings.legendPlacement='right'] Where to locate the legend. This can be bottom or right at the moment.
  * @param {object} [settings.legend] A setting that controls the legend values and format.
  * @param {string} [settings.legend.show='label (percent)'] Controls what is visible
@@ -40,13 +41,18 @@ const COMPONENT_NAME = 'pie';
  * @param {string} [settings.tooltip.show='label (value)'] Controls what is visible in
   the tooltip, this can be value, label or percent or custom function.
  * @param {string} [settings.tooltip.formatter='.0f'] The d3.formatter string.
+ * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
+ * This accepts an object of the form emptyMessage:
+ * `{title: 'No Data Available',
+ *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+ *  button: {text: 'xxx', click: <function>}
+ *  }`
+ *  Set this to null for no message or will default to 'No Data Found with an icon.'
  */
 
 const PIE_DEFAULTS = {
   dataset: [],
   isDonut: false,
-  animationSpeed: 600,
-  animate: true,
   redrawOnResize: true,
   hideCenterLabel: false,
   showLines: true,
@@ -65,7 +71,8 @@ const PIE_DEFAULTS = {
   tooltip: {
     show: 'label (value)', // value, label, label (value) or percent or custom function
     formatter: '.0f'
-  }
+  },
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
 function Pie(element, settings) {
@@ -91,14 +98,15 @@ Pie.prototype = {
     this.width = 0;
     this.isFirefox = env.browser.name === 'firefox';
 
+    // Handle Empty Data Set
+    if (this.settings.dataset.length === 0) {
+      this.element.emptymessage(this.settings.emptyMessage);
+      return this;
+    }
+
     this
       .build()
       .handleEvents();
-
-    // Handle initial option
-    if (this.settings.animate === 'initial') {
-      this.settings.animate = false;
-    }
 
     /**
      * Fires when the chart is complete done rendering, for customization.
@@ -130,19 +138,29 @@ Pie.prototype = {
     self.mainGroup.append('g').attr('class', 'lines');
     this.element.addClass('chart-pie');
 
+    if (this.settings.showMobile) {
+      this.settings.legendPlacement = 'bottom';
+    }
+
     if (self.settings.legendPlacement) {
       this.element.addClass(`has-${self.settings.legendPlacement}-legend`);
     }
 
     const w = parseInt(this.element.width(), 10);
+    const h = parseInt(this.element.height(), 10);
 
     const dims = {
-      height: parseInt(this.element.height(), 10),
+      height: h,
       width: w
     };
 
     if (self.settings.legendPlacement === 'right') {
       dims.width = w * 0.75;
+    }
+
+    if (this.settings.showMobile) {
+      dims.height = h * 0.80; // make some more room for the legend
+      this.element.addClass('is-mobile');
     }
 
     dims.radius = Math.min(dims.width, dims.height) / 2;
@@ -165,7 +183,7 @@ Pie.prototype = {
 
     self.svg
       .attr('width', self.settings.legendPlacement === 'right' ? '75%' : '100%')
-      .attr('height', '100%');
+      .attr('height', self.settings.showMobile ? '80%' : '100%');
 
     self.mainGroup
       .attr('transform', `translate(${dims.width / 2},${dims.height / 2})`);
@@ -197,21 +215,6 @@ Pie.prototype = {
     if (isEmpty || sum === 0 || isNaN(sum)) {
       this.chartData.push({ data: {}, color: '#BDBDBD', name: 'Empty-Pie', value: 100, percent: 1, percentRound: 100 });
     }
-
-    // 1. Animate on reload example
-    // self.updateData(self.chartData);
-    // setTimeout(function () {
-    //  self.updateData(self.randomize());
-    // }, 4000);
-    // charts.appendTooltip();
-
-    // 2. Animate initial - looks wierd
-    // const temp = JSON.parse(JSON.stringify(self.chartData));
-    // self.updateData(self.randomize(true));
-    // self.chartData = JSON.parse(JSON.stringify(temp));
-    // setTimeout(function () {
-    //   self.updateData(self.chartData);
-    // }, 0);
 
     self.updateData(self.chartData);
     if (self.settings.showTooltips) {
@@ -398,10 +401,10 @@ Pie.prototype = {
         const rads = self.midAngle(d);
 
         // https://www.wyzant.com/resources/lessons/math/trigonometry/unit-circle
-        const isTop = (rads < (Math.PI / 4) && rads > 0) || rads > (7 * Math.PI / 4);
-        const isRight = rads < (3 * Math.PI / 4) && rads > (Math.PI / 4);
-        const isBottom = rads < (5 * Math.PI / 4) && rads > (3 * Math.PI / 4);
-        const isLeft = rads < (7 * Math.PI / 4) && rads > (5 * Math.PI / 4);
+        const isTop = (rads <= (Math.PI / 4) && rads >= 0) || rads > (7 * Math.PI / 4);
+        const isRight = rads <= (3 * Math.PI / 4) && rads >= (Math.PI / 4);
+        const isBottom = rads <= (5 * Math.PI / 4) && rads >= (3 * Math.PI / 4);
+        const isLeft = rads <= (7 * Math.PI / 4) && rads >= (5 * Math.PI / 4);
 
         // Build the content
         let content = '';
@@ -716,8 +719,8 @@ Pie.prototype = {
     this.element.empty();
 
     return this
-      .teardown()
-      .init();
+      .build()
+      .element.trigger('rendered', [this.svg]);
   },
 
   /**
@@ -779,7 +782,7 @@ Pie.prototype = {
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
-    $(window).off(`resize.${COMPONENT_NAME}`);
+    $('body').off(`resize.${COMPONENT_NAME}`);
     return this;
   },
 
