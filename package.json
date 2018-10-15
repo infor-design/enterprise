@@ -146,7 +146,7 @@
     "unoconv": "^0.1.2",
     "vinyl-contents-tostring": "^1.0.0",
     "vinyl-write": "^0.2.2",
-    "webpack": "4.17.1",
+    "webpack": "4.20.2",
     "yargs": "^11.0.0"
   }
 }
