@@ -599,6 +599,15 @@ Tabs.prototype = {
       .on('mousedown.tabs', '> li', function (e) {
         self.handleAddFocusData(e, $(this));
 
+        if ($(e.target).hasClass('close')) {
+          const menu = $(this).data('popupmenu').menu;
+          const hrefs = [];
+          $.each(menu[0].children, function(i, li){
+            hrefs.push(li.children[0].href);
+          });
+          self.closeDismissibleTabs(hrefs);
+        }
+
         // let right click pass through
         if (e.which !== 3) {
           return self.handleTabClick(e, $(this));
@@ -2510,6 +2519,7 @@ Tabs.prototype = {
       }
     }
 
+
     // If we find nothing, search for ANY available tab
     if (!prevLi.length) {
       prevLi = this.tablist.children('li').not(notATab).first();
@@ -3816,6 +3826,18 @@ Tabs.prototype = {
    */
   closeDismissibleTab(tabId) {
     return this.remove(tabId);
+  },
+
+  /**
+   *
+   * @param {array} tabUrlArray the Array of urls from the target popupmenu
+   * @returns {this} component instance
+   */
+  closeDismissibleTabs(tabUrlArray) {
+    tabUrlArray.forEach(tabUrl => {
+      const tabId = tabUrl.match(/#.*/);
+      return this.remove(tabId[0]);
+    })
   },
 
   /**
