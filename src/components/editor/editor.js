@@ -44,6 +44,7 @@ const EDITOR_DEFAULTS = {
       'separator', 'quote', 'orderedlist', 'unorderedlist',
       'separator', 'anchor',
       'separator', 'image',
+      'separator', 'clearFormatting',
       'separator', 'source'
     ],
     source: [
@@ -404,6 +405,7 @@ Editor.prototype = {
       u: 85, // {Ctrl + U} underline
       h3: 51, // {Ctrl + 3} h3
       h4: 52, // {Ctrl + 4} h4
+      space: 32, // {Ctrl + Space} Clear Formatting
       sv: 192 // {Ctrl + ~} toggle source -or- visualview
     };
 
@@ -468,6 +470,9 @@ Editor.prototype = {
         case keys.u:
           this.triggerClick(e, 'underline');
           e.preventDefault();
+          break;
+        case keys.space:
+          this.triggerClick(e, 'clearFormatting');
           break;
         case keys.sv:
           this.triggerClick(e, currentElement === this.element ? 'source' : 'visual');
@@ -683,6 +688,8 @@ Editor.prototype = {
 
       justifyRight: `<button type="button" class="btn" title="${Locale.translate('JustifyRight')}" data-action="justifyRight" >${buttonLabels.justifyRight}</button>`,
 
+      clearFormatting: `<button type="button" class="btn" title="${Locale.translate('ClearFormatting')}" data-action="clearFormatting" >${buttonLabels.clearFormatting}</button>`,
+
       source: `<button type="button" class="btn" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
 
       visual: `<button type="button" class="btn" title="${Locale.translate('ViewVisual')}" data-action="visual" >${buttonLabels.visual}</button>`
@@ -717,6 +724,7 @@ Editor.prototype = {
       justifyLeft: this.getIcon('JustifyLeft', 'left-text-align'),
       justifyCenter: this.getIcon('JustifyCenter', 'center-text'),
       justifyRight: this.getIcon('JustifyRight', 'right-text-align'),
+      clearFormatting: this.getIcon('clearFormatting', 'clear-formatting'),
       source: this.getIcon('ViewSource', 'html', 'html-icon'),
       visual: this.getIcon('ViewSource', 'visual', 'visual-icon')
     };
@@ -1786,6 +1794,8 @@ Editor.prototype = {
         this.modals.image.data('modal').open();
       } else if (action === 'foreColor' || action === 'backColor') {
         this.colorpickerActions(action);
+      } else if (action === 'clearFormatting') {
+        this.clearFormatting();
       } else if (action === 'source' || action === 'visual') {
         this.toggleSource();
       } else {
@@ -1838,6 +1848,166 @@ Editor.prototype = {
     this.switchToolbars();
   },
 
+  /**
+   * Function to clear formatting on selected area.
+   * @private
+   * @returns {void}
+   */
+  clearFormatting() {
+    const parentEl = this.getSelectionParentElement();
+    let parentTag = parentEl.tagName;
+    let align = {};
+
+    // Function to get text-align value if found
+    const getTextAlign = () => {
+      const isFound = el => el && el.style && el.style.textAlign !== '';
+      let elem = parentEl;
+      let found = isFound(elem);
+      let max = 9999;
+      while (!found && max > 0) {
+        max--;
+        elem = elem ? elem.parentNode : null;
+        found = elem && elem === this.element[0] || isFound(elem);
+      }
+      const r = { found: elem && elem !== parentEl && elem !== this.element[0] };
+      if (r.found) {
+        r.elem = elem;
+        r.textAlign = elem.style.textAlign;
+      }
+      return r;
+    };
+
+    // Clear other formated tags.
+    const clearFormatedTags = () => {
+      const replaceTag = (elem) => {
+        const parent = elem.parentNode;
+        const p = document.createElement('p');
+        p.innerHTML = elem.innerHTML;
+        parent.replaceChild(p, elem);
+      };
+      if (this.parentElements.indexOf(parentTag) > -1) {
+        if (parentTag !== 'p') {
+          replaceTag(parentEl);
+        }
+      } else {
+        this.parentElements.forEach((el) => {
+          if (el !== 'p') {
+            const nodes = [].slice.call(parentEl.querySelectorAll(el));
+            nodes.forEach(node => replaceTag(node));
+          }
+        });
+      }
+    };
+
+    // Clear all lists belongs to selection area
+    const clearLists = () => {
+      const normalizeList = (list) => {
+        const items = [].slice.call(list.querySelectorAll('li'));
+        if (items.length > 0) {
+          const fragment = document.createDocumentFragment();
+          items.forEach((item) => {
+            const textNode = document.createTextNode(item.textContent);
+            fragment.appendChild(textNode);
+            fragment.appendChild(document.createElement('br'));
+          });
+          const target = items[0].parentNode;
+          target.parentNode.insertBefore(fragment, target.nextSibling);
+          target.parentNode.removeChild(target);
+        }
+      };
+      if (parentTag === 'li') {
+        normalizeList(parentEl.parentNode);
+      } else if (/ul|ol/.test(parentTag)) {
+        normalizeList(parentEl);
+      } else {
+        const lists = [].slice.call(parentEl.parentNode.querySelectorAll('ul, ol'));
+        lists.forEach(list => normalizeList(list));
+      }
+    };
+
+    // Check if selection contains given node
+    const containsNodeInSelection = (node) => {
+      const sel = window.getSelection();
+      let r = false;
+      if (this.isIe11) {
+        const rangeAt = sel.getRangeAt(0);
+        const range = document.createRange();
+        range.selectNode(node);
+        const s2s = rangeAt.compareBoundaryPoints(Range.START_TO_END, range);
+        const s2e = rangeAt.compareBoundaryPoints(Range.START_TO_START, range);
+        const e2s = rangeAt.compareBoundaryPoints(Range.END_TO_START, range);
+        const e2e = rangeAt.compareBoundaryPoints(Range.END_TO_END, range);
+        r = ((s2s !== s2e) || (e2s !== e2e) || (s2s !== e2e));
+      } else {
+        r = sel.containsNode(node, true);
+      }
+      return r;
+    };
+
+    // Convert hyperlinks to plain text in selected area.
+    const hyperlinksToText = () => {
+      const toText = (a) => {
+        const parent = a.parentNode;
+        const text = a.firstChild;
+        parent.insertBefore(text, a);
+        parent.removeChild(a);
+        parent.normalize();
+      };
+      if (parentTag === 'a') {
+        toText(parentEl);
+      } else {
+        const links = [].slice.call(parentEl.querySelectorAll('a'));
+        links.forEach((a) => {
+          if (containsNodeInSelection(a)) {
+            toText(a);
+          }
+        });
+      }
+    };
+
+    if (parentEl && parentTag) {
+      parentTag = parentTag.toLowerCase();
+      align = getTextAlign();
+      clearLists();
+      clearFormatedTags();
+      hyperlinksToText();
+    }
+
+    // Some browser (IE, Firefox) use attr 'align' instead style `text-align`
+    parentEl.removeAttribute('align');
+    document.execCommand('removeFormat', false, null);
+
+    // Restore style `text-align`, some browser (chrome, safari) clear `text-align` on parent node with command `removeFormat`
+    if (align.found) {
+      align.elem.style.textAlign = align.textAlign;
+    }
+  },
+
+  /**
+   * Get selection parent element.
+   * @private
+   * @returns {object} parent element.
+   */
+  getSelectionParentElement() {
+    let parentEl = null;
+    let sel;
+    if (window.getSelection) {
+      sel = window.getSelection();
+      if (sel.rangeCount) {
+        parentEl = sel.getRangeAt(0).commonAncestorContainer;
+        if (parentEl.nodeType !== 1) {
+          parentEl = parentEl.parentNode;
+        }
+      }
+    } else {
+      sel = document.selection;
+      if (sel && sel.type !== 'Control') {
+        parentEl = sel.createRange().parentElement();
+      }
+    }
+    return parentEl;
+  },
+
   // Set ['foreColor'|'backColor'] button icon color in toolbar
   colorpickerButtonState(action) {
     const cpBtn = $(`[data-action="${action}"]`, this.toolbar);
@@ -1881,30 +2051,13 @@ Editor.prototype = {
         }
       } else {
         // [action: backColor] - for Chrome/Firefox/Safari
-        // Get selection parent element
-        const getSelectionParentElement = function () {
-          let parentEl = null;
-          let sel;
-          if (window.getSelection) {
-            sel = window.getSelection();
-            if (sel.rangeCount) {
-              parentEl = sel.getRangeAt(0).commonAncestorContainer;
-              if (parentEl.nodeType !== 1) {
-                parentEl = parentEl.parentNode;
-              }
-            }
-          } else if ((sel = document.selection) && sel.type !== 'Control') {// eslint-disable-line
-            parentEl = sel.createRange().parentElement();
-          }
-          return parentEl;
-        };
 
         // FIX: "backColor" - Chrome/Firefox/Safari
         // some reason font/span node not get inserted with "backColor"
         // so use "fontSize" command to add node, then remove size attribute
         // this fix will conflict with combination of font size & background color
         document.execCommand('fontSize', false, '2');
-        const parent = getSelectionParentElement().parentNode;
+        const parent = this.getSelectionParentElement().parentNode;
         const els = parent.getElementsByTagName('font');
 
         // Using timeout, firefox not executes with current call stack
