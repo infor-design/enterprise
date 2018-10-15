@@ -50,7 +50,5 @@ module.exports = function (testType, envSpecs) {
     return EMPTY;
   }
 
-  debugger;
-
   return getCustomSpecs(testType);
 };
