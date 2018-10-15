@@ -86,7 +86,7 @@ describe('DatePicker API', () => {
 
   it('Should be able to call setToday and getCurrentDate', () => {
     datepickerAPI.destroy();
-    datepickerAPI = new DatePicker(datepickerEl, { setTimeToMidnight: true });
+    datepickerAPI = new DatePicker(datepickerEl);
     datepickerAPI.setToday();
     const todayDate = datepickerAPI.getCurrentDate();
     const testDate = new Date();
@@ -105,9 +105,9 @@ describe('DatePicker API', () => {
     expect(todayDate.toString()).toEqual(testDate.toString());
   });
 
-  it('Should be able to call setToday with time', () => {
+  it('Should be able to call setToday with time set to noon', () => {
     datepickerTimeAPI.destroy();
-    datepickerTimeAPI = new DatePicker(datepickerEl, { setTimeToMidnight: true });
+    datepickerTimeAPI = new DatePicker(datepickerEl, { useCurrentTime: false });
     datepickerTimeAPI.setToday();
     const todayDate = datepickerTimeAPI.getCurrentDate();
     const testDate = new Date();
@@ -116,10 +116,10 @@ describe('DatePicker API', () => {
     expect(todayDate.toString()).toEqual(testDate.toString());
   });
 
-  it('Should be able to call setToday and getCurrentDate in Umalqura', () => {
+  it('Should be able to call setToday and getCurrentDate in Umalqura with time set to noon', () => {
     datepickerAPI.destroy();
     Locale.set('ar-SA');
-    datepickerAPI = new DatePicker(datepickerEl, { setTimeToMidnight: true });
+    datepickerAPI = new DatePicker(datepickerEl, { useCurrentTime: false, showTime: true });
     datepickerAPI.setToday();
 
     const todayDate = datepickerAPI.getCurrentDate();
@@ -130,18 +130,44 @@ describe('DatePicker API', () => {
 
     const converted = datepickerAPI.conversions.fromGregorian(testDate);
 
-    expect(datepickerEl.value).toEqual(`${converted[0]}/${(`${converted[1] + 1}`).padStart(2, '0')}/${(`${converted[2]}`).padStart(2, '0')}`);
+    expect(datepickerEl.value).toEqual(`${converted[0]}/${(`${converted[1] + 1}`).padStart(2, '0')}/${(`${converted[2]}`).padStart(2, '0')} 12:00 ص`);
   });
 
-  it('Should be able to set setTimeToMidnight to false', () => {
+  it('Should be able to set time using current time', () => {
     datepickerTimeAPI.destroy();
-    datepickerTimeAPI = new DatePicker(datepickerEl, { setTimeToMidnight: false });
+    datepickerTimeAPI = new DatePicker(datepickerEl, { useCurrentTime: true, showTime: true });
     datepickerTimeAPI.setToday();
     const todayDate = datepickerTimeAPI.getCurrentDate();
     const testDate = new Date();
-    testDate.setHours(0, 0, 0, 0);
 
-    expect(todayDate.toString()).not.toEqual(testDate.toString());
+    expect(todayDate.toString()).toEqual(testDate.toString());
+  });
+
+  it('Should be able to set time using current time in Umalqura', () => {
+    datepickerAPI.destroy();
+    Locale.set('ar-SA');
+    datepickerAPI = new DatePicker(datepickerEl, { useCurrentTime: true, showTime: true });
+    datepickerAPI.setToday();
+
+    const todayDate = datepickerAPI.getCurrentDate();
+    const testDate = new Date();
+
+    expect(todayDate.toString()).toEqual(testDate.toString());
+
+    const converted = datepickerAPI.conversions.fromGregorian(testDate);
+
+    let hours = testDate.getHours();
+    let minutes = testDate.getMinutes();
+    let amPm = 'ص';
+    if (hours > 12) {
+      hours -= 12;
+      amPm = 'م';
+    }
+    if (minutes.toString().length === 1) {
+      minutes = `0${minutes}`;
+    }
+
+    expect(datepickerEl.value).toEqual(`${converted[0]}/${(`${converted[1] + 1}`).padStart(2, '0')}/${(`${converted[2]}`).padStart(2, '0')} ${hours}:${minutes} ${amPm}`);
   });
 
   it('Should set internal format', () => {
