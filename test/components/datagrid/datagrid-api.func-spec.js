@@ -108,10 +108,9 @@ describe('Datagrid API', () => {
   });
 
   it('Should be able to call addRow and removeRow', () => {
-    const iconExclamation = '<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation" title="New"><use xlink:href="#icon-exclamation"></use></svg>';
     datagridObj.addRow({ productId: 'New', productName: 'New' });
 
-    expect(document.body.querySelector('tr td').innerHTML).toEqual(`${iconExclamation}<div class="datagrid-cell-wrapper">New</div>`);
+    expect(document.body.querySelector('tr td use').getAttribute('xlink:href')).toEqual('#icon-exclamation');
     expect(document.body.querySelectorAll('tr').length).toEqual(9);
 
     datagridObj.addRow({ productId: 'New 2', productName: 'New 2' }, 'bottom');
@@ -119,7 +118,7 @@ describe('Datagrid API', () => {
     const nodes = document.body.querySelectorAll('tr');
     const lastRow = nodes[nodes.length - 1];
 
-    expect(lastRow.querySelector('td').innerHTML).toEqual(`${iconExclamation}<div class="datagrid-cell-wrapper">New 2</div>`);
+    expect(lastRow.querySelector('td use').getAttribute('xlink:href')).toEqual('#icon-exclamation');
     expect(document.body.querySelectorAll('tr').length).toEqual(10);
 
     // Cleanup
@@ -176,12 +175,12 @@ describe('Datagrid API', () => {
 
   it('Should be able to call updateRow', () => {
     let text = '';
-    text = document.body.querySelectorAll('tbody tr')[1].querySelector('td').innerText.replace(/(\r\n\t|\n|\r\t)/gm, '');
+    text = document.body.querySelectorAll('tbody tr')[1].querySelector('td').innerText.trim();
 
     expect(text).toEqual('200');
 
     datagridObj.updateRow(1, { productId: 'test', productName: 'test' });
-    text = document.body.querySelectorAll('tbody tr')[1].querySelector('td').innerText.replace(/(\r\n\t|\n|\r\t)/gm, '');
+    text = document.body.querySelectorAll('tbody tr')[1].querySelector('td').innerText.trim();
 
     expect(text).toEqual('test');
   });
@@ -240,7 +239,7 @@ describe('Datagrid API', () => {
     columnInfo = datagridObj.columnById('activity')[0];
 
     expect(columnInfo.name).toEqual('Activity');
-    expect(columnInfo.reorderable).toEqual(true);
+    expect(columnInfo.readonly).toEqual(true);
   });
 
   it('Should be able to get the column index by id', () => {
@@ -392,7 +391,7 @@ describe('Datagrid API', () => {
     datagridObj.validateRow(1);
     setTimeout(() => {
       expect(document.querySelectorAll('td.error').length).toEqual(1);
-      expect(document.querySelector('td.error').getAttribute('data-errormessage')).toEqual('[Required]');
+      expect(document.querySelector('td.error').getAttribute('data-errormessage').indexOf('Required')).not.toBeLessThan('0');
       datagridObj.clearAllErrors();
       done();
     });
@@ -434,7 +433,7 @@ describe('Datagrid API', () => {
   it('Should be able to set an active cell', () => {
     datagridObj.setActiveCell(1, 0);
 
-    expect(document.activeElement.innerText.substr(0, 3)).toEqual('200');
+    expect(document.activeElement.innerText.trim()).toEqual('200');
   });
 
   it('Should be able to toggle an expandable row', (done) => {
