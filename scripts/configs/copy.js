@@ -39,6 +39,18 @@ module.exports = {
         { expand: true, flatten: false, src: ['src/**/*.scss'], dest: 'dist/sass/', filter: 'isFile' }
       ]
     },
+
+    'custom-test': {
+      files: [
+        {
+          expand: true,
+          flatten: true,
+          src: ['temp/tests-functional.txt', 'temp/tests-e2e.txt'],
+          dest: 'dist/tests/',
+          filter: 'isFile'
+        }
+      ]
+    }
   }
 
 };

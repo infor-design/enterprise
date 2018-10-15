@@ -2,10 +2,15 @@
 const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
+const customSpecs = require('./helpers/detect-custom-spec-list')('e2e');
 
 const getSpecs = (listSpec) => {
   if (listSpec) {
     return listSpec.split(',');
+  }
+
+  if (customSpecs) {
+    return customSpecs;
   }
 
   return ['behaviors/**/*.e2e-spec.js', 'components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];

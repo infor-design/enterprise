@@ -66,6 +66,7 @@ const logger = require('./logger');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
+const TEST_DIR = path.join(__dirname, '..', 'test');
 const RELATIVE_SRC_DIR = path.join('..', 'src');
 
 const filePaths = {
@@ -116,6 +117,10 @@ const filePaths = {
         'light-theme': path.join(TEMP_DIR, 'light-theme.scss'),
         // 'uplift-theme': path.join(TEMP_DIR, 'uplift-theme.scss')
       }
+    },
+    tests: {
+      e2e: path.join(TEMP_DIR, 'tests-e2e.txt'),
+      functional: path.join(TEMP_DIR, 'tests-functional.txt'),
     }
   }
 
@@ -211,7 +216,9 @@ const buckets = {
   mid: [],
   complex: [],
   layouts: [],
-  patterns: []
+  patterns: [],
+  'test-e2e': [],
+  'test-func': []
 };
 
 // -------------------------------------
@@ -716,6 +723,25 @@ function renderTargetSassFile(key, targetFilePath) {
 }
 
 /**
+ * @private
+ * @param {string} type functional, e2e
+ * @returns {Promise}
+ */
+function renderTestManifest(type) {
+  let targetFile = '';
+  let bucket = 'test-func';
+  if (type === 'e2e') {
+    bucket = 'test-e2e';
+  }
+
+  buckets[bucket].forEach((test) => {
+    targetFile += `${test}\n`;
+  });
+
+  return writeFile(filePaths.target.tests[type], targetFile);
+}
+
+/**
  * Renders all available target files.
  * @param {boolean} isNormalBuild returns an empty promise chain if this is a normal build
  * @returns {Promise} containing all file writes.
@@ -744,6 +770,9 @@ function renderTargetFiles(isNormalBuild) {
     renderPromises.push(p);
   });
   renderPromises.push(renderTargetSassFile('components', filePaths.target.sass.controls));
+
+  renderPromises.push(renderTestManifest('functional'));
+  renderPromises.push(renderTestManifest('e2e'));
 
   return Promise.all(renderPromises);
 }
@@ -790,8 +819,7 @@ function runBuildProcess(terminalCommand, terminalArgs) {
  * @returns {Promise} containing results of all build processes
  */
 function runBuildProcesses(requested, jsMatches, jQueryMatches, sassMatches) {
-  let jsBuildPromise;
-  let sassBuildPromise;
+  const buildPromises = [];
   let isCustom = false;
   let hasCustom = '';
   const rollupArgs = ['-c'];
@@ -809,23 +837,27 @@ function runBuildProcesses(requested, jsMatches, jQueryMatches, sassMatches) {
   logger(`\nRunning build processes${hasCustom}...\n`);
 
   // Copy vendor libs/dependencies
-  const copyPromise = runBuildProcess('npx', ['grunt', 'copy:main']);
+  buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:main']));
+
+  if (buckets['test-func'].length || buckets['test-e2e'].length) {
+    buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:custom-test']));
+  }
 
   // Build JS
   if (commandLineArgs.disableJs) {
     logger('alert', 'Ignoring build process for JS');
   } else if (!isCustom || (jsMatches.length || jQueryMatches.length)) {
-    jsBuildPromise = runBuildProcess('rollup', rollupArgs);
+    buildPromises.push(runBuildProcess('rollup', rollupArgs));
   }
 
   // Build CSS
   if (commandLineArgs.disableCss) {
     logger('alert', 'Ignoring build process for CSS');
   } else if (!isCustom || sassMatches.length) {
-    sassBuildPromise = runBuildProcess('grunt', sassArgs);
+    buildPromises.push(runBuildProcess('grunt', sassArgs));
   }
 
-  return Promise.all([copyPromise, jsBuildPromise, sassBuildPromise]);
+  return Promise.all(buildPromises);
 }
 
 /**
@@ -893,6 +925,7 @@ cleanAll(true).then(() => {
 
     // Scan source code directories
     const items = read(SRC_DIR);
+    const tests = read(TEST_DIR);
 
     // Search the stored list of source files for each term
     requestedComponents.forEach((arg) => {
@@ -909,6 +942,17 @@ cleanAll(true).then(() => {
           return;
         }
         renderTarget.push(result);
+      });
+
+      // Scan for relevant tests
+      const testResults = searchFileNames(tests, arg);
+      testResults.forEach((result) => {
+        if (result.indexOf('func-spec.js') > -1) {
+          buckets['test-func'].push(result);
+        }
+        if (result.indexOf('e2e-spec.js') > -1) {
+          buckets['test-e2e'].push(result);
+        }
       });
     });
 
