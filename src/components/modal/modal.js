@@ -756,6 +756,7 @@ Modal.prototype = {
     let tabbableElements;
 
     // Escape key
+    $(document).off('keydown.modal');
     $(document).on('keydown.modal', (e) => {
       const keyCode = e.which || e.keyCode;
       if (keyCode === 27) {
@@ -776,6 +777,7 @@ Modal.prototype = {
       }
     });
 
+    $(self.element).off('keypress.modal keydown.modal');
     $(self.element).on('keypress.modal keydown.modal', (e) => {
       const keyCode = e.which || e.keyCode;
 
