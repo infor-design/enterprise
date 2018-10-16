@@ -440,17 +440,32 @@ function searchFileNames(files, term) {
   }
 
   files.forEach((file) => {
-    if (file.indexOf(term) === -1) {
+    const wordBoundaryRegex = new RegExp(`\\b[_.]?${term}\\b`, 'gi');
+    if (!file.match(wordBoundaryRegex)) {
       return;
     }
-
-    // TODO: More granular sorting of component names (see #850).
-    // fx: "builder" should not also match "listbuilder"
 
     results.push(file);
   });
 
   return results;
+}
+
+/**
+ * Prunes the test results list in specific, tough cases
+ * @private
+ * @param {string} file path to a functional or e2e test
+ * @param {array} components array of requested bundle items
+ * @returns {boolean} whether or not the test should be pruned
+ */
+function pruneTest(file, components) {
+  // If validation component is included but datagrid is not, remove datagrid validation test
+  const datagridValidationTest = path.join('components', 'datagrid', 'datagrid-validation.func-spec.js');
+  if (file === datagridValidationTest && components.indexOf('datagrid') === -1) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -1005,6 +1020,10 @@ cleanAll(true).then(() => {
       // Scan for relevant tests
       const testResults = searchFileNames(tests, arg);
       testResults.forEach((result) => {
+        if (pruneTest(result, requestedComponents)) {
+          return;
+        }
+
         if (result.indexOf('func-spec.js') > -1) {
           buckets['test-func'].push(result);
         }
