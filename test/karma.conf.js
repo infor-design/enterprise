@@ -23,7 +23,7 @@ module.exports = function (config) {
       optimization: {
         minimize: false
       },
-      // devtool: 'sourcemap',
+      devtool: 'sourcemap',
       module: {
         rules: [
           {
