@@ -7067,7 +7067,6 @@ Datagrid.prototype = {
       };
       this.cacheTooltip(icon, tooltip);
       this.setupTooltips(false, true);
-      this.showTooltip(tooltip);
     }
   },
 
