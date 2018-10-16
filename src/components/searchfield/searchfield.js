@@ -1713,8 +1713,8 @@ SearchField.prototype = {
     }
 
     $('<li class="separator" role="presentation"></li>').appendTo(list);
-    const more = $('<li role="presentation"></li>').appendTo(list);
-    this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>')
+    const more = $('<li role="presentation" class="is-disabled"></li>').appendTo(list);
+    this.moreLink = $('<a href="#" class="more-results" disabled="disabled" tabindex="-1" role="menuitem" aria-disabled="true"></a>')
       .html(`<span>${Locale.translate('AllResults')} "${xssUtils.ensureAlphaNumeric(val)}"</span>`)
       .appendTo(more);
   },
@@ -1730,9 +1730,9 @@ SearchField.prototype = {
       return;
     }
 
-    const none = $('<li role="presentation"></li>').appendTo(list);
+    const none = $('<li role="presentation" class="is-disabled"></li>').appendTo(list);
 
-    this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html(`<span>${Locale.translate('NoResults')}</span>`).appendTo(none);
+    this.noneLink = $('<a href="#" class="no-results" disabled="disabled" tabindex="-1" role="menuitem" aria-disabled="true"></a>').html(`<span>${Locale.translate('NoResults')}</span>`).appendTo(none);
   },
 
   /**
