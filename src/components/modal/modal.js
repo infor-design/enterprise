@@ -756,15 +756,16 @@ Modal.prototype = {
     let tabbableElements;
 
     // Escape key
-    $(document).off('keydown.modal');
-    $(document).on('keydown.modal', (e) => {
-      const keyCode = e.which || e.keyCode;
-      if (keyCode === 27) {
-        const modals = $('.modal.is-visible');
+    $(document)
+      .off('keydown.modal')
+      .on('keydown.modal', (e) => {
+        const keyCode = e.which || e.keyCode;
+        if (keyCode === 27) {
+          const modals = $('.modal.is-visible');
 
-        if (modals.length > 1) {
-          modals.not(':last').on('beforeclose.modal', () => false);
-          modals.on('afterclose.modal', () => {
+          if (modals.length > 1) {
+            modals.not(':last').on('beforeclose.modal', () => false);
+            modals.on('afterclose.modal', () => {
             modals.off('beforeclose.modal');
           });
           const apiModal = modals.last().data('modal');
@@ -777,12 +778,13 @@ Modal.prototype = {
       }
     });
 
-    $(self.element).off('keypress.modal keydown.modal');
-    $(self.element).on('keypress.modal keydown.modal', (e) => {
-      const keyCode = e.which || e.keyCode;
+    $(self.element)
+      .off('keypress.modal keydown.modal')
+      .on('keypress.modal keydown.modal', (e) => {
+        const keyCode = e.which || e.keyCode;
 
-      if (keyCode === 9) {
-        tabbableElements = self.getTabbableElements();
+        if (keyCode === 9) {
+          tabbableElements = self.getTabbableElements();
 
         // Move focus to first element that can be tabbed if Shift isn't used
         if (e.target === tabbableElements.last && !e.shiftKey) {
