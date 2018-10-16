@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const logger = require('../../scripts/logger');
 
 const types = ['functional', 'e2e'];
 const EMPTY = [];
@@ -29,13 +30,24 @@ function getCustomSpecs(type) {
 
   const filePath = path.resolve(__dirname, '..', '..', 'dist', 'log', fileName);
 
-  // If there is no custom specs file,
-  const specs = fs.readFileSync(filePath, 'utf8');
-  if (!specs || !specs.length) {
+  function defaults() {
     if (type === 'e2e') {
       return DEFAULT_E2E_SPECS;
     }
     return DEFAULT_FUNC_SPECS;
+  }
+
+  // If there is no custom specs file,
+  let specs;
+  try {
+    specs = fs.readFileSync(filePath, 'utf8');
+  } catch (e) {
+    logger('warn', `Test manifest at "${filePath}" doesn't exist, using default ${type} specs blob...\n`);
+    return defaults();
+  }
+
+  if (!specs || !specs.length) {
+    return defaults();
   }
 
   return specs.split('\n').filter(el => el !== null && el !== '');
