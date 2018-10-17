@@ -31,7 +31,7 @@ describe('Searchfield example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress on example-index', async () => { //eslint-disable-line
+    it('Should not visual regress on example-index', async () => {
       const searchfieldInputEl = await element(by.id(searchfieldId));
       const searchfieldSection = await element(by.id('maincontent'));
       await browser.driver
@@ -49,7 +49,7 @@ describe('Searchfield example-index tests', () => {
     });
   }
 
-  fit('Should filter on example-index', async () => { //eslint-disable-line
+  it('Should filter on example-index', async () => {
     const searchfieldInputEl = await element(by.id(searchfieldId));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
