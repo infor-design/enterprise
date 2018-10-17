@@ -291,6 +291,11 @@
     }
   }
 
+  a.no-results,
+  a.more-results {
+    color: #000000 !important;
+  }
+
   span {
     @include font-size(14);
 
