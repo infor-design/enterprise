@@ -49,6 +49,17 @@ describe('Searchfield example-index tests', () => {
     });
   }
 
+  fit('Should filter on example-index', async () => { //eslint-disable-line
+    const searchfieldInputEl = await element(by.id(searchfieldId));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+
+    await searchfieldInputEl.clear();
+    await searchfieldInputEl.sendKeys('co');
+
+    expect(await searchfieldInputEl.getAttribute('value')).toEqual('co');
+  });
+
   it('Adds an "all results" link when results populate the Autocomplete list', async () => {
     const searchfieldInputEl = await element(by.id(searchfieldId));
     await searchfieldInputEl.sendKeys('co');
