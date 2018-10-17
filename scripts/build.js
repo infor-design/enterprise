@@ -881,7 +881,7 @@ function runBuildProcess(terminalCommand, terminalArgs) {
     });
     buildProcess.on('exit', (code) => {
       if (code !== 0) {
-        reject(new Error(`Rollup build exited with error code (${code})`));
+        reject(new Error(`"${terminalCommand}" process exited with error code (${code})\nArgs: ${terminalArgs.join(' ')}`));
       }
       resolve(log);
     });

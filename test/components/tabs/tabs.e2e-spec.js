@@ -180,13 +180,13 @@ describe('Tabs keyboard example-index tests', () => {
     it('Should open 5th tab, on arrow right', async () => {
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-focused')), config.waitsFor));
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('is-focused')), config.waitsFor));
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-focused')), config.waitsFor));
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('is-focused')), config.waitsFor));
       await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
       await browser.driver
-        .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#tabs-normal-notes.is-visible'))), config.waitsFor);
+        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#tabs-normal-notes.is-visible'))), config.waitsFor);
 
       expect(await element(by.id('tabs-normal-notes')).getAttribute('class')).toContain('can-show');
       expect(await element.all(by.className('tab')).get(4).getAttribute('class')).toContain('is-selected');

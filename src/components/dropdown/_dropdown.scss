@@ -1,5 +1,8 @@
 // Select (DropDown)
 //================================================== //
+
+@import '../input/input-mixins';
+
 @mixin list-icon-colors {
   &.error {
     fill: $error-color;
