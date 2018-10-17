@@ -4246,6 +4246,13 @@ Datagrid.prototype = {
       modal.element.on('close.datagrid', () => {
         self.isColumnsChanged = false;
       });
+      modal.element.on('keydown.datagrid', (event) => {
+        // Escape Button Code. Make sure to close the modal correctly.
+        if (event.keyCode === 27) {
+          modal.close();
+          $('body').off('open.datagrid');
+        }
+      });
     });
   },
 
