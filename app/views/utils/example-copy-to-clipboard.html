@@ -1,0 +1,58 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Copies a string to the clipboard.</h2>
+    <p>
+      Must be called from within an event handler such as click.<br>
+      May return false if it failed, but this is not always<br>
+      possible. Browser support for Chrome 43+, Firefox 42+, Edge and IE 10+.<br>
+      No Safari support, as of (Mar. 2016). Returns false.<br>
+      IE: The clipboard feature may be disabled by an adminstrator. By default a prompt is
+      shown the first time the clipboard is used (per session).
+    </p>
+
+<pre id="example" class="code-block"><code>
+(function() {
+  var s = document.createElement('script');
+  s.id = "some-id";
+  s.type = "text/javascript";
+  document.body.appendChild(s);
+})();
+</code></pre>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <button type="button" id="copy" class="btn-primary">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-copy"></use>
+      </svg>
+      <span>Copy to clipboard</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  $('#copy').on('click', function() {
+    var pre = $('#example code')[0],
+      str = (pre.innerText) ? pre.innerText : pre.textContent,
+      result = $.copyToClipboard(str),
+      toastTitle = '',
+      toastMsg = '';
+
+    if (result) {
+      toastTitle = 'Success!';
+      toastMsg = 'copied to clipboard';
+    }
+    else {
+      toastTitle = 'Error!';
+      toastMsg = 'Something went wrong...';
+    }
+
+    $('body').toast({
+      title: toastTitle,
+      message: toastMsg
+    });
+  });
+</script>

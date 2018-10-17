@@ -628,20 +628,39 @@ utils.fixSVGIcons = function fixSVGIcons(rootElement) {
     return;
   }
 
+  const xlinkNS = 'http://www.w3.org/1999/xlink';
+
+  // Handle jQuery
   if (rootElement instanceof $) {
     if (!rootElement.length) {
       return;
     }
 
-    rootElement = rootElement[0];
+    if (rootElement.length === 1) {
+      rootElement = rootElement[0];
+    } else {
+      rootElement.each((i, elem) => {
+        fixSVGIcons(elem);
+      });
+      return;
+    }
+  }
+
+  // Handle NodeList in an IE-friendly way
+  // https://developer.mozilla.org/en-US/docs/Web/API/NodeList#Example
+  if (rootElement instanceof NodeList) {
+    Array.prototype.forEach.call(rootElement, (elem) => {
+      fixSVGIcons(elem);
+    });
+    return;
   }
 
   setTimeout(() => {
     const uses = rootElement.getElementsByTagName('use');
     for (let i = 0; i < uses.length; i++) {
-      const attr = uses[i].getAttribute('xlink:href');
-      uses[i].setAttribute('xlink:href', 'x');
-      uses[i].setAttribute('xlink:href', attr);
+      const attr = uses[i].getAttributeNS(xlinkNS, 'href');
+      uses[i].setAttributeNS(xlinkNS, 'href', 'x');
+      uses[i].setAttributeNS(xlinkNS, 'href', attr);
     }
   }, 1);
 };

@@ -140,6 +140,7 @@ app.use('/patterns', generalRoute);
 app.use('/examples', generalRoute);
 app.use('/layouts', generalRoute);
 app.use('/tests', generalRoute);
+app.use('/utils', generalRoute);
 
 // =========================================
 // Fake 'API' Calls for use with AJAX-ready Controls

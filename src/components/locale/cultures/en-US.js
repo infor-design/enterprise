@@ -98,6 +98,7 @@ Soho.Locale.addCulture('en-US', {
     Checked: { id: 'Checked', value: 'Checked', comment: 'Checked tooltip' },
     Clear: { id: 'Clear', value: 'Clear', comment: 'Tooltip for a Clear Action' },
     ClearFilter: { id: 'ClearFilter', value: 'Clear Filter', comment: 'Clear the current filter criteria' },
+    ClearFormatting: { id: 'ClearFormatting', value: 'Clear Formatting', comment: 'Clear the formatting in editor' },
     ClearSelection: { id: 'ClearSelection', value: '(Clear Selection)', comment: 'clear dropdown selection' },
     Clock: { id: 'Clock', value: 'Clock', comment: 'Clock tooltip' },
     Close: { id: 'Close', value: 'Close', comment: 'Tooltip for a Close Button Action' },
