@@ -757,8 +757,8 @@ Modal.prototype = {
 
     // Escape key
     $(document)
-      .off('keydown.modal')
-      .on('keydown.modal', (e) => {
+      .off(`keydown.modal-${this.id}`)
+      .on(`keydown.modal-${this.id}`, (e) => {
         const keyCode = e.which || e.keyCode;
         if (keyCode === 27) {
           const modals = $('.modal.is-visible');
