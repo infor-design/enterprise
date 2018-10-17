@@ -436,7 +436,7 @@ Datagrid.prototype = {
       isTop = true;
     }
     // Add row status
-    data.rowStatus = { icon: 'new', text: 'New', tooltip: 'New' };
+    data.rowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
 
     // Add to array
     if (typeof location === 'string') {
