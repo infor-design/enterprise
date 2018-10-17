@@ -165,11 +165,9 @@ describe('Tabs keyboard example-index tests', () => {
     const tabsEl = await element(by.id('tabs-normal'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
-    const tabElTriggerStart = await element(by.id('header-searchfield'));
-    await tabElTriggerStart.click();
-    await element(by.css('body')).sendKeys(protractor.Key.TAB);
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-focused')), config.waitsFor));
+
+    const selectedTab = await element(by.css('.tab.is-selected > a'));
+    await selectedTab.click();
   });
 
   it('Should not have errors', async () => {
