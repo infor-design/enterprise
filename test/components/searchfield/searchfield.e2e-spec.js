@@ -40,7 +40,8 @@ describe('Searchfield example-index tests', () => {
 
       expect(await browser.protractorImageComparison.checkElement(searchfieldInputEl, 'searchfield-init')).toEqual(0);
       await searchfieldInputEl.clear();
-      await searchfieldInputEl.sendKeys('co');
+      await searchfieldInputEl.sendKeys('c');
+      await searchfieldInputEl.sendKeys('o');
       await browser.driver.sleep(config.waitsFor);
       await searchfieldInputEl.sendKeys(protractor.Key.ARROW_DOWN);
 
