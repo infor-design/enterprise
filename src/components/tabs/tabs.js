@@ -599,7 +599,7 @@ Tabs.prototype = {
       .on('mousedown.tabs', '> li', function (e) {
         self.handleAddFocusData(e, $(this));
 
-        if ($(e.target).hasClass('close')) {
+        if ($(e.target).hasClass('close') && $(e.target).parent().hasClass('has-popupmenu')) {
           const menu = $(this).data('popupmenu').menu;
           const hrefs = [];
           $.each(menu[0].children, (i, li) => {
