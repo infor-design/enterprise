@@ -161,7 +161,7 @@ const Environment = {
       version = nUAgent.substring(verOffset + 8);
     } else if (nUAgent.indexOf('Trident/') !== -1) { //eslint-disable-line
       browser = 'Microsoft Internet Explorer';
-      version = nUAgent.subString(nUAgent.indexOf('rv:') + 3);
+      version = nUAgent.substring(nUAgent.indexOf('rv:') + 3);
     } else if ((nameOffset = nUAgent.lastIndexOf(' ') + 1) < (verOffset = nUAgent.lastIndexOf('/'))) { //eslint-disable-line
       browser = nUAgent.substring(nameOffset, verOffset);
       version = nUAgent.substring(verOffset + 1);
