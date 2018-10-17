@@ -3585,10 +3585,11 @@ Datagrid.prototype = {
    * Setup tooltips on the cells.
    * @private
    * @param  {boolean} rowstatus true set tootip with row status
+   * @param  {boolean} isForced true set tootip
    * @returns {void}
    */
-  setupTooltips(rowstatus) {
-    if (!rowstatus && !this.settings.enableTooltips) {
+  setupTooltips(rowstatus, isForced) {
+    if (!rowstatus && !isForced && !this.settings.enableTooltips) {
       return;
     }
 
@@ -3602,14 +3603,15 @@ Datagrid.prototype = {
       td: '.datagrid-body tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
       rowstatus: '.datagrid-body tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
     };
+    selector.errorIcon = `${selector.td} .icon-error`;
 
     // Selector string
     if (rowstatus && this.settings.enableTooltips) {
-      selector.str = `${selector.th}, ${selector.td}, ${selector.rowstatus}`;
+      selector.str = `${selector.th}, ${selector.td}, ${selector.errorIcon}, ${selector.rowstatus}`;
     } else if (rowstatus) {
       selector.str = `${selector.th}, ${selector.rowstatus}`;
     } else {
-      selector.str = `${selector.th}, ${selector.td}`;
+      selector.str = `${selector.th}, ${selector.td}, ${selector.errorIcon}`;
     }
 
     // Handle tooltip to show
@@ -7064,7 +7066,7 @@ Datagrid.prototype = {
         wrapper: icon
       };
       this.cacheTooltip(icon, tooltip);
-      this.showTooltip(tooltip);
+      this.setupTooltips(false, true);
     }
   },
 
