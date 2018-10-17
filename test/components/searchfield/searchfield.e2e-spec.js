@@ -38,6 +38,7 @@ describe('Searchfield example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(searchfieldInputEl, 'searchfield-init')).toEqual(0);
+      await searchfieldInputEl.clear();
       await searchfieldInputEl.sendKeys('co');
       await browser.driver
         .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('autocomplete-list'))), config.waitsFor);
