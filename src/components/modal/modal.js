@@ -766,17 +766,17 @@ Modal.prototype = {
           if (modals.length > 1) {
             modals.not(':last').on('beforeclose.modal', () => false);
             modals.on('afterclose.modal', () => {
-            modals.off('beforeclose.modal');
-          });
-          const apiModal = modals.last().data('modal');
-          if (apiModal && apiModal.close) {
-            apiModal.close();
+              modals.off('beforeclose.modal');
+            });
+            const apiModal = modals.last().data('modal');
+            if (apiModal && apiModal.close) {
+              apiModal.close();
+            }
+          } else {
+            self.close();
           }
-        } else {
-          self.close();
         }
-      }
-    });
+      });
 
     $(self.element)
       .off('keypress.modal keydown.modal')
@@ -786,18 +786,18 @@ Modal.prototype = {
         if (keyCode === 9) {
           tabbableElements = self.getTabbableElements();
 
-        // Move focus to first element that can be tabbed if Shift isn't used
-        if (e.target === tabbableElements.last && !e.shiftKey) {
-          e.preventDefault();
-          tabbableElements.first.focus();
-        } else if (e.target === tabbableElements.first && e.shiftKey) {
-          e.preventDefault();
-          tabbableElements.last.focus();
-        }
+          // Move focus to first element that can be tabbed if Shift isn't used
+          if (e.target === tabbableElements.last && !e.shiftKey) {
+            e.preventDefault();
+            tabbableElements.first.focus();
+          } else if (e.target === tabbableElements.first && e.shiftKey) {
+            e.preventDefault();
+            tabbableElements.last.focus();
+          }
 
-        self.element.find('#message-title').removeAttr('tabindex');
-      }
-    });
+          self.element.find('#message-title').removeAttr('tabindex');
+        }
+      });
   },
 
   /**
