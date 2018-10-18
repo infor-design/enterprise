@@ -24,12 +24,13 @@ describe('About index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+   fit('Should not visual regress on example-index', async () => {
       const button = await element(by.id('about-trigger'));
       await button.click();
 
       await browser.driver
         .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(await element(by.id('about-modal')), 'about-open')).toEqual(0);
     });
