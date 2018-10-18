@@ -217,6 +217,7 @@ Soho.Locale.addCulture('fr-FR', {
     MoveToLeft: { id: 'MoveToLeft', value: 'Déplacer vers la gauche', comment: 'Button tooltip used in a list of movable items' },
     MoveToRight: { id: 'MoveToRight', value: 'Déplacer vers la droite', comment: 'Button tooltip used in a list of movable items' },
     MsgDirty: { id: 'MsgDirty', value: ', Modifié', comment: 'for modified form fields' },
+    New: { id: 'New', value: 'Nouveau', comment: 'Add new rowstatus in datagrid' },
     NewDocument: { id: 'NewDocument', value: 'Nouveau document', comment: 'New Document tooltip' },
     NewItem: { id: 'NewItem', value: 'Nouvel élément', comment: 'New item in listbuilder' },
     Next: { id: 'Next', value: 'Suivant', comment: 'Next in icons tooltip' },
