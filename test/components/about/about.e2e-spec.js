@@ -24,15 +24,14 @@ describe('About index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-   fit('Should not visual regress on example-index', async () => {
+    it('Should not visual regress on example-index', async () => {
       const button = await element(by.id('about-trigger'));
       await button.click();
 
-      await browser.driver
-        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
+      const searchfieldSection = await element(by.id('maincontent'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(await element(by.id('about-modal')), 'about-open')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(searchfieldSection, 'about-open')).toEqual(0);
     });
   }
 });
