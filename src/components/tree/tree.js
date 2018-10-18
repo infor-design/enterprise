@@ -127,6 +127,9 @@ Tree.prototype = {
    */
   setFocus(node) {
     node = this.isjQuery(node) ? node[0] : node;
+    if (!node) {
+      return;
+    }
     node.focus();
     node.classList.remove('hide-focus');
   },

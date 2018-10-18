@@ -272,7 +272,8 @@ Soho.Locale.addCulture('ar-EG', {
 
           // remaining days is less than is in one month, thus is the day of the month we landed on
           // hmonth-1 because in javascript months are zero based, stay consistent with that.
-          return [hyear, hmonth - 1, days + 1];
+          return [hyear, hmonth - 1, days + 1,
+            gdate.getHours(), gdate.getMinutes(), gdate.getSeconds()];
         }
       }
     }],
