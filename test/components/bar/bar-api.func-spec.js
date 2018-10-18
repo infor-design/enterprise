@@ -54,6 +54,7 @@ describe('Bar API', () => {
     const rowEl = document.body.querySelector('.row');
 
     barObj.destroy();
+
     rowEl.parentNode.removeChild(rowEl);
     barEl.parentNode.removeChild(barEl);
     svgEl.parentNode.removeChild(svgEl);
