@@ -4265,11 +4265,12 @@ Datagrid.prototype = {
   * @param {number} width The width of the column
   * @param {number} diff The difference between the old and new width
   */
-  setColumnWidth(idOrNode, width, diff) {
+  setColumnWidth(idOrNode, width) {
     const self = this;
     const percent = parseFloat(width);
     let columnNode = idOrNode;
     const columnSettings = this.columnById(typeof idOrNode === 'string' ? idOrNode : idOrNode.attr('data-column-id'))[0];
+    const idx = columnNode.index();
 
     if (!percent) {
       return;
@@ -4310,22 +4311,30 @@ Datagrid.prototype = {
       columnSettings.width = width;
     }
 
-    const idx = columnNode.index();
-    self.headerColGroup.find('col').eq(idx)[0].style.width = (`${width}px`);
-
-    if (self.settings.dataset.length > 0) {
-      self.bodyColGroup.find('col').eq(idx)[0].style.width = (`${width}px`);
-    }
-
-    if (self.tableWidth && diff) {
-      self.headerTable.css('width', parseInt(self.tableWidth, 10) + diff);
-      self.table.css('width', parseInt(self.tableWidth, 10) + diff);
-    }
-
     this.element.trigger('columnchange', [{ type: 'resizecolumn', index: idx, columns: this.settings.columns }]);
     this.saveColumns();
     this.saveUserSettings();
     this.headerWidths[idx].width = width;
+  },
+
+  /**
+   * Change the width of the column as the user drags the resizeHandle
+   * @param {boolean} idOrNode Specifies if the column info is provide by id or as a node reference.
+   * @param {number} width The width of the column
+   * @param {number} diff The difference between the old and new width
+   */
+  resizeColumnWidth(idOrNode, width, diff) {
+    const idx = idOrNode.index();
+    this.headerColGroup.find('col').eq(idx)[0].style.width = (`${width}px`);
+
+    if (this.settings.dataset.length > 0) {
+      this.bodyColGroup.find('col').eq(idx)[0].style.width = (`${width}px`);
+    }
+
+    if (this.tableWidth && diff) {
+      this.headerTable.css('width', parseInt(this.tableWidth, 10) + diff);
+      this.table.css('width', parseInt(this.tableWidth, 10) + diff);
+    }
   },
 
   /**
@@ -4384,11 +4393,12 @@ Datagrid.prototype = {
         }
 
         width = Math.round(width);
-
-        self.setColumnWidth(self.currentHeader, width, width - columnStartWidth);
+        self.resizeColumnWidth(self.currentHeader, width, width - columnStartWidth);
       })
-      .on('dragend.datagrid', () => {
+      .on('dragend.datagrid', (e, ui) => {
+        const width = (ui.left - startingLeft - 1);
         self.dragging = false;
+        self.setColumnWidth(self.currentHeader, width);
       });
   },
 
