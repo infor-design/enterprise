@@ -24,7 +24,7 @@ describe('About index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress on example-index', async () => { //eslint-disable-line
+    it('Should not visual regress on example-index', async () => {
       const button = await element(by.id('about-trigger'));
       await button.click();
 
