@@ -385,6 +385,13 @@ describe('Tabs API', () => {
     expect(document.querySelectorAll('.tab')[2].innerText).toEqual('Contacts');
   });
 
+  it('Should remove tab with dropdown of dismissible tabs', () => {
+    const testHrefs = ['#tabs-normal-attachments', '#tabs-normal-contacts', '#tabs-normal-notes'];
+    tabsObj.closeDismissibleTabs(testHrefs);
+
+    expect(document.querySelectorAll('.tab')[1].innerText).toEqual('Opportunities');
+  });
+
   it('Should teardown tabs', (done) => {
     const tabs = tabsObj.teardown();
     setTimeout(() => {
