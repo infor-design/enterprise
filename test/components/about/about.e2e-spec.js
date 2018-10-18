@@ -22,4 +22,16 @@ describe('About index tests', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    fit('Should not visual regress on example-index', async () => { //eslint-disable-line
+      const button = await element(by.id('about-trigger'));
+      await button.click();
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(await element(by.id('about-modal')), 'about-open')).toEqual(0);
+    });
+  }
 });
