@@ -4045,7 +4045,7 @@ Datagrid.prototype = {
     if (this.originalColumns) {
       const columnGroups = this.settings.columnGroups && this.originalColGroups ?
         this.originalColGroups : null;
-      this.updateColumns(this.originalColumns, columnGroups);
+      this.updateColumns(this.columnsFromString(JSON.stringify(this.originalColumns)), columnGroups);
     }
 
     this.clearFilter();
