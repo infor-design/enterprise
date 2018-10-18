@@ -31,7 +31,7 @@ describe('About index tests', () => {
       const searchfieldSection = await element(by.id('maincontent'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(searchfieldSection, 'about-open')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(searchfieldSection, 'about-open')).toBeLessThan(1);
     });
   }
 });
