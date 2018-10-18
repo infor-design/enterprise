@@ -40,12 +40,25 @@ describe('Searchfield example-index tests', () => {
 
       expect(await browser.protractorImageComparison.checkElement(searchfieldInputEl, 'searchfield-init')).toEqual(0);
       await searchfieldInputEl.clear();
-      await searchfieldInputEl.sendKeys('co');
+      await searchfieldInputEl.sendKeys('c');
+      await searchfieldInputEl.sendKeys('o');
       await browser.driver.sleep(config.waitsFor);
+      await searchfieldInputEl.sendKeys(protractor.Key.ARROW_DOWN);
 
       expect(await browser.protractorImageComparison.checkElement(searchfieldSection, 'searchfield-open')).toEqual(0);
     });
   }
+
+  it('Should filter on example-index', async () => {
+    const searchfieldInputEl = await element(by.id(searchfieldId));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+
+    await searchfieldInputEl.clear();
+    await searchfieldInputEl.sendKeys('co');
+
+    expect(await searchfieldInputEl.getAttribute('value')).toEqual('co');
+  });
 
   it('Adds an "all results" link when results populate the Autocomplete list', async () => {
     const searchfieldInputEl = await element(by.id(searchfieldId));
