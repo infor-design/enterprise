@@ -5848,30 +5848,33 @@ Datagrid.prototype = {
   * @returns {object} Information about the activated row.
   */
   activatedRow() {
-    if (!this.tableBody) {
-      return [{ row: -1, item: undefined, elem: undefined }];
-    }
+    let r = [{ row: -1, item: undefined, elem: undefined }];
 
-    const activatedRow = this.tableBody.find('tr.is-rowactivated');
+    if (this.tableBody) {
+      const s = this.settings;
+      const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+      const activatedRow = this.tableBody.find('tr.is-rowactivated');
 
-    if (activatedRow.length) {
-      let rowIndex = this.actualRowIndex(activatedRow);
-      const dataRowIndex = this.dataRowIndex(activatedRow);
+      if (activatedRow.length) {
+        const dataRowIndex = this.dataRowIndex(activatedRow);
+        const rowIndex = s.indeterminate ? dataRowIndex : this.actualRowIndex(activatedRow);
+        r = [{ row: rowIndex, item: dataset[rowIndex], elem: activatedRow }];
+      } else {
+        r = null;
+        // Activated row may be filtered or on another page, so check all until find it
+        for (let i = 0; i < dataset.length; i++) {
+          if (dataset[i]._rowactivated) {
+            r = [{ row: i, item: dataset[i], elem: undefined }];
+            break;
+          }
+        }
 
-      if (this.settings.indeterminate) {
-        rowIndex = this.dataRowIndex(activatedRow);
+        if (r === null) {
+          r = [{ row: -1, item: undefined, elem: activatedRow }];
+        }
       }
-
-      return [{ row: rowIndex, item: this.settings.dataset[dataRowIndex], elem: activatedRow }];
     }
-    // Activated row may be filtered or on another page, so check all until find it
-    for (let i = 0; i < this.settings.dataset.length; i++) {
-      if (this.settings.dataset[i]._rowactivated) {
-        return [{ row: i, item: this.settings.dataset[i], elem: undefined }];
-      }
-    }
-
-    return [{ row: -1, item: undefined, elem: activatedRow }];
+    return r;
   },
 
   /**
@@ -5880,13 +5883,15 @@ Datagrid.prototype = {
   * @returns {void}
   */
   toggleRowActivation(idx) {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     let row = (typeof idx === 'number' ? this.tableBody.find(`tr[aria-rowindex="${idx + 1}"]`) : idx);
-    let rowIndex = (typeof idx === 'number' ? idx : ((this.pager && this.settings.source) ? this.dataRowIndex(row) : this.dataRowIndex(row)));
-    const item = this.settings.dataset[rowIndex];
+    let rowIndex = (typeof idx === 'number' ? idx : ((s.treeGrid || s.groupable) ? this.actualRowIndex(row) : this.dataRowIndex(row)));
+    const item = dataset[rowIndex];
     const isActivated = item ? item._rowactivated : false;
 
-    if (typeof idx === 'number' && this.pager && this.settings.source && this.settings.indeterminate) {
-      const rowIdx = idx + ((this.pager.activePage - 1) * this.settings.pagesize);
+    if (typeof idx === 'number' && this.pager && s.source && s.indeterminate) {
+      const rowIdx = idx + ((this.pager.activePage - 1) * s.pagesize);
       row = this.tableBody.find(`tr[aria-rowindex="${rowIdx + 1}"]`);
       rowIndex = idx;
     }
@@ -5901,10 +5906,10 @@ Datagrid.prototype = {
     * @property {object} args.item The current sort column.
     */
     if (isActivated) {
-      if (!this.settings.disableRowDeactivation) {
+      if (!s.disableRowDeactivation) {
         row.removeClass('is-rowactivated');
-        delete this.settings.dataset[rowIndex]._rowactivated;
-        this.element.triggerHandler('rowdeactivated', [{ row: rowIndex, item: this.settings.dataset[rowIndex] }]);
+        delete dataset[rowIndex]._rowactivated;
+        this.element.triggerHandler('rowdeactivated', [{ row: rowIndex, item: dataset[rowIndex] }]);
       }
     } else {
       // Deselect old row
@@ -5913,16 +5918,16 @@ Datagrid.prototype = {
         oldActivated.removeClass('is-rowactivated');
 
         const oldIdx = this.dataRowIndex(oldActivated);
-        if (this.settings.dataset[oldIdx]) { // May have changed page
-          delete this.settings.dataset[oldIdx]._rowactivated;
+        if (dataset[oldIdx]) { // May have changed page
+          delete dataset[oldIdx]._rowactivated;
         }
-        this.element.triggerHandler('rowdeactivated', [{ row: oldIdx, item: this.settings.dataset[oldIdx] }]);
+        this.element.triggerHandler('rowdeactivated', [{ row: oldIdx, item: dataset[oldIdx] }]);
       } else {
         // Old active row may be filtered or on another page, so check all until find it
-        for (let i = 0; i < this.settings.dataset.length; i++) {
-          if (this.settings.dataset[i]._rowactivated) {
-            delete this.settings.dataset[i]._rowactivated;
-            this.element.triggerHandler('rowdeactivated', [{ row: i, item: this.settings.dataset[i] }]);
+        for (let i = 0; i < dataset.length; i++) {
+          if (dataset[i]._rowactivated) {
+            delete dataset[i]._rowactivated;
+            this.element.triggerHandler('rowdeactivated', [{ row: i, item: dataset[i] }]);
             break;
           }
         }
@@ -5938,9 +5943,9 @@ Datagrid.prototype = {
       * @property {object} args.item The current sort column.
       */
       row.addClass('is-rowactivated');
-      if (this.settings.dataset[rowIndex]) { // May have changed page
-        this.settings.dataset[rowIndex]._rowactivated = true;
-        this.element.triggerHandler('rowactivated', [{ row: rowIndex, item: this.settings.dataset[rowIndex] }]);
+      if (dataset[rowIndex]) { // May have changed page
+        dataset[rowIndex]._rowactivated = true;
+        this.element.triggerHandler('rowactivated', [{ row: rowIndex, item: dataset[rowIndex] }]);
       }
     }
   },
