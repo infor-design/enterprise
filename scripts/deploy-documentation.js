@@ -14,25 +14,12 @@
  *     ids-website server
  *
  * @example `node ./scripts/deploy-documentation.js`
- *
- * Flags:
- * --dry-run       - Run the script, skipping POSTing to the api
- * --site=[server] - Deploy to specific server:
- *                   [local, localDebug, staging, prod]
- *                   Note: If there is no flag, it'll deploy to "static"
- *
- * --test-mode     - Run the script on a few components
- * --verbose       - Log all details
- *
- * NOTE: More than likely there is a command in the package.json
- * to run this script with NPM.
  */
 
 // -------------------------------------
 //   Node Modules/Options
 // -------------------------------------
 const archiver = require('archiver');
-const argv = require('yargs').argv;
 const chalk = require('chalk');
 const del = require('del');
 const documentation = require('documentation');
@@ -44,8 +31,30 @@ const hbsRegistrar = require('handlebars-registrar');
 const marked = require('marked');
 const path = require('path');
 const slash = require('slash');
+const swlog = require(`./helpers/stopwatch-log`)
 const vinylToString = require('vinyl-contents-tostring');
 const yaml = require('js-yaml');
+
+const argv = require('yargs')
+  .usage('Usage $node ./scripts/deploy-documentation.js [-s] [-d] [-T]')
+  .option('site', {
+    alias: 's',
+    describe: 'The site server to publish to (static, local, localDebug, staging, prod)',
+    default: 'static'
+  })
+  .option('dry-run', {
+    alias: 'd',
+    describe: 'Run the script, skipping sending of files',
+    default: false
+  })
+  .option('test-mode', {
+    alias: 'T',
+    describe: 'Run the script on a few preset components',
+    default: false
+  })
+  .help('h')
+  .alias('h', 'help')
+  .argv;
 
 // Set Marked options
 marked.setOptions({
@@ -114,7 +123,6 @@ const componentStats = {
   numSkipped: 0,
   total: 0,
 };
-const stopwatch = {};
 let deployTo = 'static';
 let numArchivesSent = 0;
 
@@ -128,7 +136,11 @@ hbsRegistrar(handlebars, {
 // -------------------------------------
 //   Main
 // -------------------------------------
-logTaskStart(`deploying ${packageJson.version}`);
+const opStart = swlog.logTaskStart(`deploying ${packageJson.version}`);
+
+if (argv.testMode) {
+  console.log(chalk.bgGreen.bold(`\n!! TEST MODE !!`));
+}
 
 if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
   deployTo = argv.site;
@@ -141,22 +153,15 @@ if (packageJson.version.includes('-') && deployTo === 'prod') {
   process.exit(0);
 }
 
-const setupPromises = [
-  cleanAll(),
-  compileSupportingDocs(),
-  compileComponents()
-];
-
-Promise.all(setupPromises)
-  .catch(err => {
-    console.error(chalk.red('Error!'), err);
-  })
+cleanAll()
+  .then(copyTokenFiles)
+  .then(compileSupportingDocs)
+  .then(compileComponents)
   .then(() => {
-    logTaskStart('writing files');
-
+    const writeStart = swlog.logTaskStart('writing files');
     const pageTemplate = handlebars.compile(fs.readFileSync(`${paths.templates.hbs}/page.hbs`, 'utf-8'));
-
     const writePromises = [];
+
     if (deployTo === 'static') {
       writePromises.push(writeHtmlSitemap());
     } else {
@@ -176,7 +181,7 @@ Promise.all(setupPromises)
         console.error(chalk.red('Error!'), err);
       })
       .then(() => {
-        logTaskEnd('writing files');
+        swlog.logTaskEnd(writeStart);
         if (deployTo !== 'static') {
           zipAndDeploy();
         }
@@ -193,7 +198,7 @@ Promise.all(setupPromises)
  */
 function compileComponents() {
   return new Promise((resolve, reject) => {
-    logTaskStart('component documentation');
+    const docStart = swlog.logTaskStart('component documentation');
     const compPromises = [];
     let compName = '';
 
@@ -204,10 +209,13 @@ function compileComponents() {
         compName = deriveComponentName(compDir);
 
         // For testing to only get one or two components
-        if (argv.testMode && !testComponents.includes(compName)) return;
+        if (argv.testMode && !testComponents.includes(compName)) {
+          componentStats.numSkipped++;
+          return;
+        }
 
         if (!documentationExists(compName)) {
-          logTaskAction('Skipping', compName, 'yellow');
+          swlog.logTaskAction('Skipping', compName, 'yellow');
           componentStats.numSkipped++;
           return;
         }
@@ -228,7 +236,7 @@ function compileComponents() {
           reject(err.message);
         })
         .then(() => {
-          logTaskEnd('component documentation');
+          swlog.logTaskEnd(docStart);
           resolve();
         });
     });
@@ -242,18 +250,24 @@ function compileComponents() {
  */
 function compileSupportingDocs() {
   return new Promise((resolve, reject) => {
-    logTaskStart('markdown documentation');
+    const mdStart = swlog.logTaskStart('markdown documentation');
     const promises = [];
 
     glob(`${paths.docs}/*.md`, (err, files) => {
       componentStats.total += files.length;
 
-      files.forEach(filePath => {
+      files.forEach((filePath, i) => {
+
+        // For testing to only get one or two components
+        if (argv.testMode && i > 2) {
+          componentStats.numSkipped++;
+          return;
+        }
+
         const fileName = path.basename(filePath, '.md').toLowerCase();
 
         allDocsObjMap[fileName] = Object.assign({}, jsonTemplate, {
           title: fileName,
-          description: `All about ${fileName}`,
         });
 
         promises.push(markdownToHtml(filePath, fileName));
@@ -264,7 +278,7 @@ function compileSupportingDocs() {
           reject(err);
         })
         .then(() => {
-          logTaskEnd('markdown documentation');
+          swlog.logTaskEnd(mdStart);
           resolve();
         });
     });
@@ -272,10 +286,45 @@ function compileSupportingDocs() {
 }
 
 /**
+ * Publish token data too
+ */
+function copyTokenFiles() {
+  return new Promise((resolve, reject) => {
+    const cpStart = swlog.logTaskStart('Copy token files');
+    const dist = `${paths.idsWebsite.dist}/ids-identity`;
+    const files = glob.sync(`./node_modules/ids-identity/dist/tokens/web/theme-*.json`);
+
+    const promises = files.map(file => {
+      return new Promise((resolve, reject) => {
+        const fileName = path.parse(file).name;
+        const obj = JSON.parse(fs.readFileSync(file, 'utf8'));
+        createDirs([dist]);
+        fs.writeFile(`${dist}/${fileName}.json`, JSON.stringify(obj, null, 4), () => {
+          swlog.logTaskAction('Copied', `${fileName}.json`);
+          resolve();
+        });
+      })
+    });
+
+    Promise.all(promises)
+      .catch(err => {
+        reject(err);
+      })
+      .then(() => {
+        swlog.logTaskEnd(cpStart);
+        resolve();
+      });
+  });
+}
+
+/**
  * Remove any "built" directories/files
+ * @async
  * @returns {Promise} - A promise
  */
-function cleanAll() {
+async function cleanAll() {
+  const cleanStart = swlog.logTaskStart('cleaning dist');
+
   const filesToDel = [];
 
   if (deployTo === 'static') {
@@ -290,20 +339,19 @@ function cleanAll() {
     );
   }
 
-  return del(filesToDel)
-    .catch(err => {
-      console.error(chalk.red('Error!'), err);
-    })
-    .then(() => {
-      logTaskAction('Cleaned', `${deployTo} directories`);
-      createDirs([
-        paths.idsWebsite.root,
-        paths.idsWebsite.dist,
-        paths.idsWebsite.distDocs,
-        paths.static.root,
-        paths.static.components
-      ]);
-    });
+  try {
+    await del(filesToDel)
+    await createDirs([
+      paths.idsWebsite.root,
+      paths.idsWebsite.dist,
+      paths.idsWebsite.distDocs,
+      paths.static.root,
+      paths.static.components
+    ]);
+    swlog.logTaskEnd(cleanStart);
+  } catch (err) {
+    console.error(chalk.red('Error!'), err);
+  }
 }
 
 /**
@@ -331,7 +379,7 @@ function markdownToHtml(filePath, fileName) {
             reject(err);
           } else {
             componentStats.numConverted++;
-            logTaskAction('Converting', `${fileName}/readme.md`, true);
+            swlog.logTaskAction('Converting to html', `${filePath.replace(process.cwd(), '')}`);
             resolve(allDocsObjMap[fileName].body = content);
           }
         });
@@ -348,7 +396,6 @@ function createDirs(arrPaths) {
   arrPaths.forEach(path => {
     if (!fs.existsSync(path)) {
       fs.mkdirSync(path);
-      logTaskAction('Created', path.replace(rootPath, '.'));
     }
   });
 }
@@ -369,25 +416,20 @@ function documentationExists(componentName) {
  * @param  {string} componentName - the name of the component
  * @returns {Promise} - A promise
  */
-function documentJsToHtml(componentName) {
+async function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
   const themeName = 'theme-ids-website';
 
-  return documentation.build([compFilePath], { extension: 'js', shallow: true })
-    .then(comments => {
-      documentation.formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}` })
-        .then(output => {
-          return output.map((file) => {
-            return vinylToString(file, 'utf8').then(contents => {
-              componentStats.numDocumented++;
-              logTaskAction('Documented', `${componentName}.js`, true);
-              allDocsObjMap[componentName].api = contents;
-            });
-          });
-        }, err => {
-          console.error(chalk.red('Error!'), err);
-        });
-    });
+
+  const comments = await documentation.build([compFilePath], { extension: 'js', shallow: true })
+  const output = await documentation.formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}` })
+
+  const results = output.map(async file => {
+    const contents = await vinylToString(file, 'utf8');
+    componentStats.numDocumented++;
+    swlog.logTaskAction('JSDoc parsed', `${componentName}.js`);
+    allDocsObjMap[componentName].api = contents;
+  });
 }
 
 /**
@@ -402,58 +444,26 @@ function deriveComponentName(dirPath) {
 }
 
 /**
- * Console.log a staring action and track its start time
- * @param {string} taskName - the unique name of the task
- */
-function logTaskStart(taskName) {
-  stopwatch[taskName] = Date.now();
-  console.log('Starting', chalk.cyan(taskName), '...');
-}
-
-/**
- * Console.log a finished action and display its run time
- * @param {string} taskName - the name of the task that matches its start time
- */
-function logTaskEnd(taskName) {
-  console.log('Finished', chalk.cyan(taskName), `after ${chalk.magenta(timeElapsed(stopwatch[taskName]))}`);
-}
-
-/**
- * Log an individual task's action
- * @param {string} action - the action
- * @param {string} desc - a brief description or more details
- * @param {boolean} [onlyVerbose] - console log only with verbose flag
- * @param {string} [color] - one of the chalk module's color aliases
- *
- */
-function logTaskAction(action, desc, onlyVerbose = false, color = 'green') {
-  if (!onlyVerbose || (onlyVerbose && argv.verbose)) {
-    console.log('-', action, chalk[color](desc));
-  }
-}
-
-/**
  * Deploy the zipped bundle using a POST request
  */
 function postZippedBundle() {
   const FormData = require('form-data');
-
-  logTaskStart(`attempt publish to server "${deployTo}"`);
+  const publishStart = swlog.logTaskStart(`attempt publish to server "${deployTo}"`);
 
   const form = new FormData();
   form.append('file', fs.createReadStream(`${paths.idsWebsite.dist}.zip`));
   form.append('root_path', `ids-enterprise/${packageJson.version}`);
   form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : '');
   form.submit(serverURIs[deployTo], (err, res) => {
-    logTaskEnd(`attempt publish to server "${deployTo}"`);
+    swlog.logTaskEnd(publishStart);
     if (err) {
       console.error(err);
-      logTaskAction('Failed!', `Status ${err}`, false, 'red');
+      swlog.logTaskAction('Failed!', `Status ${err}`, 'red');
     } else {
       if (res.statusCode === 200) {
-        logTaskAction('Success', `to "${serverURIs[deployTo]}"`);
+        swlog.logTaskAction('Success', `to "${serverURIs[deployTo]}"`);
       } else {
-        logTaskAction('Failed!', `Status ${res.statusCode}: ${res.statusMessage}`, false, 'red');
+        swlog.logTaskAction('Failed!', `Status ${res.statusCode}: ${res.statusMessage}`, 'red');
       }
       res.resume();
       numArchivesSent++;
@@ -489,7 +499,7 @@ function removeTrailingSlash(uri) {
  * Console.log statistics from the build
  */
 function statsConclusion() {
-  logTaskEnd(`deploying ${packageJson.version}`);
+  swlog.logTaskEnd(opStart);
   // did not use multiline string for formatting reasons
   let str = '';
   str += `\nComponents ${chalk.green('converted')}:  ${componentStats.numConverted}/${componentStats.total}`;
@@ -541,7 +551,7 @@ function writeHtmlFile(hbsTemplate, componentName) {
       if (err) {
         reject(err);
       } else {
-        logTaskAction('Created', `${componentName}.html`, true);
+        swlog.logTaskAction('Created', `${dest.replace(process.cwd(), '')}.html`);
         resolve();
       }
     });
@@ -556,12 +566,14 @@ function writeHtmlFile(hbsTemplate, componentName) {
 function writeJsonFile(componentName) {
   return new Promise((resolve, reject) => {
     const thisName = componentName;
-    fs.writeFile(`${paths.idsWebsite.distDocs}/${thisName}.json`, JSON.stringify(allDocsObjMap[thisName]), 'utf8', err => {
+    const dest = `${paths.idsWebsite.distDocs}/${thisName}.json`;
+
+    fs.writeFile(dest, JSON.stringify(allDocsObjMap[thisName]), 'utf8', err => {
       if (err) {
         reject(err);
       } else {
         componentStats.numWritten++;
-        logTaskAction('Created', `${thisName}.json`, true);
+        swlog.logTaskAction('Created', dest.replace(process.cwd(), ''));
         resolve();
       }
     });
@@ -579,7 +591,7 @@ function writeJsonSitemap() {
       if (err) {
         reject(err);
       } else {
-        logTaskAction('Created', 'sitemap.json');
+        swlog.logTaskAction('Created', 'sitemap.json');
         resolve();
       }
     });
@@ -600,7 +612,7 @@ function writeHtmlSitemap() {
       if (err) {
         reject(err);
       } else {
-        logTaskAction('Created', 'sitemap.html');
+        swlog.logTaskAction('Created', 'sitemap.html');
         resolve();
       }
     });
@@ -611,7 +623,7 @@ function writeHtmlSitemap() {
  * Zip the documentation files and call the method to POST
  */
 function zipAndDeploy() {
-  logTaskStart('zip json files');
+  const zipStart = swlog.logTaskStart('zip json files');
 
   // create a file to stream archive data to.
   const output = fs.createWriteStream(`${paths.idsWebsite.dist}.zip`);
@@ -622,11 +634,11 @@ function zipAndDeploy() {
   // listen for all archive data to be written
   // 'close' event is fired only when a file descriptor is involved
   output.on('close', () => {
-    logTaskAction('Zipped', `${archive.pointer()} total bytes`);
-    logTaskEnd('zip json files');
+    swlog.logTaskAction('Zipped', `${archive.pointer()} total bytes`);
+    swlog.logTaskEnd(zipStart);
 
     if (argv.dryRun) {
-      console.log(chalk.bgRed.bold('!! DRY RUN !!'));
+      console.log(chalk.bgRed.bold(`\n!! NO PUBLISH - DRY RUN !!\n`));
       statsConclusion();
     } else {
       postZippedBundle();
