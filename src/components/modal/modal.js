@@ -66,7 +66,7 @@ Modal.prototype = {
     const self = this;
 
     // Used for tracking events tied to the Window object
-    this.id = `${utils.uniqueId(this.element, 'modal')}-id`;
+    this.id = this.element.attr('id') || (parseInt($('.modal').length, 10) + 1);
     // Find the button or anchor with same dialog ID
     this.trigger = $(`button[data-modal="${this.element.attr('id')}"], a[data-modal="${this.element.attr('id')}"]`);
     this.overlay = $('<div class="overlay"></div>');
