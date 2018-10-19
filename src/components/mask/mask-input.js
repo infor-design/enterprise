@@ -516,7 +516,7 @@ MaskInput.prototype = {
       }(this.settings.showSymbol));
 
       // derive the location of the symbol
-      const detectableSymbol = (symbolSetting === 'currency' ? 'Â¤' : symbol.char);
+      const detectableSymbol = (symbolSetting === 'currency' ? '¤' : symbol.char);
       const symbolRegex = new RegExp(detectableSymbol, 'g');
       const match = symbolRegex.exec(symbol.format);
       let replacementRegex;
@@ -524,7 +524,7 @@ MaskInput.prototype = {
       let index = -1;
       let placementType;
 
-      if (match.length) {
+      if (match && match.length) {
         index = symbol.format.indexOf(match[0]);
         if (index === 0) {
           placementType = 'prefix';
@@ -541,7 +541,7 @@ MaskInput.prototype = {
         }
 
         if (symbolSetting === 'currency') {
-          symbolWithWhitespace = symbolWithWhitespace.replace('Â¤', symbol.char);
+          symbolWithWhitespace = symbolWithWhitespace.replace('¤', symbol.char);
         }
         this.settings.patternOptions[placementType] = symbolWithWhitespace;
       }
