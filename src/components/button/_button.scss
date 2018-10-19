@@ -11,6 +11,10 @@ button {
   &:last-child {
     margin-right: 0;
   }
+
+  > svg.icon {
+    margin-top: 0 !important;
+  }
 }
 
 // How all button types will deal with iconography
