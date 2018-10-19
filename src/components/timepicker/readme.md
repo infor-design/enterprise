@@ -42,7 +42,7 @@ A time field is created by adding an input field with `type="text"` and a `.time
 </div>
 ```
 
-It's also possible to configure the timepicker with a custom time format.  This allows the timepicker to be configured in [Military Time]( ../components/timepicker/example-24-hour), and/or with a [Seconds Picker]( ../components/timepicker/example-seconds-picker) for more accurate time.
+It's also possible to configure the timepicker with a custom time format.  This allows the timepicker to be configured in [Military Time](https://design.infor.com/code/ids-enterprise/latest/demo/timepicker/example-24-hour?font=source-sans), and/or with a [Seconds Picker](https://design.infor.com/code/ids-enterprise/latest/demo/timepicker/example-seconds-picker?font=source-sans) for more accurate time.
 
 ```html
 <div class="field">
@@ -51,7 +51,7 @@ It's also possible to configure the timepicker with a custom time format.  This 
 </div>
 ```
 
-In [another configuration]( ../components/timepicker/example-intervals), it's also possible to pass the Timepicker settings that control the intervals of minutes and seconds available for picking, as well as if the timepicker will allow "off-timing"-intervals to be entered manually with a keyboard.
+In [another configuration](https://design.infor.com/code/ids-enterprise/latest/demo/timepicker/example-intervals?font=source-sans), it's also possible to pass the Timepicker settings that control the intervals of minutes and seconds available for picking, as well as if the timepicker will allow "off-timing"-intervals to be entered manually with a keyboard.
 
 ```html
 <div class="field">

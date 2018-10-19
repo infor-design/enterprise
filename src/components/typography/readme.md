@@ -9,8 +9,7 @@ demo:
 
 ## Font family
 
-The default font family is still for the moment. `font-family: Helvetica, Arial` However the Infor design
-team decided on a new font you can now work with as a preference. `'Source Sans Pro', Helvetica, Arial`
+The default font family for the three themes is still for the moment `font-family: Helvetica, Arial`. Future designs will use a new font family  `'Source Sans Pro', Helvetica, Arial`. You can use this now on all three themes as an option.
 
 To enable this font in the components first you need to add this link to the head of your pages.
 
@@ -20,19 +19,19 @@ To enable this font in the components first you need to add this link to the hea
 
 After that you can either:
 
-1. Add the class `font-source-sans` to the HTML tag like `<html class="font-source-sans>`
-2. Or pass it in to the `.personalize()` API as the example below shows:
+1. Add the class `font-source-sans` to the HTML tag for example `<html class="font-source-sans>`
+2. Or pass it as an option to the `.personalize()` API.
 
 ```javascript
 $('html').personalize({colors: ['80000'], theme: 'dark', font: 'source-sans'});
 ```
 
-The sample app can be run with this font by adding the `?font=source-sans` parameter to any page. For example
-[Main Example Page]( ../components/personalize/example-index.html?font=source-sans)
+The sample app can also be run with this font by adding the `?font=source-sans` parameter to any page. For example
+[Main Example Page](https://design.infor.com/code/ids-enterprise/latest/demo/personalize/example-index.html?font=source-sans)
 
 ## Typography Related Classes
 
-The following classes can be used for text color:
+The following classes can be used for text emphasis:
 
 - `text-default`- Makes the text the normal default color for the theme.
 - `text-descriptive` - Used for descriptive text so a bit lighter.
@@ -101,7 +100,7 @@ Context should be used when choosing label text. For example, if the page title 
 
 In general, "Number" should not be used in labels. Example: use "Advance Ship Notice" rather than "Advance Ship Notice Number". However, "Number" may be appended to a label if it helps differentiate between fields like "Item Number" and "Item Description"
 
-If abbreviations are needed (useful in datagrid), it is better to abbreviate by removing words, for example removing "Item" since context is known. "Item Number" could become "Number" or "Num", and "Item Description" could become "Description" or "Desc"
+If abbreviations are needed (useful in datagrid headers for example), it is better to abbreviate by removing words, for example removing "Item" since context is known. "Item Number" could become "Number" or "Num", and "Item Description" could become "Description" or "Desc"
 
 When a field can contain one or more items, use the plural. Example: rather than "Group(s)", use "Groups"
 

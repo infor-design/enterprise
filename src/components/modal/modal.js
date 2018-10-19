@@ -56,6 +56,7 @@ function Modal(element, settings) {
 Modal.prototype = {
 
   /**
+   * @private
    * @returns {boolean} whether or not the Modal is a Contextual Action Panel (CAP)
    */
   get isCAP() {
@@ -211,6 +212,7 @@ Modal.prototype = {
 
   /**
    * Check if the submit button should be disabled based on validation status.
+   * @private
    * @returns {void}
    */
   disableSubmit() {
@@ -456,7 +458,6 @@ Modal.prototype = {
   },
 
   /**
-   *
    * Open the modal via the api.
    * @param {boolean} ajaxReturn Flag used internally to denote its an ajax result return.
    */
@@ -723,6 +724,10 @@ Modal.prototype = {
     }
   },
 
+  /**
+   * Utility function to check via the api if the modal is open.
+   * @returns {boolean} The current state open (true) or closed (false).
+   */
   isOpen() {
     return this.element.is('.is-visible');
   },
@@ -866,6 +871,11 @@ Modal.prototype = {
     return false;
   },
 
+  /**
+   * Destroy the modal.
+   * @param {settings} The settings to update on the modal
+   * @returns {object} The modal object for chaining.
+   */
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
@@ -874,7 +884,9 @@ Modal.prototype = {
     return this;
   },
 
-  // NOTE: Destroy method needs to function as a callback to be cancellable
+  /**
+   * Destroy the modal.
+   */
   destroy() {
     const self = this;
     const canDestroy = this.element.trigger('beforedestroy');

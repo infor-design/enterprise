@@ -16,14 +16,6 @@ demo:
     slug: example-set-selected
 ---
 
-## Configuration Options
-
-1. Scatter Plot Chart Example [View Example]( ../components/scatterplot/example-index)
-2. Defaulting a selected plot item [View Example]( ../components/scatterplot/example-selected)
-3. Set animation speed [View Example]( ../components/scatterplot/example-animation)
-4. Example showing Get Selected value [View Example]( ../components/scatterplot/example-get-selected)
-5. Example showing Set Selected value [View Example]( ../components/scatterplot/example-set-selected)
-
 A scatter plot (also called a scatterplot, scatter graph, scatter chart, scattergram, or scatter diagram) is a type of plot or mathematical diagram using Cartesian coordinates to display values for typically two variables for a set of data.
 
 See the [line chart api]( ../components/line) for more details as some settings are similar.
