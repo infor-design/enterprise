@@ -40,7 +40,7 @@ describe('Contextmenu index tests', () => {
 
 describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/popupmenu/example-selectable');
+    await utils.setPage('/components/popupmenu/example-selectable?nofrills=true');
   });
 
   it('Should not have errors', async () => {
@@ -48,7 +48,7 @@ describe('Popupmenu example-selectable tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-selectable', async () => {
+    xit('Should not visual regress on example-selectable', async () => {
       const popupmenuSection = await element(by.id('maincontent'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
@@ -121,22 +121,23 @@ describe('Popupmenu example-selectable tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-      expect(await element.all(by.css('#popupmenu-2 li')).last().getAttribute('class')).toEqual('is-focused');
+      expect(await element.all(by.css('.popupmenu.is-open li')).last().getAttribute('class')).toEqual('is-focused');
     });
 
     it('Should select last item on spacebar, arrowing down', async () => {
       const bodyEl = await element(by.css('body'));
-      const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
-      await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
-      const listItem = await element.all(by.css('#popupmenu-2 li')).last();
+      await element(by.id('single-select-popupmenu-trigger')).click();
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await element.all(by.css('#popupmenu-2 li a')).last().sendKeys(protractor.Key.SPACE);
+      await element.all(by.css('.popupmenu.is-open li a')).last().sendKeys(protractor.Key.SPACE);
 
-      expect(await listItem.getAttribute('class')).toEqual('is-checked');
+      // Re-open menu so we can see the checked item
+      await element(by.id('single-select-popupmenu-trigger')).click();
+
+      expect(await element.all(by.css('.popupmenu.is-open li')).last().getAttribute('class')).toEqual('is-checked');
     });
   }
 });
@@ -164,15 +165,15 @@ describe('Popupmenu example-selectable-multiple tests', () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
-      const lastItem = await element.all(by.css('#popupmenu-2 li')).last();
-      const firstItem = await element.all(by.css('#popupmenu-2 li')).first();
-      await element.all(by.css('#popupmenu-2 li a')).first().sendKeys(protractor.Key.SPACE);
+      const lastItem = await element.all(by.css('.popupmenu.is-open li')).last();
+      const firstItem = await element.all(by.css('.popupmenu.is-open li')).first();
+      await element.all(by.css('.popupmenu.is-open li a')).first().sendKeys(protractor.Key.SPACE);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await element.all(by.css('#popupmenu-2 li a')).last().sendKeys(protractor.Key.SPACE);
+      await element.all(by.css('.popupmenu.is-open li a')).last().sendKeys(protractor.Key.SPACE);
 
       expect(await lastItem.getAttribute('class')).toEqual('is-focused is-checked');
       expect(await firstItem.getAttribute('class')).toEqual('is-checked');
@@ -182,19 +183,19 @@ describe('Popupmenu example-selectable-multiple tests', () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
-      const lastItem = await element.all(by.css('#popupmenu-2 li')).last();
-      const firstItem = await element.all(by.css('#popupmenu-2 li')).first();
-      await element.all(by.css('#popupmenu-2 li a')).first().sendKeys(protractor.Key.SPACE);
+      const lastItem = await element.all(by.css('.popupmenu.is-open li')).last();
+      const firstItem = await element.all(by.css('.popupmenu.is-open li')).first();
+      await element.all(by.css('.popupmenu.is-open li a')).first().sendKeys(protractor.Key.SPACE);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await element.all(by.css('#popupmenu-2 li a')).last().sendKeys(protractor.Key.SPACE);
+      await element.all(by.css('.popupmenu.is-open li a')).last().sendKeys(protractor.Key.SPACE);
 
       expect(await lastItem.getAttribute('class')).toEqual('is-focused is-checked');
       expect(await firstItem.getAttribute('class')).toEqual('is-checked');
-      await element.all(by.css('#popupmenu-2 li a')).last().sendKeys(protractor.Key.SPACE);
+      await element.all(by.css('.popupmenu.is-open li a')).last().sendKeys(protractor.Key.SPACE);
 
       expect(await lastItem.getAttribute('class')).not.toEqual('is-focused is-checked');
     });

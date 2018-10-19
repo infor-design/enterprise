@@ -10,7 +10,14 @@ module.exports = {
   isBS: () => process.env.isBrowserStack,
   isCI: () => process.env.TRAVIS,
   setPage: async (url) => {
-    const pageurl = `${browser.baseUrl + url}?theme=${browser.params.theme}`;
+    let addQuery = '?';
+    let theme = `theme=${browser.params.theme}`;
+    if (url.indexOf('?') > -1) {
+      addQuery = '';
+      theme = `&${theme}`;
+    }
+
+    const pageurl = `${browser.baseUrl + url}${addQuery}${theme}`;
     await browser.waitForAngularEnabled(false);
     await browser.driver.get(pageurl);
   },

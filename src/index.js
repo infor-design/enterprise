@@ -29,6 +29,9 @@ export * from './components/personalize/personalize.hooks';
 // jQuery constructor for Personalize is required
 import './components/personalize/personalize.jquery';
 
+// Form functions are required
+import './components/form/form';
+
 // Explicitly import the initializer (which is considered "core").
 // This implicitly imports all jQuery-specific IDS component constructors.
 import './behaviors/initialize/initialize.jquery';

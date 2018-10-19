@@ -1,0 +1,146 @@
+// Mixins for text input
+//================================================== //
+
+@mixin input-style() {
+  @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
+  @include antialiased();
+  @include font-size(14);
+
+  -webkit-appearance: none;
+  background-color: $input-bg-color;
+  border: 1px solid $input-border-color;
+  border-collapse: separate;
+  border-radius: 2px;
+  color: $input-color;
+  display: inline-block;
+  max-width: 100%;
+  padding: 8px 10px;
+  resize: none;
+  text-align: left;
+  width: 300px;
+
+  &:hover {
+    border-color: $input-hover-border-color;
+  }
+
+  &[disabled] {
+    background-color: $input-disabled-bg-color;
+    border: solid 1px $input-disabled-border-color;
+    color: $input-disabled-color;
+    -webkit-text-fill-color: $input-disabled-color;
+  }
+
+  &[readonly] {
+    background-color: $input-readonly-bg-color;
+    border-color: $input-readonly-border-color;
+    color: $input-readonly-color;
+    -webkit-text-fill-color: $input-readonly-color;
+  }
+
+  &.is-placeholder {
+    color: $input-placeholder-color;
+
+    &.error {
+      color: $error-color;
+    }
+
+    &.alert {
+      color: $alert-color;
+    }
+
+    &.info {
+      color: $info-color;
+    }
+  }
+
+  &:focus,
+  &.is-focused {
+    @include focus-state();
+  }
+
+  &.error {
+    border-color: $error-color;
+
+    &:focus {
+      // Needed for printing
+      border-color: $error-color !important;
+      box-shadow: $error-focus-box-shadow !important;
+      color: $input-color !important;
+    }
+  }
+
+  &.alert {
+    border-color: $alert-color;
+
+    &:focus {
+      // Needed for printing
+      border-color: $alert-color !important;
+      color: $input-color !important;
+    }
+  }
+
+  &.confirm {
+    border-color: $confirm-color;
+
+    &:focus {
+      // Needed for printing
+      border-color: $confirm-color !important;
+      color: $input-color !important;
+    }
+  }
+
+  &.info {
+    border-color: $info-color;
+
+    &:focus {
+      // Needed for printing
+      border-color: $info-color !important;
+      color: $input-color !important;
+    }
+  }
+}
+
+// Required Indicator
+@mixin required-indicator() {
+  @include font-size(18);
+
+  color: $error-color;
+  content: '*';
+  display: inline-block;
+  left: 3px;
+  line-height: 0;
+  position: relative;
+  top: 3px;
+}
+
+// Labels without the "for" attribute
+@mixin inline-control-label($controls) {
+  @each $control in $controls {
+    &.inline-#{$control} {
+      .label-text {
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
+
+@mixin inline-control($controls) {
+  $exclude-controls: '';
+
+  @each $control in $controls {
+    $exclude-controls: $exclude-controls + ':not(.#{$control})';
+  }
+
+  input {
+    &#{$exclude-controls} {
+      margin: 5px 0 15px;
+    }
+  }
+
+  textarea {
+    &#{$exclude-controls} {
+      margin: 5px 0 12px;
+    }
+  }
+
+}
