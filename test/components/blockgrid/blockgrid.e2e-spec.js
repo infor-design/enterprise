@@ -65,7 +65,7 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress on example-responsive', async () => {
+    it('Should not visual regress on example-responsive', async () => {
       const blockgridEl = await element(by.id('blockgrid'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
