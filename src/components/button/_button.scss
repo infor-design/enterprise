@@ -11,18 +11,6 @@ button {
   &:last-child {
     margin-right: 0;
   }
-
-  &[id^='primary'],
-  &[id^='secondary'],
-  &[id^='tertiary'],
-  &.btn-menu,
-  &.btn {
-    > svg {
-      &.icon {
-        margin-top: 0;
-      }
-    }
-  }
 }
 
 // How all button types will deal with iconography
@@ -55,7 +43,6 @@ button {
 
   > .icon {
     fill: inherit;
-    margin-top: -3px;
     position: static;
     width: 18px;
 
