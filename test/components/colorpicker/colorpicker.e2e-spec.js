@@ -386,9 +386,6 @@ describe('Colorpicker modal tests', () => {
     await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
 
     expect(await element(by.id('color2')).getAttribute('value')).toEqual('#1A1A1A');
-    await browser.driver
-      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
-
-    expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
+    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
   });
 });
