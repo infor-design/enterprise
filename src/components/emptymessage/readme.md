@@ -64,7 +64,6 @@ You can invoke a empty message manually by showing it on a widget container. Thi
 
 - None
 
-
 ## Upgrading from 3.X
 
 - This is a new concept

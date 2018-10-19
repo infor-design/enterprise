@@ -81,6 +81,7 @@ For single select, just add the class `is-selectable` to the `popupmenu` item. A
     <li><a href="#">Menu Option #6</a></li>
 </ul>
 ```
+
 For multi select, just add the class `is-multiselectable` to the `popupmenu` item. And you can optionally set one or more of the items as selected by adding the class `is-checked` to those items.
 
 ```html
@@ -93,6 +94,7 @@ For multi select, just add the class `is-multiselectable` to the `popupmenu` ite
 <li><a href="#">Menu Option #6</a></li>
 </ul><
 ```
+
 ### Detecting menu selections
 
 To know when a menu item is clicked, selected or deselected you use the `selected` event.

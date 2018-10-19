@@ -873,7 +873,7 @@ Modal.prototype = {
 
   /**
    * Destroy the modal.
-   * @param {settings} The settings to update on the modal
+   * @param {settings} settings The settings to update on the modal
    * @returns {object} The modal object for chaining.
    */
   updated(settings) {
