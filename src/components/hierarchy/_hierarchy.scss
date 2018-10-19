@@ -375,6 +375,12 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     }
   }
 
+  li[data-disabled='true'],
+  li[data-disabled='true'] > a {
+    cursor: default;
+    opacity: 0.5;
+  }
+
   //The Top Level Node
   .root {
     margin: 0 auto;
