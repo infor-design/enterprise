@@ -180,7 +180,7 @@ describe('Button example-with-icons tests', () => {
   });
 
   if (!utils.isSafari()) {
-    it('Should open menu on return', async () => {
+    fit('Should open menu on return', async () => {
       const buttonEl = await element(by.id('menu-button-alone'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
