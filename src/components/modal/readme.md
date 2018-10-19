@@ -18,19 +18,21 @@ demo:
     slug: example-full-content
   - name: Validation (enabling buttons) Example
     slug: example-validation
+  - name: Canceling Close Example
+    slug: example-cancel-close
 ---
 
 ## Code Example
 
-### Input Dialog
+### Modal Dialog
 
-To create an Input Dialog, use the modal plugin. To provide content for the modal dialog you can either append it directly in the page and access it by ID, or pass it as a string to the modal plugin. This example demonstrates both ways. You can also invoke the modal in a few ways: by linking it to a button or trigger action, or immediately on demand.
+To provide content for the modal dialog you can either append it directly in the page and access it by ID, or pass it as a string to the modal plugin. This example demonstrates both ways. You can also invoke the modal in a few ways: by linking it to a button or trigger action, or by invoking it immediately as needed.
 
-When the modal is invoked, it animates and centers itself in the page using the content provided. It will expand to the content no bigger than the page plus some padding.
+When the modal is invoked, it animates and centers itself in the page using the content provided. It will expand to the content no bigger than the page plus some padding including on mobile devices.
 
 Even if the user clicks outside of the dialog on the application which invoked the dialog, focus remains in the dialog.
 
-The modal will animate from 90% to 100% and at the same time fades in.
+The modal animate behavior is that it animates from 90% to 100% and at the same time fades in.
 
 ```html
    <button id="modal" class="btn" type="button" data-modal="modal-1">Add Context</button>
@@ -42,16 +44,6 @@ The modal will animate from 90% to 100% and at the same time fades in.
         </div>
 
         <div class="modal-body">
-          <div class="field">
-            <label for="context-type">Type</label>
-            <select class="dropdown" id="context-type" name="type">
-              <option value="1">Context #1</option>
-              <option value="2">Context #2</option>
-              <option value="3">Context #3</option>
-              <option value="4">Context #4</option>
-              <option value="5">Context #5</option>
-            </select>
-          </div>
           <div class="field">
             <label for="context-name" class="required">Name</label>
             <input id="context-name"  aria-required="true" data-validate="required" name="context-name" type="text">
@@ -71,6 +63,27 @@ The modal will animate from 90% to 100% and at the same time fades in.
 
     <button class="btn" type="button" id="btn-add-comment">Add Comment</button>
 
+```
+
+### Veto / Cancel closing the modal
+
+In some cases you may want to cancel closing the modal. This can be done with the `beforeclose` event by returning false from it. It does not work asyncronously. To do this, one way is to attach to the `.modal` element in the page after the modal is opened. The sequence would look like this.
+
+```javascript
+    $('body').modal({
+      title: 'Enter Problem',
+      content: $('#modal-add-context'),
+      buttons: [{
+        text: 'Cancel'
+      }, {
+        text: 'Save'
+      }]
+    });
+
+    $('.modal').on('beforeclose', function () {
+        $('body').toast({ title: 'Example Only', message: 'This Dialog May not be closed.'});
+        return false;
+    });
 ```
 
 ## Accessibility

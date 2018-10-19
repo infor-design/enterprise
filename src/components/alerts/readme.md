@@ -45,5 +45,5 @@ Alert icons and Badges do not have tab stops or keyboard interaction on their ow
 
 ## Upgrading from 3.X
 
-- The old alerts where shown as `<div>`s, the new ones are displayed as spans. These could be used interchangeably, but span is easier to position in line so is usually a better fit.
+- The old alerts where shown as `<div>`s, the new ones are displayed as spans. These could be used interchangeably, but span is easier to position inline so is usually a better fit.
 - Classes which were formerly `.inforAlertIcon` should be changed to an SVG element

@@ -12,9 +12,9 @@ demo:
 
 ## Code Example
 
-This is an example showing a bread crumb pattern with four items. The current item should be last and have the `current` class. All items take the hyperlink style via class `hyperlink`. However, based on background element (header or page) the style may adopt and change. The `disabled` class can be added to prevent links from being clicked, however they can still be focused because the hyperlink element cannot contain a disabled property by valid HTML standards.
+This is an example showing a breadcrumb component with four items. The current item should be last and have the `current` class. All items take the hyperlink style via class `hyperlink`. However, based on background element (header or page) the style may adopt and change. The `disabled` class can be added to prevent links from being clickable, however they can still be focused because the hyperlink element cannot contain a disabled property by valid HTML standards.
 
-This control is entirely HTML and CSS, to update you will need to implement the logic to replace the link elements in the hierarchy.
+This component is entirely HTML and CSS, to update contents you will need to implement the logic to replace the link elements in the hierarchy.
 
 ```html
 <nav class="breadcrumb">
@@ -33,6 +33,15 @@ This control is entirely HTML and CSS, to update you will need to implement the 
 </nav>
 ```
 
+## Breadcrumb Positioning and Variations
+
+The above example just shows an in page breadcrumb. But usually the breadcrumb would be the top level element in the page. In some cases it is actually in or just below the header. These examples are showing in the [patterns section](../patterns).
+
+Examples:
+
+- [In Header](../patterns/navigation-breadcrumbs) this variation is used when the breadcrumb acts as the sole top level navigation.
+- [Below Header](../patterns/navigation-breadcrumbs-alternate.) this variation is used when the breadcrumb acts as a secondary top level navigation. For example if its part of the page pattern.
+
 ## Accessibility
 
 - Add an `aria-label` with the localized term for "breadcrumb"
@@ -50,4 +59,4 @@ This control is entirely HTML and CSS, to update you will need to implement the 
 ## Upgrading from 3.X
 
 - "Collapsing Lists" is Deprecated
-- Markup entirely changed, see updated example
+- Markup has entirely changed, see the updated code example

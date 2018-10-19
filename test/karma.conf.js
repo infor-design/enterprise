@@ -1,17 +1,24 @@
+const specs = require('./helpers/detect-custom-spec-list')('functional', process.env.PROTRACTOR_SPECS);
+
+// Preprend `test/` to the spec list results
+specs.forEach((spec, i) => {
+  specs[i] = `test/${spec}`;
+});
+
+const files = [
+  'dist/css/light-theme.css',
+  'dist/js/jquery-3.3.1.js',
+  'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
+  'dist/js/d3.v4.js',
+  'dist/js/sohoxi.js',
+  'dist/js/cultures/en-US.js'
+].concat(specs);
+
 module.exports = function (config) {
   config.set({
     basePath: '..',
     frameworks: ['jasmine'],
-    files: [
-      'dist/css/light-theme.css',
-      'dist/js/jquery-3.3.1.js',
-      'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
-      'dist/js/d3.v4.js',
-      'dist/js/sohoxi.js',
-      'dist/js/cultures/en-US.js',
-      'test/behaviors/**/*.func-spec.js',
-      'test/components/**/*.func-spec.js'
-    ],
+    files,
     exclude: [
       'node_modules'
     ],
@@ -23,7 +30,7 @@ module.exports = function (config) {
       optimization: {
         minimize: false
       },
-      devtool: 'sourcemap',
+      mode: 'development',
       module: {
         rules: [
           {

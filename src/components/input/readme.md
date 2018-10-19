@@ -39,15 +39,15 @@ With structured formatting, the system requires values be entered in a specific 
 
 ### Text Input Field
 
-A standard Text Input is a basic input element with `type="text"`. Password type can also be used. To implement one, create an input element with `type="text"`. You can also add various related features, including:
+A standard Text Input is a basic input element with `type="text"`. Password type can also be used. To implement one, create an input element with `type="text"`. You can also add various related features, some of these are separate components documented on separate pages, including:
 
-- Masking
-- Placeholder
-- Tooltip
-- Required
-- Validation
-- Dirty Indicator
-- Enabled/Read-only
+- [Masking](../components/mask) - We include a mask component to handle structured formatting.
+- Placeholder - Is supported on most input fields via the standard `placeholder` attribute. This should only be used in certain cases and not on EVERY form field
+- [Tooltip](../components/tooltip) - We include a tooltip component to handle stylized tooltips. This is supported on most input fields via the standard `title` attribute and invoking the tooltip plugin
+- [Required](../components/validation) Is a special type of validation. This is handled via the validation plugin.
+- [Validation](../components/validation) Allows you to customize alerts and errors on a field.
+- [Dirty Indicator](../components/trackdirty) We include a plugin to track if the field is modified and show a small indicator.
+- Enabled/Read-only - Is supported on most input fields via the standard `disabled` and `readonly` attributes.
 
 ```html
 <div class="field">
@@ -101,8 +101,8 @@ A standard Text Input is a basic input element with `type="text"`. Password type
 
 ## Responsive Guidelines
 
-- Default size is 300px wide but there are a number of widths [View Example](./input/example-sizes)
-- You can also use the responsive grid [View Example]( ./form/example-inputs-simple)
+- Default size is 300px wide but there are a number of widths [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/input/example-sizes?font=source-sans)
+- You can also use the responsive grid [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/form/example-inputs-simple?font=source-sans)
 
 ## Upgrading from 3.X
 

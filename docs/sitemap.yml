@@ -143,8 +143,6 @@ sections:
     slug: trackdirty
   - name: Visibility
     slug: visibility
-  - name: Utils
-    slug: utils
   - name: Validation
     slug: validation
   - name: Zoom

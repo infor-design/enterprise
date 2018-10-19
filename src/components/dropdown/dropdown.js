@@ -8,6 +8,7 @@ import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../icons/icons.jquery';
+import '../../utils/lifecycle';
 import '../place/place.jquery';
 import '../tooltip/tooltip.jquery';
 
