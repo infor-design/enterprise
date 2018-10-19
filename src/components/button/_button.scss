@@ -12,8 +12,15 @@ button {
     margin-right: 0;
   }
 
-  > svg.icon {
-    margin-top: 0 !important;
+  &[id^='primary'],
+  &[id^='secondary'],
+  &[id^='tertiary'],
+  &.btn-menu {
+    > svg {
+      &.icon {
+        margin-top: 0;
+      }
+    }
   }
 }
 
