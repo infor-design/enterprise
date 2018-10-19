@@ -36,7 +36,6 @@ Standard Soho masks can be defined using arrays of both "literal" string charact
 A field needing to capture a U.S. Phone Number could be masked with a pattern array like this:
 
 ```javascript
-
 const phoneNumberPattern = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/ ];
 
 $('#my-phone-number').mask({
@@ -61,13 +60,28 @@ function customMaskFunction(rawValue, options) {
 }
 ```
 
-When using the mask process `date`, `time`, or `number`, the Masked Input field will automatically configure itself with built-in mask functions that handle these cases.  For example, to format a U.S. shorthand date, a user could define a mask field with the following:
+When using the mask's `process` setting, `date`, `time`, or `number`, the Masked Input field will automatically configure itself with built-in mask functions that handle these cases.  For example, to format a U.S. shorthand date, a user could define a mask field with the following:
 
 ```javascript
 $('#my-date-field').mask({
   process: 'date',
   patternOptions: {
     format: 'M/d/yyyy'
+  }
+});
+```
+
+Another Example: If a user wanted to properly format a number as the user types (with currency and the possibility of becoming negative), the mask field could be defined this way:
+
+```javascript
+$('#my-number-field').mask({
+  process: 'number',
+  patternOptions: {
+    allowDecimal: true,
+    allowNegative: true,
+    decimalLimit: 2,
+    integerLimit: 7,
+    prefix: '$'
   }
 });
 ```
