@@ -16,7 +16,7 @@ button {
   &[id^='secondary'],
   &[id^='tertiary'],
   &.btn-menu,
-  &#regular-with-icon {
+  &.btn {
     > svg {
       &.icon {
         margin-top: 0;
