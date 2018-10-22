@@ -99,6 +99,7 @@ PopupMenu.prototype = {
 
   /**
    * Checks whether or not Right-To-Left reading mode is active.
+   * @private
    * @returns {boolean} whether or not the reading/writing direction is RTL
    */
   isRTL() {
@@ -286,6 +287,8 @@ PopupMenu.prototype = {
   },
 
   /**
+   * Renders a menu item in the UI.
+   * @private
    * @param {object|object[]} settings JSON-friendly object that represents a popupmenu item, or array of items.
    * @param {string} [settings.id] adds an ID to the item's anchor tag
    * @param {boolean} [settings.separator=false] causes this menu item to be a separator (overrides everything else)
@@ -422,6 +425,7 @@ PopupMenu.prototype = {
 
   /**
    * Converts the contents of a popupmenu or submenu to a JSON-friendly object structure.
+   * @private
    * @param {object} [settings={}] incoming conversion settings
    * @param {jQuery[]|HTMLElement} [settings.contextElement] the top-most element that will
    *  be modified (defaults to the top-level menu).
@@ -538,6 +542,8 @@ PopupMenu.prototype = {
   },
 
   /**
+   * Marks up menu items in the UI
+   * @private
    * @param {jQuery[]|HTMLElement} [contextElement] the top-most element that will
    *  be modified (defaults to the top-level menu).
    * @returns {void}
@@ -640,6 +646,7 @@ PopupMenu.prototype = {
 
   /**
    * Takes a pre-existing menu item and refreshes its state.
+   * @private
    * @param {HTMLElement} item the menu item to be refreshed
    * @param {object} data representing a Popupmenu data structure, containing updated state information
    * @param {function} [callback] runs on completion of the item refresh.  Can be used for adding additional
@@ -1238,6 +1245,7 @@ PopupMenu.prototype = {
 
   /**
    * Get the event position, handling browser cases (IE,FF) as well as SVG
+   * @private
    * @param {jQuery.Event} e the mouse event to be checked for pageX/pageY
    * @returns {object} containing x/y coordinates
    */
@@ -1275,6 +1283,7 @@ PopupMenu.prototype = {
 
   /**
    * Sets the position of the context menu.
+   * @private
    * @param {jQuery.Event} e jQuery Event that caused the menu to open (can be several types)
    * @returns {void}
    */
@@ -1902,6 +1911,7 @@ PopupMenu.prototype = {
 
   /**
    * Places a highlighted visual state on an item inside the menu
+   * @private
    * @param {jQuery[]} anchor the anchor tag representing the menu item.
    * @returns {void}
    */
@@ -2001,6 +2011,7 @@ PopupMenu.prototype = {
 
   /**
    * Removes event listeners from all popupmenu elements.
+   * @private
    * @returns {void}
    */
   detach() {
@@ -2127,6 +2138,7 @@ PopupMenu.prototype = {
 
   /**
    * Removes bound events and generated markup from this component
+   * @private
    * @returns {void}
    */
   teardown() {

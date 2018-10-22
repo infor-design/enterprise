@@ -22,6 +22,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {jQuery[]|HTMLElement} element The component element.
  * @param {object} [settings] The component settings.
  * @param {boolean} [settings.showTime=false] If true the time selector will be shown.
+ * @param {boolean} [settings.useCurrentTime=false] If true current time will be used for the time portion otherwise 12:00 midnight is used
  * @param {string} [settings.timeFormat] Format to use time section fx HH:mm,
  *  defaults current locale settings.
  * @param {number} [settings.minuteInterval]
@@ -76,10 +77,11 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
  * implemented https://jira.infor.com/browse/SOHO-3437
  * @param {boolean} [settings.autoSize=false] If true the field will be sized to the width of the date.
-* @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
+ * @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
  */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
+  useCurrentTime: false,
   timeFormat: undefined,
   minuteInterval: undefined,
   secondInterval: undefined,
@@ -778,7 +780,7 @@ DatePicker.prototype = {
     // Set timepicker
     if (this.settings.showTime) {
       // Set to 12:00
-      if (this.element.val() === '' && this.currentDate && this.currentDate.getDate()) {
+      if (this.element.val() === '' && this.currentDate && this.currentDate.getDate() && !this.settings.useCurrentTime) {
         this.currentDate.setHours(0);
         this.currentDate.setMinutes(0);
         this.currentDate.setSeconds(0);
@@ -1529,7 +1531,10 @@ DatePicker.prototype = {
   setToday() {
     const s = this.settings;
     this.currentDate = new Date();
-    this.currentDate.setHours(0, 0, 0, 0);
+
+    if (!this.settings.useCurrentTime) {
+      this.currentDate.setHours(0, 0, 0, 0);
+    }
 
     if (this.element.val() !== '') {
       if (this.timepicker && this.timepicker.hourSelect) {
@@ -1547,8 +1552,14 @@ DatePicker.prototype = {
 
     if (this.isIslamic) {
       const islamicDateParts = this.conversions.fromGregorian(this.currentDate);
-      this.currentDateIslamic =
-        new Date(islamicDateParts[0], islamicDateParts[1], islamicDateParts[2]);
+      this.currentDateIslamic = new Date(
+        islamicDateParts[0],
+        islamicDateParts[1],
+        islamicDateParts[2],
+        this.currentDate.getHours(),
+        this.currentDate.getMinutes(),
+        this.currentDate.getSeconds(),
+      );
     }
 
     if (this.isOpen()) {

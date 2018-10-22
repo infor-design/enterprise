@@ -66,6 +66,7 @@ const logger = require('./logger');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
+const TEST_DIR = path.join(__dirname, '..', 'test');
 const RELATIVE_SRC_DIR = path.join('..', 'src');
 
 const filePaths = {
@@ -116,6 +117,12 @@ const filePaths = {
         'light-theme': path.join(TEMP_DIR, 'light-theme.scss'),
         // 'uplift-theme': path.join(TEMP_DIR, 'uplift-theme.scss')
       }
+    },
+    log: {
+      components: path.join(TEMP_DIR, 'components.txt'),
+      e2e: path.join(TEMP_DIR, 'tests-e2e.txt'),
+      functional: path.join(TEMP_DIR, 'tests-functional.txt'),
+      source: path.join(TEMP_DIR, 'source.txt')
     }
   }
 
@@ -211,8 +218,18 @@ const buckets = {
   mid: [],
   complex: [],
   layouts: [],
-  patterns: []
+  patterns: [],
+  'test-e2e': [],
+  'test-func': []
 };
+
+// Component List file output
+let componentList = '';
+
+// Source code matches
+const jsMatches = [];
+const jQueryMatches = [];
+const sassMatches = [];
 
 // -------------------------------------
 // Functions
@@ -423,17 +440,32 @@ function searchFileNames(files, term) {
   }
 
   files.forEach((file) => {
-    if (file.indexOf(term) === -1) {
+    const wordBoundaryRegex = new RegExp(`\\b[_.]?${term}\\b`, 'gi');
+    if (!file.match(wordBoundaryRegex)) {
       return;
     }
-
-    // TODO: More granular sorting of component names (see #850).
-    // fx: "builder" should not also match "listbuilder"
 
     results.push(file);
   });
 
   return results;
+}
+
+/**
+ * Prunes the test results list in specific, tough cases
+ * @private
+ * @param {string} file path to a functional or e2e test
+ * @param {array} components array of requested bundle items
+ * @returns {boolean} whether or not the test should be pruned
+ */
+function pruneTest(file, components) {
+  // If validation component is included but datagrid is not, remove datagrid validation test
+  const datagridValidationTest = path.join('components', 'datagrid', 'datagrid-validation.func-spec.js');
+  if (file === datagridValidationTest && components.indexOf('datagrid') === -1) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -716,6 +748,78 @@ function renderTargetSassFile(key, targetFilePath) {
 }
 
 /**
+ * @private
+ * @param {string} type functional, e2e
+ * @returns {Promise} representing the written test manifest file
+ */
+function renderTestManifest(type) {
+  let targetFile = '';
+  let bucket = 'test-func';
+  if (type === 'e2e') {
+    bucket = 'test-e2e';
+  }
+
+  buckets[bucket].forEach((test) => {
+    targetFile += `${test}\n`;
+  });
+
+  return writeFile(filePaths.target.log[type], targetFile);
+}
+
+/**
+ * Renders a list of components that were requested
+ * @private
+ * @returns {Promise} representing the written components list
+ */
+function renderComponentList() {
+  return writeFile(filePaths.target.log.components, componentList);
+}
+
+/**
+ * Renders a list of source code matched
+ * @private
+ * @returns {Promise} representing the source code list
+ */
+function renderSourceCodeList() {
+  let targetFile = '';
+
+  function logEmpty() {
+    targetFile += '\n';
+    if (commandLineArgs.verbose) {
+      process.stdout.write('\n');
+    }
+  }
+
+  function logHeaderToBoth(str) {
+    targetFile += `${str}\n`;
+    if (commandLineArgs.verbose) {
+      logger(`${chalk.cyan(str)}`);
+    }
+  }
+
+  function logItemToBoth(item) {
+    targetFile += `- ${item}\n`;
+    if (commandLineArgs.verbose) {
+      logger('bullet', `${item}`);
+    }
+  }
+
+  logHeaderToBoth('JS Source Code:');
+  jsMatches.forEach(item => logItemToBoth(item));
+  logEmpty();
+
+  logHeaderToBoth('jQuery Source Code:');
+  jQueryMatches.forEach(item => logItemToBoth(item));
+  logEmpty();
+
+  logHeaderToBoth('Sass Source Code:');
+  sassMatches.forEach(item => logItemToBoth(item));
+  logEmpty();
+
+  return writeFile(filePaths.target.log.source, targetFile);
+}
+
+/**
  * Renders all available target files.
  * @param {boolean} isNormalBuild returns an empty promise chain if this is a normal build
  * @returns {Promise} containing all file writes.
@@ -745,6 +849,10 @@ function renderTargetFiles(isNormalBuild) {
   });
   renderPromises.push(renderTargetSassFile('components', filePaths.target.sass.controls));
 
+  renderPromises.push(renderComponentList(), renderSourceCodeList());
+  renderPromises.push(renderTestManifest('functional'));
+  renderPromises.push(renderTestManifest('e2e'));
+
   return Promise.all(renderPromises);
 }
 
@@ -773,7 +881,7 @@ function runBuildProcess(terminalCommand, terminalArgs) {
     });
     buildProcess.on('exit', (code) => {
       if (code !== 0) {
-        reject(new Error(`Rollup build exited with error code (${code})`));
+        reject(new Error(`"${terminalCommand}" process exited with error code (${code})\nArgs: ${terminalArgs.join(' ')}`));
       }
       resolve(log);
     });
@@ -784,14 +892,10 @@ function runBuildProcess(terminalCommand, terminalArgs) {
  * Runs all relevant build processes
  * @private
  * @param {array} requested the search terms that were requested
- * @param {array} jsMatches base Javascript matches
- * @param {array} jQueryMatches jQuery matches
- * @param {array} sassMatches Sass matches
  * @returns {Promise} containing results of all build processes
  */
-function runBuildProcesses(requested, jsMatches, jQueryMatches, sassMatches) {
-  let jsBuildPromise;
-  let sassBuildPromise;
+function runBuildProcesses(requested) {
+  const buildPromises = [];
   let isCustom = false;
   let hasCustom = '';
   const rollupArgs = ['-c'];
@@ -809,23 +913,27 @@ function runBuildProcesses(requested, jsMatches, jQueryMatches, sassMatches) {
   logger(`\nRunning build processes${hasCustom}...\n`);
 
   // Copy vendor libs/dependencies
-  const copyPromise = runBuildProcess('npx', ['grunt', 'copy:main']);
+  buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:main']));
+
+  if (buckets['test-func'].length || buckets['test-e2e'].length) {
+    buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:custom-test']));
+  }
 
   // Build JS
   if (commandLineArgs.disableJs) {
     logger('alert', 'Ignoring build process for JS');
   } else if (!isCustom || (jsMatches.length || jQueryMatches.length)) {
-    jsBuildPromise = runBuildProcess('rollup', rollupArgs);
+    buildPromises.push(runBuildProcess('rollup', rollupArgs));
   }
 
   // Build CSS
   if (commandLineArgs.disableCss) {
     logger('alert', 'Ignoring build process for CSS');
   } else if (!isCustom || sassMatches.length) {
-    sassBuildPromise = runBuildProcess('grunt', sassArgs);
+    buildPromises.push(runBuildProcess('grunt', sassArgs));
   }
 
-  return Promise.all([copyPromise, jsBuildPromise, sassBuildPromise]);
+  return Promise.all(buildPromises);
 }
 
 /**
@@ -879,20 +987,18 @@ if (!commandLineArgs.components) {
 }
 
 cleanAll(true).then(() => {
-  const jsMatches = [];
-  const jQueryMatches = [];
-  const sassMatches = [];
-
   if (!normalBuild) {
     // Display a list of requested components to the console
-    let componentList = `${(commandLineArgs.verbose ? '\n' : '')}${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
+    let loggedComponentList = `${(commandLineArgs.verbose ? '\n' : '')}${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
     requestedComponents.forEach((comp) => {
-      componentList += `- ${comp}\n`;
+      componentList += `${comp}\n`;
+      loggedComponentList += `- ${comp}\n`;
     });
-    logger(componentList);
+    logger(loggedComponentList);
 
     // Scan source code directories
     const items = read(SRC_DIR);
+    const tests = read(TEST_DIR);
 
     // Search the stored list of source files for each term
     requestedComponents.forEach((arg) => {
@@ -910,25 +1016,25 @@ cleanAll(true).then(() => {
         }
         renderTarget.push(result);
       });
+
+      // Scan for relevant tests
+      const testResults = searchFileNames(tests, arg);
+      testResults.forEach((result) => {
+        if (pruneTest(result, requestedComponents)) {
+          return;
+        }
+
+        if (result.indexOf('func-spec.js') > -1) {
+          buckets['test-func'].push(result);
+        }
+        if (result.indexOf('e2e-spec.js') > -1) {
+          buckets['test-e2e'].push(result);
+        }
+      });
     });
 
-    if (commandLineArgs.verbose) {
-      logger(`${chalk.cyan('JS Source Code:')}`);
-      jsMatches.forEach((item) => {
-        logger('bullet', `${item}`);
-      });
-
-      logger(`${chalk.cyan('jQuery Source Code:')}`);
-      jQueryMatches.forEach((item) => {
-        logger('bullet', `${item}`);
-      });
-
-      logger(`${chalk.cyan('Sass Source Code:')}`);
-      sassMatches.forEach((item) => {
-        logger('bullet', `${item}`);
-      });
-      process.stdout.write('\n');
-    } else {
+    // Only log the results if we're not in verbose mode.
+    if (!commandLineArgs.verbose) {
       logger(`${chalk.cyan('JS Source Code:')} ${jsMatches.length} files`);
       logger(`${chalk.cyan('jQuery Source Code:')} ${jQueryMatches.length} files`);
       logger(`${chalk.cyan('Sass Source Code:')} ${sassMatches.length} files`);

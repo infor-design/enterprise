@@ -176,6 +176,10 @@ Hierarchy.prototype = {
 
       e.stopImmediatePropagation();
 
+      if (isAction && $(target).parent().data('disabled')) {
+        return;
+      }
+
       $('.is-selected').removeClass('is-selected');
       $(`#${nodeId}`).addClass('is-selected');
 
@@ -317,10 +321,33 @@ Hierarchy.prototype = {
    * @returns {string} returns list items as a string
    */
   getActionMenuItems(data) {
+    const actions = data.menu.actions.map((a) => {
+      if (a.disabled === undefined) {
+        a.disabled = false;
+      }
+
+      return a;
+    });
+
     // Ignoring next line. Eslint expects template literals vs string concat.
     // However template literals break JSON.stringify() in this case
-    // eslint-disable-next-line
-    return `${data.menu.actions.map(a => "<li><a href='" + a.url + "' data-action-reference='" + JSON.stringify(a.data) + "'>" + a.value + "</a></li>").join('')}`;
+    /* eslint-disable */
+    return `${actions.map(a => `
+      <li data-disabled='${a.disabled}' class='${a.menu ? 'submenu' : ''}'>
+        <a href='${a.url}' data-action-reference='` + JSON.stringify(a.data) + `'>
+          ${a.value}
+          ${a.menu ? '<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>' : ''}
+        </a>
+        ${a.menu ? `<div class="wrapper" role="application" aria-hidden="true">
+          <ul class="popupmenu">
+            ${a.menu.map(i => `
+            <li data-disabled='${a.disabled}'>
+              <a href='${a.url}' data-action-reference='` + JSON.stringify(a.data) + `'>${i.value}</a>
+            </li>`).join('')}
+          </ul>
+        </div>` : ''}
+      </li>`).join('')}`;
+    /* eslint-enable */
   },
 
   /**

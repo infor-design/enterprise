@@ -436,7 +436,7 @@ Datagrid.prototype = {
       isTop = true;
     }
     // Add row status
-    data.rowStatus = { icon: 'new', text: 'New', tooltip: 'New' };
+    data.rowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
 
     // Add to array
     if (typeof location === 'string') {
@@ -3585,10 +3585,11 @@ Datagrid.prototype = {
    * Setup tooltips on the cells.
    * @private
    * @param  {boolean} rowstatus true set tootip with row status
+   * @param  {boolean} isForced true set tootip
    * @returns {void}
    */
-  setupTooltips(rowstatus) {
-    if (!rowstatus && !this.settings.enableTooltips) {
+  setupTooltips(rowstatus, isForced) {
+    if (!rowstatus && !isForced && !this.settings.enableTooltips) {
       return;
     }
 
@@ -3602,14 +3603,15 @@ Datagrid.prototype = {
       td: '.datagrid-body tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
       rowstatus: '.datagrid-body tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
     };
+    selector.errorIcon = `${selector.td} .icon-error`;
 
     // Selector string
     if (rowstatus && this.settings.enableTooltips) {
-      selector.str = `${selector.th}, ${selector.td}, ${selector.rowstatus}`;
+      selector.str = `${selector.th}, ${selector.td}, ${selector.errorIcon}, ${selector.rowstatus}`;
     } else if (rowstatus) {
       selector.str = `${selector.th}, ${selector.rowstatus}`;
     } else {
-      selector.str = `${selector.th}, ${selector.td}`;
+      selector.str = `${selector.th}, ${selector.td}, ${selector.errorIcon}`;
     }
 
     // Handle tooltip to show
@@ -4041,9 +4043,10 @@ Datagrid.prototype = {
     }
 
     if (this.originalColumns) {
+      const originalColumns = this.columnsFromString(JSON.stringify(this.originalColumns));
       const columnGroups = this.settings.columnGroups && this.originalColGroups ?
         this.originalColGroups : null;
-      this.updateColumns(this.originalColumns, columnGroups);
+      this.updateColumns(originalColumns, columnGroups);
     }
 
     this.clearFilter();
@@ -4246,6 +4249,13 @@ Datagrid.prototype = {
       modal.element.on('close.datagrid', () => {
         self.isColumnsChanged = false;
       });
+      modal.element.on('keydown.datagrid', (event) => {
+        // Escape Button Code. Make sure to close the modal correctly.
+        if (event.keyCode === 27) {
+          modal.close();
+          $('body').off('open.datagrid');
+        }
+      });
     });
   },
 
@@ -4256,11 +4266,12 @@ Datagrid.prototype = {
   * @param {number} width The width of the column
   * @param {number} diff The difference between the old and new width
   */
-  setColumnWidth(idOrNode, width, diff) {
+  setColumnWidth(idOrNode, width) {
     const self = this;
     const percent = parseFloat(width);
     let columnNode = idOrNode;
     const columnSettings = this.columnById(typeof idOrNode === 'string' ? idOrNode : idOrNode.attr('data-column-id'))[0];
+    const idx = columnNode.index();
 
     if (!percent) {
       return;
@@ -4301,22 +4312,30 @@ Datagrid.prototype = {
       columnSettings.width = width;
     }
 
-    const idx = columnNode.index();
-    self.headerColGroup.find('col').eq(idx)[0].style.width = (`${width}px`);
-
-    if (self.settings.dataset.length > 0) {
-      self.bodyColGroup.find('col').eq(idx)[0].style.width = (`${width}px`);
-    }
-
-    if (self.tableWidth && diff) {
-      self.headerTable.css('width', parseInt(self.tableWidth, 10) + diff);
-      self.table.css('width', parseInt(self.tableWidth, 10) + diff);
-    }
-
     this.element.trigger('columnchange', [{ type: 'resizecolumn', index: idx, columns: this.settings.columns }]);
     this.saveColumns();
     this.saveUserSettings();
     this.headerWidths[idx].width = width;
+  },
+
+  /**
+   * Change the width of the column as the user drags the resizeHandle
+   * @param {boolean} idOrNode Specifies if the column info is provide by id or as a node reference.
+   * @param {number} width The width of the column
+   * @param {number} diff The difference between the old and new width
+   */
+  resizeColumnWidth(idOrNode, width, diff) {
+    const idx = idOrNode.index();
+    this.headerColGroup.find('col').eq(idx)[0].style.width = (`${width}px`);
+
+    if (this.settings.dataset.length > 0) {
+      this.bodyColGroup.find('col').eq(idx)[0].style.width = (`${width}px`);
+    }
+
+    if (this.tableWidth && diff) {
+      this.headerTable.css('width', parseInt(this.tableWidth, 10) + diff);
+      this.table.css('width', parseInt(this.tableWidth, 10) + diff);
+    }
   },
 
   /**
@@ -4375,11 +4394,12 @@ Datagrid.prototype = {
         }
 
         width = Math.round(width);
-
-        self.setColumnWidth(self.currentHeader, width, width - columnStartWidth);
+        self.resizeColumnWidth(self.currentHeader, width, width - columnStartWidth);
       })
-      .on('dragend.datagrid', () => {
+      .on('dragend.datagrid', (e, ui) => {
+        const width = (ui.left - startingLeft - 1);
         self.dragging = false;
+        self.setColumnWidth(self.currentHeader, width);
       });
   },
 
@@ -5828,30 +5848,33 @@ Datagrid.prototype = {
   * @returns {object} Information about the activated row.
   */
   activatedRow() {
-    if (!this.tableBody) {
-      return [{ row: -1, item: undefined, elem: undefined }];
-    }
+    let r = [{ row: -1, item: undefined, elem: undefined }];
 
-    const activatedRow = this.tableBody.find('tr.is-rowactivated');
+    if (this.tableBody) {
+      const s = this.settings;
+      const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+      const activatedRow = this.tableBody.find('tr.is-rowactivated');
 
-    if (activatedRow.length) {
-      let rowIndex = this.actualRowIndex(activatedRow);
-      const dataRowIndex = this.dataRowIndex(activatedRow);
+      if (activatedRow.length) {
+        const dataRowIndex = this.dataRowIndex(activatedRow);
+        const rowIndex = s.indeterminate ? dataRowIndex : this.actualRowIndex(activatedRow);
+        r = [{ row: rowIndex, item: dataset[rowIndex], elem: activatedRow }];
+      } else {
+        r = null;
+        // Activated row may be filtered or on another page, so check all until find it
+        for (let i = 0; i < dataset.length; i++) {
+          if (dataset[i]._rowactivated) {
+            r = [{ row: i, item: dataset[i], elem: undefined }];
+            break;
+          }
+        }
 
-      if (this.settings.indeterminate) {
-        rowIndex = this.dataRowIndex(activatedRow);
+        if (r === null) {
+          r = [{ row: -1, item: undefined, elem: activatedRow }];
+        }
       }
-
-      return [{ row: rowIndex, item: this.settings.dataset[dataRowIndex], elem: activatedRow }];
     }
-    // Activated row may be filtered or on another page, so check all until find it
-    for (let i = 0; i < this.settings.dataset.length; i++) {
-      if (this.settings.dataset[i]._rowactivated) {
-        return [{ row: i, item: this.settings.dataset[i], elem: undefined }];
-      }
-    }
-
-    return [{ row: -1, item: undefined, elem: activatedRow }];
+    return r;
   },
 
   /**
@@ -5860,13 +5883,15 @@ Datagrid.prototype = {
   * @returns {void}
   */
   toggleRowActivation(idx) {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     let row = (typeof idx === 'number' ? this.tableBody.find(`tr[aria-rowindex="${idx + 1}"]`) : idx);
-    let rowIndex = (typeof idx === 'number' ? idx : ((this.pager && this.settings.source) ? this.dataRowIndex(row) : this.dataRowIndex(row)));
-    const item = this.settings.dataset[rowIndex];
+    let rowIndex = (typeof idx === 'number' ? idx : ((s.treeGrid || s.groupable) ? this.actualRowIndex(row) : this.dataRowIndex(row)));
+    const item = dataset[rowIndex];
     const isActivated = item ? item._rowactivated : false;
 
-    if (typeof idx === 'number' && this.pager && this.settings.source && this.settings.indeterminate) {
-      const rowIdx = idx + ((this.pager.activePage - 1) * this.settings.pagesize);
+    if (typeof idx === 'number' && this.pager && s.source && s.indeterminate) {
+      const rowIdx = idx + ((this.pager.activePage - 1) * s.pagesize);
       row = this.tableBody.find(`tr[aria-rowindex="${rowIdx + 1}"]`);
       rowIndex = idx;
     }
@@ -5881,10 +5906,10 @@ Datagrid.prototype = {
     * @property {object} args.item The current sort column.
     */
     if (isActivated) {
-      if (!this.settings.disableRowDeactivation) {
+      if (!s.disableRowDeactivation) {
         row.removeClass('is-rowactivated');
-        delete this.settings.dataset[rowIndex]._rowactivated;
-        this.element.triggerHandler('rowdeactivated', [{ row: rowIndex, item: this.settings.dataset[rowIndex] }]);
+        delete dataset[rowIndex]._rowactivated;
+        this.element.triggerHandler('rowdeactivated', [{ row: rowIndex, item: dataset[rowIndex] }]);
       }
     } else {
       // Deselect old row
@@ -5893,16 +5918,16 @@ Datagrid.prototype = {
         oldActivated.removeClass('is-rowactivated');
 
         const oldIdx = this.dataRowIndex(oldActivated);
-        if (this.settings.dataset[oldIdx]) { // May have changed page
-          delete this.settings.dataset[oldIdx]._rowactivated;
+        if (dataset[oldIdx]) { // May have changed page
+          delete dataset[oldIdx]._rowactivated;
         }
-        this.element.triggerHandler('rowdeactivated', [{ row: oldIdx, item: this.settings.dataset[oldIdx] }]);
+        this.element.triggerHandler('rowdeactivated', [{ row: oldIdx, item: dataset[oldIdx] }]);
       } else {
         // Old active row may be filtered or on another page, so check all until find it
-        for (let i = 0; i < this.settings.dataset.length; i++) {
-          if (this.settings.dataset[i]._rowactivated) {
-            delete this.settings.dataset[i]._rowactivated;
-            this.element.triggerHandler('rowdeactivated', [{ row: i, item: this.settings.dataset[i] }]);
+        for (let i = 0; i < dataset.length; i++) {
+          if (dataset[i]._rowactivated) {
+            delete dataset[i]._rowactivated;
+            this.element.triggerHandler('rowdeactivated', [{ row: i, item: dataset[i] }]);
             break;
           }
         }
@@ -5918,9 +5943,9 @@ Datagrid.prototype = {
       * @property {object} args.item The current sort column.
       */
       row.addClass('is-rowactivated');
-      if (this.settings.dataset[rowIndex]) { // May have changed page
-        this.settings.dataset[rowIndex]._rowactivated = true;
-        this.element.triggerHandler('rowactivated', [{ row: rowIndex, item: this.settings.dataset[rowIndex] }]);
+      if (dataset[rowIndex]) { // May have changed page
+        dataset[rowIndex]._rowactivated = true;
+        this.element.triggerHandler('rowactivated', [{ row: rowIndex, item: dataset[rowIndex] }]);
       }
     }
   },
@@ -7064,7 +7089,7 @@ Datagrid.prototype = {
         wrapper: icon
       };
       this.cacheTooltip(icon, tooltip);
-      this.showTooltip(tooltip);
+      this.setupTooltips(false, true);
     }
   },
 
