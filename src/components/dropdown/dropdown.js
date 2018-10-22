@@ -1838,7 +1838,7 @@ Dropdown.prototype = {
       const searchInputHeight = $(this).hasClass('dropdown-short') ? 24 : 34;
 
       if (ulHeight + searchInputHeight >= listHeight) {
-        self.listUl[0].style.height = `${listHeight - (searchInputHeight*2)}px`;
+        self.listUl[0].style.height = `${listHeight - (searchInputHeight * 2)}px`;
       }
 
       return placementObj;
