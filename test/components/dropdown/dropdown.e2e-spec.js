@@ -108,7 +108,7 @@ describe('Dropdown example-index tests', () => {
   }
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress', async () => {
+    it('Should not visual regress', async () => {
       const dropdownEl = element(by.css('div[aria-controls="dropdown-list"]'));
       const dropdownElList = element(by.id('dropdown-list'));
       await browser.driver
