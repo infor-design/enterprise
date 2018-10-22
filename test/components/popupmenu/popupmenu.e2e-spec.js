@@ -78,14 +78,14 @@ describe('Popupmenu example-selectable tests', () => {
   });
 
   if (!utils.isIE() && !utils.isSafari()) {
-    xit('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
+    it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
       await popupmenuPageObject.openSingleSelect();
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
 
-    xit('Should be accessible on close with no WCAG2AA violations on keypress(Escape)', async () => {
+    it('Should be accessible on close with no WCAG2AA violations on keypress(Escape)', async () => {
       const buttonTriggerEl = await popupmenuPageObject.openSingleSelect();
       await buttonTriggerEl.sendKeys(protractor.Key.ESCAPE);
 

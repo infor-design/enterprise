@@ -69,7 +69,7 @@ const DEFAULT_RESPONSE_OPTS = {
   enableLiveReload: true,
   layout: 'layout',
   locale: 'en-US',
-  title: 'SoHo XI',
+  title: 'IDS Enterprise',
   headerHamburger: false,
   basepath: BASE_PATH,
   version: packageJSON.version,

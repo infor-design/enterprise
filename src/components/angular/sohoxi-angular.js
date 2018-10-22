@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 /**
- * SoHo XI Angular Directives
+ * IDS Enterprise Angular Directives
  * @private
  */
 (function () {
