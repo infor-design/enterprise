@@ -5885,68 +5885,148 @@ Datagrid.prototype = {
   toggleRowActivation(idx) {
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
-    let row = (typeof idx === 'number' ? this.tableBody.find(`tr[aria-rowindex="${idx + 1}"]`) : idx);
-    let rowIndex = (typeof idx === 'number' ? idx : ((s.treeGrid || s.groupable) ? this.actualRowIndex(row) : this.dataRowIndex(row)));
-    const item = dataset[rowIndex];
-    const isActivated = item ? item._rowactivated : false;
+    let row;
+    let rowJq;
+    let rowIndex;
 
-    if (typeof idx === 'number' && this.pager && s.source && s.indeterminate) {
-      const rowIdx = idx + ((this.pager.activePage - 1) * s.pagesize);
-      row = this.tableBody.find(`tr[aria-rowindex="${rowIdx + 1}"]`);
+    if (typeof idx === 'number') {
+      row = this.tableBody[0].querySelector(`tr[aria-rowindex="${idx + 1}"]`);
       rowIndex = idx;
-    }
 
-    /**
-    * Fires after a row is deactivated in mixed selection mode.
-    * @event rowdeactivated
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Additional arguments
-    * @property {array} args.row An array of selected rows.
-    * @property {object} args.item The current sort column.
-    */
-    if (isActivated) {
-      if (!s.disableRowDeactivation) {
-        row.removeClass('is-rowactivated');
-        delete dataset[rowIndex]._rowactivated;
-        this.element.triggerHandler('rowdeactivated', [{ row: rowIndex, item: dataset[rowIndex] }]);
+      if (this.pager && s.source && s.indeterminate) {
+        const rowIdx = idx + ((this.pager.activePage - 1) * s.pagesize);
+        row = this.tableBody[0].querySelector(`tr[aria-rowindex="${rowIdx + 1}"]`);
       }
     } else {
-      // Deselect old row
-      const oldActivated = this.tableBody.find('tr.is-rowactivated');
-      if (oldActivated.length) {
-        oldActivated.removeClass('is-rowactivated');
+      rowJq = idx instanceof jQuery ? idx : $(idx);
+      row = rowJq[0];
+      rowIndex = (s.treeGrid || s.groupable) ?
+        this.actualRowIndex(rowJq) : this.dataRowIndex(rowJq);
+    }
 
-        const oldIdx = this.dataRowIndex(oldActivated);
-        if (dataset[oldIdx]) { // May have changed page
-          delete dataset[oldIdx]._rowactivated;
-        }
-        this.element.triggerHandler('rowdeactivated', [{ row: oldIdx, item: dataset[oldIdx] }]);
-      } else {
-        // Old active row may be filtered or on another page, so check all until find it
-        for (let i = 0; i < dataset.length; i++) {
-          if (dataset[i]._rowactivated) {
-            delete dataset[i]._rowactivated;
-            this.element.triggerHandler('rowdeactivated', [{ row: i, item: dataset[i] }]);
-            break;
-          }
-        }
-      }
+    if (s.indeterminate && !row) {
+      rowJq = this.actualRowNode(rowIndex);
+      row = rowJq[0];
+    }
+
+    const isActivated = dataset[rowIndex] ? dataset[rowIndex]._rowactivated : false;
+
+    // Toggle it
+    if (isActivated) {
+      this.deactivateMixSelRow(row, rowIndex, dataset);
+    } else {
+      this.deactivateAllMixSelRows(dataset);
+      this.activateMixSelRow(row, rowIndex, dataset);
+    }
+  },
+
+  /**
+   * Activate given row with mixed selection mode.
+   * @private
+   * @param  {object} row The row to activated
+   * @param  {number} idx The row index to activated
+   * @param  {object} dataset Optional data to use
+   * @returns {void}
+   */
+  activateMixSelRow(row, idx, dataset) {
+    if (typeof row === 'undefined' || typeof idx !== 'number' || idx < 0) {
+      return;
+    }
+    const s = this.settings;
+
+    if (typeof dataset === 'undefined') {
+      dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    }
+
+    if (dataset[idx]) {
+      row.classList.add('is-rowactivated');
+      dataset[idx]._rowactivated = true;
 
       /**
-      * Fires after a row is activated in mixed selection mode.
-      * @event rowactivated
-      * @memberof Datagrid
-      * @property {object} event The jquery event object
-      * @property {object} args Additional arguments
-      * @property {array} args.row An array of selected rows.
-      * @property {object} args.item The current sort column.
-      */
-      row.addClass('is-rowactivated');
-      if (dataset[rowIndex]) { // May have changed page
-        dataset[rowIndex]._rowactivated = true;
-        this.element.triggerHandler('rowactivated', [{ row: rowIndex, item: dataset[rowIndex] }]);
+       * Fires after a row is activated in mixed selection mode.
+       * @event rowactivated
+       * @memberof Datagrid
+       * @property {object} event The jquery event object
+       * @property {object} args Additional arguments
+       * @property {array} args.row An array of selected rows.
+       * @property {object} args.item The current sort column.
+       */
+      this.element.triggerHandler('rowactivated', [{ row: idx, item: dataset[idx] }]);
+    }
+  },
+
+  /**
+  * Deactivate given row with mixed selection mode.
+  * @private
+  * @param  {object} row The row to deactivated
+  * @param  {number} idx The row index to deactivated
+  * @param  {object} dataset Optional data to use
+  * @returns {void}
+  */
+  deactivateMixSelRow(row, idx, dataset) {
+    if (typeof row === 'undefined' || typeof idx !== 'number' || idx < 0) {
+      return;
+    }
+    const s = this.settings;
+
+    if (typeof dataset === 'undefined') {
+      dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    }
+
+    if (dataset[idx] && !s.disableRowDeactivation) {
+      row.classList.remove('is-rowactivated');
+      delete dataset[idx]._rowactivated;
+
+      /**
+       * Fires after a row is deactivated in mixed selection mode.
+       * @event rowdeactivated
+       * @memberof Datagrid
+       * @property {object} event The jquery event object
+       * @property {object} args Additional arguments
+       * @property {array} args.row An array of selected rows.
+       * @property {object} args.item The current sort column.
+       */
+      this.element.triggerHandler('rowdeactivated', [{ row: idx, item: dataset[idx] }]);
+    }
+  },
+
+  /**
+  * Deactivate all rows with mixed selection mode.
+  * @private
+  * @param  {object} dataset Optional data to use
+  * @returns {void}
+  */
+  deactivateAllMixSelRows(dataset) {
+    const s = this.settings;
+    let triggerData = null;
+
+    if (typeof dataset === 'undefined') {
+      dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    }
+
+    // Deselect activated row
+    const activated = this.tableBody[0].querySelector('tr.is-rowactivated');
+    if (activated) {
+      activated.classList.remove('is-rowactivated');
+      const idx = this.dataRowIndex($(activated));
+      triggerData = { row: idx, item: dataset[idx] };
+      if (dataset[idx]) {
+        delete dataset[idx]._rowactivated;
       }
+    } else {
+      // actived row may be filtered or on another page, so check all until find it
+      for (let i = 0; i < dataset.length; i++) {
+        const data = dataset[i];
+        if (data._rowactivated) {
+          delete data._rowactivated;
+          triggerData = { row: i, item: data };
+          break;
+        }
+      }
+    }
+
+    if (triggerData !== null) {
+      this.element.triggerHandler('rowdeactivated', [triggerData]);
     }
   },
 
