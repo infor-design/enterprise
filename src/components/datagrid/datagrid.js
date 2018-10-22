@@ -5913,10 +5913,10 @@ Datagrid.prototype = {
 
     // Toggle it
     if (isActivated) {
-      this.deactivateMixSelRow(row, rowIndex, dataset);
+      this.deactivateMixedSelectionRow(row, rowIndex, dataset);
     } else {
-      this.deactivateAllMixSelRows(dataset);
-      this.activateMixSelRow(row, rowIndex, dataset);
+      this.deactivateAllMixedSelectionRows(dataset);
+      this.activateMixedSelectionRow(row, rowIndex, dataset);
     }
   },
 
@@ -5928,7 +5928,7 @@ Datagrid.prototype = {
    * @param  {object} dataset Optional data to use
    * @returns {void}
    */
-  activateMixSelRow(row, idx, dataset) {
+  activateMixedSelectionRow(row, idx, dataset) {
     if (typeof row === 'undefined' || typeof idx !== 'number' || idx < 0) {
       return;
     }
@@ -5963,7 +5963,7 @@ Datagrid.prototype = {
   * @param  {object} dataset Optional data to use
   * @returns {void}
   */
-  deactivateMixSelRow(row, idx, dataset) {
+  deactivateMixedSelectionRow(row, idx, dataset) {
     if (typeof row === 'undefined' || typeof idx !== 'number' || idx < 0) {
       return;
     }
@@ -5996,7 +5996,7 @@ Datagrid.prototype = {
   * @param  {object} dataset Optional data to use
   * @returns {void}
   */
-  deactivateAllMixSelRows(dataset) {
+  deactivateAllMixedSelectionRows(dataset) {
     const s = this.settings;
     let triggerData = null;
 
