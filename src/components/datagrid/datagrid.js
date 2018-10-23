@@ -6008,7 +6008,8 @@ Datagrid.prototype = {
     const activated = this.tableBody[0].querySelector('tr.is-rowactivated');
     if (activated) {
       activated.classList.remove('is-rowactivated');
-      const idx = this.dataRowIndex($(activated));
+      const idx = (s.treeGrid || s.groupable) ?
+        this.actualRowIndex($(activated)) : this.dataRowIndex($(activated));
       triggerData = { row: idx, item: dataset[idx] };
       if (dataset[idx]) {
         delete dataset[idx]._rowactivated;
