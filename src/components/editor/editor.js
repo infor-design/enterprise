@@ -777,6 +777,10 @@ Editor.prototype = {
         self.execAction(action, e);
       }
 
+      if (self.isIe) {
+        self.getCurrentElement().trigger('change');
+      }
+
       return false;
     });
 
