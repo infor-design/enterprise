@@ -5916,8 +5916,8 @@ Datagrid.prototype = {
       const oldActivated = this.tableBody.find('tr.is-rowactivated');
       if (oldActivated.length) {
         oldActivated.removeClass('is-rowactivated');
-
-        const oldIdx = this.dataRowIndex(oldActivated);
+        const oldIdx = (s.treeGrid || s.groupable) ?
+          this.actualRowIndex(oldActivated) : this.dataRowIndex(oldActivated);
         if (dataset[oldIdx]) { // May have changed page
           delete dataset[oldIdx]._rowactivated;
         }
