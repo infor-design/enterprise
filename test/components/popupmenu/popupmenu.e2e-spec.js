@@ -48,8 +48,8 @@ describe('Popupmenu example-selectable tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress on example-selectable', async () => {
-      const popupmenuSection = await element(by.id('maincontent'));
+    it('Should not visual regress on example-selectable', async () => {
+      const popupmenuSection = await element(by.id('main-content'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
