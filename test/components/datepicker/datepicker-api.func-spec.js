@@ -160,7 +160,7 @@ describe('DatePicker API', () => {
     let minutes = testDate.getMinutes();
     let amPm = 'ص';
     if (hours > 11) {
-      hours -= 12;
+      hours -= hours > 12 ? 12 : 0;
       amPm = 'م';
     }
     if (minutes.toString().length === 1) {
