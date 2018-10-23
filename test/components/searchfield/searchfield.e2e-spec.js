@@ -49,7 +49,18 @@ describe('Searchfield example-index tests', () => {
     });
   }
 
-  it('Should filter on example-index', async () => {
+  fit('Should filter on example-index', async () => { //eslint-disable-line
+    const searchfieldInputEl = await element(by.id(searchfieldId));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+
+    await searchfieldInputEl.clear();
+    await searchfieldInputEl.sendKeys('co');
+
+    expect(await searchfieldInputEl.getAttribute('value')).toEqual('co');
+  });
+
+  fit('Should be able to type in as an input', async () => { //eslint-disable-line
     const searchfieldInputEl = await element(by.id(searchfieldId));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
