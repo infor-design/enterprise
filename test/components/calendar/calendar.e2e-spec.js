@@ -124,7 +124,7 @@ describe('Calendar specific month tests', () => {
 
   it('should render icons on events', async () => {
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element.all(by.css('.calendar-event.emerald.event-day-start .icon'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event.emerald.event-day-start .icon'))), config.waitsFor);
 
     expect(await element.all(by.css('.calendar-event.emerald.event-day-start .icon')).count()).toEqual(1);
   });
