@@ -696,7 +696,7 @@ Modal.prototype = {
   resize() {
     // 90% -(180 :extra elements-height)
     let calcHeight = ($(window).height() * 0.9) - this.settings.frameHeight;
-    const calcWidth = ($(window).width() * 1) - this.settings.frameWidth;
+    const calcWidth = ($(window).width() * 1.05) - this.settings.frameWidth;
 
     const wrapper = this.element.find('.modal-body-wrapper');
 
