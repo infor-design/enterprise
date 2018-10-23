@@ -8473,7 +8473,7 @@ Datagrid.prototype = {
     if (typeof tooltip === 'undefined') {
       const contentTooltip = elem.querySelector('.is-editor.content-tooltip');
       const aTitle = elem.querySelector('a[title]');
-      const isRowstatus = elem.classList.contains('rowstatus-cell');
+      const isRowstatus = elem.getAttribute('class').match(/rowstatus-cell/g);
       const isSvg = elem.tagName.toLowerCase() === 'svg';
       const isTh = elem.tagName.toLowerCase() === 'th';
       let title;
@@ -8487,7 +8487,7 @@ Datagrid.prototype = {
 
       // Cache rowStatus cell
       if (isRowstatus || isSvg) {
-        const rowNode = this.closest(elem, el => el.classList.contains('datagrid-row'));
+        const rowNode = this.closest(elem, el => el.getAttribute('class').match(/datagrid-row/g));
         const classList = rowNode ? rowNode.classList : [];
         tooltip.isError = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
         tooltip.placement = 'right';
@@ -8530,7 +8530,7 @@ Datagrid.prototype = {
       }
 
       if (tooltip.content !== '') {
-        const isEllipsis = elem.classList.contains('text-ellipsis');
+        const isEllipsis = elem.getAttribute('class').match(/text-ellipsis/g);
         tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (isEllipsis ? 8 : 0);
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
         if (title) {
