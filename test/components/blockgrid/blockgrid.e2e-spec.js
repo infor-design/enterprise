@@ -65,7 +65,7 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress on example-responsive', async () => { //eslint-disable-line
+    it('Should not visual regress on example-responsive', async () => {
       const blockgridEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
@@ -74,7 +74,7 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
       expect(await browser.protractorImageComparison.checkScreen('blockgrid')).toEqual(0);
     });
 
-    fit('Should not visual regress on example-responsive at 500px', async () => {  //eslint-disable-line
+    it('Should not visual regress on example-responsive at 500px', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(500, 600);
       await browser.driver.sleep(config.sleep);
@@ -88,7 +88,7 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
       await browser.driver.sleep(config.sleep);
     });
 
-    fit('Should not visual regress on example-responsive at 320px', async () => {  //eslint-disable-line
+    it('Should not visual regress on example-responsive at 320px', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(320, 480);
       await browser.driver.sleep(config.sleep);
