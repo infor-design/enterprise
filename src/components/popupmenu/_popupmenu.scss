@@ -253,6 +253,14 @@
         padding-left: 35px;
       }
     }
+
+    &.is-placeholder {
+      cursor: default;
+      
+      &:hover {
+        background-color: transparent;
+      }
+    }
   }
 
   a {
