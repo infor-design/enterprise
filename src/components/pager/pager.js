@@ -558,6 +558,7 @@ Pager.prototype = {
     if (pageNum === undefined ||
         pageNum === 0 ||
         isNaN(pageNum) ||
+        (pageNum > this.pageCount() && this.pageCount() > 0) ||
         (pageNum === this.activePage && !force)) {
       this.renderBar(pagingInfo);
       return this.activePage;
