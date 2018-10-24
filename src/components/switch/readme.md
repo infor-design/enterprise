@@ -1,6 +1,6 @@
 ---
 title: Switch Component
-description: This page describes Switch Component .
+description: Displays two selectable values. A user can select exactly one value at a time. Best used when offering two values that are binary in the sense that selecting one negates the other.
 demo:
   embedded:
   - name: Main Switch Example

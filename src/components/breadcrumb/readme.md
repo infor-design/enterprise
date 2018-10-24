@@ -1,6 +1,6 @@
 ---
 title: Breadcrumb
-description: This page describes Breadcrumb.
+description: Displays the current view and all parent views. A user can navigate between views. Best for presenting hierarchical paths in a system.
 demo:
   embedded:
   - name: Default Breadcrumb Example

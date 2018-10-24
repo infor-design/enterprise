@@ -1,6 +1,6 @@
 ---
 title: Busy Indicator
-description: This page describes Busy Indicator.
+description: Displays feedback about a current process. A user can infer that the system is functioning. Best for a system processes that precludes further user action until their completion.
 demo:
   embedded:
   - name: Busy Form Example

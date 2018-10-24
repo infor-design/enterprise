@@ -1,6 +1,8 @@
 ---
 title: Form Functionality
-description: The forms plugins are a set of form related utilities and functionality contained in `forms.js`. This page outlines the functionality contained in that plugin and shows some from related examples for layout from other areas.
+description: > Displays a set of inputs related to a single data object. A user can select or input values, and submit as a set. Best for entering or editing information for a single object.
+
+The forms plugins are a set of form related utilities and functionality contained in `forms.js`. This page outlines the functionality contained in that plugin and shows some from related examples for layout from other areas.
 demo:
   embedded:
   - name: Form Inputs in the Responsive Grid

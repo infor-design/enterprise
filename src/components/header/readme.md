@@ -1,6 +1,6 @@
 ---
 title: Header
-description: This page describes Header.
+description: Displays identifying information for a given data set. Best for identifying the main object or data set in a given view.
 demo:
   embedded:
   - name: Default Header Example

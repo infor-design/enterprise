@@ -1,6 +1,6 @@
 ---
 title: Listview
-description: This page describes Listview.
+description: Displays a set of related data objects and their attributes. Best for limited attribute data that may or may not include clear differentiators like status.
 system:
   category: blocks
   name: data-list
