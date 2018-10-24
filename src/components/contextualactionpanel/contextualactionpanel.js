@@ -331,7 +331,7 @@ ContextualActionPanel.prototype = {
           }
           if (!selected.length && self.toolbar.is('.flex-toolbar')) {
             selected = self.toolbar.find('button').first();
-            selected.blur();
+            selected.focus();
             return;
           }
           const toolbarData = self.toolbar.data('toolbar');
