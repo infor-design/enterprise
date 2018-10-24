@@ -1,9 +1,10 @@
 import * as debug from '../../utils/debug';
-import { utils } from '../../utils/utils';
+import { utils, math } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 import { breakpoints } from '../../utils/breakpoints';
 import { stringUtils } from '../../utils/string';
+import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { Locale } from '../locale/locale';
 
 // jQuery components
@@ -1928,17 +1929,22 @@ Tabs.prototype = {
         // eslint-disable-next-line
         targetPanelElem.offsetHeight;
 
-        targetPanel.one(`${$.fn.transitionEndName()}.tabs`, () => {
-          /**
-           * Fires when a new tab has been completely activated, and the activation process is done
-           *
-           * @event afteractivated
-           * @memberof Tabs
-           * @param {jQuery.Event} e event object
-           * @param {jQuery} a the tab anchor attempting to activate
-           */
-          self.element.trigger('afteractivated', [a]);
+        // Register an `afteractivated` event trigger as a renderLoop callback
+        const timer = new RenderLoopItem({
+          duration: math.convertDelayToFPS(150),
+          timeoutCallback() {
+            /**
+             * Fires when a new tab has been completely activated, and the activation process is done
+             *
+             * @event afteractivated
+             * @memberof Tabs
+             * @param {jQuery.Event} e event object
+             * @param {jQuery} a the tab anchor attempting to activate
+             */
+            self.element.trigger('afteractivated', [a]);
+          }
         });
+        renderLoop.register(timer);
 
         // Triggers the CSS Animation
         targetPanelElem.classList.add('is-visible');
