@@ -531,7 +531,7 @@ Datagrid.prototype = {
   * Remove all selected rows from the grid and dataset.
   */
   removeSelected() {
-    this._selectedRows.sort((a, b) => a.idx > b.idx);
+    this._selectedRows.sort((a, b) => (a.idx < b.idx ? -1 : (a.idx > b.idx ? 1 : 0)));
 
     for (let i = this._selectedRows.length - 1; i >= 0; i--) {
       this.removeRow(this._selectedRows[i].idx, true);
@@ -2249,42 +2249,70 @@ Datagrid.prototype = {
         if (self.isSafari) {
           status.end.css({ display: '' });
         }
-        // Move the elem in the data set
-        const first = self.settings.dataset.splice(status.startIndex, 1)[0];
-        self.settings.dataset.splice(status.endIndex, 0, first);
 
-        const moveDown = status.endIndex > status.startIndex;
-
-        // If using expandable rows move the expandable row with it
-        if ((self.settings.rowTemplate || self.settings.expandableRow) && moveDown) {
-          self.tableBody.find('tr').eq(status.startIndex * 2).insertAfter(status.end);
-          status.end.next().next().insertAfter(status.over);
-        }
-
-        if ((self.settings.rowTemplate || self.settings.expandableRow) && !moveDown) {
-          self.tableBody.find('tr').eq(status.startIndex * 2).next().insertAfter(status.end);
-        }
-
-        // Resequence the rows
-        const allRows = self.tableBody.find('tr:not(.datagrid-expandable-row)');
-        for (let i = 0; i < allRows.length; i++) {
-          allRows[i].setAttribute('data-index', i);
-          allRows[i].setAttribute('aria-rowindex', i + 1);
-        }
-
-        /**
-        * Fires after a row is moved via the rowReorder option.
-        * @event rowremove
-        * @memberof Datagrid
-        * @property {object} event The jquery event object
-        * @property {object} status Object with row reorder info
-        * @property {number} status.endIndex The ending row index
-        * @property {number} status.startIndex The starting row index
-        * @property {HTMLElement} status.over The row object that was dragged over.
-        * @property {HTMLElement} status.start The starting row object.
-        */
-        self.element.trigger('rowreorder', [status]);
+        self.reorderRow(status.startIndex, status.endIndex, status);
       });
+  },
+
+  /**
+   * Move a row from one position to another.
+   * @param {number} startIndex The row to move.
+   * @param {boolean} endIndex The end index.
+   * @param {object} status The drag event object.
+   */
+  reorderRow(startIndex, endIndex, status) {
+    const moveDown = endIndex > startIndex;
+    const startRow = this.tableBody.find('tr').eq(startIndex);
+    const endRow = this.tableBody.find('tr').eq(endIndex);
+
+    // Move the elem in the data set
+    const startRowIdx = this.settings.dataset.splice(startIndex, 1)[0];
+    this.settings.dataset.splice(endIndex, 0, startRowIdx);
+
+    // move in the ui
+    if (!status && moveDown) {
+      startRow.insertAfter(endRow);
+    }
+
+    if (!status && !moveDown) {
+      startRow.insertBefore(endRow);
+    }
+
+    // If using expandable rows move the expandable row with it
+    if ((this.settings.rowTemplate || this.settings.expandableRow) && moveDown) {
+      this.tableBody.find('tr').eq(startIndex * 2).insertAfter(status.end);
+      status.end.next().next().insertAfter(status.over);
+    }
+
+    if ((this.settings.rowTemplate || this.settings.expandableRow) && !moveDown) {
+      this.tableBody.find('tr').eq(startIndex * 2).next().insertAfter(status.end);
+    }
+
+    // Resequence the rows
+    const allRows = this.tableBody.find('tr:not(.datagrid-expandable-row)');
+    for (let i = 0; i < allRows.length; i++) {
+      allRows[i].setAttribute('data-index', i);
+      allRows[i].setAttribute('aria-rowindex', i + 1);
+    }
+
+    /**
+    * Fires after a row is moved via the rowReorder option.
+    * @event rowremove
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} status Object with row reorder info
+    * @property {number} status.endIndex The ending row index
+    * @property {number} status.startIndex The starting row index
+    * @property {HTMLElement} status.over The row object that was dragged over.
+    * @property {HTMLElement} status.start The starting row object.
+    */
+    this.element.trigger('rowreorder', [{
+      endIndex,
+      startIndex,
+      over: endRow,
+      start: startRow,
+    }]);
+    this.syncSelectedRowsIdx();
   },
 
   /**
@@ -5753,7 +5781,7 @@ Datagrid.prototype = {
     let idx = null;
 
     for (let i = 0; i < this._selectedRows.length; i++) {
-      if (this._selectedRows[i].page === this.pager.activePage) {
+      if (this.pager && this._selectedRows[i].page === this.pager.activePage) {
         idx = this._selectedRows[i].idx;
         this.selectNode(this.visualRowNode(idx), idx, this.settings.dataset[idx], true);
       }
@@ -5771,6 +5799,31 @@ Datagrid.prototype = {
         this._selectedRows[i].idx = idx % this.settings.pagesize;
         this._selectedRows[i].page = Math.round(idx / this.settings.pagesize) + 1;
         this._selectedRows[i].pagesize = this.settings.pagesize;
+      }
+    }
+  },
+
+  /**
+   * Run throught the array and remark the idx's after a row reorder.
+   * @private
+   * @returns {void}
+   */
+  syncSelectedRowsIdx() {
+    if (this._selectedRows.length === 0 || this.settings.dataset.length === 0) {
+      return;
+    }
+    this._selectedRows = [];
+
+    for (let i = 0; i < this.settings.dataset.length; i++) {
+      if (this.settings.dataset[i]._selected) {
+        this._selectedRows.push({
+          idx: i,
+          data: this.settings.dataset[i],
+          elem: this.dataRowNode(i),
+          page: this.pager ? this.pager.activePage : 1,
+          pagingIdx: i,
+          pagesize: this.settings.pagesize
+        });
       }
     }
   },

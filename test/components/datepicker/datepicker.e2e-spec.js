@@ -424,7 +424,7 @@ describe('Datepicker Timeformat Tests', () => {
     let amPm = 'AM';
 
     if (hours > 11) {
-      hours -= 12;
+      hours -= hours > 12 ? 12 : 0;
       amPm = 'PM';
     }
     if (minutes.toString().length === 1) {

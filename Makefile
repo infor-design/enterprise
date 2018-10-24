@@ -9,7 +9,7 @@ pull :
 up : pull
 	rm -rf node_modules
 	docker-compose up -d
-	@echo "[Info] Building SoHo XI..."
+	@echo "[Info] Building IDS Enterprise..."
 	@echo "[Info] Can take up to 5 mins to start. Check http://localhost:4000"
 	@echo "[Info] Run make down to stop containers."
 

@@ -76,7 +76,7 @@ This is an example of a slider that can only have values in increments of 10, wi
 
 ## Implementation Tips
 
-Only providing the HTML label and input with a `type="range"` attribute and `slider` CSS class are necessary if using the SoHo Xi Components Suite.
+Only providing the HTML label and input with a `type="range"` attribute and `slider` CSS class are necessary if using the IDS Enterprise Components Suite.
 
 ## Accessibility
 

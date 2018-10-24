@@ -1177,6 +1177,10 @@ $datagrid-short-row-height: 23px;
         &:first-child {
           border-left: 1px solid $datagrid-cell-border-color;
         }
+
+        .is-readonly {
+          background-color: transparent !important;
+        }
       }
     }
 
