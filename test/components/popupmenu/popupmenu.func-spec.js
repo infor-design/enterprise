@@ -82,30 +82,6 @@ describe('Popupmenu Menu Button API', () => {
   });
 });
 
-describe('Popupmenu Icons', () => {
-  beforeEach(() => {
-    popupmenuButtonEl = null;
-    svgEl = null;
-    popupmenuObj = null;
-    document.body.insertAdjacentHTML('afterbegin', popupmenuIconHTML);
-    document.body.insertAdjacentHTML('afterbegin', svg);
-    popupmenuButtonEl = document.body.querySelector('#icon-menu-button');
-    svgEl = document.body.querySelector('.svg-icons');
-    popupmenuObj = new PopupMenu(popupmenuButtonEl);
-  });
-
-  afterEach(() => {
-    popupmenuObj.destroy();
-    popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    svgEl.parentNode.removeChild(svgEl);
-  });
-
-  xit('Should set padding correctly for icons', () => {
-    // Plain js style.disply doesnt show this data
-    expect(window.getComputedStyle(document.body.querySelector('.popupmenu.has-icons a'), null).getPropertyValue('padding')).toEqual('0px 30px 0px 40px');
-  });
-});
-
 describe('Popupmenu Single Select API', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
