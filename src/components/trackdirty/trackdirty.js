@@ -1,3 +1,4 @@
+import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
@@ -28,6 +29,8 @@ function Trackdirty(element, settings) {
 Trackdirty.prototype = {
 
   init() {
+    this.isIe = env.browser.name === 'ie';
+
     this.handleEvents();
   },
 
@@ -224,6 +227,10 @@ Trackdirty.prototype = {
           const textArea = field.find('textarea');
           original = textArea.data('original');
           current = this.valMethod(textArea);
+        }
+
+        if (this.isIe) {
+          current = input[0].innerHTML;
         }
 
         if (current === original || (input.attr('multiple') && utils.equals(current, original))) {
