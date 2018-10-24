@@ -121,14 +121,14 @@ Inside this `accordion-content` element can be any HTML markup, including other 
 
 ## Implementation Tips
 
-On the SoHo Xi Components Accordion, top-level Accordion Headers have support for using SVG icons. However, Accordion sub-headers are only text-based.
+On the IDS Enterprise Components Accordion, top-level Accordion Headers have support for using SVG icons. However, Accordion sub-headers are only text-based.
 
 ## Accessibility
 
-The SoHo Xi Components' Accordion Plugin will manage the accessibility of an Accordion automatically. However, if customization is necessary, accordions can make use of the following:
+The IDS Enterprise Components' Accordion Plugin will manage the accessibility of an Accordion automatically. However, if customization is necessary, accordions can make use of the following:
 
 - If multiple Accordion panes can be open at once, the main Accordion element should have `aria-multiselectable="true"`. If only one pane should be open at any given time, it should be set to `false`.
-- Accordion headers built similar to the SoHo Xi Components Accordion Plugin should have `role="presentation".` Each Accordion header has an `<a>` tag that acts as its trigger element for itself and its corresponding pane.
+- Accordion headers built similar to the IDS Enterprise Components Accordion Plugin should have `role="presentation".` Each Accordion header has an `<a>` tag that acts as its trigger element for itself and its corresponding pane.
 - Accordion header `<a>` tags that currently have keyboard focus should have `aria-selected="true"`. All other accordion header `<a>` tags should have this attribute set to `false`.
 - Accordion panes that are collapsed should have `aria-expanded="false"`. Panes that are expanded should have `aria-expanded="true"`.
 - Collapsed Accordion panes should have a `"display: none;"` CSS property on them, to prevent any of the elements inside of the pane that are focusable from receiving keyboard focus.

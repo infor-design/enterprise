@@ -42,12 +42,12 @@ Within the menu itself:
 
 ## Keyboard Shortcuts
 
-In SoHo Xi Controls, the following keyboard shortcuts are implemented in the Application Menu
+In IDS Enterprise Controls, the following keyboard shortcuts are implemented in the Application Menu
 
 - When pressing <kbd>Enter</kbd> while focused on an Application Menu Trigger, the Application Menu will be toggled open/closed.
 - When pressing <kbd>Escape</kbd> while the Application Menu is opened, the Application Menu will close and (if applicable) the Trigger Button that originally caused the Application Menu to open will be re-focused.
 
-In all other cases, the Application Menu uses a SoHo Xi [Accordion Control](./accordion) internally, and will utilize its keyboard shortcuts when focus lies inside of the menu.
+In all other cases, the Application Menu uses a IDS Enterprise [Accordion Control](./accordion) internally, and will utilize its keyboard shortcuts when focus lies inside of the menu.
 
 ## States and Variations
 

@@ -13,11 +13,11 @@ import '../wizard/wizard.jquery';
 const COMPONENT_NAME = 'header';
 
 /**
- * Special Header with Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
+ * Special Header with Toolbar at the top of the page used to faciliate IDS Enterprise Nav Patterns
  * @class Header
  * @param {HTMLElement|jQuery[]} element the base element
  * @param {object} [settings] incoming settings
- * @param {boolean} [settings.demoOptions = true] Used to enable/disable default SoHo Xi options for demo purposes
+ * @param {boolean} [settings.demoOptions = true] Used to enable/disable default IDS Enterprise options for demo purposes
  * @param {boolean} [settings.useBackButton = true] If true, displays a back button next to the title in the header toolbar
  * @param {boolean} [settings.useBreadcrumb = false] If true, displays a breadcrumb on drilldown
  * @param {boolean} [settings.usePopupmenu = false] If true, changes the Header Title into a popupmenu that can change the current page
@@ -236,7 +236,7 @@ Header.prototype = {
 
       // TODO: Flesh this out so that the header control can build tabs based on options
       const tablist = $('<ul class="tab-list" role="tablist"></ul>').appendTo(this.tabsContainer);
-      $('<li class="tab"><a href="#header-tabs-home" role="tab">SoHo Xi Controls | Patterns</a></li>').appendTo(tablist);
+      $('<li class="tab"><a href="#header-tabs-home" role="tab">IDS Enterprise Controls | Patterns</a></li>').appendTo(tablist);
       $('<li class="tab"><a href="#header-tabs-level-1" role="tab">Level 1 Detail</a></li>').appendTo(tablist);
       $('<li class="tab"><a href="#header-tabs-level-2" role="tab">Level 2 Detail</a></li>').appendTo(tablist);
     }
