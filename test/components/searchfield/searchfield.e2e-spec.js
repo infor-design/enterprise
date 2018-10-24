@@ -49,7 +49,7 @@ describe('Searchfield example-index tests', () => {
     });
   }
 
-  fit('Should filter on example-index', async () => { //eslint-disable-line
+  it('Should filter on example-index', async () => {
     const searchfieldInputEl = await element(by.id(searchfieldId));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
@@ -60,7 +60,7 @@ describe('Searchfield example-index tests', () => {
     expect(await searchfieldInputEl.getAttribute('value')).toEqual('co');
   });
 
-  fit('Should be able to type in as an input', async () => { //eslint-disable-line
+  it('Should be able to type in as an input', async () => {
     const searchfieldInputEl = await element(by.id(searchfieldId));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
