@@ -396,7 +396,7 @@ describe('Datepicker Timeformat Tests', () => {
     expect(await element(by.id('dp1')).getAttribute('value')).toEqual(`${(testDate.getFullYear())}/${testDate.getMonth() + 1}/${testDate.getDate()} 00:00`);
   });
 
-  it('Should set locale time when selected ', async () => {
+  it('Should set locale time to midnight when selected ', async () => {
     const datepickerEl = await element(by.id('dp2'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
@@ -409,6 +409,29 @@ describe('Datepicker Timeformat Tests', () => {
     testDate.setSeconds(0);
 
     expect(await element(by.id('dp2')).getAttribute('value')).toEqual(`${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} 12:00 AM`);
+  });
+
+  it('Should set locale time to current time when selected ', async () => {
+    const datepickerEl = await element(by.id('dp3'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    const todayEl = await element(by.css('button.is-today'));
+    await todayEl.click();
+
+    const testDate = new Date();
+    let hours = testDate.getHours();
+    let minutes = testDate.getMinutes();
+    let amPm = 'AM';
+
+    if (hours > 11) {
+      hours -= 12;
+      amPm = 'PM';
+    }
+    if (minutes.toString().length === 1) {
+      minutes = `0${minutes}`;
+    }
+
+    expect(await element(by.id('dp3')).getAttribute('value')).toEqual(`${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${minutes} ${amPm}`);
   });
 });
 

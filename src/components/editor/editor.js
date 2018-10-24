@@ -1978,7 +1978,11 @@ Editor.prototype = {
     }
 
     // Some browser (IE, Firefox) use attr 'align' instead style `text-align`
-    parentEl.removeAttribute('align');
+    const gParentEl = parentEl.parentNode;
+    if (gParentEl !== this.element[0]) {
+      const alignAttrElems = [].slice.call(gParentEl.querySelectorAll('[align]'));
+      alignAttrElems.forEach(el => el.removeAttribute('align'));
+    }
     document.execCommand('removeFormat', false, null);
 
     // Restore style `text-align`, some browser (chrome, safari) clear `text-align` on parent node with command `removeFormat`

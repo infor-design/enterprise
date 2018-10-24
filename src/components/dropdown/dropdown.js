@@ -8,6 +8,7 @@ import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../icons/icons.jquery';
+import '../../utils/lifecycle';
 import '../place/place.jquery';
 import '../tooltip/tooltip.jquery';
 
@@ -999,7 +1000,15 @@ Dropdown.prototype = {
       // Highlight Term
       const exp = self.getSearchRegex(term);
       const text = li.text().replace(exp, '<i>$1</i>').trim();
-      const icon = (li.children('a').find('svg').length !== 0) ? li.children('a').find('svg')[0].outerHTML : '';
+      let icon = '';
+
+      if (li.children('a').find('svg').length !== 0) {
+        if (li.children('a').find('svg')[0].outerHTML) {
+          icon = li.children('a').find('svg')[0].outerHTML;
+        } else {
+          icon = new XMLSerializer().serializeToString(li.children('a').find('svg')[0]);
+        }
+      }
 
       if (icon) {
         hasIcons = true;
@@ -1824,12 +1833,12 @@ Dropdown.prototype = {
       }
 
       // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
-      const ulHeight = parseInt(window.getComputedStyle(self.listUl[0]).height, 10);
-      const listHeight = parseInt(window.getComputedStyle(self.list[0]).height, 10);
+      const ulHeight = parseInt(self.listUl[0].offsetHeight, 10);
+      const listHeight = parseInt(self.list[0].offsetHeight, 10);
       const searchInputHeight = $(this).hasClass('dropdown-short') ? 24 : 34;
 
-      if (ulHeight + searchInputHeight > listHeight) {
-        self.listUl[0].style.height = `${listHeight - searchInputHeight}px`;
+      if (ulHeight + searchInputHeight >= listHeight) {
+        self.listUl[0].style.height = `${listHeight - (searchInputHeight * 2)}px`;
       }
 
       return placementObj;

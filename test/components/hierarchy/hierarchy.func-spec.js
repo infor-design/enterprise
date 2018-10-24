@@ -49,12 +49,12 @@ describe('hierarchy API', () => {
     const nodes = document.body.querySelectorAll('.leaf');
 
     expect(nodes.length).toEqual(27);
-    expect(nodes[0].innerText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('Jonathan CargillDirectorFT');
-    expect(nodes[1].innerText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('Kaylee EdwardsRecords ManagerFT');
-    expect(nodes[2].innerText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('Tony ClevelandRecords ClerkC');
-    expect(nodes[3].innerText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('Julie DawesRecords ClerkPT');
-    expect(nodes[4].innerText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('Richard FairbanksRecords ClerkFT');
-    expect(nodes[5].innerText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('Jason AyersHR ManagerFT');
+    expect(nodes[0].innerText.replace(/(\r\n\t|\n|\r\t|Expand\/Collapse)/gm, '')).toEqual('Jonathan CargillDirectorFT');
+    expect(nodes[1].innerText.replace(/(\r\n\t|\n|\r\t|Expand\/Collapse)/gm, '')).toEqual('Kaylee EdwardsRecords ManagerFT');
+    expect(nodes[2].innerText.replace(/(\r\n\t|\n|\r\t|Expand\/Collapse)/gm, '')).toEqual('Tony ClevelandRecords ClerkC');
+    expect(nodes[3].innerText.replace(/(\r\n\t|\n|\r\t|Expand\/Collapse)/gm, '')).toEqual('Julie DawesRecords ClerkPT');
+    expect(nodes[4].innerText.replace(/(\r\n\t|\n|\r\t|Expand\/Collapse)/gm, '')).toEqual('Richard FairbanksRecords ClerkFT');
+    expect(nodes[5].innerText.replace(/(\r\n\t|\n|\r\t|Expand\/Collapse)/gm, '')).toEqual('Jason AyersHR ManagerFT');
   });
 
   it('Can be empty', () => {

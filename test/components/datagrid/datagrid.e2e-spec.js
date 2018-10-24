@@ -918,3 +918,28 @@ describe('Datagrid tooltip tests', () => {
     expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
   });
 });
+
+describe('Datagrid Row Activation tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-tree-row-activated');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show rowactivated', async () => {
+    let row = await element(by.css('tbody tr[aria-rowindex="6"]'));
+
+    expect(await row.getAttribute('class')).not.toContain('is-rowactivated');
+    const cell = await element(by.css('tbody tr[aria-rowindex="6"] td[aria-colindex="2"]'));
+    await cell.click();
+    row = await element(by.css('tbody tr[aria-rowindex="6"]'));
+
+    expect(await row.getAttribute('class')).toContain('is-rowactivated');
+  });
+});

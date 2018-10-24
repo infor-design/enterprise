@@ -18,11 +18,11 @@ demo:
 
 ## Configuration Options
 
-1. Bubble Chart Example [View Example]( ../components/bubble/example-index)
-2. Defaulting a selected bubble [View Example]( ../components/bubble/example-selected)
-3. Set animation speed [View Example]( ../components/bubble/example-animation)
-4. Example showing Get Selected value [View Example]( ../components/bubble/example-get-selected)
-5. Example showing Set Selected value [View Example]( ../components/bubble/example-set-selected)
+1. Bubble Chart Example [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-index?font=source-sans)
+2. Defaulting a selected bubble [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-selected?font=source-sans)
+3. Set animation speed [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-animation?font=source-sans)
+4. Example showing Get Selected value [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-get-selected?font=source-sans)
+5. Example showing Set Selected value [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-set-selected?font=source-sans)
 
 The bubble chart is a line chart with the isBubble set that adds the bubble. Plus the z dimension in the data.
 See the [line chart api]( ../components/line) for more details.

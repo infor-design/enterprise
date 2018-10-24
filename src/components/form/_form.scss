@@ -38,16 +38,7 @@
 
 }
 
-@include respond-to(phone) {
-  .form-responsive {
-    .field .checkbox-label,
-    .field .checkbox > label {
-      margin-top: -10px;
-    }
-  }
-}
-
-@include respond-to(tabletup) {
+@media (max-width: $breakpoint-phone-to-tablet + 1) {
   .form-responsive {
     .field .checkbox-label,
     .field .checkbox > label {

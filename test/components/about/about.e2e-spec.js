@@ -22,4 +22,16 @@ describe('About index tests', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      const button = await element(by.id('about-trigger'));
+      await button.click();
+
+      const searchfieldSection = await element(by.id('maincontent'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(searchfieldSection, 'about-open')).toBeLessThan(1);
+    });
+  }
 });

@@ -3,14 +3,7 @@ const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
 const browserstack = require('browserstack-local');
 const protractorImageComparison = require('protractor-image-comparison');
-
-const getSpecs = (listSpec) => {
-  if (listSpec) {
-    return listSpec.split(',');
-  }
-
-  return ['behaviors/**/*.e2e-spec.js', 'components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
-};
+const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
 const theme = process.env.ENTERPRISE_THEME || 'light'
 let browserstackBuildID = `${theme} theme: ci:bs e2e ${Date.now()}`;
@@ -30,7 +23,7 @@ exports.config = {
   getPageTimeout: 10000,
   logLevel: 'DEBUG',
   troubleshoot: true,
-  specs: getSpecs(process.env.PROTRACTOR_SPECS),
+  specs: specs,
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,
   baseUrl: 'http://localhost:4000',

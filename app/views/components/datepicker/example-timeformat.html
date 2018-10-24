@@ -7,8 +7,12 @@
         <input id="dp1" data-init="false" class="datepicker datetime" name="dp1" type="text" />
       </div>
       <div class="field">
-        <label for="dp2" class="label">Date-Time Picker in Locale (Default)</label>
+        <label for="dp2" class="label">Date-Time Picker in Locale (Time to Midnight)</label>
         <input id="dp2" data-init="false" class="datepicker datetime" name="dp2" type="text"/>
+      </div>
+      <div class="field">
+        <label for="dp3" class="label">Date-Time Picker in Locale (Time to Current)</label>
+        <input id="dp3" data-init="false" class="datepicker datetime" name="dp3" type="text"/>
       </div>
     </form>
   </div>
@@ -24,6 +28,11 @@ $('body').on('initialized', function () {
 
   $('#dp2').datepicker({
     showTime: true
+  });
+
+  $('#dp3').datepicker({
+    showTime: true,
+    useCurrentTime: true
   });
 });
 </script>

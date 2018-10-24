@@ -25,7 +25,8 @@ const Locale = {  // eslint-disable-line
   culturesPath: existingCulturePath,
 
   /**
-   * Sets the Lang in the Html Header
+   * Sets the current language in the Html Header
+   * @private
    * @returns {void}
    */
   updateLang() {
@@ -47,6 +48,7 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Get the path to the directory with the cultures
+   * @private
    * @returns {string} path containing culture files.
    */
   getCulturesPath() {
@@ -80,6 +82,7 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
+   * Checks if the culture is set as an inline script in the head tag.
    * @private
    * @returns {boolean} whether or not a culture file exists in the document header.
    */
@@ -175,6 +178,7 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Append the local script to the page.
+   * @private
    * @param {string} locale The locale name to append.
    * @param {boolean} isCurrent If we should set this as the current locale
    * @returns {void}
@@ -206,7 +210,7 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-   * Set the currently used locale.
+   * Sets the current locale.
    * @param {string} locale The locale to fetch and set.
    * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
    */
@@ -255,6 +259,7 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Chooses a stored locale dataset and sets it as "current"
+   * @private
    * @param {string} name the 4-character Locale ID
    * @param {object} data translation data and locale-specific functions, such as calendars.
    * @returns {void}
@@ -270,9 +275,9 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-  * Formats a Date Object and return it parsed in the current locale.
+  * Formats a date object and returns it parsed back using the current locale or settings.
   * @param {date} value The date to show in the current locale.
-  * @param {object} attribs Additional formatting settings.
+  * @param {object} attribs additional formatting settings.
   * @returns {string} the formatted date.
   */
   formatDate(value, attribs) {
@@ -446,7 +451,7 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-   * Take a date string written in the current locale and parse it into a Date Object
+   * Takes a formatted date string and parses back it into a date object
    * @param {string} dateString  The string to parse in the current format
    * @param {string} dateFormat  The source format fx yyyy-MM-dd
    * @param {boolean} isStrict  If true missing date parts will be considered
@@ -828,12 +833,9 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-  * Format a decimal with thousands and padding in the current locale.
-  * http://mzl.la/1MUOEWm
+  * Formats a decimal with thousands and padding in the current locale or settings.
   * @param {number} number The source number.
-  * @param {object} options Additional options.style can be decimal, currency,
-   percent and integer options.percentSign, options.minusSign, options.decimal,
-   options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+  * @param {object} options additional options (see Number Format Patterns)
   * @returns {string} the formatted number.
   */
   formatNumber(number, options) {
@@ -974,7 +976,7 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-   * Take a Formatted Number and return a real number
+   * Takes a formatted number string and returns back real number object.
    * @param {string} input  The source number (as a string).
    * @returns {number} the number as an actual Number type.
    */
@@ -1007,7 +1009,7 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-   * Overridable culture messages
+   * Takes a translation key and returns the translation in the current locale.
    * @param {string} key  The key to search for on the string.
    * @param {boolean} [showAsUndefined] causes a translated phrase to be
     instead of defaulting to the default locale's version of the string.
@@ -1032,6 +1034,7 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Translate Day Period
+   * @private
    * @param {string} period should be "am", "pm", "AM", "PM", or "i"
    * @returns {string} the translated day period.
    */
@@ -1045,6 +1048,7 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Shortcut function to get 'first' calendar
+   * @private
    * @returns {object} containing calendar data.
    */
   calendar() {
@@ -1073,6 +1077,7 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Access the calendar array
+   * @private
    * @param {string} name the name of the calendar (fx: "gregorian", "islamic-umalqura")
    * @returns {object} containing calendar data
    */
@@ -1092,6 +1097,7 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Shortcut function to get numbers
+   * @private
    * @returns {object} containing information for formatting numbers
    */
   numbers() {
@@ -1105,11 +1111,12 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-   * TODO: Document this
-   * @param {string} n ?
-   * @param {number} width ?
-   * @param {string} z ?
-   * @returns {string} ?
+   * Padd a number to the given width and decimals
+   * @private
+   * @param {string} n the number
+   * @param {number} width the decimal with
+   * @param {string} z the padding character
+   * @returns {string} the padded string
    */
   pad(n, width, z) {
     z = z || '0';
@@ -1118,7 +1125,7 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-   * Describes whether or not this locale is read in "right-to-left" fashion.
+   * Describes whether or not this locale is one that is read in "right-to-left" fashion.
    * @returns {boolean} whether or not this locale is "right-to-left".
    */
   isRTL() {
@@ -1129,6 +1136,7 @@ const Locale = {  // eslint-disable-line
    * Takes a string and converts its contents to upper case, taking into account
    * Locale-specific character conversions.  In most cases this method will simply
    * pipe the string to `String.prototype.toUpperCase()`.
+   * @private
    * @param {string} str the incoming string
    * @returns {string} modified string
    */
@@ -1144,6 +1152,7 @@ const Locale = {  // eslint-disable-line
    * Takes a string and converts its contents to lower case, taking into account
    * Locale-specific character conversions. In most cases this method will simply
    * pipe the string to `String.prototype.toLowerCase()`
+   * @private
    * @param {string} str - the incoming string
    * @returns {string} The localized string
    */
@@ -1159,6 +1168,7 @@ const Locale = {  // eslint-disable-line
    * Takes a string and capitalizes the first letter, taking into account Locale-specific
    * character conversions. In most cases this method will simply use a simple algorithm
    * for captializing the first letter of the string.
+   * @private
    * @param {string} str the incoming string
    * @returns {string} the modified string
    */
@@ -1170,6 +1180,7 @@ const Locale = {  // eslint-disable-line
    * Takes a string and capitalizes the first letter of each word in a string, taking
    * into account Locale-specific character conversions. In most cases this method
    * will simply use a simple algorithm for captializing the first letter of the string.
+   * @private
    * @param {string} str the incoming string
    * @returns {string} the modified string
    */
@@ -1186,6 +1197,7 @@ const Locale = {  // eslint-disable-line
   /**
    * Modifies a specified list of icons by flipping them horizontally to make them
    * compatible for RTL-based locales.
+   * @private
    * @returns {void}
    */
   flipIconsHorizontally() {
