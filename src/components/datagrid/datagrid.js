@@ -3631,15 +3631,29 @@ Datagrid.prototype = {
       td: '.datagrid-body tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
       rowstatus: '.datagrid-body tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
     };
-    selector.errorIcon = `${selector.td} .icon-error`;
+
+    if (this.settings.filterable) {
+      selector.headerColumn = `${selector.th} .datagrid-column-wrapper`;
+      selector.headerFilter = `${selector.th} .datagrid-filter-wrapper .btn-menu`;
+      selector.header = `${selector.headerColumn}, ${selector.headerFilter}`;
+    } else {
+      selector.header = selector.th;
+    }
+
+    selector.iconAlert = `${selector.td} .icon-alert`;
+    selector.iconConfirm = `${selector.td} .icon-confirm`;
+    selector.iconError = `${selector.td} .icon-error`;
+    selector.iconInfo = `${selector.td} .icon-info`;
+
+    selector.icons = `${selector.iconAlert}, ${selector.iconConfirm}, ${selector.iconError}, ${selector.iconInfo}`;
 
     // Selector string
     if (rowstatus && this.settings.enableTooltips) {
-      selector.str = `${selector.th}, ${selector.td}, ${selector.errorIcon}, ${selector.rowstatus}`;
+      selector.str = `${selector.header}, ${selector.td}, ${selector.icons}, ${selector.rowstatus}`;
     } else if (rowstatus) {
-      selector.str = `${selector.th}, ${selector.rowstatus}`;
+      selector.str = `${selector.header}, ${selector.rowstatus}`;
     } else {
-      selector.str = `${selector.th}, ${selector.td}, ${selector.errorIcon}`;
+      selector.str = `${selector.header}, ${selector.td}, ${selector.icons}`;
     }
 
     // Handle tooltip to show
@@ -3647,7 +3661,9 @@ Datagrid.prototype = {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       tooltipTimer = setTimeout(() => {
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
-        const width = self.getOuterWidth(elem);
+        const containerEl = utils.hasClass(elem, 'datagrid-column-wrapper') ?
+          elem.parentNode : elem;
+        const width = self.getOuterWidth(containerEl);
 
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35)))) {
           self.showTooltip(tooltip);
@@ -3656,11 +3672,15 @@ Datagrid.prototype = {
     };
 
     // Handle tooltip to hide
-    const handleHide = (delay) => {
+    const handleHide = (elem, delay) => {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       clearTimeout(tooltipTimer);
       setTimeout(() => {
         self.hideTooltip();
+        // Clear cache for header filter, so it can use always current selected
+        if (utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper')) {
+          self.removeTooltipData(elem);
+        }
       }, delay);
     };
 
@@ -3671,11 +3691,11 @@ Datagrid.prototype = {
         handleShow(this);
       })
       .off('mouseleave.gridtooltip click.gridtooltip', selector.str)
-      .on('mouseleave.gridtooltip click.gridtooltip', selector.str, () => {
-        handleHide();
+      .on('mouseleave.gridtooltip click.gridtooltip', selector.str, function () {
+        handleHide(this);
       })
       .off('longpress.gridtooltip', selector.str)
-      .on('longpress.gridtooltip', selector.str, () => {
+      .on('longpress.gridtooltip', selector.str, function () {
         handleShow(this, 0);
       })
       .off('keydown.gridtooltip', selector.str)
@@ -3687,7 +3707,7 @@ Datagrid.prototype = {
           handleShow(this, 0);
         } else if (key === 27) { // Escape
           handle = self.isGridtooltip();
-          handleHide(0);
+          handleHide(this, 0);
         }
 
         if (handle) {
@@ -8607,21 +8627,23 @@ Datagrid.prototype = {
     if (typeof tooltip === 'undefined') {
       const contentTooltip = elem.querySelector('.is-editor.content-tooltip');
       const aTitle = elem.querySelector('a[title]');
-      const isRowstatus = elem.getAttribute('class').match(/rowstatus-cell/g);
+      const isRowstatus = utils.hasClass(elem, 'rowstatus-cell');
       const isSvg = elem.tagName.toLowerCase() === 'svg';
       const isTh = elem.tagName.toLowerCase() === 'th';
+      const isHeaderColumn = utils.hasClass(elem, 'datagrid-column-wrapper');
+      const isHeaderFilter = utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
       let title;
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
 
-      if (isTh) {
+      if (isTh || isHeaderColumn || isHeaderFilter) {
         tooltip.wrapper = elem;
-        tooltip.placement = 'bottom';
+        tooltip.placement = isHeaderColumn ? 'top' : 'bottom';
       }
 
       // Cache rowStatus cell
       if (isRowstatus || isSvg) {
-        const rowNode = this.closest(elem, el => el.getAttribute('class').match(/datagrid-row/g));
+        const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
         const classList = rowNode ? rowNode.classList : [];
         tooltip.isError = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
         tooltip.placement = 'right';
@@ -8657,6 +8679,13 @@ Datagrid.prototype = {
           // Title attribute on current element
           tooltip.content = title;
           elem.removeAttribute('title');
+        } else if (isHeaderFilter) {
+          // Disabled filterable headers
+          const filterDisabled = elem.parentNode.querySelectorAll('.dropdown.is-disabled, input[type="text"][disabled], .btn-filter[disabled]').length > 0;
+          if (!filterDisabled) {
+            const targetEl = elem.parentNode.querySelector('.is-checked');
+            tooltip.content = targetEl ? xssUtils.stripHTML(targetEl.textContent) : '';
+          }
         } else {
           // Default use wrapper content
           tooltip.content = xssUtils.stripHTML(tooltip.wrapper.textContent);
@@ -8664,10 +8693,15 @@ Datagrid.prototype = {
       }
 
       if (tooltip.content !== '') {
-        const isEllipsis = elem.getAttribute('class').match(/text-ellipsis/g);
-        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (isEllipsis ? 8 : 0);
+        const isEllipsis = utils.hasClass(elem, 'text-ellipsis');
+        const icons = [].slice.call(elem.querySelectorAll('.icon'));
+        let extraWidth = isEllipsis ? 8 : 0;
+        icons.forEach((icon) => {
+          extraWidth += icon.getBBox().width + 8;
+        });
+        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + extraWidth;
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
-        if (title) {
+        if (title || isHeaderFilter) {
           tooltip.forced = true;
         }
       }
