@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="six columns">
+    <h2>RenderLoop Example: No Automatic Start</h2>
+    <p>Related Issue: <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/1095" target="_blank">#1095</a></p>
+    <p>This page sets up a <span class="code">window.SohoConfig.renderLoop</span> setting that turns off automatic start
+    of the renderLoop.  Clicking the buttons below toggles the renderLoop.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <span>Count: </span>
+      <span class="count-style" id="timercounts">0</span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <div class="field">
+      <button id="start-btn" class="btn-secondary">
+        <span>Start RenderLoop</span>
+      </button>
+
+      <button id="stop-btn" class="btn-secondary" disabled>
+        <span>Stop RenderLoop</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var TIMER_COUNT = 0,
+    span = $('#timercounts'),
+    startBtn = $('#start-btn'),
+    stopBtn = $('#stop-btn');
+
+  function updateCount() {
+    TIMER_COUNT++;
+    span.text(TIMER_COUNT);
+  }
+
+  $('body').on('initialized', function() {
+
+    // Register Once
+    Soho.renderLoop.register(updateCount, undefined, 'test-timer-count');
+
+    startBtn.on('click.test', function() {
+      Soho.renderLoop.start();
+      startBtn.prop('disabled', true);
+      stopBtn.prop('disabled', false);
+    });
+
+    stopBtn.on('click.test', function() {
+      Soho.renderLoop.stop();
+      stopBtn.prop('disabled', true);
+      startBtn.prop('disabled', false);
+    });
+  });
+</script>
