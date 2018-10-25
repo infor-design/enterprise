@@ -341,7 +341,7 @@ TimePicker.prototype = {
     };
 
     const validation = 'time';
-    const events = { time: 'blur' };
+    const events = { time: 'blur change enter' };
 
     if (!this.element[0].getAttribute('data-validate')) {
       this.element
