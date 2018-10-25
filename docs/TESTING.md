@@ -156,7 +156,7 @@ npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js
 
 ## Working With Visual Regression Tests
 
-A visual regression test will be similar to the following code snippet. The tests run on Travis. Locally, in our development environment, we replicate the environment with Docker in order to capture and compare screenshots on a nearly identical machine.  Below, we provide a guide for the setup and generation of baseline images.
+A visual regression test will be similar to the following code snippet. The tests run on Travis. Locally, in our development environment, we need to replicate the environment with Docker in order to capture and compare screenshots on a nearly identical machine.  Below, we provide a guide for the setup and generation of baseline images.
 
 ```javascript
 // Only test visual regressions on Chrome, and the CI
@@ -251,13 +251,32 @@ Some tests will most likely fail.  These failures are due to visual differences.
 
 #### Replacing ALL Baseline images at once
 
-1. Copy the file from the actual folder to the baseline folder `mv /root/enterprise/test/.tmp/actual/radio-init-chrome-1200x800-dpr-1.png /root/enterprise/test/baseline/radio-init-chrome-1200x800-dpr-1.png`
+1. Copy the file from the actual folder to the baseline
 1. Run the `npm run e2e:ci` again to tests.  Ensure that all the tests pass.
 1. Commit and push the files to your branch.
 
 #### Replacing specific baseline images
 
-We can also just copy `test/.tmp/actual/<name-of-test-file.png>` verified screenshots to the `test/baseline` folder for testing, from the Docker container. [Copy](https://docs.docker.com/engine/reference/commandline/cp/) the new actual screenshots from `test/.tmp/actual/*.png`.
+1. Remove the file from the baseline using a command like `rm test/baseline/searchfield-open-chrome-1200x800-dpr-1.png`
+1. Run the tests and it should say `Image not found, saving current image as new baseline.`
+1. Copy the file locally and check it using `docker cp 9979cb17cbfc:/enterprise/test/.tmp/actual/searchfield-open-chrome-1200x800-dpr-1.png /Users/tmcconechy/dev/actual`
+1. If it looks visually as expected then copy it to the baseline
+
+```sh
+mv test/.tmp/actual/searchfield-open-chrome-1200x800-dpr-1.png test/baseline/searchfield-open-chrome-1200x800-dpr-1.png`
+```
+
+1. Run tests again to confirm
+1. Commit and push
+
+#### Copying files locally for inspection
+
+As mentioned, we can copy the last test run folder (actual) `test/.tmp/actual/<name-of-test-file.png>` and compare it to the baseline `test/baseline/<name-of-test-file.png>`. You use the docker cp command from your machine, and it goes into the container to copies the file out locally. Documentation for the command can be  [found here](https://docs.docker.com/engine/reference/commandline/cp/). Sample commands:
+
+```sh
+ docker cp 9979cb17cbfc:/enterprise/test/.tmp/actual/searchfield-open-chrome-1200x800-dpr-1.png /Users/tmcconechy/dev/actual
+cp 9979cb17cbfc:/enterprise/test/baseline/searchfield-open-chrome-1200x800-dpr-1.png /Users/tmcconechy/dev/baseline
+```
 
 Or copy them all to your local directory for inspection.
 
@@ -270,22 +289,6 @@ See [https://stackoverflow.com/questions/22907231/copying-files-from-host-to-doc
 Once the files are copied to the host machine, check the image for quality, commit, and push.
 
 Tests should now pass on the branch CI as the baselines should be identical to the screenshots created during the test.
-
-### Testing Coverage Rating Scale
-
-☹️ 😕 🙂 😁
-
-Component | Functional Test Coverage
-------------- | :-------------:
-Button | 😁
-Datagrid | 🙂
-Dropdown | ☹️
-Hierarchy | 😕
-MultiSelect | 🙂
-Popupmenu | 😕
-Textarea | 😁
-Treemap | 🙂
-Validation | ☹️
 
 ## Testing Resources
 

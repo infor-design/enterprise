@@ -215,7 +215,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   &.has-focus {
     &:not(.toolbar-searchfield-wrapper) {
-      box-shadow: $focus-box-shadow;
+      box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.3);
     }
 
     .btn {

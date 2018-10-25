@@ -423,8 +423,8 @@ describe('Datepicker Timeformat Tests', () => {
     let minutes = testDate.getMinutes();
     let amPm = 'AM';
 
-    if (hours > 12) {
-      hours -= 12;
+    if (hours > 11) {
+      hours -= hours > 12 ? 12 : 0;
       amPm = 'PM';
     }
     if (minutes.toString().length === 1) {

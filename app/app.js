@@ -11,7 +11,6 @@ const crypto = require('crypto');
 const getJSONFile = require('./src/js/get-json-file');
 
 const app = express();
-app.disable('x-powered-by');
 
 const BASE_PATH = process.env.BASEPATH || '/';
 const packageJSON = getJSONFile('../../../package.json');
@@ -69,7 +68,7 @@ const DEFAULT_RESPONSE_OPTS = {
   enableLiveReload: true,
   layout: 'layout',
   locale: 'en-US',
-  title: 'SoHo XI',
+  title: 'IDS Enterprise',
   headerHamburger: false,
   basepath: BASE_PATH,
   version: packageJSON.version,
@@ -86,6 +85,7 @@ app.use(require('./src/js/middleware/option-handler')(app, DEFAULT_RESPONSE_OPTS
 app.use(require('./src/js/middleware/basepath-handler')(app));
 app.use(require('./src/js/middleware/global-data-handler')(app));
 app.use(require('./src/js/middleware/response-throttler')(app));
+app.use(require('./src/js/middleware/remove-headers')(app));
 app.use(require('./src/js/middleware/csp-handler')(app));
 
 app.use(router);

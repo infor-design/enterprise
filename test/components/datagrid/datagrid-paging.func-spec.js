@@ -38,8 +38,8 @@ const pagingDataSource = (req, res) => {
   } else if (req.type === 'next') {
     req.firstPage = false;
     req.lastPage = false;
-    req.activePage++;
     pagingData = pagingGetData(req.activePage, pagesize);
+    req.activePage++;
   }
 
   if (req.indeterminate) {
@@ -381,6 +381,43 @@ describe('Datagrid Paging API', () => {
             expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('prev');
             done();
           }, 1);
+        }, 1);
+      }, 1);
+    });
+
+    it('test activation row for indeterminate with mixed selection mode', (done) => {
+      data = JSON.parse(JSON.stringify(sampleData));
+      const dataSourceContainer = { dataSource: pagingDataSource };
+      const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
+      const options = { columns, paging: true, pagesize: 3, indeterminate: true, selectable: 'mixed', source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
+      datagridObj = new Datagrid(datagridEl, options);
+
+      let row;
+      let column;
+
+      setTimeout(() => {
+        row = document.body.querySelector('tbody tr[aria-rowindex="2"]');
+        column = row.querySelector('td[aria-colindex="2"]');
+
+        expect(row.classList.contains('is-rowactivated')).toBeFalsy();
+        const rowactivatedSpy = spyOnEvent(datagridEl, 'rowactivated');
+        column.click();
+
+        setTimeout(() => {
+          row = document.body.querySelector('tbody tr[aria-rowindex="2"]');
+
+          expect(rowactivatedSpy).toHaveBeenTriggered();
+          expect(row.classList.contains('is-rowactivated')).toBeTruthy();
+
+          const buttonEl = document.body.querySelector('li.pager-next a');
+          const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
+          buttonEl.click();
+
+          expect(buttonClickSpy).toHaveBeenTriggered();
+          expect(dataSourceSpy).toHaveBeenCalled();
+          expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
+          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
+          done();
         }, 1);
       }, 1);
     });

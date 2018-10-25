@@ -13,11 +13,7 @@ const GENERAL_LISTING_EXCLUDES = [
   /listing\.html/,
   /footer\.html/,
   /_header\.html/,
-  /(api.md$)/,
-  /(api.html$)/,
   /partial/,
-  /functional/,
-  /unit/,
   /\.DS_Store/
 ];
 

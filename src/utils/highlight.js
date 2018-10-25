@@ -2,7 +2,7 @@
 // Originally called "highlight v5" by Johann Burkard
 // http://johannburkard.de/blog/programming/javascript/highlight-javascript-text-higlighting-jquery-plugin.html
 //
-// Modified for SoHo Xi (TODO: bit.ly link to docs)
+// Modified for IDS Enterprise (TODO: bit.ly link to docs)
 
 function innerHighlight(node, pat) {
   let skip = 0;

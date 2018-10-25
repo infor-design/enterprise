@@ -50,8 +50,8 @@ This is a specific component wrapper for searchfield components that reside insi
 
 There are several scenarios where the background, border, and text color of a toolbar searchfield can change based on how it's used:
 
-- There is an [alternate in-page style]( ../components/toolbarsearchfield/example-alternate-style) for toolbar searchfields that can be used when content is displayed over a gray background
-- [Inside contextual action panels]( ../components/toolbarsearchfield/example-inside-contextual-panel.html), the background and border colors change to match the header
+- There is an [alternate in-page style](https://design.infor.com/code/ids-enterprise/latest/demo/toolbarsearchfield/example-alternate-style?font=source-sans) for toolbar searchfields that can be used when content is displayed over a gray background
+- [Inside contextual action panels](https://design.infor.com/code/ids-enterprise/latest/demo/toolbarsearchfield/example-inside-contextual-panel?font=source-sans), the background and border colors change to match the header
 - In any example of a [header]( ./header), the toolbar searchfield's background color becomes semi-transparent black, and the text/border change to stand out better on the darker colors defined in the header's background
 - Inside of [mastheads]( ./masthead), the toolbar searchfield will change to a dark graphite/slate to match the background color of the masthead
 
