@@ -1,6 +1,6 @@
 ---
 title: MenuButton Component
-description: This page describes MenuButton Component .
+description: 
 demo:
   embedded:
   - name: Simple Menu Button

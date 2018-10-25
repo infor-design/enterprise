@@ -1,6 +1,6 @@
 ---
 title: Hierarchy
-description: This page describes Hierarchy.
+description: 
 demo:
   embedded:
   - name: Org Chart Example

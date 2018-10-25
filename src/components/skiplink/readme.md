@@ -1,6 +1,6 @@
 ---
 title: Skiplink Component
-description: This page describes Skiplink Component .
+description: 
 demo:
   embedded:
   - name: Main Example

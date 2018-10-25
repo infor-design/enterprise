@@ -1,6 +1,6 @@
 ---
 title: Editor (Rich Text)
-description: This page describes Editor (Rich Text).
+description: 
 demo:
   embedded:
   - name: Default Rich Text Editor Example

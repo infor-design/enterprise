@@ -1,6 +1,6 @@
 ---
 title: Empty Message
-description: This page describes Empty Message .
+description: 
 demo:
   embedded:
   - name: Simple Empty Message

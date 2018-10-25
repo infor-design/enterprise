@@ -1,6 +1,6 @@
 ---
 title: Popover Component
-description: This page describes Popover Component .
+description: 
 demo:
   embedded:
   - name: Common Configuration

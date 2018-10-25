@@ -1,6 +1,6 @@
 ---
 title: Donut Chart
-description: This page describes Donut Chart.
+description: 
 demo:
   embedded:
   - name: Standard Donut Chart

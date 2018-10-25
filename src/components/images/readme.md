@@ -1,6 +1,6 @@
 ---
 title: Images
-description: This page describes Images.
+description: 
 demo:
   embedded:
   - name: Image Sizes and Placeholders

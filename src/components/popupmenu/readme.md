@@ -1,6 +1,6 @@
 ---
 title: Popupmenu Component
-description: This page describes Popupmenu Component .
+description: 
 demo:
   embedded:
   - name: Popupmenu as a Menu Button

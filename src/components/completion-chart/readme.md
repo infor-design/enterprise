@@ -1,6 +1,6 @@
 ---
 title: Completion Chart
-description: This page describes Completion Chart.
+description: 
 demo:
   embedded:
   - name: Standard Completion Chart Example

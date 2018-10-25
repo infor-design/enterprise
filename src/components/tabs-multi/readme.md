@@ -1,6 +1,6 @@
 ---
 title: Tabs-multi
-description: This page describes Tabs-multi.
+description: 
 demo:
   embedded:
   - name: Default tabs-multi example

@@ -1,6 +1,6 @@
 ---
 title: Locale
-description: This page describes Locale.
+description: 
 ---
 
 ## Code Example - Initializing

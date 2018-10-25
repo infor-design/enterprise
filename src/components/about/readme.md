@@ -1,6 +1,6 @@
 ---
 title: About
-description: This page describes About.
+description: 
 demo:
   embedded:
   - name: Default About Example

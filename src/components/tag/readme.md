@@ -1,6 +1,6 @@
 ---
 title: Tag Component
-description: This page describes Tag Component .
+description: 
 demo:
   embedded:
   - name: Common Tag Examples

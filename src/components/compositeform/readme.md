@@ -1,6 +1,6 @@
 ---
 title: Composite Form Pattern
-description: This page describes Composite Form Pattern.
+description: 
 demo:
   embedded:
   - name: Default Composite Form Example

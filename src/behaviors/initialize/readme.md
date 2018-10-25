@@ -1,6 +1,6 @@
 ---
 title: Initialize
-description: This page describes Initialize.
+description: 
 ---
 
 ## Code Example

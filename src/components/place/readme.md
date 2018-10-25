@@ -1,6 +1,6 @@
 ---
 title: Place
-description: This page describes Place.
+description: 
 demo:
   embedded:
   - name: Place by Coordinate

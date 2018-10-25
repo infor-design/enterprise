@@ -1,6 +1,6 @@
 ---
 title: Application Menu
-description: This page describes Application Menu.
+description: 
 demo:
   embedded:
   - name: Default About Example

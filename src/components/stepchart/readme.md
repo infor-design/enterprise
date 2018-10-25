@@ -1,6 +1,6 @@
 ---
 title: Step Chart
-description: This page describes Step Chart.
+description: 
 demo:
   embedded:
   - name: Standard Step Chart

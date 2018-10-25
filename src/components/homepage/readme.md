@@ -1,6 +1,6 @@
 ---
 title: HomePage
-description: This page describes HomePage.
+description: 
 demo:
   embedded:
   - name: Example of Empty HomePage Layout

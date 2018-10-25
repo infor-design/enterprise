@@ -1,6 +1,6 @@
 ---
 title: Arrange
-description: This page describes Arrange.
+description: 
 demo:
   embedded:
   - name: Main Example

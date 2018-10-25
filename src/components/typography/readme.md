@@ -1,6 +1,6 @@
 ---
 title: Typography
-description: This page describes Typography .
+description: 
 demo:
   embedded:
   - name: Main Example Page

@@ -1,6 +1,6 @@
 ---
 title: Line
-description: This page describes Line.
+description: 
 demo:
   embedded:
   - name: Standard Line Chart

@@ -1,6 +1,6 @@
 ---
 title: Module Tabs
-description: This page describes Module Tabs .
+description: 
 demo:
   embedded:
   - name: Common Configuration

@@ -1,6 +1,6 @@
 ---
 title: MonthView
-description: This page describes MonthView.
+description: 
 demo:
   embedded:
   - name: Full Page MonthView Example

@@ -1,6 +1,6 @@
 ---
 title: Toolbar
-description: This page describes Toolbar.
+description: 
 demo:
   embedded:
   - name: Common Configuration

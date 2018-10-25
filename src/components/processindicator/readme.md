@@ -1,6 +1,6 @@
 ---
 title: Process Indicator
-description: This page describes Process Indicator .
+description: 
 demo:
   embedded:
   - name: Main Process Indicator Example

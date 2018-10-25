@@ -1,6 +1,6 @@
 ---
 title: Alerts
-description: This page describes Alerts.
+description: 
 demo:
   embedded:
   - name: Alerts (Icons)
