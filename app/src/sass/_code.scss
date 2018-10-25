@@ -1,9 +1,9 @@
 // Code Example Styles
 // ===============================================
 
-$code-bg-color: #cccccc;
-$code-border-color: #aaaaaa;
-$code-text-color: #555555;
+$code-bg-color: #ccc;
+$code-border-color: #aaa;
+$code-text-color: #555;
 
 @mixin code-style() {
   background: $code-bg-color;
