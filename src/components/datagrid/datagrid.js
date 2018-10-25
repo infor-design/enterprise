@@ -531,7 +531,7 @@ Datagrid.prototype = {
   * Remove all selected rows from the grid and dataset.
   */
   removeSelected() {
-    this._selectedRows.sort((a, b) => a.idx > b.idx);
+    this._selectedRows.sort((a, b) => (a.idx < b.idx ? -1 : (a.idx > b.idx ? 1 : 0)));
 
     for (let i = this._selectedRows.length - 1; i >= 0; i--) {
       this.removeRow(this._selectedRows[i].idx, true);
@@ -2249,42 +2249,70 @@ Datagrid.prototype = {
         if (self.isSafari) {
           status.end.css({ display: '' });
         }
-        // Move the elem in the data set
-        const first = self.settings.dataset.splice(status.startIndex, 1)[0];
-        self.settings.dataset.splice(status.endIndex, 0, first);
 
-        const moveDown = status.endIndex > status.startIndex;
-
-        // If using expandable rows move the expandable row with it
-        if ((self.settings.rowTemplate || self.settings.expandableRow) && moveDown) {
-          self.tableBody.find('tr').eq(status.startIndex * 2).insertAfter(status.end);
-          status.end.next().next().insertAfter(status.over);
-        }
-
-        if ((self.settings.rowTemplate || self.settings.expandableRow) && !moveDown) {
-          self.tableBody.find('tr').eq(status.startIndex * 2).next().insertAfter(status.end);
-        }
-
-        // Resequence the rows
-        const allRows = self.tableBody.find('tr:not(.datagrid-expandable-row)');
-        for (let i = 0; i < allRows.length; i++) {
-          allRows[i].setAttribute('data-index', i);
-          allRows[i].setAttribute('aria-rowindex', i + 1);
-        }
-
-        /**
-        * Fires after a row is moved via the rowReorder option.
-        * @event rowremove
-        * @memberof Datagrid
-        * @property {object} event The jquery event object
-        * @property {object} status Object with row reorder info
-        * @property {number} status.endIndex The ending row index
-        * @property {number} status.startIndex The starting row index
-        * @property {HTMLElement} status.over The row object that was dragged over.
-        * @property {HTMLElement} status.start The starting row object.
-        */
-        self.element.trigger('rowreorder', [status]);
+        self.reorderRow(status.startIndex, status.endIndex, status);
       });
+  },
+
+  /**
+   * Move a row from one position to another.
+   * @param {number} startIndex The row to move.
+   * @param {boolean} endIndex The end index.
+   * @param {object} status The drag event object.
+   */
+  reorderRow(startIndex, endIndex, status) {
+    const moveDown = endIndex > startIndex;
+    const startRow = this.tableBody.find('tr').eq(startIndex);
+    const endRow = this.tableBody.find('tr').eq(endIndex);
+
+    // Move the elem in the data set
+    const startRowIdx = this.settings.dataset.splice(startIndex, 1)[0];
+    this.settings.dataset.splice(endIndex, 0, startRowIdx);
+
+    // move in the ui
+    if (!status && moveDown) {
+      startRow.insertAfter(endRow);
+    }
+
+    if (!status && !moveDown) {
+      startRow.insertBefore(endRow);
+    }
+
+    // If using expandable rows move the expandable row with it
+    if ((this.settings.rowTemplate || this.settings.expandableRow) && moveDown) {
+      this.tableBody.find('tr').eq(startIndex * 2).insertAfter(status.end);
+      status.end.next().next().insertAfter(status.over);
+    }
+
+    if ((this.settings.rowTemplate || this.settings.expandableRow) && !moveDown) {
+      this.tableBody.find('tr').eq(startIndex * 2).next().insertAfter(status.end);
+    }
+
+    // Resequence the rows
+    const allRows = this.tableBody.find('tr:not(.datagrid-expandable-row)');
+    for (let i = 0; i < allRows.length; i++) {
+      allRows[i].setAttribute('data-index', i);
+      allRows[i].setAttribute('aria-rowindex', i + 1);
+    }
+
+    /**
+    * Fires after a row is moved via the rowReorder option.
+    * @event rowremove
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} status Object with row reorder info
+    * @property {number} status.endIndex The ending row index
+    * @property {number} status.startIndex The starting row index
+    * @property {HTMLElement} status.over The row object that was dragged over.
+    * @property {HTMLElement} status.start The starting row object.
+    */
+    this.element.trigger('rowreorder', [{
+      endIndex,
+      startIndex,
+      over: endRow,
+      start: startRow,
+    }]);
+    this.syncSelectedRowsIdx();
   },
 
   /**
@@ -5753,7 +5781,7 @@ Datagrid.prototype = {
     let idx = null;
 
     for (let i = 0; i < this._selectedRows.length; i++) {
-      if (this._selectedRows[i].page === this.pager.activePage) {
+      if (this.pager && this._selectedRows[i].page === this.pager.activePage) {
         idx = this._selectedRows[i].idx;
         this.selectNode(this.visualRowNode(idx), idx, this.settings.dataset[idx], true);
       }
@@ -5771,6 +5799,31 @@ Datagrid.prototype = {
         this._selectedRows[i].idx = idx % this.settings.pagesize;
         this._selectedRows[i].page = Math.round(idx / this.settings.pagesize) + 1;
         this._selectedRows[i].pagesize = this.settings.pagesize;
+      }
+    }
+  },
+
+  /**
+   * Run throught the array and remark the idx's after a row reorder.
+   * @private
+   * @returns {void}
+   */
+  syncSelectedRowsIdx() {
+    if (this._selectedRows.length === 0 || this.settings.dataset.length === 0) {
+      return;
+    }
+    this._selectedRows = [];
+
+    for (let i = 0; i < this.settings.dataset.length; i++) {
+      if (this.settings.dataset[i]._selected) {
+        this._selectedRows.push({
+          idx: i,
+          data: this.settings.dataset[i],
+          elem: this.dataRowNode(i),
+          page: this.pager ? this.pager.activePage : 1,
+          pagingIdx: i,
+          pagesize: this.settings.pagesize
+        });
       }
     }
   },
@@ -5885,68 +5938,149 @@ Datagrid.prototype = {
   toggleRowActivation(idx) {
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
-    let row = (typeof idx === 'number' ? this.tableBody.find(`tr[aria-rowindex="${idx + 1}"]`) : idx);
-    let rowIndex = (typeof idx === 'number' ? idx : ((s.treeGrid || s.groupable) ? this.actualRowIndex(row) : this.dataRowIndex(row)));
-    const item = dataset[rowIndex];
-    const isActivated = item ? item._rowactivated : false;
+    let row;
+    let rowJq;
+    let rowIndex;
 
-    if (typeof idx === 'number' && this.pager && s.source && s.indeterminate) {
-      const rowIdx = idx + ((this.pager.activePage - 1) * s.pagesize);
-      row = this.tableBody.find(`tr[aria-rowindex="${rowIdx + 1}"]`);
+    if (typeof idx === 'number') {
+      row = this.tableBody[0].querySelector(`tr[aria-rowindex="${idx + 1}"]`);
       rowIndex = idx;
-    }
 
-    /**
-    * Fires after a row is deactivated in mixed selection mode.
-    * @event rowdeactivated
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Additional arguments
-    * @property {array} args.row An array of selected rows.
-    * @property {object} args.item The current sort column.
-    */
-    if (isActivated) {
-      if (!s.disableRowDeactivation) {
-        row.removeClass('is-rowactivated');
-        delete dataset[rowIndex]._rowactivated;
-        this.element.triggerHandler('rowdeactivated', [{ row: rowIndex, item: dataset[rowIndex] }]);
+      if (this.pager && s.source && s.indeterminate) {
+        const rowIdx = idx + ((this.pager.activePage - 1) * s.pagesize);
+        row = this.tableBody[0].querySelector(`tr[aria-rowindex="${rowIdx + 1}"]`);
       }
     } else {
-      // Deselect old row
-      const oldActivated = this.tableBody.find('tr.is-rowactivated');
-      if (oldActivated.length) {
-        oldActivated.removeClass('is-rowactivated');
+      rowJq = idx instanceof jQuery ? idx : $(idx);
+      row = rowJq[0];
+      rowIndex = (s.treeGrid || s.groupable) ?
+        this.actualRowIndex(rowJq) : this.dataRowIndex(rowJq);
+    }
 
-        const oldIdx = this.dataRowIndex(oldActivated);
-        if (dataset[oldIdx]) { // May have changed page
-          delete dataset[oldIdx]._rowactivated;
-        }
-        this.element.triggerHandler('rowdeactivated', [{ row: oldIdx, item: dataset[oldIdx] }]);
-      } else {
-        // Old active row may be filtered or on another page, so check all until find it
-        for (let i = 0; i < dataset.length; i++) {
-          if (dataset[i]._rowactivated) {
-            delete dataset[i]._rowactivated;
-            this.element.triggerHandler('rowdeactivated', [{ row: i, item: dataset[i] }]);
-            break;
-          }
-        }
-      }
+    if (s.indeterminate && !row) {
+      rowJq = this.actualRowNode(rowIndex);
+      row = rowJq[0];
+    }
+
+    const isActivated = dataset[rowIndex] ? dataset[rowIndex]._rowactivated : false;
+
+    // Toggle it
+    if (isActivated) {
+      this.deactivateMixedSelectionRow(row, rowIndex, dataset);
+    } else {
+      this.deactivateAllMixedSelectionRows(dataset);
+      this.activateMixedSelectionRow(row, rowIndex, dataset);
+    }
+  },
+
+  /**
+   * Activate given row with mixed selection mode.
+   * @private
+   * @param  {object} row The row to activated
+   * @param  {number} idx The row index to activated
+   * @param  {object} dataset Optional data to use
+   * @returns {void}
+   */
+  activateMixedSelectionRow(row, idx, dataset) {
+    if (typeof row === 'undefined' || typeof idx !== 'number' || idx < 0) {
+      return;
+    }
+    const s = this.settings;
+
+    if (typeof dataset === 'undefined') {
+      dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    }
+
+    if (dataset[idx]) {
+      row.classList.add('is-rowactivated');
+      dataset[idx]._rowactivated = true;
 
       /**
-      * Fires after a row is activated in mixed selection mode.
-      * @event rowactivated
-      * @memberof Datagrid
-      * @property {object} event The jquery event object
-      * @property {object} args Additional arguments
-      * @property {array} args.row An array of selected rows.
-      * @property {object} args.item The current sort column.
-      */
-      row.addClass('is-rowactivated');
-      if (dataset[rowIndex]) { // May have changed page
-        dataset[rowIndex]._rowactivated = true;
-        this.element.triggerHandler('rowactivated', [{ row: rowIndex, item: dataset[rowIndex] }]);
+       * Fires after a row is activated in mixed selection mode.
+       * @event rowactivated
+       * @memberof Datagrid
+       * @property {object} event The jquery event object
+       * @property {object} args Additional arguments
+       * @property {array} args.row An array of selected rows.
+       * @property {object} args.item The current sort column.
+       */
+      this.element.triggerHandler('rowactivated', [{ row: idx, item: dataset[idx] }]);
+    }
+  },
+
+  /**
+  * Deactivate given row with mixed selection mode.
+  * @private
+  * @param  {object} row The row to deactivated
+  * @param  {number} idx The row index to deactivated
+  * @param  {object} dataset Optional data to use
+  * @returns {void}
+  */
+  deactivateMixedSelectionRow(row, idx, dataset) {
+    if (typeof row === 'undefined' || typeof idx !== 'number' || idx < 0) {
+      return;
+    }
+    const s = this.settings;
+
+    if (typeof dataset === 'undefined') {
+      dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    }
+
+    if (dataset[idx] && !s.disableRowDeactivation) {
+      row.classList.remove('is-rowactivated');
+      delete dataset[idx]._rowactivated;
+
+      /**
+       * Fires after a row is deactivated in mixed selection mode.
+       * @event rowdeactivated
+       * @memberof Datagrid
+       * @property {object} event The jquery event object
+       * @property {object} args Additional arguments
+       * @property {array} args.row An array of selected rows.
+       * @property {object} args.item The current sort column.
+       */
+      this.element.triggerHandler('rowdeactivated', [{ row: idx, item: dataset[idx] }]);
+    }
+  },
+
+  /**
+  * Deactivate all rows with mixed selection mode.
+  * @private
+  * @param  {object} dataset Optional data to use
+  * @returns {void}
+  */
+  deactivateAllMixedSelectionRows(dataset) {
+    const s = this.settings;
+    let triggerData = null;
+
+    if (typeof dataset === 'undefined') {
+      dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    }
+
+    // Deselect activated row
+    const activated = this.tableBody[0].querySelector('tr.is-rowactivated');
+    if (activated) {
+      activated.classList.remove('is-rowactivated');
+      const idx = (s.treeGrid || s.groupable) ?
+        this.actualRowIndex($(activated)) : this.dataRowIndex($(activated));
+      triggerData = { row: idx, item: dataset[idx] };
+      if (dataset[idx]) {
+        delete dataset[idx]._rowactivated;
       }
+    } else {
+      // actived row may be filtered or on another page, so check all until find it
+      for (let i = 0; i < dataset.length; i++) {
+        const data = dataset[i];
+        if (data._rowactivated) {
+          delete data._rowactivated;
+          triggerData = { row: i, item: data };
+          break;
+        }
+      }
+    }
+
+    if (triggerData !== null) {
+      this.element.triggerHandler('rowdeactivated', [triggerData]);
     }
   },
 
@@ -8473,7 +8607,7 @@ Datagrid.prototype = {
     if (typeof tooltip === 'undefined') {
       const contentTooltip = elem.querySelector('.is-editor.content-tooltip');
       const aTitle = elem.querySelector('a[title]');
-      const isRowstatus = elem.classList.contains('rowstatus-cell');
+      const isRowstatus = elem.getAttribute('class').match(/rowstatus-cell/g);
       const isSvg = elem.tagName.toLowerCase() === 'svg';
       const isTh = elem.tagName.toLowerCase() === 'th';
       let title;
@@ -8487,7 +8621,7 @@ Datagrid.prototype = {
 
       // Cache rowStatus cell
       if (isRowstatus || isSvg) {
-        const rowNode = this.closest(elem, el => el.classList.contains('datagrid-row'));
+        const rowNode = this.closest(elem, el => el.getAttribute('class').match(/datagrid-row/g));
         const classList = rowNode ? rowNode.classList : [];
         tooltip.isError = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
         tooltip.placement = 'right';
@@ -8530,7 +8664,7 @@ Datagrid.prototype = {
       }
 
       if (tooltip.content !== '') {
-        const isEllipsis = elem.classList.contains('text-ellipsis');
+        const isEllipsis = elem.getAttribute('class').match(/text-ellipsis/g);
         tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (isEllipsis ? 8 : 0);
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
         if (title) {

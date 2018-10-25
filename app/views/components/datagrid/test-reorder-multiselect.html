@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">1 Selected</div>
+      <div class="buttonset">
+        <button class="btn" type="button" id="remove-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span>Remove</span>
+        </button>
+      </div>
+    </div>
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var columns = [];
+    var data = [
+    {code: 'cs_CZ', position: 1},
+    {code: 'es_MX', position: 2},
+    {code: 'ko_KR', position: 3},
+    {code: 'fr_CA', position: 4},
+    {code: 'en_GB', position: 5},
+    {code: 'bo-CN', position: 6},
+    {code: 'cu-RU', position: 7},
+    {code: 'da-DK', position: 8},
+    {code: 'de-AT', position: 9},
+    {code: 'dz-BT', position: 10}];
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'rowReorder', sortable: false, resizable: false, formatter: Formatters.RowReorder, align: 'center'});
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'position', name: 'Position', field: 'position', sortable: false, formatter: Formatters.Readonly});
+    columns.push({ id: 'code', name: 'Locale Code', field: 'code', sortable: false});
+
+    // Init and get the api for the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      editable: true,
+      rowReorder: true,
+      selectable: 'multiple',
+      clickToSelect: false
+    });
+
+    $('#remove-btn').on('click', function () {
+      $('#datagrid').data('datagrid').removeSelected();
+    });
+ });
+</script>

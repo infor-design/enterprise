@@ -169,16 +169,70 @@ describe('Datagrid Selection API', () => {
     expect(datagridObj.selectedRows().length).toEqual(0);
   });
 
-  it('Should be able to removeSelected', () => {
+  it('Should be able to remove selected rows', () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, selectable: 'multi' });
 
-    document.body.querySelectorAll('tr')[2].querySelector('td').click();
-    document.body.querySelectorAll('tr')[3].querySelector('td').click();
+    const trs = document.body.querySelectorAll('tbody tr');
+    trs[2].querySelector('td').click();
+    trs[3].querySelector('td').click();
 
     datagridObj.removeSelected();
 
-    expect(document.body.querySelectorAll('tr').length).toEqual(6);
+    expect(document.body.querySelectorAll('tbody tr').length).toEqual(5);
+    expect(datagridObj.selectedRows().length).toEqual(0);
+
+    datagridObj.updateDataset(originalData);
+  });
+
+  it('Should be able to remove all selected', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, selectable: 'multi' });
+
+    const trs = document.body.querySelectorAll('tbody tr');
+    trs[0].querySelector('td').click();
+    trs[1].querySelector('td').click();
+    trs[2].querySelector('td').click();
+    trs[3].querySelector('td').click();
+    trs[4].querySelector('td').click();
+    trs[5].querySelector('td').click();
+    trs[6].querySelector('td').click();
+
+    datagridObj.removeSelected();
+
+    expect(document.body.querySelectorAll('tbody tr').length).toEqual(0);
+    expect(datagridObj.selectedRows().length).toEqual(0);
+
+    datagridObj.updateDataset(originalData);
+  });
+
+  it('Should be able to remove all in ascending order', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, selectable: 'multi' });
+
+    const trs = document.body.querySelectorAll('tbody tr');
+    trs[3].querySelector('td').click();
+    trs[2].querySelector('td').click();
+
+    datagridObj.removeSelected();
+
+    expect(document.body.querySelectorAll('tbody tr').length).toEqual(5);
+    expect(datagridObj.selectedRows().length).toEqual(0);
+
+    datagridObj.updateDataset(originalData);
+  });
+
+  it('Should be able to remove all in descending order', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, selectable: 'multi' });
+
+    const trs = document.body.querySelectorAll('tbody tr');
+    trs[2].querySelector('td').click();
+    trs[3].querySelector('td').click();
+
+    datagridObj.removeSelected();
+
+    expect(document.body.querySelectorAll('tbody tr').length).toEqual(5);
     expect(datagridObj.selectedRows().length).toEqual(0);
 
     datagridObj.updateDataset(originalData);

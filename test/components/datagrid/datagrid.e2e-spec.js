@@ -943,3 +943,38 @@ describe('Datagrid Row Activation tests', () => {
     expect(await row.getAttribute('class')).toContain('is-rowactivated');
   });
 });
+
+describe('Datagrid Row Indeterminate Activation tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging-indeterminate-landmark');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show activation row for indeterminate with mixed selection', async () => {
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+    let row = await element(by.css('tbody tr[aria-rowindex="2"]'));
+
+    expect(await row.getAttribute('class')).not.toContain('is-rowactivated');
+    const cell = await element(by.css('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]'));
+    await cell.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+    row = await element(by.css('tbody tr[aria-rowindex="2"]'));
+
+    expect(await row.getAttribute('class')).toContain('is-rowactivated');
+    await element(by.css('li.pager-next a')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+    row = await element(by.css('tbody tr[aria-rowindex="2"]'));
+
+    expect(await row.getAttribute('class')).toContain('is-rowactivated');
+  });
+});

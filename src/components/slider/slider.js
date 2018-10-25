@@ -484,7 +484,7 @@ Slider.prototype = {
       function conversion() {
         if (self.isVertical()) {
           const wh = self.wrapper.height();
-          // Vertical Slider accounts for limits set on the height by SoHo Xi Drag.js
+          // Vertical Slider accounts for limits set on the height by IDS Enterprise Drag.js
           const adjustedHeight = wh - thisHandle.outerHeight();
 
           return ((adjustedHeight - args.top) / adjustedHeight) * 100;
