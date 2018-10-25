@@ -1,6 +1,6 @@
 ---
 title: Hierarchy
-description: 
+description: null
 demo:
   embedded:
   - name: Org Chart Example

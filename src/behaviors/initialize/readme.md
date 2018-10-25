@@ -1,6 +1,6 @@
 ---
 title: Initialize
-description: 
+description: null
 ---
 
 ## Code Example

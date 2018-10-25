@@ -1,6 +1,6 @@
 ---
 title: Zoom Component
-description: 
+description: null
 ---
 
 ## Testability

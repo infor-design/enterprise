@@ -1,6 +1,6 @@
 ---
 title: Treemap
-description: 
+description: null
 demo:
   embedded:
   - name: Treemap Main Example

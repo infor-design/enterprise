@@ -1,6 +1,6 @@
 ---
 title: MenuButton Component
-description: 
+description: null
 demo:
   embedded:
   - name: Simple Menu Button

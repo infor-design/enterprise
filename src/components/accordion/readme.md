@@ -1,6 +1,6 @@
 ---
 title: Accordion
-description: 
+description: null
 demo:
   embedded:
   - name: Basic Accordion

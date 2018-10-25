@@ -1,6 +1,6 @@
 ---
 title: Lookup
-description: 
+description: null
 demo:
   embedded:
   - name: Default Lookup

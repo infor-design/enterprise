@@ -1,6 +1,6 @@
 ---
 title: Images
-description: 
+description: null
 demo:
   embedded:
   - name: Image Sizes and Placeholders

@@ -1,6 +1,6 @@
 ---
 title: Bar Chart (Stacked)
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Stacked Bar Chart

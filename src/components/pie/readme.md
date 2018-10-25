@@ -1,6 +1,6 @@
 ---
 title: Pie Chart
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Pie Chart

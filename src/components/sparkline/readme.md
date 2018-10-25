@@ -1,6 +1,6 @@
 ---
 title: Sparklines
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Sparkline Chart

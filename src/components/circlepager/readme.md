@@ -1,6 +1,6 @@
 ---
 title: Circle Pager
-description: 
+description: null
 demo:
   embedded:
   - name: Default Circle Pager Example

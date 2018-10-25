@@ -1,6 +1,6 @@
 ---
 title: List Filter
-description: 
+description: null
 ---
 
 ## Code Example

@@ -1,6 +1,6 @@
 ---
 title: Header Tabs
-description: 
+description: null
 demo:
   embedded:
   - name: Common Configuration

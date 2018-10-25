@@ -1,6 +1,6 @@
 ---
 title: MonthView
-description: 
+description: null
 demo:
   embedded:
   - name: Full Page MonthView Example

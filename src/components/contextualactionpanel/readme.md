@@ -1,6 +1,6 @@
 ---
 title: Contextual Action Panel
-description: 
+description: null
 demo:
   embedded:
   - name: Default CAP Example

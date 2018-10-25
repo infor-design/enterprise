@@ -1,6 +1,6 @@
 ---
 title: Bullet Chart
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Bullet Chart

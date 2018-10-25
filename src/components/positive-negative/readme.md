@@ -1,6 +1,6 @@
 ---
 title: Positive-Negative Chart
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Positive/Negative Chart

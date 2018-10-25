@@ -1,6 +1,6 @@
 ---
 title: Tabs-multi
-description: 
+description: null
 demo:
   embedded:
   - name: Default tabs-multi example

@@ -1,6 +1,6 @@
 ---
 title: Column Chart
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Column Chart

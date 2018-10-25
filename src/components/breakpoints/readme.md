@@ -1,6 +1,6 @@
 ---
 title: Favorites
-description: 
+description: null
 demo:
   embedded:
   - name: Breakpoint Event Change Detection

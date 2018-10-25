@@ -1,6 +1,6 @@
 ---
 title: Message
-description: 
+description: null
 demo:
   embedded:
   - name: Message Examples

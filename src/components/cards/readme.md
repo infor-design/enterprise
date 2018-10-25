@@ -1,6 +1,6 @@
 ---
 title: Cards
-description: 
+description: null
 demo:
   embedded:
   - name: Simple Card Example

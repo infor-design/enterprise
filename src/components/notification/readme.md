@@ -1,6 +1,6 @@
 ---
 title: Notification
-description: 
+description: null
 demo:
   embedded:
   - name: Showing a notfication banner

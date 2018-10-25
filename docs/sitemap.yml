@@ -15,112 +15,110 @@ sections:
     slug: grid
 - name: Components
   pages:
-  - name: Elements
-    pages:
-    - name: Accordion
-      slug: accordion
-    - name: Alerts
-      slug: alerts
-    - name: Autocomplete
-      slug: autocomplete
-    - name: Badges
-      slug: badges
-    - name: Button
-      slug: button
-    - name: Breadcrumb
-      slug: breadcrumb
-    - name: Busy Indicator
-      slug: busyindicator
-    - name: Checkboxes
-      slug: checkboxes
-    - name: Circle Pager
-      slug: circlepager
-    - name: Color Picker
-      slug: colorpicker
-    - name: Counts
-      slug: counts
-    - name: Datepicker
-      slug: datepicker
-    - name: Dropdown
-      slug: dropdown
-    - name: Editor (RichText)
-      slug: editor
-    - name: Favorites
-      slug: favorites
-    - name: Field Filter
-      slug: field-filter
-    - name: File Upload
-      slug: fileupload
-    - name: File Upload (Advanced)
-      slug: fileupload-advanced
-    - name: Hyperlinks
-      slug: hyperlinks
-    - name: Input (Text)
-      slug: input
-    - name: List Builder
-      slug: listbuilder
-    - name: Menubutton
-      slug: menubutton
-    - name: Modal
-      slug: modal
-    - name: Multiselect
-      slug: multiselect
-    - name: Pager
-      slug: pager
-    - name: Popover
-      slug: popover
-    - name: Popupmenu
-      slug: popupmenu
-    - name: Progress Indicator
-      slug: progress
-    - name: Rating
-      slug: rating
-    - name: Searchfield
-      slug: searchfield
-    - name: Skip Link
-      slug: skiplink
-    - name: Slider
-      slug: slider
-    - name: Spinbox
-      slug: spinbox
-    - name: Swaplist
-      slug: swaplist
-    - name: Switch
-      slug: switch
-    - name: Tabs
-      slug: tabs
-    - name: Tabs (Header)
-      slug: tabs-header
-    - name: Tabs (Module)
-      slug: tabs-module
-    - name: Tabs (Vertical)
-      slug: tabs-vertical
-    - name: Tag
-      slug: tag
-    - name: Text Input
-      slug: input
-    - name: Timeline
-      slug: timeline
-    - name: Timepicker
-      slug: timepicker
-    - name: Toast
-      slug: toast
-    - name: Toolbar Searchfield
-      slug: toolbarsearchfield
-    - name: Tooltip
-      slug: tooltip
-  - name: Blocks
-    pages:
-    - name: Data Tiles
-      slug: cards
-    - name: Data Grid
-      slug: datagrid
-    - name: Data List
-      slug: listview
-    - name: Header
-      slug: header
-    - name: Toolbar
-      slug: toolbar
+  - name: Accordion
+    slug: accordion
+  - name: Alerts
+    slug: alerts
+  - name: Autocomplete
+    slug: autocomplete
+  - name: Badges
+    slug: badges
+  - name: Button
+    slug: button
+  - name: Breadcrumb
+    slug: breadcrumb
+  - name: Busy Indicator
+    slug: busyindicator
+  - name: Cards
+    slug: cards
+  - name: Checkboxes
+    slug: checkboxes
+  - name: Circle Pager
+    slug: circlepager
+  - name: Color Picker
+    slug: colorpicker
+  - name: Counts
+    slug: counts
+  - name: Data Grid
+    slug: datagrid
+  - name: Datepicker
+    slug: datepicker
+  - name: Dropdown
+    slug: dropdown
+  - name: Editor (RichText)
+    slug: editor
+  - name: Favorites
+    slug: favorites
+  - name: Field Filter
+    slug: field-filter
+  - name: File Upload
+    slug: fileupload
+  - name: File Upload (Advanced)
+    slug: fileupload-advanced
+  - name: Header
+    slug: header
+  - name: Hyperlinks
+    slug: hyperlinks
+  - name: Input (Text)
+    slug: input
+  - name: List
+    slug: listview
+  - name: List Builder
+    slug: listbuilder
+  - name: Menubutton
+    slug: menubutton
+  - name: Modal
+    slug: modal
+  - name: Multiselect
+    slug: multiselect
+  - name: Pager
+    slug: pager
+  - name: Popover
+    slug: popover
+  - name: Popupmenu
+    slug: popupmenu
+  - name: Progress Indicator
+    slug: progress
+  - name: Radios
+    slug: radios
+  - name: Rating
+    slug: rating
+  - name: Searchfield
+    slug: searchfield
+  - name: Skip Link
+    slug: skiplink
+  - name: Slider
+    slug: slider
+  - name: Spinbox
+    slug: spinbox
+  - name: Swaplist
+    slug: swaplist
+  - name: Switch
+    slug: switch
+  - name: Tabs
+    slug: tabs
+  - name: Tabs (Header)
+    slug: tabs-header
+  - name: Tabs (Module)
+    slug: tabs-module
+  - name: Tabs (Vertical)
+    slug: tabs-vertical
+  - name: Tag
+    slug: tag
+  - name: Text Input
+    slug: input
+  - name: Timeline
+    slug: timeline
+  - name: Timepicker
+    slug: timepicker
+  - name: Toast
+    slug: toast
+  - name: Toolbar
+    slug: toolbar
+  - name: Toolbar Searchfield
+    slug: toolbarsearchfield
+  - name: Tooltip
+    slug: tooltip
 - name: Utilities
   pages:
   - name: Arrange
@@ -203,7 +201,7 @@ sections:
     slug: blockgrid
   - name: Context Menu
     slug: contextmenu
-  - name: Compositform
+  - name: Composite Form
     slug: compositeform
   - name: Empty Messages
     slug: emptymessage
@@ -217,7 +215,7 @@ sections:
     slug: form
   - name: Hierarchy (Org Chart)
     slug: hierarchy
-  - name: HomePage
+  - name: Homepage
     slug: homepage
   - name: Images
     slug: images
@@ -231,8 +229,6 @@ sections:
     slug: message
   - name: Process Indicator
     slug: processindicator
-  - name: Radios
-    slug: radios
   - name: Tabs-multi
     slug: tabs-multi
   - name: Textarea

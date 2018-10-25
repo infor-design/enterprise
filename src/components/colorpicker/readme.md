@@ -1,6 +1,6 @@
 ---
 title: Color Picker
-description: 
+description: null
 demo:
   embedded:
   - name: Color Picker Example

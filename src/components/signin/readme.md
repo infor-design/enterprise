@@ -1,6 +1,6 @@
 ---
 title: Signin Component
-description: 
+description: null
 demo:
   embedded:
   - name: Main Example

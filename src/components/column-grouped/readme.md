@@ -1,6 +1,6 @@
 ---
 title: Column Chart (Grouped)
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Grouped Column Chart

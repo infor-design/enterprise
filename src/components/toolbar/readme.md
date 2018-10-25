@@ -1,6 +1,6 @@
 ---
 title: Toolbar
-description: 
+description: null
 demo:
   embedded:
   - name: Common Configuration

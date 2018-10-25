@@ -1,6 +1,6 @@
 ---
 title: Bar Chart (Grouped)
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Grouped Bar Chart

@@ -1,6 +1,6 @@
 ---
 title: Field Set
-description: 
+description: null
 demo:
   embedded:
   - name: Default Fieldset Example

@@ -1,6 +1,6 @@
 ---
 title: Visibility CSS Classes
-description: 
+description: null
 demo:
   embedded:
   - name: All Examples

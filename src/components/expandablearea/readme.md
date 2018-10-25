@@ -1,6 +1,6 @@
 ---
 title: Expandable Area
-description: 
+description: null
 demo:
   embedded:
   - name: Default Expandable Area Example

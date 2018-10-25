@@ -1,6 +1,6 @@
 ---
 title: Blockgrid
-description: 
+description: null
 demo:
   embedded:
   - name: Blockgrid with images

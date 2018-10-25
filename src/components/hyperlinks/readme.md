@@ -1,6 +1,6 @@
 ---
 title: Hyperlinks
-description: 
+description: null
 demo:
   embedded:
   - name: Default Hyperlink Example

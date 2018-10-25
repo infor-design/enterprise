@@ -1,6 +1,6 @@
 ---
 title: Scatter Plot Chart
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Scatter Plot Chart

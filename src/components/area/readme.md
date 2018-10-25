@@ -1,6 +1,6 @@
 ---
 title: Area
-description: 
+description: null
 demo:
   embedded:
   - name: Main Example

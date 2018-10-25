@@ -1,6 +1,6 @@
 ---
 title: Radar Chart
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Radar Chart

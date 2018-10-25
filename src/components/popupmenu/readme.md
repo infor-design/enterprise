@@ -1,6 +1,6 @@
 ---
 title: Popupmenu Component
-description: 
+description: null
 demo:
   embedded:
   - name: Popupmenu as a Menu Button

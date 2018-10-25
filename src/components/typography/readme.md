@@ -1,6 +1,6 @@
 ---
 title: Typography
-description: 
+description: null
 demo:
   embedded:
   - name: Main Example Page

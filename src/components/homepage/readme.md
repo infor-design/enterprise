@@ -1,6 +1,6 @@
 ---
 title: HomePage
-description: 
+description: null
 demo:
   embedded:
   - name: Example of Empty HomePage Layout

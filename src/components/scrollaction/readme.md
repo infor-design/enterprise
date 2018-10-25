@@ -1,6 +1,6 @@
 ---
 title: ScrollAction Component
-description: 
+description: null
 ---
 
 ## Configuration Options

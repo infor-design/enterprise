@@ -1,6 +1,6 @@
 ---
 title: Tag Component
-description: 
+description: null
 demo:
   embedded:
   - name: Common Tag Examples

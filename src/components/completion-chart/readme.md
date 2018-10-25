@@ -1,6 +1,6 @@
 ---
 title: Completion Chart
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Completion Chart Example

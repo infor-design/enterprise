@@ -1,6 +1,6 @@
 ---
 title: Place
-description: 
+description: null
 demo:
   embedded:
   - name: Place by Coordinate

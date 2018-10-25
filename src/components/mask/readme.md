@@ -1,6 +1,6 @@
 ---
 title: Mask
-description: 
+description: null
 demo:
   embedded:
   - name: Main Example

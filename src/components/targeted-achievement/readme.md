@@ -1,6 +1,6 @@
 ---
 title: Targeted Achievement Chart
-description: 
+description: null
 demo:
   embedded:
   - name: Main Target to Achievement Example (shows 3 examples)

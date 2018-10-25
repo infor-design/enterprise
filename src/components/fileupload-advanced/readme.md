@@ -1,6 +1,6 @@
 ---
 title: File Upload Advanced
-description: 
+description: null
 demo:
   embedded:
   - name: Advanced File Upload Example

@@ -1,6 +1,6 @@
 ---
 title: Bar Chart
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Bar Chart

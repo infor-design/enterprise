@@ -1,6 +1,6 @@
 ---
 title: Locale
-description: 
+description: null
 ---
 
 ## Code Example - Initializing

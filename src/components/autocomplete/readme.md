@@ -1,6 +1,6 @@
 ---
 title: Autocomplete
-description: 
+description: null
 demo:
   embedded:
   - name: Default Autocomplete

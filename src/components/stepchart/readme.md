@@ -1,6 +1,6 @@
 ---
 title: Step Chart
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Step Chart

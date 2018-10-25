@@ -1,6 +1,6 @@
 ---
 title: ListBuilder
-description: 
+description: null
 demo:
   embedded:
   - name: Default List Builder Example

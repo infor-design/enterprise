@@ -1,6 +1,6 @@
 ---
 title: Drag Behavior
-description: 
+description: null
 demo:
   embedded:
   - name: Basic Drag Examples

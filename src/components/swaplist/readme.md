@@ -1,6 +1,6 @@
 ---
 title: Swaplist Component
-description: 
+description: null
 demo:
   embedded:
   - name: Main Swaplist Example

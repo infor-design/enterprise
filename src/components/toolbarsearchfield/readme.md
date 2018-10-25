@@ -1,6 +1,6 @@
 ---
 title: Toolbar Searchfield
-description: 
+description: null
 demo:
   embedded:
   - name: Common Configuration

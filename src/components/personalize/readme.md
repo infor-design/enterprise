@@ -1,6 +1,6 @@
 ---
 title: Personalize
-description: 
+description: null
 demo:
   embedded:
   - name: Themes Example

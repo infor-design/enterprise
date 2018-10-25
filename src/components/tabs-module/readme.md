@@ -1,6 +1,6 @@
 ---
 title: Module Tabs
-description: 
+description: null
 demo:
   embedded:
   - name: Common Configuration

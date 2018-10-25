@@ -1,6 +1,6 @@
 ---
 title: Editor (Rich Text)
-description: 
+description: null
 demo:
   embedded:
   - name: Default Rich Text Editor Example

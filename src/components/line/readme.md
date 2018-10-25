@@ -1,6 +1,6 @@
 ---
 title: Line
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Line Chart

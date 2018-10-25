@@ -1,6 +1,6 @@
 ---
 title: Templating Component
-description: 
+description: null
 ---
 
 ## Testability

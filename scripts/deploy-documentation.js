@@ -222,7 +222,7 @@ function compileComponents() {
 
         allDocsObjMap[compName] = Object.assign({}, jsonTemplate, {
           title: compName,
-          description: `All about ${compName}`,
+          description: '',
           isComponent: true
         });
 

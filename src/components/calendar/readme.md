@@ -1,6 +1,6 @@
 ---
 title: Calendar
-description: 
+description: null
 demo:
   embedded:
   - name: Full Page Calendar Example

@@ -1,6 +1,6 @@
 ---
 title: Empty Message
-description: 
+description: null
 demo:
   embedded:
   - name: Simple Empty Message

@@ -1,6 +1,6 @@
 ---
 title: Skiplink Component
-description: 
+description: null
 demo:
   embedded:
   - name: Main Example

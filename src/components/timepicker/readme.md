@@ -1,6 +1,6 @@
 ---
 title: Timepicker Component
-description: 
+description: null
 demo:
   embedded:
   - name: Default Example

@@ -1,6 +1,6 @@
 ---
 title: About
-description: 
+description: null
 demo:
   embedded:
   - name: Default About Example

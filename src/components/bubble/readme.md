@@ -1,6 +1,6 @@
 ---
 title: Bubble Chart
-description: 
+description: null
 demo:
   embedded:
   - name: Standard Bubble Chart
