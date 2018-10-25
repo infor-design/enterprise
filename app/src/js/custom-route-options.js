@@ -59,8 +59,6 @@ module.exports = function customRouteOptions(req, res) {
 
   // RenderLoop
   if (url.match(/renderloop\/example-delayed-start/)) {
-    debugger;
-
     SohoConfig.renderLoop = {};
     SohoConfig.renderLoop.noAutoStart = true;
   }
@@ -78,7 +76,6 @@ module.exports = function customRouteOptions(req, res) {
   // If there have been properties added to SohoConfig,
   // stringify and pass it to the view options
   if (Object.keys(SohoConfig).length) {
-    debugger;
     customOpts.SohoConfig = JSON.stringify(SohoConfig);
   }
 
