@@ -18,7 +18,7 @@ demo:
     slug: example-set-selected
 ---
 
-The area chart is a line chart with the isArea set that adds the fills. See the [line chart api]( ../components/line) for more details.
+The area chart is a line chart with the isArea set that adds the fills. See the [line chart api]( ../line) for more details.
 
 ## Code Example
 
