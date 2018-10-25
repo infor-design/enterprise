@@ -8,6 +8,7 @@ import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../icons/icons.jquery';
+import '../../utils/lifecycle';
 import '../place/place.jquery';
 import '../tooltip/tooltip.jquery';
 
@@ -1832,12 +1833,12 @@ Dropdown.prototype = {
       }
 
       // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
-      const ulHeight = parseInt(window.getComputedStyle(self.listUl[0]).height, 10);
-      const listHeight = parseInt(window.getComputedStyle(self.list[0]).height, 10);
+      const ulHeight = parseInt(self.listUl[0].offsetHeight, 10);
+      const listHeight = parseInt(self.list[0].offsetHeight, 10);
       const searchInputHeight = $(this).hasClass('dropdown-short') ? 24 : 34;
 
-      if (ulHeight + searchInputHeight > listHeight) {
-        self.listUl[0].style.height = `${listHeight - searchInputHeight}px`;
+      if (ulHeight + searchInputHeight >= listHeight) {
+        self.listUl[0].style.height = `${listHeight - (searchInputHeight * 2)}px`;
       }
 
       return placementObj;

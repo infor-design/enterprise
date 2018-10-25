@@ -7,7 +7,7 @@ const COMPONENT_NAME = 'icon';
 
 // Default Options
 const ICON_DEFAULTS = {
-  use: 'user-profile', // Match this to one of the SoHo Xi icons, prefixed with an ID of '#icon-'
+  use: 'user-profile', // Match this to one of the IDS Enterprise icons, prefixed with an ID of '#icon-'
   focusable: false
 };
 

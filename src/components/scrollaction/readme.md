@@ -5,7 +5,7 @@ description: This page describes ScrollAction Component .
 
 ## Configuration Options
 
-1. Main Example [View Example](../components/scrollaction/example-index.html)
+1. Main Example [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/scrollaction/example-index?font=source-sans)
 
 ## Testability
 

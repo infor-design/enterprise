@@ -27,11 +27,26 @@ const COMPONENT_NAME = 'mask';
  *  It's also possible to define a custom mask function and supply it here. The legacy string style is also supported.
  * @param {object} [settings.patternOptions] If using a function to define `settings.pattern`, any options that must be passed
  *  to the masking function can be supplied in this object.
+ * @param {string} [settings.patternOptions.format] [date/time masks only] contains a basic date format string that will be used to properly display a date mask.
+ * @param {string} [settings.patternOptions.prefix] [number masks only] will be automatically prepended to the beginning of the masked value, but will not be counted as part of the masked value.
+ * @param {string} [settings.patternOptions.suffix] [number masks only] will be automatically appended to the end of the masked value, but will not be counted as part of the masked value.
+ * @param {boolean} [settings.patternOptions.allowThousandsSeparator] [number masks only] If true, displays a localized thousands separator in the masked value
+ * @param {object} [settings.patternOptions.symbols] [number masks only] contains default, localized special characters used in numbers
+ * @param {string} [settings.patternOptions.symbols.currency] [number masks only]
+ * @param {string} [settings.patternOptions.symbols.decimal] [number masks only]
+ * @param {string} [settings.patternOptions.symbols.negative] [number masks only]
+ * @param {string} [settings.patternOptions.symbols.thousands] [number masks only]
+ * @param {boolean} [settings.patternOptions.allowDecimal] [number masks only] allows the entry of a decimal point into a number mask with a decimal limit defined (negated when using `requireDecimal` to force its placement)
+ * @param {boolean} [settings.patternOptions.requireDecimal] [number masks only] forces the placement of a decimal point in a number mask with a decimal limit defined.
+ * @param {number} [settings.patternOptions.decimalLimit] [number masks only] defines the number of characters allowed after the decimal point.
+ * @param {number} [settings.patternOptions.integerLimit] [number masks only] defines the number of characters allowed before the decimal point.
+ * @param {boolean} [settings.patternOptions.allowNegative] [number masks only] allows a number to be negative (adds/retains a "minus" symbol at the beginning of the value)
+ * @param {boolean} [settings.patternOptions.allowLeadingZeroes] [number masks only] allows a zero be placed before a decimal or other numbers.
  * @param {string} [settings.placeholderChar='_'] If using the `settings.guide`, will be used as the placeholder
  *  for characters that are not yet typed.
  * @param {function} [settings.pipe] provides a way of adjusting the masked content, caret position,
  *  etc after the input field has been processed by the mask API.
- * @param {string} [settings.process] can be defined as a quick way to create certain complex masks.  Defaults to the regular pattern mask,
+ * @param {string} [settings.process=undefined] can be defined as a quick way to create certain complex masks.  Defaults to the regular pattern mask,
  *  but can automatically configure the field for "date", "time", and "number"
  * @param {boolean} [settings.processOnBlur=true] if defined, causes the mask API to process this input field whenever it becomes blurred.
  * @param {boolean} [settings.processOnInitialize=true] if defined, causes the mask API to process this input field when the component is initialized.
@@ -501,7 +516,7 @@ MaskInput.prototype = {
       }(this.settings.showSymbol));
 
       // derive the location of the symbol
-      const detectableSymbol = (symbolSetting === 'currency' ? 'Â¤' : symbol.char);
+      const detectableSymbol = (symbolSetting === 'currency' ? '¤' : symbol.char);
       const symbolRegex = new RegExp(detectableSymbol, 'g');
       const match = symbolRegex.exec(symbol.format);
       let replacementRegex;
@@ -509,7 +524,7 @@ MaskInput.prototype = {
       let index = -1;
       let placementType;
 
-      if (match.length) {
+      if (match && match.length) {
         index = symbol.format.indexOf(match[0]);
         if (index === 0) {
           placementType = 'prefix';
@@ -526,7 +541,7 @@ MaskInput.prototype = {
         }
 
         if (symbolSetting === 'currency') {
-          symbolWithWhitespace = symbolWithWhitespace.replace('Â¤', symbol.char);
+          symbolWithWhitespace = symbolWithWhitespace.replace('¤', symbol.char);
         }
         this.settings.patternOptions[placementType] = symbolWithWhitespace;
       }

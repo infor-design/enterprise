@@ -599,6 +599,15 @@ Tabs.prototype = {
       .on('mousedown.tabs', '> li', function (e) {
         self.handleAddFocusData(e, $(this));
 
+        if ($(e.target).hasClass('close') && $(e.target).parent().hasClass('has-popupmenu')) {
+          const menu = $(this).data('popupmenu').menu;
+          const hrefs = [];
+          $.each(menu[0].children, (i, li) => {
+            hrefs.push(li.children[0].href);
+          });
+          self.closeDismissibleTabs(hrefs);
+        }
+
         // let right click pass through
         if (e.which !== 3) {
           return self.handleTabClick(e, $(this));
@@ -3816,6 +3825,17 @@ Tabs.prototype = {
    */
   closeDismissibleTab(tabId) {
     return this.remove(tabId);
+  },
+
+  /**
+   * Remove top level dismissible tab with dropdown
+   * @param {array} tabUrlArray the Array of urls from the target popupmenu
+   */
+  closeDismissibleTabs(tabUrlArray) {
+    tabUrlArray.forEach((tabUrl) => {
+      const tabId = tabUrl.match(/#.*/);
+      return this.remove(tabId[0]);
+    });
   },
 
   /**

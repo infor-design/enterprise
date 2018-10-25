@@ -1,5 +1,8 @@
 // Select (DropDown)
 //================================================== //
+
+@import '../input/input-mixins';
+
 @mixin list-icon-colors {
   &.error {
     fill: $error-color;
@@ -523,7 +526,7 @@ div.multiselect {
 }
 
 .dropdown-search {
-  background-color: $body-bg-color-primary;
+  background-color: $dropdown-search-bg-color;
   border: 0;
   border-bottom: 1px solid $dropdown-menu-separator-border-color;
   border-radius: 0;
