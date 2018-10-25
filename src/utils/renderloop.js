@@ -1,3 +1,16 @@
+import { utils } from './utils';
+
+// Default RenderLoop Settings
+const RENDERLOOP_DEFAULTS = {
+  noAutoStart: false
+};
+
+// Only start the renderloop if it's not disabled by a Global config setting.
+let instanceSettings = {};
+if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.renderLoop === 'object') {
+  instanceSettings = utils.extend({}, RENDERLOOP_DEFAULTS, window.SohoConfig.renderLoop);
+}
+
 /**
  * Gets an accurate timestamp from
  * @private
@@ -77,10 +90,17 @@ RenderLoopItem.prototype = {
  * Sets up a timed rendering loop that can be used for controlling animations
  * globally in an application that implements Soho.
  * @constructor
+ * @param {object} [settings] incoming settings
+ * @param {boolean} [settings.noAutoStart] if true, will not auto-start the renderLoop
  */
-function RenderLoop() {
+function RenderLoop(settings) {
   this.items = [];
   this.element = $('body');
+  this.settings = utils.mergeSettings(null, settings, RENDERLOOP_DEFAULTS);
+
+  if (this.settings.noAutoStart !== true) {
+    this.start();
+  }
 
   return this;
 }
@@ -403,7 +423,6 @@ RenderLoop.prototype = {
 };
 
 // Setup a single instance of RenderLoop for export.
-const renderLoop = new RenderLoop();
-renderLoop.start();
+const renderLoop = new RenderLoop(instanceSettings);
 
 export { RenderLoopItem, renderLoop };
