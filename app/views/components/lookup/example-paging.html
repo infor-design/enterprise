@@ -13,6 +13,11 @@
       <input id="pagingSmall" data-init="false" class="lookup" name="pagingSmall" type="text">
     </div>
     
+    <div class="field">
+      <label for="pagingSmallMinWidth" class="label">Paging Small (minWidth=620)</label>
+      <input id="pagingSmallMinWidth" data-init="false" class="lookup" name="pagingSmallMinWidth" type="text">
+    </div>
+    
   </div>
 </div>
 
@@ -83,6 +88,32 @@
               }
             }
         });
+        
+        //Init the Lookup with that data and paging options
+        $('#pagingSmallMinWidth').lookup({
+            field: 'productId',
+            minWidth: 620,
+            options: {
+              columns: columnsSmall,
+              dataset: data.data,
+              selectable: 'single',
+              stretchColumn: 'productName',
+              paging: true,
+              pagesize: 5,
+              toolbar: {
+                results: true,
+                dateFilter: false,
+                keywordFilter: true,
+                advancedFilter: true,
+                actions: true,
+                views: true,
+                rowHeight: false,
+                collapsibleFilter: false,
+                fullWidth: true
+              }
+            }
+        });
+        
         
       });
 </script>
