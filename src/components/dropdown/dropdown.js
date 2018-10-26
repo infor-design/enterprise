@@ -1057,7 +1057,15 @@ Dropdown.prototype = {
       const li = $(this);
 
       const text = a.text();
-      const icon = (li.children('a').find('svg').length !== 0) ? li.children('a').find('svg')[0].outerHTML : '';
+      let icon = '';
+
+      if (li.children('a').find('svg').length !== 0) {
+        if (li.children('a').find('svg')[0].outerHTML) {
+          icon = li.children('a').find('svg')[0].outerHTML;
+        } else {
+          icon = new XMLSerializer().serializeToString(li.children('a').find('svg')[0]);
+        }
+      }
 
       if (icon) {
         hasIcons = true;
