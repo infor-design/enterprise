@@ -1238,6 +1238,7 @@ Datagrid.prototype = {
         $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
           const menu = $(this).next('.popupmenu-wrapper');
           utils.fixSVGIcons(menu);
+          self.hideTooltip();
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
           .on('selected.datagrid-filter', (e, anchor) => {
@@ -3660,12 +3661,15 @@ Datagrid.prototype = {
     const handleShow = (elem, delay) => {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       tooltipTimer = setTimeout(() => {
+        const isHeaderColumn = utils.hasClass(elem, 'datagrid-column-wrapper');
+        const isHeaderFilter = utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
+        const isPopup = isHeaderFilter ?
+          elem.parentNode.querySelectorAll('.popupmenu.is-open').length > 0 : false;
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
-        const containerEl = utils.hasClass(elem, 'datagrid-column-wrapper') ?
-          elem.parentNode : elem;
+        const containerEl = isHeaderColumn ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
 
-        if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35)))) {
+        if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
       }, delay);
@@ -8638,6 +8642,7 @@ Datagrid.prototype = {
 
       if (isTh || isHeaderColumn || isHeaderFilter) {
         tooltip.wrapper = elem;
+        tooltip.distance = isHeaderFilter ? 15 : null;
         tooltip.placement = isHeaderColumn ? 'top' : 'bottom';
       }
 
@@ -8741,7 +8746,7 @@ Datagrid.prototype = {
           options.extraClassList.map(className => this.tooltip.classList.add(className));
         }
 
-        const distance = 10;
+        const distance = typeof options.distance === 'number' ? options.distance : 10;
         const placeOptions = {
           x: 0,
           y: distance,
@@ -8757,13 +8762,13 @@ Datagrid.prototype = {
           placeOptions.y = 0;
         }
 
-        // If already have place instance
-        if (tooltip.data('place')) {
-          tooltip.data('place').place(placeOptions);
-        } else {
+        // If not already have place instance
+        if (!tooltip.data('place')) {
           tooltip.place(placeOptions);
-          tooltip.data('place').place(placeOptions);
         }
+
+        // Apply place
+        tooltip.data('place').place(placeOptions);
 
         // Flag to mark as gridtooltip
         tooltip.data('gridtooltip', true);
