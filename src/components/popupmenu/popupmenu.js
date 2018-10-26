@@ -2134,6 +2134,9 @@ PopupMenu.prototype = {
       return;
     }
 
+    if (document.activeElement && document.activeElement.tagName === 'INPUT') {
+      return;
+    }
     this.element.focus();
   },
 
