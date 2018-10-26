@@ -253,6 +253,14 @@
         padding-left: 35px;
       }
     }
+
+    &.is-placeholder {
+      cursor: default;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
   }
 
   a {
@@ -289,6 +297,10 @@
       color: $disabled-color;
       pointer-events: none;
     }
+  }
+
+  a.no-results {
+    color: inherit !important;
   }
 
   span {

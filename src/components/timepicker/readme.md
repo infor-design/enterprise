@@ -17,7 +17,7 @@ demo:
   - name: Timepicker with a Seconds Picker
     slug: example-seconds-picker
   - name: Timepicker with Required Validation
-    slug: example-with-validation
+    slug: example-validation
 ---
 ## Behavior Guidelines
 

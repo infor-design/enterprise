@@ -1730,9 +1730,9 @@ SearchField.prototype = {
       return;
     }
 
-    const none = $('<li role="presentation"></li>').appendTo(list);
+    const none = $('<li role="presentation" class="is-placeholder"></li>').appendTo(list);
 
-    this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html(`<span>${Locale.translate('NoResults')}</span>`).appendTo(none);
+    this.noneLink = $('<a href="#" class="no-results" disabled="disabled" tabindex="-1" role="menuitem" aria-disabled="true"></a>').html(`<span>${Locale.translate('NoResults')}</span>`).appendTo(none);
   },
 
   /**

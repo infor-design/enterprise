@@ -24,8 +24,7 @@ const TIMEPICKER_DEFAULTS = function () {
     mode: TIMEPICKER_MODES[0],
     roundToInterval: true,
     parentElement: null,
-    returnFocus: true,
-    customValidation: false
+    returnFocus: true
   };
 };
 
@@ -41,7 +40,6 @@ const TIMEPICKER_DEFAULTS = function () {
  * @property {string} [settings.mode = 'standard']  Can be set to 'standard', 'range',
  * @property {boolean} [settings.roundToInterval = true]  if `false`, does not automatically round user-entered values
  * from the pickers to their nearest interval.
- * @param {boolean} [settings.customValidation=false] If true the internal validation is disabled.
  * @param {null|jQuery[]} [settings.parentElement] if defined as a jQuery-wrapped element, will be used as the target element.
  * @property {string} [settings.returnFocus = true]  If set to false, focus will not be returned to
  *  the calling element. It usually should be for accessibility purposes.
@@ -342,36 +340,19 @@ TimePicker.prototype = {
       }
     };
 
-    let validation = 'time';
-    let events = { time: 'blur' };
-    const customValidation = this.element.attr('data-validate');
-    const customEvents = this.element.attr('data-validation-events');
+    const validation = 'time';
+    const events = { time: 'blur change enter' };
 
-    if (customValidation === 'required' && !customEvents) {
-      validation = `${customValidation} ${validation}`;
-      $.extend(events, {
-        required: 'change blur'
-      });
-    } else if (!!customValidation && !!customEvents) {
-      // Remove default validation, if found "no-default-validation" string in
-      // "data-validate" attribute
-      if (customValidation.indexOf('no-default-validation') > -1) {
-        validation = customValidation.replace(/no-default-validation/g, '');
-        events = $.fn.parseOptions(this.element, 'data-validation-events');
-      } else {
-        // Keep default validation along custom validation
-        validation = `${customValidation} ${validation}`;
-        $.extend(events, $.fn.parseOptions(this.element, 'data-validation-events'));
-      }
-    }
-
-    if (!this.settings.customValidation) {
+    if (!this.element[0].getAttribute('data-validate')) {
       this.element
         .attr('data-validate', validation)
         .attr('data-validation-events', JSON.stringify(events))
-        .mask(maskOptions)
-        .validate()
-        .triggerHandler('updated');
+        .validate();
+    }
+
+    if (maskOptions) {
+      this.element
+        .mask(maskOptions);
     }
   },
 
