@@ -1,6 +1,9 @@
 const extend = require('extend');
 const utils = require('./utils');
 
+// Object with settings that gets stringify
+const SohoConfig = {};
+
 // Augments the current set of options for a specific route's needs
 module.exports = function customRouteOptions(req, res) {
   if (!utils.canChangeLayout(req, res)) {
@@ -54,6 +57,12 @@ module.exports = function customRouteOptions(req, res) {
     customOpts.layout = 'components/place/scrolling/layout-nested';
   }
 
+  // RenderLoop
+  if (url.match(/renderloop\/example-delayed-start/)) {
+    SohoConfig.renderLoop = {};
+    SohoConfig.renderLoop.noAutoStart = true;
+  }
+
   // Searchfield in Headers (needs to load the Header layout)
   if (url.match(/searchfield\/example-header/)) {
     customOpts.layout = 'components/header/layout';
@@ -62,6 +71,12 @@ module.exports = function customRouteOptions(req, res) {
   // Sign-in Dialog
   if (url.match(/tests\/signin/)) {
     customOpts.layout = 'tests/layout-noheader';
+  }
+
+  // If there have been properties added to SohoConfig,
+  // stringify and pass it to the view options
+  if (Object.keys(SohoConfig).length) {
+    customOpts.SohoConfig = JSON.stringify(SohoConfig);
   }
 
   return extend({}, res.opts, customOpts);
