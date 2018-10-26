@@ -864,8 +864,9 @@ PopupMenu.prototype = {
     // http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
     // Handle Events in Anchors
-    this.menu.on('click.popupmenu', 'a', function (e) {
-      self.handleItemClick(e, $(this));
+    this.menu.on('click.popupmenu', 'li', function (e) {
+      const a = $(this).find('a');
+      self.handleItemClick(e, a);
     });
 
     const excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
