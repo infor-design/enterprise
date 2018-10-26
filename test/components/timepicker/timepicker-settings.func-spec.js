@@ -37,8 +37,7 @@ describe('TimePicker settings', () => {
       mode: TIMEPICKER_MODES[0],
       roundToInterval: true,
       parentElement: null,
-      returnFocus: true,
-      customValidation: false
+      returnFocus: true
     };
 
     expect(timepickerObj.settings).toEqual(settings);
@@ -52,8 +51,7 @@ describe('TimePicker settings', () => {
       mode: TIMEPICKER_MODES[0],
       roundToInterval: true,
       parentElement: null,
-      returnFocus: true,
-      customValidation: false
+      returnFocus: true
     };
 
     timepickerObj.updated();
@@ -71,8 +69,7 @@ describe('TimePicker settings', () => {
       mode: TIMEPICKER_MODES[0],
       roundToInterval: true,
       parentElement: null,
-      returnFocus: true,
-      customValidation: false
+      returnFocus: true
     };
     timepickerObj.updated(settings);
 

@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>
+       Custom Validation Example
+    </h2>
+    <p>
+       Shows adding a custom validation rule.
+    </p>
+    <br/>
+
+    <div class="field">
+      <label for="date-field-1" class="label">Uses Default (Valid Date) Validation</label>
+      <input id="date-field-1" class="datepicker" name="date-field-1" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="date-field-2" class="label">Uses Default (Available Date) Validation</label>
+      <input id="date-field-2" class="datepicker" name="date-field-2" type="text" data-options="{'disable':{'dates': ['6/9/2015', '6/12/2015'], 'dayOfWeek': '[0,6]'}}"/>
+    </div>
+
+    <div class="field">
+      <label for="date-field-3" class="label">Uses Custom Validation</label>
+      <input id="date-field-3" class="datepicker" name="date-field-3" type="text" data-validate="customRule" />
+    </div>
+
+    <div class="field">
+      <label for="date-field-4" class="label required">Uses Required Validation with Date Validation</label>
+      <input id="date-field-4" aria-required="true" class="datepicker" name="date-field-4" type="text" data-validate="required date" />
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+      $.fn.validation.rules.customRule = {
+      	check: function (value, field, grid) {
+      		return false;
+      	},
+        id: 'custom',
+        type: 'error',
+      	message: 'Test Error - Anything you enter will be wrong'
+      };
+  });
+</script>
