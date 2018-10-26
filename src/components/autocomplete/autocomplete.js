@@ -204,7 +204,10 @@ Autocomplete.prototype = {
       return;
     }
 
-    this.element.triggerHandler('beforeOpen', [this]);
+    const canOpen = this.element.triggerHandler('beforeopen', [this]);
+    if (canOpen === false) {
+      return;
+    }
 
     const self = this;
     term = Locale.toLowerCase(term);

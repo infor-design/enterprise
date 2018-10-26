@@ -69,4 +69,12 @@ describe('Autocomplete API', () => {
     expect(spySelectedEvent).toHaveBeenTriggered();
     done();
   });
+
+  it('triggers a `beforeopen` event before the list is opened', (done) => {
+    const spySelectedEvent = spyOnEvent($(autocompleteInputEl), 'beforeopen');
+    autocompleteAPI.openList('new', data);
+
+    expect(spySelectedEvent).toHaveBeenTriggered();
+    done();
+  });
 });
