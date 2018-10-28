@@ -740,9 +740,9 @@ Lookup.prototype = {
     // check that the minWidth is less than the windows width, so 
     // that the control remains responsive
     if ($(window).width() > this.settings.minWidth) {      
-      var minWidth = `${this.settings.minWidth}px`;
+      let minWidth = `${this.settings.minWidth}px`;
       lookupGrid.css({
-        "min-width": minWidth
+        'min-width': minWidth
       });
     }
 
