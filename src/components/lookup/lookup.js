@@ -164,14 +164,11 @@ Lookup.prototype = {
    */
   addAria() {
     const self = this;
+    self.label = self.isInlineLabel ? self.inlineLabelText : $(`label[for="${self.element.attr('id')}"]`);
 
-    setTimeout(() => {
-      self.label = self.isInlineLabel ? self.inlineLabelText : $(`label[for="${self.element.attr('id')}"]`);
-
-      if (self.label) {
-        self.label.append(`<span class="audible">${Locale.translate('UseEnter')}</span>`);
-      }
-    }, 500);
+    if (self.label) {
+      self.label.append(`<span class="audible">${Locale.translate('UseEnter')}</span>`);
+    }
   },
 
   /**
@@ -662,7 +659,7 @@ Lookup.prototype = {
 
       // Clear _selected tag
       const idx = this.selectedRows[i].idx;
-      if (this.settings.options.dataset) {
+      if (this.settings.options.dataset && this.settings.options.dataset[idx]) {
         delete this.settings.options.dataset[idx]._selected;
       }
     }
@@ -744,6 +741,28 @@ Lookup.prototype = {
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
+  },
+
+  /**
+  * Send in a new data set to display in the datagrid in the lookup.
+  * This will work whether or not the lookup is open or closed.
+  * @param {object} dataset The array of data to show in the datagridgrid.
+  * @param {object} pagerInfo The extra pager info object with information like activePage and pagesize.
+  */
+  updateDataset(dataset, pagerInfo) {
+    this.settings.options.dataset = dataset;
+
+    if (pagerInfo && pagerInfo.activePage) {
+      this.settings.options.activePage = pagerInfo.activePage;
+    }
+
+    if (pagerInfo && pagerInfo.pagesize) {
+      this.settings.options.pagesize = pagerInfo.pagesize;
+    }
+
+    if (this.grid) {
+      this.grid.updateDataset(dataset, pagerInfo);
     }
   },
 

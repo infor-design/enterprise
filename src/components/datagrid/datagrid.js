@@ -5441,6 +5441,11 @@ Datagrid.prototype = {
    */
   highlightSearchRows(term) {
     const self = this;
+
+    if (!term || term === '') {
+      return;
+    }
+
     // Move across all visible cells and rows, highlighting
     this.tableBody.find('tr').each(function () {
       let found = false;
