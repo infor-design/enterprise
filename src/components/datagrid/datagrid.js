@@ -3603,15 +3603,20 @@ Datagrid.prototype = {
       td: '.datagrid-body tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
       rowstatus: '.datagrid-body tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
     };
-    selector.errorIcon = `${selector.td} .icon-error`;
+    selector.iconAlert = `${selector.td} .icon-alert`;
+    selector.iconConfirm = `${selector.td} .icon-confirm`;
+    selector.iconError = `${selector.td} .icon-error`;
+    selector.iconInfo = `${selector.td} .icon-info`;
+
+    selector.icons = `${selector.iconAlert}, ${selector.iconConfirm}, ${selector.iconError}, ${selector.iconInfo}`;
 
     // Selector string
     if (rowstatus && this.settings.enableTooltips) {
-      selector.str = `${selector.th}, ${selector.td}, ${selector.errorIcon}, ${selector.rowstatus}`;
+      selector.str = `${selector.th}, ${selector.td}, ${selector.icons}, ${selector.rowstatus}`;
     } else if (rowstatus) {
       selector.str = `${selector.th}, ${selector.rowstatus}`;
     } else {
-      selector.str = `${selector.th}, ${selector.td}, ${selector.errorIcon}`;
+      selector.str = `${selector.th}, ${selector.td}, ${selector.icons}`;
     }
 
     // Handle tooltip to show
