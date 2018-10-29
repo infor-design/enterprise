@@ -2175,6 +2175,7 @@ Editor.prototype = {
     this.toolbar = undefined;
     this.element.off('mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor paste.editor');
     this.textarea.off('mouseup.editor click.editor keyup.editor input.editor focus.editor blur.editor');
+    this.textarea = undefined;
     this.element.prev('.label').off('click.editor');
 
     this.element.closest('.editor-container').off('focus.editor blur.editor click.editorlinks');
