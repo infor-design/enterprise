@@ -17,7 +17,10 @@
 }
 
 .toolbar-section {
+  @include transition(width 100ms $cubic-bezier-ease, padding 100ms $cubic-bezier-ease);
+
   white-space: nowrap;
+  width: auto;
 
   // Allows certain sections to collapse.
   // NOTE: Not all sections are collapsible.
@@ -124,6 +127,27 @@
 
       &.no-overflowed-items {
         display: none;
+      }
+    }
+  }
+}
+
+// Special Case for a responsive, active searchfield
+@include respond-to(phone) {
+  .flex-toolbar.searchfield-active {
+    .toolbar-section {
+      overflow: hidden;
+      padding-left: 0;
+      padding-right: 0;
+      width: 0;
+
+      &.search {
+        width: 100%;
+      }
+
+      .searchfield-wrapper,
+      .toolbar-searchfield-wrapper {
+        width: 100%;
       }
     }
   }

@@ -162,6 +162,14 @@ SearchField.prototype = {
   },
 
   /**
+   * @private
+   * @returns {boolean} whether or not the parent toolbar is a Flex Toolbar
+   */
+  get isContainedByFlexToolbar() {
+    return this.containmentParent.className.indexOf('flex-toolbar') > -1;
+  },
+
+  /**
    * Initialization Kickoff
    * @private
    * @returns {void}
@@ -263,7 +271,7 @@ SearchField.prototype = {
 
     // Initially disable animations on toolbar searchfields
     // An event listener on Toolbar's `rendered` event removes these at the correct time
-    if (this.toolbarParent) {
+    if (this.toolbarParent && !this.isContainedByFlexToolbar) {
       this.element.add(this.wrapper).addClass('no-transition no-animation');
     }
 
@@ -486,6 +494,10 @@ SearchField.prototype = {
       return;
     }
 
+    if (this.isContainedByFlexToolbar) {
+      return;
+    }
+
     this.saveFocus();
 
     this.elemBeforeWrapper = this.wrapper.prev();
@@ -505,6 +517,10 @@ SearchField.prototype = {
    */
   appendToButtonset() {
     if (!this.containmentParent || !this.wrapper.parent().is($(this.containmentParent))) {
+      return;
+    }
+
+    if (this.isContainedByFlexToolbar) {
       return;
     }
 
@@ -828,9 +844,9 @@ SearchField.prototype = {
 
     // Activate
     this.wrapper.addClass('active');
-    const toolbar = this.element.closest('.toolbar, [class$="-toolbar"]');
-    if (toolbar.length) {
-      toolbar.addClass('searchfield-active');
+
+    if (this.toolbarParent) {
+      this.toolbarParent.classList.add('searchfield-active');
     }
 
     if (this.isExpanded) {
@@ -926,6 +942,10 @@ SearchField.prototype = {
       wrapperElem.classList.remove('has-focus', 'active');
 
       self.removeDocumentDeactivationEvents();
+
+      if (self.toolbarParent) {
+        self.toolbarParent.classList.remove('searchfield-active');
+      }
 
       if (self.isCurrentlyCollapsible) {
         self.collapse();
