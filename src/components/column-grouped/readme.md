@@ -18,15 +18,6 @@ demo:
     slug: example-set-selected
 ---
 
-## Configuration Options
-
-1. Example Grouped Column Chart [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/column-grouped/example-index?font=source-sans)
-2. Default a Selected Group [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/column-grouped/example-selected?font=source-sans)
-3. Handle Negative Values [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/column-grouped/example-negative-value?font=source-sans)
-4. Set animation speed [View Example]( ../components/column-grouped/example-animation)
-5. Example showing Get Selected value [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/column-grouped/example-animation?font=source-sans)
-6. Example showing Set Selected value [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/column-grouped/example-set-selected?font=source-sans)
-
 ## Code Example
 
 This example shows how to invoke the grouped bar chart in the charts component. We pass a dataset data points for each bar group we want to show.

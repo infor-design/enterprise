@@ -37,4 +37,4 @@ The Multi-Tabs component creates a system that wraps individual [Tabs Components
 
 ## Keyboard Shortcuts
 
-There aren't any keystrokes specific to the Multi-tabs component.  See the [Tabs Component](../components/tabs/index) documentation for information about keystrokes.
+There aren't any keystrokes specific to the Multi-tabs component.  See the [Tabs Component](../tabs) documentation for information about keystrokes.
