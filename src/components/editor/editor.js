@@ -86,6 +86,7 @@ Editor.prototype = {
     this.isIe11 = this.isIe && env.browser.version === '11';
     this.isMac = env.os.name === 'Mac OS X';
     this.isFirefox = env.browser.name === 'firefox';
+    this.textarea = null;
 
     this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
     this.id = `${utils.uniqueId(this.element, 'editor')}-id`;
