@@ -722,12 +722,13 @@ Pager.prototype = {
             pagesize: self.settings.pagesize,
             settings: self.settings
           });
-          self.element.trigger('pagesizechange', {
-            tag: args,
-            pagesize: self.settings.pagesize,
-            settings: self.settings
-          });
         }
+
+        self.element.trigger('pagesizechange', {
+          tag: args,
+          pagesize: self.settings.pagesize,
+          settings: self.settings
+        });
 
         // Update the number of records per page
         self.pagerBar.find('.btn-menu span')
