@@ -86,6 +86,7 @@ Editor.prototype = {
     this.isIe11 = this.isIe && env.browser.version === '11';
     this.isMac = env.os.name === 'Mac OS X';
     this.isFirefox = env.browser.name === 'firefox';
+    this.textarea = null;
 
     this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
     this.id = `${utils.uniqueId(this.element, 'editor')}-id`;
@@ -2175,7 +2176,6 @@ Editor.prototype = {
     this.toolbar = undefined;
     this.element.off('mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor paste.editor');
     this.textarea.off('mouseup.editor click.editor keyup.editor input.editor focus.editor blur.editor');
-    this.textarea = undefined;
     this.element.prev('.label').off('click.editor');
 
     this.element.closest('.editor-container').off('focus.editor blur.editor click.editorlinks');
