@@ -243,6 +243,7 @@ ListView.prototype = {
     // Render Pager
     if (this.settings.paging) {
       this.renderPager(pagerInfo);
+      this.pager.setActivePage(this.pager.settings.activePage, true);
     }
 
     // Add Aria

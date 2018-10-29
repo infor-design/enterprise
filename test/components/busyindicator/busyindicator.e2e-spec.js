@@ -102,7 +102,7 @@ describe('Busy Indicator test-block-entire-ui tests', () => {
     const buttonEl = await element(by.id('submit'));
     await buttonEl.click();
 
-    browser.actions()
+    await browser.actions()
       .mouseMove(element(by.tagName('body')), { x: 170, y: 235 })
       .click()
       .perform();

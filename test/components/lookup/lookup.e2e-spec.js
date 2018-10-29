@@ -152,7 +152,7 @@ describe('Lookup (multiselect)', () => {
   });
 });
 
-describe('Lookup (paging)', () => {
+describe('Lookup paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-paging');
   });
