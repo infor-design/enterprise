@@ -2068,6 +2068,13 @@ Editor.prototype = {
         const parent = this.getSelectionParentElement().parentNode;
         const els = parent.getElementsByTagName('font');
 
+        // Clearing all the background style in any element node in selection's parent
+        for (let i = 0, j = els.length; i < j; i++) {
+          if (els[i].hasAttribute('style')) {
+            els[i].style.backgroundColor = '';
+          }
+        }
+
         // Using timeout, firefox not executes with current call stack
         setTimeout(() => {
           for (let i = 0, l = els.length; i < l; i++) {
