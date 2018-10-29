@@ -141,7 +141,9 @@ ToolbarFlex.prototype = {
       return;
     }
 
-    if (key === 'ArrowLeft' || key === 'ArrowUp') {
+    // Left Navigation
+    const leftNavKeys = ['ArrowLeft', 'Left', 'ArrowUp', 'Up'];
+    if (leftNavKeys.indexOf(key) > -1) {
       if (item.type === 'searchfield' && key === 'ArrowLeft') {
         return;
       }
@@ -149,7 +151,9 @@ ToolbarFlex.prototype = {
       return;
     }
 
-    if (key === 'ArrowRight' || key === 'ArrowDown') {
+    // Right Navigation
+    const rightNavKeys = ['ArrowRight', 'Right', 'ArrowDown', 'Down'];
+    if (rightNavKeys.indexOf(key) > -1) {
       if (item.type === 'searchfield' && key === 'ArrowRight') {
         return;
       }
