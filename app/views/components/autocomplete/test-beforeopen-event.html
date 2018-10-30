@@ -8,7 +8,7 @@
   <script>
     $('#autocomplete-default').on('selected', function (e, elem, args) {
       console.log(args);
-    }).on('beforeopen', function (e, elem, args) {
+    }).on('beforeopen.autocomplete', function (e, elem, args) {
       console.log('beforeopen');
     });
   </script>
