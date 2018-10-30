@@ -1,3 +1,9 @@
+<style>
+  .custom-width {
+    width: 40px;
+  }
+</style>
+
 <div class="row top-padding">
   <div class="six columns">
 
@@ -22,7 +28,7 @@
 
     <div class="field-short">
       <label for="input-custom">Custom</label>
-      <input data-validate="test" id="input-custom" style="width: 40px;" />
+      <input data-validate="test" id="input-custom" class="custom-width"/>
     </div>
 
     <div class="field-short">
@@ -52,8 +58,8 @@
 
     <div class="field-short">
       <label for="dd-custom">Custom</label>
-      <select id="dd-custom" data-validate="test" class="dropdown" style="width: 40px;">
-        <option value="" selected></option>
+      <select id="dd-custom" data-validate="test" class="dropdown custom-width">
+        <option value="" selected="true"></option>
         <option value="1">1</option>
         <option value="b">B</option>
         <option value="c">C</option>
@@ -64,7 +70,7 @@
     <div class="field-short">
       <label for="dd-xs">dropdown-xs</label>
       <select id="dd-xs" data-validate="test" class="dropdown dropdown-xs">
-        <option value="" selected></option>
+        <option value="" selected="true"></option>
         <option value="1">1</option>
         <option value="b">B</option>
         <option value="c">C</option>
@@ -75,7 +81,7 @@
     <div class="field-short">
       <label for="dd-sm">dropdown-sm</label>
       <select id="dd-sm" data-validate="test" class="dropdown dropdown-sm">
-        <option value="" selected></option>
+        <option value="" selected="true"></option>
         <option value="1">1</option>
         <option value="b">B</option>
         <option value="c">C</option>
@@ -89,10 +95,8 @@
 
 <div class="row">
   <div class="twelve columns">
-
     <hr class="fieldset-hr" />
     <h2 class="fieldset-title">Multiselect</h2>
-
   </div>
 </div>
 
@@ -101,8 +105,8 @@
 
     <div class="field-short">
       <label for="ms-custom">Custom</label>
-      <select id="ms-custom" data-validate="test" class="multiselect" style="width: 40px;" multiple>
-        <option value="" selected></option>
+      <select id="ms-custom" data-validate="test" class="multiselect custom-width" multiple="true">
+        <option value="" selected="true"></option>
         <option value="1">1</option>
         <option value="b">B</option>
         <option value="c">C</option>
@@ -112,8 +116,8 @@
 
     <div class="field-short">
       <label for="ms-xs">multiselect-xs</label>
-      <select id="ms-xs" data-validate="test" class="multiselect multiselect-xs" multiple>
-        <option value="" selected></option>
+      <select id="ms-xs" data-validate="test" class="multiselect multiselect-xs" multiple="true">
+        <option value="" selected="true"></option>
         <option value="1">1</option>
         <option value="b">B</option>
         <option value="c">C</option>
@@ -123,8 +127,8 @@
 
     <div class="field-short">
       <label for="ms-sm">multiselect-sm</label>
-      <select id="ms-sm" data-validate="test" class="multiselect multiselect-sm" multiple>
-        <option value="" selected></option>
+      <select id="ms-sm" data-validate="test" class="multiselect multiselect-sm" multiple="true">
+        <option value="" selected="true"></option>
         <option value="1">1</option>
         <option value="b">B</option>
         <option value="c">C</option>
@@ -149,17 +153,17 @@
 
     <div class="field-short">
       <label for="lookup-custom">Custom</label>
-      <input data-validate="test" id="lookup-custom" class="lookup" type="text" style="width: 40px;">
+      <input data-validate="test" id="lookup-custom" class="lookup custom-width" type="text"/>
     </div>
 
     <div class="field-short">
       <label for="lookup-xs">lookup-xs</label>
-      <input data-validate="test" id="lookup-xs" class="lookup input-xs" type="text">
+      <input data-validate="test" id="lookup-xs" class="lookup input-xs" type="text"/>
     </div>
 
     <div class="field-short">
       <label for="lookup-sm">lookup-sm</label>
-      <input data-validate="test" id="lookup-sm" class="lookup input-sm" type="text">
+      <input data-validate="test" id="lookup-sm" class="lookup input-sm" type="text"/>
     </div>
 
   </div>
@@ -167,10 +171,8 @@
 
 <div class="row">
   <div class="twelve columns">
-
     <hr class="fieldset-hr" />
     <h2 class="fieldset-title">Datepicker</h2>
-
   </div>
 </div>
 
@@ -179,17 +181,17 @@
 
     <div class="field-short">
       <label for="datepicker-custom">Custom</label>
-      <input data-validate="test" id="datepicker-custom" class="datepicker" style="width: 40px;" data-options='{customValidation: true}'>
+      <input data-validate="test" id="datepicker-custom" class="datepicker custom-width"/>
     </div>
 
     <div class="field-short">
       <label for="datepicker-xs">datepicker-xs</label>
-      <input data-validate="test" id="datepicker-xs" class="datepicker input-xs" data-options='{customValidation: true}'>
+      <input data-validate="test" id="datepicker-xs" class="datepicker input-xs"/>
     </div>
 
     <div class="field-short">
       <label for="datepicker-sm">datepicker-sm</label>
-      <input data-validate="test" id="datepicker-sm" class="datepicker input-sm" data-options='{customValidation: true}'>
+      <input data-validate="test" id="datepicker-sm" class="datepicker input-sm"/>
     </div>
 
   </div>
@@ -197,10 +199,8 @@
 
 <div class="row">
   <div class="twelve columns">
-
     <hr class="fieldset-hr" />
     <h2 class="fieldset-title">Timepicker</h2>
-
   </div>
 </div>
 
@@ -209,17 +209,17 @@
 
     <div class="field-short">
       <label for="timepicker-custom">Custom</label>
-      <input data-validate="test" id="timepicker-custom" class="timepicker" style="width: 40px;" data-options='{customValidation: true}'>
+      <input data-validate="test" id="timepicker-custom" class="timepicker custom-width"/>
     </div>
 
     <div class="field-short">
       <label for="timepicker-xs">timepicker-xs</label>
-      <input data-validate="test" id="timepicker-xs" class="timepicker input-xs" data-options='{customValidation: true}'>
+      <input data-validate="test" id="timepicker-xs" class="timepicker input-xs"/>
     </div>
 
     <div class="field-short">
       <label for="timepicker-sm">timepicker-sm</label>
-      <input data-validate="test" id="timepicker-sm" class="timepicker input-sm" data-options='{customValidation: true}'>
+      <input data-validate="test" id="timepicker-sm" class="timepicker input-sm"/>
     </div>
 
   </div>
@@ -239,7 +239,7 @@
 
     <div class="field-short">
       <label for="spinbox-custom">Custom</label>
-      <input data-validate="test" id="spinbox-custom" name="spinbox-custom" type="text" class="spinbox" style="width: 40px;"/>
+      <input data-validate="test" id="spinbox-custom" name="spinbox-custom" type="text" class="spinbox custom-width"/>
     </div>
 
     <div class="field-short">

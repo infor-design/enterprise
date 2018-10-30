@@ -52,7 +52,6 @@ const COMPONENT_NAME = 'datepicker';
  * It requires minDate and maxDate for the feature to activate.
  * For example if you have more non specific dates to disable then enable ect.
  * @param {boolean} [settings.showLegend=false] If true a legend is show to associate dates.
- * @param {boolean} [settings.customValidation=false] If true the internal validation is disabled.
  * @param {boolean} [settings.showMonthYearPicker=false] If true the month and year will render as dropdowns.
  * @param {boolean} [settings.hideDays=false] If true the days portion of the calendar will be hidden.
  *  Usefull for Month/Year only formats.
@@ -98,7 +97,6 @@ const DATEPICKER_DEFAULTS = {
     restrictMonths: false
   },
   showLegend: false,
-  customValidation: false,
   showMonthYearPicker: false,
   hideDays: false,
   advanceMonths: 5,
@@ -593,8 +591,6 @@ DatePicker.prototype = {
   mask() {
     this.setFormat();
     const s = this.settings;
-    const customValidation = this.element.attr('data-validate');
-    const customEvents = this.element.attr('data-validation-events');
     const maskOptions = {
       process: 'date',
       keepCharacterPositions: true,
@@ -612,21 +608,6 @@ DatePicker.prototype = {
       events = { rangeDate: 'change blur' };
     }
 
-    if (customValidation === 'required' && !customEvents) {
-      validation = `${customValidation} ${validation}`;
-      $.extend(events, { required: 'change blur' });
-    } else if (!!customValidation && !!customEvents) {
-      // Remove default validation, if found "no-default-validation" string in "data-validate" attr
-      if (customValidation.indexOf('no-default-validation') > -1) {
-        validation = customValidation.replace(/no-default-validation/g, '');
-        events = $.fn.parseOptions(this.element, 'data-validation-events');
-      } else {
-        // Keep default validation along custom validation
-        validation = `${customValidation} ${validation}`;
-        $.extend(events, $.fn.parseOptions(this.element, 'data-validation-events'));
-      }
-    }
-
     maskOptions.processOnInitialize = false;
 
     if (this.isFullMonth) {
@@ -635,7 +616,7 @@ DatePicker.prototype = {
       this.element.mask(maskOptions);
     }
 
-    if (!s.customValidation) {
+    if (!this.element[0].getAttribute('data-validate')) {
       this.element.attr({
         'data-validate': validation,
         'data-validation-events': JSON.stringify(events)
