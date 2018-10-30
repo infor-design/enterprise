@@ -1039,6 +1039,10 @@ Pager.prototype = {
       expr = (self.activePage === 1 ? `:not(".is-filtered"):lt(${rows})` : `:not(".is-filtered"):lt(${(self.activePage) * rows}):gt(${((self.activePage - 1) * rows) - 1})`);
 
       elements.filter(expr).show();
+
+      if (self.element.children('.datagrid-summary-row')) {
+        self.element.children('.datagrid-summary-row').show();
+      }
     } else {
       elements.show();
     }
