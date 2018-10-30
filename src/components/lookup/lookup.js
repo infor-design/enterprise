@@ -33,7 +33,7 @@ let LOOKUP_GRID_ID = 'lookup-datagrid';
  * @param {function} [settings.validator] A function that fires to let you validate form items on open and select
  * @param {boolean} [settings.autoWidth=false] If true the field will grow/change in size based on the content selected.
  * @param {char} [settings.delimiter=','] A character being used to separate data strings
- * @param {int} [settings.minWidth=null] Applys a minimum width to the lookup
+ * @param {int} [settings.minWidth=400] Applys a minimum width to the lookup
  */
 
 const LOOKUP_DEFAULTS = {
@@ -51,7 +51,7 @@ const LOOKUP_DEFAULTS = {
   autoWidth: false,
   clickArguments: {},
   delimiter: ',',
-  minWidth: null
+  minWidth: 400
 };
 
 function Lookup(element, settings) {

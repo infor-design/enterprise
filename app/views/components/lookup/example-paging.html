@@ -7,16 +7,6 @@
       <label for="paging" class="label">Paging</label>
       <input id="paging" data-init="false" class="lookup" name="paging" type="text">
     </div>
-
-    <div class="field">
-      <label for="pagingSmall" class="label">Paging Small</label>
-      <input id="pagingSmall" data-init="false" class="lookup" name="pagingSmall" type="text">
-    </div>
-    
-    <div class="field">
-      <label for="pagingSmallMinWidth" class="label">Paging Small (minWidth=620)</label>
-      <input id="pagingSmallMinWidth" data-init="false" class="lookup" name="pagingSmallMinWidth" type="text">
-    </div>
     
   </div>
 </div>
@@ -32,12 +22,6 @@
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
       columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-
-      var columnsSmall = [];
-
-      //Define Columns for the Grid.
-      columnsSmall.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
-      columnsSmall.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
       
       //Get some data via ajax
       var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
@@ -64,56 +48,6 @@
               }
             }
         });
-
-        //Init the Lookup with that data and paging options
-        $('#pagingSmall').lookup({
-            field: 'productId',
-            options: {
-              columns: columnsSmall,
-              dataset: data.data,
-              selectable: 'single',
-              stretchColumn: 'productName',
-              paging: true,
-              pagesize: 5,
-              toolbar: {
-                results: true,
-                dateFilter: false,
-                keywordFilter: true,
-                advancedFilter: true,
-                actions: true,
-                views: true,
-                rowHeight: false,
-                collapsibleFilter: false,
-                fullWidth: true
-              }
-            }
-        });
-        
-        //Init the Lookup with that data and paging options
-        $('#pagingSmallMinWidth').lookup({
-            field: 'productId',
-            minWidth: 620,
-            options: {
-              columns: columnsSmall,
-              dataset: data.data,
-              selectable: 'single',
-              stretchColumn: 'productName',
-              paging: true,
-              pagesize: 5,
-              toolbar: {
-                results: true,
-                dateFilter: false,
-                keywordFilter: true,
-                advancedFilter: true,
-                actions: true,
-                views: true,
-                rowHeight: false,
-                collapsibleFilter: false,
-                fullWidth: true
-              }
-            }
-        });
-        
         
       });
 </script>
