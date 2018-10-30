@@ -204,9 +204,11 @@ Autocomplete.prototype = {
       return;
     }
 
-    const canOpen = this.element.triggerHandler('beforeopen', [this]);
-    if (canOpen === false) {
-      return;
+    if (!this.element.hasClass('searchfield')) {
+      const canOpen = this.element.triggerHandler('beforeopen', [this]);
+      if (canOpen === false) {
+        return;
+      }
     }
 
     const self = this;
