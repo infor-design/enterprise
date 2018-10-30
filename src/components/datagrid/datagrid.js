@@ -4576,7 +4576,7 @@ Datagrid.prototype = {
       if (rowElem.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer')) {
         isTrigger = false; // No need to trigger if no data item
       } else {
-        row = self.pagingRowIndex(self.actualRowIndex(rowElem));
+        row = self.actualPagingRowIndex(self.actualRowIndex(rowElem));
         item = self.settings.dataset[self.groupArray[row].group];
         if (item && item.values) {
           item = item.values[self.groupArray[row].node];
@@ -4866,7 +4866,7 @@ Datagrid.prototype = {
 
         if (self.settings.groupable) {
           if (!rowElem.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer')) {
-            rowIdx = self.pagingRowIndex(self.actualRowIndex(rowElem));
+            rowIdx = self.actualPagingRowIndex(self.actualRowIndex(rowElem));
             item = self.settings.dataset[self.groupArray[rowIdx].group];
             if (item && item.values) {
               item = item.values[self.groupArray[rowIdx].node];
