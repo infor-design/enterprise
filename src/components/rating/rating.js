@@ -1,5 +1,5 @@
 import * as debug from '../../utils/debug';
-import { utils } from '../../utils/utils';
+import { utils, math } from '../../utils/utils';
 
 // Component Name
 const COMPONENT_NAME = 'rating';
@@ -55,7 +55,7 @@ Rating.prototype = {
    * @returns {number} current value
    */
   val(value) {
-    if (value === '' || isNaN(value) || Math.sign(value) === -1) {
+    if (value === '' || isNaN(value) || math.sign(value) === -1) {
       return this.currentValue;
     }
 
