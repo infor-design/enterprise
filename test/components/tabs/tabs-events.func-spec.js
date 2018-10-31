@@ -59,7 +59,7 @@ describe('Tabs API', () => {
   it('Should trigger "hash-change" event', () => {
     tabsObj.settings.changeTabOnHashChange = true;
     const spyEvent = spyOnEvent('#tabs-normal', 'hash-change');
-    tabsObj.select('#tabs-normal-opportunities');
+    tabsObj.select('#tabs-normal-notes');
 
     expect(spyEvent).toHaveBeenTriggered();
   });

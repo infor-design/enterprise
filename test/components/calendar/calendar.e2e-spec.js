@@ -40,6 +40,7 @@ describe('Calendar index tests', () => {
     await prevButton.click();
     await utils.checkForErrors();
 
+    await testDate.setDate(1);
     await testDate.setMonth(testDate.getMonth() - 1);
     await testDate.setHours(0);
     await testDate.setMinutes(0);
