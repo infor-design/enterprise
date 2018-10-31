@@ -8,7 +8,7 @@ let tabsPanelEl;
 let svgEl;
 let tabsObj;
 
-fdescribe('Tabs API', () => { //eslint-disable-line
+describe('Tabs API', () => {
   beforeEach(() => {
     tabsEl = null;
     tabsPanelEl = null;
