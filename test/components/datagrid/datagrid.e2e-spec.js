@@ -978,3 +978,21 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
     expect(await row.getAttribute('class')).toContain('is-rowactivated');
   });
 });
+
+describe('Datagrid multiselect with no selection checkbox', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging-with-summary-row');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should display summary row', async () => {
+    expect(await element(by.css('tr.datagrid-summary-row').count()).toEqual(1));
+  });
+});
