@@ -42,41 +42,31 @@
 </div>
 
 <script>
-  $('body').on('initialized', function() {
-    $('#tabs').on('activated.test', function(e, anchor) {
-      var color = '#aa1111',
-        anchorName, anchorId;
+  function onActivationEvent(e, anchor) {
+    var type = e.type;
+    var color = '#aa1111';
+    var anchorName;
+    var anchorId;
 
-      if (!anchor) {
-        anchorName = '[undefined anchor name]';
-        anchorId = '[undefined anchor id]';
-        color = '#1111aa';
-      } else {
-        anchorName = anchor.text().trim();
-        anchorId = anchor.attr('href');
-      }
+    if (!anchor) {
+      anchorName = '[undefined anchor name]';
+      anchorId = '[undefined anchor id]';
+      color = '#1111aa';
+    } else {
+      anchorName = anchor.text().trim();
+      anchorId = anchor.attr('href');
+    }
 
-      $('body').toast({
-        title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + anchorId + '</span> [activated] triggered!',
-        message: 'The "<b>'+ anchorName +'</b>" tab was clicked or triggered!'
-      });
-    }).on('beforeactivated.test', function(e, anchor) {
-      var color = 'red',
-        anchorName, anchorId;
-
-      if (!anchor) {
-        anchorName = '[undefined anchor name]';
-        anchorId = '[undefined anchor id]';
-        color = '#1111aa';
-      } else {
-        anchorName = anchor.text().trim();
-        anchorId = anchor.attr('href');
-      }
-      
-      $('body').toast({
-        title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + anchorId + '</span> [beforeActivate] triggered!',
-        message: 'The "<b>'+ anchorName +'</b>" tab was clicked or triggered!'
-      });
+    $('body').toast({
+      title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + anchorId + '</span> ['+ type +'] triggered!',
+      message: 'The "<b>'+ anchorName +'</b>" tab was clicked or triggered!'
     });
+  }
+
+  $('body').on('initialized', function() {
+    $('#tabs')
+      .on('activated.test', onActivationEvent)
+      .on('beforeactivated.test', onActivationEvent)
+      .on('afteractivated.test', onActivationEvent);
   });
 </script>
