@@ -113,6 +113,9 @@ describe('Calendar specific month tests', () => {
   });
 
   it('should display a tooltip when hovering an event', async () => {
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event.emerald.event-day-start .icon'))), config.waitsFor);
+
     await browser.actions()
       .mouseMove(await element.all(by.css('.calendar-event.emerald.event-day-start')).first())
       .perform();
