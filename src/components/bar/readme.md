@@ -1,6 +1,6 @@
 ---
 title: Bar Chart
-description: This page describes Bar Chart.
+description: null
 demo:
   embedded:
   - name: Standard Bar Chart

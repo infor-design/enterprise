@@ -1,6 +1,6 @@
 ---
 title: Timeline Component
-description: This page describes Timeline Component .
+description: null
 demo:
   embedded:
   - name: Main Example

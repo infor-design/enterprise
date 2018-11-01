@@ -1,6 +1,6 @@
 ---
 title: Splitter Component
-description: This page describes Splitter Component .
+description: null
 demo:
   embedded:
   - name: Main Example

@@ -1,6 +1,6 @@
 ---
 title: ScrollAction Component
-description: This page describes ScrollAction Component .
+description: null
 ---
 
 ## Configuration Options

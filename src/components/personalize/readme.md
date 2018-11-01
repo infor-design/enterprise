@@ -1,6 +1,6 @@
 ---
 title: Personalize
-description: This page describes Personalize.
+description: null
 demo:
   embedded:
   - name: Themes Example

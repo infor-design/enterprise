@@ -1,6 +1,6 @@
 ---
 title: Mask
-description: This page describes Mask.
+description: null
 demo:
   embedded:
   - name: Main Example

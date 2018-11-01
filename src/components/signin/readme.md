@@ -1,6 +1,6 @@
 ---
 title: Signin Component
-description: This page describes Signin Component .
+description: null
 demo:
   embedded:
   - name: Main Example

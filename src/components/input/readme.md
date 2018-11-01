@@ -1,6 +1,6 @@
 ---
 title: Text Input
-description: This page describes Text Input.
+description: Displays an editable field. A user can enter alphanumeric data. Best for open-ended inputs that complete a key value pair.
 demo:
   embedded:
   - name: Text Input Examples
