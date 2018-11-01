@@ -64,9 +64,11 @@ describe('Datagrid API', () => {
   it('Should render datagrid', () => {
     datagridObj.destroy();
     const spyEvent = spyOnEvent($(datagridEl), 'rendered');
+    const spyEventAfter = spyOnEvent($(datagridEl), 'afterrender');
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
 
     expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEventAfter).toHaveBeenTriggered();
     expect(document.body.querySelectorAll('tr').length).toEqual(8);
   });
 

@@ -51,6 +51,63 @@ describe('Datagrid index tests', () => {
   });
 });
 
+describe('Datagrid grouping with paging tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-grouping-paging');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should handle click', async () => {
+    const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
+
+    expect(await element(by.css(cell)).getText()).toEqual('214220');
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
+
+    element(by.css('.pager-next')).click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+
+    expect(await element(by.css(cell)).getText()).toEqual('214225');
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
+  });
+
+  it('Should handle selection', async () => {
+    const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
+    const row = '#datagrid .datagrid-body tbody tr:nth-child(2)';
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
+
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
+
+    element(by.css('.pager-next')).click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
+
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
+  });
+});
+
 describe('Datagrid mixed selection tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-mixed-selection');
