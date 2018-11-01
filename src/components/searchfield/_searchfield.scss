@@ -453,15 +453,15 @@ html[dir='rtl'] {
     text-overflow: clip;
 
     &::-webkit-input-placeholder {
-      color: transparent !important;
+      color: transparent;
     }
 
     &::-moz-placeholder {
-      color: transparent !important;
+      color: transparent;
     }
 
     &:-ms-input-placeholder {
-      color: transparent !important;
+      color: transparent;
     }
   }
 }

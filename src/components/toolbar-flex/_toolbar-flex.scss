@@ -97,10 +97,6 @@
     }
   }
 
-  .searchfield-wrapper {
-    margin: 0 5px 0 0;
-  }
-
   > .separator {
     background-color: $formatter-toolbar-separator-color;
     display: inline-block;
@@ -132,27 +128,6 @@
   }
 }
 
-// Special Case for a responsive, active searchfield
-@include respond-to(phone) {
-  .flex-toolbar.searchfield-active {
-    .toolbar-section {
-      overflow: hidden;
-      padding-left: 0;
-      padding-right: 0;
-      width: 0;
-
-      &.search {
-        width: 100%;
-      }
-
-      .searchfield-wrapper,
-      .toolbar-searchfield-wrapper {
-        width: 100%;
-      }
-    }
-  }
-}
-
 // RTL Styles
 html[dir='rtl'] {
   .toolbar-section {
@@ -173,10 +148,6 @@ html[dir='rtl'] {
       button {
         margin-left: 0;
       }
-    }
-
-    .searchfield-wrapper {
-      margin: 0 0 0 5px;
     }
   }
 

@@ -115,10 +115,13 @@ ToolbarFlexItem.prototype = {
     if (this.disabled === true) {
       return false;
     }
-    if (this.overflowed === true) {
-      return false;
+    if (this.type === 'searchfield') {
+      return true;
     }
     if (this.type === 'actionbutton' && this.hasNoOverflowedItems === true) {
+      return false;
+    }
+    if (this.overflowed === true) {
       return false;
     }
 

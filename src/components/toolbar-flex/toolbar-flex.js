@@ -126,6 +126,9 @@ ToolbarFlex.prototype = {
   handleItemKeydown(e) {
     const key = e.key;
     const item = this.getItemFromElement(e.target);
+    function preventScrolling() {
+      e.preventDefault();
+    }
 
     // NOTE: 'Enter' and 'SpaceBar' are purposely not handled on keydown, since
     // a `click` event will be fired on Toolbar items while pressing either of these keys.
@@ -144,20 +147,22 @@ ToolbarFlex.prototype = {
     // Left Navigation
     const leftNavKeys = ['ArrowLeft', 'Left', 'ArrowUp', 'Up'];
     if (leftNavKeys.indexOf(key) > -1) {
-      if (item.type === 'searchfield' && key === 'ArrowLeft') {
+      if (item.type === 'searchfield' && (key === 'ArrowLeft' || key === 'Left')) {
         return;
       }
       this.navigate(-1, undefined, true);
+      preventScrolling();
       return;
     }
 
     // Right Navigation
     const rightNavKeys = ['ArrowRight', 'Right', 'ArrowDown', 'Down'];
     if (rightNavKeys.indexOf(key) > -1) {
-      if (item.type === 'searchfield' && key === 'ArrowRight') {
+      if (item.type === 'searchfield' && (key === 'ArrowRight' || key === 'Right')) {
         return;
       }
       this.navigate(1, undefined, true);
+      preventScrolling();
     }
   },
 

@@ -839,11 +839,19 @@ SearchField.prototype = {
 
     this.addDocumentDeactivationEvents();
 
-    this.wrapper.addClass('has-focus');
-    this.expand(true);
+    const wrapperClasses = ['has-focus', 'active'];
+
+    if (this.isCurrentlyCollapsible) {
+      this.expand(true);
+    } else if (this.isContainedByFlexToolbar) {
+      wrapperClasses.push('is-open');
+    }
 
     // Activate
-    this.wrapper.addClass('active');
+    wrapperClasses.forEach((cssClass) => {
+      // IE11 compatibility doesn't allow for multiple arguments for `classList.add()`
+      this.wrapper[0].classList.add(cssClass);
+    });
 
     if (this.toolbarParent) {
       this.toolbarParent.classList.add('searchfield-active');
@@ -949,6 +957,8 @@ SearchField.prototype = {
 
       if (self.isCurrentlyCollapsible) {
         self.collapse();
+      } else if (self.isContainedByFlexToolbar) {
+        self.wrapper[0].classList.remove('is-open');
       }
     }
 
@@ -1613,9 +1623,11 @@ SearchField.prototype = {
         buttonset: buttonsetElemWidth
       };
 
-      self.wrapper.addClass('is-open');
-      self.calculateOpenWidth();
-      self.setOpenWidth();
+      if (!this.isContainedByFlexToolbar || breakpoints.isAbove('phone-to-tablet')) {
+        this.wrapper[0].classList.add('is-open');
+      }
+      this.calculateOpenWidth();
+      this.setOpenWidth();
 
       // Some situations require adjusting the focused element
       if (!noFocus || env.os.name === 'ios' || (self.isFocused && document.activeElement !== self.input)) {
@@ -1719,11 +1731,11 @@ SearchField.prototype = {
    * @returns {void}
    */
   checkContents() {
-    let textMethod = 'removeClass';
+    let textMethod = 'remove';
     if (this.input.value.trim() !== '') {
-      textMethod = 'addClass';
+      textMethod = 'add';
     }
-    this.wrapper[textMethod]('has-text');
+    this.wrapper[0].classList[textMethod]('has-text');
   },
 
   /**

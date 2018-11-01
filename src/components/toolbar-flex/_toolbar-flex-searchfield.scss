@@ -1,0 +1,53 @@
+// =======================================
+// Flexible Toolbar - Searchfield Component
+// ==================================== //
+
+$responsive-searchfield-filled-out-width: 34px;
+
+.toolbar-section {
+  .searchfield-wrapper {
+    margin: 0 5px 0 0;
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .toolbar-section {
+    .searchfield-wrapper {
+      margin: 0 0 0 5px;
+    }
+  }
+}
+
+// Special Case for a responsive, active searchfield.
+// All toolbar sections except for the one containing the searchfield collapse,
+// and the one containing the searchfield expands to fill the entire space.
+@include respond-to(phone) {
+  .flex-toolbar {
+    &.searchfield-active {
+      .toolbar-section {
+        overflow: hidden;
+        padding-left: 0;
+        padding-right: 0;
+        width: 0;
+
+        &.search {
+          width: 100%;
+        }
+
+        .searchfield-wrapper,
+        .toolbar-searchfield-wrapper {
+          width: 100%;
+        }
+      }
+    }
+
+    // TODO: Remove this once we don't need to support regular Toolbar anymore
+    .searchfield-wrapper,
+    .toolbar-searchfield-wrapper {
+      &.has-text {
+        width: 34px;
+      }
+    }
+  }
+}
