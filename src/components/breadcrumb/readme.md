@@ -35,12 +35,12 @@ This component is entirely HTML and CSS, to update contents you will need to imp
 
 ## Breadcrumb Positioning and Variations
 
-The above example just shows an in page breadcrumb. But usually the breadcrumb would be the top level element in the page. In some cases it is actually in or just below the header. These examples are showing in the [patterns section](./demo/patterns).
+The above example just shows an in page breadcrumb. But usually the breadcrumb would be the top level element in the page. In some cases it is actually in or just below the header. These examples are showing in the [patterns section](./demo/patterns/list).
 
 Examples:
 
 - [In Header](./demo/patterns/navigation-breadcrumbs) this variation is used when the breadcrumb acts as the sole top level navigation.
-- [Below Header](./demo/patterns/navigation-breadcrumbs-alternate.) this variation is used when the breadcrumb acts as a secondary top level navigation. For example if its part of the page pattern.
+- [Below Header](./demo/patterns/navigation-breadcrumbs-alternate) this variation is used when the breadcrumb acts as a secondary top level navigation. For example if its part of the page pattern.
 
 ## Accessibility
 
