@@ -1,5 +1,16 @@
 # What's New with Enterprise
 
+## v4.13.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.13.0 Fixes
+
+- `[Datepicker / Timepicker]` Removed the need to use the customValidation setting. You can remove this option from your code. The logic will pick up if you added customValidation to your input by adding a data-validate option. You also may need to add `date` or `availableDate` validation to your  data-validate attribute if these validations are desired along with your custom or required validation. ([#862](https://github.com/infor-design/enterprise/issues/862))
+
+(X Issues Solved this release, Backlog Enterprise X, Backlog Ng X, X Functional Tests, X e2e Test)
+
 ## v4.12.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)

@@ -266,41 +266,49 @@ describe('Timepicker states tests', () => {
   });
 });
 
-describe('Timepicker validation tests', () => {
+describe('Timepicker Custom Validation Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/timepicker/example-with-validation');
+    await utils.setPage('/components/timepicker/example-validation');
   });
 
-  it('Should have required css class in markup', async () => {
-    expect(await element(by.css('.timepicker.required')).isDisplayed()).toBe(true);
-  });
-
-  it('Should check required rule', async () => {
-    const timepickerEl = await element(by.id('timepicker-main'));
-    await timepickerEl.clear();
-
-    expect(await timepickerEl.getAttribute('value')).toEqual('');
-
-    await timepickerEl.sendKeys(protractor.Key.TAB);
+  it('Should be able to do default invalid time validation', async () => {
+    const datepickerEl = await element(by.id('timepicker-1'));
+    await datepickerEl.clear();
+    await datepickerEl.sendKeys('1:');
+    await datepickerEl.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.message-text')).getText()).toBe('Required');
-    expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
-    expect(await timepickerEl.getAttribute('class')).toContain('error');
+    expect(await element.all(by.css('.message-text')).last().getText()).toEqual('Invalid Time');
+    expect(await element.all(by.css('.message-text')).last(1).isPresent()).toBe(true);
   });
 
-  it('Should check for invalid time rule', async () => {
-    const timepickerEl = await element(by.id('timepicker-main'));
-    await timepickerEl.clear();
-    await timepickerEl.sendKeys('1:00 A');
+  it('Should be able to do custom validation', async () => {
+    expect(await element(by.css('.message-text')).isPresent()).toBe(false);
 
-    expect(await timepickerEl.getAttribute('value')).toEqual('1:00 A');
+    const datepicker2El = await element(by.id('timepicker-2'));
+    await datepicker2El.sendKeys(protractor.Key.TAB);
 
-    await timepickerEl.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.message-text')).getText()).toBe('Invalid Time');
-    expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
-    expect(await timepickerEl.getAttribute('class')).toContain('error');
+    expect(await element.all(by.css('.message-text')).last().getText()).toEqual('Test Error - Anything you enter will be wrong');
+    expect(await element.all(by.css('.message-text')).last(1).isPresent()).toBe(true);
+  });
+
+  it('Should be able to do required and time validation', async () => {
+    const datepickerEl = await element(by.id('timepicker-3'));
+    await datepickerEl.clear();
+    await datepickerEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.message-text')).last().getText()).toEqual('Required');
+    expect(await element.all(by.css('.message-text')).last(1).isPresent()).toBe(true);
+
+    await datepickerEl.clear();
+    await datepickerEl.sendKeys('1:');
+    await datepickerEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.message-text')).last().getText()).toEqual('Invalid Time');
+    expect(await element.all(by.css('.message-text')).last(1).isPresent()).toBe(true);
   });
 });

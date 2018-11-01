@@ -45,6 +45,14 @@
       display: inline;
     }
 
+    span {
+      display: inline;
+
+      @media (max-width: $breakpoint-big-phone) {
+        display: none;
+      }
+    }
+
     .page-title,
     .section-title {
       display: block;

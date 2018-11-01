@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Timepicker Example: Validation</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="timepicker-1" class="label required">Uses Default (Valid Time) Validation</label>
+      <input id="timepicker-1" class="timepicker" name="timepicker-1" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="timepicker-2" class="label">Uses Custom Validation</label>
+      <input id="timepicker-2" class="timepicker" name="timepicker-2" type="text" data-validate="customRule" />
+    </div>
+
+    <div class="field">
+      <label for="timepicker-3" class="label required">Uses Required Validation with Time Validation</label>
+      <input id="timepicker-3" class="timepicker" name="timepicker-3" type="text" data-validate="required time" />
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+      $.fn.validation.rules.customRule = {
+      	check: function (value, field, grid) {
+      		return false;
+      	},
+        id: 'custom',
+        type: 'error',
+      	message: 'Test Error - Anything you enter will be wrong'
+      };
+  });
+</script>

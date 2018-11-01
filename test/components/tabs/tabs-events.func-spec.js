@@ -46,11 +46,14 @@ describe('Tabs API', () => {
     expect(spyEvent).toHaveBeenTriggered();
   });
 
-  xit('Should trigger "afteractivated" event', () => {
+  it('Should trigger "afteractivated" event', (done) => {
     const spyEvent = spyOnEvent('#tabs-normal', 'afteractivated');
     tabsObj.activate('#tabs-normal-opportunities');
 
-    expect(spyEvent).toHaveBeenTriggered();
+    setTimeout(() => {
+      expect(spyEvent).toHaveBeenTriggered();
+      done();
+    }, 200);
   });
 
   it('Should trigger "hash-change" event', () => {

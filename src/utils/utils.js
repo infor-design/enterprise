@@ -983,4 +983,24 @@ utils.forEach = function forEach(array, callback, scope) {
   }
 };
 
+/**
+ * Function to check if element has css class
+ * @private
+ * @param {object} elem The DOM element
+ * @param {string} classStr The css class name to check
+ * @returns {boolean} true if found given css class
+ */
+utils.hasClass = function hasClass(elem, classStr) {
+  let r = false;
+  if (elem) {
+    if ('classList' in elem) {
+      r = elem.classList.contains(classStr);
+    } else {
+      const classAttr = elem.getAttribute('class');
+      r = classAttr ? classAttr.split(/\s+/).indexOf(classStr) !== -1 : false;
+    }
+  }
+  return r;
+};
+
 export { utils, math };

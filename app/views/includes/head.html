@@ -21,6 +21,13 @@
 
   <script src="{{basepath}}js/jquery-3.3.1.js"></script>
   <script src="{{basepath}}js/d3.v4.js"></script>
+
+  {{#SohoConfig}}
+  <script type="text/javascript">
+    window.SohoConfig = JSON.parse('{{{SohoConfig}}}');
+  </script>
+  {{/SohoConfig}}
+
   {{#minify}}
   <script src="{{basepath}}js/sohoxi.min.js"></script>
   {{/minify}}

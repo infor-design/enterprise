@@ -48,7 +48,6 @@ describe('DatePicker Settings', () => {
         restrictMonths: false
       },
       showLegend: false,
-      customValidation: false,
       showMonthYearPicker: false,
       hideDays: false,
       advanceMonths: 5,
