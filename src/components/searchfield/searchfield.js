@@ -759,6 +759,10 @@ SearchField.prototype = {
           self.autocomplete.closeList();
         }
       });
+
+      self.xButton.on(`blur.${this.id}`, (e) => {
+        self.handleSafeBlur(e);
+      });
     }
 
     // Override the 'click' listener created by Autocomplete (which overrides the
@@ -891,6 +895,13 @@ SearchField.prototype = {
     if (this.categoryButton && this.categoryButton.length) {
       const menu = this.categoryButton.data('popupmenu').menu;
       if (menu.has(active).length) {
+        return true;
+      }
+    }
+
+    // Clearable button
+    if (this.xButton && this.xButton.length) {
+      if (this.xButton.has(active).length) {
         return true;
       }
     }
@@ -1862,6 +1873,7 @@ SearchField.prototype = {
     }
 
     if (this.xButton && this.xButton.length) {
+      this.xButton.off(`blur.${this.id}`);
       this.xButton.remove();
     }
 
