@@ -3119,6 +3119,10 @@ Datagrid.prototype = {
         cssClass += ' rowstatus-cell';
       }
 
+      if (self.isCellDirty(dataRowIdx, j)) {
+        cssClass += ' is-dirty-cell';
+      }
+
       // Trim extra spaces
       if (cssClass !== '') {
         cssClass = cssClass.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
@@ -7016,6 +7020,27 @@ Datagrid.prototype = {
       cellValue = this.fieldValue(rowData, col.field);
     }
     this.editor.val(cellValue);
+
+    // Set original data for trackdirty
+    if (this.settings.showDirty) {
+      let originalVal = cellValue;
+
+      if (originalVal === '' && /checkbox|favorite/i.test(this.editor.name)) {
+        originalVal = false;
+      }
+
+      const data = { originalVal, isDirty: false };
+      if (typeof this.dirtyArray === 'undefined') {
+        this.dirtyArray = [];
+      }
+      if (typeof this.dirtyArray[idx] === 'undefined') {
+        this.dirtyArray[idx] = [];
+        this.dirtyArray[idx][cell] = data;
+      } else if (typeof this.dirtyArray[idx][cell] === 'undefined') {
+        this.dirtyArray[idx][cell] = data;
+      }
+    }
+
     this.editor.focus();
 
     /**
@@ -7705,6 +7730,14 @@ Datagrid.prototype = {
     if (!fromApiCall) {
       // Validate the cell
       this.validateCell(dataRowIndex, cell);
+
+      // Update and set trackdirty
+      if (this.isDirtyCellNotUndefined(row, cell)) {
+        this.dirtyArray[row][cell].value = value;
+        this.dirtyArray[row][cell].coercedVal = coercedVal;
+        this.dirtyArray[row][cell].escapedCoercedVal = xssUtils.escapeHTML(coercedVal);
+        this.setIsDirtyAndIcon(row, cell, cellNode);
+      }
     }
 
     if (coercedVal !== oldVal && !fromApiCall) {
@@ -7735,11 +7768,59 @@ Datagrid.prototype = {
        */
       this.element.trigger('cellchange', args);
       this.wasJustUpdated = true;
-
-      if (this.settings.showDirty) {
-        this.rowStatus(row, 'dirty');
-      }
     }
+  },
+
+  /**
+   * Function to check if given cell has true value for isDirty
+   * @private
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @returns {boolean} true if isDirty
+   */
+  isCellDirty(row, cell) {
+    return this.isDirtyCellNotUndefined(row, cell) ?
+      this.dirtyArray[row][cell].isDirty : false;
+  },
+
+  /**
+   * Set isDirty value and Add/Remove dirty icon to given cell
+   * must checked before to be true from `isDirtyCellNotUndefined(row, cell)`
+   * must checked before not undefined `cellNode`
+   * @private
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @param {object} cellNode jQuery cell node
+   * @returns {void}
+   */
+  setIsDirtyAndIcon(row, cell, cellNode) {
+    const d = this.dirtyArray[row][cell];
+    if ((d.originalVal === d.value) ||
+      (d.originalVal === d.coercedVal) ||
+      (d.originalVal === d.escapedCoercedVal)) {
+      this.dirtyArray[row][cell].isDirty = false;
+      cellNode[0].classList.remove('is-dirty-cell');
+    } else {
+      this.dirtyArray[row][cell].isDirty = true;
+      cellNode[0].classList.add('is-dirty-cell');
+    }
+  },
+
+  /**
+   * Function to check given cell is cache to dirtyArray
+   * @private
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @returns {boolean} true if found
+   */
+  isDirtyCellNotUndefined(row, cell) {
+    return (this.settings.showDirty &&
+      typeof row === 'number' &&
+      typeof cell === 'number' &&
+      row > -1 && cell > -1 &&
+      typeof this.dirtyArray !== 'undefined' &&
+      typeof this.dirtyArray[row] !== 'undefined' &&
+      typeof this.dirtyArray[row][cell] !== 'undefined');
   },
 
   /**

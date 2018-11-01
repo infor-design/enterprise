@@ -1958,6 +1958,25 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    &.is-dirty-cell {
+      position: relative;
+
+      &::before {
+        @include css3(border-radius, 2px 0 0);
+
+        border-color: $dirty-icon-fill transparent transparent $dirty-icon-fill;
+        border-style: solid;
+        border-width: 4px;
+        content: '';
+        display: inline-block;
+        height: 0;
+        left: 2px;
+        margin: 3px 0 0 1px;
+        position: absolute;
+        top: 0;
+        width: 0;
+      }
+    }
   }
 
   // Nested Grids
