@@ -2947,7 +2947,7 @@ Datagrid.prototype = {
         ((activePage - 1) * self.settings.pagesize) : 0));
 
     isEven = (this.recordCount % 2 === 0);
-    const isSelected = this.isNodeSelected(rowData);
+    const isSelected = this.isRowSelected(rowData);
     const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
     if (rowData && rowData.rowStatus) {
@@ -5583,12 +5583,12 @@ Datagrid.prototype = {
   /**
   * Check if node index is exists in selected nodes
   * @private
-  * @param {object} node The node to compare.
+  * @param {object} row The row to compare.
   * @returns {boolean} If its selected or not.
   */
-  isNodeSelected(node) {
+  isRowSelected(row) {
     // As of 4.3.3, return the rows that have _selected = true
-    return node ? node._selected === true : false;
+    return row ? row._selected === true : false;
   },
 
   /**
@@ -5604,7 +5604,7 @@ Datagrid.prototype = {
     const self = this;
 
     // do not add if already exists in selected
-    if ((!data || self.isNodeSelected(data)) && !force) {
+    if ((!data || self.isRowSelected(data)) && !force) {
       return;
     }
     checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
@@ -5702,18 +5702,19 @@ Datagrid.prototype = {
       } else {
         rowData = s.dataset[dataRowIndex];
         if (s.groupable) {
-          const gData = self.groupArray[idx];
-          rowData = s.dataset[gData.group].values[gData.node];
-          const actualIdx = self.actualPagingRowIndex(idx);
+          const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
+          const gData = self.groupArray[row];
+          rowData = self.settings.dataset[gData.group].values[gData.node];
+          dataRowIndex = self.actualPagingRowIndex(idx);
           this._selectedRows.push({
-            idx: actualIdx,
+            idx: dataRowIndex,
             data: rowData,
-            elem: self.dataRowNode(actualIdx),
-            group: s.dataset[gData.group]
+            elem: rowNode,
+            group: s.dataset[self.groupArray[row].group]
           });
         }
         self.selectNode(rowNode, dataRowIndex, rowData);
-        self.lastSelectedRow = idx;// Rememeber index to use shift key
+        self.lastSelectedRow = idx; // Rememeber index to use shift key
       }
 
       // Append data to selectedRows
@@ -6182,7 +6183,7 @@ Datagrid.prototype = {
 
       if (s.treeGrid) {
         for (let i = 0; i < s.treeDepth.length; i++) {
-          if (self.isNodeSelected(s.treeDepth[i].node)) {
+          if (self.isRowSelected(s.treeDepth[i].node)) {
             if (typeof index !== 'undefined') {
               if (index === s.treeDepth[i].idx - 1) {
                 removeSelected(s.treeDepth[i].node);
@@ -6200,8 +6201,9 @@ Datagrid.prototype = {
           rowData = self.settings.dataset[selIdx];
         }
         if (s.groupable) {
-          const gData = self.groupArray[idx];
-          rowData = s.dataset[gData.group].values[gData.node];
+          const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
+          const gData = self.groupArray[row];
+          rowData = self.settings.dataset[gData.group].values[gData.node];
         }
         if (rowData !== undefined) {
           removeSelected(rowData);
@@ -8378,7 +8380,7 @@ Datagrid.prototype = {
         for (let k = 0; k < dataset[i].values.length; k++) {
           idx++;
           data = dataset[i].values[k];
-          if (this.isNodeSelected(data)) {
+          if (this.isRowSelected(data)) {
             this._selectedRows.push({
               idx,
               data,
@@ -8392,7 +8394,7 @@ Datagrid.prototype = {
         }
       } else {
         data = s.treeGrid ? dataset[i].node : dataset[i];
-        if (this.isNodeSelected(data)) {
+        if (this.isRowSelected(data)) {
           this._selectedRows.push({
             idx: i,
             data,

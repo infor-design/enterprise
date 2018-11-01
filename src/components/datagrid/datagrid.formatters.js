@@ -263,7 +263,7 @@ const formatters = {
   SelectionCheckbox(row, cell, value, col, item, api) {
     let isChecked = (value === undefined ? false : value === true);
     if (!value) {
-      isChecked = api.isNodeSelected(item);
+      isChecked = api.isRowSelected(item);
     }
     return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select'))}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}" aria-checked="${isChecked}"></span></div>`;
   },
