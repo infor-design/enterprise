@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' }),
+      columns.push({ id: 'productId', sortable: false, name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
+      columns.push({ id: 'productName', sortable: false, name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', sortable: false, hidden: true, name: 'Activity', field: 'activity', width: 125});
+      columns.push({ id: 'quantity', sortable: false, name: 'Quantity', field: 'quantity', width: 125});
+      columns.push({ id: 'price', sortable: false, name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', sortable: false, name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+      $('#datagrid').datagrid({
+        columns: columns,
+        paging: true,
+        pagesize: 5,
+        selectable: 'multiple',
+        groupable: {
+          fields: ['status'],
+          expanded: true,
+          aggregator: 'sum' //sum, averge, max ect
+        },
+        source: function(req, response) {
+          // Load a specific page and set the page - simulating a page state
+          if (req.type === 'last') {
+            req.activePage = lastPage;
+          }
+
+          var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+          if (req.sortField) {
+            url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
+          }
+
+          if (req.filterExpr && req.filterExpr[0]) {
+            url += '&filter=' + req.filterExpr[0].value;
+          }
+
+          $.getJSON(url, function(res) {
+            lastPage = Math.floor(res.total / req.pagesize);
+            req.total = res.total;
+
+            if (req.activePage === 1) {
+              req.firstPage = true;
+              req.lastPage = false;
+            } else if (req.activePage >= lastPage) {
+              req.firstPage = false;
+              req.lastPage = true;
+            } else {
+              req.firstPage = false;
+              req.lastPage = false;
+            }
+            response(res.data, req);  //Option 1, return paging info here.
+          });
+        },
+        toolbar: {title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
+      }).on('click', function (e, args) {
+          console.log('Row Click ',args)
+      });
+ });
+
+</script>
