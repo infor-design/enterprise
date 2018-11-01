@@ -813,6 +813,10 @@ html[dir='rtl'] {
       }
     }
 
+    &.has-text {
+      width: $toolbarsearchfield-empty-width;
+    }
+
     .searchfield {
       background-color: transparent;
     }
