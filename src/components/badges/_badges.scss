@@ -52,7 +52,7 @@
 
   &.graphite03,
   &.graphite02 {
-    color: $pill-neutral-bg-color;
+    color: $graphite02;
   }
 
   &.round {
@@ -169,7 +169,7 @@
     &::after {
       @include css3(transform, scaleX(-1) rotate(135deg));
 
-      border-color: $checkbox-arrow-color;
+      border-color: $checkbox-color-checked-initial-arrow;
       border-style: solid;
       border-width: 2px 2px 0 0;
       content: '';

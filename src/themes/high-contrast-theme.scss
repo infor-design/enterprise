@@ -9,7 +9,7 @@
 @import '../components/colors/colorpalette';
 
 // ids-identity token vars
-@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho-high-contrast';
+@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho-contrast';
 
 // Local vars
 @import '../core/config';
@@ -110,11 +110,11 @@ $circlepager-disable-focus-border-color: $color-default-alt;
 
 // Popovers
 $popover-bg-color: $graphite01;
-$popover-border-color: $notification-border-color;
-$popover-box-shadow: $notification-box-shadow;
-$popover-arrow-border-color: $notification-arrow-border-color;
-$popover-color: $notification-text-color;
-$popover-separator-color: $notification-separator-color;
+$popover-border-color: $graphite03;
+$popover-box-shadow: 0 2px 5px $drop-shadow-depth;
+$popover-arrow-border-color: $graphite03;
+$popover-color: $theme-color-font-base;
+$popover-separator-color: $graphite03;
 
 // Tooltips
 $tooltip-bg-color: $graphite08;
@@ -126,19 +126,19 @@ $tooltip-error-border-color:  $alert-red;
 $tooltip-error-color: $white;
 
 // Badges
-$badge-neutral-color: $pill-neutral-color;
-$badge-neutral-bg-color: $pill-neutral-bg-color;
-$badge-neutral-hover-bg-color: $pill-neutral-hover-bg-color;
-$badge-secondary-color: $pill-secondary-color;
-$badge-secondary-bg-color: $pill-secondary-bg-color;
-$badge-secondary-border-color: $pill-secondary-border-color;
-$badge-error-color: $pill-error-color;
-$badge-alert-color: $pill-alert-color;
-$badge-good-color: $pill-good-color;
-$badge-info-color: $pill-info-color;
+$badge-neutral-color: $graphite10;
+$badge-neutral-bg-color: $graphite02;
+$badge-neutral-hover-bg-color: $graphite03;
+$badge-secondary-color: $graphite10;
+$badge-secondary-bg-color: $white;
+$badge-secondary-border-color: $graphite03;
+$badge-error-color: $white;
+$badge-alert-color: $graphite10;
+$badge-good-color: $white;
+$badge-info-color: $white;
 $badge-info-bg-color: $color-primary;
-$badge-neutral-icon-color: $pill-neutral-icon-color;
-$badge-neutral-hover-icon-color: $pill-neutral-hover-icon-color;
+$badge-neutral-icon-color: $graphite06;
+$badge-neutral-hover-icon-color: $graphite10;
 
 .tag,
 .badge {
@@ -167,10 +167,10 @@ $secondary-border-btn-hover-border-color: $graphite10;
 $secondary-border-btn-ripple-color: $color-primary-alt;
 
 // Input Fields
-$input-color: $input-text-color;
-$input-disabled-color: $input-disabled-text-color;
-$input-placeholder-color: $input-placeholder-text-color;
-$input-readonly-color: $input-readonly-text-color;
+$input-color: $input-color-initial-font;
+$input-disabled-color: $input-color-disabled-font;
+$input-placeholder-color: $input-color-initial-placeholder;
+$input-readonly-color: $input-color-readonly-font;
 
 //States
 $error-color: $alert-red;
@@ -186,7 +186,7 @@ $selected-bg-color: rgba($color-primary-alt, 0.3);
 
 // Autocomplete
 $autocomplete-light-text: $graphite05;
-$autocomplete-active-bg-color: $body-bg-color-primary;
+$autocomplete-active-bg-color: $body-color-primary-background;
 $autocomplete-box-shadow: 0 2px 5px 2px $focus-box-shadow-color;
 $autocomplete-box-shadow-flipped: 0 -2px 5px 2px $focus-box-shadow-color;
 $trigger-icon-fill-color: $graphite09;
@@ -210,8 +210,8 @@ $listview-header-bg-color: $color-default-alt;
 $listview-header-color: $font-color-extrahighcontrast;
 $listview-subhead-color: $graphite06;
 
-$listview-toolbar-button-text-color: $button-link-text-color;
-$listview-toolbar-button-icon-color: $button-link-text-color;
+$listview-toolbar-button-text-color: $button-color-tertiary-initial-font;
+$listview-toolbar-button-icon-color: $button-color-tertiary-initial-font;
 $listview-toolbar-button-text-hover-color: $color-primary;
 $listview-toolbar-button-icon-hover-color: $color-primary;
 $listview-toolbar-button-text-selected-color: $color-primary;
@@ -223,10 +223,10 @@ $listview-search-disabled-border-color: $graphite06;
 $listview-search-disabled-icon-color: $graphite06;
 
 // Listbuilder
-$listbuilder-bg-color: $input-bg-color;
+$listbuilder-bg-color: $input-color-initial-background;
 $listbuilder-bg-color-hover: $color-default-alt;
 $listbuilder-bg-color-selected: $color-primary;
-$listbuilder-border-color: $input-border-color;
+$listbuilder-border-color: $input-color-initial-border;
 $listbuilder-border-color-focus: $color-primary-alt;
 $listbuilder-icon-color-hover: $font-color-highcontrast;
 $listbuilder-text-color: $black;
@@ -239,7 +239,7 @@ $toolbar-standalone-disabled-color: $graphite08;
 $toolbar-separator-color: $graphite06;
 
 // Field Filter
-$fieldfilter-border-side-color: $input-border-color;
+$fieldfilter-border-side-color: $input-color-initial-border;
 
 // Formatter Toolbar
 $formatter-toolbar-separator-color: $graphite06;
@@ -268,7 +268,7 @@ $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $black;
 $datepicker-hover-bg-color: $color-default-alt;
 $datepicker-disabled-border-color: $color-default-alt;
-$datepicker-disabled-bg-color: $input-readonly-bg-color;
+$datepicker-disabled-bg-color: $input-color-readonly-background;
 $datepicker-disabled-color: $color-default-alt;
 
 .calendar-table .is-today {
@@ -344,7 +344,7 @@ $switch-unchecked-bar-color: $graphite07;
 $switch-unchecked-border-color: $graphite06;
 $switch-unchecked-color: $slate05;
 $switch-unchecked-pressed-bg-color: $slate04;
-$switch-disabled-bg-color: $input-readonly-bg-color;
+$switch-disabled-bg-color: $input-color-readonly-background;
 $switch-disabled-border-color: $color-default-alt;
 $switch-disabled-bar-color: $color-default-alt;
 $switch-disabled-label-color: $disabled-color;
@@ -352,10 +352,10 @@ $switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $color-primary, 0 0 4px 6
 $switch-hover-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 
 // Editor
-$editor-bg-color: $input-bg-color;
-$editor-border-color: $input-border-color;
-$editor-hover-border-color: $input-hover-border-color;
-$editor-focus-border-color: $input-focus-border-color;
+$editor-bg-color: $input-color-initial-background;
+$editor-border-color: $input-color-initial-border;
+$editor-hover-border-color: $input-color-hover-border;
+$editor-focus-border-color: $input-color-focus-border;
 $editor-line-number-color: $graphite05;
 $editor-color: $input-color;
 $editor-toolbar-bg-color: $graphite02;
@@ -368,15 +368,15 @@ $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(41, 41, 41, 0.3);
 $editor-blockquote-color: $graphite07;
 
 // Radio Buttons
-$radio-border-hover-color: $radio-border-hover-color;
+$radio-border-hover-color: $radio-color-unchecked-hover-border;
 $radio-checked-color: $color-primary;
-$radio-checked-bg-color: $radio-checked-bg-color;
-$radio-disabled-checked-bg-color: $radio-disabled-checked-bg-color;
+$radio-checked-bg-color: $radio-color-checked-initial-background;
+$radio-disabled-checked-bg-color: $radio-color-checked-disabled-background;
 
 // Pager
 $pager-text-color: $color-primary;
 $pager-selected-color: $font-color-highcontrast;
-$pager-focus-border-color: $input-focus-border-color;
+$pager-focus-border-color: $input-color-focus-border;
 $pager-hover-color: $font-color-extrahighcontrast;
 $pager-disabled-color: $color-default-alt;
 
@@ -490,7 +490,7 @@ $vertical-tab-active-text-color: $white;
 $vertical-tab-active-bg-color: $color-primary;
 
 $vertical-tab-panel-bg-color: $panel-bg-color;
-$vertical-tab-sidebar-bg-color: $body-bg-color-primary;
+$vertical-tab-sidebar-bg-color: $body-color-primary-background;
 $vertical-tab-sidebar-border-color: $graphite06;
 
 //Multi-tabs
@@ -519,7 +519,7 @@ $datagrid-required-icon-color: $white;
 
 $datagrid-cell-color: $font-color;
 $datagrid-cell-bg-color: $graphite01;
-$datagrid-cell-readonly-bg-color: $input-readonly-bg-color;
+$datagrid-cell-readonly-bg-color: $input-color-readonly-background;
 $datagrid-cell-readonly-color: $font-color;
 $datagrid-cell-border-color: $graphite06;
 $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(80, 83, 90, 0.4);
@@ -606,7 +606,7 @@ $timeline-line-color: $graphite05;
 $timeline-header-color: $azure09;
 
 //Wizard
-$wizard-default-bg: $body-bg-color-primary;
+$wizard-default-bg: $body-color-primary-background;
 $wizard-bar-bg: $graphite06;
 $wizard-color: $graphite09;
 $wizard-disabled-color: $color-default-alt;
@@ -620,8 +620,8 @@ $hierarchy-line-color: $graphite10;
 // Searchfield Colors
 $searchfield-bg-color: $white;
 $searchfield-border-color: $graphite03;
-$searchfield-icon-color: $button-link-text-color;
-$searchfield-text-color: $button-link-text-color;
+$searchfield-icon-color: $button-color-tertiary-initial-font;
+$searchfield-text-color: $button-color-tertiary-initial-font;
 $searchfield-lighter-bg-color: $graphite02;
 $searchfield-lighter-text-color: $graphite05;
 $searchfield-active-icon-color: $azure09;
@@ -652,10 +652,10 @@ $image-border-color: $graphite03;
 $image-background-color: $graphite03;
 
 //Toast
-$toast-bg-color: $notification-bg-color;
-$toast-border-color: $notification-border-color;
-$toast-header-color: $notification-header-color;
-$toast-text-color: $notification-text-color;
+$toast-bg-color: $white;
+$toast-border-color: $graphite03;
+$toast-header-color: $graphite10;
+$toast-text-color: $theme-color-font-base;
 
 $toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
 
@@ -729,7 +729,7 @@ $swaplist-title-text-color: $black;
 
 // Block Grid
 $blockgrid-selected-bg-color: $selected-bg-color;
-$blockgrid-selected-border-color: $button-default-focus-border-color;
+$blockgrid-selected-border-color: $button-color-secondary-focus-border;
 $blockgrid-hover-color: $listview-hover-bg-color;
 $blockgrid-focus-border-color: $color-primary;
 
@@ -743,7 +743,7 @@ $calendar-line-color: $graphite09;
 $calendar-selected-border-color: $color-primary;
 $calendar-selected-bg-color: $graphite02;
 $calendar-hover-bg-color: rgba(240, 240, 240, 0.75);
-$calendar-disabled-bg-color: $input-readonly-bg-color;
+$calendar-disabled-bg-color: $input-color-readonly-background;
 $calendar-disabled-color: $graphite10;
 
 //================================================== //

@@ -37,7 +37,7 @@
   }
 
   &.is-open {
-    border-color: $input-focus-border-color;
+    border-color: $input-color-focus-border;
 
     + .icon {
       fill: $trigger-active-color;

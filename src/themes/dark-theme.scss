@@ -90,18 +90,18 @@ $circlepager-disable-hover-border-color: $slate05;
 $circlepager-disable-focus-border-color: $slate05;
 
 // Popovers
-$popover-bg-color: $notification-bg-color;
-$popover-border-color: $notification-border-color;
-$popover-box-shadow: $notification-box-shadow;
-$popover-arrow-border-color: $notification-arrow-border-color;
-$popover-color: $notification-text-color;
-$popover-separator-color: $notification-separator-color;
-$popover-alternate-color: $notification-alternate-color;
-$popover-alternate-subheader-color: $notification-alternate-subheader-color;
-$popover-alternate-bg-color: $notification-alternate-bg-color;
-$popover-alternate-arrow-color: $notification-alternate-arrow-color;
-$popover-alternate-title-bg-color: $notification-alternate-title-bg-color;
-$popover-alternate-table-header: $notification-alternate-table-header;
+$popover-bg-color: $white;
+$popover-border-color: $graphite03;
+$popover-box-shadow: 0 2px 5px $drop-shadow-depth;
+$popover-arrow-border-color: $graphite03;
+$popover-color: $theme-color-font-base;
+$popover-separator-color: $graphite03;
+$popover-alternate-color: $graphite10;
+$popover-alternate-subheader-color: $graphite06;
+$popover-alternate-bg-color: $graphite01;
+$popover-alternate-arrow-color: $graphite01;
+$popover-alternate-title-bg-color: $white;
+$popover-alternate-table-header: $graphite01;
 
 // Progress
 $progress-bg-color: transparent;
@@ -117,19 +117,19 @@ $tooltip-error-bg-color: $alert-red;
 $tooltip-error-color: $white;
 
 // Badges
-$badge-neutral-color: $pill-neutral-color;
-$badge-neutral-bg-color: $pill-neutral-bg-color;
-$badge-neutral-hover-bg-color: $pill-neutral-hover-bg-color;
-$badge-secondary-color: $pill-secondary-color;
-$badge-secondary-bg-color: $pill-secondary-bg-color;
-$badge-secondary-border-color: $pill-secondary-border-color;
-$badge-error-color: $pill-error-color;
-$badge-alert-color: $pill-alert-color;
-$badge-good-color: $pill-good-color;
-$badge-info-color: $pill-info-color;
+$badge-neutral-color: $graphite10;
+$badge-neutral-bg-color: $graphite02;
+$badge-neutral-hover-bg-color: $graphite03;
+$badge-secondary-color: $graphite10;
+$badge-secondary-bg-color: $white;
+$badge-secondary-border-color: $graphite03;
+$badge-error-color: $white;
+$badge-alert-color: $graphite10;
+$badge-good-color: $white;
+$badge-info-color: $white;
 $badge-info-bg-color: $color-primary;
-$badge-neutral-icon-color: $pill-neutral-icon-color;
-$badge-neutral-hover-icon-color: $pill-neutral-hover-icon-color;
+$badge-neutral-icon-color: $graphite06;
+$badge-neutral-hover-icon-color: $graphite10;
 
 // Popup Menu
 $popupmenu-color: $white;
@@ -150,11 +150,11 @@ $secondary-border-btn-hover-border-color: $white;
 $secondary-border-btn-ripple-color: $white;
 
 // Input Fields
-$input-color: $input-text-color;
-$input-disabled-color: $input-disabled-text-color;
+$input-color: $input-color-initial-font;
+$input-disabled-color: $input-color-disabled-font;
 $input-focus-border-color: $color-primary;
-$input-placeholder-color: $input-placeholder-text-color;
-$input-readonly-color: $input-readonly-text-color;
+$input-placeholder-color: $input-color-initial-placeholder;
+$input-readonly-color: $input-color-readonly-font;
 
 // States
 $error-color: $alert-red;
@@ -167,7 +167,7 @@ $selected-bg-color: rgba($color-primary, 0.3);
 
 // Autocomplete
 $autocomplete-light-text: $slate04;
-$autocomplete-active-bg-color: $body-bg-color-primary;
+$autocomplete-active-bg-color: $body-color-primary-background;
 $autocomplete-box-shadow: 0 2px 5px 1px $focus-box-shadow-color;
 $autocomplete-box-shadow-flipped: 0 -2px 5px 1px $focus-box-shadow-color;
 $trigger-icon-fill-color: $slate03;
@@ -271,7 +271,7 @@ $fileupload-droparea-dd-hover-bg-color: rgba($slate10, 0.3);
 // Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
 $spinbox-bg-color: $slate06;
-$spinbox-button-color: $body-bg-color-primary;
+$spinbox-button-color: $body-color-primary-background;
 
 // Skip Link
 $skip-link-border-color: $slate05;
@@ -313,8 +313,8 @@ $cardlist-header-color: $white;
 $cardlist-actions-color: $slate03;
 
 // Checkboxes
-$checkbox-disabled-text-color: $checkbox-disabled-text-color;
-$checkbox-disabled-checked-bg-color: $checkbox-disabled-border-color;
+$checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
+$checkbox-disabled-checked-bg-color: $checkbox-color-unchecked-disabled-border;
 
 // Switch
 $radio-checked-color: $color-primary;
@@ -348,15 +348,15 @@ $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
 $editor-blockquote-color: $slate04;
 
 // Radio Buttons
-$radio-border-hover-color: $radio-border-hover-color;
+$radio-border-hover-color: $radio-color-unchecked-hover-border;
 $radio-checked-color: $color-primary;
-$radio-checked-bg-color: $radio-checked-bg-color;
-$radio-disabled-checked-bg-color: $radio-disabled-checked-bg-color;
+$radio-checked-bg-color: $radio-color-checked-initial-background;
+$radio-disabled-checked-bg-color: $radio-color-checked-disabled-background;
 
 // Pager
 $pager-text-color: $color-primary;
 $pager-selected-color: $font-color-extrahighcontrast;
-$pager-focus-border-color: $input-focus-border-color;
+$pager-focus-border-color: $input-color-focus-border;
 $pager-hover-color: $font-color-extrahighcontrast;
 $pager-disabled-color: $slate06;
 
@@ -580,7 +580,7 @@ $timeline-line-color: $slate04;
 $timeline-header-color: $color-primary;
 
 // Themable Variables in config.scss
-$wizard-default-bg: $body-bg-color-primary;
+$wizard-default-bg: $body-color-primary-background;
 $wizard-bar-bg: $slate04;
 $wizard-color: $slate03;
 $wizard-disabled-color: $slate04;
@@ -594,8 +594,8 @@ $hierarchy-line-color: $slate04;
 // Searchfield Colors
 $searchfield-bg-color: $slate09;
 $searchfield-border-color: $slate10;
-$searchfield-icon-color: $button-link-text-color;
-$searchfield-text-color: $button-link-text-color;
+$searchfield-icon-color: $button-color-tertiary-initial-font;
+$searchfield-text-color: $button-color-tertiary-initial-font;
 $searchfield-lighter-bg-color: $slate08;
 $searchfield-lighter-text-color: $slate04;
 $searchfield-active-icon-color: $color-primary-alt;
@@ -626,10 +626,10 @@ $image-border-color: $slate04;
 $image-background-color: $slate04;
 
 // Toast
-$toast-bg-color: $notification-bg-color;
-$toast-border-color: $notification-border-color;
-$toast-header-color: $notification-header-color;
-$toast-text-color: $notification-text-color;
+$toast-bg-color: $white;
+$toast-border-color: $graphite03;
+$toast-header-color: $graphite10;
+$toast-text-color: $theme-color-font-base;
 $toast-shadow: none; // 0 0 5px rgba(255, 255, 255, .2);
 
 // Builder Pattern
@@ -692,7 +692,7 @@ $step-chart-totally-completed-bg-color: $alert-green;
 
 // Block Grid
 $blockgrid-selected-bg-color: $selected-bg-color;
-$blockgrid-selected-border-color: $button-default-focus-border-color;
+$blockgrid-selected-border-color: $button-color-secondary-focus-border;
 $blockgrid-hover-color: $listview-hover-bg-color;
 $blockgrid-focus-border-color: $color-primary;
 

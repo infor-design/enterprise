@@ -55,13 +55,13 @@
       text-overflow: ellipsis;
 
       &.readonly {
-        background-color: $input-readonly-bg-color;
+        background-color: $input-color-readonly-background;
         color: $input-readonly-color;
         -webkit-text-fill-color: $input-readonly-color;
       }
 
       &[disabled] {
-        background-color: $input-disabled-bg-color;
+        background-color: $input-color-disabled-background;
         color: $input-disabled-color;
         -webkit-text-fill-color: $input-disabled-color;
       }
@@ -77,12 +77,12 @@
     &:disabled + span:not(.audible),
     &:disabled + label.fileupload {
       svg {
-        fill: $input-disabled-border-color;
+        fill: $input-color-disabled-border;
       }
 
       &:hover {
         svg {
-          fill: $input-disabled-border-color;
+          fill: $input-color-disabled-border;
         }
       }
     }

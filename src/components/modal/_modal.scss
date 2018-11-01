@@ -411,7 +411,7 @@
     }
 
     &:focus:not(.hide-focus) {
-      border: 1px solid $input-focus-border-color;
+      border: 1px solid $input-color-focus-border;
       box-shadow: $focus-box-shadow;
       outline: none;
       outline-color: transparent;
@@ -433,7 +433,7 @@
     }
 
     .ripple-effect {
-      background-color: $button-primary-bg-color;
+      background-color: $button-color-primary-initial-background;
     }
   }
 

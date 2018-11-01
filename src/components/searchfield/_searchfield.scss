@@ -58,7 +58,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   &:hover input:not([disabled]):not(:focus) {
     + svg {
-      fill: $button-link-hover-text-color;
+      fill: $button-color-tertiary-hover-font;
     }
   }
 
@@ -167,10 +167,10 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     &.is-hovered {
       .btn {
         border-color: $searchfield-context-border-color;
-        color: $input-hover-border-color;
+        color: $input-color-hover-border;
 
         .icon {
-          fill: $input-hover-border-color;
+          fill: $input-color-hover-border;
         }
       }
 
@@ -194,16 +194,16 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   &.is-hovered {
     .btn {
-      border-color: $input-hover-border-color;
-      color: $input-hover-border-color;
+      border-color: $input-color-hover-border;
+      color: $input-color-hover-border;
 
       .icon {
-        fill: $input-hover-border-color;
+        fill: $input-color-hover-border;
       }
     }
 
     .searchfield {
-      border-color: $input-hover-border-color;
+      border-color: $input-color-hover-border;
     }
 
     &.has-categories {
@@ -219,20 +219,20 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     }
 
     .btn {
-      border-color: $input-focus-border-color;
+      border-color: $input-color-focus-border;
 
       &:focus,
       &:active {
-        color: $input-focus-border-color;
+        color: $input-color-focus-border;
 
         .icon {
-          fill: $input-focus-border-color;
+          fill: $input-color-focus-border;
         }
       }
     }
 
     .searchfield {
-      border-color: $input-focus-border-color;
+      border-color: $input-color-focus-border;
     }
 
     input:focus {
@@ -247,7 +247,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
       &.show-category {
         .searchfield {
-          border-left-color: $input-focus-border-color;
+          border-left-color: $input-color-focus-border;
 
           &:focus {
             box-shadow: none;
@@ -267,7 +267,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
     background-color: transparent;
     border-bottom-right-radius: 0;
-    border-color: $input-border-color;
+    border-color: $input-color-initial-border;
     border-right: 0;
     border-top-right-radius: 0;
     color: $font-color;
@@ -297,10 +297,10 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     }
 
     &.is-open {
-      color: $input-focus-border-color;
+      color: $input-color-focus-border;
 
       .icon {
-        fill: $input-focus-border-color;
+        fill: $input-color-focus-border;
       }
     }
   }
@@ -316,7 +316,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
       }
 
       .searchfield {
-        border-left: 1px solid $input-border-color;
+        border-left: 1px solid $input-color-initial-border;
 
         &:focus {
           box-shadow: none;
@@ -427,7 +427,7 @@ html[dir='rtl'] {
 
         &.show-category {
           .searchfield {
-            border-right: 1px solid $input-border-color;
+            border-right: 1px solid $input-color-initial-border;
           }
         }
       }
@@ -453,11 +453,11 @@ html[dir='rtl'] {
     &:not(.toolbar-searchfield-wrapper):not(.context) {
       &.has-categories {
         .btn {
-          border-right: 1px solid $input-border-color;
+          border-right: 1px solid $input-color-initial-border;
         }
 
         .searchfield {
-          border-left: 1px solid $input-border-color;
+          border-left: 1px solid $input-color-initial-border;
         }
       }
     }

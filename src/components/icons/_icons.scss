@@ -4,7 +4,7 @@
 // Svg Styles
 .icon {
   display: inline-block;
-  fill: $icon-fill;
+  fill: $icon-color-fill;
   height: 18px; //Older ones at 32 but now based on 40
   position: relative;
   width: 22px;
@@ -394,7 +394,7 @@ svg.icon-dirty {
     width: 32px;
 
     span:not(.audible) {
-      background-color: $button-link-text-color;
+      background-color: $button-color-tertiary-initial-font;
     }
   }
 }
