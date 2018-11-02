@@ -69,7 +69,7 @@ Rating.prototype = {
       if (i < value) {
         input.addClass('is-filled').removeClass('is-half');
       } else {
-        input.removeClass('is-filled').removeClass('is-half');
+        input.removeClass('is-filled').removeClass('is-half').prop('checked', false);
       }
 
       // Handle Half Star
