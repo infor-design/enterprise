@@ -336,7 +336,7 @@
       @include font-size(14);
 
       color: $font-color !important;
-      font-weight: $font-weight-normal;
+      font-weight: $theme-number-font-weight-base;
       right: unset;
       top: 20px;
     }

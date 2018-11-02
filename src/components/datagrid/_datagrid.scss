@@ -1635,7 +1635,7 @@ $datagrid-short-row-height: 23px;
     .search-mode {
       i {
         font-style: normal;
-        font-weight: $font-weight-bold;
+        font-weight: $theme-number-font-weight-bold;
       }
     }
 
@@ -2013,7 +2013,7 @@ $datagrid-short-row-height: 23px;
       color: $datagrid-header-color;
       direction: ltr;
       display: table-cell;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
       text-align: left;
       vertical-align: middle;
       white-space: nowrap;
@@ -2322,7 +2322,7 @@ $datagrid-short-row-height: 23px;
 
     span {
       color: $datagrid-rowgroup-color;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
     }
 
     .icon {
@@ -2895,7 +2895,7 @@ td .btn-actions {
   }
 
   .icon {
-    fill: $text-color;
+    fill: $theme-color-font-base;
     margin-top: 9px;
     right: 2px;
 

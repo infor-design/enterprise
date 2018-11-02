@@ -232,7 +232,7 @@ div.multiselect {
   }
 
   &.is-ontop {
-    box-shadow: $dropdown-shadow-initial-boxshadow-top;
+    box-shadow: $dropdown-box-shadow-top;
   }
 
   ul {
@@ -380,7 +380,7 @@ div.multiselect {
     li {
       i {
         color: $font-color-extrahighcontrast;
-        font-weight: $font-weight-bold;
+        font-weight: $theme-number-font-weight-bold;
         letter-spacing: -0.2;
       }
 
@@ -469,7 +469,7 @@ div.multiselect {
     @include font-size(12);
 
     color: $label-color-initial-font;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
     line-height: 20px;
     min-height: 20px;
     padding: 6px 0 4px;

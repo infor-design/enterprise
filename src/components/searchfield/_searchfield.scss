@@ -3,14 +3,14 @@
 
 @mixin searchfield-text-style() {
   color: $font-color;
-  font-weight: $font-weight-bold;
+  font-weight: $theme-number-font-weight-bold;
 
   @include font-size(14);
 }
 
 @mixin searchfield-text-style-hover() {
   color: $theme-color-brand-primary-base;
-  font-weight: $font-weight-bold;
+  font-weight: $theme-number-font-weight-bold;
 
   @include font-size(14);
 }
@@ -271,7 +271,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     border-right: 0;
     border-top-right-radius: 0;
     color: $font-color;
-    font-weight: $font-weight-normal;
+    font-weight: $theme-number-font-weight-base;
     height: 34px;
     margin: 0;
     min-width: 0;

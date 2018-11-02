@@ -118,7 +118,7 @@
     a {
       @include font-size(12);
 
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
       margin: 0 auto;
       overflow: hidden;
       padding: 10px;
@@ -131,7 +131,7 @@
       }
 
       > span:not(.icon) {
-        font-weight: $font-weight-bold;
+        font-weight: $theme-number-font-weight-bold;
         margin-left: 5px;
       }
     }
@@ -195,7 +195,7 @@
   .add-tab-button {
     @include font-size(24);
 
-    font-weight: $font-weight-normal;
+    font-weight: $theme-number-font-weight-base;
     height: 34px;
     padding-bottom: 5px;
     padding-top: 1px;
@@ -204,7 +204,7 @@
     span {
       @include font-size(24);
 
-      font-weight: $font-weight-normal;
+      font-weight: $theme-number-font-weight-base;
     }
 
   }
@@ -228,7 +228,7 @@
 
     border-left: 1px solid $module-tabs-x-border-color;
     color: $module-tabs-inactive-text-color;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
     padding: 8px 10px;
     text-align: center;
 
@@ -239,7 +239,7 @@
     .more-text {
       @include font-size(12);
 
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
     }
 
     &.is-selected {

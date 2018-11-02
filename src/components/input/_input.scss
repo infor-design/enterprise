@@ -322,7 +322,7 @@ label,
   @include font-size(14);
 
   color: $input-placeholder-color;
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   line-height: 16px;
   opacity: 1;
 }
@@ -331,7 +331,7 @@ label,
   @include font-size(14);
 
   color: $input-placeholder-color;
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   line-height: 16px;
   opacity: 1;
 }
@@ -340,7 +340,7 @@ label,
   @include font-size(14);
 
   color: $input-placeholder-color;
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   line-height: 16px;
   opacity: 1;
 }

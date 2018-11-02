@@ -47,7 +47,7 @@
 
     &.selected > a {
       color: $pager-selected-color;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
     }
 
     > a {
@@ -76,7 +76,7 @@
       }
 
       .audible {
-        color: $text-color;
+        color: $theme-color-font-base;
       }
     }
 
@@ -199,7 +199,7 @@ li + .pager-count {
     span {
       @include font-size(14);
 
-      font-weight: $font-weight-normal;
+      font-weight: $theme-number-font-weight-base;
       line-height: 27px;
       text-transform: none;
     }

@@ -24,7 +24,7 @@ button {
   @include antialiased();
 
   color: inherit;
-  font-weight: $font-weight-bold;
+  font-weight: $theme-number-font-weight-bold;
   height: 34px;
   line-height: normal;
   min-width: 100px;
@@ -412,10 +412,10 @@ a.btn-close {
 .btn-menu,
 .btn-actions {
   &.is-open {
-    color: $button-link-open-text-color;
+    color: $theme-color-brand-primary-base;
 
     .icon {
-      fill: $button-link-open-text-color;
+      fill: $theme-color-brand-primary-base;
     }
   }
 }

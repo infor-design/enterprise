@@ -99,7 +99,7 @@
     .colons {
       @include rem(font-size, 1.4rem);
 
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
       min-width: 15px;
 
       &:empty {

@@ -11,7 +11,7 @@
   border-radius: 15px;
   color: $badge-neutral-color;
   display: inline-block;
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   height: 22px;
   line-height: 22px;
   padding: 0 10px;
@@ -187,7 +187,7 @@
       content: '!';
       display: inline-block;
       font-size: 1.3em;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
       height: 100%;
       left: 0;
       position: absolute;

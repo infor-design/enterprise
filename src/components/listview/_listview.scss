@@ -13,7 +13,7 @@
   }
 
   .bold {
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
   }
 
   &:focus {
@@ -26,7 +26,7 @@
     @include font-size(14);
 
     color: $listview-color;
-    font-weight: $font-weight-normal;
+    font-weight: $theme-number-font-weight-base;
     overflow-wrap: break-word;
 
     &.hyperlink {
@@ -207,7 +207,7 @@
       @include font-size(14);
 
       color: $listview-color;
-      font-weight: $font-weight-normal;
+      font-weight: $theme-number-font-weight-base;
       text-decoration: none;
 
       &.hyperlink {
@@ -225,7 +225,7 @@
   i {
     color: $listview-color;
     font-style: normal;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
   }
 
   .days,
@@ -456,7 +456,7 @@
   .highlight {
     background-color: transparent;
     color: inherit;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
   }
 
   // Empty message area
@@ -502,7 +502,7 @@
 
       color: $listview-header-color;
       display: table-cell;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
       padding: 15px;
 
       span {
@@ -544,7 +544,7 @@
     @include font-size(14);
 
     color: $font-color-lowcontrast;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
     padding-top: 3px;
   }
 
@@ -571,7 +571,7 @@
     @include font-size(16);
 
     color: $font-color-highcontrast;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
     margin-top: 10px;
   }
 }

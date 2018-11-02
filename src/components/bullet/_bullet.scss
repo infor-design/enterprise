@@ -22,11 +22,11 @@
   .title {
     @include font-size(12);
 
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
   }
 
   .subtitle {
-    font-weight: $font-weight-normal;
+    font-weight: $theme-number-font-weight-base;
     text-transform: none;
   }
 

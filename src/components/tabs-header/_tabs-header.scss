@@ -32,7 +32,7 @@
 
     .tab {
       color: $header-tab-normal-color;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
       overflow: hidden;
 
       &::before {
