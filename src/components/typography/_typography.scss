@@ -274,7 +274,7 @@ small,
 .info-text {
   @include font-size(11);
 
-  color: $color-primary-alt;
+  color: $theme-color-brand-primary-alt;
   font-weight: $font-weight-bold;
 }
 

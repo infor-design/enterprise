@@ -33,7 +33,7 @@ svg.icon-dirty,
 }
 
 .icon-info-field {
-  fill: $color-primary;
+  fill: $theme-color-brand-primary-base;
 }
 
 .field {
@@ -531,8 +531,8 @@ svg.icon-dirty {
   }
 
   &.checkmark-selected {
-    background-color: $color-primary;
-    border-color: $color-primary;
+    background-color: $theme-color-brand-primary-base;
+    border-color: $theme-color-brand-primary-base;
 
     &::after {
       border-color: $inverse-color $inverse-color $inverse-color transparent;
@@ -645,7 +645,7 @@ html[dir='rtl'] {
 
 .icon-empty-state {
   display: inline-block;
-  fill: $color-primary; // Themable Empty Icons
+  fill: $theme-color-brand-primary-base; // Themable Empty Icons
   height: 65px;
   position: relative;
   width: 65px;

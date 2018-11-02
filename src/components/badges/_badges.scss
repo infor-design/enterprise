@@ -72,7 +72,7 @@
     }
 
     &:focus:not(.hide-focus) {
-      border-color: $color-primary;
+      border-color: $theme-color-brand-primary-base;
       box-shadow: $focus-box-shadow;
       outline: none;
       -moz-outline-style: none;
@@ -89,7 +89,7 @@
     padding: 0 10px;
 
     &:focus:not(.hide-focus) {
-      border-color: $color-primary;
+      border-color: $theme-color-brand-primary-base;
       box-shadow: $focus-box-shadow;
       outline: none;
       -moz-outline-style: none;

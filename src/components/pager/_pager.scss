@@ -192,7 +192,7 @@ li + .pager-count {
     height: 30px;
 
     &:focus {
-      border-color: $color-primary;
+      border-color: $theme-color-brand-primary-base;
       box-shadow: $focus-box-shadow;
     }
 

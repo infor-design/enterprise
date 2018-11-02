@@ -439,14 +439,14 @@ label,
 
 // Text Selection
 ::selection {
-  background: $color-primary;
+  background: $theme-color-brand-primary-base;
   color: $inverse-color;
   fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
 }
 
 ::-moz-selection {
-  background: $color-primary;
+  background: $theme-color-brand-primary-base;
   color: $inverse-color;
   fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;

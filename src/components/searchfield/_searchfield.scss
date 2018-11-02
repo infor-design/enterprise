@@ -9,7 +9,7 @@
 }
 
 @mixin searchfield-text-style-hover() {
-  color: $color-primary;
+  color: $theme-color-brand-primary-base;
   font-weight: $font-weight-bold;
 
   @include font-size(14);
@@ -182,11 +182,11 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
     &.has-focus {
       .btn {
-        border-color: $color-primary;
+        border-color: $theme-color-brand-primary-base;
       }
 
       .searchfield {
-        border-color: $color-primary;
+        border-color: $theme-color-brand-primary-base;
       }
     }
 
@@ -363,7 +363,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   background-color: $searchfield-context-bg;
   border: 0;
-  border-top: 1px solid $color-primary-alt;
+  border-top: 1px solid $theme-color-brand-primary-alt;
 
   &.alternate {
     background-color: $searchfield-context-alt-bg;

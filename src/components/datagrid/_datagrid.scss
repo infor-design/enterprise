@@ -1130,7 +1130,7 @@ $datagrid-short-row-height: 23px;
     line-height: $datagrid-row-height;
 
     &.is-active-row {
-      outline: 1px solid $color-primary;
+      outline: 1px solid $theme-color-brand-primary-base;
       outline-offset: -1px;
 
       td {
@@ -1440,7 +1440,7 @@ $datagrid-short-row-height: 23px;
       box-shadow: $datagrid-cell-focus-box-shadow;
 
       .datagrid-cell-wrapper {
-        border: 1px solid $color-primary;
+        border: 1px solid $theme-color-brand-primary-base;
       }
     }
 
@@ -1663,7 +1663,7 @@ $datagrid-short-row-height: 23px;
       position: relative;
 
       .datagrid-cell-wrapper {
-        border: 1px solid $color-primary;
+        border: 1px solid $theme-color-brand-primary-base;
         left: 0;
         position: absolute;
         text-overflow: initial;
@@ -2316,7 +2316,7 @@ $datagrid-short-row-height: 23px;
 
     &:focus,
     &.is-focused {
-      border: 1px solid $color-primary;
+      border: 1px solid $theme-color-brand-primary-base;
       box-shadow: $focus-box-shadow;
     }
 
@@ -3563,7 +3563,7 @@ html[dir='rtl'] {
 
         td {
           .datagrid-cell-wrapper {
-            border-color: $color-primary;
+            border-color: $theme-color-brand-primary-base;
             border-style: solid;
             border-width: 1px 0;
           }
