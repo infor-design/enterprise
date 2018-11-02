@@ -759,6 +759,24 @@ describe('Datagrid paging serverside single select tests', () => {
   });
 });
 
+describe('Datagrid Paging with Summary Row test', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging-with-summary-row');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should display summary row', async () => {
+    expect(await element.all(by.css('tr.datagrid-summary-row')).count()).toEqual(1);
+  });
+});
+
 describe('Datagrid select and focus row', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-select-and-focus-row');
