@@ -1405,7 +1405,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.rowstatus-row-info {
-      @include rowstatus($color-primary);
+      @include rowstatus($theme-color-brand-primary-base);
     }
 
     &.rowstatus-row-in-progress {

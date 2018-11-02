@@ -39,7 +39,7 @@
 @mixin checkbox-checked-after-style {
   @include css3(transform, scaleX(-1) rotate(135deg));
 
-  border-color: $checkbox-arrow-color $checkbox-arrow-color $checkbox-arrow-color transparent;
+  border-color: $checkbox-color-checked-initial-arrow $checkbox-color-checked-initial-arrow $checkbox-color-checked-initial-arrow transparent;
   border-style: solid;
   border-width: 2px 2px 0 0;
   content: '';
@@ -51,7 +51,7 @@
 }
 
 @mixin checkbox-checked-disabled-after-style {
-  border-color: $checkbox-disabled-arrow-color $checkbox-disabled-arrow-color $checkbox-disabled-arrow-color transparent;
+  border-color: $checkbox-color-unchecked-disabled-arrow $checkbox-color-unchecked-disabled-arrow $checkbox-color-unchecked-disabled-arrow transparent;
 }
 
 @mixin checkbox-focus-state {

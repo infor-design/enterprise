@@ -191,7 +191,7 @@ div.multiselect {
   }
 
   &:focus {
-    border-color: $input-focus-border-color !important;
+    border-color: $input-color-focus-border !important;
   }
 
 }
@@ -203,7 +203,7 @@ div.multiselect {
   background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
-  box-shadow: $dropdown-box-shadow, $focus-box-shadow;
+  box-shadow: $dropdown-shadow-initial-boxshadow, $focus-box-shadow;
   font-size: 1.4rem;
   max-height: 300px;
   min-height: 30px;
@@ -232,7 +232,7 @@ div.multiselect {
   }
 
   &.is-ontop {
-    box-shadow: $dropdown-box-shadow-top;
+    box-shadow: $dropdown-shadow-initial-boxshadow-top;
   }
 
   ul {
@@ -310,7 +310,7 @@ div.multiselect {
       .badge {
         background-color: $inverse-color;
         border-color: $inverse-color;
-        color: $dropdown-selected-bg-color !important;
+        color: $dropdown-color-selected-background !important;
       }
     }
 

@@ -182,7 +182,7 @@ $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
 $info-icon-fill: $azure08;
-$selected-bg-color: rgba($color-primary-alt, 0.3);
+$selected-bg-color: rgba($theme-color-brand-primary-base-alt, 0.3);
 
 // Autocomplete
 $autocomplete-light-text: $graphite05;
@@ -348,7 +348,7 @@ $switch-disabled-bg-color: $input-color-readonly-background;
 $switch-disabled-border-color: $theme-color-brand-secondary-alt;
 $switch-disabled-bar-color: $theme-color-brand-secondary-alt;
 $switch-disabled-label-color: $disabled-color;
-$switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $color-primary, 0 0 4px 6px rgba(41, 41, 41, 0.3);
+$switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $theme-color-brand-primary-base, 0 0 4px 6px rgba(41, 41, 41, 0.3);
 $switch-hover-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 
 // Editor
@@ -363,7 +363,7 @@ $editor-middle-border-color: $graphite06;
 $editor-btn-color: $graphite09;
 $editor-btn-hover-color: $graphite05;
 $editor-btn-active-color: $theme-color-brand-primary-base;
-$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $color-primary, $focus-box-shadow;
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(41, 41, 41, 0.3);
 $editor-blockquote-color: $graphite07;
 

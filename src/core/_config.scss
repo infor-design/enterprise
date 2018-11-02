@@ -175,12 +175,12 @@ $input-readonly-color: $input-color-readonly-font;
 
 //States
 $error-color: $theme-color-status-danger;
-$error-color-transparent: rgba($color-danger, 0.3);
+$error-color-transparent: rgba($theme-color-status-danger, 0.3);
 $error-focus-box-shadow:  0 0 4px 2px $error-color-transparent;
 $alert-color: $theme-color-status-warning;
 $confirm-color: $theme-color-status-success;
 $info-color: $theme-color-brand-primary-base;
-$error-bg-color: rgba($color-danger, 0.1);
+$error-bg-color: rgba($theme-color-status-danger, 0.1);
 $error-icon-fill: $theme-color-status-danger;
 $dirty-icon-fill: $theme-color-status-caution;
 $confirm-icon-fill: $theme-color-status-success;
@@ -256,9 +256,9 @@ $formatter-toolbar-separator-color: $theme-color-brand-secondary-alt;
 //Contextual Toolbar
 $contextual-toolbar-bg-color: $theme-color-brand-primary-base;
 $contextual-toolbar-color: $button-color-primary-initial-font;
-$contextual-toolbar-button-color: rgba($button-primary-text-color, 0.8);
-$contextual-toolbar-button-hover-color: rgba($button-primary-text-color, 1);
-$contextual-toolbar-button-disabled-color: rgba($button-primary-text-color, 0.3);
+$contextual-toolbar-button-color: rgba($button-color-primary-initial-font, 0.8);
+$contextual-toolbar-button-hover-color: rgba($button-color-primary-initial-font, 1);
+$contextual-toolbar-button-disabled-color: rgba($button-color-primary-initial-font, 0.3);
 $contextual-panel-seperator-bg-color: $theme-color-brand-secondary-alt;
 
 // Swaplist
@@ -315,7 +315,7 @@ $fileupload-hover-color: $text-color;
 $fileupload-completed-color: $emerald08;
 $fileupload-completed-border-color: $emerald08;
 $fileupload-error-color: $theme-color-status-danger;
-$fileupload-error-hover-color: darken($color-danger, 15%);
+$fileupload-error-hover-color: darken($theme-color-status-danger, 15%);
 $fileupload-error-border-color: $theme-color-status-warning;
 $fileupload-border-color: $graphite05;
 $fileupload-droparea-color: $graphite05;
@@ -385,7 +385,7 @@ $switch-disabled-border-color: $graphite03;
 $switch-disabled-bg-color: $graphite02;
 $switch-disabled-bar-color: $graphite03;
 $switch-disabled-label-color: $theme-color-brand-secondary-alt;
-$switch-focus-box-shadow: 0 0 0 3px $focus-color, 0 0 0 4px $color-primary, 0 0 4px 6px rgba(54, 138, 192, 0.3);
+$switch-focus-box-shadow: 0 0 0 3px $focus-color, 0 0 0 4px $theme-color-brand-primary-base, 0 0 4px 6px rgba(54, 138, 192, 0.3);
 $switch-hover-box-shadow: 0 2px 5px $focus-shadow;
 
 // Editor
@@ -400,7 +400,7 @@ $editor-middle-border-color: $theme-color-brand-secondary-alt;
 $editor-btn-color: $graphite06;
 $editor-btn-hover-color: $text-color;
 $editor-btn-active-color: $theme-color-brand-primary-base;
-$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $color-primary, $focus-box-shadow;
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(54, 138, 192, 0.3);
 $editor-blockquote-color: $graphite06;
 

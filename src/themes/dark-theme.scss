@@ -163,7 +163,7 @@ $error-icon-fill: $alert-red;
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
 $info-icon-fill: $theme-color-brand-primary-base;
-$selected-bg-color: rgba($color-primary, 0.3);
+$selected-bg-color: rgba($theme-color-brand-primary-base, 0.3);
 
 // Autocomplete
 $autocomplete-light-text: $slate04;
@@ -343,7 +343,7 @@ $editor-middle-border-color: $slate04;
 $editor-btn-color: $slate03;
 $editor-btn-hover-color: $white;
 $editor-btn-active-color: $theme-color-brand-primary-base;
-$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $color-primary, $focus-box-shadow;
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
 $editor-blockquote-color: $slate04;
 

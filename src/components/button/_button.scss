@@ -162,7 +162,7 @@ button {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color-primary, 0 0 0 3px $button-primary-bg-color, $focus-box-shadow;
+      box-shadow: 0 0 0 2px $body-color-primary-background, 0 0 0 3px $button-color-primary-initial-background, $focus-box-shadow;
     }
 
     &:active {
@@ -292,7 +292,7 @@ a.btn-close {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color-primary, 0 0 0 3px $button-default-focus-border-color, $focus-box-shadow;
+      box-shadow: 0 0 0 2px $body-color-primary-background, 0 0 0 3px $button-color-secondary-focus-border, $focus-box-shadow;
     }
 
     &:active {
@@ -361,7 +361,7 @@ a.btn-close {
   }
 
   &:focus:not(.hide-focus) {
-    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $button-default-focus-bg-color, $focus-box-shadow;
+    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $button-color-secondary-focus-background, $focus-box-shadow;
 
     &:active {
       box-shadow: none;
@@ -622,10 +622,10 @@ a.btn-close {
 
 .btn-toggle {
   &.is-pressed {
-    color: $button-primary-bg-color !important;
+    color: $button-color-primary-initial-background !important;
 
     svg {
-      fill: $button-primary-bg-color !important;
+      fill: $button-color-primary-initial-background !important;
     }
   }
 }
@@ -772,7 +772,7 @@ html[lang^='fr-'] {
   }
 
   &:focus {
-    box-shadow: 0 0 0 1px $body-bg-color-primary, 0 0 0 2px $color-primary, $focus-box-shadow;
+    box-shadow: 0 0 0 1px $body-color-primary-background, 0 0 0 2px $theme-color-brand-primary-base, $focus-box-shadow;
   }
 
   &:disabled {

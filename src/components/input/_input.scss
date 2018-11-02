@@ -551,7 +551,7 @@ label,
 
 //Info Field
 .field-info {
-  $icon-width: 15px;
+  $this-icon-width: 15px;
 
   @include font-size(12);
 
@@ -568,7 +568,7 @@ label,
     left: 0;
     position: absolute;
     top: 0;
-    width: $icon-size-width;
+    width: $this-icon-width;
   }
 
   .icon-info-field {
@@ -585,13 +585,13 @@ label,
     margin-bottom: 16px;
     margin-top: -2px;
     max-width: 267px;
-    padding-left: $icon-width + 5;
+    padding-left: $this-icon-width + 5;
   }
 }
 
 //Error Field
 .error-message {
-  $icon-width: 14px;
+  $this-icon-width: 14px;
 
   @include font-size(12);
 
@@ -603,26 +603,26 @@ label,
   position: relative;
 
   .icon {
-    height: $icon-size-width;
+    height: $this-icon-width;
     left: 0;
     margin-left: 0;
     margin-top: 0;
     position: absolute;
     top: 0;
-    width: $icon-size-width;
+    width: $this-icon-width;
   }
 
   .message-text {
     font-size: inherit;
     line-height: 15px;
     max-width: 280px;
-    padding-left: $icon-width + 5;
+    padding-left: $this-icon-width + 5;
   }
 }
 
 // Alert Field
 .alert-message {
-  $icon-width: 14px;
+  $this-icon-width: 14px;
 
   @include font-size(12);
 
@@ -634,26 +634,26 @@ label,
   position: relative;
 
   .icon {
-    height: $icon-size-width;
+    height: $this-icon-width;
     left: 0;
     margin-left: 0;
     margin-top: 0;
     position: absolute;
     top: 0;
-    width: $icon-size-width;
+    width: $this-icon-width;
   }
 
   .message-text {
     font-size: inherit;
     line-height: 15px;
     max-width: 280px;
-    padding-left: $icon-width + 5;
+    padding-left: $this-icon-width + 5;
   }
 }
 
 // Confirm Field
 .confirm-message {
-  $icon-width: 14px;
+  $this-icon-width: 14px;
 
   @include font-size(12);
 
@@ -665,27 +665,27 @@ label,
   position: relative;
 
   .icon {
-    height: $icon-size-width;
+    height: $this-icon-width;
     left: 0;
     margin-left: 0;
     margin-top: 0;
     position: absolute;
     top: 0;
-    width: $icon-size-width;
+    width: $this-icon-width;
   }
 
   .message-text {
     font-size: inherit;
     line-height: 15px;
     max-width: 280px;
-    padding-left: $icon-width + 5;
+    padding-left: $this-icon-width + 5;
   }
 }
 
 //Information Field
 .custom-icon-message,
 .info-message {
-  $icon-width: 14px;
+  $this-icon-width: 14px;
 
   @include font-size(12);
 
@@ -697,20 +697,20 @@ label,
   position: relative;
 
   .icon {
-    height: $icon-size-width;
+    height: $this-icon-width;
     left: 0;
     margin-left: 0;
     margin-top: 0;
     position: absolute;
     top: 0;
-    width: $icon-size-width;
+    width: $this-icon-width;
   }
 
   .message-text {
     font-size: inherit;
     line-height: 15px;
     max-width: 280px;
-    padding-left: $icon-width + 5;
+    padding-left: $this-icon-width + 5;
   }
 }
 
