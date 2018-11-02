@@ -70,7 +70,7 @@ function generalRoute(req, res, next) {
 
   // Return the directory listing if we're looking at a directory
   if (utils.isType('directory', directoryPath)) {
-    if (directoryPath.substring(directoryPath.length - 1) === '/') {
+    if (req.originalUrl.substring(req.originalUrl.length - 1) === '/') {
       res.redirect(req.originalUrl.substring(0, req.originalUrl.length - 1));
       return;
     }
