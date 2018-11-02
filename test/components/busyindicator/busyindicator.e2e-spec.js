@@ -135,7 +135,7 @@ describe('Busy Indicator test-block-specific-area tests', () => {
 
 describe('Busy Indicator test-block-whole-page tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/busyindicator/test-block-whole-page tests');
+    await utils.setPage('/components/busyindicator/test-block-whole-page');
   });
 
   it('Should not have errors', async () => {
