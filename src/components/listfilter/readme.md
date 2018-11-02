@@ -1,6 +1,6 @@
 ---
 title: List Filter
-description: This page describes List Filter.
+description: null
 ---
 
 ## Code Example

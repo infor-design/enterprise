@@ -1,6 +1,6 @@
 ---
 title: File Upload
-description: This page describes File Upload.
+description: Displays an editable field. A user can prompt a system menu to select one or more file to upload. Best for allowing users to select files from a local server to be hosted on an application.
 demo:
   embedded:
   - name: Default File Upload Example

@@ -1,6 +1,6 @@
 ---
 title: Modal
-description: This page describes Modal.
+description: null
 demo:
   embedded:
   - name: Modal Example

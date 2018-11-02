@@ -1,6 +1,6 @@
 ---
 title: Area
-description: This page describes Area.
+description: null
 demo:
   embedded:
   - name: Main Example

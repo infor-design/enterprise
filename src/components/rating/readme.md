@@ -1,6 +1,6 @@
 ---
 title: Rating
-description: This page describes Rating.
+description: Displays a scale of selectable values in ascending order. A user can select exactly one value at a time. Best for showing a user's current selection relative to the lower and upper limits of a scale.
 demo:
   embedded:
   - name: Rating Example

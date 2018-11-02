@@ -1,6 +1,6 @@
 ---
 title: Badges
-description: This page describes Badges.
+description: Displays an alphanumeric value. A user can easily skim object-related values. Best used to provide users with information about an object that is worthy of attention.
 demo:
   embedded:
   - name: Default Badge Example

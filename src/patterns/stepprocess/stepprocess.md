@@ -1,6 +1,6 @@
 ---
 title: Step Process Component
-description: This page describes Step Process Component .
+description: 
 demo:
   embedded:
   - name: Main Example

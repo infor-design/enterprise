@@ -1,6 +1,6 @@
 ---
 title: Datagrid
-description: This page describes Datagrid .
+description: Displays a set of related data objects and their attributes. Best for comparison across many objects and attributes.
 demo:
   embedded:
   - name: Simple Datagrid Example
