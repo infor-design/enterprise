@@ -166,6 +166,10 @@ SearchField.prototype = {
    * @returns {boolean} whether or not the parent toolbar is a Flex Toolbar
    */
   get isContainedByFlexToolbar() {
+    if (!this.containmentParent) {
+      return false;
+    }
+
     return this.containmentParent.className.indexOf('flex-toolbar') > -1;
   },
 
