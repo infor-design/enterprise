@@ -8436,13 +8436,60 @@ Datagrid.prototype = {
     }
     const sort = this.sortFunction(this.sortColumn.sortId, this.sortColumn.sortAsc);
 
+    this.setDirtyBeforeSort();
+
     if (!this.settings.disableClientSort) {
       this.settings.dataset.sort(sort);
     }
 
+    this.setDirtyAfterSort();
+
     // Resync the _selectedRows array
     if (this.settings.selectable) {
       this.syncDatasetWithSelectedRows();
+    }
+  },
+
+  /**
+  * Set current data to sync up dirtyArray before sort
+  * @private
+  * @returns {void}
+  */
+  setDirtyBeforeSort() {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    if (s.showDirty && this.dirtyArray && this.dirtyArray.length) {
+      for (let i = 0, l = dataset.length; i < l; i++) {
+        if (typeof this.dirtyArray[i] !== 'undefined') {
+          const node = s.treeGrid ? dataset[i].node : dataset[i];
+          node.tempNodeIndex = i;
+        }
+      }
+    }
+  },
+
+  /**
+  * Set current data to sync up dirtyArray after sort
+  * @private
+  * @returns {void}
+  */
+  setDirtyAfterSort() {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    if (s.showDirty && this.dirtyArray && this.dirtyArray.length) {
+      const changes = [];
+      for (let i = 0, l = dataset.length; i < l; i++) {
+        const node = s.treeGrid ? dataset[i].node : dataset[i];
+        if (typeof node.tempNodeIndex !== 'undefined') {
+          changes.push({ newIdx: i, oldIdx: node.tempNodeIndex });
+          delete node.tempNodeIndex;
+        }
+      }
+      const newDirtyArray = [];
+      for (let i = 0, l = changes.length; i < l; i++) {
+        newDirtyArray[changes[i].newIdx] = this.dirtyArray[changes[i].oldIdx];
+      }
+      this.dirtyArray = newDirtyArray;
     }
   },
 
