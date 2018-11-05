@@ -488,7 +488,7 @@ html[dir='rtl'] {
 .is-mac {
   .searchfield-wrapper {
     &.context {
-      > .searchfield {
+      > #searchfield-context-white.searchfield {
         background-color: $searchfield-context-bg;
       }
     }
