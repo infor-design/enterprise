@@ -623,6 +623,11 @@ Datagrid.prototype = {
         this.pager.activePage = pagerInfo.activePage;
       }
       this.pager.settings.dataset = dataset;
+
+      if (this.settings.showDirty && this.settings.source &&
+        /first|last|next|prev|sorted/.test(pagerInfo.type)) {
+        this.dirtyArray = undefined;
+      }
     }
 
     // Update Paging and Clear Rows
@@ -7485,6 +7490,7 @@ Datagrid.prototype = {
     if (errors.length > 0) {
       this.render();
     }
+    this.dirtyArray = undefined;
   },
 
   /**
@@ -8455,7 +8461,7 @@ Datagrid.prototype = {
   setDirtyBeforeSort() {
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
-    if (s.showDirty && this.dirtyArray && this.dirtyArray.length) {
+    if (s.showDirty && !this.settings.source && this.dirtyArray && this.dirtyArray.length) {
       for (let i = 0, l = dataset.length; i < l; i++) {
         if (typeof this.dirtyArray[i] !== 'undefined') {
           const node = s.treeGrid ? dataset[i].node : dataset[i];
