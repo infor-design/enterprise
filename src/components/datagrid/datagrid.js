@@ -7498,12 +7498,22 @@ Datagrid.prototype = {
   * @returns {array} An array of dirty rows.
   */
   dirtyRows() {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     const rows = [];
-    const data = this.settings.dataset;
 
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].rowStatus && data[i].rowStatus.icon === 'dirty') {
-        rows.push(data[i]);
+    if (s.showDirty && this.dirtyArray && this.dirtyArray.length) {
+      for (let i = 0, l = dataset.length; i < l; i++) {
+        const row = this.dirtyArray[i];
+        if (typeof row !== 'undefined') {
+          for (let i2 = 0, l2 = row.length; i2 < l2; i2++) {
+            const col = row[i2];
+            if (typeof col !== 'undefined' && col.isDirty) {
+              rows.push(s.treeGrid ? dataset[i].node : dataset[i]);
+              break;
+            }
+          }
+        }
       }
     }
     return rows;
