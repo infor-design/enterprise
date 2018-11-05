@@ -481,3 +481,16 @@ html[dir='rtl'] {
     }
   }
 }
+
+//for iOS fixes
+
+.ios,
+.is-mac {
+  .searchfield-wrapper {
+    &.context {
+      > .searchfield {
+        background-color: $searchfield-context-bg;
+      }
+    }
+  }
+}
