@@ -8,8 +8,15 @@
   <script>
     $('#autocomplete-default').on('selected', function (e, elem, args) {
       console.log(args);
-    }).on('beforeopen.autocomplete', function (e, elem, args) {
+    }).on('beforeopen.autocomplete', function (e, elem) {
       console.log('beforeopen');
+
+      if (elem.value.charAt(0) !== '{') {
+        console.log('not open');
+        return false;
+      } else {
+        console.log('open');
+      }
     });
   </script>
 </div>
