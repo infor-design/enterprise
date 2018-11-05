@@ -156,15 +156,14 @@ Textarea.prototype = {
       if (oldHeight === newHeight) {
         return;
       }
-    }
-    else {
+    } else {
       self.element.css('overflow', 'hidden');
     }
 
     if (oldHeight < newHeight) {
       self.scrollTop = 0;
 
-      if (self.settings.autoGrowAnimate &&  newHeight !== maxHeight) {
+      if (self.settings.autoGrowAnimate && newHeight !== maxHeight) {
         self.element.stop().animate({ height: newHeight }, self.settings.autoGrowAnimateSpeed);
       } else {
         self.element.innerHeight(newHeight);
