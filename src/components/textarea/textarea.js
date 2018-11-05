@@ -153,7 +153,7 @@ Textarea.prototype = {
     if (maxHeight > 0 && maxHeight < newHeight) {
       newHeight = maxHeight;
       self.element.css('overflow', '');
-      if (oldHeight == newHeight) {
+      if (oldHeight === newHeight) {
         return;
       }
     }
