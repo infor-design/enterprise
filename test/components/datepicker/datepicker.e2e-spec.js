@@ -354,7 +354,8 @@ describe('Datepicker Range Tests', () => {
 
     const testDate1 = new Date();
     const testDate2 = new Date();
-    testDate2.setDate(new Date(testDate2.getFullYear(), testDate2.getMonth() + 1, 0).getDate());
+    const testDate3 = new Date(testDate2.getFullYear(), testDate2.getMonth() + 1, 0);
+    await testDate2.setDate(testDate3.getDate());
 
     expect(await element(by.id('range-novalue')).getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/1/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
   });
@@ -416,9 +417,9 @@ describe('Datepicker Timeformat Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     const todayEl = await element(by.css('button.is-today'));
+    const testDate = new Date();
     await todayEl.click();
 
-    const testDate = new Date();
     let hours = testDate.getHours();
     let minutes = testDate.getMinutes();
     let amPm = 'AM';
