@@ -1167,7 +1167,7 @@ Datagrid.prototype = {
             for (let i = 0; i < col.options.length; i++) {
               const option = col.options[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              if (option && optionValue) {
+              if (option && optionValue !== '') {
                 filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
               }
             }
@@ -1178,14 +1178,10 @@ Datagrid.prototype = {
         case 'multiselect':
           filterMarkup += `<select ${col.filterDisabled ? ' disabled' : ''}${col.filterType === 'select' ? ' class="dropdown"' : ' multiple class="multiselect"'}id="${filterId}">`;
           if (col.options) {
-            if (col.filterType === 'select') {
-              filterMarkup += '<option></option>';
-            }
-
             for (let i = 0; i < col.options.length; i++) {
               const option = col.options[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              if (option && optionValue) {
+              if (option && option.label) {
                 filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
               }
             }
@@ -1574,7 +1570,7 @@ Datagrid.prototype = {
         }
 
         if (columnDef.filterType === 'contents' || columnDef.filterType === 'select' || columnDef.filterType === 'multiselect') {
-          rowValue = rowValue.toLowerCase();
+          rowValue = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         }
 
         if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '')) &&
