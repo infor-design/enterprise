@@ -8438,6 +8438,7 @@ Datagrid.prototype = {
       this.settings.dataset.sort(sort);
     }
 
+    this.setTreeDepth();
     this.setDirtyAfterSort();
 
     // Resync the _selectedRows array
