@@ -1,6 +1,6 @@
 ---
 title: Searchfield
-description: This page describes Searchfield.
+description: Displays an editable field. A user can enter and then search for an alphanumeric value within the system. Best used for targeted, keyword-based searches for specific objects.
 demo:
   embedded:
   - name: Common Configuration

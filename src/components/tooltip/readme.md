@@ -1,6 +1,6 @@
 ---
 title: Tooltip Component
-description: This page describes Tooltip Component .
+description: Displays additional content as an overlay in the context of a component. A user can prompt the content to display via proximity or direct interaction. Best when a component lacks clarity and requires additional instruction or information.
 demo:
   embedded:
   - name: Default Tooltip Example

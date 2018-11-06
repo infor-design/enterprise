@@ -1,6 +1,6 @@
 ---
 title: Field Set
-description: This page describes Field Set.
+description: null
 demo:
   embedded:
   - name: Default Fieldset Example

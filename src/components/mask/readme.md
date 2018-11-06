@@ -1,6 +1,6 @@
 ---
 title: Mask
-description: This page describes Mask.
+description: null
 demo:
   embedded:
   - name: Main Example
@@ -19,7 +19,7 @@ demo:
 The Masked Input limits the types of text input that can be included inside of an HTML Input field.  Masking of the input is done as a user is typing text into the input field, and can also be done on an entire string of text (for example, copy/paste or programmatically).  This can be used for several purposes, such as:
 
 - Limiting text in simple patterns, such as credit cards and phone numbers.
-- Automatically formatting numbers, dates, and times to the current [Locale](../components/locale/locale.md).
+- Automatically formatting numbers, dates, and times to the current [Locale](../locale).
 
 ### Defining a Mask Pattern
 

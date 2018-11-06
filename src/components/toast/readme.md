@@ -1,6 +1,6 @@
 ---
 title: Toast Component
-description: This page describes Toast Component .
+description: Displays a given data set in a visual way. Best for showing feedback about a system process that is not related to the current view.
 demo:
   embedded:
   - name: Common Configuration

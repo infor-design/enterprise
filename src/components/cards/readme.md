@@ -1,6 +1,6 @@
 ---
 title: Cards
-description: This page describes Cards.
+description: null
 demo:
   embedded:
   - name: Simple Card Example
