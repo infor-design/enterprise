@@ -6469,6 +6469,10 @@ Datagrid.prototype = {
       return;
     }
 
+    if (/dirty/.test(status)) {
+      return;
+    }
+
     if (!this.settings.dataset[idx]) {
       return;
     }
@@ -7428,7 +7432,7 @@ Datagrid.prototype = {
   },
 
   /**
-   * Clear a row level all errors, alerts, info messages and dirty indicators
+   * Clear a row level all errors, alerts, info messages
    * @param {number} row The row index.
    * @returns {void}
    */
@@ -7444,7 +7448,7 @@ Datagrid.prototype = {
   },
 
   /**
-   * Clear all errors, alerts, info messages and dirty indicators in entire datagrid.
+   * Clear all errors, alerts and info messages in entire datagrid.
    * @returns {void}
    */
   clearAllErrors() {
@@ -7495,7 +7499,13 @@ Datagrid.prototype = {
     if (errors.length > 0) {
       this.render();
     }
+
+    // Clear dirty cells
     this.dirtyArray = undefined;
+    const cells = [].slice.call(this.element[0].querySelectorAll('.is-dirty-cell'));
+    cells.forEach((cell) => {
+      cell.classList.remove('is-dirty-cell');
+    });
   },
 
   /**
@@ -8798,7 +8808,7 @@ Datagrid.prototype = {
       if (isRowstatus || isSvg) {
         const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
         const classList = rowNode ? rowNode.classList : [];
-        tooltip.isError = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
+        tooltip.isError = classList.contains('rowstatus-row-error');
         tooltip.placement = 'right';
 
         // For nonVisibleCellErrors
