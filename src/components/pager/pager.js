@@ -292,6 +292,10 @@ Pager.prototype = {
       }
 
       if (li.is('.pager-prev')) {
+        if (self.settings.indeterminate && self.activePage <= 1) {
+          self.activePage = self.pageCount();
+        }
+
         self.setActivePage(self.activePage - 1, false, 'prev');
         if (self.settings.onPreviousPage) {
           self.settings.onPreviousPage(this, opts);
@@ -310,6 +314,10 @@ Pager.prototype = {
       }
 
       if (li.is('.pager-first')) {
+        if (self.settings.indeterminate && self.activePage <= 1) {
+          self.activePage = self.pageCount();
+        }
+
         self.setActivePage(1, false, 'first');
         if (self.settings.onFirstPage) {
           self.settings.onFirstPage(this, opts);
