@@ -7,6 +7,13 @@ $responsive-searchfield-filled-out-width: 34px;
 .toolbar-section {
   .searchfield-wrapper {
     margin: 0 5px 0 0;
+
+    .collapse-button {
+      display: none;
+      min-width: 0;
+      padding: 0;
+      width: $responsive-searchfield-filled-out-width;
+    }
   }
 }
 
@@ -47,6 +54,39 @@ html[dir='rtl'] {
     .toolbar-searchfield-wrapper {
       &.has-text {
         width: 34px;
+      }
+    }
+
+    .searchfield-wrapper {
+      > .icon.close {
+        right: 40px;
+      }
+    }
+  }
+
+  .toolbar-section {
+    .searchfield-wrapper {
+      &.is-open {
+        .collapse-button {
+          display: inline;
+        }
+
+        &.has-collapse-button {
+          .searchfield {
+            width: calc(100% - 34px);
+          }
+        }
+      }
+    }
+  }
+
+  html[dir='rtl'] {
+    .flex-toolbar {
+      .searchfield-wrapper {
+        > .icon.close {
+          left: 40px;
+          right: auto;
+        }
       }
     }
   }

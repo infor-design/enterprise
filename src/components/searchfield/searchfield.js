@@ -348,6 +348,24 @@ SearchField.prototype = {
       this.setCategoryButtonText();
     }
 
+    // Flex Toolbar Searchfields contain an extra button for use as a closing trigger
+    if (this.isContainedByFlexToolbar) {
+      if (!this.collapseButton || !this.collapseButton.length) {
+        this.collapseButton = $(`
+          <button class="btn-secondary collapse-button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-exit-fullview"></use>
+            </svg>
+            <span class="audible">${Locale.translate('Collapse')}</span>
+          </button>
+        `);
+      }
+      this.wrapper[0].classList.add('has-collapse-button');
+      this.element.after(this.collapseButton);
+    } else {
+      this.wrapper[0].classList.remove('has-collapse-button');
+    }
+
     // Pull a Go Button from markup, if applicable.
     let goButton = this.wrapper.next('.go-button');
     if (!goButton.length) {
@@ -731,6 +749,12 @@ SearchField.prototype = {
         self.adjustOnBreakpoint();
       });
       self.adjustOnBreakpoint();
+    }
+
+    if (this.collapseButton && this.collapseButton.length) {
+      this.collapseButton.on(`click.${this.id}`, (e) => {
+        self.collapseResponsive(e);
+      });
     }
 
     if (this.toolbarParent) {
@@ -1740,6 +1764,13 @@ SearchField.prototype = {
   },
 
   /**
+   * @private
+   */
+  collapseResponsive() {
+    alert('sup dawg');
+  },
+
+  /**
    * Adds/removes a CSS class to the searchfield wrapper depending on whether or not the input field is empty.
    * Needed for expand/collapse scenarios, for proper searchfield resizing.
    * @private
@@ -1851,11 +1882,18 @@ SearchField.prototype = {
     }
 
     if (this.goButton && this.goButton.length) {
-      this.goButton.off(`click.${this.id} blur.${this.id}`);
+      this.goButton.off(`click.${this.id} blur.${this.id}`).remove();
+      delete this.goButton;
     }
 
     if (this.categoryButton && this.categoryButton.length) {
-      this.categoryButton.off();
+      this.categoryButton.off().remove();
+      delete this.categoryButton;
+    }
+
+    if (this.collapseButton && this.collapseButton.length) {
+      this.collapseButton.off().remove();
+      delete this.collapseButton;
     }
 
     // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
