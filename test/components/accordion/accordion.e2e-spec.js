@@ -122,3 +122,23 @@ describe('Accordion example-index tests', () => {
     expect(await element(by.className('is-expanded'))).toBeTruthy();
   });
 });
+
+describe('Accordion expand multiple tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/accordion/test-expand-all');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should expand both panes', async () => {
+    expect(await element.all(by.css('.accordion-header.is-expanded')).count()).toEqual(2);
+    await element.all(by.css('.accordion-pane.is-expanded')).get(0).getSize().then((size) => {
+      expect(size.height).not.toBeLessThan(50);
+    });
+    await element.all(by.css('.accordion-pane.is-expanded')).get(1).getSize().then((size) => {
+      expect(size.height).not.toBeLessThan(50);
+    });
+  });
+});

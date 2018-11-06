@@ -34,8 +34,7 @@ We will next add better responsiveness, better keyboard support, adding events a
         <a href="#"><span>Upcoming Time off</span></a>
       </div>
       <div class="accordion-pane">
-        <div class="calendar-event-upcoming accordion-content">
-          <p>Remix, optimize, "B2B, iterate?" Best-of-breed efficient beta-test; social cutting-edge: rich magnetic tagclouds front-end infomediaries viral authentic incentivize sexy extensible functionalities incentivize. Generate killer authentic grow vertical blogospheres, functionalities ecologies harness, "tag solutions synergies exploit data-driven B2C open-source e-markets optimize create, enhance convergence create." Out-of-the-box strategize best-of-breed back-end, deploy design markets metrics. Content web services enhance leading-edge Cluetrain, deliverables dot-com scalable. User-centric morph, back-end, synthesize mesh, frictionless, exploit next-generation tag portals, e-commerce channels; integrate; recontextualize distributed revolutionize innovative eyeballs.</p>
+        <div class="calendar-upcoming-events accordion-content">
         </div>
       </div>
     </div>

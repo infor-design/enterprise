@@ -148,4 +148,28 @@ describe('Monthview API', () => {
 
     expect(document.getElementById('monthview-datepicker-field').value).toEqual(stringDate);
   });
+
+  it('Should be able to select a day by date', () => {
+    monthviewAPI.selectDay(new Date(2018, 7, 15));
+
+    expect(document.getElementById('monthview-datepicker-field').value).toEqual('August 2018');
+    expect(document.body.querySelector('.monthview .is-selected .day-text').innerText).toEqual('15');
+
+    monthviewAPI.selectDay(new Date(2018, 8, 22));
+
+    expect(document.getElementById('monthview-datepicker-field').value).toEqual('September 2018');
+    expect(document.body.querySelector('.monthview .is-selected .day-text').innerText).toEqual('22');
+  });
+
+  it('Should be able to select a day by key', () => {
+    monthviewAPI.selectDay('20180820');
+
+    expect(document.getElementById('monthview-datepicker-field').value).toEqual('August 2018');
+    expect(document.body.querySelector('.monthview .is-selected .day-text').innerText).toEqual('20');
+
+    monthviewAPI.selectDay('20180922');
+
+    expect(document.getElementById('monthview-datepicker-field').value).toEqual('September 2018');
+    expect(document.body.querySelector('.monthview .is-selected .day-text').innerText).toEqual('22');
+  });
 });

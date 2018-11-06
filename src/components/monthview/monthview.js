@@ -833,29 +833,55 @@ MonthView.prototype = {
     // Allow dates to be selected
     if (self.settings.selectable) {
       self.element.addClass('is-selectable').off('click.monthview-day').on('click.monthview-day', 'td', (e) => {
-        const node = e.currentTarget;
         const data = $(e.currentTarget).data();
         const key = data.key;
-
-        const args = {
-          node,
-          key,
-          day: parseInt(key.substr(6, 2), 10),
-          month: parseInt(key.substr(4, 2), 10),
-          year: parseInt(key.substr(0, 4), 10)
-        };
-
-        self.element.trigger('selected', args);
-        if (self.settings.onSelected) {
-          self.settings.onSelected(node, args);
-        }
-
-        self.element.find('td.is-selected').removeClass('is-selected');
-        $(node).addClass('is-selected');
+        self.selectDay(key);
       });
     }
 
     return this;
+  },
+
+  /**
+   * Select a specific date visually.
+   * @param {date | string} date specific date or a date key (hash string of the date)
+   */
+  selectDay(date) {
+    if (typeof date !== 'string') {
+      date = stringUtils.padDate(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+      );
+    }
+
+    let dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
+    const day = parseInt(date.substr(6, 2), 10);
+    const month = parseInt(date.substr(4, 2), 10);
+    const year = parseInt(date.substr(0, 4), 10);
+
+    if (dayObj.length === 0) {
+      // Show month
+      this.showMonth(month - 1, year);
+      dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
+    }
+    const node = dayObj[0].elem[0];
+
+    const args = {
+      node,
+      key: date,
+      day,
+      month,
+      year
+    };
+
+    this.element.trigger('selected', args);
+    if (this.settings.onSelected) {
+      this.settings.onSelected(node, args);
+    }
+
+    this.element.find('td.is-selected').removeClass('is-selected');
+    $(node).addClass('is-selected');
   },
 
   /**
