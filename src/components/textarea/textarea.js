@@ -27,7 +27,7 @@ const TEXTAREA_DEFAULTS = {
 * @param {boolean} [settings.autoGrow = false] Will automatically expand the textarea to fit the contents when typing.
 * @param {boolean} [settings.autoGrowAnimate  = true] Will animate the textarea grow.
 * @param {number} [settings.autoGrowAnimateSpeed = 200] The speed of the animation.
-* @param {null|number} [settings.autoGrowMaxHeight = 'Maximum height in pixels'] The Max Height of the textarea when autoGrow is enabled.
+* @param {number} [settings.autoGrowMaxHeight = null] The Max Height of the textarea when autoGrow is enabled.
 * @param {boolean} [settings.characterCounter = true] Displays a counter that counts down from the maximum.
 * @param {boolean} [settings.maxLength = number] Maximum characters allowed in textarea.
 * length allowed.
