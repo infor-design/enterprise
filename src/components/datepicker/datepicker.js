@@ -154,7 +154,7 @@ DatePicker.prototype = {
     this.trigger = $.createIconElement('calendar').insertAfter(this.element);
 
     // Hide icon if datepicker input is hidden 
-    if (this.element.is(':hidden') || this.element.css('visibility') === 'hidden') {
+    if ((this.element.is(':hidden') || this.element.css('visibility') === 'hidden') && this.element.parents('.modal').length === 0) {
       this.trigger.hide();
     }
 
