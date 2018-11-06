@@ -1003,4 +1003,21 @@ utils.hasClass = function hasClass(elem, classStr) {
   return r;
 };
 
+/**
+ * Returns the sign of a number, indicating whether the number is positive, negative or zero
+ * @param {number} x A number.
+ * @returns {number} A number representing the sign of the given argument. If the argument is a positive number, negative number, positive zero or negative zero, the function will return 1, -1, 0 or -0 respectively. Otherwise, NaN is returned.
+ */
+math.sign = function (x) {
+  if (Math.sign) {
+    return Math.sign(x);
+  }
+
+  x = +x;
+  if (x === 0 || isNaN(x)) {
+    return x;
+  }
+  return x > 0 ? 1 : -1;
+};
+
 export { utils, math };

@@ -1,6 +1,6 @@
 ---
 title: Message
-description: This page describes Message.
+description: null
 demo:
   embedded:
   - name: Message Examples

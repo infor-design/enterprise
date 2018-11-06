@@ -1,6 +1,6 @@
 ---
 title: Counts
-description: This page describes Counts.
+description: null
 demo:
   embedded:
   - name: Counts - Of an Instance

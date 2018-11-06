@@ -567,6 +567,9 @@ Toolbar.prototype = {
           return;
         }
 
+        if (document.activeElement && document.activeElement.tagName === 'INPUT') {
+          return;
+        }
         el.focus();
         self.buttonset.scrollTop(0);
       });

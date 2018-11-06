@@ -1,6 +1,6 @@
 ---
 title: Context Menu
-description: This page describes Context Menu .
+description: null
 demo:
   embedded:
   - name: Context Menu on an Input

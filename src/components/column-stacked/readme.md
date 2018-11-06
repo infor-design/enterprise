@@ -1,6 +1,6 @@
 ---
 title: Column Chart (Stacked)
-description: This page describes Column Chart (Stacked).
+description: null
 demo:
   embedded:
   - name: Standard Stacked Column Chart

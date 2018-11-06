@@ -1,6 +1,6 @@
 ---
 title: Charts
-description: This page describes Charts.
+description: Displays a given data set in a visual way. A user can interpret the data to gain insights. Best for showing data distributions, comparisons, or trends.
 demo:
   embedded:
   - name: Using Patterns on Chart Colors

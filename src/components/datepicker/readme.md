@@ -1,6 +1,6 @@
 ---
 title: Datepicker
-description: This page describes Datepicker.
+description: Displays one or more selectable values in a menu that is collapsed by default. Best for allowing users to select date and time values from a predetermined calendar while ensuring appropriate value formatting.
 demo:
   embedded:
   - name: Simple Date Picker Example

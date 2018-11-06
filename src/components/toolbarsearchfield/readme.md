@@ -1,6 +1,6 @@
 ---
 title: Toolbar Searchfield
-description: This page describes Toolbar Searchfield .
+description: null
 demo:
   embedded:
   - name: Common Configuration

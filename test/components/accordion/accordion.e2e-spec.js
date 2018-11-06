@@ -16,10 +16,8 @@ describe('Accordion example-accordion-click-event tests', () => {
   });
 
   it('Should toast diplay when accordion is clicked', async () => {
-    const accordionEl = await element.all(by.className('accordion-header')).first();
-
-    await browser.actions().mouseMove(accordionEl).perform();
-    await browser.actions().click(accordionEl).perform();
+    await browser.actions().mouseMove(await element.all(by.className('accordion-header')).first()).perform();
+    await browser.actions().click(await element.all(by.className('accordion-header')).first()).perform();
 
     expect(await element(by.className('toast'))).toBeTruthy();
   });

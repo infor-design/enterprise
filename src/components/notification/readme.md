@@ -1,6 +1,6 @@
 ---
 title: Notification
-description: This page describes banner style notifications.
+description: null
 demo:
   embedded:
   - name: Showing a notfication banner

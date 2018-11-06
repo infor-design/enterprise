@@ -1,6 +1,6 @@
 ---
 title: Tree Component
-description: This page describes Tree Component .
+description: null
 demo:
   embedded:
   - name: Common Configuration

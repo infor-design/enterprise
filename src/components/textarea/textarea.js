@@ -292,7 +292,6 @@ Textarea.prototype = {
    * Destroys this component instance and unlinks it from its element.
    */
   destroy() {
-    $.removeData(this.element[0], COMPONENT_NAME);
     if (this.printarea && this.printarea.length) {
       this.printarea.remove();
     }
