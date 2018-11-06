@@ -558,6 +558,7 @@ Pager.prototype = {
     if (pageNum === undefined ||
         pageNum === 0 ||
         isNaN(pageNum) ||
+        (pageNum > this.pageCount() && this.pageCount() > 0) ||
         (pageNum === this.activePage && !force)) {
       this.renderBar(pagingInfo);
       return this.activePage;
@@ -721,12 +722,13 @@ Pager.prototype = {
             pagesize: self.settings.pagesize,
             settings: self.settings
           });
-          self.element.trigger('pagesizechange', {
-            tag: args,
-            pagesize: self.settings.pagesize,
-            settings: self.settings
-          });
         }
+
+        self.element.trigger('pagesizechange', {
+          tag: args,
+          pagesize: self.settings.pagesize,
+          settings: self.settings
+        });
 
         // Update the number of records per page
         self.pagerBar.find('.btn-menu span')
@@ -1039,6 +1041,10 @@ Pager.prototype = {
       expr = (self.activePage === 1 ? `:not(".is-filtered"):lt(${rows})` : `:not(".is-filtered"):lt(${(self.activePage) * rows}):gt(${((self.activePage - 1) * rows) - 1})`);
 
       elements.filter(expr).show();
+
+      if (self.element.children('.datagrid-summary-row')) {
+        self.element.children('.datagrid-summary-row').show();
+      }
     } else {
       elements.show();
     }

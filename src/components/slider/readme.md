@@ -1,6 +1,6 @@
 ---
 title: Slider Component
-description: This page describes Slider Component.
+description: Displays a scale of selectable values in ascending order. A user can select a single value or range of values. Best for showing a user’s current selection relative to the lower and upper limits of a scale.
 demo:
   embedded:
   - name: Main Example

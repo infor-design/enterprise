@@ -1167,7 +1167,7 @@ Datagrid.prototype = {
             for (let i = 0; i < col.options.length; i++) {
               const option = col.options[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              if (option && optionValue) {
+              if (option && optionValue !== '') {
                 filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
               }
             }
@@ -1178,14 +1178,10 @@ Datagrid.prototype = {
         case 'multiselect':
           filterMarkup += `<select ${col.filterDisabled ? ' disabled' : ''}${col.filterType === 'select' ? ' class="dropdown"' : ' multiple class="multiselect"'}id="${filterId}">`;
           if (col.options) {
-            if (col.filterType === 'select') {
-              filterMarkup += '<option></option>';
-            }
-
             for (let i = 0; i < col.options.length; i++) {
               const option = col.options[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              if (option && optionValue) {
+              if (option && option.label) {
                 filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
               }
             }
@@ -1238,6 +1234,7 @@ Datagrid.prototype = {
         $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
           const menu = $(this).next('.popupmenu-wrapper');
           utils.fixSVGIcons(menu);
+          self.hideTooltip();
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
           .on('selected.datagrid-filter', (e, anchor) => {
@@ -1573,7 +1570,7 @@ Datagrid.prototype = {
         }
 
         if (columnDef.filterType === 'contents' || columnDef.filterType === 'select' || columnDef.filterType === 'multiselect') {
-          rowValue = rowValue.toLowerCase();
+          rowValue = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         }
 
         if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '')) &&
@@ -2946,7 +2943,7 @@ Datagrid.prototype = {
         ((activePage - 1) * self.settings.pagesize) : 0));
 
     isEven = (this.recordCount % 2 === 0);
-    const isSelected = this.isNodeSelected(rowData);
+    const isSelected = this.isRowSelected(rowData);
     const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
     if (rowData && rowData.rowStatus) {
@@ -3631,36 +3628,59 @@ Datagrid.prototype = {
       td: '.datagrid-body tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
       rowstatus: '.datagrid-body tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
     };
-    selector.errorIcon = `${selector.td} .icon-error`;
+
+    if (this.settings.filterable) {
+      selector.headerColumn = `${selector.th} .datagrid-column-wrapper`;
+      selector.headerFilter = `${selector.th} .datagrid-filter-wrapper .btn-menu`;
+      selector.header = `${selector.headerColumn}, ${selector.headerFilter}`;
+    } else {
+      selector.header = selector.th;
+    }
+
+    selector.iconAlert = `${selector.td} .icon-alert`;
+    selector.iconConfirm = `${selector.td} .icon-confirm`;
+    selector.iconError = `${selector.td} .icon-error`;
+    selector.iconInfo = `${selector.td} .icon-info`;
+
+    selector.icons = `${selector.iconAlert}, ${selector.iconConfirm}, ${selector.iconError}, ${selector.iconInfo}`;
 
     // Selector string
     if (rowstatus && this.settings.enableTooltips) {
-      selector.str = `${selector.th}, ${selector.td}, ${selector.errorIcon}, ${selector.rowstatus}`;
+      selector.str = `${selector.header}, ${selector.td}, ${selector.icons}, ${selector.rowstatus}`;
     } else if (rowstatus) {
-      selector.str = `${selector.th}, ${selector.rowstatus}`;
+      selector.str = `${selector.header}, ${selector.rowstatus}`;
     } else {
-      selector.str = `${selector.th}, ${selector.td}, ${selector.errorIcon}`;
+      selector.str = `${selector.header}, ${selector.td}, ${selector.icons}`;
     }
 
     // Handle tooltip to show
     const handleShow = (elem, delay) => {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       tooltipTimer = setTimeout(() => {
+        const isHeaderColumn = utils.hasClass(elem, 'datagrid-column-wrapper');
+        const isHeaderFilter = utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
+        const isPopup = isHeaderFilter ?
+          elem.parentNode.querySelectorAll('.popupmenu.is-open').length > 0 : false;
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
-        const width = self.getOuterWidth(elem);
+        const containerEl = isHeaderColumn ? elem.parentNode : elem;
+        const width = self.getOuterWidth(containerEl);
 
-        if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35)))) {
+        if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
       }, delay);
     };
 
     // Handle tooltip to hide
-    const handleHide = (delay) => {
+    const handleHide = (elem, delay) => {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       clearTimeout(tooltipTimer);
       setTimeout(() => {
         self.hideTooltip();
+        // Clear cache for header filter, so it can use always current selected
+        if (utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper')) {
+          self.removeTooltipData(elem);
+        }
       }, delay);
     };
 
@@ -3671,11 +3691,11 @@ Datagrid.prototype = {
         handleShow(this);
       })
       .off('mouseleave.gridtooltip click.gridtooltip', selector.str)
-      .on('mouseleave.gridtooltip click.gridtooltip', selector.str, () => {
-        handleHide();
+      .on('mouseleave.gridtooltip click.gridtooltip', selector.str, function () {
+        handleHide(this);
       })
       .off('longpress.gridtooltip', selector.str)
-      .on('longpress.gridtooltip', selector.str, () => {
+      .on('longpress.gridtooltip', selector.str, function () {
         handleShow(this, 0);
       })
       .off('keydown.gridtooltip', selector.str)
@@ -3687,7 +3707,7 @@ Datagrid.prototype = {
           handleShow(this, 0);
         } else if (key === 27) { // Escape
           handle = self.isGridtooltip();
-          handleHide(0);
+          handleHide(this, 0);
         }
 
         if (handle) {
@@ -4552,7 +4572,7 @@ Datagrid.prototype = {
       if (rowElem.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer')) {
         isTrigger = false; // No need to trigger if no data item
       } else {
-        row = self.pagingRowIndex(self.actualRowIndex(rowElem));
+        row = self.actualPagingRowIndex(self.actualRowIndex(rowElem));
         item = self.settings.dataset[self.groupArray[row].group];
         if (item && item.values) {
           item = item.values[self.groupArray[row].node];
@@ -4842,7 +4862,7 @@ Datagrid.prototype = {
 
         if (self.settings.groupable) {
           if (!rowElem.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer')) {
-            rowIdx = self.pagingRowIndex(self.actualRowIndex(rowElem));
+            rowIdx = self.actualPagingRowIndex(self.actualRowIndex(rowElem));
             item = self.settings.dataset[self.groupArray[rowIdx].group];
             if (item && item.values) {
               item = item.values[self.groupArray[rowIdx].node];
@@ -5464,6 +5484,11 @@ Datagrid.prototype = {
    */
   highlightSearchRows(term) {
     const self = this;
+
+    if (!term || term === '') {
+      return;
+    }
+
     // Move across all visible cells and rows, highlighting
     this.tableBody.find('tr').each(function () {
       let found = false;
@@ -5559,12 +5584,12 @@ Datagrid.prototype = {
   /**
   * Check if node index is exists in selected nodes
   * @private
-  * @param {object} node The node to compare.
+  * @param {object} row The row to compare.
   * @returns {boolean} If its selected or not.
   */
-  isNodeSelected(node) {
+  isRowSelected(row) {
     // As of 4.3.3, return the rows that have _selected = true
-    return node ? node._selected === true : false;
+    return row ? row._selected === true : false;
   },
 
   /**
@@ -5580,7 +5605,7 @@ Datagrid.prototype = {
     const self = this;
 
     // do not add if already exists in selected
-    if ((!data || self.isNodeSelected(data)) && !force) {
+    if ((!data || self.isRowSelected(data)) && !force) {
       return;
     }
     checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
@@ -5678,18 +5703,19 @@ Datagrid.prototype = {
       } else {
         rowData = s.dataset[dataRowIndex];
         if (s.groupable) {
-          const gData = self.groupArray[idx];
-          rowData = s.dataset[gData.group].values[gData.node];
-          const actualIdx = self.actualPagingRowIndex(idx);
+          const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
+          const gData = self.groupArray[row];
+          rowData = self.settings.dataset[gData.group].values[gData.node];
+          dataRowIndex = self.actualPagingRowIndex(idx);
           this._selectedRows.push({
-            idx: actualIdx,
+            idx: dataRowIndex,
             data: rowData,
-            elem: self.dataRowNode(actualIdx),
-            group: s.dataset[gData.group]
+            elem: rowNode,
+            group: s.dataset[self.groupArray[row].group]
           });
         }
         self.selectNode(rowNode, dataRowIndex, rowData);
-        self.lastSelectedRow = idx;// Rememeber index to use shift key
+        self.lastSelectedRow = idx; // Rememeber index to use shift key
       }
 
       // Append data to selectedRows
@@ -6158,7 +6184,7 @@ Datagrid.prototype = {
 
       if (s.treeGrid) {
         for (let i = 0; i < s.treeDepth.length; i++) {
-          if (self.isNodeSelected(s.treeDepth[i].node)) {
+          if (self.isRowSelected(s.treeDepth[i].node)) {
             if (typeof index !== 'undefined') {
               if (index === s.treeDepth[i].idx - 1) {
                 removeSelected(s.treeDepth[i].node);
@@ -6176,8 +6202,9 @@ Datagrid.prototype = {
           rowData = self.settings.dataset[selIdx];
         }
         if (s.groupable) {
-          const gData = self.groupArray[idx];
-          rowData = s.dataset[gData.group].values[gData.node];
+          const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
+          const gData = self.groupArray[row];
+          rowData = self.settings.dataset[gData.group].values[gData.node];
         }
         if (rowData !== undefined) {
           removeSelected(rowData);
@@ -8354,7 +8381,7 @@ Datagrid.prototype = {
         for (let k = 0; k < dataset[i].values.length; k++) {
           idx++;
           data = dataset[i].values[k];
-          if (this.isNodeSelected(data)) {
+          if (this.isRowSelected(data)) {
             this._selectedRows.push({
               idx,
               data,
@@ -8368,7 +8395,7 @@ Datagrid.prototype = {
         }
       } else {
         data = s.treeGrid ? dataset[i].node : dataset[i];
-        if (this.isNodeSelected(data)) {
+        if (this.isRowSelected(data)) {
           this._selectedRows.push({
             idx: i,
             data,
@@ -8607,21 +8634,24 @@ Datagrid.prototype = {
     if (typeof tooltip === 'undefined') {
       const contentTooltip = elem.querySelector('.is-editor.content-tooltip');
       const aTitle = elem.querySelector('a[title]');
-      const isRowstatus = elem.getAttribute('class').match(/rowstatus-cell/g);
+      const isRowstatus = utils.hasClass(elem, 'rowstatus-cell');
       const isSvg = elem.tagName.toLowerCase() === 'svg';
       const isTh = elem.tagName.toLowerCase() === 'th';
+      const isHeaderColumn = utils.hasClass(elem, 'datagrid-column-wrapper');
+      const isHeaderFilter = utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
       let title;
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
 
-      if (isTh) {
+      if (isTh || isHeaderColumn || isHeaderFilter) {
         tooltip.wrapper = elem;
-        tooltip.placement = 'bottom';
+        tooltip.distance = isHeaderFilter ? 15 : null;
+        tooltip.placement = isHeaderColumn ? 'top' : 'bottom';
       }
 
       // Cache rowStatus cell
       if (isRowstatus || isSvg) {
-        const rowNode = this.closest(elem, el => el.getAttribute('class').match(/datagrid-row/g));
+        const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
         const classList = rowNode ? rowNode.classList : [];
         tooltip.isError = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
         tooltip.placement = 'right';
@@ -8657,6 +8687,13 @@ Datagrid.prototype = {
           // Title attribute on current element
           tooltip.content = title;
           elem.removeAttribute('title');
+        } else if (isHeaderFilter) {
+          // Disabled filterable headers
+          const filterDisabled = elem.parentNode.querySelectorAll('.dropdown.is-disabled, input[type="text"][disabled], .btn-filter[disabled]').length > 0;
+          if (!filterDisabled) {
+            const targetEl = elem.parentNode.querySelector('.is-checked');
+            tooltip.content = targetEl ? xssUtils.stripHTML(targetEl.textContent) : '';
+          }
         } else {
           // Default use wrapper content
           tooltip.content = xssUtils.stripHTML(tooltip.wrapper.textContent);
@@ -8664,10 +8701,15 @@ Datagrid.prototype = {
       }
 
       if (tooltip.content !== '') {
-        const isEllipsis = elem.getAttribute('class').match(/text-ellipsis/g);
-        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (isEllipsis ? 8 : 0);
+        const isEllipsis = utils.hasClass(elem, 'text-ellipsis');
+        const icons = [].slice.call(elem.querySelectorAll('.icon'));
+        let extraWidth = isEllipsis ? 8 : 0;
+        icons.forEach((icon) => {
+          extraWidth += icon.getBBox().width + 8;
+        });
+        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + extraWidth;
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
-        if (title) {
+        if (title || isHeaderFilter) {
           tooltip.forced = true;
         }
       }
@@ -8707,7 +8749,7 @@ Datagrid.prototype = {
           options.extraClassList.map(className => this.tooltip.classList.add(className));
         }
 
-        const distance = 10;
+        const distance = typeof options.distance === 'number' ? options.distance : 10;
         const placeOptions = {
           x: 0,
           y: distance,
@@ -8723,13 +8765,13 @@ Datagrid.prototype = {
           placeOptions.y = 0;
         }
 
-        // If already have place instance
-        if (tooltip.data('place')) {
-          tooltip.data('place').place(placeOptions);
-        } else {
+        // If not already have place instance
+        if (!tooltip.data('place')) {
           tooltip.place(placeOptions);
-          tooltip.data('place').place(placeOptions);
         }
+
+        // Apply place
+        tooltip.data('place').place(placeOptions);
 
         // Flag to mark as gridtooltip
         tooltip.data('gridtooltip', true);

@@ -1,6 +1,6 @@
 ---
 title: Header Tabs
-description: This page describes Header Tabs .
+description: null
 demo:
   embedded:
   - name: Common Configuration

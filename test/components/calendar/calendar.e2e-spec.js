@@ -40,6 +40,7 @@ describe('Calendar index tests', () => {
     await prevButton.click();
     await utils.checkForErrors();
 
+    await testDate.setDate(1);
     await testDate.setMonth(testDate.getMonth() - 1);
     await testDate.setHours(0);
     await testDate.setMinutes(0);
@@ -112,12 +113,14 @@ describe('Calendar specific month tests', () => {
   });
 
   it('should display a tooltip when hovering an event', async () => {
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event.emerald.event-day-start .icon'))), config.waitsFor);
+
     await browser.actions()
       .mouseMove(await element.all(by.css('.calendar-event.emerald.event-day-start')).first())
       .perform();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element(by.id('tooltip')).getText()).toEqual('Autumn Foliage Trip (Pending)');
   });

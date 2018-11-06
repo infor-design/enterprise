@@ -1,6 +1,6 @@
 ---
 title: Alerts
-description: This page describes Alerts.
+description:
 demo:
   embedded:
   - name: Alerts (Icons)
@@ -32,8 +32,8 @@ Also see [Badges](./badges) for more options.
 
 ## Accessibility
 
-- The traffic light colors in the Light UI theme is technically a contrast violation, so care should be given not to use the identical colors if styling text near the alerts. The high-contrast theme provides an alternative
-- Make to include an offscreen label even though the element does not get focus. This could be read by the virtual cursor on a screen reader (`class="audible"`)
+- The traffic light colors are accessibility violations for contrast, however, the high contrast theme provides an alternative that passes. In addition, in context text should be used as color alone cannot provide the meaning.
+- An audible span (`class="audible"`) should always be included for accessibility, it should describe the alert status and/or count value in a meaningful way to a non-visual user.
 
 ## Testability
 

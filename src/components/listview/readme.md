@@ -1,6 +1,6 @@
 ---
 title: Listview
-description: This page describes Listview.
+description: Displays a set of related data objects and their attributes. Best for limited attribute data that may or may not include clear differentiators like status.
 system:
   category: blocks
   name: data-list
@@ -105,7 +105,7 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
 
 - The list is 100% of the parent container in height and width so can be used in a widget object or responsive grid object.
 - The list body will expand vertically and horizontally to fill it the size of its parent container.
-- When used in [homepages]( ../components/homepage), special rules apply with sizes.
+- When used in [homepages]( ../homepage), special rules apply with sizes.
 
 ## Testability
 

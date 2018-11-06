@@ -1,6 +1,6 @@
 ---
 title: Visibility CSS Classes
-description: This page describes Visibility CSS Classes.
+description: null
 demo:
   embedded:
   - name: All Examples

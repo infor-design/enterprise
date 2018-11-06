@@ -33,6 +33,7 @@ let LOOKUP_GRID_ID = 'lookup-datagrid';
  * @param {function} [settings.validator] A function that fires to let you validate form items on open and select
  * @param {boolean} [settings.autoWidth=false] If true the field will grow/change in size based on the content selected.
  * @param {char} [settings.delimiter=','] A character being used to separate data strings
+ * @param {int} [settings.minWidth=400] Applys a minimum width to the lookup
  */
 
 const LOOKUP_DEFAULTS = {
@@ -49,7 +50,8 @@ const LOOKUP_DEFAULTS = {
   validator: null,
   autoWidth: false,
   clickArguments: {},
-  delimiter: ','
+  delimiter: ',',
+  minWidth: 400
 };
 
 function Lookup(element, settings) {
@@ -164,14 +166,11 @@ Lookup.prototype = {
    */
   addAria() {
     const self = this;
+    self.label = self.isInlineLabel ? self.inlineLabelText : $(`label[for="${self.element.attr('id')}"]`);
 
-    setTimeout(() => {
-      self.label = self.isInlineLabel ? self.inlineLabelText : $(`label[for="${self.element.attr('id')}"]`);
-
-      if (self.label) {
-        self.label.append(`<span class="audible">${Locale.translate('UseEnter')}</span>`);
-      }
-    }, 500);
+    if (self.label) {
+      self.label.append(`<span class="audible">${Locale.translate('UseEnter')}</span>`);
+    }
   },
 
   /**
@@ -464,6 +463,10 @@ Lookup.prototype = {
       lookupGrid = self.modal.element.find(`#${LOOKUP_GRID_ID}`);
     }
 
+    if (this.settings.minWidth) {
+      lookupGrid = this.applyMinWidth(lookupGrid); 
+    }
+
     if (self.settings.options) {
       if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
         self.settings.options.cellNavigation = false;
@@ -662,7 +665,7 @@ Lookup.prototype = {
 
       // Clear _selected tag
       const idx = this.selectedRows[i].idx;
-      if (this.settings.options.dataset) {
+      if (this.settings.options.dataset && this.settings.options.dataset[idx]) {
         delete this.settings.options.dataset[idx]._selected;
       }
     }
@@ -721,6 +724,29 @@ Lookup.prototype = {
   },
 
   /**
+   * apply the min width setting to the datagrid.
+   * @private
+   * @param {jquery[]} grid jQuery wrapped element
+   * @returns {jquery[]} grid jQuery wrapped element with the css applied
+   */
+  applyMinWidth(lookupGrid) {
+    if (this.settings.minWidth == null) {
+      return lookupGrid;
+    }
+
+    // check that the minWidth is less than the windows width, so 
+    // that the control remains responsive
+    if ($(window).width() > this.settings.minWidth) {      
+      const minWidth = `${this.settings.minWidth}px`;
+      lookupGrid.css({
+        'min-width': minWidth
+      });
+    }
+
+    return lookupGrid;
+  },
+
+  /**
    * Input is disabled or not
    * @returns {boolean} whether or not the Input is disabled
    */
@@ -744,6 +770,28 @@ Lookup.prototype = {
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
+  },
+
+  /**
+  * Send in a new data set to display in the datagrid in the lookup.
+  * This will work whether or not the lookup is open or closed.
+  * @param {object} dataset The array of data to show in the datagridgrid.
+  * @param {object} pagerInfo The extra pager info object with information like activePage and pagesize.
+  */
+  updateDataset(dataset, pagerInfo) {
+    this.settings.options.dataset = dataset;
+
+    if (pagerInfo && pagerInfo.activePage) {
+      this.settings.options.activePage = pagerInfo.activePage;
+    }
+
+    if (pagerInfo && pagerInfo.pagesize) {
+      this.settings.options.pagesize = pagerInfo.pagesize;
+    }
+
+    if (this.grid) {
+      this.grid.updateDataset(dataset, pagerInfo);
     }
   },
 

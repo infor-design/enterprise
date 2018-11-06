@@ -1,6 +1,6 @@
 ---
 title: Treemap
-description: This page describes treemap.
+description: null
 demo:
   embedded:
   - name: Treemap Main Example

@@ -70,12 +70,12 @@ module.exports = (req, res, next) => {
       }
     }
 
-    const status = Math.floor(statuses.length / (start + seed)) + 1;
+    const status = Math.floor(statuses.length / (start + seed));
 
     if (!filteredOut) {
       filteredTotal++;
       productsAll.push({
-        id: j, productId: 214220 + j, productName: `Compressor ${j}`, activity: 'Assemble Paint', quantity: 1 + (j / 2), price: 210.99 - j, status: statuses[status], orderDate: new Date(2014, 12, seed), action: 'Action'
+        id: j, productId: 214220 + j, productName: `Compressor ${j}`, activity: 'Assemble Paint', quantity: 1 + (j / 2), price: 210.99 - j, status: statuses[status] || 'None', orderDate: new Date(2014, 12, seed), action: 'Action'
       });
     }
 

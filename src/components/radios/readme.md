@@ -1,6 +1,6 @@
 ---
 title: Radio Buttons
-description: This page describes Radio Buttons.
+description: Displays one or more selectable values. A user can select exactly one value at a time. Best used when all possible options should be clearly visible to a user.
 demo:
   embedded:
   - name: Radio Button Example
