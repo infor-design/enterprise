@@ -574,8 +574,7 @@ describe('Datagrid paging multiselect across pages', () => {
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
@@ -644,8 +643,7 @@ describe('Datagrid paging client side multiselect tests', () => {
 
     await element(by.css('.pager-next')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tr:nth-child(1) td[aria-colindex="2"]'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
@@ -679,15 +677,13 @@ describe('Datagrid paging clientside single select tests', () => { //eslint-disa
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
   });
@@ -714,15 +710,13 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
   });
