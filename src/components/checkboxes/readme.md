@@ -1,6 +1,6 @@
 ---
 title: Checkboxes
-description: This page describes Checkboxes.
+description: A user can select one or more values at a time. Best used when all possible options should be clearly visible to a user.
 demo:
   embedded:
   - name: Default Checkbox Example

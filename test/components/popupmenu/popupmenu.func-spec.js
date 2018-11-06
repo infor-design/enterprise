@@ -3,7 +3,6 @@ import { PopupMenu } from '../../../src/components/popupmenu/popupmenu';
 const popupmenuHTML = require('../../../app/views/components/popupmenu/example-index.html');
 const popupmenuSelectableHTML = require('../../../app/views/components/popupmenu/example-selectable.html');
 const popupmenuContextMenuHTML = require('../../../app/views/components/contextmenu/example-index.html');
-const popupmenuIconHTML = require('../../../app/views/components/popupmenu/example-icons.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 const ePage = {
@@ -79,30 +78,6 @@ describe('Popupmenu Menu Button API', () => {
 
   it('Should set padding correctly', () => {
     expect(document.body.querySelector('.popupmenu a').style.paddingLeft).toEqual('');
-  });
-});
-
-describe('Popupmenu Icons', () => {
-  beforeEach(() => {
-    popupmenuButtonEl = null;
-    svgEl = null;
-    popupmenuObj = null;
-    document.body.insertAdjacentHTML('afterbegin', popupmenuIconHTML);
-    document.body.insertAdjacentHTML('afterbegin', svg);
-    popupmenuButtonEl = document.body.querySelector('#icon-menu-button');
-    svgEl = document.body.querySelector('.svg-icons');
-    popupmenuObj = new PopupMenu(popupmenuButtonEl);
-  });
-
-  afterEach(() => {
-    popupmenuObj.destroy();
-    popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    svgEl.parentNode.removeChild(svgEl);
-  });
-
-  it('Should set padding correctly for icons', () => {
-    // Plain js style.disply doesnt show this data
-    expect(window.getComputedStyle(document.body.querySelector('.popupmenu.has-icons a'), null).getPropertyValue('padding')).toEqual('0px 30px 0px 40px');
   });
 });
 

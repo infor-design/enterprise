@@ -1,6 +1,6 @@
 ---
 title: Hyperlinks
-description: This page describes Hyperlinks.
+description: null
 demo:
   embedded:
   - name: Default Hyperlink Example

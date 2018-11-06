@@ -1,6 +1,6 @@
 ---
 title: Lookup
-description: This page describes Lookup.
+description: null
 demo:
   embedded:
   - name: Default Lookup

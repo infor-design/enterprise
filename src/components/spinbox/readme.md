@@ -1,6 +1,6 @@
 ---
 title: Spinbox Component
-description: This page describes Spinbox Component .
+description: Displays an editable field. A user can enter numeric data. Best for incremental inputs within a scale where users do not require a view of the lower and upper limits at all times.
 demo:
   embedded:
   - name: Main

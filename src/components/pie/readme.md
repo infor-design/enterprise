@@ -1,6 +1,6 @@
 ---
 title: Pie Chart
-description: This page describes Pie Chart.
+description: null
 demo:
   embedded:
   - name: Standard Pie Chart

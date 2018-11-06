@@ -1,6 +1,6 @@
 ---
 title: Templating Component
-description: This page describes Templating Component .
+description: null
 ---
 
 ## Testability

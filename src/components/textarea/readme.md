@@ -1,6 +1,6 @@
 ---
 title: Textarea Component
-description: This page describes Textarea Component.
+description: null
 demo:
   embedded:
   - name: Main Examples
