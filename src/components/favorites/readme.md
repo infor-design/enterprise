@@ -1,6 +1,6 @@
 ---
 title: Favorites
-description: This page describes Favorites.
+description: null
 demo:
   embedded:
   - name: Default Favorites Example

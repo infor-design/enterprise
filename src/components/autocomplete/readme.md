@@ -1,6 +1,6 @@
 ---
 title: Autocomplete
-description: This page describes Autocomplete.
+description: null
 demo:
   embedded:
   - name: Default Autocomplete

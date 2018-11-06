@@ -1,6 +1,6 @@
 ---
 title: Tabs Component
-description: This page describes Tabs Component .
+description: Displays the current view and all alternate views available. A user can navigate between views. Best for communicating different views of the data set, or offering navigation between related data sets.
 demo:
   embedded:
   - name: Common Configuration

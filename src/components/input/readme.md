@@ -1,6 +1,6 @@
 ---
 title: Text Input
-description: This page describes Text Input.
+description: Displays an editable field. A user can enter alphanumeric data. Best for open-ended inputs that complete a key value pair.
 demo:
   embedded:
   - name: Text Input Examples
@@ -41,12 +41,12 @@ With structured formatting, the system requires values be entered in a specific 
 
 A standard Text Input is a basic input element with `type="text"`. Password type can also be used. To implement one, create an input element with `type="text"`. You can also add various related features, some of these are separate components documented on separate pages, including:
 
-- [Masking](../components/mask) - We include a mask component to handle structured formatting.
+- [Masking](../mask) - We include a mask component to handle structured formatting.
 - Placeholder - Is supported on most input fields via the standard `placeholder` attribute. This should only be used in certain cases and not on EVERY form field
-- [Tooltip](../components/tooltip) - We include a tooltip component to handle stylized tooltips. This is supported on most input fields via the standard `title` attribute and invoking the tooltip plugin
-- [Required](../components/validation) Is a special type of validation. This is handled via the validation plugin.
-- [Validation](../components/validation) Allows you to customize alerts and errors on a field.
-- [Dirty Indicator](../components/trackdirty) We include a plugin to track if the field is modified and show a small indicator.
+- [Tooltip](../tooltip) - We include a tooltip component to handle stylized tooltips. This is supported on most input fields via the standard `title` attribute and invoking the tooltip plugin
+- [Required](../validation) Is a special type of validation. This is handled via the validation plugin.
+- [Validation](../validation) Allows you to customize alerts and errors on a field.
+- [Dirty Indicator](../trackdirty) We include a plugin to track if the field is modified and show a small indicator.
 - Enabled/Read-only - Is supported on most input fields via the standard `disabled` and `readonly` attributes.
 
 ```html

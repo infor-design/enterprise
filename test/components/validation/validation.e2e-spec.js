@@ -481,27 +481,26 @@ describe('Validation resetForm tests', () => {
   });
 
   it('Should be able reset form', async () => {
-    const emailEl = await element(by.id('email-address-ok'));
-    await emailEl.clear();
-    await emailEl.sendKeys(protractor.Key.TAB);
+    await element(by.id('email-address-ok')).clear();
+    await element(by.id('email-address-ok')).sendKeys(protractor.Key.TAB);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.icon-error'))), config.waitsFor);
 
     expect(await element(by.css('.message-text')).getText()).toBe('Required');
     expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
-    expect(await emailEl.getAttribute('class')).toContain('error');
+    expect(await element(by.id('email-address-ok')).getAttribute('class')).toContain('error');
 
     await element(by.id('reset')).click();
 
     expect(await element(by.css('.icon-error')).isPresent()).toBe(false);
 
-    await emailEl.clear();
-    await emailEl.sendKeys(protractor.Key.TAB);
+    await element(by.id('email-address-ok')).clear();
+    await element(by.id('email-address-ok')).sendKeys(protractor.Key.TAB);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.icon-error'))), config.waitsFor);
 
     expect(await element(by.css('.message-text')).getText()).toBe('Required');
     expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
-    expect(await emailEl.getAttribute('class')).toContain('error');
+    expect(await element(by.id('email-address-ok')).getAttribute('class')).toContain('error');
   });
 });

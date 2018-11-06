@@ -1000,15 +1000,7 @@ Dropdown.prototype = {
       // Highlight Term
       const exp = self.getSearchRegex(term);
       const text = li.text().replace(exp, '<i>$1</i>').trim();
-      let icon = '';
-
-      if (li.children('a').find('svg').length !== 0) {
-        if (li.children('a').find('svg')[0].outerHTML) {
-          icon = li.children('a').find('svg')[0].outerHTML;
-        } else {
-          icon = new XMLSerializer().serializeToString(li.children('a').find('svg')[0]);
-        }
-      }
+      const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
 
       if (icon) {
         hasIcons = true;
@@ -1057,7 +1049,7 @@ Dropdown.prototype = {
       const li = $(this);
 
       const text = a.text();
-      const icon = (li.children('a').find('svg').length !== 0) ? li.children('a').find('svg')[0].outerHTML : '';
+      const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
 
       if (icon) {
         hasIcons = true;

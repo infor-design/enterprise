@@ -1,6 +1,6 @@
 ---
 title: Vertical Tabs
-description: This page describes Vertical Tabs .
+description: null
 demo:
   embedded:
   - name: Independent Column Scrolling

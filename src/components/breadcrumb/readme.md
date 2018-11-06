@@ -1,6 +1,6 @@
 ---
 title: Breadcrumb
-description: This page describes Breadcrumb.
+description: Displays the current view and all parent views. A user can navigate between views. Best for presenting hierarchical paths in a system.
 demo:
   embedded:
   - name: Default Breadcrumb Example
@@ -8,6 +8,10 @@ demo:
   pages:
   - name: Breadcrumb with current item a link
     slug: example-current-as-link
+  - name: Navigation breadcrumbs in header
+    slug: example-navigation-breadcrumbs
+  - name: Navigation breadcrumb in header (alternate)
+    slug: example-navigation-breadcrumbs-alternate
 ---
 
 ## Code Example
@@ -35,12 +39,12 @@ This component is entirely HTML and CSS, to update contents you will need to imp
 
 ## Breadcrumb Positioning and Variations
 
-The above example just shows an in page breadcrumb. But usually the breadcrumb would be the top level element in the page. In some cases it is actually in or just below the header. These examples are showing in the [patterns section](../patterns).
+The above example just shows an in-page breadcrumb. But usually the breadcrumb would be the top level element in the page. In some cases it is actually in or just below the header. These examples are shown in the [patterns section](./demo/patterns/list).
 
 Examples:
 
-- [In Header](../patterns/navigation-breadcrumbs) this variation is used when the breadcrumb acts as the sole top level navigation.
-- [Below Header](../patterns/navigation-breadcrumbs-alternate.) this variation is used when the breadcrumb acts as a secondary top level navigation. For example if its part of the page pattern.
+- [In Header](./demo/patterns/navigation-breadcrumbs) this variation is used when the breadcrumb acts as the sole top level navigation.
+- [Below Header](./demo/patterns/navigation-breadcrumbs-alternate) this variation is used when the breadcrumb acts as a secondary top level navigation. For example if its part of the page pattern.
 
 ## Accessibility
 
@@ -49,7 +53,7 @@ Examples:
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+- Please refer to the [Application Testability Checklist](/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

@@ -1,6 +1,6 @@
 ---
 title: Grid
-description: This page describes Grid.
+description: null
 demo:
   embedded:
   - name: 12 Column Responsive Grid
