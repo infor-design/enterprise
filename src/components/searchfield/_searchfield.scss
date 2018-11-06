@@ -68,7 +68,11 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   .searchfield {
     padding-left: 34px;
-    padding-right: 34px;
+    padding-right: 10px;
+
+    @media (min-width: $breakpoint-phablet) {
+      padding-right: 34px;
+    }
 
     @include transition(background-color 300ms $cubic-bezier-ease,
     border-color 300ms $cubic-bezier-ease);
@@ -466,14 +470,23 @@ html[dir='rtl'] {
   }
 }
 
-//for iOS fixes
-
+//for iOS & MAC fixes
 .ios,
 .is-mac {
   .searchfield-wrapper {
     &.context {
       > #searchfield-context-white.searchfield {
         background-color: $searchfield-context-bg;
+      }
+    }
+  }
+}
+
+.ios {
+  .searchfield-wrapper {
+    &.context {
+      .btn {
+        height: 35px;
       }
     }
   }
