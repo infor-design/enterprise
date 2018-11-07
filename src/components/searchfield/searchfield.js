@@ -1392,7 +1392,7 @@ SearchField.prototype = {
 
     // NOTE: final width can only be 100% if no value is subtracted for other elements
     if (subtractWidth > 0) {
-      subtractWidth = subtractWidth - 10;
+      subtractWidth -= 10;
       targetWidthProp = `calc(100% - ${subtractWidth}px)`;
     }
     if (targetWidthProp) {
