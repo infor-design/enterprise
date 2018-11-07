@@ -22,7 +22,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {jQuery[]|HTMLElement} element The component element.
  * @param {object} [settings] The component settings.
  * @param {boolean} [settings.showTime=false] If true the time selector will be shown.
- * @param {boolean} [settings.useCurrentTime=true] If true current time will be used for the time portion otherwise 12:00 midnight is used
+ * @param {boolean} [settings.useCurrentTime=false] If true current time will be used for the time portion otherwise 12:00 midnight is used
  * @param {string} [settings.timeFormat] Format to use time section fx HH:mm,
  *  defaults current locale settings.
  * @param {number} [settings.minuteInterval]
@@ -80,7 +80,7 @@ const COMPONENT_NAME = 'datepicker';
  */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
-  useCurrentTime: true,
+  useCurrentTime: false,
   timeFormat: undefined,
   minuteInterval: undefined,
   secondInterval: undefined,
