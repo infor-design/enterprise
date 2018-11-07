@@ -1,6 +1,6 @@
 ---
 title: Masthead
-description: This page describes Masthead.
+description: null
 demo:
   embedded:
   - name: Default Masthead Example

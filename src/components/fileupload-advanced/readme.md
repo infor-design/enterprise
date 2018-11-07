@@ -1,6 +1,6 @@
 ---
 title: File Upload Advanced
-description: This page describes File Upload Advanced.i
+description: null
 demo:
   embedded:
   - name: Advanced File Upload Example

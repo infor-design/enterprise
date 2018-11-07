@@ -243,6 +243,7 @@ ListView.prototype = {
     // Render Pager
     if (this.settings.paging) {
       this.renderPager(pagerInfo);
+      this.pager.setActivePage(this.pager.settings.activePage, true);
     }
 
     // Add Aria
@@ -1184,7 +1185,7 @@ ListView.prototype = {
             self.toggleItemActivation(item);
           }
 
-          if (pattern.length > 0 && $(window).outerWidth() < 767 && !item.hasClass('is-disabled')) {
+          if (pattern.length > 0 && $(window).outerWidth() < 767 && !item.hasClass('is-disabled') && !isCheckbox) {
             self.element.trigger('drilldown', [item]);
           }
 

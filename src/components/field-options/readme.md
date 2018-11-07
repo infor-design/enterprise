@@ -1,6 +1,6 @@
 ---
 title: Field Options
-description: This page describes Field Options.
+description: null
 demo:
   embedded:
   - name: Default Field Options Example

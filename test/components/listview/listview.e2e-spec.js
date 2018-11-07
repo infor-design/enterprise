@@ -307,6 +307,15 @@ describe('Listview example-paging tests', () => {
     });
   }
 
+  it('Should render initial page', async () => {
+    expect(await element.all(by.css('.listview ul li')).count()).toEqual(24);
+
+    expect(await element.all(by.css('.listview ul li')).get(0).isDisplayed()).toEqual(true);
+    expect(await element.all(by.css('.listview ul li')).get(9).isDisplayed()).toEqual(true);
+    expect(await element.all(by.css('.listview ul li')).get(10).isDisplayed()).toEqual(false);
+    expect(await element.all(by.css('.listview ul li')).get(23).isDisplayed()).toEqual(false);
+  });
+
   it('Should click page "2" in pager bar, and display new listings', async () => {
     const listviewPagerEl = await element.all(by.css('.pager-toolbar li.pager-no')).get(1);
     await listviewPagerEl.click();

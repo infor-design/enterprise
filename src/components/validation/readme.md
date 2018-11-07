@@ -1,6 +1,6 @@
 ---
 title: Validation
-description: This page describes Validation.
+description: null
 demo:
   embedded:
   - name: Main Validation Examples

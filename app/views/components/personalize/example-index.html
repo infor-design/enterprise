@@ -1,113 +1,127 @@
-
-  <div class="banner-detail">
-    <div class="banner">
-
-      <div class="row top-padding">
-        <div class="twelve columns">
-
-          <div class="field">
-            <label for="normal-field">Label</label>
-            <input type="text" id="normal-field" name="normal-field" value="Data">
-          </div>
-
-          <div class="field">
-            <label for="readonly-field">Label</label>
-            <input type="text" id="readonly-field" name="readonly-field" value="Read only Data" readonly>
-          </div>
-
-          <div class="field is-disabled">
-            <label for="disabled-field">Label</label>
-            <input type="text" id="disabled-field" name="disabled-field" value="Disabled Data" disabled>
-          </div>
-
-          <button class="btn-primary" type="button">Button</button>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <button class="btn-secondary" type="button">Button</button>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <button class="btn-tertiary" type="button">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-calendar"></use>
-            </svg>
-            <span>Date</span>
-          </button>
-          <button disabled class="btn-tertiary" type="button">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-calendar"></use>
-            </svg>
-            <span>Date</span>
-          </button>
-
-          <br><br>
-          <a class="hyperlink" href="#">Hyperlink</a>
-
-        </div>
+<div class="page-container no-scroll">
+  <header class="header is-personalizable">
+    <div class="toolbar">
+      <div class="title">
+        <h1>Level Two Detail View</h1>
       </div>
 
+      <div class="buttonset">
+        <input class="searchfield" />
+      </div>
 
+      {{> includes/header-actionbutton}}
     </div>
-    <div class="detail">
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+  </header>
 
-      <div class="row top-padding">
-        <div class="twelve columns">
-          <div class="toolbar" role="toolbar">
-            <div class="title">
-              List Title
+  <div id="maincontent" class="page-container scrollable" role="main">
+    <div class="banner-detail">
+      <div class="banner">
+        <div class="row top-padding">
+          <div class="twelve columns">
+
+            <div class="field">
+              <label for="normal-field">Label</label>
+              <input type="text" id="normal-field" name="normal-field" value="Data"/>
             </div>
 
-          </div>
-          <div id="datagrid">
+            <div class="field">
+              <label for="readonly-field">Label</label>
+              <input type="text" id="readonly-field" name="readonly-field" value="Read only Data" readonly="true"/>
+            </div>
+
+            <div class="field is-disabled">
+              <label for="disabled-field">Label</label>
+              <input type="text" id="disabled-field" name="disabled-field" value="Disabled Data" disabled="true"/>
+            </div>
+
+            <button class="btn-primary" type="button">Button</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn-secondary" type="button">Button</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn-tertiary" type="button">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-calendar"></use>
+              </svg>
+              <span>Date</span>
+            </button>
+            <button disabled="true" class="btn-tertiary" type="button">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-calendar"></use>
+              </svg>
+              <span>Date</span>
+            </button>
+
+            <br/><br/>
+            <a class="hyperlink" href="#">Hyperlink</a>
+
           </div>
         </div>
       </div>
+      <div class="detail">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
 
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+        <div class="row top-padding">
+          <div class="twelve columns">
+            <div class="toolbar" role="toolbar">
+              <div class="title">
+                List Title
+              </div>
 
-      <div class="row top-padding">
-        <div class="twelve columns">
-        <div class="widget">
-          <div class="widget-header">
-            <h2 class="widget-title">Card Title</h2>
-
+            </div>
+            <div id="datagrid">
+            </div>
           </div>
         </div>
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
+        <div class="row top-padding">
+            <div class="twelve columns">
+            <div class="widget">
+              <div class="widget-header">
+                <h2 class="widget-title">Card Title</h2>
+
+              </div>
+            </div>
+          </div>
       </div>
-    </div>
 
     </div>
   </div>
+</div>
 
 <script>
-   Locale.set('en-US').done(function () {
-      var grid,
-        columns = [],
-        data = [];
+  $('html').personalize({ colors: { header: '800000' } });
 
-      // Some Sample Data
-      data.push({ id: 1, columnA: 'Item A', columnB: '$123,456.78'});
-      data.push({ id: 2, columnA: 'Item B', columnB: '$123,456.78'});
-      data.push({ id: 3, columnA: 'Item C', columnB: '$123,456.78'});
-      data.push({ id: 4, columnA: 'Item D', columnB: '$123,456.78'});
-      data.push({ id: 5, columnA: 'Item E', columnB: '$123,456.78'});
+  $('body').on('initialized', function () {
+    var grid,
+      columns = [],
+      data = [];
 
-      //Define Columns for the Grid.
-      columns.push({ id: 'columnA', name: 'Column A', field: 'columnA', width: 140, formatter: Formatters.Readonly});
-      columns.push({ id: 'columnB', name: 'Column B', field: 'columnB', width: 150, formatter: Formatters.Number});
+    // Some Sample Data
+    data.push({ id: 1, columnA: 'Item A', columnB: '$123,456.78'});
+    data.push({ id: 2, columnA: 'Item B', columnB: '$123,456.78'});
+    data.push({ id: 3, columnA: 'Item C', columnB: '$123,456.78'});
+    data.push({ id: 4, columnA: 'Item D', columnB: '$123,456.78'});
+    data.push({ id: 5, columnA: 'Item E', columnB: '$123,456.78'});
 
-      //Init and get the api for the grid
-      grid = $('#datagrid').datagrid({
-        columns: columns,
-        dataset: data,
-        selectable: 'single'
-      });
+    //Define Columns for the Grid.
+    columns.push({ id: 'columnA', name: 'Column A', field: 'columnA', formatter: Formatters.Readonly});
+    columns.push({ id: 'columnB', name: 'Column B', field: 'columnB', formatter: Formatters.Number});
+
+    //Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      selectable: 'single'
+    });
   });
-
 </script>
