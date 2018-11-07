@@ -1515,19 +1515,19 @@ DatePicker.prototype = {
 
     if (!this.settings.useCurrentTime) {
       this.currentDate.setHours(0, 0, 0, 0);
-    }
 
-    if (this.element.val() !== '') {
-      if (this.timepicker && this.timepicker.hourSelect) {
-        this.currentDate.setHours(this.timepicker.hourSelect.val());
-      }
+      if (this.element.val() !== '') {
+        if (this.timepicker && this.timepicker.hourSelect) {
+          this.currentDate.setHours(this.timepicker.hourSelect.val());
+        }
 
-      if (this.timepicker && this.timepicker.minuteSelect) {
-        this.currentDate.setMinutes(this.timepicker.minuteSelect.val());
-      }
+        if (this.timepicker && this.timepicker.minuteSelect) {
+          this.currentDate.setMinutes(this.timepicker.minuteSelect.val());
+        }
 
-      if (this.timepicker && this.timepicker.secondSelect) {
-        this.currentDate.setSeconds(this.timepicker.secondSelect.val());
+        if (this.timepicker && this.timepicker.secondSelect) {
+          this.currentDate.setSeconds(this.timepicker.secondSelect.val());
+        }
       }
     }
 
