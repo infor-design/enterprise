@@ -215,6 +215,56 @@ describe('Datagrid paging (client side) tests', () => {
   });
 });
 
+describe('Datagrid paging indeterminate tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging-indeterminate');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to move to last', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 9');
+
+    await element(by.css('.pager-last a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 990');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 999');
+  });
+
+  it('Should be able to move to first', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 9');
+
+    await element(by.css('.pager-last a')).click();
+    await element(by.css('.pager-first a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 9');
+  });
+
+  it('Should be able to move to next/prev', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 9');
+
+    await element(by.css('.pager-next a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 10');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 19');
+
+    await element(by.css('.pager-prev a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 9');
+  });
+});
+
 describe('Datagrid page size selector tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging-page-size-selector');
@@ -413,6 +463,122 @@ describe('Datagrid hide selection checkbox tests', () => {
 
   it('Should not show selection checkbox', async () => {
     expect(await element(by.css('#datagrid .datagrid-header thead .datagrid-checkbox')).isDisplayed()).toBeFalsy();
+  });
+});
+
+describe('Datagrid paging indeterminate landmark tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-indeterminate-landmark');
+
+    const datagridEl = await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should start on last page', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('214315');
+    expect(await element(by.css('tbody tr:nth-child(5) td:nth-child(2) span')).getText()).toEqual('214319');
+  });
+
+  it('Should be able to move to last', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('214315');
+    expect(await element(by.css('tbody tr:nth-child(5) td:nth-child(2) span')).getText()).toEqual('214319');
+
+    await element(by.css('.pager-first a')).click();
+    await element(by.css('.pager-last a')).click();
+
+    await browser.driver.sleep(config.waitsFor);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('214315');
+    expect(await element(by.css('tbody tr:nth-child(5) td:nth-child(2) span')).getText()).toEqual('214319');
+  });
+
+  it('Should be able to move to first', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('214315');
+    expect(await element(by.css('tbody tr:nth-child(5) td:nth-child(2) span')).getText()).toEqual('214319');
+
+    await element(by.css('.pager-first a')).click();
+
+    await browser.driver.sleep(config.waitsFor);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('214220');
+    expect(await element(by.css('tbody tr:nth-child(5) td:nth-child(2) span')).getText()).toEqual('214224');
+  });
+
+  it('Should be able to move to next/prev', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('214315');
+    expect(await element(by.css('tbody tr:nth-child(5) td:nth-child(2) span')).getText()).toEqual('214319');
+
+    await element(by.css('.pager-prev a')).click();
+    await browser.driver.sleep(config.waitsFor);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('214310');
+    expect(await element(by.css('tbody tr:nth-child(5) td:nth-child(2) span')).getText()).toEqual('214314');
+
+    await element(by.css('.pager-next a')).click();
+    await browser.driver.sleep(config.waitsFor);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('214315');
+    expect(await element(by.css('tbody tr:nth-child(5) td:nth-child(2) span')).getText()).toEqual('214319');
+  });
+});
+
+describe('Datagrid paging indeterminate start on page 2 tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-indeterminate-pagetwo');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should start on page 2', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 10');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 19');
+  });
+
+  it('Should be able to move to last', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 10');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 19');
+
+    await element(by.css('.pager-last a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 990');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 999');
+  });
+
+  it('Should be able to move to first', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 10');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 19');
+
+    await element(by.css('.pager-last a')).click();
+    await element(by.css('.pager-first a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 9');
+  });
+
+  it('Should be able to move to next/prev', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 10');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 19');
+
+    await element(by.css('.pager-next a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 20');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 29');
+
+    await element(by.css('.pager-prev a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(3) a')).getText()).toEqual('Compressor 10');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(3) a')).getText()).toEqual('Compressor 19');
   });
 });
 

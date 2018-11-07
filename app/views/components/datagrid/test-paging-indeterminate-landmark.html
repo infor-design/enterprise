@@ -93,8 +93,8 @@
       setTimeout(function () {
 
         switch (request.type) {
-          case 'initial': beginIndex = 0; break;
           case 'first':   beginIndex = 0; break;
+          case 'initial':
           case 'last':    beginIndex = getData().length - request.pagesize; break;
           case 'next':    beginIndex = beginIndex + request.pagesize; break;
           case 'prev':    beginIndex = beginIndex - request.pagesize; break;
