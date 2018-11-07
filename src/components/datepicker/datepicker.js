@@ -22,7 +22,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {jQuery[]|HTMLElement} element The component element.
  * @param {object} [settings] The component settings.
  * @param {boolean} [settings.showTime=false] If true the time selector will be shown.
- * @param {boolean} [settings.useCurrentTime=false] If true current time will be used for the time portion otherwise 12:00 midnight is used
+ * @param {boolean} [settings.useCurrentTime=true] If true current time will be used for the time portion otherwise 12:00 midnight is used
  * @param {string} [settings.timeFormat] Format to use time section fx HH:mm,
  *  defaults current locale settings.
  * @param {number} [settings.minuteInterval]
@@ -80,7 +80,7 @@ const COMPONENT_NAME = 'datepicker';
  */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
-  useCurrentTime: false,
+  useCurrentTime: true,
   timeFormat: undefined,
   minuteInterval: undefined,
   secondInterval: undefined,
@@ -1515,19 +1515,19 @@ DatePicker.prototype = {
 
     if (!this.settings.useCurrentTime) {
       this.currentDate.setHours(0, 0, 0, 0);
-    }
 
-    if (this.element.val() !== '') {
-      if (this.timepicker && this.timepicker.hourSelect) {
-        this.currentDate.setHours(this.timepicker.hourSelect.val());
-      }
+      if (this.element.val() !== '') {
+        if (this.timepicker && this.timepicker.hourSelect) {
+          this.currentDate.setHours(this.timepicker.hourSelect.val());
+        }
 
-      if (this.timepicker && this.timepicker.minuteSelect) {
-        this.currentDate.setMinutes(this.timepicker.minuteSelect.val());
-      }
+        if (this.timepicker && this.timepicker.minuteSelect) {
+          this.currentDate.setMinutes(this.timepicker.minuteSelect.val());
+        }
 
-      if (this.timepicker && this.timepicker.secondSelect) {
-        this.currentDate.setSeconds(this.timepicker.secondSelect.val());
+        if (this.timepicker && this.timepicker.secondSelect) {
+          this.currentDate.setSeconds(this.timepicker.secondSelect.val());
+        }
       }
     }
 
