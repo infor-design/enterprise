@@ -21,15 +21,5 @@
     "releaseName": "v%s",
     "tokenRef": "GITHUB_ACCESS_TOKEN",
     "assets": "dist.zip"
-  },
-  "prompt": {
-    "src": {
-      "status": true,
-      "commit": false,
-      "tag": false,
-      "push": false,
-      "release": false,
-      "publish": false
-    }
   }
 }
