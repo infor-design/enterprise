@@ -1,6 +1,6 @@
 ---
 title: Datagrid
-description: This page describes Datagrid .
+description: Displays a set of related data objects and their attributes. Best for comparison across many objects and attributes.
 demo:
   embedded:
   - name: Simple Datagrid Example
@@ -116,9 +116,9 @@ $('#datagrid').datagrid({
 |Formatter Setting|Description|
 |---|---|
 |`inlineEditor` | If true the elements (on supported formatters) will be shown inline in the field. For example you could show an input element on each cell. This should only be used with the isList type and sparingly.|
-|`dateFormat` | Used with `Date` formatters and editors. You can use it to specify the display format for date values. fx yyyy-MM-dd. See [locale]( ../components/locale) for date  formatting patterns.|
-|`timeFormat` | Used with `Time` and 'Date' + `Time` formatters and editors. You can use it to specify the display format for date values. fx HH;mm See [locale]( ../components/locale) for time formatting patterns.|
-|`numberFormat` | Used Decimal and Integer columns, this is the same number structure that locale uses. See [locale]( ../components/locale) for number formatting patterns.|
+|`dateFormat` | Used with `Date` formatters and editors. You can use it to specify the display format for date values. fx yyyy-MM-dd. See [locale]( ../locale) for date  formatting patterns.|
+|`timeFormat` | Used with `Time` and 'Date' + `Time` formatters and editors. You can use it to specify the display format for date values. fx HH;mm See [locale]( ../locale) for time formatting patterns.|
+|`numberFormat` | Used Decimal and Integer columns, this is the same number structure that locale uses. See [locale]( ../locale) for number formatting patterns.|
 |`href` | Used on `Hyperlink` formatters. This can be a string to pass to the links href attribute. Or can be function which dynamically runs and can return the href using logic.|
 |`target` | Used on `Hyperlink` formatters. This can be a string to pass to the links target attribute. Or can be function which dynamically runs and can return the target with using logic.|
 |`icon` | Used on `Hyperlink` and `Button` formatters, if provided as a string it will show this icon from the svg icon set added to the page.|
@@ -146,8 +146,8 @@ $('#datagrid').datagrid({
 |`Time` | Shows a dates time portion or a time string value formatted to the column's `timeFormat` settings or otherwise the current locale's time settings.|
 |`Autocomplete` | Formats the column as direct text like the Text formatter. But added for symmetry with Autocomplete editor.|
 |`Lookup` | Formats the column for use with a Lookup editor. It calls the editors field option / function to assist in mapping key value pairs to the columns data element. When a lookup editor is added it shows the icon on hover.|
-|`Decimal` | Formats the numeric data in the current columns number format. Or you can use the `numberFormat` option for customization.See [locale]( ../components/locale) for number formatting patterns.|
-|`Integer` | Formats the numeric data in the current columns integer format. Or you can use the `numberFormat` option for customization. See [locale]( ../components/locale) for number formatting patterns.|
+|`Decimal` | Formats the numeric data in the current columns number format. Or you can use the `numberFormat` option for customization.See [locale]( ../locale) for number formatting patterns.|
+|`Integer` | Formats the numeric data in the current columns integer format. Or you can use the `numberFormat` option for customization. See [locale]( ../locale) for number formatting patterns.|
 |`Hyperlink` | Formats the current data into a clickable hyperlink. You can use the `href` value to pass the links href value in the column (this defaults to '#'). You can use the `text` column value to change the text of the link, in doing so the column value becomes the link contents. `hyperlinkTooltip` can be added to give tooltip text for the link. The `icon` option can be added to provide a icon next to the link.|
 |`Drilldown` | Formats the cell with a drill down icon button in it. This type of column is used to drill into this records details. Use the `click` column option to provide the javascript for that logic.|
 |`RowReorder` | Formats the cell with a reorder icon button in it. This should be used in conjunction with the row-reorder feature. See [Example](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-row-reorder?font=source-sans)|
@@ -155,7 +155,7 @@ $('#datagrid').datagrid({
 |`SelectionCheckbox` | Formats the cell with a selection checkbox in it. The selection functionality of the grid will populate this with the current rows selection attributes and populate the header with a select all / deselect all checkbox.|
 |`Actions` | Formats the cell with a .. actions button icon. You can use the `menuId` option to pass in an id of a ul item. The menu will be the same structure as the standard popupmenu.|
 |`Textarea` | Formats the cell with readonly multi line text area. The column rows will size to the contents of the largest Textarea cell.|
-|`Editor` | Formats the cell with readonly Rich Text Editor. See example [See example]( ../components/datagrid/test-editable-editor-singleline.html). The `singleline` option if set to true will cut the text to single line and show a tooltip.|
+|`Editor` | Formats the cell with readonly Rich Text Editor. See example [See example]( https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/test-editable-editor-singleline.html?font=source-sans). The `singleline` option if set to true will cut the text to single line and show a tooltip.|
 |`Expander` | Formats the cell with an expander chevron. This will act on the `click` option or toggle the collapsed row, when using the [expandable row option](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-expandable-row?font=source-sans)|
 |`GroupRow` | Formats this cell / column as the group row. If a `groupRowFormatter` is provided this can be used to return customized html for the group row details. If not it will show the expander icon with the data of the group name. You can pass `expanded` true in the column to expend the row, this can also be a function that dynamically can determine if the row should be expanded. See the [grouping examples](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-grouping?font=source-sans)|
 |`GroupFooterRow` | Formats this entire row as the last row in a group when using grouping. The option should be a function that returns the `<tr>` markup for the last group row. See the [group totals example](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-grouping-totals?font=source-sans)|
@@ -169,7 +169,7 @@ $('#datagrid').datagrid({
 |`Dropdown` | Formats the cell to go along with a dropdown editor. It will lookup the value in the column `options` array and display the label for the given key. This can be used to resolve code to label displays. It supports the `inlineEditor` option as well for list grids.|
 |`Spinbox` | Formats the cell as text for use with a Spinbox editor. Also supports the `inlineEditor` option as well for list grids.|
 |`Favorite` | Formats the cell with a favorite star. The star's value (checked or unchecked) is populated like the checkbox column with a boolean or truthy value in the data. The `isChecked` function or boolean can be used to more dynamically check set state.|
-|`TargetedAchievement` | Formats the cell with the a targeted achievement chart. The row value will be divided by 100 to form a percent and the chart will show the percent value. See the [targeted achievement example]( ../components/datagrid/test-targeted-achievement.html)|
+|`TargetedAchievement` | Formats the cell with the a targeted achievement chart. The row value will be divided by 100 to form a percent and the chart will show the percent value. See the [targeted achievement example](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/test-targeted-achievement.html?font=source-sans)|
 
 ## Creating Custom Formatters
 
@@ -199,10 +199,10 @@ TODO
 |Setting|Description|
 |---|---|
 |`maxLength` | Used for some editors, on some input types to restrict the input to this integer number of characters.|
-|`mask` | Used to pass in an input mask for some editors to override or add a custom mask. See [the mask component]( ../components/mask) for details on making a mask.|
-|`maskMode` | Used to pass in an input mask maskMode option. See [the mask component]( ../components/mask) for details on making a mask.|
+|`mask` | Used to pass in an input mask for some editors to override or add a custom mask. See [the mask component]( ../mask) for details on making a mask.|
+|`maskMode` | Used to pass in an input mask maskMode option. See [the mask component]( ../mask) for details on making a mask.|
 |`caseInsensitive` | Used in the dropdown editor to make it such case is not used to match keys to the key/value pairs in the options.|
-|`validate` | The validation function(s) to use. See [the validation component]( ../components/validation) for details on validation functions.|
+|`validate` | The validation function(s) to use. See [the validation component]( ../validation) for details on validation functions.|
 
 ## Testability
 

@@ -1,6 +1,6 @@
 ---
 title: Pager
-description: This page describes Pager.
+description:  For a given data set, displays feedback about the current subset in a view and all alternate subsets available. A user can navigate between views. Best for presenting digestible portions of large data sets.
 demo:
   embedded:
   - name: Paging a List (Ul)

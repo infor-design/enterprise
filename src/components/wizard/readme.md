@@ -1,6 +1,6 @@
 ---
 title: Wizard Component
-description: This page describes Wizard Component .
+description: Displays feedback about a current process. A user can view a depiction of their current status within a process, and may optionally navigate between points. Best for displaying progress relative to the start and finish of a user workflow.
 demo:
   embedded:
   - name: Common Configuration

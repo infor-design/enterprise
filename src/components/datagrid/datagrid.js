@@ -623,6 +623,11 @@ Datagrid.prototype = {
         this.pager.activePage = pagerInfo.activePage;
       }
       this.pager.settings.dataset = dataset;
+
+      if (this.settings.showDirty && this.settings.source &&
+        /first|last|next|prev|sorted/.test(pagerInfo.type)) {
+        this.dirtyArray = undefined;
+      }
     }
 
     // Update Paging and Clear Rows
@@ -1167,7 +1172,7 @@ Datagrid.prototype = {
             for (let i = 0; i < col.options.length; i++) {
               const option = col.options[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              if (option && optionValue) {
+              if (option && optionValue !== '') {
                 filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
               }
             }
@@ -1178,14 +1183,10 @@ Datagrid.prototype = {
         case 'multiselect':
           filterMarkup += `<select ${col.filterDisabled ? ' disabled' : ''}${col.filterType === 'select' ? ' class="dropdown"' : ' multiple class="multiselect"'}id="${filterId}">`;
           if (col.options) {
-            if (col.filterType === 'select') {
-              filterMarkup += '<option></option>';
-            }
-
             for (let i = 0; i < col.options.length; i++) {
               const option = col.options[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              if (option && optionValue) {
+              if (option && option.label) {
                 filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
               }
             }
@@ -1574,7 +1575,7 @@ Datagrid.prototype = {
         }
 
         if (columnDef.filterType === 'contents' || columnDef.filterType === 'select' || columnDef.filterType === 'multiselect') {
-          rowValue = rowValue.toLowerCase();
+          rowValue = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         }
 
         if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '')) &&
@@ -3117,6 +3118,10 @@ Datagrid.prototype = {
 
       if (rowStatus.class !== '') {
         cssClass += ' rowstatus-cell';
+      }
+
+      if (self.isCellDirty(dataRowIdx, j)) {
+        cssClass += ' is-dirty-cell';
       }
 
       // Trim extra spaces
@@ -5488,6 +5493,11 @@ Datagrid.prototype = {
    */
   highlightSearchRows(term) {
     const self = this;
+
+    if (!term || term === '') {
+      return;
+    }
+
     // Move across all visible cells and rows, highlighting
     this.tableBody.find('tr').each(function () {
       let found = false;
@@ -6459,6 +6469,10 @@ Datagrid.prototype = {
       return;
     }
 
+    if (/dirty/.test(status)) {
+      return;
+    }
+
     if (!this.settings.dataset[idx]) {
       return;
     }
@@ -7016,6 +7030,27 @@ Datagrid.prototype = {
       cellValue = this.fieldValue(rowData, col.field);
     }
     this.editor.val(cellValue);
+
+    // Set original data for trackdirty
+    if (this.settings.showDirty) {
+      let originalVal = cellValue;
+
+      if (originalVal === '' && /checkbox|favorite/i.test(this.editor.name)) {
+        originalVal = false;
+      }
+
+      const data = { originalVal, isDirty: false };
+      if (typeof this.dirtyArray === 'undefined') {
+        this.dirtyArray = [];
+      }
+      if (typeof this.dirtyArray[idx] === 'undefined') {
+        this.dirtyArray[idx] = [];
+        this.dirtyArray[idx][cell] = data;
+      } else if (typeof this.dirtyArray[idx][cell] === 'undefined') {
+        this.dirtyArray[idx][cell] = data;
+      }
+    }
+
     this.editor.focus();
 
     /**
@@ -7397,7 +7432,7 @@ Datagrid.prototype = {
   },
 
   /**
-   * Clear a row level all errors, alerts, info messages and dirty indicators
+   * Clear a row level all errors, alerts, info messages
    * @param {number} row The row index.
    * @returns {void}
    */
@@ -7413,7 +7448,7 @@ Datagrid.prototype = {
   },
 
   /**
-   * Clear all errors, alerts, info messages and dirty indicators in entire datagrid.
+   * Clear all errors, alerts and info messages in entire datagrid.
    * @returns {void}
    */
   clearAllErrors() {
@@ -7464,6 +7499,13 @@ Datagrid.prototype = {
     if (errors.length > 0) {
       this.render();
     }
+
+    // Clear dirty cells
+    this.dirtyArray = undefined;
+    const cells = [].slice.call(this.element[0].querySelectorAll('.is-dirty-cell'));
+    cells.forEach((cell) => {
+      cell.classList.remove('is-dirty-cell');
+    });
   },
 
   /**
@@ -7471,12 +7513,22 @@ Datagrid.prototype = {
   * @returns {array} An array of dirty rows.
   */
   dirtyRows() {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     const rows = [];
-    const data = this.settings.dataset;
 
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].rowStatus && data[i].rowStatus.icon === 'dirty') {
-        rows.push(data[i]);
+    if (s.showDirty && this.dirtyArray && this.dirtyArray.length) {
+      for (let i = 0, l = dataset.length; i < l; i++) {
+        const row = this.dirtyArray[i];
+        if (typeof row !== 'undefined') {
+          for (let i2 = 0, l2 = row.length; i2 < l2; i2++) {
+            const col = row[i2];
+            if (typeof col !== 'undefined' && col.isDirty) {
+              rows.push(s.treeGrid ? dataset[i].node : dataset[i]);
+              break;
+            }
+          }
+        }
       }
     }
     return rows;
@@ -7705,6 +7757,14 @@ Datagrid.prototype = {
     if (!fromApiCall) {
       // Validate the cell
       this.validateCell(dataRowIndex, cell);
+
+      // Update and set trackdirty
+      if (this.isDirtyCellNotUndefined(row, cell)) {
+        this.dirtyArray[row][cell].value = value;
+        this.dirtyArray[row][cell].coercedVal = coercedVal;
+        this.dirtyArray[row][cell].escapedCoercedVal = xssUtils.escapeHTML(coercedVal);
+        this.setIsDirtyAndIcon(row, cell, cellNode);
+      }
     }
 
     if (coercedVal !== oldVal && !fromApiCall) {
@@ -7735,11 +7795,59 @@ Datagrid.prototype = {
        */
       this.element.trigger('cellchange', args);
       this.wasJustUpdated = true;
-
-      if (this.settings.showDirty) {
-        this.rowStatus(row, 'dirty');
-      }
     }
+  },
+
+  /**
+   * Function to check if given cell has true value for isDirty
+   * @private
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @returns {boolean} true if isDirty
+   */
+  isCellDirty(row, cell) {
+    return this.isDirtyCellNotUndefined(row, cell) ?
+      this.dirtyArray[row][cell].isDirty : false;
+  },
+
+  /**
+   * Set isDirty value and Add/Remove dirty icon to given cell
+   * must checked before to be true from `isDirtyCellNotUndefined(row, cell)`
+   * must checked before not undefined `cellNode`
+   * @private
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @param {object} cellNode jQuery cell node
+   * @returns {void}
+   */
+  setIsDirtyAndIcon(row, cell, cellNode) {
+    const d = this.dirtyArray[row][cell];
+    if ((d.originalVal === d.value) ||
+      (d.originalVal === d.coercedVal) ||
+      (d.originalVal === d.escapedCoercedVal)) {
+      this.dirtyArray[row][cell].isDirty = false;
+      cellNode[0].classList.remove('is-dirty-cell');
+    } else {
+      this.dirtyArray[row][cell].isDirty = true;
+      cellNode[0].classList.add('is-dirty-cell');
+    }
+  },
+
+  /**
+   * Function to check given cell is cache to dirtyArray
+   * @private
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @returns {boolean} true if found
+   */
+  isDirtyCellNotUndefined(row, cell) {
+    return (this.settings.showDirty &&
+      typeof row === 'number' &&
+      typeof cell === 'number' &&
+      row > -1 && cell > -1 &&
+      typeof this.dirtyArray !== 'undefined' &&
+      typeof this.dirtyArray[row] !== 'undefined' &&
+      typeof this.dirtyArray[row][cell] !== 'undefined');
   },
 
   /**
@@ -8355,13 +8463,61 @@ Datagrid.prototype = {
     }
     const sort = this.sortFunction(this.sortColumn.sortId, this.sortColumn.sortAsc);
 
+    this.setDirtyBeforeSort();
+
     if (!this.settings.disableClientSort) {
       this.settings.dataset.sort(sort);
     }
 
+    this.setTreeDepth();
+    this.setDirtyAfterSort();
+
     // Resync the _selectedRows array
     if (this.settings.selectable) {
       this.syncDatasetWithSelectedRows();
+    }
+  },
+
+  /**
+  * Set current data to sync up dirtyArray before sort
+  * @private
+  * @returns {void}
+  */
+  setDirtyBeforeSort() {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    if (s.showDirty && !this.settings.source && this.dirtyArray && this.dirtyArray.length) {
+      for (let i = 0, l = dataset.length; i < l; i++) {
+        if (typeof this.dirtyArray[i] !== 'undefined') {
+          const node = s.treeGrid ? dataset[i].node : dataset[i];
+          node.tempNodeIndex = i;
+        }
+      }
+    }
+  },
+
+  /**
+  * Set current data to sync up dirtyArray after sort
+  * @private
+  * @returns {void}
+  */
+  setDirtyAfterSort() {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    if (s.showDirty && this.dirtyArray && this.dirtyArray.length) {
+      const changes = [];
+      for (let i = 0, l = dataset.length; i < l; i++) {
+        const node = s.treeGrid ? dataset[i].node : dataset[i];
+        if (typeof node.tempNodeIndex !== 'undefined') {
+          changes.push({ newIdx: i, oldIdx: node.tempNodeIndex });
+          delete node.tempNodeIndex;
+        }
+      }
+      const newDirtyArray = [];
+      for (let i = 0, l = changes.length; i < l; i++) {
+        newDirtyArray[changes[i].newIdx] = this.dirtyArray[changes[i].oldIdx];
+      }
+      this.dirtyArray = newDirtyArray;
     }
   },
 
@@ -8652,7 +8808,7 @@ Datagrid.prototype = {
       if (isRowstatus || isSvg) {
         const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
         const classList = rowNode ? rowNode.classList : [];
-        tooltip.isError = classList.contains('rowstatus-row-error') || classList.contains('rowstatus-row-dirtyerror');
+        tooltip.isError = classList.contains('rowstatus-row-error');
         tooltip.placement = 'right';
 
         // For nonVisibleCellErrors

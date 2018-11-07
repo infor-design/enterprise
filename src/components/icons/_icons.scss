@@ -51,9 +51,9 @@ svg.icon-dirty,
   .icon-error,
   .icon-confirm {
     height: 14px;
-    position: absolute;
-    right: 5px;
-    top: 24px;
+    position: relative;
+    right: 0;
+    top: -8px;
     width: 18px;
   }
 

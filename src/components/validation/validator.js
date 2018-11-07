@@ -798,8 +798,11 @@ Validator.prototype = {
       tooltipAPI.hide();
     });
 
-    if (showTooltip && tooltipAPI) {
+    if (tooltipAPI) {
       field.attr('data-error-type', 'tooltip');
+    }
+
+    if (showTooltip && tooltipAPI) {
       tooltipAPI.show();
     }
   },

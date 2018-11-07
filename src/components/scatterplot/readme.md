@@ -1,6 +1,6 @@
 ---
 title: Scatter Plot Chart
-description: This page describes Scatter Plot Chart.
+description: null
 demo:
   embedded:
   - name: Standard Scatter Plot Chart
@@ -18,7 +18,7 @@ demo:
 
 A scatter plot (also called a scatterplot, scatter graph, scatter chart, scattergram, or scatter diagram) is a type of plot or mathematical diagram using Cartesian coordinates to display values for typically two variables for a set of data.
 
-See the [line chart api]( ../components/line) for more details as some settings are similar.
+See the [line chart api]( ../line) for more details as some settings are similar.
 
 ## Code Example
 

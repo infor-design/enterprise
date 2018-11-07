@@ -1,6 +1,6 @@
 ---
 title: Popupmenu Component
-description: This page describes Popupmenu Component .
+description: null
 demo:
   embedded:
   - name: Popupmenu as a Menu Button
@@ -43,7 +43,7 @@ Here is an example of a menu button using a popupmenu. This is also described on
 
 ### Initialization as a context menu
 
-In addition to invoking popupmenus on menu button clicks, menus can also be invoked as a right click menu. This is covered under the [contextmenu example](../components/contextmenu). The contextmenu is really just the popupmenu using the `rightClick` trigger option. Here is an example invoking the popupmenu on the body / page. The `menu` option refers to the id of the `ul` in the page with the menu items, and the `trigger` option is set to `rightClick`.
+In addition to invoking popupmenus on menu button clicks, menus can also be invoked as a right click menu. This is covered under the [contextmenu example](../contextmenu). The contextmenu is really just the popupmenu using the `rightClick` trigger option. Here is an example invoking the popupmenu on the body / page. The `menu` option refers to the id of the `ul` in the page with the menu items, and the `trigger` option is set to `rightClick`.
 
 ```javascript
 $('body').popupmenu({

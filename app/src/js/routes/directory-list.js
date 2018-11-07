@@ -53,16 +53,31 @@ module.exports = function directoryList(directory, viewsRoot, req, res, next) {
 
     // Map with links, add to
     function pathMapper(link) {
-      let href = path.join('/', directory.replace(viewsRoot, ''), link);
-      let icon;
+      let href = `./${link}`;
+      let icon = '#icon-document';
       let type = 'file';
+      let tempDir = `${directory}`;
 
-      if (utils.isType('directory', `${directory}${link}`)) {
+      function hasNoTrailingSlash(dir) {
+        return dir.lastIndexOf('/') !== (dir.length - 1);
+      }
+      const hasExplicitList = req.url.lastIndexOf('/list') !== -1;
+
+      // handle "list"
+      if (hasExplicitList) {
+        tempDir = tempDir.substr(0, tempDir.lastIndexOf('/') + 1);
+        href = link;
+      } else if (hasNoTrailingSlash(tempDir)) {
+      // Correct for a missing slash at the end of the URL
+        const subDir = tempDir.substring(tempDir.lastIndexOf('/') + 1);
+        tempDir = `${tempDir}/`;
+        href = `${subDir}/${link}`;
+      }
+
+      if (utils.isType('directory', `${tempDir}${link}`)) {
         icon = '#icon-folder';
         type = 'folder';
         href += '/list';
-      } else {
-        icon = '#icon-document';
       }
 
       if (link.indexOf('example-') === 0) {
@@ -73,7 +88,7 @@ module.exports = function directoryList(directory, viewsRoot, req, res, next) {
 
       return {
         icon,
-        href: href.replace(/\\/g, '/'),
+        href,
         text: formatPath(link),
         type
       };

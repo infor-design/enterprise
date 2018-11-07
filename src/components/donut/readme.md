@@ -1,6 +1,6 @@
 ---
 title: Donut Chart
-description: This page describes Donut Chart.
+description: null
 demo:
   embedded:
   - name: Standard Donut Chart
@@ -22,7 +22,7 @@ demo:
 
 ## Settings
 
-See the [Pie API]( ../components/pie) as this is just a pie setting.
+See the [Pie API]( ../pie) as this is just a pie setting.
 
 ## Code Example
 

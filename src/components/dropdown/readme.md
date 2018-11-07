@@ -1,6 +1,6 @@
 ---
 title: Dropdown
-description: This page describes Dropdown.
+description: Displays one or more selectable values in a menu that is collapsed by default. A user can select an actionable value. Best used when users do not require a view of all possible values at all times.
 demo:
   embedded:
   - name: Default Dropdown Example

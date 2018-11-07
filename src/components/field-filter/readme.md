@@ -1,6 +1,6 @@
 ---
 title: Field Filter
-description: This page describes Field Filter.
+description: Displays an editable field and related formatting options. A user can enter and format alphanumeric data. Best for long-form content that may require formatting and embedded media.
 demo:
   embedded:
   - name: Default Field Filter Example

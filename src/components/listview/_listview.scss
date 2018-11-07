@@ -82,11 +82,6 @@
     }
   }
 
-  //Respect min height with pager
-  &.paginated {
-    min-height: 400px;
-  }
-
   .listview-micro {
     @include font-size(12);
 

@@ -547,6 +547,10 @@ div.multiselect {
     display: none;
   }
 
+  &[readonly] {
+    background-color: $dropdown-search-bg-color !important;
+  }
+
   &:focus {
     border: 0;
     border-bottom: 1px solid $dropdown-menu-separator-color;

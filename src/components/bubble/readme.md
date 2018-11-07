@@ -1,6 +1,6 @@
 ---
 title: Bubble Chart
-description: This page describes Bubble Chart.
+description: null
 demo:
   embedded:
   - name: Standard Bubble Chart
@@ -25,7 +25,7 @@ demo:
 5. Example showing Set Selected value [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-set-selected?font=source-sans)
 
 The bubble chart is a line chart with the isBubble set that adds the bubble. Plus the z dimension in the data.
-See the [line chart api]( ../components/line) for more details.
+See the [line chart api]( ../line) for more details.
 
 ## Code Example
 

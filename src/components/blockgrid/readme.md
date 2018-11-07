@@ -1,6 +1,6 @@
 ---
 title: Blockgrid
-description: This page describes Blockgrid.
+description: null
 demo:
   embedded:
   - name: Blockgrid with images

@@ -558,6 +558,7 @@ Pager.prototype = {
     if (pageNum === undefined ||
         pageNum === 0 ||
         isNaN(pageNum) ||
+        (pageNum > this.pageCount() && this.pageCount() > 0) ||
         (pageNum === this.activePage && !force)) {
       this.renderBar(pagingInfo);
       return this.activePage;
@@ -721,12 +722,13 @@ Pager.prototype = {
             pagesize: self.settings.pagesize,
             settings: self.settings
           });
-          self.element.trigger('pagesizechange', {
-            tag: args,
-            pagesize: self.settings.pagesize,
-            settings: self.settings
-          });
         }
+
+        self.element.trigger('pagesizechange', {
+          tag: args,
+          pagesize: self.settings.pagesize,
+          settings: self.settings
+        });
 
         // Update the number of records per page
         self.pagerBar.find('.btn-menu span')

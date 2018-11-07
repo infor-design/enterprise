@@ -378,8 +378,16 @@ $subheader-height: 60px;
   .full-searchfield-container {
     margin: 0 auto;
     max-width: $breakpoint-tablet-to-desktop;
-    padding: 1.4rem 4rem 0;
+    padding: 1.4rem 2rem 0;
     vertical-align: middle;
+
+    @media (max-width: $breakpoint-slim) {
+      padding: 1.4rem 0.5rem 0;
+    }
+
+    @media (min-width: $breakpoint-phone-to-tablet) {
+      padding: 1.4rem 4rem 0;
+    }
 
     .hyperlink {
       @include font-size(14);

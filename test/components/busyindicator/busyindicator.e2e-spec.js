@@ -102,7 +102,7 @@ describe('Busy Indicator test-block-entire-ui tests', () => {
     const buttonEl = await element(by.id('submit'));
     await buttonEl.click();
 
-    browser.actions()
+    await browser.actions()
       .mouseMove(element(by.tagName('body')), { x: 170, y: 235 })
       .click()
       .perform();
@@ -135,7 +135,7 @@ describe('Busy Indicator test-block-specific-area tests', () => {
 
 describe('Busy Indicator test-block-whole-page tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/busyindicator/test-block-whole-page tests');
+    await utils.setPage('/components/busyindicator/test-block-whole-page');
   });
 
   it('Should not have errors', async () => {

@@ -9,7 +9,8 @@ const VALIDATE_COMPONENT_NAME = 'validate';
 // Settings specific to error messages.
 // Used for backwards compatibility.
 const ERROR_MESSAGE_DEFAULTS = {
-  type: 'error'
+  type: 'error',
+  inline: true
 };
 
 /**
@@ -138,7 +139,12 @@ $.fn.addMessage = function (settings) {
  * @returns {jQuery[]} elements receiving errors
  */
 $.fn.addError = function (settings) {
+  let inline = true;
+  if (typeof settings.inline === 'boolean' && settings.inline === false) {
+    inline = false;
+  }
   settings = utils.extend({}, settings, ERROR_MESSAGE_DEFAULTS);
+  settings.inline = inline;
   return this.each(function () {
     $(this).addMessage(settings);
   });

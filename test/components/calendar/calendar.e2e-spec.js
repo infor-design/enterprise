@@ -120,8 +120,7 @@ describe('Calendar specific month tests', () => {
       .mouseMove(await element.all(by.css('.calendar-event.emerald.event-day-start')).first())
       .perform();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element(by.id('tooltip')).getText()).toEqual('Autumn Foliage Trip (Pending)');
   });
