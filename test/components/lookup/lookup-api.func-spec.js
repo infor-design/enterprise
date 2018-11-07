@@ -55,6 +55,22 @@ describe('Lookup API', () => {
     expect(lookupObj.isReadonly()).toBeTruthy();
   });
 
+  it('Should hide icon if input is hidden', () => {
+    lookupObj.destroy();
+
+    lookupEl.style.display = 'none';
+    lookupObj = new Lookup(lookupEl);
+
+    expect($(lookupEl).siblings('span.trigger').css('display')).toEqual('none');
+
+    lookupObj.destroy();
+
+    lookupEl.style.visibility = 'hidden';
+    lookupObj = new Lookup(lookupEl);
+
+    expect($(lookupEl).siblings('span.trigger').css('display')).toEqual('none');
+  });
+
   it('Should be able to destroy it', () => {
     lookupObj.destroy();
 
