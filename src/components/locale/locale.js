@@ -1011,8 +1011,8 @@ const Locale = {  // eslint-disable-line
   /**
    * Takes a translation key and returns the translation in the current locale.
    * @param {string} key  The key to search for on the string.
-   * @param {boolean} [showAsUndefined] causes a translated phrase to be
-    instead of defaulting to the default locale's version of the string.
+   * @param {boolean} [showAsUndefined] Causes a translated phrase to be shown in square brackets
+   * instead of defaulting to the default locale's version of the string.
    * @returns {string|undefined} a translated string, or nothing, depending on configuration
    */
   translate(key, showAsUndefined) {

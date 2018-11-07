@@ -77,6 +77,7 @@
 
   .calendar-event-types {
     margin-bottom: -3px;
+    margin-right: 5px;
   }
 
   // A calendar event
@@ -134,8 +135,9 @@
 
     .calendar-event-content {
       overflow: hidden;
-      padding: 3px 1px;
+      padding: 3px 5px;
       position: relative;
+      text-align: left;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
