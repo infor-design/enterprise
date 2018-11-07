@@ -189,10 +189,6 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
       }
     }
 
-    .searchfield {
-      border-color: $input-hover-border-color;
-    }
-
     &.has-categories {
       .searchfield {
         border-left-color: transparent;
