@@ -94,7 +94,7 @@ describe('Datagrid grouping with paging tests', () => {
 
     expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
 
-    element(by.css('.pager-next')).click();
+    element(await by.css('.pager-next')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
