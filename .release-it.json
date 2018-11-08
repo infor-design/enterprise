@@ -10,7 +10,7 @@
     "commitMessage": "Release v%s",
     "tagAnnotation": "Release v%s",
     "beforeStartCommand": "npm run eslint:error-only",
-    "afterReleaseCommand": ""
+    "afterReleaseCommand": "./scripts/after-release.sh ${npm.tag} ${version}"
   },
   "npm": {
     "publish": true,
