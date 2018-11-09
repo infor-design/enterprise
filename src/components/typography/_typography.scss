@@ -20,7 +20,7 @@ html {
   font-size: 62.5%;
 
   body {
-    background-color: $body-bg-color-primary;
+    background-color: $body-color-primary-background;
     color: $font-color-default;
     font-family: $font-regular;
     font-size: 1rem;
@@ -52,7 +52,7 @@ ul,
 ol {
   @include antialiased();
 
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   line-height: normal;
 }
 
@@ -132,7 +132,7 @@ p {
 }
 
 .text-strong {
-  font-weight: $font-weight-bold !important;
+  font-weight: $theme-number-font-weight-bold !important;
 }
 
 .text-alert {
@@ -235,7 +235,7 @@ small,
   @include rem(line-height, 2rem);
 
   color: $alert-red;
-  font-weight: $font-weight-bold;
+  font-weight: $theme-number-font-weight-bold;
   padding-left: 15px;
 
   &::before {
@@ -254,35 +254,35 @@ small,
   @include font-size(11);
 
   color: $alert01;
-  font-weight: $font-weight-bold;
+  font-weight: $theme-number-font-weight-bold;
 }
 
 .warning-text {
   @include font-size(11);
 
   color: $alert02;
-  font-weight: $font-weight-bold;
+  font-weight: $theme-number-font-weight-bold;
 }
 
 .good-text {
   @include font-size(11);
 
   color: $alert04;
-  font-weight: $font-weight-bold;
+  font-weight: $theme-number-font-weight-bold;
 }
 
 .info-text {
   @include font-size(11);
 
-  color: $color-primary-alt;
-  font-weight: $font-weight-bold;
+  color: $theme-color-brand-primary-alt;
+  font-weight: $theme-number-font-weight-bold;
 }
 
 .small-thin-text {
   @include font-size(10);
 
   color: $font-color;
-  font-weight: $font-weight-bold;
+  font-weight: $theme-number-font-weight-bold;
 
   + .small-thin-text {
     margin-top: 0;
@@ -293,7 +293,7 @@ small,
   @include font-size(14);
 
   color: $font-color-highcontrast;
-  font-weight: $font-weight-bold;
+  font-weight: $theme-number-font-weight-bold;
 }
 
 .data-large {

@@ -10,17 +10,17 @@ $images-size: (
 );
 
 // Image Placeholder
-@mixin image-placeholder($width, $height, $icon-height) {
+@mixin image-placeholder($this-width, $this-height, $this-icon-height) {
   background: $white;
   border: 1px solid $image-border-color;
-  height: $height;
-  max-height: $height;
-  max-width: $width;
+  height: $this-height;
+  max-height: $this-height;
+  max-width: $this-width;
   text-align: center;
-  width: $width;
+  width: $this-width;
 
   .icon {
-    margin-top: ($height - $icon-height) / 2;
+    margin-top: ($this-height - $this-icon-height) / 2;
   }
 }
 

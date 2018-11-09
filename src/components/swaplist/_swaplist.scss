@@ -125,7 +125,7 @@
 
     .card-title {
       color: $swaplist-title-text-color;
-      font-weight: $font-weight-normal;
+      font-weight: $theme-number-font-weight-base;
     }
 
     p {
@@ -255,7 +255,7 @@
 
         p {
           color: $swaplist-text-color-selected;
-          font-weight: $font-weight-bold;
+          font-weight: $theme-number-font-weight-bold;
         }
 
         &:hover:not(.is-disabled),

@@ -97,7 +97,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
           }
 
           button {
-            background: $color-primary;
+            background: $theme-color-brand-primary-base;
             color: $white;
             display: block;
             margin: 0 0 0 122px;
@@ -211,7 +211,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
 
     // Remove the last node if its expandable
     .chart:not(.has-single-child) > .sub-level > li.branch-expanded:last-child::after {
-      background-color: $body-bg-color-primary;
+      background-color: $body-color-primary-background;
       content: '';
       height: 100%;
       left: 13px;
@@ -290,7 +290,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     }
 
     .image-placeholder {
-      border: 2px solid $color-default-alt;
+      border: 2px solid $theme-color-brand-secondary-alt;
     }
 
     .detail {

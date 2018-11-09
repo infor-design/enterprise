@@ -38,7 +38,7 @@ $subheader-height: 60px;
 
     color: $header-text-color;
     display: inline;
-    font-weight: $font-weight-normal;
+    font-weight: $theme-number-font-weight-base;
     margin-bottom: 0;
     text-overflow: ellipsis;
     vertical-align: middle;
@@ -72,7 +72,7 @@ $subheader-height: 60px;
     }
 
     &:focus:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $color-primary-alt, 0 0 0 3px $white, $header-focus-box-shadow;
+      box-shadow: 0 0 0 2px $theme-color-brand-primary-alt, 0 0 0 3px $white, $header-focus-box-shadow;
 
       &:active {
         box-shadow: none;
@@ -291,7 +291,7 @@ $subheader-height: 60px;
     }
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 1px $body-bg-color-primary, 0 0 0 2px $button-default-focus-border-color, $focus-box-shadow;
+      box-shadow: 0 0 0 1px $body-color-primary-background, 0 0 0 2px $button-color-secondary-focus-border, $focus-box-shadow;
     }
   }
 }

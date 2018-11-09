@@ -142,7 +142,7 @@ a {
   @include font-size(16);
 
   color: $color-main-blue;
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   text-decoration: none;
 
   svg {
@@ -175,7 +175,7 @@ pre {
 p strong {
   @include font-size(16);
 
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   padding-left: 0;
 
   &::after {
@@ -407,7 +407,7 @@ code {
     th {
       @include font-size(16);
 
-      font-weight: $font-weight-normal;
+      font-weight: $theme-number-font-weight-base;
       padding: 16px 30px 16px 0;
     }
 

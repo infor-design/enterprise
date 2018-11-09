@@ -233,7 +233,7 @@
     @include font-size(18);
 
     color: $modal-primary-color;
-    font-weight: $font-weight-normal;
+    font-weight: $theme-number-font-weight-base;
     -webkit-margin-after: 0;
     text-align: left;
 
@@ -283,7 +283,7 @@
     @include font-size(16);
 
     color: $modal-primary-color;
-    font-weight: $font-weight-normal;
+    font-weight: $theme-number-font-weight-base;
     -webkit-margin-after: 0;
     text-align: left;
 
@@ -393,7 +393,7 @@
     color: $modal-btn-color;
     cursor: pointer;
     float: left;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
     height: 46px;
     line-height: 46px; // Used same value as height to get accurate measurement of vertical height
     margin-right: 0;
@@ -411,7 +411,7 @@
     }
 
     &:focus:not(.hide-focus) {
-      border: 1px solid $input-focus-border-color;
+      border: 1px solid $input-color-focus-border;
       box-shadow: $focus-box-shadow;
       outline: none;
       outline-color: transparent;
@@ -433,7 +433,7 @@
     }
 
     .ripple-effect {
-      background-color: $button-primary-bg-color;
+      background-color: $button-color-primary-initial-background;
     }
   }
 
