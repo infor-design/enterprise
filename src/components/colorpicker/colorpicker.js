@@ -45,6 +45,7 @@ const COLORPICKER_DEFAULTS = {
     dark: { border: 'matched-only', checkmark: { one: [1, 2], two: [3, 10] } },
     'high-contrast': { border: 'all', checkmark: { one: [1, 3], two: [4, 10] } }
   },
+  customColors: false,
   colors: [
     { label: 'Slate', number: '10', value: '1a1a1a' },
     { label: 'Slate', number: '09', value: '292929' },
@@ -539,7 +540,7 @@ ColorPicker.prototype = {
         const a = $(`<a href="#" title="${s.clearableText}"><span class="swatch is-empty${isBorderAll ? ' is-border' : ''}"></span></a>`).appendTo(li);
         a.data('label', s.clearableText).data('value', '').tooltip();
         menu.append(li);
-      } else {
+      } else if (!this.settings.customColors) {
         const li = $('<li></li>');
         $('<a href="#" title="Azure01 #C8E9F4"><span class="swatch" style="background-color: rgb(173 ,216, 235);"></span></a>').appendTo(li).tooltip();
         menu.append(li);

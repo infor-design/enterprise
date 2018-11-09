@@ -107,7 +107,7 @@
     .icon {
       @include transition(fill 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
-      fill: $application-menu-trigger-icon-fill-color;
+      fill: lighten($application-menu-trigger-icon-fill-color, 20%);
 
       &:not(.close) {
         left: 18px;
@@ -129,10 +129,6 @@
 
       .searchfield-category-button {
         border-color: transparent;
-      }
-
-      .icon {
-        fill: $application-menu-searchfield-icon-color;
       }
     }
 
@@ -188,20 +184,20 @@
     width: auto;
 
     &::placeholder {
-      color: $application-menu-searchfield-placeholder-color;
+      color: lighten($application-menu-searchfield-placeholder-color, 20%);
     }
 
     &::-webkit-input-placeholder {
-      color: $application-menu-searchfield-placeholder-color;
+      color: lighten($application-menu-searchfield-placeholder-color, 20%);
     }
 
     &::-moz-placeholder {
-      color: $application-menu-searchfield-placeholder-color;
+      color: lighten($application-menu-searchfield-placeholder-color, 20%);
       opacity: 1;
     }
 
     &:-ms-input-placeholder {
-      color: $application-menu-searchfield-placeholder-color;
+      color: lighten($application-menu-searchfield-placeholder-color, 20%);
     }
   }
 

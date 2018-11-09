@@ -152,6 +152,12 @@ DatePicker.prototype = {
 
     // Append a trigger button
     this.trigger = $.createIconElement('calendar').insertAfter(this.element);
+
+    // Hide icon if datepicker input is hidden 
+    if ((this.element.is(':hidden') || this.element.css('visibility') === 'hidden') && this.element.parents('.modal').length === 0) {
+      this.trigger.hide();
+    }
+
     this.addAria();
 
     // Set the current calendar
@@ -1515,19 +1521,19 @@ DatePicker.prototype = {
 
     if (!this.settings.useCurrentTime) {
       this.currentDate.setHours(0, 0, 0, 0);
-    }
 
-    if (this.element.val() !== '') {
-      if (this.timepicker && this.timepicker.hourSelect) {
-        this.currentDate.setHours(this.timepicker.hourSelect.val());
-      }
+      if (this.element.val() !== '') {
+        if (this.timepicker && this.timepicker.hourSelect) {
+          this.currentDate.setHours(this.timepicker.hourSelect.val());
+        }
 
-      if (this.timepicker && this.timepicker.minuteSelect) {
-        this.currentDate.setMinutes(this.timepicker.minuteSelect.val());
-      }
+        if (this.timepicker && this.timepicker.minuteSelect) {
+          this.currentDate.setMinutes(this.timepicker.minuteSelect.val());
+        }
 
-      if (this.timepicker && this.timepicker.secondSelect) {
-        this.currentDate.setSeconds(this.timepicker.secondSelect.val());
+        if (this.timepicker && this.timepicker.secondSelect) {
+          this.currentDate.setSeconds(this.timepicker.secondSelect.val());
+        }
       }
     }
 
