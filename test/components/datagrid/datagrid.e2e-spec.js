@@ -51,6 +51,63 @@ describe('Datagrid index tests', () => {
   });
 });
 
+describe('Datagrid grouping with paging tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-grouping-paging');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should handle click', async () => {
+    const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
+
+    expect(await element(by.css(cell)).getText()).toEqual('214220');
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
+
+    element(by.css('.pager-next')).click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+
+    expect(await element(by.css(cell)).getText()).toEqual('214225');
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
+  });
+
+  it('Should handle selection', async () => {
+    const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
+    const row = '#datagrid .datagrid-body tbody tr:nth-child(2)';
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
+
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
+
+    element(await by.css('.pager-next')).click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
+
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
+  });
+});
+
 describe('Datagrid mixed selection tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-mixed-selection');
@@ -138,6 +195,80 @@ describe('Datagrid multiselect tests', () => {
 
     expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
+  });
+});
+
+describe('Datagrid paging (client side) tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to move to last', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+
+    await element(by.css('.pager-last a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('990');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('999');
+  });
+
+  it('Should be able to move to first', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+
+    await element(by.css('.pager-last a')).click();
+    await element(by.css('.pager-first a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+  });
+
+  it('Should be able to move to next/prev', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+
+    await element(by.css('.pager-next a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('10');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('19');
+
+    await element(by.css('.pager-prev a')).click();
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+  });
+
+  it('Should be able to move to specific page', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+
+    await element(by.css('.pager-count input')).sendKeys(protractor.Key.BACK_SPACE);
+    await element(by.css('.pager-count input')).sendKeys('5');
+    await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('40');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
+  });
+
+  it('Should not move on a page thats more than the max', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+
+    await element(by.css('.pager-count input')).clear();
+    await element(by.css('.pager-count input')).sendKeys('101');
+    await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
   });
 });
 
@@ -443,8 +574,7 @@ describe('Datagrid paging multiselect across pages', () => {
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
@@ -513,8 +643,7 @@ describe('Datagrid paging client side multiselect tests', () => {
 
     await element(by.css('.pager-next')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tr:nth-child(1) td[aria-colindex="2"]'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
@@ -548,15 +677,13 @@ describe('Datagrid paging clientside single select tests', () => { //eslint-disa
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
   });
@@ -583,15 +710,13 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
+    await browser.driver.sleep(config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
   });
@@ -699,6 +824,24 @@ describe('Datagrid paging serverside single select tests', () => {
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
+  });
+});
+
+describe('Datagrid Paging with Summary Row test', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging-with-summary-row');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should display summary row', async () => {
+    expect(await element.all(by.css('tr.datagrid-summary-row')).count()).toEqual(1);
   });
 });
 

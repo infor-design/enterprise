@@ -1,6 +1,7 @@
 /* eslint-disable jasmine/no-focused-tests */
 import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
+import { Editors } from '../../../src/components/datagrid/datagrid.editors';
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -53,7 +54,9 @@ const pagingDataSource = (req, res) => {
 // Define Columns for the Grid.
 const columns = [];
 columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: 100, filterType: 'Text' });
-columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, filterType: 'Text' });
+columns.push({
+  id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, filterType: 'Text', editor: Editors.Input
+});
 columns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true, filterType: 'Text' });
 columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden', filterType: 'Text' });
 columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' } });
@@ -63,6 +66,93 @@ columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, fi
 
 describe('Datagrid Paging API', () => {
   const Locale = window.Soho.Locale;
+
+  describe('Check Clientside Paging', () => {
+    beforeEach(() => {
+      datagridEl = null;
+      svgEl = null;
+      datagridObj = null;
+      document.body.insertAdjacentHTML('afterbegin', svg);
+      document.body.insertAdjacentHTML('afterbegin', datagridHTML);
+      datagridEl = document.body.querySelector('#datagrid');
+      svgEl = document.body.querySelector('.svg-icons');
+
+      Locale.set('en-US');
+    });
+
+    afterEach(() => {
+      datagridObj.destroy();
+      datagridEl.parentNode.removeChild(datagridEl);
+      svgEl.parentNode.removeChild(svgEl);
+
+      const rowEl = document.body.querySelector('.row');
+      rowEl.parentNode.removeChild(rowEl);
+    });
+
+    it('Should be able to track dirty cells with pagging', (done) => {
+      const options = { dataset: sampleData, columns, paging: true, pagesize: 3, editable: true, showDirty: true }; // eslint-disable-line max-len
+      datagridObj = new Datagrid(datagridEl, options);
+
+      let cell1;
+      let cell2;
+      let input;
+
+      setTimeout(() => {
+        cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
+        cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+
+        expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+        expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+
+        cell1.click();
+        input = cell1.querySelector('input');
+        const originalVal = input.value;
+        input.value = 'Cell test value';
+        cell2.click();
+
+        expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+        expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+
+        const buttonElNext = document.body.querySelector('li.pager-next a');
+        const buttonClickSpyNext = spyOnEvent(buttonElNext, 'click.button');
+        buttonElNext.click();
+
+        setTimeout(() => {
+          expect(buttonClickSpyNext).toHaveBeenTriggered();
+
+          cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
+          cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+
+          expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+          expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+
+          const buttonElPrev = document.body.querySelector('li.pager-prev a');
+          const buttonClickSpyPrev = spyOnEvent(buttonElPrev, 'click.button');
+          buttonElPrev.click();
+
+          setTimeout(() => {
+            expect(buttonClickSpyPrev).toHaveBeenTriggered();
+
+            cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
+            cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+
+            expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+            expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+
+            cell1.click();
+            input = cell1.querySelector('input');
+            input.value = originalVal;
+            cell2.click();
+
+            expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+            expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+
+            done();
+          }, 1);
+        }, 1);
+      }, 1);
+    });
+  });
 
   describe('Check Indeterminate Paging using DataGrid source API', () => {
     beforeEach(() => {

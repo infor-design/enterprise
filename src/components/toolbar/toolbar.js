@@ -567,6 +567,9 @@ Toolbar.prototype = {
           return;
         }
 
+        if (document.activeElement && document.activeElement.tagName === 'INPUT') {
+          return;
+        }
         el.focus();
         self.buttonset.scrollTop(0);
       });
@@ -1060,7 +1063,7 @@ Toolbar.prototype = {
     this.activeButton = getActiveButton();
     this.activeButton.addClass('is-selected').attr('tabindex', '0');
 
-    if (!noFocus) {
+    if (!noFocus && this.activeButton[0]) {
       this.activeButton[0].focus();
 
       /**
@@ -1343,7 +1346,10 @@ Toolbar.prototype = {
       });
 
       if (shouldFocus) {
-        this.getLastVisibleButton()[0].focus();
+        const lastVisibleButton = this.getLastVisibleButton()[0];
+        if (lastVisibleButton) {
+          lastVisibleButton.focus();
+        }
       }
     }
   },

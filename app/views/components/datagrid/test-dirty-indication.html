@@ -15,14 +15,6 @@
           </svg>
           <span>Reset</span>
         </button>
-
-        <button class="btn" type="button" id="show-dirty">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-info"></use>
-          </svg>
-          <span>Show Dirty</span>
-        </button>
-
       </div>
 
       <div class="more">
@@ -117,10 +109,4 @@
   $('#add-reset').on('click', function () {
     gridApi.resetRowStatus();
   });
-
-  //Example of seeing all dirty rows
-  $('#show-dirty').on('click', function () {
-    console.log(gridApi.dirtyRows());
-  });
-
 </script>

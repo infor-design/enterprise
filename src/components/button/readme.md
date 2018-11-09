@@ -1,6 +1,6 @@
 ---
 title: Button
-description: This page describes Button.
+description: Displays an action. A user can interact with a button to initiate a process. Best used for performing discrete operations on a given set of data, or triggering a separate workflow.
 demo:
   embedded:
   - name: Form Buttons

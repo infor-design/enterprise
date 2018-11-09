@@ -29,7 +29,7 @@ function render(useComments) {
   const startComment = useComments ? '/** ' : '';
   const comment = useComments ? ' *  ' : '';
   const endComment = useComments ? ' */ ' : '';
-  const date = `Date: ${moment().format('DD/MM/YYYY, h:mm:ss a')}`;
+  const date = `Date: ${moment().toISOString()}`;
   const revision = `Revision: ${commitHash}`.trim();
   let isCustom = '';
   let componentsArgs;

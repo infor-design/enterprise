@@ -227,9 +227,6 @@ const editors = {
       self.input.off('hide.editor keydown.editor');
       setTimeout(() => {
         self.input.remove();
-        // Reset tooltip
-        const elem = self.td.find('.is-editor.content-tooltip');
-        api.setupContentTooltip(elem, self.editorWidth);
       }, 0);
     };
 

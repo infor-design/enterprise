@@ -97,7 +97,7 @@
       }
 
       &.is-selected {
-        background-color: $listbuilder-bg-color-selected;
+        background-color: $listbuilder-bg-color-selected !important;
 
         &.is-disabled {
           background-color: $listbuilder-bg-color-hover;

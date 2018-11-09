@@ -1960,7 +1960,7 @@ Tree.prototype = {
                 startWidth: a.outerWidth()
               };
 
-              self.element.triggerHandler('dragstart', self.sortable);
+              self.element.triggerHandler('sortstart', self.sortable);
               e.preventDefault();
               e.stopImmediatePropagation();
             })
@@ -2022,7 +2022,7 @@ Tree.prototype = {
               // Fix: On windows 10 with IE-11 icons disappears
               utils.fixSVGIcons(start);
 
-              self.element.triggerHandler('dragend', self.sortable);
+              self.element.triggerHandler('sortend', self.sortable);
               // Sync dataset and ui
               self.syncDataset();
               if (self.isMultiselect) {

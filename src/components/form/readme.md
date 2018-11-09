@@ -1,6 +1,9 @@
 ---
 title: Form Functionality
-description: The forms plugins are a set of form related utilities and functionality contained in `forms.js`. This page outlines the functionality contained in that plugin and shows some from related examples for layout from other areas.
+description: >
+    Displays a set of inputs related to a single data object. A user can select or input values, and submit as a set. Best for entering or editing information for a single object.
+
+    The forms plugins are a set of form related utilities and functionality contained in `forms.js`. This page outlines the functionality contained in that plugin and shows some from related examples for layout from other areas.
 demo:
   embedded:
   - name: Form Inputs in the Responsive Grid
@@ -24,11 +27,11 @@ The following classes can be used for form labels:
 
 The following classes can be used for form and label alignment.
 
-- `form-responsive` - Makes all the fields inside go to width 100% so that the fields will align in a responsive grid. You have the option to use fixed field sizes (default) or responsive forms. This class forces a responsive form. [See Example](https://design.infor.com/code/ids-enterprise/latest/demo/form/example-inputs?font=source-sans)
-- `field-flex` - Makes all the labels and fields inside go into a side by side layout. Yet still work responsively. This can be used for labels input description situations or to force some labels to sit together , similar to compound fields [See Example](https://design.infor.com/code/ids-enterprise/latest/demo/form/example-labels?font=source-sans)
-- `label-left` - Used to put a label and data label to the left of each other rather than on top. This may be used on some forms but not with editable inputs. [See Example](https://design.infor.com/code/ids-enterprise/latest/demo/form/example-labels?font=source-sans)
-- `compound-field` - Used to put several fields next to each other in a row. This may be used for related fields like phone + extension [See Example](https://design.infor.com/code/ids-enterprise/latest/demo/form/example-forms?font=source-sans)
+- `form-responsive` - Makes all the fields inside go to width 100% so that the fields will align in a responsive grid. You have the option to use fixed field sizes (default) or responsive forms. This class forces a responsive form. [See Example](./demo/components/form/example-inputs?font=source-sans)
+- `field-flex` - Makes all the labels and fields inside go into a side by side layout. Yet still work responsively. This can be used for labels input description situations or to force some labels to sit together , similar to compound fields [See Example](./demo/components/form/example-labels?font=source-sans)
+- `label-left` - Used to put a label and data label to the left of each other rather than on top. This may be used on some forms but not with editable inputs. [See Example](./demo/form/example-labels?font=source-sans)
+- `compound-field` - Used to put several fields next to each other in a row. This may be used for related fields like phone + extension [See Example](./demo/form/example-forms?font=source-sans)
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+- Please refer to the [Application Testability Checklist](/resources/application-testability-checklist) for further details.

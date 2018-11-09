@@ -64,9 +64,11 @@ describe('Datagrid API', () => {
   it('Should render datagrid', () => {
     datagridObj.destroy();
     const spyEvent = spyOnEvent($(datagridEl), 'rendered');
+    const spyEventAfter = spyOnEvent($(datagridEl), 'afterrender');
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
 
     expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEventAfter).toHaveBeenTriggered();
     expect(document.body.querySelectorAll('tr').length).toEqual(8);
   });
 
@@ -348,26 +350,30 @@ describe('Datagrid API', () => {
     expect(document.querySelectorAll('.icon-rowstatus').length).toEqual(0);
   });
 
-  it('Should be able to get dirty rows', () => {
+  it('Should be able to track dirty cells', () => {
     datagridObj.destroy();
-    datagridObj = new Datagrid(datagridEl, {
-      dataset: data,
-      columns,
-      editable: true,
-      showDirty: true
-    });
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
 
-    document.querySelector('tr:nth-child(1) td:nth-child(2)').click();
-    document.querySelector('tr:nth-child(1) td:nth-child(2) input').value = 'Test';
-    document.querySelector('tr:nth-child(2) td:nth-child(2)').click();
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
 
-    expect(document.querySelectorAll('.rowstatus-row-dirty').length).toEqual(1);
-    expect(document.querySelectorAll('.icon-rowstatus').length).toEqual(1);
+    const cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
+    const cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
 
-    datagridObj.resetRowStatus();
+    cell1.click();
+    let input = cell1.querySelector('input');
+    const originalVal = input.value;
+    input.value = 'Cell test value';
+    cell2.click();
 
-    expect(document.querySelectorAll('.rowstatus-row-dirty').length).toEqual(0);
-    expect(document.querySelectorAll('.icon-rowstatus').length).toEqual(0);
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+
+    cell1.click();
+    input = cell1.querySelector('input');
+    input.value = originalVal;
+    cell2.click();
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
   });
 
   it('Should be able to validate rows', (done) => {
@@ -500,5 +506,55 @@ describe('Datagrid API', () => {
     datagridObj.setSortColumn('productName', true);
 
     expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 15)).toEqual('Air Compressors');
+  });
+
+  it('Should be able to track dirty cells with sort column', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
+
+    let input;
+    let cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
+    let cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 10)).toEqual('Compressor');
+
+    cell1.click();
+    input = cell1.querySelector('input');
+    const originalVal = input.value;
+    input.value = 'Cell test value';
+    cell2.click();
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+
+    datagridObj.setSortColumn('productName', false);
+
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 15)).toEqual('Some Compressor');
+
+    cell1 = document.querySelector('tr:nth-child(5) td:nth-child(2)');
+    cell2 = document.querySelector('tr:nth-child(5) td:nth-child(3)');
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+
+    datagridObj.setSortColumn('productName', true);
+
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 15)).toEqual('Air Compressors');
+
+    cell1 = document.querySelector('tr:nth-child(3) td:nth-child(2)');
+    cell2 = document.querySelector('tr:nth-child(3) td:nth-child(3)');
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+
+    cell1.click();
+    input = cell1.querySelector('input');
+    input.value = originalVal;
+    cell2.click();
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
   });
 });

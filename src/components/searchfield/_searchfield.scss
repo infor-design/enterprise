@@ -68,7 +68,11 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   .searchfield {
     padding-left: 34px;
-    padding-right: 34px;
+    padding-right: 10px;
+
+    @media (min-width: $breakpoint-phablet) {
+      padding-right: 34px;
+    }
 
     @include transition(background-color 300ms $cubic-bezier-ease,
     border-color 300ms $cubic-bezier-ease);
@@ -162,23 +166,6 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
         width: calc(100% - 39px);
       }
     }
-
-    /*
-    &.is-hovered {
-      .btn {
-        border-color: $searchfield-context-border-color;
-        color: $input-hover-border-color;
-
-        .icon {
-          fill: $input-hover-border-color;
-        }
-      }
-
-      &.has-categories.show-category .searchfield {
-        border-color: $searchfield-context-border-color;
-      }
-    }
-    */
 
     &.has-focus {
       .btn {
@@ -342,7 +329,8 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
 .searchfield-category-button {
   .category {
-    padding-left: 0;
+    margin-bottom: 2px;
+    padding-left: 5px;
     padding-right: 0;
 
     + .icon {
@@ -478,6 +466,28 @@ html[dir='rtl'] {
 
     &:-ms-input-placeholder {
       color: transparent !important;
+    }
+  }
+}
+
+//for iOS & MAC fixes
+.ios,
+.is-mac {
+  .searchfield-wrapper {
+    &.context {
+      > #searchfield-context-white.searchfield {
+        background-color: $searchfield-context-bg;
+      }
+    }
+  }
+}
+
+.ios {
+  .searchfield-wrapper {
+    &.context {
+      .btn {
+        height: 35px;
+      }
     }
   }
 }

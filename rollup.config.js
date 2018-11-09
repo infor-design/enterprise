@@ -28,8 +28,7 @@ const config = {
     resolve(),
     json(),
     babel({
-      exclude: 'node_modules/**', // only transpile our source code
-      plugins: ['external-helpers']
+      exclude: 'node_modules/**'
     }),
     license({
       sourceMap: true,
