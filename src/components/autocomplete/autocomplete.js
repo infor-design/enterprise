@@ -204,6 +204,13 @@ Autocomplete.prototype = {
       return;
     }
 
+    if (!this.element.hasClass('searchfield')) {
+      const canOpen = this.element.triggerHandler('beforeopen.autocomplete', { elem: this.element, value: this.element.val() });
+      if (canOpen === false) {
+        return;
+      }
+    }
+
     const self = this;
     term = Locale.toLowerCase(term);
 
