@@ -11,6 +11,7 @@ const TEXTAREA_DEFAULTS = {
   autoGrow: false,
   autoGrowAnimate: true,
   autoGrowAnimateSpeed: 200,
+  autoGrowMaxHeight: null,
   characterCounter: true,
   maxLength: null,
   printable: true,
@@ -26,6 +27,7 @@ const TEXTAREA_DEFAULTS = {
 * @param {boolean} [settings.autoGrow = false] Will automatically expand the textarea to fit the contents when typing.
 * @param {boolean} [settings.autoGrowAnimate  = true] Will animate the textarea grow.
 * @param {number} [settings.autoGrowAnimateSpeed = 200] The speed of the animation.
+* @param {number} [settings.autoGrowMaxHeight = null] The Max Height of the textarea when autoGrow is enabled.
 * @param {boolean} [settings.characterCounter = true] Displays a counter that counts down from the maximum.
 * @param {boolean} [settings.maxLength = number] Maximum characters allowed in textarea.
 * length allowed.
@@ -145,12 +147,23 @@ Textarea.prototype = {
     const oldHeight = self.element.innerHeight();
     let newHeight = self.element.get(0).scrollHeight;
     const minHeight = self.element.data('autogrow-start-height') || 0;
+    const maxHeight = self.settings.autoGrowMaxHeight || 0;
     let clone;
+
+    if (maxHeight > 0 && maxHeight < newHeight) {
+      newHeight = maxHeight;
+      self.element.css('overflow', '');
+      if (oldHeight === newHeight) {
+        return;
+      }
+    } else {
+      self.element.css('overflow', 'hidden');
+    }
 
     if (oldHeight < newHeight) {
       self.scrollTop = 0;
 
-      if (self.settings.autoGrowAnimate) {
+      if (self.settings.autoGrowAnimate && newHeight !== maxHeight) {
         self.element.stop().animate({ height: newHeight }, self.settings.autoGrowAnimateSpeed);
       } else {
         self.element.innerHeight(newHeight);
