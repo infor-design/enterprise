@@ -8,14 +8,13 @@
 
 <div class="row top-padding">
   <div class="four columns">
-
     <!-- Regular Panel Accordion Example -->
     <div id="regular-panel-accordion-example" class="accordion panel">
-      <div class="accordion-header">
+      <div class="accordion-header" data-options="{trigger:'rightClick'}" data-popupmenu='context-menu'>
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-user"></use>
         </svg>
-        <a href="#" class="menu-trigger"><span>Personal</span></a>
+        <a href="#"><span>Personal</span></a>
       </div>
       <div class="accordion-pane">
         <div class="accordion-header">
@@ -26,7 +25,7 @@
         </div>
       </div>
 
-      <div class="accordion-header" >
+      <div class="accordion-header" data-options="{trigger:'rightClick'}" data-popupmenu='context-menu'>
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-roles"></use>
         </svg>
@@ -44,7 +43,7 @@
         </div>
       </div>
 
-      <div class="accordion-header">
+      <div class="accordion-header" data-options="{trigger:'rightClick'}" data-popupmenu='context-menu'>
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-payment-request"></use>
         </svg>
@@ -69,18 +68,23 @@
   </div>
 </div>
 
-<script>
-
-  $('.menu-trigger').on('contextmenu', function(e, args) {
-    e.preventDefault();
-    $(e.target).on('selected', function(args, a) {
-      console.log(args, a);
-    }).popupmenu({
-      menu: 'action-popupmenu',
-      trigger: 'immediate',
-      attached: 'body',
-      offset: {y: -15}
-    });
-  });
-
-</script>
+<ul id="context-menu">
+  <li id="contextmenu1">
+      <a href="#" >
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon">
+              <use xlink:href="#icon-open-folder"></use>
+          </svg>
+          Menu1
+      </a>
+  </li>
+  <li class="separator"></li>
+  <li id="contextmenu2">
+      <a href="#">
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon">
+              <use xlink:href="#icon-copy"></use>
+          </svg>
+          Menu2
+      </a>
+  </li>
+</ul>
+  

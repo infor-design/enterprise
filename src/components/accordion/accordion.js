@@ -79,11 +79,11 @@ Accordion.prototype = {
       headers = this.element.find('.accordion-header');
       this.anchors = headers.children('a');
       anchors = headers.children('a');
-      this.panes = headers.next('.accordion-pane');
-      panes = headers.next('.accordion-pane');
+      this.panes = headers.nextAll().not('.audible').first('.accordion-pane');
+      panes = headers.nextAll().not('.audible').first('.accordion-pane');
     } else {
       anchors = headers.children('a');
-      panes = headers.next('.accordion-pane');
+      panes = headers.nextAll().not('.audible').first('.accordion-pane');
       isGlobalBuild = false;
 
       // update internal refs
@@ -137,7 +137,7 @@ Accordion.prototype = {
       }
 
       // Don't continue if there's no pane
-      if (!header.next('.accordion-pane').length) {
+      if (!header.nextAll().not('.audible').first().hasClass('accordion-pane')) {
         checkIfIcons();
         return;
       }
@@ -280,7 +280,7 @@ Accordion.prototype = {
   handleAnchorClick(e, anchor) {
     const self = this;
     const header = anchor.parent('.accordion-header');
-    const pane = header.next('.accordion-pane');
+    const pane = header.nextAll().not('.audible').first('.accordion-pane');
     const ngLink = anchor.attr('ng-reflect-href');
 
     if (e && !ngLink) {
@@ -670,7 +670,7 @@ Accordion.prototype = {
     }
 
     const self = this;
-    const pane = header.next('.accordion-pane');
+    const pane = header.nextAll().not('.audible').first('.accordion-pane');
     const a = header.children('a');
     const dfd = $.Deferred();
 
@@ -799,7 +799,7 @@ Accordion.prototype = {
     }
 
     const self = this;
-    const pane = header.next('.accordion-pane');
+    const pane = header.nextAll().not('.audible').first('.accordion-pane');
     const a = header.children('a');
     const dfd = $.Deferred();
 
