@@ -662,6 +662,10 @@ ColorPicker.prototype = {
     return this;
   },
 
+  closeColorPicker(isPickerOpen) {
+
+  },
+
   /**
   * Detach events and restore DOM to default.
   * @private
