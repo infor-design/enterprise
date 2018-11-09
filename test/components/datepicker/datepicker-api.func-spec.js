@@ -424,4 +424,20 @@ describe('DatePicker API', () => {
       done();
     }, 100);
   });
+
+  it('Should hide icon if input is hidden', () => {
+    datepickerAPI.destroy();
+
+    datepickerEl.style.display = 'none';
+    datepickerAPI = new DatePicker(datepickerEl);
+
+    expect($(datepickerEl).siblings('svg.icon').css('display')).toEqual('none');
+
+    datepickerAPI.destroy();
+
+    datepickerEl.style.visibility = 'hidden';
+    datepickerAPI = new DatePicker(datepickerEl);
+
+    expect($(datepickerEl).siblings('svg.icon').css('display')).toEqual('none');
+  });
 });
