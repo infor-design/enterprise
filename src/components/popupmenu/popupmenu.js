@@ -1544,9 +1544,12 @@ PopupMenu.prototype = {
      * @property {object} event - The jquery event object
      * @property {object} this menu instance
      */
-    let canOpen = this.element.triggerHandler('beforeopen', [this.menu]);
-    if (canOpen === false) {
-      return;
+    let canOpen = true;
+    if (!this.element.hasClass('autocomplete')) {
+      canOpen = this.element.triggerHandler('beforeopen', [this.menu]);
+      if (canOpen === false) {
+        return;
+      }
     }
 
     // Check external AJAX source, if applicable

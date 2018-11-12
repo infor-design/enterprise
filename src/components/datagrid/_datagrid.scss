@@ -630,12 +630,12 @@ $datagrid-short-row-height: 23px;
 
             .spinbox-control {
               border: 0;
-              border-right: 1px solid  $input-focus-border-color;
+              border-right: 1px solid  $input-color-focus-border;
               padding: 11px 10px;
               width: 35px;
 
               &.up {
-                border-left: 1px solid  $input-focus-border-color;
+                border-left: 1px solid  $input-color-focus-border;
               }
             }
 
@@ -998,12 +998,12 @@ $datagrid-short-row-height: 23px;
 
             .spinbox-control {
               border: 0;
-              border-right: 1px solid  $input-focus-border-color;
+              border-right: 1px solid  $input-color-focus-border;
               padding: 3px 15px;
               width: 30px;
 
               &.up {
-                border-left: 1px solid  $input-focus-border-color;
+                border-left: 1px solid  $input-color-focus-border;
                 padding: 2px 10px;
               }
             }
@@ -1130,7 +1130,7 @@ $datagrid-short-row-height: 23px;
     line-height: $datagrid-row-height;
 
     &.is-active-row {
-      outline: 1px solid $color-primary;
+      outline: 1px solid $theme-color-brand-primary-base;
       outline-offset: -1px;
 
       td {
@@ -1155,15 +1155,15 @@ $datagrid-short-row-height: 23px;
       cursor: move;
 
       .icon {
-        fill: $button-link-text-color;
+        fill: $button-color-tertiary-initial-font;
         vertical-align: middle;
 
         &:hover {
-          fill: $button-link-hover-text-color;
+          fill: $button-color-tertiary-hover-font;
         }
 
         &:active {
-          fill: $button-link-active-text-color;
+          fill: $button-color-tertiary-active-font;
         }
       }
     }
@@ -1188,7 +1188,7 @@ $datagrid-short-row-height: 23px;
       height: $datagrid-row-height + 7;
 
       td {
-        background-color: $body-bg-color-primary;
+        background-color: $body-color-primary-background;
       }
     }
 
@@ -1217,16 +1217,16 @@ $datagrid-short-row-height: 23px;
       background-color: $datagrid-row-selected-color;
 
       .btn.row-btn {
-        background-color: $button-primary-bg-color;
-        border: 1px solid  $button-primary-bg-color;
-        color: $button-primary-text-color;
+        background-color: $button-color-primary-initial-background;
+        border: 1px solid  $button-color-primary-initial-background;
+        color: $button-color-primary-initial-font;
 
         &:hover {
-          background-color: $button-primary-hover-bg-color;
+          background-color: $button-color-primary-hover-background;
         }
 
         &:active {
-          background-color: $button-primary-active-bg-color;
+          background-color: $button-color-primary-active-background;
         }
       }
     }
@@ -1257,7 +1257,7 @@ $datagrid-short-row-height: 23px;
 
     .icon.plus-minus::before,
     .icon.plus-minus::after {
-      background-color: $button-link-text-color;
+      background-color: $button-color-tertiary-initial-font;
     }
 
     &.alt-shading {
@@ -1405,7 +1405,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.rowstatus-row-info {
-      @include rowstatus($color-primary);
+      @include rowstatus($theme-color-brand-primary-base);
     }
 
     &.rowstatus-row-in-progress {
@@ -1440,7 +1440,7 @@ $datagrid-short-row-height: 23px;
       box-shadow: $datagrid-cell-focus-box-shadow;
 
       .datagrid-cell-wrapper {
-        border: 1px solid $color-primary;
+        border: 1px solid $theme-color-brand-primary-base;
       }
     }
 
@@ -1635,7 +1635,7 @@ $datagrid-short-row-height: 23px;
     .search-mode {
       i {
         font-style: normal;
-        font-weight: $font-weight-bold;
+        font-weight: $theme-number-font-weight-bold;
       }
     }
 
@@ -1663,7 +1663,7 @@ $datagrid-short-row-height: 23px;
       position: relative;
 
       .datagrid-cell-wrapper {
-        border: 1px solid $color-primary;
+        border: 1px solid $theme-color-brand-primary-base;
         left: 0;
         position: absolute;
         text-overflow: initial;
@@ -1870,12 +1870,12 @@ $datagrid-short-row-height: 23px;
 
         .spinbox-control {
           border: 0;
-          border-right: 1px solid  $input-focus-border-color;
+          border-right: 1px solid  $input-color-focus-border;
           padding: 18px 10px 31px;
           width: 36px;
 
           &.up {
-            border-left: 1px solid  $input-focus-border-color;
+            border-left: 1px solid  $input-color-focus-border;
           }
         }
       }
@@ -2032,7 +2032,7 @@ $datagrid-short-row-height: 23px;
       color: $datagrid-header-color;
       direction: ltr;
       display: table-cell;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
       text-align: left;
       vertical-align: middle;
       white-space: nowrap;
@@ -2053,7 +2053,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &.is-checked::before {
-        border: 1px solid $checkbox-border-color;
+        border: 1px solid $checkbox-color-unchecked-initial-border;
       }
     }
 
@@ -2336,13 +2336,13 @@ $datagrid-short-row-height: 23px;
 
     &:focus,
     &.is-focused {
-      border: 1px solid $color-primary;
+      border: 1px solid $theme-color-brand-primary-base;
       box-shadow: $focus-box-shadow;
     }
 
     span {
       color: $datagrid-rowgroup-color;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
     }
 
     .icon {
@@ -2670,7 +2670,7 @@ td .btn-actions {
   &:hover {
     .icon.plus-minus::before,
     .icon.plus-minus::after {
-      background-color: $button-link-hover-text-color;
+      background-color: $button-color-tertiary-hover-font;
     }
 
     span {
@@ -2915,7 +2915,7 @@ td .btn-actions {
   }
 
   .icon {
-    fill: $text-color;
+    fill: $theme-color-font-base;
     margin-top: 9px;
     right: 2px;
 
@@ -3583,7 +3583,7 @@ html[dir='rtl'] {
 
         td {
           .datagrid-cell-wrapper {
-            border-color: $color-primary;
+            border-color: $theme-color-brand-primary-base;
             border-style: solid;
             border-width: 1px 0;
           }

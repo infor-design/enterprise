@@ -129,7 +129,7 @@ html[dir='rtl'] {
       div.dropdown {
         border-left-color: $fieldfilter-border-side-color;
         border-radius: 0 2px 2px 0;
-        border-right-color: $input-border-color;
+        border-right-color: $input-color-initial-border;
         padding-top: 8px;
       }
     }

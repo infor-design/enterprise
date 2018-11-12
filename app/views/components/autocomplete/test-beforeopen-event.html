@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2 class="fieldset-title">Autocomplete Test: Before Open event</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      This autocomplete will only allow searches with { at the start. All other searches will prevent the popup from showing up
+    </div>
+    <div class="field">
+      <label for="auto-template">Users</label>
+      <input class="autocomplete" data-autocomplete="source" data-init="false" id="auto-template" placeholder="Type to Search" type="text">
+    </div>
+  </div>
+</div>
+
+<script id="test-scripts">
+  $('body').on('initialized', function() {
+
+  // Setup an alternate source for the templated Autocomplete.
+    $('#auto-template').autocomplete({
+      source: function (req, resp) {
+        var data = [];
+        data.push({ label: '{test1}'});
+        data.push({ label: '{test2}'});
+        data.push({ label: '{test3}'});
+        data.push({ label: '{test4}'});
+        data.push({ label: '{test5}'});
+        data.push({ label: 'John Smith' });
+        data.push({ label: 'Alex Mills' });
+        data.push({ label: 'Steve Mills' });
+        data.push({ label: 'Quincy Adams' });
+        data.push({ label: 'Paul Thompson' });
+        resp(req, data);
+      }
+    }).on('selected', function (e, anchor) {
+      console.log('Changed to: ' + $(anchor).parent().attr('data-value'));
+    });
+
+    $('#auto-default, #auto-template').on('beforeopen.autocomplete', function (e, elem) {
+      console.log('beforeopen');
+
+      if (elem.value.charAt(0) !== '{') {
+        console.log('not open');
+        return false;
+      } else {
+        console.log('open');
+      }
+    });
+  });
+</script>
+  

@@ -13,7 +13,7 @@
   }
 
   .bold {
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
   }
 
   &:focus {
@@ -26,7 +26,7 @@
     @include font-size(14);
 
     color: $listview-color;
-    font-weight: $font-weight-normal;
+    font-weight: $theme-number-font-weight-base;
     overflow-wrap: break-word;
 
     &.hyperlink {
@@ -127,7 +127,7 @@
     }
 
     &:focus {
-      border-color: $color-primary !important;
+      border-color: $theme-color-brand-primary-base !important;
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
     }
@@ -202,7 +202,7 @@
       @include font-size(14);
 
       color: $listview-color;
-      font-weight: $font-weight-normal;
+      font-weight: $theme-number-font-weight-base;
       text-decoration: none;
 
       &.hyperlink {
@@ -220,7 +220,7 @@
   i {
     color: $listview-color;
     font-style: normal;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
   }
 
   .days,
@@ -451,7 +451,7 @@
   .highlight {
     background-color: transparent;
     color: inherit;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
   }
 
   // Empty message area
@@ -497,7 +497,7 @@
 
       color: $listview-header-color;
       display: table-cell;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
       padding: 15px;
 
       span {
@@ -539,7 +539,7 @@
     @include font-size(14);
 
     color: $font-color-lowcontrast;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
     padding-top: 3px;
   }
 
@@ -566,7 +566,7 @@
     @include font-size(16);
 
     color: $font-color-highcontrast;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
     margin-top: 10px;
   }
 }
@@ -591,14 +591,14 @@
 // Search Toolbar on Listview
 .listview-search {
   .searchfield-wrapper {
-    background-color: $body-bg-color-primary;
+    background-color: $body-color-primary-background;
     height: 36px;
     margin-bottom: 0;
     width: 100%;
 
     &.has-focus {
       input {
-        border: 1px solid $color-primary;
+        border: 1px solid $theme-color-brand-primary-base;
       }
     }
   }

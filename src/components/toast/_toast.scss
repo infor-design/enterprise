@@ -43,7 +43,7 @@
   .toast-title {
     color: $toast-header-color;
     display: block;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
     margin-top: 19px;
     padding-right: 20px;
   }
@@ -115,7 +115,7 @@
 }
 
 .toast-progress {
-  background-color: $color-primary;
+  background-color: $theme-color-brand-primary-base;
   bottom: 0;
   height: 3px;
   left: 0;

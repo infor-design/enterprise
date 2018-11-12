@@ -67,7 +67,7 @@
       display: inline-block;
 
       &:focus:not(.hide-focus) {
-        border-color: $button-default-focus-border-color;
+        border-color: $button-color-secondary-focus-border;
       }
     }
   }
@@ -244,7 +244,7 @@
 
     &.card-group-action,
     &.widget-group-action {
-      background-color: $body-bg-color-primary;
+      background-color: $body-color-primary-background;
       border: 1px solid transparent;
       border-bottom-color: $listview-border-color;
     }
@@ -278,7 +278,7 @@
   }
 
   &.alternate {
-    background-color: $body-bg-color-primary;
+    background-color: $body-color-primary-background;
   }
 
 }
@@ -326,7 +326,7 @@
 .empty-actions,
 .empty-info {
   -webkit-font-smoothing: antialiased;
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   line-height: normal;
   text-align: center;
 }

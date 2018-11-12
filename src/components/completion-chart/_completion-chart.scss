@@ -111,7 +111,7 @@
 
     span {
       color: $chart-progressbar-completed-fill;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
 
       &.value,
       &.text {
@@ -322,7 +322,7 @@
   .remaining,
   .info {
     .value {
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
     }
 
     .error-color,

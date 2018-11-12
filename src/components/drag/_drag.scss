@@ -22,7 +22,7 @@
   @include no-select;
 
   background: transparent none repeat scroll 0 0;
-  border: 1px solid $color-primary;
+  border: 1px solid $theme-color-brand-primary-base;
   cursor: e-resize;
   height: inherit;
   left: 48px;
@@ -36,7 +36,7 @@
 }
 
 .arrange-placeholder {
-  border: 1px dashed $input-border-color;
+  border: 1px dashed $input-color-initial-border;
 }
 
 .arrange-dragging.is-touch {

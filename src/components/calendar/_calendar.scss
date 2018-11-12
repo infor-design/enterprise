@@ -63,7 +63,7 @@
 
   // The details section
   .calendar-event-details {
-    background-color: $body-bg-color-primary;
+    background-color: $body-color-primary-background;
     border-left: 1px solid $calendar-line-color;
     display: inline-block;
     height: 100%;
@@ -80,7 +80,7 @@
     @include font-size(11);
 
     background-color: $azure02;
-    border-left: 5px solid $color-primary-alt;
+    border-left: 5px solid $theme-color-brand-primary-alt;
     border-radius: 3px;
     color: $font-color-extrahighcontrast;
     cursor: pointer;
