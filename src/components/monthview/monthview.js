@@ -1086,11 +1086,11 @@ MonthView.prototype = {
 
       // Space or Enter closes Date Picker, selecting the Date
       if (key === 32 || key === 13) {
+        handled = true;
         if (s.range.useRange) {
           if (!s.range.first || (s.range.first && !s.range.first.date)) {
             allCell.removeClass('is-selected');
           }
-          handled = true;
         }
 
         const d = this.getCellDate(cell);

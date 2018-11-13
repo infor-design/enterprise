@@ -235,13 +235,6 @@ DatePicker.prototype = {
           handled = true;
         }
 
-        if (key === 32 || key === 13) {
-          if (!s.range.useRange) {
-            this.closeCalendar();
-            this.element.focus();
-          }
-        }
-
         // 't' selects today
         if (key === 84) {
           this.closeCalendar();
