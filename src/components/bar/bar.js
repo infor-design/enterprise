@@ -333,8 +333,14 @@ Bar.prototype = {
       }
     }
 
-    if (self.settings.ticks) {
-      xAxis.ticks(self.settings.ticks.number, self.settings.ticks.format);
+    if (self.settings.ticks && !self.settings.useLogScale) {
+      if (innerWidth < 480) {
+        xAxis.ticks(self.settings.ticks.smallNumber, self.settings.ticks.format);
+      } else if (innerWidth >= 481 && innerWidth <= 992) {
+        xAxis.ticks(self.settings.ticks.mediumNumber, self.settings.ticks.format);
+      } else if (innerWidth > 992) {
+        xAxis.ticks(self.settings.ticks.largeNumber, self.settings.ticks.format);
+      }
     }
 
     const yAxis = d3.axisLeft()
@@ -614,8 +620,31 @@ Bar.prototype = {
     charts.appendTooltip();
 
     this.setInitialSelected();
+    this.setTextValues();
     this.element.trigger('rendered');
     return this;
+  },
+
+  /**
+   * Set the text value in three viewport of bar chart
+   * @private
+   */
+  setTextValues() {
+    const elems = document.querySelectorAll('.bar-chart .axis.y .tick text');
+    const dataset = this.settings.dataset;
+    for (let i = 0; i < dataset.length; i++) {
+      Object.values(dataset[i]).forEach((key) => {
+        for (let j = 0; j < key.length; j++) {
+          if (innerWidth <= 480) {
+            elems[j].textContent = key[j].shortName;
+          } else if (innerWidth >= 481 && innerWidth <= 992) {
+            elems[j].textContent = key[j].abbrName;
+          } else if (innerWidth > 992) {
+            elems[j].textContent = key[j].name;
+          }
+        }
+      });
+    }
   },
 
   /**
