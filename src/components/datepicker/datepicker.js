@@ -563,7 +563,7 @@ DatePicker.prototype = {
     // Handle day change
     this.settings.onSelected = (node, args) => {
       this.currentDate = new Date(args.year, args.month, args.day);
-      if (self.settings.range.first) {
+      if (self.range.useRange && self.settings.range.first) {
         return;
       }
       self.insertDate(this.currentDate);
