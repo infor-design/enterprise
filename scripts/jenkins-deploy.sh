@@ -3,13 +3,14 @@
 JENKINS_USER="Jenkins"
 JENKINS_DOMAIN="jenkins.design.infor.com:8080"
 JENKINS_JOB="soho4-swarm-deploy"
-JENKINS_URL="http://$JENKINS_USER:$JENKINS_SECRET@$JENKINS_DOMAIN"
+JENKINS_URL="http://$JENKINS_USER:$JENKINS_API_TOKEN@$JENKINS_DOMAIN"
 
 BUILD_FROM="master"
 BUILD_AS_LATEST=false
 WATCH_FOR_BUILD_STATUS=false
+QUEUE_BUILD=false
 
-while getopts "b:lw" opt; do
+while getopts "b:lwq" opt; do
     case $opt in
         b)
             # the branch or tag name to build from
@@ -18,6 +19,10 @@ while getopts "b:lw" opt; do
         l)
             # latest? publishes to `latest-enterprise` demo server
             BUILD_AS_LATEST=true
+            ;;
+        q)
+            # Add to queue instead of cancelling existing build
+            QUEUE_BUILD=true
             ;;
         w)
             # watch build status to break build
@@ -29,9 +34,21 @@ while getopts "b:lw" opt; do
     esac
 done
 
-if [[ -z $JENKINS_SECRET ]]; then echo "JENKINS_SECRET must be defined"; exit 1; fi
+if [[ -z $JENKINS_API_TOKEN ]]; then echo "JENKINS_API_TOKEN must be defined"; exit 1; fi
 if [[ -z $JENKINS_JOB_TOKEN ]]; then echo "JENKINS_JOB_TOKEN must be defined"; exit 1; fi
-if [[ -z $JENKINS_CRUMB_TOKEN ]]; then echo "JENKINS_CRUMB_TOKEN must be defined"; exit 1; fi
+
+_check_credentials() {
+    response=$(curl --write-out "%{http_code}\n" --silent --output /dev/null \
+                "$JENKINS_URL/job/$JENKINS_JOB/lastBuild/api/json"
+              )
+    if [[ "$response" == "200" ]]; then
+        echo "Successfully authenticated..."
+    else
+        echo "ERROR: Authorization to Jenkins returned $response"
+        echo $(curl -s $JENKINS_URL/job/$JENKINS_JOB/lastBuild/api/json)
+        exit 1
+    fi
+}
 
 check_status () {
     job_status=$(curl -s $JENKINS_URL/job/$JENKINS_JOB/lastBuild/api/json | \
@@ -58,32 +75,40 @@ stop_jenkins_build () {
 }
 
 queue_jenkins_build () {
+    crumb=$(curl -s -X GET "$JENKINS_URL/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,%22:%22,//crumb)")
     response=$(curl --write-out "%{http_code}\n" --silent --output /dev/null -X POST \
-                -H "Jenkins-Crumb:$JENKINS_CRUMB_TOKEN" \
+                -H "Jenkins-Crumb:$crumb" \
                 "$JENKINS_URL/job/$JENKINS_JOB/buildWithParameters?CONTAINER=enterprise&BUILD_FROM=$BUILD_FROM&BUILD_AS_LATEST=$BUILD_AS_LATEST&token=$JENKINS_JOB_TOKEN"\
               )
     echo $response
 }
 
-echo "Building $BUILD_FROM as $([ $BUILD_AS_LATEST = true ] && echo 'latest-enterprise' || echo $BUILD_FROM-enterprise)..."
+_check_credentials
+
+build_number_url=$(echo $BUILD_FROM | sed -e 's/\.//g')
+
+echo "Building $BUILD_FROM as $([ $BUILD_AS_LATEST = true ] && echo 'latest-enterprise' || echo $build_number_url-enterprise)..."
 
 CURRENT_JOB_STATUS=`check_status`
 
 if [[ "$CURRENT_JOB_STATUS" == "None" ]]; then
-    CURRENT_BUILD_NUMBER=`get_build_number`
-    echo "Job #$CURRENT_BUILD_NUMBER is already running. Aborting that job now..."
-    RESP=`stop_jenkins_build`
-    if [[ "$RESP" == "302" ]]; then
-        echo "Successfully aborted job #$CURRENT_BUILD_NUMBER"
+    if [ $QUEUE_BUILD = false ]; then
+        CURRENT_BUILD_NUMBER=`get_build_number`
+        echo "Job #$CURRENT_BUILD_NUMBER is already running. Aborting that job now..."
+        RESP=`stop_jenkins_build`
+        if [[ "$RESP" == "302" ]]; then
+            echo "Successfully aborted job #$CURRENT_BUILD_NUMBER"
+        else
+            exit 1
+            echo "ERROR: Request to Jenkins returned $RESP"
+        fi
     else
-        exit 1
-        echo "ERROR: Request to Jenkins returned $RESP"
+        echo "- adding Jenkins build to queue..."
     fi
 else
     echo "- adding Jenkins build to queue..."
 fi
 
-CRUMB=$(curl -s -X GET "$JENKINS_URL/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,%22:%22,//crumb)")
 RESP=`queue_jenkins_build`
 
 if [[ "$RESP" == "201" ]]; then
@@ -106,7 +131,7 @@ if [ $WATCH_FOR_BUILD_STATUS = true ]; then
         done
         if [[ "$BUILD_STATUS" == "SUCCESS" ]]; then
             echo "" # new line
-            echo "DEPLOY to http://$BUILD_FROM-enterprise.demo.design.infor.com SUCCESSFUL."
+            echo "DEPLOY to http://$build_number_url-enterprise.demo.design.infor.com SUCCESSFUL."
             exit
         elif [[ "$BUILD_STATUS" == "ABORTED" ]]; then
             echo "" # new line

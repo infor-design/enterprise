@@ -274,16 +274,27 @@ Tree.prototype = {
    * @returns {void}
    */
   expandAll(nodes) {
-    const self = this;
-    nodes = nodes || this.element.find('ul[role=group]');
+    let groups = nodes;
 
-    nodes.each(function () {
-      const node = $(this);
-      node.addClass('is-open');
-      self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.folderIconOpen);
+    if (typeof groups !== 'undefined') {
+      groups = this.isjQuery(groups) ? $.makeArray(groups) : groups;
+    } else {
+      groups = [].slice.call(this.element[0].querySelectorAll('ul[role=group]'));
+    }
 
-      if (self.hasIconClass(node.prev('a'))) {
-        self.setTreeIcon(node.prev('svg.icon-tree'), node.prev('a').attr('class'));
+    groups.forEach((group) => {
+      const prev = group.previousElementSibling;
+      group.parentNode.classList.add('is-open');
+      group.classList.add('is-open');
+      group.style.height = '';
+
+      if (prev && prev.tagName.toLowerCase() === 'a') {
+        const svg = prev.querySelector('svg.icon-tree');
+        this.setTreeIcon(svg, this.settings.folderIconOpen);
+        prev.setAttribute('aria-expanded', true);
+        if (this.hasIconClass(prev)) {
+          this.setTreeIcon(svg, prev.getAttribute('class'));
+        }
       }
     });
   },
@@ -295,22 +306,28 @@ Tree.prototype = {
    * @returns {void}
    */
   collapseAll(nodes) {
-    const self = this;
-    nodes = nodes || this.element.find('ul[role=group]');
+    let groups = nodes;
 
-    nodes.each(function () {
-      const node = $(this);
-      node.removeClass('is-open');
-      self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.folderIconClosed);
+    if (typeof groups !== 'undefined') {
+      groups = this.isjQuery(groups) ? $.makeArray(groups) : groups;
+    } else {
+      groups = [].slice.call(this.element[0].querySelectorAll('ul[role=group]'));
+    }
 
-      if (self.hasIconClass(node.prev('a'))) {
-        self.setTreeIcon(node.prev('a').find('svg.icon-tree'), node.prev('a').attr('class')
-          .replace('open', 'closed')
-          .replace(/\s?is-selected/, ''));
-      }
+    groups.forEach((group) => {
+      const prev = group.previousElementSibling;
+      group.parentNode.classList.remove('is-open');
+      group.classList.remove('is-open');
+      group.style.height = 0;
 
-      if (self.hasIconClass(node.prev('a'))) {
-        self.setTreeIcon(node.prev('svg.icon-tree'), node.prev('a').attr('class').replace('open', 'closed'));
+      if (prev && prev.tagName.toLowerCase() === 'a') {
+        const svg = prev.querySelector('svg.icon-tree');
+        this.setTreeIcon(svg, this.settings.folderIconClosed);
+        prev.setAttribute('aria-expanded', false);
+        prev.classList.remove('is-selected');
+        if (this.hasIconClass(prev)) {
+          this.setTreeIcon(svg, prev.getAttribute('class').replace('open', 'closed'));
+        }
       }
     });
   },
@@ -1960,7 +1977,7 @@ Tree.prototype = {
                 startWidth: a.outerWidth()
               };
 
-              self.element.triggerHandler('dragstart', self.sortable);
+              self.element.triggerHandler('sortstart', self.sortable);
               e.preventDefault();
               e.stopImmediatePropagation();
             })
@@ -2022,7 +2039,7 @@ Tree.prototype = {
               // Fix: On windows 10 with IE-11 icons disappears
               utils.fixSVGIcons(start);
 
-              self.element.triggerHandler('dragend', self.sortable);
+              self.element.triggerHandler('sortend', self.sortable);
               // Sync dataset and ui
               self.syncDataset();
               if (self.isMultiselect) {

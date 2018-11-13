@@ -130,6 +130,11 @@ Lookup.prototype = {
 
     lookup.after(this.icon);
 
+    // Hide icon if lookup input is hidden
+    if ((lookup.is(':hidden') || lookup.css('visibility') === 'hidden') && lookup.parents('.modal').length === 0) {
+      this.icon.hide();
+    }
+
     if (this.settings.autoWidth) {
       this.applyAutoWidth();
     }

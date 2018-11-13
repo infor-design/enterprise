@@ -54,12 +54,23 @@ describe('Tree Methods', () => {
     expect(secondDir.querySelectorAll('ul[role=group].is-open').length).toEqual(1);
   });
 
-  it('Should expand all tree nodes', () => {
-    expect(treeEl.querySelectorAll('li.folder ul[role=group].is-open').length).toEqual(2);
+  it('Should expand all tree nodes', (done) => {
+    expect(treeEl.querySelectorAll('li.folder ul[role=group]').length).toEqual(3);
+    expect(treeEl.querySelectorAll('li.folder.is-open ul[role=group].is-open').length).toEqual(2);
+    expect(treeEl.querySelectorAll('li.folder.is-open a[aria-expanded="true"').length).toEqual(2);
 
-    treeObj.expandAll();
+    treeEl.querySelector('li.folder a[role="treeitem"]').click();
 
-    expect(treeEl.querySelectorAll('li.folder ul[role=group].is-open').length).toEqual(3);
+    setTimeout(() => {
+      expect(treeEl.querySelectorAll('li.folder.is-open ul[role=group].is-open').length).toEqual(1);
+      expect(treeEl.querySelectorAll('li.folder.is-open a[aria-expanded="true"').length).toEqual(1);
+      treeObj.expandAll();
+      setTimeout(() => {
+        expect(treeEl.querySelectorAll('li.folder.is-open ul[role=group].is-open').length).toEqual(3);
+        expect(treeEl.querySelectorAll('li.folder.is-open a[aria-expanded="true"').length).toEqual(3);
+        done();
+      }, 300);
+    }, 300);
   });
 
   it('Should collapse a collection of tree nodes', () => {
@@ -72,12 +83,23 @@ describe('Tree Methods', () => {
     expect(firstDir.querySelectorAll('ul[role=group].is-open').length).toEqual(0);
   });
 
-  it('Should collapse all tree nodes', () => {
-    expect(treeEl.querySelectorAll('li.folder ul[role=group].is-open').length).toEqual(2);
+  it('Should collapse all tree nodes', (done) => {
+    expect(treeEl.querySelectorAll('li.folder ul[role=group]').length).toEqual(3);
+    expect(treeEl.querySelectorAll('li.folder.is-open ul[role=group].is-open').length).toEqual(2);
+    expect(treeEl.querySelectorAll('li.folder.is-open a[aria-expanded="true"').length).toEqual(2);
 
-    treeObj.collapseAll();
+    treeEl.querySelector('li.folder a[role="treeitem"]').click();
 
-    expect(treeEl.querySelectorAll('li.folder ul[role=group].is-open').length).toEqual(0);
+    setTimeout(() => {
+      expect(treeEl.querySelectorAll('li.folder.is-open ul[role=group].is-open').length).toEqual(1);
+      expect(treeEl.querySelectorAll('li.folder.is-open a[aria-expanded="true"').length).toEqual(1);
+      treeObj.collapseAll();
+      setTimeout(() => {
+        expect(treeEl.querySelectorAll('li.folder.is-open ul[role=group].is-open').length).toEqual(0);
+        expect(treeEl.querySelectorAll('li.folder.is-open a[aria-expanded="true"').length).toEqual(0);
+        done();
+      }, 300);
+    }, 300);
   });
 
   it('Should select a node specifically using its ID attribute', () => {

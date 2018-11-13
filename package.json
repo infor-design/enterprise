@@ -52,15 +52,16 @@
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d dist infor-devops-core-soho-us-east-1/sohoxi/4.9.0 -v",
-    "release:beta": "release-it minor --preRelease=beta --no-github.release",
-    "release:rc": "release-it --preRelease=rc --no-github.release",
-    "release:final": "release-it",
+    "release:beta": "npx release-it minor --preRelease=beta --no-github.release",
+    "release:rc": "npx release-it --preRelease=rc --no-github.release",
+    "release:final": "npx release-it",
     "prepublishOnly": "npm run build",
     "test": "npm run mdlint && npm run eslint && npm run stylelint && npm run functional:ci && npm run e2e:ci"
   },
   "dependencies": {
     "d3": "^4.13.0",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "promise-polyfill": "^8.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

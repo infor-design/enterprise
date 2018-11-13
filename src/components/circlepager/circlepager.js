@@ -383,7 +383,9 @@ CirclePager.prototype = {
   unbind() {
     $('body').off('resize.circlepager');
     this.element.off('focus.circlepager keydown.circlepager', '*');
-    this.controlButtons.off('click.circlepager keydown.circlepager');
+    if (this.controlButtons) {
+      this.controlButtons.off('click.circlepager keydown.circlepager');
+    }
     $('.btn-previous, .btn-next', this.element).off('click.circlepager');
     $('.controls', this.element).remove();
     this.showExpandedView();

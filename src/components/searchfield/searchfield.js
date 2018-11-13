@@ -1,3 +1,5 @@
+import Promise from 'promise-polyfill';
+
 import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { breakpoints } from '../../utils/breakpoints';
@@ -361,12 +363,6 @@ SearchField.prototype = {
     } else {
       this.wrapper.removeClass('has-go-button');
     }
-
-    /*
-    // Hoist the 'alternate' CSS class to the wrapper, if applicable
-    const isAlternate = this.element.hasClass('alternate');
-    this.wrapper[isAlternate ? 'addClass' : 'removeClass']('alternate');
-    */
 
     if (this.settings.clearable) {
       this.element.clearable();
@@ -1392,6 +1388,7 @@ SearchField.prototype = {
 
     // NOTE: final width can only be 100% if no value is subtracted for other elements
     if (subtractWidth > 0) {
+      subtractWidth -= 10;
       targetWidthProp = `calc(100% - ${subtractWidth}px)`;
     }
     if (targetWidthProp) {
@@ -1565,123 +1562,134 @@ SearchField.prototype = {
    * Expands the Searchfield
    * @param {boolean} [noFocus] If defined, causes the searchfield component not to become focused
    *  at the end of the expand method. Its default functionality is that it will become focused.
-   * @returns {void}
+   * @returns {Promise} resolved when the expansion completes
    */
   expand(noFocus) {
-    if (this.isExpanded || this.isExpanding) {
-      return;
-    }
-
     const self = this;
-    const notFullWidth = !this.shouldBeFullWidth();
-
-    this.isExpanding = true;
-
-    // Places the input wrapper into the toolbar on smaller breakpoints
-    if (!notFullWidth) {
-      this.appendToParent();
-    }
-
-    // Re-adjust the size of the buttonset element if the expanded searchfield would be
-    // too large to fit.
-    let buttonsetWidth = 0;
-    if (this.buttonsetElem) {
-      buttonsetWidth = parseInt(window.getComputedStyle(this.buttonsetElem).width, 10);
-    }
-
-    const buttonsetElemWidth = buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE;
-    const containerSizeSetters = {
-      buttonset: buttonsetElemWidth
-    };
-
-    this.wrapper.addClass('is-open');
-    this.calculateOpenWidth();
-    this.setOpenWidth();
-
-    // Some situations require adjusting the focused element
-    if (!noFocus || env.os.name === 'ios' || (self.isFocused && document.activeElement !== self.input)) {
-      if (self.focusElem) {
-        self.focusElem = self.input;
+    const expandPromise = new Promise((resolve) => {
+      if (self.isExpanded || self.isExpanding) {
+        resolve();
+        return;
       }
-      self.input.focus();
-    }
 
-    // Recalculate the Toolbar Buttonset/Title sizes.
-    const eventArgs = [];
-    if (containerSizeSetters) {
-      eventArgs.push(containerSizeSetters);
-    }
+      const notFullWidth = !self.shouldBeFullWidth();
 
-    $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
+      self.isExpanding = true;
 
-    const expandTimer = new RenderLoopItem({
-      duration: 30,
-      updateCallback() {}, // TODO: make this work without an empty function
-      timeoutCallback() {
-        $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
-        self.wrapper.triggerHandler('expanded');
-        delete self.isExpanding;
-        self.isExpanded = true;
+      // Places the input wrapper into the toolbar on smaller breakpoints
+      if (!notFullWidth) {
+        self.appendToParent();
+      }
 
-        if (self.isCurrentlyCollapsible && !self.isFocused && !self.focusElem) {
-          self.handleSafeBlur();
+      // Re-adjust the size of the buttonset element if the expanded searchfield would be
+      // too large to fit.
+      let buttonsetWidth = 0;
+      if (self.buttonsetElem) {
+        buttonsetWidth = parseInt(window.getComputedStyle(self.buttonsetElem).width, 10);
+      }
+
+      const buttonsetElemWidth = buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE;
+      const containerSizeSetters = {
+        buttonset: buttonsetElemWidth
+      };
+
+      self.wrapper.addClass('is-open');
+      self.calculateOpenWidth();
+      self.setOpenWidth();
+
+      // Some situations require adjusting the focused element
+      if (!noFocus || env.os.name === 'ios' || (self.isFocused && document.activeElement !== self.input)) {
+        if (self.focusElem) {
+          self.focusElem = self.input;
         }
+        self.input.focus();
       }
+
+      // Recalculate the Toolbar Buttonset/Title sizes.
+      const eventArgs = [];
+      if (containerSizeSetters) {
+        eventArgs.push(containerSizeSetters);
+      }
+
+      $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
+
+      const expandTimer = new RenderLoopItem({
+        duration: 30,
+        updateCallback() {}, // TODO: make this work without an empty function
+        timeoutCallback() {
+          $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
+          self.wrapper.triggerHandler('expanded');
+          delete self.isExpanding;
+          self.isExpanded = true;
+
+          if (self.isCurrentlyCollapsible && !self.isFocused && !self.focusElem) {
+            self.handleSafeBlur();
+          }
+        }
+      });
+      renderLoop.register(expandTimer);
     });
-    renderLoop.register(expandTimer);
+
+    return expandPromise;
   },
 
   /**
    * Collapses the Searchfield
-   * @returns {void}
+   * @returns {Promise} resolved once the collapse completes
    */
   collapse() {
-    if (!this.isExpanded || this.isCollapsing) {
-      return;
-    }
-
     const self = this;
-
-    this.isCollapsing = true;
-
-    // Puts the input wrapper back where it should be if it's been moved due to small form factors.
-    this.appendToButtonset();
-
-    this.checkContents();
-
-    this.wrapper[0].classList.remove('active', 'is-open');
-    if (env.browser.isIE11) {
-      this.wrapper[0].classList.remove('is-open');
-    }
-    if (!this.isFocused) {
-      this.wrapper[0].classList.remove('has-focus');
-    }
-
-    this.wrapper.removeAttr('style');
-    this.input.removeAttribute('style');
-
-    if (this.categoryButton && this.categoryButton.length) {
-      this.categoryButton.data('popupmenu').close(false, true);
-    }
-
-    this.wrapper.triggerHandler('collapsed');
-
-    if (env.os.name === 'ios') {
-      $('head').triggerHandler('enable-zoom');
-    }
-
-    delete this.isExpanded;
-    delete this.isExpanding;
-
-    const collapseTimer = new RenderLoopItem({
-      duration: 30,
-      updateCallback() {}, // TODO: make this work without an empty function
-      timeoutCallback() {
-        delete self.isCollapsing;
-        $(self.toolbarParent).triggerHandler('recalculate-buttons');
+    const collapsePromise = new Promise((resolve) => {
+      if (!self.isExpanded || self.isCollapsing) {
+        resolve();
+        return;
       }
+
+      self.isCollapsing = true;
+
+      // Puts the input wrapper back where it should be if it's been moved due to small form factors.
+      self.appendToButtonset();
+
+      self.checkContents();
+
+      self.wrapper[0].classList.remove('active', 'is-open');
+      if (env.browser.isIE11) {
+        self.wrapper[0].classList.remove('is-open');
+      }
+      if (!this.isFocused) {
+        self.wrapper[0].classList.remove('has-focus');
+      }
+
+      self.wrapper.removeAttr('style');
+      self.input.removeAttribute('style');
+
+      if (self.categoryButton && self.categoryButton.length) {
+        self.categoryButton.data('popupmenu').close(false, true);
+      }
+
+      self.wrapper.triggerHandler('collapsed');
+
+      if (env.os.name === 'ios') {
+        $('head').triggerHandler('enable-zoom');
+      }
+
+      delete self.isExpanded;
+      delete self.isExpanding;
+
+      const collapseTimer = new RenderLoopItem({
+        duration: 30,
+        updateCallback() {}, // TODO: make this work without an empty function
+        timeoutCallback() {
+          delete self.isCollapsing;
+          $(self.toolbarParent).triggerHandler('recalculate-buttons');
+          resolve();
+        }
+      });
+
+      renderLoop.register(collapseTimer);
     });
-    renderLoop.register(collapseTimer);
+
+    return collapsePromise;
   },
 
   /**

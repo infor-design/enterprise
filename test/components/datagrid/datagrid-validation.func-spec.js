@@ -1,5 +1,6 @@
 import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
+import { Editors } from '../../../src/components/datagrid/datagrid.editors';
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-editable.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -16,7 +17,9 @@ let datagridObj;
 const columns = [];
 columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
 columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: 100, filterType: 'Text' });
-columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, filterType: 'Text' });
+columns.push({
+  id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, filterType: 'Text', editor: Editors.Input
+});
 columns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true, filterType: 'Text', required: true, validate: 'required' });
 columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden', filterType: 'Text' });
 columns.push({
@@ -121,18 +124,6 @@ describe('Datagrid Validation API', () => {
 
     expect(document.body.querySelectorAll('tbody tr')[4].classList.contains('rowstatus-row-confirm')).toBeFalsy();
     expect(document.body.querySelectorAll('tbody tr')[4].querySelectorAll('.icon-rowstatus').length).toEqual(0);
-  });
-
-  it('Should be able to set/remove rowStatus type Dirty', () => {
-    datagridObj.rowStatus(0, 'dirty');
-
-    expect(document.body.querySelectorAll('tbody tr')[0].classList.contains('rowstatus-row-dirty')).toBeTruthy();
-    expect(document.body.querySelectorAll('tbody tr')[0].querySelectorAll('.icon-rowstatus').length).toEqual(1);
-
-    datagridObj.resetRowStatus();
-
-    expect(document.body.querySelectorAll('tbody tr')[0].classList.contains('rowstatus-row-dirty')).toBeFalsy();
-    expect(document.body.querySelectorAll('tbody tr')[0].querySelectorAll('.icon-rowstatus').length).toEqual(0);
   });
 
   it('Should be able to set/remove rowStatus type New', () => {
@@ -260,16 +251,59 @@ describe('Datagrid Validation API', () => {
     }, 0);
   });
 
-  it('Should show currently dirty rows', (done) => {
-    datagridObj.rowStatus(1, 'dirty');
-    datagridObj.rowStatus(3, 'dirty');
+  it('Should show currently dirty rows', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
 
-    setTimeout(() => {
-      const dirtyRows = datagridObj.dirtyRows();
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
 
-      expect(dirtyRows.length).toEqual(2);
-      done();
-    }, 0);
+    const cell1 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+    const cell2 = document.querySelector('tr:nth-child(2) td:nth-child(3)');
+    const cell3 = document.querySelector('tr:nth-child(2) td:nth-child(2)');
+
+    cell1.click();
+    let input = cell1.querySelector('input');
+    input.value = 'Cell test value 1';
+    cell2.click();
+    input = cell2.querySelector('input');
+    input.value = 'Cell test value 2';
+    cell3.click();
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(2);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(cell2.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(datagridObj.dirtyRows().length).toEqual(2);
+  });
+
+  it('Should reset all dirty rows', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+
+    const cell1 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+    const cell2 = document.querySelector('tr:nth-child(2) td:nth-child(3)');
+    const cell3 = document.querySelector('tr:nth-child(2) td:nth-child(2)');
+
+    cell1.click();
+    let input = cell1.querySelector('input');
+    input.value = 'Cell test value 1';
+    cell2.click();
+    input = cell2.querySelector('input');
+    input.value = 'Cell test value 2';
+    cell3.click();
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(2);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(cell2.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(datagridObj.dirtyRows().length).toEqual(2);
+
+    datagridObj.resetRowStatus();
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+    expect(cell2.classList.contains('is-dirty-cell')).toBeFalsy();
+    expect(datagridObj.dirtyRows().length).toEqual(0);
   });
 
   it('Should show in title non visible error on another page', () => {
