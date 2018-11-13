@@ -754,7 +754,7 @@ SearchField.prototype = {
     if (this.collapseButton && this.collapseButton.length) {
       this.collapseButton.on(`click.${this.id}`, (e) => {
         self.collapseResponsive(e);
-      });
+      }).on(`blur.${this.id}`, () => self.handleSafeBlur());
     }
 
     if (this.toolbarParent) {
@@ -873,10 +873,12 @@ SearchField.prototype = {
 
     const wrapperClasses = ['has-focus', 'active'];
 
-    if (this.isCurrentlyCollapsible) {
+    if (this.isCurrentlyCollapsible || this.isContainedByFlexToolbar) {
       this.expand(true);
-    } else if (this.isContainedByFlexToolbar) {
-      wrapperClasses.push('is-open');
+
+      if (this.isContainedByFlexToolbar) {
+        wrapperClasses.push('is-open');
+      }
     }
 
     // Activate
@@ -989,10 +991,7 @@ SearchField.prototype = {
       wrapperElem.classList.remove('has-focus', 'active');
 
       self.removeDocumentDeactivationEvents();
-
-      if (self.toolbarParent) {
-        self.toolbarParent.classList.remove('searchfield-active');
-      }
+      self.clearResponsiveState();
 
       if (self.isCurrentlyCollapsible) {
         self.collapse();
@@ -1011,6 +1010,17 @@ SearchField.prototype = {
       timeoutCallback: safeBlurHandler
     });
     renderLoop.register(this.blurTimer);
+  },
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  clearResponsiveState() {
+    if (!this.toolbarParent) {
+      return;
+    }
+    this.toolbarParent.classList.remove('searchfield-active');
   },
 
   /**
@@ -1636,7 +1646,7 @@ SearchField.prototype = {
   expand(noFocus) {
     const self = this;
     const expandPromise = new Promise((resolve) => {
-      if (self.isExpanded || self.isExpanding) {
+      if (self.isExpanded || self.isExpanding || self.isCollapsing) {
         resolve();
         return;
       }
@@ -1682,14 +1692,15 @@ SearchField.prototype = {
         eventArgs.push(containerSizeSetters);
       }
 
+      self.element.trigger('beforeexpand');
       $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
 
       const expandTimer = new RenderLoopItem({
-        duration: 30,
+        duration: 10,
         updateCallback() {}, // TODO: make this work without an empty function
         timeoutCallback() {
           $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
-          self.wrapper.triggerHandler('expanded');
+          self.element.trigger('expanded');
           delete self.isExpanding;
           self.isExpanded = true;
 
@@ -1711,7 +1722,7 @@ SearchField.prototype = {
   collapse() {
     const self = this;
     const collapsePromise = new Promise((resolve) => {
-      if (!self.isExpanded || self.isCollapsing) {
+      if (!self.isExpanded && !self.isExpanding && !self.isCollapsing) {
         resolve();
         return;
       }
@@ -1722,6 +1733,8 @@ SearchField.prototype = {
       self.appendToButtonset();
 
       self.checkContents();
+
+      self.clearResponsiveState();
 
       self.wrapper[0].classList.remove('active', 'is-open');
       if (env.browser.isIE11) {
@@ -1738,7 +1751,7 @@ SearchField.prototype = {
         self.categoryButton.data('popupmenu').close(false, true);
       }
 
-      self.wrapper.triggerHandler('collapsed');
+      self.element.trigger('beforecollapse');
 
       if (env.os.name === 'ios') {
         $('head').triggerHandler('enable-zoom');
@@ -1748,11 +1761,12 @@ SearchField.prototype = {
       delete self.isExpanding;
 
       const collapseTimer = new RenderLoopItem({
-        duration: 30,
+        duration: 10,
         updateCallback() {}, // TODO: make this work without an empty function
         timeoutCallback() {
           delete self.isCollapsing;
           $(self.toolbarParent).triggerHandler('recalculate-buttons');
+          self.element.trigger('collapsed');
           resolve();
         }
       });
@@ -1765,9 +1779,13 @@ SearchField.prototype = {
 
   /**
    * @private
+   * @returns {void}
    */
   collapseResponsive() {
-    alert('sup dawg');
+    const self = this;
+    this.collapse().then(() => {
+      self.wrapper.trigger('collapsed-responsive', [self.wrapper]);
+    });
   },
 
   /**

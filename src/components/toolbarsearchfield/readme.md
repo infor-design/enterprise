@@ -14,7 +14,7 @@ demo:
 
 ## Important Notes
 
-This is a specific component wrapper for searchfield components that reside inside of a [toolbar]( ./toolbar). This component is very different from regular searchfields and have an expanded API. There is an alternate API documentation for the main [Searchfield]( ./searchfield) component.
+This is a specific component wrapper for Searchfield components that reside inside of a [toolbar]( ./toolbar). This component uses a subset of the standard Searchfield component's API. See [this page]( ./searchfield) For a complete API documentation.
 
 ## Code Example
 
