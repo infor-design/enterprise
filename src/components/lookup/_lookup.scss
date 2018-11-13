@@ -16,7 +16,7 @@
       cursor: default;
 
       .icon {
-        fill: $input-disabled-bg-color;
+        fill: $input-color-disabled-background;
       }
     }
 
@@ -25,8 +25,8 @@
     }
 
     &.is-not-editable {
-      background-color: $input-bg-color;
-      border: 1px solid $input-border-color;
+      background-color: $input-color-initial-background;
+      border: 1px solid $input-color-initial-border;
       color: $input-color;
       -webkit-text-fill-color: $input-color;
 

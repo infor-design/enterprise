@@ -34,7 +34,7 @@
     .btn-next,
     .btn-previous {
       background-color: $graphite10;
-      border: 1px solid $color-default-alt;
+      border: 1px solid $theme-color-brand-secondary-alt;
       border-radius: 50%;
       display: none;
       height: 32px;
@@ -47,7 +47,7 @@
       z-index: 1001;
 
       .icon {
-        fill: $icon-fill;
+        fill: $icon-color-fill;
         height: 18px;
         width: 18px;
       }
@@ -151,9 +151,9 @@
 
         &.is-active {
           background-color: $graphite10;
-          border: 1px solid $color-default-alt;
+          border: 1px solid $theme-color-brand-secondary-alt;
           border-radius: 2px;
-          color: $color-default-alt;
+          color: $theme-color-brand-secondary-alt;
           cursor: default;
           display: inline-block;
           height: auto;
@@ -162,12 +162,12 @@
 
           &:hover {
             background-color: $graphite10;
-            border-color: $color-default-alt;
+            border-color: $theme-color-brand-secondary-alt;
           }
 
           &:focus {
             background-color: $graphite10;
-            border-color: $color-default-alt;
+            border-color: $theme-color-brand-secondary-alt;
           }
         }
       }

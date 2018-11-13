@@ -2,7 +2,7 @@
 //================================================== //
 
 $busy-indicator-size: 64px;
-$busy-indicator-color: $button-primary-bg-color;
+$busy-indicator-color: $button-color-primary-initial-background;
 $busy-indicator-check-color: $inverse-color;
 
 .busy-indicator-container {
@@ -78,7 +78,7 @@ $busy-indicator-check-color: $inverse-color;
   @include opacity(0.75);
   @include transition(opacity 500ms);
 
-  background-color: $body-bg-color-primary;
+  background-color: $body-color-primary-background;
   position: absolute;
   visibility: visible;
 

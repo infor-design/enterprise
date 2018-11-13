@@ -3,7 +3,7 @@
 
 // Uses Many Popup Menu Styles and Text Input
 .popupmenu.autocomplete {
-  border: 1px solid $input-focus-border-color;
+  border: 1px solid $input-color-focus-border;
   border-radius: 0 0 3px 3px;
   border-top: 1px solid $dropdown-menu-separator-color;
   box-shadow: $autocomplete-box-shadow;
@@ -25,8 +25,8 @@
     }
 
     &.is-selected {
-      background-color: $dropdown-selected-bg-color;
-      color: $dropdown-selected-color;
+      background-color: $dropdown-color-selected-background;
+      color: $dropdown-color-selected-font;
     }
   }
 
@@ -62,12 +62,8 @@
   }
 
   .is-selected i {
-    color: $dropdown-selected-color;
+    color: $dropdown-color-selected-font;
   }
-
-  // li:hover i {
-  //   color: $dropdown-selected-color;
-  // }
 }
 
 input.autocomplete.is-open {

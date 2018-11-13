@@ -116,7 +116,7 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
       }
 
       .label {
-        font-weight: $font-weight-bold;
+        font-weight: $theme-number-font-weight-bold;
       }
     }
 
@@ -137,7 +137,7 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
 
       .label {
         color: $wizard-disabled-color;
-        font-weight: $font-weight-normal;
+        font-weight: $theme-number-font-weight-base;
       }
 
       &.current,
@@ -229,7 +229,7 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
       &.is-disabled {
         .label {
           color: $wizard-header-disabled-color;
-          font-weight: $font-weight-normal;
+          font-weight: $theme-number-font-weight-base;
         }
 
         &.current,

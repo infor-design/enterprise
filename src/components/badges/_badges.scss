@@ -11,7 +11,7 @@
   border-radius: 15px;
   color: $badge-neutral-color;
   display: inline-block;
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   height: 22px;
   line-height: 22px;
   padding: 0 10px;
@@ -52,7 +52,7 @@
 
   &.graphite03,
   &.graphite02 {
-    color: $pill-neutral-bg-color;
+    color: $graphite02;
   }
 
   &.round {
@@ -72,7 +72,7 @@
     }
 
     &:focus:not(.hide-focus) {
-      border-color: $color-primary;
+      border-color: $theme-color-brand-primary-base;
       box-shadow: $focus-box-shadow;
       outline: none;
       -moz-outline-style: none;
@@ -89,7 +89,7 @@
     padding: 0 10px;
 
     &:focus:not(.hide-focus) {
-      border-color: $color-primary;
+      border-color: $theme-color-brand-primary-base;
       box-shadow: $focus-box-shadow;
       outline: none;
       -moz-outline-style: none;
@@ -169,7 +169,7 @@
     &::after {
       @include css3(transform, scaleX(-1) rotate(135deg));
 
-      border-color: $checkbox-arrow-color;
+      border-color: $checkbox-color-checked-initial-arrow;
       border-style: solid;
       border-width: 2px 2px 0 0;
       content: '';
@@ -187,7 +187,7 @@
       content: '!';
       display: inline-block;
       font-size: 1.3em;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
       height: 100%;
       left: 0;
       position: absolute;

@@ -8,7 +8,7 @@
 .field .checkbox > label {
   @include font-size(14);
 
-  color: $checkbox-label-color;
+  color: $checkbox-color-unchecked-initial-font;
   display: inline-block;
   margin-bottom: 0;
   margin-top: 0;
@@ -185,26 +185,26 @@ textarea {
 
 // Element with input "like" style borders
 .input-style {
-  background-color: $input-bg-color;
-  border: 1px solid $input-border-color;
+  background-color: $input-color-initial-background;
+  border: 1px solid $input-color-initial-border;
   border-collapse: separate;
 
   &:hover,
   &.is-hovered {
-    border-color: $input-hover-border-color;
+    border-color: $input-color-hover-border;
   }
 
   &[disabled],
   &.is-disabled {
-    background-color: $input-disabled-bg-color;
-    border: solid 1px $input-disabled-border-color;
+    background-color: $input-color-disabled-background;
+    border: solid 1px $input-color-disabled-border;
     -webkit-text-fill-color: $input-disabled-color;
   }
 
   &[readonly],
   &.is-readonly {
-    background-color: $input-readonly-bg-color;
-    border-color: $input-readonly-border-color;
+    background-color: $input-color-readonly-background;
+    border-color: $input-color-readonly-border;
     -webkit-text-fill-color: $input-readonly-color;
   }
 
@@ -322,7 +322,7 @@ label,
   @include font-size(14);
 
   color: $input-placeholder-color;
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   line-height: 16px;
   opacity: 1;
 }
@@ -331,7 +331,7 @@ label,
   @include font-size(14);
 
   color: $input-placeholder-color;
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   line-height: 16px;
   opacity: 1;
 }
@@ -340,7 +340,7 @@ label,
   @include font-size(14);
 
   color: $input-placeholder-color;
-  font-weight: $font-weight-normal;
+  font-weight: $theme-number-font-weight-base;
   line-height: 16px;
   opacity: 1;
 }
@@ -439,14 +439,14 @@ label,
 
 // Text Selection
 ::selection {
-  background: $color-primary;
+  background: $theme-color-brand-primary-base;
   color: $inverse-color;
   fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
 }
 
 ::-moz-selection {
-  background: $color-primary;
+  background: $theme-color-brand-primary-base;
   color: $inverse-color;
   fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
@@ -551,7 +551,7 @@ label,
 
 //Info Field
 .field-info {
-  $icon-width: 15px;
+  $this-icon-width: 15px;
 
   @include font-size(12);
 
@@ -568,7 +568,7 @@ label,
     left: 0;
     position: absolute;
     top: 0;
-    width: $icon-width;
+    width: $this-icon-width;
   }
 
   .icon-info-field {
@@ -585,13 +585,13 @@ label,
     margin-bottom: 16px;
     margin-top: -2px;
     max-width: 267px;
-    padding-left: $icon-width + 5;
+    padding-left: $this-icon-width + 5;
   }
 }
 
 //Error Field
 .error-message {
-  $icon-width: 14px;
+  $this-icon-width: 14px;
 
   @include font-size(12);
 
@@ -603,26 +603,26 @@ label,
   position: relative;
 
   .icon {
-    height: $icon-width;
+    height: $this-icon-width;
     left: 0;
     margin-left: 0;
     margin-top: 0;
     position: absolute;
     top: 0;
-    width: $icon-width;
+    width: $this-icon-width;
   }
 
   .message-text {
     font-size: inherit;
     line-height: 15px;
     max-width: 280px;
-    padding-left: $icon-width + 5;
+    padding-left: $this-icon-width + 5;
   }
 }
 
 // Alert Field
 .alert-message {
-  $icon-width: 14px;
+  $this-icon-width: 14px;
 
   @include font-size(12);
 
@@ -634,26 +634,26 @@ label,
   position: relative;
 
   .icon {
-    height: $icon-width;
+    height: $this-icon-width;
     left: 0;
     margin-left: 0;
     margin-top: 0;
     position: absolute;
     top: 0;
-    width: $icon-width;
+    width: $this-icon-width;
   }
 
   .message-text {
     font-size: inherit;
     line-height: 15px;
     max-width: 280px;
-    padding-left: $icon-width + 5;
+    padding-left: $this-icon-width + 5;
   }
 }
 
 // Confirm Field
 .confirm-message {
-  $icon-width: 14px;
+  $this-icon-width: 14px;
 
   @include font-size(12);
 
@@ -665,27 +665,27 @@ label,
   position: relative;
 
   .icon {
-    height: $icon-width;
+    height: $this-icon-width;
     left: 0;
     margin-left: 0;
     margin-top: 0;
     position: absolute;
     top: 0;
-    width: $icon-width;
+    width: $this-icon-width;
   }
 
   .message-text {
     font-size: inherit;
     line-height: 15px;
     max-width: 280px;
-    padding-left: $icon-width + 5;
+    padding-left: $this-icon-width + 5;
   }
 }
 
 //Information Field
 .custom-icon-message,
 .info-message {
-  $icon-width: 14px;
+  $this-icon-width: 14px;
 
   @include font-size(12);
 
@@ -697,20 +697,20 @@ label,
   position: relative;
 
   .icon {
-    height: $icon-width;
+    height: $this-icon-width;
     left: 0;
     margin-left: 0;
     margin-top: 0;
     position: absolute;
     top: 0;
-    width: $icon-width;
+    width: $this-icon-width;
   }
 
   .message-text {
     font-size: inherit;
     line-height: 15px;
     max-width: 280px;
-    padding-left: $icon-width + 5;
+    padding-left: $this-icon-width + 5;
   }
 }
 

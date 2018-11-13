@@ -4,8 +4,8 @@
 // Also see: /sass/controls/_timeline.scss
 
 $indicator-darkest: $azure08;
-$indicator-darker: $color-primary-alt;
-$indicator-lighter: $color-primary;
+$indicator-darker: $theme-color-brand-primary-alt;
+$indicator-lighter: $theme-color-brand-primary-base;
 $indicator-lightest: $azure05;
 $indicator-warning: $alert-red;
 $indicator-blank: $graphite02;
@@ -94,7 +94,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
 // Indicator icons
 .indicator {
-  background-color: $body-bg-color-primary;
+  background-color: $body-color-primary-background;
   border: 2px solid $indicator-blank;
   border-radius: ($indicator-size / 2);
   display: inline-block;
@@ -187,7 +187,7 @@ $indicator-current-size: ($indicator-size * 1.6);
       content: '!';
       display: inline-block;
       font-size: 1.4em;
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
       height: 100%;
       position: relative;
       text-align: center;
@@ -247,7 +247,7 @@ $indicator-current-size: ($indicator-size * 1.6);
   .heading {
     @include font-size(12);
 
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
     line-height: 1.5;
 
     @include antialiased();

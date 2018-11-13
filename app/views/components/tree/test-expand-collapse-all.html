@@ -1,0 +1,61 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h3>Tree Control: Expand All and Collapse All Folders</h3>
+    <p>This example shows to use of expand all and collapse all tree folder nodes.</p>
+    <p>
+      <button type="button" id="expand-all" class="btn-secondary">Expand All</button>
+      <button type="button" id="collapse-all" class="btn-secondary">Collapse All</button>
+    </p>
+    <br />
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <ul role="tree" id="addnode-tree" aria-label="Asset Types" class="tree" data-init="false">
+      <li>
+          <a href="#" id="home">Home</a>
+      </li>
+      <li><a href="#" id="about">About Us</a></li>
+      <li class="is-open">
+        <a href="#" id="public">Public Folders</a>
+        <ul class="is-open root">
+          <li class="is-open">
+              <a href="#" id="leadership">Leadership</a>
+              <ul class="is-open">
+                <li>
+                  <a href="#" id="managers" class="icon-tree-image">Managers</a>
+                </li>
+                <li class="is-selected">
+                  <a href="#" id="history" class="my-class">History</a>
+                </li>
+                <li>
+                  <a href="#" id="careers" class="is-disabled">Careers</a>
+                </li>
+              </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var treeApi = $('#addnode-tree').tree().data('tree');
+
+  // Expand all
+  $('#expand-all').on('click', function () {
+    if (treeApi) {
+      treeApi.expandAll();
+    }
+  });
+
+  // Collapse all
+  $('#collapse-all').on('click', function () {
+    if (treeApi) {
+      treeApi.collapseAll();
+    }
+  });
+</script>

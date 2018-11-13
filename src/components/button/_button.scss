@@ -19,12 +19,12 @@ button {
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
-  @include font-size($button-font-size);
   @include transition(color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), background-color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), border 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
   @include antialiased();
 
   color: inherit;
-  font-weight: $font-weight-bold;
+  font-size: $theme-size-font-base;
+  font-weight: $theme-number-font-weight-bold;
   height: 34px;
   line-height: normal;
   min-width: 100px;
@@ -126,35 +126,35 @@ button {
 
 // standard, primary, destructive
 .btn-primary {
-  background-color: $button-primary-bg-color;
-  border: 1px solid $button-primary-bg-color;
-  color: $button-primary-text-color;
+  background-color: $button-color-primary-initial-background;
+  border: 1px solid $button-color-primary-initial-background;
+  color: $button-color-primary-initial-font;
 
   &.btn {
-    color: $button-primary-text-color;
+    color: $button-color-primary-initial-font;
   }
 
   .icon {
-    fill: $button-primary-text-color;
+    fill: $button-color-primary-initial-font;
   }
 
   // In case both are specified
   &.btn {
-    color: $button-primary-text-color;
+    color: $button-color-primary-initial-font;
   }
 
   &:hover {
-    background-color: $button-primary-hover-bg-color;
-    border: 1px solid $button-primary-hover-bg-color;
+    background-color: $button-color-primary-hover-background;
+    border: 1px solid $button-color-primary-hover-background;
 
     &.btn {
-      color: $button-primary-text-color;
+      color: $button-color-primary-initial-font;
     }
   }
 
   &:active {
-    background-color: $button-primary-active-bg-color;
-    border: 1px solid $button-primary-active-bg-color;
+    background-color: $button-color-primary-active-background;
+    border: 1px solid $button-color-primary-active-background;
     box-shadow: none;
   }
 
@@ -162,23 +162,23 @@ button {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color-primary, 0 0 0 3px $button-primary-bg-color, $focus-box-shadow;
+      box-shadow: 0 0 0 2px $body-color-primary-background, 0 0 0 3px $button-color-primary-initial-background, $focus-box-shadow;
     }
 
     &:active {
-      background-color: $button-primary-active-bg-color;
+      background-color: $button-color-primary-active-background;
       box-shadow: none;
     }
   }
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $button-primary-disabled-bg-color;
-    border-color: $button-primary-disabled-border-color;
+    background-color: $button-color-primary-disabled-background;
+    border-color: $button-color-primary-disabled-border;
     box-shadow: none;
-    color: $button-primary-text-color;
+    color: $button-color-primary-initial-font;
     cursor: default;
-    opacity: $button-disabled-opacity;
+    opacity: $button-color-secondary-disabled-opacity;
 
     .icon {
       fill: $white;
@@ -192,18 +192,18 @@ button {
   }
 
   &.btn-menu {
-    color: $button-primary-text-color;
+    color: $button-color-primary-initial-font;
 
     .icon {
-      fill: $button-primary-text-color;
+      fill: $button-color-primary-initial-font;
     }
 
     &:hover,
     &.is-open {
-      color: $button-primary-text-color;
+      color: $button-color-primary-initial-font;
 
       .icon {
-        fill: $button-primary-text-color;
+        fill: $button-color-primary-initial-font;
       }
     }
 
@@ -270,45 +270,45 @@ a.btn-close {
 
 // Secondary Button
 .btn-secondary {
-  background-color: $button-default-bg-color;
-  border: 1px solid $button-default-bg-color;
-  color: $button-default-text-color;
+  background-color: $button-color-secondary-initial-background;
+  border: 1px solid $button-color-secondary-initial-background;
+  color: $button-color-secondary-initial-font;
 
   .icon {
-    fill: $button-default-text-color;
+    fill: $button-color-secondary-initial-font;
   }
 
   &:hover {
-    background-color: $button-default-hover-bg-color;
-    border: 1px solid $button-default-hover-bg-color;
+    background-color: $button-color-secondary-hover-background;
+    border: 1px solid $button-color-secondary-hover-background;
   }
 
   &:active {
-    background-color: $button-default-active-bg-color;
-    border: 1px solid $button-default-active-bg-color;
+    background-color: $button-color-secondary-active-background;
+    border: 1px solid $button-color-secondary-active-background;
   }
 
   &:focus {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color-primary, 0 0 0 3px $button-default-focus-border-color, $focus-box-shadow;
+      box-shadow: 0 0 0 2px $body-color-primary-background, 0 0 0 3px $button-color-secondary-focus-border, $focus-box-shadow;
     }
 
     &:active {
-      background-color: $button-default-active-bg-color;
+      background-color: $button-color-secondary-active-background;
       box-shadow: none;
     }
   }
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $button-default-disabled-bg-color;
-    border: 1px solid $button-default-disabled-border-color;
+    background-color: $button-color-secondary-disabled-background;
+    border: 1px solid $button-color-secondary-disabled-border;
     box-shadow: none;
-    color: $button-default-disabled-text-color;
+    color: $button-color-secondary-disabled-font;
     cursor: default;
-    opacity: $button-disabled-opacity;
+    opacity: $button-color-secondary-disabled-opacity;
   }
 
   .ripple-effect {
@@ -317,18 +317,18 @@ a.btn-close {
 
   // Menu Button Form
   &.btn-menu {
-    color: $button-default-text-color;
+    color: $button-color-secondary-initial-font;
 
     .icon {
-      fill: $button-default-text-color;
+      fill: $button-color-secondary-initial-font;
     }
 
     &:hover,
     &.is-open {
-      color: $button-default-text-color;
+      color: $button-color-secondary-initial-font;
 
       .icon {
-        fill: $button-default-text-color;
+        fill: $button-color-secondary-initial-font;
       }
     }
   }
@@ -345,23 +345,23 @@ a.btn-close {
   border: 1px solid transparent;
   border-radius: 2px;
   box-shadow: none;
-  color: $button-link-text-color;
+  color: $button-color-tertiary-initial-font;
   overflow: hidden;
 
   &:hover {
-    color: $button-link-hover-text-color;
+    color: $button-color-tertiary-hover-font;
 
     .icon {
-      fill: $button-link-hover-text-color;
+      fill: $button-color-tertiary-hover-font;
     }
   }
 
   &:active {
-    color: $button-link-active-text-color;
+    color: $button-color-tertiary-active-font;
   }
 
   &:focus:not(.hide-focus) {
-    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $button-default-focus-bg-color, $focus-box-shadow;
+    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $button-color-secondary-focus-background, $focus-box-shadow;
 
     &:active {
       box-shadow: none;
@@ -370,12 +370,12 @@ a.btn-close {
 
   &[disabled],
   &[disabled]:hover {
-    color: $button-link-disabled-text-color;
+    color: $button-color-tertiary-disabled-font;
     cursor: default;
-    opacity: $button-disabled-opacity;
+    opacity: $button-color-secondary-disabled-opacity;
 
     .icon {
-      fill: $button-link-disabled-text-color;
+      fill: $button-color-tertiary-disabled-font;
     }
   }
 
@@ -384,7 +384,7 @@ a.btn-close {
   }
 
   .icon {
-    fill: $button-link-text-color;
+    fill: $button-color-tertiary-initial-font;
   }
 
   .ripple-effect {
@@ -412,10 +412,10 @@ a.btn-close {
 .btn-menu,
 .btn-actions {
   &.is-open {
-    color: $button-link-open-text-color;
+    color: $theme-color-brand-primary-base;
 
     .icon {
-      fill: $button-link-open-text-color;
+      fill: $theme-color-brand-primary-base;
     }
   }
 }
@@ -506,7 +506,7 @@ a.btn-close {
 
   &.has-content {
     .icon {
-      fill: $color-primary;
+      fill: $theme-color-brand-primary-base;
     }
 
     &:hover .icon {
@@ -603,13 +603,13 @@ a.btn-close {
 
   &:active {
     .icon {
-      fill: $button-link-active-text-color;
+      fill: $button-color-tertiary-active-font;
     }
 
     .plus-minus {
       &::before,
       &::after {
-        background-color: $button-link-active-text-color;
+        background-color: $button-color-tertiary-active-font;
       }
     }
   }
@@ -622,10 +622,10 @@ a.btn-close {
 
 .btn-toggle {
   &.is-pressed {
-    color: $button-primary-bg-color !important;
+    color: $button-color-primary-initial-background !important;
 
     svg {
-      fill: $button-primary-bg-color !important;
+      fill: $button-color-primary-initial-background !important;
     }
   }
 }
@@ -772,7 +772,7 @@ html[lang^='fr-'] {
   }
 
   &:focus {
-    box-shadow: 0 0 0 1px $body-bg-color-primary, 0 0 0 2px $color-primary, $focus-box-shadow;
+    box-shadow: 0 0 0 1px $body-color-primary-background, 0 0 0 2px $theme-color-brand-primary-base, $focus-box-shadow;
   }
 
   &:disabled {

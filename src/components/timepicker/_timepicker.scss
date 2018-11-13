@@ -37,7 +37,7 @@
   }
 
   &.is-open {
-    border-color: $input-focus-border-color;
+    border-color: $input-color-focus-border;
 
     + .icon {
       fill: $trigger-active-color;
@@ -99,7 +99,7 @@
     .colons {
       @include rem(font-size, 1.4rem);
 
-      font-weight: $font-weight-bold;
+      font-weight: $theme-number-font-weight-bold;
       min-width: 15px;
 
       &:empty {

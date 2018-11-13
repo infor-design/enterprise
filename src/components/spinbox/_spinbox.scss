@@ -44,12 +44,12 @@ input::-webkit-inner-spin-button {
 
   backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
   background-color: $spinbox-button-color;
-  border: 1px solid $input-border-color;
+  border: 1px solid $input-color-initial-border;
   border-collapse: separate;
   color: $font-color;
   cursor: pointer;
   display: inline-block;
-  font-weight: $font-weight-bold;
+  font-weight: $theme-number-font-weight-bold;
   height: 34px;
   line-height: normal;
   overflow: hidden;
@@ -82,8 +82,8 @@ input::-webkit-inner-spin-button {
   }
 
   &.is-disabled {
-    background-color: $input-disabled-bg-color;
-    border-color: $input-disabled-border-color;
+    background-color: $input-color-disabled-background;
+    border-color: $input-color-disabled-border;
     color: $disabled-color;
     cursor: default;
     -webkit-text-fill-color: $disabled-color;
@@ -117,16 +117,16 @@ input::-webkit-inner-spin-button {
     box-shadow: $focus-box-shadow;
 
     > .spinbox-control {
-      border-color: $input-focus-border-color;
+      border-color: $input-color-focus-border;
 
       &.is-active {
-        border-color: $input-focus-border-color;
+        border-color: $input-color-focus-border;
         box-shadow: $focus-box-shadow;
       }
 
       &.is-disabled {
-        background-color: $input-disabled-bg-color;
-        border-color: $input-disabled-border-color;
+        background-color: $input-color-disabled-background;
+        border-color: $input-color-disabled-border;
         color: $disabled-color;
         cursor: default;
         -webkit-text-fill-color: $disabled-color;
@@ -137,8 +137,8 @@ input::-webkit-inner-spin-button {
 
   &.is-disabled {
     > .spinbox-control {
-      background-color: $input-disabled-bg-color;
-      border-color: $input-disabled-border-color;
+      background-color: $input-color-disabled-background;
+      border-color: $input-color-disabled-border;
       color: $disabled-color;
       cursor: default;
       -webkit-text-fill-color: $disabled-color;
@@ -147,7 +147,7 @@ input::-webkit-inner-spin-button {
 
   &.is-readonly {
     > .spinbox-control {
-      background-color: $input-readonly-bg-color;
+      background-color: $input-color-readonly-background;
       color: $input-readonly-color;
       cursor: default;
       -webkit-text-fill-color: $input-readonly-color;
@@ -202,7 +202,7 @@ html[dir='rtl'] {
     &.up {
       border-bottom-left-radius: 2px;
       border-bottom-right-radius: 0;
-      border-left: 1px solid $input-border-color;
+      border-left: 1px solid $input-color-initial-border;
       border-right: 0;
       border-top-left-radius: 2px;
       border-top-right-radius: 0;
@@ -212,13 +212,13 @@ html[dir='rtl'] {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 2px;
       border-left: 0;
-      border-right: 1px solid $input-border-color;
+      border-right: 1px solid $input-color-initial-border;
       border-top-left-radius: 0;
       border-top-right-radius: 2px;
     }
 
     &.is-disabled {
-      border-color: $input-disabled-border-color;
+      border-color: $input-color-disabled-border;
     }
   }
 
@@ -230,14 +230,14 @@ html[dir='rtl'] {
 
     &.is-focused {
       > .spinbox-control {
-        border-color: $input-focus-border-color;
+        border-color: $input-color-focus-border;
 
         &.is-active {
-          border-color: $input-focus-border-color;
+          border-color: $input-color-focus-border;
         }
 
         &.is-disabled {
-          border-color: $input-disabled-border-color;
+          border-color: $input-color-disabled-border;
         }
       }
 
@@ -245,7 +245,7 @@ html[dir='rtl'] {
 
     &.is-disabled {
       > .spinbox-control {
-        border-color: $input-disabled-border-color;
+        border-color: $input-color-disabled-border;
       }
     }
   }

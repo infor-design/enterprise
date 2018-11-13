@@ -158,7 +158,7 @@ p .hyperlink {
     line-height: 25px;
 
     svg {
-      fill: $color-primary;
+      fill: $theme-color-brand-primary-base;
       height: 16px;
       left: 6px;
       margin-right: 2px;
@@ -188,7 +188,7 @@ p .hyperlink {
   }
 
   .timestamp {
-    color: $link-disabled-color;
+    color: $link-color-disabled-font;
     display: block;
     font-size: 12px;
     margin: 0;
