@@ -153,7 +153,7 @@ DatePicker.prototype = {
     // Append a trigger button
     this.trigger = $.createIconElement('calendar').insertAfter(this.element);
 
-    // Hide icon if datepicker input is hidden 
+    // Hide icon if datepicker input is hidden
     if ((this.element.is(':hidden') || this.element.css('visibility') === 'hidden') && this.element.parents('.modal').length === 0) {
       this.trigger.hide();
     }
@@ -569,7 +569,7 @@ DatePicker.prototype = {
     // Handle day change
     this.settings.onSelected = (node, args) => {
       this.currentDate = new Date(args.year, args.month, args.day);
-      if (self.range.useRange && self.settings.range.first) {
+      if (self.settings.range.useRange && self.settings.range.first) {
         return;
       }
       self.insertDate(this.currentDate);
