@@ -566,6 +566,11 @@ DatePicker.prototype = {
         return;
       }
       self.insertDate(this.currentDate);
+
+      if (args.close) {
+        self.closeCalendar();
+        self.element.focus();
+      }
     };
 
     this.calendarAPI = new MonthView(this.calendarContainer, this.settings);

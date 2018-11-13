@@ -865,9 +865,11 @@ MonthView.prototype = {
       key: date,
       day,
       month,
-      year
+      year,
+      close: this.isKeyClick
     };
 
+    delete this.isKeyClick;
     this.element.trigger('selected', args);
     if (this.settings.onSelected) {
       this.settings.onSelected(node, args);
@@ -1087,6 +1089,7 @@ MonthView.prototype = {
       // Space or Enter closes Date Picker, selecting the Date
       if (key === 32 || key === 13) {
         handled = true;
+        console.log('bbb', s.range);
         if (s.range.useRange) {
           if (!s.range.first || (s.range.first && !s.range.first.date)) {
             allCell.removeClass('is-selected');
@@ -1098,7 +1101,10 @@ MonthView.prototype = {
         if (this.isIslamic) {
           this.currentDateIslamic = [d.year, d.month, d.day];
         }
-        this.selectDay(this.isIslamic ? this.currentDateIslamic : this.currentDate);
+        if (!s.range.useRange) {
+          this.isKeyClick = true;
+          this.selectDay(this.isIslamic ? this.currentDateIslamic : this.currentDate);
+        }
       }
 
       if (handled) {
