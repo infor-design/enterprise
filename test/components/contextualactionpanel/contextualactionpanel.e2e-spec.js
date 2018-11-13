@@ -52,9 +52,13 @@ describe('CAP jquery context tests no-flex', () => {
 });
 
 describe('ContextualActionPanel example-index tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/example-index.html');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const actionButtonEl = await element(by.css('.contextual-action-panel-trigger'));
+      const actionButtonEl = await element(by.css('.btn-secondary'));
       await actionButtonEl.click();
 
       await browser.driver
