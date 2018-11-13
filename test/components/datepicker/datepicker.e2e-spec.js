@@ -171,7 +171,7 @@ describe('Datepicker example-index tests', () => {
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
   });
 
-  fit('Should be able to use page up key', async () => { //eslint-disable-line
+  it('Should be able to use page up key', async () => {
     const testDate = new Date();
     testDate.setHours(0);
     testDate.setMinutes(0);
@@ -213,7 +213,7 @@ describe('Datepicker example-index tests', () => {
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
 
-  fit('Should be able to use home key', async () => { //eslint-disable-line
+  it('Should be able to use home key', async () => {
     const testDate = new Date();
     testDate.setHours(0);
     testDate.setMinutes(0);
@@ -227,7 +227,7 @@ describe('Datepicker example-index tests', () => {
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
 
-  fit('Should be able to use end key', async () => { //eslint-disable-line
+  it('Should be able to use end key', async () => {
     const today = new Date();
     today.setHours(0);
     today.setMinutes(0);
@@ -241,7 +241,7 @@ describe('Datepicker example-index tests', () => {
     expect(await datepickerEl.getAttribute('value')).toEqual(lastDayOfMonth.toLocaleDateString('en-US'));
   });
 
-  fit('Should be able to use t key', async () => { //eslint-disable-line
+  it('Should be able to use t key', async () => {
     const today = new Date();
     today.setHours(0);
     today.setMinutes(0);

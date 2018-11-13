@@ -217,7 +217,7 @@ DatePicker.prototype = {
 
     // Handle Tab key while popup is open - the rest is handled in monthview.js now
     if (elem.is('#monthview-popup')) {
-      elem.off('keyup.datepicker').on('keyup.datepicker', '.monthview-table', (e) => {
+      elem.off('keydown.datepicker').on('keydown.datepicker', '.monthview-table', (e) => {
         let handled = false;
         const key = e.keyCode || e.charCode || 0;
 
@@ -327,6 +327,7 @@ DatePicker.prototype = {
       this.currentDate.setDate(elem.text());
       this.currentDate.setMonth(this.calendar.find('.month').attr('data-month'));
       this.insertDate(this.currentDate);
+      elem.focus();
     }
   },
 
@@ -387,7 +388,8 @@ DatePicker.prototype = {
       this.element.mask(maskOptions);
     }
 
-    if (!this.element[0].getAttribute('data-validate')) {
+    if (this.element[0] && this.element[0].getAttribute &&
+      !this.element[0].getAttribute('data-validate')) {
       this.element.attr({
         'data-validate': validation,
         'data-validation-events': JSON.stringify(events)
@@ -1183,6 +1185,11 @@ DatePicker.prototype = {
     const s = this.settings;
     this.setCurrentCalendar();
 
+    if (s.range.useRange && this.element.val().trim() === '') {
+      delete s.range.data;
+      this.resetRange();
+    }
+
     if (s.range.useRange && ((this.element.val().trim() !== '') ||
       (s.range.start && s.range.end) ||
       (s.range.data && s.range.data.startDate && s.range.data.endDate))) {
@@ -1463,7 +1470,9 @@ DatePicker.prototype = {
   destroy() {
     this.closeCalendar();
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
+    if (this.element[0]) {
+      $.removeData(this.element[0], COMPONENT_NAME);
+    }
   },
 
   /**

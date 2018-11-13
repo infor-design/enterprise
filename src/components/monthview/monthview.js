@@ -838,8 +838,9 @@ MonthView.prototype = {
   /**
    * Select a specific date visually.
    * @param {date | string} date specific date or a date key (hash string of the date)
-   */
-  selectDay(date) {
+   * @param {boolean} closePopup Send a flag to close the popup
+  */
+  selectDay(date, closePopup) {
     if (typeof date !== 'string') {
       date = stringUtils.padDate(
         date.getFullYear(),
@@ -866,7 +867,7 @@ MonthView.prototype = {
       day,
       month,
       year,
-      close: this.isKeyClick
+      close: closePopup
     };
 
     delete this.isKeyClick;
@@ -1089,22 +1090,16 @@ MonthView.prototype = {
       // Space or Enter closes Date Picker, selecting the Date
       if (key === 32 || key === 13) {
         handled = true;
-        console.log('bbb', s.range);
         if (s.range.useRange) {
           if (!s.range.first || (s.range.first && !s.range.first.date)) {
             allCell.removeClass('is-selected');
           }
+          cell.focus().trigger('click');
+          return false;
         }
-
         const d = this.getCellDate(cell);
         this.currentDate = new Date(d.year, d.month, d.day);
-        if (this.isIslamic) {
-          this.currentDateIslamic = [d.year, d.month, d.day];
-        }
-        if (!s.range.useRange) {
-          this.isKeyClick = true;
-          this.selectDay(this.isIslamic ? this.currentDateIslamic : this.currentDate);
-        }
+        this.selectDay(this.currentDate, true);
       }
 
       if (handled) {
