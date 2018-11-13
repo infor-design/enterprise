@@ -126,6 +126,23 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
+  fit('Should format year in es-ES', () => { //eslint-disable-line
+    Locale.set('es-ES');
+
+    expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'year' })).toEqual('Noviembre de 2018');
+    Locale.set('en-US');
+  });
+
+  fit('Should parse year in different languages', () => { //eslint-disable-line
+    Locale.set('es-ES');
+
+    expect(Locale.parseDate('Noviembre de 2018', { date: 'year' }).getTime()).toEqual(new Date(2018, 10, 1, 0, 0, 0).getTime());
+
+    Locale.set('en-US');
+
+    expect(Locale.parseDate('November 2018', { date: 'year' }).getTime()).toEqual(new Date(2018, 10, 1, 0, 0, 0).getTime());
+  });
+
   it('Should format en-US dates', () => {
     Locale.set('en-US');
     // Note date is year, month, day

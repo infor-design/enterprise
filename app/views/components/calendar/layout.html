@@ -23,12 +23,16 @@
         </div>
 
         <div class="buttonset">
-          <button type="button" class="btn-icon" title="Add">
+          <button type="button" class="btn-icon btn-menu" id="actions" title="Add">
             <span>Add</span>
             <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
               <use xlink:href="#icon-add"></use>
             </svg>
           </button>
+          <ul class="popupmenu">
+            <li><a href="#" data-action="add"><span data-translate="text">Add</span> <span data-translate="text">Event</span></a></li>
+            <li><a href="#" data-action="clear"><span data-translate="text">Clear</span> <span data-translate="text">Events</span></a></li>
+          </ul>
         </div>
 
         {{> includes/header-actionbutton}}

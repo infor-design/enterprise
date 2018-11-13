@@ -78,6 +78,188 @@ describe('Datepicker example-index tests', () => {
       expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
     });
   }
+
+  it('Should be able to use arrow down key', async () => {
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    testDate.setDate(testDate.getDate() + 7);
+
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_DOWN);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_DOWN);
+
+    testDate.setDate(testDate.getDate() + 7);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+  });
+
+  it('Should be able to use arrow up key', async () => {
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    testDate.setDate(testDate.getDate() - 7);
+
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_UP);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_UP);
+
+    testDate.setDate(testDate.getDate() - 7);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+  });
+
+  it('Should be able to use arrow left key', async () => {
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    testDate.setDate(testDate.getDate() - 1);
+
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_LEFT);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_LEFT);
+
+    testDate.setDate(testDate.getDate() - 1);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+  });
+
+  it('Should be able to use arrow right key', async () => {
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    testDate.setDate(testDate.getDate() + 1);
+
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_RIGHT);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_RIGHT);
+
+    testDate.setDate(testDate.getDate() + 1);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+  });
+
+  fit('Should be able to use page up key', async () => { //eslint-disable-line
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    testDate.setMonth(testDate.getMonth() - 1);
+
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.PAGE_UP);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.PAGE_UP);
+
+    testDate.setMonth(testDate.getMonth() - 1);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+  });
+
+  it('Should be able to use page down key', async () => {
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    testDate.setMonth(testDate.getMonth() + 1);
+
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.PAGE_DOWN);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.PAGE_DOWN);
+
+    testDate.setMonth(testDate.getMonth() + 1);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+  });
+
+  fit('Should be able to use home key', async () => { //eslint-disable-line
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+    testDate.setDate(1);
+
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.HOME);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+  });
+
+  fit('Should be able to use end key', async () => { //eslint-disable-line
+    const today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.END);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(lastDayOfMonth.toLocaleDateString('en-US'));
+  });
+
+  fit('Should be able to use t key', async () => { //eslint-disable-line
+    const today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.css('.monthview-table .is-selected')).sendKeys('t');
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(today.toLocaleDateString('en-US'));
+
+    await datepickerEl.sendKeys(protractor.Key.ENTER);
+    await datepickerEl.clear();
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.css('.monthview-table .is-selected')).sendKeys('t');
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(today.toLocaleDateString('en-US'));
+  });
 });
 
 describe('Datepicker Anniversay tests', () => {
@@ -241,7 +423,7 @@ describe('Datepicker Modal Test', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('modal-1')).isDisplayed()).toBeTruthy();
-    await await element(by.id('context-name')).sendKeys(protractor.Key.ESCAPE);
+    await element(by.id('context-name')).sendKeys(protractor.Key.ESCAPE);
 
     await browser.driver.sleep(config.sleep);
 
@@ -490,7 +672,7 @@ describe('Datepicker Gregorian SA Tests', () => {
     await utils.setPage('/components/datepicker/test-ar-sa-gregorian');
   });
 
-  it('Should render gregorian on as-SA time', async () => {
+  it('Should render gregorian on ar-SA time', async () => {
     const datepickerEl = await element(by.id('islamic-date'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
@@ -571,6 +753,49 @@ describe('Datepicker Month Format Tests', () => {
     expect(await element(by.id('datetime-field-time2')).getAttribute('value')).toEqual('25 Dec 2016 11:55 PM');
     expect(await element(by.id('datetime-field-time4')).getAttribute('value')).toEqual('25 Dec 2016 23:45');
     expect(await element(by.id('datetime-field-time6')).getAttribute('value')).toEqual('23 Dec 2016 23:45:25');
+  });
+});
+
+describe('Datepicker restrict month selection tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-restrict-month-selection');
+  });
+
+  it('Should disable months in front and behind', async () => {
+    const datepickerEl = await element(by.id('date-field'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    expect(await element(by.css('.monthview-header .prev')).getAttribute('disabled')).toEqual('true');
+    expect(await element(by.css('.monthview-header .next')).getAttribute('disabled')).not.toEqual('true');
+
+    await element(by.css('.monthview-header .next')).click();
+
+    expect(await element(by.css('.monthview-header .prev')).getAttribute('disabled')).not.toEqual('true');
+    expect(await element(by.css('.monthview-header .next')).getAttribute('disabled')).not.toEqual('true');
+
+    await element(by.css('.monthview-header .next')).click();
+
+    expect(await element(by.css('.monthview-header .prev')).getAttribute('disabled')).not.toEqual('true');
+    expect(await element(by.css('.monthview-header .next')).getAttribute('disabled')).toEqual('true');
+
+    await element(by.css('.monthview-header .prev')).click();
+
+    expect(await element(by.css('.monthview-header .prev')).getAttribute('disabled')).not.toEqual('true');
+    expect(await element(by.css('.monthview-header .next')).getAttribute('disabled')).not.toEqual('true');
+
+    await element(by.css('.monthview-header .prev')).click();
+
+    expect(await element(by.css('.monthview-header .prev')).getAttribute('disabled')).toEqual('true');
+    expect(await element(by.css('.monthview-header .next')).getAttribute('disabled')).not.toEqual('true');
+  });
+
+  it('Should handle edge case of way out of range', async () => {
+    const datepickerEl = await element(by.id('date-field'));
+    await datepickerEl.sendKeys('04/15/2011');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    expect(await element(by.css('.monthview-header .prev')).getAttribute('disabled')).toEqual('true');
+    expect(await element(by.css('.monthview-header .next')).getAttribute('disabled')).not.toEqual('true');
   });
 });
 

@@ -85,7 +85,7 @@ Calendar.prototype = {
     for (let i = 0; i < this.settings.eventTypes.length; i++) {
       const eventType = this.settings.eventTypes[i];
       eventTypeMarkup += `<input type="checkbox" class="checkbox ${eventType.color}07" name="${eventType.id}" id="${eventType.id}" checked="${eventType.checked ? 'true' : 'false'}" ${eventType.disabled ? 'disabled="true"' : ''} />
-        <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, true) : eventType.label}</label><br/>`;
+        <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey) : eventType.label}</label><br/>`;
     }
     this.eventTypeContainer.innerHTML = eventTypeMarkup;
     this.element.initialize();
@@ -109,6 +109,12 @@ Calendar.prototype = {
     });
     this.monthViewHeader = document.querySelector('.calendar .monthview-header');
     this.renderEvents();
+
+    // Show related stuff for today
+    const dayEvents = document.querySelectorAll('.calendar td.is-selected .calendar-event');
+    for (let i = 0; i < dayEvents.length; i++) {
+      this.renderEventDetails(dayEvents[i].getAttribute('data-id'));
+    }
     return this;
   },
 
@@ -540,6 +546,38 @@ Calendar.prototype = {
       }
     }
     this.settings.onRenderMonth(this.element, response);
+  },
+
+  /**
+   * Get the events and date for the currently selected calendar day.
+   * @param {date} date The date to find the events for.
+   * @returns {object} dayEvents An object with all teh events and the event date.
+   */
+  getDayEvents(date) {
+    if (typeof date !== 'string') {
+      date = stringUtils.padDate(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+      );
+    }
+
+    const dayObj = this.monthView.dayMap.filter(dayFilter => dayFilter.key === date);
+
+    const dayEvents = {
+      currentDate: this.monthView.currentDate,
+      events: []
+    };
+
+    const dayContainer = dayObj.elem;
+    const dayEventEls = dayContainer.querySelectorAll('.calendar-event');
+    for (let i = 0; i < dayEventEls.length; i++) {
+      const eventId = dayEventEls[i].getAttribute('data-id');
+      const eventData = this.settings.events.filter(event => event.id === eventId);
+      dayEvents.events.push(eventData[0]);
+    }
+
+    return dayEvents;
   },
 
   /**

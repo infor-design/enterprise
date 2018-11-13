@@ -42,6 +42,21 @@
       events: events,
       template: 'tmpl-readonly'
     });
+
+    $('#actions').on('selected', function(e, args) {
+      var action = args[0].getAttribute('data-action');
+      var api = $('.calendar').data('calendar');
+      var selectedDate = api.getDayEvents(new Date());
+      console.log(selectedDate);
+
+      if (action === 'add') {
+        api.addEvent(selectedDate, true);
+      }
+
+      if (action === 'clear') {
+        api.clearEvents(selectedDate);
+      }
+    });
   });
 </script>
 

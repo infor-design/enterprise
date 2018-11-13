@@ -121,7 +121,7 @@
     "subject": "Staying Home with Flu",
     "status": "Approved",
     "comments": "I dont feel well. Taking the day off.",
-    "starts": "2018-11-16T00:00:59.000Z",
+    "starts": "2018-11-16T23:59:59.000Z",
     "ends": "2018-11-16T23:59:59.000Z",
     "type": "sick",
     "isAllDay": "true"
