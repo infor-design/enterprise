@@ -50,3 +50,19 @@ describe('CAP jquery context tests no-flex', () => {
     expect(await element(by.css('#modal-button-3')).isDisplayed()).toBe(true);
   });
 });
+
+describe('ContextualActionPanel example-index tests', () => {
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const actionButtonEl = await element(by.css('.contextual-action-panel-trigger'));
+      await actionButtonEl.click();
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+
+        const panelEl = await element(by.css('.contextual-action-panel'));
+
+        expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-panel')).toEqual(0);
+    });
+  }
+});
