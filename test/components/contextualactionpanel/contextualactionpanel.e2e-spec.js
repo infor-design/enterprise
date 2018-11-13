@@ -51,7 +51,7 @@ describe('CAP jquery context tests no-flex', () => {
   });
 });
 
-describe('ContextualActionPanel example-index tests', () => {
+fdescribe('ContextualActionPanel example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextualactionpanel/example-index.html');
   });
