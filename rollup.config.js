@@ -28,7 +28,8 @@ const config = {
     resolve(),
     json(),
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
+      plugins: ['external-helpers']
     }),
     license({
       sourceMap: true,
