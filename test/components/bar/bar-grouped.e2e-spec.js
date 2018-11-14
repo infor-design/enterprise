@@ -37,10 +37,10 @@ fdescribe('Grouped Bar Chart example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const mainContentEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'bar-grouped-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-index')).toEqual(0);
     });
   }
 });

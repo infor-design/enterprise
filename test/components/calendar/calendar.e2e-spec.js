@@ -53,7 +53,7 @@ fdescribe('Calendar index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('page-container'));
+      const calendarEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);

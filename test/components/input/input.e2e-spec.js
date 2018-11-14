@@ -45,10 +45,10 @@ fdescribe('Input example-index tests', () => {
 
       await inputEl.clear();
       await inputEl.sendKeys('co');
-      const mainContentEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'input-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'input-index')).toEqual(0);
     });
   }
 });

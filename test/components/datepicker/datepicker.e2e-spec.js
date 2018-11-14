@@ -83,10 +83,10 @@ fdescribe('Datepicker example-index tests', () => {
     it('Should not visual regress', async () => {
       await element(by.css('#date-field-normal + .icon')).click();
 
-      const mainContentEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'datepicker-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-index')).toEqual(0);
     });
   }
 });

@@ -28,10 +28,10 @@ fdescribe('Busy Indicator example-index tests', () => {
       const buttonEl = await element(by.id('submit'));
       await buttonEl.click();
 
-      const mainContentEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'busy-indicator-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'busy-indicator-index')).toEqual(0);
     });
   }
 });

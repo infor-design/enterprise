@@ -55,10 +55,10 @@ fdescribe('Editor example-index tests', () => {
       await element(by.css('button[data-action=visual]')).click();
       await browser.driver.sleep(config.sleep);
 
-      const mainContentEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'editor-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'editor-index')).toEqual(0);
     });
   }
 });

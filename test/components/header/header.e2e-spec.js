@@ -21,10 +21,10 @@ fdescribe('Header Index Tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const pageContainerEl = await element(by.className('page-container'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(pageContainerEl, 'header-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'header-index')).toEqual(0);
     });
   }
 });

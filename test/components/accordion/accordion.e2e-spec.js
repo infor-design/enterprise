@@ -125,10 +125,10 @@ fdescribe('Accordion example-index tests', () => {
       const buttonEl = await element.all(by.tagName('button')).get(2);
       await buttonEl.click();
 
-      const mainContentEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'accordion-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'accordion-index')).toEqual(0);
     });
   }
 });

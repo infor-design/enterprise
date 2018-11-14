@@ -52,10 +52,10 @@ fdescribe('Tree example-index tests', () => {
       const link = await element.all(by.css('a[role="treeitem"]')).first();
       await link.click();
 
-      const mainContentEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'tree-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'tree-index')).toEqual(0);
     });
   }
 });

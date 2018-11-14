@@ -48,10 +48,10 @@ fdescribe('Stacked Bar Chart example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const mainContentEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'bar-stacked-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-stacked-index')).toEqual(0);
     });
   }
 });

@@ -12,8 +12,6 @@ fdescribe('Datagrid index tests', () => {
     const datagridEl = await element(by.id('datagrid'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-    const tabElTriggerStart = await element(by.id('header-searchfield'));
-    await tabElTriggerStart.click();
     await element(by.css('body')).sendKeys(protractor.Key.TAB);
     await element(by.css('body')).sendKeys(protractor.Key.TAB);
   });

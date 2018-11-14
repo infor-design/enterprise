@@ -29,10 +29,10 @@ fdescribe('Tooltips index page tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
 
-      const mainContentEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'tooltip-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'tooltip-index')).toEqual(0);
     });
   }
 });

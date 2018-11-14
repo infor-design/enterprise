@@ -33,14 +33,14 @@ fdescribe('Bar Chart example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const mainContentEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.waitsFor);
 
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(mainContentEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'bar-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-index')).toEqual(0);
     });
   }
 });
