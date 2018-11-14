@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Busy Indicator example-index tests', () => {
+describe('Busy Indicator example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/busyindicator/example-index');
   });

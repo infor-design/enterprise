@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Header Index Tests', () => {
+fdescribe('Header Index Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/header/example-index');
   });
@@ -17,4 +17,13 @@ describe('Header Index Tests', () => {
   it('Should display header text', async () => {
     expect(await element(by.css('.title')).getText()).toEqual('Page Title');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const pageContainerEl = await element(by.className('page-container'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(pageContainerEl, 'header-index')).toEqual(0);
+    });
+  }
 });
