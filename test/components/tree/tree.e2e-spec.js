@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Tree example-index tests', () => {
+fdescribe('Tree example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tree/example-index');
   });
@@ -46,6 +46,18 @@ describe('Tree example-index tests', () => {
     expect(await element.all(by.css('.tree li.folder')).get(0).getAttribute('class')).toContain('is-open');
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('xlink:href')).toContain('#icon-open-folder');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const link = await element.all(by.css('a[role="treeitem"]')).first();
+      await link.click();
+
+      const mainContentEl = await element(by.id('maincontent'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'tree-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Tree badges tests', () => {

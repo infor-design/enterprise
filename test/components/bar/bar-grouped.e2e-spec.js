@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Grouped Bar Chart example-index tests', () => {
+fdescribe('Grouped Bar Chart example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar-grouped/example-index');
   });
@@ -33,6 +33,19 @@ describe('Grouped Bar Chart example-index tests', () => {
 
     expect(await fGroupEl.getAttribute('class')).toContain('is-selected');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const fGroupEl = await element.all(by.css('.group .series-group')).get(0);
+
+      await fGroupEl.click();
+
+      const mainContentEl = await element(by.id('maincontent'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'bar-grouped-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Grouped Bar Chart example-negative-value tests', () => {

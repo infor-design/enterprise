@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Lookup', () => {
+describe('Lookup', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-index');
   });
