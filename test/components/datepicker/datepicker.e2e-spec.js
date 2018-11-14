@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Datepicker example-index tests', () => {
+describe('Datepicker example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index');
   });

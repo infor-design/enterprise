@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Toast example-index tests', () => {
+fdescribe('Toast example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/toast/example-index');
   });
@@ -40,6 +40,20 @@ describe('Toast example-index tests', () => {
 
     expect(await element(by.id('toast-container'))).toBeTruthy();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const buttonEl = await element(by.id('show-toast-message'));
+      await buttonEl.click();
+
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('toast-container'))), config.waitsFor);
+
+      const toastEl = await element(by.id('toast-container'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(toastEl, 'toast-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Toast example-positions tests', () => {

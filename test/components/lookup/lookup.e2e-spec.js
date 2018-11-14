@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Lookup', () => {
+fdescribe('Lookup', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-index');
   });
@@ -92,6 +92,20 @@ describe('Lookup', () => {
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const buttonEl = await element.all(by.className('trigger')).first();
+      await buttonEl.click();
+
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+
+      const modalEl = await element(by.className('modal'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(modalEl, 'lookup-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Lookup (editable)', () => {
