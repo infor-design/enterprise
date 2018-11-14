@@ -21,7 +21,7 @@
 
       <div class="field">
         <label for="credit-code">Code</label>
-        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-validate="customWarningRule" data-mask="###" data-mask-mode="number"/>
+        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-validate="customWarningRule customWarningRule2" data-mask="###" data-mask-mode="number"/>
       </div>
 
       <div class="field">
@@ -66,7 +66,7 @@
         $.fn.validation.rules.customErrorRule = {
           check: function (value) {
 
-            return false;
+            return (value === '');
           },
           message: 'Custom Error',
 		      type: 'error'
@@ -74,22 +74,46 @@
 
     		$.fn.validation.rules.customWarningRule = {
           check: function (value) {
-
+           
             return false;
           },
-          message: 'Custom Warning',
+          message: 'Custom Warning 1',
+          type: 'alert'
+        };
+        
+        $.fn.validation.rules.customWarningRule2 = {
+          check: function (value) {
+
+            return true;
+          },
+          message: 'Custom Warning 2',
           type: 'alert'
         };
 
     		$.fn.validation.rules.customInformationRule = {
           check: function (value) {
-
-            return false;
+            var pass = (value === '');
+            return pass;
           },
-          message: 'Custom Information',
+          message: 'Custom Information 1',
+          type: 'info'
+        };
+        
+        $.fn.validation.rules.customInformationRule2 = {
+          check: function (value) {
+            var pass = (value !== '');
+            return pass;
+          },
+          message: 'Custom Information 2',
           type: 'info'
         };
 
+        $('input').on('change', function() {
+          $('#test-form').data('validate').validateForm(function (result) { 
+          console.log('validateForm result:', result);
+          });
+        });
+        
         $('#test-form').on('validated', function (e, isValid) {
 
           if (isValid) {
