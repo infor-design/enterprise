@@ -72,7 +72,7 @@ describe('Accordion example-disabled tests', () => {
   });
 });
 
-fdescribe('Accordion example-index tests', () => {
+describe('Accordion example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/accordion/example-index');
   });
