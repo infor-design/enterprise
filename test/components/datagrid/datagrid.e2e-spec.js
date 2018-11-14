@@ -1048,15 +1048,15 @@ describe('Datagrid tooltip tests', () => {
   it('Should show tooltip on text cut off', async () => {
     await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="4"] td[aria-colindex="9"]'))).perform();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.tooltip'))), config.waitsFor);
-    let tooltip = await element(by.id('tooltip'));
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
+    let tooltip = await element(by.css('.grid-tooltip'));
 
     expect(await tooltip.getAttribute('class')).toContain('is-hidden');
 
     await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="5"] td[aria-colindex="9"]'))).perform();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.tooltip'))), config.waitsFor);
-    tooltip = await element(by.id('tooltip'));
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
+    tooltip = await element(by.css('.grid-tooltip'));
 
     expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
   });
