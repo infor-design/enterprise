@@ -51,6 +51,7 @@ describe('Stacked Bar Chart example-index tests', () => {
       const fGroupEl = await element.all(by.css('.series-group')).get(0);
       const fBarEl = await fGroupEl.element(by.css('.bar.series-0'));
       await fBarEl.click();
+      await browser.driver.sleep(config.waitsFor);
 
       const mainContentEl = await element(by.id('maincontent'));
       await browser.driver.sleep(config.waitsFor);
