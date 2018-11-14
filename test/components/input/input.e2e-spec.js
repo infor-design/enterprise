@@ -14,7 +14,7 @@ const setPage = async function (url) {
 
 const inputId = 'first-name';
 
-fdescribe('Input example-index tests', () => {
+describe('Input example-index tests', () => {
   beforeEach(async () => {
     await setPage('/components/input/example-index?nofrills=true');
     await browser.driver

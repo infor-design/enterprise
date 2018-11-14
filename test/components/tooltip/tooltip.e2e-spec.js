@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Tooltips index page tests', () => {
+describe('Tooltips index page tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tooltip/example-index?nofrills=true');
   });

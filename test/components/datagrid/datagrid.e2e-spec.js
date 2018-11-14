@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Datagrid index tests', () => {
+describe('Datagrid index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-index?nofrills=true');
 
