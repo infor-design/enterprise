@@ -162,7 +162,7 @@
   }
 
   &.alternate {
-    background-color: $body-bg-color-primary;
+    background-color: $body-color-primary-background;
     min-height: 100%;
   }
 
@@ -453,7 +453,7 @@
         @include font-size(14);
 
         color: inherit;
-        font-weight: $font-weight-normal;
+        font-weight: $theme-number-font-weight-base;
         text-decoration: none;
 
         > * {
@@ -568,7 +568,7 @@
 
     .separator {
       &::before {
-        border-left-color: $input-disabled-border-color;
+        border-left-color: $input-color-disabled-border;
       }
     }
 
@@ -712,7 +712,7 @@ html[dir='rtl'] {
   }
 
   .tab.is-selected a {
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
   }
 
   + .tab-panel-container {

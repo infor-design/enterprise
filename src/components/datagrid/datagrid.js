@@ -208,7 +208,7 @@ Datagrid.prototype = {
     this.isIe9 = html.is('.ie9');
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
-    this.appendTooltip('grid-tooltip');
+    this.appendTooltip();
     this.initSettings();
     this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
     this.removeToolbarOnDestroy = false;
@@ -663,6 +663,7 @@ Datagrid.prototype = {
   * @returns {string} The unique id.
   */
   uniqueId(suffix) {
+    suffix = (suffix === undefined || suffix === null) ? '' : suffix;
     const uniqueid = this.settings.uniqueId ?
       `${this.settings.uniqueId}-${suffix}` :
       (`${window.location.pathname.split('/').pop()
@@ -671,7 +672,7 @@ Datagrid.prototype = {
         .replace(/\./g, '-')
         .replace(/ /g, '-')
         .replace(/%20/g, '-')}-${
-        this.element.attr('id') || 'datagrid'}-${this.gridCount}${suffix}`);
+        this.element.attr('id') || 'datagrid'}-${this.gridCount || 0}${suffix}`);
 
     return uniqueid.replace(/--/g, '-');
   },
@@ -8757,17 +8758,31 @@ Datagrid.prototype = {
   * @returns {void}
   */
   appendTooltip(extraClass) {
-    this.tooltip = document.getElementById('tooltip');
+    const defaultClass = 'grid-tooltip';
+    const regExp = new RegExp(`\\b${defaultClass}\\b`, 'g');
+
+    // Set default css class
+    if (typeof extraClass === 'string') {
+      if (!regExp.test(extraClass)) {
+        extraClass += ` ${defaultClass}`;
+      }
+    } else {
+      extraClass = defaultClass;
+    }
+
+    // Unique id for tooltip
+    const tooltipId = this.uniqueId('tooltip');
+    this.tooltip = document.getElementById(tooltipId);
 
     if (!this.tooltip) {
       const tooltip = '' +
-        `<div id="tooltip" class="tooltip ${extraClass} is-hidden">
+        `<div id="${tooltipId}" class="tooltip ${extraClass} is-hidden">
           <div class="arrow"></div>
           <div class="tooltip-content"></div>
         </div>`;
       document.body.insertAdjacentHTML('beforeend', tooltip);
 
-      this.tooltip = document.getElementById('tooltip');
+      this.tooltip = document.getElementById(tooltipId);
 
       if (this.isTouch) {
         this.tooltip.style.pointerEvents = 'auto';
@@ -8887,7 +8902,6 @@ Datagrid.prototype = {
    * @returns {void}
    */
   showTooltip(options) {
-    this.tooltip = document.getElementById('tooltip');
     if (this.tooltip) {
       const tooltip = $(this.tooltip);
       const tooltipContentEl = this.tooltip.querySelector('.tooltip-content');

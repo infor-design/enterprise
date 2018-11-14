@@ -42,13 +42,13 @@
     top: 13px;
 
     .icon {
-      color: $icon-fill;
+      color: $icon-color-fill;
       height: 15px;
       width: 15px;
     }
 
     &:hover .icon {
-      fill: $text-color;
+      fill: $theme-color-font-base;
     }
 
     &:active .icon {

@@ -95,7 +95,7 @@ body.no-scroll {
   }
 
   > .sidebar {
-    background-color: $body-bg-color-primary;
+    background-color: $body-color-primary-background;
     border-right: 1px solid $panel-border-color;
     height: 100%;
     width: calc(25%);
@@ -105,7 +105,7 @@ body.no-scroll {
     }
 
     .listview {
-      background-color: $body-bg-color-primary;
+      background-color: $body-color-primary-background;
 
       &.paginated {
         height: calc(100% - 38px);
@@ -251,7 +251,7 @@ body.no-scroll {
   }
 
   .sidebar {
-    background-color: $body-bg-color-primary;
+    background-color: $body-color-primary-background;
     width: 20%;
   }
 
@@ -752,7 +752,7 @@ body.no-scroll {
   }
 
   .hero {
-    background-color: $body-bg-color-primary;
+    background-color: $body-color-primary-background;
     border-bottom: 1px solid $graphite02;
     height: 350px;
   }
@@ -773,8 +773,8 @@ body.no-scroll {
       &:focus,
       &.is-active {
         border-bottom: 0;
-        border-left: 3px solid $color-primary;
-        color: $color-primary;
+        border-left: 3px solid $theme-color-brand-primary-base;
+        color: $theme-color-brand-primary-base;
         outline: none;
       }
     }
@@ -821,7 +821,7 @@ body.no-scroll {
   }
 
   .detail {
-    background-color: $body-bg-color-primary;
+    background-color: $body-color-primary-background;
     height: auto;
 
     .tab-container.alternate {
@@ -861,7 +861,7 @@ body.no-scroll {
 }
 
 .header-section {
-  background-color: $body-bg-color-primary;
+  background-color: $body-color-primary-background;
   border-bottom: 1px solid $panel-border-color;
 }
 
@@ -894,7 +894,7 @@ body.no-scroll {
 .sticky-footer {
   @include font-size(12);
 
-  background-color: $body-bg-color-primary;
+  background-color: $body-color-primary-background;
   bottom: 0;
   left: 50%;
   max-width: 1280px;

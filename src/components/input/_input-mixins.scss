@@ -7,8 +7,8 @@
   @include font-size(14);
 
   -webkit-appearance: none;
-  background-color: $input-bg-color;
-  border: 1px solid $input-border-color;
+  background-color: $input-color-initial-background;
+  border: 1px solid $input-color-initial-border;
   border-collapse: separate;
   border-radius: 2px;
   color: $input-color;
@@ -20,19 +20,19 @@
   width: 300px;
 
   &:hover {
-    border-color: $input-hover-border-color;
+    border-color: $input-color-hover-border;
   }
 
   &[disabled] {
-    background-color: $input-disabled-bg-color;
-    border: solid 1px $input-disabled-border-color;
+    background-color: $input-color-disabled-background;
+    border: solid 1px $input-color-disabled-border;
     color: $input-disabled-color;
     -webkit-text-fill-color: $input-disabled-color;
   }
 
   &[readonly] {
-    background-color: $input-readonly-bg-color;
-    border-color: $input-readonly-border-color;
+    background-color: $input-color-readonly-background;
+    border-color: $input-color-readonly-border;
     color: $input-readonly-color;
     -webkit-text-fill-color: $input-readonly-color;
   }

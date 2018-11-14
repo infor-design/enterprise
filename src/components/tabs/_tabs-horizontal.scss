@@ -7,8 +7,8 @@ $horizontal-tabs-height: 40px;
   &::after {
     background-image: linear-gradient(
       to right,
-      rgba($body-bg-color-primary, 0),
-      rgba($body-bg-color-primary, 1)
+      rgba($body-color-primary-background, 0),
+      rgba($body-color-primary-background, 1)
     );
     height: ($horizontal-tabs-height - 1px);
   }
@@ -20,8 +20,8 @@ $horizontal-tabs-height: 40px;
   &::before {
     background-image: linear-gradient(
       to right,
-      rgba($body-bg-color-primary, 1),
-      rgba($body-bg-color-primary, 0)
+      rgba($body-color-primary-background, 1),
+      rgba($body-color-primary-background, 0)
     );
     height: ($horizontal-tabs-height - 1px);
   }
@@ -177,16 +177,16 @@ html[dir='rtl'] {
     &::before {
       background-image: linear-gradient(
         to left,
-        rgba($body-bg-color-primary, 1),
-        rgba($body-bg-color-primary, 0)
+        rgba($body-color-primary-background, 1),
+        rgba($body-color-primary-background, 0)
       );
     }
 
     &::after {
       background-image: linear-gradient(
         to left,
-        rgba($body-bg-color-primary, 0),
-        rgba($body-bg-color-primary, 1)
+        rgba($body-color-primary-background, 0),
+        rgba($body-color-primary-background, 1)
       );
     }
 

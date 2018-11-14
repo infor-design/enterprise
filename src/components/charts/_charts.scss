@@ -213,7 +213,7 @@
     padding: 7px;
 
     &:focus {
-      border-color: $input-focus-border-color;
+      border-color: $input-color-focus-border;
       // Removed box shadow to match current style
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
@@ -336,7 +336,7 @@
       @include font-size(14);
 
       color: $font-color !important;
-      font-weight: $font-weight-normal;
+      font-weight: $theme-number-font-weight-base;
       right: unset;
       top: 20px;
     }

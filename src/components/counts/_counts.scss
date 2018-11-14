@@ -14,7 +14,7 @@
     color: $white;
     display: inline;
     float: left;
-    font-weight: $font-weight-bold;
+    font-weight: $theme-number-font-weight-bold;
     height: 38px;
     line-height: 40px;
     text-align: center;
@@ -24,7 +24,7 @@
 
   // No Color Class.
   .count[class=count] {
-    background-color: $color-default-alt;
+    background-color: $theme-color-brand-secondary-alt;
   }
 
   .title {

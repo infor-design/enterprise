@@ -1,7 +1,7 @@
 // Color Picker
 //================================================== //
 
-@mixin swatch-is-empty($offset: -5px, $border-color: $input-border-color) {
+@mixin swatch-is-empty($offset: -5px, $border-color: $input-color-initial-border) {
   background-color: $colorpicker-is-empty-bg-color;
   border: 1px solid $border-color;
 
@@ -44,20 +44,20 @@
 }
 
 .colorpicker-container {
-  background-color: $input-bg-color;
-  border: 1px solid $input-border-color;
+  background-color: $input-color-initial-background;
+  border: 1px solid $input-color-initial-border;
   border-radius: 2px;
   display: inline-block;
   overflow: hidden;
   width: 150px;
 
   &.is-focused {
-    border-color: $input-focus-border-color;
+    border-color: $input-color-focus-border;
     box-shadow: $focus-box-shadow;
   }
 
   &:hover:not(.is-focused):not(.is-open):not(.is-disabled) {
-    border-color: $input-hover-border-color;
+    border-color: $input-color-hover-border;
   }
 
   &.error {
@@ -65,11 +65,11 @@
   }
 
   &.is-disabled {
-    background-color: $input-disabled-bg-color;
-    border-color: $input-disabled-border-color;
+    background-color: $input-color-disabled-background;
+    border-color: $input-color-disabled-border;
 
     &:hover {
-      border-color: $input-disabled-border-color;
+      border-color: $input-color-disabled-border;
     }
 
     .icon:not(.icon-error),
@@ -92,16 +92,16 @@
   }
 
   &.is-readonly {
-    background-color: $input-readonly-bg-color;
-    border-color: $input-readonly-border-color;
+    background-color: $input-color-readonly-background;
+    border-color: $input-color-readonly-border;
 
     &.is-not-editable {
-      background-color: $input-bg-color;
-      border-color: $input-border-color;
+      background-color: $input-color-initial-background;
+      border-color: $input-color-initial-border;
 
       input[readonly] {
-        background-color: $input-bg-color;
-        border-color: $input-border-color;
+        background-color: $input-color-initial-background;
+        border-color: $input-color-initial-border;
         color: $input-color;
         -webkit-text-fill-color: $input-color;
       }
@@ -119,7 +119,7 @@
     }
 
     &.is-focused {
-      border-color: $input-focus-border-color !important;
+      border-color: $input-color-focus-border !important;
     }
 
     .icon:not(.icon-error),
@@ -130,7 +130,7 @@
   }
 
   &.is-open {
-    border-color: $input-focus-border-color;
+    border-color: $input-color-focus-border;
   }
 
   .trigger {
@@ -181,11 +181,11 @@
     }
 
     &:hover:not(:disabled) .icon {
-      fill: $color-primary;
+      fill: $theme-color-brand-primary-base;
     }
 
     &:active .icon {
-      fill: $color-primary;
+      fill: $theme-color-brand-primary-base;
     }
 
     &.is-empty,
@@ -241,7 +241,7 @@
 
       &:focus {
         box-shadow: $focus-box-shadow;
-        outline: 1px solid $color-primary;
+        outline: 1px solid $theme-color-brand-primary-base;
       }
 
       &.is-selected {
@@ -277,7 +277,7 @@
   }
 
   .swatch {
-    background-color: $color-default-alt;
+    background-color: $theme-color-brand-secondary-alt;
     display: block;
     height: 20px;
     width: 20px;

@@ -260,7 +260,7 @@
     &.is-today:focus {
       .day-text {
         color: $datepicker-today-color;
-        font-weight: $font-weight-bold;
+        font-weight: $theme-number-font-weight-bold;
       }
 
       &.is-selected,
@@ -403,7 +403,7 @@
         .today {
           @include font-size(12);
 
-          font-weight: $font-weight-bold;
+          font-weight: $theme-number-font-weight-bold;
           margin-left: 10px;
           text-decoration: none;
         }

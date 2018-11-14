@@ -3,14 +3,14 @@
 
 @mixin searchfield-text-style() {
   color: $font-color;
-  font-weight: $font-weight-bold;
+  font-weight: $theme-number-font-weight-bold;
 
   @include font-size(14);
 }
 
 @mixin searchfield-text-style-hover() {
-  color: $color-primary;
-  font-weight: $font-weight-bold;
+  color: $theme-color-brand-primary-base;
+  font-weight: $theme-number-font-weight-bold;
 
   @include font-size(14);
 }
@@ -58,7 +58,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   &:hover input:not([disabled]):not(:focus) {
     + svg {
-      fill: $button-link-hover-text-color;
+      fill: $button-color-tertiary-hover-font;
     }
   }
 
@@ -169,11 +169,11 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
     &.has-focus {
       .btn {
-        border-color: $color-primary;
+        border-color: $theme-color-brand-primary-base;
       }
 
       .searchfield {
-        border-color: $color-primary;
+        border-color: $theme-color-brand-primary-base;
       }
     }
 
@@ -181,11 +181,11 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   &.is-hovered {
     .btn {
-      border-color: $input-hover-border-color;
-      color: $input-hover-border-color;
+      border-color: $input-color-hover-border;
+      color: $input-color-hover-border;
 
       .icon {
-        fill: $input-hover-border-color;
+        fill: $input-color-hover-border;
       }
     }
 
@@ -202,20 +202,20 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     }
 
     .btn {
-      border-color: $input-focus-border-color;
+      border-color: $input-color-focus-border;
 
       &:focus,
       &:active {
-        color: $input-focus-border-color;
+        color: $input-color-focus-border;
 
         .icon {
-          fill: $input-focus-border-color;
+          fill: $input-color-focus-border;
         }
       }
     }
 
     .searchfield {
-      border-color: $input-focus-border-color;
+      border-color: $input-color-focus-border;
     }
 
     input:focus {
@@ -230,7 +230,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
       &.show-category {
         .searchfield {
-          border-left-color: $input-focus-border-color;
+          border-left-color: $input-color-focus-border;
 
           &:focus {
             box-shadow: none;
@@ -250,11 +250,11 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
     background-color: transparent;
     border-bottom-right-radius: 0;
-    border-color: $input-border-color;
+    border-color: $input-color-initial-border;
     border-right: 0;
     border-top-right-radius: 0;
     color: $font-color;
-    font-weight: $font-weight-normal;
+    font-weight: $theme-number-font-weight-base;
     height: 34px;
     margin: 0;
     min-width: 0;
@@ -280,10 +280,10 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     }
 
     &.is-open {
-      color: $input-focus-border-color;
+      color: $input-color-focus-border;
 
       .icon {
-        fill: $input-focus-border-color;
+        fill: $input-color-focus-border;
       }
     }
   }
@@ -299,7 +299,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
       }
 
       .searchfield {
-        border-left: 1px solid $input-border-color;
+        border-left: 1px solid $input-color-initial-border;
 
         &:focus {
           box-shadow: none;
@@ -347,7 +347,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   background-color: $searchfield-context-bg;
   border: 0;
-  border-top: 1px solid $color-primary-alt;
+  border-top: 1px solid $theme-color-brand-primary-alt;
 
   &.alternate {
     background-color: $searchfield-context-alt-bg;
@@ -411,7 +411,7 @@ html[dir='rtl'] {
 
         &.show-category {
           .searchfield {
-            border-right: 1px solid $input-border-color;
+            border-right: 1px solid $input-color-initial-border;
           }
         }
       }
@@ -437,11 +437,11 @@ html[dir='rtl'] {
     &:not(.toolbar-searchfield-wrapper):not(.context) {
       &.has-categories {
         .btn {
-          border-right: 1px solid $input-border-color;
+          border-right: 1px solid $input-color-initial-border;
         }
 
         .searchfield {
-          border-left: 1px solid $input-border-color;
+          border-left: 1px solid $input-color-initial-border;
         }
       }
     }
