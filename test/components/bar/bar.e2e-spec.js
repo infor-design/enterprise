@@ -33,10 +33,6 @@ describe('Bar Chart example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const barEl = await element(by.css('.bar.series-0'));
-      await barEl.click();
-      await browser.driver.sleep(config.waitsFor);
-
       const mainContentEl = await element(by.id('maincontent'));
       await browser.driver.sleep(config.waitsFor);
 
