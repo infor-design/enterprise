@@ -61,12 +61,10 @@ fdescribe('ContextualActionPanel example-index tests', () => {
       const actionButtonEl = await element(by.css('.btn-secondary'));
       await actionButtonEl.click();
 
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+      const panelEl = await element(by.className('contextual-action-panel'));
+      await browser.driver.sleep(config.waitsFor);
 
-        const panelEl = await element(by.css('.contextual-action-panel'));
-
-        expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-panel')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-panel')).toEqual(0);
     });
   }
 });
