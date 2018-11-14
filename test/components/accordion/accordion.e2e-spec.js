@@ -122,7 +122,7 @@ fdescribe('Accordion example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const buttonEl = await element.all(by.tagName('button')).first();
+      const buttonEl = await element.all(by.tagName('button')).get(2);
       await buttonEl.click();
 
       const mainContentEl = await element(by.id('maincontent'));
