@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Tree example-index tests', () => {
+describe('Tree example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tree/example-index?nofrills=true');
   });
