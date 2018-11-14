@@ -24,9 +24,7 @@ describe('Tooltips index page tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      await browser.actions()
-      .mouseMove(await element(by.id('tooltip-btn')))
-      .perform();
+      await browser.actions().mouseMove(await element(by.id('tooltip-btn'))).perform();
 
       await browser.driver
         .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);

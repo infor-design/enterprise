@@ -81,7 +81,6 @@ describe('Datepicker example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const datepickerEl = await element(by.id('date-field-normal'));
       await element(by.css('#date-field-normal + .icon')).click();
 
       const mainContentEl = await element(by.id('maincontent'));
