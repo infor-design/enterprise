@@ -217,7 +217,7 @@
     text-decoration: none;
 
     &:focus {
-      border-color: $color-primary !important;
+      border-color: $theme-color-brand-primary-base !important;
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
     }
