@@ -174,6 +174,18 @@ SearchField.prototype = {
   },
 
   /**
+   *
+   */
+  get toolbarFlexItem() {
+    let item;
+    if (this.isContainedByFlexToolbar) {
+      item = $(this.element).data('toolbarflexitem');
+    }
+
+    return item;
+  },
+
+  /**
    * Initialization Kickoff
    * @private
    * @returns {void}
@@ -352,7 +364,7 @@ SearchField.prototype = {
     if (this.isContainedByFlexToolbar) {
       if (!this.collapseButton || !this.collapseButton.length) {
         this.collapseButton = $(`
-          <button class="btn-secondary collapse-button">
+          <button class="btn-secondary collapse-button" type="button">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-exit-fullview"></use>
             </svg>
@@ -752,9 +764,14 @@ SearchField.prototype = {
     }
 
     if (this.collapseButton && this.collapseButton.length) {
-      this.collapseButton.on(`click.${this.id}`, (e) => {
-        self.collapseResponsive(e);
-      }).on(`blur.${this.id}`, () => self.handleSafeBlur());
+      this.collapseButton
+        .on(`keydown.${this.id}`, (e) => {
+          self.collapseResponsive(e);
+        })
+        .on(`click.${this.id}`, (e) => {
+          self.collapseResponsive(e);
+        })
+        .on(`blur.${this.id}`, () => self.handleSafeBlur());
     }
 
     if (this.toolbarParent) {
@@ -1087,6 +1104,7 @@ SearchField.prototype = {
    */
   handleKeydown(e) {
     const key = e.which;
+    const keyName = e.key;
 
     if (key === 27 && env.browser.isIE11()) {
       e.preventDefault();
@@ -1098,6 +1116,13 @@ SearchField.prototype = {
 
     if (key === 9) { // Tab
       this.handleSafeBlur();
+    }
+
+    if (this.isContainedByFlexToolbar) {
+      const yKeys = ['ArrowUp', 'Up', 'ArrowDown', 'Down'];
+      if (yKeys.indexOf(keyName) > -1) {
+        this.collapse();
+      }
     }
   },
 
@@ -1779,12 +1804,32 @@ SearchField.prototype = {
 
   /**
    * @private
+   * @param {jQuery.Event} e incoming click event (driven either by keyboard or actual click)
    * @returns {void}
    */
-  collapseResponsive() {
+  collapseResponsive(e) {
+    if (this.previouslyCollapsedByKey && e.type === 'click') {
+      delete this.previouslyCollapsedByKey;
+      return;
+    }
+
+    // Navigate forward unless the event has been driven by a keystroke
     const self = this;
+    let dir = 1;
+    if (e && !e.key) {
+      dir = 0;
+      if (this.toolbarFlexItem && this.toolbarFlexItem.focused) {
+        dir = 1;
+      }
+    }
+
+    if (e.type === 'keydown') {
+      this.previouslyCollapsedByKey = true;
+    }
+
+    // Collapse followed by a special event trigger (gets picked up by Flex Toolbar)
     this.collapse().then(() => {
-      self.wrapper.trigger('collapsed-responsive', [self.wrapper]);
+      self.wrapper.trigger('collapsed-responsive', [dir]);
     });
   },
 
@@ -1912,6 +1957,7 @@ SearchField.prototype = {
     if (this.collapseButton && this.collapseButton.length) {
       this.collapseButton.off().remove();
       delete this.collapseButton;
+      delete this.previouslyCollapsedByKey;
     }
 
     // Used to determine if the "Tab" key was involved in switching focus to the searchfield.

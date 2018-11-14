@@ -101,9 +101,9 @@ ToolbarFlex.prototype = {
     });
 
     // Inlined Searchfields can cause navigation requiring a focus change to occur on collapse.
-    $(this.element).on(`collapsed-responsive.${COMPONENT_NAME}`, (e) => {
+    $(this.element).on(`collapsed-responsive.${COMPONENT_NAME}`, (e, direction) => {
       e.stopPropagation();
-      this.navigate(1, null, true);
+      this.navigate(direction, null, true);
     });
   },
 
