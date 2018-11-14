@@ -72,7 +72,7 @@ describe('Accordion example-disabled tests', () => {
   });
 });
 
-describe('Accordion example-index tests', () => {
+fdescribe('Accordion example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/accordion/example-index');
   });
@@ -119,4 +119,16 @@ describe('Accordion example-index tests', () => {
 
     expect(await element(by.className('is-expanded'))).toBeTruthy();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const buttonEl = await element.all(by.tagName('button')).first();
+      await buttonEl.click();
+
+      const mainContentEl = await element(by.id('maincontent'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'accordion-index')).toEqual(0);
+    });
+  }
 });
