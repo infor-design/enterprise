@@ -126,14 +126,14 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  fit('Should format year in es-ES', () => { //eslint-disable-line
+  it('Should format year in es-ES', () => {
     Locale.set('es-ES');
 
     expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'year' })).toEqual('Noviembre de 2018');
     Locale.set('en-US');
   });
 
-  fit('Should parse year in different languages', () => { //eslint-disable-line
+  it('Should parse year in different languages', () => {
     Locale.set('es-ES');
 
     expect(Locale.parseDate('Noviembre de 2018', { date: 'year' }).getTime()).toEqual(new Date(2018, 10, 1, 0, 0, 0).getTime());
@@ -854,7 +854,9 @@ describe('Locale API', () => {
     Locale.set('ar-SA');
 
     // Date with spaces, dashes and comma
-    expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy').getTime()).toEqual(new Date(1439, 11, 1, 0, 0, 0).getTime());
+    expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[0]).toEqual(1439);
+    expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[1]).toEqual(11);
+    expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[2]).toEqual(1);
     Locale.set('en-US');
   });
 });

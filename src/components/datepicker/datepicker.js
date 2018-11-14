@@ -555,9 +555,23 @@ DatePicker.prototype = {
 
     this.settings.month = this.currentMonth;
     this.settings.year = this.currentYear;
-    this.settings.activeDate = this.currentDate;
+    if (this.isIslamic) {
+      this.settings.activeDateIslamic = this.activeDate instanceof Date ?
+        this.conversions.fromGregorian(this.activeDate) : this.activeDate;
+    }
 
-    this.settings.activeDateIslamic = this.currentIslamicDate || this.todayDateIslamic;
+    if (this.settings.onOpenCalendar) {
+      // In some cases, month picker wants to set a specifc time.
+      this.settings.activeDate = this.settings.onOpenCalendar();
+      if (this.isIslamic) {
+        this.settings.activeDateIslamic = this.conversions.fromGregorian(this.specificDate);
+      }
+      this.specificDate = null;
+    } else {
+      this.settings.activeDate = this.currentDate || this.todayDate;
+      this.settings.activeDateIslamic = this.currentIslamicDate || this.todayDateIslamic;
+    }
+
     this.settings.isPopup = true;
     this.settings.headerStyle = 'simple';
 
@@ -655,6 +669,7 @@ DatePicker.prototype = {
     this.popup.attr('role', 'dialog');
     this.originalDate = this.element.val();
     this.calendarAPI.currentDate = this.currentDate;
+    this.calendarAPI.currentIslamicDate = this.currentIslamicDate;
     this.calendarAPI.validatePrevNext();
 
     // Calendar Day Events
@@ -1220,16 +1235,16 @@ DatePicker.prototype = {
       this.currentDate = Locale.parseDate(gregorianValue, this.pattern, false);
     }
 
-    this.currentDate = this.currentDate || new Date();
-    this.currentMonth = this.currentDate.getMonth();
-    this.currentYear = this.currentDate.getFullYear();
-    this.currentDay = this.currentDate.getDate();
-
     if (this.isIslamic) {
       this.currentDateIslamic = this.conversions.fromGregorian(this.currentDate);
       this.currentYear = this.currentDateIslamic[0];
       this.currentMonth = this.currentDateIslamic[1];
       this.currentDay = this.currentDateIslamic[2];
+    } else {
+      this.currentDate = this.currentDate || new Date();
+      this.currentMonth = this.currentDate.getMonth();
+      this.currentYear = this.currentDate.getFullYear();
+      this.currentDay = this.currentDate.getDate();
     }
 
     // Check and fix two digit year for main input element

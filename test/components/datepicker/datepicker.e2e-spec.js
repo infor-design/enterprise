@@ -55,6 +55,13 @@ describe('Datepicker example-index tests', () => {
     expect(await datepickerEl.getAttribute('value')).toEqual('10/31/2014');
   });
 
+  it('Should not be able to show today on a entered date', async () => {
+    await element(by.id('date-field-normal')).sendKeys('4/12/2024');
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element.all(by.css('.monthview-table .is-selected')).count()).toEqual(1);
+  });
+
   if (!utils.isBS()) {
     it('Should be able to select with arrows and enter', async () => {
       const datepickerEl = await element(by.id('date-field-normal'));
@@ -78,6 +85,12 @@ describe('Datepicker example-index tests', () => {
       expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
     });
   }
+});
+
+describe('Datepicker keyboard tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/example-index');
+  });
 
   it('Should be able to use arrow down key', async () => {
     const testDate = new Date();
@@ -404,9 +417,25 @@ describe('Datepicker disabled date tests', () => {
   });
 });
 
+describe('Datepicker Legend Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/example-legend');
+  });
+
+  it('Should render a legend', async () => {
+    const datepickerEl = await element(by.id('date-field'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.monthview-legend-item')).count()).toEqual(5);
+    expect(await element.all(by.css('.is-colored')).count()).toEqual(17);
+  });
+});
+
 describe('Datepicker Modal Test', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-modal');
+    await utils.setPage('/components/datepicker/test-modal');
   });
 
   it('Should work on a modal', async () => {
@@ -545,7 +574,7 @@ describe('Datepicker Range Tests', () => {
 
 describe('Datepicker Set Value Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-set-value');
+    await utils.setPage('/components/datepicker/test-set-value');
   });
 
   it('Should setValue on Various Types', async () => {
@@ -664,6 +693,28 @@ describe('Datepicker 12hr Time Tests', () => {
     testDate.setSeconds(0);
 
     expect(value).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('en-US', { month: 'short' })} ${testDate.getFullYear()} 12:00 AM`);
+  });
+});
+
+describe('Datepicker Umalqura EG Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-ar-eg-umalqura');
+  });
+
+  it('Should render umalqura on ar-EG time', async () => {
+    const datepickerEl = await element(by.id('islamic-date'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
+    expect(await element(by.css('.popup-footer .cancel')).getText()).toEqual('مسح');
+
+    const todayEl = await element(by.css('button.is-today'));
+    await todayEl.click();
+    const result = await browser.executeScript('return Locale.getCalendar("islamic-umalqura").conversions.fromGregorian(new Date())');
+
+    expect(`${result[0]}/${(result[1] + 1).toString().padStart(2, '0')}/${result[2].toString().padStart(2, '0')}`).toEqual(await datepickerEl.getAttribute('value'));
   });
 });
 

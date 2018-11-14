@@ -7,9 +7,9 @@ demo:
     slug: example-index
     pages:
     - name: Loading events with Ajax
-      slug: example-ajax-events
+      slug: test-ajax-events
     - name: Loading a specific month and year
-      slug: example-specific-month
+      slug: test-specific-month
 ---
 
 The setup for a calendar only involves creating a `div` with the class `calendar`. In that div we add the three sections of the calendar. The first section calendar-events contains an accordion with a filter section and an upcoming events section (functionality to be added soon). The second section is a `div` with `calendar-monthview` this is where the monthview calendar will be rendered. The third section is `div` with `calendar-event-details` this is where the event details will be shown when you click on them.

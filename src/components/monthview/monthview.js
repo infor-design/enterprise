@@ -236,7 +236,8 @@ MonthView.prototype = {
         autoSize: true,
         dateFormat: Locale.calendar().dateFormat.year,
         showMonthYearPicker: true,
-        hideButtons: true
+        hideButtons: true,
+        onOpenCalendar: () => (this.isIslamic ? this.currentIslamicDate : this.currentDate)
       });
       this.header.find('button, a').hideFocus();
     }
@@ -288,8 +289,10 @@ MonthView.prototype = {
         this.settings.activeDateIslamic[2] = this.todayDateIslamic[2];
         year = this.settings.activeDateIslamic[0];
         month = this.settings.activeDateIslamic[1];
+        elementDate = this.conversions.fromGregorian(now);
+      } else {
+        elementDate = this.settings.activeDateIslamic;
       }
-      elementDate = this.conversions.fromGregorian(now);
     }
 
     if (year.toString().length < 4) {
@@ -442,6 +445,9 @@ MonthView.prototype = {
 
     if (!this.currentDate) {
       this.currentDate = new Date(self.currentYear, self.currentMonth, 1);
+      if (this.isIslamic) {
+        this.currentIslamicDate = this.conversions.fromGregorian(this.currentDate);
+      }
     }
 
     this.validatePrevNext();
@@ -827,6 +833,10 @@ MonthView.prototype = {
       self.element.addClass('is-selectable').off('click.monthview-day').on('click.monthview-day', 'td', (e) => {
         const data = $(e.currentTarget).data();
         const key = data.key;
+
+        if (e.currentTarget.classList.contains('is-disabled')) {
+          return;
+        }
         self.selectDay(key);
       });
     }
@@ -841,11 +851,20 @@ MonthView.prototype = {
    * @param {boolean} closePopup Send a flag to close the popup
   */
   selectDay(date, closePopup) {
-    if (typeof date !== 'string') {
+    if (this.isIslamic) {
+      this.currentIslamicDate = this.currentCalendar.conversions.fromGregorian(date);
+      date = stringUtils.padDate(
+        this.currentIslamicDate[0],
+        this.currentIslamicDate[1],
+        this.currentIslamicDate[2]
+      );
+    }
+
+    if (!this.isIslamic && typeof date !== 'string') {
       date = stringUtils.padDate(
         date.getFullYear(),
         date.getMonth(),
-        date.getDate(),
+        date.getDate()
       );
     }
 
@@ -859,6 +878,12 @@ MonthView.prototype = {
       this.showMonth(month, year);
       dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
     }
+
+    // Error - date not found
+    if (!dayObj.lenth === 0) {
+      return;
+    }
+
     const node = dayObj[0].elem[0];
 
     const args = {
@@ -875,7 +900,12 @@ MonthView.prototype = {
     if (this.settings.onSelected) {
       this.settings.onSelected(node, args);
     }
-    this.currentDate = new Date(year, month, day);
+
+    if (this.isIslamic) {
+      this.currentIslamicDate = this.conversions.fromGregorian(this.currentDate);
+    } else {
+      this.currentDate = new Date(year, month, day);
+    }
 
     this.element.find('td.is-selected').removeClass('is-selected').removeAttr('tabindex');
     $(node).addClass('is-selected').attr('tabindex', '0').focus();
@@ -1058,6 +1088,9 @@ MonthView.prototype = {
         }
 
         this.currentDate = firstDay;
+        if (this.isIslamic) {
+          this.currentIslamicDate = this.conversions.fromGregorian(this.currentDate);
+        }
         this.selectDay(this.currentDate);
       }
 
@@ -1078,6 +1111,9 @@ MonthView.prototype = {
         }
 
         this.currentDate = lastDay;
+        if (this.isIslamic) {
+          this.currentIslamicDate = this.conversions.fromGregorian(this.currentDate);
+        }
         this.selectDay(this.currentDate);
       }
 
@@ -1098,7 +1134,18 @@ MonthView.prototype = {
           return false;
         }
         const d = this.getCellDate(cell);
-        this.currentDate = new Date(d.year, d.month, d.day);
+
+        if (this.isIslamic) {
+          this.currentIslamicDate = [d.year, d.month, d.day];
+          this.currentDate = this.conversions.toGregorian(
+            this.currentIslamicDate[0],
+            this.currentIslamicDate[1],
+            this.currentIslamicDate[2]
+          );
+        } else {
+          this.currentDate = new Date(d.year, d.month, d.day);
+        }
+
         this.selectDay(this.currentDate, true);
       }
 

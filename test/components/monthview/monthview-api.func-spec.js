@@ -59,8 +59,7 @@ describe('Monthview API', () => {
     expect(document.body.querySelector('.monthview-table td.is-selected').getAttribute('aria-label')).toEqual('Monday, September 10, 2018');
   });
 
-  // Will fix on future PR
-  xit('Should render month text and start day', () => {
+  it('Should render month text and start day', () => {
     expect(document.getElementById('monthview-datepicker-field').value).toEqual('September 2018');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
 
@@ -75,10 +74,10 @@ describe('Monthview API', () => {
     Soho.Locale.set('ar-SA'); //eslint-disable-line
     monthviewAPI.showMonth(7, 1440);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('صفر 1440');
+    expect(document.getElementById('monthview-datepicker-field').value).toEqual('ربيع الأول 1440');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('السبت');
-    expect(document.body.querySelector('tbody tr:first-child td:first-child').textContent.trim()).toEqual('26');
-    expect(document.body.querySelector('tbody tr:first-child td:last-child').textContent.trim()).toEqual('3');
+    expect(document.body.querySelector('tbody tr:first-child td:first-child').textContent.trim()).toEqual('25');
+    expect(document.body.querySelector('tbody tr:first-child td:last-child').textContent.trim()).toEqual('1');
   });
 
   it('Should render disabled days', () => {
@@ -112,8 +111,7 @@ describe('Monthview API', () => {
     expect(document.body.querySelector('.monthview-table')).toBeFalsy();
   });
 
-  // Will fix on future PR
-  xit('Should populate header ', () => {
+  it('Should populate header ', () => {
     Locale.set('en-US');
     Soho.Locale.set('en-US'); //eslint-disable-line
     monthviewAPI.showMonth(7, 2018);
@@ -130,7 +128,7 @@ describe('Monthview API', () => {
     Soho.Locale.set('ar-SA'); //eslint-disable-line
     monthviewAPI.showMonth(7, 2018);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('صفر 1440');
+    expect(document.getElementById('monthview-datepicker-field').value).toEqual('ربيع الأول 1440');
 
     Locale.set('de-DE');
     Soho.Locale.set('de-DE'); //eslint-disable-line
