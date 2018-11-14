@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Toast example-index tests', () => {
+fdescribe('Toast example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/toast/example-index');
   });
