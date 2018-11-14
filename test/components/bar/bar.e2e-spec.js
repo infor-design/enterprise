@@ -36,7 +36,8 @@ describe('Bar Chart example-index tests', () => {
       const mainContentEl = await element(by.id('maincontent'));
       await browser.driver.sleep(config.waitsFor);
 
-      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(mainContentEl), config.waitsFor);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(mainContentEl), config.waitsFor);
       await browser.driver.sleep(config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'bar-index')).toEqual(0);
