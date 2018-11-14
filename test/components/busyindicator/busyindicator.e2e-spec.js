@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Busy Indicator example-index tests', () => {
+fdescribe('Busy Indicator example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/busyindicator/example-index');
   });
@@ -22,6 +22,18 @@ describe('Busy Indicator example-index tests', () => {
 
     expect(await element(by.className('busy-indicator-container'))).toBeTruthy();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const buttonEl = await element(by.id('submit'));
+      await buttonEl.click();
+
+      const mainContentEl = await element(by.id('maincontent'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(mainContentEl, 'busy-indicator-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Busy Indicator example-custom-loading-text tests', () => {
