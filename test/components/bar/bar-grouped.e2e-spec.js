@@ -1,4 +1,5 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
+const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 
 requireHelper('rejection');
@@ -39,6 +40,8 @@ fdescribe('Grouped Bar Chart example-index tests', () => {
       const fGroupEl = await element.all(by.css('.group .series-group')).get(0);
 
       await fGroupEl.click();
+
+      expect(await fGroupEl.getAttribute('class')).toContain('is-selected');
 
       const mainContentEl = await element(by.id('maincontent'));
       await browser.driver.sleep(config.waitsFor);
