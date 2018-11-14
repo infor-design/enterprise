@@ -14,9 +14,9 @@ const setPage = async function (url) {
 
 const inputId = 'first-name';
 
-describe('Input example-index tests', () => {
+fdescribe('Input example-index tests', () => {
   beforeEach(async () => {
-    await setPage('/components/input/example-index');
+    await setPage('/components/input/example-index?nofrills=true');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(inputId))), config.waitsFor);

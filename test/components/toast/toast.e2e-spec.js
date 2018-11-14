@@ -40,18 +40,6 @@ describe('Toast example-index tests', () => {
 
     expect(await element(by.id('toast-container'))).toBeTruthy();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const buttonEl = await element(by.id('show-toast-message'));
-      await buttonEl.click();
-
-      const toastEl = await element(by.id('toast-container'));
-      await browser.driver.sleep(config.waitsFor);
-
-      expect(await browser.protractorImageComparison.checkElement(toastEl, 'toast-index')).toEqual(0);
-    });
-  }
 });
 
 describe('Toast example-positions tests', () => {

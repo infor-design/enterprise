@@ -6,9 +6,9 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Tooltips index page tests', () => {
+fdescribe('Tooltips index page tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tooltip/example-index');
+    await utils.setPage('/components/tooltip/example-index?nofrills=true');
   });
 
   it('should display when hovering the icon', async () => {

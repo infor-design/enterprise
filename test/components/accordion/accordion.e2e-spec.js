@@ -72,9 +72,9 @@ describe('Accordion example-disabled tests', () => {
   });
 });
 
-describe('Accordion example-index tests', () => {
+fdescribe('Accordion example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/accordion/example-index');
+    await utils.setPage('/components/accordion/example-index?nofrills=true');
   });
 
   it('Should not have errors', async () => {

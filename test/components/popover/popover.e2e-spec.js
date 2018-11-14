@@ -6,9 +6,9 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Popover Index Tests', () => {
+fdescribe('Popover Index Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/popover/example-index');
+    await utils.setPage('/components/popover/example-index?nofrills=true');
   });
 
   it('Should not have errors', async () => {

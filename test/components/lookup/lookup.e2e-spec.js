@@ -6,9 +6,9 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Lookup', () => {
+fdescribe('Lookup', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/lookup/example-index');
+    await utils.setPage('/components/lookup/example-index?nofrills=true');
   });
 
   it('should be enabled', async () => {

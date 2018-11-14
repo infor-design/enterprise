@@ -5,9 +5,9 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Calendar index tests', () => {
+fdescribe('Calendar index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/example-index');
+    await utils.setPage('/components/calendar/example-index?nofrills=true');
   });
 
   it('Should render without error', async () => {

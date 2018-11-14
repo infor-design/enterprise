@@ -6,9 +6,9 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Stacked Bar Chart example-index tests', () => {
+fdescribe('Stacked Bar Chart example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar-stacked/example-index');
+    await utils.setPage('/components/bar-stacked/example-index?nofrills=true');
   });
 
   it('Should not have errors', async () => {

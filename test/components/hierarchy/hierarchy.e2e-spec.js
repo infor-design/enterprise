@@ -5,9 +5,9 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Hierarchy index tests', () => {
+fdescribe('Hierarchy index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/hierarchy/example-index');
+    await utils.setPage('/components/hierarchy/example-index?nofrills=true');
   });
 
   it('Should Render', async () => {
