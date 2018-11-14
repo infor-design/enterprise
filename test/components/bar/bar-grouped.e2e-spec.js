@@ -37,10 +37,6 @@ describe('Grouped Bar Chart example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const fGroupEl = await element.all(by.css('.group .series-group')).get(0);
-      await fGroupEl.click();
-      await browser.driver.sleep(config.waitsFor);
-
       const mainContentEl = await element(by.id('maincontent'));
       await browser.driver.sleep(config.waitsFor);
 
