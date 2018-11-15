@@ -46,7 +46,8 @@ describe('Button API', () => {
     const settings = {
       replaceText: false,
       toggleOffIcon: null,
-      toggleOnIcon: null
+      toggleOnIcon: null,
+      hideMenuArrow: null
     };
 
     expect(buttonObj.settings).toEqual(settings);
@@ -56,7 +57,8 @@ describe('Button API', () => {
     const settings = {
       replaceText: true,
       toggleOffIcon: null,
-      toggleOnIcon: null
+      toggleOnIcon: null,
+      hideMenuArrow: null
     };
 
     buttonObj.init();
