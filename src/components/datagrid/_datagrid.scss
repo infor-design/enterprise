@@ -115,10 +115,18 @@ $datagrid-short-row-height: 23px;
     > .datagrid-header .datagrid-column-wrapper {
       position: relative;
       top: -4px;
+
+      &.l-right-text {
+        top: -15px;
+      }
     }
 
     .is-filterable .datagrid-column-wrapper {
       top: -3px;
+
+      &.l-right-text {
+        top: -3px;
+      }
     }
   }
 
