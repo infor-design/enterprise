@@ -12,8 +12,6 @@ demo:
     slug: example-ajax-managed
   - name: Clearable Dropdown
     slug: example-clearable
-  - name: Destroy
-    slug: example-destroy
   - name: Section / Groups
     slug: example-groups
   - name: Icons

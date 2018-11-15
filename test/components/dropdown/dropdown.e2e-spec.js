@@ -428,33 +428,3 @@ describe('Dropdown placeholder tests', () => {
     expect(await element(by.css('[data-placeholder-text]')).isDisplayed()).toBeTruthy();
   });
 });
-
-describe('Dropdown destroy tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/dropdown/example-destroy');
-  });
-
-  it('Should destroy associated dropdown', async () => {
-    const dropdownElFirstButton = await element(by.id('destroy-dropdown1'));
-    const dropdownElFirst = await element(by.id('dropdown1'));
-    const dropdownElSecondButton = await element(by.id('destroy-dropdown2'));
-    const dropdownElSecond = await element(by.id('dropdown1'));
-
-    await dropdownElFirstButton.click();
-    expect(await dropdownElFirst.toBeUndefined);
-
-    await dropdownElSecondButton.click();
-    expect(await dropdownElSecond.toBeUndefined);
-  });
-
-  it('Should destroy non open dropdown', async () => {
-    const dropdownFirst = await element(by.css('div[aria-label="Dropdown One"'));
-    const dropdownSecond = await element(by.css('div[aria-label="Dropdown Two"'));
-    await dropdownFirst.click();
-    expect(await element(by.id('dropdown-list')).isPresent()).toBe(true);
-
-    const firstOption = await element(by.id('list-option-1'));
-    await firstOption.click();
-    expect(await dropdownSecond.toBeUndefined);
-  });
-});
