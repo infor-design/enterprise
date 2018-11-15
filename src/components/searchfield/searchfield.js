@@ -430,6 +430,17 @@ SearchField.prototype = {
   },
 
   /**
+   * Simpler version of `adjustOnBreakpoint` for non-collapsible Toolbar Flex searchfields
+   */
+  simpleAdjustOnBreakpoint() {
+    if (this.shouldBeFullWidth()) {
+      this.wrapper[0].classList.remove('is-open');
+      return;
+    }
+    this.wrapper[0].classList.add('is-open');
+  },
+
+  /**
    * Makes necessary adjustments to the DOM surrounding the Searchfield element to accommodate
    * breakpoint changes.
    * @private
@@ -763,6 +774,11 @@ SearchField.prototype = {
         self.adjustOnBreakpoint();
       });
       self.adjustOnBreakpoint();
+    } else {
+      $('body').on(`resize.${this.id}`, () => {
+        self.simpleAdjustOnBreakpoint();
+      });
+      self.simpleAdjustOnBreakpoint();
     }
 
     if (this.collapseButton && this.collapseButton.length) {
