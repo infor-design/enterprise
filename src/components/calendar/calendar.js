@@ -569,6 +569,10 @@ Calendar.prototype = {
       events: []
     };
 
+    if (dayObj.length === 0) {
+      return [];
+    }
+
     const dayContainer = dayObj.elem;
     const dayEventEls = dayContainer.querySelectorAll('.calendar-event');
     for (let i = 0; i < dayEventEls.length; i++) {

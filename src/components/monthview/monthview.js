@@ -237,7 +237,7 @@ MonthView.prototype = {
         dateFormat: Locale.calendar().dateFormat.year,
         showMonthYearPicker: true,
         hideButtons: true,
-        onOpenCalendar: () => (this.isIslamic ? this.currentIslamicDate : this.currentDate)
+        onOpenCalendar: () => this.currentDate
       });
       this.header.find('button, a').hideFocus();
     }
@@ -444,9 +444,11 @@ MonthView.prototype = {
     }
 
     if (!this.currentDate) {
-      this.currentDate = new Date(self.currentYear, self.currentMonth, 1);
       if (this.isIslamic) {
-        this.currentIslamicDate = this.conversions.fromGregorian(this.currentDate);
+        this.currentIslamicDate = [self.currentYear, self.currentMonth, 1];
+        this.currentDate = this.conversions.toGregorian(self.currentYear, self.currentMonth, 1);
+      } else {
+        this.currentDate = new Date(self.currentYear, self.currentMonth, 1);
       }
     }
 
@@ -851,7 +853,7 @@ MonthView.prototype = {
    * @param {boolean} closePopup Send a flag to close the popup
   */
   selectDay(date, closePopup) {
-    if (this.isIslamic) {
+    if (this.isIslamic && typeof date !== 'string') {
       this.currentIslamicDate = this.currentCalendar.conversions.fromGregorian(date);
       date = stringUtils.padDate(
         this.currentIslamicDate[0],
@@ -869,9 +871,16 @@ MonthView.prototype = {
     }
 
     let dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
-    const day = parseInt(date.substr(6, 2), 10);
-    const month = parseInt(date.substr(4, 2), 10) - 1;
     const year = parseInt(date.substr(0, 4), 10);
+    const month = parseInt(date.substr(4, 2), 10) - 1;
+    const day = parseInt(date.substr(6, 2), 10);
+
+    if (this.isIslamic) {
+      this.currentIslamicDate = date;
+      this.currentDate = this.conversions.toGregorian(year, month, day);
+    } else {
+      this.currentDate = new Date(year, month, day);
+    }
 
     if (dayObj.length === 0 || dayObj[0].elem.hasClass('alternate')) {
       // Show month
@@ -899,12 +908,6 @@ MonthView.prototype = {
     this.element.trigger('selected', args);
     if (this.settings.onSelected) {
       this.settings.onSelected(node, args);
-    }
-
-    if (this.isIslamic) {
-      this.currentIslamicDate = this.conversions.fromGregorian(this.currentDate);
-    } else {
-      this.currentDate = new Date(year, month, day);
     }
 
     this.element.find('td.is-selected').removeClass('is-selected').removeAttr('tabindex');
