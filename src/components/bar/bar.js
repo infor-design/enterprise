@@ -651,13 +651,15 @@ Bar.prototype = {
     const dataset = this.settings.dataset;
     for (let i = 0; i < dataset.length; i++) {
       Object.values(dataset[i]).forEach((key) => {
-        for (let j = 0; j < key.length; j++) {
-          if (innerWidth <= 480) {
-            elems[j].textContent = key[j].shortName || key[j].name;
-          } else if (innerWidth >= 481 && innerWidth <= 992) {
-            elems[j].textContent = key[j].abbrName || key[j].name;
-          } else if (innerWidth > 992) {
-            elems[j].textContent = key[j].name;
+        if (key && key.constructor === Array) {
+          for (let j = 0; j < key.length; j++) {
+            if (innerWidth <= 480) {
+              elems[j].textContent = key[j].shortName || key[j].name;
+            } else if (innerWidth >= 481 && innerWidth <= 992) {
+              elems[j].textContent = key[j].abbrName || key[j].name;
+            } else if (innerWidth > 992) {
+              elems[j].textContent = key[j].name;
+            }
           }
         }
       });
