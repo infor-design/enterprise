@@ -51,6 +51,7 @@ const BAR_DEFAULTS = {
   isGrouped: false,
   showLegend: true,
   animate: true,
+  longText: false,
   format: null,
   redrawOnResize: true,
   tooltip: null,
@@ -135,6 +136,9 @@ Bar.prototype = {
     const legendHeight = 30;
     const gapBetweenGroups = 0.6; // Makes it one bar in height (barHeight * 0.5)
     const isViewSmall = this.element.parent().width() < 450;
+    const smallViewport = innerWidth <= 480;
+    const mediumViewport = innerWidth >= 481 && innerWidth <= 992;
+    const largeViewport = innerWidth > 992;
     let dataset = this.settings.dataset;
 
     const margins = {
@@ -216,10 +220,23 @@ Bar.prototype = {
       });
     });
 
+    const isLongText = this.settings.longText;
     const h = parseInt(this.element.parent().height(), 10) - margins.bottom -
       (self.settings.isStacked ? 0 : (legendHeight / 2));
     const w = parseInt(this.element.parent().width(), 10) - margins.left;
-    const textWidth = margins.left + (maxTextWidth * 6);
+    let textWidth;
+
+    if (smallViewport) {
+      textWidth = margins.left + maxTextWidth * 1;
+    } else if (mediumViewport) {
+      textWidth = margins.left + maxTextWidth * 4;
+    } else if (largeViewport) {
+      textWidth = margins.left + maxTextWidth * 6;
+    }
+
+    if (!isLongText) {
+      textWidth = margins.left + maxTextWidth * 6;
+    }
 
     self.svg = d3.select(this.element[0])
       .append('svg')
@@ -334,11 +351,11 @@ Bar.prototype = {
     }
 
     if (self.settings.ticks && !self.settings.useLogScale) {
-      if (innerWidth < 480) {
+      if (smallViewport) {
         xAxis.ticks(self.settings.ticks.smallNumber, self.settings.ticks.format);
-      } else if (innerWidth >= 481 && innerWidth <= 992) {
+      } else if (mediumViewport) {
         xAxis.ticks(self.settings.ticks.mediumNumber, self.settings.ticks.format);
-      } else if (innerWidth > 992) {
+      } else if (largeViewport) {
         xAxis.ticks(self.settings.ticks.largeNumber, self.settings.ticks.format);
       }
     }
@@ -636,9 +653,9 @@ Bar.prototype = {
       Object.values(dataset[i]).forEach((key) => {
         for (let j = 0; j < key.length; j++) {
           if (innerWidth <= 480) {
-            elems[j].textContent = key[j].shortName;
+            elems[j].textContent = key[j].shortName || key[j].name;
           } else if (innerWidth >= 481 && innerWidth <= 992) {
-            elems[j].textContent = key[j].abbrName;
+            elems[j].textContent = key[j].abbrName || key[j].name;
           } else if (innerWidth > 992) {
             elems[j].textContent = key[j].name;
           }
