@@ -2,11 +2,16 @@
 // Flexible Toolbar - Searchfield Component
 // ==================================== //
 
+$flex-toolbar-searchfield-focus-width: 225px;
 $responsive-searchfield-filled-out-width: 34px;
 
 .toolbar-section {
   .searchfield-wrapper {
     margin: 0 5px 0 0;
+
+    &.has-focus {
+      width: $flex-toolbar-searchfield-focus-width;
+    }
 
     .collapse-button {
       display: none;

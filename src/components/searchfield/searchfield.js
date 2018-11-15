@@ -459,6 +459,8 @@ SearchField.prototype = {
         this.collapse();
       }
 
+      this.wrapper[0].classList.remove('is-open');
+
       return;
     }
 
@@ -1765,7 +1767,7 @@ SearchField.prototype = {
       if (env.browser.isIE11) {
         self.wrapper[0].classList.remove('is-open');
       }
-      if (!this.isFocused) {
+      if (this.isContainedByFlexToolbar || !this.isFocused) {
         self.wrapper[0].classList.remove('has-focus');
       }
 
@@ -1923,17 +1925,20 @@ SearchField.prototype = {
   teardown() {
     this.element.off([
       `updated.${this.id}`,
+      `focus.${this.id}`,
       `click.${this.id}`,
       `keydown.${this.id}`,
       `beforeopen.${this.id}`,
+      `input.${this.id}`,
       `listopen.${this.id}`,
       `listclose.${this.id}`,
       `safe-blur.${this.id}`,
       `populated.${this.id}`,
       `cleared.${this.id}`].join(' '));
 
-    // ToolbarSearchfield events
     this.wrapper.off([
+      `mouseenter.${this.id}`,
+      `mouseleave.${this.id}`,
       `focusin.${this.id}`,
       `focusout.${this.id}`,
       `keydown.${this.id}`,
