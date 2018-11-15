@@ -201,3 +201,32 @@ describe('Popupmenu example-selectable-multiple tests', () => {
     });
   }
 });
+
+describe('Contextmenu created dynamically tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-contextmenu-dynamic');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('No errors when right click on row without the menu in the dom', async () => {
+    const tableRow = await element(by.css('tbody > tr:first-of-type > td:first-of-type'));
+    await browser.actions().mouseMove(tableRow).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+
+    await utils.checkForErrors();
+
+    const insertContextButton = await element(by.id('insert-context-menu-button'));
+    await browser.actions().mouseMove(insertContextButton).perform();
+    await browser.actions().click(protractor.Button.LEFT).perform();
+
+    await browser.actions().mouseMove(tableRow).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('grid-actions-menu'))), config.waitsFor);
+
+    expect(await element(by.id('grid-actions-menu')).getAttribute('class')).toContain('is-open');
+  });
+});
