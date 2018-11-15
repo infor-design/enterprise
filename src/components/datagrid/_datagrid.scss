@@ -592,11 +592,10 @@ $datagrid-short-row-height: 23px;
             vertical-align: top;
 
             &.lookup {
-              width: calc(100% - 21px);
+              width: calc(100% - 13px);
 
               ~ .trigger .icon {
-                top: calc(50% - 6px);
-                width: inherit;
+                top: calc(50% - 4px);
               }
 
               &.align-text-right {
@@ -888,6 +887,15 @@ $datagrid-short-row-height: 23px;
         }
 
         &.datagrid-trigger-cell {
+          &:hover,
+          &:focus {
+            .icon-search-list {
+              ~ .icon-error {
+                margin-left: -48px !important;
+              }
+            }
+          }
+
           .icon {
             height: 16px;
             margin-bottom: -1px;
@@ -981,7 +989,6 @@ $datagrid-short-row-height: 23px;
             padding-left: 10px;
 
             .trigger {
-              margin-left: -18px;
               top: -7px;
             }
           }
@@ -1693,7 +1700,7 @@ $datagrid-short-row-height: 23px;
         }
 
         .trigger {
-          margin-left: -21px;
+          margin-left: -37px;
           margin-top: 1px;
         }
       }
@@ -1724,15 +1731,12 @@ $datagrid-short-row-height: 23px;
         width: 100%;
 
         &.lookup {
-          width: calc(100% - 31px);
-
           &.align-text-right {
             width: 100%;
           }
 
           ~ .trigger .icon {
             top: calc(50% - 6px);
-            width: inherit;
           }
 
           &.is-not-editable {
@@ -2596,14 +2600,24 @@ td .btn-actions {
     }
   }
 
-  &.has-editor:not(.is-readonly):not(.error):hover,
-  &.has-editor:not(.is-readonly):not(.error):focus {
-    .icon {
-      visibility: visible;
+  &.has-editor:not(.is-readonly) {
+    .icon-error {
+      @include css3(transition, margin-left 300ms ease);
     }
 
-    .icon-close {
-      margin-left: -22px;
+    &:hover,
+    &:focus {
+      .icon {
+        visibility: visible;
+      }
+
+      .icon-close {
+        margin-left: -22px;
+      }
+
+      .icon-error {
+        margin-left: -53px;
+      }
     }
   }
 
@@ -2969,20 +2983,84 @@ html[dir='rtl'] {
             }
           }
         }
+
+        td {
+          &.datagrid-trigger-cell {
+            .icon-error {
+              margin-left: 6px !important;
+            }
+
+            .icon-search-list {
+              left: 8px !important;
+            }
+
+            &:hover,
+            &:focus {
+              .icon-search-list {
+                ~ .icon-error {
+                  margin-left: 26px !important;
+                }
+              }
+            }
+          }
+        }
       }
     }
 
-    td.l-right-text .datagrid-cell-wrapper {
-      text-align: left;
+    &.medium-rowheight {
+      td {
+        &.datagrid-trigger-cell {
+          .icon-search-list {
+            left: 2px;
+          }
+        }
+      }
     }
 
-    td.is-editing {
-      .datepicker ~ .icon {
-        margin-right: -8px;
+    td {
+      &.l-right-text .datagrid-cell-wrapper {
+        text-align: left;
       }
 
-      .dropdown-wrapper .icon {
-        left: 14px;
+      &.error {
+        .datagrid-cell-wrapper {
+          .icon-error {
+            left: 0;
+            margin-left: 5px;
+          }
+        }
+
+        &:hover,
+        &:focus {
+          .icon-error {
+            margin-left: 28px;
+          }
+        }
+      }
+
+      &.is-editing {
+        .datepicker ~ .icon {
+          margin-right: -8px;
+        }
+
+        .dropdown-wrapper .icon {
+          left: 14px;
+        }
+
+        .lookup-wrapper {
+          padding-left: 0 !important;
+
+          input.lookup {
+            padding-left: 0;
+            padding-right: 20px;
+            width: calc(100% - 31px);
+          }
+
+          .trigger {
+            margin: 1px 0 0;
+            width: auto;
+          }
+        }
       }
     }
   }

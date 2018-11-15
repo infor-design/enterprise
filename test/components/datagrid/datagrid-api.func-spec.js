@@ -200,8 +200,8 @@ describe('Datagrid API', () => {
     $(td).trigger('mouseover');
 
     setTimeout(() => {
-      expect(document.body.querySelector('#tooltip')).toBeTruthy();
-      expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
+      expect(document.body.querySelector('.grid-tooltip')).toBeTruthy();
+      expect(document.body.querySelector('.grid-tooltip.is-hidden')).toBeFalsy();
       done();
     }, 500);
   });
@@ -212,9 +212,9 @@ describe('Datagrid API', () => {
     $(rowstatusIcon).trigger('mouseover');
 
     setTimeout(() => {
-      expect(document.body.querySelector('#tooltip')).toBeTruthy();
-      expect(document.body.querySelector('#tooltip.is-error')).toBeFalsy();
-      expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
+      expect(document.body.querySelector('.grid-tooltip')).toBeTruthy();
+      expect(document.body.querySelector('.grid-tooltip.is-error')).toBeFalsy();
+      expect(document.body.querySelector('.grid-tooltip.is-hidden')).toBeFalsy();
       done();
     }, 500);
   });
@@ -225,9 +225,9 @@ describe('Datagrid API', () => {
     $(rowstatusIcon).trigger('mouseover');
 
     setTimeout(() => {
-      expect(document.body.querySelector('#tooltip')).toBeTruthy();
-      expect(document.body.querySelector('#tooltip.is-error')).toBeTruthy();
-      expect(document.body.querySelector('#tooltip.is-hidden')).toBeFalsy();
+      expect(document.body.querySelector('.grid-tooltip')).toBeTruthy();
+      expect(document.body.querySelector('.grid-tooltip.is-error')).toBeTruthy();
+      expect(document.body.querySelector('.grid-tooltip.is-hidden')).toBeFalsy();
       done();
     }, 500);
   });
