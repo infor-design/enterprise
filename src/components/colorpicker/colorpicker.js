@@ -115,7 +115,8 @@ const COLORPICKER_DEFAULTS = {
     { label: 'Azure', number: '05', value: '4EA0D1' },
     { label: 'Azure', number: '04', value: '69B5DD' },
     { label: 'Azure', number: '03', value: '8DC9E6' },
-    { label: 'Azure', number: '02', value: 'ADD8EB' }
+    { label: 'Azure', number: '02', value: 'ADD8EB' },
+    { label: 'Azure', number: '01', value: 'C8E9F4' }
   ],
   placeIn: null, // null|'editor'
   showLabel: false,
@@ -539,10 +540,6 @@ ColorPicker.prototype = {
         const li = $('<li></li>');
         const a = $(`<a href="#" title="${s.clearableText}"><span class="swatch is-empty${isBorderAll ? ' is-border' : ''}"></span></a>`).appendTo(li);
         a.data('label', s.clearableText).data('value', '').tooltip();
-        menu.append(li);
-      } else if (!this.settings.customColors) {
-        const li = $('<li></li>');
-        $('<a href="#" title="Azure01 #C8E9F4"><span class="swatch" style="background-color: rgb(173 ,216, 235);"></span></a>').appendTo(li).tooltip();
         menu.append(li);
       }
 
