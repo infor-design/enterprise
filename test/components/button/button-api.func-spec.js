@@ -66,4 +66,18 @@ describe('Button API', () => {
 
     expect(buttonObj.settings.replaceText).toEqual(settings.replaceText);
   });
+
+  it('Should update menu icon setting via parameter', () => {
+    const settings = {
+      replaceText: false,
+      toggleOffIcon: null,
+      toggleOnIcon: null,
+      hideMenuArrow: true
+    };
+
+    buttonObj.init();
+    buttonObj.updated(settings);
+
+    expect(buttonObj.settings.hideMenuArrow).toEqual(settings.hideMenuArrow);
+  });
 });
