@@ -240,7 +240,10 @@ About.prototype = {
 
     this.buttons.off();
     this.element.off('open.about');
-    $.removeData(this.element[0], COMPONENT_NAME);
+
+    if (this.element.length > 0) {
+      $.removeData(this.element[0], COMPONENT_NAME);
+    }
   },
 
   /**

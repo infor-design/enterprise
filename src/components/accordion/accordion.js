@@ -632,6 +632,10 @@ Accordion.prototype = {
   * @returns {boolean} Whether or not the element is expanded.
   */
   isExpanded(header) {
+    if (header && header instanceof Element) {
+      header = $(header);
+    }
+
     if (!header || !header.length) {
       return;
     }
