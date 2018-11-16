@@ -48,7 +48,7 @@ describe('Popupmenu example-selectable tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress on example-selectable', async () => {
+    fit('Should not visual regress on example-selectable', async () => { //eslint-disable-line
       const popupmenuSection = await element(by.css('.container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
