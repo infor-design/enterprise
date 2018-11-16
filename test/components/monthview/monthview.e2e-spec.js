@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('MonthView index tests', () => {
+fdescribe('MonthView index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/monthview/example-index?nofrills=true');
   });

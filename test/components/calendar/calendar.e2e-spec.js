@@ -5,9 +5,9 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Calendar index tests', () => {
+fdescribe('Calendar index tests', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/example-index?nofrills=true');
+    await utils.setPage('/components/calendar/example-specific-month?nofrills=true');
   });
 
   it('Should render without error', async () => {
