@@ -132,3 +132,23 @@ describe('Accordion example-index tests', () => {
     });
   }
 });
+
+describe('Accordion expand multiple tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/accordion/test-expand-all');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  xit('Should expand both panes', async () => { // will remove this on another PR
+    expect(await element.all(by.css('#nested-accordion > .accordion-header.is-expanded')).count()).toEqual(2);
+    await element.all(by.css('#nested-accordion > .accordion-header.is-expanded + .accordion-pane.is-expanded')).get(0).getSize().then((size) => {
+      expect(size.height).not.toBeLessThan(50);
+    });
+    await element.all(by.css('#nested-accordion > .accordion-header.is-expanded + .accordion-pane.is-expanded')).get(1).getSize().then((size) => {
+      expect(size.height).not.toBeLessThan(50);
+    });
+  });
+});

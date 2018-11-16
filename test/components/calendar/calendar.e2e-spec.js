@@ -63,7 +63,7 @@ describe('Calendar index tests', () => {
 
 describe('Calendar ajax loading tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/example-ajax-events');
+    await utils.setPage('/components/calendar/test-ajax-events');
     const dateField = await element(by.id('monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
@@ -104,7 +104,7 @@ describe('Calendar ajax loading tests', () => {
 
 describe('Calendar specific month tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/example-specific-month');
+    await utils.setPage('/components/calendar/test-specific-month');
     const dateField = await element(by.id('monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);

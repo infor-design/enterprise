@@ -41,7 +41,7 @@
 
 //Right To Left Styles
 html[dir='rtl'] {
-  .skip-link:focus {
+  .skip-link {
     left: initial;
     margin-right: 20px;
     right: 0;

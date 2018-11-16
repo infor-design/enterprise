@@ -68,4 +68,30 @@ describe('Calendar API', () => {
 
     expect($(calendarEl).data('calendar')).toBeFalsy();
   });
+
+  it('Should render upcoming dates', () => {
+    calendarObj.destroy();
+    const start = new Date();
+    start.setDate(start.getDate() + 1);
+
+    const end = new Date();
+    end.setDate(end.getDate() + 2);
+
+    const newSettings = {
+      eventTypes,
+      events: [{
+        id: '15',
+        subject: 'Days Off',
+        starts: start,
+        ends: end,
+        type: 'dto',
+        isAllDay: true
+      }]
+    };
+
+    calendarObj = new Calendar(calendarEl, newSettings);
+    const compareDate = `${start.toLocaleDateString('en-US', { month: 'long' })} ${start.getDate()}-${end.getDate()}, ${start.toLocaleDateString('en-US', { year: 'numeric' })}`;
+
+    expect(document.querySelector('.calendar-upcoming-date').innerText).toEqual(compareDate);
+  });
 });

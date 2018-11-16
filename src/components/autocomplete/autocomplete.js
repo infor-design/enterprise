@@ -124,7 +124,7 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
 * @param {string} [settings.sourceArguments={}] If a source method is defined, this flexible object can be passed
 * into the source method, and augmented with parameters specific to the implementation.
 * @param {boolean} [settings.template If defined, use this to draw the contents of each search result instead of the default draw routine.
-* @param {string} [settings.filterMode='startsWith'] The matching algorithm, startsWith and contains are supported - false will not filter client side
+* @param {string} [settings.filterMode='startsWith'] The matching algorithm, startsWith, keyword and contains are supported - false will not filter client side
 * @param {boolean} [settings.delay=300] The delay between key strokes on the keypad before it thinks you stopped typing
 * @param {string} [settings.width=null] Width of the open auto complete menu
 * @param {string} [settings.offset=null] For the open menu, the left or top offset
