@@ -80,7 +80,8 @@ describe('Datepicker example-index tests', () => {
   }
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress', async () => {
+    fit('Should not visual regress', async () => { //eslint-disable-line
+      await element(by.css('#date-field-normal')).sendKeys('11/14/2018');
       await element(by.css('#date-field-normal + .icon')).click();
 
       const containerEl = await element(by.className('container'));
