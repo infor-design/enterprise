@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Hierarchy index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/hierarchy/example-index');
+    await utils.setPage('/components/hierarchy/example-index?nofrills=true');
   });
 
   it('Should Render', async () => {
@@ -21,4 +21,17 @@ describe('Hierarchy index tests', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(1500, 900);
+
+      const containerEl = await element.all(by.id('hierarchy')).first();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'hierarchy-index')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    });
+  }
 });

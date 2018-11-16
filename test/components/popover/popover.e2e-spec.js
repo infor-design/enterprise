@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Popover Index Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/popover/example-index');
+    await utils.setPage('/components/popover/example-index?nofrills=true');
   });
 
   it('Should not have errors', async () => {
@@ -23,4 +23,18 @@ describe('Popover Index Tests', () => {
 
     expect(await element(by.css('.popover')).isDisplayed()).toBeTruthy();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.id('popover-trigger')).click();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popover'))), config.waitsFor);
+      await utils.checkForErrors();
+
+      const popoverEl = await element(by.className('popover'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(popoverEl, 'popover-index')).toEqual(0);
+    });
+  }
 });

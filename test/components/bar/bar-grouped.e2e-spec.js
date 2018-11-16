@@ -1,4 +1,5 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
+const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 
 requireHelper('rejection');
@@ -7,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Grouped Bar Chart example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar-grouped/example-index');
+    await utils.setPage('/components/bar-grouped/example-index?nofrills=true');
   });
 
   it('Should not have errors', async () => {
@@ -33,6 +34,15 @@ describe('Grouped Bar Chart example-index tests', () => {
 
     expect(await fGroupEl.getAttribute('class')).toContain('is-selected');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-index')).toBeLessThan(1);
+    });
+  }
 });
 
 describe('Grouped Bar Chart example-negative-value tests', () => {

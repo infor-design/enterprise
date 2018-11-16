@@ -1,25 +1,17 @@
-
 <div class="row">
   <div class="twelve columns">
-
     <div class="field">
-      <label for="islamic-date" class="label">Date Picker</label>
+      <label for="islamic-date" class="label">Date Picker  in Umalqura</label>
       <input id="islamic-date" data-init="false" class="datepicker" name="islamic-date" type="text"/>
     </div>
-
   </div>
 </div>
 
 <script>
   $('body').on('initialized', function () {
-    //Change locale to one that supports umalqura calendar (Hijri)
+    // Change locale to one that supports umalqura calendar (Hijri)
     Locale.set('ar-SA').done(function () {
-      $('#islamic-date').datepicker().on('change', function () {
-        $('body').toast({
-          'title': 'Change Event Fired',
-          'message': 'Value changed to <span class="text-strong">' + $(this).val() + '</span> '
-        });
-      });
+      $('#islamic-date').datepicker();
     });
   });
 

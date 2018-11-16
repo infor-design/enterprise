@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Bar Chart example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/example-index');
+    await utils.setPage('/components/bar/example-index?nofrills=true');
   });
 
   it('Should not have errors', async () => {
@@ -30,6 +30,19 @@ describe('Bar Chart example-index tests', () => {
     expect(await barEl.getAttribute('class')).toContain('is-selected');
     expect(await barTestEl.getCssValue('opacity')).toBe('0.6');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Bar Chart example-selected tests', () => {

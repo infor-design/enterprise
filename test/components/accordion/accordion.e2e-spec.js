@@ -74,7 +74,7 @@ describe('Accordion example-disabled tests', () => {
 
 describe('Accordion example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/accordion/example-index');
+    await utils.setPage('/components/accordion/example-index?nofrills=true');
   });
 
   it('Should not have errors', async () => {
@@ -118,5 +118,37 @@ describe('Accordion example-index tests', () => {
     await browser.actions().sendKeys(protractor.Key.ENTER).perform();
 
     expect(await element(by.className('is-expanded'))).toBeTruthy();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const buttonEl = await element.all(by.tagName('button')).get(2);
+      await buttonEl.click();
+
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'accordion-index')).toEqual(0);
+    });
+  }
+});
+
+describe('Accordion expand multiple tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/accordion/test-expand-all');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  xit('Should expand both panes', async () => { // will remove this on another PR
+    expect(await element.all(by.css('#nested-accordion > .accordion-header.is-expanded')).count()).toEqual(2);
+    await element.all(by.css('#nested-accordion > .accordion-header.is-expanded + .accordion-pane.is-expanded')).get(0).getSize().then((size) => {
+      expect(size.height).not.toBeLessThan(50);
+    });
+    await element.all(by.css('#nested-accordion > .accordion-header.is-expanded + .accordion-pane.is-expanded')).get(1).getSize().then((size) => {
+      expect(size.height).not.toBeLessThan(50);
+    });
   });
 });

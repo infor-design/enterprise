@@ -36,13 +36,13 @@ describe('Searchfield example-index tests', () => {
       const searchfieldSection = await element(by.id('maincontent'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(searchfieldInputEl, 'searchfield-init')).toEqual(0);
       await searchfieldInputEl.clear();
       await searchfieldInputEl.sendKeys('c');
       await searchfieldInputEl.sendKeys('o');
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
       await searchfieldInputEl.sendKeys(protractor.Key.ARROW_DOWN);
 
       expect(await browser.protractorImageComparison.checkElement(searchfieldSection, 'searchfield-open')).toEqual(0);
