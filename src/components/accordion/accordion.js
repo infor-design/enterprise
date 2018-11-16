@@ -747,8 +747,10 @@ Accordion.prototype = {
       }
 
       if (pane.hasClass('no-transition')) {
-        pane[0].style.display = 'block';
-        pane[0].style.height = 'auto';
+        for (let i = 0; i < pane.length; i++) {
+          pane[i].style.display = 'block';
+          pane[i].style.height = 'auto';
+        }
         handleAfterExpand();
       } else {
         pane.one('animateopencomplete', handleAfterExpand).css('display', 'block').animateOpen();

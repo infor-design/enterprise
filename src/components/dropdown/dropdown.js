@@ -2845,7 +2845,7 @@ Dropdown.prototype = {
     this.element.removeAttr('style');
 
     const list = document.body.querySelector('#dropdown-list');
-    if (list) {
+    if (list && this.isOpen()) {
       list.parentNode.removeChild(list);
     }
   },

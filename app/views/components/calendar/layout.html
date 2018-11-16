@@ -5,41 +5,42 @@
   {{> includes/svg-inline-refs}}
 
     {{> includes/applicationmenu}}
+    <header class="header is-personalizable">
+      <div class="toolbar has-more-button do-resize">
+        <div class="title">
+          {{#headerHamburger}}
+          <button class="btn-icon application-menu-trigger" type="button">
+            <span class="audible">Show navigation</span>
+            <span class="icon app-header">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+          </button>
+          {{/headerHamburger}}
 
-    <div class="page-container no-scroll">
-      <header class="header is-personalizable">
-        <div class="toolbar has-more-button do-resize">
-          <div class="title">
-            {{#headerHamburger}}
-            <button class="btn-icon application-menu-trigger" type="button">
-              <span class="audible">Show navigation</span>
-              <span class="icon app-header">
-                <span class="one"></span>
-                <span class="two"></span>
-                <span class="three"></span>
-              </span>
-            </button>
-            {{/headerHamburger}}
-
-            {{> includes/page-title}}
-          </div>
-
-          <div class="buttonset">
-            <button type="button" class="btn-icon" title="Add">
-              <span>Add</span>
-              <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-                <use xlink:href="#icon-add"></use>
-              </svg>
-            </button>
-          </div>
-
-          {{> includes/header-actionbutton}}
+          {{> includes/page-title}}
         </div>
-      </header>
 
+        <div class="buttonset">
+          <button type="button" class="btn-icon btn-menu" id="actions" title="Add">
+            <span>Add</span>
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use xlink:href="#icon-add"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#" data-action="add"><span data-translate="text">Add</span> <span data-translate="text">Event</span></a></li>
+            <li><a href="#" data-action="clear"><span data-translate="text">Clear</span> <span data-translate="text">Events</span></a></li>
+          </ul>
+        </div>
+
+        {{> includes/header-actionbutton}}
+      </div>
+    </header>
+    <div class="page-container no-scroll">
       {{> content}}
     </div>
-
   {{> includes/footer}}
 </body>
 </html>
