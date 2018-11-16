@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('MonthView index tests', () => {
+describe('MonthView index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/monthview/example-index?nofrills=true');
   });
@@ -44,15 +44,6 @@ describe('MonthView index tests', () => {
     expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await prevButton.getText()).toEqual('Previous Month');
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.waitsFor);
-
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'monthview-index')).toEqual(0);
-    });
-  }
 });
 
 describe('Monthview keyboard tests', () => {
@@ -203,7 +194,7 @@ describe('Monthview keyboard tests', () => {
 
 describe('MonthView disable day tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/monthview/test-disable-weekends.html');
+    await utils.setPage('/components/monthview/test-disable-weekends.html?nofrills=true');
   });
 
   it('Should render without error', async () => {
@@ -215,6 +206,15 @@ describe('MonthView disable day tests', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     expect(await element.all(by.css('.monthview-table td.is-disabled')).count()).toEqual(12);
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'monthview-weekends')).toEqual(0);
+    });
+  }
 });
 
 describe('MonthView disable month selection tests', () => {

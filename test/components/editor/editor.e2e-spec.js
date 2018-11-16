@@ -56,7 +56,7 @@ describe('Editor example-index tests', () => {
       await browser.driver.sleep(config.sleep);
 
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'editor-index')).toEqual(0);
     });

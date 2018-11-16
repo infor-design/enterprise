@@ -100,7 +100,7 @@ describe('Modal open example-modal tests on click', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-index', async () => {
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
       const bodyEl = await element(by.className('modal-engaged'));
 
       expect(await browser.protractorImageComparison.checkElement(bodyEl, 'modal-open')).toEqual(0);

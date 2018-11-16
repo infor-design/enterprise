@@ -101,7 +101,7 @@ describe('Lookup', () => {
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 
       const modalEl = await element(by.className('modal'));
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(modalEl, 'lookup-index')).toEqual(0);
     });
