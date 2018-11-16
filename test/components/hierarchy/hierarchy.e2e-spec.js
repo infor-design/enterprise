@@ -24,7 +24,10 @@ describe('Hierarchy index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     fit('Should not visual regress', async () => {
-      const containerEl = await element.all(by.className('container')).first();
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(1500, 900);
+
+      const containerEl = await element.all(by.id('hierarchy')).first();
       await browser.driver.sleep(config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'hierarchy-index')).toEqual(0);
