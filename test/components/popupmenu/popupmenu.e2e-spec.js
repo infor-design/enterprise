@@ -51,7 +51,7 @@ describe('Popupmenu example-selectable tests', () => {
     fit('Should not visual regress on example-selectable', async () => { //eslint-disable-line
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(600, 600);
-      const popupmenuSection = await element(by.css('.container'));
+      const popupmenuSection = await element(by.css('.no-frills'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
