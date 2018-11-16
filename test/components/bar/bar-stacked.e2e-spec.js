@@ -1,4 +1,5 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
+const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 
 requireHelper('rejection');
@@ -7,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Stacked Bar Chart example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar-stacked/example-index');
+    await utils.setPage('/components/bar-stacked/example-index?nofrills=true');
   });
 
   it('Should not have errors', async () => {
@@ -44,6 +45,15 @@ describe('Stacked Bar Chart example-index tests', () => {
 
     expect(await sBarEl.getAttribute('class')).toContain('is-selected');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-stacked-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Stacked Bar Chart example-colors', () => {

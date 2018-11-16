@@ -174,7 +174,7 @@ if (utils.isChrome() && utils.isCI()) {
     // Wait for animations to complete
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     // Test init/default state
     expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-init')).toEqual(0);
@@ -182,7 +182,7 @@ if (utils.isChrome() && utils.isCI()) {
     // Wait for animations to complete
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownElList), config.waitsFor);
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     // Test open state
     expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-open')).toEqual(0);

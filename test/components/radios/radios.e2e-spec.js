@@ -16,7 +16,7 @@ const radioId = 'option1';
 
 describe('Radios example-index tests', () => {
   beforeEach(async () => {
-    await setPage('/components/radios/example-index');
+    await setPage('/components/radios/example-index?nofrills=true');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(radioId))), config.waitsFor);
@@ -28,12 +28,14 @@ describe('Radios example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-index', async () => {
-      const radioIdEl = await element(by.id(radioId));
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(600, 600);
+      const container = await element(by.css('.container'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(radioIdEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(container), config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(radioIdEl, 'radio-init')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(container, 'radio-init')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }
 });
@@ -50,12 +52,12 @@ describe('Radios validation tests', () => {
     await element.all(by.css('.radio')).first().sendKeys(protractor.Key.TAB);
     await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
     await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.message-text')).count()).toEqual(1);
 
     await element.all(by.css('.radio-label')).get(1).click();
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.message-text')).count()).toEqual(0);
   });

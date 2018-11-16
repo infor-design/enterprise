@@ -48,7 +48,7 @@ describe('Textarea example-index tests', () => {
       const textareaEl = await element(by.id('description-max'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(textareaEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(textareaEl, 'textarea-init')).toEqual(0);
     });

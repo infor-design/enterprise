@@ -191,7 +191,6 @@ const Locale = {  // eslint-disable-line
       if (isCurrent) {
         this.setCurrentLocale(locale, this.cultures[locale]);
       }
-      this.addCulture(locale, this.currentLocale.data);
 
       if (isCurrent) {
         this.dff.resolve(this.currentLocale.name);
@@ -342,12 +341,14 @@ const Locale = {  // eslint-disable-line
       pattern = cal.dateFormat[attribs.date];
     }
 
-    let day = value.getDate();
-    let month = value.getMonth();
-    let year = value.getFullYear();
-    const mins = value.getMinutes();
-    const hours = value.getHours();
-    const seconds = value.getSeconds();
+    let year = (value instanceof Array ? value[0] : value.getFullYear());
+    let month = (value instanceof Array ? value[1] : value.getMonth());
+    let day = (value instanceof Array ? value[2] : value.getDate());
+    const dayOfWeek = (value.getDay ? value.getDay() : '');
+    const hours = (value instanceof Array ? value[3] : value.getHours());
+    const mins = (value instanceof Array ? value[4] : value.getMinutes());
+    const seconds = (value instanceof Array ? value[5] : value.getSeconds());
+    const millis = (value instanceof Array ? value[6] : value.getMilliseconds());
 
     if (cal && cal.conversions) {
       if (attribs.fromGregorian) {
@@ -364,6 +365,7 @@ const Locale = {  // eslint-disable-line
     }
 
     // Special
+    pattern = pattern.replace('de', 'nnnnn');
     pattern = pattern.replace('ngày', 'nnnn');
     pattern = pattern.replace('tháng', 't1áng');
     pattern = pattern.replace('den', 'nnn');
@@ -391,7 +393,7 @@ const Locale = {  // eslint-disable-line
     ret = ret.replace('H', hours);
     ret = ret.replace('mm', this.pad(mins, 2));
     ret = ret.replace('ss', this.pad(seconds, 2));
-    ret = ret.replace('SSS', this.pad(value.getMilliseconds(), 0));
+    ret = ret.replace('SSS', this.pad(millis, 0));
 
     // months
     ret = ret.replace('MMMM', cal ? cal.months.wide[month] : null); // full
@@ -404,13 +406,14 @@ const Locale = {  // eslint-disable-line
     // PM
     if (cal) {
       ret = ret.replace(' a', ` ${hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]}`);
-      ret = ret.replace('EEEE', cal.days.wide[value.getDay()]); // Day of Week
+      ret = ret.replace('EEEE', cal.days.wide[dayOfWeek]); // Day of Week
     }
 
     // Day of Week
     if (cal) {
-      ret = ret.replace('EEEE', cal.days.wide[value.getDay()]); // Day of Week
+      ret = ret.replace('EEEE', cal.days.wide[dayOfWeek]); // Day of Week
     }
+    ret = ret.replace('nnnnn', 'de');
     ret = ret.replace('nnnn', 'ngày');
     ret = ret.replace('t1áng', 'tháng');
     ret = ret.replace('nnn', 'den');
@@ -456,7 +459,7 @@ const Locale = {  // eslint-disable-line
    * @param {string} dateFormat  The source format fx yyyy-MM-dd
    * @param {boolean} isStrict  If true missing date parts will be considered
    *  invalid. If false the current month/day.
-   * @returns {date|undefined} updated date object, or nothing
+   * @returns {date|array|undefined} A correct date object, if islamic calendar then an array is used or undefined if invalid.
    */
   parseDate(dateString, dateFormat, isStrict) {
     const thisLocaleCalendar = this.calendar();
@@ -491,6 +494,10 @@ const Locale = {  // eslint-disable-line
       dateFormat = dateFormat.replace(/[T\s:.-]/g, '/').replace(/z/i, '');
       dateString = dateString.replace(/[T\s:.-]/g, '/').replace(/z/i, '');
     }
+
+    // Remove spanish de
+    dateFormat = dateFormat.replace(' de ', ' ');
+    dateString = dateString.replace(' de ', ' ');
 
     if (dateFormat === 'Mdyyyy' || dateFormat === 'dMyyyy') {
       dateString = `${dateString.substr(0, dateString.length - 4)}/${dateString.substr(dateString.length - 4, dateString.length)}`;
@@ -574,7 +581,7 @@ const Locale = {  // eslint-disable-line
 
     // Check the incoming date string's parts to make sure the values are
     // valid against the localized Date pattern.
-    const month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM', 'MMM');
+    const month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM', 'MMM', 'MMMM');
     const year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy');
     let hasDays = false;
 
@@ -746,12 +753,6 @@ const Locale = {  // eslint-disable-line
       dateObj.year = `20${dateObj.year}`;
     }
 
-    // TODO: Need to find solution for three digit year
-    // http://jira/browse/SOHO-4691
-    // if (dateObj.year && dateObj.year.length === 3) {
-    //   dateObj.year = '2' + dateObj.year;
-    // }
-
     dateObj.year = $.trim(dateObj.year);
     dateObj.day = $.trim(dateObj.day);
 
@@ -813,6 +814,17 @@ const Locale = {  // eslint-disable-line
       dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day);
     }
 
+    if (thisLocaleCalendar.name === 'islamic-umalqura') {
+      return [
+        parseInt(dateObj.year, 10),
+        parseInt(dateObj.month, 10),
+        parseInt(dateObj.day, 10),
+        parseInt(dateObj.h || 0, 10),
+        parseInt(dateObj.ss || 0, 10),
+        parseInt(dateObj.ms || 0, 10)
+      ];
+    }
+
     return (this.isValidDate(dateObj.return) ? dateObj.return : undefined);
   },
 
@@ -820,11 +832,14 @@ const Locale = {  // eslint-disable-line
     return parseInt((twoDigitYear > 39 ? '19' : '20') + twoDigitYear, 10);
   },
 
-  getDatePart(formatParts, dateStringParts, filter1, filter2, filter3) {
+  getDatePart(formatParts, dateStringParts, filter1, filter2, filter3, filter4) {
     let ret = 0;
 
     $.each(dateStringParts, (i) => {
-      if (filter1 === formatParts[i] || filter2 === formatParts[i] || filter3 === formatParts[i]) {
+      if (filter1 === formatParts[i] ||
+        filter2 === formatParts[i] ||
+        filter3 === formatParts[i] ||
+        filter4 === formatParts[i]) {
         ret = dateStringParts[i];
       }
     });
@@ -1011,8 +1026,8 @@ const Locale = {  // eslint-disable-line
   /**
    * Takes a translation key and returns the translation in the current locale.
    * @param {string} key  The key to search for on the string.
-   * @param {boolean} [showAsUndefined] causes a translated phrase to be
-    instead of defaulting to the default locale's version of the string.
+   * @param {boolean} [showAsUndefined] Causes a translated phrase to be shown in square brackets
+   * instead of defaulting to the default locale's version of the string.
    * @returns {string|undefined} a translated string, or nothing, depending on configuration
    */
   translate(key, showAsUndefined) {

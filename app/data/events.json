@@ -6,8 +6,8 @@
     "comments": "Short getaway",
     "location": "Us Office",
     "status": "Draft",
-    "starts": "2018-08-22T09:00:00.000Z",
-    "ends": "2018-08-22T13:00:00.000Z",
+    "starts": "2018-08-22T23:59:59.000Z",
+    "ends": "2018-08-22T23:59:59.000Z",
     "type": "dto",
     "isAllDay": "true"
   },
@@ -19,8 +19,8 @@
     "status": "Draft",
     "starts": "2018-08-22T14:00:00.000Z",
     "ends": "2018-08-22T18:00:00.000Z",
-    "type": "sick",
-    "isAllDay": "true"
+    "type": "dto",
+    "isAllDay": "false"
   },
   {
     "id": "3",
@@ -30,7 +30,7 @@
     "starts": "2018-08-22T16:00:00.000Z",
     "ends": "2018-08-22T17:00:00.000Z",
     "type": "admin",
-    "isAllDay": "true"
+    "isAllDay": "false"
   },
   {
     "id": "4",
@@ -40,7 +40,7 @@
     "starts": "2018-08-22T16:00:00.000Z",
     "ends": "2018-08-22T17:00:00.000Z",
     "type": "admin",
-    "isAllDay": "true"
+    "isAllDay": "false"
   },
   {
     "id": "5",
@@ -50,7 +50,7 @@
     "starts": "2018-08-22T18:00:00.000Z",
     "ends": "2018-08-22T19:00:00.000Z",
     "type": "admin",
-    "isAllDay": "true"
+    "isAllDay": "false"
   },
   {
     "id": "6",
@@ -73,7 +73,7 @@
     "starts": "2018-10-01T16:00:00.000Z",
     "ends": "2018-10-01T18:00:00.000Z",
     "type": "team",
-    "isAllDay": "true"
+    "isAllDay": "false"
   },
   {
     "id": "8",
@@ -92,26 +92,85 @@
     "comments": "Annual Autumn Foliage Trip",
     "status": "Pending",
     "icon": "icon-clock",
-    "starts": "2018-10-22T09:00:00.000Z",
-    "ends": "2018-10-24T13:00:00.000Z",
+    "starts": "2018-10-22T23:59:59.000Z",
+    "ends": "2018-10-24T23:59:59.000Z",
     "type": "dto",
-    "isAllDay": "true"
+    "isAllDay": "false"
   },
   {
     "id": "10",
     "subject": "Birthday Off",
     "comments": "Taking my birthday off",
-    "starts": "2018-10-12T09:00:00.000Z",
-    "ends": "2018-10-12T13:00:00.000Z",
+    "starts": "2018-10-12T23:59:59.000Z",
+    "ends": "2018-10-12T23:59:59.000Z",
     "type": "dto",
     "isAllDay": "true"
   },
   {
     "id": "11",
     "subject": "Mexico Trip",
+    "status": "Approved",
     "comments": "I week vacation in mexico",
     "starts": "2018-11-01T23:59:59.000Z",
     "ends": "2018-11-14T23:59:59.000Z",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "12",
+    "subject": "Staying Home with Flu",
+    "status": "Approved",
+    "comments": "I dont feel well. Taking the day off.",
+    "starts": "2018-11-16T23:59:59.000Z",
+    "ends": "2018-11-16T23:59:59.000Z",
+    "type": "sick",
+    "isAllDay": "true"
+  },
+  {
+    "id": "13",
+    "subject": "Long Weekend",
+    "status": "Submitted",
+    "comments": "Going to DC",
+    "starts": "2018-11-30T23:59:59.000Z",
+    "ends": "2018-11-30T23:59:59.000Z",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "14",
+    "subject": "Scrum",
+    "comments": "What are you working on? Any blockers?",
+    "location": "Us Office",
+    "starts": "2018-11-09T18:00:00.000Z",
+    "ends": "2018-11-09T19:00:00.000Z",
+    "type": "admin",
+    "isAllDay": "false"
+  },
+  {
+    "id": "15",
+    "subject": "One on One",
+    "comments": "What are you working on? Any blockers?",
+    "location": "Us Office",
+    "starts": "2018-11-14T18:00:00.000Z",
+    "ends": "2018-11-14T21:00:00.000Z",
+    "type": "admin",
+    "isAllDay": "false"
+  },
+  {
+    "id": "16",
+    "subject": "Christmas",
+    "comments": "Santa and Presents",
+    "starts": "2018-12-25T23:59:59.000Z",
+    "ends": "2018-12-25T23:59:59.000Z",
+    "type": "comp",
+    "isAllDay": "true"
+  },
+  {
+    "id": "17",
+    "subject": "Christmas Holiday in Aruba",
+    "comments": "Santa and Presents",
+    "starts": "2018-12-26T23:59:59.000Z",
+    "ends": "2019-01-05T23:59:59.000Z",
     "type": "dto",
     "isAllDay": "true"
   }

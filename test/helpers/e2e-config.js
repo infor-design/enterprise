@@ -1,4 +1,4 @@
 module.exports = {
-  sleep: 1000,
-  waitsFor: 2500
+  sleep: 500,
+  waitsFor: 1000
 };

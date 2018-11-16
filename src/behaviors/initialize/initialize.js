@@ -335,7 +335,7 @@ const PLUGIN_MAPPINGS = [
   ['texttranslations', '[data-translate="text"]', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {
       const obj = $(item);
-      obj.text(Locale.translate(obj.text()));
+      obj.text(Locale.translate(obj.text(), true));
     });
   }],
 
@@ -358,7 +358,7 @@ const PLUGIN_MAPPINGS = [
 // specified rules or CSS selectors.
 function mapToInit(elem, plugin, selector, callback) {
   // Don't continue if the jQuery constructor for this plugin isn't loaded.
-  if (!$.fn[plugin]) {
+  if (!$.fn[plugin] && plugin !== 'texttranslations') {
     return;
   }
 

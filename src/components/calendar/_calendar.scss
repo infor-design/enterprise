@@ -11,8 +11,12 @@
 
   // The event container
   .calendar-events {
+    border-right: 1px solid $calendar-line-color;
     border-top: 1px solid $calendar-line-color;
     display: inline-block;
+    height: 100%;
+    margin-right: -1px;
+    overflow-y: scroll;
     vertical-align: top;
     width: 220px;
 
@@ -73,6 +77,7 @@
 
   .calendar-event-types {
     margin-bottom: -3px;
+    margin-right: 5px;
   }
 
   // A calendar event
@@ -130,8 +135,9 @@
 
     .calendar-event-content {
       overflow: hidden;
-      padding: 3px 1px;
+      padding: 3px 5px;
       position: relative;
+      text-align: left;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -193,6 +199,114 @@
     margin: 4px 10px;
     text-align: left;
     width: auto;
+  }
+
+  // The upcoming event details section
+  .calendar-upcoming-events.accordion-content {
+    padding: 5px 0 15px 12px !important; //so it works on RTL
+  }
+
+  .calendar-upcoming-event {
+    border: 1px solid transparent;
+    border-bottom: 1px solid $calendar-line-color;
+    color: $font-color-extrahighcontrast;
+    cursor: pointer;
+    display: block;
+    margin: -5px 0 5px -12px;
+    padding: 0 10px 10px;
+    text-decoration: none;
+
+    &:focus {
+      border-color: $theme-color-brand-primary-base !important;
+      box-shadow: 0 0 4px 1px $focus-box-shadow-color;
+      outline: none;
+    }
+
+    .calendar-upcoming-date {
+      @include font-size(14);
+
+      display: block;
+      padding: 10px;
+    }
+
+    .calendar-upcoming-event-color {
+      background-color: $azure06;
+      border-radius: 50%;
+      color: transparent;
+      display: inline-block;
+      font-size: 0;
+      height: 8px;
+      margin-left: 10px;
+      vertical-align: top;
+      width: 8px;
+
+      &.ruby {
+        background-color: $ruby06;
+      }
+
+      &.amber {
+        background-color: $amber06;
+      }
+
+      &.emerald {
+        background-color: $emerald06;
+      }
+
+      &.azure {
+        background-color: $azure06;
+      }
+
+      &.turquoise {
+        background-color: $turquoise06;
+      }
+
+      &.amethyst {
+        background-color: $amethyst06;
+      }
+
+      &.slate {
+        background-color: $slate06;
+      }
+
+      &.graphite {
+        background-color: $graphite06;
+      }
+    }
+
+    .calendar-upcoming-description {
+      @include font-size(12);
+
+      display: inline-block;
+      left: 5px;
+      position: relative;
+      top: -4px;
+      width: 145px;
+    }
+
+    .calendar-upcoming-status-text {
+      @include font-size(12);
+
+      display: block;
+      font-style: italic;
+      left: 25px;
+      position: relative;
+      top: 2px;
+
+      &:empty + .calendar-upcoming-duration {
+        top: -18px;
+      }
+    }
+
+    .calendar-upcoming-duration {
+      @include font-size(12);
+
+      display: block;
+      float: right;
+      font-style: italic;
+      position: relative;
+      right: 5px;
+      top: -12px;
+    }
   }
 }
 
@@ -290,5 +404,23 @@ html[dir='rtl'] {
   .calendar-event-details {
     border-left: 0;
     border-right: 1px solid $calendar-line-color;
+  }
+
+  .calendar-upcoming-events {
+    .calendar-upcoming-description {
+      margin-left: 0;
+      margin-right: 10px;
+    }
+
+    .calendar-upcoming-status-text {
+      left: initial;
+      right: 25px;
+    }
+
+    .calendar-upcoming-duration {
+      float: left;
+      left: 5px;
+      right: initial;
+    }
   }
 }

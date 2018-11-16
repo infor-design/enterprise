@@ -69,7 +69,7 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
       const blockgridEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('blockgrid')).toEqual(0);
     });
@@ -81,7 +81,7 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
       const blockgridEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('blockgrid-500px')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
@@ -95,7 +95,7 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
       const blockgridEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('blockgrid-320px')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
@@ -154,7 +154,7 @@ describe('Blockgrid example-multiselect tests', () => {
     const blockgridEl = await element(by.id('blockgrid'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     await blockEl1.click();
     await blockEl2.click();
@@ -256,7 +256,7 @@ describe('Blockgrid example-paging tests', () => {
     await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
     await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
     await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.block.is-selectable')).get(1)), config.waitsFor);
 
