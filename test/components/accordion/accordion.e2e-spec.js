@@ -131,11 +131,11 @@ describe('Accordion expand multiple tests', () => {
   });
 
   it('Should expand both panes', async () => {
-    expect(await element.all(by.css('.accordion-header.is-expanded')).count()).toEqual(2);
-    await element.all(by.css('.accordion-pane.is-expanded')).get(0).getSize().then((size) => {
+    expect(await element.all(by.css('#nested-accordion > .accordion-header.is-expanded')).count()).toEqual(2);
+    await element.all(by.css('#nested-accordion > .accordion-header.is-expanded + .accordion-pane.is-expanded')).get(0).getSize().then((size) => {
       expect(size.height).not.toBeLessThan(50);
     });
-    await element.all(by.css('.accordion-pane.is-expanded')).get(1).getSize().then((size) => {
+    await element.all(by.css('#nested-accordion > .accordion-header.is-expanded + .accordion-pane.is-expanded')).get(1).getSize().then((size) => {
       expect(size.height).not.toBeLessThan(50);
     });
   });
