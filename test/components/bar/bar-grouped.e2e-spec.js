@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Grouped Bar Chart example-index tests', () => {
+fdescribe('Grouped Bar Chart example-index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/bar-grouped/example-index?nofrills=true');
   });
