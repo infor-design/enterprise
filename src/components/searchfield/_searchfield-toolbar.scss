@@ -253,7 +253,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
   &:not(.is-open) {
     .icon.close {
-      display: none;
+      display: none !important;
     }
   }
 
@@ -282,10 +282,6 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.active {
       width: $toolbarsearchfield-max-width;
-    }
-
-    .searchfield {
-      padding-right: 0;
     }
   }
 
@@ -357,22 +353,22 @@ $toolbarsearchfield-category-empty-width: 51px;
 }
 
 .azure07 .active input {
-  background-color: rgba(29, 95, 138, 0.5);  //08
-  border-bottom-color: rgba(19, 77, 113, 0.7);  //09
+  background-color: rgba(29, 95, 138, 0.5) !important;  //08
+  border-bottom-color: rgba(19, 77, 113, 0.7) !important;  //09
   color: $white;
 
   &::-webkit-input-placeholder {
-    color: $white;
+    color: $white !important;
     opacity: 0.7;
   }
 
   &::-moz-placeholder {
-    color: $white;
+    color: $white !important;
     opacity: 0.7;
   }
 
   &:-ms-input-placeholder {
-    color: $white;
+    color: $white !important;
     opacity: 0.7;
   }
 }
@@ -724,11 +720,6 @@ html[dir='rtl'] {
           }
         }
       }
-
-      .searchfield {
-        padding-left: 0;
-        padding-right: 34px;
-      }
     }
 
     &.has-categories {
@@ -788,31 +779,8 @@ html[dir='rtl'] {
 @include respond-to(phone) {
   .toolbar-searchfield-wrapper {
     &:not(.is-open) {
-      .searchfield {
-        background-color: transparent;
-        color: transparent;
-        padding-left: 0;
-        padding-right: 0;
-        width: 34px;
-
-        &.alternate {
-          background-color: transparent;
-        }
-
-        &::-webkit-input-placeholder {
-          color: transparent;
-          opacity: 0;
-        }
-
-        &::-moz-placeholder {
-          color: transparent;
-          opacity: 0;
-        }
-
-        &:-ms-input-placeholder {
-          color: transparent;
-          opacity: 0;
-        }
+      .searchfield.alternate {
+        background-color: transparent !important;
       }
     }
 
@@ -820,14 +788,6 @@ html[dir='rtl'] {
       > .icon.close {
         right: 35px;
       }
-    }
-
-    &.has-text {
-      width: $toolbarsearchfield-empty-width;
-    }
-
-    .searchfield {
-      background-color: transparent;
     }
   }
 

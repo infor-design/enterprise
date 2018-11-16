@@ -174,7 +174,8 @@ SearchField.prototype = {
   },
 
   /**
-   *
+   * @private
+   * @returns {ToolbarFlexItem|undefined} if inside a Flex Toolbar, returns a reference to the corresponding Toolbar Flex Item API
    */
   get toolbarFlexItem() {
     let item;
@@ -183,6 +184,13 @@ SearchField.prototype = {
     }
 
     return item;
+  },
+
+  /**
+   * @returns {boolean} whether or not this is a context searchfield.
+   */
+  get isContextSearch() {
+    return this.wrapper[0].className.indexOf('context') > -1;
   },
 
   /**
@@ -434,9 +442,12 @@ SearchField.prototype = {
    */
   simpleAdjustOnBreakpoint() {
     if (this.shouldBeFullWidth()) {
-      this.wrapper[0].classList.remove('is-open');
+      if (!this.isFocused) {
+        this.wrapper[0].classList.remove('is-open');
+      }
       return;
     }
+
     this.wrapper[0].classList.add('is-open');
   },
 
@@ -470,7 +481,9 @@ SearchField.prototype = {
         this.collapse();
       }
 
-      this.wrapper[0].classList.remove('is-open');
+      if (this.isContainedByFlexToolbar) {
+        this.wrapper[0].classList.remove('is-open');
+      }
 
       return;
     }
@@ -707,6 +720,11 @@ SearchField.prototype = {
       })
       .on(`focus.${this.id}`, (e) => {
         self.handleFocus(e);
+      })
+      .on(`blur.${this.id}`, (e) => {
+        if (self.isContainedByFlexToolbar) {
+          self.handleSafeBlur(e);
+        }
       })
       .on(`click.${this.id}`, (e) => {
         self.handleClick(e);
@@ -1498,9 +1516,21 @@ SearchField.prototype = {
    * @private
    */
   calculateSearchfieldWidth() {
+    const inlineStyleProp = this.element[0].getAttribute('style');
+    let baseWidth = '100%';
     let subtractWidth = 0;
     let targetWidthProp;
 
+    if (inlineStyleProp) {
+      this.element[0].removeAttribute('style');
+    }
+
+    const computedStyle = window.getComputedStyle(this.element[0]);
+    if (computedStyle.width && !this.isContextSearch) {
+      baseWidth = computedStyle.width;
+    }
+
+    // Subtract width of extraneous buttons/elems
     if (this.hasCategories()) {
       subtractWidth += this.categoryButton.outerWidth(true);
     }
@@ -1510,8 +1540,7 @@ SearchField.prototype = {
 
     // NOTE: final width can only be 100% if no value is subtracted for other elements
     if (subtractWidth > 0) {
-      subtractWidth -= 10;
-      targetWidthProp = `calc(100% - ${subtractWidth}px)`;
+      targetWidthProp = `calc(${baseWidth} - ${subtractWidth}px)`;
     }
     if (targetWidthProp) {
       this.element[0].style.width = targetWidthProp;
@@ -1765,7 +1794,7 @@ SearchField.prototype = {
   collapse() {
     const self = this;
     const collapsePromise = new Promise((resolve) => {
-      if (!self.isExpanded && !self.isExpanding && !self.isCollapsing) {
+      if (!self.isExpanded && self.isExpanding && !self.isCollapsing) {
         resolve();
         return;
       }
@@ -1942,6 +1971,7 @@ SearchField.prototype = {
     this.element.off([
       `updated.${this.id}`,
       `focus.${this.id}`,
+      `blur.${this.id}`,
       `click.${this.id}`,
       `keydown.${this.id}`,
       `beforeopen.${this.id}`,
