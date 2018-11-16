@@ -16,7 +16,7 @@ const radioId = 'option1';
 
 describe('Radios example-index tests', () => {
   beforeEach(async () => {
-    await setPage('/components/radios/example-index');
+    await setPage('/components/radios/example-index?nofrills=true');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(radioId))), config.waitsFor);
@@ -27,13 +27,13 @@ describe('Radios example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
-      const radioIdEl = await element(by.id(radioId));
+    fit('Should not visual regress on example-index', async () => {
+      const container = await element(by.css('div[role=main]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(radioIdEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(container), config.waitsFor);
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(radioIdEl, 'radio-init')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(container, 'radio-init')).toEqual(0);
     });
   }
 });
