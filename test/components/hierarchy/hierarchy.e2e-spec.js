@@ -23,7 +23,7 @@ describe('Hierarchy index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress', async () => {
+    fit('Should not visual regress', async () => { //eslint-disable-line
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1500, 900);
 
@@ -31,6 +31,7 @@ describe('Hierarchy index tests', () => {
       await browser.driver.sleep(config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'hierarchy-index')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }
 });
