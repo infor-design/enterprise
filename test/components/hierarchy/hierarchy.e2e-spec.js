@@ -24,10 +24,14 @@ describe('Hierarchy index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.waitsFor);
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(1500, 900);
+
+      const containerEl = await element.all(by.id('hierarchy')).first();
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'hierarchy-index')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }
 });

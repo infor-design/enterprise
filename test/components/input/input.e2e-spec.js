@@ -46,7 +46,7 @@ describe('Input example-index tests', () => {
       await inputEl.clear();
       await inputEl.sendKeys('co');
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'input-index')).toEqual(0);
     });

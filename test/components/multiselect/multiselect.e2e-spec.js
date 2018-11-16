@@ -148,14 +148,14 @@ describe('Multiselect example-index tests', () => {
       const multiselectElList = await element(by.id('dropdown-list'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(multiselectEl, 'multiselect-init')).toEqual(0);
 
       await clickOnMultiselect();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectElList), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(multiselectElList, 'multiselect-open')).toEqual(0);
     });
