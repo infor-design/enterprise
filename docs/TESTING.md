@@ -33,6 +33,13 @@ The IDS components are backed by both functional and end-to-end (e2e) test suite
 - `Can be [x]`
 - `Will do [x] when also doing [y]`
 
+#### Best Practices for Tests
+
+- Try to use `protractor.ExpectedConditions` rather than sleeps to make things faster, these wait for items in the DOM to change. For more into see [the protractor docs](https://www.protractortest.org/#/api?view=ProtractorExpectedConditions).
+- If you have to use a sleep make sure to use the right config for example `await browser.driver.sleep(config.sleep)`. This is only .5 seconds
+- Try not repeat yourself in tests. For example if you covered some functionality in one page, no need to test the same thing in another page.
+- If you see a sleep in the code, try to refactor it to use `protractor.ExpectedConditions`
+
 ## Running Functional Tests
 
 Functional tests can be run in multiple modes.
