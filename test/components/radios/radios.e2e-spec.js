@@ -27,7 +27,7 @@ describe('Radios example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress on example-index', async () => {
+    it('Should not visual regress on example-index', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(600, 600);
       const container = await element(by.css('.container'));

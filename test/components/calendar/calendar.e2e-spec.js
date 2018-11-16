@@ -52,7 +52,7 @@ describe('Calendar index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress', async () => {
+    it('Should not visual regress', async () => {
       const calendarEl = await element(by.className('calendar'));
       await browser.driver.sleep(config.waitsFor);
 
