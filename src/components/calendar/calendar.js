@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { MonthView } from '../monthview/monthview';
@@ -16,7 +17,8 @@ const COMPONENT_NAME_DEFAULTS = {
   year: new Date().getFullYear(),
   showViewChanger: true,
   onRenderMonth: null,
-  template: null
+  template: null,
+  upcomingEventDays: 14
 };
 
 /**
@@ -28,6 +30,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {array} [settings.events] An array of objects with data for the events.
  * @param {array} [settings.month] Initial month to show.
  * @param {array} [settings.year] Initial year to show.
+ * @param {array} [settings.upcomingEventDays=14] How many days in advance should we show in the upcoming events pane.
  * @param {boolean} [settings.showViewChanger] If false the dropdown to change views will not be shown.
  * @param {function} [settings.onRenderMonth] Fires when a month is rendered, allowing you to pass back events or event types to show.
  * @param {function} [settings.onSelected] Fires when a month day is clicked. Allowing you to do something.
@@ -61,8 +64,9 @@ Calendar.prototype = {
   build() {
     this
       .renderEventTypes()
-      .renderMonthView()
+      .renderMonth()
       .renderViewChanger();
+
     return this;
   },
 
@@ -81,7 +85,7 @@ Calendar.prototype = {
     for (let i = 0; i < this.settings.eventTypes.length; i++) {
       const eventType = this.settings.eventTypes[i];
       eventTypeMarkup += `<input type="checkbox" class="checkbox ${eventType.color}07" name="${eventType.id}" id="${eventType.id}" checked="${eventType.checked ? 'true' : 'false'}" ${eventType.disabled ? 'disabled="true"' : ''} />
-        <label for="${eventType.id}" class="checkbox-label">${eventType.label}</label><br/>`;
+        <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey) : eventType.label}</label><br/>`;
     }
     this.eventTypeContainer.innerHTML = eventTypeMarkup;
     this.element.initialize();
@@ -93,7 +97,7 @@ Calendar.prototype = {
    * @returns {object} The Calendar prototype, useful for chaining.
    * @private
    */
-  renderMonthView() {
+  renderMonth() {
     this.monthViewContainer = document.querySelector('.calendar .calendar-monthview');
 
     this.monthView = new MonthView(this.monthViewContainer, {
@@ -105,7 +109,57 @@ Calendar.prototype = {
     });
     this.monthViewHeader = document.querySelector('.calendar .monthview-header');
     this.renderEvents();
+
+    // Show related stuff for today
+    const dayEvents = document.querySelectorAll('.calendar td.is-selected .calendar-event');
+    for (let i = 0; i < dayEvents.length; i++) {
+      this.renderEventDetails(dayEvents[i].getAttribute('data-id'));
+    }
     return this;
+  },
+
+  /**
+   * Render the upcoming events view
+   * @param {object} event The Calendar event to show.
+   * @private
+   */
+  appendUpcomingEvent(event) {
+    this.upcomingEventsContainer = document.querySelector('.calendar-upcoming-events');
+    if (!this.upcomingEventsContainer || event.daysUntil > 0) {
+      return;
+    }
+
+    const daysUntil = Math.abs(event.daysUntil);
+    if (daysUntil < 0 || daysUntil > this.settings.upcomingEventDays) {
+      return;
+    }
+
+    const upcomingEvent = document.createElement('a');
+    upcomingEvent.setAttribute('href', '#');
+    upcomingEvent.setAttribute('data-key', event.startKey);
+    upcomingEvent.classList.add('calendar-upcoming-event');
+
+    let upcomingEventsMarkup = '';
+    const startDay = Locale.formatDate(event.starts, { pattern: 'd' });
+    const endDay = Locale.formatDate(event.ends, { pattern: 'd' });
+    let dateRange = `${Locale.formatDate(event.starts, { pattern: 'MMMM' })} ${startDay === endDay ? startDay : `${startDay}-${endDay}`}, ${Locale.formatDate(event.starts, { pattern: 'yyyy' })}`;
+
+    if (parseInt(endDay, 10) < parseInt(startDay, 10)) {
+      const nextMonth = new Date(event.starts);
+      nextMonth.setDate(1);
+      nextMonth.setMonth(nextMonth.getMonth() + 1);
+      const endYear = nextMonth.getFullYear();
+      dateRange = `${Locale.formatDate(event.starts, { pattern: 'MMMM' })} ${startDay} - ${Locale.formatDate(nextMonth, { pattern: 'MMMM' })} ${endDay}, ${endYear}`;
+    }
+
+    upcomingEventsMarkup += `
+      <span class="calendar-upcoming-date">${dateRange}</span>
+      <span class="calendar-upcoming-event-color ${event.color || ''}">${event.color || ''}</span>
+      <span class="calendar-upcoming-description">${event.subject || ''}</span>
+      <span class="calendar-upcoming-status-text">${event.status || ''}</span>
+      <span class="calendar-upcoming-duration">${event.isDays ? event.duration : event.durationHours} ${event.durationUnits || ''}</span>`;
+    upcomingEvent.innerHTML = upcomingEventsMarkup;
+    this.upcomingEventsContainer.appendChild(upcomingEvent);
   },
 
   /**
@@ -182,6 +236,16 @@ Calendar.prototype = {
   },
 
   /**
+   * Clear all contents from the upcoming events area.
+   * @private
+   */
+  clearUpcomingEvents() {
+    if (this.upcomingEventsContainer) {
+      this.upcomingEventsContainer.innerHTML = '';
+    }
+  },
+
+  /**
    * Get the currently unchecked filter types
    * @returns {array} The active types.
    * @private
@@ -200,6 +264,25 @@ Calendar.prototype = {
   },
 
   /**
+   * Get the difference between two dates.
+   * @private
+   * @param {date} first The first date.
+   * @param {date} second The second date.
+   * @param {boolean} useHours The different in hours if true, otherways days.
+   * @param {boolean} isFullDay Add an hour to include the full day to match the calendar.
+   * @returns {number} The difference between the two dates.
+   */
+  dateDiff(first, second, useHours, isFullDay) {
+    // Take the difference between the dates and divide by milliseconds per day.
+    // Round to nearest whole number to deal with DST.
+    let diff = Math.round((second - first) / (1000 * 60 * 60 * (useHours ? 1 : 24)));
+    if (isFullDay) {
+      diff += 1;
+    }
+    return diff;
+  },
+
+  /**
    * Render/ReRender the events attached to the settings.
    * @param {boolean} isCallback Will be set to true when a callback occurs
    * @returns {object} The Calendar prototype, useful for chaining.
@@ -213,11 +296,17 @@ Calendar.prototype = {
     const self = this;
     const filters = this.filterEventTypes();
 
+    // Cleanup from previous renders
     this.visibleEvents = [];
     this.removeAllEvents();
+    this.clearUpcomingEvents();
 
-    for (let i = 0; i < this.settings.events.length; i++) {
-      const event = this.settings.events[i];
+    // Clone and sort the array.
+    const eventsSorted = this.settings.events.slice(0);
+    eventsSorted.sort((a, b) => (a.starts < b.starts ? -1 : (a.starts > b.starts ? 1 : 0)));
+
+    for (let i = 0; i < eventsSorted.length; i++) {
+      const event = eventsSorted[i];
       if (filters.indexOf(event.type) > -1) {
         continue;
       }
@@ -239,25 +328,53 @@ Calendar.prototype = {
       );
 
       const days = self.monthView.dayMap.filter(day => day.key >= startKey && day.key <= endKey);
+      event.color = self.getEventTypeColor(event.type);
+      event.duration = Math.abs(this.dateDiff(
+        new Date(event.ends),
+        new Date(event.starts),
+        false,
+        event.isFullDay
+      ));
+      event.durationUnits = event.duration > 1 ? Locale.translate('Days') : Locale.translate('Day');
+      event.endKey = endKey;
+      event.startKey = startKey;
+      event.daysUntil = event.starts ? this.dateDiff(new Date(event.starts), new Date()) : 0;
+      event.durationHours = this.dateDiff(new Date(event.starts), new Date(event.ends), true);
+      event.isDays = true;
+
+      if (event.durationHours < 24) {
+        event.isDays = false;
+        event.durationUnits = event.durationHours > 1 ? Locale.translate('Hours') : Locale.translate('Hour');
+      }
+      if (event.durationHours < 24 && event.isAllDay.toString() === 'true') {
+        event.isDays = true;
+        event.durationUnits = event.duration > 1 ? Locale.translate('Days') : Locale.translate('Day');
+      }
+      if (event.duration === 0 && event.isAllDay.toString() === 'true') {
+        event.isDays = true;
+        event.duration = 1;
+        event.durationUnits = Locale.translate('Day');
+      }
 
       // Event is only on this day
       if (days.length === 1) {
-        const color = self.getEventTypeColor(event.type);
-        self.appendEvent(days[0].elem[0], event, color, 'event-day-start-end');
+        self.appendEvent(days[0].elem[0], event, 'event-day-start-end');
       }
 
       // Event extends multiple days
       if (days.length > 1) {
-        const color = self.getEventTypeColor(event.type);
         for (let l = 0; l < days.length; l++) {
           let cssClass = l === 0 ? 'event-day-start' : 'event-day-span';
 
           if (days.length - 1 === l) {
             cssClass = 'event-day-end';
           }
-          self.appendEvent(days[l].elem[0], event, color, cssClass);
+          self.appendEvent(days[l].elem[0], event, cssClass);
         }
       }
+
+      // Event extends multiple days
+      this.appendUpcomingEvent(event, days);
     }
 
     return this;
@@ -275,11 +392,10 @@ Calendar.prototype = {
    * Add the ui event to the container.
    * @param {object} container The container to append to
    * @param {object} event The event data object.
-   * @param {string} color The color to shade
    * @param {string} type Type of event, can be event-day-start, event-day-start-end, event-day-span, event-day-end
    * @returns {object} The Calendar prototype, useful for chaining.
    */
-  appendEvent(container, event, color, type) {
+  appendEvent(container, event, type) {
     let node;
     const eventCnt = container.querySelectorAll('.calendar-event').length;
 
@@ -304,7 +420,7 @@ Calendar.prototype = {
     }
 
     node = document.createElement('a');
-    node.classList.add('calendar-event', color, type);
+    node.classList.add('calendar-event', event.color, type);
     node.setAttribute('data-id', event.id);
 
     node.innerHTML = `<div class="calendar-event-content">
@@ -405,6 +521,10 @@ Calendar.prototype = {
       }
     });
 
+    this.element.on(`click.${COMPONENT_NAME}`, '.calendar-upcoming-event', (e) => {
+      const key = e.currentTarget.getAttribute('data-key');
+      this.monthView.selectDay(key);
+    });
     return this;
   },
 
@@ -429,6 +549,42 @@ Calendar.prototype = {
   },
 
   /**
+   * Get the events and date for the currently selected calendar day.
+   * @param {date} date The date to find the events for.
+   * @returns {object} dayEvents An object with all teh events and the event date.
+   */
+  getDayEvents(date) {
+    if (typeof date !== 'string') {
+      date = stringUtils.padDate(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+      );
+    }
+
+    const dayObj = this.monthView.dayMap.filter(dayFilter => dayFilter.key === date);
+
+    const dayEvents = {
+      currentDate: this.monthView.currentDate,
+      events: []
+    };
+
+    if (dayObj.length === 0) {
+      return [];
+    }
+
+    const dayContainer = dayObj.elem;
+    const dayEventEls = dayContainer.querySelectorAll('.calendar-event');
+    for (let i = 0; i < dayEventEls.length; i++) {
+      const eventId = dayEventEls[i].getAttribute('data-id');
+      const eventData = this.settings.events.filter(event => event.id === eventId);
+      dayEvents.events.push(eventData[0]);
+    }
+
+    return dayEvents;
+  },
+
+  /**
    * Handle updated settings and values.
    * @returns {object} [description]
    */
@@ -447,6 +603,7 @@ Calendar.prototype = {
     this.element.off(`updated.${COMPONENT_NAME}`);
     this.element.off(`monthrendered.${COMPONENT_NAME}`);
     this.element.off(`change.${COMPONENT_NAME}`);
+    this.element.on(`click.${COMPONENT_NAME}`);
     $(this.monthViewContainer).off();
 
     return this;
@@ -462,6 +619,9 @@ Calendar.prototype = {
     }
     if (this.monthViewContainer) {
       this.monthViewContainer.innerHTML = '';
+    }
+    if (this.upcomingEventsContainer) {
+      this.upcomingEventsContainer.innerHTML = '';
     }
     if (this.eventDetailsContainer) {
       this.eventDetailsContainer.innerHTML = '';

@@ -7,9 +7,9 @@ demo:
     slug: example-index
   pages:
   - name: Disabling Weeks/Days
-    slug: example-disable-weeks
+    slug: example-disable-weekends
   - name: Restricting Month Selection
-    slug: example-restrict-month-selection
+    slug: test-restrict-month-selection
 ---
 
 The setup for a monthview only involves creating an `<div>` with the class `monthview`. The monthview is also used in [datepicker](./datepicker) popup (isPopup option). The [calendar](./calendar) is also part of the calendar.
@@ -22,7 +22,7 @@ This plugin works using Locale plugin which provides data for the calendar, incl
 
 ## Accessibility
 
-The monthview is a very complex control to code for accessibility. We take the following approach.
+The monthview is a very complex component to code for accessibility. We take the following approach:
 
 - Add an `aria` label to the calendar element
 - Add `aria-selected=true` to selected day

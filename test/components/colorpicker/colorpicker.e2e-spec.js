@@ -187,7 +187,7 @@ describe('Colorpicker clearable tests', () => {
   });
 
   it('Should show clearable option', async () => {
-    await element(by.css('#cp-clearable-true + .trigger .icon')).click();
+    await element.all(by.css('#cp-clearable-true + .trigger .icon')).first().click();
 
     expect(await element(by.css('#colorpicker-menu li:last-child .swatch')).getAttribute('class')).toContain('is-empty');
   });
