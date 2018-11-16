@@ -710,6 +710,9 @@ ColorPicker.prototype = {
       if (e.keyCode === 38 || e.keyCode === 40) {
         this.toggleList();
       }
+      if (e.keyCode === 13) {
+        this.setColor(elem.val());
+      }
     });
   }
 
