@@ -415,7 +415,7 @@ describe('Validation Duplicate Events', () => {
     const dateEl = await element(by.id('date-field'));
     await dateEl.sendKeys('2121');
     await dateEl.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(1500);
 
     expect(await element.all(by.css('.toast-message')).count()).toEqual(2);
     expect(await element.all(by.css('.toast-message')).get(0).getText()).toEqual('error event fired');

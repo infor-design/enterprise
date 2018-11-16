@@ -54,7 +54,7 @@ describe('Datagrid index tests', () => {
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
 
       const datagridEl = await element(by.id('datagrid'));
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-index')).toEqual(0);
     });
@@ -584,7 +584,7 @@ describe('Datagrid paging multiselect across pages', () => {
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
@@ -653,7 +653,7 @@ describe('Datagrid paging client side multiselect tests', () => {
 
     await element(by.css('.pager-next')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
@@ -687,13 +687,13 @@ describe('Datagrid paging clientside single select tests', () => { //eslint-disa
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
   });
@@ -720,13 +720,13 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
   });

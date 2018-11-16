@@ -24,7 +24,7 @@ describe('Timepicker example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(timepickerSection), config.waitsFor);
       await element(by.css('.timepicker + .icon')).click();
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(timepickerSection, 'timepicker-open')).toEqual(0);
     });

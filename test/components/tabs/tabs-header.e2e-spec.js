@@ -29,7 +29,7 @@ describe('Tabs header click example-index tests', () => {
       const tabsEl = await element(by.id('header-tabs'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(tabsEl, 'header-tabs-init')).toEqual(0);
     });

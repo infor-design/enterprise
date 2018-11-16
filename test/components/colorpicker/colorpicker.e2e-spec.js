@@ -16,7 +16,7 @@ describe('Colorpicker example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-index', async () => {
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
       const colorpickerSection = await element(by.id('maincontent'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(colorpickerSection), config.waitsFor);
@@ -24,7 +24,7 @@ describe('Colorpicker example-index tests', () => {
 
       expect(await browser.protractorImageComparison.checkElement(colorpickerContainer, 'colorpicker-init')).toEqual(0);
       await element(by.css('#background-color + .trigger .icon')).click();
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(colorpickerSection, 'colorpicker-open')).toEqual(0);
     });

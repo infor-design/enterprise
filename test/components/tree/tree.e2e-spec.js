@@ -53,7 +53,7 @@ describe('Tree example-index tests', () => {
       await link.click();
 
       const containerEl = await element(by.id('maincontent'));
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'tree-index')).toEqual(0);
     });
@@ -106,7 +106,7 @@ describe('Tree Ajax data tests', () => {
   it('Should load Ajax data node on click', async () => {
     expect(await element.all(by.css('.tree li')).count()).toBe(2);
     await element.all(by.css('.tree li.folder a[role="treeitem"]')).first().click();
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(2500);
 
     expect(await element.all(by.css('.tree li')).count()).toBe(4);
   });

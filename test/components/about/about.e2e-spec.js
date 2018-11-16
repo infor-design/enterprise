@@ -29,7 +29,7 @@ describe('About index tests', () => {
       await button.click();
 
       const searchfieldSection = await element(by.id('maincontent'));
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(searchfieldSection, 'about-open')).toBeLessThan(1);
     });
