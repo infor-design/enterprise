@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Datepicker example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-index');
+    await utils.setPage('/components/datepicker/example-index?nofrills=true');
   });
 
   it('Should not have errors', async () => {
@@ -76,6 +76,17 @@ describe('Datepicker example-index tests', () => {
       testDate.setSeconds(0);
 
       expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    });
+  }
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.css('#date-field-normal + .icon')).click();
+
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-index')).toEqual(0);
     });
   }
 });

@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('MonthView index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/monthview/example-index');
+    await utils.setPage('/components/monthview/example-index?nofrills=true');
   });
 
   it('Should render without error', async () => {
@@ -44,6 +44,15 @@ describe('MonthView index tests', () => {
     expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await prevButton.getText()).toEqual('Previous Month');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'monthview-index')).toEqual(0);
+    });
+  }
 });
 
 describe('MonthView disable day tests', () => {

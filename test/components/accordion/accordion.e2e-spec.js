@@ -74,7 +74,7 @@ describe('Accordion example-disabled tests', () => {
 
 describe('Accordion example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/accordion/example-index');
+    await utils.setPage('/components/accordion/example-index?nofrills=true');
   });
 
   it('Should not have errors', async () => {
@@ -119,4 +119,16 @@ describe('Accordion example-index tests', () => {
 
     expect(await element(by.className('is-expanded'))).toBeTruthy();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const buttonEl = await element.all(by.tagName('button')).get(2);
+      await buttonEl.click();
+
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'accordion-index')).toEqual(0);
+    });
+  }
 });

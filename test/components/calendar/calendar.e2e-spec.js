@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Calendar index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/example-index');
+    await utils.setPage('/components/calendar/example-index?nofrills=true');
   });
 
   it('Should render without error', async () => {
@@ -50,6 +50,15 @@ describe('Calendar index tests', () => {
 
     expect(await prevButton.getText()).toEqual('Previous Month');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const calendarEl = await element(by.className('calendar'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Calendar ajax loading tests', () => {

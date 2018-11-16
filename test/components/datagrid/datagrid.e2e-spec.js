@@ -7,13 +7,11 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Datagrid index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-index');
+    await utils.setPage('/components/datagrid/example-index?nofrills=true');
 
     const datagridEl = await element(by.id('datagrid'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-    const tabElTriggerStart = await element(by.id('header-searchfield'));
-    await tabElTriggerStart.click();
     await element(by.css('body')).sendKeys(protractor.Key.TAB);
     await element(by.css('body')).sendKeys(protractor.Key.TAB);
   });
@@ -49,6 +47,18 @@ describe('Datagrid index tests', () => {
 
     expect(await cellEl.getAttribute('aria-colindex')).toBe('1');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+
+      const datagridEl = await element(by.id('datagrid'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid grouping with paging tests', () => {
