@@ -33,7 +33,7 @@ describe('Tabs click example-index tests', () => {
       const tabsEl = await element(by.id('tabs-normal'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-init')).toEqual(0);
     });
@@ -122,7 +122,7 @@ describe('Tabs click example-counts tests', () => {
       const tabsEl = await element(by.id('tabs-counts'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-counts')).toEqual(0);
     });
@@ -278,7 +278,7 @@ describe('Tabs click example-add-tab button tests', () => {
       const tabsEl = await element(by.id('add-capable-tabs'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-add-tab')).toEqual(0);
     });
@@ -387,7 +387,7 @@ describe('Tabs click example-dropdown-tabs tests', () => {
       const tabsEl = await element(by.id('tabs-dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-dropdown')).toEqual(0);
     });

@@ -44,7 +44,7 @@ module.exports = function (config) {
             use: [{
               loader: 'babel-loader',
               options: {
-                presets: ['@babel/preset-env']
+                presets: ['env']
               }
             }],
             exclude: /node_modules/

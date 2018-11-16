@@ -1,0 +1,69 @@
+<div class="row" style="margin-bottom: 20px;">
+  <div class="three columns">
+    <button id="destroy-dropdown1" class="btn-secondary">Destroy Dropdown One</button>
+  </div>
+
+  <div class="three columns">
+    <button id="destroy-dropdown2" class="btn-secondary">Destroy Dropdown Two</button>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="three columns">
+
+    <div class="field">
+      <label for="dropdown1" class="label">Dropdown One</label>
+      <select id="dropdown1" name="dropdown1" class="dropdown">
+        <option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+        <option value="MN">Minnesota</option>
+        <option value="OR">Oregon</option>
+        <option value="WA">Washington</option>
+        <option value="WY">Wyoming</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="three columns">
+
+    <div class="field">
+      <label for="dropdown2" class="label">Dropdown Two</label>
+      <select id="dropdown2" name="dropdown2" class="dropdown">
+        <option value="0">Value Zero</option>
+        <option value="1">Value One</option>
+        <option value="2">Value Two</option>
+      </select>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+$('body').on('initialized', function() {
+
+  var dropdown1 = $('#dropdown1');
+  var dropdown2 = $('#dropdown2');
+
+  $('#destroy-dropdown1').on('click', function() {
+    dropdown1.data('dropdown').destroy();
+  });
+
+  $('#destroy-dropdown2').on('click', function() {
+    dropdown2.data('dropdown').destroy();
+  });
+
+  dropdown1.on('selected', function (elem, options, isSelected) {
+    if (options[0].value === 'AZ') {
+      // destroy dropdown
+      var dropdown = $('#dropdown2').data('dropdown');
+      dropdown.destroy();
+    }
+  });
+
+});
+</script>

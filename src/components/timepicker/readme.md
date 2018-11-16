@@ -6,18 +6,14 @@ demo:
   - name: Default Example
     slug: example-index
   pages:
-  - name: 24-Hour (Military) Time
-    slug: example-24-hour
-  - name: Rounded Minute Intervals
-    slug: example-intervals
-  - name: Readonly Timepicker
-    slug: example-readonly
-  - name: Disabled Timepicker
-    slug: example-disabled
-  - name: Timepicker with a Seconds Picker
-    slug: example-seconds-picker
   - name: Timepicker with Required Validation
     slug: example-validation
+  - name: 24-Hour (Military) Time
+    slug: test-24-hour
+  - name: Rounded Minute Intervals
+    slug: test-intervals
+  - name: Timepicker with a Seconds Picker
+    slug: test-seconds-picker
 ---
 ## Behavior Guidelines
 

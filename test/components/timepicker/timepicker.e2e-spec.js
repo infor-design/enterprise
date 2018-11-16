@@ -24,7 +24,7 @@ describe('Timepicker example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(timepickerSection), config.waitsFor);
       await element(by.css('.timepicker + .icon')).click();
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(timepickerSection, 'timepicker-open')).toEqual(0);
     });
@@ -91,7 +91,7 @@ describe('Timepicker example-index tests', () => {
 
 describe('Timepicker 24 Hour tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/timepicker/example-24-hour');
+    await utils.setPage('/components/timepicker/test-24-hour');
   });
 
   it('Should open popup on icon click for 24 Hour', async () => {
@@ -126,7 +126,7 @@ describe('Timepicker 24 Hour tests', () => {
 
 describe('Timepicker with seconds example tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/timepicker/example-seconds-picker');
+    await utils.setPage('/components/timepicker/test-seconds-picker');
   });
 
   it('Should open popup on icon click with seconds', async () => {
@@ -191,7 +191,7 @@ describe('Timepicker with seconds example tests', () => {
 
 describe('Timepicker Intervals tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/timepicker/example-intervals');
+    await utils.setPage('/components/timepicker/test-intervals');
   });
 
   it('Should pick time from picker with 10 minute intervals', async () => {
@@ -233,7 +233,7 @@ describe('Timepicker Intervals tests', () => {
 
 describe('Timepicker states tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/timepicker/example-states');
+    await utils.setPage('/components/timepicker/test-states');
   });
 
   it('Should check to make readonly', async () => {

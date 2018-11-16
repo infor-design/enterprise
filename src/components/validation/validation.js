@@ -123,70 +123,80 @@ function ValidationRules() {
         this.message = Locale.translate('UnavailableDate');
         let check = true;
 
-        if (value !== '') {
-          if (self.rules.date.check(value, field)) { // if valid date
-            const datepickerApi = field.data('datepicker');
-            const options = datepickerApi ? datepickerApi.settings : {};
-            const hasOptions = Object.keys(options).length > 0;
-            let d;
-            let i;
-            let l;
-            let min;
-            let max;
-            let dateObj = value;
-            if (typeof dateObj === 'string') {
-              let format = options.dateFormat !== 'locale' ?
-                options.dateFormat : Locale.calendar().dateFormat.short;
-              if (options.showTime) {
-                const timeFormat = options.timeFormat || Locale.calendar().timeFormat;
-                format += ` ${timeFormat}`;
-              }
-              dateObj = Locale.parseDate(dateObj, format);
-            }
-            let d2 = options.useUTC ? Locale.dateToUTC(dateObj) : dateObj;
+        if (value === '') {
+          return check;
+        }
 
-            if (d2 && hasOptions) {
-              min = (options.useUTC ?
-                Locale.dateToUTC(new Date(options.disable.minDate)).setHours(0, 0, 0, 0) :
-                new Date(options.disable.minDate).setHours(0, 0, 0, 0));
-              max = (options.useUTC ?
-                Locale.dateToUTC(new Date(options.disable.maxDate)).setHours(0, 0, 0, 0) :
-                new Date(options.disable.maxDate).setHours(0, 0, 0, 0));
+        if (!self.rules.date.check(value, field)) {
+          // not a validate date so that will fail instead
+          check = false;
+          this.message = '';
+          return check;
+        }
 
-              // dayOfWeek
-              if (options.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
-                check = false;
-              }
-
-              d2 = d2.setHours(0, 0, 0, 0);
-
-              // min and max
-              if ((d2 <= min) || (d2 >= max)) {
-                check = false;
-              }
-
-              // dates
-              if (options.disable.dates.length && typeof options.disable.dates === 'string') {
-                options.disable.dates = [options.disable.dates];
-              }
-              for (i = 0, l = options.disable.dates.length; i < l; i++) {
-                d = options.useUTC ? Locale.dateToUTC(options.disable.dates[i]) :
-                  new Date(options.disable.dates[i]);
-
-                if (d2 === d.setHours(0, 0, 0, 0)) {
-                  check = false;
-                  break;
-                }
-              }
-            }
-            if (hasOptions) {
-              check = !!(((check && !options.disable.isEnable) ||
-                (!check && options.disable.isEnable)));
-            }
-          } else { // Invalid date
-            check = false;
-            this.message = '';
+        const datepickerApi = field.data('datepicker');
+        const options = datepickerApi ? datepickerApi.settings : {};
+        const hasOptions = Object.keys(options).length > 0;
+        let d;
+        let i;
+        let l;
+        let min;
+        let max;
+        let dateObj = value;
+        if (typeof dateObj === 'string') {
+          let format = options.dateFormat !== 'locale' ?
+            options.dateFormat : Locale.calendar().dateFormat.short;
+          if (options.showTime) {
+            const timeFormat = options.timeFormat || Locale.calendar().timeFormat;
+            format += ` ${timeFormat}`;
           }
+          dateObj = Locale.parseDate(dateObj, format);
+        }
+        let d2 = options.useUTC ? Locale.dateToUTC(dateObj) : dateObj;
+
+        // TODO: The developer will have to set disabled dates in arabic as arrays,
+        // will come back to this for now its not supported in arabic.
+        if (d2 instanceof Array) {
+          return check;
+        }
+
+        if (d2 && hasOptions) {
+          min = (options.useUTC ?
+            Locale.dateToUTC(new Date(options.disable.minDate)).setHours(0, 0, 0, 0) :
+            new Date(options.disable.minDate).setHours(0, 0, 0, 0));
+          max = (options.useUTC ?
+            Locale.dateToUTC(new Date(options.disable.maxDate)).setHours(0, 0, 0, 0) :
+            new Date(options.disable.maxDate).setHours(0, 0, 0, 0));
+
+          // dayOfWeek
+          if (options.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
+            check = false;
+          }
+
+          d2 = d2.setHours(0, 0, 0, 0);
+
+          // min and max
+          if ((d2 <= min) || (d2 >= max)) {
+            check = false;
+          }
+
+          // dates
+          if (options.disable.dates.length && typeof options.disable.dates === 'string') {
+            options.disable.dates = [options.disable.dates];
+          }
+          for (i = 0, l = options.disable.dates.length; i < l; i++) {
+            d = options.useUTC ? Locale.dateToUTC(options.disable.dates[i]) :
+              new Date(options.disable.dates[i]);
+
+            if (d2 === d.setHours(0, 0, 0, 0)) {
+              check = false;
+              break;
+            }
+          }
+        }
+        if (hasOptions) {
+          check = !!(((check && !options.disable.isEnable) ||
+            (!check && options.disable.isEnable)));
         }
 
         return check;

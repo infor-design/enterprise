@@ -7,13 +7,11 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Datagrid index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-index');
+    await utils.setPage('/components/datagrid/example-index?nofrills=true');
 
     const datagridEl = await element(by.id('datagrid'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-    const tabElTriggerStart = await element(by.id('header-searchfield'));
-    await tabElTriggerStart.click();
     await element(by.css('body')).sendKeys(protractor.Key.TAB);
     await element(by.css('body')).sendKeys(protractor.Key.TAB);
   });
@@ -49,6 +47,18 @@ describe('Datagrid index tests', () => {
 
     expect(await cellEl.getAttribute('aria-colindex')).toBe('1');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+
+      const datagridEl = await element(by.id('datagrid'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid grouping with paging tests', () => {
@@ -574,7 +584,7 @@ describe('Datagrid paging multiselect across pages', () => {
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
@@ -643,7 +653,7 @@ describe('Datagrid paging client side multiselect tests', () => {
 
     await element(by.css('.pager-next')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
@@ -677,13 +687,13 @@ describe('Datagrid paging clientside single select tests', () => { //eslint-disa
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
   });
@@ -710,13 +720,13 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
 
     element(by.css('.pager-next')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev')).click();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
   });
@@ -1048,15 +1058,15 @@ describe('Datagrid tooltip tests', () => {
   it('Should show tooltip on text cut off', async () => {
     await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="4"] td[aria-colindex="9"]'))).perform();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.tooltip'))), config.waitsFor);
-    let tooltip = await element(by.id('tooltip'));
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
+    let tooltip = await element(by.css('.grid-tooltip'));
 
     expect(await tooltip.getAttribute('class')).toContain('is-hidden');
 
     await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="5"] td[aria-colindex="9"]'))).perform();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.tooltip'))), config.waitsFor);
-    tooltip = await element(by.id('tooltip'));
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
+    tooltip = await element(by.css('.grid-tooltip'));
 
     expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
   });
