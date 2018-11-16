@@ -32,7 +32,7 @@
 - `[Colorpicker]` Fixed issue where the palette is not closed on enter key / click. ([#1050](https://github.com/infor-design/enterprise/issues/1050))
 - `[Accordion]` Fixed issues with context menus on the accordion. ([#639](https://github.com/infor-design/enterprise/issues/639))
 - `[Searchfield]` Made no results appear unclickable ([#329](https://github.com/infor-design/enterprise/issues/329))
-- `[Datagrid]` Added an exaple of groups and paging. ([#435](https://github.com/infor-design/enterprise/issues/435))
+- `[Datagrid]` Added an example of groups and paging. ([#435](https://github.com/infor-design/enterprise/issues/435))
 - `[Editor]` Fixed the dirty indicator when using toolbar items. ([#910](https://github.com/infor-design/enterprise/issues/910))
 - `[Datagrid]` Fixed a bug that made tooltips disappear when a lookup editor is closed. ([#1186](https://github.com/infor-design/enterprise/issues/1186))
 - `[Datagrid]` Fixed a bug where not all rows are removed in the removeSelected function. ([#1036](https://github.com/infor-design/enterprise/issues/1036))
