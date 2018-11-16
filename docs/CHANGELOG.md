@@ -29,7 +29,7 @@
 - `[General]` Added the ability to stop renderLoop. ([#214](https://github.com/infor-design/enterprise/issues/214))
 - `[Datepicker]` Fixed an issue reselecting ranges with the date picker range option. ([#1197](https://github.com/infor-design/enterprise/issues/1197))
 - `[Editor]` Fixed bugs on IE with background color option ([#392](https://github.com/infor-design/enterprise/issues/392))
-- `[Colorpicker]` Fixed issue where the palette is no closed on enter key / click. ([#1050](https://github.com/infor-design/enterprise/issues/1050))
+- `[Colorpicker]` Fixed issue where the palette is not closed on enter key / click. ([#1050](https://github.com/infor-design/enterprise/issues/1050))
 - `[Accordion]` Fixed issues with context menus on the accordion. ([#639](https://github.com/infor-design/enterprise/issues/639))
 - `[Searchfield]` Made no results appear unclickable ([#329](https://github.com/infor-design/enterprise/issues/329))
 - `[Datagrid]` Added an exaple of groups and paging. ([#435](https://github.com/infor-design/enterprise/issues/435))
