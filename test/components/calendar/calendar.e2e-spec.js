@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Calendar index tests', () => { //eslint-disable-line
+describe('Calendar index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?nofrills=true');
   });
@@ -52,7 +52,7 @@ fdescribe('Calendar index tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Calendar ajax loading tests', () => {  //eslint-disable-line
+describe('Calendar ajax loading tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-ajax-events');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -93,9 +93,9 @@ fdescribe('Calendar ajax loading tests', () => {  //eslint-disable-line
   });
 });
 
-fdescribe('Calendar specific month tests', () => {  //eslint-disable-line
+describe('Calendar specific month tests', () => {  //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/test-specific-month');
+    await utils.setPage('/components/calendar/test-specific-month?nofrills=true');
     const dateField = await element(by.id('monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
