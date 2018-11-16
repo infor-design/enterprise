@@ -49,9 +49,7 @@ describe('Popupmenu example-selectable tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     fit('Should not visual regress on example-selectable', async () => { //eslint-disable-line
-      const windowSize = await browser.driver.manage().window().getSize();
-      await browser.driver.manage().window().setSize(600, 600);
-      const popupmenuSection = await element(by.css('.no-frills'));
+      const popupmenuSection = await element(by.id('main-content'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
@@ -59,7 +57,6 @@ describe('Popupmenu example-selectable tests', () => {
       await browser.driver.sleep(config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(popupmenuSection, 'popupmenu-single-open')).toEqual(0);
-      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }
 
