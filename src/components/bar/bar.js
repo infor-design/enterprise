@@ -647,6 +647,11 @@ Bar.prototype = {
    * @private
    */
   setTextValues() {
+    if (this.settings.isGrouped) {
+      // These are TODO, as you need a different structure since its using the group name
+      return;
+    }
+
     const elems = document.querySelectorAll('.bar-chart .axis.y .tick text');
     const dataset = this.settings.dataset;
     for (let i = 0; i < dataset.length; i++) {
