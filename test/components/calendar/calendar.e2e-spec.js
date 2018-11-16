@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 fdescribe('Calendar index tests', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/example-specific-month?nofrills=true');
+    await utils.setPage('/components/calendar/example-index?nofrills=true');
   });
 
   it('Should render without error', async () => {
@@ -50,18 +50,9 @@ fdescribe('Calendar index tests', () => { //eslint-disable-line
 
     expect(await prevButton.getText()).toEqual('Previous Month');
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.waitsFor);
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);
-    });
-  }
 });
 
-describe('Calendar ajax loading tests', () => {
+fdescribe('Calendar ajax loading tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-ajax-events');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -102,7 +93,7 @@ describe('Calendar ajax loading tests', () => {
   });
 });
 
-describe('Calendar specific month tests', () => {
+fdescribe('Calendar specific month tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-month');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -120,6 +111,15 @@ describe('Calendar specific month tests', () => {
 
     expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const calendarEl = await element(by.className('calendar'));
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);
+    });
+  }
 
   it('should display a tooltip when hovering an event', async () => {
     await browser.driver
