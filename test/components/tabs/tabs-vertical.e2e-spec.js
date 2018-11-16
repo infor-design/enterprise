@@ -29,7 +29,7 @@ describe('Tabs vertical click example-index tests', () => {
       const tabsEl = await element(by.id('tabs-vertical'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-vertical')).toEqual(0);
     });
@@ -80,7 +80,7 @@ describe('Tabs vertical click example-responsive tests', () => {
       const tabsEl = await element(by.id('tabs-vertical'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-vertical-500px')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);

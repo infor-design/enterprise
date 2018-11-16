@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Tooltips index page tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tooltip/example-index');
+    await utils.setPage('/components/tooltip/example-index?nofrills=true');
   });
 
   it('should display when hovering the icon', async () => {
@@ -21,6 +21,20 @@ describe('Tooltips index page tests', () => {
 
     expect(await element(by.id('tooltip')).getText()).toEqual('Tooltips Provide Additional Information');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await browser.actions().mouseMove(await element(by.id('tooltip-btn'))).perform();
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
+
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'tooltip-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Tooltips on icon tests', () => {

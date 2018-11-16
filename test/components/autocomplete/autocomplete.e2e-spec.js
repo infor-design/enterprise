@@ -32,7 +32,7 @@ describe('Autocomplete example-index tests', () => {
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteListContainer), config.waitsFor);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(autocompleteListContainer), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(autocompleteListContainer, 'autocomplete-open')).toEqual(0);
     });

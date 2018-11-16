@@ -5,9 +5,9 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Calendar index tests', () => {
+describe('Calendar index tests', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/example-index');
+    await utils.setPage('/components/calendar/example-index?nofrills=true');
   });
 
   it('Should render without error', async () => {
@@ -52,9 +52,9 @@ describe('Calendar index tests', () => {
   });
 });
 
-describe('Calendar ajax loading tests', () => {
+describe('Calendar ajax loading tests', () => {  //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/example-ajax-events');
+    await utils.setPage('/components/calendar/test-ajax-events');
     const dateField = await element(by.id('monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
@@ -93,9 +93,9 @@ describe('Calendar ajax loading tests', () => {
   });
 });
 
-describe('Calendar specific month tests', () => {
+describe('Calendar specific month tests', () => {  //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/example-specific-month');
+    await utils.setPage('/components/calendar/test-specific-month?nofrills=true');
     const dateField = await element(by.id('monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
@@ -112,6 +112,15 @@ describe('Calendar specific month tests', () => {
     expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const calendarEl = await element(by.className('calendar'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);
+    });
+  }
+
   it('should display a tooltip when hovering an event', async () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event.emerald.event-day-start .icon'))), config.waitsFor);
@@ -120,7 +129,7 @@ describe('Calendar specific month tests', () => {
       .mouseMove(await element.all(by.css('.calendar-event.emerald.event-day-start')).first())
       .perform();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(2000);
 
     expect(await element(by.id('tooltip')).getText()).toEqual('Autumn Foliage Trip (Pending)');
   });
