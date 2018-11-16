@@ -88,7 +88,9 @@ PopupMenu.prototype = {
     // Allow for an external click event to be passed in from outside this code.
     // This event can be used to pass clientX/clientY coordinates for mouse cursor positioning.
     if (this.settings.trigger === 'immediate') {
-      this.open(this.settings.eventObj);
+      if (this.menu.length) {
+        this.open(this.settings.eventObj);
+      }
     }
 
     // Use some css rules on submenu parents
