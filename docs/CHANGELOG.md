@@ -5,11 +5,69 @@
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
 - [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
 
+### v4.13.0 Features
+
+- `[Calendar]` Added some new features such as upcoming events view, RTL, keyboard support and fixed styling issues and bugs. ([#1221](https://github.com/infor-design/enterprise/issues/1221))
+- `[Flex Toolbar]` Added search field integration, so that the search field is mainly close to being able to replace the legacy toolbar. ([#269](https://github.com/infor-design/enterprise/issues/269))
+- `[Bar]` Added short, medium label support for adapting the chart to responsive views. ([#1094](https://github.com/infor-design/enterprise/issues/1094))
+- `[Textarea]` Added maxLength option to prevent typing over a set maximum. ([#1046](https://github.com/infor-design/enterprise/issues/1046))
+- `[Textarea]` Added maxGrow option to prevent growing when typing over a set max. ([#1147](https://github.com/infor-design/enterprise/issues/1147))
+- `[Datagrid]` If using the `showDirty` option the indication will now be on each cell. ([#1183](https://github.com/infor-design/enterprise/issues/1183))
+- `[Datepicker]` Added an option `useCurrentTime` that will insert current time instead of noon time with date and timepickers. ([#1087](https://github.com/infor-design/enterprise/issues/1087))
+- `[General]` Included an IE 11 polyfill for ES6 Promises, this is a new dependency in the package.json you should include. ([#1172](https://github.com/infor-design/enterprise/issues/1172))
+
 ### v4.13.0 Fixes
 
 - `[Datepicker / Timepicker]` Removed the need to use the customValidation setting. You can remove this option from your code. The logic will pick up if you added customValidation to your input by adding a data-validate option. You also may need to add `date` or `availableDate` validation to your  data-validate attribute if these validations are desired along with your custom or required validation. ([#862](https://github.com/infor-design/enterprise/issues/862))
+- `[Menubutton]` Added a new setting `hideMenuArrow` you can use for buttons that dont require an arrow, such as menu buttons. ([#1088](https://github.com/infor-design/enterprise/issues/1088))
+- `[Dropdown]` Fixed issues with destroy when multiple dropdowns are on the page. ([#1202](https://github.com/infor-design/enterprise/issues/1202))
+- `[Datagrid]` Fixed alignment issues when using filtering with some columns that do not have a filter. ([#1124](https://github.com/infor-design/enterprise/issues/1124))
+- `[Datagrid]` Fixed an error when dynamically adding context menus. ([#1216](https://github.com/infor-design/enterprise/issues/1216))
+- `[Datagrid]` Added an example of dynamic intermediate paging and filtering. ([#396](https://github.com/infor-design/enterprise/issues/396))
+- `[Dropdown]` Fixed alignment issues on mobile devices. ([#1069](https://github.com/infor-design/enterprise/issues/1069))
+- `[Datepicker]` Fixed incorrect assumptions, causing incorrect umalqura calendar calculations. ([#1189](https://github.com/infor-design/enterprise/issues/1189))
+- `[General]` Added the ability to stop renderLoop. ([#214](https://github.com/infor-design/enterprise/issues/214))
+- `[Datepicker]` Fixed an issue reselecting ranges with the date picker range option. ([#1197](https://github.com/infor-design/enterprise/issues/1197))
+- `[Editor]` Fixed bugs on IE with background color option. ([#392](https://github.com/infor-design/enterprise/issues/392))
+- `[Colorpicker]` Fixed issue where the palette is not closed on enter key / click. ([#1050](https://github.com/infor-design/enterprise/issues/1050))
+- `[Accordion]` Fixed issues with context menus on the accordion. ([#639](https://github.com/infor-design/enterprise/issues/639))
+- `[Searchfield]` Made no results appear unclickable. ([#329](https://github.com/infor-design/enterprise/issues/329))
+- `[Datagrid]` Added an example of groups and paging. ([#435](https://github.com/infor-design/enterprise/issues/435))
+- `[Editor]` Fixed the dirty indicator when using toolbar items. ([#910](https://github.com/infor-design/enterprise/issues/910))
+- `[Datagrid]` Fixed a bug that made tooltips disappear when a lookup editor is closed. ([#1186](https://github.com/infor-design/enterprise/issues/1186))
+- `[Datagrid]` Fixed a bug where not all rows are removed in the removeSelected function. ([#1036](https://github.com/infor-design/enterprise/issues/1036))
+- `[Datagrid]` Fixed bugs in activateRow and deactivateRow in some edge cases. ([#948](https://github.com/infor-design/enterprise/issues/948))
+- `[Datagrid]` Fixed formatting of tooltips on the header and filter. ([#955](https://github.com/infor-design/enterprise/issues/955))
+- `[Datagrid]` Fixed wrong page number when saving the page number in localstorage and reloading. ([#798](https://github.com/infor-design/enterprise/issues/798))
+- `[Tree]` Fixed issues when expanding and collapsing after dragging nodes around. ([#1183](https://github.com/infor-design/enterprise/issues/1183))
+- `[ContextualActionPanel]` Fixed a bug where the CAP will be closed if clicking an accordion in it. ([#1138](https://github.com/infor-design/enterprise/issues/1138))
+- `[Colorpicker]` Added a setting (customColors) to prevent adding default colors if totally custom colors are used. ([#1135](https://github.com/infor-design/enterprise/issues/1135))
+- `[AppMenu]` Improved contrast in high contrast theme. ([#1146](https://github.com/infor-design/enterprise/issues/1146))
+- `[Searchfield]` Fixed issue where ascenders/descenders are cut off. ([#1101](https://github.com/infor-design/enterprise/issues/1101))
+- `[Tree]` Added sortstop and sortstart events. ([#1003](https://github.com/infor-design/enterprise/issues/1003))
+- `[Searchfield]` Fixed some alignment issues in different browsers. ([#1106](https://github.com/infor-design/enterprise/issues/1106))
+- `[Searchfield]` Fixed some contrast issues in different browsers. ([#1104](https://github.com/infor-design/enterprise/issues/1104))
+- `[Autocomplete]` Added a beforeOpen setting ([#398](https://github.com/infor-design/enterprise/issues/398))
+- `[Toolbar]` Fixed an error where toolbar tried to focus a DOM item that was removed. ([#1177](https://github.com/infor-design/enterprise/issues/1177))
+- `[Dropdown]` Fixed a problem where the bottom of some lists is cropped. ([#909](https://github.com/infor-design/enterprise/issues/909))
+- `[General]` Fixed a few components so that they could still initialize when hidden. ([#230](https://github.com/infor-design/enterprise/issues/230))
+- `[Datagrid]` Fixed missing tooltips on new row. ([#1081](https://github.com/infor-design/enterprise/issues/1081))
+- `[Lookup]` Fixed a bug using select all where it would select the previous list. ([#295](https://github.com/infor-design/enterprise/issues/295))
+- `[Datagrid]` Fixed missing summary row on initial render in some cases. ([#330](https://github.com/infor-design/enterprise/issues/330))
+- `[Button]` Fixed alignment of text and icons. ([#973](https://github.com/infor-design/enterprise/issues/973))
+- `[Datagrid]` Fixed missing source call when loading last page first. ([#1162](https://github.com/infor-design/enterprise/issues/1162))
+- `[SwapList]` Made sure swap list will work in all cases and in angular. ([#152](https://github.com/infor-design/enterprise/issues/152))
 
-(X Issues Solved this release, Backlog Enterprise X, Backlog Ng X, X Functional Tests, X e2e Test)
+### v4.13.0 Chore & Maintenance
+
+- `[General]` Added more complete visual tests. ([#978](https://github.com/infor-design/enterprise/issues/978))
+- `[General]` Cleaned up some of the sample pages start at A, making sure examples work and tests are covered for better QA (on going). ([#1136](https://github.com/infor-design/enterprise/issues/1136))
+- `[General]` Upgraded to ids-identity 2.0.x ([#1062](https://github.com/infor-design/enterprise/issues/1062))
+- `[General]` Cleanup missing files in the directory listings. ([#985](https://github.com/infor-design/enterprise/issues/985))
+- `[Demo App]` Removed response headers for less veracode errors. ([#959](https://github.com/infor-design/enterprise/issues/959))
+- `[Angular 1.0]` We removd the angular 1.0 directives from the code and examples. These are no longer being updated. You can still use older versions of this or move on to Angular 7.x ([#1136](https://github.com/infor-design/enterprise/issues/1136))
+
+(60 Issues Solved this release, Backlog Enterprise 196, Backlog Ng 63, 653 Functional Tests, 607 e2e Test)
 
 ## v4.12.0
 
@@ -79,7 +137,7 @@
 - `[Tree]` Added a disable/enable method to disable/enable the whole tree. ([#752](https://github.com/infor-design/enterprise/issues/752))
 - `[App Menu]` Fixed a bug clearing the search filter box. ([#702](https://github.com/infor-design/enterprise/issues/702))
 - `[Column Chart]` Added a yAxis option, you can use to format the yAxis in custom ways. ([#627](https://github.com/infor-design/enterprise/issues/627))
-- `[General]` More fixes to use external ids tokens ([#708](https://github.com/infor-design/enterprise/issues/708))
+- `[General]` More fixes to use external ids tokens. ([#708](https://github.com/infor-design/enterprise/issues/708))
 - `[Datagrid]` Fixed an error calling selectRows with an integer. ([#756](https://github.com/infor-design/enterprise/issues/756))
 - `[Tree]` Fixed a bug that caused newly added rows to not be draggable. ([#618](https://github.com/infor-design/enterprise/issues/618))
 - `[Dropdown / Multiselect]` Re-added the ability to have a placeholder on the component. ([#832](https://github.com/infor-design/enterprise/issues/832))
@@ -127,10 +185,10 @@
 ### v4.10.0 Features
 
 - `[General]` Changed the code to pass Veracode scans. The IDS components now pass ISO at 86 rating. The rest of the flaws are mitigated with fixes such as stripping tags. As a result we went fairly aggressive with what we strip. If teams are doing something special we don't have tests for there is potential for customizations being stripped. ([#256](https://github.com/infor-design/enterprise/issues/256))
-- `[Tooltips]` Will now activate on longpress on mobile devices ([#400](https://github.com/infor-design/enterprise/issues/400))
-- `[Contextmenu]` Will now activate on longpress on mobile devices (except when on inputs) ([#245](https://github.com/infor-design/enterprise/issues/245))
-- `[Locale]` Added support for zh-Hant and zh-Hans ([#397](https://github.com/infor-design/enterprise/issues/397))
-- `[Tree]` Greatly improved rendering and expanding performance ([#251](https://github.com/infor-design/enterprise/issues/251))
+- `[Tooltips]` Will now activate on longpress on mobile devices. ([#400](https://github.com/infor-design/enterprise/issues/400))
+- `[Contextmenu]` Will now activate on longpress on mobile devices (except when on inputs). ([#245](https://github.com/infor-design/enterprise/issues/245))
+- `[Locale]` Added support for zh-Hant and zh-Hans. ([#397](https://github.com/infor-design/enterprise/issues/397))
+- `[Tree]` Greatly improved rendering and expanding performance. ([#251](https://github.com/infor-design/enterprise/issues/251))
 - `[General]` Internally all of the sass is now extended from [IDS Design tokens]( https://github.com/infor-design/design-system) ([#354](https://github.com/infor-design/enterprise/issues/354))
 - `[Calendar]` Added initial readonly calendar. At the moment the calendar can only render events and has a filtering feature. More will be added next sprint. ([#261](https://github.com/infor-design/enterprise/issues/261))
 
@@ -138,16 +196,16 @@
 
 - `[Dropdown]` Minor Breaking Change for Xss reasons we removed the ability to set a custom hex color on icons in the dropdown. You can still pass in one of the alert colors from the colorpallette (fx alert, good, info). This was not even shown in the examples so may not be missed. ([#256](https://github.com/infor-design/enterprise/issues/256))
 - `[Popupmenu]` Fixed a problem in popupmenu, if it was opened in immediate mode, submenus will be cleared of their text when the menu is eventually closed. ([#701](https://github.com/infor-design/enterprise/issues/701))
-- `[Editor]` Fixed xss injection problem on the link dialog ([#257](https://github.com/infor-design/enterprise/issues/257))
+- `[Editor]` Fixed xss injection problem on the link dialog. ([#257](https://github.com/infor-design/enterprise/issues/257))
 - `[Spinbox]` Fixed a height / alignment issue on spinboxes when used in short height configuration. ([#547](https://github.com/infor-design/enterprise/issues/547))
 - `[Datepicker / Mask]` Fixed an issue in angular that caused using backspace to not save back to the model. ([#51](https://github.com/infor-design/enterprise-ng/issues/51))
 - `[Field Options]` Fixed mobile support so they now work on touch better on IOS and Android. ([#555](https://github.com/infor-design/enterprise-ng/issues/555))
 - `[Tree]` Tree with + and - for the folders was inversed visually. This was fixed, update your svg.html ([#685](https://github.com/infor-design/enterprise-ng/issues/685))
-- `[Modal]` Fixed an alignment issue with the closing X on the top corner ([#662](https://github.com/infor-design/enterprise-ng/issues/662))
+- `[Modal]` Fixed an alignment issue with the closing X on the top corner. ([#662](https://github.com/infor-design/enterprise-ng/issues/662))
 - `[Popupmenu]` Fixed a visual flickering when opening dynamic submenus. ([#588](https://github.com/infor-design/enterprise/issues/588))
-- `[Tree]` Added full unit and functional tests ([#264](https://github.com/infor-design/enterprise/issues/264))
-- `[Lookup]` Added full unit and functional tests ([#344](https://github.com/infor-design/enterprise/issues/344))
-- `[Datagrid]` Added more unit and functional tests ([#242](https://github.com/infor-design/enterprise/issues/242))
+- `[Tree]` Added full unit and functional tests. ([#264](https://github.com/infor-design/enterprise/issues/264))
+- `[Lookup]` Added full unit and functional tests. ([#344](https://github.com/infor-design/enterprise/issues/344))
+- `[Datagrid]` Added more unit and functional tests. ([#242](https://github.com/infor-design/enterprise/issues/242))
 - `[General]` Updated the develop tools and sample app to Node 10. During this update we set package-lock.json to be ignored in .gitignore ([#540](https://github.com/infor-design/enterprise/issues/540))
 - `[Modal]` Allow beforeOpen callback to run optionally whether you have content or not passed back. ([#409](https://github.com/infor-design/enterprise/issues/409))
 - `[Datagrid]` The lookup editor now supports left, right, and center align on the column settings. ([#228](https://github.com/infor-design/enterprise/issues/228))
@@ -187,8 +245,8 @@
 - `[Datagrid]` Fixed the performance of pasting from excel. ([#240](https://github.com/infor-design/enterprise/issues/240))
 - `[Datagrid]` The keyword search will now clear when reloading data. ([#307](https://github.com/infor-design/enterprise/issues/307))
 - `[Docs]` Fixed several noted missing pages and broken links in the docs. ([#244](https://github.com/infor-design/enterprise/issues/244))
-- `[Dropdown]` Fixed bug in badges configuration ([#270](https://github.com/infor-design/enterprise/issues/270))
-- `[Flex Layout]` Fixed field-flex to work better on IE ([#252](https://github.com/infor-design/enterprise/issues/252))
+- `[Dropdown]` Fixed bug in badges configuration. ([#270](https://github.com/infor-design/enterprise/issues/270))
+- `[Flex Layout]` Fixed field-flex to work better on IE. ([#252](https://github.com/infor-design/enterprise/issues/252))
 - `[Editor]` Fixed bug that made it impossible to edit the visual tab. ([#478](https://github.com/infor-design/enterprise/issues/478))
 - `[Editor]` Fixed a bug with dirty indicator that caused a messed up layout. ([#241](https://github.com/infor-design/enterprise/issues/241))
 - `[Lookup]` Fixed it so that select will work correctly when filtering. ([#248](https://github.com/infor-design/enterprise/issues/248))
@@ -266,10 +324,10 @@
 ### v4.8.0 Chore & Maintenance
 
 - `[Npm Package]` Added back sass files in correct folder structure. ([#SOHO-7583](https://jira.infor.com/browse/SOHO-7583))
-- `[Menu Button]` Added button functional and e2e tests ([#SOHO-7600](https://jira.infor.com/browse/SOHO-7600))
-- `[Textarea]` Added Textarea functional and e2e tests ([#SOHO-7929](https://jira.infor.com/browse/SOHO-7929))
-- `[ListFilter]` Added ListFilter functional and e2e tests ([#SOHO-7975](https://jira.infor.com/browse/SOHO-7975))
-- `[Colorpicker]` Added Colorpicker functional and e2e tests ([#SOHO-8078](https://jira.infor.com/browse/SOHO-8078))
+- `[Menu Button]` Added button functional and e2e tests. ([#SOHO-7600](https://jira.infor.com/browse/SOHO-7600))
+- `[Textarea]` Added Textarea functional and e2e tests. ([#SOHO-7929](https://jira.infor.com/browse/SOHO-7929))
+- `[ListFilter]` Added ListFilter functional and e2e tests. ([#SOHO-7975](https://jira.infor.com/browse/SOHO-7975))
+- `[Colorpicker]` Added Colorpicker functional and e2e tests. ([#SOHO-8078](https://jira.infor.com/browse/SOHO-8078))
 - `[Site / Docs]` Fixed a few broken links ([#SOHO-7993](https://jira.infor.com/browse/SOHO-7993))
 
 (62 Jira Issues Solved this release, Backlog Dev 186, Design 110, Unresolved 349, Test Count 380 Functional, 178 e2e )
@@ -282,8 +340,8 @@
 
 ### v4.7.0 Features
 
-- `[Github]` The project was migrated to be open source on github with a new workflow and testing suite
-- `[Tag]` Added a Tag angular component ([#SOHO-8005](https://jira.infor.com/browse/SOHO-8006))
+- `[Github]` The project was migrated to be open source on github with a new workflow and testing suite.
+- `[Tag]` Added a Tag angular component. ([#SOHO-8005](https://jira.infor.com/browse/SOHO-8006))
 - `[Validate]` Exposed validate and removeMessage methods. ([#SOHO-8003](https://jira.infor.com/browse/SOHO-8003))
 - `[General]` Upgrade to Angular 6 ([#SOHO-7927](https://jira.infor.com/browse/SOHO-7927))
 - `[General]` Introduced nightly versions in npm ([#SOHO-7804](https://jira.infor.com/browse/SOHO-7804))
@@ -298,7 +356,7 @@
 - `[Lookup]` Fixed existing example that shows creating a customized dialog on the lookup ([#SOHO-8069](https://jira.infor.com/browse/SOHO-8069))
 - `[Lookup]` Fixed existing example that incorrectly showed a checkbox column. ([#SOHO-8068](https://jira.infor.com/browse/SOHO-8068))
 - `[Line Chart]` Fixed an error when provoking the tooltip. ([#/SOHO-8051](https://jira.infor.com/browse/SOHO-8051))
-- `[Module Tabs]` Fixed a bug toggling the menu on mobile ([#/SOHO-8043](https://jira.infor.com/browse/SOHO-8043))
+- `[Module Tabs]` Fixed a bug toggling the menu on mobile. ([#/SOHO-8043](https://jira.infor.com/browse/SOHO-8043))
 - `[Autocomplete]` Fixed a bug that made enter key not work to select. ([#SOHO-8036](https://jira.infor.com/browse/SOHO-8036))
 - `[Tabs]` Removed an errant scrollbar that appeared sometimes on IE ([#SOHO-8034](https://jira.infor.com/browse/SOHO-8034))
 - `[Datagrid]` The drill down click event now currently shows the right row information in the event data. ([#SOHO-8023](https://jira.infor.com/browse/SOHO-8023))
@@ -307,18 +365,18 @@
 - `[Datagrid]` Hyperlinks now can be clicked when in a datagrid expandable row. ([#SOHO-8009](https://jira.infor.com/browse/SOHO-8009))
 - `[Popupmenu]` Removed extra padding on icon menus ([#SOHO-8006](https://jira.infor.com/browse/SOHO-8006))
 - `[Spinbox]` Range limits now work correctly ([#SOHO-7999](https://jira.infor.com/browse/SOHO-7999))
-- `[Dropdown]` Fixed not working filtering on nosearch option ([#SOHO-7998](https://jira.infor.com/browse/SOHO-7998))
-- `[Hierarchy]` Children layout and in general layouts where improved ([#SOHO-7992](https://jira.infor.com/browse/SOHO-7992))
+- `[Dropdown]` Fixed not working filtering on nosearch option. ([#SOHO-7998](https://jira.infor.com/browse/SOHO-7998))
+- `[Hierarchy]` Children layout and in general layouts where improved. ([#SOHO-7992](https://jira.infor.com/browse/SOHO-7992))
 - `[Buttons]` Fixed layout issues on mobile. ([#SOHO-7982](https://jira.infor.com/browse/SOHO-7982))
 - `[Datagrid]` Fixed format initialization issue ([#SOHO-7982](https://jira.infor.com/browse/SOHO-7982))
 - `[Lookup]` Fixed a problem that caused the lookup to only work once. ([#SOHO-7971](https://jira.infor.com/browse/SOHO-7971))
-- `[Treemap]` Fix a bug using `fixture.detectChanges()` ([#SOHO-7969](https://jira.infor.com/browse/SOHO-7969))
+- `[Treemap]` Fix a bug using `fixture.detectChanges()`. ([#SOHO-7969](https://jira.infor.com/browse/SOHO-7969))
 - `[Textarea]` Fixed a bug that made it possible for the count to go to a negative value. ([#SOHO-7952](https://jira.infor.com/browse/SOHO-7952))
 - `[Tabs]` Fixed a bug that made extra events fire. ([#SOHO-7948](https://jira.infor.com/browse/SOHO-7948))
 - `[Toolbar]` Fixed a with showing icons and text in the overflowmenu. ([#SOHO-7942](https://jira.infor.com/browse/SOHO-7942))
 - `[DatePicker]` Fixed an error when restricting dates. ([#SOHO-7922](https://jira.infor.com/browse/SOHO-7922))
 - `[TimePicker]` Fixed sort order of times in arabic locales. ([#SOHO-7920](https://jira.infor.com/browse/SOHO-7920))
-- `[Multiselect]` Fixed initialization of selected items ([#SOHO-7916](https://jira.infor.com/browse/SOHO-7916))
+- `[Multiselect]` Fixed initialization of selected items. ([#SOHO-7916](https://jira.infor.com/browse/SOHO-7916))
 - `[Line Chart]` Solved a problem clicking lines to select. ([#SOHO-7912](https://jira.infor.com/browse/SOHO-7912))
 - `[Hierarchy]` Improved RTL version ([#SOHO-7888](https://jira.infor.com/browse/SOHO-7888))
 - `[Datagrid]` Row click event now shows correct data when using Groups ([#SOHO-7861](https://jira.infor.com/browse/SOHO-7861))
@@ -333,7 +391,7 @@
 ### v4.7.0 Chore & Maintenance
 
 - `[Timepicker]` Added functional and e2e tests ([#SOHO-7809](https://jira.infor.com/browse/SOHO-7809))
-- `[General]` Restructured the project to clean up and seperate the demo app from code. ([#SOHO-7803](https://jira.infor.com/browse/SOHO-7803))
+- `[General]` Restructured the project to clean up and separate the demo app from code. ([#SOHO-7803](https://jira.infor.com/browse/SOHO-7803))
 
 (56 Jira Issues Solved this release, Backlog Dev 218, Design 101, Unresolved 391, Test Count 232 Functional, 117 e2e )
 
@@ -347,79 +405,79 @@
 
 - `[Treemap]` New Component Added
 - `[Website]` Launch of new docs site <https://design.infor.com/code/ids-enterprise/latest>
-- `[Security]` Ids Now passes CSP (Content Security Policy) Compliance for info see <docs/SECURITY.md>
+- `[Security]` Ids Now passes CSP (Content Security Policy) Compliance for info see <docs/SECURITY.md>.
 - `[Toolbar]` New ["toolbar"](http://usalvlhlpool1.infor.com/4.6.0/components/toolbar-flex/list)
-    - Based on css so it is much faster
-    - Expect a future breaking change from flex-toolbar to this toolbar when all features are implemented
-    - As of now collapsible search is not supported yet
+    - Based on css so it is much faster.
+    - Expect a future breaking change from flex-toolbar to this toolbar when all features are implemented.
+    - As of now collapsible search is not supported yet.
 
 ### v4.6.0 Behavior Changes
 
-- `[App Menu]` Now automatically closes when items are clicked on mobile devices
+- `[App Menu]` Now automatically closes when items are clicked on mobile devices.
 
 ### v4.6.0 Improvements
 
-- `[Angular]` Validation now allows dynamic functions
-- `[Editor]` Added a clear method
-- `[Locale]` Map iw locale to Hebrew
-- `[Locale]` Now defaults locals with no country. For example en maps to en-US es and es-ES
-- `[Color Picker]` Added option to clear the color
+- `[Angular]` Validation now allows dynamic functions.
+- `[Editor]` Added a clear method.
+- `[Locale]` Map iw locale to Hebrew.
+- `[Locale]` Now defaults locals with no country. For example en maps to en-US es and es-ES.
+- `[Color Picker]` Added option to clear the color.
 - `[Angular]` Allow Formatters, Editors to work with Soho. without the migration script.
 - `[Added a new labels example <http://usalvlhlpool1.infor.com/4.6.0/components/form/example-labels.html>
-- `[Angular]` Added new Chart Wrappers (Line, Bar, Column ect )
-- `[Datagrid]` Added file up load editor
-- `[Editor]` Its possible to put a link on an image now
+- `[Angular]` Added new Chart Wrappers (Line, Bar, Column ect ).
+- `[Datagrid]` Added file up load editor.
+- `[Editor]` Its possible to put a link on an image now.
 
 ### v4.6.0 Code Updates / Breaking Changes
 
-- `[Templates]` The internal template engine changed for better XSS security as a result one feature is no longer supported. If you have a delimiter syntax to embed html like `{{& name}}`, change this to be `{{{name}}}`
-- `[jQuery]` Updated from 3.1.1 to 3.3.1
+- `[Templates]` The internal template engine changed for better XSS security as a result one feature is no longer supported. If you have a delimiter syntax to embed html like `{{& name}}`, change this to be `{{{name}}}`.
+- `[jQuery]` Updated from 3.1.1 to 3.3.1.
 
 ### v4.6.0 Bug Fixes
 
-- `[Angular]` Added fixes so that the `soho.migrate` script is no longer needed
-- `[Angular Datagrid]` Added filterWhenTyping option
-- `[Angular Popup]` Expose close, isOpen and keepOpen
-- `[Angular Linechart]` Added "xAxis" and "yAxis" options
-- `[Angular Treemap]` Added new wrapper
-- `[Angular Rating]` Added a rating wrapper
-- `[Angular Circle Page]` Added new wrapper
-- `[Checkbox]` Fixed issue when you click the top left of the page, would toggle the last checkbox
-- `[Composite Form]` Fixed broken swipe
-- `[Colorpicker]` Fixed cases where change did not fire
-- `[Colorpicker]` Added short field option
-- `[Completion Chart]` Added more colors
-- `[Datagrid]` Fixed some misaligned icons on short row height
-- `[Datagrid]` Fixed issue that blank dropdown filter items would not show
-- `[Datagrid]` Added click arguments for more information on editor clicks and callback data
-- `[Datagrid]` Fixed wrong data on events on second page with expandable row
-- `[Datagrid]` Fixed focus / filter bugs
-- `[Datagrid]` Fixed bug with filter dropdowns on IOS
-- `[Datagrid]` Fixed column alignment when scrolling and RTL
-- `[Datagrid]` Fixed NaN error when using the colspan example
-- `[Datagrid]` Made totals work correctly when filtering
-- `[Datagrid]` Fixed issue with focus when multiple grids on a page
-- `[Datagrid]` Removed extra rows from the grid export when using expandable rows
-- `[Datagrid]` Fixed performance of select all on paging client side
-- `[Datagrid]` Fixed text alignment on header when some columns are not filterable
-- `[Datagrid]` Fixed wrong cursor on non actionable rows
-- `[Hierarchy]` Fixed layout issues
-- `[Mask]` Fixed issue when not using decimals in the pattern option
-- `[Modal]` Allow editor and dropdown to properly block the submit button
-- `[Menu Button]` Fixed beforeOpen so it also runs on submenus
-- `[Message]` Fixed XSS vulnerability
-- `[Pager]` Added fixes for RTL
+- `[Angular]` Added fixes so that the `soho.migrate` script is no longer needed.
+- `[Angular Datagrid]` Added filterWhenTyping option.
+- `[Angular Popup]` Expose close, isOpen and keepOpen.
+- `[Angular Linechart]` Added "xAxis" and "yAxis" options.
+- `[Angular Treemap]` Added new wrapper.
+- `[Angular Rating]` Added a rating wrapper.
+- `[Angular Circle Page]` Added new wrapper.
+- `[Checkbox]` Fixed issue when you click the top left of the page, would toggle the last checkbox.
+- `[Composite Form]` Fixed broken swipe.
+- `[Colorpicker]` Fixed cases where change did not fire.
+- `[Colorpicker]` Added short field option.
+- `[Completion Chart]` Added more colors.
+- `[Datagrid]` Fixed some misaligned icons on short row height.
+- `[Datagrid]` Fixed issue that blank dropdown filter items would not show.
+- `[Datagrid]` Added click arguments for more information on editor clicks and callback data.
+- `[Datagrid]` Fixed wrong data on events on second page with expandable row.
+- `[Datagrid]` Fixed focus / filter bugs.
+- `[Datagrid]` Fixed bug with filter dropdowns on IOS.
+- `[Datagrid]` Fixed column alignment when scrolling and RTL.
+- `[Datagrid]` Fixed NaN error when using the colspan example.
+- `[Datagrid]` Made totals work correctly when filtering.
+- `[Datagrid]` Fixed issue with focus when multiple grids on a page.
+- `[Datagrid]` Removed extra rows from the grid export when using expandable rows.
+- `[Datagrid]` Fixed performance of select all on paging client side.
+- `[Datagrid]` Fixed text alignment on header when some columns are not filterable.
+- `[Datagrid]` Fixed wrong cursor on non actionable rows.
+- `[Hierarchy]` Fixed layout issues.
+- `[Mask]` Fixed issue when not using decimals in the pattern option.
+- `[Modal]` Allow editor and dropdown to properly block the submit button.
+- `[Menu Button]` Fixed beforeOpen so it also runs on submenus.
+- `[Message]` Fixed XSS vulnerability.
+- `[Pager]` Added fixes for RTL.
 - `[List Detail]` Improved amount of space the header takes
-- `[Multiselect]` Fixed problems when using the tab key well manipulating the multiselect
-- `[Multiselect]` Fixed bug with select all not working correctly
-- `[Multiselect]` Fixed bug with required validation rule
-- `[Spinbox]` Fixed issue on short field versions
-- `[Textarea]` Fixed issue with counter when in angular and on a modal
-- `[Toast]` Fixed XSS vulnerability
-- `[Tree]` Fixed checkbox click issue
-- `[Lookup]` Fixed issue in the example when running on Edge
-- `[Validation]` Fixed broken form submit validation
-- `[Vertical Tabs]` Fix cut off header
+- `[Multiselect]` Fixed problems when using the tab key well manipulating the multiselect.
+- `[Multiselect]` Fixed bug with select all not working correctly.
+- `[Multiselect]` Fixed bug with required validation rule.
+- `[Spinbox]` Fixed issue on short field versions.
+- `[Textarea]` Fixed issue with counter when in angular and on a modal.
+- `[Toast]` Fixed XSS vulnerability.
+- `[Tree]` Fixed checkbox click issue.
+- `[Lookup]` Fixed issue in the example when running on Edge.
+- `[Validation]` Fixed broken form submit validation.
+- `[Vertical Tabs]` Fix cut off header.
 
 (98 Jira Issues Solved this release, Backlog Dev 388, Design 105, Unresolved 595, Test Coverage 6.66%)
 
@@ -427,22 +485,22 @@
 
 ### v4.5.0 Key New Features
 
-- `[Font]` Experimental new font added from IDS as explained
-- `[Datagrid]` Added support for pasting from excel
-- `[Datagrid]` Added option to specify which column stretches
+- `[Font]` Experimental new font added from IDS as explained.
+- `[Datagrid]` Added support for pasting from excel.
+- `[Datagrid]` Added option to specify which column stretches.
 
 ### v4.5.0 Behavior Changes
 
-- `[Search Field]` `ESC` incorrectly cleared the field and was inconsistent. The proper key is `ctrl + backspace` (PC )/ `alt + delete` (mac) to clear all field contents. `ESC` no longer does anything
+- `[Search Field]` `ESC` incorrectly cleared the field and was inconsistent. The proper key is `ctrl + backspace` (PC )/ `alt + delete` (mac) to clear all field contents. `ESC` no longer does anything.
 
 ### v4.5.0 Improvements
 
-- `[Datagrid]` Added support for a two line title on the header
-- `[Dropdown]` Added onKeyPress override for custom key strokes
-- `[Contextual Action Panel]` Added an option to add a right side close button
-- `[Datepicker]` Added support to select ranges
-- `[Maintenence]` Added more unit tests
-- `[Maintenence]` Removed jsHint in favor of Eslint
+- `[Datagrid]` Added support for a two line title on the header.
+- `[Dropdown]` Added onKeyPress override for custom key strokes.
+- `[Contextual Action Panel]` Added an option to add a right side close button.
+- `[Datepicker]` Added support to select ranges.
+- `[Maintenence]` Added more unit tests.
+- `[Maintenence]` Removed jsHint in favor of Eslint.
 
 ### v4.5.0 Code Updates / Breaking Changes
 
@@ -450,51 +508,50 @@
 
 ### v4.5.0 Bug Fixes
 
-- `[Angular]` Added new wrappers for Radar, Bullet, Line, Pie, Sparkline
-- `[Angular Dropdown]` Fixed missing data from select event
-- `[Colorpicker]` Added better translation support
-- `[Compound Field]` Fixed layout with some field types
-- `[Datepicker]` Fixed issues with validation in certain locales
-- `[Datepicker]` Not able to validate on MMMM
-- `[Datagrid]` Fixed bug that filter did not work when it started out hidden
-- `[Datagrid]` Fixed issue with context menu not opening repeatedly
-- `[Datagrid]` Fixed bug in indeterminate paging with smaller page sizes
-- `[Datagrid]` Fixed error when editing some numbers
-- `[Datagrid]` Added support for single line markup
-- `[Datagrid]` Fixed exportable option, which was not working for both csv and xls export
-- `[Datagrid]` Fixed column sizing logic to work better with alerts and alerts plus text
-- `[Datagrid]` Fixed bug when reordering rows with expandable rows
-- `[Datagrid]` Added events for opening and closing the filter row
-- `[Datagrid]` Fixed bugs on multiselect + tree grid
-- `[Datagrid]` Fixed problems with missing data on click events when paging
-- `[Datagrid]` Fixed problems editing with paging
-- `[Datagrid]` Fixed Column alignment calling updateDataset
-- `[Datagrid]` Now passes sourceArgs for the filter row
-- `[Dropdown]` Fixed cursor on disabled items
-- `[Editor]` Added paste support for links
-- `[Editor]` Fixed bug that prevented some shortcut keys from working
-- `[Editor]` Fixed link pointers in readonly mode
-- `[Expandable Area]` Fixed bug when not working on second page
-- `[General]` Some ES6 imports missing
-- `[Personalization]` Added support for cache bust
-- `[Locale]` Fixed some months missing in some cultures
-- `[Listview]` Removed redundant resize events
-- `[Line]` Fixed problems updating data
-- `[Mask]` Fixed bug on alpha masks that ignored the last character
-- `[Modal]` Allow enter key to be stopped for forms
-- `[Modal]` Allow filter row to work if a grid is on a modal
-- `[Fileupload]` Fixed bug when running in Contextual Action Panel
-- `[Searchfield]` Fixed wrong width
-- `[Step Process]` Improved layout and responsive
-- `[Step Process]` Improved wrapping of step items
-- `[Targeted Achievement]` Fixed icon alignment
-- `[Timepicker]` Fixed error calling removePunctuation
-- `[Text Area]` Adding missing classes for use in responsive-forms
-- `[Toast]` Fixed missing animation
-- `[Toolbar]` Added
-- `[Tree]` Fixed a bug where if the callback is not async the node wont open
-- `[Track Dirty]` Fixed error when used on a file upload
-- `[Track Dirty]` Did not work to reset dirty on editor and Multiselect
-- `[Validation]` Fixed more extra events firing
+- `[Angular]` Added new wrappers for Radar, Bullet, Line, Pie, Sparkline.
+- `[Angular Dropdown]` Fixed missing data from select event.
+- `[Colorpicker]` Added better translation support.
+- `[Compound Field]` Fixed layout with some field types.
+- `[Datepicker]` Fixed issues with validation in certain locales.
+- `[Datepicker]` Not able to validate on MMMM.
+- `[Datagrid]` Fixed bug that filter did not work when it started out hidden.
+- `[Datagrid]` Fixed issue with context menu not opening repeatedly.
+- `[Datagrid]` Fixed bug in indeterminate paging with smaller page sizes.
+- `[Datagrid]` Fixed error when editing some numbers.
+- `[Datagrid]` Added support for single line markup.
+- `[Datagrid]` Fixed exportable option, which was not working for both csv and xls export.
+- `[Datagrid]` Fixed column sizing logic to work better with alerts and alerts plus text.
+- `[Datagrid]` Fixed bug when reordering rows with expandable rows.
+- `[Datagrid]` Added events for opening and closing the filter row.
+- `[Datagrid]` Fixed bugs on multiselect + tree grid.
+- `[Datagrid]` Fixed problems with missing data on click events when paging.
+- `[Datagrid]` Fixed problems editing with paging.
+- `[Datagrid]` Fixed Column alignment calling updateDataset.
+- `[Datagrid]` Now passes sourceArgs for the filter row.
+- `[Dropdown]` Fixed cursor on disabled items.
+- `[Editor]` Added paste support for links.
+- `[Editor]` Fixed bug that prevented some shortcut keys from working.
+- `[Editor]` Fixed link pointers in readonly mode.
+- `[Expandable Area]` Fixed bug when not working on second page.
+- `[General]` Some ES6 imports missing.
+- `[Personalization]` Added support for cache bust.
+- `[Locale]` Fixed some months missing in some cultures.
+- `[Listview]` Removed redundant resize events.
+- `[Line]` Fixed problems updating data.
+- `[Mask]` Fixed bug on alpha masks that ignored the last character.
+- `[Modal]` Allow enter key to be stopped for forms.
+- `[Modal]` Allow filter row to work if a grid is on a modal.
+- `[Fileupload]` Fixed bug when running in Contextual Action Panel.
+- `[Searchfield]` Fixed wrong width.
+- `[Step Process]` Improved layout and responsive.
+- `[Step Process]` Improved wrapping of step items.
+- `[Targeted Achievement]` Fixed icon alignment.
+- `[Timepicker]` Fixed error calling removePunctuation.
+- `[Text Area]` Adding missing classes for use in responsive-forms.
+- `[Toast]` Fixed missing animation.
+- `[Tree]` Fixed a bug where if the callback is not async the node wont open.
+- `[Track Dirty]` Fixed error when used on a file upload.
+- `[Track Dirty]` Did not work to reset dirty on editor and Multiselect.
+- `[Validation]` Fixed more extra events firing.
 
 (67 Jira Issues Solved this release, Backlog Dev 378, Design 105, Unresolved 585, Test Coverage 6% )
