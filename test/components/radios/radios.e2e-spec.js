@@ -52,12 +52,12 @@ describe('Radios validation tests', () => {
     await element.all(by.css('.radio')).first().sendKeys(protractor.Key.TAB);
     await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
     await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.message-text')).count()).toEqual(1);
 
     await element.all(by.css('.radio-label')).get(1).click();
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.message-text')).count()).toEqual(0);
   });

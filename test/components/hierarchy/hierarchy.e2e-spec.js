@@ -28,7 +28,7 @@ describe('Hierarchy index tests', () => {
       await browser.driver.manage().window().setSize(1500, 900);
 
       const containerEl = await element.all(by.id('hierarchy')).first();
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'hierarchy-index')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);

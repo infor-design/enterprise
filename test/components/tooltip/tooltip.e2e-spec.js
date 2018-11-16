@@ -30,7 +30,7 @@ describe('Tooltips index page tests', () => {
         .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
 
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'tooltip-index')).toEqual(0);
     });

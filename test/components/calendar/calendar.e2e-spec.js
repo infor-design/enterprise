@@ -115,7 +115,7 @@ describe('Calendar specific month tests', () => {  //eslint-disable-line
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);
     });
@@ -129,7 +129,7 @@ describe('Calendar specific month tests', () => {  //eslint-disable-line
       .mouseMove(await element.all(by.css('.calendar-event.emerald.event-day-start')).first())
       .perform();
 
-    await browser.driver.sleep(config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('tooltip')).getText()).toEqual('Autumn Foliage Trip (Pending)');
   });
