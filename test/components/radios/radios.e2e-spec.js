@@ -28,10 +28,9 @@ describe('Radios example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     fit('Should not visual regress on example-index', async () => {
-      const container = await element(by.css('div[role=main]'));
+      const container = await element(by.css('.container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(container), config.waitsFor);
-      await browser.driver.sleep(config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(container, 'radio-init')).toEqual(0);
     });
