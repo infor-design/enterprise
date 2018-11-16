@@ -129,7 +129,7 @@ describe('Calendar specific month tests', () => {  //eslint-disable-line
       .mouseMove(await element.all(by.css('.calendar-event.emerald.event-day-start')).first())
       .perform();
 
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(2000);
 
     expect(await element(by.id('tooltip')).getText()).toEqual('Autumn Foliage Trip (Pending)');
   });

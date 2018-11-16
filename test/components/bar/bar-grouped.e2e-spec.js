@@ -40,7 +40,7 @@ describe('Grouped Bar Chart example-index tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-index')).toBeLessThan(1);
     });
   }
 });
