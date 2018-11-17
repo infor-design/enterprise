@@ -1,13 +1,12 @@
 # @TODO: fix sudo workaround
 # https://github.com/travis-ci/travis-ci/issues/8836#issuecomment-356362524
 sudo: required
+addons:
+  chrome: stable
 language: node_js
 dist: trusty
 node_js:
   - "10"
-before_install:
-  - if [ $TEST_SUITE != lint ]; then wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb; fi
-  - if [ $TEST_SUITE != lint ]; then sudo dpkg -i google-chrome*.deb; fi
 cache:
   directories:
     - node_modules

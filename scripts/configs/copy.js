@@ -11,12 +11,15 @@ module.exports = {
           src: [
             'node_modules/jquery/dist/jquery.js',
             'node_modules/jquery/dist/jquery.min.js',
-            'node_modules/jquery/dist/jquery.min.map'
+            'node_modules/jquery/dist/jquery.min.map',
+            'node_modules/promise-polyfill/dist/polyfill.js',
+            'node_modules/promise-polyfill/dist/polyfill.min.js'
           ],
           dest: 'dist/js/',
           filter: 'isFile',
           rename(dest, src) {
-            return dest + src.replace('jquery.', 'jquery-3.3.1.');
+            return dest + src.replace('jquery.', 'jquery-3.3.1.')
+              .replace('polyfill.', 'promise-polyfill.');
           }
         },
         {
