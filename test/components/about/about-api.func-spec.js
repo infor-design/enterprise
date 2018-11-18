@@ -35,8 +35,15 @@ describe('About API', () => {
   });
 
   afterAll(() => {
-    const aboutModalEl = document.body.querySelector('#about-modal');
-    aboutModalEl.parentNode.removeChild(aboutModalEl);
+    const aboutModalEls = document.body.querySelectorAll('.modal');
+    for (let i = 0; i < aboutModalEls.length; i++) {
+      aboutModalEls[i].parentNode.removeChild(aboutModalEls[i]);
+    }
+
+    const containerEls = document.body.querySelectorAll('.modal-page-container');
+    for (let i = 0; i < containerEls.length; i++) {
+      containerEls[i].parentNode.removeChild(containerEls[i]);
+    }
   });
 
   it('Should show on page via API', (done) => {
@@ -71,21 +78,21 @@ describe('About API', () => {
   });
 
   it('Should show correct text in ukranian', (done) => {
-    Locale.set('uk-UA');
+    Locale.set('uk-UA').done(() => {
+      $('body').about({
+        appName: 'IDS Enterprise',
+        productName: 'Controls',
+        version: 'ver. {{version}}',
+        content: '<p>Fashionable components for fashionable applications.</p>'
+      });
 
-    $('body').about({
-      appName: 'IDS Enterprise',
-      productName: 'Controls',
-      version: 'ver. {{version}}',
-      content: '<p>Fashionable components for fashionable applications.</p>'
+      setTimeout(() => {
+        const ukText = 'Авторські права © Infor, 2018. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі права збережено. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників. www.infor.com.';
+
+        expect(document.body.querySelector('#about-modal + .modal-page-container')).toBeVisible();
+        expect(document.body.querySelector('#about-modal + .modal-page-container .additional-content + p').innerText).toEqual(ukText);
+        done();
+      }, 300);
     });
-
-    setTimeout(() => {
-      const ukText = 'Авторські права © Infor, 2018. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі права збережено. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників. www.infor.com.';
-
-      expect(document.body.querySelector('#about-modal + .modal-page-container')).toBeVisible();
-      expect(document.body.querySelector('#about-modal + .modal-page-container .additional-content + p').innerText).toEqual(ukText);
-      done();
-    }, 300);
   });
 });
