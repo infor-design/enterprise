@@ -8,6 +8,10 @@ demo:
   pages:
   - name: Accordion Panels
     slug: example-accordion-panels
+  - name: Allow only one pane open
+    slug: example-allow-one-pane
+  - name: Disabling Panes
+    slug: example-disabled
 ---
 
 ## Code Example

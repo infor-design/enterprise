@@ -190,7 +190,7 @@ describe('Datagrid API', () => {
   it('Should be able to show tooltip on either text cut off or not', (done) => {
     datagridObj.destroy();
     columns[1].width = 500;
-    columns[1].tooltip = 'Some tolltip data';
+    columns[1].tooltip = 'Some tooltip data';
     datagridObj = new Datagrid(datagridEl, {
       dataset: data,
       columns,
@@ -201,12 +201,11 @@ describe('Datagrid API', () => {
 
     setTimeout(() => {
       expect(document.body.querySelector('.grid-tooltip')).toBeTruthy();
-      expect(document.body.querySelector('.grid-tooltip.is-hidden')).toBeFalsy();
       done();
     }, 500);
   });
 
-  it('Should be able to shown tooltip rowStatus', (done) => {
+  it('Should be able to show tooltip rowStatus', (done) => {
     datagridObj.rowStatus(0, 'info', 'Info');
     const rowstatusIcon = document.body.querySelector('tbody tr[aria-rowindex="1"] td[aria-colindex="1"] .icon-rowstatus');
     $(rowstatusIcon).trigger('mouseover');
@@ -214,12 +213,11 @@ describe('Datagrid API', () => {
     setTimeout(() => {
       expect(document.body.querySelector('.grid-tooltip')).toBeTruthy();
       expect(document.body.querySelector('.grid-tooltip.is-error')).toBeFalsy();
-      expect(document.body.querySelector('.grid-tooltip.is-hidden')).toBeFalsy();
       done();
     }, 500);
   });
 
-  it('Should be able to shown tooltip rowStatus error', (done) => {
+  it('Should be able to show tooltip rowStatus error', (done) => {
     datagridObj.rowStatus(0, 'error', 'Error');
     const rowstatusIcon = document.body.querySelector('tbody tr[aria-rowindex="1"] td[aria-colindex="1"] .icon-rowstatus');
     $(rowstatusIcon).trigger('mouseover');
@@ -227,7 +225,6 @@ describe('Datagrid API', () => {
     setTimeout(() => {
       expect(document.body.querySelector('.grid-tooltip')).toBeTruthy();
       expect(document.body.querySelector('.grid-tooltip.is-error')).toBeTruthy();
-      expect(document.body.querySelector('.grid-tooltip.is-hidden')).toBeFalsy();
       done();
     }, 500);
   });

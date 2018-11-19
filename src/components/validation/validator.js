@@ -528,7 +528,7 @@ Validator.prototype = {
         }
       } else if (!validationType.errorsForm) {
         // Rules that do not error the form need to resolve
-        dfrd.resolve();  
+        dfrd.resolve();
       }
 
       self.setIconOnParent(field, rule.type);

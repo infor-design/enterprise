@@ -66,4 +66,30 @@ describe('Accordion API', () => {
 
     expect(isExpanded).toBeFalsy();
   });
+
+  it('Should be able to expandAll and collapseAll', (done) => {
+    expect(accordionObj.isExpanded(accordionObj.headers[0])).toBeFalsy();
+    expect(accordionObj.isExpanded(accordionObj.headers[1])).toBeFalsy();
+    expect(accordionObj.isExpanded(accordionObj.headers[2])).toBeFalsy();
+    expect(accordionObj.isExpanded(accordionObj.headers[3])).toBeFalsy();
+
+    accordionObj.expandAll();
+
+    setTimeout(() => {
+      expect(accordionObj.isExpanded(accordionObj.headers[0])).toBeTruthy();
+      expect(accordionObj.isExpanded(accordionObj.headers[1])).toBeTruthy();
+      expect(accordionObj.isExpanded(accordionObj.headers[2])).toBeTruthy();
+      expect(accordionObj.isExpanded(accordionObj.headers[3])).toBeTruthy();
+
+      accordionObj.collapseAll();
+
+      setTimeout(() => {
+        expect(accordionObj.isExpanded(accordionObj.headers[0])).toBeFalsy();
+        expect(accordionObj.isExpanded(accordionObj.headers[1])).toBeFalsy();
+        expect(accordionObj.isExpanded(accordionObj.headers[2])).toBeFalsy();
+        expect(accordionObj.isExpanded(accordionObj.headers[3])).toBeFalsy();
+        done();
+      }, 300);
+    }, 300);
+  });
 });

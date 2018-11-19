@@ -5,9 +5,6 @@ demo:
   embedded:
   - name: Default About Example
     slug: example-index
-  pages:
-  - name: Close Event Demo
-    slug: test-close-event
 ---
 
 ## Code Example
@@ -25,7 +22,7 @@ $('body').about({
 
 ## Accessibility
 
-- [Modal](./modal) guidelines apply as this is essentially a specific modal dialog.
+- [Modal](./modal) guidelines apply as this is actually a specific modal dialog.
 
 ## Code Tips
 
