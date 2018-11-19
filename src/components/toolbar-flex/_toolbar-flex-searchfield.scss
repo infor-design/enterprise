@@ -1,0 +1,98 @@
+// =======================================
+// Flexible Toolbar - Searchfield Component
+// ==================================== //
+
+$flex-toolbar-searchfield-focus-width: 225px;
+$responsive-searchfield-filled-out-width: 34px;
+
+.toolbar-section {
+  .searchfield-wrapper {
+    margin: 0 5px 0 0;
+
+    &.has-focus {
+      width: $flex-toolbar-searchfield-focus-width;
+    }
+
+    .collapse-button {
+      display: none;
+      min-width: 0;
+      padding: 0;
+      width: $responsive-searchfield-filled-out-width;
+    }
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .toolbar-section {
+    .searchfield-wrapper {
+      margin: 0 0 0 5px;
+    }
+  }
+}
+
+// Special Case for a responsive, active searchfield.
+// All toolbar sections except for the one containing the searchfield collapse,
+// and the one containing the searchfield expands to fill the entire space.
+@include respond-to(phone) {
+  .flex-toolbar {
+    &.searchfield-active {
+      .toolbar-section {
+        overflow: hidden;
+        padding-left: 0;
+        padding-right: 0;
+        width: 0;
+
+        &.search {
+          width: 100%;
+        }
+
+        .searchfield-wrapper,
+        .toolbar-searchfield-wrapper {
+          width: 100%;
+        }
+      }
+    }
+
+    // TODO: Remove this once we don't need to support regular Toolbar anymore
+    .searchfield-wrapper,
+    .toolbar-searchfield-wrapper {
+      &.has-text {
+        width: 34px;
+      }
+    }
+
+    .searchfield-wrapper {
+      > .icon.close {
+        right: 40px;
+      }
+    }
+  }
+
+  .toolbar-section {
+    .searchfield-wrapper {
+      &.is-open {
+        .collapse-button {
+          display: inline;
+        }
+
+        &.has-collapse-button {
+          .searchfield {
+            width: calc(100% - 34px);
+          }
+        }
+      }
+    }
+  }
+
+  html[dir='rtl'] {
+    .flex-toolbar {
+      .searchfield-wrapper {
+        > .icon.close {
+          left: 40px;
+          right: auto;
+        }
+      }
+    }
+  }
+}
