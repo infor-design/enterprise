@@ -1,7 +1,7 @@
 {
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
-  "version": "4.13.0-dev",
+  "version": "4.14.0-dev",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "repository": {
     "type": "git",
@@ -55,7 +55,6 @@
     "release:beta": "npx release-it minor --preRelease=beta --no-github.release",
     "release:rc": "npx release-it --preRelease=rc --no-github.release",
     "release:final": "npx release-it",
-    "prepublishOnly": "npm run build",
     "test": "npm run mdlint && npm run eslint && npm run stylelint && npm run functional:ci && npm run e2e:ci"
   },
   "dependencies": {

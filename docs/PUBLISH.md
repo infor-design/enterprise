@@ -42,6 +42,10 @@ git config --global credential.helper wincred
     - (mac) `export GITHUB_ACCESS_TOKEN="<your token here>"`
     - (windows) `set GITHUB_ACCESS_TOKEN="<your token here>"`
 
+### Make sure you are logged into NPM
+
+- Verify you are logged into NPM in your terminal to avoid `release-it` dying at the end.
+
 ## Release
 
 1. Make sure you have release-it installed (`npm install release-it -g`)
@@ -52,7 +56,6 @@ git config --global credential.helper wincred
     - `npm run release:rc` - release candidate normally the final testing branch before the release
     - `npm run release:final` - the release itself
     - **Always** verify the release version when the script asks. You MAY have to use a different release-it command than what we provide with the NPM script.
-1. Deploy the demo app for the semver
 
 For a final release, finish with:
 
@@ -62,7 +65,6 @@ For a final release, finish with:
 1. Manually merge the version branch into `master`. Do **NOT** use a pull request. (You will need github push permissions for this)
 1. If needed, use a pull request to set the `master` branch's package.json version to the proper "dev" version
     - i.e. if we just released `4.7.0`, master should be be `4.8.0-dev`
-1. Deploy the demo app for the specific releases's semver AS "LATEST"
 
 ## Setup tools for AWS CDN Publish
 
