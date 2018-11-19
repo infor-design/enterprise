@@ -316,7 +316,7 @@ Dropdown.prototype = {
     this.setWidth();
 
     this.tooltipApi = null;
-    if (this.pseudoElem.find('span').width() >= this.pseudoElem.width()) {
+    if (this.pseudoElem.find('span').width() > this.pseudoElem.width()) {
       this.setTooltip();
     }
 
