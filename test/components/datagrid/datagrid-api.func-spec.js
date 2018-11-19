@@ -187,7 +187,7 @@ describe('Datagrid API', () => {
     expect(text).toEqual('test');
   });
 
-  fit('Should be able to show tooltip on either text cut off or not', (done) => {
+  it('Should be able to show tooltip on either text cut off or not', (done) => {
     datagridObj.destroy();
     columns[1].width = 500;
     columns[1].tooltip = 'Some tooltip data';
@@ -205,7 +205,7 @@ describe('Datagrid API', () => {
     }, 500);
   });
 
-  fit('Should be able to show tooltip rowStatus', (done) => {
+  it('Should be able to show tooltip rowStatus', (done) => {
     datagridObj.rowStatus(0, 'info', 'Info');
     const rowstatusIcon = document.body.querySelector('tbody tr[aria-rowindex="1"] td[aria-colindex="1"] .icon-rowstatus');
     $(rowstatusIcon).trigger('mouseover');
@@ -217,7 +217,7 @@ describe('Datagrid API', () => {
     }, 500);
   });
 
-  fit('Should be able to show tooltip rowStatus error', (done) => {
+  it('Should be able to show tooltip rowStatus error', (done) => {
     datagridObj.rowStatus(0, 'error', 'Error');
     const rowstatusIcon = document.body.querySelector('tbody tr[aria-rowindex="1"] td[aria-colindex="1"] .icon-rowstatus');
     $(rowstatusIcon).trigger('mouseover');
