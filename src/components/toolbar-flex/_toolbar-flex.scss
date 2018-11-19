@@ -17,7 +17,10 @@
 }
 
 .toolbar-section {
+  @include transition(width 100ms $cubic-bezier-ease, padding 100ms $cubic-bezier-ease);
+
   white-space: nowrap;
+  width: auto;
 
   // Allows certain sections to collapse.
   // NOTE: Not all sections are collapsible.
@@ -94,10 +97,6 @@
     }
   }
 
-  .searchfield-wrapper {
-    margin: 0 5px 0 0;
-  }
-
   > .separator {
     background-color: $formatter-toolbar-separator-color;
     display: inline-block;
@@ -149,10 +148,6 @@ html[dir='rtl'] {
       button {
         margin-left: 0;
       }
-    }
-
-    .searchfield-wrapper {
-      margin: 0 0 0 5px;
     }
   }
 

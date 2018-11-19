@@ -58,7 +58,7 @@
       <div id="searchfield-section" class="toolbar-section search">
         <div class="searchfield-wrapper">
           <label for="searchfield" class="audible">Toolbar Search</label>
-          <input id="searchfield" class="searchfield" placeholder="Search..."/>
+          <input id="searchfield" class="searchfield" placeholder="Search..." data-options="{ clearable: true }"/>
         </div>
       </div>
 
@@ -98,6 +98,20 @@
     <div id="eyebrow-text-container" class="field">
       <label for="eyebrow-text">Eyebrow Text</label>
       <input type="text" id="eyebrow-text" value="Smaller Subsection Title with Details" disabled/>
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <h3>Searchfield Configs</h3>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="searchfield-collapsible" id="searchfield-collapsible"/>
+      <label for="searchfield-collapsible" class="radio-label">Make Searchfield Collapsible</label>
+      <br />
+
+      <input type="checkbox" class="checkbox" name="searchfield-clearable" id="searchfield-clearable" checked/>
+      <label for="searchfield-clearable" class="radio-label">Make Searchfield Clearable</label>
+      <br />
     </div>
 
   </div>
@@ -198,6 +212,8 @@
     var inputTitleText = $('#title-text');
     var inputEyebrowText = $('#eyebrow-text');
     var chkShowEyebrow = $('#show-eyebrow-text');
+    var chkSearchfieldCollapsible = $('#searchfield-collapsible');
+    var chkSearchfieldClearable = $('#searchfield-clearable');
 
     // Get the current toolbar state
     function getPageState() {
@@ -292,7 +308,7 @@
     checkShowEyebrow();
 
     function updateText(field, textarea) {
-      textarea.html(Soho.xss.ensureAlphaNumeric(field.val()));
+      textarea.html(Soho.xss.escapeHTML(field.val()));
     }
 
     inputTitleText.on('change.test input.test', function() {
@@ -304,6 +320,31 @@
       updateText($(this), sectionTitleSpan);
     });
     updateText(inputEyebrowText, sectionTitleSpan);
+
+    //====================================================
+    // Searchfield Settings
+    function setSearchfieldCollapsible() {
+      var newSettings = {
+        collapsible: false
+      };
+      if (chkSearchfieldCollapsible.prop('checked') === true) {
+        newSettings.collapsible = true;
+      }
+      searchfieldAPI.componentAPI.updated(newSettings);
+    }
+
+    function setSearchfieldClearable() {
+      var newSettings = {
+        clearable: false
+      };
+      if (chkSearchfieldClearable.prop('checked') === true) {
+        newSettings.clearable = true;
+      }
+      searchfieldAPI.componentAPI.updated(newSettings);
+    }
+
+    chkSearchfieldCollapsible.on('change.test', setSearchfieldCollapsible);
+    chkSearchfieldClearable.on('change.test', setSearchfieldClearable);
 
   });
 </script>

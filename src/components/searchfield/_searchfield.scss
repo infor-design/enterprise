@@ -70,10 +70,6 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     padding-left: 34px;
     padding-right: 10px;
 
-    @media (min-width: $breakpoint-phablet) {
-      padding-right: 34px;
-    }
-
     @include transition(background-color 300ms $cubic-bezier-ease,
     border-color 300ms $cubic-bezier-ease);
   }
@@ -453,15 +449,15 @@ html[dir='rtl'] {
     text-overflow: clip;
 
     &::-webkit-input-placeholder {
-      color: transparent !important;
+      color: transparent;
     }
 
     &::-moz-placeholder {
-      color: transparent !important;
+      color: transparent;
     }
 
     &:-ms-input-placeholder {
-      color: transparent !important;
+      color: transparent;
     }
   }
 }

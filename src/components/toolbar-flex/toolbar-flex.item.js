@@ -4,6 +4,13 @@ import { Environment as env } from '../../utils/environment';
 // Component Name
 const COMPONENT_NAME = 'toolbarflexitem';
 
+// Filters out buttons located inside of Searchfield wrappers.
+// Only `input` elements should be picked up by the item detector.
+function buttonFilter(elem) {
+  const searchfieldWrapper = $(elem).parents('.searchfield-wrapper, .toolbar-searchfield-wrapper');
+  return !searchfieldWrapper.length;
+}
+
 // Filters out hyperlinks that are part of menu/action button components
 function hyperlinkFilter(elem) {
   if (elem.nodeName !== 'A') {
@@ -18,7 +25,7 @@ function hyperlinkFilter(elem) {
 // Any of these element/class types are valid toolbar items.
 // TODO: Designate between "button" and "menu button"
 const TOOLBAR_ELEMENTS = [
-  { type: 'button', selector: 'button:not(.btn-menu):not(.btn-actions), input[type="button"]:not(.btn-menu):not(.btn-actions)' },
+  { type: 'button', selector: 'button:not(.btn-menu):not(.btn-actions), input[type="button"]:not(.btn-menu):not(.btn-actions)', filter: buttonFilter },
   { type: 'menubutton', selector: '.btn-menu' },
   { type: 'actionbutton', selector: '.btn-actions' },
   { type: 'hyperlink', selector: 'a[href]', filter: hyperlinkFilter },
@@ -115,10 +122,13 @@ ToolbarFlexItem.prototype = {
     if (this.disabled === true) {
       return false;
     }
-    if (this.overflowed === true) {
-      return false;
+    if (this.type === 'searchfield') {
+      return true;
     }
     if (this.type === 'actionbutton' && this.hasNoOverflowedItems === true) {
+      return false;
+    }
+    if (this.overflowed === true) {
       return false;
     }
 

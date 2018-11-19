@@ -99,6 +99,12 @@ ToolbarFlex.prototype = {
     $(this.element).on(`selected.${COMPONENT_NAME}`, (e, ...args) => {
       log('dir', args);
     });
+
+    // Inlined Searchfields can cause navigation requiring a focus change to occur on collapse.
+    $(this.element).on(`collapsed-responsive.${COMPONENT_NAME}`, (e, direction) => {
+      e.stopPropagation();
+      this.navigate(direction, null, true);
+    });
   },
 
   /**
@@ -126,6 +132,9 @@ ToolbarFlex.prototype = {
   handleItemKeydown(e) {
     const key = e.key;
     const item = this.getItemFromElement(e.target);
+    function preventScrolling() {
+      e.preventDefault();
+    }
 
     // NOTE: 'Enter' and 'SpaceBar' are purposely not handled on keydown, since
     // a `click` event will be fired on Toolbar items while pressing either of these keys.
@@ -141,19 +150,25 @@ ToolbarFlex.prototype = {
       return;
     }
 
-    if (key === 'ArrowLeft' || key === 'ArrowUp') {
-      if (item.type === 'searchfield' && key === 'ArrowLeft') {
+    // Left Navigation
+    const leftNavKeys = ['ArrowLeft', 'Left', 'ArrowUp', 'Up'];
+    if (leftNavKeys.indexOf(key) > -1) {
+      if (item.type === 'searchfield' && (key === 'ArrowLeft' || key === 'Left')) {
         return;
       }
       this.navigate(-1, undefined, true);
+      preventScrolling();
       return;
     }
 
-    if (key === 'ArrowRight' || key === 'ArrowDown') {
-      if (item.type === 'searchfield' && key === 'ArrowRight') {
+    // Right Navigation
+    const rightNavKeys = ['ArrowRight', 'Right', 'ArrowDown', 'Down'];
+    if (rightNavKeys.indexOf(key) > -1) {
+      if (item.type === 'searchfield' && (key === 'ArrowRight' || key === 'Right')) {
         return;
       }
       this.navigate(1, undefined, true);
+      preventScrolling();
     }
   },
 
@@ -279,6 +294,20 @@ ToolbarFlex.prototype = {
   },
 
   /**
+   * If this toolbar contains a searchfield, this alias returns a reference to its ComponentAPI property.
+   * If no searchfield exists, it returns `undefined`
+   * @returns {Searchfield|undefined} a reference to the componentAPI of the searchfield item.
+   */
+  get searchfieldAPI() {
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].type === 'searchfield') {
+        return this.items[i].componentAPI;
+      }
+    }
+    return undefined;
+  },
+
+  /**
    * @returns {ToolbarFlexItem|undefined} either a toolbar item, or undefined if one
    *  wasn't previously focused.
    */
@@ -321,6 +350,29 @@ ToolbarFlex.prototype = {
   },
 
   /**
+   * @returns {boolean} determining whether or not the Flex Toolbar has the authority to currently control focus
+   */
+  get canManageFocus() {
+    const activeElement = document.activeElement;
+    if (this.element.contains(activeElement)) {
+      return true;
+    }
+
+    // If the searchfield currently has focus, return true
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].type === 'searchfield' && this.items[i].componentAPI.isFocused) {
+        return true;
+      }
+    }
+
+    if (activeElement.tagName === 'BODY') {
+      return true;
+    }
+
+    return false;
+  },
+
+  /**
    * @returns {ToolbarFlexItem[]} all overflowed items in the toolbar
    */
   get overflowedItems() {
@@ -351,7 +403,7 @@ ToolbarFlex.prototype = {
     // reference the original direction for later, if placement fails.
     const originalDirection = 0 + direction;
 
-    if (currentIndex === undefined) {
+    if (currentIndex === undefined || currentIndex === null) {
       currentIndex = this.items.indexOf(this.focusedItem);
     }
 
@@ -384,7 +436,7 @@ ToolbarFlex.prototype = {
 
     // Retain a reference to the focused item and set focus, if applicable.
     this.focusedItem = targetItem;
-    if (doSetFocus) {
+    if (doSetFocus && this.canManageFocus) {
       this.focusedItem.element.focus();
     }
   },
@@ -493,6 +545,7 @@ ToolbarFlex.prototype = {
     this.element.removeEventListener('click', this.clickListener);
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);
+    $(this.element).off(`collapsed-responsive.${COMPONENT_NAME}`);
 
     this.items.forEach((item) => {
       item.teardown();

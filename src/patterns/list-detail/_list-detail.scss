@@ -330,11 +330,6 @@ html[dir='rtl'] {
     margin-left: 0;
   }
 
-  //Make this color target specifically header
-  .header .searchfield-wrapper:not(.context) input {
-    color: $header-text-color;
-  }
-
   // RTL makes everything come in from the opposite side.
   html[dir='rtl'] {
     .list-detail {

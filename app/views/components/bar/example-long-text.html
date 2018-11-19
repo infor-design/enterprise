@@ -20,18 +20,24 @@ $('body').on('initialized', function () {
  var dataset = [{
       data: [{
           name: 'Requirements Exceeding Net Change',
-          value: 373
+          value: 373,
+          abbrName: 'Req ex Net Change',
+          shortName: 'RENC'
       }, {
           name: 'Schedules with Requirements Rejected',
-          value: 372
+          value: 372,
+          abbrName: 'Schds w/ req rej',
+          shortName: 'SRR'
       }, {
           name: 'Open Premium Freight Authorization',
-          value: 236.35
+          value: 236.35,
+          abbrName: 'Open Prem frght autho',
+          shortName: 'OPFA'
       }],
       name: ''  //Can be optionally passed in makes less sense with one: Group 1
     }];
 
-  $('#bar-example').chart({type: 'bar', dataset: dataset});
+  $('#bar-example').chart({type: 'bar', dataset: dataset, longText: true, ticks: {largeNumber: 10, mediumNumber: 5, smallNumber: 2}});
 
 });
 </script>
