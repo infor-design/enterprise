@@ -7,9 +7,9 @@ demo:
     slug: example-index
     pages:
     - name: Loading events with Ajax
-      slug: example-ajax-events
+      slug: test-ajax-events
     - name: Loading a specific month and year
-      slug: example-specific-month
+      slug: test-specific-month
 ---
 
 The setup for a calendar only involves creating a `div` with the class `calendar`. In that div we add the three sections of the calendar. The first section calendar-events contains an accordion with a filter section and an upcoming events section (functionality to be added soon). The second section is a `div` with `calendar-monthview` this is where the monthview calendar will be rendered. The third section is `div` with `calendar-event-details` this is where the event details will be shown when you click on them.
@@ -34,8 +34,7 @@ We will next add better responsiveness, better keyboard support, adding events a
         <a href="#"><span>Upcoming Time off</span></a>
       </div>
       <div class="accordion-pane">
-        <div class="calendar-event-upcoming accordion-content">
-          <p>Remix, optimize, "B2B, iterate?" Best-of-breed efficient beta-test; social cutting-edge: rich magnetic tagclouds front-end infomediaries viral authentic incentivize sexy extensible functionalities incentivize. Generate killer authentic grow vertical blogospheres, functionalities ecologies harness, "tag solutions synergies exploit data-driven B2C open-source e-markets optimize create, enhance convergence create." Out-of-the-box strategize best-of-breed back-end, deploy design markets metrics. Content web services enhance leading-edge Cluetrain, deliverables dot-com scalable. User-centric morph, back-end, synthesize mesh, frictionless, exploit next-generation tag portals, e-commerce channels; integrate; recontextualize distributed revolutionize innovative eyeballs.</p>
+        <div class="calendar-upcoming-events accordion-content">
         </div>
       </div>
     </div>

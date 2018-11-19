@@ -469,7 +469,7 @@ Lookup.prototype = {
     }
 
     if (this.settings.minWidth) {
-      lookupGrid = this.applyMinWidth(lookupGrid); 
+      lookupGrid = this.applyMinWidth(lookupGrid);
     }
 
     if (self.settings.options) {
@@ -731,7 +731,7 @@ Lookup.prototype = {
   /**
    * apply the min width setting to the datagrid.
    * @private
-   * @param {jquery[]} grid jQuery wrapped element
+   * @param {jquery[]} lookupGrid jQuery wrapped element
    * @returns {jquery[]} grid jQuery wrapped element with the css applied
    */
   applyMinWidth(lookupGrid) {
@@ -739,9 +739,9 @@ Lookup.prototype = {
       return lookupGrid;
     }
 
-    // check that the minWidth is less than the windows width, so 
+    // check that the minWidth is less than the windows width, so
     // that the control remains responsive
-    if ($(window).width() > this.settings.minWidth) {      
+    if ($(window).width() > this.settings.minWidth) {
       const minWidth = `${this.settings.minWidth}px`;
       lookupGrid.css({
         'min-width': minWidth

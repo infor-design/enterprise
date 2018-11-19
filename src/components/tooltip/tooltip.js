@@ -210,6 +210,10 @@ Tooltip.prototype = {
           }, delay);
         })
         .on(`mouseleave.${COMPONENT_NAME} click.${COMPONENT_NAME}`, () => {
+          if (!env.features.touch) {
+            return;
+          }
+
           clearTimeout(timer);
           setTimeout(() => {
             self.hide();
