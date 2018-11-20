@@ -1751,7 +1751,7 @@ Dropdown.prototype = {
 
         if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
             (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
-          self.touchPrevented = true;
+           self.touchPrevented = false;
         }
       });
     }
