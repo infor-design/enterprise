@@ -526,7 +526,7 @@ Tooltip.prototype = {
     }
 
     // Don't open if this is an Actions Button with an open popupmenu
-    if (this.element[0].className.indexOf('btn-actions') > -1 && this.element[0].className.indexOf('is-open') > -1) {
+    if (DOM.hasClass(this.element[0], 'btn-actions') && DOM.hasClass(this.element[0], 'is-open')) {
       return;
     }
 
