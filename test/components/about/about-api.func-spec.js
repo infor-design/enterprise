@@ -12,7 +12,7 @@ let aboutObj;
 describe('About API', () => {
   const Locale = window.Soho.Locale;
 
-  beforeEach(() => {
+  beforeAll(() => {
     aboutEl = null;
     svgEl = null;
     aboutObj = null;
@@ -27,11 +27,7 @@ describe('About API', () => {
 
   afterEach(() => {
     Locale.set('en-US');
-    aboutObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    aboutObj.close();
   });
 
   afterAll(() => {
@@ -43,6 +39,15 @@ describe('About API', () => {
     const containerEls = document.body.querySelectorAll('.modal-page-container');
     for (let i = 0; i < containerEls.length; i++) {
       containerEls[i].parentNode.removeChild(containerEls[i]);
+    }
+
+    if (svgEl) {
+      svgEl.parentNode.removeChild(svgEl);
+    }
+
+    const rowEl = document.body.querySelector('.row');
+    if (rowEl) {
+      rowEl.parentNode.removeChild(rowEl);
     }
   });
 
