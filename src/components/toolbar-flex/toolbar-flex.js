@@ -23,6 +23,85 @@ function ToolbarFlex(element, settings) {
   this.element = element;
   this.settings = utils.mergeSettings(this.element, settings, TOOLBAR_FLEX_DEFAULTS);
 
+  // Array.from not supported in  IE6+ standards and Windows 8.1
+  // This code will emulate an ES6's Array.from method.
+  if (!Array.from) {
+    Array.from = (function () {
+      const toStr = Object.prototype.toString;
+      const isCallable = function (fn) {
+        return typeof fn === 'function' || toStr.call(fn) === '[object Function]';
+      };
+      const toInteger = function (value) {
+        const number = Number(value);
+        if (isNaN(number)) { return 0; }
+        if (number === 0 || !isFinite(number)) { return number; }
+        return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
+      };
+      const maxSafeInteger = Math.pow(2, 53) - 1;
+      const toLength = function (value) {
+        const len = toInteger(value);
+        return Math.min(Math.max(len, 0), maxSafeInteger);
+      };
+
+      // The length property of the from method is 1.
+      return function from(arrayLike/* , mapFn, thisArg */) {
+        // 1. Let C be the this value.
+        const C = this;
+
+        // 2. Let items be ToObject(arrayLike).
+        const items = Object(arrayLike);
+
+        // 3. ReturnIfAbrupt(items).
+        if (arrayLike == null) {
+          throw new TypeError('Array.from requires an array-like object - not null or undefined');
+        }
+
+        // 4. If mapfn is undefined, then let mapping be false.
+        const mapFn = arguments.length > 1 ? arguments[1] : void undefined; //eslint-disable-line
+        let T;
+        if (typeof mapFn !== 'undefined') {
+          // 5. else
+          // 5. a If IsCallable(mapfn) is false, throw a TypeError exception.
+          if (!isCallable(mapFn)) {
+            throw new TypeError('Array.from: when provided, the second argument must be a function');
+          }
+
+          // 5. b. If thisArg was supplied, let T be thisArg; else let T be undefined.
+          if (arguments.length > 2) {
+            T = arguments[2]; //eslint-disable-line
+          }
+        }
+
+        // 10. Let lenValue be Get(items, "length").
+        // 11. Let len be ToLength(lenValue).
+        const len = toLength(items.length);
+
+        // 13. If IsConstructor(C) is true, then
+        // 13. a. Let A be the result of calling the [[Construct]] internal method of C with an argument list containing the single item len.
+        // 14. a. Else, Let A be ArrayCreate(len).
+        const A = isCallable(C) ? Object(new C(len)) : new Array(len);
+
+        // 16. Let k be 0.
+        let k = 0;
+        // 17. Repeat, while k < len… (also steps a - h)
+        let kValue;
+        while (k < len) {
+          kValue = items[k];
+          if (mapFn) {
+            A[k] = typeof T === 'undefined' ? mapFn(kValue, k) : mapFn.call(T, kValue, k);
+          } else {
+            A[k] = kValue;
+          }
+          k += 1;
+        }
+        // 18. Let putStatus be Put(A, "length", len, true).
+        A.length = len;
+        // 20. Return A.
+        return A;
+      };
+    }());
+  }
+
   this.init();
 }
 
@@ -99,12 +178,6 @@ ToolbarFlex.prototype = {
     $(this.element).on(`selected.${COMPONENT_NAME}`, (e, ...args) => {
       log('dir', args);
     });
-
-    // Inlined Searchfields can cause navigation requiring a focus change to occur on collapse.
-    $(this.element).on(`collapsed-responsive.${COMPONENT_NAME}`, (e, direction) => {
-      e.stopPropagation();
-      this.navigate(direction, null, true);
-    });
   },
 
   /**
@@ -132,9 +205,6 @@ ToolbarFlex.prototype = {
   handleItemKeydown(e) {
     const key = e.key;
     const item = this.getItemFromElement(e.target);
-    function preventScrolling() {
-      e.preventDefault();
-    }
 
     // NOTE: 'Enter' and 'SpaceBar' are purposely not handled on keydown, since
     // a `click` event will be fired on Toolbar items while pressing either of these keys.
@@ -150,25 +220,19 @@ ToolbarFlex.prototype = {
       return;
     }
 
-    // Left Navigation
-    const leftNavKeys = ['ArrowLeft', 'Left', 'ArrowUp', 'Up'];
-    if (leftNavKeys.indexOf(key) > -1) {
-      if (item.type === 'searchfield' && (key === 'ArrowLeft' || key === 'Left')) {
+    if (key === 'ArrowLeft' || key === 'ArrowUp') {
+      if (item.type === 'searchfield' && key === 'ArrowLeft') {
         return;
       }
       this.navigate(-1, undefined, true);
-      preventScrolling();
       return;
     }
 
-    // Right Navigation
-    const rightNavKeys = ['ArrowRight', 'Right', 'ArrowDown', 'Down'];
-    if (rightNavKeys.indexOf(key) > -1) {
-      if (item.type === 'searchfield' && (key === 'ArrowRight' || key === 'Right')) {
+    if (key === 'ArrowRight' || key === 'ArrowDown') {
+      if (item.type === 'searchfield' && key === 'ArrowRight') {
         return;
       }
       this.navigate(1, undefined, true);
-      preventScrolling();
     }
   },
 
@@ -294,20 +358,6 @@ ToolbarFlex.prototype = {
   },
 
   /**
-   * If this toolbar contains a searchfield, this alias returns a reference to its ComponentAPI property.
-   * If no searchfield exists, it returns `undefined`
-   * @returns {Searchfield|undefined} a reference to the componentAPI of the searchfield item.
-   */
-  get searchfieldAPI() {
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].type === 'searchfield') {
-        return this.items[i].componentAPI;
-      }
-    }
-    return undefined;
-  },
-
-  /**
    * @returns {ToolbarFlexItem|undefined} either a toolbar item, or undefined if one
    *  wasn't previously focused.
    */
@@ -350,29 +400,6 @@ ToolbarFlex.prototype = {
   },
 
   /**
-   * @returns {boolean} determining whether or not the Flex Toolbar has the authority to currently control focus
-   */
-  get canManageFocus() {
-    const activeElement = document.activeElement;
-    if (this.element.contains(activeElement)) {
-      return true;
-    }
-
-    // If the searchfield currently has focus, return true
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].type === 'searchfield' && this.items[i].componentAPI.isFocused) {
-        return true;
-      }
-    }
-
-    if (activeElement.tagName === 'BODY') {
-      return true;
-    }
-
-    return false;
-  },
-
-  /**
    * @returns {ToolbarFlexItem[]} all overflowed items in the toolbar
    */
   get overflowedItems() {
@@ -403,7 +430,7 @@ ToolbarFlex.prototype = {
     // reference the original direction for later, if placement fails.
     const originalDirection = 0 + direction;
 
-    if (currentIndex === undefined || currentIndex === null) {
+    if (currentIndex === undefined) {
       currentIndex = this.items.indexOf(this.focusedItem);
     }
 
@@ -436,7 +463,7 @@ ToolbarFlex.prototype = {
 
     // Retain a reference to the focused item and set focus, if applicable.
     this.focusedItem = targetItem;
-    if (doSetFocus && this.canManageFocus) {
+    if (doSetFocus) {
       this.focusedItem.element.focus();
     }
   },
@@ -545,7 +572,6 @@ ToolbarFlex.prototype = {
     this.element.removeEventListener('click', this.clickListener);
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);
-    $(this.element).off(`collapsed-responsive.${COMPONENT_NAME}`);
 
     this.items.forEach((item) => {
       item.teardown();
