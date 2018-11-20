@@ -179,7 +179,7 @@ utils.uniqueId = function (element, className, prefix, suffix) {
 
   prefix = (!prefix ? '' : `${prefix}-`);
   suffix = (!suffix ? '' : `-${suffix}`);
-  className = (!className ? Array.from(element.classList).join('-') : className);
+  className = (!className ? utils.getArrayFromList(element.classList).join('-') : className);
 
   const str = `${prefix}${className}-${uniqueIdCount}${suffix}`;
   uniqueIdCount += 1;
@@ -1018,6 +1018,18 @@ math.sign = function (x) {
     return x;
   }
   return x > 0 ? 1 : -1;
+};
+
+/**
+ * Convenience method for using `Array.prototype.slice()` on an Array-like object (or an actual array)
+ * to make a copy.
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice#Array-like_objects
+ * @param {Array|NodeList} listObj an array-like object
+ * @returns {array} containing the list in array format.
+ */
+utils.getArrayFromList = function (listObj) {
+  const unboundSlice = Array.prototype.slice;
+  return Function.prototype.call.bind(unboundSlice)(listObj);
 };
 
 export { utils, math };
