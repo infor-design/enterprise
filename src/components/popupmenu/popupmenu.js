@@ -871,7 +871,7 @@ PopupMenu.prototype = {
       self.handleItemClick(e, a);
     });
 
-    const excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
+    const excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled):not(.is-placeholder)';
 
     // Select on Focus
     if (this.settings.mouseFocus) {
