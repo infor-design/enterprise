@@ -202,6 +202,13 @@ Tooltip.prototype = {
     const delay = 400;
     let timer;
 
+    function hideOnTimer() {
+      clearTimeout(timer);
+      setTimeout(() => {
+        self.hide();
+      }, delay);
+    }
+
     if (this.settings.trigger === 'hover' && !this.settings.isError) {
       ((this.element.is('.dropdown, .multiselect')) ? this.activeElement : this.element)
         .on(`mouseenter.${COMPONENT_NAME}`, () => {
@@ -209,15 +216,14 @@ Tooltip.prototype = {
             self.show();
           }, delay);
         })
-        .on(`mouseleave.${COMPONENT_NAME} click.${COMPONENT_NAME}`, () => {
+        .on(`mouseleave.${COMPONENT_NAME}`, () => {
+          hideOnTimer();
+        })
+        .on(`click.${COMPONENT_NAME}`, () => {
           if (!env.features.touch) {
             return;
           }
-
-          clearTimeout(timer);
-          setTimeout(() => {
-            self.hide();
-          }, delay);
+          hideOnTimer();
         })
         .on(`longpress.${COMPONENT_NAME}`, () => {
           self.show();
@@ -517,6 +523,11 @@ Tooltip.prototype = {
 
     if (newSettings) {
       this.settings = utils.mergeSettings(this.element[0], newSettings, this.settings);
+    }
+
+    // Don't open if this is an Actions Button with an open popupmenu
+    if (this.element[0].className.indexOf('btn-actions') > -1 && this.element[0].className.indexOf('is-open') > -1) {
+      return;
     }
 
     if (this.settings.beforeShow && !ajaxReturn) {
