@@ -69,9 +69,9 @@ $font-color-hyperlink: $theme-color-brand-primary-base;
 $font-color-muted: $graphite05;
 $font-color-alert: $alert-red;
 
-//The hyperlink Style
-$hyperlink-color: $azure04;
-$hyperlink-focus-border-color: $azure09;
+// The hyperlink Style
+$hyperlink-color: $link-color-initial-font;
+$hyperlink-focus-border-color: $link-color-initial-font;
 $hyperlink-visited-color: $amethyst10;
 $hyperlink-disabled-color: $disabled-color;
 $hyperlink-hover-color: $theme-color-brand-primary-alt;
