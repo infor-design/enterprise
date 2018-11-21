@@ -741,10 +741,11 @@ $treemap-title-color: $white;
 
 // Calendar
 $calendar-bg-color: $panel-bg-color;
+$calendar-event-color: $graphite10;
 $calendar-line-color: $graphite09;
 $calendar-selected-border-color: $theme-color-brand-primary-base;
-$calendar-selected-bg-color: $graphite02;
-$calendar-hover-bg-color: rgba(240, 240, 240, 0.75);
+$calendar-selected-bg-color: $graphite03;
+$calendar-hover-bg-color: rgba(74, 74, 74, 0.1);
 $calendar-disabled-bg-color: $input-color-readonly-background;
 $calendar-disabled-color: $graphite10;
 

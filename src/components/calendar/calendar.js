@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { stringUtils } from '../../utils/string';
 import { MonthView } from '../monthview/monthview';
 import { Locale } from '../locale/locale';
@@ -137,7 +138,7 @@ Calendar.prototype = {
     const upcomingEvent = document.createElement('a');
     upcomingEvent.setAttribute('href', '#');
     upcomingEvent.setAttribute('data-key', event.startKey);
-    upcomingEvent.classList.add('calendar-upcoming-event');
+    DOM.addClass(upcomingEvent, 'calendar-upcoming-event');
 
     let upcomingEventsMarkup = '';
     const startDay = Locale.formatDate(event.starts, { pattern: 'd' });
@@ -384,8 +385,15 @@ Calendar.prototype = {
    * Remove all events from the month.
    */
   removeAllEvents() {
-    this.monthViewContainer.querySelectorAll('.calendar-event-more').forEach(e => e.parentNode.removeChild(e));
-    this.monthViewContainer.querySelectorAll('.calendar-event').forEach(e => e.parentNode.removeChild(e));
+    const moreEvents = this.monthViewContainer.querySelectorAll('.calendar-event-more');
+    for (let i = 0; i < moreEvents.length; i++) {
+      moreEvents[i].parentNode.removeChild(moreEvents[i]);
+    }
+
+    const calendarEvents = this.monthViewContainer.querySelectorAll('.calendar-event');
+    for (let i = 0; i < calendarEvents.length; i++) {
+      calendarEvents[i].parentNode.removeChild(calendarEvents[i]);
+    }
   },
 
   /**
@@ -404,7 +412,7 @@ Calendar.prototype = {
       const moreText = Locale.translate('More').replace('...', '');
       if (!moreSpan) {
         node = document.createElement('span');
-        node.classList.add('calendar-event-more');
+        DOM.addClass(node, 'calendar-event-more');
         node.innerHTML = `+ 1 ${moreText}`;
         node.setAttribute('data-count', 1);
         container.querySelector('.day-container').appendChild(node);
@@ -420,7 +428,7 @@ Calendar.prototype = {
     }
 
     node = document.createElement('a');
-    node.classList.add('calendar-event', event.color, type);
+    DOM.addClass(node, 'calendar-event', event.color, type);
     node.setAttribute('data-id', event.id);
 
     node.innerHTML = `<div class="calendar-event-content">
