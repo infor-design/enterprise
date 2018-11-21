@@ -1715,6 +1715,7 @@ Dropdown.prototype = {
     function scrollDocument(e) {
       const focus = $('*:focus'); // dont close on timepicker arrow down and up
       if (self.touchPrevented || isDropdownElement($(e.target)) || focus.is('.timepicker')) {
+        self.touchPrevented = false;
         return;
       }
       self.closeList('cancel');
@@ -1751,7 +1752,7 @@ Dropdown.prototype = {
 
         if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
             (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
-           self.touchPrevented = false;
+           self.touchPrevented = true;
         }
       });
     }
