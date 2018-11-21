@@ -316,7 +316,7 @@ Dropdown.prototype = {
     this.setWidth();
 
     this.tooltipApi = null;
-    if (this.pseudoElem.find('span').width() >= this.pseudoElem.width()) {
+    if (this.pseudoElem.find('span').width() > this.pseudoElem.width()) {
       this.setTooltip();
     }
 
@@ -2393,7 +2393,7 @@ Dropdown.prototype = {
       // Fire the change event with the new value if the noTrigger flag isn't set
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
 
-      if (this.pseudoElem.find('span').width() >= this.pseudoElem.width()) {
+      if (this.pseudoElem.find('span').width() > this.pseudoElem.width()) {
         this.setTooltip();
       } else if (this.tooltipApi) {
         this.tooltipApi.destroy();
