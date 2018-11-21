@@ -52,7 +52,7 @@ describe('Calendar index tests', () => {
   });
 });
 
-describe('Calendar ajax loading tests', () => {  //eslint-disable-line
+describe('Calendar ajax loading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-ajax-events');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -93,7 +93,7 @@ describe('Calendar ajax loading tests', () => {  //eslint-disable-line
   });
 });
 
-describe('Calendar specific month tests', () => {  //eslint-disable-line
+describe('Calendar specific month tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-month?nofrills=true');
     const dateField = await element(by.id('monthview-datepicker-field'));

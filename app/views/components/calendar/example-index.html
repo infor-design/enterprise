@@ -24,6 +24,7 @@
 </div>
 
 <script>
+$('body').one('initialized', function () {
   // Get the Event Type and Events to show in the calendar
   var eventTypes = [];
   var events = [];
@@ -41,7 +42,7 @@
       });
     });
   });
-
+});
   /* TODO
     $('#actions').on('selected', function(e, args) {
       var action = args[0].getAttribute('data-action');
