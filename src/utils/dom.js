@@ -70,7 +70,7 @@ DOM.removeClass = function removeClass(el, ...className) {
   for (let i = 0; i < className.length; i++) {
     if (el.classList) {
       el.classList.remove(className[i]);
-    } else if (!DOM.hasClass(el, [i])) {
+    } else {
       let newClassName = '';
       const classes = el.className.split(' ');
       for (let j = 0; j < classes.length; j++) {
