@@ -45,14 +45,41 @@ DOM.hasClass = function hasClass(el, className) {
 };
 
 /**
+ * Add a class to any element and handle multiple classes.
+ * Handles DOM and SVG elements down to IE11
  * @param {HTMLElement} el a element being checked.
- * @param {string} className a string representing a class name.
+ * @param {...string} className a string representing a class name.
  */
-DOM.addClass = function addClass(el, className) {
-  if (el.classList) {
-    el.classList.add(className);
-  } else if (!DOM.hasClass(el, className)) {
-    el.className += ` ${className}`;
+DOM.addClass = function addClass(el, ...className) {
+  for (let i = 0; i < className.length; i++) {
+    if (el.classList) {
+      el.classList.add(className[i]);
+    } else if (!DOM.hasClass(el, [i])) {
+      el.className += ` ${className[i]}`;
+    }
+  }
+};
+
+/**
+ * Remove a class from any element and handle multiple classes.
+ * Handles DOM and SVG elements down to IE11
+ * @param {HTMLElement} el a element being checked.
+ * @param {...string} className a string representing a class name.
+ */
+DOM.removeClass = function removeClass(el, ...className) {
+  for (let i = 0; i < className.length; i++) {
+    if (el.classList) {
+      el.classList.remove(className[i]);
+    } else {
+      let newClassName = '';
+      const classes = el.className.split(' ');
+      for (let j = 0; j < classes.length; j++) {
+        if (classes[j] !== className[j]) {
+          newClassName += `${classes[i]} `;
+        }
+      }
+      this.className = newClassName;
+    }
   }
 };
 
