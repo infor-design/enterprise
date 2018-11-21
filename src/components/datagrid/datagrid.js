@@ -7725,14 +7725,15 @@ Datagrid.prototype = {
 
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
-        const parts = col.field.split('.');
-        if (parts.length === 2) {
-          rowData[parts[0]][parts[1]] = coercedVal;
-        }
-
-        if (parts.length === 3) {
-          rowData[parts[0]][parts[1]][parts[2]] = coercedVal;
-        }
+        let rowDataObj = rowData;
+        const nbrParts = col.field.split('.').length;
+        col.field.split('.').forEach((part, index) => {
+          if (index === nbrParts - 1) {
+            rowDataObj[part] = coercedVal;
+          } else {
+            rowDataObj = rowDataObj[part];
+          }
+        });
       } else {
         rowData[col.field] = coercedVal;
       }
