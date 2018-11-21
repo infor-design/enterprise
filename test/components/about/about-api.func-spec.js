@@ -3,7 +3,6 @@ import { About } from '../../../src/components/about/about';
 const aboutHTML = require('../../../app/views/components/about/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 require('../../../src/components/locale/cultures/en-US.js');
-require('../../../src/components/locale/cultures/uk-UA.js');
 
 let aboutEl;
 let svgEl;
@@ -75,24 +74,5 @@ describe('About API', () => {
       expect(spyEvent).toHaveBeenTriggered();
       done();
     }, 300);
-  });
-
-  it('Should show correct text in ukranian', (done) => {
-    Locale.set('uk-UA').done(() => {
-      $('body').about({
-        appName: 'IDS Enterprise',
-        productName: 'Controls',
-        version: 'ver. {{version}}',
-        content: '<p>Fashionable components for fashionable applications.</p>'
-      });
-
-      setTimeout(() => {
-        const ukText = 'Авторські права © Infor, 2018. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі права збережено. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників. www.infor.com.';
-
-        expect(document.body.querySelector('#about-modal + .modal-page-container')).toBeVisible();
-        expect(document.body.querySelector('#about-modal + .modal-page-container .additional-content + p').innerText).toEqual(ukText);
-        done();
-      }, 300);
-    });
   });
 });
