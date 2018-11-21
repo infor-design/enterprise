@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="accordion-header is-expanded">
-        <a href="#"><span data-translate="text">UpComingTimeOff</span></a>
+        <a href="#"><span data-translate="text">UpComing</span></a>
       </div>
       <div class="accordion-pane">
         <div class="calendar-upcoming-events accordion-content">
@@ -24,27 +24,28 @@
 </div>
 
 <script>
+$('body').one('initialized', function () {
   // Get the Event Type and Events to show in the calendar
   var eventTypes = [];
   var events = [];
 
   $.getJSON('{{basepath}}api/event-types', function(res) {
     eventTypes = res;
-  });
 
-  $.getJSON('{{basepath}}api/events', function(res) {
-    events = res;
-  });
+    $.getJSON('{{basepath}}api/events', function(res) {
+      events = res;
 
-  $('body').one('initialized', function () {
-    $('.calendar').calendar({
-      month: 9,
-      year: 2018,
-      eventTypes: eventTypes,
-      events: events,
-      template: 'tmpl-readonly'
+
+        $('.calendar').calendar({
+          month: 9,
+          year: 2018,
+          eventTypes: eventTypes,
+          events: events,
+          template: 'tmpl-readonly'
+        });
+      });
     });
-  });
+});
 </script>
 
 {{={{{ }}}=}}

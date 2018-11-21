@@ -5,9 +5,12 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Calendar index tests', () => { //eslint-disable-line
+describe('Calendar index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?nofrills=true');
+    const dateField = await element(by.id('monthview-datepicker-field'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
 
   it('Should render without error', async () => {
@@ -52,7 +55,7 @@ describe('Calendar index tests', () => { //eslint-disable-line
   });
 });
 
-describe('Calendar ajax loading tests', () => {  //eslint-disable-line
+describe('Calendar ajax loading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-ajax-events');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -93,9 +96,9 @@ describe('Calendar ajax loading tests', () => {  //eslint-disable-line
   });
 });
 
-describe('Calendar specific month tests', () => {  //eslint-disable-line
+describe('Calendar specific month tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/test-specific-month?nofrills=true');
+    await utils.setPage('/components/calendar/test-specific-month');
     const dateField = await element(by.id('monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
@@ -120,19 +123,6 @@ describe('Calendar specific month tests', () => {  //eslint-disable-line
       expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);
     });
   }
-
-  it('should display a tooltip when hovering an event', async () => {
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event.emerald.event-day-start .icon'))), config.waitsFor);
-
-    await browser.actions()
-      .mouseMove(await element.all(by.css('.calendar-event.emerald.event-day-start')).first())
-      .perform();
-
-    await browser.driver.sleep(2000);
-
-    expect(await element(by.id('tooltip')).getText()).toEqual('Autumn Foliage Trip (Pending)');
-  });
 
   it('should render icons on events', async () => {
     await browser.driver
