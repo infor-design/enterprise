@@ -19,9 +19,9 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**ids-enterprise Version**
+**Version**
 <!-- You can find this by inspecting the document html tag or sohoxi.js script header -->
-ids-enterprise: [e.g. v4.9.0 or v4.10.0]
+- ids-enterprise: [e.g. v4.9.0 or v4.10.0]
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
