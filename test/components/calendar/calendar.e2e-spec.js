@@ -98,7 +98,7 @@ describe('Calendar ajax loading tests', () => {
 
 describe('Calendar specific month tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/test-specific-month?nofrills=true');
+    await utils.setPage('/components/calendar/test-specific-month');
     const dateField = await element(by.id('monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
