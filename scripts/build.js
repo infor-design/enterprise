@@ -63,6 +63,8 @@ const fs = require('fs');
 const path = require('path');
 
 const logger = require('./logger');
+const createDirs = require('./build/create-dirs');
+const writeFile = require('./build/write-file');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
@@ -357,21 +359,6 @@ function writeSassImportStatement(libFile, libPath) {
 }
 
 /**
- * @param {array} dirs an array of strings representing directories
- * @returns {void}
- */
-function createDirs(dirs) {
-  dirs.forEach((dir) => {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-      if (commandLineArgs.verbose) {
-        logger('info', `Created directory "${dir}"`);
-      }
-    }
-  });
-}
-
-/**
  * "cleans" all the folders used by this script
  * @param {boolean} buildTempDir if true, re-builds the `temp/` directory
  * @returns {Promise} that resolves when the `del` library completes its task
@@ -599,40 +586,6 @@ function renderImportsToString(key, type) {
   });
 
   return fileContents;
-}
-
-/**
- * @private
- * @param {string} targetFilePath the path of the file that will be written
- * @param {string} targetFile the contents of the file to be written
- * @returns {void}
- */
-function logFileResults(targetFilePath, targetFile) {
-  if (!commandLineArgs.verbose) {
-    return;
-  }
-  const kbLength = (Buffer.byteLength(targetFile, 'utf8') / 1024).toFixed(2);
-  logger('success', `File "${chalk.yellow(targetFilePath)}\n" generated (${kbLength} KB)`);
-}
-
-/**
- * Wraps `fs.writeFile()` with actual async
- * @private
- * @param {string} targetFilePath the path of the file that will be written
- * @param {string} targetFile the contents of the file to be written
- * @returns {Promise} results of `fs.writeFile()`
- */
-function writeFile(targetFilePath, targetFile) {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(targetFilePath, targetFile, (err) => {
-      if (err) {
-        logger('error', `${err}`);
-        reject(err);
-      }
-      logFileResults(targetFilePath, targetFile);
-      resolve();
-    });
-  });
 }
 
 /**
