@@ -8,6 +8,9 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Calendar index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?nofrills=true');
+    const dateField = await element(by.id('monthview-datepicker-field'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
 
   it('Should render without error', async () => {
