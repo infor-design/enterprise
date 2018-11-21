@@ -27,6 +27,7 @@
 
   // Changes to the monthview container
   .calendar-monthview {
+    background-color: $calendar-bg-color;
     width: calc(100% - 440px);
 
     .monthview-table {
@@ -134,6 +135,7 @@
     }
 
     .calendar-event-content {
+      color: $calendar-event-color;
       overflow: hidden;
       padding: 3px 5px;
       position: relative;
