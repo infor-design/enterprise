@@ -94,6 +94,9 @@ describe('Datagrid grouping with paging tests', () => {
   });
 
   it('Should handle selection', async () => {
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next a'))), config.waitsFor);
+
     const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
     const row = '#datagrid .datagrid-body tbody tr:nth-child(2)';
     await element(by.css(cell)).click();
@@ -107,7 +110,8 @@ describe('Datagrid grouping with paging tests', () => {
     element(await by.css('.pager-next')).click();
 
     await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev a'))), config.waitsFor);
+
     await element(by.css(cell)).click();
 
     expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');

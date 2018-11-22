@@ -316,7 +316,7 @@ Dropdown.prototype = {
     this.setWidth();
 
     this.tooltipApi = null;
-    if (this.pseudoElem.find('span').width() >= this.pseudoElem.width()) {
+    if (this.pseudoElem.find('span').width() > this.pseudoElem.width()) {
       this.setTooltip();
     }
 
@@ -1715,6 +1715,7 @@ Dropdown.prototype = {
     function scrollDocument(e) {
       const focus = $('*:focus'); // dont close on timepicker arrow down and up
       if (self.touchPrevented || isDropdownElement($(e.target)) || focus.is('.timepicker')) {
+        self.touchPrevented = false;
         return;
       }
       self.closeList('cancel');
@@ -2392,7 +2393,7 @@ Dropdown.prototype = {
       // Fire the change event with the new value if the noTrigger flag isn't set
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
 
-      if (this.pseudoElem.find('span').width() >= this.pseudoElem.width()) {
+      if (this.pseudoElem.find('span').width() > this.pseudoElem.width()) {
         this.setTooltip();
       } else if (this.tooltipApi) {
         this.tooltipApi.destroy();
