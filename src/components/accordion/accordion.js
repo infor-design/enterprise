@@ -395,6 +395,15 @@ Accordion.prototype = {
       e.stopPropagation();
     }
 
+    const openPopup = $('.popupmenu.is-open');
+    if (openPopup.length) {
+      const headers = this.element.find('.accordion-header[aria-haspopup="true"]');
+      headers.each(function () {
+        const api = $(this).data('popupmenu');
+        api.close();
+      });
+    }
+
     const pane = header.next('.accordion-pane');
     if (pane.length) {
       this.toggle(header);
