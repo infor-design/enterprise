@@ -1544,7 +1544,7 @@ Datagrid.prototype = {
       for (let i = 0; i < conditions.length; i++) {
         const columnDef = self.columnById(conditions[i].columnId)[0];
 
-        let rowValue = rowData ? rowData[columnDef.field] :
+        let rowValue = rowData && rowData[columnDef.field] != undefined ? rowData[columnDef.field] :
           self.fieldValue(rowData, columnDef.field);
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();
