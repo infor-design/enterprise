@@ -19,7 +19,8 @@ const COMPONENT_NAME = 'message';
  * @param {number} [settings.width='auto']  Pass a specific with or defaults to auto
  * @param {object} [settings.buttons=null]  Array of buttons to add to the message (see modal examples as well)
  * @param {string} [settings.cssClass=null]  Extra Class to add to the dialog for customization.
- * @param {string} [settings.returnFocus=null]  JQuery Element selector to focus on return
+ * @param {string} [settings.returnFocus=null]  JQuery Element selector to focus on return.
+ * @param {string} [settings.allowHTMLTags=false]  Change to true to allow supported tags instead of stripping all HTML.
  */
 const MESSAGE_DEFAULTS = {
   title: 'Message Title',
@@ -45,7 +46,7 @@ Message.prototype = {
   init() {
     const self = this;
     let content;
-    const allowedHTML = "<b><strong><i><em><mark><small><del><ins><sub><sup><br>";
+    const allowedHTML = '<b><strong><i><em><mark><small><del><ins><sub><sup><br>';
 
     // Create the Markup
     this.message = $('<div class="modal message"></div>');
