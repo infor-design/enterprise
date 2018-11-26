@@ -19,7 +19,8 @@
         title: '<span>Application Error</span>',
         status: 'error',
         returnFocus: $(this),
-        message: 'This application has experienced a system error due to the lack of internet access. Please restart the application in order to proceed.',
+        message: 'This application has experienced a <b>system error</b> due to the lack of internet access.<br><em>Please</em> restart the application in order to proceed.',
+        sanitizeHTML: false,
         buttons: [{
             text: 'Restart Now',
             click: function() {
@@ -74,7 +75,7 @@
     $('#show-fileupload-confirmation').on('click', function() {
       $('body').message({
         title: 'File Upload Complete',
-        message: 'Your file "<b>photo.png</b>" was successfully uploaded to your personal folder and is now public for viewing.',
+        message: 'Your file "<b>photo.png</b>" was successfully uploaded to your personal folder and is now <em>public for viewing</em>.',
         returnFocus: $(this),
         buttons: [{
           text: 'Done',
@@ -90,8 +91,9 @@
     $('#show-delete-confirmation').on('click', function() {
       $('body').message({
         title: 'Delete this Application?',
-        message: 'You are about to delete this application permanently. Would you like to proceed?',
+        message: 'You are about to delete this application permanently.<br>Would you like to proceed?',
         returnFocus: $(this),
+        sanitizeHTML: false,
         buttons: [{
           text: 'Yes',
           click: function(e, modal) {
