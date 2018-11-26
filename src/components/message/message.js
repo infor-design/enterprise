@@ -29,7 +29,7 @@ const MESSAGE_DEFAULTS = {
   buttons: null,
   cssClass: null,
   returnFocus: null,
-  sanitizeHTML: true
+  allowHTMLTags: false
 };
 
 function Message(element, settings) {
@@ -49,8 +49,8 @@ Message.prototype = {
     // Create the Markup
     this.message = $('<div class="modal message"></div>');
     this.messageContent = $('<div class="modal-content"></div>');
-    this.title = $(`<h1 class="modal-title" id="message-title">${this.settings.sanitizeHTML ? xssUtils.stripHTML(this.settings.title) : this.settings.title}</h1>`).appendTo(this.messageContent).wrap('<div class="modal-header"></div>');
-    this.content = $(`<div class="modal-body"><p class="message" id="message-text">${this.settings.sanitizeHTML ? xssUtils.stripHTML(this.settings.message) : this.settings.message}</p></div>`).appendTo(this.messageContent);
+    this.title = $(`<h1 class="modal-title" id="message-title">${this.settings.allowHTMLTags ? xssUtils.stripTags(this.settings.title, '<b><strong><i><em><mark><small><del><ins><sub><sup>') : xssUtils.stripHTML(this.settings.title)}</h1>`).appendTo(this.messageContent).wrap('<div class="modal-header"></div>');
+    this.content = $(`<div class="modal-body"><p class="message" id="message-text">${this.settings.allowHTMLTags ? xssUtils.stripTags(this.settings.message, '<b><strong><i><em><mark><small><del><ins><sub><sup>') : xssUtils.stripHTML(this.settings.message)}</p></div>`).appendTo(this.messageContent);
 
     // Append The Content if Passed in
     if (!this.element.is('body')) {

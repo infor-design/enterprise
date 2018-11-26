@@ -20,7 +20,7 @@
         status: 'error',
         returnFocus: $(this),
         message: 'This application has experienced a <b>system error</b> due to the lack of internet access.<br><em>Please</em> restart the application in order to proceed.',
-        sanitizeHTML: false,
+        allowHTMLTags: true,
         buttons: [{
             text: 'Restart Now',
             click: function() {
@@ -93,7 +93,7 @@
         title: 'Delete this Application?',
         message: 'You are about to delete this application permanently.<br>Would you like to proceed?',
         returnFocus: $(this),
-        sanitizeHTML: false,
+        allowHTMLTags: true,
         buttons: [{
           text: 'Yes',
           click: function(e, modal) {
