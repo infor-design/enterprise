@@ -27,8 +27,19 @@
   }
 
   &.bottom {
-    #tab-container-popupmenu {
+    .popupmenu {
       .dismissible {
+        .wrapper {
+          li {
+            a {
+              .icon {
+                &.close {
+                  right: 6px;
+                }
+              }
+            }
+          }
+        }
         .icon.close {
           height: 15px;
           padding-left: 6px;
@@ -36,15 +47,6 @@
           position: absolute;
           right: 17px;
           top: 2px;
-        }
-      }
-    }
-
-    .wrapper {
-      .dismissible {
-        .icon.close {
-          padding: !important;
-          right: 6px !important;
         }
       }
     }
