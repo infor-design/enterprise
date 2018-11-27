@@ -109,6 +109,13 @@ PopupMenu.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not the popupmenu is currently open
+   */
+  get isOpen() {
+    return DOM.hasClass(this.element[0], 'is-open');
+  },
+
+  /**
    * @private
    * @returns {void}
    */
@@ -1588,6 +1595,12 @@ PopupMenu.prototype = {
         api.close();
       }
     });
+
+    // Close open tooltips associated with this menu's trigger element
+    const tooltipAPI = this.element.data('tooltip');
+    if (tooltipAPI && tooltipAPI.visible) {
+      tooltipAPI.hide();
+    }
 
     // Close open dropdowns
     $('#dropdown-list').remove();
