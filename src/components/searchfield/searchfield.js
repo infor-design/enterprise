@@ -856,7 +856,7 @@ SearchField.prototype = {
 
     // Override the 'click' listener created by Autocomplete (which overrides the
     // default Popupmenu method) to act differntly when the More Results link is activated.
-    self.element.on(`listopen.${this.id}`, (e, items) => {
+    self.element.on(`listopen.${this.id}`, () => {
       const list = $('#autocomplete-list');
 
       // Visual indicator class
