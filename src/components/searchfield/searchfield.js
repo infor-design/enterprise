@@ -862,31 +862,16 @@ SearchField.prototype = {
       // Visual indicator class
       self.wrapper.addClass('popup-is-open');
 
-      list.on(`click.${this.id}`, 'a', (thisE) => {
-        const a = $(thisE.currentTarget);
-        let ret = a.text().trim();
+      // Trigger the `allResultsCallback` if one is defined
+      self.element.on(`selected.${this.id}`, (thisE, a, ret) => {
         const isMoreLink = a.hasClass('more-results');
-        const isNoneLink = a.hasClass('no-results');
-
-        if (!isMoreLink && !isNoneLink) {
-          // Only write text into the field on a regular result pick.
-          self.element.attr('aria-activedescendant', a.parent().attr('id'));
+        if (!isMoreLink) {
+          return;
         }
 
-        if (a.parent().attr('data-value')) {
-          for (let i = 0; i < items.length; i++) {
-            if (items[i].value.toString() === a.parent().attr('data-value')) {
-              ret = items[i];
-            }
-          }
-        }
-
-        if (isMoreLink) {
-          // Trigger callback if one is defined
-          const callback = self.settings.allResultsCallback;
-          if (callback && typeof callback === 'function') {
-            callback(ret);
-          }
+        const callback = self.settings.allResultsCallback;
+        if (callback && typeof callback === 'function') {
+          callback(ret);
         }
       });
 
@@ -901,7 +886,7 @@ SearchField.prototype = {
     }).on(`listclose.${this.id}`, () => {
       const list = $('#autocomplete-list');
 
-      list.off(`click.${this.id}`);
+      self.element.off(`selected.${this.id}`);
       list.off(`focus.${this.id}`);
     });
 
@@ -1979,6 +1964,7 @@ SearchField.prototype = {
       `listopen.${this.id}`,
       `listclose.${this.id}`,
       `safe-blur.${this.id}`,
+      `selected.${this.id}`,
       `populated.${this.id}`,
       `cleared.${this.id}`].join(' '));
 

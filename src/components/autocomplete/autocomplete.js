@@ -779,7 +779,6 @@ Autocomplete.prototype = {
       ret.value = a.text().trim();
     }
 
-    this.closeList();
     this.highlight(a);
 
     this.noSelect = true;
@@ -802,13 +801,14 @@ Autocomplete.prototype = {
     * @memberof Autocomplete
     * @param {array} args An array containing the link and the return object.
     */
-    this.element
-      .trigger('selected', [a, ret])
-      .focus();
+    this.element.trigger('selected', [a, ret]);
 
     if (isEvent) {
       anchorOrEvent.preventDefault();
     }
+
+    this.closeList();
+    this.element.focus();
 
     return ret;
   },
