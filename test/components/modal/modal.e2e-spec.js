@@ -164,10 +164,18 @@ describe('Modal example-validation tests', () => {
       await browser.driver.sleep(config.sleep);
       await element(by.id('context-desc')).click();
       await browser.driver.sleep(config.sleep);
+      await element(by.id('context-name')).click();
+      await browser.driver.sleep(config.sleep);
 
-      const messageEl = await element.all(by.className('message-text')).first();
+      const errors = [
+        await element.all(by.className('message-text')).get(0),
+        await element.all(by.className('message-text')).get(1),
+        await element.all(by.className('message-text')).get(2)
+      ];
 
-      expect(await messageEl.getText()).toEqual('Email address not valid');
+      expect(await errors[0].getText()).toEqual('Required');
+      expect(await errors[1].getText()).toEqual('Email address not valid');
+      expect(await errors[2].getText()).toEqual('Required');
     });
 
     it('Should enable submit', async () => {
