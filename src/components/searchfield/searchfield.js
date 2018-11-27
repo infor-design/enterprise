@@ -187,6 +187,14 @@ SearchField.prototype = {
   },
 
   /**
+   * @private
+   * @returns {Autocomplete|undefined} a reference to the Searchfield's optional Autocomplete API
+   */
+  get autocompleteAPI() {
+    return $(this.element).data('autocomplete');
+  },
+
+  /**
    * @returns {boolean} whether or not this is a context searchfield.
    */
   get isContextSearch() {
@@ -865,14 +873,6 @@ SearchField.prototype = {
           self.element.attr('aria-activedescendant', a.parent().attr('id'));
         }
 
-        if (isMoreLink) {
-          // Trigger callback if one is defined
-          const callback = self.settings.allResultsCallback;
-          if (callback && typeof callback === 'function') {
-            callback(ret);
-          }
-        }
-
         if (a.parent().attr('data-value')) {
           for (let i = 0; i < items.length; i++) {
             if (items[i].value.toString() === a.parent().attr('data-value')) {
@@ -881,13 +881,13 @@ SearchField.prototype = {
           }
         }
 
-        self.element.trigger('selected', [a, ret]);
-
-        const popup = self.element.data('popupmenu');
-        if (popup) {
-          popup.close();
+        if (isMoreLink) {
+          // Trigger callback if one is defined
+          const callback = self.settings.allResultsCallback;
+          if (callback && typeof callback === 'function') {
+            callback(ret);
+          }
         }
-        return false;
       });
 
       // Override the focus event created by the Autocomplete control to make the more link
