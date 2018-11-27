@@ -21,6 +21,12 @@ module.exports = function (grunt) {
       rollup: {
         cmd: 'npx rollup -c'
       },
+      sass: {
+        cmd: (configType) => {
+          configType = configType || 'dist';
+          return `node ./scripts/build-sass --type=${configType}`;
+        }
+      },
       documentation: {
         cmd: (componentName) => {
           componentName = componentName || '';
@@ -88,9 +94,9 @@ module.exports = function (grunt) {
     const comps = grunt.option('components');
     if (comps) {
       grunt.log.writeln(`Compiling custom CSS library with components "${comps}"...`);
-      grunt.task.run('sass:custom');
+      grunt.task.run('exec:sass:custom');
     } else {
-      grunt.task.run('sass:dist');
+      grunt.task.run('exec:sass');
     }
     grunt.task.run('cssmin');
     grunt.task.run('usebanner');

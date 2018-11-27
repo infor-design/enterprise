@@ -65,6 +65,8 @@ const path = require('path');
 const logger = require('./logger');
 const createDirs = require('./build/create-dirs');
 const writeFile = require('./build/write-file');
+const buildSass = require('./build/sass');
+const sassConfig = require('./configs/sass').sass;
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
@@ -851,16 +853,16 @@ function runBuildProcesses(requested) {
   const buildPromises = [];
   let isCustom = false;
   let hasCustom = '';
+  let targetSassConfig = 'dist';
   const rollupArgs = ['-c'];
-  const sassArgs = ['build:sass'];
 
   // if Requested
   if (Array.isArray(requested) && requested.length) {
     isCustom = true;
+    targetSassConfig = 'custom';
     const componentsArg = `--components=${requested.join(',')}`;
     hasCustom = ' with custom entry points';
     rollupArgs.push(componentsArg);
-    sassArgs.push(componentsArg);
   }
 
   logger(`\nRunning build processes${hasCustom}...\n`);
@@ -882,8 +884,8 @@ function runBuildProcesses(requested) {
   // Build CSS
   if (commandLineArgs.disableCss) {
     logger('alert', 'Ignoring build process for CSS');
-  } else if (!isCustom || sassMatches.length) {
-    buildPromises.push(runBuildProcess('grunt', sassArgs));
+  } else if (sassMatches.length) {
+    buildPromises.push(buildSass(sassConfig[targetSassConfig]));
   }
 
   return Promise.all(buildPromises);

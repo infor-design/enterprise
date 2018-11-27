@@ -24,8 +24,8 @@ module.exports = {
       }
     },
 
-    options: genericOpts,
     app: {
+      options: genericOpts,
       files: {
         'app/dist/css/docs.css': 'app/src/docs.scss',
         'app/dist/css/demo.css': 'app/src/index.scss',
