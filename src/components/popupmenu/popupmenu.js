@@ -112,7 +112,7 @@ PopupMenu.prototype = {
    * @returns {boolean} whether or not the popupmenu is currently open
    */
   get isOpen() {
-    return this.element[0].className.indexOf('is-open') > -1;
+    return DOM.hasClass(this.element[0], 'is-open');
   },
 
   /**

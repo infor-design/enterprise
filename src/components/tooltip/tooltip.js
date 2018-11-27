@@ -72,7 +72,7 @@ Tooltip.prototype = {
    * @returns {boolean} whether or not the tooltip/popover is currently showing
    */
   get visible() {
-    return this.element[0].className.indexOf('is-hidden') === -1;
+    return DOM.hasClass(this.element[0], 'is-hidden') === false;
   },
 
   /**
