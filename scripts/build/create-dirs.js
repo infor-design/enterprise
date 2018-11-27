@@ -10,6 +10,7 @@ const logger = require('../logger');
  * @returns {void}
  */
 function createDirs(dirs) {
+  debugger;
   dirs.forEach((dir) => {
     if (fs.existsSync(dir)) {
       if (commandLineArgs.verbose) {
