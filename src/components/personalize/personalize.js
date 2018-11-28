@@ -46,7 +46,8 @@ Personalize.prototype = {
     this.availableThemes = [
       'light',
       'dark',
-      'high-contrast'
+      'high-contrast',
+      'uplift-alpha'
     ];
 
     // Set the default theme, or grab the theme from an external CSS stylesheet.
