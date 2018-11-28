@@ -35,8 +35,8 @@ module.exports = function (grunt) {
           return `npm run documentation ${componentName}`;
         }
       },
-      minify: {
-        cmd: 'node ./scripts/minify.js'
+      'minify-js': {
+        cmd: 'node ./scripts/minify-js.js'
       }
     },
   };
@@ -87,7 +87,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build:js:min', [
     'exec:rollup',
-    'exec:minify',
+    'exec:minify-js',
     'copy:main'
   ]);
 
