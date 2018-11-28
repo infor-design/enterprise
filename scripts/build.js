@@ -73,6 +73,8 @@ const TEMP_DIR = path.join(__dirname, '..', 'temp');
 const TEST_DIR = path.join(__dirname, '..', 'test');
 const RELATIVE_SRC_DIR = path.join('..', 'src');
 
+const bannerText = require('./generate-bundle-banner');
+
 const filePaths = {
   src: {
     js: {
@@ -115,6 +117,7 @@ const filePaths = {
     },
     sass: {
       controls: path.join(TEMP_DIR, '_controls.scss'),
+      banner: path.join(TEMP_DIR, '_banner.scss'),
       themes: {
         'dark-theme': path.join(TEMP_DIR, 'dark-theme.scss'),
         'high-contrast-theme': path.join(TEMP_DIR, 'high-contrast-theme.scss'),
@@ -674,7 +677,7 @@ function renderTargetJQueryFile(key, targetFilePath) {
  * @param {string} targetFilePath the path of the file that will be written
  * @returns {Promise} containing the results of the file write
  */
-function renderTargetSassFile(key, targetFilePath) {
+function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
   let targetFile = '';
   const type = 'scss';
 
@@ -690,13 +693,23 @@ function renderTargetSassFile(key, targetFilePath) {
       targetFile += '\n';
     });
     targetFile += '// These controls must come last\n@import \'../src/components/colors/colors\';\n';
+  } else if (key === 'banner') {
+    targetFile += bannerText;
   } else {
     // All other keys are "theme" entry points that just need their linked paths corrected.
     const themeFile = getFileContents(path.join(SRC_DIR, 'themes', `${key}.scss`));
-    targetFile = themeFile
+
+    // Inline the copyright banner
+    targetFile += '@import \'./banner\';\n\n';
+
+    // Add the theme contents
+    targetFile += themeFile
       .replace(/('\.\.\/)((?!\.))/g, '\'../src/') // replaces anything pointing to a source code file
-      .replace(/(\.\.\/)\1/g, '../') // fixes the node_modules link to IDS Identity
-      .replace('../src/core/controls', './controls');
+      .replace(/(\.\.\/)\1/g, '../'); // fixes the node_modules link to IDS Identity
+
+    if (!isNormalBuild) {
+      targetFile = targetFile.replace('../src/core/controls', './controls');
+    }
   }
 
   return writeFile(targetFilePath, targetFile);
@@ -781,13 +794,25 @@ function renderSourceCodeList() {
  */
 function renderTargetFiles(isNormalBuild) {
   const renderPromises = [];
-  if (isNormalBuild) {
-    return Promise.all([]);
-  }
 
   const jsEntryPoints = Object.keys(filePaths.target.js);
   const jQueryEntryPoints = Object.keys(filePaths.target.jQuery);
   const sassThemes = Object.keys(filePaths.target.sass.themes);
+
+  function runSassBuilds() {
+    sassThemes.forEach((filePathKey) => {
+      const theme = filePaths.target.sass.themes[filePathKey];
+      const promise = renderTargetSassFile(filePathKey, theme, isNormalBuild);
+      renderPromises.push(promise);
+    });
+    renderPromises.push(renderTargetSassFile('banner', filePaths.target.sass.banner, isNormalBuild));
+  }
+
+  // On normal builds, still generate the banner and inline it into each theme file.
+  if (isNormalBuild) {
+    runSassBuilds();
+    return Promise.all(renderPromises);
+  }
 
   jsEntryPoints.forEach((filePathKey) => {
     renderPromises.push(renderTargetJSFile(filePathKey, filePaths.target.js[filePathKey]));
@@ -798,10 +823,7 @@ function renderTargetFiles(isNormalBuild) {
     renderPromises.push(p);
   });
 
-  sassThemes.forEach((filePathKey) => {
-    const p = renderTargetSassFile(filePathKey, filePaths.target.sass.themes[filePathKey]);
-    renderPromises.push(p);
-  });
+  runSassBuilds();
   renderPromises.push(renderTargetSassFile('components', filePaths.target.sass.controls));
 
   renderPromises.push(renderComponentList(), renderSourceCodeList());
@@ -884,7 +906,7 @@ function runBuildProcesses(requested) {
   // Build CSS
   if (commandLineArgs.disableCss) {
     logger('alert', 'Ignoring build process for CSS');
-  } else if (sassMatches.length) {
+  } else if (!isCustom || sassMatches.length) {
     buildPromises.push(buildSass(sassConfig[targetSassConfig]));
   }
 

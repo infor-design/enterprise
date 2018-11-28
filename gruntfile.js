@@ -4,7 +4,6 @@ module.exports = function (grunt) {
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
 
-  const sass = require('./scripts/configs/sass.js');
   const chokidar = require('./scripts/configs/watch.js');
   const copy = require('./scripts/configs/copy.js');
   const cssmin = require('./scripts/configs/cssmin.js');
@@ -18,6 +17,9 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     banner: bannerText,
     exec: {
+      build: {
+        cmd: 'npm run build',
+      },
       rollup: {
         cmd: 'npx rollup -c'
       },
@@ -45,7 +47,6 @@ module.exports = function (grunt) {
     config,
     chokidar,
     clean,
-    sass,
     copy,
     cssmin,
     usebanner,
@@ -61,7 +62,8 @@ module.exports = function (grunt) {
   // - Updates local documentation
   grunt.registerTask('default', [
     'clean',
-    'build'
+    'build:sass:app',
+    'exec:build'
   ]);
 
   // Main build task (Gets everything)
@@ -73,7 +75,7 @@ module.exports = function (grunt) {
   // Demo build tasks
   grunt.registerTask('demo', [
     'clean:app',
-    'sass:app'
+    'exec:sass:app'
   ]);
 
   // Javascript Build Tasks
