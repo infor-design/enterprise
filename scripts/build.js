@@ -667,6 +667,7 @@ function renderTargetJQueryFile(key, targetFilePath) {
  * @private
  * @param {string} key the file path bucket to use
  * @param {string} targetFilePath the path of the file that will be written
+ * @param {boolean} isNormalBuild whether or not the build is normal (true) or custom (false)
  * @returns {Promise} containing the results of the file write
  */
 function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
