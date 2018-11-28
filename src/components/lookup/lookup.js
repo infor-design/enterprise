@@ -131,9 +131,8 @@ Lookup.prototype = {
     lookup.after(this.icon);
 
     // Hide icon if lookup input is hidden
-    const isHiddenComponent = lookup.parents('.modal').length > 0 || lookup.parents('.tab-panel').length > 0;
-    if ((lookup.is(':hidden') || lookup.css('visibility') === 'hidden') && !isHiddenComponent) {
-      this.icon.hide();
+    if (lookup.hasClass('hidden')) {
+      this.icon.addClass('hidden');
     }
 
     if (this.settings.autoWidth) {
