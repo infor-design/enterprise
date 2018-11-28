@@ -5,6 +5,7 @@ const path = require('path');
 const sass = require('node-sass');
 const getDirName = require('path').dirname;
 
+const commandLineArgs = require('yargs').argv;
 const logger = require('../logger');
 const createDirs = require('./create-dirs');
 const writeFile = require('./write-file');
@@ -33,6 +34,10 @@ function compileSass(options = {}) {
 
   // Write the result to file
   fileWritePromises.push(writeFile(options.outFile, result.css).then((err) => {
+    if (!commandLineArgs.verbose) {
+      return;
+    }
+
     if (err) {
       logger('error', `Error: ${err}`);
     }
@@ -43,6 +48,9 @@ function compileSass(options = {}) {
   if (result.map) {
     const sourcemapFileName = `${options.outFile}.map`;
     fileWritePromises.push(writeFile(sourcemapFileName, result.map).then((err) => {
+      if (!commandLineArgs.verbose) {
+        return;
+      }
       if (err) {
         logger('error', `Error: ${err}`);
       }

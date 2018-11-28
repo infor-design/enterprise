@@ -64,6 +64,7 @@ const path = require('path');
 
 const logger = require('./logger');
 const createDirs = require('./build/create-dirs');
+const getFileContents = require('./build/get-file-contents');
 const writeFile = require('./build/write-file');
 const buildSass = require('./build/sass');
 const sassConfig = require('./configs/sass').sass;
@@ -458,15 +459,6 @@ function pruneTest(file, components) {
   }
 
   return false;
-}
-
-/**
- * Gets a copy of the standard `index.js` file.
- * @param {string} filePath the target file to be read.
- * @returns {string} containing the imported file.
- */
-function getFileContents(filePath) {
-  return fs.readFileSync(filePath, 'utf8');
 }
 
 /**
