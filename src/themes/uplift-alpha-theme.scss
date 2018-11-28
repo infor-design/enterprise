@@ -11,6 +11,11 @@
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/tokens/web/theme-uplift';
 
+// Correct Font
+html body {
+  font-family: $theme-font-family-base !important;
+}
+
 // Local vars
 @import '../core/config';
 
