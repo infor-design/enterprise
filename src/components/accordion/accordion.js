@@ -232,9 +232,13 @@ Accordion.prototype = {
 
       if (this.settings.allowOnePane) {
         targetsToExpand = targetsToExpand.first();
+        this.expand(targetsToExpand);
+      } else {
+        targetsToExpand.each((idx) => {
+          this.expand($(targetsToExpand[idx]));
+        });
       }
 
-      this.expand(targetsToExpand);
       this.select(targetsToExpand.last());
       targetsToExpand.next('.accordion-pane').removeClass('no-transition');
     }
@@ -393,15 +397,6 @@ Accordion.prototype = {
     // cases where it shouldn't be clicked.
     if (e) {
       e.stopPropagation();
-    }
-
-    const openPopup = $('.popupmenu.is-open');
-    if (openPopup.length) {
-      const headers = this.element.find('.accordion-header[aria-haspopup="true"]');
-      headers.each(function () {
-        const api = $(this).data('popupmenu');
-        api.close();
-      });
     }
 
     const pane = header.next('.accordion-pane');
