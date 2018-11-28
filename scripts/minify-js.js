@@ -20,6 +20,10 @@ const paths = {
   inputSourceMapFile: path.resolve(__dirname, '..', config.inputSourceMapFileName),
 };
 
+// -------------------------------------
+// Main
+// -------------------------------------
+
 // Get the uncompressed, transpiled `sohoxi.js` from Rollup.
 const TRANSPILED_CODE = getFileContents(paths.inputJSFile);
 if (TRANSPILED_CODE) {
