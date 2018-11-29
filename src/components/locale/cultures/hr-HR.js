@@ -17,8 +17,8 @@ Soho.Locale.addCulture('hr-HR', {
       timeSeparator: ':',
       short: 'd.M.yyyy.', // use four digit year
       medium: 'd. MMM yyyy.',
-      long: 'd. MMMM yyyyy.',
-      full: 'EEEE, d. MMMM yyyyy.',
+      long: 'd. MMMM yyyy.',
+      full: 'EEEE, d. MMMM yyyy.',
       month: 'd. MMMM',
       year: 'MMMM, yyyy',
       timestamp: 'HH:mm:ss',
@@ -40,8 +40,8 @@ Soho.Locale.addCulture('hr-HR', {
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['AM', 'PM']
   }],
-  // numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-  currencySign: 'kn', // (Replace Sign http://www.currencysymbols.in ?)
+  // numbers/currencyFormats-numberSystem-latn/standard
+  currencySign: 'kn',
   currencyFormat: '#,##0.00 ¤',
   // numbers/symbols-numberSystem-latn
   numbers: {
@@ -51,7 +51,7 @@ Soho.Locale.addCulture('hr-HR', {
     decimal: ',',
     group: '.'
   },
-  // Resx - Approved By Translation Team
+  // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Autorska prava &copy; {0} Infor. Sva prava pridržana. Riječi i znakovi navedeni u ovom dokumentu predstavljaju zaštitne znakove i/ili registrirane zaštitne znakove tvrtke Infor i/ili povezanih društava i podružnica. Sva prava pridržana. Svi su drugi ovdje navedeni zaštitni znakovi u vlasništvu odgovarajućih vlasnika.' },
     Actions: { id: 'Actions', value: 'Radnje', comment: 'Tooltip text for the action button with additional in context actions' },
