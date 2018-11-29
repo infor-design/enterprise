@@ -54,6 +54,11 @@ const commandLineArgs = require('yargs')
     describe: 'Disables the build process for JS',
     default: false
   })
+  .option('disable-copy', {
+    alias: 'p',
+    describe: 'Disables the copying of all pre-built assets to the `/dist` folder',
+    default: false,
+  })
   .argv;
 
 const chalk = require('chalk');
@@ -849,7 +854,11 @@ function runBuildProcesses(requested) {
   logger(`\nRunning build processes${hasCustom}...\n`);
 
   // Copy vendor libs/dependencies
-  buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:main']));
+  if (commandLineArgs.disableCopy) {
+    logger('alert', 'Ignoring build process for copied dependencies');
+  } else {
+    buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:main']));
+  }
 
   if (buckets['test-func'].length || buckets['test-e2e'].length) {
     buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:custom-test']));

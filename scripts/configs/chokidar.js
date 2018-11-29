@@ -9,7 +9,7 @@ module.exports = {
         'src/components/**/*.scss',
         'src/patterns/**/*.scss'
       ],
-      tasks: ['build:sass'],
+      tasks: ['exec:sass:dist'],
       options: {
         livereload: true
       }

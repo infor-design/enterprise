@@ -7,7 +7,6 @@ module.exports = function (grunt) {
   const chokidar = require('./scripts/configs/watch.js');
   const copy = require('./scripts/configs/copy.js');
   const cssmin = require('./scripts/configs/cssmin.js');
-  const usebanner = require('./scripts/configs/usebanner.js');
   const compress = require('./scripts/configs/compress.js');
   const clean = require('./scripts/configs/clean.js');
 
@@ -26,7 +25,7 @@ module.exports = function (grunt) {
       sass: {
         cmd: (configType) => {
           configType = configType || 'dist';
-          return `node ./scripts/build-sass --type=${configType}`;
+          return `node ./scripts/build --disable-js --disable-copy --type=${configType}`;
         }
       },
       documentation: {
@@ -55,7 +54,6 @@ module.exports = function (grunt) {
     clean,
     copy,
     cssmin,
-    usebanner,
     compress
   ));
 
@@ -108,7 +106,6 @@ module.exports = function (grunt) {
       grunt.task.run('exec:sass');
     }
     grunt.task.run('cssmin');
-    grunt.task.run('usebanner');
   });
 
   // Zip dist folder for download from the git releases page.
