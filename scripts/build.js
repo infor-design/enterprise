@@ -57,7 +57,6 @@ const commandLineArgs = require('yargs')
   .argv;
 
 const chalk = require('chalk');
-const { spawn } = require('child_process');
 const del = require('del');
 const fs = require('fs');
 const path = require('path');
@@ -65,6 +64,7 @@ const path = require('path');
 const logger = require('./logger');
 const createDirs = require('./build/create-dirs');
 const getFileContents = require('./build/get-file-contents');
+const runBuildProcess = require('./build/run-build-process');
 const writeFile = require('./build/write-file');
 const buildSass = require('./build/sass');
 const sassConfig = require('./configs/sass').sass;
@@ -824,38 +824,6 @@ function renderTargetFiles(isNormalBuild) {
   renderPromises.push(renderTestManifest('e2e'));
 
   return Promise.all(renderPromises);
-}
-
-/**
- * Runs a single build process
- * @param {string} terminalCommand the base terminal command
- * @param {array} terminalArgs series of command arguments
- * @returns {Promise} resolves the process's log
- */
-function runBuildProcess(terminalCommand, terminalArgs) {
-  if (!terminalCommand) {
-    throw new Error(`"${terminalCommand}" must be a valid terminal command`);
-  }
-  if (!Array.isArray(terminalArgs)) {
-    terminalArgs = [];
-  }
-
-  return new Promise((resolve, reject) => {
-    const buildProcess = spawn(terminalCommand, terminalArgs);
-    let log = '';
-    buildProcess.stdout.on('data', (data) => {
-      log += data.toString('utf8');
-    });
-    buildProcess.stderr.on('data', (data) => {
-      log += data.toString('utf8');
-    });
-    buildProcess.on('exit', (code) => {
-      if (code !== 0) {
-        reject(new Error(`"${terminalCommand}" process exited with error code (${code})\nArgs: ${terminalArgs.join(' ')}`));
-      }
-      resolve(log);
-    });
-  });
 }
 
 /**

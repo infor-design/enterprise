@@ -9,6 +9,7 @@
 // -------------------------------------
 const path = require('path');
 const UglifyJS = require('uglify-es');
+const commandLineArgs = require('yargs').argv;
 
 const logger = require('./logger');
 const config = require('./configs/uglify');
@@ -16,47 +17,76 @@ const getFileContents = require('./build/get-file-contents');
 const writeFile = require('./build/write-file');
 
 const paths = {
-  inputJSFile: path.resolve(__dirname, '..', config.inputFileName),
-  inputSourceMapFile: path.resolve(__dirname, '..', config.inputSourceMapFileName),
+  input: {
+    js: path.resolve(__dirname, '..', config.inputFileName),
+    sourceMap: path.resolve(__dirname, '..', config.inputSourceMapFileName)
+  },
+  output: {
+    js: path.resolve(__dirname, '..', config.outputFileName),
+    sourceMap: path.resolve(__dirname, '..', config.outputSourceMapFileName)
+  }
 };
+
+// -------------------------------------
+// Functions
+// -------------------------------------
+function openUncompressedFile(name, filePath) {
+  const uncompressedFile = getFileContents(filePath);
+
+  if (commandLineArgs.verbose) {
+    if (!uncompressedFile) {
+      logger('alert', `WARNING: No ${name} was available at "${filePath}"`);
+    } else {
+      logger('info', `Opened ${name}...`);
+    }
+  }
+
+  return uncompressedFile;
+}
+
+/**
+ * Wraps the run of Uglify-ES and returns the result when resolved.
+ * @returns {Promise} resovled once the Uglify process completes.
+ */
+function minify() {
+  const code = openUncompressedFile('Uncompressed JS Code', paths.input.js);
+  config.uglify.sourceMap.content = openUncompressedFile('Uncompressed JS SourceMap', paths.input.sourceMap);
+
+  return new Promise((resolve, reject) => {
+    const result = UglifyJS.minify(code, config.uglify);
+    if (result.error) {
+      reject(new Error(`Error running Uglify-ES: ${result.error}`));
+      return;
+    }
+    if (commandLineArgs.verbose) {
+      logger('info', 'Finished UglifyJS process...');
+    }
+    resolve(result);
+  });
+}
 
 // -------------------------------------
 // Main
 // -------------------------------------
 
-// Get the uncompressed, transpiled `sohoxi.js` from Rollup.
-const TRANSPILED_CODE = getFileContents(paths.inputJSFile);
-if (TRANSPILED_CODE) {
-  logger('info', 'Opened uncompressed JS code...');
-} else {
-  logger('alert', `WARNING: No JS file was available at "${paths.inputJSFile}"`);
+function minifyJS() {
+  return new Promise((resolve, reject) => {
+    minify().then((result) => {
+      const fileWrites = [
+        writeFile(paths.output.js, result.code),
+        writeFile(paths.output.sourceMap, result.map)
+      ];
+
+      Promise.all(fileWrites).then((values) => {
+        logger('success', 'Compressed JS files written. JS minifying complete!');
+        resolve(values);
+        process.exit(0);
+      });
+    }).catch((e) => {
+      reject(e);
+      process.exit(1);
+    });
+  });
 }
 
-// Get the contents of the uncompressed sourceMap file.
-config.uglify.sourceMap.content = getFileContents(paths.inputSourceMapFile);
-if (config.uglify.sourceMap.content) {
-  logger('info', 'Opened uncompressed JS sourceMap...');
-} else {
-  logger('alert', `WARNING: No sourceMap file was available at "${paths.inputSourceMapFile}"`);
-}
-
-// Run Uglify-ES and get the result
-const result = UglifyJS.minify(TRANSPILED_CODE, config.uglify);
-if (result.error) {
-  logger('error', `Error running Uglify-ES: ${result.error}`);
-  process.exit(1);
-}
-logger('info', 'Finished UglifyJS process...');
-
-// Save the minified code
-const codeResultPath = path.resolve(__dirname, '..', config.outputFileName);
-const sourceMapPath = path.resolve(__dirname, '..', config.outputSourceMapFileName);
-const promises = [
-  writeFile(codeResultPath, result.code),
-  writeFile(sourceMapPath, result.map)
-];
-
-module.exports = Promise.all(promises).then(() => {
-  logger('success', 'Compressed JS files written. JS minifying complete!');
-  process.exit(0);
-});
+module.exports = minifyJS();

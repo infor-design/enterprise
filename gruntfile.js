@@ -37,6 +37,12 @@ module.exports = function (grunt) {
       },
       'minify-js': {
         cmd: 'node ./scripts/minify-js.js'
+      },
+      'minify-css': {
+        cmd: 'node ./scripts/minify-css.js'
+      },
+      minify: {
+        cmd: 'node ./scripts/minify.js'
       }
     },
   };
@@ -62,8 +68,9 @@ module.exports = function (grunt) {
   // - Updates local documentation
   grunt.registerTask('default', [
     'clean',
-    'build:sass:app',
-    'exec:build'
+    'exec:sass:app',
+    'exec:build',
+    'exec:minify'
   ]);
 
   // Main build task (Gets everything)

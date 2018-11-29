@@ -9,6 +9,7 @@
 // Requirements
 // -------------------------------------
 const cssmin = require('cssmin');
+const commandLineArgs = require('yargs').argv;
 
 const logger = require('./logger');
 const getFileContents = require('./build/get-file-contents');
@@ -28,24 +29,36 @@ function minify(srcFilePath, targetFilePath) {
       logger('error', `Error minifying "${srcFilePath}": ${err}`);
       return;
     }
-    logger('success', `Successfully minified "${targetFilePath}"`);
+    // Only log if not in --verbose mode (file logger has more detailed results)
+    if (!commandLineArgs.verbose) {
+      logger('success', `Successfully minified "${targetFilePath}"`);
+    }
+  });
+}
+
+function minifyCSS() {
+  return new Promise((resolve, reject) => {
+    if (!config.dist || !config.dist.files) {
+      throw new Error('Need to have target CSS files passed in for minifier');
+    }
+
+    const files = Object.keys(config.dist.files);
+    const processes = [];
+
+    files.forEach((targetFileName) => {
+      const srcFileName = config.dist.files[targetFileName][0];
+      processes.push(minify(srcFileName, targetFileName));
+    });
+
+    return Promise.all(processes).then(() => {
+      resolve();
+    }).catch((e) => {
+      reject(e);
+    });
   });
 }
 
 // -------------------------------------
 // Main
 // -------------------------------------
-
-if (!config.dist || !config.dist.files) {
-  throw new Error('Need to have target CSS files passed in for minifier');
-}
-
-const files = Object.keys(config.dist.files);
-const processes = [];
-
-files.forEach((targetFileName) => {
-  const srcFileName = config.dist.files[targetFileName][0];
-  processes.push(minify(srcFileName, targetFileName));
-});
-
-module.exports = Promise.all(processes);
+module.exports = minifyCSS();

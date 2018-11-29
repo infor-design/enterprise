@@ -7,14 +7,30 @@
 // -------------------------------------
 // Requirements
 // -------------------------------------
+const commandLineArgs = require('yargs').argv;
+
 const logger = require('./logger');
-const minifyJSResults = require('./minify-js');
-const minifyCSSResults = require('./minify-css');
+const runBuildProcess = require('./build/run-build-process');
 
 // -------------------------------------
 // Main
 // -------------------------------------
-Promise.all([minifyCSSResults, minifyJSResults]).then(() => {
+
+const cssArgs = ['./scripts/minify-css'];
+const jsArgs = ['./scripts/minify-js'];
+
+if (commandLineArgs.verbose) {
+  const vb = '--verbose';
+  cssArgs.push(vb);
+  jsArgs.push(vb);
+}
+
+const minifyPromises = [
+  runBuildProcess('node', cssArgs),
+  runBuildProcess('node', jsArgs)
+];
+
+Promise.all(minifyPromises).then(() => {
   logger('success', 'All Minification Complete!');
   process.exit(0);
 });
