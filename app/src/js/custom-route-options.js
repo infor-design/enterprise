@@ -58,7 +58,7 @@ module.exports = function customRouteOptions(req, res) {
   }
 
   // RenderLoop
-  if (url.match(/renderloop\/example-delayed-start/)) {
+  if (url.indexOf('renderloop/example-delayed-start') > -1) {
     SohoConfig.renderLoop = {};
     SohoConfig.renderLoop.noAutoStart = true;
   }

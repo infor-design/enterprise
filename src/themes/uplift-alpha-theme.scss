@@ -1,0 +1,39 @@
+// IDS Enterprise - Uplift Theme
+//================================================== //
+
+// Standard CSS reset stuff here
+@import '../core/reset';
+@import '../core/mixins';
+
+// Enterprise colors
+@import '../components/colors/colorpalette';
+
+// ids-identity token vars
+@import '../../node_modules/ids-identity/dist/tokens/web/theme-uplift';
+
+// Local vars
+@import '../core/config';
+
+// Core Controls
+@import '../core/controls';
+
+// Temporary Banner - Remove this when not alpha.
+body::before {
+  background: $alert02;
+  bottom: 12px;
+  color: $white;
+  content: 'alpha';
+  font-size: 13px;
+  font-weight: 900;
+  height: 25px;
+  left: -25px;
+  line-height: 27px;
+  position: fixed;
+  text-align: center;
+  text-transform: uppercase;
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  width: 100px;
+  z-index: 1000;
+}

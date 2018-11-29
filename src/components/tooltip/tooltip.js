@@ -69,11 +69,26 @@ function Tooltip(element, settings) {
 Tooltip.prototype = {
 
   /**
+   * @returns {boolean} whether or not the tooltip/popover is currently showing
+   */
+  get visible() {
+    return DOM.hasClass(this.element[0], 'is-hidden') === false;
+  },
+
+  /**
+   * @returns {Popupmenu|undefined} if a Popupmenu API exists on the trigger element
+   */
+  get popupmenuAPI() {
+    return this.element.data('popupmenu');
+  },
+
+  /**
    * Initializes the component
    * @private
    * @returns {void}
    */
   init() {
+    this.uniqueId = utils.uniqueId(this.element, 'tooltip');
     this.setup();
     this.appendTooltip();
 
@@ -202,25 +217,48 @@ Tooltip.prototype = {
     const delay = 400;
     let timer;
 
+    function showOnTimer() {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (self.element.is(':visible')) {
+          self.show();
+        }
+      }, delay);
+    }
+
+    function hideOnTimer() {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        self.hide();
+      }, delay);
+    }
+
+    function showImmediately() {
+      clearTimeout(timer);
+      self.show();
+    }
+
+    function hideImmediately() {
+      clearTimeout(timer);
+      self.hide();
+    }
+
     if (this.settings.trigger === 'hover' && !this.settings.isError) {
-      ((this.element.is('.dropdown, .multiselect')) ? this.activeElement : this.element)
+      ((this.element.is('.dropdown, .multiselect, span.longpress-target')) ? this.activeElement : this.element)
         .on(`mouseenter.${COMPONENT_NAME}`, () => {
-          timer = setTimeout(() => {
-            self.show();
-          }, delay);
+          showOnTimer();
         })
-        .on(`mouseleave.${COMPONENT_NAME} click.${COMPONENT_NAME}`, () => {
+        .on(`mouseleave.${COMPONENT_NAME}`, () => {
+          hideOnTimer();
+        })
+        .on(`click.${COMPONENT_NAME}`, () => {
           if (!env.features.touch) {
             return;
           }
-
-          clearTimeout(timer);
-          setTimeout(() => {
-            self.hide();
-          }, delay);
+          showImmediately();
         })
         .on(`longpress.${COMPONENT_NAME}`, () => {
-          self.show();
+          showImmediately();
         })
         .on(`updated.${COMPONENT_NAME}`, () => {
           self.updated();
@@ -228,10 +266,10 @@ Tooltip.prototype = {
     }
 
     function toggleTooltipDisplay() {
-      if (!self.tooltip.hasClass('is-hidden')) {
-        self.hide();
+      if (!self.visible) {
+        hideImmediately();
       } else {
-        self.show();
+        showImmediately();
       }
     }
 
@@ -251,22 +289,21 @@ Tooltip.prototype = {
     if (isFocusable) {
       this.element
         .on(`focus.${COMPONENT_NAME}`, () => {
-          self.show();
+          showImmediately();
         })
         .on(`blur.${COMPONENT_NAME}`, () => {
           if (!self.settings.keepOpen) {
-            self.hide();
+            hideImmediately();
           }
         });
     }
 
     // Close the popup/tooltip on orientation changes (but not when keyboard is open)
     $(window).on(`orientationchange.${COMPONENT_NAME}`, () => {
-      // Match every time.
-      if (self.tooltip.hasClass('is-hidden')) {
+      if (!self.visible) {
         return;
       }
-      self.close();
+      hideImmediately();
     }, false);
   },
 
@@ -519,6 +556,11 @@ Tooltip.prototype = {
       this.settings = utils.mergeSettings(this.element[0], newSettings, this.settings);
     }
 
+    // Don't open if this is an Actions Button with an open popupmenu
+    if (this.popupmenuAPI && this.popupmenuAPI.isOpen) {
+      return;
+    }
+
     if (this.settings.beforeShow && !ajaxReturn) {
       const response = function (content) {
         if (typeof content === 'boolean' && !content) {
@@ -580,7 +622,7 @@ Tooltip.prototype = {
 
     setTimeout(() => {
       $(document)
-        .on(`${mouseUpEventName}.${COMPONENT_NAME}`, (e) => {
+        .on(`${mouseUpEventName}.${COMPONENT_NAME}-${self.uniqueId}`, (e) => {
           const target = $(e.target);
 
           if (self.settings.isError || self.settings.trigger === 'focus') {
@@ -600,7 +642,7 @@ Tooltip.prototype = {
             self.hide(e);
           }
         })
-        .on(`keydown.${COMPONENT_NAME}`, (e) => {
+        .on(`keydown.${COMPONENT_NAME}-${self.uniqueId}`, (e) => {
           if (e.which === 27 || self.settings.isError) {
             self.hide();
           }
@@ -744,7 +786,7 @@ Tooltip.prototype = {
    * @returns {void}
    */
   hide() {
-    if (this.settings.keepOpen) {
+    if (this.settings.keepOpen || !this.visible) {
       return;
     }
 
@@ -807,9 +849,9 @@ Tooltip.prototype = {
     this.tooltip.off(`click.${COMPONENT_NAME}`);
 
     $(document).off([
-      `keydown.${COMPONENT_NAME}`,
-      `mouseup.${COMPONENT_NAME}`,
-      `touchend.${COMPONENT_NAME}`].join(' '));
+      `keydown.${COMPONENT_NAME}-${self.uniqueId}`,
+      `mouseup.${COMPONENT_NAME}-${self.uniqueId}`,
+      `touchend.${COMPONENT_NAME}-${self.uniqueId}`].join(' '));
 
     $('body').off([
       `resize.${COMPONENT_NAME}`,

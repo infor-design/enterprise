@@ -18,7 +18,6 @@
 //================================================== //
 
 // Form Background Color
-$body-bg-color-primary:  $slate08;
 $header-bg-color: $slate09;
 $subhead-bg-color: $slate06;
 $header-border-color: $slate10;
@@ -89,18 +88,18 @@ $circlepager-disable-hover-border-color: $slate05;
 $circlepager-disable-focus-border-color: $slate05;
 
 // Popovers
-$popover-bg-color: $white;
-$popover-border-color: $graphite03;
+$popover-bg-color: $slate07;
+$popover-border-color: $slate05;
 $popover-box-shadow: 0 2px 5px $drop-shadow-depth;
-$popover-arrow-border-color: $graphite03;
-$popover-color: $theme-color-font-base;
-$popover-separator-color: $graphite03;
-$popover-alternate-color: $graphite10;
-$popover-alternate-subheader-color: $graphite06;
-$popover-alternate-bg-color: $graphite01;
-$popover-alternate-arrow-color: $graphite01;
-$popover-alternate-title-bg-color: $white;
-$popover-alternate-table-header: $graphite01;
+$popover-arrow-border-color: $slate05;
+$popover-color: $font-color;
+$popover-separator-color: $slate05;
+$popover-alternate-color: inherit;
+$popover-alternate-subheader-color: inherit;
+$popover-alternate-bg-color: $slate07;
+$popover-alternate-arrow-color: $slate07;
+$popover-alternate-title-bg-color: $slate06;
+$popover-alternate-table-header: inherit;
 
 // Progress
 $progress-bg-color: transparent;
@@ -116,19 +115,19 @@ $tooltip-error-bg-color: $alert-red;
 $tooltip-error-color: $white;
 
 // Badges
-$badge-neutral-color: $graphite10;
-$badge-neutral-bg-color: $graphite02;
-$badge-neutral-hover-bg-color: $graphite03;
-$badge-secondary-color: $graphite10;
-$badge-secondary-bg-color: $white;
-$badge-secondary-border-color: $graphite03;
-$badge-error-color: $white;
+$badge-neutral-color: $theme-color-palette-white;
+$badge-neutral-bg-color: $slate06;
+$badge-neutral-hover-bg-color: $slate05;
+$badge-secondary-color: $theme-color-palette-white;
+$badge-secondary-bg-color: $slate07;
+$badge-secondary-border-color: $slate05;
+$badge-error-color: $theme-color-palette-white;
 $badge-alert-color: $graphite10;
-$badge-good-color: $white;
-$badge-info-color: $white;
+$badge-good-color: $graphite10;
+$badge-info-color: $theme-color-palette-white;
 $badge-info-bg-color: $theme-color-brand-primary-base;
-$badge-neutral-icon-color: $graphite06;
-$badge-neutral-hover-icon-color: $graphite10;
+$badge-neutral-icon-color: $slate03;
+$badge-neutral-hover-icon-color: $theme-color-palette-white;
 
 // Popup Menu
 $popupmenu-color: $white;
@@ -627,11 +626,11 @@ $image-border-color: $slate04;
 $image-background-color: $slate04;
 
 // Toast
-$toast-bg-color: $white;
-$toast-border-color: $graphite03;
-$toast-header-color: $graphite10;
-$toast-text-color: $theme-color-font-base;
-$toast-shadow: none; // 0 0 5px rgba(255, 255, 255, .2);
+$toast-bg-color: $slate07;
+$toast-border-color: $slate05;
+$toast-header-color: $white;
+$toast-text-color: $white;
+$toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
 
 // Builder Pattern
 $builder-header-bg-color: $slate08;

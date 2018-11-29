@@ -26,7 +26,7 @@ $.fn.bindFirst = function (name, fn) {
  * uniqueIdCount is a baseline unique number that will be used when generating
  * uniqueIds for elements and components.
  */
-export let uniqueIdCount = 0; // eslint-disable-line
+export let uniqueIdCount = []; // eslint-disable-line
 
 /**
  * Detect whether or not a text string represents a valid CSS property.  This check
@@ -181,8 +181,11 @@ utils.uniqueId = function (element, className, prefix, suffix) {
   suffix = (!suffix ? '' : `-${suffix}`);
   className = (!className ? utils.getArrayFromList(element.classList).join('-') : className);
 
-  const str = `${prefix}${className}-${uniqueIdCount}${suffix}`;
-  uniqueIdCount += 1;
+  if (!uniqueIdCount[className]) {
+    uniqueIdCount[className] = 1;
+  }
+  const str = `${prefix}${className}-${uniqueIdCount[className]}${suffix}`;
+  uniqueIdCount[className] += 1;
   return str;
 };
 
