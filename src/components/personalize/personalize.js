@@ -52,7 +52,7 @@ Personalize.prototype = {
 
     // Set the default theme, or grab the theme from an external CSS stylesheet.
     const cssTheme = this.getThemeFromStylesheet();
-    this.currentTheme = cssTheme || this.settings.theme;
+    this.currentTheme = this.settings.theme || cssTheme;
     this.setTheme(this.currentTheme);
 
     if (this.settings.colors) {
