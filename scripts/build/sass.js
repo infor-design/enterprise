@@ -5,7 +5,6 @@ const path = require('path');
 const sass = require('node-sass');
 const getDirName = require('path').dirname;
 
-const commandLineArgs = require('yargs').argv;
 const logger = require('../logger');
 const createDirs = require('./create-dirs');
 const writeFile = require('./write-file');
@@ -29,32 +28,29 @@ function compileSass(options = {}) {
   const result = sass.renderSync(options);
   const fileWritePromises = [];
 
+  const originalOutFile = `${options.outFile}`;
+  options.file = path.resolve(options.file);
+  options.outFile = path.resolve(options.outFile);
+
   // Build directories
   createDirs([getDirName(options.outFile)]);
 
   // Write the result to file
   fileWritePromises.push(writeFile(options.outFile, result.css).then((err) => {
-    if (!commandLineArgs.verbose) {
-      return;
-    }
-
     if (err) {
       logger('error', `Error: ${err}`);
     }
-    logger('success', `${options.outFile} built.`);
+    logger('success', `Built "${originalOutFile}"`);
   }));
 
   // Write a sourcemap file, if applicable
   if (result.map) {
     const sourcemapFileName = `${options.outFile}.map`;
     fileWritePromises.push(writeFile(sourcemapFileName, result.map).then((err) => {
-      if (!commandLineArgs.verbose) {
-        return;
-      }
       if (err) {
         logger('error', `Error: ${err}`);
       }
-      logger('success', `${sourcemapFileName} built.`);
+      logger('success', `Built "${originalOutFile}.map"`);
     }));
   }
 
@@ -79,8 +75,8 @@ module.exports = function buildSass(config) {
 
   files.forEach((file) => {
     let options = {
-      file: path.resolve(config.files[file]),
-      outFile: path.resolve(file)
+      file: config.files[file],
+      outFile: file
     };
 
     if (config.options) {

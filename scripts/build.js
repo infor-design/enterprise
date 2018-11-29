@@ -66,8 +66,6 @@ const createDirs = require('./build/create-dirs');
 const getFileContents = require('./build/get-file-contents');
 const runBuildProcess = require('./build/run-build-process');
 const writeFile = require('./build/write-file');
-const buildSass = require('./build/sass');
-const sassConfig = require('./configs/sass').sass;
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
@@ -868,7 +866,7 @@ function runBuildProcesses(requested) {
   if (commandLineArgs.disableCss) {
     logger('alert', 'Ignoring build process for CSS');
   } else if (!isCustom || sassMatches.length) {
-    buildPromises.push(buildSass(sassConfig[targetSassConfig]));
+    buildPromises.push(runBuildProcess('node', ['./scripts/build-sass', `--type=${targetSassConfig}`]));
   }
 
   return Promise.all(buildPromises);
