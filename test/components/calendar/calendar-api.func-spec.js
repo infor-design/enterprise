@@ -41,6 +41,7 @@ describe('Calendar API', () => {
     calendarObj.destroy();
     svgEl.parentNode.removeChild(svgEl);
     calendarEl.parentNode.removeChild(calendarEl);
+    jasmine.clock().uninstall();
   });
 
   it('Should render calendar', () => {
@@ -70,6 +71,10 @@ describe('Calendar API', () => {
   });
 
   it('Should render upcoming dates', () => {
+    jasmine.clock().install();
+    const baseTime = new Date(2018, 10, 10);
+    jasmine.clock().mockDate(baseTime);
+
     calendarObj.destroy();
     const start = new Date();
     start.setDate(start.getDate() + 1);
