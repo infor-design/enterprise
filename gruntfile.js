@@ -66,7 +66,6 @@ module.exports = function (grunt) {
   // - Updates local documentation
   grunt.registerTask('default', [
     'clean',
-    'exec:sass:app',
     'exec:build',
     'exec:minify'
   ]);
