@@ -778,7 +778,7 @@ Editor.prototype = {
         self.execAction(action, e);
       }
 
-      if (self.isIe) {
+      if (self.isIe || self.isIeEdge) {
         self.getCurrentElement().trigger('change');
       }
 
