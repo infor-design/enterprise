@@ -354,6 +354,13 @@ ColorPicker.prototype = {
         this.isPickerOpen = true;
       })
       .on('close.colorpicker', () => {
+        const links = [].slice.call(this.menu[0].querySelectorAll('a'));
+        links.forEach((link) => {
+          const tooltipApi = $(link).data('tooltip');
+          if (tooltipApi) {
+            tooltipApi.hide();
+          }
+        });
         menu.on('destroy.colorpicker', () => {
           this.element.off('open.colorpicker selected.colorpicker close.colorpicker');
           this.menu.off('destroy.colorpicker').remove();
