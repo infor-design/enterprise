@@ -13,14 +13,14 @@
         data = [];
 
       // Define Some Sample Data
-      data.push({ id: 1, productId: 2142201, productName: 'Compressor', inStock: true, activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action', status: 'Error'});
-      data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold', status: 'Error'});
-      data.push({ id: 3, productId: 2342203, productName: 'Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action', status: 'Error'});
-      data.push({ id: 4, productId: 2445204, productName: '1 Another Compressor', inStock: false, activity:  'Assemble Paint', quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action', status: 'Confirmed'});
-      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', inStock: true, activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold', status: 'Confirmed'});
-      data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', inStock: false, activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Error'});
-      data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Confirmed'});
-      data.push({ id: 7, productId: null, productName: null, activity:  null, quantity: null, price: null, status: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', inStock: true, activity:  'Assemble Paint', order: { quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8) }, action: 'Action', status: 'Error'});
+      data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', order: { quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3)}, action: 'On Hold', status: 'Error'});
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', inStock: true, activity:  'Inspect and Repair', order: { quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3)}, action: 'Action', status: 'Error'});
+      data.push({ id: 4, productId: 2445204, productName: '1 Another Compressor', inStock: false, activity:  'Assemble Paint', order: { quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3)}, action: 'Action', status: 'Confirmed'});
+      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', inStock: true, activity:  'Inspect and Repair', order: { quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5)}, action: 'On Hold', status: 'Confirmed'});
+      data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', inStock: false, activity:  'Inspect and Repair', order: { quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9)}, action: 'On Hold', status: 'Error'});
+      data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', order: { quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9)}, action: 'On Hold', status: 'Confirmed'});
+      data.push({ id: 7, productId: null, productName: null, activity:  null, order: { quantity: null, price: null, status: null, orderDate: null}, action: 'Blank Row', status: 'Confirmed'});
 
       var statuses = [{id:'Confirmed', value:'Confirmed', label:'Confirmed'},
                          {id:'Error', value:'Error', label:'Error'}];
@@ -33,7 +33,13 @@
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
       columns.push({ id: 'productId2', name: 'Product Id 2', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', required: true, validate: 'required', formatter: Formatters.Hyperlink, filterType: 'text', editor: Editors.Input});
-	  columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', width: 130, formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editor: Editors.Date});
+	    columns.push({ id: 'quantity', name: 'Quantity', field: 'order.quantity', align: 'right', editor: Editors.Input, filterType: 'integer', mask: '###', isEditable: function (row, cell, value, col, item) {
+        //For this fake logic just disable odd rows
+        return (row % 2 === 0);
+      }});
+      
+      columns.push({ id: 'price', name: 'Price', field: 'order.price', align: 'right', formatter: Formatters.Decimal, filterType: 'decimal', validate: 'required', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'order.orderDate', formatter: Formatters.Date, editor: Editors.Date, filterType: 'date', validate: 'required date'});
       columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', width: 90, formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox', editor: Editors.Checkbox});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'contents', options: activities, editor: Editors.Dropdown});
 
