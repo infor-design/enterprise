@@ -16,7 +16,7 @@ exports.config = {
   capabilities: {
     browserName: 'chrome' || 'firefox',
     shardTestFiles: true,
-    maxInstances: 3,
+    maxInstances: 2,
   },
   directConnect: true,
   baseUrl: 'http://localhost:4000',

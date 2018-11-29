@@ -41,7 +41,7 @@ exports.config = {
     build: browserstackBuildID,
     name: `${theme} theme local tunnel e2e tests`,
     shardTestFiles: true,
-    maxInstances: 3
+    maxInstances: 2
   },
   multiCapabilities: [
     {

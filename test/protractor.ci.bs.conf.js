@@ -40,7 +40,7 @@ exports.config = {
     name: `${theme} theme ci:bs e2e tests`,
     project: 'ids-enterprise-e2e-ci',
     shardTestFiles: true,
-    maxInstances: 3
+    maxInstances: 2
   },
   multiCapabilities: [
     {
