@@ -3,11 +3,15 @@
 // -------------------------------------
 const path = require('path');
 const sass = require('node-sass');
-const getDirName = require('path').dirname;
 
 const logger = require('../logger');
 const createDirs = require('./create-dirs');
 const writeFile = require('./write-file');
+
+const dirs = [
+  'dist',
+  'dist/css'
+];
 
 // -------------------------------------
 // Functions
@@ -33,7 +37,7 @@ function compileSass(options = {}) {
   options.outFile = path.resolve(options.outFile);
 
   // Build directories
-  createDirs([getDirName(options.outFile)]);
+  createDirs(dirs);
 
   // Write the result to file
   fileWritePromises.push(writeFile(options.outFile, result.css).then((err) => {
