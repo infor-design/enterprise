@@ -116,17 +116,10 @@ describe('Lookup API', () => {
   it('Should hide icon if input is hidden', () => {
     lookupObj.destroy();
 
-    lookupEl.style.display = 'none';
+    lookupEl.classList.add('hidden');
     lookupObj = new Lookup(lookupEl);
 
-    expect($(lookupEl).siblings('span.trigger').css('display')).toEqual('none');
-
-    lookupObj.destroy();
-
-    lookupEl.style.visibility = 'hidden';
-    lookupObj = new Lookup(lookupEl);
-
-    expect($(lookupEl).siblings('span.trigger').css('display')).toEqual('none');
+    expect($(lookupEl).siblings('span.trigger').css('visibility')).toEqual('hidden');
   });
 
   it('Should be able to destroy it', () => {
