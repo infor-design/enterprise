@@ -120,7 +120,7 @@ describe('Calendar specific month tests', () => {
       const calendarEl = await element(by.className('calendar'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toBeLessThan(1);
     });
   }
 

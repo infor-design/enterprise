@@ -52,14 +52,14 @@ describe('Listview example-singleselect tests', () => {
 
   it('Should deselect one item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
-    listviewItemEl.click();
+    await listviewItemEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-selected="true"]')).isPresent()).toBeTruthy();
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
 
-    listviewItemEl.click();
+    await listviewItemEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitsFor);
 

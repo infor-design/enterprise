@@ -232,9 +232,13 @@ Accordion.prototype = {
 
       if (this.settings.allowOnePane) {
         targetsToExpand = targetsToExpand.first();
+        this.expand(targetsToExpand);
+      } else {
+        targetsToExpand.each((idx) => {
+          this.expand($(targetsToExpand[idx]));
+        });
       }
 
-      this.expand(targetsToExpand);
       this.select(targetsToExpand.last());
       targetsToExpand.next('.accordion-pane').removeClass('no-transition');
     }
@@ -318,6 +322,15 @@ Accordion.prototype = {
     // potentially click the it twice
     if (e) {
       e.stopPropagation();
+    }
+
+    const openPopup = $('.popupmenu.is-open');
+    if (openPopup.length) {
+      const headers = this.element.find('.accordion-header[aria-haspopup="true"]');
+      headers.each(function () {
+        const api = $(this).data('popupmenu');
+        api.close();
+      });
     }
 
     /**
@@ -674,13 +687,9 @@ Accordion.prototype = {
     }
 
     const self = this;
-    let pane = header.nextAll().not('.audible').first('.accordion-pane');
+    const pane = header.nextAll().not('.audible').first('.accordion-pane');
     const a = header.children('a');
     const dfd = $.Deferred();
-
-    if (this.settings.allowOnePane) {
-      pane = header.next('.accordion-pane').not('.audible');
-    }
 
     const canExpand = this.element.triggerHandler('beforeexpand', [a]);
     if (canExpand === false) {
