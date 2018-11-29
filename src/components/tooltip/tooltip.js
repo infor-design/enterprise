@@ -220,7 +220,9 @@ Tooltip.prototype = {
     function showOnTimer() {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        self.show();
+        if (self.element.is(':visible')) {
+          self.show();
+        }
       }, delay);
     }
 

@@ -428,16 +428,9 @@ describe('DatePicker API', () => {
   it('Should hide icon if input is hidden', () => {
     datepickerAPI.destroy();
 
-    datepickerEl.style.display = 'none';
+    datepickerEl.classList.add('hidden');
     datepickerAPI = new DatePicker(datepickerEl);
 
-    expect($(datepickerEl).siblings('svg.icon').css('display')).toEqual('none');
-
-    datepickerAPI.destroy();
-
-    datepickerEl.style.visibility = 'hidden';
-    datepickerAPI = new DatePicker(datepickerEl);
-
-    expect($(datepickerEl).siblings('svg.icon').css('display')).toEqual('none');
+    expect($(datepickerEl).siblings('svg.icon').css('visibility')).toEqual('hidden');
   });
 });
