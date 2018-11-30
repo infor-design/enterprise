@@ -115,31 +115,35 @@ ListFilter.prototype = {
 
     // Iterates through each list item and attempts to find the provided search term.
     function searchItemIterator(item) {
-      const text = getSearchableContent(item);
+      let text = getSearchableContent(item);
+      if (!self.settings.caseSensitive) {
+        text = text.toLowerCase();
+      }
+
       const parts = text.split(' ');
       let match = false;
 
       if (self.settings.filterMode === 'startsWith') {
         for (let a = 0; a < parts.length; a++) {
-          if (parts[a].toLowerCase().indexOf(term) === 0) {
+          if (parts[a].indexOf(term) === 0) {
             match = true;
             break;
           }
         }
 
         // Direct Match
-        if (text.toLowerCase().indexOf(term) === 0) {
+        if (text.indexOf(term) === 0) {
           match = true;
         }
 
         // Partial dual word match
-        if (term.indexOf(' ') > 0 && text.toLowerCase().indexOf(term) > 0) {
+        if (term.indexOf(' ') > 0 && text.indexOf(term) > 0) {
           match = true;
         }
       }
 
       if (self.settings.filterMode === 'contains') {
-        if (text.toLowerCase().indexOf(term) >= 0) {
+        if (text.indexOf(term) >= 0) {
           match = true;
         }
       }
@@ -148,7 +152,7 @@ ListFilter.prototype = {
         const keywords = term.split(' ');
         for (let i = 0; i < keywords.length; i++) {
           const keyword = keywords[i];
-          if (text.toLowerCase().indexOf(keyword) >= 0) {
+          if (text.indexOf(keyword) >= 0) {
             match = true;
             break;
           }
