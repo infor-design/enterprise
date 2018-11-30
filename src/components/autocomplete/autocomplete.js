@@ -94,8 +94,11 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
     }
   } else {
     // Handle "startsWith" filterMode highlighting a bit differently.
-    const originalItem = targetProp;
-    const pos = Locale.toLowerCase(originalItem).indexOf(options.term);
+    let originalItem = targetProp;
+    if (!options.caseSensitive) {
+      originalItem = Locale.toLowerCase(originalItem);
+    }
+    const pos = originalItem.indexOf(options.term);
 
     if (pos > 0) {
       targetProp = originalItem.substr(0, pos) + '<i>' + originalItem.substr(pos, options.term.length) + '</i>' + originalItem.substr(options.term.length + pos);
@@ -124,6 +127,7 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
 * @param {string} [settings.sourceArguments={}] If a source method is defined, this flexible object can be passed
 * into the source method, and augmented with parameters specific to the implementation.
 * @param {boolean} [settings.template If defined, use this to draw the contents of each search result instead of the default draw routine.
+* @param {boolean} [settings.caseSensitive=false] if true, causes filter results that don't match case to be thrown out
 * @param {string} [settings.filterMode='startsWith'] The matching algorithm, startsWith, keyword and contains are supported - false will not filter client side
 * @param {boolean} [settings.delay=300] The delay between key strokes on the keypad before it thinks you stopped typing
 * @param {string} [settings.width=null] Width of the open auto complete menu
@@ -141,6 +145,7 @@ const AUTOCOMPLETE_DEFAULTS = {
   sourceArguments: {},
   template: undefined,
   filterMode: 'startsWith',
+  caseSensitive: false,
   delay: 300,
   width: null,
   offset: null,
@@ -175,6 +180,7 @@ Autocomplete.prototype = {
 
     const listFilterSettings = {
       filterMode: this.settings.filterMode,
+      caseSensitive: this.settings.caseSensitive,
       highlightMatchedText: this.settings.highlightMatchedText,
       searchableTextCallback: this.settings.searchableTextCallback
     };
@@ -212,7 +218,9 @@ Autocomplete.prototype = {
     }
 
     const self = this;
-    term = Locale.toLowerCase(term);
+    if (!this.settings.caseSensitive) {
+      term = Locale.toLowerCase(term);
+    }
 
     // append the list
     this.list = $('#autocomplete-list');
