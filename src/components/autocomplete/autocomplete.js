@@ -267,6 +267,7 @@ Autocomplete.prototype = {
         if (self.settings.highlightMatchedText) {
           const filterOpts = {
             filterMode: self.settings.filterMode,
+            caseSensitive: self.settings.caseSensitive,
             term
           };
           if (result.highlightTarget) {
