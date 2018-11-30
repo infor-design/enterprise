@@ -10,7 +10,9 @@ const writeFile = require('./write-file');
 
 const dirs = [
   'dist',
-  'dist/css'
+  'dist/css',
+  'app/dist',
+  'app/dist/css'
 ];
 
 // -------------------------------------
