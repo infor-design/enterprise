@@ -94,11 +94,12 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
     }
   } else {
     // Handle "startsWith" filterMode highlighting a bit differently.
-    let originalItem = targetProp;
+    const originalItem = targetProp;
+    let testContent = `${originalItem}`;
     if (!options.caseSensitive) {
-      originalItem = Locale.toLowerCase(originalItem);
+      testContent = Locale.toLowerCase(testContent);
     }
-    const pos = originalItem.indexOf(options.term);
+    const pos = testContent.indexOf(options.term);
 
     if (pos > 0) {
       targetProp = originalItem.substr(0, pos) + '<i>' + originalItem.substr(pos, options.term.length) + '</i>' + originalItem.substr(options.term.length + pos);
