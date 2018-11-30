@@ -25,6 +25,9 @@ module.exports = function (grunt) {
       sass: {
         cmd: (configType) => {
           configType = configType || 'dist';
+          if (configType === 'app') {
+            return `node ./scripts/build-sass --type=${configType}`;
+          }
           return `node ./scripts/build --disable-js --disable-copy --type=${configType}`;
         }
       },
