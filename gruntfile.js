@@ -10,11 +10,8 @@ module.exports = function (grunt) {
   const compress = require('./scripts/configs/compress.js');
   const clean = require('./scripts/configs/clean.js');
 
-  const bannerText = require('./scripts/generate-bundle-banner');
-
   const config = {
     pkg: grunt.file.readJSON('package.json'),
-    banner: bannerText,
     exec: {
       build: {
         cmd: 'npm run build',
