@@ -153,6 +153,31 @@ describe('Datagrid mixed selection tests', () => {
   });
 });
 
+describe('Datagrid editor dropdown source tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-editor-dropdown-source');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should datagrid exists', async () => {
+    expect(await element(by.css('.datagrid-container'))).toBeTruthy();
+  });
+
+  it('Should highlight the selected value', async () => {
+    const triggerEl = element.all(by.css('.datagrid-row')).first();
+    const testEl = triggerEl.all(by.tagName('td')).get(4);
+    await testEl.click();
+
+    expect(await element(by.css('.is-focused'))).toBeTruthy();
+    const focusEl = element(by.css('.is-focused'));
+    
+    expect(focusEl.getText()).toEqual('Place On-Hold');
+  });
+});
+
 describe('Datagrid multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-multiselect');

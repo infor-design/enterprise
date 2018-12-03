@@ -372,6 +372,9 @@ const editors = {
       }
 
       this.input.dropdown(editorOptions);
+      this.input.on('requestend', () => {
+        this.val(this.datasetValue);
+      });
 
       // Append the Dropdown's sourceArguments with some row/col meta-data
       const api = this.input.data('dropdown');
@@ -388,6 +391,8 @@ const editors = {
     };
 
     this.val = function (v) {
+      this.datasetValue = v;
+
       if (v !== undefined) {
         const compareValue = column.caseInsensitive && typeof v === 'string' ? v.toLowerCase() : v;
         this.input.val(v);
