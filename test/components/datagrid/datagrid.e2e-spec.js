@@ -78,11 +78,11 @@ describe('Datagrid grouping with paging tests', () => {
     const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
 
     expect(await element(by.css(cell)).getText()).toEqual('214220');
-    await element(by.css(cell)).click();
+    await element(await by.css(cell)).click();
 
     expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
 
-    element(by.css('.pager-next')).click();
+    await element(await by.css('.pager-next')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
@@ -107,7 +107,7 @@ describe('Datagrid grouping with paging tests', () => {
 
     expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
 
-    element(await by.css('.pager-next')).click();
+    await element(await by.css('.pager-next')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev a'))), config.waitsFor);
@@ -173,7 +173,7 @@ describe('Datagrid editor dropdown source tests', () => {
 
     expect(await element(by.css('.is-focused'))).toBeTruthy();
     const focusEl = element(by.css('.is-focused'));
-    
+
     expect(focusEl.getText()).toEqual('Place On-Hold');
   });
 });
@@ -611,7 +611,7 @@ describe('Datagrid paging multiselect across pages', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
-    element(by.css('.pager-next')).click();
+    await element(await by.css('.pager-next')).click();
 
     await browser.driver.sleep(config.sleep);
 
@@ -714,7 +714,7 @@ describe('Datagrid paging clientside single select tests', () => { //eslint-disa
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
 
-    element(by.css('.pager-next')).click();
+    await element(await by.css('.pager-next')).click();
 
     await browser.driver.sleep(config.sleep);
 
@@ -747,7 +747,7 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
-    element(by.css('.pager-next')).click();
+    await element(await by.css('.pager-next')).click();
 
     await browser.driver.sleep(config.sleep);
 
@@ -780,7 +780,7 @@ describe('Datagrid paging indeterminate single select tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
 
-    element(by.css('.pager-next')).click();
+    await element(await by.css('.pager-next')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
@@ -815,7 +815,7 @@ describe('Datagrid paging serverside multi select tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
-    element(by.css('.pager-next')).click();
+    await element(await by.css('.pager-next')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
