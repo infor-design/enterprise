@@ -76,6 +76,19 @@ Modal.prototype = {
     return api;
   },
 
+  get isAttachedToBody() {
+    return (this.trigger.length && this.trigger.is('body'));
+  },
+
+  /**
+   * @returns whether or not this modal should persist
+   */
+  /*
+  get persists() {
+    return this.settings.trigger !== 'immediate' || (this.trigger.length && this.trigger.is('body'));
+  },
+  */
+
   /**
    * @private
    */
@@ -94,8 +107,11 @@ Modal.prototype = {
     this.overlay = $('<div class="overlay"></div>');
     this.oldActive = this.trigger;
 
-    if (this.settings.trigger === 'click') {
-      this.trigger.on('click.modal', () => {
+    if (this.settings.trigger === 'click' && !this.isAttachedToBody) {
+      this.trigger.on('click.modal', (e) => {
+        if (!$(e.currentTarget).is(self.trigger)) {
+          return;
+        }
         self.open();
       });
     }
@@ -592,7 +608,7 @@ Modal.prototype = {
     setTimeout(() => {
       this.resize();
       this.element.addClass('is-visible').attr('role', (this.settings.isAlert ? 'alertdialog' : 'dialog'));
-      this.root.attr('aria-hidden', 'false');
+      this.root.removeAttr('aria-hidden');
       this.overlay.attr('aria-hidden', 'true');
       this.element.attr('aria-modal', 'true'); // This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
     }, 1);
@@ -851,7 +867,7 @@ Modal.prototype = {
       this.root.attr('aria-hidden', 'true');
     }
 
-    if ($('.modal-page-container[aria-hidden="false"]').length < 1) {
+    if ($('.modal-page-container:not([aria-hidden])').length < 1) {
       $('body').removeClass('modal-engaged');
       $('body > *').not(this.element.closest('.modal-page-container')).removeAttr('aria-hidden');
       $('.overlay').remove();
@@ -925,9 +941,7 @@ Modal.prototype = {
         self.capAPI.destroy();
       }
 
-      if (self.settings.trigger === 'click') {
-        self.trigger.off('click.modal');
-      }
+      self.trigger.off('click.modal');
 
       self.element.closest('.modal-page-container').remove();
       self.element[0].removeAttribute('data-modal');
