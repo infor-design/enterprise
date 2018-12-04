@@ -167,14 +167,14 @@ describe('Datagrid editor dropdown source tests', () => {
   });
 
   it('Should highlight the selected value', async () => {
-    const triggerEl = element.all(by.css('.datagrid-row')).first();
-    const testEl = triggerEl.all(by.tagName('td')).get(4);
+    const triggerEl = await element.all(await by.css('.datagrid-row')).first();
+    const testEl = await triggerEl.all(by.tagName('td')).get(4);
     await testEl.click();
 
     expect(await element(by.css('.is-focused'))).toBeTruthy();
-    const focusEl = element(by.css('.is-focused'));
+    const focusEl = await element(await by.css('.is-focused'));
 
-    expect(focusEl.getText()).toEqual('Place On-Hold');
+    expect(await focusEl.getText()).toEqual('Place On-Hold');
   });
 });
 
