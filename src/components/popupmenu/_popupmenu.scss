@@ -339,6 +339,10 @@
     &:hover {
       background-color: transparent;
     }
+
+    &.is-focused {
+      background-color: transparent;
+    }
   }
 
   .submenu {
