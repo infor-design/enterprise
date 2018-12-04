@@ -584,7 +584,6 @@ Modal.prototype = {
     $('body').on(`resize.modal-${this.id}`, () => {
       this.resize();
     });
-    this.resize();
 
     // Center
     this.root[0].style.display = '';
