@@ -15,23 +15,28 @@
 - `[Datagrid]` If using the `showDirty` option the indication will now be on each cell. ([#1183](https://github.com/infor-design/enterprise/issues/1183))
 - `[Datepicker]` Added an option `useCurrentTime` that will insert current time instead of noon time with date and timepickers. ([#1087](https://github.com/infor-design/enterprise/issues/1087))
 - `[General]` Included an IE 11 polyfill for ES6 Promises, this is a new dependency in the package.json you should include. ([#1172](https://github.com/infor-design/enterprise/issues/1172))
+- `[General]` Add translations in 38 languages including new support for Slovak (sk-SK). ([#557](https://github.com/infor-design/enterprise/issues/557))
 
 ### v4.13.0 Fixes
 
+- `[Tooltips]` Fixed an important bug where tooltips would stick around in the page on the top corner. ([#1273](https://github.com/infor-design/enterprise/issues/1273))
+- `[Tooltips]` Fixed some contrast issues on the high contrast theme. ([#1249](https://github.com/infor-design/enterprise/issues/1249))
+- `[Tooltips]` Fixed a bug where Toolbar "More Actions" menu buttons could incorrectly display a tooltip overlapping an open menu. ([#1242](https://github.com/infor-design/enterprise/issues/1242))
 - `[Datepicker / Timepicker]` Removed the need to use the customValidation setting. You can remove this option from your code. The logic will pick up if you added customValidation to your input by adding a data-validate option. You also may need to add `date` or `availableDate` validation to your  data-validate attribute if these validations are desired along with your custom or required validation. ([#862](https://github.com/infor-design/enterprise/issues/862))
-- `[Menubutton]` Added a new setting `hideMenuArrow` you can use for buttons that dont require an arrow, such as menu buttons. ([#1088](https://github.com/infor-design/enterprise/issues/1088))
-- `[Dropdown]` Fixed issues with destroy when multiple dropdowns are on the page. ([#1202](https://github.com/infor-design/enterprise/issues/1202))
+- `[Menubutton]` Added a new setting `hideMenuArrow` you can use for buttons that don't require an arrow, such as menu buttons. ([#1088](https://github.com/infor-design/enterprise/issues/1088))
+- `[Dropdown]` Fixed issues with destroy when multiple dropdown components are on the page. ([#1202](https://github.com/infor-design/enterprise/issues/1202))
 - `[Datagrid]` Fixed alignment issues when using filtering with some columns that do not have a filter. ([#1124](https://github.com/infor-design/enterprise/issues/1124))
 - `[Datagrid]` Fixed an error when dynamically adding context menus. ([#1216](https://github.com/infor-design/enterprise/issues/1216))
 - `[Datagrid]` Added an example of dynamic intermediate paging and filtering. ([#396](https://github.com/infor-design/enterprise/issues/396))
 - `[Dropdown]` Fixed alignment issues on mobile devices. ([#1069](https://github.com/infor-design/enterprise/issues/1069))
 - `[Datepicker]` Fixed incorrect assumptions, causing incorrect umalqura calendar calculations. ([#1189](https://github.com/infor-design/enterprise/issues/1189))
+- `[Datepicker]` Fixed an issue where the dialog would not close on click out if opening the time dropdown components first. ([#1278](https://github.com/infor-design/enterprise/issues/))
 - `[General]` Added the ability to stop renderLoop. ([#214](https://github.com/infor-design/enterprise/issues/214))
 - `[Datepicker]` Fixed an issue reselecting ranges with the date picker range option. ([#1197](https://github.com/infor-design/enterprise/issues/1197))
 - `[Editor]` Fixed bugs on IE with background color option. ([#392](https://github.com/infor-design/enterprise/issues/392))
 - `[Colorpicker]` Fixed issue where the palette is not closed on enter key / click. ([#1050](https://github.com/infor-design/enterprise/issues/1050))
 - `[Accordion]` Fixed issues with context menus on the accordion. ([#639](https://github.com/infor-design/enterprise/issues/639))
-- `[Searchfield]` Made no results appear unclickable. ([#329](https://github.com/infor-design/enterprise/issues/329))
+- `[Searchfield]` Made no results appear not clickable. ([#329](https://github.com/infor-design/enterprise/issues/329))
 - `[Datagrid]` Added an example of groups and paging. ([#435](https://github.com/infor-design/enterprise/issues/435))
 - `[Editor]` Fixed the dirty indicator when using toolbar items. ([#910](https://github.com/infor-design/enterprise/issues/910))
 - `[Datagrid]` Fixed a bug that made tooltips disappear when a lookup editor is closed. ([#1186](https://github.com/infor-design/enterprise/issues/1186))
@@ -47,6 +52,7 @@
 - `[Tree]` Added sortstop and sortstart events. ([#1003](https://github.com/infor-design/enterprise/issues/1003))
 - `[Searchfield]` Fixed some alignment issues in different browsers. ([#1106](https://github.com/infor-design/enterprise/issues/1106))
 - `[Searchfield]` Fixed some contrast issues in different browsers. ([#1104](https://github.com/infor-design/enterprise/issues/1104))
+- `[Searchfield]` Prevent multiple selected events from firing. ([#1259](https://github.com/infor-design/enterprise/issues/1259))
 - `[Autocomplete]` Added a beforeOpen setting ([#398](https://github.com/infor-design/enterprise/issues/398))
 - `[Toolbar]` Fixed an error where toolbar tried to focus a DOM item that was removed. ([#1177](https://github.com/infor-design/enterprise/issues/1177))
 - `[Dropdown]` Fixed a problem where the bottom of some lists is cropped. ([#909](https://github.com/infor-design/enterprise/issues/909))
@@ -57,6 +63,8 @@
 - `[Button]` Fixed alignment of text and icons. ([#973](https://github.com/infor-design/enterprise/issues/973))
 - `[Datagrid]` Fixed missing source call when loading last page first. ([#1162](https://github.com/infor-design/enterprise/issues/1162))
 - `[SwapList]` Made sure swap list will work in all cases and in angular. ([#152](https://github.com/infor-design/enterprise/issues/152))
+- `[Toast]` Fixed a bug where some toasts on certain urls may not close. ([#1305](https://github.com/infor-design/enterprise/issues/1305))
+- `[Datepicker / Lookup]` Fixed bugs where they would not load on tabs. ([#1304](https://github.com/infor-design/enterprise/issues/1304))
 
 ### v4.13.0 Chore & Maintenance
 
@@ -64,10 +72,11 @@
 - `[General]` Cleaned up some of the sample pages start at A, making sure examples work and tests are covered for better QA (on going). ([#1136](https://github.com/infor-design/enterprise/issues/1136))
 - `[General]` Upgraded to ids-identity 2.0.x ([#1062](https://github.com/infor-design/enterprise/issues/1062))
 - `[General]` Cleanup missing files in the directory listings. ([#985](https://github.com/infor-design/enterprise/issues/985))
-- `[Demo App]` Removed response headers for less veracode errors. ([#959](https://github.com/infor-design/enterprise/issues/959))
-- `[Angular 1.0]` We removd the angular 1.0 directives from the code and examples. These are no longer being updated. You can still use older versions of this or move on to Angular 7.x ([#1136](https://github.com/infor-design/enterprise/issues/1136))
+- `[Demo App]` Removed response headers for less Veracode errors. ([#959](https://github.com/infor-design/enterprise/issues/959))
+- `[Angular 1.0]` We removed the angular 1.0 directives from the code and examples. These are no longer being updated. You can still use older versions of this or move on to Angular 7.x ([#1136](https://github.com/infor-design/enterprise/issues/1136))
+- `[Uplift]` Included the uplift theme again as alpha for testing. It will show with a watermark and is only available via the personalize api or url params in the demo app. ([#1224](https://github.com/infor-design/enterprise/issues/1224))
 
-(60 Issues Solved this release, Backlog Enterprise 196, Backlog Ng 63, 653 Functional Tests, 607 e2e Test)
+(69 Issues Solved this release, Backlog Enterprise 199, Backlog Ng 63, 662 Functional Tests, 659 e2e Test)
 
 ## v4.12.0
 
