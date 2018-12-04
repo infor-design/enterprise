@@ -775,6 +775,17 @@ div.dropdown-xs,
       }
     }
   }
+
+  &.ie-edge18 {
+    .dropdown-list {
+      &.multiple li {
+        &::before {
+          margin-left: 10px;
+          margin-top: 7px;
+        }
+      }
+    }
+  }
 }
 
 // Firefox needs a nudge on the list items
