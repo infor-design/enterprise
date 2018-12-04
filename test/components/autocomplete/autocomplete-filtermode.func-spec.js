@@ -6,11 +6,17 @@ const svgHTML = require('../../../src/components/icons/svg.html');
 const newTemplateHTML = require('../../../app/views/components/autocomplete/example-contains.html');
 const statesData = require('../../../app/data/states-all.json');
 
+const caseSensitiveData = [
+  'CALIFORNIA',
+  'california',
+  'CaLiFoRnIa'
+];
+
 let autocompleteInputEl;
 let autocompleteAPI;
 
 describe('Autocomplete API', () => {
-  it('can provide search results with a "contains" filter', () => {
+  beforeEach(() => {
     document.body.insertAdjacentHTML('afterbegin', svgHTML);
     document.body.insertAdjacentHTML('afterbegin', newTemplateHTML);
 
@@ -21,7 +27,17 @@ describe('Autocomplete API', () => {
     autocompleteInputEl = document.body.querySelector('#autocomplete-default');
     autocompleteInputEl.classList.add('no-init');
     autocompleteInputEl.removeAttribute('data-options');
+  });
 
+  afterEach(() => {
+    autocompleteAPI.destroy();
+    autocompleteInputEl.parentNode.remove(autocompleteInputEl);
+
+    autocompleteInputEl = null;
+    autocompleteAPI = null;
+  });
+
+  it('can provide search results with a "contains" filter', () => {
     autocompleteAPI = new Autocomplete(autocompleteInputEl, {
       source: statesData
     });
@@ -46,5 +62,19 @@ describe('Autocomplete API', () => {
     expect(resultItems).toBeDefined();
     expect(resultItems.length).toEqual(10);
     expect(resultItems[7].innerText.trim()).toBe('Pennsylvania');
+  });
+
+  it('can run case-sensitive searches', () => {
+    autocompleteAPI = new Autocomplete(autocompleteInputEl, {
+      source: caseSensitiveData,
+      caseSensitive: true
+    });
+    autocompleteAPI.openList('calif', caseSensitiveData);
+    const autocompleteListEl = document.querySelector('#autocomplete-list');
+    const resultItems = autocompleteListEl.querySelectorAll('li');
+
+    expect(resultItems).toBeDefined();
+    expect(resultItems.length).toEqual(1);
+    expect(resultItems[0].innerText.trim()).toBe('california');
   });
 });

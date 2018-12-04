@@ -18,7 +18,6 @@
 //================================================== //
 
 // Form Background Color
-$body-bg-color-primary:  $graphite03;
 $header-bg-color: $azure09;
 $subhead-bg-color: $azure08;
 $header-border-color: $slate10;
@@ -69,9 +68,9 @@ $font-color-hyperlink: $theme-color-brand-primary-base;
 $font-color-muted: $graphite05;
 $font-color-alert: $alert-red;
 
-//The hyperlink Style
-$hyperlink-color: $azure04;
-$hyperlink-focus-border-color: $azure09;
+// The hyperlink Style
+$hyperlink-color: $link-color-initial-font;
+$hyperlink-focus-border-color: $link-color-initial-font;
 $hyperlink-visited-color: $amethyst10;
 $hyperlink-disabled-color: $disabled-color;
 $hyperlink-hover-color: $theme-color-brand-primary-alt;
@@ -126,19 +125,19 @@ $tooltip-error-border-color:  $alert-red;
 $tooltip-error-color: $white;
 
 // Badges
-$badge-neutral-color: $graphite10;
-$badge-neutral-bg-color: $graphite02;
-$badge-neutral-hover-bg-color: $graphite03;
-$badge-secondary-color: $graphite10;
-$badge-secondary-bg-color: $white;
-$badge-secondary-border-color: $graphite03;
+$badge-neutral-color: $black;
+$badge-neutral-bg-color: $graphite04;
+$badge-neutral-hover-bg-color: $graphite05;
+$badge-secondary-color: $black;
+$badge-secondary-bg-color: $graphite02;
+$badge-secondary-border-color: $graphite06;
 $badge-error-color: $white;
-$badge-alert-color: $graphite10;
+$badge-alert-color: $black;
 $badge-good-color: $white;
 $badge-info-color: $white;
 $badge-info-bg-color: $theme-color-brand-primary-base;
-$badge-neutral-icon-color: $graphite06;
-$badge-neutral-hover-icon-color: $graphite10;
+$badge-neutral-icon-color: $graphite09;
+$badge-neutral-hover-icon-color: $graphite06;
 
 .tag,
 .badge {

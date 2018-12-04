@@ -39,7 +39,9 @@ exports.config = {
     'browserstack.local': true,
     'browserstack.networkLogs' : true,
     build: browserstackBuildID,
-    name: `${theme} theme local tunnel e2e tests`
+    name: `${theme} theme local tunnel e2e tests`,
+    shardTestFiles: true,
+    maxInstances: 2
   },
   multiCapabilities: [
     {
@@ -49,7 +51,6 @@ exports.config = {
       os_version: '10',
       os: 'Windows',
       'browserstack.selenium_version': '3.11.0',
-
     },
     {
       browserName: 'Firefox',
