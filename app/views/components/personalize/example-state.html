@@ -1,0 +1,52 @@
+<div class="page-container no-scroll">
+  <header class="header is-personalizable">
+    <div class="toolbar">
+      <div class="title">
+        <h1>Example: Reinitialize</h1>
+      </div>
+
+      <div class="buttonset">
+        <input class="searchfield" />
+      </div>
+
+      {{> includes/header-actionbutton}}
+    </div>
+  </header>
+
+  <div id="maincontent" class="page-container scrollable" role="main">
+    <div class="row">
+
+      <div class="one columns">
+        <button id="reinitialize" class="btn btn-secondary">Reinitialize</button>
+        <br></br>
+        <button id="personalize" class="btn btn-secondary">Personalize</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+  // these are random colors for example purposes only
+  var colors = {
+    header: '#800000',
+    subheader: '#700000',
+    text: '#000000',
+    verticalBorder: '#000000',
+    horizontalBorder: '#000000',
+    inactive: '#CCCCCC',
+    hover: '#CCCCCC'
+  };
+
+  $('html').personalize({colors: colors});
+
+  $('#reinitialize').on('click', function() {
+    $('body').initialize();
+  });
+
+  $('#personalize').on('click', function() {
+    $('html').personalize({colors: colors});
+  });
+</script>
