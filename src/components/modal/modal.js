@@ -63,13 +63,34 @@ Modal.prototype = {
     return this.element.is('.contextual-action-panel');
   },
 
+  /**
+   * @private
+   * @returns {ContextualActionPanel|undefined} a reference to a Contextual Action Panel
+   * API associated with this modal, if one exists.
+   */
+  get capAPI() {
+    let api;
+    if (this.trigger && this.trigger.length) {
+      api = this.trigger.data('contextualactionpanel');
+    }
+    return api;
+  },
+
+  /**
+   * @private
+   */
   init() {
     const self = this;
 
     // Used for tracking events tied to the Window object
     this.id = this.element.attr('id') || (parseInt($('.modal').length, 10) + 1);
+
     // Find the button or anchor with same dialog ID
-    this.trigger = $(`button[data-modal="${this.element.attr('id')}"], a[data-modal="${this.element.attr('id')}"]`);
+    this.trigger = $(`[data-modal="${this.element.attr('id')}"]`);
+    if (this.element.is('body')) {
+      this.trigger = this.element;
+    }
+
     this.overlay = $('<div class="overlay"></div>');
     this.oldActive = this.trigger;
 
@@ -868,7 +889,7 @@ Modal.prototype = {
   },
 
   /**
-   * Destroy the modal.
+   * Update the modal
    * @param {settings} settings The settings to update on the modal
    * @returns {object} The modal object for chaining.
    */
@@ -900,11 +921,18 @@ Modal.prototype = {
         $('body').off(`resize.modal-${this.id}`);
       }
 
+      // Properly teardown contexual action panels
+      if (self.isCAP && self.capAPI) {
+        self.capAPI.destroy();
+      }
+
       if (self.settings.trigger === 'click') {
         self.trigger.off('click.modal');
       }
 
       self.element.closest('.modal-page-container').remove();
+      self.element[0].removeAttribute('data-modal');
+
       $.removeData(self.element[0], 'modal');
     }
 

@@ -41,6 +41,17 @@ function ContextualActionPanel(element, settings) {
 ContextualActionPanel.prototype = {
 
   /**
+   * @returns {Modal|undefined} instance of an IDS modal, or undefined if one doesn't exist
+   */
+  get modalAPI() {
+    let api;
+    if (this.panel && this.panel.length) {
+      api = this.panel.data('modal');
+    }
+    return api;
+  },
+
+  /**
   * Initialize the CAP.
   * @private
   */
@@ -417,8 +428,9 @@ ContextualActionPanel.prototype = {
     if (this.settings.trigger === 'immediate') {
       destroy = true;
     }
-    if (this.panel.data('modal')) {
-      this.panel.data('modal').close(destroy);
+
+    if (this.modalAPI) {
+      this.modalAPI.close(destroy);
     }
   },
 
@@ -458,7 +470,6 @@ ContextualActionPanel.prototype = {
   */
   destroy() {
     this.teardown();
-    this.panel.data('modal').destroy();
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
