@@ -1141,21 +1141,21 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
 
   it('Should show activation row for indeterminate with mixed selection', async () => {
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
-    let row = await element(by.css('tbody tr[aria-rowindex="2"]'));
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+    let row = await element(await by.css('tbody tr[aria-rowindex="2"]'));
 
     expect(await row.getAttribute('class')).not.toContain('is-rowactivated');
-    const cell = await element(by.css('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]'));
+    const cell = await element(await by.css('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]'));
     await cell.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
-    row = await element(by.css('tbody tr[aria-rowindex="2"]'));
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+    row = await element(await by.css('tbody tr[aria-rowindex="2"]'));
 
     expect(await row.getAttribute('class')).toContain('is-rowactivated');
-    await element(by.css('li.pager-next a')).click();
+    await element(await by.css('li.pager-next a')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
-    row = await element(by.css('tbody tr[aria-rowindex="2"]'));
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+    row = await element(await by.css('tbody tr[aria-rowindex="2"]'));
 
     expect(await row.getAttribute('class')).toContain('is-rowactivated');
   });
