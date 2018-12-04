@@ -1,4 +1,5 @@
 <div class="page-container no-scroll">
+
   <header class="header is-personalizable">
     <div class="toolbar">
       <div class="title">
@@ -14,30 +15,39 @@
   </header>
 
   <div id="maincontent" class="page-container scrollable" role="main">
+
     <div class="row">
-
-      <div class="one columns">
-        <button id="reinitialize" class="btn btn-secondary">Reinitialize</button>
-        <br></br>
-        <button id="personalize" class="btn btn-secondary">Personalize</button>
+      <div class="six columns">
+        <p>This example tests state maintenance for personalization of colors and theme. Personalizations should maintain upon reinitialization of elements after having chosen a theme or color from the "..." button in the header.</p>
+        <p>Personalization button will set all colors to defaults as declared in HTML <em>script</em> tag, regardless of theme.</p><br><br>
       </div>
-
     </div>
+
+    <div class="row">
+      <div class="one columns">
+        <button id="reinitialize" class="btn-secondary">Reinitialize</button>
+        <br></br>
+        <button id="personalize" class="btn-secondary">Personalize Colors to Defaults</button>
+      </div>
+    </div>
+
   </div>
 
 </div>
 
 <script>
 
-  // these are random colors for example purposes only
+  // component defaults
   var colors = {
-    header: '#800000',
-    subheader: '#700000',
-    text: '#000000',
-    verticalBorder: '#000000',
-    horizontalBorder: '#000000',
-    inactive: '#CCCCCC',
-    hover: '#CCCCCC'
+    header: '2578A9',
+    subheader: '1d5f8a',
+    text: 'ffffff',
+    verticalBorder: '133C59',
+    horizontalBorder: '134D71',
+    inactive: '1d5f8a',
+    hover: '133C59',
+    btnColorHeader: '368AC0',
+    btnColorSubheader: '54a1d3'
   };
 
   $('html').personalize({colors: colors});
