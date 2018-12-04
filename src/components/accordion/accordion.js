@@ -330,6 +330,7 @@ Accordion.prototype = {
       headers.each(function () {
         const api = $(this).data('popupmenu');
         api.close();
+        e.stopPropagation();
       });
     }
 
@@ -408,7 +409,7 @@ Accordion.prototype = {
     }
 
     // If there's no accordion pane, attempt to simply follow the link.
-    return this.handleAnchorClick(null, header.children('a'));
+    return this.handleAnchorClick(e, header.children('a'));
   },
 
   /**
