@@ -88,6 +88,7 @@ const DATEPICKER_DEFAULTS = {
   roundToInterval: undefined,
   dateFormat: 'locale', // or can be a specific format
   placeholder: false,
+  firstDayOfWeek: null,
   disable: {
     dates: [],
     minDate: '',
@@ -178,6 +179,10 @@ DatePicker.prototype = {
       this.currentCalendar = Locale.getCalendar(this.settings.calendarName) || Locale.calendar();
     } else {
       this.currentCalendar = Locale.calendar();
+    }
+
+    if (this.settings.firstDayOfWeek) {
+      this.currentCalendar.firstDayofWeek = this.settings.firstDayOfWeek;
     }
   },
 

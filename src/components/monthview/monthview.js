@@ -13,6 +13,7 @@ const COMPONENT_NAME_DEFAULTS = {
   activeDateIslamic: null,
   isPopup: false,
   headerStyle: 'full',
+  firstDayOfWeek: null,
   disable: {
     dates: [],
     minDate: '',

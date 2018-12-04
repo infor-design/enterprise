@@ -17,7 +17,8 @@
   
 <script>
   $('body').on('initialized', function () {
-    Locale.currentLocale.data.calendars[0].firstDayofWeek = 1; // starts on Monday
-    $('my-datepicker').datepicker();
+    $('#date-field-normal').datepicker({
+      firstDayOfWeek: 1 // starts on Monday
+    });
   });
 </script>
