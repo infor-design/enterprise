@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Editor example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/editor/example-index?nofrills=true');
+    await utils.setPage('/components/editor/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {

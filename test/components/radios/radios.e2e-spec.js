@@ -16,7 +16,7 @@ const radioId = 'option1';
 
 describe('Radios example-index tests', () => {
   beforeEach(async () => {
-    await setPage('/components/radios/example-index?nofrills=true');
+    await setPage('/components/radios/example-index?layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(radioId))), config.waitsFor);

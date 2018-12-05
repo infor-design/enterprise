@@ -1,0 +1,41 @@
+// Embedded Layout
+// =====================================
+
+.layout-embedded {
+  height: 100%;
+
+  .custom-header {
+    background-color: #fff;
+    overflow: hidden;
+    position: relative;
+  }
+
+  button {
+    color: #5c5c5c;
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 34px;
+    line-height: 34px;
+    margin: 0 10px;
+    position: relative;
+
+    &::after {
+      background: #9c9c9c;
+      bottom: 4px;
+      content: '';
+      display: none;
+      height: 2px;
+      position: absolute;
+      width: 100%;
+    }
+
+    &:hover,
+    &:active,
+    &.custom-active {
+      &::after {
+        display: block;
+      }
+    }
+  }
+}
