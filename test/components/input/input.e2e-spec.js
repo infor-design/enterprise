@@ -16,7 +16,7 @@ const inputId = 'first-name';
 
 describe('Input example-index tests', () => {
   beforeEach(async () => {
-    await setPage('/components/input/example-index?nofrills=true');
+    await setPage('/components/input/example-index?layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(inputId))), config.waitsFor);

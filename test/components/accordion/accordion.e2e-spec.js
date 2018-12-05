@@ -136,7 +136,7 @@ describe('Accordion example-disabled tests', () => {
 
 describe('Accordion example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/accordion/example-index?nofrills=true');
+    await utils.setPage('/components/accordion/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {

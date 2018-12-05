@@ -181,10 +181,7 @@ utils.getParentDirectory = function getParentDirectory(filePath) {
 // Returns a true/false value that determines whether or not the layout is allowed to change
 // (use this instead of hardcoding settings for layout changes in multiple spots)
 utils.canChangeLayout = function (req, res) {
-  if (res.opts.nofrillslayout) {
-    return false;
-  }
-  return true;
+  return !(res.opts.layout && res.opts.layout.length > 0);
 };
 
 module.exports = utils;
