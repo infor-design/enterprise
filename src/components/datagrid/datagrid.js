@@ -4213,13 +4213,12 @@ Datagrid.prototype = {
 
   /**
   * Export the grid contents to csv
-  * Consider Deprecated use excel.exportToCsv
-  *
   * @param {string} fileName The desired export filename in the download.
   * @param {string} customDs An optional customized version of the data to use.
+  * @param {string} separator (optional) If user's machine is configured for a locale with alternate default seperator.
   */
-  exportToCsv(fileName, customDs) {
-    excel.exportToCsv(fileName, customDs, this);
+  exportToCsv(fileName, customDs, separator) {
+    excel.exportToCsv(fileName, customDs, separator, this);
   },
 
   /**
