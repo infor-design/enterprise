@@ -962,8 +962,7 @@ Validator.prototype = {
       return;
     }
 
-    field.removeClass(`${rule.type} custom-icon`);
-    loc.data('isValid', true);
+    field.removeClass(`${rule.type} custom-icon`).data('isValid', true);
 
     if (field.hasClass('dropdown') || field.hasClass('multiselect')) {
       field.next().next().removeClass(`${rule.type} custom-icon`);

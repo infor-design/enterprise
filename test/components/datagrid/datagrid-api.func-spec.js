@@ -554,4 +554,66 @@ describe('Datagrid API', () => {
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
     expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
   });
+
+  it('Should be able to accept nested datarow objects', () => {
+    const newColumns = [];
+    newColumns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
+    newColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productInfo.productName.value', formatter: Formatters.Text, editor: Editors.Input });
+    newColumns.push({ id: 'productType', name: 'Product Type', sortable: false, field: 'productInfo.productProperties.productType.value', formatter: Formatters.Text, editor: Editors.Input });
+    newColumns.push({ id: 'productUnit', name: 'Product Unit', sortable: false, field: 'productInfo.productProperties.productMeasure.productUnit.value', formatter: Formatters.Text, editor: Editors.Input });
+
+    datagridObj.updateColumns(newColumns);
+
+    const newData = [];
+    newData.push({
+      id: 1,
+      productId: 2142201,
+      productInfo: {
+        productName: {
+          value: 'Compressor'
+        },
+        productProperties: {
+          productType: {
+            value: 'Metal'
+          },
+          productMeasure: {
+            productUnit: {
+              value: 'Newton'
+            }
+          }
+        }
+      }
+    });
+
+    newData.push({
+      id: 2,
+      productId: 2142202,
+      productInfo: {
+        productName: {
+          value: 'Compressor'
+        },
+        productProperties: {
+          productType: {
+            value: 'Aluminum'
+          },
+          productMeasure: {
+            productUnit: {
+              value: 'Newton'
+            }
+          }
+        }
+      }
+    });
+
+    datagridObj.updateDataset(newData);
+
+    // Check if rows are properly rendered
+    expect(document.body.querySelectorAll('.datagrid-row').length).toEqual(2);
+
+    // Check if dataset is properly rendered
+    expect(document.body.querySelectorAll('td').length).toEqual(8);
+
+    // Check if value in dataset is properly rendered
+    expect(document.body.querySelectorAll('.datagrid-cell-wrapper')[3].innerHTML).toEqual('Newton');
+  });
 });

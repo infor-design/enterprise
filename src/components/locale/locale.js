@@ -115,6 +115,7 @@ const Locale = {  // eslint-disable-line
       { lang: 'ar', default: 'af-EG' },
       { lang: 'bg', default: 'bg-BG' },
       { lang: 'cs', default: 'cs-CZ' },
+      { lang: 'da', default: 'da-DK' },
       { lang: 'de', default: 'de-DE' },
       { lang: 'el', default: 'el-GR' },
       { lang: 'en', default: 'en-US' },
@@ -132,6 +133,7 @@ const Locale = {  // eslint-disable-line
       { lang: 'ja', default: 'ja-JP' },
       { lang: 'ko', default: 'ko-KR' },
       { lang: 'lt', default: 'lt-LT' },
+      { lang: 'lv', default: 'lv-LV' },
       { lang: 'ms', default: 'ms-bn' },
       { lang: 'nb', default: 'nb-NO' },
       { lang: 'nl', default: 'nl-NL' },
@@ -140,6 +142,7 @@ const Locale = {  // eslint-disable-line
       { lang: 'pt', default: 'pt-PT' },
       { lang: 'ro', default: 'ro-RO' },
       { lang: 'ru', default: 'ru-RU' },
+      { lang: 'sk', default: 'sk-SK' },
       { lang: 'sl', default: 'sl-SI' },
       { lang: 'sv', default: 'sv-SE' },
       { lang: 'th', default: 'th-TH' },
@@ -152,7 +155,7 @@ const Locale = {  // eslint-disable-line
       'en-AU', 'en-GB', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'es-AR', 'es-ES', 'es-MX',
       'es-US', 'et-EE', 'fi-FI', 'fr-CA', 'fr-FR', 'he-IL', 'hi-IN', 'hr-HR',
       'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
-      'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
+      'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
       'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'];
 
     if (allLocales.indexOf(locale) === -1) {

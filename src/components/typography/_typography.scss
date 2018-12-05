@@ -2,7 +2,6 @@
 //================================================== */
 
 // Font Variables
-$font-regular: helvetica, arial;
 $font-source-sans: 'Source Sans Pro', helvetica, arial;
 
 // Special Fonts for Certain Languages
@@ -22,7 +21,7 @@ html {
   body {
     background-color: $body-color-primary-background;
     color: $font-color-default;
-    font-family: $font-regular;
+    font-family: $theme-font-family-base;
     font-size: 1rem;
     height: 100%;
     -webkit-overflow-scrolling: touch;

@@ -87,14 +87,6 @@ Modal.prototype = {
 
     self.isCancelled = false;
 
-    if (window.history && window.history.pushState) {
-      $(window).off('popstate.modal');
-
-      $(window).on('popstate.modal', () => {
-        self.destroy();
-      });
-    }
-
     // ensure is appended to body for new dom tree
     if (this.settings.content) {
       this.settings.trigger = this.settings.content instanceof jQuery ? this.settings.trigger : 'immediate';
@@ -914,8 +906,6 @@ Modal.prototype = {
 
       self.element.closest('.modal-page-container').remove();
       $.removeData(self.element[0], 'modal');
-
-      $(window).off('popstate.modal');
     }
 
     if (!this.isOpen()) {

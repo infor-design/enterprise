@@ -232,9 +232,13 @@ Accordion.prototype = {
 
       if (this.settings.allowOnePane) {
         targetsToExpand = targetsToExpand.first();
+        this.expand(targetsToExpand);
+      } else {
+        targetsToExpand.each((idx) => {
+          this.expand($(targetsToExpand[idx]));
+        });
       }
 
-      this.expand(targetsToExpand);
       this.select(targetsToExpand.last());
       targetsToExpand.next('.accordion-pane').removeClass('no-transition');
     }

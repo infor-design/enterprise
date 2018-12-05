@@ -372,7 +372,7 @@ const formatters = {
       <span class="icon plus-minus ${(isOpen ? ' active' : '')}"></span>
       <span class="audible">${Locale.translate('ExpandCollapse')}</span>
       </button>${(value ? `<span> ${value}</span>` : '')}`;
-    const node = `<span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}> ${value}</span>`;
+    const node = `<span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth))}px` : '')}"` : '')}> ${value}</span>`;
 
     return (item && item[col.children ? col.children : 'children'] ? button : node);
   },

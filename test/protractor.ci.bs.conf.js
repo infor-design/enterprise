@@ -38,7 +38,9 @@ exports.config = {
     'browserstack.timezone': 'New_York',
     build: browserstackBuildID,
     name: `${theme} theme ci:bs e2e tests`,
-    project: 'ids-enterprise-e2e-ci'
+    project: 'ids-enterprise-e2e-ci',
+    shardTestFiles: true,
+    maxInstances: 2
   },
   multiCapabilities: [
     {

@@ -1,6 +1,3 @@
-# @TODO: fix sudo workaround
-# https://github.com/travis-ci/travis-ci/issues/8836#issuecomment-356362524
-sudo: required
 addons:
   chrome: stable
 language: node_js

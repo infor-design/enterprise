@@ -88,6 +88,7 @@ Tooltip.prototype = {
    * @returns {void}
    */
   init() {
+    this.uniqueId = utils.uniqueId(this.element, 'tooltip');
     this.setup();
     this.appendTooltip();
 
@@ -219,7 +220,9 @@ Tooltip.prototype = {
     function showOnTimer() {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        self.show();
+        if (self.element.is(':visible')) {
+          self.show();
+        }
       }, delay);
     }
 
@@ -241,7 +244,7 @@ Tooltip.prototype = {
     }
 
     if (this.settings.trigger === 'hover' && !this.settings.isError) {
-      ((this.element.is('.dropdown, .multiselect')) ? this.activeElement : this.element)
+      ((this.element.is('.dropdown, .multiselect, span.longpress-target')) ? this.activeElement : this.element)
         .on(`mouseenter.${COMPONENT_NAME}`, () => {
           showOnTimer();
         })
@@ -619,7 +622,7 @@ Tooltip.prototype = {
 
     setTimeout(() => {
       $(document)
-        .on(`${mouseUpEventName}.${COMPONENT_NAME}`, (e) => {
+        .on(`${mouseUpEventName}.${COMPONENT_NAME}-${self.uniqueId}`, (e) => {
           const target = $(e.target);
 
           if (self.settings.isError || self.settings.trigger === 'focus') {
@@ -639,7 +642,7 @@ Tooltip.prototype = {
             self.hide(e);
           }
         })
-        .on(`keydown.${COMPONENT_NAME}`, (e) => {
+        .on(`keydown.${COMPONENT_NAME}-${self.uniqueId}`, (e) => {
           if (e.which === 27 || self.settings.isError) {
             self.hide();
           }
@@ -846,9 +849,9 @@ Tooltip.prototype = {
     this.tooltip.off(`click.${COMPONENT_NAME}`);
 
     $(document).off([
-      `keydown.${COMPONENT_NAME}`,
-      `mouseup.${COMPONENT_NAME}`,
-      `touchend.${COMPONENT_NAME}`].join(' '));
+      `keydown.${COMPONENT_NAME}-${self.uniqueId}`,
+      `mouseup.${COMPONENT_NAME}-${self.uniqueId}`,
+      `touchend.${COMPONENT_NAME}-${self.uniqueId}`].join(' '));
 
     $('body').off([
       `resize.${COMPONENT_NAME}`,
