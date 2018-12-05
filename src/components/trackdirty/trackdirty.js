@@ -231,7 +231,7 @@ Trackdirty.prototype = {
         }
 
         if (this.isIe || this.isIeEdge) {
-          current = input[0].innerHTML;
+          current = input[0].innerHTML || input[0].value;
         }
 
         if (current === original || (input.attr('multiple') && utils.equals(current, original))) {
