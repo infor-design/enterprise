@@ -63,7 +63,7 @@ module.exports = function (grunt) {
   // Default Task:
   // - Cleans up
   // - Builds
-  // - Updates local documentation
+  // - Minifies
   grunt.registerTask('default', [
     'clean',
     'exec:build',
@@ -71,12 +71,13 @@ module.exports = function (grunt) {
   ]);
 
   // Main build task (Gets everything)
+  // NOTE: Better to run `npm run build`, which can run these simultaneously
   grunt.registerTask('build', [
     'build:js:min',
     'build:sass'
   ]);
 
-  // Demo build tasks
+  // Demo build tasks. Generates CSS specific to the Demoapp
   grunt.registerTask('demo', [
     'clean:app',
     'exec:sass:app'
@@ -88,7 +89,6 @@ module.exports = function (grunt) {
     'exec:rollup',
     'copy:main'
   ]);
-
   grunt.registerTask('build:js:min', [
     'exec:rollup',
     'exec:minify-js',
