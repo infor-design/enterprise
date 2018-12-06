@@ -27,7 +27,8 @@ describe('Personalization tests', () => {
 
     expect(await element.all(by.css('html')).get(0).getAttribute('class')).toContain(chosenTheme[0]);
 
-    reinitButton.click();
+    await browser.driver.sleep(301);
+    await reinitButton.click();
 
     expect(await element.all(by.css('html')).get(0).getAttribute('class')).toContain(chosenTheme[0]);
   });
@@ -44,7 +45,8 @@ describe('Personalization tests', () => {
 
     const beforeInitSheet = await element(by.id('soho-personalization'));
 
-    reinitButton.click();
+    await browser.driver.sleep(301);
+    await reinitButton.click();
 
     expect(element(by.id('soho-personalization')).getText()).toEqual(beforeInitSheet.getText());
   });
