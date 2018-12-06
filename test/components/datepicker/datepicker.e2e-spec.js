@@ -475,6 +475,9 @@ describe('Datepicker Modal Test', () => {
 describe('Datepicker Month Year Picker Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format');
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
   });
 
   it('Should be able to function as month/year picker', async () => {
@@ -489,11 +492,7 @@ describe('Datepicker Month Year Picker Tests', () => {
     const buttonEl = await element(by.css('.select-month.btn-tertiary'));
     await buttonEl.click();
 
-    const testDate = new Date();
-    await testDate.setDate(1);
-    await testDate.setMonth(testDate.getMonth() + 1);
-
-    expect(await element(by.id('month-year')).getAttribute('value')).toEqual(`${(testDate.getMonth()).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
+    expect(await element(by.id('month-year')).getAttribute('value')).toEqual('12/2018');
   });
 
   it('Should be able to function as month/year picker long', async () => {
@@ -519,6 +518,9 @@ describe('Datepicker Month Year Picker Tests', () => {
 describe('Datepicker Month Year Changer Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-picker');
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
   });
 
   it('Should be able to change month and year from the pickers', async () => {
@@ -551,11 +553,7 @@ describe('Datepicker Month Year Changer Tests', () => {
     await buttonEl.click();
     await browser.driver.sleep(config.sleep);
 
-    const testDate = new Date();
-    await testDate.setDate(1);
-    await testDate.setMonth(testDate.getMonth() + 1);
-
-    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual(`${(testDate.getMonth())}/1/${testDate.getFullYear()}`);
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('12/1/2018');
   });
 });
 
@@ -652,7 +650,7 @@ describe('Datepicker Timeformat Tests', () => {
       amPm = 'PM';
     }
     if (minutes.toString().length === 1) {
-      minutes = `0${minutes}`;
+      minutes = `0${minutes}`.padStart(2, '0');
     }
 
     expect([

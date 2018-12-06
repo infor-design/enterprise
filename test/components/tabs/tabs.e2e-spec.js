@@ -475,7 +475,7 @@ describe('Tabs ajax as href tests', () => {
     await utils.checkForErrors();
   });
 
-  if (!utils.isCI()) {
+  if (!utils.isCI() && !utils.isBS()) {
     it('Should be able to activate href tabs', async () => {
       expect(await element(by.id('ajaxified-tabs-tab-1')).getAttribute('innerHTML')).not.toBe('');
 

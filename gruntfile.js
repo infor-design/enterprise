@@ -4,11 +4,9 @@ module.exports = function (grunt) {
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
 
-  const sass = require('./scripts/configs/sass.js');
   const chokidar = require('./scripts/configs/watch.js');
   const copy = require('./scripts/configs/copy.js');
   const cssmin = require('./scripts/configs/cssmin.js');
-  const usebanner = require('./scripts/configs/usebanner.js');
   const compress = require('./scripts/configs/compress.js');
   const clean = require('./scripts/configs/clean.js');
 
@@ -18,14 +16,32 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     banner: bannerText,
     exec: {
+      build: {
+        cmd: 'npm run build',
+      },
       rollup: {
         cmd: 'npx rollup -c'
+      },
+      sass: {
+        cmd: (configType) => {
+          configType = configType || 'dist';
+          if (configType === 'app') {
+            return `node ./scripts/build-sass --type=${configType}`;
+          }
+          return `node ./scripts/build --disable-js --disable-copy --type=${configType}`;
+        }
       },
       documentation: {
         cmd: (componentName) => {
           componentName = componentName || '';
           return `npm run documentation ${componentName}`;
         }
+      },
+      'minify-js': {
+        cmd: 'node ./scripts/minify-js.js'
+      },
+      'minify-css': {
+        cmd: 'node ./scripts/minify-css.js'
       },
       minify: {
         cmd: 'node ./scripts/minify.js'
@@ -39,10 +55,8 @@ module.exports = function (grunt) {
     config,
     chokidar,
     clean,
-    sass,
     copy,
     cssmin,
-    usebanner,
     compress
   ));
 
@@ -55,7 +69,8 @@ module.exports = function (grunt) {
   // - Updates local documentation
   grunt.registerTask('default', [
     'clean',
-    'build'
+    'exec:build',
+    'exec:minify'
   ]);
 
   // Main build task (Gets everything)
@@ -67,7 +82,7 @@ module.exports = function (grunt) {
   // Demo build tasks
   grunt.registerTask('demo', [
     'clean:app',
-    'sass:app'
+    'exec:sass:app'
   ]);
 
   // Javascript Build Tasks
@@ -79,7 +94,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build:js:min', [
     'exec:rollup',
-    'exec:minify',
+    'exec:minify-js',
     'copy:main'
   ]);
 
@@ -88,12 +103,11 @@ module.exports = function (grunt) {
     const comps = grunt.option('components');
     if (comps) {
       grunt.log.writeln(`Compiling custom CSS library with components "${comps}"...`);
-      grunt.task.run('sass:custom');
+      grunt.task.run('exec:sass:custom');
     } else {
-      grunt.task.run('sass:dist');
+      grunt.task.run('exec:sass');
     }
     grunt.task.run('cssmin');
-    grunt.task.run('usebanner');
   });
 
   // Zip dist folder for download from the git releases page.

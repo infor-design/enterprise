@@ -39,9 +39,7 @@ exports.config = {
     'browserstack.local': true,
     'browserstack.networkLogs' : true,
     build: browserstackBuildID,
-    name: `${theme} theme local tunnel e2e tests`,
-    shardTestFiles: true,
-    maxInstances: 2
+    name: `${theme} theme local tunnel e2e tests`
   },
   multiCapabilities: [
     {

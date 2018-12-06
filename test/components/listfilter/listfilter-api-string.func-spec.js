@@ -68,9 +68,7 @@ describe('Listfilter API (against arrays of strings)', () => {
     expect(items.length).toBe(3); // should get all results
   });
 
-  // NOTE: test is skipped because this doesn't currently work.
-  // SOHO-8083 has been raised to address it.
-  xit('can implement case-sensitive filtering', () => {
+  it('can implement case-sensitive filtering', () => {
     listfilterArrayAPI.updated({
       caseSensitive: true
     });
