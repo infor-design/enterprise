@@ -11,31 +11,25 @@
   }
 
   button {
+    border-bottom: 2px solid transparent;
     color: #5c5c5c;
     display: block;
     float: left;
     font-size: 14px;
-    height: 34px;
+    height: 40px;
     line-height: 34px;
     margin: 0 10px;
+    padding: 0 10px;
     position: relative;
 
-    &::after {
-      background: #9c9c9c;
-      bottom: 4px;
-      content: '';
-      display: none;
-      height: 2px;
-      position: absolute;
-      width: 100%;
+    &:hover {
+        border-bottom: 2px solid $theme-color-palette-black;
+        color: $theme-color-palette-black;
     }
 
-    &:hover,
     &:active,
     &.custom-active {
-      &::after {
-        display: block;
-      }
+        border-bottom: 2px solid $theme-color-brand-primary-base;
     }
   }
 }
