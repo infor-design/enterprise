@@ -469,7 +469,10 @@ ContextualActionPanel.prototype = {
   * @returns {void}
   */
   destroy() {
-    this.teardown();
+    // ModalAPI calls `capAPI.teardown()` at the correct timing
+    if (this.modalAPI && this.modalAPI.isOpen) {
+      this.modalAPI.close(true);
+    }
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };

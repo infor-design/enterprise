@@ -76,18 +76,35 @@ Modal.prototype = {
     return api;
   },
 
+  /**
+   * @returns {boolean} whether or not the body tag is this Modal's trigger element
+   */
   get isAttachedToBody() {
     return (this.trigger.length && this.trigger.is('body'));
   },
 
   /**
-   * @returns whether or not this modal should persist
+   * @returns {boolean} whether or not this Modal is currently being displayed
    */
-  /*
-  get persists() {
-    return this.settings.trigger !== 'immediate' || (this.trigger.length && this.trigger.is('body'));
+  get visible() {
+    return this.element.is('.is-visible');
   },
-  */
+
+  /**
+   * @returns {boolean} whether or not this Modal instance is the top-level one
+   */
+  get isOnTop() {
+    let max = 0;
+    const dialog = this.element;
+
+    $('.modal.is-visible').each(function () {
+      if (max < this.style.zIndex) {
+        max = this.style.zIndex;
+      }
+    });
+
+    return max === dialog[0].style.zIndex;
+  },
 
   /**
    * @private
@@ -627,7 +644,7 @@ Modal.prototype = {
         return;
       }
 
-      if (e.which === 13 && this.isOnTop() &&
+      if (e.which === 13 && this.isOnTop &&
           !target.closest('form').find(':submit').length &&
           this.element.find('.btn-modal-primary:enabled').length) {
         e.stopPropagation();
@@ -753,24 +770,11 @@ Modal.prototype = {
   },
 
   /**
-   * Utility function to check via the api if the modal is open.
+   * @deprecated as of v4.14.x
    * @returns {boolean} The current state open (true) or closed (false).
    */
   isOpen() {
-    return this.element.is('.is-visible');
-  },
-
-  isOnTop() {
-    let max = 0;
-    const dialog = this.element;
-
-    $('.modal.is-visible').each(function () {
-      if (max < this.style.zIndex) {
-        max = this.style.zIndex;
-      }
-    });
-
-    return max === dialog[0].style.zIndex;
+    return this.visible;
   },
 
   getTabbableElements() {
@@ -839,7 +843,7 @@ Modal.prototype = {
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
   close(destroy) {
-    if (!this.isOpen()) {
+    if (!this.visible) {
       return true;
     }
 
@@ -867,7 +871,7 @@ Modal.prototype = {
       this.root.attr('aria-hidden', 'true');
     }
 
-    if ($('.modal-page-container:not([aria-hidden])').length < 1) {
+    if ($('.modal-page-container').length <= 1) {
       $('body').removeClass('modal-engaged');
       $('body > *').not(this.element.closest('.modal-page-container')).removeAttr('aria-hidden');
       $('.overlay').remove();
@@ -938,18 +942,22 @@ Modal.prototype = {
 
       // Properly teardown contexual action panels
       if (self.isCAP && self.capAPI) {
-        self.capAPI.destroy();
+        self.capAPI.teardown();
       }
 
       self.trigger.off('click.modal');
 
-      self.element.closest('.modal-page-container').remove();
+      if (self.root && self.root.length) {
+        self.root.remove();
+      } else {
+        self.element.closest('.modal-page-container').remove();
+      }
       self.element[0].removeAttribute('data-modal');
 
       $.removeData(self.element[0], 'modal');
     }
 
-    if (!this.isOpen()) {
+    if (!this.visible) {
       destroyCallback();
       return;
     }
