@@ -1,3 +1,5 @@
+import { cleanup } from '../../helpers/func-utils';
+
 import { ContextualActionPanel } from '../../../src/components/contextualactionpanel/contextualactionpanel';
 
 const svgHTML = require('../../../src/components/icons/svg.html');
@@ -28,24 +30,26 @@ const capSettings = {
 };
 
 let capAPI;
-let svgEl;
 
 describe('Contexual Action Panel - Defined Through Settings', () => {
   beforeEach(() => {
     capAPI = null;
-    svgEl = null;
-
     document.body.insertAdjacentHTML('afterbegin', svgHTML);
     document.body.insertAdjacentHTML('afterbegin', triggerHTML);
-
-    svgEl = document.body.querySelector('.svg-icons');
   });
 
   afterEach(() => {
+    cleanup([
+      '.svg-icons',
+      '#tooltip',
+      '.contextual-action-panel.modal',
+      '.row',
+      '#test-script'
+    ]);
+
     if (capAPI) {
       capAPI.destroy();
     }
-    svgEl.parentNode.removeChild(svgEl);
     document.body.removeAttribute('data-modal');
   });
 
