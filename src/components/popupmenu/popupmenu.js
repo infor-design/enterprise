@@ -148,8 +148,6 @@ PopupMenu.prototype = {
    */
   addMarkup() {
     let id;
-    const leftClick = this.settings.trigger !== 'rightClick';
-    const immediate = this.settings.trigger === 'immediate';
 
     switch (typeof this.settings.menu) {
       case 'string': // ID Selector
