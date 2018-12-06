@@ -1,10 +1,11 @@
 ---
 title: Slider Component
-description: This page describes Slider Component.
+description: Displays a scale of selectable values in ascending order. A user can select a single value or range of values. Best for showing a user’s current selection relative to the lower and upper limits of a scale.
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
+  pages:
   - name: Range Example (Two Handles)
     slug: example-range
   - name: Steps
@@ -75,7 +76,7 @@ This is an example of a slider that can only have values in increments of 10, wi
 
 ## Implementation Tips
 
-Only providing the HTML label and input with a `type="range"` attribute and `slider` CSS class are necessary if using the SoHo Xi Components Suite.
+Only providing the HTML label and input with a `type="range"` attribute and `slider` CSS class are necessary if using the IDS Enterprise Components Suite.
 
 ## Accessibility
 
@@ -94,6 +95,10 @@ The Slider is fairly complex to make accessible. But generally this can be accom
 - Conditionally use the following ARIA attributes in some situations:
     - `aria-label` - Use in most cases to describe the purpose of the handle (Is it the only one? Is it the lower-value versus the higher handle)
     - `aria-describedby` - When used in conjunction with a [tooltip control](./tooltip), this attribute will be appended to the handle automatically, but in this case the `aria-label` attribute should be removed.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

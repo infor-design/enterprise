@@ -6,6 +6,7 @@ const svg = require('../../../src/components/icons/svg.html');
 let tabsEl;
 let tabsPanelEl;
 let svgEl;
+let rowEl;
 let tabsObj;
 
 describe('Tabs API', () => {
@@ -14,20 +15,25 @@ describe('Tabs API', () => {
     tabsPanelEl = null;
     svgEl = null;
     tabsObj = null;
+
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', tabsHTML);
+
     tabsEl = document.body.querySelector('.tab-container');
+    rowEl = document.body.querySelector('.row');
     tabsPanelEl = document.body.querySelector('.tab-panel-container');
     svgEl = document.body.querySelector('.svg-icons');
     tabsEl.classList.add('no-init');
+
     tabsObj = new Tabs(tabsEl);
   });
 
   afterEach(() => {
     tabsObj.destroy();
-    tabsEl.parentNode.removeChild(tabsEl);
     tabsPanelEl.parentNode.removeChild(tabsPanelEl);
+    tabsEl.parentNode.removeChild(tabsEl);
     svgEl.parentNode.removeChild(svgEl);
+    rowEl.parentNode.removeChild(rowEl);
   });
 
   it('Should be defined on jQuery object', () => {
@@ -163,7 +169,8 @@ describe('Tabs API', () => {
 
   it('Should fetch content that will display inside a tab, return a promise', () => {
     const href = 'http://localhost:9876';
-    const externalRes = tabsObj.callSource(href, true);
+    const tabone = jQuery('.tab:nth-of-type(1)');
+    const externalRes = tabsObj.callSource(href, tabone, true);
 
     expect(externalRes).toEqual(jasmine.any(Object));
   });
@@ -378,26 +385,37 @@ describe('Tabs API', () => {
     expect(document.querySelectorAll('.tab')[2].innerText).toEqual('Contacts');
   });
 
-  it('Should teardown tabs', () => {
-    const tabs = tabsObj.teardown();
+  it('Should remove tab with dropdown of dismissible tabs', () => {
+    const testHrefs = ['#tabs-normal-attachments', '#tabs-normal-contacts', '#tabs-normal-notes'];
+    tabsObj.closeDismissibleTabs(testHrefs);
 
-    expect(tabs).toEqual(jasmine.any(Object));
-    expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-selected');
-    expect(document.querySelectorAll('[aria-expanded="true"]').length).toEqual(0);
-    expect(document.querySelectorAll('[aria-selected="true"]').length).toEqual(0);
-    // Teardown interferes with afterEach script, so we restore Tabs instance
-    tabsObj = new Tabs(tabsEl);
+    expect(document.querySelectorAll('.tab')[1].innerText).toEqual('Opportunities');
   });
 
-  it('Should destroy tabs', () => {
+  it('Should teardown tabs', (done) => {
+    const tabs = tabsObj.teardown();
+    setTimeout(() => {
+      expect(tabs).toEqual(jasmine.any(Object));
+      expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-selected');
+      expect(document.querySelectorAll('.tab a[aria-expanded="true"]').length).toEqual(0);
+      expect(document.querySelectorAll('.tab a[aria-selected="true"]').length).toEqual(0);
+      // Teardown interferes with afterEach script, so we restore Tabs instance
+      tabsObj = new Tabs(tabsEl);
+      done();
+    }, 100);
+  });
+
+  it('Should destroy tabs', (done) => {
     tabsObj.destroy();
     const empty = {};
-
-    expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-selected');
-    expect(document.querySelectorAll('[aria-expanded="true"]').length).toEqual(0);
-    expect(document.querySelectorAll('[aria-selected="true"]').length).toEqual(0);
-    expect(tabsObj.element.data()).toEqual(empty);
-    // Teardown interferes with afterEach script, so we restore Tabs instance
-    tabsObj = new Tabs(tabsEl);
+    setTimeout(() => {
+      expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-selected');
+      expect(document.querySelectorAll('.tab a[aria-expanded="true"]').length).toEqual(0);
+      expect(document.querySelectorAll('.tab a[aria-selected="true"]').length).toEqual(0);
+      expect(tabsObj.element.data()).toEqual(empty);
+      // Teardown interferes with afterEach script, so we restore Tabs instance
+      tabsObj = new Tabs(tabsEl);
+      done();
+    }, 100);
   });
 });

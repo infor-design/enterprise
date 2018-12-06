@@ -2,17 +2,14 @@
 title: Icons
 description:
 demo:
-  pages:
+  embedded:
   - name: Basic Icons
     slug: example-index
+  pages:
   - name: Extended Icon Set
     slug: example-extended
-  - name: Alert Icons
-    slug: example-index
   - name: Tree Folder Icons
     slug: example-tree
-  - name: Tree Icons
-    slug: example-index
   - name: Empty Widget Icons
     slug: example-empty-widgets
   - name: Grid Filter Drop Down Menu Icons
@@ -41,7 +38,7 @@ It is required to inline the SVG icons in HTML markup in order to be able to cha
 
 ```html
 // As Icon Button
-<button class="btn-icon">
+<button id="calendar" class="btn-icon">
   <svg aria-hidden="true" focusable="false" role="presentation" class="icon">
      <use xlink:href="#icon-calendar"></use>
    </svg>
@@ -58,6 +55,10 @@ It is required to inline the SVG icons in HTML markup in order to be able to cha
 
 - When used alone (icon with out text) an audible span should be added for screen readers.
 - Tooltips should be shown on icons (but not on icons with text as it is redundant)
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

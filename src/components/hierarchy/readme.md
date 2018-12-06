@@ -1,10 +1,11 @@
 ---
 title: Hierarchy
-description: This page describes Hierarchy.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Org Chart Example
     slug: example-index
+  pages:
   - name: Lazy Loading Example
     slug: example-lazy-load
   - name: Example Paging
@@ -49,6 +50,10 @@ Required template HTML markup:
 
 - This component is lacking accessibility
 - Needs, Keyboard, Aria Added or an Alternate view
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

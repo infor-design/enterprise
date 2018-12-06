@@ -1,6 +1,8 @@
+import { DOM } from '../../utils/dom';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 import { Formatters } from './datagrid.formatters';
+import { xssUtils } from '../../utils/xss';
 
 /**
 *  A object containing all the supported Editors
@@ -167,10 +169,10 @@ const editors = {
       this.editorWidth = api.setUnit(editorOptions.width || container.outerWidth());
       delete editorOptions.width;
 
-      container.append('' +
+      container[0].innerHTML =
         `<div class="editor-wrapper" style="width: ${this.editorWidth};">
-          <div class="editor" data-init="false">${$.unescapeHTML(value)}</div>
-        </div>`);
+          <div class="editor" data-init="false">${xssUtils.unescapeHTML(value)}</div>
+        </div>`;
       this.td = container.closest('td');
       this.input = $('.editor', container);
 
@@ -225,9 +227,6 @@ const editors = {
       self.input.off('hide.editor keydown.editor');
       setTimeout(() => {
         self.input.remove();
-        // Reset tooltip
-        const elem = self.td.find('.is-editor.content-tooltip');
-        api.setupContentTooltip(elem, self.editorWidth);
       }, 0);
     };
 
@@ -291,6 +290,7 @@ const editors = {
     this.name = 'colorpicker';
     this.originalValue = value;
     this.useValue = true; // use the data set value not cell value
+    value = xssUtils.stripTags(value);
 
     this.init = function () {
       this.input = $(`<input id="colorpicker-${cell}" name="colorpicker-${cell}" class="colorpicker" value="${value}" type="text" />`).appendTo(container);
@@ -372,6 +372,9 @@ const editors = {
       }
 
       this.input.dropdown(editorOptions);
+      this.input.on('requestend', () => {
+        this.val(this.datasetValue);
+      });
 
       // Append the Dropdown's sourceArguments with some row/col meta-data
       const api = this.input.data('dropdown');
@@ -388,6 +391,8 @@ const editors = {
     };
 
     this.val = function (v) {
+      this.datasetValue = v;
+
       if (v !== undefined) {
         const compareValue = column.caseInsensitive && typeof v === 'string' ? v.toLowerCase() : v;
         this.input.val(v);
@@ -436,8 +441,10 @@ const editors = {
       const self = this;
 
       // Check if isClick or cell touch and just open the list
-      this.input.trigger('openlist');
-      this.input.parent().find('div.dropdown').focus();
+      if (event.type === 'click') {
+        this.input.trigger('openlist');
+      }
+      this.input[0].parentNode.querySelector('div.dropdown').focus();
 
       this.input.off('listclosed').on('listclosed', (e, type) => {
         grid.commitCellEdit(self.input);
@@ -516,18 +523,19 @@ const editors = {
       allowedTypes: '*' // restrict file types(ie. 'jpg|png|gif') ['*' all types]
     });
     const fileExtensions = s.allowedTypes.split(/[\s|]+/g);
-    const id = $.fn.uniqueId(`fileupload-${row}-${cell}-`);
-    const multiple = s.useMultiple ? ' multiple' : '';
-    const disabled = s.isDisabled ? ' disabled' : '';
+    let id = utils.uniqueId(this, `fileupload-${row}-${cell}-`);
+
+    let multiple = s.useMultiple ? ' multiple' : '';
+    let disabled = s.isDisabled ? ' disabled' : '';
     let types = '';
 
     if (fileExtensions.length === 1) {
       if (fileExtensions[0] !== '*') {
-        types = `.${fileExtensions[0]}`;
+        types = `.${xssUtils.ensureAlphaNumeric(fileExtensions[0])}`;
       }
     } else {
       for (let i = 0, l = fileExtensions.length; i < l; i++) {
-        types += `.${(fileExtensions[i] + (i !== (l - 1) ? ',' : ''))}`;
+        types += `.${(xssUtils.ensureAlphaNumeric(fileExtensions[i]) + (i !== (l - 1) ? ',' : ''))}`;
       }
     }
     if (types !== '') {
@@ -540,6 +548,10 @@ const editors = {
     this.useValue = true; // use the data set value not cell value
 
     this.init = function () {
+      id = xssUtils.ensureAlphaNumeric(id);
+      multiple = xssUtils.ensureAlphaNumeric(multiple);
+      disabled = xssUtils.ensureAlphaNumeric(disabled);
+
       this.input = $(`<input id="${id}" name="${id}" class="fileupload" type="file" ${types}${multiple}${disabled} />`);
       container.append(`<label>${this.input[0].outerHTML}</label>`);
       this.api = this.input.fileupload(column.editorOptions).data('fileupload');
@@ -547,7 +559,12 @@ const editors = {
     };
 
     this.val = function (v) {
-      return v ? this.input.attr('value', v) : this.input.val();
+      if (v) {
+        v = xssUtils.stripTags(v);
+        this.input.attr('value', v);
+        return v;
+      }
+      return this.input.val();
     };
 
     this.focus = () => {
@@ -699,7 +716,7 @@ const editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input class="lookup" data-init="false" />').appendTo(container);
+      this.input = $(`<input class="lookup ${column.align === 'right' ? 'align-text-right' : ''}" data-init="false" />`).appendTo(container);
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
@@ -790,7 +807,7 @@ const editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input class="autocomplete datagrid-autocomplete" data-autocomplete="source" />').appendTo(container);
+      this.input = $('<input class="autocomplete datagrid-autocomplete" />').appendTo(container);
 
       if (!column.editorOptions) {
         column.editorOptions = {};
@@ -844,7 +861,7 @@ const editors = {
         <input id="spinbox-${cell}" name="spinbox-${cell}" type="text" class="spinbox" value="'+ ${value} +'">
         <span class="spinbox-control up">+</span></span>`;
 
-      container.append(markup);
+      DOM.append(container, markup, '<label><span><input>');
       this.input = container.find('input');
 
       if (!column.editorOptions) {

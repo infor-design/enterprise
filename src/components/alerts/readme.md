@@ -1,10 +1,11 @@
 ---
 title: Alerts
-description: This page describes Alerts.
+description:
 demo:
-  pages:
+  embedded:
   - name: Alerts (Icons)
     slug: example-index
+  pages:
   - name: Alerts (Badges)
     slug: example-index
 ---
@@ -31,8 +32,12 @@ Also see [Badges](./badges) for more options.
 
 ## Accessibility
 
-- The traffic light colors in the Light UI theme is technically a contrast violation, so care should be given not to use the identical colors if styling text near the alerts. The high-contrast theme provides an alternative
-- Make to include an offscreen label even though the element does not get focus. This could be read by the virtual cursor on a screen reader (`class="audible"`)
+- The traffic light colors are accessibility violations for contrast, however, the high contrast theme provides an alternative that passes. In addition, in context text should be used as color alone cannot provide the meaning.
+- An audible span (`class="audible"`) should always be included for accessibility, it should describe the alert status and/or count value in a meaningful way to a non-visual user.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
@@ -40,5 +45,5 @@ Alert icons and Badges do not have tab stops or keyboard interaction on their ow
 
 ## Upgrading from 3.X
 
-- The old alerts where shown as `<div>`s, the new ones are displayed as spans. These could be used interchangeably, but span is easier to position in line so is usually a better fit.
+- The old alerts where shown as `<div>`s, the new ones are displayed as spans. These could be used interchangeably, but span is easier to position inline so is usually a better fit.
 - Classes which were formerly `.inforAlertIcon` should be changed to an SVG element

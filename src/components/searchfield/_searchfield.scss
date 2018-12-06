@@ -3,30 +3,33 @@
 
 @mixin searchfield-text-style() {
   color: $font-color;
-  font-weight: bold;
+  font-weight: $theme-number-font-weight-bold;
+
   @include font-size(14);
 }
 
 @mixin searchfield-text-style-hover() {
-  color: $primary-color;
-  font-weight: bold;
+  color: $theme-color-brand-primary-base;
+  font-weight: $theme-number-font-weight-bold;
+
   @include font-size(14);
 }
 
 @mixin context-searchfield-box-shadow() {
-  box-shadow: 0 3px 5px 0 rgba($searchfield-context-box-shadow-color, .7);
+  box-shadow: 0 3px 5px 0 rgba($searchfield-context-box-shadow-color, 0.7);
 }
 
-$cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
+$cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
 .searchfield-wrapper {
   display: inline-block;
   margin-bottom: 20px;
   position: relative;
+
   @include transition(width 300ms $cubic-bezier-ease,
-    left 300ms $cubic-bezier-ease,
-    right 300ms $cubic-bezier-ease,
-    box-shadow 300ms $cubic-bezier-ease);
+  left 300ms $cubic-bezier-ease,
+  right 300ms $cubic-bezier-ease,
+  box-shadow 300ms $cubic-bezier-ease);
 
   > .icon {
     background-color: rgba($white, 0); // IE 10
@@ -55,7 +58,7 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 
   &:hover input:not([disabled]):not(:focus) {
     + svg {
-      fill: $tertiary-btn-hover-color;
+      fill: $button-color-tertiary-hover-font;
     }
   }
 
@@ -64,10 +67,12 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
   }
 
   .searchfield {
+    height: 34px;
     padding-left: 34px;
-    padding-right: 34px;
+    padding-right: 10px;
+
     @include transition(background-color 300ms $cubic-bezier-ease,
-      border-color 300ms $cubic-bezier-ease);
+    border-color 300ms $cubic-bezier-ease);
   }
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
@@ -81,6 +86,7 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
       border-left: 0;
       border-right: 0;
       border-top: 0;
+      height: 33px;
       padding-left: 32px;
       width: 100%;
 
@@ -159,30 +165,13 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
       }
     }
 
-    /*
-    &.is-hovered {
-      .btn {
-        border-color: $searchfield-context-border-color;
-        color: $input-hover-border-color;
-
-        .icon {
-          fill: $input-hover-border-color;
-        }
-      }
-
-      &.has-categories.show-category .searchfield {
-        border-color: $searchfield-context-border-color;
-      }
-    }
-    */
-
     &.has-focus {
       .btn {
-        border-color: $primary-color;
+        border-color: $theme-color-brand-primary-base;
       }
 
       .searchfield {
-        border-color: $primary-color;
+        border-color: $theme-color-brand-primary-base;
       }
     }
 
@@ -190,16 +179,12 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 
   &.is-hovered {
     .btn {
-      border-color: $input-hover-border-color;
-      color: $input-hover-border-color;
+      border-color: $input-color-hover-border;
+      color: $input-color-hover-border;
 
       .icon {
-        fill: $input-hover-border-color;
+        fill: $input-color-hover-border;
       }
-    }
-
-    .searchfield {
-      border-color: $input-hover-border-color;
     }
 
     &.has-categories {
@@ -211,24 +196,24 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 
   &.has-focus {
     &:not(.toolbar-searchfield-wrapper) {
-      box-shadow: $focus-box-shadow;
+      box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.3);
     }
 
     .btn {
-      border-color: $input-focus-border-color;
+      border-color: $input-color-focus-border;
 
       &:focus,
       &:active {
-        color: $input-focus-border-color;
+        color: $input-color-focus-border;
 
         .icon {
-          fill: $input-focus-border-color;
+          fill: $input-color-focus-border;
         }
       }
     }
 
     .searchfield {
-      border-color: $input-focus-border-color;
+      border-color: $input-color-focus-border;
     }
 
     input:focus {
@@ -243,7 +228,7 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 
       &.show-category {
         .searchfield {
-          border-left-color: $input-focus-border-color;
+          border-left-color: $input-color-focus-border;
 
           &:focus {
             box-shadow: none;
@@ -260,13 +245,14 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
   // Buttons inside of searchfields
   .btn {
     @include transition(border 300ms $cubic-bezier-ease); // Matches the one on inputs
+
     background-color: transparent;
     border-bottom-right-radius: 0;
-    border-color: $input-border-color;
+    border-color: $input-color-initial-border;
     border-right: 0;
     border-top-right-radius: 0;
     color: $font-color;
-    font-weight: normal;
+    font-weight: $theme-number-font-weight-base;
     height: 34px;
     margin: 0;
     min-width: 0;
@@ -292,10 +278,10 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
     }
 
     &.is-open {
-      color: $input-focus-border-color;
+      color: $input-color-focus-border;
 
       .icon {
-        fill: $input-focus-border-color;
+        fill: $input-color-focus-border;
       }
     }
   }
@@ -311,7 +297,7 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
       }
 
       .searchfield {
-        border-left: 1px solid $input-border-color;
+        border-left: 1px solid $input-color-initial-border;
 
         &:focus {
           box-shadow: none;
@@ -337,7 +323,8 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 
 .searchfield-category-button {
   .category {
-    padding-left: 0;
+    margin-bottom: 2px;
+    padding-left: 5px;
     padding-right: 0;
 
     + .icon {
@@ -355,16 +342,17 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 // Context Searchfield's Popupmenu has alternate styles
 .popupmenu.autocomplete.context {
   @include context-searchfield-box-shadow();
+
   background-color: $searchfield-context-bg;
   border: 0;
-  border-top: 1px solid $azure07;
+  border-top: 1px solid $theme-color-brand-primary-alt;
 
   &.alternate {
     background-color: $searchfield-context-alt-bg;
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .searchfield-wrapper {
     > .icon {
@@ -389,11 +377,6 @@ html[dir='rtl'] {
       margin-right: 0;
     }
 
-    .searchfield {
-      padding-left: 34px;
-      padding-right: 10px;
-    }
-
     &.has-categories {
       .btn {
         border-left: 0;
@@ -407,10 +390,10 @@ html[dir='rtl'] {
 
       &:not(.context) {
         .btn {
-          border-top-left-radius: 0;
           border-bottom-left-radius: 0;
-          border-top-right-radius: 3px;
           border-bottom-right-radius: 3px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 3px;
         }
 
         .category:empty {
@@ -418,15 +401,15 @@ html[dir='rtl'] {
         }
 
         .searchfield {
-          border-top-left-radius: 3px;
           border-bottom-left-radius: 3px;
-          border-top-right-radius: 0;
           border-bottom-right-radius: 0;
+          border-top-left-radius: 3px;
+          border-top-right-radius: 0;
         }
 
         &.show-category {
           .searchfield {
-            border-right: 1px solid $input-border-color;
+            border-right: 1px solid $input-color-initial-border;
           }
         }
       }
@@ -443,8 +426,8 @@ html[dir='rtl'] {
 
       &.show-category {
         .btn {
-          padding-right: 10px;
           padding-left: 10px;
+          padding-right: 10px;
         }
       }
     }
@@ -452,11 +435,11 @@ html[dir='rtl'] {
     &:not(.toolbar-searchfield-wrapper):not(.context) {
       &.has-categories {
         .btn {
-          border-right: 1px solid $input-border-color;
+          border-right: 1px solid $input-color-initial-border;
         }
 
         .searchfield {
-          border-left: 1px solid $input-border-color;
+          border-left: 1px solid $input-color-initial-border;
         }
       }
     }
@@ -468,15 +451,37 @@ html[dir='rtl'] {
     text-overflow: clip;
 
     &::-webkit-input-placeholder {
-      color: transparent !important;
+      color: transparent;
     }
 
     &::-moz-placeholder {
-      color: transparent !important;
+      color: transparent;
     }
 
     &:-ms-input-placeholder {
-      color: transparent !important;
+      color: transparent;
+    }
+  }
+}
+
+//for iOS & MAC fixes
+.ios,
+.is-mac {
+  .searchfield-wrapper {
+    &.context {
+      > #searchfield-context-white.searchfield {
+        background-color: $searchfield-context-bg;
+      }
+    }
+  }
+}
+
+.ios {
+  .searchfield-wrapper {
+    &.context {
+      .btn {
+        height: 35px;
+      }
     }
   }
 }

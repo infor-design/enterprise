@@ -3,9 +3,12 @@
 
 // Contains the main popupmenu UL for positioning.
 .popupmenu-wrapper {
+  @include css3(user-select, none);
+
   display: inline-block;
   left: -9999px;
   position: fixed;
+  -webkit-touch-callout: none;
   z-index: 4000;
 
   .arrow,
@@ -204,8 +207,9 @@
 
   .heading {
     @include font-size(12);
+
     color: $popupmenu-heading-color;
-    font-weight: bold;
+    font-weight: $theme-number-font-weight-bold;
     line-height: 25px;
     padding: 0 10px;
   }
@@ -230,6 +234,7 @@
     &.is-checked > a::before,
     &.is-checked.is-selected > a::before {
       @include css3(transform, rotate(45deg));
+
       border-color: $popupmenu-checked-color $popupmenu-checked-color $popupmenu-checked-color transparent;
       border-style: solid;
       border-width: 0 2px 2px 0;
@@ -248,12 +253,21 @@
         padding-left: 35px;
       }
     }
+
+    &.is-placeholder {
+      cursor: default;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
   }
 
   a {
     @include no-select();
     @include antialiased();
     @include font-size(14);
+
     border: 1px solid transparent;
     color: $popupmenu-color;
     display: block;
@@ -272,6 +286,7 @@
 
     small {
       @include font-size(11);
+
       display: block;
       line-height: normal;
       margin-bottom: 8px;
@@ -284,8 +299,13 @@
     }
   }
 
+  a.no-results {
+    color: inherit !important;
+  }
+
   span {
     @include font-size(14);
+
     color: $font-color-highcontrast;
   }
 
@@ -293,8 +313,8 @@
   i {
     color: $font-color-extrahighcontrast;
     font-style: normal;
-    font-weight: bold;
-    letter-spacing: -.1;
+    font-weight: $theme-number-font-weight-bold;
+    letter-spacing: -0.1;
   }
 
   b {
@@ -305,7 +325,7 @@
   li.is-disabled,
   li.disabled {
     cursor: default;
-    // scss-lint:disable ImportantRule
+
     a {
       background-color: transparent;
       color: $disabled-color !important;
@@ -315,9 +335,12 @@
     .icon {
       fill: $disabled-color !important;
     }
-    // scss-lint:enable ImportantRule
 
     &:hover {
+      background-color: transparent;
+    }
+
+    &.is-focused {
       background-color: transparent;
     }
   }
@@ -347,6 +370,7 @@
 
       > .icon.icon-dropdown {
         @include css3(transform, rotate(-90deg));
+
         border-width: 0;
         height: 24px;
         left: auto;
@@ -428,6 +452,7 @@
       &::before,
       &.is-focused::before {
         @include checkbox-unchecked-before-style;
+
         margin-left: 7px;
         margin-top: 0;
         top: 8px;
@@ -435,6 +460,7 @@
 
       &.is-checked::before {
         @include checkbox-checked-before-style;
+
         margin-left: 7px;
         margin-top: 0;
         top: 8px;
@@ -442,6 +468,7 @@
 
       &.is-checked::after {
         @include checkbox-checked-after-style;
+
         left: 12px;
         margin-top: 4px;
         top: 5px;
@@ -450,6 +477,7 @@
       &.is-disabled {
         &::before {
           @include checkbox-unchecked-disabled-before-style;
+
           margin-left: 12px;
           margin-top: 0;
           top: 9px;
@@ -462,6 +490,7 @@
 
           &::after {
             @include checkbox-checked-disabled-after-style;
+
             left: 21px;
             margin-top: 8px;
           }
@@ -481,14 +510,15 @@
   margin-top: 10px;
 
   button {
-    @include css3(transition, color .3s ease 0s);
+    @include css3(transition, color 0.3s ease 0s);
     @include font-size(14);
+
     border: 1px solid transparent;
     border-left: 1px solid $popover-separator-color;
     border-radius: 0;
     color: $modal-btn-color;
     float: left;
-    font-weight: bold;
+    font-weight: $theme-number-font-weight-bold;
     height: 50px;
     line-height: 50px;
     margin: 0;
@@ -508,7 +538,7 @@
 
     &.btn-primary {
       background-color: $popover-bg-color;
-      color: $primary-color;
+      color: $theme-color-brand-primary-base;
 
       &:hover {
         border: 1px solid transparent;
@@ -525,9 +555,8 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
-
   .popupmenu {
     text-align: right;
 
@@ -553,7 +582,6 @@ html[dir='rtl'] {
     }
 
     .submenu > a {
-
       > .icon.icon-dropdown {
         left: 5px;
         right: auto;

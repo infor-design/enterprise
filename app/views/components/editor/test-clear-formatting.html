@@ -1,0 +1,31 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label class="label" for="title">Title</label>
+      <input type="text" id="title" value="The Page Title">
+    </div>
+
+    <div class="field">
+      <span class="label">Comments</span>
+      <div class="editor" data-init="false" id="editor1" role="textbox" aria-multiline="true" aria-label="Comments">
+        <p>Embrace <a href="http://en.wikipedia.org/wiki/e-commerce" class="hyperlink">e-commerce action-items</a>, reintermediate, <b>ecologies</b> <i>paradigms</i> <u>wireless</u> <strike>share life-hacks create</strike> <font color="#d66221">innovative</font> <font style="background-color: #c0ede3;">harness</font>. Evolve solutions rich-clientAPIs synergies harness relationships <font style="background-color: #daccec;">virtual vertical <b>facilitate</b> <i>end-to-end, wireless</i>, evolve synergistic</font> synergies.</p>
+
+        <p>Cross-platform, evolve, ROI scale cultivate <font color="#a13030">eyeballs addelivery, e-services <b>content cross-platform</b> leverage</font> extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; <strike>cutting-edge. Innovate, end-to-end podcasting</strike>, whiteboard streamline e-business social; compelling, "cross-media exploit infomediaries innovative integrate integrateAJAX-enabled." Killer <b>interactive reinvent, cultivate widgets leverage</b> morph.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    $('#editor1').editor({
+      excludeButtons: {
+        editor: ['']
+      }
+    });
+
+  });
+</script>

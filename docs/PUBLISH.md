@@ -1,30 +1,8 @@
-# Dev Ops and Release Publishing Tasks and Notes
+# Release Enterprise
 
-## Check Published npm Tags
+## Dev Release
 
-```bash
-npm info ids-enterprise dist-tags
-npm view ids-enterprise versions
-```
-
-## Delete a npm Tag
-
-```bash
-npm dist-tag rm ids-enterprise tagname
-```
-
-## Cherry-pick a fix from one branch to another
-
-```bash
-git checkout 4.7.x
-git cherry-pick 802b102fda5420a0f714d9d0efa5eff635fe77d9
-git push
-git checkout master
-```
-
-## Dev Releases
-
-To do a dev release, publish a dated semever to npm.
+To do a dev release, publish a dated semver to npm.
 
 1. Make sure you are on `master` and its clean
 1. Change the `package.json` version to append the date, i.e. `4.7.0-dev.YYYYMMDD`
@@ -32,12 +10,11 @@ To do a dev release, publish a dated semever to npm.
 1. `npm publish --tag=dev`
 1. Undo the version change/reset your branch
 
-## Official, Tagged Releases
+## Production Release (tagged)
 
 ### Documentation
 
 - Verify the [changelog](/changelog) is up-to-date
-- Generate Release Notes <http://bit.ly/2w6X8Xw>
 
 ### Make sure you have [credential] setup in .gitconfig  (Windows Users Only)
 
@@ -65,33 +42,29 @@ git config --global credential.helper wincred
     - (mac) `export GITHUB_ACCESS_TOKEN="<your token here>"`
     - (windows) `set GITHUB_ACCESS_TOKEN="<your token here>"`
 
+### Make sure you are logged into NPM
+
+- Verify you are logged into NPM in your terminal to avoid `release-it` dying at the end.
+
 ## Release
 
 1. Make sure you have release-it installed (`npm install release-it -g`)
 1. Checkout the release branch and `git pull --tags`
+    - Set the master branch to the next minor dev version. For example if we made branch `4.9.x`, then the `master` package.json version should now be changed to `4.10.0-dev`
 1. Run a release cmd:
     - `npm run release:beta` - beta
     - `npm run release:rc` - release candidate normally the final testing branch before the release
-    - `release:final` - the release itself
-    - **Always** verify the release version when the script asks
-1. Deploy the demo app for the semver
+    - `npm run release:final` - the release itself
+    - **Always** verify the release version when the script asks. You MAY have to use a different release-it command than what we provide with the NPM script.
 
 For a final release, finish with:
 
-1. Merge back into `master`
-1. PR the master version to the proper "dev" version
-    - i.e. if we just released `4.7.0`, master will now be `4.8.0-dev`
-1. Deploy the demo app for the semver AS "LATEST"
-
-## Test Npm packages
-
-```bash
-npm view ids-enterprise versions
-npm view ids-enterprise-angular versions
-
-npm info ids-enterprise-angular dist-tags
-npm info ids-enterprise dist-tags
-```
+1. Publish/upload the documentation to design.infor.com:
+    - `export DOCS_API_KEY={API KEY}`
+    - `npm run documentation -- --site=prod`
+1. Manually merge the version branch into `master`. Do **NOT** use a pull request. (You will need github push permissions for this)
+1. If needed, use a pull request to set the `master` branch's package.json version to the proper "dev" version
+    - i.e. if we just released `4.7.0`, master should be be `4.8.0-dev`
 
 ## Setup tools for AWS CDN Publish
 

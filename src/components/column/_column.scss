@@ -22,7 +22,7 @@
       }
 
       &.is-selected {
-        font-weight: bold;
+        font-weight: $theme-number-font-weight-bold;
       }
     }
 
@@ -30,7 +30,7 @@
       cursor: pointer;
 
       &.is-not-selected {
-        opacity: .35;
+        opacity: 0.35;
       }
     }
   }

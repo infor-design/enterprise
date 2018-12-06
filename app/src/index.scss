@@ -2,18 +2,26 @@
 // Used for Demonstration purposes, mostly in Kitchen Sink.
 //
 // This stylesheet assumes that it's being loaded alongside
-// a SoHo Xi Theme, and therefore doesn't pull in any of those
+// a IDS Enterprise Theme, and therefore doesn't pull in any of those
 // styles.
-//==================================================//
+//================================================== //
+
+// Enterprise color palette
+@import '../../src/components/colors/colorpalette';
+
+// ids-identity token vars
+@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho';
 
 // Soho Core/Helpers
 @import '../../src/core/config';
 @import '../../src/core/mixins';
 
 // Demo-specific styles
+@import 'sass/code';
 @import 'sass/nofrills';
 @import 'sass/directory';
 @import 'sass/grid';
 @import 'sass/forms';
 @import 'sass/patterns';
+@import 'sass/typography';
 @import 'sass/wizard';

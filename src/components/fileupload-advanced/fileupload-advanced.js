@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { Locale } from '../locale/locale';
 
 // Component Name
@@ -102,7 +103,7 @@ FileUploadAdvanced.prototype = {
     // Browse files option
     if (s.showBrowseButton) {
       let types = '';
-      const id = $.fn.uniqueId('fileupload-adv-');
+      const id = utils.uniqueId(this.element, 'fileupload-adv-');
       const fileExtensions = s.allowedTypes.split(/[\s|]+/g);
       let isExtra = s.maxFilesInProcess > 1 ? ' multiple' : '';
       isExtra += s.isDisabled ? ' disabled' : '';
@@ -138,7 +139,8 @@ FileUploadAdvanced.prototype = {
           </div>
         </div>`;
     }
-    this.element.append(html);
+
+    DOM.append(this.element, html, '<div><svg><use><label><span><input>');
     this.dropArea = $('.drop-area', this.element);
   },
 

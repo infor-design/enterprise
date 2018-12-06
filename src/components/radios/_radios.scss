@@ -16,7 +16,8 @@
 .inline .radio ~ .label-text,
 .radio + label {
   @include font-size(14);
-  color: $checkbox-label-color;
+
+  color: $checkbox-color-unchecked-initial-font;
   cursor: pointer;
   line-height: 24px;
   margin-bottom: 6px;
@@ -28,8 +29,8 @@
 
 .inline .radio ~ .label-text::before,
 .radio + label::before {
-  background-color: $radio-bg-color;
-  border: 1px solid $radio-border-color;
+  background-color: $radio-color-unchecked-initial-background;
+  border: 1px solid $radio-color-unchecked-initial-border;
   border-radius: 50%;
   content: '';
   height: 14px;
@@ -46,7 +47,8 @@
 .inline .radio:hover ~ .label-text::before,
 .radio:hover + label::before {
   @include css3(transition, border-color 300ms ease);
-  border-color: $radio-hover-border-color;
+
+  border-color: $radio-color-unchecked-hover-border;
 }
 
 .inline .radio ~ .label-text,
@@ -63,15 +65,15 @@
 
 .inline .radio ~ .label-text::after,
 .radio + label::after {
-  background-color: $radio-selected-bg-color;
-  border: 2px solid $radio-selected-bg-color;
+  background-color: $radio-color-checked-initial-background;
+  border: 2px solid $radio-color-checked-initial-background;
   border-radius: 50%;
   content: '';
   height: 4px;
   left: 5px;
   position: absolute;
   top: 8px;
-  transition: all .2s ease 0s;
+  transition: all 0.2s ease 0s;
   width: 4px;
 }
 
@@ -81,42 +83,44 @@
 
 .inline .radio:checked ~ .label-text::before,
 .radio:checked + label::before {
-  background-color: $radio-selected-color;
-  border: 1px solid $radio-selected-color;
+  background-color: $radio-color-checked-initial-fill;
+  border: 1px solid $radio-color-checked-initial-fill;
 }
 
 // checked mark aspect changes
 .inline .radio:not(:checked) ~ .label-text::after,
 .radio:not(:checked) + label::after {
   @include opacity(0);
+
   transform: scale(0);
 }
 
 .inline .radio:checked ~ .label-text::after,
 .radio:checked + label::after {
   @include opacity(1);
+
   transform: scale(1);
 }
 
 // disabled radio
 .inline .radio:disabled ~ .label-text::before,
 .radio:disabled + label::before {
-  background-color: $radio-disabled-bg-color;
-  border-color: $radio-disabled-border-color;
+  background-color: $radio-color-unchecked-disabled-background;
+  border-color: $radio-color-unchecked-disabled-border;
   cursor: default;
 }
 
 .inline .radio:disabled:checked ~ .label-text::before,
 .radio:disabled:checked + label::before {
-  background-color: $radio-disabled-border-color;
-  border-color: $radio-disabled-border-color;
+  background-color: $radio-color-unchecked-disabled-border;
+  border-color: $radio-color-unchecked-disabled-border;
   cursor: default;
 }
 
 .inline .radio:disabled:checked ~ .label-text::before,
 .radio:disabled:checked + label::after {
-  background-color: $radio-disabled-select-bg-color;
-  border: 2px solid $radio-disabled-select-bg-color;
+  background-color: $radio-color-checked-disabled-background;
+  border: 2px solid $radio-color-checked-disabled-background;
 }
 
 .inline .radio:disabled ~ .label-text,
@@ -127,7 +131,7 @@
 
 .inline .radio:not(.hide-focus):focus ~ .label-text::before,
 .radio:not(.hide-focus):focus + label::before {
-  box-shadow: $radio-focus-shadow;
+  box-shadow: $radio-shadow-focus-boxshadow;
 }
 
 // Print Support
@@ -161,6 +165,7 @@
 
   legend {
     @include font-size(12);
+
     color: $label-color;
     padding-bottom: 5px;
   }
@@ -222,6 +227,7 @@
 
       .in-label {
         @include font-size(14);
+
         line-height: 25px;
         margin-top: -10px;
       }
@@ -288,9 +294,8 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
-
   .radio {
     margin-left: inherit;
     margin-right: 7px;
@@ -308,11 +313,10 @@ html[dir='rtl'] {
     margin-right: -33px;
   }
 
-
   .inline .radio ~ .label-text::after,
   .radio + label::after {
     left: auto;
-    right: .53em;
+    right: 0.53em;
   }
 
   // Radio Section
@@ -360,7 +364,6 @@ html[dir='rtl'] {
 
 // Short Fields
 .field-short {
-
   .inline .radio ~ .label-text,
   .radio + label {
     margin-bottom: 0;
@@ -390,10 +393,10 @@ html[dir='rtl'] {
 // disabled radio
 .inline .radio.error:disabled ~ .label-text,
 .radio.error:disabled + label {
-  color: rgba($error-color, .4);
+  color: rgba($error-color, 0.4);
 
   &::before {
-    border-color: rgba($error-color, .4);
+    border-color: rgba($error-color, 0.4);
   }
 }
 

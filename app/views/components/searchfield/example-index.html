@@ -13,5 +13,10 @@
   $('#searchfield').searchfield({
     clearable: true,
     source: '{{basepath}}api/states?term='
+  }).on('selected', function (e, a) {
+    console.log('`Selected` event was fired');
+    if (a.hasClass('more-results')) {
+      console.log('More results was clicked');
+    }
   });
 </script>

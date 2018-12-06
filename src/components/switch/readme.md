@@ -1,10 +1,11 @@
 ---
 title: Switch Component
-description: This page describes Switch Component .
+description: Displays two selectable values. A user can select exactly one value at a time. Best used when offering two values that are binary in the sense that selecting one negates the other.
 demo:
-  pages:
+  embedded:
   - name: Main Switch Example
     slug: example-index
+  pages:
   - name: Alternate Alignment
     slug: example-alignment
   - name: Two Column Layout
@@ -27,6 +28,10 @@ A switch element is essentially a specially-styled [checkbox element]( ./checkbo
 ## Accessibility
 
 - Always include a meaningfully described label thats linked correctly to the input field by the `for` and `id` attribute
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

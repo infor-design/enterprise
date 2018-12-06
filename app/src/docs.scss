@@ -1,6 +1,12 @@
 // Docs Site Styling
 // Compiles down to what used to be `site.css`
-//==================================================//
+//================================================== //
+
+// Enterprise color palette
+@import '../../src/components/colors/colorpalette';
+
+// ids-identity token vars
+@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho';
 
 // Soho Core/Helpers
 @import '../../src/core/config';
@@ -13,7 +19,7 @@
 
 // Variables for this page
 $color-font-lighter: #606060;
-$color-font-lighter2: rgba(96, 96, 96, .3);
+$color-font-lighter2: rgba(96, 96, 96, 0.3);
 $color-font-darker: #606060;
 
 $color-accent-green: #007567;
@@ -27,16 +33,13 @@ $color-header-grey: #727272;
 $color-code-bg: #f7f7f9;
 $color-code-border: #e1e8e8;
 
-// scss-lint:disable VendorPrefix
 * {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-// scss-lint:disable VendorPrefix
 
-
-$font-family: 'Source Sans Pro', Helvetica, Arial;
+$font-family: 'Source Sans Pro', helvetica, arial;
 $font-family-monospace: 'source code pro', monospace;
 
 html {
@@ -62,10 +65,11 @@ html {
   // Change Letter Color and Size
   .fieldset-title {
     @include font-size(14);
+
     color: $color-font-lighter;
   }
 
-   // Align the Letter columns
+  // Align the Letter columns
   .columns {
     text-align: center;
 
@@ -90,12 +94,14 @@ html {
 // Typography
 h1 {
   @include font-size(50);
+
   color: $black;
   line-height: 60px;
 }
 
 h2 {
   @include font-size(26);
+
   color: $black;
   font-weight: 400;
   line-height: 42px;
@@ -103,6 +109,7 @@ h2 {
 
 h3 {
   @include font-size(14);
+
   color: $black;
   letter-spacing: 1.17px;
   line-height: 16px;
@@ -111,6 +118,7 @@ h3 {
 
 h4 {
   @include font-size(14);
+
   color: $black;
 }
 
@@ -119,6 +127,7 @@ ul,
 li,
 code {
   @include font-size(16);
+
   color: $color-font-lighter;
   font-family: $font-family;
   font-weight: 400;
@@ -131,8 +140,9 @@ ol {
 
 a {
   @include font-size(16);
+
   color: $color-main-blue;
-  font-weight: normal;
+  font-weight: $theme-number-font-weight-base;
   text-decoration: none;
 
   svg {
@@ -156,17 +166,16 @@ pre {
 }
 
 //Hide Table Of Contents (for now)
-// scss-lint:disable IdSelector
 #table-of-contents,
 #table-of-contents + ul {
   display: none;
 }
-// scss-lint:enable idSelector
 
 // Format the Paramaters Label
 p strong {
   @include font-size(16);
-  font-weight: normal;
+
+  font-weight: $theme-number-font-weight-base;
   padding-left: 0;
 
   &::after {
@@ -210,6 +219,7 @@ p strong {
 
   .doc-header-link {
     @include font-size(16);
+
     border-bottom: 2px solid transparent;
     color: $black;
     display: inline-block;
@@ -230,6 +240,7 @@ p strong {
 
   .doc-header-secondary-link {
     @include font-size(16);
+
     color: $color-header-grey;
     display: inline-block;
     margin: 29px 18px 29px 18.5px;
@@ -265,7 +276,6 @@ p strong {
 
 // Media Queries for Header Area
 @media (min-width: 0) and (max-width: $breakpoint-wide-tablet - 1) {
-
   .doc-header .doc-header-secondary-links {
     clear: both;
     display: block;
@@ -287,12 +297,10 @@ p strong {
   }
 }
 
-
 // Pandoc code highlight styles - customized
 // https://github.com/jgm/highlighting-kate/blob/master/css/hk-pyg.css
 //==================================================//
 
-// scss-lint:disable SelectorFormat, ColorVariable
 table.sourceCode,
 tr.sourceCode,
 td.lineNumbers,
@@ -309,8 +317,8 @@ table.sourceCode pre {
 }
 
 td.lineNumbers {
-  border-right: 1px solid #aaaaaa;
-  color: #aaaaaa;
+  border-right: 1px solid #aaa;
+  color: #aaa;
   padding-left: 5px;
   padding-right: 5px;
   text-align: right;
@@ -321,7 +329,7 @@ td.sourceCode {
 }
 
 code.sourceCode span.kw {
-  color: #006699;
+  color: #069;
 }
 
 code.sourceCode span.dt {
@@ -358,7 +366,7 @@ code.sourceCode span.ot {
 }
 
 code.sourceCode span.al {
-  color: #ff0000;
+  color: #f00;
 }
 
 code.sourceCode span.fu {
@@ -366,17 +374,17 @@ code.sourceCode span.fu {
 }
 
 code.sourceCode span.er {
-  color: #ff0000;
+  color: #f00;
 }
 
 // Inline Code
 
-// scss-lint:disable MergeableSelector
 code {
   @include font-size(14);
+
   background-color: $color-code-bg;
   border: 1px solid #e1e8e8;
-  border-radius: .25rem .25rem 0 0;
+  border-radius: 0.25rem 0.25rem 0 0;
   font-family: $font-family-monospace;
   line-height: 24px;
   padding: 0 4px;
@@ -386,11 +394,7 @@ code {
   }
 }
 
-// scss-lint:enable MergeableSelector
-// scss-lint:enable SelectorFormat, ColorVariable
-
 // Tables
-
 .section-table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -402,7 +406,8 @@ code {
 
     th {
       @include font-size(16);
-      font-weight: normal;
+
+      font-weight: $theme-number-font-weight-base;
       padding: 16px 30px 16px 0;
     }
 
@@ -417,6 +422,7 @@ code {
 
   td {
     @include font-size(16);
+
     padding-right: 30px;
     vertical-align: middle;
 

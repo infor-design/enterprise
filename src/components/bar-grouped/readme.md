@@ -1,10 +1,11 @@
 ---
 title: Bar Chart (Grouped)
-description: This page describes Bar Chart (Grouped).
+description: null
 demo:
-  pages:
+  embedded:
   - name: Standard Grouped Bar Chart
     slug: example-index
+  pages:
   - name: Example showing defaulting a selected value
     slug: example-selected
   - name: Example showing with negative values
@@ -85,6 +86,10 @@ $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
   }
 });
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

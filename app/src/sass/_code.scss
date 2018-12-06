@@ -1,0 +1,32 @@
+// Code Example Styles
+// ===============================================
+
+$code-bg-color: #ccc;
+$code-border-color: #aaa;
+$code-text-color: #555;
+
+@mixin code-style() {
+  background: $code-bg-color;
+  border: 1px solid $code-border-color;
+  border-radius: 2px;
+  color: $code-text-color;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+span.code {
+  @include code-style();
+
+  padding: 3px 8px;
+}
+
+.code-block {
+  @include code-style();
+
+  margin: 1em 0;
+  overflow: auto;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+  white-space: pre-wrap;
+}

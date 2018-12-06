@@ -1,7 +1,11 @@
+import Promise from 'promise-polyfill';
+
 import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { breakpoints } from '../../utils/breakpoints';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
+
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { Locale } from '../locale/locale';
 
@@ -158,6 +162,46 @@ SearchField.prototype = {
   },
 
   /**
+   * @private
+   * @returns {boolean} whether or not the parent toolbar is a Flex Toolbar
+   */
+  get isContainedByFlexToolbar() {
+    if (!this.containmentParent) {
+      return false;
+    }
+
+    return this.containmentParent.className.indexOf('flex-toolbar') > -1;
+  },
+
+  /**
+   * @private
+   * @returns {ToolbarFlexItem|undefined} if inside a Flex Toolbar, returns a reference to the corresponding Toolbar Flex Item API
+   */
+  get toolbarFlexItem() {
+    let item;
+    if (this.isContainedByFlexToolbar) {
+      item = $(this.element).data('toolbarflexitem');
+    }
+
+    return item;
+  },
+
+  /**
+   * @private
+   * @returns {Autocomplete|undefined} a reference to the Searchfield's optional Autocomplete API
+   */
+  get autocompleteAPI() {
+    return $(this.element).data('autocomplete');
+  },
+
+  /**
+   * @returns {boolean} whether or not this is a context searchfield.
+   */
+  get isContextSearch() {
+    return this.wrapper[0].className.indexOf('context') > -1;
+  },
+
+  /**
    * Initialization Kickoff
    * @private
    * @returns {void}
@@ -176,7 +220,7 @@ SearchField.prototype = {
   build() {
     // Used for managing events that are bound to $(document)
     if (!this.id) {
-      this.id = this.element.uniqueId(COMPONENT_NAME);
+      this.id = utils.uniqueId(this.element, COMPONENT_NAME);
     }
 
     this.label = this.element.prev('label, .label');
@@ -188,7 +232,7 @@ SearchField.prototype = {
     // NOTE: The `source` setting can be modified due to a conflict between a legacy Soho attribute,
     // `data-autocomplete`, having the same value as jQuery's `$.data('autocomplete')`.
     const autocompleteDataAttr = this.element.attr('data-autocomplete');
-    if (autocompleteDataAttr) {
+    if (autocompleteDataAttr && autocompleteDataAttr !== 'source') {
       this.settings.source = autocompleteDataAttr;
       this.element.removeAttr('data-autocomplete');
       $.removeData(this.element, 'autocomplete');
@@ -259,7 +303,7 @@ SearchField.prototype = {
 
     // Initially disable animations on toolbar searchfields
     // An event listener on Toolbar's `rendered` event removes these at the correct time
-    if (this.toolbarParent) {
+    if (this.toolbarParent && !this.isContainedByFlexToolbar) {
       this.element.add(this.wrapper).addClass('no-transition no-animation');
     }
 
@@ -332,6 +376,24 @@ SearchField.prototype = {
       this.setCategoryButtonText();
     }
 
+    // Flex Toolbar Searchfields contain an extra button for use as a closing trigger
+    if (this.isContainedByFlexToolbar) {
+      if (!this.collapseButton || !this.collapseButton.length) {
+        this.collapseButton = $(`
+          <button class="btn-secondary collapse-button" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-exit-fullview"></use>
+            </svg>
+            <span class="audible">${Locale.translate('Collapse')}</span>
+          </button>
+        `);
+      }
+      this.wrapper[0].classList.add('has-collapse-button');
+      this.element.after(this.collapseButton);
+    } else {
+      this.wrapper[0].classList.remove('has-collapse-button');
+    }
+
     // Pull a Go Button from markup, if applicable.
     let goButton = this.wrapper.next('.go-button');
     if (!goButton.length) {
@@ -353,18 +415,12 @@ SearchField.prototype = {
           </button>
         `);
       }
-      this.goButton.attr('id', this.goButton.uniqueId('searchfield-go-button-'));
+      this.goButton.attr('id', utils.uniqueId(this.goButton, 'searchfield-go-button-'));
       this.wrapper.addClass('has-go-button');
       this.element.after(this.goButton);
     } else {
       this.wrapper.removeClass('has-go-button');
     }
-
-    /*
-    // Hoist the 'alternate' CSS class to the wrapper, if applicable
-    const isAlternate = this.element.hasClass('alternate');
-    this.wrapper[isAlternate ? 'addClass' : 'removeClass']('alternate');
-    */
 
     if (this.settings.clearable) {
       this.element.clearable();
@@ -387,6 +443,20 @@ SearchField.prototype = {
     }
 
     return this;
+  },
+
+  /**
+   * Simpler version of `adjustOnBreakpoint` for non-collapsible Toolbar Flex searchfields
+   */
+  simpleAdjustOnBreakpoint() {
+    if (this.shouldBeFullWidth()) {
+      if (!this.isFocused) {
+        this.wrapper[0].classList.remove('is-open');
+      }
+      return;
+    }
+
+    this.wrapper[0].classList.add('is-open');
   },
 
   /**
@@ -417,6 +487,10 @@ SearchField.prototype = {
 
       if (this.isCurrentlyCollapsible && this.isExpanded) {
         this.collapse();
+      }
+
+      if (this.isContainedByFlexToolbar) {
+        this.wrapper[0].classList.remove('is-open');
       }
 
       return;
@@ -488,6 +562,10 @@ SearchField.prototype = {
       return;
     }
 
+    if (this.isContainedByFlexToolbar) {
+      return;
+    }
+
     this.saveFocus();
 
     this.elemBeforeWrapper = this.wrapper.prev();
@@ -507,6 +585,10 @@ SearchField.prototype = {
    */
   appendToButtonset() {
     if (!this.containmentParent || !this.wrapper.parent().is($(this.containmentParent))) {
+      return;
+    }
+
+    if (this.isContainedByFlexToolbar) {
       return;
     }
 
@@ -647,6 +729,11 @@ SearchField.prototype = {
       .on(`focus.${this.id}`, (e) => {
         self.handleFocus(e);
       })
+      .on(`blur.${this.id}`, (e) => {
+        if (self.isContainedByFlexToolbar) {
+          self.handleSafeBlur(e);
+        }
+      })
       .on(`click.${this.id}`, (e) => {
         self.handleClick(e);
       })
@@ -713,6 +800,22 @@ SearchField.prototype = {
         self.adjustOnBreakpoint();
       });
       self.adjustOnBreakpoint();
+    } else {
+      $('body').on(`resize.${this.id}`, () => {
+        self.simpleAdjustOnBreakpoint();
+      });
+      self.simpleAdjustOnBreakpoint();
+    }
+
+    if (this.collapseButton && this.collapseButton.length) {
+      this.collapseButton
+        .on(`keydown.${this.id}`, (e) => {
+          self.collapseResponsive(e);
+        })
+        .on(`click.${this.id}`, (e) => {
+          self.collapseResponsive(e);
+        })
+        .on(`blur.${this.id}`, () => self.handleSafeBlur());
     }
 
     if (this.toolbarParent) {
@@ -738,64 +841,53 @@ SearchField.prototype = {
       }
     });
 
+    // Setup a listener for the Clearable behavior, if applicable
+    if (self.settings.clearable) {
+      self.element.on(`cleared.${this.id}`, () => {
+        if (self.autocomplete) {
+          self.autocomplete.closeList();
+        }
+      });
+
+      self.xButton.on(`blur.${this.id}`, (e) => {
+        self.handleSafeBlur(e);
+      });
+    }
+
     // Override the 'click' listener created by Autocomplete (which overrides the
     // default Popupmenu method) to act differntly when the More Results link is activated.
-    self.element.on(`listopen.${this.id}`, (e, items) => {
+    self.element.on(`listopen.${this.id}`, () => {
       const list = $('#autocomplete-list');
 
       // Visual indicator class
       self.wrapper.addClass('popup-is-open');
 
-      list.off('click').on(`click.${this.id}`, 'a', (thisE) => {
-        const a = $(thisE.currentTarget);
-        let ret = a.text().trim();
+      // Trigger the `allResultsCallback` if one is defined
+      self.element.on(`selected.${this.id}`, (thisE, a, ret) => {
         const isMoreLink = a.hasClass('more-results');
-        const isNoneLink = a.hasClass('no-results');
-
-        if (!isMoreLink && !isNoneLink) {
-          // Only write text into the field on a regular result pick.
-          self.element.attr('aria-activedescendant', a.parent().attr('id'));
+        if (!isMoreLink) {
+          return;
         }
 
-        if (isMoreLink) {
-          // Trigger callback if one is defined
-          const callback = self.settings.allResultsCallback;
-          if (callback && typeof callback === 'function') {
-            callback(ret);
-          }
+        const callback = self.settings.allResultsCallback;
+        if (callback && typeof callback === 'function') {
+          callback(ret);
         }
-
-        if (a.parent().attr('data-value')) {
-          for (let i = 0; i < items.length; i++) {
-            if (items[i].value.toString() === a.parent().attr('data-value')) {
-              ret = items[i];
-            }
-          }
-        }
-
-        self.element.trigger('selected', [a, ret]);
-        self.element.data('popupmenu').close();
-        // e.preventDefault();
-        return false;
       });
 
       // Override the focus event created by the Autocomplete control to make the more link
       // and no-results link blank out the text inside the input.
-      list.find('.more-results, .no-results').off('focus').on(`focus.${this.id}`, function () {
+      list.find('.more-results, .no-results').on(`focus.${this.id}`, function () {
         const anchor = $(this);
         list.find('li').removeClass('is-selected');
         anchor.parent('li').addClass('is-selected');
         self.element.val('');
       });
+    }).on(`listclose.${this.id}`, () => {
+      const list = $('#autocomplete-list');
 
-      // Setup a listener for the Clearable behavior, if applicable
-      if (self.settings.clearable) {
-        self.element.on(`cleared.${this.id}`, () => {
-          if (self.autocomplete) {
-            self.autocomplete.closeList();
-          }
-        });
-      }
+      self.element.off(`selected.${this.id}`);
+      list.off(`focus.${this.id}`);
     });
 
     return this;
@@ -817,14 +909,24 @@ SearchField.prototype = {
 
     this.addDocumentDeactivationEvents();
 
-    this.wrapper.addClass('has-focus');
-    this.expand(true);
+    const wrapperClasses = ['has-focus', 'active'];
+
+    if (this.isCurrentlyCollapsible || this.isContainedByFlexToolbar) {
+      this.expand(true);
+
+      if (this.isContainedByFlexToolbar) {
+        wrapperClasses.push('is-open');
+      }
+    }
 
     // Activate
-    this.wrapper.addClass('active');
-    const toolbar = this.element.closest('.toolbar, [class$="-toolbar"]');
-    if (toolbar.length) {
-      toolbar.addClass('searchfield-active');
+    wrapperClasses.forEach((cssClass) => {
+      // IE11 compatibility doesn't allow for multiple arguments for `classList.add()`
+      this.wrapper[0].classList.add(cssClass);
+    });
+
+    if (this.toolbarParent) {
+      this.toolbarParent.classList.add('searchfield-active');
     }
 
     if (this.isExpanded) {
@@ -861,6 +963,13 @@ SearchField.prototype = {
     if (this.categoryButton && this.categoryButton.length) {
       const menu = this.categoryButton.data('popupmenu').menu;
       if (menu.has(active).length) {
+        return true;
+      }
+    }
+
+    // Clearable button
+    if (this.xButton && this.xButton.length) {
+      if (this.xButton.has(active).length) {
         return true;
       }
     }
@@ -920,9 +1029,12 @@ SearchField.prototype = {
       wrapperElem.classList.remove('has-focus', 'active');
 
       self.removeDocumentDeactivationEvents();
+      self.clearResponsiveState();
 
       if (self.isCurrentlyCollapsible) {
         self.collapse();
+      } else if (self.isContainedByFlexToolbar) {
+        self.wrapper[0].classList.remove('is-open');
       }
     }
 
@@ -936,6 +1048,17 @@ SearchField.prototype = {
       timeoutCallback: safeBlurHandler
     });
     renderLoop.register(this.blurTimer);
+  },
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  clearResponsiveState() {
+    if (!this.toolbarParent) {
+      return;
+    }
+    this.toolbarParent.classList.remove('searchfield-active');
   },
 
   /**
@@ -1002,13 +1125,25 @@ SearchField.prototype = {
    */
   handleKeydown(e) {
     const key = e.which;
+    const keyName = e.key;
 
     if (key === 27 && env.browser.isIE11()) {
       e.preventDefault();
     }
 
+    if (e.ctrlKey && key === 8) {
+      this.element.val('');
+    }
+
     if (key === 9) { // Tab
       this.handleSafeBlur();
+    }
+
+    if (this.isContainedByFlexToolbar) {
+      const yKeys = ['ArrowUp', 'Up', 'ArrowDown', 'Down'];
+      if (yKeys.indexOf(keyName) > -1) {
+        this.collapse();
+      }
     }
   },
 
@@ -1322,6 +1457,9 @@ SearchField.prototype = {
     let nextElem = this.wrapper.next();
     let width;
 
+    if (!buttonset.length) {
+      return;
+    }
     // If small form factor, use the right edge
     if (nextElem.is('.title')) {
       nextElem = buttonset;
@@ -1338,10 +1476,6 @@ SearchField.prototype = {
       }
 
       this.openWidth = width;
-      return;
-    }
-
-    if (!buttonset.length) {
       return;
     }
 
@@ -1367,9 +1501,21 @@ SearchField.prototype = {
    * @private
    */
   calculateSearchfieldWidth() {
+    const inlineStyleProp = this.element[0].getAttribute('style');
+    let baseWidth = '100%';
     let subtractWidth = 0;
     let targetWidthProp;
 
+    if (inlineStyleProp) {
+      this.element[0].removeAttribute('style');
+    }
+
+    const computedStyle = window.getComputedStyle(this.element[0]);
+    if (computedStyle.width && !this.isContextSearch) {
+      baseWidth = computedStyle.width;
+    }
+
+    // Subtract width of extraneous buttons/elems
     if (this.hasCategories()) {
       subtractWidth += this.categoryButton.outerWidth(true);
     }
@@ -1379,7 +1525,7 @@ SearchField.prototype = {
 
     // NOTE: final width can only be 100% if no value is subtracted for other elements
     if (subtractWidth > 0) {
-      targetWidthProp = `calc(100% - ${subtractWidth}px)`;
+      targetWidthProp = `calc(${baseWidth} - ${subtractWidth}px)`;
     }
     if (targetWidthProp) {
       this.element[0].style.width = targetWidthProp;
@@ -1393,6 +1539,8 @@ SearchField.prototype = {
    * @param  {object} anchor the link object
    */
   handleCategorySelected(e, anchor) {
+    this.element.trigger('selected', [anchor]);
+
     // Only change the text and searchfield size if we can
     if (!this.settings.showCategoryText) {
       return;
@@ -1550,123 +1698,171 @@ SearchField.prototype = {
    * Expands the Searchfield
    * @param {boolean} [noFocus] If defined, causes the searchfield component not to become focused
    *  at the end of the expand method. Its default functionality is that it will become focused.
-   * @returns {void}
+   * @returns {Promise} resolved when the expansion completes
    */
   expand(noFocus) {
-    if (this.isExpanded || this.isExpanding) {
-      return;
-    }
-
     const self = this;
-    const notFullWidth = !this.shouldBeFullWidth();
-
-    this.isExpanding = true;
-
-    // Places the input wrapper into the toolbar on smaller breakpoints
-    if (!notFullWidth) {
-      this.appendToParent();
-    }
-
-    // Re-adjust the size of the buttonset element if the expanded searchfield would be
-    // too large to fit.
-    let buttonsetWidth = 0;
-    if (this.buttonsetElem) {
-      buttonsetWidth = parseInt(window.getComputedStyle(this.buttonsetElem).width, 10);
-    }
-
-    const buttonsetElemWidth = buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE;
-    const containerSizeSetters = {
-      buttonset: buttonsetElemWidth
-    };
-
-    this.wrapper.addClass('is-open');
-    this.calculateOpenWidth();
-    this.setOpenWidth();
-
-    // Some situations require adjusting the focused element
-    if (!noFocus || env.os.name === 'ios' || (self.isFocused && document.activeElement !== self.input)) {
-      if (self.focusElem) {
-        self.focusElem = self.input;
+    const expandPromise = new Promise((resolve) => {
+      if (self.isExpanded || self.isExpanding || self.isCollapsing) {
+        resolve();
+        return;
       }
-      self.input.focus();
-    }
 
-    // Recalculate the Toolbar Buttonset/Title sizes.
-    const eventArgs = [];
-    if (containerSizeSetters) {
-      eventArgs.push(containerSizeSetters);
-    }
+      const notFullWidth = !self.shouldBeFullWidth();
 
-    $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
+      self.isExpanding = true;
 
-    const expandTimer = new RenderLoopItem({
-      duration: 30,
-      updateCallback() {}, // TODO: make this work without an empty function
-      timeoutCallback() {
-        $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
-        self.wrapper.triggerHandler('expanded');
-        delete self.isExpanding;
-        self.isExpanded = true;
+      // Places the input wrapper into the toolbar on smaller breakpoints
+      if (!notFullWidth) {
+        self.appendToParent();
+      }
 
-        if (self.isCurrentlyCollapsible && !self.isFocused && !self.focusElem) {
-          self.handleSafeBlur();
+      // Re-adjust the size of the buttonset element if the expanded searchfield would be
+      // too large to fit.
+      let buttonsetWidth = 0;
+      if (self.buttonsetElem) {
+        buttonsetWidth = parseInt(window.getComputedStyle(self.buttonsetElem).width, 10);
+      }
+
+      const buttonsetElemWidth = buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE;
+      const containerSizeSetters = {
+        buttonset: buttonsetElemWidth
+      };
+
+      if (!this.isContainedByFlexToolbar || breakpoints.isAbove('phone-to-tablet')) {
+        this.wrapper[0].classList.add('is-open');
+      }
+      this.calculateOpenWidth();
+      this.setOpenWidth();
+
+      // Some situations require adjusting the focused element
+      if (!noFocus || env.os.name === 'ios' || (self.isFocused && document.activeElement !== self.input)) {
+        if (self.focusElem) {
+          self.focusElem = self.input;
         }
+        self.input.focus();
       }
+
+      // Recalculate the Toolbar Buttonset/Title sizes.
+      const eventArgs = [];
+      if (containerSizeSetters) {
+        eventArgs.push(containerSizeSetters);
+      }
+
+      self.element.trigger('beforeexpand');
+      $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
+
+      const expandTimer = new RenderLoopItem({
+        duration: 10,
+        updateCallback() {}, // TODO: make this work without an empty function
+        timeoutCallback() {
+          $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
+          self.element.trigger('expanded');
+          delete self.isExpanding;
+          self.isExpanded = true;
+
+          if (self.isCurrentlyCollapsible && !self.isFocused && !self.focusElem) {
+            self.handleSafeBlur();
+          }
+        }
+      });
+      renderLoop.register(expandTimer);
     });
-    renderLoop.register(expandTimer);
+
+    return expandPromise;
   },
 
   /**
    * Collapses the Searchfield
-   * @returns {void}
+   * @returns {Promise} resolved once the collapse completes
    */
   collapse() {
-    if (!this.isExpanded || this.isCollapsing) {
+    const self = this;
+    const collapsePromise = new Promise((resolve) => {
+      if (!self.isExpanded && self.isExpanding && !self.isCollapsing) {
+        resolve();
+        return;
+      }
+
+      self.isCollapsing = true;
+
+      // Puts the input wrapper back where it should be if it's been moved due to small form factors.
+      self.appendToButtonset();
+
+      self.checkContents();
+
+      self.clearResponsiveState();
+
+      self.wrapper[0].classList.remove('active', 'is-open');
+      if (env.browser.isIE11) {
+        self.wrapper[0].classList.remove('is-open');
+      }
+      if (this.isContainedByFlexToolbar || !this.isFocused) {
+        self.wrapper[0].classList.remove('has-focus');
+      }
+
+      self.wrapper.removeAttr('style');
+      self.input.removeAttribute('style');
+
+      if (self.categoryButton && self.categoryButton.length) {
+        self.categoryButton.data('popupmenu').close(false, true);
+      }
+
+      self.element.trigger('beforecollapse');
+
+      if (env.os.name === 'ios') {
+        $('head').triggerHandler('enable-zoom');
+      }
+
+      delete self.isExpanded;
+      delete self.isExpanding;
+
+      const collapseTimer = new RenderLoopItem({
+        duration: 10,
+        updateCallback() {}, // TODO: make this work without an empty function
+        timeoutCallback() {
+          delete self.isCollapsing;
+          $(self.toolbarParent).triggerHandler('recalculate-buttons');
+          self.element.trigger('collapsed');
+          resolve();
+        }
+      });
+
+      renderLoop.register(collapseTimer);
+    });
+
+    return collapsePromise;
+  },
+
+  /**
+   * @private
+   * @param {jQuery.Event} e incoming click event (driven either by keyboard or actual click)
+   * @returns {void}
+   */
+  collapseResponsive(e) {
+    if (this.previouslyCollapsedByKey && e.type === 'click') {
+      delete this.previouslyCollapsedByKey;
       return;
     }
 
+    // Navigate forward unless the event has been driven by a keystroke
     const self = this;
-
-    this.isCollapsing = true;
-
-    // Puts the input wrapper back where it should be if it's been moved due to small form factors.
-    this.appendToButtonset();
-
-    this.checkContents();
-
-    this.wrapper[0].classList.remove('active', 'is-open');
-    if (env.browser.isIE11) {
-      this.wrapper[0].classList.remove('is-open');
-    }
-    if (!this.isFocused) {
-      this.wrapper[0].classList.remove('has-focus');
-    }
-
-    this.wrapper.removeAttr('style');
-    this.input.removeAttribute('style');
-
-    if (this.categoryButton && this.categoryButton.length) {
-      this.categoryButton.data('popupmenu').close(false, true);
-    }
-
-    this.wrapper.triggerHandler('collapsed');
-
-    if (env.os.name === 'ios') {
-      $('head').triggerHandler('enable-zoom');
-    }
-
-    delete this.isExpanded;
-    delete this.isExpanding;
-
-    const collapseTimer = new RenderLoopItem({
-      duration: 30,
-      updateCallback() {}, // TODO: make this work without an empty function
-      timeoutCallback() {
-        delete self.isCollapsing;
-        $(self.toolbarParent).triggerHandler('recalculate-buttons');
+    let dir = 1;
+    if (e && !e.key) {
+      dir = 0;
+      if (this.toolbarFlexItem && this.toolbarFlexItem.focused) {
+        dir = 1;
       }
+    }
+
+    if (e.type === 'keydown') {
+      this.previouslyCollapsedByKey = true;
+    }
+
+    // Collapse followed by a special event trigger (gets picked up by Flex Toolbar)
+    this.collapse().then(() => {
+      self.wrapper.trigger('collapsed-responsive', [dir]);
     });
-    renderLoop.register(collapseTimer);
   },
 
   /**
@@ -1676,11 +1872,11 @@ SearchField.prototype = {
    * @returns {void}
    */
   checkContents() {
-    let textMethod = 'removeClass';
+    let textMethod = 'remove';
     if (this.input.value.trim() !== '') {
-      textMethod = 'addClass';
+      textMethod = 'add';
     }
-    this.wrapper[textMethod]('has-text');
+    this.wrapper[0].classList[textMethod]('has-text');
   },
 
   /**
@@ -1699,7 +1895,9 @@ SearchField.prototype = {
 
     $('<li class="separator" role="presentation"></li>').appendTo(list);
     const more = $('<li role="presentation"></li>').appendTo(list);
-    this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html(`<span>${Locale.translate('AllResults')} "${val}"</span>`).appendTo(more);
+    this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>')
+      .html(`<span>${Locale.translate('AllResults')} "${xssUtils.ensureAlphaNumeric(val)}"</span>`)
+      .appendTo(more);
   },
 
   /**
@@ -1713,9 +1911,9 @@ SearchField.prototype = {
       return;
     }
 
-    const none = $('<li role="presentation"></li>').appendTo(list);
+    const none = $('<li role="presentation" class="is-placeholder"></li>').appendTo(list);
 
-    this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html(`<span>${Locale.translate('NoResults')}</span>`).appendTo(none);
+    this.noneLink = $('<a href="#" class="no-results" disabled="disabled" tabindex="-1" role="menuitem" aria-disabled="true"></a>').html(`<span>${Locale.translate('NoResults')}</span>`).appendTo(none);
   },
 
   /**
@@ -1757,17 +1955,22 @@ SearchField.prototype = {
   teardown() {
     this.element.off([
       `updated.${this.id}`,
+      `focus.${this.id}`,
+      `blur.${this.id}`,
       `click.${this.id}`,
       `keydown.${this.id}`,
       `beforeopen.${this.id}`,
+      `input.${this.id}`,
       `listopen.${this.id}`,
       `listclose.${this.id}`,
       `safe-blur.${this.id}`,
+      `selected.${this.id}`,
       `populated.${this.id}`,
       `cleared.${this.id}`].join(' '));
 
-    // ToolbarSearchfield events
     this.wrapper.off([
+      `mouseenter.${this.id}`,
+      `mouseleave.${this.id}`,
       `focusin.${this.id}`,
       `focusout.${this.id}`,
       `keydown.${this.id}`,
@@ -1779,11 +1982,19 @@ SearchField.prototype = {
     }
 
     if (this.goButton && this.goButton.length) {
-      this.goButton.off(`click.${this.id} blur.${this.id}`);
+      this.goButton.off(`click.${this.id} blur.${this.id}`).remove();
+      delete this.goButton;
     }
 
     if (this.categoryButton && this.categoryButton.length) {
-      this.categoryButton.off();
+      this.categoryButton.off().remove();
+      delete this.categoryButton;
+    }
+
+    if (this.collapseButton && this.collapseButton.length) {
+      this.collapseButton.off().remove();
+      delete this.collapseButton;
+      delete this.previouslyCollapsedByKey;
     }
 
     // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
@@ -1805,6 +2016,7 @@ SearchField.prototype = {
     }
 
     if (this.xButton && this.xButton.length) {
+      this.xButton.off(`blur.${this.id}`);
       this.xButton.remove();
     }
 

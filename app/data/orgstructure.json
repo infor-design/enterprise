@@ -15,7 +15,30 @@
         { "id": "1_3_1", "Name": "Tony Cleveland", "Position": "Records Clerk", "EmploymentType": "C", "Picture": "https://randomuser.me/api/portraits/med/men/6.jpg", "isLeaf": true },
         { "id": "1_3_2", "Name": "Julie Dawes", "Position": "Records Clerk", "EmploymentType": "PT", "Picture": "https://randomuser.me/api/portraits/med/women/5.jpg", "isLeaf": true },
         { "id": "1_3_3", "Name": "Richard Fairbanks", "Position": "Records Clerk", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/men/7.jpg", "isLeaf": true }
-      ]
+      ],
+      "menu" : {
+        "details": [
+          {"key": "Organization Unit", "value": "U.S Headquarters"},
+          {"key": "Position", "value": "Project Manager"},
+          {"key": "Work Phone", "value": "612-555-1212"},
+          {"key": "Location", "value": "St. Paul"},
+          {"key": "Position Family", "value": "ITS"},
+          {"key": "Position Category", "value": "PMO"},
+          {"key": "Position Sub Category", "value": "Some subcategory"},
+          {"key": "Position Level", "value": "Career"},
+          {"key": "Years of Service", "value": "4.33"}
+        ],
+        "actions": [
+          {"value": "Profile", "url": "#", "data": {"id":"Profile","label":"Profile","type":"action","index":1}},
+          {"value": "Change Pay Rate", "url": "#", "data": {}, "disabled": true},
+          {"value": "Add work assignment", "url" : "#", "data": {}},
+          {"value": "Promote", "url" : "#", "data": {}},
+          {"value": "Transfer", "url" : "#", "data": {}},
+          {"value": "Terminate", "url" : "#", "data": {}},
+          {"value": "Update", "url" : "#", "data": {}},
+          {"value": "Options", "url" : "#", "data": {}, "menu": [{"value": "Sub Item", "url" : "#", "data": {}}]}
+        ]
+      }
     },
     {
       "id": "1_4",
@@ -63,13 +86,73 @@
       "EmploymentType": "FT",
       "Picture": "https://randomuser.me/api/portraits/med/women/3.jpg",
       "children": [
-        { "id": "1_7_1", "Name": "Katie Olland", "Position": "Workers’ Compensation Specialist", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/women/12.jpg", "isLeaf": true },
+        {
+          "id": "1_7_1",
+          "Name": "Katie Olland",
+          "Position": "Workers’ Compensation Specialist",
+          "EmploymentType": "FT",
+          "Picture": "https://randomuser.me/api/portraits/med/women/12.jpg",
+          "isLeaf": true,
+          "menu" : {
+            "details": [
+              {"key": "Organization Unit", "value": "U.S Headquarters"},
+              {"key": "Position", "value": "Project Manager"},
+              {"key": "Work Phone", "value": "612-555-1212"},
+              {"key": "Location", "value": "St. Paul"},
+              {"key": "Position Family", "value": "ITS"},
+              {"key": "Position Category", "value": "PMO"},
+              {"key": "Position Sub Category", "value": "Some subcategory"},
+              {"key": "Position Level", "value": "Career"},
+              {"key": "Years of Service", "value": "4.33"}
+            ],
+            "actions": [
+              {"value": "Profile", "url": "#", "data": {"id":"Profile","label":"Profile","type":"action","index":1}},
+              {"value": "Change Pay Rate", "url": "#", "data": {}, "disabled": true},
+              {"value": "Add work assignment", "url" : "#", "data": {}},
+              {"value": "Promote", "url" : "#", "data": {}},
+              {"value": "Transfer", "url" : "#", "data": {}},
+              {"value": "Terminate", "url" : "#", "data": {}},
+              {"value": "Update", "url" : "#", "data": {}},
+              {"value": "Options", "url" : "#", "data": {}, "menu": [{"value": "Sub Item", "url" : "#", "data": {}}]}
+            ]
+          }
+        },
         { "id": "1_7_2", "Name": "Tanya Wright", "Position": "Workers’ Compensation Specialist", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/women/13.jpg", "isLeaf": true },
         { "id": "1_7_3", "Name": "OPEN", "Position": "Workers’ Compensation Specialist", "EmploymentType": "O", "isLeaf": true },
         { "id": "1_7_4", "Name": "John Johnson", "Position": "Workers’ Compensation Specialist", "Initials": "JJ", "EmploymentType": "FT", "isLeaf": true }
       ]
     },
-    { "id": "1_1", "Name": "Partricia Clark", "Position": "Administration", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/women/4.jpg", "isLeaf": true },
+    {
+      "id": "1_1",
+      "Name": "Partricia Clark",
+      "Position": "Administration",
+      "EmploymentType": "FT",
+      "Picture": "https://randomuser.me/api/portraits/med/women/4.jpg",
+      "isLeaf": true,
+      "menu" : {
+        "details": [
+          {"key": "Organization Unit", "value": "U.S Headquarters"},
+          {"key": "Position", "value": "Project Manager"},
+          {"key": "Work Phone", "value": "612-555-1212"},
+          {"key": "Location", "value": "St. Paul"},
+          {"key": "Position Family", "value": "ITS"},
+          {"key": "Position Category", "value": "PMO"},
+          {"key": "Position Sub Category", "value": "Some subcategory"},
+          {"key": "Position Level", "value": "Career"},
+          {"key": "Years of Service", "value": "4.33"}
+        ],
+        "actions": [
+          {"value": "Profile", "url": "#", "data": {"id":"Profile","label":"Profile","type":"action","index":1}},
+          {"value": "Change Pay Rate", "url": "#", "data": {}, "disabled": true},
+          {"value": "Add work assignment", "url" : "#", "data": {}},
+          {"value": "Promote", "url" : "#", "data": {}},
+          {"value": "Transfer", "url" : "#", "data": {}},
+          {"value": "Terminate", "url" : "#", "data": {}},
+          {"value": "Update", "url" : "#", "data": {}},
+          {"value": "Options", "url" : "#", "data": {}, "menu": [{"value": "Sub Item", "url" : "#", "data": {}}]}
+        ]
+      }
+    },
     { "id": "1_2", "Name": "Drew Buchanan", "Position": "Assistant Director", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/men/5.jpg", "isLeaf": true }
   ]
 }]

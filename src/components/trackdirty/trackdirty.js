@@ -1,3 +1,4 @@
+import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
@@ -28,6 +29,9 @@ function Trackdirty(element, settings) {
 Trackdirty.prototype = {
 
   init() {
+    this.isIe = env.browser.name === 'ie';
+    this.isIeEdge = env.browser.name === 'edge';
+
     this.handleEvents();
   },
 
@@ -71,9 +75,11 @@ Trackdirty.prototype = {
       if (window.getComputedStyle(el, null).position === 'relative') {
         return false;
       }
+
       pos.left += el.scrollLeft;
       pos.top += el.scrollTop;
     });
+
     return { left: pos.left, top: pos.top };
   },
 
@@ -127,11 +133,16 @@ Trackdirty.prototype = {
   handleEvents() {
     const input = this.element;
 
+    if (input.is('.editor')) {
+      const textArea = input.parent().find('textarea');
+      textArea.data('original', this.valMethod(textArea));
+    }
+
     input.data('original', this.valMethod(input, true))
       .on('resetdirty.dirty', () => {
         if (input.is('.editor')) {
           const textArea = input.parent().find('textarea');
-          textArea[0].defaultValue = this.valMethod(textArea);
+          textArea.data('original', this.valMethod(textArea));
         }
 
         input.data('original', this.valMethod(input))
@@ -148,7 +159,7 @@ Trackdirty.prototype = {
         }
 
         if (field.is('.editor-container')) {
-          el = field.find('.editor');
+          el = field.find('.editor-source');
         }
 
         // Used element without .field wrapper
@@ -177,12 +188,12 @@ Trackdirty.prototype = {
         if (!d.icon.is('.icon-dirty')) {
           if (input.is('[type="checkbox"]')) {
             d.rect = this.getAbsolutePosition(label);
-            d.style = ` style="left:${d.rect.left}px; top:${d.rect.top}px;"`;
+            d.style = `left:${d.rect.left}px; top:${d.rect.top}px;`;
           } else if (input.is('.colorpicker') && !Locale.isRTL()) {
             d.rect = this.getAbsolutePosition(input);
-            d.style = ` style="left:${d.rect.left}px; top:${d.rect.top}px;"`;
+            d.style = `left:${d.rect.left}px; top:${d.rect.top}px;`;
           }
-          d.icon = `<span class="icon-dirty${d.class}"${d.style}></span>`;
+          d.icon = `<span class="icon-dirty${d.class}"></span>`;
           d.msg = Locale.translate('MsgDirty') || '';
           d.msg = `<span class="audible msg-dirty">${d.msg}</span>`;
 
@@ -193,6 +204,10 @@ Trackdirty.prototype = {
           if ($(el[0].parentElement).find('.icon-dirty').length === 0) {
             el.before(d.icon);
             label.append(d.msg);
+
+            if (d.style && el.prev('.icon-dirty')[0]) {
+              el.prev('.icon-dirty')[0].style.cssText = d.style;
+            }
           }
 
           // Cache icon and msg
@@ -211,8 +226,12 @@ Trackdirty.prototype = {
           // editors values are further down it's tree in a textarea,
           // so get the elements with the value
           const textArea = field.find('textarea');
-          original = textArea[0].defaultValue;
+          original = textArea.data('original');
           current = this.valMethod(textArea);
+        }
+
+        if (this.isIe || this.isIeEdge) {
+          current = input[0].innerHTML || input[0].value;
         }
 
         if (current === original || (input.attr('multiple') && utils.equals(current, original))) {

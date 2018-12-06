@@ -9,7 +9,7 @@ import '../../utils/animations';
 // The name of this component.
 const COMPONENT_NAME = 'tree';
 
-// The Component Defaults
+// The Component Defaults.
 const TREE_DEFAULTS = {
   selectable: 'single', // ['single'|'multiple']
   hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
@@ -20,7 +20,8 @@ const TREE_DEFAULTS = {
   sortable: false, // Allow nodes to be sortable
   onBeforeSelect: null,
   onExpand: null,
-  onCollapse: null
+  onCollapse: null,
+  originalEnablementState: null
 };
 
 /**
@@ -62,7 +63,7 @@ Tree.prototype = {
     this.setupEvents();
 
     if (this.loadData(this.settings.dataset) === -1) {
-      this.syncDataset(this.element);
+      this.syncDataset();
       this.initSelected();
       this.focusFirst();
       this.attachMenu(this.settings.menuId);
@@ -103,10 +104,8 @@ Tree.prototype = {
    * @private
   */
   initSelected() {
-    const self = this;
-    this.element.find('li').each(function () {
-      self.setNodeStatus($('a:first', this));
-    });
+    const listItems = [].slice.call(this.element[0].querySelectorAll('li'));
+    listItems.forEach(li => this.setNodeStatus($(li.querySelector('a'))));
   },
 
   /**
@@ -114,7 +113,10 @@ Tree.prototype = {
    * @private
    */
   focusFirst() {
-    this.element.find('a:first').attr('tabindex', '0');
+    const a = this.element[0].querySelector('a');
+    if (a) {
+      a.setAttribute('tabindex', '0');
+    }
   },
 
   /**
@@ -124,7 +126,12 @@ Tree.prototype = {
    * @returns {void}
    */
   setFocus(node) {
-    node.focus().removeClass('hide-focus');
+    node = this.isjQuery(node) ? node[0] : node;
+    if (!node) {
+      return;
+    }
+    node.focus();
+    node.classList.remove('hide-focus');
   },
 
   /**
@@ -135,136 +142,120 @@ Tree.prototype = {
    */
   //ApprovaOS Change - Added parameter checkox and icon to show check box and icon on demand for particular node
   decorateNode(a, icon, hideCheckbox) {
+    a = this.isjQuery(a) ? a : $(a);
     let parentCount = 0;
-    let badgeData = a.attr('data-badge');
-    const alertIcon = a.attr('data-alert-icon');
-    const badge = { elem: $('<span class="tree-badge badge"></span>') };
+    let badgeData = a[0].getAttribute('data-badge');
+    const alertIcon = a[0].getAttribute('data-alert-icon');
     const isParentsDisabled = a.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0;
-    const isDisabled = a.hasClass('is-disabled') || isParentsDisabled;
+    const isDisabled = a[0].classList.contains('is-disabled') || isParentsDisabled;
 
     if (typeof badgeData !== 'undefined') {
       badgeData = utils.parseSettings(a, 'data-badge');
     }
 
     // Set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
-    a.attr({ role: 'treeitem', tabindex: '-1', 'aria-selected': 'false' });
+    a[0].setAttribute('role', 'treeitem');
+    a[0].setAttribute('tabindex', '-1');
+    a[0].setAttribute('aria-selected', 'false');
 
     // Add Aria disabled
     if (isDisabled) {
-      a.addClass('is-disabled').attr('aria-disabled', 'true');
+      a[0].classList.add('is-disabled');
+      a[0].setAttribute('aria-disabled', 'true');
       const childSection = a.next();
 
-      if (childSection.is('ul.is-open')) {
-        $('a', childSection).addClass('is-disabled').attr('aria-disabled', 'true');
-        $('ul', a.parent()).addClass('is-disabled');
+      if (childSection[0] && childSection[0].tagName.toLowerCase() === 'ul' && childSection[0].classList.contains('is-open')) {
+        const childLinks = [].slice.call(childSection[0].querySelectorAll('a'));
+        childLinks.forEach((link) => {
+          link.classList.add('is-disabled');
+          link.setAttribute('aria-disabled', 'true');
+        });
+        const parentUls = [].slice.call(a[0].parentNode.querySelectorAll('ul'));
+        parentUls.forEach(ul => ul.classList.add('is-disabled'));
       }
     }
 
     // ParentCount 'aria-level' to the node's level depth
     parentCount = a.parentsUntil(this.element, 'ul').length - 1;
-    a.attr('aria-level', parentCount + 1);
+    a[0].setAttribute('aria-level', parentCount + 1);
 
-    // SSet the current tree item node position relative to its aria-setsize
+    // Set the current tree item node position relative to its aria-setsize
     const posinset = a.parent().index();
-    a.attr('aria-posinset', posinset + 1);
+    a[0].setAttribute('aria-posinset', posinset + 1);
 
     // Set the current tree item aria-setsize
-    const listCount = a.closest('li').siblings().addBack().length;
-    a.attr('aria-setsize', listCount);
+    const listCount = a.closest('li').siblings().length + 1;
+    a[0].setAttribute('aria-setsize', listCount);
 
     // Set the current tree item node expansion state
-    if (a.next('ul').children().length > 0) {
-      a.attr('aria-expanded', a.next().hasClass('is-open') ? 'true' : 'false');
+    const subNode = a.next('ul');
+    if (subNode[0] && subNode.children().length > 0) {
+      a[0].setAttribute('aria-expanded', subNode[0].classList.contains('is-open') ? 'true' : 'false');
     }
-
-    // Adds role=group' to all subnodes
-    const subNode = a.next();
 
     // Inject Icons
     const text = a.contents().filter(function () {
       return !$(this).is('.tree-badge');// Do not include badge text
     }).text();
 
-    a.text('');
+    a[0].textContent = '';
     if (a.children('svg.icon-tree').length === 0) {
       //old code: a.prepend($.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
       //ApprovaOS Change - removed icon of node
-      if (icon || icon === '') {
-        a.prepend($.createIcon({ icon: icon, classes: ['icon-tree'] }));
-      } else {
-        a.prepend($.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
+      if (icon || icon === '') {        
+        a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: icon, classes: ['icon-tree'] }));
+      } else {        
+        a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
       }
 
       if (this.settings.useStepUI) {
-        a.prepend($.createIcon({ icon: alertIcon, classes: ['step-alert', `icon-${alertIcon}`] }));
+        a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: alertIcon, classes: ['step-alert', `icon-${alertIcon}`] }));
       }
     }
 
     // Inject checkbox
+
 	  //Old code - if (this.isMultiselect && !this.settings.hideCheckboxes) {
     //ApprovaOS Change - Show check box for particular node on demand
-    if (this.isMultiselect && (!this.settings.hideCheckboxes || hideCheckbox === false)) {
-      a.append('<span class="tree-checkbox"></span>');
+    if (this.isMultiselect && (!this.settings.hideCheckboxes || hideCheckbox === false)) {      
+      a[0].insertAdjacentHTML('beforeend', '<span class="tree-checkbox"></span>');
     }
 
     // Inject badge
-    if (badgeData && !badgeData.remove) {
-      badge.text = '';
-
-      if (typeof badgeData.text !== 'undefined') {
-        badge.text = badgeData.text.toString();
-        badge.elem.html(badge.text);
-        if (badge.text.length === 1) {
-          badge.elem.addClass('round');
-        }
-      }
-
-      let badgeStyle = '';
-      if (/info|good|error|alert|pending/i.test(badgeData.type)) {
-        badge.elem.addClass(badgeData.type);
-      } else if (badgeData.type && badgeData.type.charAt(0) === '#' && badgeData.type.length === 7) {
-        badgeStyle = `background-color: ${badgeData.type} !important;`;
-      }
-      if (badgeData.backColor) {
-        badgeStyle = `background-color: ${badgeData.backColor} !important;`;
-      }
-      if (badgeData.foreColor) {
-        badgeStyle += `color: ${badgeData.foreColor} !important;`;
-      }
-
-      badge.elem.attr('style', badgeStyle);
-
-      if (badge.elem.text() !== '') {
-        a.append(badge.elem);
-      }
-      if (badgeData.type && badgeData.type.indexOf('pending') !== -1) {
-        badge.elem.text('');
-      }
+    const badgeHtml = this.getBadgeHtml(badgeData);
+    if (badgeHtml !== '') {
+      a[0].insertAdjacentHTML('beforeend', badgeHtml);
     }
 
-    a.append($('<span class="tree-text"></span>').text(text));
+    const span = document.createElement('span');
+    span.classList.add('tree-text');
+    span.textContent = text;
+    a[0].appendChild(span);
 
-    if (a.is('[class^="icon"]')) {
+    if (this.hasIconClass(a)) {
       // CreateIconPath
-      this.setTreeIcon(a.find('svg.icon-tree'), a.attr('class'));
+      this.setTreeIcon(a.find('svg.icon-tree'), a[0].getAttribute('class'));
     }
 
-    if (subNode.is('ul')) {
-      subNode.attr('role', 'group').parent().addClass('folder');
-      this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
+    // Adds role=group' to all subnodes
+    if (subNode[0] && subNode[0].tagName.toLowerCase() === 'ul') {
+      let aClass = a[0].getAttribute('class');
+      subNode[0].setAttribute('role', 'group');
+      subNode[0].parentNode.classList.add('folder');
+      this.setTreeIcon(a.find('svg.icon-tree'), subNode[0].classList.contains('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
 
-      if (a.attr('class') && a.attr('class').indexOf('open') === -1 && a.attr('class').indexOf('closed') === -1) {
-        a.attr('class', isDisabled ? 'is-disabled' : '');
-        this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
+      if (aClass && aClass.indexOf('open') === -1 && aClass.indexOf('closed') === -1) {
+        a[0].setAttribute('class', isDisabled ? 'is-disabled' : '');
+        this.setTreeIcon(a.find('svg.icon-tree'), subNode[0].classList.contains('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
       }
 
-      if (a.is('[class^="icon"]')) {
-        this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ?
-          a.attr('class') : a.attr('class').replace('open', 'closed'));
+      if (this.hasIconClass(a)) {
+        aClass = a[0].getAttribute('class');
+        this.setTreeIcon(a.find('svg.icon-tree'), subNode[0].classList.contains('is-open') ?
+          aClass : aClass.replace('open', 'closed'));
       }
     }
 
-    a.addClass('hide-focus');
     a.hideFocus();
   },
 
@@ -276,6 +267,10 @@ Tree.prototype = {
    * @returns {void}
    */
   setTreeIcon(svg, icon) {
+    if (!svg || typeof icon !== 'string') {
+      return;
+    }
+    svg = this.isjQuery(svg) ? svg : $(svg);
     // Replace all "icon-", "hide-focus", "\s? - all spaces if any" with nothing
     const iconStr = icon.replace(/#?icon-|hide-focus|\s?/gi, '');
     svg.changeIcon(iconStr);
@@ -288,16 +283,27 @@ Tree.prototype = {
    * @returns {void}
    */
   expandAll(nodes) {
-    const self = this;
-    nodes = nodes || this.element.find('ul[role=group]');
+    let groups = nodes;
 
-    nodes.each(function () {
-      const node = $(this);
-      node.addClass('is-open');
-      self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.folderIconOpen);
+    if (typeof groups !== 'undefined') {
+      groups = this.isjQuery(groups) ? $.makeArray(groups) : groups;
+    } else {
+      groups = [].slice.call(this.element[0].querySelectorAll('ul[role=group]'));
+    }
 
-      if (node.prev('a').is('[class^="icon"]')) {
-        self.setTreeIcon(node.prev('svg.icon-tree'), node.prev('a').attr('class'));
+    groups.forEach((group) => {
+      const prev = group.previousElementSibling;
+      group.parentNode.classList.add('is-open');
+      group.classList.add('is-open');
+      group.style.height = '';
+
+      if (prev && prev.tagName.toLowerCase() === 'a') {
+        const svg = prev.querySelector('svg.icon-tree');
+        this.setTreeIcon(svg, this.settings.folderIconOpen);
+        prev.setAttribute('aria-expanded', true);
+        if (this.hasIconClass(prev)) {
+          this.setTreeIcon(svg, prev.getAttribute('class'));
+        }
       }
     });
   },
@@ -309,23 +315,28 @@ Tree.prototype = {
    * @returns {void}
    */
   collapseAll(nodes) {
-    const self = this;
-    nodes = nodes || this.element.find('ul[role=group]');
+    let groups = nodes;
 
-    nodes.each(function () {
-      const node = $(this);
-      node.removeClass('is-open');
-      self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.folderIconClosed);
+    if (typeof groups !== 'undefined') {
+      groups = this.isjQuery(groups) ? $.makeArray(groups) : groups;
+    } else {
+      groups = [].slice.call(this.element[0].querySelectorAll('ul[role=group]'));
+    }
 
-      if (node.prev('a').is('[class^="icon"]')) {
-        self.setTreeIcon(node.prev('a').find('svg.icon-tree'), node.prev('a').attr('class')
-          .replace('open', 'closed')
-          .replace(' hide-focus', '')
-          .replace(' is-selected', ''));
-      }
+    groups.forEach((group) => {
+      const prev = group.previousElementSibling;
+      group.parentNode.classList.remove('is-open');
+      group.classList.remove('is-open');
+      group.style.height = 0;
 
-      if (node.prev('a').is('[class^="icon"]')) {
-        self.setTreeIcon(node.prev('svg.icon-tree'), node.prev('a').attr('class').replace('open', 'closed'));
+      if (prev && prev.tagName.toLowerCase() === 'a') {
+        const svg = prev.querySelector('svg.icon-tree');
+        this.setTreeIcon(svg, this.settings.folderIconClosed);
+        prev.setAttribute('aria-expanded', false);
+        prev.classList.remove('is-selected');
+        if (this.hasIconClass(prev)) {
+          this.setTreeIcon(svg, prev.getAttribute('class').replace('open', 'closed'));
+        }
       }
     });
   },
@@ -394,8 +405,9 @@ Tree.prototype = {
     }
 
     // Set active css class
-    $('li', self.element).removeClass('is-active');
-    node.parent().addClass('is-active');
+    const listItems = [].slice.call(this.element[0].querySelectorAll('li'));
+    listItems.forEach(li => li.classList.remove('is-active'));
+    node[0].parentNode.classList.add('is-active');
 
     setTimeout(() => {
       const jsonData = node.data('jsonData') || {};
@@ -422,6 +434,7 @@ Tree.prototype = {
    */
   selectNode(node, focus) {
     const self = this;
+    const s = this.settings;
 
     if (node.length === 0) {
       return;
@@ -429,8 +442,8 @@ Tree.prototype = {
 
     // Possibly Call the onBeforeSelect
     let result;
-    if (typeof self.settings.onBeforeSelect === 'function') {
-      result = self.settings.onBeforeSelect(node);
+    if (typeof s.onBeforeSelect === 'function') {
+      result = s.onBeforeSelect(node);
       if (result && result.done && typeof result.done === 'function') { // A promise is returned
         result.done((continueSelectNode) => {
           if (continueSelectNode) {
@@ -450,21 +463,46 @@ Tree.prototype = {
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {boolean} focus - if defined, causes the node to become focused.
+   * @param {object} e - jquery event.
    * @returns {void}
    */
-  selectNodeFinish(node, focus) {
+  selectNodeFinish(node, focus, e) {
+    // Don't do selection for toggle type only
+    if (this.isMultiselect && e) {
+      if (e.type === 'click' || e.type === 'touch') {
+        if (e.target.classList.contains('icon') &&
+          node[0].parentNode.classList.contains('folder')) {
+          return;
+        }
+      } else if (e.type === 'keydown') {
+        const charCode = e.charCode || e.keyCode;
+        if (charCode === 37 || charCode === 39) {
+          return;
+        }
+      }
+    }
+
     const self = this;
-    const aTags = $('a', this.element);
-    aTags.attr('tabindex', '-1');
-    node.attr('tabindex', '0');
+    const links = [].slice.call(this.element[0].querySelectorAll('a'));
+    links.forEach(a => a.setAttribute('tabindex', '-1'));
+    node[0].setAttribute('tabindex', '0');
 
     if (this.isMultiselect) {
-      $('a:not(.is-disabled)', node.parent())
-        .attr('aria-selected', 'true').parent().addClass('is-selected');
+      const links2 = [].slice.call(node[0].parentNode.querySelectorAll('a:not(.is-disabled)'));
+      links2.forEach((a) => {
+        a.setAttribute('aria-selected', 'true');
+        a.classList.add('is-selected');
+        a.parentNode.classList.add('is-selected');
+      });
     } else {
-      aTags.attr('aria-selected', 'false').parent().removeClass('is-selected');
-      aTags.attr('aria-selected', 'false').removeClass('is-selected');
-      node.attr('aria-selected', 'true').parent().addClass('is-selected');
+      links.forEach((a) => {
+        a.setAttribute('aria-selected', 'false');
+        a.classList.remove('is-selected');
+        a.parentNode.classList.remove('is-selected');
+      });
+      node[0].setAttribute('aria-selected', 'true');
+      node[0].classList.add('is-selected');
+      node[0].parentNode.classList.add('is-selected');
     }
 
     this.syncNode(node);
@@ -477,8 +515,9 @@ Tree.prototype = {
     }
 
     // Set active css class
-    $('li', self.element).removeClass('is-active');
-    node.parent().addClass('is-active');
+    const listItems = [].slice.call(this.element[0].querySelectorAll('li'));
+    listItems.forEach(li => li.classList.remove('is-active'));
+    node[0].parentNode.classList.add('is-active');
 
     setTimeout(() => {
       const jsonData = node.data('jsonData') || {};
@@ -497,7 +536,7 @@ Tree.prototype = {
   },
 
   /**
-   * Deselects a tree node
+   * Set current node status
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @returns {void}
@@ -509,37 +548,46 @@ Tree.prototype = {
 
     // Not multiselect
     if (!this.isMultiselect) {
-      node.removeClass('is-selected is-partial');
+      const a = node[0];
+      const li = a.parentNode;
       if (data && data.selected) {
-        node.addClass('is-selected');
+        li.classList.add('is-selected');
+        a.classList.add('is-selected');
+        a.setAttribute('aria-selected', true);
+      } else {
+        li.classList.remove('is-selected', 'is-partial');
+        a.classList.remove('is-selected', 'is-partial');
+        a.setAttribute('aria-selected', false);
       }
       return;
     }
 
     const setStatus = function (thisNodes, isFirstSkipped) {
-      thisNodes.each(function () {
-        const thisNode = $('a:first', this);
-        const parent = thisNode.parent();
-        const status = self.getSelectedStatus(thisNode, isFirstSkipped);
+      thisNodes.forEach((li) => {
+        const a = $(li.querySelector('a'));
+        const status = self.getSelectedStatus(a, isFirstSkipped);
 
         if (status === 'mixed') {
-          parent.removeClass('is-selected is-partial').addClass('is-partial');
+          li.classList.remove('is-selected', 'is-partial');
+          li.classList.add('is-partial');
         } else if (status) {
-          parent.removeClass('is-selected is-partial').addClass('is-selected');
+          li.classList.remove('is-selected', 'is-partial');
+          li.classList.add('is-selected');
         } else {
-          parent.removeClass('is-selected is-partial');
+          li.classList.remove('is-selected', 'is-partial');
         }
-        self.syncNode(thisNode);
+        self.syncNode(a);
       });
     };
 
     // Multiselect
     let isFirstSkipped = false;
-    nodes = node.parent().find('li.folder');
+    nodes = [].slice.call(node[0].parentNode.querySelectorAll('li.folder'));
     setStatus(nodes, isFirstSkipped);
 
     isFirstSkipped = !(!nodes.length && data && !data.selected);
     nodes = node.parentsUntil(this.element, 'li.folder');
+    nodes = [].slice.call(nodes.toArray());
     setStatus(nodes, isFirstSkipped);
   },
 
@@ -581,43 +629,43 @@ Tree.prototype = {
   },
 
   /**
-   * Changes a node's selected status to its opposite form.
+   * Changes a node's open/close status to its opposite form.
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
-   * @param {boolean} isFirstSkipped - ?
+   * @param {object} e jquery event
    * @returns {void}
    */
-  toggleNode(node) {
+  toggleNode(node, e) {
     const next = node.next();
     const self = this;
+    const s = this.settings;
     let result;
-    if (next.is('ul[role="group"]')) {
-      if (next.hasClass('is-open')) {
-        if (typeof self.settings.onCollapse === 'function') {
-          result = self.settings.onCollapse(node);
+    if (next[0] && next[0].tagName.toLowerCase() === 'ul' && next[0].getAttribute('role') === 'group') {
+      if (next[0].classList.contains('is-open')) {
+        if (typeof s.onCollapse === 'function') {
+          result = s.onCollapse(node);
           if (result && result.done && typeof result.done === 'function') { // A promise is returned
             result.done((continueSelectNode) => {
               if (continueSelectNode) {
-                self.selectNodeFinish(node, focus);
+                self.selectNodeFinish(node, focus, e);
               }
             });
           } else if (result) { // Boolean is returned instead of a promise
-            self.selectNodeFinish(node, focus);
+            self.selectNodeFinish(node, focus, e);
           }
         } else { // No Callback specified
 		      //ApprovaOS Change - if tree is multiselect commented because do not select node on expand node
-          //self.selectNodeFinish(node, focus);
+          //self.selectNodeFinish(node, focus, e);
         }
 
-        self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
+        self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), s.folderIconClosed);
 
-        if (node.closest('.folder a').is('[class^="icon"]')) {
+        if (self.hasIconClass(node.closest('.folder a'))) {
           self.setTreeIcon(
             node.closest('.folder a').find('svg.icon-tree'),
             node.closest('.folder a').attr('class')
               .replace('open', 'closed')
-              .replace(' hide-focus', '')
-              .replace(' is-selected', '')
+              .replace(/\s?is-selected/, '')
           );
         }
 
@@ -625,35 +673,35 @@ Tree.prototype = {
 
         if (!self.isMultiselect) {
           self.unSelectedNode(node.parent().find('li.is-selected'), false);
-          node.removeClass('is-selected');
+          node[0].classList.remove('is-selected');
         }
 
         next.one('animateclosedcomplete', () => {
-          next.removeClass('is-open');
+          next[0].classList.remove('is-open');
           self.isAnimating = false;
         }).animateClosed();
 
-        node.attr('aria-expanded', node.attr('aria-expanded') !== 'true');
+        node[0].setAttribute('aria-expanded', node[0].getAttribute('aria-expanded') !== 'true');
       } else {
-        if (typeof self.settings.onExpand === 'function') {
-          result = self.settings.onExpand(node);
+        if (typeof s.onExpand === 'function') {
+          result = s.onExpand(node);
           if (result && result.done && typeof result.done === 'function') { // A promise is returned
             result.done((continueSelectNode) => {
               if (continueSelectNode) {
-                self.selectNodeFinish(node, focus);
+                self.selectNodeFinish(node, focus, e);
               }
             });
           } else if (result) { // Boolean is returned instead of a promise
-            self.selectNodeFinish(node, focus);
+            self.selectNodeFinish(node, focus, e);
           }
         } else { // No Callback specified
 		      //ApprovaOS Change - if tree is multiselect commented because do not select node on expand node
-          //self.selectNodeFinish(node, focus);
+          //self.selectNodeFinish(node, focus, e);
         }
 
         const nodeData = node.data('jsonData');
 
-        if (self.settings.source && nodeData.children && nodeData.children.length === 0) {
+        if (s.source && nodeData.children && nodeData.children.length === 0) {
           const response = function (nodes) {
             const id = nodeData.id;
             const elem = self.findById(id);
@@ -661,7 +709,7 @@ Tree.prototype = {
             // Add DB and UI nodes
             elem.children = nodes;
             self.addChildNodes(elem, node.parent());
-            node.removeClass('is-loading');
+            node[0].classList.remove('is-loading');
             self.loading = false;
 
             // Open
@@ -675,7 +723,7 @@ Tree.prototype = {
           };
 
           const args = { node, data: node.data('jsonData') };
-          node.addClass('is-loading');
+          node[0].classList.add('is-loading');
           self.loading = true;
           self.settings.source(args, response);
 
@@ -693,20 +741,20 @@ Tree.prototype = {
    * @param  {object} node The DOM element.
    */
   accessNode(next, node) {
-    const self = this;
+    const nodeClass = node.attr('class');
 
-    self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconOpen);
+    this.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg.icon-tree'), this.settings.folderIconOpen);
 
-    if (node.is('[class^="icon"]')) {
-      self.setTreeIcon(node.find('svg.icon-tree'), node.attr('class').replace(' hide-focus', '').replace(' is-selected', ''));
+    if (this.hasIconClass(nodeClass)) {
+      this.setTreeIcon(node.find('svg.icon-tree'), nodeClass.replace('is-selected', ''));
     }
 
-    self.isAnimating = true;
+    this.isAnimating = true;
 
     next.one('animateopencomplete', () => {
-      self.isAnimating = false;
+      this.isAnimating = false;
     }).addClass('is-open').css('height', 0).animateOpen();
-    node.attr('aria-expanded', node.attr('aria-expanded') !== 'true');
+    node[0].setAttribute('aria-expanded', node[0].getAttribute('aria-expanded') !== 'true');
   },
 
   /**
@@ -751,6 +799,22 @@ Tree.prototype = {
   },
 
   /**
+   * Check if given value has icon class
+   * @private
+   * @param  {string|object} elemClass class or element has icon class
+   * @returns  {boolean} true if has icon.
+   */
+  hasIconClass(elemClass) {
+    if (typeof elemClass !== 'string') {
+      if (this.isjQuery(elemClass)) {
+        elemClass = elemClass.length > 1 ? elemClass.first()[0] : elemClass[0];
+      }
+      elemClass = elemClass.getAttribute('class');
+    }
+    return elemClass && elemClass.indexOf('icon') > -1;
+  },
+
+  /**
    * Close The Node
    * @private
    * @param  {object} nextTarget The next tree element
@@ -760,13 +824,12 @@ Tree.prototype = {
     const self = this;
     self.setTreeIcon(nodeTarget.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
 
-    if (nodeTarget.closest('.folder a').is('[class^="icon"]')) {
+    if (self.hasIconClass(nodeTarget.closest('.folder a'))) {
       self.setTreeIcon(
         nodeTarget.closest('.folder a').find('svg.icon-tree'),
         nodeTarget.closest('.folder a').attr('class')
           .replace('open', 'closed')
-          .replace(' hide-focus', '')
-          .replace(' is-selected', '')
+          .replace(/\s?is-selected/, '')
       );
     }
 
@@ -801,35 +864,40 @@ Tree.prototype = {
     // On click give clicked element 0 tabindex and 'aria-selected=true', resets all other links
     this.element.on('click.tree', 'a:not(.is-clone)', function (e) {
       const target = $(this);
-      const parent = target.parent();
-      if (!target.is('.is-disabled, .is-loading')) {
+      const parent = this.parentNode;
+      if (!target[0].classList.contains('is-disabled') && !target[0].classList.contains('is-loading')) {
         if (self.isMultiselect) {
-          if ($(e.target).is('.icon') && parent.is('.folder')) {
-            self.toggleNode(target);
-          } else if (parent.is('.is-selected, .is-partial')) {
+          if (e.target.classList.contains('icon') && parent.classList.contains('folder')) {
+            self.toggleNode(target, e);
+          } else if (parent.classList.contains('is-selected') || parent.classList.contains('is-partial')) {
             self.unSelectedNode(target, true);
           } else {
             self.selectNode(target, true);
           }
         } else {
           self.selectNode(target, true);
-          self.toggleNode(target);
+          self.toggleNode(target, e);
         }
         e.stopPropagation();
       }
+
+      if (self.popupEl && self.popupEl.data('popupmenu')) {
+        self.popupEl.data('popupmenu').close();
+        self.popupEl = null;
+      }
+
       return false; // Prevent Click from Going to Top
     });
 
     this.element
     // Focus on "a" elements
       .on('focus.tree', 'a', function () {
-        const target = $(this);
-        if (parseInt(target.attr('aria-level'), 10) === 0 && parseInt(target.attr('aria-posinset'), 10) === 1) {
+        if (parseInt(this.getAttribute('aria-level'), 10) === 0 && parseInt(this.getAttribute('aria-posinset'), 10) === 1) {
           // First element if disabled
-          if (target.hasClass('is-disabled')) {
+          if (this.classList.contains('is-disabled')) {
             const e = $.Event('keydown.tree');
             e.keyCode = 40; // move down
-            target.trigger(e);
+            $(this).trigger(e);
             return;// eslint-disable-line
           }
         }
@@ -870,10 +938,10 @@ Tree.prototype = {
             prev = target.next().find('a:first');
             self.setFocus(prev);
           } else {
-            self.toggleNode(target);
+            self.toggleNode(target, e);
           }
         } else if (target.next().hasClass('is-open')) {
-          self.toggleNode(target);
+          self.toggleNode(target, e);
         } else {
           prev = target.closest('.folder').find('a:first');
           self.setFocus(prev);
@@ -886,7 +954,7 @@ Tree.prototype = {
       if (charCode === 39) {
         if (Locale.isRTL()) {
           if (target.next().hasClass('is-open')) {
-            self.toggleNode(target);
+            self.toggleNode(target, e);
           } else {
             next = target.closest('.folder').find('a:first');
             self.setFocus(next);
@@ -895,7 +963,7 @@ Tree.prototype = {
           next = target.next().find('a:first');
           self.setFocus(next);
         } else {
-          self.toggleNode(target);
+          self.toggleNode(target, e);
           self.setFocus(target);
         }
         e.stopPropagation();
@@ -945,7 +1013,7 @@ Tree.prototype = {
 
   /**
    * Handle Loading JSON.
-   * @param {object} dataset - to load.
+   * @param {object} dataset to load.
    * @returns {void}
    */
   loadData(dataset) {// eslint-disable-line
@@ -956,16 +1024,267 @@ Tree.prototype = {
     self.element.empty();
 
     self.loading = true;
+    dataset = this.arrangeDataset(dataset);
+    let html = '';
+    self.jsonData = [];
     for (let i = 0, l = dataset.length; i < l; i++) {
-      self.addNode(dataset[i], 'bottom');
+      html += self.getNodeHtml(dataset[i], i);
     }
+    self.element[0].insertAdjacentHTML('beforeend', html);
+    const nodes = [].slice.call(self.element[0].querySelectorAll('a[role="treeitem"]'));
+    nodes.forEach((node, i) => {
+      const a = $(node);
+      const data = self.jsonData[i];
+      a.data('jsonData', data);
+      if (data.selected) {
+        self.selectNode(a, data.focus);
+      }
+    });
+    self.jsonData = undefined;
     self.loading = false;
 
-    self.syncDataset(self.element);
+    self.syncDataset();
     self.initSelected();
     self.focusFirst();
     self.attachMenu(self.settings.menuId);
     self.createSortable();
+  },
+
+  /**
+   * Rearrange the given or default dataset. if dataset use `parent` key to arrange nodes
+   * @private
+   * @param {object} dataset a data object.
+   * @returns {object} arranged data object
+   */
+  arrangeDataset(dataset) {
+    if (!this.hasKeyInData('parent', dataset)) {
+      return dataset;
+    }
+
+    dataset = dataset || this.settings.dataset;
+    const arrangedData = JSON.parse(JSON.stringify(dataset));
+
+    // Add given node to parent
+    const addToParent = (node) => {
+      let arranged = false;
+      // Add child to given parent
+      const addChild = (parent) => {
+        parent.children = parent.children || [];
+        parent.children.push(node);
+        arranged = true;
+      };
+
+      // Traverse in given data and arrange it
+      const arrange = (data) => {
+        for (let i = 0; i < data.length && !arranged; i++) {
+          if (data[i].id === node.parent) {
+            addChild(data[i]);
+          }
+          if (typeof data[i].children !== 'undefined') {
+            arrange(data[i].children);
+          }
+        }
+      };
+      arrange(arrangedData);
+    };
+
+    // Traverse in given data and add to parent
+    const traverse = (data) => {
+      for (let i = 0; i < data.length; i++) {
+        if (typeof data[i].parent !== 'undefined') {
+          addToParent(data[i]);
+        }
+        if (typeof data[i].children !== 'undefined') {
+          traverse(data[i].children);
+        }
+      }
+    };
+    traverse(dataset);
+
+    // Clean old nodes with parent key
+    const clean = (data, id) => {
+      for (let i = 0; i < data.length; i++) {
+        if (typeof data[i].children !== 'undefined') {
+          clean(data[i].children, data[i].id);
+        }
+        if ((typeof id === 'undefined' && typeof data[i].parent !== 'undefined') ||
+          (typeof id !== 'undefined' && typeof data[i].parent !== 'undefined' && id !== data[i].parent)) {
+          data.splice(i, 1);
+          i--;
+        } else {
+          delete data[i].parent;
+        }
+      }
+    };
+    clean(arrangedData);
+
+    // Set and return the arranged data
+    this.settings.dataset = arrangedData;
+    return arrangedData;
+  },
+
+  /**
+   * Check if given key is exists in dataset.
+   * @private
+   * @param {string} key to check.
+   * @param {object} data to check in.
+   * @returns {boolean} true if key found
+   */
+  hasKeyInData(key, data) {
+    let found = false;
+    data = data || this.settings.dataset;
+
+    /* eslint-disable no-restricted-syntax */
+    const findkey = (obj) => {
+      for (const prop in obj) {
+        if (obj.hasOwnProperty(prop)) {// eslint-disable-line
+          const value = obj[prop];
+          if (typeof value === 'object' && !found) {
+            findkey(value);
+          } else if (key === prop) {
+            found = true;
+          }
+          if (found) {
+            break;
+          }
+        }
+      }
+    };
+    /* eslint-enable no-restricted-syntax */
+
+    for (let i = 0, l = data.length; i < l; i++) {
+      if (found) {
+        break;
+      }
+      findkey(data[i]);
+    }
+    return found;
+  },
+
+  /**
+   * Create html for given json data.
+   * @private
+   * @param {object} data to do html.
+   * @param {number} position for node.
+   * @param {number} level for node.
+   * @param {boolean} isParentsDisabled for node.
+   * @returns {string} created html
+   */
+  getNodeHtml(data, position, level, isParentsDisabled) {
+    level = level || 0;
+    position += 1;
+    const s = this.settings;
+    const isDisabled = isParentsDisabled || data.disabled || false;
+    const a = {
+      id: typeof data.id !== 'undefined' ? ` id="${data.id}"` : '',
+      href: ` href="${typeof data.href !== 'undefined' ? data.href : '#'}"`,
+      expanded: ` aria-expanded="${data.open ? 'true' : 'false'}"`,
+      icon: 'tree-node',
+      alertIcon: '',
+      alertIconAttr: typeof data.alertIcon !== 'undefined' ? ` data-alert-icon="${data.alertIcon}"` : '',
+      text: `<span class="tree-text">${data.text}</span>`,
+      class: ['hide-focus'],
+      ariaDisabled: isDisabled ? 'aria-disabled="true"' : '',
+      checkbox: this.isMultiselect && !this.settings.hideCheckboxes ? '<span class="tree-checkbox"></span>' : '',
+      badge: typeof data.badge === 'object' ? this.getBadgeHtml(data.badge) : ''
+    };
+    this.jsonData.push(data);
+
+    if (s.useStepUI) {
+      a.alertIcon = `<svg class="icon step-alert icon-${data.alertIcon}" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-${data.alertIcon}"></use>`;
+    }
+
+    const isChildren = typeof data.children !== 'undefined';
+    let liClassList = isChildren ? 'folder' : '';
+    liClassList += data.selected ? ' is-selected' : '';
+    if (liClassList !== '') {
+      liClassList += data.open ? ' is-open' : '';
+      liClassList = ` class="${liClassList}"`;
+    }
+    if (isDisabled) {
+      a.class.push('is-disabled');
+    }
+    if (data.icon) {
+      a.icon = data.icon;
+      if (!isChildren || (isChildren && (/open|closed/i.test(data.icon)))) {
+        a.class.push(data.icon);
+      }
+    }
+    if (isChildren) {
+      if (data.open) {
+        a.icon = data.icon && /open|closed/i.test(data.icon) ? data.icon : s.folderIconOpen;
+        isParentsDisabled = isDisabled;
+      } else {
+        a.icon = data.icon && /open|closed/i.test(data.icon) ? data.icon.replace('open', 'closed') : s.folderIconClosed;
+      }
+    }
+    a.icon = `#icon-${a.icon.replace(/^#?icon-?/, '')}`;
+    a.class = ` class="${a.class.join(' ')}"`;
+
+    let html = `
+      <li${liClassList}>
+        <a role="treeitem" aria-selected="false" tabindex="-1"
+          aria-level="${level}"
+          aria-position="${position}"
+          aria-setsize="${position}"
+          ${a.id + a.href + a.class + a.expanded + a.ariaDisabled + a.alertIconAttr}>
+            <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${a.icon}"></use>
+            </svg>${a.checkbox + a.alertIcon + a.badge + a.text}
+        </a>`;
+
+    if (isChildren) {
+      html += `<ul class="folder${data.open ? ' is-open' : ''}" role="group">`;
+      for (let i = 0, l = data.children.length; i < l; i++) {
+        html += this.getNodeHtml(data.children[i], i, (level + 1), isParentsDisabled);
+      }
+      html += '</ul>';
+    }
+    html += '</li>';
+
+    return html;
+  },
+
+  /**
+   * Create badge html.
+   * @private
+   * @param {object} badgeData to do html.
+   * @returns {string} html created
+   */
+  getBadgeHtml(badgeData) {
+    const badge = { html: '', style: '', class: ['badge', 'tree-badge'] };
+
+    if (badgeData && !badgeData.remove) {
+      badge.text = '';
+
+      if (typeof badgeData.text !== 'undefined') {
+        badge.text = badgeData.text.toString();
+        if (badge.text.length === 1) {
+          badge.class.push('round');
+        }
+      }
+
+      if (/info|good|error|alert|pending/i.test(badgeData.type)) {
+        badge.class.push(badgeData.type);
+      } else if (badgeData.type && badgeData.type.charAt(0) === '#' && badgeData.type.length === 7) {
+        badge.style = `background-color: ${badgeData.type} !important;`;
+      }
+      if (badgeData.backColor) {
+        badge.style = `background-color: ${badgeData.backColor} !important;`;
+      }
+      if (badgeData.foreColor) {
+        badge.style += `color: ${badgeData.foreColor} !important;`;
+      }
+      if (badge.style !== '') {
+        badge.style = ` style="${badge.style}"`;
+      }
+      if (badge.text !== '') {
+        if (badgeData.type && badgeData.type.indexOf('pending') !== -1) {
+          badge.text = '';
+        }
+        badge.html = `<span class="${badge.class.join(' ')}"${badge.style}>${badge.text}</span>`;
+      }
+    }
+    return badge.html;
   },
 
   // Functions to Handle Internal Data Store
@@ -1131,68 +1450,93 @@ Tree.prototype = {
     return prev;
   },
 
-  // Sync the tree with the underlying dataset
+  /**
+   * Sync the tree with the underlying dataset
+   * @private
+   * @param {object} node the jQuery element to sync (Optional)
+   * @returns {void}
+   */
   syncDataset(node) {
     const json = [];
     const self = this;
+    node = node || this.element;
 
-    node.children('li').each(function () {
-      const elem = $(this);
-      const tag = elem.find('a:first');
-
-      const entry = self.syncNode(tag);
-      json.push(entry);
+    const items = [].slice.call(node.children('li').toArray());
+    items.forEach((li) => {
+      json.push(self.syncNode(li.querySelector('a')));
     });
 
     this.settings.dataset = json;
+    this.element.triggerHandler('rendered', { data: this.settings.dataset });
   },
 
-  // Sync a node with its dataset 'record'
+  /**
+   * Sync a node with its dataset record
+   * @private
+   * @param {object} node The node to sync (jQuery or DOM element)
+   * @returns {object} synced node data
+   */
   syncNode(node) {
-    let entry = {};
     const self = this;
-    const jsonData = node.data('jsonData');
+    const nodeJQ = this.isjQuery(node) ? node : $(node);
+    node = nodeJQ[0];
+    const parent = node.parentNode;
+    const hasClass = (el, className) => el.classList.contains(className);
 
-    entry.node = node;
-    entry.id = node.attr('id');
-    entry.text = node.find('.tree-text').text();
+    let entry = {
+      node: nodeJQ,
+      id: node.getAttribute('id'),
+      text: node.querySelector('.tree-text').textContent
+    };
 
-    if (node.hasClass('is-open')) {
+    // Is folder open
+    if (hasClass(node, 'is-open') ||
+        (parent && parent.tagName.toLowerCase() === 'li') && hasClass(parent, 'is-open')) {
       entry.open = true;
     }
 
-    if (node.attr('href')) {
-      entry.href = node.attr('href');
+    // Href
+    const href = node.getAttribute('href');
+    if (href) {
+      entry.href = href;
     }
 
-    if (node.parent().is('.is-selected')) {
+    // Selected
+    if (hasClass(parent, 'is-selected')) {
       entry.selected = true;
     }
 
-    // Icon
-    const clazz = node.attr('class');
-    if (clazz && clazz.indexOf('icon') > -1) {
-      entry.icon = node.attr('class');
+    // Disabled
+    if (hasClass(node, 'is-disabled')) {
+      entry.disabled = true;
     }
 
-    if (node.next().is('ul')) {
-      const ul = node.next();
+    // Icon
+    const classAttribute = node.getAttribute('class');
+    if (classAttribute && classAttribute.indexOf('icon') > -1) {
+      entry.icon = classAttribute;
+    }
+
+    // Children
+    const ul = nodeJQ.next();
+    if (ul[0] && ul[0].tagName.toLowerCase() === 'ul') {
       entry.children = [];
 
-      ul.children('li').each(function () {
-        const elem = $(this);
-        const tag = elem.find('a:first');
-
-        entry.children.push(self.syncNode(tag));
+      const items = [].slice.call(ul.children('li').toArray());
+      items.forEach((li) => {
+        entry.children.push(self.syncNode(li.querySelector('a')));
       });
     }
 
+    // Merge json data
+    const jsonData = nodeJQ.data('jsonData');
     if (jsonData) {
       delete jsonData.selected;
+      delete jsonData.children;
       entry = $.extend({}, jsonData, entry);
     }
 
-    node.data('jsonData', entry);
+    nodeJQ.data('jsonData', entry);
     return entry;
   },
 
@@ -1202,20 +1546,27 @@ Tree.prototype = {
    * @param {object} location in tree.
    * @returns {object} li added
    */
+
   //ApprovaOS Change - parameter added to add node before or after the node
   addNode(nodeData, location, isBeforeOrAfter) {
     let li = $('<li></li>');
     const a = $('<a href="#"></a>').appendTo(li);
+
     const badgeAttr = typeof nodeData.badge === 'object' ? JSON.stringify(nodeData.badge) : nodeData.badge;
+
+    nodeData.href = typeof nodeData.href !== 'undefined' ? nodeData.href : '#';
 
     location = (!location ? 'bottom' : location); // supports button or top or jquery node
 
-    a.attr({
-      id: nodeData.id,
-      href: nodeData.href,
-      'data-badge': badgeAttr,
-      'data-alert-icon': nodeData.alertIcon
-    }).text(nodeData.text);
+    let a = document.createElement('a');
+    a.setAttribute('id', nodeData.id);
+    a.setAttribute('href', nodeData.href);
+    if (typeof badgeAttr !== 'undefined') {
+      a.setAttribute('data-badge', badgeAttr);
+    }
+    if (typeof nodeData.alertIcon !== 'undefined') {
+      a.setAttribute('data-alert-icon', nodeData.alertIcon);
+    }
 
     //Start ApprovaOS Change - added for dropdown
     if (nodeData.type === 'dropdown') {
@@ -1259,14 +1610,26 @@ Tree.prototype = {
     if (nodeData.open) {
       a.parent().addClass('is-open');
     }
+    
+    if (nodeData.text) {
+      a.textContent = nodeData.text;
+
+    }
 
     if (nodeData.disabled) {
-      a.addClass('is-disabled');
+      a.classList.add('is-disabled');
+    }
+    if (nodeData.icon) {
+      a.classList.add(nodeData.icon);
     }
 
-    if (nodeData.icon) {
-      a.addClass(nodeData.icon);
+    let li = document.createElement('li');
+
+    if (nodeData.open) {
+      li.classList.add('is-open');
     }
+
+    li.appendChild(a);
 
     // Handle Location
     let found = this.loading ? true : this.addToDataset(nodeData, location);
@@ -1288,12 +1651,12 @@ Tree.prototype = {
     if (location instanceof jQuery &&
       (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)
       && !(isBeforeOrAfter === 'before' || isBeforeOrAfter === 'after')) {
-      location.append(li);
+      location[0].appendChild(li);
       found = true;
     }
 
     if (location === 'bottom' && (!nodeData.parent || !found)) {
-      this.element.append(li);
+      this.element[0].appendChild(li);
     }
 
     if (location === 'top' && (!nodeData.parent || !found)) {
@@ -1318,15 +1681,19 @@ Tree.prototype = {
         }
         this.addAsChild(nodeData, li);
       }
-      nodeData.node = li.find(`ul li a#${nodeData.id}`);
+      if (this.isjQuery(li)) {
+        nodeData.node = li.find(`ul li a#${nodeData.id}`);
+      }
     } else {
+      li = $(li);
       this.addChildNodes(nodeData, li);
       nodeData.node = li.children('a').first();
     }
 
+    a = $(a);
     //ApprovaOS Change - Added parameter to show or hide checkbox according to node.
     this.decorateNode(a, nodeData.icon, nodeData.hideCheckbox);
-
+    
     if (nodeData.selected) {
       this.selectNode(a, nodeData.focus);
     }
@@ -1335,44 +1702,59 @@ Tree.prototype = {
     return li;
   },
 
-  // Add a node to an exiting node, making it a folder if need be
+  /**
+   * Add a node to an existing node, making it a folder if need be
+   * @private
+   * @param {object} nodeData data for node to be added.
+   * @param {object} li parent node to add node.
+   * @returns {void}
+   */
   addAsChild(nodeData, li) {
-    let ul = li.find('ul').first();
-    if (ul.length === 0) {
-      ul = $('<ul></ul>').appendTo(li);
-      ul.addClass('folder');
+    li = this.isjQuery(li) ? li[0] : li;
+    let ul = li.querySelector('ul');
+    if (!ul) {
+      li.insertAdjacentHTML('beforeend', '<ul class="folder"></ul>');
+      ul = li.querySelector('ul');
     }
 
-    ul.addClass(nodeData.open ? 'is-open' : '');
-    this.decorateNode(li.find('a').first());
+    if (nodeData.open) {
+      ul.classList.add('is-open');
+    }
+
+    this.decorateNode(li.querySelector('a'));
 
     nodeData.parent = '';
-    this.addNode(nodeData, ul);
+    this.addNode(nodeData, $(ul));
   },
 
-  // Add the children for the specified node element
+  /**
+   * Add the children for the specified node element,
+   * and if `nodeData.children` not passed will remove current children from node
+   * @private
+   * @param {object} nodeData data for children to be added.
+   * @param {object} li parent node to add children.
+   * @returns {void}
+   */
   addChildNodes(nodeData, li) {
-    const self = this;
-    let ul = li.find('ul');
+    li = this.isjQuery(li) ? li[0] : li;
+    let ul = li.querySelector('ul');
 
     if (!nodeData.children) {
-      ul.remove();
+      if (ul) {
+        ul.parentNode.removeChild(ul);
+      }
       return;
     }
 
-    if (ul.length === 0) {
-      ul = $('<ul></ul>').appendTo(li);
-      ul.addClass(nodeData.open ? 'is-open' : '');
-      ul.addClass('folder');
+    if (!ul) {
+      li.insertAdjacentHTML('beforeend', `<ul class="folder${nodeData.open ? ' is-open' : ''}"></ul>`);
+      ul = li.querySelector('ul');
     }
 
-    ul.empty();
+    ul.innerHTML = '';
 
     if (nodeData.children) {
-      for (let i = 0, l = nodeData.children.length; i < l; i++) {
-        const elem = nodeData.children[i];
-        self.addNode(elem, ul);
-      }
+      nodeData.children.forEach(elem => this.addNode(elem, $(ul)));
     }
   },
 
@@ -1392,59 +1774,55 @@ Tree.prototype = {
    * @returns {void}
    */
   updateNode(nodeData) {
-    // Find the node in the dataset and ui and sync it
-    let elem = this.findById(nodeData.id);
-
-    // Passed in the node element
-    if (nodeData.node) {
-      elem = {};
-      elem.node = nodeData.node;
-    }
-
-    if (!elem) {
+    // Passed in the node element or find the node in the dataset and ui and sync it
+    const elem = nodeData.node ? { node: nodeData.node } : this.findById(nodeData.id);
+    if (!elem || !elem.node[0]) {
       return;
     }
 
-    const parent = elem.node.parent();
+    const parent = elem.node[0].parentNode;
+    const nodetext = elem.node[0].querySelector('.tree-text');
     const isDisabled = this.isTrue(nodeData.disabled) || this.isFalse(nodeData.enabled);
     const isEnabled = this.isTrue(nodeData.enabled) || this.isFalse(nodeData.disabled);
 
     // Update badge
     if (nodeData.badge) {
-      let badge = elem.node.find('.tree-badge:first');
-      // Add badge if not exists
-      if (!badge.length && !nodeData.badge.remove) {
-        if (!nodeData.badge.remove && typeof nodeData.badge.text !== 'undefined' && $.trim(nodeData.badge.text) !== '') {
-          $('<span class="tree-badge badge"></span>').insertBefore(elem.node.find('.tree-text:first'));
-          badge = elem.node.find('.tree-badge:first');
+      let badge = elem.node[0].querySelector('.tree-badge');
+      if (!badge && !nodeData.badge.remove) {
+        if (typeof nodeData.badge.text !== 'undefined' && $.trim(nodeData.badge.text) !== '') {
+          const newBadge = document.createElement('span');
+          newBadge.classList.add('tree-badge', 'badge');
+          nodetext.parentNode.insertBefore(newBadge, nodetext);
+          badge = elem.node[0].querySelector('.tree-badge');
         }
       }
       // Make update changes
-      if (badge.length) {
+      if (badge) {
         if (typeof nodeData.badge.text !== 'undefined') {
           nodeData.badge.text = nodeData.badge.text.toString();
-          badge.text(nodeData.badge.text).removeClass('round');
+          badge.textContent = nodeData.badge.text;
+          badge.classList.remove('round');
           if (nodeData.badge.text.length === 1) {
-            badge.addClass('round');
+            badge.classList.add('round');
           }
         }
         if (typeof nodeData.badge.type !== 'undefined') {
-          badge.removeClass('info good error alert pending');
+          badge.classList.remove('info', 'good', 'error', 'alert', 'pending');
           if (/info|good|error|alert|pending/i.test(nodeData.badge.type)) {
-            badge.addClass(nodeData.badge.type);
-          } else if (nodeData.type && nodeData.badge.type.charAt(0) === '#' && nodeData.badge.type.length === 7) {
-            badge.elem.css('background-color', nodeData.badge.type);
+            badge.classList.add(nodeData.badge.type);
+          } else if (nodeData.badge.type.charAt(0) === '#' && nodeData.badge.type.length === 7) {
+            badge.style.backgroundColor = nodeData.badge.type;
           }
 
           if (nodeData.badge.type.indexOf('pending') !== -1) {
-            badge.text('');
+            badge.textContent = '';
           }
         }
         elem.badge = nodeData.badge;
 
         // Remove badge
         if (this.parseBool(nodeData.badge.remove)) {
-          badge.remove();
+          badge.parentNode.removeChild(badge);
           if (typeof elem.badge !== 'undefined') {
             delete elem.badge;
           }
@@ -1453,20 +1831,28 @@ Tree.prototype = {
     }
 
     if (nodeData.text) {
-      elem.node.find('.tree-text').first().text(nodeData.text);
+      nodetext.textContent = nodeData.text;
       elem.text = nodeData.text;
     }
 
     if (nodeData.icon) {
-      this.setTreeIcon(elem.node.find('svg.icon-tree').first(), nodeData.icon);
+      this.setTreeIcon(elem.node[0].querySelector('svg.icon-tree'), nodeData.icon);
       elem.icon = nodeData.icon;
+    } else if (nodeData.children && nodeData.children.length &&
+      !parent.classList.contains('folder')) {
+      this.convertFileToFolder(elem.node);
     }
 
     if (isDisabled) {
-      elem.node.addClass('is-disabled').attr('aria-disabled', 'true');
+      elem.node[0].classList.add('is-disabled');
+      elem.node[0].setAttribute('aria-disabled', 'true');
 
-      if (parent.is('.folder.is-open')) {
-        $('a, ul[role=group]', parent).addClass('is-disabled').attr('aria-disabled', 'true');
+      if (parent.classList.contains('folder') && parent.classList.contains('is-open')) {
+        const nodes = [].slice.call(parent.querySelectorAll('a, ul[role=group]'));
+        nodes.forEach((node) => {
+          node.classList.add('is-disabled');
+          node.setAttribute('aria-disabled', 'true');
+        });
       }
     }
 
@@ -1474,16 +1860,21 @@ Tree.prototype = {
       const isParentsDisabled = elem.node.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0;
 
       if (!isParentsDisabled) {
-        elem.node.removeClass('is-disabled').removeAttr('aria-disabled');
+        elem.node[0].classList.remove('is-disabled');
+        elem.node[0].removeAttribute('aria-disabled');
 
-        if (parent.is('.folder.is-open')) {
-          $('a, ul[role=group]', parent).removeClass('is-disabled').removeAttr('aria-disabled');
+        if (parent.classList.contains('folder') && parent.classList.contains('is-open')) {
+          const nodes = [].slice.call(parent.querySelectorAll('a, ul[role=group]'));
+          nodes.forEach((node) => {
+            node.classList.remove('is-disabled');
+            node.removeAttribute('aria-disabled');
+          });
         }
       }
     }
 
     if (nodeData.node) {
-      this.syncDataset(this.element);
+      this.syncDataset();
     }
 
     if (nodeData.children) {
@@ -1493,6 +1884,7 @@ Tree.prototype = {
         this.removeChildren(nodeData, parent);
       }
     }
+    this.createSortable();
   },
 
   // Performs the usual Boolean coercion with the exception of
@@ -1501,13 +1893,22 @@ Tree.prototype = {
     return !(/^(false|0)$/i).test(b) && !!b;
   },
 
-  // Delete children nodes
+  /**
+   * Delete children nodes
+   * @private
+   * @param {object} nodeData data for icon to be replaced.
+   * @param {object} li parent node to delete children.
+   * @returns {void}
+   */
   removeChildren(nodeData, li) {
-    const ul = li.find('ul');
+    li = this.isjQuery(li) ? li[0] : li;
+    const ul = li.querySelector('ul');
 
-    this.setTreeIcon(li.find('svg.icon-tree').first(), (nodeData.icon || 'icon-tree-node'));
-    li.removeClass('folder is-open');
-    ul.remove();
+    this.setTreeIcon(li.querySelector('svg.icon-tree'), (nodeData.icon || 'icon-tree-node'));
+    li.classList.remove('folder', 'is-open');
+    if (ul) {
+      ul.parentNode.removeChild(ul);
+    }
   },
 
   /**
@@ -1528,7 +1929,7 @@ Tree.prototype = {
     if (!elem) {
       return;
     }
-    this.syncDataset(this.element);
+    this.syncDataset();
   },
 
   // Attach Context Menus
@@ -1542,7 +1943,7 @@ Tree.prototype = {
     this.element.off('contextmenu.tree').on('contextmenu.tree', 'a', function (e) {
       const node = $(this);
       e.preventDefault();
-      $(e.currentTarget).popupmenu({ menuId, eventObj: e, trigger: 'immediate', attachToBody: true }).off('selected').on('selected', (event, args) => {
+      self.popupEl = $(e.currentTarget).popupmenu({ menuId, eventObj: e, trigger: 'immediate', attachToBody: true }).off('selected').on('selected', (event, args) => {
         /**
         * Fires when the an attached context menu item is selected.
         *
@@ -1572,7 +1973,11 @@ Tree.prototype = {
     });
   },
 
-  // Create sortable
+  /**
+   * Create sortable.
+   * @private
+   * @returns {void}
+   */
   createSortable() {
     if (!this.settings.sortable) {
       return;
@@ -1583,12 +1988,14 @@ Tree.prototype = {
     let interval;
     let doDrag;
 
-    self.targetArrow = self.element.prev('.tree-drag-target-arrow');
-    self.linkSelector = 'a:not(.is-dragging-clone, .is-disabled)';
+    self.targetArrow = self.element[0].previousElementSibling;
+    self.linkSelector = 'a:not(.is-dragging-clone):not(.is-disabled)';
 
-    if (!self.targetArrow.length) {
-      $('<div class="tree-drag-target-arrow"></div>').insertBefore(self.element);
-      self.targetArrow = self.element.prev('.tree-drag-target-arrow');
+    if (!self.targetArrow || (self.targetArrow && !self.targetArrow.classList.contains('tree-drag-target-arrow'))) {
+      const div = document.createElement('div');
+      div.classList.add('tree-drag-target-arrow');
+      self.element[0].parentNode.insertBefore(div, self.element[0]);
+      self.targetArrow = self.element[0].previousElementSibling;
     }
 
     function isReady() {
@@ -1596,8 +2003,14 @@ Tree.prototype = {
       if (!self.loading) {
         clearInterval(interval);
 
-        $(self.linkSelector, self.element).each(function () {
-          const a = $(this);
+        const links = [].slice.call(self.element[0].querySelectorAll(self.linkSelector));
+        links.forEach((link) => {
+          const a = $(link);
+
+          // Quit if already binded with `drag`
+          if (a.data('drag')) {
+            return;
+          }
 
           // Don't drag with folder icon, save for toggle nodes
           a.on('mousedown.tree', (e) => {
@@ -1606,7 +2019,8 @@ Tree.prototype = {
             if (e.which === 3) {
               doDrag = false;
             } else {
-              doDrag = $(e.target).is('.icon') ? !a.parent().is('.folder') : true;
+              doDrag = e.target.classList.contains('icon') ?
+                !link.parentNode.classList.contains('folder') : true;
             }
           })
 
@@ -1620,26 +2034,32 @@ Tree.prototype = {
             // Drag start =======================================
             .on('dragstart.tree', (e, pos, thisClone) => {
               if (!thisClone || !doDrag) {
-                a.removeClass('is-dragging');
+                link.classList.remove('is-dragging');
                 if (thisClone) {
-                  thisClone.remove();
+                  thisClone[0].parentNode.removeChild(thisClone[0]);
                 }
                 return;
               }
               clone = thisClone;
-              clone.removeAttr('id').addClass('is-dragging-clone');
-              clone.find('.tree-checkbox, .tree-badge').remove();
+              clone[0].removeAttribute('id');
+              clone[0].classList.add('is-dragging-clone');
 
+              const items = [].slice.call(clone[0].querySelectorAll('.tree-checkbox, .tree-badge'));
+              items.forEach(node => node.parentNode.removeChild(node));
+
+              const startUl = a.closest('ul');
               self.sortable = {
                 // Do not use index from each loop, get updated index on drag start
                 startIndex: $(self.linkSelector, self.element).index(a),
                 startNode: a,
                 startIcon: $('svg.icon-tree', a).getIconName(),
-                startUl: a.closest('ul'),
-                startFolderNode: a.closest('ul').prev('a'),
+                startUl,
+                startLi: a.closest('li'),
+                startFolderNode: startUl.prev('a'),
                 startWidth: a.outerWidth()
               };
 
+              self.element.triggerHandler('sortstart', self.sortable);
               e.preventDefault();
               e.stopImmediatePropagation();
             })
@@ -1657,8 +2077,9 @@ Tree.prototype = {
 
             // Drag end =========================================
             .on('dragend.tree', (e, pos) => {
-              self.targetArrow.hide();
-              $(self.linkSelector, self.element).removeClass('is-over');
+              self.targetArrow.style.display = 'none';
+              const items = [].slice.call(self.element[0].querySelectorAll(self.linkSelector));
+              items.forEach(node => node.classList.remove('is-over'));
 
               if (!clone || !self.sortable.overDirection) {
                 return;
@@ -1671,19 +2092,19 @@ Tree.prototype = {
 
               // Over
               if (self.sortable.overDirection === 'over') {
-                if (!end.is('.folder')) {
+                if (!end[0].classList.contains('folder')) {
                   self.convertFileToFolder(self.sortable.overNode);
                 }
-                $('ul:first', end).append(start);
-                if (!end.is('.is-open')) {
-                  self.toggleNode(self.sortable.overNode);
+                end[0].querySelector('ul').appendChild(start[0]);
+                if (!end[0].classList.contains('is-open')) {
+                  self.toggleNode(self.sortable.overNode, e);
                 }
               } else if (self.sortable.overDirection === 'up') {
                 // Up
                 start.insertBefore(end);
               } else if (self.sortable.overDirection === 'down') {
                 // Down
-                if (end.is('.is-open')) {
+                if (end[0].classList.contains('is-open') && end[0].classList.contains('folder')) {
                   $('ul:first', end).prepend(start);
                 } else {
                   start.insertAfter(end);
@@ -1691,22 +2112,18 @@ Tree.prototype = {
               }
 
               // Restore file type
-              if ($('li', self.sortable.startUl).length === 0 &&
+              if (!self.sortable.startUl[0].querySelector('li') &&
                 !!self.sortable.startFolderNode.data('oldData') &&
                   self.sortable.startFolderNode.data('oldData').type === 'file') {
                 self.convertFolderToFile(self.sortable.startFolderNode);
               }
 
               // Fix: On windows 10 with IE-11 icons disappears
-              if (self.isIe11) {
-                start.find('.icon-tree').each(function () {
-                  const svg = $(this);
-                  self.setTreeIcon(svg, svg.find('use').attr('xlink:href'));
-                });
-              }
+              utils.fixSVGIcons(start);
 
+              self.element.triggerHandler('sortend', self.sortable);
               // Sync dataset and ui
-              self.syncDataset(self.element);
+              self.syncDataset();
               if (self.isMultiselect) {
                 self.initSelected();
               }
@@ -1718,9 +2135,16 @@ Tree.prototype = {
     interval = setInterval(isReady, 10);
   },
 
-  // Set actions while drag over
+  /**
+   * Set actions while drag over.
+   * @private
+   * @param {object} clone node.
+   * @param {object} pos node positions to compare.
+   * @returns {void}
+   */
   setDragOver(clone, pos) {
     const self = this;
+    const cloneSvg = clone[0].querySelector('svg.icon-tree');
     const treeRec = self.element[0].getBoundingClientRect();
     let extra = 20;
     let exMargin;
@@ -1743,8 +2167,8 @@ Tree.prototype = {
       self.sortable.overIndex = null;
       self.sortable.overDirection = null;
 
-      self.targetArrow.hide();
-      self.setTreeIcon($('svg.icon-tree', clone), 'icon-cancel');
+      self.targetArrow.style.display = 'none';
+      self.setTreeIcon(cloneSvg, 'icon-cancel');
     };
 
     // Moving inside tree
@@ -1752,35 +2176,35 @@ Tree.prototype = {
         pos.top < (treeRec.bottom + extra) &&
         pos.left > (treeRec.left - extra - self.sortable.startWidth) &&
         pos.left < (treeRec.left + treeRec.height + extra)) {
-      links = $(self.linkSelector, self.element);
       extra = 2;
+      links = [].slice.call(self.element[0].querySelectorAll(self.linkSelector));
 
-      for (let i = 0, l = links.length; i < l; i++) {
+      links.forEach((link, i) => {
         direction = null;
-        rec = links[i].getBoundingClientRect();
+        rec = link.getBoundingClientRect();
 
         // Moving on/around node range
         if (pos.top > rec.top - extra && pos.top < rec.bottom + extra) {
-          a = $(links[i]);
+          a = $(link);
 
           // Moving on/around node has parents as same node need to rearrange
           // Cannot rearrange parents to child
           isParentsStartNode = !!a.parentsUntil(self.element, '.folder')
             .filter(function () {
-              return $('a:first', this).is(self.sortable.startNode);
+              return $('a:first', this).is(self.sortable.startNode) && self.sortable.startLi.is('.folder');
             }).length;
           if (isParentsStartNode) {
             outOfRange();
-            continue;
+            return;
           }
 
-          li = a.parent();
+          li = link.parentNode;
           left = rec.left;
           ul = a.closest('ul');
-          exMargin = parseInt(li[0].style.marginTop, 10) > 0 ? 2 : 0;
+          exMargin = parseInt(li.style.marginTop, 10) > 0 ? 2 : 0;
           isBeforeStart = ((i - 1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
           isAfterSttart = ((i + 1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
-          links.removeClass('is-over');
+          links.forEach(node => node.classList.remove('is-over'));
 
           // Apply actions
           /* eslint-disable no-loop-func */
@@ -1791,23 +2215,23 @@ Tree.prototype = {
             }
 
             // Reset icon
-            self.setTreeIcon($('svg.icon-tree', clone), self.sortable.startIcon);
+            self.setTreeIcon(cloneSvg, self.sortable.startIcon);
 
             // Over
             if (direction === 'over') {
-              self.targetArrow.hide();
-              if (!a.is('.is-disabled')) {
-                a.addClass('is-over');
+              self.targetArrow.style.display = 'none';
+              if (!link.classList.contains('is-disabled')) {
+                link.classList.add('is-over');
               }
             } else {
               // Up -or- Down
-              links.removeClass('is-over');
+              links.forEach(node => node.classList.remove('is-over'));
               top = (direction === 'up') ?
-                (rec.top - 1.5 - (li.is('.is-active') ? 3 : 0)) :
-                (rec.bottom + (li.next().is('.is-active') ? -1 : 1.5) + exMargin);
-              self.targetArrow[0].style.left = `${left}px`;
-              self.targetArrow[0].style.top = `${top}px`;
-              self.targetArrow.show();
+                (rec.top - 1.5 - (li.classList.contains('is-active') ? 3 : 0)) :
+                (rec.bottom + (li.nextElementSibling && li.nextElementSibling.classList.contains('is-active') ? -1 : 1.5) + exMargin);
+              self.targetArrow.style.left = `${left}px`;
+              self.targetArrow.style.top = `${top}px`;
+              self.targetArrow.style.display = 'block';
             }
 
             // Set changes
@@ -1838,7 +2262,7 @@ Tree.prototype = {
           }
           doAction(direction);
         }
-      }
+      });
     } else {
       // Out side from tree area
       outOfRange();
@@ -1847,18 +2271,23 @@ Tree.prototype = {
 
   // Convert file node to folder type
   convertFileToFolder(node) {
-    const newFolder = $('<ul role="group"></ul>');
+    const newFolder = document.createElement('ul');
+    newFolder.setAttribute('role', 'group');
     const oldData = {
       icon: $('svg.icon-tree', node).getIconName(),
       type: 'file'
     };
-    if (node.is('[class^="icon"]')) {
-      const iconClass = node.attr('class').replace(' hide-focus', '').replace(' is-selected', '');
+    if (this.hasIconClass(node)) {
+      const iconClass = node.attr('class').replace(/\s?is-selected/, '');
       oldData.iconClass = iconClass;
       node.removeClass(iconClass);
     }
     node.data('oldData', oldData);
-    node.parent('li').addClass('folder').append(newFolder);
+    const parent = node[0].parentNode;
+    if (parent && parent.tagName.toLowerCase() === 'li') {
+      parent.classList.add('folder');
+      parent.appendChild(newFolder);
+    }
     this.setTreeIcon($('svg.icon-tree', node), this.settings.folderIconClosed);
   },
 
@@ -1924,6 +2353,76 @@ Tree.prototype = {
     this.element.empty();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
+
+  /**
+   * Disables all nodes in the Tree component
+   * @returns {void}
+   */
+  disable() {
+    const nodes = this.element[0].querySelectorAll('a');
+    nodes.forEach((node) => {
+      node.classList.add('is-disabled');
+      node.setAttribute('aria-disabled', 'true');
+    });
+  },
+
+  /**
+   * Enables all nodes in the Tree component
+   * @returns {void}
+   */
+  enable() {
+    const nodes = this.element[0].querySelectorAll('a');
+    nodes.forEach((node) => {
+      node.classList.remove('is-disabled');
+      node.removeAttribute('aria-disabled');
+    });
+  },
+
+  /**
+   * Preserves all nodes' enablement states in the Tree component
+   * @returns {array} of node objects containing attributes nodeId and state (enablement state)
+   */
+  preserveEnablementState() {
+    const nodes = this.element[0].querySelectorAll('a');
+    const enablementStates = [];
+
+    nodes.forEach((node) => {
+      if ((node.classList.contains('is-disabled')) || (node.getAttribute('aria-disabled') === true)) {
+        enablementStates.push({ nodeId: node.id, state: 'disabled' });
+      } else {
+        enablementStates.push({ nodeId: node.id, state: 'enabled' });
+      }
+    });
+
+    this.settings.originalEnablementState = enablementStates;
+    return enablementStates;
+  },
+
+  /**
+   * Restores all nodes' original enablement states in the Tree component
+   * @returns {void}
+   */
+  restoreEnablementState() {
+    const nodes = this.element[0].querySelectorAll('a');
+
+    // check to prevent error if preserveEnablementState() has not been invoked
+    if (!(this.settings.originalEnablementState === null)) {
+      nodes.forEach((node) => {
+        this.settings.originalEnablementState.forEach((origNode) => {
+          if (origNode.nodeId === node.id) {
+            if (origNode.state === 'disabled') {
+              node.classList.add('is-disabled');
+              node.setAttribute('aria-disabled', 'true');
+            } else {
+              node.classList.remove('is-disabled');
+              node.removeAttribute('aria-disabled');
+            }
+          }
+        });
+      });
+    }
+  }
+
 };
 
 export { Tree, COMPONENT_NAME };

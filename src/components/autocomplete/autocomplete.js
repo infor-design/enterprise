@@ -2,10 +2,11 @@
 
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { ListFilter } from '../listfilter/listfilter';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../../utils/highlight';
@@ -81,10 +82,24 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
   // Easy match for 'contains'-style filterMode.
   if (options.filterMode === 'contains') {
     targetProp = targetProp.replace(new RegExp('(' + options.term + ')', 'ig'), '<i>$1</i>');
+  } else if (options.filterMode === 'keyword') {
+    // Handle "keyword" filterMode
+    const keywords = options.term.split(' ');
+    for (let i = 0; i < keywords.length; i++) {
+      const keyword = keywords[i];
+
+      if (keyword) {
+        targetProp = targetProp.replace(new RegExp('(' + keyword + ')', 'ig'), '<i>$1</i>');
+      }
+    }
   } else {
     // Handle "startsWith" filterMode highlighting a bit differently.
     const originalItem = targetProp;
-    const pos = Locale.toLowerCase(originalItem).indexOf(options.term);
+    let testContent = `${originalItem}`;
+    if (!options.caseSensitive) {
+      testContent = Locale.toLowerCase(testContent);
+    }
+    const pos = testContent.indexOf(options.term);
 
     if (pos > 0) {
       targetProp = originalItem.substr(0, pos) + '<i>' + originalItem.substr(pos, options.term.length) + '</i>' + originalItem.substr(options.term.length + pos);
@@ -113,16 +128,16 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
 * @param {string} [settings.sourceArguments={}] If a source method is defined, this flexible object can be passed
 * into the source method, and augmented with parameters specific to the implementation.
 * @param {boolean} [settings.template If defined, use this to draw the contents of each search result instead of the default draw routine.
-* @param {string} [settings.filterMode='startsWith'] The matching algorithm, startsWith and contains are supported - false will not filter client side
+* @param {boolean} [settings.caseSensitive=false] if true, causes filter results that don't match case to be thrown out
+* @param {string} [settings.filterMode='startsWith'] The matching algorithm, startsWith, keyword and contains are supported - false will not filter client side
 * @param {boolean} [settings.delay=300] The delay between key strokes on the keypad before it thinks you stopped typing
 * @param {string} [settings.width=null] Width of the open auto complete menu
 * @param {string} [settings.offset=null] For the open menu, the left or top offset
 * @param {string} [settings.autoSelectFirstItem=false] Whether or not to select he first item in the list to be selected
-* @param {function} [settings.resultsCallback] If defined, does not produce the results of the Autocomplete
-* inside a popupmenu, instead piping them to a process defined inside this callback function.
 * @param {boolean} [settings.highlightMatchedText=true] The highlightMatchText property.
 * @param {function} [settings.highlightCallback] The highlightCallback property.
 * @param {function} [settings.resultIteratorCallback] The resultIteratorCallback property.
+* @param {function} [settings.clearResultsCallback] the clearResultsCallback property.
 * @param {function} [settings.displayResultsCallback] The displayResultsCallback property.
 * @param {function} [settings.searchableTextCallback] The searchableTextCallback property.
 */
@@ -131,6 +146,7 @@ const AUTOCOMPLETE_DEFAULTS = {
   sourceArguments: {},
   template: undefined,
   filterMode: 'startsWith',
+  caseSensitive: false,
   delay: 300,
   width: null,
   offset: null,
@@ -138,6 +154,7 @@ const AUTOCOMPLETE_DEFAULTS = {
   highlightMatchedText: true,
   highlightCallback: DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK,
   resultIteratorCallback: DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK,
+  clearResultsCallback: undefined,
   displayResultsCallback: undefined,
   searchableTextCallback: DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK
 };
@@ -164,6 +181,7 @@ Autocomplete.prototype = {
 
     const listFilterSettings = {
       filterMode: this.settings.filterMode,
+      caseSensitive: this.settings.caseSensitive,
       highlightMatchedText: this.settings.highlightMatchedText,
       searchableTextCallback: this.settings.searchableTextCallback
     };
@@ -193,8 +211,17 @@ Autocomplete.prototype = {
       return;
     }
 
+    if (!this.element.hasClass('searchfield')) {
+      const canOpen = this.element.triggerHandler('beforeopen.autocomplete', { elem: this.element, value: this.element.val() });
+      if (canOpen === false) {
+        return;
+      }
+    }
+
     const self = this;
-    term = Locale.toLowerCase(term);
+    if (!this.settings.caseSensitive) {
+      term = Locale.toLowerCase(term);
+    }
 
     // append the list
     this.list = $('#autocomplete-list');
@@ -240,6 +267,7 @@ Autocomplete.prototype = {
         if (self.settings.highlightMatchedText) {
           const filterOpts = {
             filterMode: self.settings.filterMode,
+            caseSensitive: self.settings.caseSensitive,
             term
           };
           if (result.highlightTarget) {
@@ -285,6 +313,7 @@ Autocomplete.prototype = {
       attachToBody: true,
       autoFocus: false,
       returnFocus: false,
+      triggerSelect: false,
       placementOpts: {
         parent: this.element,
         callback: afterPlaceCallback
@@ -294,14 +323,7 @@ Autocomplete.prototype = {
     filterResult.forEach((dataset) => {
       if (typeof Tmpl !== 'undefined') {
         const renderedTmpl = Tmpl.compile(self.tmpl, dataset);
-        self.list.append($.sanitizeHTML(renderedTmpl));
-      } else {
-        const listItem = $('<li role="listitem"></li>');
-        listItem.attr('id', dataset.listItemId);
-        listItem.attr('data-index', dataset.index);
-        listItem.attr('data-value', dataset.value);
-        listItem.append(`<a href="#" tabindex="-1"><span>${dataset.label}</span></a>`);
-        self.list.append($.sanitizeHTML(listItem));
+        DOM.append(self.list, renderedTmpl, '*');
       }
     });
 
@@ -368,11 +390,6 @@ Autocomplete.prototype = {
   },
 
   closeList(dontClosePopup) {
-    const popup = this.element.data('popupmenu');
-    if (!popup) {
-      return;
-    }
-
     // Remove events
     this.list.off([
       `click.${COMPONENT_NAME}`,
@@ -381,12 +398,21 @@ Autocomplete.prototype = {
     ].join(' '));
     this.list.find('a').off(`focus.${COMPONENT_NAME} touchend.${COMPONENT_NAME}`);
 
+    this.element.trigger('listclose');
+
+    if (typeof this.settings.clearResultsCallback === 'function') {
+      this.settings.clearResultsCallback();
+      return;
+    }
+
+    const popup = this.element.data('popupmenu');
+    if (!popup) {
+      return;
+    }
     if (!dontClosePopup) {
       popup.close();
     }
 
-    this.currentDataSet = null;
-    this.element.trigger('listclose');
     $('#autocomplete-list').parent('.popupmenu-wrapper').remove();
     $('#autocomplete-list').remove();
     this.element.add(this.list).removeClass('is-open is-ontop');
@@ -542,7 +568,7 @@ Autocomplete.prototype = {
       if (deferredStatus === false) {
         return dfd.reject(searchTerm);
       }
-      return dfd.resolve(searchTerm, response);
+      return dfd.resolve(xssUtils.stripTags(searchTerm), response);
     }
 
     this.loadingTimeout = setTimeout(() => {
@@ -551,6 +577,7 @@ Autocomplete.prototype = {
       }
 
       buffer = field.val();
+
       if (buffer === '') {
         if (self.element.data('popupmenu')) {
           self.element.data('popupmenu').close();
@@ -582,6 +609,64 @@ Autocomplete.prototype = {
         done(buffer, sourceData, true);
       } else if (!self.settings.source) {
         dfd.reject(buffer);
+      } else if (self.settings.filterMode === 'keyword') {
+        let keywordData = [];
+        const mergeData = function (data) {
+          if (keywordData.length === 0) {
+            keywordData = data;
+          } else {
+            // Check for duplicate entries
+            for (let i = 0; i < data.length; i++) {
+              const dataItem = data[i];
+
+              let isExists = false;
+
+              for (let ii = 0; ii < keywordData.length; ii++) {
+                const keywordItem = keywordData[ii];
+
+                for (let iii = 0; iii < Object.getOwnPropertyNames(keywordItem).length; iii++) {
+                  const dataPropVal = dataItem[Object.getOwnPropertyNames(dataItem)[iii]];
+                  const keywordPropVal = keywordItem[Object.getOwnPropertyNames(keywordItem)[iii]];
+
+                  if (dataPropVal === keywordPropVal) {
+                    isExists = true;
+                    break;
+                  }
+                }
+              }
+
+              if (!isExists) {
+                keywordData.push(dataItem);
+              }
+            }
+          }
+        };
+
+        const doneData = function (data) {
+          mergeData(data);
+
+          done(buffer, keywordData, true);
+        };
+
+        const keywords = buffer.split(' ');
+        if (keywords[keywords.length - 1] === '') {
+          keywords.splice(-1, 1);
+        }
+
+        for (let i = 0; i < keywords.length; i++) {
+          const keyword = keywords[i];
+
+          if (keyword.length > 0) {
+            const sourceURL = self.settings.source.toString();
+            const request = $.getJSON(sourceURL + keyword);
+
+            if (i < keywords.length - 1) {
+              request.done(mergeData).fail(mergeData);
+            } else {
+              request.done(doneData).fail(doneData);
+            }
+          }
+        }
       } else {
         // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
         const sourceURL = self.settings.source.toString();
@@ -617,11 +702,7 @@ Autocomplete.prototype = {
     // select all text (after a delay since works better across browsers), but only if element is
     // still focused to avoid flashing cursor focus trap (since select causes focus event to
     // fire if no longer focused)
-    setTimeout(() => {
-      if (self.element.is(':focus')) {
-        self.element.select();
-      }
-    }, 10);
+    self.element.select();
   },
 
   /**
@@ -708,13 +789,12 @@ Autocomplete.prototype = {
       ret.value = a.text().trim();
     }
 
-    this.closeList();
     this.highlight(a);
 
     this.noSelect = true;
 
     // Update the data for the event
-    ret.label = stringUtils.stripHTML(ret.label);
+    ret.label = xssUtils.stripHTML(ret.label);
 
     // Add these elements for key down vs click consistency
     if (!ret.highlightTarget) {
@@ -731,13 +811,14 @@ Autocomplete.prototype = {
     * @memberof Autocomplete
     * @param {array} args An array containing the link and the return object.
     */
-    this.element
-      .trigger('selected', [a, ret])
-      .focus();
+    this.element.trigger('selected', [a, ret]);
 
     if (isEvent) {
       anchorOrEvent.preventDefault();
     }
+
+    this.closeList();
+    this.element.focus();
 
     return ret;
   },

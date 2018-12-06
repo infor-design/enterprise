@@ -220,7 +220,7 @@ BusyIndicator.prototype = {
 
   /**
    * Removes the appended markup and hides any trace of the indicator.
-   * @param {boolean} fromEvent Designates the close is comming from an event (internal)
+   * @param {boolean} fromEvent Designates the close is coming from an event (internal)
    * @returns {void}
    */
   close(fromEvent) {
@@ -361,6 +361,7 @@ BusyIndicator.prototype = {
    * @returns {void}
    */
   destroy() {
+    this.close(true);
     this.element.off('start.busyindicator complete.busyindicator afterstart.busyindicator aftercomplete.busyindicator updated.busyindicator');
     $.removeData(this.element[0], COMPONENT_NAME);
   },

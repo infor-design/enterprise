@@ -1,7 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
-import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery Components
 import '../button/button.jquery';
@@ -151,6 +151,7 @@ Toolbar.prototype = {
       this.more = $('<button class="btn-actions" type="button"></button>')
         .html(`${$.createIcon({ icon: 'more' })
         }<span class="audible">${Locale.translate('MoreActions')}</span>`)
+        .attr('title', Locale.translate('More'))
         .appendTo(moreContainer);
     }
 
@@ -534,7 +535,7 @@ Toolbar.prototype = {
       popupLiText = item.text();
     }
 
-    return stringUtils.stripHTML(popupLiText);
+    return xssUtils.stripHTML(popupLiText);
   },
 
   /**
@@ -566,6 +567,9 @@ Toolbar.prototype = {
           return;
         }
 
+        if (document.activeElement && document.activeElement.tagName === 'INPUT') {
+          return;
+        }
         el.focus();
         self.buttonset.scrollTop(0);
       });
@@ -1059,7 +1063,7 @@ Toolbar.prototype = {
     this.activeButton = getActiveButton();
     this.activeButton.addClass('is-selected').attr('tabindex', '0');
 
-    if (!noFocus) {
+    if (!noFocus && this.activeButton[0]) {
       this.activeButton[0].focus();
 
       /**
@@ -1342,7 +1346,10 @@ Toolbar.prototype = {
       });
 
       if (shouldFocus) {
-        this.getLastVisibleButton()[0].focus();
+        const lastVisibleButton = this.getLastVisibleButton()[0];
+        if (lastVisibleButton) {
+          lastVisibleButton.focus();
+        }
       }
     }
   },

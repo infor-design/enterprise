@@ -1,10 +1,11 @@
 ---
 title: Line
-description: This page describes Line.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Standard Line Chart
     slug: example-index
+  pages:
   - name: Labels on Axis
     slug: example-axis-labels
   - name: Ticks Adjustment (Less ticks than data points)
@@ -97,6 +98,10 @@ var dataset = [{
 
 $('#area-example').chart({type: 'line', dataset: dataset});
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

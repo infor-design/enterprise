@@ -1,10 +1,11 @@
 ---
 title: Targeted Achievement Chart
-description: This page describes Targeted Achievement Chart.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Main Target to Achievement Example (shows 3 examples)
     slug: example-index
+  pages:
   - name: Showing Percentage Text
     slug: example-percent-text
   - name: Used on a Datagrid
@@ -40,6 +41,10 @@ var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

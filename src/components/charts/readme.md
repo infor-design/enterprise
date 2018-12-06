@@ -1,8 +1,8 @@
 ---
 title: Charts
-description: This page describes Charts.
+description: Displays a given data set in a visual way. A user can interpret the data to gain insights. Best for showing data distributions, comparisons, or trends.
 demo:
-  pages:
+  embedded:
   - name: Using Patterns on Chart Colors
     slug: example-chart-patterns
   - name: How to Hide / Show a Chart
@@ -49,6 +49,10 @@ We still have some work to do to make charts accessible. Some todo's:
 - Should be keyboard friendly. Can focus the legend and hit enter to select.
 - When keying in to the legend elements it should read the data
 - Have a table option to display the data in optional data form.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

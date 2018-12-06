@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { Environment as env } from '../../utils/environment';
 
 const COMPONENT_NAME = 'about';
 
@@ -116,10 +117,14 @@ About.prototype = {
 
     if (this.settings.deviceSpecs) {
       const specs = this.getDeviceSpecs();
-      const text = `<span class="browser">${Locale.translate('Browser')} : ${specs.browser}</span><br>
+      const specsver = this.settings;
+      const text = `<span class="browser">${Locale.translate('Browser')} : ${env.devicespecs.currentBrowser} ${env.devicespecs.browserMajorVersion} (${env.devicespecs.browserVersion})</span><br>
+        <span class="ds">${Locale.translate('OperatingSystem')} : ${env.devicespecs.os} ${env.devicespecs.currentOSVersion}</span><br>
         <span class="platform">${Locale.translate('Platform')} : ${specs.os}</span><br>
+        <span class="ds">${Locale.translate('Mobile')} : ${env.devicespecs.isMobile}</span><br>
         <span class="locale">${Locale.translate('Locale')} : ${specs.locale}</span><br>
-        <span class="cookiesEnabled">${Locale.translate('CookiesEnabled')} : ${specs.cookiesEnabled}</span><br>`;
+        <span class="cookiesEnabled">${Locale.translate('CookiesEnabled')} : ${specs.cookiesEnabled}</span><br>
+        <span class="version">${Locale.translate('Version')} : ${specsver.version}</span><br>`;
 
       $('<p></p>').html(text).appendTo(body);
     }
@@ -235,7 +240,10 @@ About.prototype = {
 
     this.buttons.off();
     this.element.off('open.about');
-    $.removeData(this.element[0], COMPONENT_NAME);
+
+    if (this.element.length > 0) {
+      $.removeData(this.element[0], COMPONENT_NAME);
+    }
   },
 
   /**

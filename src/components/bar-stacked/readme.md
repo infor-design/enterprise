@@ -1,10 +1,11 @@
 ---
 title: Bar Chart (Stacked)
-description: This page describes Bar Chart (Stacked).
+description: null
 demo:
-  pages:
+  embedded:
   - name: Standard Stacked Bar Chart
     slug: example-index
+  pages:
   - name: 100% Stacked Bar Chart
     slug: example-stacked-100
   - name: Colors
@@ -87,6 +88,10 @@ $('#bar-grouped-example').chart({type: 'bar-stacked', dataset: dataset,
   }
 });
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

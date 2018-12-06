@@ -1,10 +1,11 @@
 ---
 title: Area
-description: This page describes Area.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Main Example
     slug: example-index
+  pages:
   - name: Make the Tooltip Formatted (Currency)
     slug: example-formatter
   - name: Set animation speed
@@ -17,7 +18,7 @@ demo:
     slug: example-set-selected
 ---
 
-The area chart is a line chart with the isArea set that adds the fills. See the [line chart api]( ../components/line) for more details.
+The area chart is a line chart with the isArea set that adds the fills. See the [line chart api]( ../line) for more details.
 
 ## Code Example
 
@@ -101,6 +102,10 @@ $('#area-example').chart({type: 'area', dataset: dataset});
 color: '#1a1a1a'
 name: 'Component C'
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

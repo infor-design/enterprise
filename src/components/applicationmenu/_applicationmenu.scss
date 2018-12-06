@@ -3,9 +3,10 @@
 
 .application-menu {
   @include css3(transform, translateZ(0));
-  @include transition(left 300ms cubic-bezier(.17, .04, .03, .94),
-    box-shadow 300ms cubic-bezier(.17, .04, .03, .94));  background-color: $slate08;
+  @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+  box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
+  background-color: $slate08;
   border-right: 1px solid $application-menu-border-color;
   bottom: 0;
   color: $white;
@@ -31,10 +32,11 @@
 
   // Add animation to the page container when Nav is in use
   + .page-container {
-    @include transition(height 300ms cubic-bezier(.17, .04, .03, .94),
-      margin 300ms cubic-bezier(.17, .04, .03, .94),
-      left 300ms cubic-bezier(.17, .04, .03, .94),
-      width 300ms cubic-bezier(.17, .04, .03, .94));
+    @include transition(height 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+    margin 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+    left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+    width 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
     right: 0;
   }
 
@@ -75,8 +77,9 @@
 
         .content {
           @include font-size(14);
+
           max-width: calc(100% - 52px);
-          padding-left: .5em;
+          padding-left: 0.5em;
 
           > * {
             display: block;
@@ -102,7 +105,9 @@
     width: 100%;
 
     .icon {
-      @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
+      @include transition(fill 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
+      fill: lighten($application-menu-trigger-icon-fill-color, 20%);
 
       &:not(.close) {
         left: 18px;
@@ -124,10 +129,6 @@
 
       .searchfield-category-button {
         border-color: transparent;
-      }
-
-      .icon {
-        fill: $application-menu-searchfield-icon-color;
       }
     }
 
@@ -165,9 +166,10 @@
   .searchfield,
   .searchfield-category-button {
     @include transition(
-      color 300ms cubic-bezier(.17, .04, .03, .94),
-      background-color 300ms cubic-bezier(.17, .04, .03, .94)
+      color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+      background-color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94)
     );
+
     background-color: transparent;
     border-color: transparent;
   }
@@ -182,20 +184,20 @@
     width: auto;
 
     &::placeholder {
-      color: $application-menu-searchfield-placeholder-color;
+      color: lighten($application-menu-searchfield-placeholder-color, 20%);
     }
 
     &::-webkit-input-placeholder {
-      color: $application-menu-searchfield-placeholder-color;
+      color: lighten($application-menu-searchfield-placeholder-color, 20%);
     }
 
     &::-moz-placeholder {
-      color: $application-menu-searchfield-placeholder-color;
+      color: lighten($application-menu-searchfield-placeholder-color, 20%);
       opacity: 1;
     }
 
     &:-ms-input-placeholder {
-      color: $application-menu-searchfield-placeholder-color;
+      color: lighten($application-menu-searchfield-placeholder-color, 20%);
     }
   }
 
@@ -215,6 +217,7 @@
 
     .name {
       @include font-size(18);
+
       padding: 10px;
       position: relative;
       top: -3px;
@@ -258,8 +261,15 @@
       width: 34px;
     }
   }
-}
 
+  .hyperlink {
+    color: $accordion-inverse-text-color;
+
+    &:hover:not([disabled]) {
+      color: $accordion-inverse-text-hover-color;
+    }
+  }
+}
 
 // Generic CSS Class that allows block-level elements like "divs" to become "clickable" on iOS 8 and up
 // https://stackoverflow.com/questions/3705937/document-click-not-working-correctly-on-iphone-jquery
@@ -267,14 +277,13 @@
   cursor: pointer;
 }
 
-
 // Right-to-Left Styles
 html[dir='rtl'] {
-
   .application-menu {
+    @include transition(right 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+    box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
-    @include transition(right 300ms cubic-bezier(.17, .04, .03, .94),
-      box-shadow 300ms cubic-bezier(.17, .04, .03, .94));  background-color: $slate08;
+    background-color: $slate08;
     border-left: 1px solid $application-menu-border-color;
     border-right: 0;
     left: initial;
@@ -310,7 +319,7 @@ html[dir='rtl'] {
 
       .panel.logout .content {
         padding-left: 0;
-        padding-right: .5em;
+        padding-right: 0.5em;
       }
     }
 
@@ -335,9 +344,9 @@ html[dir='rtl'] {
 // On large + extra-large breakpoints, the .page-content element will shift to the left while the menu is open
 @media (min-width: $breakpoint-phone-to-tablet) {
   .application-menu {
-
     + .page-container {
       @include css3(transform, none);
+
       left: 0;
       margin: 0 0 0 auto;
       width: 100%;

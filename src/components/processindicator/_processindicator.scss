@@ -4,10 +4,10 @@
 // Also see: /sass/controls/_timeline.scss
 
 $indicator-darkest: $azure08;
-$indicator-darker: $azure07;
-$indicator-lighter: $azure06;
+$indicator-darker: $theme-color-brand-primary-alt;
+$indicator-lighter: $theme-color-brand-primary-base;
 $indicator-lightest: $azure05;
-$indicator-warning: $alert-red;  //$ruby06
+$indicator-warning: $alert-red;
 $indicator-blank: $graphite02;
 
 $indicator-size: 1.3em;
@@ -16,12 +16,13 @@ $indicator-current-size: ($indicator-size * 1.6);
 // Container
 .process-indicator {
   margin-bottom: 20px;
+
   @include font-size(14);
 
   // Main blocks:  .display, .header, .details
   .display {
     margin-bottom: 20px;
-    word-spacing: -($indicator-size * .22);
+    word-spacing: -($indicator-size * 0.22);
 
     > * {
       vertical-align: middle;
@@ -60,6 +61,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
   .details {
     color: $font-color;
+
     @include font-size(10);
     @include antialiased();
 
@@ -77,7 +79,7 @@ $indicator-current-size: ($indicator-size * 1.6);
   // Makes the size of the process indicator smaller
   &.compact {
     .display {
-      @include css3(transform, scale(.7, .7));
+      @include css3(transform, scale(0.7, 0.7));
       @include css3(transform-origin, left center);
     }
 
@@ -92,7 +94,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
 // Indicator icons
 .indicator {
-  background-color: $body-bg-color;
+  background-color: $body-color-primary-background;
   border: 2px solid $indicator-blank;
   border-radius: ($indicator-size / 2);
   display: inline-block;
@@ -135,7 +137,7 @@ $indicator-current-size: ($indicator-size * 1.6);
     width: $indicator-current-size;
 
     // circle
-    &:before {
+    &::before {
       border-radius: ($indicator-current-size / 2);
     }
   }
@@ -144,34 +146,34 @@ $indicator-current-size: ($indicator-size * 1.6);
   &.rejected {
     border: 0;
 
-    &:before,
-    &:after {
-      background-color: #ffffff;
-      border-radius: .2em;
+    &::before,
+    &::after {
+      background-color: #fff;
+      border-radius: 0.2em;
       content: '';
       display: inline-block;
-      height: .15em;
-      left: .14em;
+      height: 0.15em;
+      left: 0.14em;
       position: absolute;
-      top: .54em;
-      width: ($indicator-size * .82);
+      top: 0.54em;
+      width: ($indicator-size * 0.82);
     }
 
-    &:before {
+    &::before {
       @include css3(transform, rotate(135deg));
     }
 
-    &:after {
+    &::after {
       @include css3(transform, rotate(45deg));
     }
 
     &.current {
       background-color: $indicator-warning;
 
-      &:before,
-      &:after {
-        left: .51em;
-        top: .93em;
+      &::before,
+      &::after {
+        left: 0.51em;
+        top: 0.93em;
       }
     }
 
@@ -180,19 +182,19 @@ $indicator-current-size: ($indicator-size * 1.6);
   &.more-info {
     border: 0;
 
-    &:before {
-      color: #ffffff;
+    &::before {
+      color: #fff;
       content: '!';
       display: inline-block;
       font-size: 1.4em;
-      font-weight: bold;
-      @include antialiased();
-
+      font-weight: $theme-number-font-weight-bold;
       height: 100%;
       position: relative;
       text-align: center;
-      top: .25em;
+      top: 0.25em;
       width: 100%;
+
+      @include antialiased();
     }
 
     &.current {
@@ -204,25 +206,25 @@ $indicator-current-size: ($indicator-size * 1.6);
     border: 0;
 
     // Clock circle
-    &:before {
-      border: .15em solid #ffffff;
+    &::before {
+      border: 0.15em solid #fff;
       content: '';
       height: 50%;
-      left: .370em;
+      left: 0.37em;
       position: absolute;
-      top: .370em;
+      top: 0.37em;
       width: 50%;
     }
 
     // Clock hands
-    &:after {
-      border-bottom: .15em solid #ffffff;
-      border-left: .15em solid #ffffff;
+    &::after {
+      border-bottom: 0.15em solid #fff;
+      border-left: 0.15em solid #fff;
       content: '';
       height: 20%;
-      left: .97em;
+      left: 0.97em;
       position: absolute;
-      top: .6em;
+      top: 0.6em;
       width: 10%;
     }
 
@@ -242,21 +244,22 @@ $indicator-current-size: ($indicator-size * 1.6);
 
 .process-indicator,
 .timeline {
-
   .heading {
     @include font-size(12);
-    font-weight: bold;
-    @include antialiased();
+
+    font-weight: $theme-number-font-weight-bold;
     line-height: 1.5;
+
+    @include antialiased();
   }
 
   .sub-heading {
     color: $font-color;
-    @include font-size(12);
-    @include antialiased();
-
     line-height: 1.5;
     margin-bottom: 10px;
+
+    @include font-size(12);
+    @include antialiased();
   }
 
 }

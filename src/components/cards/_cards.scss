@@ -14,8 +14,8 @@
 }
 
 @mixin auto-width {
-  width: auto;
   min-width: 0;
+  width: auto;
 
   .widget-content,
   .card-content {
@@ -67,13 +67,14 @@
       display: inline-block;
 
       &:focus:not(.hide-focus) {
-        border-color: $btn-focus-border-color;
+        border-color: $button-color-secondary-focus-border;
       }
     }
   }
 
   .small-thin-text {
     @include font-size(11);
+
     color: $font-color-lowcontrast;
   }
 
@@ -111,14 +112,13 @@
 
     .title {
       @include font-size(16);
+
       color: $cardlist-header-color;
       -webkit-font-smoothing: antialiased;
       font-weight: 100;
       margin: 0;
       padding-top: 3px;
-      // scss-lint:disable ImportantRule
       text-rendering: optimizeLegibility !important;
-      // scss-lint:enable ImportantRule
     }
 
     //Prevent FOUC
@@ -131,7 +131,7 @@
     }
   }
 
-  [class^="btn"] {
+  [class^='btn'] {
     color: $listview-toolbar-button-text-color;
 
     span {
@@ -191,8 +191,7 @@
   }
 
   &:not(.has-toolbar) {
-
-    > .btn-actions ,
+    > .btn-actions,
     > .btn-expander {
       line-height: normal;
       margin: 0;
@@ -245,7 +244,7 @@
 
     &.card-group-action,
     &.widget-group-action {
-      background-color: $body-bg-color;
+      background-color: $body-color-primary-background;
       border: 1px solid transparent;
       border-bottom-color: $listview-border-color;
     }
@@ -279,7 +278,7 @@
   }
 
   &.alternate {
-    background-color: $body-bg-color;
+    background-color: $body-color-primary-background;
   }
 
 }
@@ -288,7 +287,7 @@
   width: 64px;
 
   img {
-    border-radius: .5rem;
+    border-radius: 0.5rem;
   }
 }
 
@@ -327,7 +326,7 @@
 .empty-actions,
 .empty-info {
   -webkit-font-smoothing: antialiased;
-  font-weight: normal;
+  font-weight: $theme-number-font-weight-base;
   line-height: normal;
   text-align: center;
 }
@@ -342,6 +341,7 @@
 .widget-empty-title,
 .empty-title {
   @include font-size(16);
+
   padding: 0 0 20px;
 
   &:first-child {
@@ -353,6 +353,7 @@
 .widget-empty-info,
 .empty-info {
   @include font-size(14);
+
   padding: 0 20px 40px;
 
   &:last-child {
@@ -366,13 +367,10 @@
   padding: 0 0 40px;
 }
 
-
 // RTL Styles
 html[dir='rtl'] {
-
   .card-header,
   .widget-header {
-
     > h2,
     > h1,
     > button {

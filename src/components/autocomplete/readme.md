@@ -1,10 +1,11 @@
 ---
 title: Autocomplete
-description: This page describes Autocomplete.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Default Autocomplete
     slug: example-index
+  pages:
   - name: Ajax Autocomplete
     slug: example-ajax
   - name: Ajax as a Function Autocomplete
@@ -52,3 +53,7 @@ This example shows how to invoke the autocomplete and its starting markup. Remem
 - <kbd>Any Letter</kbd> After a typehead delay all of these choices should be shown. The focus should stay in the field for additional typing. NOTE: Only valid alpha numeric characters will open the list.
 - <kbd>Escape</kbd> Closes the drop down list and restores the last value (if any)
 - <kbd>Tab</kbd> Goes to the next tabbable item. If the list is open the currently highlighted one will be selected
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

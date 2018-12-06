@@ -2,15 +2,15 @@
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
 
-  <section id="test-multitabs" class="multitabs-container side-by-side" data-options='{"trigger": "rightClick"}' data-popupmenu="action-popupmenu">
+  <section id="test-multitabs" class="multitabs-container side-by-side">
     <div class="multitabs-section">
       <div id="tab-list-one" class="tab-container module-tabs">
         <ul class="tab-list">
-          <li class="tab is-selected"><a href="#tabs-one-contracts">Contracts (and then a few more Contracts)</a></li>
-          <li class="tab"><a href="#tabs-one-opportunities">Opportunities</a></li>
-          <li class="tab"><a href="#tabs-one-attachments">Attachments</a></li>
-          <li class="tab"><a href="#tabs-one-contacts">Contacts</a></li>
-          <li class="tab"><a href="#tabs-one-notes">Notes</a></li>
+          <li class="tab is-selected"><a id="tabs-one-contracts-1" href="#tabs-one-contracts">Contracts (and then a few more Contracts)</a></li>
+          <li class="tab"><a id="tabs-one-opportunities-1" href="#tabs-one-opportunities">Opportunities</a></li>
+          <li class="tab"><a id="tabs-one-attachments-1" href="#tabs-one-attachments">Attachments</a></li>
+          <li class="tab"><a id="tabs-one-contacts-1" href="#tabs-one-contacts">Contacts</a></li>
+          <li class="tab"><a id="tabs-one-notes-1" href="#tabs-one-notes">Notes</a></li>
         </ul>
       </div> <!-- #tab-list-one -->
       <div id="tab-container-one" class="tab-panel-container">
@@ -58,11 +58,11 @@
     <div class="multitabs-section alternate">
       <div id="tab-list-two" class="tab-container module-tabs">
         <ul class="tab-list">
-          <li class="tab"><a href="#tabs-two-contracts">Contracts (and then a few more Contracts)</a></li>
-          <li class="tab"><a href="#tabs-two-opportunities">Opportunities</a></li>
-          <li class="tab is-selected"><a href="#tabs-two-attachments">Attachments</a></li>
-          <li class="tab"><a href="#tabs-two-contacts">Contacts</a></li>
-          <li class="tab"><a href="#tabs-two-notes">Notes</a></li>
+          <li class="tab"><a id="tabs-two-contracts-2" href="#tabs-two-contracts">Contracts (and then a few more Contracts)</a></li>
+          <li class="tab"><a id="tabs-two-opportunities-2" href="#tabs-two-opportunities">Opportunities</a></li>
+          <li class="tab is-selected"><a id="tabs-two-attachments-2" href="#tabs-two-attachments">Attachments</a></li>
+          <li class="tab"><a id="tabs-two-contacts-2" href="#tabs-two-contacts">Contacts</a></li>
+          <li class="tab"><a id="tabs-two-notes-2" href="#tabs-two-notes">Notes</a></li>
         </ul>
       </div> <!-- #tab-list-two -->
       <div id="tab-container-two" class="tab-panel-container">
@@ -117,20 +117,20 @@
 
 
   <!-- Modals -->
-  <div id="modal-add-tab" style="display: none;">
+  <div id="modal-add-tab" class="hidden">
     <form id="form-add-tab" action="#" method="post">
       <div class="field">
         <label for="add-tab-create-tab-name">Tab Name:</label>
-        <input id="add-tab-create-tab-name" name="create-tab-name" disabled/>
+        <input id="add-tab-create-tab-name" name="create-tab-name" disabled="true"/>
       </div>
 
       <div class="field">
         <label for="add-tab-create-tab-content">Content:</label>
-        <textarea id="add-tab-create-tab-content" name="create-tab-content" disabled></textarea>
+        <textarea id="add-tab-create-tab-content" name="create-tab-content" disabled="true"></textarea>
       </div>
 
       <div class="field">
-        <input type="checkbox" class="checkbox" id="add-tab-use-garbage" checked>
+        <input type="checkbox" class="checkbox" id="add-tab-use-garbage" checked="true"/>
         <label for="add-tab-use-garbage" class="checkbox-label" >Fill with Garbage</label>
       </div>
     </form>
@@ -153,6 +153,14 @@
     $('body').on('initialized', function() {
       multiAPI = multitabs.data('multitabs');
     });
+
+    // Only enable `rightClick` menu on desktop for this demo.
+    if (!Soho.env.features.touch) {
+      multitabs.popupmenu({
+        trigger: 'rightClick',
+        menu: 'action-popupmenu'
+      });
+    }
 
     // Use mouseover/click to store reference to the target tabset
     multitabs.on('click.test, mouseover.test', function(e) {
@@ -221,25 +229,6 @@
       return;
     }
 
-
-    // Setup a Tab ID
-    function makeId(name) {
-      if (!name) {
-        console.warn('No name for a new tab was provided.')
-        name = '';
-      }
-
-      var stringName = name.toLowerCase().split(' ').join('-');
-
-      var existing = $('[id^="'+ stringName +'"]');
-      if (!existing.length) {
-        return stringName + '-0';
-      }
-
-      return stringName + '-' + existing.length;
-    }
-
-
     // Setup new Module Tab page markup
     function wrapInPageMarkup(name, content) {
       return '<header class="header is-personalizable">' +
@@ -270,7 +259,7 @@
     function completeTab(tabsAPI, name, content) {
       content = wrapInPageMarkup(name, content);
 
-      var tabId = makeId(name),
+      var tabId = Soho.utils.uniqueId($('a'), 'tab'),
         targetTabsetName = tabsAPI.multitabsID;
 
       multiAPI.add(targetTabsetName, tabId, {
@@ -279,8 +268,6 @@
         isDismissible: true,
         doActivate: true
       });
-
-      console.log('new ID: ' + tabId);
     }
 
     function paragraph(text) {

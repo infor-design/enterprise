@@ -31,7 +31,9 @@ describe('Textarea API', () => {
       autoGrow: false,
       autoGrowAnimate: true,
       autoGrowAnimateSpeed: 200,
+      autoGrowMaxHeight: null,
       characterCounter: true,
+      maxLength: null,
       printable: true,
       charRemainingText: null,
       charMaxText: null
@@ -45,7 +47,9 @@ describe('Textarea API', () => {
       autoGrow: false,
       autoGrowAnimate: true,
       autoGrowAnimateSpeed: 200,
+      autoGrowMaxHeight: null,
       characterCounter: true,
+      maxLength: null,
       printable: true,
       charRemainingText: null,
       charMaxText: null

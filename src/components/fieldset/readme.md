@@ -1,10 +1,11 @@
 ---
 title: Field Set
-description: This page describes Field Set.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Default Fieldset Example
     slug: example-index
+  pages:
   - name: 50/50 Fieldset Example
     slug: example-50-50
   - name: Example Showing Input Fields
@@ -35,7 +36,7 @@ Here is an example showing a few input fields in a `<fieldset>`. Anything can go
       <input type="password" id="example-fs-company-address" name="example-fs-company-address">
     </div>
 
-    <button class="btn-primary" type="submit">Submit</button>
+    <button id="submit" class="btn-primary" type="submit">Submit</button>
   </fieldset>
 </form>
 ```
@@ -56,6 +57,10 @@ There are some added classes to style sections to look like `<fieldsets>` in cas
 </div>
 
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

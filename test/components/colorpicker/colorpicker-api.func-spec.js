@@ -24,6 +24,9 @@ describe('ColorPicker API', () => {
     colorpickerObj.destroy();
     colorpickerEl.parentNode.removeChild(colorpickerEl);
     svgEl.parentNode.removeChild(svgEl);
+
+    const rowEl = document.body.querySelector('.row');
+    rowEl.parentNode.removeChild(rowEl);
   });
 
   it('Should be defined on jQuery object', () => {

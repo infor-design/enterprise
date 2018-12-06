@@ -20,7 +20,11 @@ const JSON_REGEX = /\.json$/i;
 // Handles the sending of an incoming JSON file
 function sendJSONFile(filepath, req, res, next) {
   const data = getJSONFile(`${filepath}.json`);
-  res.setHeader('Content-Type', 'application/json');
+  res.set({
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+    'Content-Type': 'application/json'
+  });
   res.json(data);
   next();
 }
@@ -32,6 +36,11 @@ function getDataFilePath(filename) {
 
 // Calls out to an external piece of middleware that will pass JS data.
 function handleJSFile(jsFilename, req, res, next) {
+  res.set({
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+  });
+  
   const middleware = require(jsFilename);
   return middleware(req, res, next);
 }

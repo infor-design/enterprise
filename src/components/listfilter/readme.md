@@ -1,6 +1,6 @@
 ---
 title: List Filter
-description: This page describes List Filter.
+description: null
 ---
 
 ## Code Example
@@ -18,3 +18,7 @@ var term = 'search for me';
 results = this.listfilter.filter(list, term);
 
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

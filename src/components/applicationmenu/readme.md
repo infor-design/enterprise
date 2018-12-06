@@ -1,10 +1,11 @@
 ---
 title: Application Menu
-description: This page describes Application Menu.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Default About Example
     slug: example-index
+  pages:
   - name: Different Header Types Event Demo
     slug: example-different-header-types
   - name: As Shown on the Soho Site
@@ -35,14 +36,18 @@ Within the menu itself:
 - Multiple categories can be open at one time.
 - Scrolling within the menu is supported when necessary.
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
-In SoHo Xi Controls, the following keyboard shortcuts are implemented in the Application Menu
+In IDS Enterprise Controls, the following keyboard shortcuts are implemented in the Application Menu
 
 - When pressing <kbd>Enter</kbd> while focused on an Application Menu Trigger, the Application Menu will be toggled open/closed.
 - When pressing <kbd>Escape</kbd> while the Application Menu is opened, the Application Menu will close and (if applicable) the Trigger Button that originally caused the Application Menu to open will be re-focused.
 
-In all other cases, the Application Menu uses a SoHo Xi [Accordion Control](./accordion) internally, and will utilize its keyboard shortcuts when focus lies inside of the menu.
+In all other cases, the Application Menu uses a IDS Enterprise [Accordion Control](./accordion) internally, and will utilize its keyboard shortcuts when focus lies inside of the menu.
 
 ## States and Variations
 

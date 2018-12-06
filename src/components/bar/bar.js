@@ -51,6 +51,7 @@ const BAR_DEFAULTS = {
   isGrouped: false,
   showLegend: true,
   animate: true,
+  longText: false,
   format: null,
   redrawOnResize: true,
   tooltip: null,
@@ -132,19 +133,29 @@ Bar.prototype = {
     const tooltipData = self.settings.tooltip;
 
     let maxBarHeight = 30;
-    const legendHeight = 40;
-    const gapBetweenGroups = 0.5; // As of one bar height (barHeight * 0.5)
+    const legendHeight = 30;
+    const gapBetweenGroups = 0.6; // Makes it one bar in height (barHeight * 0.5)
     const isViewSmall = this.element.parent().width() < 450;
+    const smallViewport = innerWidth <= 480;
+    const mediumViewport = innerWidth >= 481 && innerWidth <= 992;
+    const largeViewport = innerWidth > 992;
+    let dataset = this.settings.dataset;
 
     const margins = {
-      top: self.settings.isStacked ? 30 : 20,
+      top: 20,
       left: 30,
       right: 30,
-      bottom: 30 // 30px plus size of the bottom axis (20)
+      bottom: dataset.length === 1 ? 5 : 30
     };
 
-    let dataset = this.settings.dataset;
     this.element.addClass('bar-chart');
+    if (this.settings.isGrouped) {
+      this.element.addClass('bar-chart-grouped');
+    }
+
+    if (this.settings.isStacked) {
+      this.element.addClass('bar-chart-stacked');
+    }
 
     // Handle Empty Data Set
     if (dataset.length === 0) {
@@ -209,10 +220,23 @@ Bar.prototype = {
       });
     });
 
+    const isLongText = this.settings.longText;
     const h = parseInt(this.element.parent().height(), 10) - margins.bottom -
       (self.settings.isStacked ? 0 : (legendHeight / 2));
     const w = parseInt(this.element.parent().width(), 10) - margins.left;
-    const textWidth = margins.left + (maxTextWidth * 6);
+    let textWidth;
+
+    if (smallViewport) {
+      textWidth = margins.left + maxTextWidth * 1;
+    } else if (mediumViewport) {
+      textWidth = margins.left + maxTextWidth * 4;
+    } else if (largeViewport) {
+      textWidth = margins.left + maxTextWidth * 6;
+    }
+
+    if (!isLongText) {
+      textWidth = margins.left + maxTextWidth * 6;
+    }
 
     self.svg = d3.select(this.element[0])
       .append('svg')
@@ -326,8 +350,14 @@ Bar.prototype = {
       }
     }
 
-    if (self.settings.ticks) {
-      xAxis.ticks(self.settings.ticks.number, self.settings.ticks.format);
+    if (self.settings.ticks && !self.settings.useLogScale) {
+      if (smallViewport) {
+        xAxis.ticks(self.settings.ticks.smallNumber, self.settings.ticks.format);
+      } else if (mediumViewport) {
+        xAxis.ticks(self.settings.ticks.mediumNumber, self.settings.ticks.format);
+      } else if (largeViewport) {
+        xAxis.ticks(self.settings.ticks.largeNumber, self.settings.ticks.format);
+      }
     }
 
     const yAxis = d3.axisLeft()
@@ -404,9 +434,7 @@ Bar.prototype = {
         let shape = d3.select(this);
         const setPattern = function (pattern, hexColor2) {
           return !pattern || !hexColor2 ? '' :
-            `${'<svg width="12" height="12">' +
-            '<rect style="fill: '}${hexColor2}" mask="url(#${pattern})" height="12" width="12" />` +
-          '</svg>';
+            `<svg width="12" height="12"><rect mask="url(#${pattern})" height="12" width="12" /></svg>`;
         };
 
         const show = function (xPosS, yPosS, isTooltipBottom) {
@@ -432,13 +460,11 @@ Bar.prototype = {
                 total += dataset[k][i].x;
                 totals[k] = dataset[k][i].x;
               }
-              content += `${'' +
-                '<div class="swatch-row">' +
-                  '<div style="background-color:'}${series[j].pattern ? 'transparent' : hexColor};">${
-                setPattern(series[j].pattern, hexColor)
-              }</div>` +
-                  `<span>${series[j].name}</span><b> ${isFormatter ? format(totals[j]) : (`${Math.round((totals[j] / total) * 100)}%`)} </b>` +
-                '</div>';
+              content += `<div class="swatch-row">
+                  <div class="swatch-color">${setPattern(series[j].pattern, hexColor)}</div>
+                  <span>${series[j].name}</span>
+                  <b> ${isFormatter ? format(totals[j]) : (`${Math.round((totals[j] / total) * 100)}%`)} </b>
+                </div>`;
             }
           } else {
             if (mid > 1) {
@@ -446,13 +472,10 @@ Bar.prototype = {
             }
             for (j = 0, l = data.length; j < l; j++) {
               hexColor = charts.chartColor(j, 'bar', legendMap[j]);
-              content += `${'' +
-                '<div class="swatch-row">' +
-                  '<div style="background-color:'}${legendMap[j].pattern ? 'transparent' : hexColor};">${
-                setPattern(legendMap[j].pattern, hexColor)
-              }</div>` +
-                  `<span>${data[j].name}</span><b>${format(data[j].value)}</b>` +
-                '</div>';
+              content += `<div class="swatch-row">
+                    <div class="swatch-color">${setPattern(legendMap[j].pattern, hexColor)}</div>
+                  <span>${data[j].name}</span><b>${format(data[j].value)}</b>
+                </div>`;
             }
           }
           content += '</div>';
@@ -487,6 +510,29 @@ Bar.prototype = {
         } else {
           content = tooltipDataCache[i] || tooltipData || d.tooltip || content || '';
           show(xPosS, yPosS, isTooltipBottom);
+
+          // set inline colors
+          if (self.settings.isStacked) {
+            for (j = 0, l = dataset.length; j < l; j++) {
+              hexColor = charts.chartColor(j, 'bar', series[j]);
+
+              const row = $('#svg-tooltip').find('.swatch-row').eq(j);
+              if (!series[j].pattern) {
+                row.find('div').css('background-color', hexColor);
+              }
+              row.find('rect').css('fill', hexColor);
+            }
+          } else {
+            for (j = 0, l = data.length; j < l; j++) {
+              hexColor = charts.chartColor(j, 'bar', legendMap[j]);
+
+              const row = $('#svg-tooltip').find('.swatch-row').eq(j);
+              if (!legendMap[j].pattern) {
+                row.find('div').css('background-color', hexColor);
+              }
+              row.find('rect').css('fill', hexColor);
+            }
+          }
         }
       })
       .on('mouseleave', () => {
@@ -591,8 +637,38 @@ Bar.prototype = {
     charts.appendTooltip();
 
     this.setInitialSelected();
+    this.setTextValues();
     this.element.trigger('rendered');
     return this;
+  },
+
+  /**
+   * Set the text value in three viewport of bar chart
+   * @private
+   */
+  setTextValues() {
+    if (this.settings.isGrouped) {
+      // These are TODO, as you need a different structure since its using the group name
+      return;
+    }
+
+    const elems = document.querySelectorAll('.bar-chart .axis.y .tick text');
+    const dataset = this.settings.dataset;
+    for (let i = 0; i < dataset.length; i++) {
+      Object.values(dataset[i]).forEach((key) => {
+        if (key && key.constructor === Array) {
+          for (let j = 0; j < key.length; j++) {
+            if (innerWidth <= 480) {
+              elems[j].textContent = key[j].shortName || key[j].name;
+            } else if (innerWidth >= 481 && innerWidth <= 992) {
+              elems[j].textContent = key[j].abbrName || key[j].name;
+            } else if (innerWidth > 992) {
+              elems[j].textContent = key[j].name;
+            }
+          }
+        }
+      });
+    }
   },
 
   /**
@@ -672,7 +748,7 @@ Bar.prototype = {
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${COMPONENT_NAME}`, () => {
         this.handleResize();
       });
 
@@ -746,8 +822,8 @@ Bar.prototype = {
     this.element.empty();
 
     return this
-      .teardown()
-      .init();
+      .build()
+      .element.trigger('rendered', [this.svg]);
   },
 
   /**
@@ -757,7 +833,7 @@ Bar.prototype = {
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
-    $(window).off(`resize.${COMPONENT_NAME}`);
+    $('body').off(`resize.${COMPONENT_NAME}`);
     return this;
   },
 

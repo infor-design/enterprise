@@ -2,22 +2,16 @@
 const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
-
-const getSpecs = (listSpec) => {
-  if (listSpec) {
-    return listSpec.split(',');
-  }
-
-  return ['components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
-};
+const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
 const theme = process.env.ENTERPRISE_THEME || 'light'
-let browserstackBuildID = `${theme} theme: ci:bs e2e ${Date.now()}`;
+let browserstackBuildID = `${Date.now()} : ${theme} theme: ci:bs e2e`;
 
 if (process.env.TRAVIS_BUILD_NUMBER) {
-  browserstackBuildID = process.env.TRAVIS_BUILD_NUMBER;
-  browserstackBuildID = `${theme} theme: ci:bs e2e ${process.env.TRAVIS_BUILD_NUMBER}`;
+  browserstackBuildID = `Travis Build No. ${process.env.TRAVIS_BUILD_NUMBER} : ${theme} theme: ci:bs e2e`;
 }
+
+process.env.isBrowserStack = true;
 
 exports.config = {
   params: {
@@ -25,7 +19,7 @@ exports.config = {
   },
   allScriptsTimeout: 12000,
   logLevel: 'INFO',
-  specs: getSpecs(process.env.PROTRACTOR_SPECS),
+  specs: specs,
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,
   baseUrl: 'http://master-enterprise.demo.design.infor.com',
@@ -38,17 +32,20 @@ exports.config = {
     'browserstack.user': process.env.BROWSERSTACK_USERNAME,
     'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
     'browserstack.debug': true,
-    'browserstack.video' : true,
+    'browserstack.video': true,
     'browserstack.local': false,
-    'browserstack.networkLogs' : false,
+    'browserstack.networkLogs': false,
+    'browserstack.timezone': 'New_York',
     build: browserstackBuildID,
     name: `${theme} theme ci:bs e2e tests`,
-    project: 'ids-enterprise-e2e-ci'
+    project: 'ids-enterprise-e2e-ci',
+    shardTestFiles: true,
+    maxInstances: 2
   },
   multiCapabilities: [
     {
       browserName: 'Chrome',
-      browser_version: '66.0',
+      browser_version: '68.0',
       resolution: '1280x800',
       os_version: '10',
       os: 'Windows',

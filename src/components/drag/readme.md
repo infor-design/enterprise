@@ -1,8 +1,8 @@
 ---
 title: Drag Behavior
-description: This page describes Drag Behavior.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Basic Drag Examples
     slug: example-index
 ---
@@ -18,6 +18,10 @@ $(draggableThing).drag({containment: 'parent'});
 ## Accessibility
 
 Dragging is NOT accessible. Try to provide alternate keyboard friendly ways to do the equivalent functionality.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

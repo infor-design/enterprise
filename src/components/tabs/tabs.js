@@ -1,8 +1,10 @@
 import * as debug from '../../utils/debug';
-import { utils } from '../../utils/utils';
+import { utils, math } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 import { breakpoints } from '../../utils/breakpoints';
 import { stringUtils } from '../../utils/string';
+import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { Locale } from '../locale/locale';
 
 // jQuery components
@@ -115,7 +117,7 @@ Tabs.prototype = {
     let moveTabPanelContainer = false;
 
     // Check for a tab panel container immediately after the `.tab-container`
-    // element (default as of Soho Xi 4.3.0)
+    // element (default as of IDS Enterprise 4.3.0)
     tabPanelContainer = this.element.next('.tab-panel-container');
 
     // Auto-detect and move existing tab-panel containers in key areas, if applicable.
@@ -397,7 +399,7 @@ Tabs.prototype = {
 
       // If there are tabs present, activate the first one
       if (selected.length) {
-        this.activate(selectedAnchor.attr('href'));
+        this.activate(selectedAnchor.attr('href'), selectedAnchor);
       }
     }
 
@@ -598,6 +600,15 @@ Tabs.prototype = {
       .on('mousedown.tabs', '> li', function (e) {
         self.handleAddFocusData(e, $(this));
 
+        if ($(e.target).hasClass('close') && $(e.target).parent().hasClass('has-popupmenu')) {
+          const menu = $(this).data('popupmenu').menu;
+          const hrefs = [];
+          $.each(menu[0].children, (i, li) => {
+            hrefs.push(li.children[0].href);
+          });
+          self.closeDismissibleTabs(hrefs);
+        }
+
         // let right click pass through
         if (e.which !== 3) {
           return self.handleTabClick(e, $(this));
@@ -648,7 +659,7 @@ Tabs.prototype = {
         const popupLi = $(this);
         const href = $(anchor).attr('href');
 
-        if (!self.activate(href)) {
+        if (!self.activate(href, $(anchor))) {
           return false;
         }
 
@@ -716,7 +727,7 @@ Tabs.prototype = {
     self.handleResize(true);
 
     // Resize the tab to show the error
-    $('.tab-panel input').on('isvalid.tabs', () => {
+    $('.tab-panel input').on('error.tabs, valid.tabs', () => {
       const currentLi = $('.tab.is-selected');
       self.focusBar(currentLi);
     });
@@ -854,7 +865,7 @@ Tabs.prototype = {
       return true;
     }
 
-    if (!this.activate(href)) {
+    if (!this.activate(href, a)) {
       return true;
     }
     this.changeHash(href);
@@ -1289,7 +1300,7 @@ Tabs.prototype = {
     if ((e.ctrlKey && key === 38) &&
       $.contains(document.activeElement, panel[0])) { // Ctrl + Up Arrow
       e.preventDefault();
-      return this.activate(a.attr('href'));
+      return this.activate(a.attr('href'), a);
     }
 
     return undefined;
@@ -1775,6 +1786,29 @@ Tabs.prototype = {
   },
 
   /**
+   * Takes a tab ID and activates an adjacent available tab
+   * @param {object} e event object
+   * @param {string} tabId the tab ID
+   */
+  activateAdjacentTab(e, tabId) {
+    const tab = this.doGetTab(e, tabId);
+
+    if (typeof e === 'string') {
+      tabId = e;
+    }
+
+    if (tab.is('.is-selected')) {
+      if (tab.prevAll('li.tab').not('.hidden').not('.is-disabled').length > 0) {
+        this.select($(tab.prevAll('li.tab').not('.hidden').not('.is-disabled')[0]).find('a')[0].hash);
+      } else if (tab.nextAll('li.tab').not('.hidden').length > 0) {
+        this.select($(tab.nextAll('li.tab').not('.hidden').not('.is-disabled')[0]).find('a')[0].hash);
+      }
+    } else {
+      this.select($(this.element.find('li.tab.is-selected')[0]).find('a')[0].hash);
+    }
+  },
+
+  /**
    * Takes a tab ID and returns a jquery object containing the previous available tab
    * If an optional target Tab (li) is provided, use this to perform activation events
    * @param {string} tabId the tab ID
@@ -1796,7 +1830,7 @@ Tabs.prototype = {
 
     const a = target.children('a');
     if (tab.is('.is-selected')) {
-      if (!this.activate(a.attr('href'))) {
+      if (!this.activate(a.attr('href'), a)) {
         return target;
       }
       a.focus();
@@ -1823,13 +1857,14 @@ Tabs.prototype = {
   /**
    * Causes a new tab panel to become active.  Will also trigger AJAX calls on unloaded tab panels, if necessary.
    * @param {string} href a string that either matches up to a Tab ID, or an outbound link to grab AJAX content from.
+   * @param {object} anchor in addition to the ref the anchor object may be passed to avoid extra querying.
    * @returns {void}
    */
-  activate(href) {
+  activate(href, anchor) {
     const self = this;
 
     if (self.isURL(href)) {
-      return this.callSource(href, true);
+      return this.callSource(href, anchor, true);
     }
 
     const a = self.getAnchor(href);
@@ -1870,7 +1905,7 @@ Tabs.prototype = {
     function completeActivate(vetoResult) {
       if (targetPanel.length < 1) {
         if (self.settings.source) {
-          self.callSource(href);
+          self.callSource(href, a);
           return true;
         }
       } else {
@@ -1894,17 +1929,22 @@ Tabs.prototype = {
         // eslint-disable-next-line
         targetPanelElem.offsetHeight;
 
-        targetPanel.one(`${$.fn.transitionEndName()}.tabs`, () => {
-          /**
-           * Fires when a new tab has been completely activated, and the activation process is done
-           *
-           * @event afteractivated
-           * @memberof Tabs
-           * @param {jQuery.Event} e event object
-           * @param {jQuery} a the tab anchor attempting to activate
-           */
-          self.element.trigger('afteractivated', [a]);
+        // Register an `afteractivated` event trigger as a renderLoop callback
+        const timer = new RenderLoopItem({
+          duration: math.convertDelayToFPS(150),
+          timeoutCallback() {
+            /**
+             * Fires when a new tab has been completely activated, and the activation process is done
+             *
+             * @event afteractivated
+             * @memberof Tabs
+             * @param {jQuery.Event} e event object
+             * @param {jQuery} a the tab anchor attempting to activate
+             */
+            self.element.trigger('afteractivated', [a]);
+          }
         });
+        renderLoop.register(timer);
 
         // Triggers the CSS Animation
         targetPanelElem.classList.add('is-visible');
@@ -1998,12 +2038,13 @@ Tabs.prototype = {
   /**
    * Calls an options-provided source method to fetch content that will be displayed inside a tab.
    * @param {string} href - string representing the target tab to load content under.
+   * @param {object} anchor - Reference to the dom object anchor tag.
    * @param {boolean} isURL detects whether or not the URL is actually an external /
    * call, or an ID for an existing tab in the page.
    * @returns {boolean|$.Deferred} true if source call was successful, false for failure/ignore,
    * or a promise object that will fire callbacks in either "success" or "failure" scenarios.
    */
-  callSource(href, isURL) {
+  callSource(href, anchor, isURL) {
     if ((isURL === undefined || isURL === null || isURL === false) && !this.settings.source) {
       return false;
     }
@@ -2017,17 +2058,16 @@ Tabs.prototype = {
         return;
       }
 
-      htmlContent = $.sanitizeHTML(htmlContent);
+      htmlContent = xssUtils.sanitizeHTML(htmlContent);
 
       // Get a new random tab ID for this tab if one can't be derived from the URL string
       if (isURL) {
-        const anchor = this.tablist.find(`[href="${href}"]`);
         const containerId = this.element[0].id || '';
-        const id = anchor.uniqueId('tab', containerId);
+        const id = utils.uniqueId(anchor, 'tab', containerId);
 
         href = `#${id}`;
         // Replace the original URL on this anchor now that we've loaded content.
-        anchor.attr('href', href);
+        anchor[0].setAttribute('href', href);
       }
 
       this.createTabPanel(href, htmlContent, true);
@@ -2475,12 +2515,12 @@ Tabs.prototype = {
      */
     this.element.trigger('close', [targetLi]);
 
-    // If any tabs are left in the list, set the previous tab as the currently selected one.
+    // If any tabs are left in the list, set the first available tab as the currently selected one.
     let count = targetLiIndex - 1;
     while (count > -1) {
       count = -1;
       if (prevLi.is(notATab)) {
-        prevLi = prevLi.prev();
+        prevLi = this.tablist.children('li').not(notATab)[0];
         count -= 1;
       }
     }
@@ -2543,10 +2583,9 @@ Tabs.prototype = {
     // If content is text/string, simply inline it.
     const markup = $(`<div id="${tabId}" class="tab-panel" role="tabpanel"></div>`);
     if (content instanceof $) {
-      markup.append(content);
-    } else {
-      markup[0].innerHTML = content || '';
+      content = content[0];
     }
+    DOM.html(markup[0], content || '', '*');
 
     if (doInsert === true) {
       this.container.append(markup);
@@ -2664,9 +2703,8 @@ Tabs.prototype = {
   hide(e, tabId) {
     const tab = this.doGetTab(e, tabId);
 
-    if (tab.is('.is-selected')) {
-      this.activatePreviousTab(tabId);
-    }
+    this.activateAdjacentTab(e, tabId);
+
     tab.addClass('hidden');
     this.focusBar();
     this.positionFocusState();
@@ -2683,6 +2721,9 @@ Tabs.prototype = {
     const tab = this.doGetTab(e, tabId);
 
     tab.removeClass('hidden');
+
+    this.select($(this.element.find('li.tab.is-selected')[0]).find('a')[0].hash);
+
     this.focusBar();
     this.positionFocusState();
     return this;
@@ -2697,12 +2738,8 @@ Tabs.prototype = {
   disableTab(e, tabId) {
     const tab = this.doGetTab(e, tabId);
 
-    if (tab.is('.is-selected')) {
-      if (typeof e === 'string') {
-        tabId = e;
-      }
-      this.activatePreviousTab(tabId);
-    }
+    this.activateAdjacentTab(e, tabId);
+
     tab.addClass('is-disabled');
     this.focusBar();
     this.positionFocusState();
@@ -3616,7 +3653,7 @@ Tabs.prototype = {
       }
       targetPosString += `${key}: ${targetPos[key]}px;`;
     });
-    focusStateElem.setAttribute('style', targetPosString);
+    focusStateElem.style.cssText = targetPosString;
 
     const selected = targetClassList.contains('is-selected') ? 'add' : 'remove';
     focusStateElem.classList[selected]('is-selected');
@@ -3797,6 +3834,17 @@ Tabs.prototype = {
   },
 
   /**
+   * Remove top level dismissible tab with dropdown
+   * @param {array} tabUrlArray the Array of urls from the target popupmenu
+   */
+  closeDismissibleTabs(tabUrlArray) {
+    tabUrlArray.forEach((tabUrl) => {
+      const tabId = tabUrl.match(/#.*/);
+      return this.remove(tabId[0]);
+    });
+  },
+
+  /**
    * Tears down this instance of the tabs component by removing events,
    * other components, and extraneous markup.
    * @returns {this} component instance
@@ -3882,7 +3930,7 @@ Tabs.prototype = {
       this.animatedBar.remove();
       this.animatedBar = undefined;
     }
-    $('.tab-panel input').off('isvalid.tabs');
+    $('.tab-panel input').off('error.tabs valid.tabs');
 
     return this;
   },

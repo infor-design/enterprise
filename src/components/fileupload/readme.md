@@ -1,10 +1,11 @@
 ---
 title: File Upload
-description: This page describes File Upload.
+description: Displays an editable field. A user can prompt a system menu to select one or more file to upload. Best for allowing users to select files from a local server to be hosted on an application.
 demo:
-  pages:
+  embedded:
   - name: Default File Upload Example
     slug: example-index
+  pages:
   - name: Advanced File Upload Example
     slug: example-index
   - name: Limit File Types
@@ -34,6 +35,10 @@ The custom-styled file upload is built by making the standard file upload elemen
 ## Accessibility
 
 - Make sure the input has a matching label which describes what you are uploading
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

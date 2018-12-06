@@ -1,6 +1,6 @@
 import { TimePicker } from '../../../src/components/timepicker/timepicker';
 
-const timepickerHTML = require('../../../app/views/components/timepicker/test-events.html');
+const timepickerHTML = require('../../../app/views/components/timepicker/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let timepickerEl;
@@ -17,7 +17,6 @@ describe('TimePicker Events', () => {
     document.body.insertAdjacentHTML('afterbegin', timepickerHTML);
     timepickerEl = document.body.querySelector('.timepicker');
     svgEl = document.body.querySelector('.svg-icons');
-    timepickerEl.classList.add('no-init');
     timepickerObj = new TimePicker(timepickerEl);
   });
 
@@ -28,7 +27,7 @@ describe('TimePicker Events', () => {
   });
 
   it('Should trigger "change" event', () => {
-    const spyEvent = spyOnEvent('#timepicker-events', 'change');
+    const spyEvent = spyOnEvent('#timepicker-main', 'change');
     timepickerObj.openTimePopup();
     timepickerObj.setTimeOnField();
     timepickerObj.closeTimePopup();

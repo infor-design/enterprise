@@ -1,10 +1,11 @@
 ---
 title: Column Chart (Grouped)
-description: This page describes Column Chart (Grouped).
+description: null
 demo:
-  pages:
+  embedded:
   - name: Standard Grouped Column Chart
     slug: example-index
+  pages:
   - name: Default a Selected Group
     slug: example-selected
   - name: Handle negative values
@@ -16,15 +17,6 @@ demo:
   - name: Example showing Set Selected value
     slug: example-set-selected
 ---
-
-## Configuration Options
-
-1. Example Grouped Column Chart [View Example]( ../components/column-grouped/example-index)
-2. Default a Selected Group [View Example]( ../components/column-grouped/example-selected)
-3. Handle Negative Values [View Example]( ../components/column-grouped/example-negative-value)
-4. Set animation speed [View Example]( ../components/column-grouped/example-animation)
-5. Example showing Get Selected value [View Example]( ../components/column-grouped/example-get-selected)
-6. Example showing Set Selected value [View Example]( ../components/column-grouped/example-set-selected)
 
 ## Code Example
 
@@ -61,6 +53,10 @@ The contrast and actual colors can be a concern for visibility impaired and colo
 ## Code Tips
 
 You can override the tooltip by passing in a specific tooltip text value.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

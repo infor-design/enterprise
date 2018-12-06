@@ -1,10 +1,11 @@
 ---
 title: Tabs-multi
-description: This page describes Tabs-multi.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Default tabs-multi example
     slug: example-index
+  pages:
   - name: test masthead
     slug: test-masthead
   - name: test side by side
@@ -30,6 +31,10 @@ The Multi-Tabs component creates a system that wraps individual [Tabs Components
 
 ```
 
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+
 ## Keyboard Shortcuts
 
-There aren't any keystrokes specific to the Multi-tabs component.  See the [Tabs Component](../components/tabs/index) documentation for information about keystrokes.
+There aren't any keystrokes specific to the Multi-tabs component.  See the [Tabs Component](../tabs) documentation for information about keystrokes.

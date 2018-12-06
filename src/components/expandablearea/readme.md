@@ -1,10 +1,11 @@
 ---
 title: Expandable Area
-description: This page describes Expandable Area .
+description: null
 demo:
-  pages:
+  embedded:
   - name: Default Expandable Area Example
     slug: example-index
+  pages:
   - name: Custom Link Text Demo
     slug: example-custom-text
 ---
@@ -27,6 +28,10 @@ It's possible to keep the area open by default by adding the class `is-expanded`
   </div>
 </div>
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

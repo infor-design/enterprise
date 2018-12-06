@@ -1,5 +1,8 @@
 // Select (DropDown)
 //================================================== //
+
+@import '../input/input-mixins';
+
 @mixin list-icon-colors {
   &.error {
     fill: $error-color;
@@ -74,14 +77,15 @@ div.multiselect {
   @include input-style();
   @include css3(touch-callout, none);
   @include css3(user-select, none);
-  @include transition(background-color .2s ease);
-  background-color: $input-bg-color;
-  border-color: $input-border-color;
-  color: $dropdown-color;
+  @include transition(background-color 0.2s ease);
+
+  background-color: $input-color-initial-background;
+  border-color: $input-color-initial-border;
+  color: $dropdown-color-initial-font;
   cursor: pointer;
   overflow: hidden;
   padding: 8px 30px 8px 10px;
-  -webkit-text-fill-color: $dropdown-color;
+  -webkit-text-fill-color: $dropdown-color-initial-font;
   text-overflow: ellipsis;
   vertical-align: middle;
   white-space: nowrap;
@@ -101,10 +105,17 @@ div.multiselect {
     text-overflow: ellipsis;
     vertical-align: top;
     width: inhert;
+
+    &:empty::before {
+      color: $input-placeholder-color;
+      content: attr(data-placeholder-text);
+      -webkit-text-fill-color: $input-placeholder-color;
+    }
   }
 
   > .listoption-icon {
     @include list-icon-colors();
+
     fill: $popupmenu-icon-color;
     height: 16px;
     left: 14px;
@@ -124,8 +135,8 @@ div.multiselect {
 
   &[disabled],
   &.is-disabled {
-    background-color: $input-disabled-bg-color;
-    border-color: $input-disabled-border-color;
+    background-color: $input-color-disabled-background;
+    border-color: $input-color-disabled-border;
     color: $input-disabled-color;
     cursor: default;
     pointer-events: none;
@@ -133,7 +144,7 @@ div.multiselect {
 
     .icon,
     + .icon {
-      background-color: $input-disabled-bg-color;
+      background-color: $input-color-disabled-background;
       cursor: default;
       fill: $trigger-disabled-color;
     }
@@ -147,7 +158,7 @@ div.multiselect {
     }
   }
 
-  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly):not(.is-open) {
+  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly):not(.is-open):not(.error) {
     border-color: $trigger-hover-color;
 
     + .icon {
@@ -172,17 +183,15 @@ div.multiselect {
   }
 
   &.is-readonly {
-    background-color: $input-readonly-bg-color;
-    border-color: $input-readonly-border-color;
+    background-color: $input-color-readonly-background;
+    border-color: $input-color-readonly-border;
     color: $input-readonly-color;
     cursor: text;
     -webkit-text-fill-color: $input-readonly-color;
   }
 
   &:focus {
-    // scss-lint:disable ImportantRule
-    border-color: $input-focus-border-color !important;
-    // scss-lint:enable ImportantRule
+    border-color: $input-color-focus-border !important;
   }
 
 }
@@ -190,10 +199,11 @@ div.multiselect {
 // The List
 .dropdown-list {
   @include unselectable();
+
   background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
-  box-shadow: $dropdown-box-shadow, $focus-box-shadow;
+  box-shadow: $dropdown-shadow-initial-boxshadow, $focus-box-shadow;
   font-size: 1.4rem;
   max-height: 300px;
   min-height: 30px;
@@ -218,7 +228,7 @@ div.multiselect {
 
   // Enables certain mobile-specific settings
   &.mobile {
-    background-color: $body-bg-color;
+    background-color: $body-color-primary-background;
   }
 
   &.is-ontop {
@@ -227,6 +237,7 @@ div.multiselect {
 
   ul {
     @include font-size(14);
+
     background-color: $popupmenu-bg-color;
     color: $popupmenu-color;
     height: auto;
@@ -243,7 +254,7 @@ div.multiselect {
     position: relative;
 
     i {
-      color: $dropdown-filter-color;
+      color: $dropdown-color-initial-icon;
       font-style: normal;
       text-decoration: none;
     }
@@ -278,14 +289,14 @@ div.multiselect {
     }
 
     &.is-focused:not(.is-disabled) {
-      background-color: $dropdown-selected-bg-color;
+      background-color: $dropdown-color-selected-background;
 
       a {
-        color: $dropdown-selected-color;
+        color: $dropdown-color-selected-font;
       }
 
       &.is-selected {
-        background-color: $dropdown-selected-bg-color;
+        background-color: $dropdown-color-selected-background;
 
         a {
           color: $inverse-color;
@@ -297,12 +308,15 @@ div.multiselect {
       }
 
       .badge {
+        background-color: $inverse-color;
         border-color: $inverse-color;
+        color: $dropdown-color-selected-background !important;
       }
     }
 
     .listoption-icon {
       @include list-icon-colors();
+
       fill: $popupmenu-icon-color;
       height: 16px;
       left: 0;
@@ -326,6 +340,7 @@ div.multiselect {
 
   > .listoption-icon {
     @include list-icon-colors();
+
     fill: $popupmenu-icon-color;
     height: 16px;
     left: 10px;
@@ -346,6 +361,7 @@ div.multiselect {
   a {
     @include css3(touch-callout, none);
     @include css3(user-select, none);
+
     color: $popupmenu-color;
     display: block;
     overflow: hidden;
@@ -361,12 +377,11 @@ div.multiselect {
 
   // Added to the dropdown list when doing a search
   &.search-mode {
-
     li {
       i {
         color: $font-color-extrahighcontrast;
-        font-weight: bold;
-        letter-spacing: -.2;
+        font-weight: $theme-number-font-weight-bold;
+        letter-spacing: -0.2;
       }
 
       &.is-disabled {
@@ -385,13 +400,13 @@ div.multiselect {
   }
 
   &.multiple {
-
     ul {
       text-indent: 33px;
     }
 
     li::before {
       @include checkbox-unchecked-before-style;
+
       margin-left: 10px;
       margin-top: 8px;
     }
@@ -414,6 +429,7 @@ div.multiselect {
 
     li.is-selected::after {
       @include checkbox-checked-after-style;
+
       left: 15px;
       margin-top: 0;
       top: 8px;
@@ -451,8 +467,9 @@ div.multiselect {
   .group-label {
     @include css3(user-select, none);
     @include font-size(12);
-    color: $dropdown-group-label-color;
-    font-weight: bold;
+
+    color: $label-color-initial-font;
+    font-weight: $theme-number-font-weight-bold;
     line-height: 20px;
     min-height: 20px;
     padding: 6px 0 4px;
@@ -479,6 +496,7 @@ div.multiselect {
 
     .icon {
       @include css3(transform, rotate(180deg));
+
       background-color: rgba($white, 0);
       fill: $trigger-icon-fill-color;
       height: 32px;
@@ -486,6 +504,7 @@ div.multiselect {
 
       &.search {
         @include css3(transform, rotate(0deg));
+
         height: 18px;
         margin-top: 7px;
         width: 16px;
@@ -507,11 +526,11 @@ div.multiselect {
 }
 
 .dropdown-search {
-  background-color: $body-bg-color;
+  background-color: $dropdown-search-bg-color;
   border: 0;
   border-bottom: 1px solid $dropdown-menu-separator-border-color;
   border-radius: 0;
-  color: $dropdown-color;
+  color: $dropdown-color-initial-font;
   padding: 8px 30px 8px 10px;
   text-overflow: ellipsis;
   width: 100%;
@@ -526,6 +545,10 @@ div.multiselect {
 
   &::-ms-clear {
     display: none;
+  }
+
+  &[readonly] {
+    background-color: $dropdown-search-bg-color !important;
   }
 
   &:focus {
@@ -548,6 +571,10 @@ div.multiselect {
   .dropdown-search {
     border-bottom: 0;
   }
+}
+
+.no-icon-padding {
+  padding-left: 12px !important;
 }
 
 .dropdown.error {
@@ -577,9 +604,9 @@ input.dropdown.error:focus {
 
 //Shorter Field Size
 .field-short {
-
   div.dropdown {
     @include font-size(12);
+
     margin-bottom: 0;
     padding: 5px 21px 5px 5px;
 
@@ -650,6 +677,7 @@ div.dropdown-xs,
 .dropdown-list.dropdown-short {
   .dropdown-search {
     @include font-size(12);
+
     padding: 5px 32px 5px 5px;
   }
 
@@ -661,6 +689,7 @@ div.dropdown-xs,
 
   ul {
     @include font-size(12);
+
     text-indent: 5px;
   }
 
@@ -746,6 +775,17 @@ div.dropdown-xs,
       }
     }
   }
+
+  &.ie-edge18 {
+    .dropdown-list {
+      &.multiple li {
+        &::before {
+          margin-left: 10px;
+          margin-top: 7px;
+        }
+      }
+    }
+  }
 }
 
 // Firefox needs a nudge on the list items
@@ -781,6 +821,7 @@ div.dropdown-xs,
     &.dropdown-short {
       .dropdown-search {
         @include font-size(12);
+
         padding: 5px 21px 5px 5px;
       }
     }
@@ -798,18 +839,44 @@ div.dropdown-xs,
 .ios {
   .dropdown-list.multiple li {
     &::before {
-      top: 6px;
+      top: 0;
     }
 
     &.is-selected::after {
+      top: 8px;
+    }
+  }
+
+  div.dropdown,
+  div.multiselect {
+    > .listoption-icon {
       top: 11px;
+    }
+
+    + .icon {
+      top: 4px;
     }
   }
 }
 
-//RTL Styles
-html[dir='rtl'] {
+//for firefox on android
+.is-firefox {
+  &.android {
+    div.dropdown,
+    div.multiselect {
+      > .listoption-icon {
+        top: 12px;
+      }
 
+      + .icon {
+        top: 4px;
+      }
+    }
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
   .dropdown,
   .multiselect,
   input.dropdown,
@@ -830,9 +897,7 @@ html[dir='rtl'] {
       left: 8px;
       margin-left: inherit;
       margin-right: -33px;
-      // scss-lint:disable ImportantRule
       right: auto !important;
-      // scss-lint:enable ImportantRule
     }
   }
 
@@ -850,9 +915,7 @@ html[dir='rtl'] {
 
   // The List
   .dropdown-list {
-
     &.multiple {
-
       li::before {
         margin-left: inherit;
         margin-right: 5px;
@@ -884,7 +947,6 @@ html[dir='rtl'] {
         margin-right: -22px;
       }
     }
-
 
     li {
       .listoption-icon {
@@ -972,9 +1034,7 @@ html[dir='rtl'] {
 
       ~ .icon-error {
         margin-left: inherit;
-        // scss-lint:disable ImportantRule
         margin-right: -38px !important;
-        // scss-lint:enable ImportantRule
       }
     }
 

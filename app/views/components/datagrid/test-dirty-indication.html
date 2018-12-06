@@ -15,14 +15,6 @@
           </svg>
           <span>Reset</span>
         </button>
-
-        <button class="btn" type="button" id="show-dirty">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-info"></use>
-          </svg>
-          <span>Show Dirty</span>
-        </button>
-
       </div>
 
       <div class="more">
@@ -83,7 +75,7 @@
 
         //Define Columns for the Grid.
         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, sortable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-        columns.push({ id: 'rowStatus', resizable: false, sortable: false, formatter: Formatters.Status, align: 'center'});
+        // columns.push({ id: 'rowStatus', resizable: false, sortable: false, formatter: Formatters.Status, align: 'center'});
         columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
         columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required'});  //maxLength: 2
@@ -117,10 +109,4 @@
   $('#add-reset').on('click', function () {
     gridApi.resetRowStatus();
   });
-
-  //Example of seeing all dirty rows
-  $('#show-dirty').on('click', function () {
-    console.log(gridApi.dirtyRows());
-  });
-
 </script>

@@ -1,10 +1,11 @@
 ---
 title: Bar Chart
-description: This page describes Bar Chart.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Standard Bar Chart
     slug: example-index
+  pages:
   - name: Example with More Elements and Longer Text
     slug: example-alignment
   - name: Example showing how to set Colors
@@ -84,6 +85,10 @@ $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
 });
 
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

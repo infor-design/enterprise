@@ -45,22 +45,6 @@ stringUtils.containsHTML = function containsHTML(str) {
 };
 
 /**
- * Takes a string and removes html tabs
- * @param {string} str The string to parse
- * @returns {string} The string minus html tags.
- */
-stringUtils.stripHTML = function stripHTML(str) {
-  let newStr = str;
-
-  if (!newStr) {
-    return '';
-  }
-
-  newStr = newStr.replace(/<\/?[^>]+(>|$)/g, '');
-  return newStr;
-};
-
-/**
  * Takes a string containing HTML and strips it of extraneous white space.
  * @param {string} str The string to parse
  * @returns {string} The string minus extraneous white space.
@@ -79,6 +63,70 @@ stringUtils.stripWhitespace = function stripWhitespace(str) {
  */
 stringUtils.capitalize = function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+/**
+ * [capitalize description]
+ * @param  {string} val A text string ("true" or "false") that can be converted to a boolean.
+ * @returns {boolean} true or false
+ */
+stringUtils.toBoolean = function capitalize(val) {
+  const num = +val;
+  return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
+};
+
+/**
+ * Return the width in pixels, assuming fontsize 14 as a default
+ * @param  {string} text A text string to measure.
+ * @param  {string} fontsize The elements font size (defaults to 14)
+ * @returns {number} The text width.
+ */
+stringUtils.textWidth = function capitalize(text, fontsize = 14) {
+  this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+  const context = this.canvas.getContext('2d');
+  context.font = `${fontsize}px arial`;
+
+  const metrics = context.measureText(text);
+  return Math.round(metrics.width);
+};
+
+/**
+ * Pad a date into a string with zeros added.
+ * @private
+ * @param {number} year The year to use.
+ * @param {number} month The month to use.
+ * @param {number} day The day to use.
+ * @returns {void}
+ */
+stringUtils.padDate = function padDate(year, month, day) {
+  return year + `0${month + 1}`.slice(-2) + `0${day}`.slice(-2);
+};
+
+/**
+ * Calculate the width for given text string.
+ * @private
+ * @param {string} text string to process
+ * @param {number} padding value for left + right
+ * @param {string} font size and family used with the given text string
+ * @returns {number} calculated width
+ */
+stringUtils.textWidth = function textWidth(text, padding, font) {
+  this.canvasTW = this.canvasTW || (this.canvasTW = document.createElement('canvas'));
+  const context = this.canvasTW.getContext('2d');
+  context.font = font || '14px arial';
+
+  const metrics = context.measureText(text);
+  return Math.round(metrics.width + (padding || 0));
+};
+
+/**
+ * Escape  user input to be treated as literal string with regular expressions
+ * @private
+ * @param {string} s string to process.
+ * @returns {string} string after escaping.
+ */
+stringUtils.escapeRegExp = function escapeRegExp(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& whole matched string
 };
 
 export { stringUtils }; //eslint-disable-line

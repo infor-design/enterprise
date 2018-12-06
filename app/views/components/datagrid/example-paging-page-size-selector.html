@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="twelve columns">
-    <button class="btn-primary" type="button" id="toggle-pagesize-selector">Toggle pagesize selector</button><br>
+    <button class="btn-primary" type="button" id="toggle-pagesize-selector">Toggle pagesize selector</button>
     <div id="datagrid">
     </div>
   </div>
@@ -25,7 +25,6 @@
       var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
 
       $.getJSON(url, function(res) {
-
         //Show the grid
         grid = $('#datagrid').datagrid({
           columns: columns,
@@ -34,7 +33,7 @@
           paging: true,
           pagesize: 3,
           showPageSizeSelector: false,
-          toolbar: {title: 'Requests', results: true, dateFilter: false, keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
+          toolbar: {title: 'Compressors', results: true, dateFilter: false, keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
         }).data('datagrid');
 
         // Toggle Pagesize Selector

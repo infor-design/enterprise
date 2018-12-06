@@ -1,5 +1,5 @@
 import * as debug from '../../utils/debug';
-import { utils } from '../../utils/utils';
+import { utils, math } from '../../utils/utils';
 
 // Component Name
 const COMPONENT_NAME = 'rating';
@@ -55,7 +55,7 @@ Rating.prototype = {
    * @returns {number} current value
    */
   val(value) {
-    if (!value) {
+    if (value === '' || isNaN(value) || math.sign(value) === -1) {
       return this.currentValue;
     }
 
@@ -69,7 +69,7 @@ Rating.prototype = {
       if (i < value) {
         input.addClass('is-filled').removeClass('is-half');
       } else {
-        input.removeClass('is-filled').removeClass('is-half');
+        input.removeClass('is-filled').removeClass('is-half').prop('checked', false);
       }
 
       // Handle Half Star
@@ -83,7 +83,7 @@ Rating.prototype = {
         input.addClass('is-half').next(svgSelector).find('svg').changeIcon('star-half');
       }
     }
-    if (chkIdx <= 0) {
+    if (chkIdx <= 0 && value > 0) {
       $(this.allInputs[0]).prop('checked', true);
     }
 

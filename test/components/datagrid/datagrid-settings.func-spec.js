@@ -62,6 +62,7 @@ describe('Datagrid Settings', () => {
       rowHeight: 'normal',
       selectable: false,
       selectChildren: true,
+      allowSelectAcrossPages: null,
       groupable: null,
       spacerColumn: false,
       stretchColumn: 'last',
@@ -100,7 +101,8 @@ describe('Datagrid Settings', () => {
       onDestroyCell: null,
       onEditCell: null,
       onExpandRow: null,
-      emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+      emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
+      searchExpandableRow: true
     };
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
   });

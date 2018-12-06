@@ -4,7 +4,7 @@ const EXCLUDED_FROM_CLOSE_CHILDREN = ['.expandable-area', '.accordion'];
 const EXCLUDED_FROM_HANDLE_RESIZE = [];
 
 // Used by several of these plugins to detect whether or not the "data" property in question
-// is a valid SoHo Xi Control.
+// is a valid IDS Enterprise Control.
 function canAccessAPI(prop) {
   return prop && !(prop instanceof jQuery);
 }

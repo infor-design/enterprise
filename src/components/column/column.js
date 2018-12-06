@@ -3,6 +3,7 @@
 // Other Shared Imports
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
@@ -294,6 +295,22 @@ Column.prototype = {
       .tickSize(-width)
       .tickPadding(isRTL ? -12 : 12)
       .ticks(self.settings.ticks || 9, d3.format(self.settings.format || 's'));
+
+    if (self.settings.yAxis) {
+      if (self.settings.yAxis.formatter) {
+        yAxis.tickFormat(function (d, k) {
+          if (typeof self.settings.yAxis.formatter === 'function') {
+            return self.settings.yAxis.formatter(d, k);
+          }
+          return d;
+        });
+      }
+
+      if (self.settings.yAxis.ticks &&
+          self.settings.yAxis.ticks.number > 1 && self.settings.yAxis.ticks.format) {
+        yAxis.ticks(self.settings.yAxis.ticks.number, self.settings.yAxis.ticks.format);
+      }
+    }
 
     const svg = d3.select(this.element[0])
       .append('svg')
@@ -869,7 +886,7 @@ Column.prototype = {
         const text = d3.select(this).text();
         const markup = self.settings.xAxis.formatText(text, m);
 
-        elem.html(markup);
+        DOM.html(elem.node(), markup, '<tspan>');
       });
     }
 
@@ -1082,7 +1099,7 @@ Column.prototype = {
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${COMPONENT_NAME}`, () => {
         this.handleResize();
       });
 
@@ -1155,8 +1172,7 @@ Column.prototype = {
     this.element.empty();
 
     return this
-      .teardown()
-      .init();
+      .build();
   },
 
   /**
@@ -1166,7 +1182,7 @@ Column.prototype = {
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
-    $(window).off(`resize.${COMPONENT_NAME}`);
+    $('body').off(`resize.${COMPONENT_NAME}`);
     return this;
   },
 

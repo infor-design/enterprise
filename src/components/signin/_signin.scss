@@ -31,6 +31,7 @@
 
   h1 {
     @include font-size(24);
+
     color: $signin-title-color;
     margin-bottom: 30px;
     margin-top: -20px;
@@ -73,16 +74,29 @@
 
 }
 
-// scss-lint:disable ImportantRule
 .ios .signin .icon-error,
 .ios .signin .icon-confirm {
   top: 26.5px !important;
 }
-// scss-lint:enable ImportantRule
+
+//ios issue in misaligned icon error
+.ios .signin {
+  > #signin {
+    .error-message {
+      .icon-error {
+        top: 0 !important;
+      }
+
+      & .icon-confirm {
+        top: 0 !important;
+      }
+    }
+  }
+}
 
 .password-hint {
   strong {
-    font-weight: bold;
+    font-weight: $theme-number-font-weight-bold;
   }
 
   li {

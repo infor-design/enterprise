@@ -2,14 +2,8 @@
 const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
-
-const getSpecs = (listSpec) => {
-  if (listSpec) {
-    return listSpec.split(',');
-  }
-
-  return ['components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
-};
+const customSpecs = require('./helpers/detect-custom-spec-list')('e2e');
+const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
 exports.config = {
   params: {
@@ -17,17 +11,19 @@ exports.config = {
   },
   allScriptsTimeout: 120000,
   logLevel: 'DEBUG',
-  specs: getSpecs(process.env.PROTRACTOR_SPECS),
+  specs: specs,
   SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
     browserName: 'chrome' || 'firefox',
+    shardTestFiles: true,
+    maxInstances: 2,
   },
   directConnect: true,
   baseUrl: 'http://localhost:4000',
   framework: 'jasmine2',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 30000,
+    defaultTimeoutInterval: 120000,
     print: () => {}
   },
   onPrepare: () => {

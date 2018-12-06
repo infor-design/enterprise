@@ -1,10 +1,4 @@
 # Each line is a file pattern followed by one or more owners.
 
 # Default owners for the repo:
-*       @tmcconechy @EdwardCoyle @deep7102 @LarryAmisola
-
-# Code owners for the docs directory
-docs/   @tmcconechy @EdwardCoyle @deep7102 @clepore
-
-# Code owners for the test directory
-test/   @tmcconechy @d-g-h @CindyMercadoReyes
+* @tmcconechy @EdwardCoyle @deep7102 @davidcarlsonberg

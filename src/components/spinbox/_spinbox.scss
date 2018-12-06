@@ -2,7 +2,7 @@
 //================================================== //
 
 // Overrides some basic styles from the "input".
-.spinbox {
+input.spinbox {
   border-radius: 0;
   -webkit-font-smoothing: subpixel-antialiased;
   font-weight: 400;
@@ -12,9 +12,8 @@
   width: 84px;
 
   &:focus {
-    box-shadow: none;
+    box-shadow: none !important;
   }
-
 }
 
 input[type='number'] {
@@ -33,6 +32,7 @@ input::-webkit-inner-spin-button {
 
   > .spinbox-wrapper {
     @include font-size(0);
+
     position: relative;
     vertical-align: top;
   }
@@ -41,14 +41,15 @@ input::-webkit-inner-spin-button {
 .spinbox-control {
   @include css3(user-select, none);
   @include font-size(14);
+
   backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
   background-color: $spinbox-button-color;
-  border: 1px solid $input-border-color;
+  border: 1px solid $input-color-initial-border;
   border-collapse: separate;
   color: $font-color;
   cursor: pointer;
   display: inline-block;
-  font-weight: 700;
+  font-weight: $theme-number-font-weight-bold;
   height: 34px;
   line-height: normal;
   overflow: hidden;
@@ -81,8 +82,8 @@ input::-webkit-inner-spin-button {
   }
 
   &.is-disabled {
-    background-color: $input-disabled-bg-color;
-    border-color: $input-disabled-border-color;
+    background-color: $input-color-disabled-background;
+    border-color: $input-color-disabled-border;
     color: $disabled-color;
     cursor: default;
     -webkit-text-fill-color: $disabled-color;
@@ -103,6 +104,11 @@ input::-webkit-inner-spin-button {
     top: 0;
   }
 
+  &.error .spinbox-control {
+    border-color: $error-color;
+    color: $error-color;
+  }
+
   + .icon-error {
     margin-top: -15px;
   }
@@ -111,16 +117,16 @@ input::-webkit-inner-spin-button {
     box-shadow: $focus-box-shadow;
 
     > .spinbox-control {
-      border-color: $input-focus-border-color;
+      border-color: $input-color-focus-border;
 
       &.is-active {
-        border-color: $input-focus-border-color;
+        border-color: $input-color-focus-border;
         box-shadow: $focus-box-shadow;
       }
 
       &.is-disabled {
-        background-color: $input-disabled-bg-color;
-        border-color: $input-disabled-border-color;
+        background-color: $input-color-disabled-background;
+        border-color: $input-color-disabled-border;
         color: $disabled-color;
         cursor: default;
         -webkit-text-fill-color: $disabled-color;
@@ -131,8 +137,8 @@ input::-webkit-inner-spin-button {
 
   &.is-disabled {
     > .spinbox-control {
-      background-color: $input-disabled-bg-color;
-      border-color: $input-disabled-border-color;
+      background-color: $input-color-disabled-background;
+      border-color: $input-color-disabled-border;
       color: $disabled-color;
       cursor: default;
       -webkit-text-fill-color: $disabled-color;
@@ -141,7 +147,7 @@ input::-webkit-inner-spin-button {
 
   &.is-readonly {
     > .spinbox-control {
-      background-color: $input-readonly-bg-color;
+      background-color: $input-color-readonly-background;
       color: $input-readonly-color;
       cursor: default;
       -webkit-text-fill-color: $input-readonly-color;
@@ -160,8 +166,9 @@ input::-webkit-inner-spin-button {
   }
 
   .spinbox {
-    height: inherit;
-    margin-bottom: 0;
+    height: auto;
+    line-height: normal; // initial value declaration is 16px from "_typgraphy.scss" at "input.is-firefox"
+    padding: 5px;
   }
 
   .spinbox-control {
@@ -171,13 +178,31 @@ input::-webkit-inner-spin-button {
   }
 }
 
-//RTL Styles
+// Override for iOS to correctly align ".spinbox" as child of  ".field-short"
+.ios {
+  .field-short {
+    .spinbox {
+      padding-top: 6px;
+    }
+  }
+}
+
+// Override for IE to correctly align ".spinbox" as child of  ".field-short"
+.ie {
+  .field-short {
+    .spinbox {
+      height: 25px;
+    }
+  }
+}
+
+// RTL Styles
 html[dir='rtl'] {
   .spinbox-control {
     &.up {
       border-bottom-left-radius: 2px;
       border-bottom-right-radius: 0;
-      border-left: 1px solid $input-border-color;
+      border-left: 1px solid $input-color-initial-border;
       border-right: 0;
       border-top-left-radius: 2px;
       border-top-right-radius: 0;
@@ -187,13 +212,13 @@ html[dir='rtl'] {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 2px;
       border-left: 0;
-      border-right: 1px solid $input-border-color;
+      border-right: 1px solid $input-color-initial-border;
       border-top-left-radius: 0;
       border-top-right-radius: 2px;
     }
 
     &.is-disabled {
-      border-color: $input-disabled-border-color;
+      border-color: $input-color-disabled-border;
     }
   }
 
@@ -205,14 +230,14 @@ html[dir='rtl'] {
 
     &.is-focused {
       > .spinbox-control {
-        border-color: $input-focus-border-color;
+        border-color: $input-color-focus-border;
 
         &.is-active {
-          border-color: $input-focus-border-color;
+          border-color: $input-color-focus-border;
         }
 
         &.is-disabled {
-          border-color: $input-disabled-border-color;
+          border-color: $input-color-disabled-border;
         }
       }
 
@@ -220,7 +245,7 @@ html[dir='rtl'] {
 
     &.is-disabled {
       > .spinbox-control {
-        border-color: $input-disabled-border-color;
+        border-color: $input-color-disabled-border;
       }
     }
   }

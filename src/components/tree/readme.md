@@ -1,10 +1,11 @@
 ---
 title: Tree Component
-description: This page describes Tree Component .
+description: null
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Add Node
     slug: example-add-node
   - name: Ajax
@@ -31,4 +32,14 @@ demo:
     slug: example-sortable
   - name: Update Node
     slug: example-update-node
+  - name: Disable Tree
+    slug: example-disable
+  - name: Enable Tree
+    slug: example-enable
+  - name: Preserve and Restore Tree
+    slug: example-preserve-restore
 ---
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

@@ -34,6 +34,9 @@
 
 <script>
   $('#dropdown').on('change', function (e) {
-    console.log(e, $(this).val());
+    $('body').toast({
+      'title': 'Change Event Fired',
+      'message': 'Value changed to <span class="text-strong">' + $(this).val() + '</span> '
+    });
   });
 </script>

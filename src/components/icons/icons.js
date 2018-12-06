@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { base } from '../../utils/base';
 import { utils } from '../../utils/utils';
 
 // component name
@@ -6,7 +7,7 @@ const COMPONENT_NAME = 'icon';
 
 // Default Options
 const ICON_DEFAULTS = {
-  use: 'user-profile', // Match this to one of the SoHo Xi icons, prefixed with an ID of '#icon-'
+  use: 'user-profile', // Match this to one of the IDS Enterprise icons, prefixed with an ID of '#icon-'
   focusable: false
 };
 
@@ -81,7 +82,7 @@ Icon.prototype = {
    * @returns {string} a version of this icon's definition prefixed with the current base tag's URL.
    */
   getBasedUseTag() {
-    return $.getBaseURL(`#icon-${this.settings.use}`);
+    return base.getBaseURL(`#icon-${this.settings.use}`);
   },
 
   /**

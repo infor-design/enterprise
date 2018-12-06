@@ -19,7 +19,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
     $animations: #{$animations + nth($animate, $i)};
 
     @if $i < $max {
-      $animations: #{$animations + ", "};
+      $animations: #{$animations + ', '};
     }
   }
 
@@ -35,9 +35,11 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 
 // Builds out vendor-prefixed keyframe definitions
 @mixin keyframes($animation-name) {
-  @-webkit-keyframes #{$animation-name} {@content;}
-  @-moz-keyframes #{$animation-name} {@content;}
-  @keyframes #{$animation-name} {@content;}
+  @-webkit-keyframes #{$animation-name} { @content; }
+
+  @-moz-keyframes #{$animation-name} { @content; }
+
+  @keyframes #{$animation-name} { @content; }
 }
 
 // basic vendor prefixing
@@ -50,6 +52,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 // basic vendor prefixing with optional prefixes only
 @mixin css3-extended($property, $value, $this-prefixes:false) {
   $this-prefixes: if($this-prefixes, $this-prefixes, $prefixes);
+
   @each $prefix in $this-prefixes {
     #{$prefix}#{$property}: $value;
   }
@@ -107,9 +110,10 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 
 // set opacity cross browser
 @mixin opacity($opacity) {
-  opacity: $opacity;
   $opacity-ie: $opacity * 100;
-  filter: alpha(opacity=$opacity-ie); //IE8
+
+  filter: alpha(opacity=$opacity-ie); // IE8
+  opacity: $opacity;
 }
 
 // Util For Rem Mixin
@@ -120,12 +124,14 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 // Util To Disable Select
 @mixin no-select {
   @include css3(user-select, none);
+
   -webkit-touch-callout: none;
 }
 
 // Util to enable select (use in conjunction with the disable util)
 @mixin enable-select {
   @include css3(user-select, auto);
+
   -webkit-touch-callout: default;
 }
 
@@ -140,7 +146,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
     $px-values: #{$px-values + $value*16}px;
 
     @if $i < $max {
-      $px-values: #{$px-values + " "};
+      $px-values: #{$px-values + ' '};
     }
   }
 
@@ -149,7 +155,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
     $rem-values: #{$rem-values + $value}rem;
 
     @if $i < $max {
-      $rem-values: #{$rem-values + " "};
+      $rem-values: #{$rem-values + ' '};
     }
   }
 
@@ -161,21 +167,37 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 @mixin respond-to($media) {
   @if $media == phone {
     @media (max-width: $breakpoint-phone-to-tablet - 1) { @content; }
-  } @else if $media == phonedown {
+  }
+
+  @else if $media == phonedown {
     @media (min-width: 0) and (max-width: $breakpoint-big-phone - 1) { @content; }
-  } @else if $media == tabletdown {
+  }
+
+  @else if $media == tabletdown {
     @media (max-width: $breakpoint-tablet-to-desktop - 1) { @content; }
-  } @else if $media == tablet {
+  }
+
+  @else if $media == tablet {
     @media (min-width: $breakpoint-phone-to-tablet) and (max-width: $breakpoint-tablet-to-desktop - 1) { @content; }
-  } @else if $media == phablet {
+  }
+
+  @else if $media == phablet {
     @media (max-width: $breakpoint-phablet) { @content; }
-  } @else if $media == phabletdown {
+  }
+
+  @else if $media == phabletdown {
     @media (min-width: 0) and (max-width: $breakpoint-wide-tablet - 1) { @content; }
-  } @else if $media == tabletup {
+  }
+
+  @else if $media == tabletup {
     @media (min-width: $breakpoint-phone-to-tablet) { @content; }
-  } @else if $media == desktop {
+  }
+
+  @else if $media == desktop {
     @media (min-width: $breakpoint-tablet-to-desktop) and (max-width: $breakpoint-desktop-to-extralarge - 1) { @content; }
-  } @else if $media == extralarge {
+  }
+
+  @else if $media == extralarge {
     @media (min-width: $breakpoint-desktop-to-extralarge) { @content; }
   }
 }
@@ -197,12 +219,12 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 // Truncate to Ellipsis....
 @mixin ellipsis {
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @mixin focus-state {
-  border: solid 1px $input-focus-border-color;
+  border: solid 1px $input-color-focus-border;
   box-shadow: $focus-box-shadow;  //wanted 0 0 4px 3px rgba(54, 138 ,192, 0.30)
   outline: none;
   outline-color: transparent;
@@ -210,16 +232,17 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 
 // Wrap longer word
 @mixin word-wrap() {
-  -ms-word-break: break-all;
-  word-break: break-all;
   -webkit-hyphens: auto;
   -moz-hyphens: auto;
   -ms-hyphens: auto;
   hyphens: auto;
+  -ms-word-break: break-all;
+  word-break: break-all;
 }
 
 // Disable Text Selection
 @mixin unselectable() {
+  outline-style: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -227,11 +250,11 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
-  outline-style: none;
 }
 
 // Enable Text Selection
 @mixin selectable() {
+  outline-style: none;
   -webkit-touch-callout: auto;
   -webkit-user-select: auto;
   -khtml-user-select: auto;
@@ -239,7 +262,6 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   -ms-user-select: auto;
   -o-user-select: auto;
   user-select: auto;
-  outline-style: none;
 }
 
 // Vertical Alignment Spacer
@@ -277,29 +299,31 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 
 @mixin flex($value) {
   -webkit-box-flex: $value;
-  -moz-box-flex:  $value;
-  -webkit-flex:  $value;
-  -ms-flex:  $value;
+  -moz-box-flex: $value;
+  -webkit-flex: $value;
+  -ms-flex: $value;
   flex: $value;
 }
 
 @mixin flex-direction($value) {
   $orient: horizontal;
+
   @if $value == 'column' {
     $orient: vertical;
   }
+
   -moz-box-direction: $value;
   -webkit-box-direction: $value;
   -webkit-box-orient: $orient;
   -webkit-flex-direction: $value;
-  -ms-flexbox-direction: $value;
   -ms-flex-direction: $value;
   flex-direction: $value;
+  -ms-flexbox-direction: $value;
 }
 // END: Flexbox
 
 // Re-usable box shadow statement for drawer-style stuff
-$box-shadow-on-color: rgba(0, 0, 0, .75);
+$box-shadow-on-color: rgba(0, 0, 0, 0.75);
 $box-shadow-off-color: rgba(0, 0, 0, 0);
 
 @mixin drawer-box-shadow() {

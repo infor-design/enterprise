@@ -1,8 +1,8 @@
 ---
 title: Context Menu
-description: This page describes Context Menu .
+description: null
 demo:
-  pages:
+  embedded:
   - name: Context Menu on an Input
     slug: example-index
 ---
@@ -29,25 +29,25 @@ The popup menu can be linked as a right-click menu item by adding the attribute 
   <input type="text" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu">
 </div>
 <ul id="action-popupmenu" class="popupmenu">
-  <li><a href="#">Cut</a></li>
-  <li><a href="#">Copy</a></li>
-  <li><a href="#">Paste</a></li>
+  <li><a href="#" id="cut">Cut</a></li>
+  <li><a href="#" id="copy">Copy</a></li>
+  <li><a href="#" id="paste">Paste</a></li>
   <li>
-    <a href="#">Paste Special</a>
+    <a href="#" id="paste-special">Paste Special</a>
     <ul class="popupmenu">
-      <li><a href="#">Sub Menu 1</a></li>
-      <li><a href="#">Sub Menu 2</a></li>
+      <li><a href="#" id="sub-menu-1">Sub Menu 1</a></li>
+      <li><a href="#" id="sub-menu-2">Sub Menu 2</a></li>
     </ul>
   </li>
   <li class="separator"></li>
-  <li><a href="#">Name and project range</a></li>
-  <li><a id='x' href="#" disabled>Insert comment</a></li>
-  <li><a href="#" disabled>Insert note</a></li>
-  <li><a href="#">Clear notes</a></li>
+  <li><a href="#" id="name-project-range">Name and project range</a></li>
+  <li><a id='insert-comment' href="#" disabled>Insert comment</a></li>
+  <li><a id="insert-note" href="#" disabled>Insert note</a></li>
+  <li><a id="clear-notes" href="#">Clear notes</a></li>
   <li class="separator single-selectable-section"></li>
   <li class="heading">Additional Options</li>
-  <li class="is-selectable is-checked"><a href="#">Conditional formatting</a></li>
-  <li class="is-selectable"><a href="#">Data validation</a></li>
+  <li class="is-selectable is-checked"><a href="#" id="conditional-fromatting">Conditional formatting</a></li>
+  <li class="is-selectable"><a href="#" id="data-validation">Data validation</a></li>
 </ul>
 ```
 
@@ -58,3 +58,7 @@ The popup menu can be linked as a right-click menu item by adding the attribute 
 - A right-click menu should never be the only method of performing specific actions as the actions are not easily discoverable by the user
 
 For all additional information, see the [popup menu](./popupmenu) as this component is used to make a context menu via it's option `trigger: 'right-click'`.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

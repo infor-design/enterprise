@@ -1,10 +1,11 @@
 ---
 title: Rating
-description: This page describes Rating.
+description: Displays a scale of selectable values in ascending order. A user can select exactly one value at a time. Best for showing a user's current selection relative to the lower and upper limits of a scale.
 demo:
-  pages:
+  embedded:
   - name: Rating Example
     slug: example-index
+  pages:
   - name: Readonly Example
     slug: example-readonly
   - name: Rounding Decimals Up Example
@@ -64,6 +65,10 @@ Note that the name should be the same for all stars for it to function correctly
 ## Accessibility
 
 `aubible` labels are added for giving the star information.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

@@ -8,9 +8,9 @@ $dd-width: 55px;
 
 .field.fieldfilter-wrapper {
   div:first-of-type {
+    height: 34px;
     margin-right: -1px;
     vertical-align: top;
-    height: 34px;
 
     div.dropdown {
       border-radius: 2px 0 0 2px;
@@ -129,7 +129,7 @@ html[dir='rtl'] {
       div.dropdown {
         border-left-color: $fieldfilter-border-side-color;
         border-radius: 0 2px 2px 0;
-        border-right-color: $input-border-color;
+        border-right-color: $input-color-initial-border;
         padding-top: 8px;
       }
     }

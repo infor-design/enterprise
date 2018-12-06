@@ -3,15 +3,16 @@
 @mixin is-dragging() {
   background-color: $swaplist-bg-color;
   border: 1px solid transparent;
-  opacity: .4;
+  opacity: 0.4;
   padding: 9px 20px 8px;
 }
 
 @mixin is-dragging-touch() {
   @include is-dragging();
+
   background-color: $swaplist-bg-color-selected;
   color: $white;
-  opacity: .7;
+  opacity: 0.7;
   position: fixed;
   z-index: 2;
 
@@ -21,7 +22,6 @@
 }
 
 .swaplist {
-
   .card {
     border-bottom-width: 1px;
     border-color: $swaplist-border-color-card;
@@ -58,26 +58,26 @@
       }
 
       &::after { //border left and right
-        box-shadow: 0 6px 0 $swaplist-icon-color,
-                    0 12px 0 $swaplist-icon-color,
-                    16px 0 0 $swaplist-icon-color,
-                    16px 6px 0 $swaplist-icon-color,
-                    16px 12px 0 $swaplist-icon-color;
+        box-shadow:
+          0 6px 0 $swaplist-icon-color,
+          0 12px 0 $swaplist-icon-color,
+          16px 0 0 $swaplist-icon-color,
+          16px 6px 0 $swaplist-icon-color,
+          16px 12px 0 $swaplist-icon-color;
         height: 5px;
         width: 2px;
       }
 
       &::before { //border top and bottom
         box-shadow: 13px 0 0 $swaplist-icon-color,
-                    0 16px 0 $swaplist-icon-color,
-                    13px 16px 0 $swaplist-icon-color;
+          0 16px 0 $swaplist-icon-color,
+          13px 16px 0 $swaplist-icon-color;
         height: 2px;
         width: 5px;
       }
 
       &:hover,
       &:focus:not(.hide-focus):not(.is-disabled) {
-
         &::after,
         &::before {
           background: $swaplist-icon-color-hover; //border color
@@ -85,16 +85,16 @@
 
         &::after {
           box-shadow: 0 6px 0 $swaplist-icon-color-hover,
-                      0 12px 0 $swaplist-icon-color-hover,
-                      16px 0 0 $swaplist-icon-color-hover,
-                      16px 6px 0 $swaplist-icon-color-hover,
-                      16px 12px 0 $swaplist-icon-color-hover;
+            0 12px 0 $swaplist-icon-color-hover,
+            16px 0 0 $swaplist-icon-color-hover,
+            16px 6px 0 $swaplist-icon-color-hover,
+            16px 12px 0 $swaplist-icon-color-hover;
         }
 
         &::before {
           box-shadow: 13px 0 0 $swaplist-icon-color-hover,
-                      0 16px 0 $swaplist-icon-color-hover,
-                      13px 16px 0 $swaplist-icon-color-hover;
+            0 16px 0 $swaplist-icon-color-hover,
+            13px 16px 0 $swaplist-icon-color-hover;
         }
 
         .icon {
@@ -125,7 +125,7 @@
 
     .card-title {
       color: $swaplist-title-text-color;
-      font-weight: normal;
+      font-weight: $theme-number-font-weight-base;
     }
 
     p {
@@ -195,14 +195,12 @@
   }
 
   .is-multiselect {
-    // scss-lint:disable NestingDepth
     ul {
       min-height: 100%;
       padding: 5px 0;
 
       &.is-not-droppable {
         li {
-
           &.is-selected {
             &:hover:not(.is-disabled),
             &:focus:not(.is-disabled) {
@@ -222,7 +220,6 @@
         }
       }
     }
-    // scss-lint:enable NestingDepth
 
     li {
       border: 1px solid transparent;
@@ -258,7 +255,7 @@
 
         p {
           color: $swaplist-text-color-selected;
-          font-weight: bold;
+          font-weight: $theme-number-font-weight-bold;
         }
 
         &:hover:not(.is-disabled),
@@ -275,7 +272,6 @@
           }
         }
       }
-
 
       &.is-dragging {
         @include is-dragging();
@@ -328,11 +324,9 @@
   }
 }
 
-
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .swaplist {
-
     .card {
       border-left-width: 1px;
       border-right-width: 0;

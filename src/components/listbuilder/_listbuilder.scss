@@ -17,7 +17,7 @@
     background-color: $listbuilder-bg-color-hover;
     border-color: transparent;
     min-height: 34px;
-    opacity: .4;
+    opacity: 0.4;
 
     .handle {
       display: inline-block;
@@ -28,14 +28,12 @@
     margin-bottom: -1px;
 
     .buttonset {
-      [class^="btn"] {
+      [class^='btn'] {
         height: 24px;
         margin-left: 1px;
         margin-right: 10px;
         margin-top: 4px;
-        // scss-lint:disable ImportantRule
         padding: 0 2px !important;
-        // scss-lint:enable ImportantRule
         width: 24px;
 
         &:first-child {
@@ -51,6 +49,7 @@
 
   .handle {
     @include font-size(25);
+
     color: $listbuilder-icon-color-hover;
     display: none;
     left: 6px;
@@ -98,7 +97,7 @@
       }
 
       &.is-selected {
-        background-color: $listbuilder-bg-color-selected;
+        background-color: $listbuilder-bg-color-selected !important;
 
         &.is-disabled {
           background-color: $listbuilder-bg-color-hover;
@@ -122,7 +121,7 @@
 
         p {
           color: $listbuilder-text-color-selected;
-          font-weight: bold;
+          font-weight: $theme-number-font-weight-bold;
         }
 
         &:hover:not(.is-disabled),
@@ -142,6 +141,7 @@
 
       &.is-editing {
         @include selectable;
+
         padding: 1px 10px;
 
         &:hover:not(.is-disabled),
@@ -154,7 +154,7 @@
         .edit-input {
           border: 0;
           color: $listbuilder-text-color-selected;
-          font-weight: bold;
+          font-weight: $theme-number-font-weight-bold;
         }
       }
     }

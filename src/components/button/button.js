@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 
 // jQuery components
@@ -20,6 +21,7 @@ const COMPONENT_NAME = 'button';
 const BUTTON_DEFAULTS = {
   toggleOnIcon: null,
   toggleOffIcon: null,
+  hideMenuArrow: null,
   replaceText: false
 };
 
@@ -66,6 +68,10 @@ Button.prototype = {
         this.element.on('selected.content', function (e, a) {
           $(this).find('span').text(a.text());
         });
+      }
+
+      if (this.settings.hideMenuArrow) {
+        ddIcon.remove();
       }
     }
 
@@ -141,7 +147,7 @@ Button.prototype = {
         // Start the JS Animation Loop if IE9
         // Or Safari/Firefox has bug with combination like: animation, overflow, position,
         // border-radius etc.)
-        if (!$.fn.cssPropSupport('animation') || self.isSafari || self.isFirefox) {
+        if (!$.fn.cssPropSupport('animation') || self.isSafari && !env.features.touch || self.isFirefox) {
           ripple.removeClass('is-animation');
           self.animateWithJS(ripple);
         } else {

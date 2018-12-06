@@ -3,8 +3,8 @@
   <div class="twelve columns">
 
     <div class="field">
-      <label for="date-field" class="label">Date Field</label>
-      <input id="date-field" class="datepicker" name="date-field" type="text" data-validate="required" data-init="false">
+      <label for="date-field" class="label">Date Field (Restricted to Apr - June)</label>
+      <input id="date-field" class="datepicker" name="date-field" type="text" data-validate="required" data-init="false"/>
     </div>
 
   </div>
@@ -13,14 +13,16 @@
 <script>
   $('body').on('initialized', function () {
 
-    $('#date-field').datepicker({
+    var api = $('#date-field').datepicker({
       dateFormat: 'MM/dd/yyyy',
       disable: {
         restrictMonths: true,
         minDate: '04/01/2018',
         maxDate: '06/30/2018'
       }
-    }).setValue('04/15/2018');
+    }).data('datepicker');
+
+    api.setValue('04/15/2018');
 
   });
 </script>

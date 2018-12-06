@@ -1,8 +1,8 @@
 ---
 title: Progress Indicator
-description: This page describes Progress Indicator.
+description: Displays feedback about a system process. Best for showing feedback about a system process that is not related to the current view.
 demo:
-  pages:
+  embedded:
   - name: Default Progress Indicator Example
     slug: example-index
 ---
@@ -32,6 +32,10 @@ When the markup is established, you can call the `updated` method or trigger the
 - `role="progressbar"` indicates the role of the progress bar
 - `aria-valuenow` should indicate the current value
 - `aria-maxvalue="100"` should indicate the max value (100%)
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

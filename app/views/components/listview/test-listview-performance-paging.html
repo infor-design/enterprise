@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="twelve columns">
+      <h2 class="fieldset-title">ListView  - 4000 Items</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Tasks</h2>
+      </div>
+
+      <div class="card-content">
+        <div class="listview-search">
+          <label class="audible" for="searchfield">Search</label>
+          <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="searchfield" data-options="{clearable: true}"/>
+        </div>
+        <div class="listview" id="big-listview" data-init="false"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $.getJSON('{{basepath}}api/names', function(res) {
+    $('#big-listview').listview({
+      template: $('#names-tmpl').html(),
+      dataset: res,
+      paging: true,
+      pagesize: 500,
+      searchable: true
+    });
+  });
+</script>
+
+{{={{{ }}}=}}
+<script id="names-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      <li>
+        <p class="listview-heading">#{{id}}</p>
+        <p class="listview-subheading">{{name}} </p>
+        <p class="listview-micro">{{email}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>

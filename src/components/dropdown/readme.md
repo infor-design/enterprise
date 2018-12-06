@@ -1,30 +1,45 @@
 ---
 title: Dropdown
-description: This page describes Dropdown.
+description: Displays one or more selectable values in a menu that is collapsed by default. A user can select an actionable value. Best used when users do not require a view of all possible values at all times.
 demo:
-  pages:
+  embedded:
   - name: Default Dropdown Example
     slug: example-index
-  - name: Clearable Dropdown
-    slug: example-clearable
-  - name: Updating the Contents
-    slug: example-updating
+  pages:
   - name: Ajax Contents on Open
     slug: example-ajax
+  - name: Ajax Managed
+    slug: example-ajax-managed
+  - name: Clearable Dropdown
+    slug: example-clearable
   - name: Section / Groups
     slug: example-groups
+  - name: Icons
+    slug: example-icons
   - name: Disable Search
     slug: example-no-search
+  - name: Disable Search filtering
+    slug: example-no-search-filtering
+  - name: Disable search LSF
+    slug: example-no-search-lsf
+  - name: Placeholder
+    slug: example-placeholder
+  - name: Readonly
+    slug: example-readonly
+  - name: Set value
+    slug: example-set-value
   - name: States
     slug: example-states
+  - name: Tooltips
+    slug: example-tooltips
+  - name: Updating the Contents
+    slug: example-updating
   - name: Validation
     slug: example-validation
   - name: Widths
     slug: example-widths
   - name: Data Attributes
     slug: example-with-data-attribute
-  - name: Icons
-    slug: example-icons
 ---
 
 To distinguish between single and multi-select situations, use checkboxes in multi-select lists. See the live example for how multiple selections are handled in the field display and the list display. The field height is not dynamic so the height of the field should not be expanded to display multiple selections.
@@ -63,6 +78,10 @@ The dropdown list is fairly complex to make accessible but generally this can be
     - `role="option"` on each list item
     - `aria-activedescendant` to associate the `<input>` to the active list item. It must be removed if no options are selected
     - `aria-controls` on the input field, containing the ID of the matching dropdown list
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

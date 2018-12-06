@@ -1,10 +1,11 @@
 ---
 title: Spinbox Component
-description: This page describes Spinbox Component .
+description: Displays an editable field. A user can enter numeric data. Best for incremental inputs within a scale where users do not require a view of the lower and upper limits at all times.
 demo:
-  pages:
+  embedded:
   - name: Main
     slug: example-index
+  pages:
   - name: Configured with Range Limits
     slug: example-range-limits
   - name: Configured with Step Intervals of 3
@@ -46,6 +47,10 @@ Touch and mobile keyboard are supported.
 ## Accessibility
 
 - Focus should remain on the edit field
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

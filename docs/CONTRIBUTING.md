@@ -2,24 +2,22 @@
 
 So you're interested in giving us a hand? That's awesome! We've put together some brief guidelines that should help you get started quickly and easily.
 
-There are several to get involved, this document covers:
+There are several ways to get involved, this document covers:
 
-- [raising issues](#raising-issues)
-    - [bug reports](#bugs)
-    - [feature requests](#features)
-    - [change requests](#changes)
-- [working on Enterprise core](#core)
-    - [submitting pull requests](#pull-requests)
-- [testing and quality assurance](#testing)
-- [writing documentation](#documentation)
+- [Raising Issues/Requests](#reporting-an-issue)
+    - :beetle: [bug reports](#bug-reports)
+    - :bulb: [feature requests](#feature-requests)
+- [Contributing to the codebase](#submitting-pull-requests)
+    - :repeat: [submitting pull requests](#pull-requests)
+- [testing and quality assurance](#testing-and-quality-assurance)
 
 ## Reporting An Issue
 
 <https://github.com/infor-design/enterprise/issues>
 
-### Bug Reports 🐞
+### Bug Reports
 
-A bug is a _demonstrable problem_ that is caused by the code in the repository. Good bug reports are extremely helpful - thank you :+1:!
+A bug is a _demonstrable problem_ that is caused by the code in the repository. Good bug reports are extremely helpful - thank you!
 
 Guidelines for bug reports:
 
@@ -63,10 +61,14 @@ If you'd like to submit a pull request you'll need to do the following:
 
 1. **[Forking the repo](https://help.github.com/articles/fork-a-repo/)**. Navigate to [Github Repository](https://github.com/infor-design/enterprise) and click the "Fork" button in the top right corner of your browser.
 
-1. **[Clone the Repository](https://help.github.com/articles/cloning-a-repository/) to your machine.**.
-1. **Make your changes with the local copy of the code.**
+1. **[Clone the Repository](https://help.github.com/articles/cloning-a-repository/)** to your machine.
+1. **Make your changes** to your local fork for the proper branch.
+- Almost all development will be done on branches from `master`.
+- Occasionally there will be a need to contribute to a version branch (i.e. `4.9.x`) in which case you want to branch off of one of those.
 
-1. **Commit your changes locally.**  Add any related JIRA Ticket numbers or Github issue numbers into the message
+If you are unsure, just ask someone on the team so you don't have to redo your branch.
+
+1. **Commit your changes locally.**  Try to follow the standards for your commit message outlined below.
     - Try to follow
         - [Github's commit message standards](https://github.com/erlang/otp/wiki/Writing-good-commit-messagesMore)
         - [Closing issues using keywords with commits and PRs](https://help.github.com/articles/closing-issues-using-keywords/)
@@ -88,7 +90,16 @@ If you'd like to submit a pull request you'll need to do the following:
 
 1. **Push your changes to your remote repository.**  Use `git push {remote} {branch}` to push your changes to your branch on the remote repository.
 
-1. **[Creating a pull request](https://help.github.com/articles/creating-a-pull-request/)**
+1. **[Create a pull request](https://help.github.com/articles/creating-a-pull-request/)**
+    1. Request to the proper branch
+        - Normal changes get merged into `master`
+        - Version specific changes need to go into that specific version branch
+    1. The pull request title should follow this format:
+        - `{Issue Number} - Brief description of fix`
+        - e.g. `100 - Fixed a typo for such and such`
+    1. If you are doing a patch and requesting into a version branch, the title should look like
+        - `{Issue Number} - Brief description of fix [v{the version branch}]`
+        - e.g. `100 - Fixed a type for such and such [v4.9.x]`
 
 See [help.github.com](https://help.github.com/) for further information.
 

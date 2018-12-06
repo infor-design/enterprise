@@ -3,11 +3,12 @@
 
 .skip-link {
   @include font-size(12);
+
   background-color: $skip-link-bg-color;
   border: 1px solid $skip-link-border-color;
   border-radius: 0 0 2px 2px;
   border-top: 1px;
-  box-shadow: 0 0 4px 1px rgba(0, 0, 0, .3);
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
   color: $skip-link-color;
   left: 0;
   line-height: 31px;
@@ -35,12 +36,12 @@
   outline: 0 none;
   position: absolute;
   top: 0;
-  transition: top .3s ease-in 0s, background .3s linear 0s;
+  transition: top 0.3s ease-in 0s, background 0.3s linear 0s;
 }
 
 //Right To Left Styles
 html[dir='rtl'] {
-  .skip-link:focus {
+  .skip-link {
     left: initial;
     margin-right: 20px;
     right: 0;

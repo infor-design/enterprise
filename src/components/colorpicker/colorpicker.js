@@ -45,6 +45,7 @@ const COLORPICKER_DEFAULTS = {
     dark: { border: 'matched-only', checkmark: { one: [1, 2], two: [3, 10] } },
     'high-contrast': { border: 'all', checkmark: { one: [1, 3], two: [4, 10] } }
   },
+  customColors: false,
   colors: [
     { label: 'Slate', number: '10', value: '1a1a1a' },
     { label: 'Slate', number: '09', value: '292929' },
@@ -113,8 +114,9 @@ const COLORPICKER_DEFAULTS = {
     { label: 'Azure', number: '06', value: '368AC0' },
     { label: 'Azure', number: '05', value: '4EA0D1' },
     { label: 'Azure', number: '04', value: '69B5DD' },
-    { label: 'Azure', number: '03', value: '8DC9A6' },
-    { label: 'Azure', number: '02', value: 'ADD8EB' }
+    { label: 'Azure', number: '03', value: '8DC9E6' },
+    { label: 'Azure', number: '02', value: 'ADD8EB' },
+    { label: 'Azure', number: '01', value: 'C8E9F4' }
   ],
   placeIn: null, // null|'editor'
   showLabel: false,
@@ -320,12 +322,8 @@ ColorPicker.prototype = {
       return;
     }
 
-    if (menu.length) {
-      $(document).trigger($.Event('keydown', { keyCode: 27, which: 27 })); // escape
-
-      if (this.isPickerOpen) {
-        return;
-      }
+    if (menu.length && this.isPickerOpen) {
+      return;
     }
 
     // Append Color Menu
@@ -349,7 +347,6 @@ ColorPicker.prototype = {
     };
 
     // Show Menu
-
     this.element
       .popupmenu(popupmenuOpts)
       .on('open.colorpicker', () => {
@@ -357,6 +354,13 @@ ColorPicker.prototype = {
         this.isPickerOpen = true;
       })
       .on('close.colorpicker', () => {
+        const links = [].slice.call(this.menu[0].querySelectorAll('a'));
+        links.forEach((link) => {
+          const tooltipApi = $(link).data('tooltip');
+          if (tooltipApi) {
+            tooltipApi.hide();
+          }
+        });
         menu.on('destroy.colorpicker', () => {
           this.element.off('open.colorpicker selected.colorpicker close.colorpicker');
           this.menu.off('destroy.colorpicker').remove();
@@ -709,6 +713,9 @@ ColorPicker.prototype = {
     elem.on('keydown.colorpicker', (e) => {
       if (e.keyCode === 38 || e.keyCode === 40) {
         this.toggleList();
+      }
+      if (e.keyCode === 13) {
+        this.setColor(elem.val());
       }
     });
   }

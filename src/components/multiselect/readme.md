@@ -2,9 +2,10 @@
 title: Multi-Select
 description:
 demo:
-  pages:
+  embedded:
   - name: Multiselect
     slug: example-index
+  pages:
   - name: Clear All
     slug: example-clear-all
   - name: Ajax
@@ -12,6 +13,8 @@ demo:
   - name: States
     slug: example-states
 ---
+
+The MultiSelect Component allows selecting multiple items from a list. Multiselect inherits from dropdown so please refer to [dropdown](../dropdown) for more API details and events.
 
 ## Code Example
 
@@ -52,6 +55,10 @@ The multi-select list is fairly complex to make accessible. But generally this c
     - `role="option"` on each list item
     - `aria-activedescendant` to associate the `<input>` to the active list item. It must be removed if no options are selected
     - `aria-controls` on the input field, containing the ID of the matching dropdown list
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

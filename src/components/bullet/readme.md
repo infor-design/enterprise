@@ -1,10 +1,11 @@
 ---
 title: Bullet Chart
-description: This page describes Bullet Chart.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Standard Bullet Chart
     slug: example-index
+  pages:
   - name: Shows Grouping a Series of Related Bullet Charts
     slug: example-data-group
   - name: Shows a Bullet Chart with Positive and Negative Values
@@ -36,6 +37,10 @@ $('#bullet-example1').chart({type: 'bullet', dataset: dataset1});
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

@@ -13,6 +13,10 @@ describe('Textarea example-index tests', () => {
     await utils.setPage('/components/textarea/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should block input on disabled', async () => {
     const textareaEl = await element(by.id('description-disabled'));
 
@@ -39,15 +43,87 @@ describe('Textarea example-index tests', () => {
     });
   }
 
-  if (utils.isChrome()) {
-    xit('Should not visual regress', async () => {
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
       const textareaEl = await element(by.id('description-max'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(textareaEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('textarea')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(textareaEl, 'textarea-init')).toEqual(0);
     });
   }
+
+  it('Should allow maximum of 90 characters', async () => {
+    const charStr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt';
+    await element(by.id('description-max')).clear();
+    await element(by.id('description-max')).sendKeys(charStr);
+
+    expect(await element(by.id('description-max')).getAttribute('value')).toEqual(charStr);
+    expect(await element(by.css('#description-max + span')).getText()).toBe('You can type 1 more characters.');
+  });
+
+  it('Should show validation message if more than/equal to 90 characters', async () => {
+    const charStr90 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ';
+    await element(by.id('description-max')).clear();
+    await element(by.id('description-max')).sendKeys(charStr90);
+
+    expect(await element(by.id('description-max')).getAttribute('value')).toEqual(charStr90);
+
+    expect(await element(by.className('textarea-wordcount'))).toBeTruthy();
+  });
+
+  it('Should allow copy/paste', async () => {
+    const sampleStr = 'Lorem ipsum';
+
+    await element(by.id('description-dirty')).clear();
+    await element(by.id('description-dirty')).sendKeys(sampleStr);
+    await element(by.id('description-dirty')).sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'a'));
+    await element(by.id('description-dirty')).sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'c'));
+
+    await element(by.id('description-dirty')).sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'v'));
+
+    expect(await element(by.id('description-dirty')).getAttribute('value')).toEqual(sampleStr);
+  });
+
+  it('Should allow special characters', async () => {
+    const specChars = '¤¶§Çüéâôûÿ£¥';
+    await element(by.id('description-max')).clear();
+    await element(by.id('description-max')).sendKeys(specChars);
+
+    expect(await element(by.id('description-max')).getAttribute('value')).toEqual(specChars);
+  });
+
+  it('Should display textbox label correctly', async () => {
+    expect(await element.all(by.css('.field label')).get(0).isDisplayed()).toBeTruthy();
+  });
+
+  it('Should enable scrollbar when multiple lines of text is in field box', async () => {
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('description-max')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.id('description-max')).getAttribute('scrollHeight')).toBeGreaterThan(await element(by.id('description-max')).getAttribute('height'));
+  });
+
+  it('Should display dirty tracker if text area is updated and unfocused', async () => {
+    await element(by.id('description-dirty')).sendKeys('1');
+
+    await element(by.id('description-max')).click();
+
+    expect(await element(by.className('icon-dirty'))).toBeTruthy();
+  });
+
+  it('Should display required error message if text area is empty', async () => {
+    await element(by.id('description-error')).clear();
+
+    expect(await element(by.className('icon-error'))).toBeTruthy();
+  });
 });
 
 describe('Textarea size tests', () => {
@@ -56,6 +132,8 @@ describe('Textarea size tests', () => {
   });
 
   it('Should support check sizes', async () => {
+    await browser.driver.manage().window().setSize(1200, 800);
+
     const smEl = await element(by.id('sm-textarea-example'));
 
     expect(await smEl.getCssValue('width')).toBe('150px');

@@ -1,10 +1,11 @@
 ---
 title: Checkboxes
-description: This page describes Checkboxes.
+description: A user can select one or more values at a time. Best used when all possible options should be clearly visible to a user.
 demo:
-  pages:
+  embedded:
   - name: Default Checkbox Example
     slug: example-index
+  pages:
   - name: Checkbox Groups
     slug: example-checkbox-groups
   - name: Horizontal Checkbox Group
@@ -31,7 +32,7 @@ The checkbox is a CSS-only control so principals of the `<input type="checkbox">
 </div>
 
 <div class="field">
-  <input type="checkbox" data-trackdirty="true" class="checkbox" id="checkbox3" >
+  <input type="checkbox" data-trackdirty="true" class="checkbox" id="checkbox3">
   <label for="checkbox3" class="checkbox-label">Dirty Tracking</label>
 </div>
 
@@ -55,6 +56,10 @@ The checkbox is a CSS-only control so principals of the `<input type="checkbox">
 ## Accessibility
 
 - Make sure you have matching `for` and `id` values to associate the label with the appropriate form control. Make sure `id`s are unique on each page and only one label can be associated to each unique form element
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

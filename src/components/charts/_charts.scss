@@ -42,6 +42,7 @@
   text {
     @include font-size(12);
     @include antialiased();
+
     fill: $chart-font-color;
   }
 
@@ -68,6 +69,10 @@
 
   &.completion-chart {
     margin: 30px;
+
+    @media only screen and (min-width: $breakpoint-phone-to-tablet) and (max-width: $breakpoint-tablet-to-desktop) {
+      margin: 30px 5px;
+    }
   }
 
   // Right aligned Legend
@@ -112,6 +117,7 @@
 
   &.empty-message {
     @include vertical-align();
+
     margin-top: -20px;
   }
 
@@ -123,7 +129,7 @@
 
   .swatch-caption {
     display: table-caption;
-    margin-bottom: .7em;
+    margin-bottom: 0.7em;
     text-align: center;
 
     .indicator-box {
@@ -168,6 +174,9 @@
     }
   }
 
+  &.line .swatch-caption b {
+    display: inline-block;
+  }
 }
 
 .chart-tooltip-total {
@@ -204,7 +213,7 @@
     padding: 7px;
 
     &:focus {
-      border-color: $input-focus-border-color;
+      border-color: $input-color-focus-border;
       // Removed box shadow to match current style
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
@@ -232,6 +241,7 @@
   .chart-legend-item-text {
     @include ellipsis;
     @include font-size(12);
+
     color: $chart-font-color;
     width: auto;
   }
@@ -270,7 +280,7 @@
   }
 
   .is-not-selected {
-    opacity: .35;
+    opacity: 0.35;
   }
 }
 
@@ -281,11 +291,11 @@
 }
 
 .chart-targeted-achievement {
-  // scss-lint:disable ImportantRule
   margin-bottom: 17px !important;
 
   .label {
     @include font-size(14);
+
     margin-top: 2px;
   }
 
@@ -305,7 +315,6 @@
   .completed::after {
     content: none !important;
   }
-  // scss-lint:enable ImportantRule
 
   .remaining {
     background: repeating-linear-gradient(
@@ -325,10 +334,9 @@
 
     span {
       @include font-size(14);
-      // scss-lint:disable ImportantRule
+
       color: $font-color !important;
-      // scss-lint:enable ImportantRule
-      font-weight: normal;
+      font-weight: $theme-number-font-weight-base;
       right: unset;
       top: 20px;
     }
@@ -405,8 +413,7 @@
   top: -9999999px;
 }
 
-// Temporary fix for SVG Tooltips
-// scss-lint:disable IdSelector
+// Temporary fix for SVG Tooltip
 #svg-tooltip.tooltip {
   &.top,
   &.bottom {
@@ -422,9 +429,8 @@
     }
   }
 }
-// scss-lint:enable IdSelector
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .chart-legend {
     margin-left: inherit;
@@ -458,7 +464,6 @@ html[dir='rtl'] {
   // Progess Bar Charts
   .chart-completion-target,
   .chart-completion {
-
     span:not(.audible) {
       left: 2px;
       right: auto;
@@ -529,5 +534,13 @@ html[dir='rtl'] {
       }
 
     }
+  }
+}
+
+.sparkline-tooltip {
+  line-height: 5px !important;
+
+  b {
+    line-height: 22px;
   }
 }

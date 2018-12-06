@@ -1,10 +1,11 @@
 ---
 title: Tabs Component
-description: This page describes Tabs Component .
+description: Displays the current view and all alternate views available. A user can navigate between views. Best for communicating different views of the data set, or offering navigation between related data sets.
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Tabs With Counts
     slug: example-counts
   - name: Dismissible Tabs
@@ -150,6 +151,10 @@ It's possible to create a tab that contains a dropdown menu. In the case of a dr
     </li>
 </ul>
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

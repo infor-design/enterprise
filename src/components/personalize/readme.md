@@ -1,17 +1,15 @@
 ---
 title: Personalize
-description: This page describes Personalize.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Themes Example
     slug: example-index?colors=800000
-  - name: Property Page
-    slug: example-settings-page
 ---
 
 ## Code Example
 
-Pass in a primary (header) color to the personalize function. This is the minimum needed. The rest of the colors will be calculated as percents of the source color. (For example sub header is 20%).
+You should pass in a primary (header) color to the personalize function. This is the minimum option need. The rest of the colors will be calculated as percents of the source color. For example the sub header is 20% of the main color.
 
 ```javascript
 var colors = {header: colors[0],
@@ -29,7 +27,8 @@ For reduction of FOUC (flash of unstyled content) run the personalize logic befo
 
 ```html
 <script>
- //Call personalize here
+  //Call personalize here
+  $('html').personalize({colors: colors});
 </script>
 <link rel="stylesheet" id="sohoxi-stylesheet" href="../../stylesheets/{{theme}}-theme.css" type="text/css">
 ```
@@ -40,4 +39,8 @@ For reduction of FOUC (flash of unstyled content) run the personalize logic befo
 
 ## Accessibility
 
-- The contrast and actual colors can be a concern for visibility impaired and color blind people. Choose colors that pass contrast guidlines. Future we plan on adding a checker to the settings dialog.
+- The contrast and actual colors can be a concern for visibility impaired and color blind people. Choose colors that pass contrast guidelines. Future we plan on adding a checker to the settings dialog.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

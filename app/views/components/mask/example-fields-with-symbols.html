@@ -1,23 +1,19 @@
 <div class="row">
   <div class="six columns">
-
     <h2>Mask-Controlled Fields with Symbols</h2>
-
   </div>
 </div>
 
 <div class="row">
   <div class="twelve columns">
-
     <div class="field">
       <label for="currency-input">Currency Input</label>
-      <input id="currency-input" data-mask="###.00" data-mask-mode="number" data-options="{showSymbol: 'currency'}"/>
+      <input id="currency-input" class="new-mask" data-options="{ process: number, patternOptions: { prefix: '$', integerLimit: 3, decimalLimit: 2, allowDecimal: true } }"/>
     </div>
 
     <div class="field">
       <label for="percentage-input">Percentage Input</label>
-      <input id="percentage-input" data-mask-mode="number" data-mask="###" data-options="{showSymbol: 'percent'}"/>
+      <input id="percentage-input" class="new-mask" data-options="{ process: number, patternOptions: { suffix: '%', integerLimit: 3 } }"/>
     </div>
-
   </div>
 </div>

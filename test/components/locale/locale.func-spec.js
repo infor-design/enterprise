@@ -49,6 +49,8 @@ require('../../../src/components/locale/cultures/tr-TR.js');
 require('../../../src/components/locale/cultures/uk-UA.js');
 require('../../../src/components/locale/cultures/vi-VN.js');
 require('../../../src/components/locale/cultures/zh-CN.js');
+require('../../../src/components/locale/cultures/zh-Hans.js');
+require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
 describe('Locale API', () => {
@@ -122,6 +124,23 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2000, 12, 1), { pattern: Locale.calendar().dateFormat.month })).toEqual('01 محرم');
     expect(Locale.formatDate(new Date(2017, 10, 8), { pattern: Locale.calendar().dateFormat.month })).toEqual('08 ذو القعدة');
     Locale.set('en-US');
+  });
+
+  it('Should format year in es-ES', () => {
+    Locale.set('es-ES');
+
+    expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'year' })).toEqual('Noviembre de 2018');
+    Locale.set('en-US');
+  });
+
+  it('Should parse year in different languages', () => {
+    Locale.set('es-ES');
+
+    expect(Locale.parseDate('Noviembre de 2018', { date: 'year' }).getTime()).toEqual(new Date(2018, 10, 1, 0, 0, 0).getTime());
+
+    Locale.set('en-US');
+
+    expect(Locale.parseDate('November 2018', { date: 'year' }).getTime()).toEqual(new Date(2018, 10, 1, 0, 0, 0).getTime());
   });
 
   it('Should format en-US dates', () => {
@@ -727,6 +746,8 @@ describe('Locale API', () => {
   });
 
   it('truncate decimals', () => {
+    Locale.set('en-US');
+
     expect(Locale.truncateDecimals('1111111111.11', 2, 2)).toEqual('1111111111.11');
     expect(Locale.truncateDecimals('11111111111.11', 2, 2)).toEqual('11111111111.11');
     expect(Locale.truncateDecimals('1.10', 2, 2)).toEqual('1.10');
@@ -827,5 +848,15 @@ describe('Locale API', () => {
 
     // Date without spaces, dashes and comma
     expect(Locale.parseDate('20141211', 'yyyyMMdd').getTime()).toEqual(new Date(2014, 11, 11, 0, 0, 0).getTime());
+  });
+
+  it('Should parse arabic dates in year pattern', () => {
+    Locale.set('ar-SA');
+
+    // Date with spaces, dashes and comma
+    expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[0]).toEqual(1439);
+    expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[1]).toEqual(11);
+    expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[2]).toEqual(1);
+    Locale.set('en-US');
   });
 });

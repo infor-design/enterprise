@@ -1,10 +1,11 @@
 ---
 title: Column Chart (Stacked)
-description: This page describes Column Chart (Stacked).
+description: null
 demo:
-  pages:
+  embedded:
   - name: Standard Stacked Column Chart
     slug: example-index
+  pages:
   - name: Defaulting Selected Stacks
     slug: example-selected
   - name: Single Column Chart
@@ -95,6 +96,10 @@ $('#bar-grouped-example').chart({type: 'bar-stacked', dataset: dataset,
   }
 });
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

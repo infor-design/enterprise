@@ -1,15 +1,16 @@
 ---
 title: Pager
-description: This page describes Pager.
+description:  For a given data set, displays feedback about the current subset in a view and all alternate subsets available. A user can navigate between views. Best for presenting digestible portions of large data sets.
 demo:
-  pages:
+  embedded:
   - name: Paging a List (Ul)
     slug: example-index
+  pages:
   - name: Paging on the Listview Component
     slug: example-paging
   - name: Paging on the Datagrid Component
     slug: example-paging
-  - name: Circle Pager Component
+  - name: Paging on the Circle Pager Component
     slug: example-index
 ---
 
@@ -18,7 +19,7 @@ demo:
 The auto initializer will search for `<ul>` elements with a `paginated` class and add a pager to them. You can add the option `data-options="{'pagesize': 10}"` to set the page size desired. For [listview](./listview) and [datagrid](./datagrid) components, this is built into those components.
 
 ```html
-    <ul class="paginated listview" data-options="{'pagesize': 10}">
+    <ul id="listview" class="paginated listview" data-options="{'pagesize': 10}">
       <li>Item One</li>
       <li>Item Two</li>
       <li>Item Three</li>
@@ -51,6 +52,10 @@ The auto initializer will search for `<ul>` elements with a `paginated` class an
 - Icons have `role="presentation" aria-hidden="true" focusable="false"`
 - Selected page has `aria-selected = "true"`
 - Disabled pages (if exists) have `aria-disabled="true"`
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

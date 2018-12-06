@@ -29,6 +29,7 @@
 
 .toast {
   @include font-size(14);
+
   background-color: $toast-bg-color;
   border: 1px solid $toast-border-color;
   border-radius: 2px;
@@ -42,7 +43,7 @@
   .toast-title {
     color: $toast-header-color;
     display: block;
-    font-weight: bold;
+    font-weight: $theme-number-font-weight-bold;
     margin-top: 19px;
     padding-right: 20px;
   }
@@ -76,22 +77,25 @@
 
 // Toast Animation
 .effect-scale {
-  @include animation(animScale .25s);
+  @include animation(animScale 0.25s);
 }
 
 .effect-scale-hide {
-  @include animation(animScaleOut .25s);
+  @include animation(animScaleOut 0.25s);
+
   opacity: 0;
 }
 
 @include keyframes(animScale) {
   0% {
-    @include transform(translate3d(0, 40px, 0) scale3d(.1, .6, 1));
+    @include transform(translate3d(0, 40px, 0) scale3d(0.1, 0.6, 1));
+
     opacity: 0;
   }
 
   100% {
     @include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
+
     opacity: 1;
   }
 }
@@ -99,17 +103,19 @@
 @include keyframes(animScaleOut) {
   0% {
     @include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
+
     opacity: 1;
   }
 
   100% {
-    @include transform(translate3d(0, 40px, 0) scale3d(.1, .6, 1));
+    @include transform(translate3d(0, 40px, 0) scale3d(0.1, 0.6, 1));
+
     opacity: 0;
   }
 }
 
 .toast-progress {
-  background-color: $primary-color;
+  background-color: $theme-color-brand-primary-base;
   bottom: 0;
   height: 3px;
   left: 0;
@@ -118,7 +124,7 @@
   width: 100%;
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .toast-container {
     &.toast-bottom-right {

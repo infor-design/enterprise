@@ -1,10 +1,11 @@
 ---
 title: Busy Indicator
-description: This page describes Busy Indicator.
+description: Displays feedback about a current process. A user can infer that the system is functioning. Best for a system processes that precludes further user action until their completion.
 demo:
-  pages:
+  embedded:
   - name: Busy Form Example
     slug: example-index
+  pages:
   - name: Busy Input Elements
     slug: example-inputs
   - name: Non Blocking Busy Indicator
@@ -51,7 +52,7 @@ You can provide the options inline in the `data-options`. This example below use
     <input type="text" id="busy-field-cats" name="busy-field-cats" value="" />
   </div>
   <div class="field">
-    <button type="submit" class="btn-primary" style="margin-left: 3px">Submit</button>
+    <button type="submit" id="submit" class="btn-primary" style="margin-left: 3px">Submit</button>
   </div>
 </form>
 
@@ -66,6 +67,10 @@ $('#busy-form button[type="submit"]').click(function(e) {
 });
 
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Responsive Guidelines
 

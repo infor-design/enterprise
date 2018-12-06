@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 
 // The Name of this component.
 const COMPONENT_NAME = 'ListFilter';
@@ -109,37 +110,52 @@ ListFilter.prototype = {
       }
 
       const isString = typeof item === 'string';
-      return (isString ? item : $(item).text());
+      return xssUtils.sanitizeHTML((isString ? item : $(item).text()));
     }
 
     // Iterates through each list item and attempts to find the provided search term.
     function searchItemIterator(item) {
-      const text = getSearchableContent(item);
+      let text = getSearchableContent(item);
+      if (!self.settings.caseSensitive) {
+        text = text.toLowerCase();
+      }
+
       const parts = text.split(' ');
       let match = false;
 
       if (self.settings.filterMode === 'startsWith') {
         for (let a = 0; a < parts.length; a++) {
-          if (parts[a].toLowerCase().indexOf(term) === 0) {
+          if (parts[a].indexOf(term) === 0) {
             match = true;
             break;
           }
         }
 
         // Direct Match
-        if (text.toLowerCase().indexOf(term) === 0) {
+        if (text.indexOf(term) === 0) {
           match = true;
         }
 
         // Partial dual word match
-        if (term.indexOf(' ') > 0 && text.toLowerCase().indexOf(term) > 0) {
+        if (term.indexOf(' ') > 0 && text.indexOf(term) > 0) {
           match = true;
         }
       }
 
       if (self.settings.filterMode === 'contains') {
-        if (text.toLowerCase().indexOf(term) >= 0) {
+        if (text.indexOf(term) >= 0) {
           match = true;
+        }
+      }
+
+      if (self.settings.filterMode === 'keyword') {
+        const keywords = term.split(' ');
+        for (let i = 0; i < keywords.length; i++) {
+          const keyword = keywords[i];
+          if (text.indexOf(keyword) >= 0) {
+            match = true;
+            break;
+          }
         }
       }
 

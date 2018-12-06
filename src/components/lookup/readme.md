@@ -1,14 +1,17 @@
 ---
 title: Lookup
-description: This page describes Lookup.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Default Lookup
     slug: example-index
+  pages:
   - name: Multiselect Lookup
     slug: example-multiselect
-  - name: Lookup with Paging
+  - name: Lookup with Paging (Client Side)
     slug: example-paging
+  - name: Multiselect Lookup with Paging (Server Side)
+    slug: example-multiselect-paging-serverside
   - name: Lookup with Filter
     slug: example-filter-row
   - name: Editable Lookup
@@ -77,6 +80,10 @@ grid = $('#product-lookup').lookup({
 ## Responsive Guidelines
 
 - The dialog stretches to 90% at smaller breakpoints
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

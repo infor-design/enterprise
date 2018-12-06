@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
 
 // jQuery components
@@ -78,11 +79,11 @@ Accordion.prototype = {
       headers = this.element.find('.accordion-header');
       this.anchors = headers.children('a');
       anchors = headers.children('a');
-      this.panes = headers.next('.accordion-pane');
-      panes = headers.next('.accordion-pane');
+      this.panes = headers.nextAll().not('.audible').first('.accordion-pane');
+      panes = headers.nextAll().not('.audible').first('.accordion-pane');
     } else {
       anchors = headers.children('a');
-      panes = headers.next('.accordion-pane');
+      panes = headers.nextAll().not('.audible').first('.accordion-pane');
       isGlobalBuild = false;
 
       // update internal refs
@@ -136,7 +137,7 @@ Accordion.prototype = {
       }
 
       // Don't continue if there's no pane
-      if (!header.next('.accordion-pane').length) {
+      if (!header.nextAll().not('.audible').first().hasClass('accordion-pane')) {
         checkIfIcons();
         return;
       }
@@ -227,13 +228,19 @@ Accordion.prototype = {
     // Expand to the current accordion header if we find one that's selected
     if (isGlobalBuild && !this.element.data('updating')) {
       let targetsToExpand = headers.filter('.is-selected, .is-expanded');
+      targetsToExpand.next('.accordion-pane').addClass('no-transition');
 
       if (this.settings.allowOnePane) {
         targetsToExpand = targetsToExpand.first();
+        this.expand(targetsToExpand);
+      } else {
+        targetsToExpand.each((idx) => {
+          this.expand($(targetsToExpand[idx]));
+        });
       }
 
-      this.expand(targetsToExpand);
       this.select(targetsToExpand.last());
+      targetsToExpand.next('.accordion-pane').removeClass('no-transition');
     }
 
     // Retain an internal storage of available filtered accordion headers.
@@ -277,7 +284,7 @@ Accordion.prototype = {
   handleAnchorClick(e, anchor) {
     const self = this;
     const header = anchor.parent('.accordion-header');
-    const pane = header.next('.accordion-pane');
+    const pane = header.nextAll().not('.audible').first('.accordion-pane');
     const ngLink = anchor.attr('ng-reflect-href');
 
     if (e && !ngLink) {
@@ -315,6 +322,16 @@ Accordion.prototype = {
     // potentially click the it twice
     if (e) {
       e.stopPropagation();
+    }
+
+    const openPopup = $('.popupmenu.is-open');
+    if (openPopup.length) {
+      const headers = this.element.find('.accordion-header[aria-haspopup="true"]');
+      headers.each(function () {
+        const api = $(this).data('popupmenu');
+        api.close();
+        e.stopPropagation();
+      });
     }
 
     /**
@@ -392,7 +409,7 @@ Accordion.prototype = {
     }
 
     // If there's no accordion pane, attempt to simply follow the link.
-    return this.handleAnchorClick(null, header.children('a'));
+    return this.handleAnchorClick(e, header.children('a'));
   },
 
   /**
@@ -629,6 +646,10 @@ Accordion.prototype = {
   * @returns {boolean} Whether or not the element is expanded.
   */
   isExpanded(header) {
+    if (header && header instanceof Element) {
+      header = $(header);
+    }
+
     if (!header || !header.length) {
       return;
     }
@@ -667,7 +688,7 @@ Accordion.prototype = {
     }
 
     const self = this;
-    const pane = header.next('.accordion-pane');
+    const pane = header.nextAll().not('.audible').first('.accordion-pane');
     const a = header.children('a');
     const dfd = $.Deferred();
 
@@ -740,8 +761,10 @@ Accordion.prototype = {
       }
 
       if (pane.hasClass('no-transition')) {
-        pane[0].style.display = 'block';
-        pane[0].style.height = 'auto';
+        for (let i = 0; i < pane.length; i++) {
+          pane[i].style.display = 'block';
+          pane[i].style.height = 'auto';
+        }
         handleAfterExpand();
       } else {
         pane.one('animateopencomplete', handleAfterExpand).css('display', 'block').animateOpen();
@@ -796,7 +819,7 @@ Accordion.prototype = {
     }
 
     const self = this;
-    const pane = header.next('.accordion-pane');
+    const pane = header.nextAll().not('.audible').first('.accordion-pane');
     const a = header.children('a');
     const dfd = $.Deferred();
 
@@ -961,7 +984,7 @@ Accordion.prototype = {
     const elem = this.getElements(element);
     const adjacentHeaders = elem.header.parent().children();
     const currentIndex = adjacentHeaders.index(elem.header);
-    let target = $(adjacentHeaders.get(currentIndex - 1));
+    let target = $(adjacentHeaders.get(xssUtils.ensureAlphaNumeric(currentIndex) - 1));
 
     if (!adjacentHeaders.length || currentIndex === 0) {
       if (elem.header.parent('.accordion-pane').length) {
@@ -1016,7 +1039,7 @@ Accordion.prototype = {
     const elem = this.getElements(element);
     const adjacentHeaders = elem.header.parent().children();
     const currentIndex = adjacentHeaders.index(elem.header);
-    let target = $(adjacentHeaders.get(currentIndex + 1));
+    let target = $(adjacentHeaders.get(xssUtils.ensureAlphaNumeric(currentIndex) + 1));
 
     if (!adjacentHeaders.length || currentIndex === adjacentHeaders.length - 1) {
       if (elem.header.parent('.accordion-pane').length) {
@@ -1040,7 +1063,7 @@ Accordion.prototype = {
           return this.descend(prevHeader);
         }
       }
-      target = $(adjacentHeaders.get(currentIndex + 2));
+      target = $(adjacentHeaders.get(xssUtils.ensureAlphaNumeric(currentIndex) + 2));
 
       // if no target's available here, we've hit the end and need to wrap around
       if (!target.length) {
@@ -1388,6 +1411,10 @@ Accordion.prototype = {
     // or allows it to continue.
     function clickInterceptor(e, element) {
       const type = getElementType(element);
+
+      // Trigger a document click since we stop propgation, to close any open menus/popups.
+      $('body').children().not('.application-menu, .modal-page-container, .page-container').closeChildren();
+
       return self[`handle${type}Click`](e, element);
     }
 

@@ -17,7 +17,10 @@
 }
 
 .toolbar-section {
+  @include transition(width 100ms $cubic-bezier-ease, padding 100ms $cubic-bezier-ease);
+
   white-space: nowrap;
+  width: auto;
 
   // Allows certain sections to collapse.
   // NOTE: Not all sections are collapsible.
@@ -29,6 +32,10 @@
       overflow-x: hidden;
       overflow-y: auto;
     }
+
+    &.static {
+      flex-grow: 0;
+    }
   }
 
   &.title {
@@ -39,6 +46,14 @@
     h5,
     h6 {
       display: inline;
+    }
+
+    span {
+      display: inline;
+
+      @media (max-width: $breakpoint-big-phone) {
+        display: none;
+      }
     }
 
     .page-title,
@@ -69,17 +84,37 @@
   &.buttonset {
     padding: 4px;
 
-    [class^="btn"] {
+    [class^='btn'] {
       margin-right: 0;
     }
   }
 
   &.search {
     padding: 0 10px;
+
+    + .buttonset {
+      flex-grow: 0;
+    }
   }
 
-  .searchfield-wrapper {
-    margin-bottom: 0;
+  > .separator {
+    background-color: $formatter-toolbar-separator-color;
+    display: inline-block;
+    height: 20px;
+    margin: 3px 3px 0;
+    position: relative;
+    top: 6px;
+    width: 1px;
+  }
+
+  // Hide separators that come after "overflowed" elements
+  .is-overflowed,
+  .hidden {
+    + .separator,
+    + .popupmenu,
+    + .popupmenu-wrapper + .separator {
+      display: none;
+    }
   }
 
   &.more {
@@ -95,7 +130,6 @@
 
 // RTL Styles
 html[dir='rtl'] {
-
   .toolbar-section {
     &.title + .toolbar-section.buttonset {
       text-align: left;

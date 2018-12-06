@@ -1,0 +1,89 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var sampleData;
+
+  sampleData = [{
+    "@status": "est",
+    "@id": "VE1QOjQ1RjQ3REM0LUVEODUtNDVBRC1CM0Y3LTBBQjEzMjQ5RUMzRQ==",
+    "tpkcmnnode": 2,
+    "tfkcmnaudt": 36,
+    "tfkcmnoptn": 2,
+    "tfkcmnnode": null,
+    "abbrev": "SYSTEM",
+    "descr": "System Menu",
+    "origin": "P",
+    "nodetype": "R",
+    "nodeseq": 10,
+    "icon": "icon-menuroot-open",
+    "id": "2",
+    "text": "System Menu",
+    "open": true
+  }, {
+    "@status": "est",
+    "@id": "VE1QOjc3MzBGQTA4LTE1NUQtNEYwQS05QzNCLUI5OURFNTQzOEZCMw==",
+    "tpkcmnnode": 5,
+    "tfkcmnaudt": 36,
+    "tfkcmnoptn": 5,
+    "tfkcmnnode": 2,
+    "abbrev": "LAP",
+    "descr": "Applications",
+    "origin": "P",
+    "nodetype": "I",
+    "nodeseq": 70,
+    "icon": "icon-plan2-open",
+    "id": "5",
+    "parent": "2",
+    "text": "Applications",
+    "open": true
+  }, {
+    "@status": "est",
+    "@id": "VE1QOkRERUYwMzU3LTg4MDctNEJBRi05RDhFLUQzRjc3M0ExRDQ3MQ==",
+    "tpkcmnnode": 57,
+    "tfkcmnaudt": 36,
+    "tfkcmnoptn": 57,
+    "tfkcmnnode": 5,
+    "abbrev": "LAP01",
+    "descr": "Batch",
+    "origin": "P",
+    "nodetype": "I",
+    "nodeseq": 11,
+    "icon": "icon-go-open",
+    "id": "57",
+    "parent": "5",
+    "text": "Batch",
+    "open": true
+  }, {
+    "@status": "est",
+    "@id": "VE1QOjlCQTAzRTEyLTkxQzctNDczNS1CMzY5LUU5OThDMjQ1ODQ1QQ==",
+    "tpkcmnnode": 6702,
+    "tfkcmnaudt": 36,
+    "tfkcmnoptn": 1008,
+    "tfkcmnnode": 57,
+    "abbrev": "LAPC7110",
+    "descr": "Lapsed/Expired Report Control",
+    "origin": "P",
+    "nodetype": "L",
+    "nodeseq": 40,
+    "icon": "icon-options2-open",
+    "id": "6702",
+    "parent": "57",
+    "text": "Lapsed/Expired Report Control",
+    "open": true
+  }];
+
+  //Can refer to the data set here
+  var elem = $('#json-tree').tree({dataset: sampleData}),
+    api = elem.data('tree');
+
+  console.log(api.settings.dataset);
+
+</script>

@@ -1,26 +1,21 @@
 // All desired Soho jQuery-based components ==================== /
 // TODO: Make this file auto-generated for custom builds?
 
-// behaviors
-// TODO: separate this more logically?
-import '../utils/highlight';
-import './arrange/arrange.jquery';
-import './drag/drag.jquery';
-import './place/place.jquery';
-import './personalize/personalize.jquery';
-
-// Atoms
+// Foundational ====/
 import './button/button.jquery';
 import './hyperlinks/hyperlinks.jquery';
 import './icons/icons.jquery';
+import './mask/mask-input.jquery';
+import './popupmenu/popupmenu.jquery';
 
-// Molecules
+// Mid ====/
 import './about/about.jquery';
 import './accordion/accordion.jquery';
 import './applicationmenu/applicationmenu.jquery';
 import './blockgrid/blockgrid.jquery';
 import './busyindicator/busyindicator.jquery';
 import './charts/charts.jquery';
+import './calendar/calendar.jquery';
 import './circlepager/circlepager.jquery';
 import './colorpicker/colorpicker.jquery';
 import './compositeform/compositeform.jquery';
@@ -39,13 +34,13 @@ import './fileupload-advanced/fileupload-advanced.jquery';
 import './homepage/homepage.jquery';
 import './listbuilder/listbuilder.jquery';
 import './listview/listview.jquery';
-import './mask/mask-input.jquery';
 import './message/message.jquery';
 import './modal/modal.jquery';
+import './monthview/monthview.jquery';
 import './multiselect/multiselect.jquery';
+import './notification/notification.jquery';
 import './pager/pager.jquery';
 import './progress/progress.jquery';
-import './popupmenu/popupmenu.jquery';
 import './popdown/popdown.jquery';
 import './rating/rating.jquery';
 import './searchfield/searchfield.jquery';
@@ -74,7 +69,7 @@ import './validation/validation.utils';
 import './wizard/wizard.jquery';
 import './zoom/zoom.jquery';
 
-// Organisms
+// Complex ====/
 import './datagrid/datagrid.jquery';
 import './header/header.jquery';
 import './lookup/lookup.jquery';

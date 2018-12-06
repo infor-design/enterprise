@@ -1,10 +1,11 @@
 ---
 title: Donut Chart
-description: This page describes Donut Chart.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Standard Donut Chart
     slug: example-index
+  pages:
   - name: Showing Slices as Alerts
     slug: example-alerts
   - name: With a Right Click Menu
@@ -21,7 +22,7 @@ demo:
 
 ## Settings
 
-See the [Pie API]( ../components/pie) as this is just a pie setting.
+See the [Pie API]( ../pie) as this is just a pie setting.
 
 ## Code Example
 
@@ -54,6 +55,10 @@ You can control the size of the donut chart by setting the size of the parent el
 This may include possibly using an inset margin in some cases.
 
 See also pie chart
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

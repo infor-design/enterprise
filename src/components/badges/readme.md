@@ -1,10 +1,11 @@
 ---
 title: Badges
-description: This page describes Badges.
+description: Displays an alphanumeric value. A user can easily skim object-related values. Best used to provide users with information about an object that is worthy of attention.
 demo:
-  pages:
+  embedded:
   - name: Default Badge Example
     slug: example-index
+  pages:
   - name: Additional Badges
     slug: example-additional-badges
 ---
@@ -27,3 +28,7 @@ A badge is a CSS only component that uses a `<span>` with the class `badge`. In 
 ## Keyboard Shortcuts
 
 Badges do not have tab stops and have no keyboard interaction on their own, but they may be placed in a grid cell or object that has tab focus.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

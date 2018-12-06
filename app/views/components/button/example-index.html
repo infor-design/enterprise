@@ -2,12 +2,11 @@
 <div class="row">
   <div class="four columns">
     <span class="label">Primary</span>
-    <button class="btn btn-primary" type="button">Action</button><br><br><br>
-    <button class="btn-primary" type="button">Action</button><br><br><br>
-    <button class="btn-primary" type="button" disabled>Action</button><br><br><br>
+    <button class="btn-primary" type="button" id="primary-action-two">Action</button><br><br><br>
+    <button class="btn-primary" type="button" id="primary-action-three" disabled>Action</button><br><br><br>
 
-    <button class="btn-primary" type="button">
-      <svg class="icon" focusable="false" aria-hidden="true" role="presenatation">
+    <button class="btn-primary" type="button" id="primary-alert">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use xlink:href="#icon-alert"></use>
       </svg>
       <span>Primary Button</span>
@@ -18,11 +17,11 @@
 
   <div class="three columns">
     <span class="label">Secondary</span>
-    <button class="btn-secondary" type="button">Action</button><br><br><br>
-    <button class="btn-secondary" type="button" disabled>Action</button><br><br><br>
+    <button class="btn-secondary" type="button" id="secondary-action-one">Action</button><br><br><br>
+    <button class="btn-secondary" type="button" id="secondary-action-two" disabled>Action</button><br><br><br>
 
-    <button class="btn-secondary" type="button">
-      <svg class="icon" focusable="false" aria-hidden="true" role="presenatation">
+    <button class="btn-secondary" type="button" id="secondary-alert">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use xlink:href="#icon-settings"></use>
       </svg>
       <span>Secondary Button</span>
@@ -34,7 +33,7 @@
   <div class="three columns">
     <span class="label">Tertiary</span>
 
-    <button type="button" class="btn-tertiary">
+    <button type="button" class="btn-tertiary" id="tertiary-filter-one">
       <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
         <use xlink:href="#icon-filter"></use>
       </svg>
@@ -42,7 +41,7 @@
     </button>
     <br><br>
 
-    <button type="button" class="btn-tertiary" disabled>
+    <button type="button" class="btn-tertiary" id="tertiary-filter-two" disabled>
       <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
         <use xlink:href="#icon-filter"></use>
       </svg>
@@ -50,7 +49,7 @@
     </button>
     <br><br>
 
-    <button type="button" class="btn btn-link">
+    <button type="button" class="btn btn-link" id="tertiary-filter-three">
       <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
         <use xlink:href="#icon-filter"></use>
       </svg>
@@ -63,7 +62,7 @@
   <div class="two columns">
     <span class="label">Icon</span>
 
-    <button type="button" class="btn-icon">
+    <button type="button" class="btn-icon" id="calendar-enabled">
       <span>Date</span>
       <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
         <use xlink:href="#icon-calendar"></use>
@@ -71,7 +70,7 @@
     </button>
     <br><br>
 
-    <button type="button" class="btn-icon" disabled>
+    <button type="button" class="btn-icon" id="calendar-disabled" disabled>
       <span>Date</span>
       <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
         <use xlink:href="#icon-calendar"></use>

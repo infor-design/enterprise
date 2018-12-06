@@ -131,6 +131,7 @@
   .blockgrid-title {
     @include antialiased();
     @include font-size(14);
+
     color: $font-color;
     display: block;
     padding-bottom: 10px;
@@ -140,7 +141,6 @@
 
 // RTL Styles
 html[dir='rtl'] {
-
   .blockgrid {
     text-align: right;
 

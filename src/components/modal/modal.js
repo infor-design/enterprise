@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { Locale } from '../../../src/components/locale/locale';
 
 // jQuery components
 import '../button/button.jquery';
@@ -22,8 +23,9 @@ const COMPONENT_NAME = 'modal';
 * @param {string} [settings.id=null] Optionally tag a dialog with an id.
 * @param {number} [settings.frameHeight=180] Optional extra height to add.
 * @param {number} [settings.frameWidth=46] Optional extra width to add.
-* @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
 * @param {function} [settings.beforeShow=null] A call back function that can be used to return data for the modal.
+* @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
+* @param {boolean} [settings.showCloseBtn] If true, show a close icon button on the top right of the modal.
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
 */
 const MODAL_DEFAULTS = {
@@ -37,7 +39,8 @@ const MODAL_DEFAULTS = {
   frameHeight: 180,
   frameWidth: 46,
   beforeShow: null,
-  useFlexToolbar: false
+  useFlexToolbar: false,
+  showCloseBtn: false
 };
 
 function Modal(element, settings) {
@@ -51,11 +54,20 @@ function Modal(element, settings) {
 
 // Actual Plugin Code
 Modal.prototype = {
+
+  /**
+   * @private
+   * @returns {boolean} whether or not the Modal is a Contextual Action Panel (CAP)
+   */
+  get isCAP() {
+    return this.element.is('.contextual-action-panel');
+  },
+
   init() {
     const self = this;
 
     // Used for tracking events tied to the Window object
-    this.id = (parseInt($('.modal').length, 10) + 1);
+    this.id = this.element.attr('id') || (parseInt($('.modal').length, 10) + 1);
     // Find the button or anchor with same dialog ID
     this.trigger = $(`button[data-modal="${this.element.attr('id')}"], a[data-modal="${this.element.attr('id')}"]`);
     this.overlay = $('<div class="overlay"></div>');
@@ -74,14 +86,6 @@ Modal.prototype = {
     }
 
     self.isCancelled = false;
-
-    if (window.history && window.history.pushState) {
-      $(window).off('popstate.modal');
-
-      $(window).on('popstate.modal', () => {
-        self.destroy();
-      });
-    }
 
     // ensure is appended to body for new dom tree
     if (this.settings.content) {
@@ -116,6 +120,17 @@ Modal.prototype = {
           '</div>' +
         '</div>' +
       '</div>');
+
+    if (this.settings.showCloseBtn) {
+      const closeBtn = $(`
+        <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
+          ${$.createIcon('close')}
+          <span class="audible">${Locale.translate('Close')}</span>
+        </button>
+      `);
+      this.element.find('.modal-content').append(closeBtn);
+      closeBtn.on('click.modal', () => this.close()).tooltip();
+    }
 
     if (this.settings.id) {
       this.element.attr('id', this.settings.id);
@@ -189,6 +204,7 @@ Modal.prototype = {
 
   /**
    * Check if the submit button should be disabled based on validation status.
+   * @private
    * @returns {void}
    */
   disableSubmit() {
@@ -235,10 +251,10 @@ Modal.prototype = {
     const self = this;
     const body = this.element.find('.modal-body');
     const bodywrapper = body.parent();
+    const flexToolbar = this.element.find('.flex-toolbar');
     let btnWidth = 100;
     let isPanel = false;
     let buttonset;
-    let flexToolbar;
 
     this.modalButtons = buttons;
 
@@ -260,21 +276,11 @@ Modal.prototype = {
       return;
     }
 
-    if (this.element.is('.contextual-action-panel')) {
+    if (this.isCAP) {
+      // CAP is responsible for rendering this part, and will have done so by the
+      // time this code runs
       isPanel = true;
-      // construct the toolbar markup if a toolbar isn't found
       buttonset = this.element.find('.buttonset');
-      if (this.settings.useFlexToolbar) {
-        flexToolbar = this.element.find('.flex-toolbar');
-      }
-
-      if (!buttonset.length && !this.settings.useFlexToolbar) {
-        const toolbar = this.element.find('.toolbar');
-        if (!toolbar.length) {
-          $('<div class="toolbar"></div>').appendTo(this.element.find('.modal-header'));
-        }
-        buttonset = $('<div class="buttonset"></div>').appendTo(this.element.find('.toolbar'));
-      }
     } else {
       buttonset = this.element.find('.modal-buttonset');
       if (!buttonset.length) {
@@ -289,8 +295,12 @@ Modal.prototype = {
     }
 
     const decorateButtons = function (props, cnt) {
-      let btn = $('<button type="button"></button>');
-      btn.text(props.text);
+      let btn = $(`<button type="button">
+        <span></span>
+      </button>`);
+      const span = btn.find('span');
+
+      span.text(props.text);
       btn.attr('type', props.type || 'button');
 
       if (props.cssClass === 'separator') {
@@ -303,6 +313,10 @@ Modal.prototype = {
         btn.addClass('btn-modal-primary');
       } else {
         btn.addClass('btn-modal');
+      }
+
+      if (props.audible) {
+        span.addClass('audible');
       }
 
       if (props.validate !== undefined && !props.validate) {
@@ -322,19 +336,23 @@ Modal.prototype = {
         const label = $(`<label class="audible" for="filter">${props.text}</label>`);
         const input = $('<input class="searchfield">').attr(attrs);
 
-        buttonset.append(label, input);
+        if (flexToolbar.length) {
+          flexToolbar.find('.toolbar-section.search').append(label, input);
+        } else {
+          buttonset.append(label, input);
+        }
+        input.searchfield(props.searchfieldSettings);
         return;
       }
 
       if (props.icon && props.icon.charAt(0) === '#') {
-        btn.html(`<span>${btn.text()}</span>`);
         $.createIconElement({
           classes: [props.icon === '#icon-close' ? 'icon-close' : ''],
           icon: props.icon.substr('#icon-'.length)
         }).prependTo(btn);
       }
 
-      btn.attr('id', props.id || $.fn.uniqueId('button', 'modal'));
+      btn[0].setAttribute('id', props.id || utils.uniqueId(self.element, 'button', 'modal'));
 
       const func = buttons[cnt].click;
 
@@ -351,7 +369,8 @@ Modal.prototype = {
       }
 
       btn.button();
-      if (self.settings.useFlexToolbar) {
+
+      if ((self.settings.useFlexToolbar || self.settings.centerTitle) && props.align) {
         if (props.align === 'left') {
           flexToolbar.find('.toolbar-section').eq(0).append(btn);
         }
@@ -398,13 +417,25 @@ Modal.prototype = {
         return false;
       }
 
-      self.open(true);
-
       $('#modal-busyindicator').trigger('complete.busyindicator');
+
+      // Returning `true` from the response will cause a modal area to render to the page,
+      // but remain hidden.  In this scenario it will be up to the app developer to reveal
+      // the modal when needed.
+      if (content === true) {
+        if (self.busyIndicator) {
+          self.busyIndicator.remove();
+          delete self.busyIndicator;
+        }
+
+        return true;
+      }
 
       if (!(content instanceof jQuery)) {
         content = $(content);
       }
+
+      self.open(true);
 
       self.element.find('.modal-body').empty();
       self.element.find('.modal-body').append(content);
@@ -419,7 +450,6 @@ Modal.prototype = {
   },
 
   /**
-   *
    * Open the modal via the api.
    * @param {boolean} ajaxReturn Flag used internally to denote its an ajax result return.
    */
@@ -429,6 +459,7 @@ Modal.prototype = {
 
     if (this.busyIndicator) {
       this.busyIndicator.remove();
+      delete this.busyIndicator;
     }
 
     if (!this.trigger || this.trigger.length === 0) {
@@ -556,7 +587,7 @@ Modal.prototype = {
     $(this.element).on('keypress.modal', (e) => {
       const target = $(e.target);
 
-      if (target.is('.dropdown, .editor, .searchfield, textarea, :button') || target.closest('.tab-list').length) {
+      if (target.is('.editor, .searchfield, textarea, :button') || target.closest('.tab-list').length || $('#dropdown-list').length) {
         return;
       }
 
@@ -565,7 +596,10 @@ Modal.prototype = {
           this.element.find('.btn-modal-primary:enabled').length) {
         e.stopPropagation();
         e.preventDefault();
-        this.element.find('.btn-modal-primary:enabled').trigger('click');
+
+        if ((!target.hasClass('fileupload') && !$(target).is(':input')) || target.hasClass('colorpicker')) {
+          this.element.find('.btn-modal-primary:enabled').trigger('click');
+        }
       }
     });
 
@@ -654,7 +688,7 @@ Modal.prototype = {
   resize() {
     // 90% -(180 :extra elements-height)
     let calcHeight = ($(window).height() * 0.9) - this.settings.frameHeight;
-    const calcWidth = ($(window).width() * 1) - this.settings.frameWidth;
+    const calcWidth = ($(window).width() * 1.05) - this.settings.frameWidth;
 
     const wrapper = this.element.find('.modal-body-wrapper');
 
@@ -682,6 +716,10 @@ Modal.prototype = {
     }
   },
 
+  /**
+   * Utility function to check via the api if the modal is open.
+   * @returns {boolean} The current state open (true) or closed (false).
+   */
   isOpen() {
     return this.element.is('.is-visible');
   },
@@ -715,52 +753,48 @@ Modal.prototype = {
     let tabbableElements;
 
     // Escape key
-    $(document).on('keyup.modal', (e) => {
-      const keyCode = e.which || e.keyCode;
-      if (keyCode === 27) {
-        const modals = $('.modal.is-visible');
-        const doAction = function (api) {
-          if (!api.element.data('listclosed')) {
-            api.close();
+    $(document)
+      .off(`keydown.modal-${this.id}`)
+      .on(`keydown.modal-${this.id}`, (e) => {
+        const keyCode = e.which || e.keyCode;
+        if (keyCode === 27) {
+          const modals = $('.modal.is-visible');
+
+          if (modals.length > 1) {
+            modals.not(':last').on('beforeclose.modal', () => false);
+            modals.on('afterclose.modal', () => {
+              modals.off('beforeclose.modal');
+            });
+            const apiModal = modals.last().data('modal');
+            if (apiModal && apiModal.close) {
+              apiModal.close();
+            }
+          } else {
+            self.close();
           }
-          setTimeout(() => {
-            api.element.removeData('listclosed');
-          }, 0);
-        };
+        }
+      });
 
-        if (modals.length > 1) {
-          modals.not(':last').on('beforeclose.modal', () => false);
-          modals.on('afterclose.modal', () => {
-            modals.off('beforeclose.modal');
-          });
-          const apiModal = modals.last().data('modal');
-          if (apiModal && apiModal.close) {
-            doAction(apiModal);
+    $(self.element)
+      .off('keypress.modal keydown.modal')
+      .on('keypress.modal keydown.modal', (e) => {
+        const keyCode = e.which || e.keyCode;
+
+        if (keyCode === 9) {
+          tabbableElements = self.getTabbableElements();
+
+          // Move focus to first element that can be tabbed if Shift isn't used
+          if (e.target === tabbableElements.last && !e.shiftKey) {
+            e.preventDefault();
+            tabbableElements.first.focus();
+          } else if (e.target === tabbableElements.first && e.shiftKey) {
+            e.preventDefault();
+            tabbableElements.last.focus();
           }
-        } else {
-          doAction(self);
+
+          self.element.find('#message-title').removeAttr('tabindex');
         }
-      }
-    });
-
-    $(self.element).on('keypress.modal keydown.modal', (e) => {
-      const keyCode = e.which || e.keyCode;
-
-      if (keyCode === 9) {
-        tabbableElements = self.getTabbableElements();
-
-        // Move focus to first element that can be tabbed if Shift isn't used
-        if (e.target === tabbableElements.last && !e.shiftKey) {
-          e.preventDefault();
-          tabbableElements.first.focus();
-        } else if (e.target === tabbableElements.first && e.shiftKey) {
-          e.preventDefault();
-          tabbableElements.last.focus();
-        }
-
-        self.element.find('#message-title').removeAttr('tabindex');
-      }
-    });
+      });
   },
 
   /**
@@ -833,6 +867,11 @@ Modal.prototype = {
     return false;
   },
 
+  /**
+   * Destroy the modal.
+   * @param {settings} settings The settings to update on the modal
+   * @returns {object} The modal object for chaining.
+   */
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
@@ -841,7 +880,9 @@ Modal.prototype = {
     return this;
   },
 
-  // NOTE: Destroy method needs to function as a callback to be cancellable
+  /**
+   * Destroy the modal.
+   */
   destroy() {
     const self = this;
     const canDestroy = this.element.trigger('beforedestroy');
@@ -865,8 +906,6 @@ Modal.prototype = {
 
       self.element.closest('.modal-page-container').remove();
       $.removeData(self.element[0], 'modal');
-
-      $(window).off('popstate.modal');
     }
 
     if (!this.isOpen()) {

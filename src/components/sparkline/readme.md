@@ -1,10 +1,11 @@
 ---
 title: Sparklines
-description: This page describes Sparklines.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Standard Sparkline Chart
     slug: example-index
+  pages:
   - name: Example showing Get Selected value
     slug: example-get-selected
   - name: Example showing Set Selected value
@@ -43,6 +44,10 @@ $('#sparkline-chart-example-1').chart({type: 'sparkline-dots-n-peak', dataset: s
 ## Accessibility
 
 - Alternate information should be available for the screen reader user.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Future
 

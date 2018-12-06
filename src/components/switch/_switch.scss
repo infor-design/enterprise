@@ -9,6 +9,7 @@
   // Text Label
   label {
     @include font-size(14);
+
     color: $font-color-extrahighcontrast;
     display: inline-block;
     padding-left: 42px;
@@ -30,6 +31,7 @@
     ~ .label-text,
     ~ label {
       @include no-select();
+
       cursor: pointer;
       line-height: 16px;
       margin-bottom: 14px;
@@ -57,7 +59,8 @@
     ~ .label-text::after,
     ~ label::before,
     ~ label::after {
-      @include css3(transition, all 200ms cubic-bezier(.17, .04, .03, .94) 0s);
+      @include css3(transition, all 200ms cubic-bezier(0.17, 0.04, 0.03, 0.94) 0s);
+
       content: ' ';
       display: block;
       position: absolute;
@@ -85,8 +88,8 @@
   //Checked Styling - Toggle Handle
   input:checked ~ .label-text::after,
   input:checked ~ label::after {
-    background: $switch-checked-color;
-    border-color: $switch-checked-color;
+    background: $radio-color-checked-initial-fill;
+    border-color: $radio-color-checked-initial-fill;
     left: 15px;
   }
 
@@ -103,7 +106,7 @@
   input:not(:disabled):checked:focus ~ .label-text::after,
   input:not(:disabled):checked:active ~ label::after,
   input:not(:disabled):checked:focus ~ label::after {
-    background-color: $switch-checked-color;
+    background-color: $radio-color-checked-initial-fill;
   }
 
   input:not(:disabled):checked:hover ~ .label-text::after,
@@ -142,7 +145,7 @@
   margin-bottom: 0;
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .switch {
     input {

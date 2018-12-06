@@ -1,10 +1,11 @@
 ---
 title: Pie Chart
-description: This page describes Pie Chart.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Standard Pie Chart
     slug: example-index
+  pages:
   - name: HCM Example
     slug: example-hcm
   - name: Tooltips
@@ -56,7 +57,11 @@ This example shows how to invoke a pie bar chart with a dataset controlling the 
 You can control the size of the donut chart by setting the size of the parent element the pie chart lives in.
 This may include possibly using an inset margin in some cases.
 
-See also [Donut Chart Example]( ../components/donut/example-index)
+See also [Donut Chart Example](https://design.infor.com/code/ids-enterprise/latest/demo/donut/example-index?font=source-sans)
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

@@ -14,6 +14,22 @@ describe('Timepicker example-index tests', () => {
     await utils.setPage('/components/timepicker/example-index');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      const timepickerSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(timepickerSection), config.waitsFor);
+      await element(by.css('.timepicker + .icon')).click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(timepickerSection, 'timepicker-open')).toEqual(0);
+    });
+  }
+
   it('Should open popup on icon click', async () => {
     await element(by.css('.timepicker + .icon')).click();
 
@@ -75,7 +91,7 @@ describe('Timepicker example-index tests', () => {
 
 describe('Timepicker 24 Hour tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/timepicker/example-24-hour');
+    await utils.setPage('/components/timepicker/test-24-hour');
   });
 
   it('Should open popup on icon click for 24 Hour', async () => {
@@ -84,35 +100,33 @@ describe('Timepicker 24 Hour tests', () => {
     expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
-  xit('Should pick time from picker and set to field for 24 Hour', async () => {
-    const timepickerEl = await element(by.id('timepicker-24hrs'));
-    await timepickerEl.sendKeys('19:15');
-    await element(by.css('.timepicker + .icon')).click();
-    let dropdownEl = await element(by.css(ddSelector('hours')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
+  if (!utils.isCI() && !utils.isBS()) {
+    it('Should pick time from picker and set to field for 24 Hour', async () => {
+      const timepickerEl = await element(by.id('timepicker-24hrs'));
+      await timepickerEl.sendKeys('19:15');
+      await element(by.css('.timepicker + .icon')).click();
+      let dropdownEl = await element(by.css(ddSelector('hours')));
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
 
-    expect(await dropdownEl.getText()).toEqual('21');
-    dropdownEl = await element(by.css(ddSelector('minutes')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
+      expect(await dropdownEl.getText()).toEqual('20');
+      dropdownEl = await element(by.css(ddSelector('minutes')));
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
 
-    expect(await dropdownEl.getText()).toEqual('25');
-    await element(by.className('set-time')).click();
-    await browser.driver.sleep(config.sleep);
-    await element(by.css('.timepicker + .icon')).click();
+      expect(await dropdownEl.getText()).toEqual('20');
+      await element(by.className('set-time')).click();
+      await browser.driver.sleep(config.sleep);
+      await element(by.css('.timepicker + .icon')).click();
 
-    expect(await element(by.id('timepicker-24hrs')).getAttribute('value')).toEqual('21:25');
-  });
+      expect(await element(by.id('timepicker-24hrs')).getAttribute('value')).toEqual('20:20');
+    });
+  }
 });
 
 describe('Timepicker with seconds example tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/timepicker/example-seconds-picker');
+    await utils.setPage('/components/timepicker/test-seconds-picker');
   });
 
   it('Should open popup on icon click with seconds', async () => {
@@ -177,35 +191,35 @@ describe('Timepicker with seconds example tests', () => {
 
 describe('Timepicker Intervals tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/timepicker/example-intervals');
+    await utils.setPage('/components/timepicker/test-intervals');
   });
 
   it('Should pick time from picker with 10 minute intervals', async () => {
     const timepickerEl = await element(by.id('time-intervals'));
     await element(by.css('.timepicker + .icon')).click();
     let dropdownEl = await element(by.css(ddSelector('hours')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownEl.click();
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
 
-    expect(await dropdownEl.getText()).toEqual('3');
+    expect(await dropdownEl.getText()).toEqual('2');
     dropdownEl = await element(by.css(ddSelector('minutes')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownEl.click();
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
 
-    expect(await dropdownEl.getText()).toEqual('20');
+    expect(await dropdownEl.getText()).toEqual('10');
     dropdownEl = await element(by.css(ddSelector('period')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
+    await dropdownEl.click();
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
 
     expect(await dropdownEl.getText()).toEqual('PM');
     await element(by.css('.set-time')).sendKeys(protractor.Key.SPACE);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(element(by.id('dropdown-list'))), config.waitsFor);
 
-    expect(await timepickerEl.getAttribute('value')).toEqual('3:20 PM');
+    expect(await timepickerEl.getAttribute('value')).toEqual('2:10 PM');
   });
 
   it('Should rounds minutes to the nearest interval', async () => {
@@ -219,7 +233,7 @@ describe('Timepicker Intervals tests', () => {
 
 describe('Timepicker states tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/timepicker/example-states');
+    await utils.setPage('/components/timepicker/test-states');
   });
 
   it('Should check to make readonly', async () => {
@@ -252,41 +266,49 @@ describe('Timepicker states tests', () => {
   });
 });
 
-describe('Timepicker validation tests', () => {
+describe('Timepicker Custom Validation Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/timepicker/example-with-validation');
+    await utils.setPage('/components/timepicker/example-validation');
   });
 
-  it('Should have required css class in markup', async () => {
-    expect(await element(by.css('.timepicker.required')).isDisplayed()).toBe(true);
-  });
-
-  it('Should check required rule', async () => {
-    const timepickerEl = await element(by.id('timepicker-main'));
-    await timepickerEl.clear();
-
-    expect(await timepickerEl.getAttribute('value')).toEqual('');
-
-    await timepickerEl.sendKeys(protractor.Key.TAB);
+  it('Should be able to do default invalid time validation', async () => {
+    const datepickerEl = await element(by.id('timepicker-1'));
+    await datepickerEl.clear();
+    await datepickerEl.sendKeys('1:');
+    await datepickerEl.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.message-text')).getText()).toBe('Required');
-    expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
-    expect(await timepickerEl.getAttribute('class')).toContain('error');
+    expect(await element.all(by.css('.message-text')).last().getText()).toEqual('Invalid Time');
+    expect(await element.all(by.css('.message-text')).last(1).isPresent()).toBe(true);
   });
 
-  it('Should check for invalid time rule', async () => {
-    const timepickerEl = await element(by.id('timepicker-main'));
-    await timepickerEl.clear();
-    await timepickerEl.sendKeys('1:00 A');
+  it('Should be able to do custom validation', async () => {
+    expect(await element(by.css('.message-text')).isPresent()).toBe(false);
 
-    expect(await timepickerEl.getAttribute('value')).toEqual('1:00 A');
+    const datepicker2El = await element(by.id('timepicker-2'));
+    await datepicker2El.sendKeys(protractor.Key.TAB);
 
-    await timepickerEl.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.message-text')).getText()).toBe('Invalid Time');
-    expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
-    expect(await timepickerEl.getAttribute('class')).toContain('error');
+    expect(await element.all(by.css('.message-text')).last().getText()).toEqual('Test Error - Anything you enter will be wrong');
+    expect(await element.all(by.css('.message-text')).last(1).isPresent()).toBe(true);
+  });
+
+  it('Should be able to do required and time validation', async () => {
+    const datepickerEl = await element(by.id('timepicker-3'));
+    await datepickerEl.clear();
+    await datepickerEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.message-text')).last().getText()).toEqual('Required');
+    expect(await element.all(by.css('.message-text')).last(1).isPresent()).toBe(true);
+
+    await datepickerEl.clear();
+    await datepickerEl.sendKeys('1:');
+    await datepickerEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.message-text')).last().getText()).toEqual('Invalid Time');
+    expect(await element.all(by.css('.message-text')).last(1).isPresent()).toBe(true);
   });
 });

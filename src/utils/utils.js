@@ -26,7 +26,7 @@ $.fn.bindFirst = function (name, fn) {
  * uniqueIdCount is a baseline unique number that will be used when generating
  * uniqueIds for elements and components.
  */
-export let uniqueIdCount = 0; // eslint-disable-line
+export let uniqueIdCount = []; // eslint-disable-line
 
 /**
  * Detect whether or not a text string represents a valid CSS property.  This check
@@ -179,15 +179,14 @@ utils.uniqueId = function (element, className, prefix, suffix) {
 
   prefix = (!prefix ? '' : `${prefix}-`);
   suffix = (!suffix ? '' : `-${suffix}`);
-  className = (!className ? Array.from(element.classList).join('-') : className);
+  className = (!className ? utils.getArrayFromList(element.classList).join('-') : className);
 
-  const str = `${prefix}${className}-${uniqueIdCount}${suffix}`;
-  uniqueIdCount += 1;
+  if (!uniqueIdCount[className]) {
+    uniqueIdCount[className] = 1;
+  }
+  const str = `${prefix}${className}-${uniqueIdCount[className]}${suffix}`;
+  uniqueIdCount[className] += 1;
   return str;
-};
-
-$.fn.uniqueId = function (className, prefix, suffix) {
-  return utils.uniqueId(this, className, prefix, suffix);
 };
 
 /**
@@ -415,49 +414,6 @@ $.copyToClipboard = function (text) { // eslint-disable-line
 };
 
 /**
- * Escapes HTML, replacing special characters with encoded symbols.
- * @private
- * @param {string} value HTML in string form
- * @returns {string} the modified value
- */
-$.escapeHTML = function (value) {
-  let newValue = value;
-  if (typeof value === 'string') {
-    newValue = newValue.replace(/&/g, '&amp;');
-    newValue = newValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-  return newValue;
-};
-
-/**
- * Un-escapes HTML, replacing encoded symbols with special characters.
- * @private
- * @param {string} value HTML in string form
- * @returns {string} the modified value
- */
-$.unescapeHTML = function (value) {
-  let newValue = value;
-  if (typeof value === 'string') {
-    newValue = newValue.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-    newValue = newValue.replace(/&amp;/g, '&');
-  }
-  return newValue;
-};
-
-/**
- * Remove Script tags and all onXXX functions
- * @private
- * @param {string} html HTML in string form
- * @returns {string} the modified value
- */
-$.sanitizeHTML = function (html) {
-  let santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
-  santizedHtml = santizedHtml.replace(/<[^>]+/g, match => match.replace(/(\/|\s)on\w+=(\'|")?[^"]*(\'|")?/g, '')); // eslint-disable-line
-
-  return santizedHtml;
-};
-
-/**
  * Clearable (Shows an X to clear)
  * @private
  */
@@ -675,20 +631,39 @@ utils.fixSVGIcons = function fixSVGIcons(rootElement) {
     return;
   }
 
+  const xlinkNS = 'http://www.w3.org/1999/xlink';
+
+  // Handle jQuery
   if (rootElement instanceof $) {
     if (!rootElement.length) {
       return;
     }
 
-    rootElement = rootElement[0];
+    if (rootElement.length === 1) {
+      rootElement = rootElement[0];
+    } else {
+      rootElement.each((i, elem) => {
+        fixSVGIcons(elem);
+      });
+      return;
+    }
+  }
+
+  // Handle NodeList in an IE-friendly way
+  // https://developer.mozilla.org/en-US/docs/Web/API/NodeList#Example
+  if (rootElement instanceof NodeList) {
+    Array.prototype.forEach.call(rootElement, (elem) => {
+      fixSVGIcons(elem);
+    });
+    return;
   }
 
   setTimeout(() => {
     const uses = rootElement.getElementsByTagName('use');
     for (let i = 0; i < uses.length; i++) {
-      const attr = uses[i].getAttribute('xlink:href');
-      uses[i].setAttribute('xlink:href', 'x');
-      uses[i].setAttribute('xlink:href', attr);
+      const attr = uses[i].getAttributeNS(xlinkNS, 'href');
+      uses[i].setAttributeNS(xlinkNS, 'href', 'x');
+      uses[i].setAttributeNS(xlinkNS, 'href', attr);
     }
   }, 1);
 };
@@ -1009,6 +984,55 @@ utils.forEach = function forEach(array, callback, scope) {
   for (let i = 0; i < array.length; i++) {
     callback.call(scope, array[i], i, array); // passes back stuff we need
   }
+};
+
+/**
+ * Function to check if element has css class
+ * @private
+ * @param {object} elem The DOM element
+ * @param {string} classStr The css class name to check
+ * @returns {boolean} true if found given css class
+ */
+utils.hasClass = function hasClass(elem, classStr) {
+  let r = false;
+  if (elem) {
+    if ('classList' in elem) {
+      r = elem.classList.contains(classStr);
+    } else {
+      const classAttr = elem.getAttribute('class');
+      r = classAttr ? classAttr.split(/\s+/).indexOf(classStr) !== -1 : false;
+    }
+  }
+  return r;
+};
+
+/**
+ * Returns the sign of a number, indicating whether the number is positive, negative or zero
+ * @param {number} x A number.
+ * @returns {number} A number representing the sign of the given argument. If the argument is a positive number, negative number, positive zero or negative zero, the function will return 1, -1, 0 or -0 respectively. Otherwise, NaN is returned.
+ */
+math.sign = function (x) {
+  if (Math.sign) {
+    return Math.sign(x);
+  }
+
+  x = +x;
+  if (x === 0 || isNaN(x)) {
+    return x;
+  }
+  return x > 0 ? 1 : -1;
+};
+
+/**
+ * Convenience method for using `Array.prototype.slice()` on an Array-like object (or an actual array)
+ * to make a copy.
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice#Array-like_objects
+ * @param {Array|NodeList} listObj an array-like object
+ * @returns {array} containing the list in array format.
+ */
+utils.getArrayFromList = function (listObj) {
+  const unboundSlice = Array.prototype.slice;
+  return Function.prototype.call.bind(unboundSlice)(listObj);
 };
 
 export { utils, math };

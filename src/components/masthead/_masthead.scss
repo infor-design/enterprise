@@ -33,7 +33,7 @@ $masthead-button-focus-color: $white;
     }
   }
 
-  [class^="btn"] {
+  [class^='btn'] {
     height: 32px;
     min-width: 32px;
   }
@@ -51,7 +51,6 @@ $masthead-button-focus-color: $white;
   }
 
   .toolbar-searchfield-wrapper {
-
     > .icon:not(.close, .error) {
       fill: $masthead-button-color;
       height: 18px;
@@ -72,6 +71,14 @@ $masthead-button-focus-color: $white;
   .toolbar {
     height: 100%;
     margin-bottom: 0;
+
+    .popupmenu {
+      li {
+        &.is-checked > a::before {
+          border-color: $popupmenu-checked-color-inverse $popupmenu-checked-color-inverse $popupmenu-checked-color-inverse transparent;
+        }
+      }
+    }
 
     .title {
       height: 100%;
@@ -98,9 +105,11 @@ $masthead-button-focus-color: $white;
       }
     }
 
-    [class^="btn"] {
+    [class^='btn'] {
       background-color: transparent;
       color: $masthead-text-color;
+      margin: 3px 3px 2px 0;
+      vertical-align: top;
 
       .ripple-effect {
         background-color: $white;
@@ -119,9 +128,7 @@ $masthead-button-focus-color: $white;
 
         &.app-drawer {
           left: -6px;
-          // scss-lint:disable ImportantRule
           position: relative !important;
-          // scss-lint:enable ImportantRule
           top: -6px;
         }
       }
@@ -177,9 +184,10 @@ $masthead-button-focus-color: $white;
 
 .masthead-appname {
   @include font-size(12);
+
   color: $masthead-text-color;
   display: inline-block;
-  font-weight: bold;
+  font-weight: $theme-number-font-weight-bold;
   line-height: 38px;
   margin: 0;
   vertical-align: top;

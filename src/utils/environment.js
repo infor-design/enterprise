@@ -4,6 +4,9 @@ import { breakpoints } from './breakpoints';
 // jQuery Components
 import './debounced-resize.jquery';
 
+// Utility Name
+const UTIL_NAME = 'environment';
+
 /**
  * @class {Environment}
  */
@@ -11,7 +14,12 @@ const Environment = {
 
   browser: {},
 
+  features: {
+    touch: (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0))
+  },
+
   os: {},
+  devicespecs: {},
 
   rtl: $('html').attr('dir') === 'rtl',
 
@@ -22,6 +30,8 @@ const Environment = {
     $('html').attr('data-sohoxi-version', SOHO_XI_VERSION);
     this.addBrowserClasses();
     this.addGlobalResize();
+    this.addGlobalEvents();
+    this.addDeviceSpecs();
   },
 
   /**
@@ -29,6 +39,7 @@ const Environment = {
    */
   addBrowserClasses() {
     const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const platform = navigator.platform;
     const html = $('html');
     let cssClasses = ''; // User-agent string
 
@@ -44,7 +55,8 @@ const Environment = {
       this.browser.name = 'chrome';
     }
 
-    if (ua.indexOf('Mac OS X') !== -1) {
+    const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
+    if (macosPlatforms.indexOf(platform) > -1 && !/Linux/.test(platform)) {
       cssClasses += 'is-mac ';
       this.os.name = 'Mac OS X';
     }
@@ -58,6 +70,8 @@ const Environment = {
     if (ua.match(/Edge\//)) {
       cssClasses += 'ie ie-edge ';
       this.browser.name = 'edge';
+      this.browser.version = navigator.appVersion.indexOf('Edge/18') > -1 ? '18' : '17';
+      cssClasses += `ie-edge${this.browser.version}`;
     }
     if (ua.match(/Trident/)) {
       cssClasses += 'ie ';
@@ -101,7 +115,130 @@ const Environment = {
       this.os.name = 'android';
     }
 
+    if (!this.os.name && /Linux/.test(platform)) {
+      this.os.name = 'linux';
+    }
+
     html.addClass(cssClasses);
+  },
+
+  addDeviceSpecs() {
+    const unknown = '-';
+    const nAppVer = navigator.appVersion;
+    const nUAgent = navigator.userAgent;
+    let browser = navigator.appName;
+    let version = ` ${parseFloat(navigator.appVersion)}`;
+    let majorVersion = parseInt(navigator.appVersion, 10);
+    let nameOffset;
+    let verOffset;
+    let ix;
+
+    if ((verOffset = nUAgent.indexOf('Opera')) !== -1) { //eslint-disable-line
+      browser = 'Opera';
+      version = nUAgent.substring(verOffset + 6);
+      if ((verOffset = nUAgent.indexOf('Version')) !== -1) { //eslint-disable-line
+        version = nUAgent.substring(verOffset + 8);
+      }
+    }
+    if ((verOffset = nUAgent.indexOf('OPR')) !== -1) { //eslint-disable-line
+      browser = 'Opera';
+      version = nUAgent.substring(verOffset + 4);
+    } else if ((verOffset = nUAgent.indexOf('Edge')) !== -1) { //eslint-disable-line
+      browser = 'Microsoft Edge';
+      version = nUAgent.substring(verOffset + 5);
+    } else if ((verOffset = nUAgent.indexOf('MSIE')) !== -1) { //eslint-disable-line
+      browser = 'Microsoft Internet Explorer';
+      version = nUAgent.substring(verOffset + 5);
+    } else if ((verOffset = nUAgent.indexOf('Chrome')) !== -1) { //eslint-disable-line
+      browser = 'Chrome';
+      version = nUAgent.substring(verOffset + 7);
+    } else if ((verOffset = nUAgent.indexOf('Safari')) !== -1) { //eslint-disable-line
+      browser = 'Safari';
+      version = nUAgent.substring(verOffset + 7);
+      if ((verOffset = nUAgent.indexOf('Version')) !== -1) { //eslint-disable-line
+        version = nUAgent.substring(verOffset + 8);
+      }
+    } else if ((verOffset = nUAgent.indexOf('Firefox')) !== -1) { //eslint-disable-line
+      browser = 'Firefox';
+      version = nUAgent.substring(verOffset + 8);
+    } else if (nUAgent.indexOf('Trident/') !== -1) { //eslint-disable-line
+      browser = 'Microsoft Internet Explorer';
+      version = nUAgent.substring(nUAgent.indexOf('rv:') + 3);
+    } else if ((nameOffset = nUAgent.lastIndexOf(' ') + 1) < (verOffset = nUAgent.lastIndexOf('/'))) { //eslint-disable-line
+      browser = nUAgent.substring(nameOffset, verOffset);
+      version = nUAgent.substring(verOffset + 1);
+      if (browser.toLowerCase() === browser.toUpperCase()) {
+        browser = navigator.appName;
+      }
+    }
+    // Trim the version string
+    if ((ix = version.indexOf(';')) !== -1) version = version.substring(0, ix); //eslint-disable-line
+    if ((ix = version.indexOf(' ')) !== -1) version = version.substring(0, ix); //eslint-disable-line
+    if ((ix = version.indexOf(')')) !== -1) version = version.substring(0, ix); //eslint-disable-line
+
+    majorVersion = ` ${parseInt(version, 10)}`;
+    if (isNaN(majorVersion)) {
+      version = ` ${parseFloat(navigator.appVersion)}`;
+      majorVersion = parseInt(navigator.appVersion, 10);
+    }
+
+    // mobile version
+    const mobile = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nAppVer);
+
+    let os = unknown;
+
+    const clientStrings = [
+      { s: 'Windows 10', r: /(Windows 10.0|Windows NT 10.0)/ },
+      { s: 'Windows 8.1', r: /(Windows 8.1|Windows NT 6.3)/ },
+      { s: 'Windows 8', r: /(Windows 8|Windows NT 6.2)/ },
+      { s: 'Windows 7', r: /(Windows 7|Windows NT 6.1)/ },
+      { s: 'Android', r: /Android/ },
+      { s: 'Open BSD', r: /OpenBSD/ },
+      { s: 'Sun OS', r: /SunOS/ },
+      { s: 'Linux', r: /(Linux|X11)/ },
+      { s: 'iOS', r: /(iPhone|iPad|iPod)/ },
+      { s: 'Mac OS X', r: /Mac OS X/ },
+      { s: 'Mac OS', r: /(MacPPC|MacIntel|Mac_PowerPC|Macintosh)/ },
+      { s: 'UNIX', r: /UNIX/ }
+    ];
+
+    for (const id in clientStrings) { //eslint-disable-line
+      const cs = clientStrings[id];
+      if (cs.r.test(nUAgent)) {
+        os = cs.s;
+        break;
+      }
+    }
+
+    let osVersion = unknown;
+
+    if (/Windows/.test(os)) {
+      osVersion = /Windows (.*)/.exec(os)[1];
+    }
+
+    switch (os) { //eslint-disable-line
+      case 'Mac OS X':
+        osVersion = /Mac OS X (10[\.\_\d]+)/.exec(nUAgent)[1].replace(/\_/g, '.'); //eslint-disable-line
+        break;
+
+      case 'Android':
+        osVersion = /Android ([\.\_\d]+)/.exec(nUAgent)[1]; //eslint-disable-line
+        break;
+
+      case 'iOS':
+        osVersion = /OS (\d+)_?(\d+)?/.exec(nUAgent); //eslint-disable-line
+        osVersion = `${osVersion[1]}.${osVersion[2]}.${(osVersion[3] | 0)}`; //eslint-disable-line
+        break;
+    }
+
+    this.devicespecs = {
+      currentBrowser: browser,
+      browserVersion: version,
+      browserMajorVersion: majorVersion,
+      isMobile: mobile,
+      os,
+      currentOSVersion: osVersion
+    };
   },
 
   /**
@@ -116,6 +253,88 @@ const Environment = {
 
     // Also detect whenenver a load or orientation change occurs
     $(window).on('orientationchange load', () => breakpoints.compare());
+  },
+
+  /**
+   * Sets up global UI-specific event handlers
+   * @returns {void}
+   */
+  addGlobalEvents() {
+    const self = this;
+
+    this.globalMouseActive = 0;
+    this.globalTouchActive = 0;
+
+    // Detect mouse/touch events on the body to help scrolling detection along
+    $('body')
+      .on(`mousedown.${UTIL_NAME}`, () => {
+        ++this.globalMouseActive;
+      })
+      .on(`mouseup.${UTIL_NAME}`, () => {
+        --this.globalMouseActive;
+      })
+      .on(`touchstart.${UTIL_NAME}`, () => {
+        ++this.globalTouchActive;
+      })
+      .on(`touchend.${UTIL_NAME}`, () => {
+        --this.globalTouchActive;
+      });
+
+    // On iOS, it's possible to scroll the body tag even if there's a `no-scroll` class attached
+    // This listener persists and will prevent scrolling on the body tag in the event of a `no-scroll`
+    // class, only in iOS environments
+    $(window).on(`scroll.${UTIL_NAME}`, (e) => {
+      if (self.os.name !== 'ios' || document.body.className.indexOf('no-scroll') === -1) {
+        return true;
+      }
+
+      // If a mouse button or touch is still active, continue as normal
+      if (this.globalTouchActive || this.globalMouseActive) {
+        return true;
+      }
+
+      e.preventDefault();
+      if (document.body.scrollTop > 0) {
+        document.body.scrollTop = 0;
+      }
+      return false;
+    });
+
+    // Prevent zooming on inputs/textareas' `focusin`/`focusout` events.
+    // Some components like Dropdown have this feature built in on their specified elements.
+    // This particular setup prevents zooming on input fields not tied to a component wrapper.
+    $('body').on(`focusin.${UTIL_NAME}`, 'input, textarea', (e) => {
+      const target = e.target;
+      if (target.className.indexOf('dropdown-search') > -1) {
+        return;
+      }
+
+      if (self.os.name === 'ios') {
+        $('head').triggerHandler('disable-zoom');
+      }
+    }).on(`focusout.${UTIL_NAME}`, 'input, textarea', (e) => {
+      const target = e.target;
+      if (target.className.indexOf('dropdown-search') > -1) {
+        return;
+      }
+
+      if (self.os.name === 'ios') {
+        $('head').triggerHandler('enable-zoom');
+      }
+    });
+  },
+
+  /**
+   * Tears down global UI-specific event handlers
+   * @returns {void}
+   */
+  removeGlobalEvents() {
+    $(window).off(`scroll.${UTIL_NAME}`);
+
+    $('body').off([
+      `focusin.${UTIL_NAME}`,
+      `focusout.${UTIL_NAME}`
+    ].join(' '));
   }
 };
 
@@ -124,6 +343,13 @@ const Environment = {
  */
 Environment.browser.isIE11 = function () {
   return Environment.browser.name === 'ie' && Environment.browser.version === '11';
+};
+
+/**
+ * @returns {boolean} whether or not the current browser is IE10
+ */
+Environment.browser.isIE10 = function () {
+  return Environment.browser.name === 'ie' && Environment.browser.version === '10';
 };
 
 /**

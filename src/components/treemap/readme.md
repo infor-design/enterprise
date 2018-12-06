@@ -1,10 +1,11 @@
 ---
 title: Treemap
-description: This page describes treemap.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Treemap Main Example
     slug: example-index
+  pages:
   - name: Treemap Nesting Example
     slug: example-nested
 ---
@@ -89,7 +90,8 @@ None
 
 ## Testability
 
-Needs further testing, but you can add a permanent data-automation-id or id to the chart container for scripting purposes.
+- Needs further testing, but you can add a permanent data-automation-id or id to the chart container for scripting purposes.
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Responsive Information
 

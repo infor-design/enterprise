@@ -3,26 +3,26 @@
 
     <div class="field">
       <label for="input-menu">Label</label>
-      <input type="text" data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu">
+      <input type="text" data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu"/>
     </div>
 
     <div class="field">
       <label for="input-menu2">Label2</label>
-      <input type="text"  data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu2">
+      <input type="text"  data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu2"/>
     </div>
 
     <ul id="action-popupmenu" class="popupmenu">
-      <li><a href="#">Cut</a></li>
-      <li><a href="#">Copy</a></li>
-      <li><a href="#">Paste</a></li>
+      <li><a href="#" id="cut">Cut</a></li>
+      <li><a href="#" id="copy">Copy</a></li>
+      <li><a href="#" id="paste">Paste</a></li>
       <li>
-        <a href="#">Paste Special</a>
+        <a id="paste-special" href="#">Paste Special</a>
         <ul class="popupmenu">
-          <li><a href="#">Sub Menu 1</a></li>
-          <li><a href="#">Sub Menu 2</a></li>
+          <li><a id="sub-menu-1" href="#">Sub Menu 1</a></li>
+          <li><a id="sub-menu-2" href="#">Sub Menu 2</a></li>
           <li class="separator"></li>
           <li>
-            <a href="#">
+            <a id="settings" href="#">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use xlink:href="#icon-settings"></use>
               </svg>
@@ -32,17 +32,18 @@
         </ul>
       </li>
       <li class="separator"></li>
-      <li><a href="#">Name and project range</a></li>
-      <li class="is-disabled"><a id='x' href="#" disabled>Insert comment</a></li>
-      <li class="is-disabled"><a href="#" disabled>Insert note</a></li>
-      <li><a href="#">Clear notes</a></li>
+      <li><a href="#" id="name-project">Name and project range</a></li>
+      <li class="is-disabled"><a href="#" id="insert-comment" disabled="true">Insert comment</a></li>
+      <li class="is-disabled"><a href="#" id="insert-note" disabled="true">Insert note</a></li>
+      <li><a href="#" id="clear-notes">Clear notes</a></li>
+
       <li class="separator single-selectable-section"></li>
       <li class="heading">Additional Options</li>
-      <li class="is-selectable is-checked"><a href="#">Conditional formatting</a></li>
-      <li class="is-selectable"><a href="#">Data validation</a></li>
+      <li class="is-selectable is-checked"><a href="#" id="conditional-format">Conditional formatting</a></li>
+      <li class="is-selectable"><a href="#" id="data-validation">Data validation</a></li>
       <li class="separator"></li>
       <li>
-        <a href="#">
+        <a href="#" id="settings">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-settings"></use>
           </svg>

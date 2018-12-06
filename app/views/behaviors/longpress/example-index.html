@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="six columns">
+    <h2>LongPress Behavior</h2>
+    <p>Original Issue: <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/245" target="_blank">#245</a></p>
+    <p>Hold down the mouse button, or longpress via touch anywhere on the page to trigger a 'longpress' event that shows up in the developer console.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="four columns">
+    <button id="test-button" class="btn-primary">
+      <span>Test Button</span>
+    </button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="four columns">
+    <label for="test-dropdown">Test Dropdown</label>
+    <select id="test-dropdown" class="dropdown">
+      <option>Ready</option>
+      <option>Set</option>
+      <option>Go</option>
+    </select>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="four columns">
+    <label for="test-slider">Test Slider</label>
+    <input id="test-slider" value="10" class="slider" type="range" data-tooltip-content="['']" data-tooltip-persist="true" />
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').on('longpress', function(e) {
+    var target = e.target;
+    if (console && console.dir) {
+      console.dir(target);
+    }
+  });
+</script>

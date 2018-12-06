@@ -1,10 +1,11 @@
 ---
 title: Radio Buttons
-description: This page describes Radio Buttons.
+description: Displays one or more selectable values. A user can select exactly one value at a time. Best used when all possible options should be clearly visible to a user.
 demo:
-  pages:
+  embedded:
   - name: Radio Button Example
     slug: example-index
+  pages:
   - name: Horizontal Radio Button Example
     slug: example-horizontal
   - name: Dirty Flag
@@ -38,6 +39,7 @@ Displays one or more selectable values. A user can select exactly one value at a
 
 - Make sure each item has a unique id that does not change across versions of your software.
 - If you think that your id may change you can also use an optional automation-id for test teams to target your elements. This should not change or future test scripts may break unexpectedly.
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Implementation Tips
 

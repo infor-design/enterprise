@@ -1,8 +1,8 @@
 ---
 title: Tag Component
-description: This page describes Tag Component .
+description: null
 demo:
-  pages:
+  embedded:
   - name: Common Tag Examples
     slug: example-index
 ---
@@ -24,6 +24,10 @@ Tags are simple span elements with the class `tag`. They can be mixed in with ot
 ## Accessibility
 
 - Since you should not use color alone to indicate states, this should be either supplemented with offscreen or visual labels near the element explaining the state
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

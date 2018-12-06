@@ -9,7 +9,8 @@ const VALIDATE_COMPONENT_NAME = 'validate';
 // Settings specific to error messages.
 // Used for backwards compatibility.
 const ERROR_MESSAGE_DEFAULTS = {
-  type: 'error'
+  type: 'error',
+  inline: true
 };
 
 /**
@@ -20,11 +21,45 @@ $.fn.validation = Validation;
 /**
  * Returns the specific type message data object for a Field
  * @param {object} [settings] incoming settings
- * @returns {object} message data for the specific type
+ * @returns {string} messages as a string for the specific type
  */
 $.fn.getMessage = function (settings) {
+  if (!settings) {
+    settings = { type: 'error' };
+  }
   const dataAttr = `${settings.type}message`;
-  return $.fn.getField($(this)).data(dataAttr);
+  const messages = $.fn.getField($(this)).data(dataAttr);
+  let strMessages = '';
+
+  if (messages) {
+    if (messages.length === 1) {
+      return messages[0].message;
+    }
+
+    for (let i = 0; i < messages.length; i++) {
+      strMessages += `\u2022 ${messages[i].message}`;
+    }
+  }
+
+  return strMessages;
+};
+
+/**
+ * Returns all messages on an object as an array.
+ * @param {object} [settings] incoming settings
+ * @returns {array} message data for the specific type
+ */
+$.fn.getMessages = function (settings) {
+  if (!settings) {
+    settings = { type: 'error' };
+  }
+  const dataAttr = `${settings.type}message`;
+
+  let messages = $.fn.getField($(this)).data(dataAttr);
+  if (!messages) {
+    messages = [];
+  }
+  return messages;
 };
 
 /**
@@ -48,9 +83,7 @@ $.fn.getField = function (field) {
  */
 $.fn.getErrorMessage = function (settings) {
   settings = utils.extend({}, settings, ERROR_MESSAGE_DEFAULTS);
-  return this.each(function () {
-    $(this).getMessage(settings);
-  });
+  return $(this).getMessage(settings);
 };
 
 /**
@@ -82,15 +115,19 @@ $.fn.addMessage = function (settings) {
       instance = $.data(this, VALIDATOR_COMPONENT_NAME, new Validator(this, settings));
     }
 
+    const rule = {
+      message: settings.message,
+      type: settings.type,
+      triggerEvents: settings.triggerEvents,
+      icon: settings.icon,
+      id: settings.id || settings.message,
+    };
+
     instance.addMessage(
       $(this),
-      settings.message,
-      settings.type,
+      rule,
       settings.inline,
-      settings.showTooltip,
-      settings.isAlert,
-      settings.triggerEvents,
-      settings.icon
+      settings.showTooltip
     );
   });
 };
@@ -102,7 +139,12 @@ $.fn.addMessage = function (settings) {
  * @returns {jQuery[]} elements receiving errors
  */
 $.fn.addError = function (settings) {
+  let inline = true;
+  if (typeof settings.inline === 'boolean' && settings.inline === false) {
+    inline = false;
+  }
   settings = utils.extend({}, settings, ERROR_MESSAGE_DEFAULTS);
+  settings.inline = inline;
   return this.each(function () {
     $(this).addMessage(settings);
   });
@@ -114,6 +156,10 @@ $.fn.addError = function (settings) {
  * @returns {jQuery[]} elements having errors removed
  */
 $.fn.removeMessage = function (settings) {
+  if (!settings) {
+    settings = { type: 'error' };
+  }
+
   return this.each(function () {
     let instance = $.data(this, VALIDATOR_COMPONENT_NAME);
     if (!instance) {
@@ -121,7 +167,15 @@ $.fn.removeMessage = function (settings) {
     }
 
     const field = $(this);
-    instance.removeMessage(field, settings.type, settings.triggerEvents);
+    const dataAttr = `${settings.type}message`;
+    const errors = $.fn.getField(field).data(dataAttr);
+    if (!errors) {
+      return;
+    }
+
+    for (let i = 0; i < errors.length; i++) {
+      instance.removeMessage(field, errors[i], settings.triggerEvents);
+    }
     instance.setIconOnParent(field, settings.type);
 
     $.removeData(this, VALIDATOR_COMPONENT_NAME);

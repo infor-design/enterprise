@@ -29,6 +29,11 @@ describe('Flex Toolbar', () => {
     toolbarAPI.destroy();
     rowEl.parentNode.removeChild(rowEl);
     svgEl.parentNode.removeChild(svgEl);
+
+    const popupmenuEl = document.body.querySelector('.popupmenu');
+    if (popupmenuEl) {
+      popupmenuEl.parentNode.removeChild(popupmenuEl);
+    }
   });
 
   it('Should be invoked', () => {

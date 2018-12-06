@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="full column center" style="height: 110px">
+    <div class="full column center">
       <div id="bullet-example1" class="chart-container">
       </div>
        <div id="bullet-example2" class="chart-container">
@@ -22,21 +22,7 @@ $('body').on('initialized', function () {
       markerColors: ['#000000']
     }];
 
-  // $('#bullet-example1').chart({type: 'bullet', dataset: dataset1});
-
   $('#bullet-example1').chart({type: 'bullet', dataset: dataset1, tooltip: 'Tooltip by attribute'});
-
-  // $('#bullet-example1').chart({type: 'bullet', dataset: dataset1,
-  //   tooltip: function(response) {
-  //     //Ajax Call or async op
-  //     setTimeout(function () {
-  //       response('<strong>Tooltips Provide <br> Interesting Information</strong>');
-  //     }, 400);
-  //   }
-  // });
-
-
-
 
    //Example 2
    var dataset2 = [{
@@ -49,14 +35,13 @@ $('body').on('initialized', function () {
     }];
 
    // $('#bullet-example2').chart({type: 'bullet', dataset: dataset2});
-
    // $('#bullet-example2').chart({type: 'bullet', dataset: dataset2, tooltip: 'Tooltip by attribute Exp2'});
 
    $('#bullet-example2').chart({type: 'bullet', dataset: dataset2,
     tooltip: function(response) {
       //Ajax Call or async op
       setTimeout(function () {
-        response('<strong>Tooltips Provide Exp2 <br> Interesting Information</strong>');
+        response('Tooltips Provide Exp2 <br> Interesting Information');
       }, 400);
     }
   });

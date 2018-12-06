@@ -1,19 +1,22 @@
 ---
 title: Color Picker
-description: This page describes Color Picker.
+description: null
+demo:
+  embedded:
+  - name: Color Picker Example
+    slug: example-index
+  pages:
+  - name: Showing Custom Colors
+    slug: example-custom-labels
+  - name: Showing Label on Select
+    slug: example-show-label
+  - name: Different Sized Colorpickers
+    slug: example-sizes
 ---
-
-## Configuration Options
-
-1. Color Picker Example [View Example]( ../components/colorpicker/example-index)
-1. Showing Custom Colors [View Example]( ../components/colorpicker/example-custom-labels)
-1. Select the label not the Hex [View Example]( ../components/colorpicker/example-show-label)
-1. Test States [View Test]( ../components/colorpicker/test-states)
-1. Test it works on a Modal [View Test]( ../components/colorpicker/test-modal)
 
 ## Code Example
 
-The color picker is made from a text input with class="colorpicker". It can be initialized manually or via the page initializer. Once initialized it functions similar to a dropdown except that the list is showing colors in a pallette / swatch. A tooltip shows the hex code to be inserted. After selecting the hex code is inserted.
+The color picker is consists of a input with class="colorpicker". It can be initialized manually or with the page initializer. Once initialized it functions similar to a dropdown except that the list is showing color a color pallet in the popup. A tooltip shows the hex code to be inserted. After selecting the hex code is inserted.
 
 ```html
 <div class="field">
@@ -30,6 +33,10 @@ The color picker is made from a text input with class="colorpicker". It can be i
 ## Accessibility
 
 Implemented similar to aria combobox
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

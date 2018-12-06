@@ -3,14 +3,7 @@ const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
 const browserstack = require('browserstack-local');
 const protractorImageComparison = require('protractor-image-comparison');
-
-const getSpecs = (listSpec) => {
-  if (listSpec) {
-    return listSpec.split(',');
-  }
-
-  return ['components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
-};
+const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
 const theme = process.env.ENTERPRISE_THEME || 'light'
 let browserstackBuildID = `${theme} theme: ci:bs e2e ${Date.now()}`;
@@ -20,6 +13,8 @@ if (process.env.TRAVIS_BUILD_NUMBER) {
   browserstackBuildID = `${theme} theme: ci:bs e2e ${process.env.TRAVIS_BUILD_NUMBER}`;
 }
 
+process.env.isBrowserStack = true;
+
 exports.config = {
   params: {
     theme
@@ -28,7 +23,7 @@ exports.config = {
   getPageTimeout: 10000,
   logLevel: 'DEBUG',
   troubleshoot: true,
-  specs: getSpecs(process.env.PROTRACTOR_SPECS),
+  specs: specs,
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,
   baseUrl: 'http://localhost:4000',
@@ -54,15 +49,14 @@ exports.config = {
       os_version: '10',
       os: 'Windows',
       'browserstack.selenium_version': '3.11.0',
-
     },
     {
       browserName: 'Firefox',
-      browser_version: '60.0',
+      browser_version: '61.0',
       resolution: '1280x800',
       os_version: '10',
       os: 'Windows',
-      'browserstack.geckodriver' : '0.19.1',
+      'browserstack.geckodriver' : '0.21.0',
       'browserstack.selenium_version': '3.11.0',
     },
     {

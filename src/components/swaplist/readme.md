@@ -1,10 +1,11 @@
 ---
 title: Swaplist Component
-description: This page describes Swaplist Component .
+description: null
 demo:
-  pages:
+  embedded:
   - name: Main Swaplist Example
     slug: example-index.html
+  pages:
   - name: Swaplist with Selected Items
     slug: example-selected.html
   - name: Swaplist with Filter/Search
@@ -47,6 +48,10 @@ $('#example-swaplist-1').swaplist({available: available, selected: selected, tem
 ## Accessibility
 
 - This component is keyboard accessible but not entirely tested for WAI-ARIA and Screen reader support.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

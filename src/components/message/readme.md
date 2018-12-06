@@ -1,8 +1,8 @@
 ---
 title: Message
-description: This page describes Message.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Message Examples
     slug: example-index
 ---
@@ -33,6 +33,10 @@ $('body').message({
 - Includes `role="alertdialog"` and `aria-modal="true"`
 - `aria-labelledby` points to the `title` element's ID
 - `aria-describedby` points to the message text
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

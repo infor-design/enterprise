@@ -1,8 +1,8 @@
 ---
 title: Favorites
-description: This page describes Favorites.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Breakpoint Event Change Detection
     slug: example-change-detection
 ---
@@ -24,3 +24,7 @@ $('body').on('breakpoint-change', function(e, breakpointState) {
 });
 
 ```
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

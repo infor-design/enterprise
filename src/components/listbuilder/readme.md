@@ -1,8 +1,8 @@
 ---
 title: ListBuilder
-description: This page describes ListBuilder.
+description: null
 demo:
-  pages:
+  embedded:
   - name: Default List Builder Example
     slug: example-index
 ---
@@ -28,6 +28,10 @@ When initialized with the `$elem.listbuilder()` plugin, you pass in a data set t
 
 - [ListView](./listview) guidelines apply as this contains a listview
 - [Toolbar](./toolbar) guidelines apply as this contains a toolbar
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

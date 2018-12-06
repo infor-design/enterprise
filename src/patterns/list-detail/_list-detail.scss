@@ -17,7 +17,7 @@
     height: 100%;
 
     &.alternate {
-      background-color: $body-bg-color;
+      background-color: $body-color-primary-background;
     }
 
     .main-content {
@@ -231,7 +231,8 @@ html[dir='rtl'] {
 
     > .main,
     > .sidebar {
-      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+      @include transform-transition-list(300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
       position: absolute;
 
       &.scrollable,
@@ -252,13 +253,15 @@ html[dir='rtl'] {
     &.bleeding-edge__phone {
       > .main {
         @include css3(transform, translateX(0));
+
         width: 100%;
       }
 
       > .sidebar {
-        @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94),
-          box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
+        @include transform-transition-list(300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+        box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
         @include drawer-box-shadow;
+
         z-index: 2;
       }
 
@@ -327,11 +330,6 @@ html[dir='rtl'] {
     margin-left: 0;
   }
 
-  //Make this color target specifically header
-  .header .searchfield-wrapper:not(.context) input {
-    color: $header-text-color;
-  }
-
   // RTL makes everything come in from the opposite side.
   html[dir='rtl'] {
     .list-detail {
@@ -371,7 +369,8 @@ html[dir='rtl'] {
 
     > .main,
     > .sidebar {
-      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+      @include transform-transition-list(300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
       position: absolute;
 
       &.scrollable,
@@ -383,13 +382,15 @@ html[dir='rtl'] {
 
     > .main {
       @include css3(transform, translateX(0));
+
       width: 100%;
     }
 
     > .sidebar {
-      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94),
-        box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
+      @include transform-transition-list(300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+      box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
       @include drawer-box-shadow;
+
       max-width: 75%;
       width: 275px;
       z-index: 2;
@@ -398,6 +399,7 @@ html[dir='rtl'] {
     &.show-detail {
       > .sidebar {
         @include css3(transform, translateX(-100%));
+
         box-shadow: 0 0 0 1px $box-shadow-off-color;
       }
     }

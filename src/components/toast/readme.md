@@ -1,10 +1,11 @@
 ---
 title: Toast Component
-description: This page describes Toast Component .
+description: Displays a given data set in a visual way. Best for showing feedback about a system process that is not related to the current view.
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Demo of all Positions
     slug: example-positions
 ---
@@ -32,6 +33,10 @@ The toast component is made accessible by making an aria live region which means
 ## Responsive Guidelines
 
 - Will be placed in the top corner by default.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

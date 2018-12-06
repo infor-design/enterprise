@@ -1,10 +1,11 @@
 ---
 title: Toolbar Searchfield
-description: This page describes Toolbar Searchfield .
+description: null
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index.html
+  pages:
   - name: Alternate In-Page Style
     slug: example-alternate-style.html
   - name: "`collapsibleOnMobile` Setting Demo"
@@ -13,7 +14,7 @@ demo:
 
 ## Important Notes
 
-This is a specific component wrapper for searchfield components that reside inside of a [toolbar]( ./toolbar). This component is very different from regular searchfields and have an expanded API. There is an alternate API documentation for the main [Searchfield]( ./searchfield) component.
+This is a specific component wrapper for Searchfield components that reside inside of a [toolbar]( ./toolbar). This component uses a subset of the standard Searchfield component's API. See [this page]( ./searchfield) For a complete API documentation.
 
 ## Code Example
 
@@ -36,7 +37,7 @@ This is a specific component wrapper for searchfield components that reside insi
 
 ## Keyboard Shortcuts
 
-- <kbd>Shift + Left</kbd> and <kbd>Shift + Up<kbd> or <kbd>Shift + Right</kbd> and <kbd>Shift + Down</kbd> arrows - When focused on a toolbar searchfield, the focused element is wrapped inside of a [toolbar]( ./toolbar) element, which has its own rules that govern navigation with the arrow keys.  These shortcuts help the user navigate a toolbar while leaving movement of the text cursor to be controlled with the arrow keys
+- <kbd>Shift + Left</kbd> and <kbd>Shift + Up</kbd> or <kbd>Shift + Right</kbd> and <kbd>Shift + Down</kbd> arrows - When focused on a toolbar searchfield, the focused element is wrapped inside of a [toolbar]( ./toolbar) element, which has its own rules that govern navigation with the arrow keys.  These shortcuts help the user navigate a toolbar while leaving movement of the text cursor to be controlled with the arrow keys
 - <kbd>Alt + Del</kbd> - On a `clearable` searchfield, pressing this will clear its contents.
 
 ## States and Variations
@@ -49,8 +50,8 @@ This is a specific component wrapper for searchfield components that reside insi
 
 There are several scenarios where the background, border, and text color of a toolbar searchfield can change based on how it's used:
 
-- There is an [alternate in-page style]( ../components/toolbarsearchfield/example-alternate-style) for toolbar searchfields that can be used when content is displayed over a gray background
-- [Inside contextual action panels]( ../components/toolbarsearchfield/example-inside-contextual-panel.html), the background and border colors change to match the header
+- There is an [alternate in-page style](https://design.infor.com/code/ids-enterprise/latest/demo/toolbarsearchfield/example-alternate-style?font=source-sans) for toolbar searchfields that can be used when content is displayed over a gray background
+- [Inside contextual action panels](https://design.infor.com/code/ids-enterprise/latest/demo/toolbarsearchfield/example-inside-contextual-panel?font=source-sans), the background and border colors change to match the header
 - In any example of a [header]( ./header), the toolbar searchfield's background color becomes semi-transparent black, and the text/border change to stand out better on the darker colors defined in the header's background
 - Inside of [mastheads]( ./masthead), the toolbar searchfield will change to a dark graphite/slate to match the background color of the masthead
 
@@ -62,3 +63,7 @@ There are several scenarios where the background, border, and text color of a to
 ## Responsive Guidelines
 
 - When activating a toolbar searchfield beneath the phone breakpoint size, it will resize to become the full width of the viewport to make the search text easier to read
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

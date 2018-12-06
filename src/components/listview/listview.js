@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { stringUtils as str } from '../../utils/string';
 import { Tmpl } from '../tmpl/tmpl';
 import { ListFilter } from '../listfilter/listfilter';
@@ -28,6 +29,7 @@ const COMPONENT_NAME = 'listview';
  * @param {number} [settings.pagesize=10] If paging is activated, sets the number of listview items available per page
  * @param {string} [settings.pagingType='list'] The paging type to use, this can be 'list', 'table' or 'firstlast'
  * @param {boolean} [settings.searchable=false] If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+ * @param {boolean} [settings.highlight=true] If false the highlighting of text when using searchable is disabled. You may want to disable this on larger lists.
  * @param {string|boolean} [settings.selectable='single'] selection mode, can be false, 'single', 'multiple' or 'mixed'
  * @param {boolean} [settings.selectOnFocus=true] If true the first item in the list will be selected as it is focused.
  * @param {boolean} [settings.showCheckboxes=true] If false will not show checkboxes used with multiple selection mode only
@@ -49,6 +51,7 @@ const LISTVIEW_DEFAULTS = {
   pagesize: 10,
   pagingType: 'list',
   searchable: false,
+  highlight: true,
   selectable: 'single',
   selectOnFocus: true,
   showCheckboxes: true,
@@ -230,7 +233,8 @@ ListView.prototype = {
       if (dataset.length > 0 || this.settings.forceToRenderOnEmptyDs) {
         this.element.html(renderedTmpl);
       } else if (self.emptyMessageContainer) {
-        this.element.empty().append(this.emptyMessageContainer);
+        this.element.empty();
+        DOM.append(this.element, this.emptyMessageContainer[0].outerHTML, '<div><svg><use><span><b>');
       } else if (dataset.length === 0) {
         this.element.html(renderedTmpl || '<ul></ul>');
       }
@@ -239,6 +243,7 @@ ListView.prototype = {
     // Render Pager
     if (this.settings.paging) {
       this.renderPager(pagerInfo);
+      this.pager.setActivePage(this.pager.settings.activePage, true);
     }
 
     // Add Aria
@@ -250,7 +255,7 @@ ListView.prototype = {
     const isMultiselect = (this.settings.selectable === 'multiple' || this.settings.selectable === 'mixed');
 
     // Set Initial Tab Index
-    first.attr('tabindex', 0);
+    this.focusItem = first.attr('tabindex', 0);
 
     // Let the link be focus'd
     if (!this.settings.selectable && first.find('a').length === 1) {
@@ -275,7 +280,6 @@ ListView.prototype = {
         if (self.settings.showCheckboxes) {
           // For mixed selection mode primarily append a checkbox object
           item.prepend('<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox"><input tabindex="-1" type="checkbox" class="checkbox"><span class="label-text">&nbsp;</span></label>');
-          // TODO: item.find('.checkbox').attr('tabindex', '-1');
         }
       }
 
@@ -375,12 +379,7 @@ ListView.prototype = {
           break;
         case 'string':
           if (s.indexOf('http') === 0 || s.indexOf('/') === 0) {
-            $.ajax({
-              url: s,
-              async: false,
-              dataType: 'json',
-              success: done
-            });
+            $.getJSON(s, done);
           }
           return;
         default:
@@ -495,30 +494,38 @@ ListView.prototype = {
       return;
     }
 
-    if (searchfield instanceof HTMLElement) {
-      searchfield = $(searchfield);
+    searchfield = $(searchfield);
+
+    // Get the search string and trim whitespace
+    const searchFieldVal = searchfield.val().trim();
+
+    // Clear
+    if (!searchFieldVal) {
+      this.resetSearch();
     }
 
-    const list = this.element.find('li, tbody > tr');
-    const term = searchfield.val();
-    let results;
-
-    this.resetSearch();
-
-    if (term && term.length) {
-      results = this.listfilter.filter(list, term);
-    }
-
-    if (!results || !results.length && !term) {
+    // Make sure there is a search term...and its not the
+    // same as the previous term
+    if (searchFieldVal.length < 2 || this.searchTerm === searchFieldVal) {
       return;
     }
 
+    // Set a global "searchTerm" and get the list of elements
+    this.searchTerm = searchfield.val();
+    const list = this.element.find('li, tbody > tr');
+
+    this.resetSearch();
+
+    // Filter the results and highlight things
+    const results = this.listfilter
+      .filter(list, this.searchTerm);
+
+    if (this.settings.highlight) {
+      results.highlight(this.searchTerm);
+    }
+
+    // Hide elements that aren't in the results array
     list.not(results).addClass('hidden');
-    list.filter(results).each(function (i) {
-      const li = $(this);
-      li.attr('tabindex', i === 0 ? '0' : '-1');
-      li.highlight(term);
-    });
 
     this.renderPager();
   },
@@ -531,9 +538,13 @@ ListView.prototype = {
   resetSearch() {
     const list = this.element.find('li, tbody > tr');
 
-    list.removeClass('hidden').each(function () {
-      $(this).unhighlight();
-    });
+    list.removeClass('hidden');
+
+    if (this.settings.highlight) {
+      list.each(function () {
+        $(this).unhighlight();
+      });
+    }
   },
 
   /**
@@ -547,8 +558,10 @@ ListView.prototype = {
       return;
     }
 
-    item.siblings().removeAttr('tabindex');
-    item.attr('tabindex', 0).focus();
+    if (this.focusItem) {
+      this.focusItem.removeAttr('tabindex');
+    }
+    this.focusItem = item.attr('tabindex', 0).focus();
 
     if (!this.settings.selectable && item.find('a').length === 1) {
       item.find('a').focus();
@@ -756,7 +769,9 @@ ListView.prototype = {
 
     // focus
     if (!li.is('[tabindex="0"]')) {
-      li.siblings().removeAttr('tabindex');
+      if (this.focusItem) {
+        this.focusItem.removeAttr('tabindex');
+      }
       li.attr('tabindex', 0);
     }
 
@@ -1170,7 +1185,7 @@ ListView.prototype = {
             self.toggleItemActivation(item);
           }
 
-          if (pattern.length > 0 && $(window).outerWidth() < 767 && !item.hasClass('is-disabled')) {
+          if (pattern.length > 0 && $(window).outerWidth() < 767 && !item.hasClass('is-disabled') && !isCheckbox) {
             self.element.trigger('drilldown', [item]);
           }
 

@@ -1,10 +1,11 @@
 ---
 title: Popover Component
-description: This page describes Popover Component .
+description: null
 demo:
-  pages:
+  embedded:
   - name: Common Configuration
     slug: example-index
+  pages:
   - name: Simple Popover Content
     slug: example-simple
   - name: Complex Form Layout Inside Popover
@@ -54,3 +55,7 @@ $('#popover-trigger').popover({
 ## Accessibility
 
 Focus should always return to the object on which the popover is called from once the popover closes.
+
+## Testability
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

@@ -1,5 +1,6 @@
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
+import { xssUtils } from '../../utils/xss';
 
 /**
 * A object containing all the supported UI formatters.
@@ -76,7 +77,7 @@ const formatters = {
       } else {
         formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat));
 
-        if (formatted === 'NaN/NaN/NaN') { // show invalid dates not NA/NA/NA
+        if (formatted === 'NaN/NaN/NaN' || !formatted) { // show invalid dates not NA/NA/NA
           formatted = value;
         }
       }
@@ -149,7 +150,7 @@ const formatters = {
       formatted = col.editorOptions.field(item, null, null);
     }
 
-    return `<span class="trigger">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
+    return `<span class="trigger ${col.align === 'right' ? 'align-text-right' : ''}">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
   },
 
   Decimal(row, cell, value, col) {
@@ -262,7 +263,7 @@ const formatters = {
   SelectionCheckbox(row, cell, value, col, item, api) {
     let isChecked = (value === undefined ? false : value === true);
     if (!value) {
-      isChecked = api.isNodeSelected(item);
+      isChecked = api.isRowSelected(item);
     }
     return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select'))}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}" aria-checked="${isChecked}"></span></div>`;
   },
@@ -289,7 +290,7 @@ const formatters = {
     let classes = 'is-editor';
     classes += col.singleline ? ' is-singleline' : ' datagrid-multiline-text';
     classes += col.contentTooltip ? ' content-tooltip' : '';
-    return `<div class="${classes}">${$.unescapeHTML(formatted)}</div>`;
+    return `<div class="${classes}">${xssUtils.unescapeHTML(formatted)}</div>`;
   },
 
   // Expand / Collapse Button
@@ -364,16 +365,16 @@ const formatters = {
   },
 
   // Tree Expand / Collapse Button and Paddings
-  Tree(row, cell, value, col, item, api) {
-    const isOpen = item.expanded;
-    const depth = api.settings.treeDepth[row] ? api.settings.treeDepth[row].depth : 0;
+  Tree(row, cell, value, col, item) {
+    const isOpen = item ? item.expanded : true;
+    const depth = item && item.depth ? item.depth : 0;
     const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}>
       <span class="icon plus-minus ${(isOpen ? ' active' : '')}"></span>
       <span class="audible">${Locale.translate('ExpandCollapse')}</span>
       </button>${(value ? `<span> ${value}</span>` : '')}`;
-    const node = `<span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}> ${value}</span>`;
+    const node = `<span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth))}px` : '')}"` : '')}> ${value}</span>`;
 
-    return (item[col.children ? col.children : 'children'] ? button : node);
+    return (item && item[col.children ? col.children : 'children'] ? button : node);
   },
 
   // Badge / Tags and Visual Indictors
@@ -448,7 +449,8 @@ const formatters = {
     if (col.inlineEditor) {
       return html;
     }
-    html = `<span class="colorpicker-container trigger dropdown-trigger"><span class="swatch" style="background-color: ${value}"></span><input class="colorpicker" id="colorpicker-${cell}" name="colorpicker-${cell}" type="text" role="combobox" aria-autocomplete="list" value="${value}" aria-describedby="">`;
+    const classList = `swatch${value === '' ? ' is-empty' : ''}`;
+    html = `<span class="colorpicker-container trigger dropdown-trigger"><span class="${classList}" style="background-color: ${value}"></span><input class="colorpicker" id="colorpicker-${cell}" name="colorpicker-${cell}" type="text" role="combobox" aria-autocomplete="list" value="${value}" aria-describedby="">`;
     html += `<span class="trigger">${$.createIcon({ icon: 'dropdown' })}</span></span>`;
 
     return html;
@@ -569,7 +571,7 @@ const formatters = {
       return '<span></span>';
     }
 
-    return `${$.createIcon({ icon: item.rowStatus.icon, classes: ['icon', `icon-${item.rowStatus.icon}`, 'datagrid-alert-icon'] })}<span class="audible">${item.rowStatus.text}</span>`;
+    return `${$.createIcon({ icon: item.rowStatus.icon, classes: ['icon', `icon-${item.rowStatus.icon}`] })}<span class="audible">${item.rowStatus.text}</span>`;
   },
 
   TargetedAchievement(row, cell, value, col) {
