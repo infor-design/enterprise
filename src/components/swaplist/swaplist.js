@@ -726,10 +726,15 @@ SwapList.prototype = {
           this.element.triggerHandler('swapupdate', [this.selections.move]);
         }
       }
+
+      this.selections.items.forEach((elem) => {
+        elem.show();
+      });
+
       this.clearDropeffects();
       this.clearSelections();
       this.items.removeClass('is-dragging is-dragging-touch');
-    }, 100);
+    }, 400);
   },
 
   /**
@@ -1167,6 +1172,8 @@ SwapList.prototype = {
             self.containers[i].style.zIndex = '';
           }
         }
+
+        self.makeDraggable();
 
         selections.isHandle = null;
         $('[aria-grabbed="true"]', self.element).show();
