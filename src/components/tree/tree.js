@@ -1548,10 +1548,7 @@ Tree.prototype = {
    */
 
   //ApprovaOS Change - parameter added to add node before or after the node
-  addNode(nodeData, location, isBeforeOrAfter) {
-    let li = $('<li></li>');
-    const a = $('<a href="#"></a>').appendTo(li);
-
+  addNode(nodeData, location, isBeforeOrAfter) {    
     const badgeAttr = typeof nodeData.badge === 'object' ? JSON.stringify(nodeData.badge) : nodeData.badge;
 
     nodeData.href = typeof nodeData.href !== 'undefined' ? nodeData.href : '#';
@@ -1607,13 +1604,8 @@ Tree.prototype = {
     }
     //End ApprovaOS Change - added for dropdown
 
-    if (nodeData.open) {
-      a.parent().addClass('is-open');
-    }
-    
     if (nodeData.text) {
       a.textContent = nodeData.text;
-
     }
 
     if (nodeData.disabled) {
