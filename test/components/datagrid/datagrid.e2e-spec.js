@@ -295,6 +295,7 @@ describe('Datagrid paging (client side) tests', () => {
     await element(by.css('.pager-count input')).sendKeys(protractor.Key.BACK_SPACE);
     await element(by.css('.pager-count input')).sendKeys('5');
     await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(300);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('40');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
