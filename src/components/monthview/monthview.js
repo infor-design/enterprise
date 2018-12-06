@@ -56,6 +56,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {number} [settings.isPopup] Is it in a popup (datepicker using it)
  * @param {number} [settings.headerStyle] Configure the header, this can be 'simple' or 'full'. Full adds a picker and today link.
  * @param {number} [settings.firstDayOfWeek=null] Set first day of the week. '1' would be Monday.
+ * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
  * @param {array} [settings.disable.dates] Disable specific dates.
