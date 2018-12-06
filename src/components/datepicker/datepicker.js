@@ -1208,6 +1208,11 @@ DatePicker.prototype = {
       (s.range.start && s.range.end) ||
       (s.range.data && s.range.data.startDate && s.range.data.endDate))) {
       if (!this.setRangeValueFromField()) {
+        if (this.currentDate && typeof this.currentDate.getMonth === 'function') {
+          this.currentMonth = this.currentDate.getMonth();
+          this.currentYear = this.currentDate.getFullYear();
+          this.currentDay = this.currentDate.getDate();
+        }
         return;
       }
     }
