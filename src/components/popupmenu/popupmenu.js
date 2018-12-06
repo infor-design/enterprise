@@ -148,8 +148,6 @@ PopupMenu.prototype = {
    */
   addMarkup() {
     let id;
-    const leftClick = this.settings.trigger !== 'rightClick';
-    const immediate = this.settings.trigger === 'immediate';
 
     switch (typeof this.settings.menu) {
       case 'string': // ID Selector
@@ -274,20 +272,6 @@ PopupMenu.prototype = {
     this.element.attr('aria-controls', id);
 
     this.markupItems();
-
-    // Add an Audible Label
-    if (!leftClick && !immediate) {
-      const audibleSpanId = 'popupmenu-f10-label';
-      if ($(`#${audibleSpanId}`).length === 0) {
-        this.element.after(`
-          <span class="audible" id="${audibleSpanId}">
-            ${Locale.translate('PressShiftF10')}
-          </span>
-        `);
-      }
-      // PressShiftF10
-      this.element.attr('aria-describedby', audibleSpanId);
-    }
 
     // Unhide the menu markup, if hidden
     if (this.menu.is('.hidden')) {
