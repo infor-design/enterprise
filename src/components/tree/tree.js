@@ -133,7 +133,8 @@ Tree.prototype = {
    * @param {object} a an anchor tag reference wrapped in a jQuery object.
    * @returns {void}
    */
-  decorateNode(a) {
+  //ApprovaOS Change - Added parameter checkox and icon to show check box and icon on demand for particular node
+  decorateNode(a, icon, hideCheckbox) {
     let parentCount = 0;
     let badgeData = a.attr('data-badge');
     const alertIcon = a.attr('data-alert-icon');
@@ -186,7 +187,13 @@ Tree.prototype = {
 
     a.text('');
     if (a.children('svg.icon-tree').length === 0) {
-      a.prepend($.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
+      //old code: a.prepend($.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
+      //ApprovaOS Change - removed icon of node
+      if (icon || icon === '') {
+        a.prepend($.createIcon({ icon: icon, classes: ['icon-tree'] }));
+      } else {
+        a.prepend($.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
+      }
 
       if (this.settings.useStepUI) {
         a.prepend($.createIcon({ icon: alertIcon, classes: ['step-alert', `icon-${alertIcon}`] }));
@@ -194,7 +201,9 @@ Tree.prototype = {
     }
 
     // Inject checkbox
-    if (this.isMultiselect && !this.settings.hideCheckboxes) {
+	  //Old code - if (this.isMultiselect && !this.settings.hideCheckboxes) {
+    //ApprovaOS Change - Show check box for particular node on demand
+    if (this.isMultiselect && (!this.settings.hideCheckboxes || hideCheckbox === false)) {
       a.append('<span class="tree-checkbox"></span>');
     }
 
@@ -596,7 +605,8 @@ Tree.prototype = {
             self.selectNodeFinish(node, focus);
           }
         } else { // No Callback specified
-          self.selectNodeFinish(node, focus);
+		      //ApprovaOS Change - if tree is multiselect commented because do not select node on expand node
+          //self.selectNodeFinish(node, focus);
         }
 
         self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
@@ -637,7 +647,8 @@ Tree.prototype = {
             self.selectNodeFinish(node, focus);
           }
         } else { // No Callback specified
-          self.selectNodeFinish(node, focus);
+		      //ApprovaOS Change - if tree is multiselect commented because do not select node on expand node
+          //self.selectNodeFinish(node, focus);
         }
 
         const nodeData = node.data('jsonData');
@@ -965,6 +976,16 @@ Tree.prototype = {
       elem = this.findById(node.parent);
     }
 
+	  //ApprovaOS Change - Update dataset after added node before or after.
+    if (location instanceof jQuery && location.is('li')) {
+      var updatedNode = this.findById($(location[0].parentNode.parentNode).find('a')[0].id);
+		  var index = updatedNode.children.findIndex(function (element) {
+        return element.text === $(location).text();
+      });
+
+      updatedNode.children.splice(index, 0, node);
+    }
+
     if (location === 'bottom' && !node.parent && !elem) {
       this.settings.dataset.push(node);
     }
@@ -1181,7 +1202,8 @@ Tree.prototype = {
    * @param {object} location in tree.
    * @returns {object} li added
    */
-  addNode(nodeData, location) {
+  //ApprovaOS Change - parameter added to add node before or after the node
+  addNode(nodeData, location, isBeforeOrAfter) {
     let li = $('<li></li>');
     const a = $('<a href="#"></a>').appendTo(li);
     const badgeAttr = typeof nodeData.badge === 'object' ? JSON.stringify(nodeData.badge) : nodeData.badge;
@@ -1194,6 +1216,45 @@ Tree.prototype = {
       'data-badge': badgeAttr,
       'data-alert-icon': nodeData.alertIcon
     }).text(nodeData.text);
+
+    //Start ApprovaOS Change - added for dropdown
+    if (nodeData.type === 'dropdown') {
+      var selectedOptionText;
+      a.attr({
+        'style': 'display: none'
+      });
+
+      if (nodeData.data) {
+        var selectHtml = '<select class="dropdown" close-on-select="true">';
+
+        for (var i = 0; i < nodeData.data.length; i++) {
+          var option = nodeData.data[i]
+          if (option.value === nodeData.text) {
+            selectedOptionText = option.text;
+            selectHtml += '<option value="' + option.value + '" selected>' + option.text + '</option>';
+          } else {
+            selectHtml += '<option value="' + option.value + '">' + option.text + '</option>';
+          }
+        }
+
+        selectHtml += '</select><div class="dropdown-wrapper"><div class="dropdown"><span>' + selectedOptionText;
+
+        selectHtml += '</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
+
+        $('<div class="treeDropdown" style="width: 80px; margin-left: 35px; margin-bottom: -15px">' + selectHtml + '</div>').appendTo(li);
+
+        if (nodeData.disabled) {
+          li.find('select.dropdown').dropdown().disable();
+        } else {
+          li.find('select.dropdown').dropdown().on('selected.tree', function () {
+            var node = this.parentElement.previousElementSibling;
+            node.text = this.value;
+            self.updateNode(node);
+          });
+        }
+      }
+    }
+    //End ApprovaOS Change - added for dropdown
 
     if (nodeData.open) {
       a.parent().addClass('is-open');
@@ -1214,8 +1275,19 @@ Tree.prototype = {
       found = true;
     }
 
+     //ApprovaOS Change - added node in between the node
+     if (location instanceof jQuery && isBeforeOrAfter === 'before') {
+      li.insertBefore(location);
+      found = true;
+    } else if (location instanceof jQuery && isBeforeOrAfter === 'after') {
+      li.insertAfter(location);
+      found = true;
+    }
+
+    //ApprovaOS Change -
     if (location instanceof jQuery &&
-      (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)) {
+      (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)
+      && !(isBeforeOrAfter === 'before' || isBeforeOrAfter === 'after')) {
       location.append(li);
       found = true;
     }
@@ -1252,7 +1324,8 @@ Tree.prototype = {
       nodeData.node = li.children('a').first();
     }
 
-    this.decorateNode(a);
+    //ApprovaOS Change - Added parameter to show or hide checkbox according to node.
+    this.decorateNode(a, nodeData.icon, nodeData.hideCheckbox);
 
     if (nodeData.selected) {
       this.selectNode(a, nodeData.focus);
