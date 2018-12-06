@@ -275,20 +275,6 @@ PopupMenu.prototype = {
 
     this.markupItems();
 
-    // Add an Audible Label
-    if (!leftClick && !immediate) {
-      const audibleSpanId = 'popupmenu-f10-label';
-      if ($(`#${audibleSpanId}`).length === 0) {
-        this.element.after(`
-          <span class="audible" id="${audibleSpanId}">
-            ${Locale.translate('PressShiftF10')}
-          </span>
-        `);
-      }
-      // PressShiftF10
-      this.element.attr('aria-describedby', audibleSpanId);
-    }
-
     // Unhide the menu markup, if hidden
     if (this.menu.is('.hidden')) {
       this.menu.removeClass('hidden');

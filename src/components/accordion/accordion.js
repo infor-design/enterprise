@@ -79,11 +79,11 @@ Accordion.prototype = {
       headers = this.element.find('.accordion-header');
       this.anchors = headers.children('a');
       anchors = headers.children('a');
-      this.panes = headers.nextAll().not('.audible').first('.accordion-pane');
-      panes = headers.nextAll().not('.audible').first('.accordion-pane');
+      this.panes = headers.next('.accordion-pane');
+      panes = headers.next('.accordion-pane');
     } else {
       anchors = headers.children('a');
-      panes = headers.nextAll().not('.audible').first('.accordion-pane');
+      panes = headers.next('.accordion-pane');
       isGlobalBuild = false;
 
       // update internal refs
@@ -137,7 +137,7 @@ Accordion.prototype = {
       }
 
       // Don't continue if there's no pane
-      if (!header.nextAll().not('.audible').first().hasClass('accordion-pane')) {
+      if (!header.next('.accordion-pane').length) {
         checkIfIcons();
         return;
       }
@@ -284,7 +284,7 @@ Accordion.prototype = {
   handleAnchorClick(e, anchor) {
     const self = this;
     const header = anchor.parent('.accordion-header');
-    const pane = header.nextAll().not('.audible').first('.accordion-pane');
+    const pane = header.next('.accordion-pane');
     const ngLink = anchor.attr('ng-reflect-href');
 
     if (e && !ngLink) {
@@ -324,15 +324,7 @@ Accordion.prototype = {
       e.stopPropagation();
     }
 
-    const openPopup = $('.popupmenu.is-open');
-    if (openPopup.length) {
-      const headers = this.element.find('.accordion-header[aria-haspopup="true"]');
-      headers.each(function () {
-        const api = $(this).data('popupmenu');
-        api.close();
-        e.stopPropagation();
-      });
-    }
+    this.closePopups();
 
     /**
      * If the anchor is a real link, follow the link and die here.
@@ -379,6 +371,25 @@ Accordion.prototype = {
   },
 
   /**
+  * Close any open popup menus.
+  * @private
+  * @param {object} e The click event object.
+  */
+  closePopups(e) {
+    const openPopup = $('.popupmenu.is-open');
+    if (openPopup.length) {
+      const headers = this.element.find('.accordion-header[aria-haspopup="true"]');
+      headers.each(function () {
+        const api = $(this).data('popupmenu');
+        api.close();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+      });
+    }
+  },
+
+  /**
   * Expander-Button Click Handler
   * @private
   * @param {object} e The click event object.
@@ -399,6 +410,8 @@ Accordion.prototype = {
     if (e) {
       e.stopPropagation();
     }
+
+    this.closePopups(e);
 
     const pane = header.next('.accordion-pane');
     if (pane.length) {
@@ -688,7 +701,7 @@ Accordion.prototype = {
     }
 
     const self = this;
-    const pane = header.nextAll().not('.audible').first('.accordion-pane');
+    const pane = header.next('.accordion-pane');
     const a = header.children('a');
     const dfd = $.Deferred();
 
@@ -819,7 +832,7 @@ Accordion.prototype = {
     }
 
     const self = this;
-    const pane = header.nextAll().not('.audible').first('.accordion-pane');
+    const pane = header.next('.accordion-pane');
     const a = header.children('a');
     const dfd = $.Deferred();
 
