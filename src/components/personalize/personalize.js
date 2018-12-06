@@ -314,16 +314,12 @@ Personalize.prototype = {
 
     $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(`${theme}-theme`);
 
-    this.blockUi();
-
-    const self = this;
     const originalCss = $('#stylesheet, #sohoxi-stylesheet');
     const newCss = $('<link rel="stylesheet">');
     const path = originalCss.attr('href');
 
     newCss.on('load', () => {
       originalCss.remove();
-      self.unBlockUi();
     });
 
     const themePath = path ? path.substring(0, path.lastIndexOf('/')) : '';
@@ -335,41 +331,6 @@ Personalize.prototype = {
     });
     originalCss.removeAttr('id');
     originalCss.after(newCss);
-  },
-
-  /**
-   * Builds a temporary page overlay that prevents end users from experiencing FOUC
-   * @private
-   * @returns {void}
-   */
-  blockUi() {
-    let backgroundColor = '#bdbdbd';
-    if (theme === 'light') {
-      backgroundColor = '#f0f0f0';
-    }
-    if (theme === 'dark') {
-      backgroundColor = '#313236';
-    }
-
-    this.pageOverlay = this.pageOverlay ||
-      $('<div class="personalize-overlay"></div>');
-
-    this.pageOverlay.css('background', backgroundColor);
-    $('body').append(this.pageOverlay);
-  },
-
-  /**
-   * Removes a temporary page overlay built by `blockUi()`
-   * @private
-   * @returns {void}
-   */
-  unBlockUi() {
-    const self = this;
-
-    self.pageOverlay.fadeOut(300, () => {
-      self.pageOverlay.remove();
-      self.pageOverlay = undefined;
-    });
   },
 
   /**
