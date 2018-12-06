@@ -12,7 +12,8 @@ const COMPONENT_NAME = 'personalize';
 const PERSONALIZE_DEFAULTS = {
   colors: '',
   theme,
-  font: ''
+  font: '',
+  blockUI: true
 };
 
 /**
@@ -24,6 +25,7 @@ const PERSONALIZE_DEFAULTS = {
  * @param {string} [settings.colors]  The list of colors
  * @param {string} [settings.theme='light'] The theme name (light, dark or high-contrast)
  * @param {string} [settings.font='Helvetica'] Use the newer source sans font
+ * @param {boolean} [settings.blockUI=true] Cover the UI and animate when changing theme.
 */
 function Personalize(element, settings) {
   this.element = $(element);
@@ -318,12 +320,16 @@ Personalize.prototype = {
 
     $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(`${theme}-theme`);
 
+    this.blockUi();
+
+    const self = this;
     const originalCss = $('#stylesheet, #sohoxi-stylesheet');
     const newCss = $('<link rel="stylesheet">');
     const path = originalCss.attr('href');
 
     newCss.on('load', () => {
       originalCss.remove();
+      self.unBlockUi();
     });
 
     const themePath = path ? path.substring(0, path.lastIndexOf('/')) : '';
@@ -334,10 +340,58 @@ Personalize.prototype = {
       href: xssUtils.stripTags(`${themePath}/${exports.theme}-theme${isMin ? '.min' : ''}.css`)
     });
     originalCss.removeAttr('id');
-    originalCss.after(newCss);
+    originalCss.before(newCss);
 
     // record state of theme in settings
     this.settings.theme = theme;
+  },
+
+  /**
+   * Builds a temporary page overlay that prevents end users from experiencing FOUC
+   * @private
+   * @returns {void}
+   */
+  blockUi() {
+    const self = this;
+    if (!self.settings.blockUI) {
+      return;
+    }
+
+    let backgroundColor = '#bdbdbd';
+    switch (theme) {
+      case 'light':
+        backgroundColor = '#f0f0f0';
+        break;
+      case 'dark':
+        backgroundColor = '#313236';
+        break;
+      case 'high-contrast':
+        backgroundColor = '#d8d8d8';
+        break;
+      default:
+        backgroundColor = '#f0f0f0';
+    }
+
+    this.pageOverlay = this.pageOverlay || $('<div class="personalize-overlay"></div>');
+    this.pageOverlay.css('background', backgroundColor);
+    $('body').append(this.pageOverlay);
+  },
+
+  /**
+   * Removes a temporary page overlay built by `blockUi()`
+   * @private
+   * @returns {void}
+   */
+  unBlockUi() {
+    const self = this;
+    if (!self.settings.blockUI) {
+      return;
+    }
+
+    self.pageOverlay.fadeOut(300, () => {
+      self.pageOverlay.remove();
+      self.pageOverlay = undefined;
+    });
   },
 
   /**
