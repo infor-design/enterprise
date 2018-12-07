@@ -37,8 +37,17 @@ module.exports = function runBuildProcess(terminalCommand, terminalArgs) {
     const buildProcess = spawn(terminalCommand, terminalArgs);
     buildProcess.stdout.on('data', logLine);
     buildProcess.stderr.on('data', logLine);
-    buildProcess.on('error', (e) => {
-      logger('error', `[${terminalCommand}]: ${e.message}`);
+    buildProcess.on('error', (e, fileName, lineNumber) => {
+      let lineText = '';
+      if (lineNumber) {
+        lineText = `at "${lineNumber}"`;
+      }
+      let fileText = '';
+      if (fileName) {
+        fileText = ` in "${fileName}"`;
+      }
+
+      logger('error', `[${terminalCommand}]: ${e.message}${lineText}${fileText}`);
     });
     buildProcess.on('exit', (code) => {
       if (code !== 0) {
