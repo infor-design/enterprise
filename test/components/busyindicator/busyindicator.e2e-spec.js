@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Busy Indicator example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/busyindicator/example-index?nofrills=true');
+    await utils.setPage('/components/busyindicator/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {

@@ -5,18 +5,11 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-// Set page to test by url
-const setPage = async function (url) {
-  const pageurl = `${browser.baseUrl + url}?theme=${browser.params.theme}`;
-  await browser.waitForAngularEnabled(false);
-  await browser.driver.get(pageurl);
-};
-
 const radioId = 'option1';
 
 describe('Radios example-index tests', () => {
   beforeEach(async () => {
-    await setPage('/components/radios/example-index?nofrills=true');
+    await utils.setPage('/components/radios/example-index?layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(radioId))), config.waitsFor);
@@ -42,7 +35,7 @@ describe('Radios example-index tests', () => {
 
 describe('Radios validation tests', () => {
   beforeEach(async () => {
-    await setPage('/components/radios/test-validation');
+    await utils.setPage('/components/radios/test-validation');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(radioId))), config.waitsFor);

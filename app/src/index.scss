@@ -16,9 +16,12 @@
 @import '../../src/core/config';
 @import '../../src/core/mixins';
 
+// Layout styles
+@import 'sass/layouts/nofrills';
+@import 'sass/layouts/embedded';
+
 // Demo-specific styles
 @import 'sass/code';
-@import 'sass/nofrills';
 @import 'sass/directory';
 @import 'sass/grid';
 @import 'sass/forms';
