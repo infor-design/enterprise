@@ -13,6 +13,11 @@ module.exports = function customRouteOptions(req, res) {
   const customOpts = {};
   const url = req.originalUrl;
 
+  // All Items in the `/layout` view folder use `no-frills` by default
+  if (url.match(/layouts\//)) {
+    customOpts.layout = 'layout-nofrills';
+  }
+
   // Application Menu
   if (url.match(/components\/applicationmenu/)) {
     if (url.indexOf('/list') === -1) {
