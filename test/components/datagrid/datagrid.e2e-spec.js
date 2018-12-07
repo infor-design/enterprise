@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Datagrid index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-index?nofrills=true');
+    await utils.setPage('/components/datagrid/example-index?layout=nofrills');
 
     const datagridEl = await element(by.id('datagrid'));
     await browser.driver

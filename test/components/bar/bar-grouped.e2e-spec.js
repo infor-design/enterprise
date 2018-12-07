@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Grouped Bar Chart example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar-grouped/example-index?nofrills=true');
+    await utils.setPage('/components/bar-grouped/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
