@@ -8,10 +8,10 @@ demo:
   pages:
   - name: Ajax Autocomplete
     slug: example-ajax
-  - name: Ajax as a Function Autocomplete
-    slug: example-ajax-as-function
   - name: Autocomplete Contains Search
     slug: example-contains
+  - name: Autocomplete Keyword Search
+    slug: example-keyword
   - name: Autocomplete Disable Search/Filter
     slug: example-no-filtering
   - name: Autocomplete List Templates
