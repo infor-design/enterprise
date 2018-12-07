@@ -265,7 +265,9 @@ describe('Datagrid paging (client side) tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
     await element(by.css('.pager-last a')).click();
+    await browser.driver.sleep(300);
     await element(by.css('.pager-first a')).click();
+    await browser.driver.sleep(300);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
@@ -293,6 +295,7 @@ describe('Datagrid paging (client side) tests', () => {
     await element(by.css('.pager-count input')).sendKeys(protractor.Key.BACK_SPACE);
     await element(by.css('.pager-count input')).sendKeys('5');
     await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(300);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('40');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
@@ -1144,8 +1147,7 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
 
     expect(await element(await by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).not.toContain('is-rowactivated');
-    const cell = await element(await by.css('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]'));
-    await cell.click();
+    await element(await by.css('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
 
