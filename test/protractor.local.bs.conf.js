@@ -49,7 +49,6 @@ exports.config = {
       os_version: '10',
       os: 'Windows',
       'browserstack.selenium_version': '3.11.0',
-
     },
     {
       browserName: 'Firefox',

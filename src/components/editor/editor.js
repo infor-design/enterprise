@@ -778,7 +778,7 @@ Editor.prototype = {
         self.execAction(action, e);
       }
 
-      if (self.isIe) {
+      if (self.isIe || self.isIeEdge) {
         self.getCurrentElement().trigger('change');
       }
 
@@ -1980,7 +1980,7 @@ Editor.prototype = {
 
     // Some browser (IE, Firefox) use attr 'align' instead style `text-align`
     const gParentEl = parentEl.parentNode;
-    if (gParentEl !== this.element[0]) {
+    if (gParentEl && (gParentEl !== this.element[0])) {
       const alignAttrElems = [].slice.call(gParentEl.querySelectorAll('[align]'));
       alignAttrElems.forEach(el => el.removeAttribute('align'));
     }

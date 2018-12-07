@@ -54,20 +54,30 @@ const commandLineArgs = require('yargs')
     describe: 'Disables the build process for JS',
     default: false
   })
+  .option('disable-copy', {
+    alias: 'p',
+    describe: 'Disables the copying of all pre-built assets to the `/dist` folder',
+    default: false,
+  })
   .argv;
 
 const chalk = require('chalk');
-const { spawn } = require('child_process');
 const del = require('del');
 const fs = require('fs');
 const path = require('path');
 
 const logger = require('./logger');
+const createDirs = require('./build/create-dirs');
+const getFileContents = require('./build/get-file-contents');
+const runBuildProcess = require('./build/run-build-process');
+const writeFile = require('./build/write-file');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
 const TEST_DIR = path.join(__dirname, '..', 'test');
 const RELATIVE_SRC_DIR = path.join('..', 'src');
+
+const bannerText = require('./generate-bundle-banner');
 
 const filePaths = {
   src: {
@@ -90,7 +100,7 @@ const filePaths = {
         'dark-theme': path.join(SRC_DIR, 'themes', 'dark-theme.scss'),
         'high-contrast-theme': path.join(SRC_DIR, 'themes', 'high-contrast-theme.scss'),
         'light-theme': path.join(SRC_DIR, 'themes', 'light-theme.scss'),
-        // 'uplift-theme': path.join(SRC_DIR, 'themes', 'uplift-theme.scss'),
+        'uplift-alpha-theme': path.join(SRC_DIR, 'themes', 'uplift-alpha-theme.scss'),
       }
     }
   },
@@ -111,11 +121,12 @@ const filePaths = {
     },
     sass: {
       controls: path.join(TEMP_DIR, '_controls.scss'),
+      banner: path.join(TEMP_DIR, '_banner.scss'),
       themes: {
         'dark-theme': path.join(TEMP_DIR, 'dark-theme.scss'),
         'high-contrast-theme': path.join(TEMP_DIR, 'high-contrast-theme.scss'),
         'light-theme': path.join(TEMP_DIR, 'light-theme.scss'),
-        // 'uplift-theme': path.join(TEMP_DIR, 'uplift-theme.scss')
+        'uplift-alpha-theme': path.join(TEMP_DIR, 'uplift-alpha-theme.scss')
       }
     },
     log: {
@@ -357,21 +368,6 @@ function writeSassImportStatement(libFile, libPath) {
 }
 
 /**
- * @param {array} dirs an array of strings representing directories
- * @returns {void}
- */
-function createDirs(dirs) {
-  dirs.forEach((dir) => {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-      if (commandLineArgs.verbose) {
-        logger('info', `Created directory "${dir}"`);
-      }
-    }
-  });
-}
-
-/**
  * "cleans" all the folders used by this script
  * @param {boolean} buildTempDir if true, re-builds the `temp/` directory
  * @returns {Promise} that resolves when the `del` library completes its task
@@ -466,15 +462,6 @@ function pruneTest(file, components) {
   }
 
   return false;
-}
-
-/**
- * Gets a copy of the standard `index.js` file.
- * @param {string} filePath the target file to be read.
- * @returns {string} containing the imported file.
- */
-function getFileContents(filePath) {
-  return fs.readFileSync(filePath, 'utf8');
 }
 
 /**
@@ -602,40 +589,6 @@ function renderImportsToString(key, type) {
 }
 
 /**
- * @private
- * @param {string} targetFilePath the path of the file that will be written
- * @param {string} targetFile the contents of the file to be written
- * @returns {void}
- */
-function logFileResults(targetFilePath, targetFile) {
-  if (!commandLineArgs.verbose) {
-    return;
-  }
-  const kbLength = (Buffer.byteLength(targetFile, 'utf8') / 1024).toFixed(2);
-  logger('success', `File "${chalk.yellow(targetFilePath)}\n" generated (${kbLength} KB)`);
-}
-
-/**
- * Wraps `fs.writeFile()` with actual async
- * @private
- * @param {string} targetFilePath the path of the file that will be written
- * @param {string} targetFile the contents of the file to be written
- * @returns {Promise} results of `fs.writeFile()`
- */
-function writeFile(targetFilePath, targetFile) {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(targetFilePath, targetFile, (err) => {
-      if (err) {
-        logger('error', `${err}`);
-        reject(err);
-      }
-      logFileResults(targetFilePath, targetFile);
-      resolve();
-    });
-  });
-}
-
-/**
  * Writes a JS file containing regular ES6 Imports (not jQuery)
  * @private
  * @param {string} key the file path bucket to use
@@ -717,9 +670,10 @@ function renderTargetJQueryFile(key, targetFilePath) {
  * @private
  * @param {string} key the file path bucket to use
  * @param {string} targetFilePath the path of the file that will be written
+ * @param {boolean} isNormalBuild whether or not the build is normal (true) or custom (false)
  * @returns {Promise} containing the results of the file write
  */
-function renderTargetSassFile(key, targetFilePath) {
+function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
   let targetFile = '';
   const type = 'scss';
 
@@ -735,13 +689,23 @@ function renderTargetSassFile(key, targetFilePath) {
       targetFile += '\n';
     });
     targetFile += '// These controls must come last\n@import \'../src/components/colors/colors\';\n';
+  } else if (key === 'banner') {
+    targetFile += bannerText;
   } else {
     // All other keys are "theme" entry points that just need their linked paths corrected.
     const themeFile = getFileContents(path.join(SRC_DIR, 'themes', `${key}.scss`));
-    targetFile = themeFile
+
+    // Inline the copyright banner
+    targetFile += '@import \'./banner\';\n\n';
+
+    // Add the theme contents
+    targetFile += themeFile
       .replace(/('\.\.\/)((?!\.))/g, '\'../src/') // replaces anything pointing to a source code file
-      .replace(/(\.\.\/)\1/g, '../') // fixes the node_modules link to IDS Identity
-      .replace('../src/core/controls', './controls');
+      .replace(/(\.\.\/)\1/g, '../'); // fixes the node_modules link to IDS Identity
+
+    if (!isNormalBuild) {
+      targetFile = targetFile.replace('../src/core/controls', './controls');
+    }
   }
 
   return writeFile(targetFilePath, targetFile);
@@ -826,13 +790,25 @@ function renderSourceCodeList() {
  */
 function renderTargetFiles(isNormalBuild) {
   const renderPromises = [];
-  if (isNormalBuild) {
-    return Promise.all([]);
-  }
 
   const jsEntryPoints = Object.keys(filePaths.target.js);
   const jQueryEntryPoints = Object.keys(filePaths.target.jQuery);
   const sassThemes = Object.keys(filePaths.target.sass.themes);
+
+  function runSassBuilds() {
+    sassThemes.forEach((filePathKey) => {
+      const theme = filePaths.target.sass.themes[filePathKey];
+      const promise = renderTargetSassFile(filePathKey, theme, isNormalBuild);
+      renderPromises.push(promise);
+    });
+    renderPromises.push(renderTargetSassFile('banner', filePaths.target.sass.banner, isNormalBuild));
+  }
+
+  // On normal builds, still generate the banner and inline it into each theme file.
+  if (isNormalBuild) {
+    runSassBuilds();
+    return Promise.all(renderPromises);
+  }
 
   jsEntryPoints.forEach((filePathKey) => {
     renderPromises.push(renderTargetJSFile(filePathKey, filePaths.target.js[filePathKey]));
@@ -843,10 +819,7 @@ function renderTargetFiles(isNormalBuild) {
     renderPromises.push(p);
   });
 
-  sassThemes.forEach((filePathKey) => {
-    const p = renderTargetSassFile(filePathKey, filePaths.target.sass.themes[filePathKey]);
-    renderPromises.push(p);
-  });
+  runSassBuilds();
   renderPromises.push(renderTargetSassFile('components', filePaths.target.sass.controls));
 
   renderPromises.push(renderComponentList(), renderSourceCodeList());
@@ -854,38 +827,6 @@ function renderTargetFiles(isNormalBuild) {
   renderPromises.push(renderTestManifest('e2e'));
 
   return Promise.all(renderPromises);
-}
-
-/**
- * Runs a single build process
- * @param {string} terminalCommand the base terminal command
- * @param {array} terminalArgs series of command arguments
- * @returns {Promise} resolves the process's log
- */
-function runBuildProcess(terminalCommand, terminalArgs) {
-  if (!terminalCommand) {
-    throw new Error(`"${terminalCommand}" must be a valid terminal command`);
-  }
-  if (!Array.isArray(terminalArgs)) {
-    terminalArgs = [];
-  }
-
-  return new Promise((resolve, reject) => {
-    const buildProcess = spawn(terminalCommand, terminalArgs);
-    let log = '';
-    buildProcess.stdout.on('data', (data) => {
-      log += data.toString('utf8');
-    });
-    buildProcess.stderr.on('data', (data) => {
-      log += data.toString('utf8');
-    });
-    buildProcess.on('exit', (code) => {
-      if (code !== 0) {
-        reject(new Error(`"${terminalCommand}" process exited with error code (${code})\nArgs: ${terminalArgs.join(' ')}`));
-      }
-      resolve(log);
-    });
-  });
 }
 
 /**
@@ -898,22 +839,26 @@ function runBuildProcesses(requested) {
   const buildPromises = [];
   let isCustom = false;
   let hasCustom = '';
+  let targetSassConfig = 'dist';
   const rollupArgs = ['-c'];
-  const sassArgs = ['build:sass'];
 
   // if Requested
   if (Array.isArray(requested) && requested.length) {
     isCustom = true;
+    targetSassConfig = 'custom';
     const componentsArg = `--components=${requested.join(',')}`;
     hasCustom = ' with custom entry points';
     rollupArgs.push(componentsArg);
-    sassArgs.push(componentsArg);
   }
 
   logger(`\nRunning build processes${hasCustom}...\n`);
 
   // Copy vendor libs/dependencies
-  buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:main']));
+  if (commandLineArgs.disableCopy) {
+    logger('alert', 'Ignoring build process for copied dependencies');
+  } else {
+    buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:main']));
+  }
 
   if (buckets['test-func'].length || buckets['test-e2e'].length) {
     buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:custom-test']));
@@ -930,7 +875,7 @@ function runBuildProcesses(requested) {
   if (commandLineArgs.disableCss) {
     logger('alert', 'Ignoring build process for CSS');
   } else if (!isCustom || sassMatches.length) {
-    buildPromises.push(runBuildProcess('grunt', sassArgs));
+    buildPromises.push(runBuildProcess('node', ['./scripts/build-sass', `--type=${targetSassConfig}`]));
   }
 
   return Promise.all(buildPromises);

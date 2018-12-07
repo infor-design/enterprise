@@ -42,7 +42,7 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   init() {
-    this.sections = Array.from(this.element.querySelectorAll('.toolbar-section'));
+    this.sections = utils.getArrayFromList(this.element.querySelectorAll('.toolbar-section'));
     this.items = this.getElements().map((item) => {
       $(item).toolbarflexitem({
         toolbarAPI: this
@@ -246,7 +246,7 @@ ToolbarFlex.prototype = {
     // Get all possible Toolbar Element matches
     // NOTE: Important that the toolbar items are picked up by the querySelector
     // in their actual, physical DOM order.
-    const thisElems = Array.from(this.element.querySelectorAll(allSelectors));
+    const thisElems = utils.getArrayFromList(this.element.querySelectorAll(allSelectors));
 
     // Check each element for each type of toolbar item.
     // If there's a match, push to the item array.

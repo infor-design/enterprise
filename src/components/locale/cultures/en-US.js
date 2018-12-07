@@ -41,8 +41,8 @@ Soho.Locale.addCulture('en-US', {
     dayPeriods: ['AM', 'PM']
   }],
 
-  // numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-  currencySign: '$', // (Replace Sign http://www.currencysymbols.in ?)
+  // numbers/currencyFormats-numberSystem-latn/standard
+  currencySign: '$', // (Replace Sign http://www.currencysymbols.in)
   currencyFormat: '¤#,##0.00',
   // numbers/symbols-numberSystem-latn
   numbers: {
@@ -52,7 +52,7 @@ Soho.Locale.addCulture('en-US', {
     decimal: '.',
     group: ','
   },
-  // Resx - Approved By Translation Team
+  // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All rights reserved. All other trademarks listed herein are the property of their respective owners' },
     Actions: { id: 'Actions', value: 'Actions', comment: 'Tooltip text for the action button with additional in context actions' },
@@ -362,7 +362,8 @@ Soho.Locale.addCulture('en-US', {
     TreeExpand: { id: 'TreeExpand', value: 'Expand Tree', comment: 'Tree Expand tooltip' },
     Turquoise: { id: 'Turquoise', value: 'Turquoise', comment: 'Color in our color pallette' },
     Up: { id: 'Up', value: 'Up', comment: 'Up tooltip' },
-    UpComingEvents: { id: 'UpComingEvent', value: 'Upcoming Events', comment: 'List of upcoming calendar events' },
+    UpComing: { id: 'UpComing', value: 'Upcoming', comment: 'List of upcoming things (general)' },
+    UpComingEvents: { id: 'UpComingEvents', value: 'Upcoming Events', comment: 'List of upcoming calendar events' },
     UpComingTimeOff: { id: 'UpComingTimeOff', value: 'Upcoming Time Off', comment: 'As in time off work' },
     Upload: { id: 'Upload', value: 'Upload', comment: 'Upload tooltip' },
     UnavailableDate: { id: 'UnavailableDate', value: 'Unavailable Date', comment: 'Unavailable Date Text' },

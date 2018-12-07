@@ -19,8 +19,8 @@ const PERSONALIZE_DEFAULTS = {
  * The personalization routines for setting custom company colors.
  *
  * @class Personalize
- * @param {HTMLElement|jQuery[]} element the base element
- * @param {object} [settings] incoming settings
+ * @param {HTMLElement|jQuery[]} element The base element
+ * @param {object} [settings] Incoming settings
  * @param {string} [settings.colors]  The list of colors
  * @param {string} [settings.theme='light'] The theme name (light, dark or high-contrast)
  * @param {string} [settings.font='Helvetica'] Use the newer source sans font
@@ -46,12 +46,13 @@ Personalize.prototype = {
     this.availableThemes = [
       'light',
       'dark',
-      'high-contrast'
+      'high-contrast',
+      'uplift-alpha'
     ];
 
     // Set the default theme, or grab the theme from an external CSS stylesheet.
     const cssTheme = this.getThemeFromStylesheet();
-    this.currentTheme = cssTheme || this.settings.theme;
+    this.currentTheme = this.settings.theme || cssTheme;
     this.setTheme(this.currentTheme);
 
     if (this.settings.colors) {
@@ -103,7 +104,7 @@ Personalize.prototype = {
   },
 
   /**
-   * Validates a string containing a hexadecimal number
+   * Create new CSS rules in head and override any existing
    * @private
    * @param {object} cssRules The rules to append.
    */
@@ -186,7 +187,7 @@ Personalize.prototype = {
     colors.btnColorSubheader = this.validateHex(colors.btnColorSubheader ||
       this.getLuminousColorShade(colors.header, -0.025));
 
-    // not that the sheet is appended in backwards
+    // note that the sheet is appended in backwards
     const cssRules = `.tab-container.module-tabs.is-personalizable { border-top: 1px solid ${colors.horizontalBorder} !important; border-bottom: 1px solid ${colors.horizontalBorder} !important}` +
     ` .module-tabs.is-personalizable .tab:not(:first-child) { border-left: 1px solid ${colors.verticalBorder} !important}` +
     ` .module-tabs.is-personalizable { background-color: ${colors.inactive} !important}` +
@@ -237,6 +238,10 @@ Personalize.prototype = {
     }
 
     this.appendStyleSheet(this.getColorStyleSheet(colors));
+
+    // record state of colors in settings
+    this.settings.colors = colors;
+
     return this;
   },
 
@@ -334,6 +339,9 @@ Personalize.prototype = {
     });
     originalCss.removeAttr('id');
     originalCss.after(newCss);
+
+    // record state of theme in settings
+    this.settings.theme = theme;
   },
 
   /**

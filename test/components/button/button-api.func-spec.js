@@ -46,7 +46,8 @@ describe('Button API', () => {
     const settings = {
       replaceText: false,
       toggleOffIcon: null,
-      toggleOnIcon: null
+      toggleOnIcon: null,
+      hideMenuArrow: null
     };
 
     expect(buttonObj.settings).toEqual(settings);
@@ -56,12 +57,34 @@ describe('Button API', () => {
     const settings = {
       replaceText: true,
       toggleOffIcon: null,
-      toggleOnIcon: null
+      toggleOnIcon: null,
+      hideMenuArrow: null
     };
 
     buttonObj.init();
     buttonObj.updated(settings);
 
     expect(buttonObj.settings.replaceText).toEqual(settings.replaceText);
+  });
+
+  it('Should update menu icon setting via parameter', () => {
+    const settings = {
+      replaceText: false,
+      toggleOffIcon: null,
+      toggleOnIcon: null,
+      hideMenuArrow: true
+    };
+
+    buttonObj.init();
+    buttonObj.updated(settings);
+
+    expect(buttonObj.settings.hideMenuArrow).toEqual(settings.hideMenuArrow);
+  });
+
+  it('Should remove menu icon if hideMenuArrow set to true', () => {
+    buttonObj.init();
+    buttonObj.updated({ hideMenuArrow: true });
+
+    expect(document.body.querySelector('.icon-dropdown')).toBeFalsy();
   });
 });

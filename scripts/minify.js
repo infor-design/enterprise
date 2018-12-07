@@ -1,56 +1,36 @@
 #!/usr/bin/env node
-/* eslint-disable */
-/* =================================================
+
+/**
  * IDS Enterprise Minify Process (Uglify-ES Wrapper)
- * ============================================== */
-const chalk = require('chalk');
-const fs = require('fs');
-const path = require('path');
-const UglifyJS = require('uglify-es');
+ */
 
-// IDS Enterprise Uglify Configs
-const config = require('./configs/uglify');
-const ENCODING = 'utf-8';
+// -------------------------------------
+// Requirements
+// -------------------------------------
+const commandLineArgs = require('yargs').argv;
 
-// Get the uncompressed, transpiled `sohoxi.js` from Rollup.
-const fullInputFilePath = path.resolve(__dirname, '..', config.inputFileName);
-let TRANSPILED_CODE = fs.readFileSync(fullInputFilePath, ENCODING, function (err, data) {
-  if (err) {
-    console.log(chalk.red('Error getting uncompressed code: ') + err);
-    process.exit(1);
-  }
+const logger = require('./logger');
+const runBuildProcess = require('./build/run-build-process');
+
+// -------------------------------------
+// Main
+// -------------------------------------
+
+const cssArgs = ['./scripts/minify-css'];
+const jsArgs = ['./scripts/minify-js'];
+
+if (commandLineArgs.verbose) {
+  const vb = '--verbose';
+  cssArgs.push(vb);
+  jsArgs.push(vb);
+}
+
+const minifyPromises = [
+  runBuildProcess('node', cssArgs),
+  runBuildProcess('node', jsArgs)
+];
+
+Promise.all(minifyPromises).then(() => {
+  logger('success', 'All Minification Complete!');
+  process.exit(0);
 });
-if (TRANSPILED_CODE) {
-  console.log('Successfully opened uncompressed code.');
-}
-
-// Get the contents of the uncompressed sourceMap file.
-const fullInputSourceMapFilePath = path.resolve(__dirname, '..', config.inputSourceMapFileName);
-config.uglify.sourceMap.content = fs.readFileSync(fullInputSourceMapFilePath, ENCODING, function (err, data) {
-  if (err) {
-    console.log(chalk.red('Error getting uncompressed sourceMap: ') + err);
-    process.exit(1);
-  }
-});
-if (config.uglify.sourceMap.content) {
-  console.log('Successfully opened uncompressed sourceMap.');
-}
-
-// Run Uglify-ES and get the result
-const result = UglifyJS.minify(TRANSPILED_CODE, config.uglify);
-if (result.error) {
-  console.log(chalk.red('Error running Uglify-ES: ') + result.error);
-  process.exit(1);
-}
-console.log('Successfully finished UglifyJS process.');
-
-// Save the minified code
-const codeResult = fs.writeFileSync(path.resolve(__dirname, '..', config.outputFileName), result.code);
-console.log('Successfully saved minified code.');
-
-// Save the updated sourcemap
-const sourceMapResult = fs.writeFileSync(path.resolve(__dirname, '..', config.outputSourceMapFileName), result.map);
-console.log('Successfully saved minified code\'s sourceMap file.');
-
-console.log(chalk.green('Minify Complete!'));
-process.exit(0);

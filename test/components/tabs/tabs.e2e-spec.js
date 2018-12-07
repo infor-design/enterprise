@@ -475,13 +475,15 @@ describe('Tabs ajax as href tests', () => {
     await utils.checkForErrors();
   });
 
-  xit('Should be able to activate href tabs', async () => {
-    expect(await element(by.id('ajaxified-tabs-tab-1')).getAttribute('innerHTML')).not.toBe('');
+  if (!utils.isCI() && !utils.isBS()) {
+    it('Should be able to activate href tabs', async () => {
+      expect(await element(by.id('ajaxified-tabs-tab-1')).getAttribute('innerHTML')).not.toBe('');
 
-    await element.all(by.id('example-tab-two')).click();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('#ajaxified-tabs-tab-2.is-visible'))), config.waitsFor);
+      await element(by.css('#example-tab-two a')).click();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.css('#ajaxified-tabs-tab-2.is-visible'))), config.waitsFor);
 
-    expect(await element(by.id('ajaxified-tabs-tab-2')).getAttribute('innerHTML')).not.toBe('');
-  });
+      expect(await element(by.id('ajaxified-tabs-tab-2')).getAttribute('innerHTML')).not.toBe('');
+    });
+  }
 });

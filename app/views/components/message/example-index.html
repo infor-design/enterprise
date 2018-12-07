@@ -5,7 +5,9 @@
     <button class="btn-secondary" type="button" id="show-application-alert">Alert Example</button><br><br>
     <button class="btn-secondary" type="button" id="show-application-confirm">Confirm Example</button><br><br>
     <button class="btn-secondary" type="button" id="show-fileupload-confirmation">Complete Example</button><br><br>
-    <button class="btn-secondary" type="button" id="show-delete-confirmation">Confirmation Example</button>
+    <button class="btn-secondary" type="button" id="show-delete-confirmation">Confirmation Example</button><br><br>
+    <button class="btn-secondary" type="button" id="allow-tags">Allow Tags</button><br><br>
+    <button class="btn-secondary" type="button" id="disallow-tags">Disallow Tags</button>
 
   </div>
 </div>
@@ -19,7 +21,7 @@
         title: '<span>Application Error</span>',
         status: 'error',
         returnFocus: $(this),
-        message: 'This application has experienced a system error due to the lack of internet access. Please restart the application in order to proceed.',
+        message: 'This application has experienced a <b>system error</b> due to the lack of internet access.<br><em>Please</em> restart the application in order to proceed.',
         buttons: [{
             text: 'Restart Now',
             click: function() {
@@ -59,7 +61,7 @@
         title: '<span>Application Confirm</span>',
         status: 'confirm',
         returnFocus: $(this),
-        message: 'Success! You\'ve done the thing!',
+        message: 'Success! You\'ve done the thing! Here\'s a <a href="#" class="hyperlink hide-focus longpress-target" title="Link">link</a>.',
         buttons: [{
             text: 'Confirm',
             click: function() {
@@ -74,7 +76,7 @@
     $('#show-fileupload-confirmation').on('click', function() {
       $('body').message({
         title: 'File Upload Complete',
-        message: 'Your file "<b>photo.png</b>" was successfully uploaded to your personal folder and is now public for viewing.',
+        message: 'Your file "<em>photo.png</em>" was successfully uploaded to your personal folder and is now <strong>public for viewing</strong>.',
         returnFocus: $(this),
         buttons: [{
           text: 'Done',
@@ -90,7 +92,7 @@
     $('#show-delete-confirmation').on('click', function() {
       $('body').message({
         title: 'Delete this Application?',
-        message: 'You are about to delete this application permanently. Would you like to proceed?',
+        message: 'You are about to delete<br>this application permanently.<br/>Would you like to proceed?',
         returnFocus: $(this),
         buttons: [{
           text: 'Yes',
@@ -105,6 +107,51 @@
             modal.close();
           },
           isDefault: true
+        }]
+      });
+    });
+
+    $('#allow-tags').on('click', function() {
+      $('body').message({
+        title: 'Tags are present',
+        message: '<a href="#" class="hyperlink hide-focus longpress-target"><b>You</b> </a>have <br>allowed <br/>any <del>tags</del> <em>to</em> <i>appear</i> <ins>in</ins> <mark>this</mark> <small>message</small>. <strong>All </strong> <sub>are</sub> <sup>default allowed</sup>.',
+        returnFocus: $(this),
+        buttons: [{
+          text: 'Ok',
+          click: function(e, modal) {
+            console.log('Ok');
+            modal.close();
+          },
+          isDefault: true
+        }, {
+          text: 'Dismiss',
+          click: function(e, modal) {
+            console.log('Dismiss');
+            modal.close();
+          }
+        }]
+      });
+    });
+
+    $('#disallow-tags').on('click', function() {
+      $('body').message({
+        title: 'No tags are present',
+        message: '<a href="#" class="hyperlink hide-focus longpress-target"><b>You</b> </a>have <br>disallowed <br/>any <del>tags</del> <em>from</em> <i>appearing</i> <ins>in</ins> <mark>this</mark> <small>message</small>. <strong>All</strong> <sub>are</sub> <sup>stripped</sup>.',
+        returnFocus: $(this),
+        allowedTags: '',
+        buttons: [{
+          text: 'Ok',
+          click: function(e, modal) {
+            console.log('Ok');
+            modal.close();
+          },
+          isDefault: true
+        }, {
+          text: 'Dismiss',
+          click: function(e, modal) {
+            console.log('Dismiss');
+            modal.close();
+          }
         }]
       });
     });

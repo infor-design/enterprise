@@ -1544,8 +1544,8 @@ Datagrid.prototype = {
       for (let i = 0; i < conditions.length; i++) {
         const columnDef = self.columnById(conditions[i].columnId)[0];
 
-        let rowValue = rowData ? rowData[columnDef.field] :
-          self.fieldValue(rowData, columnDef.field);
+        let rowValue = rowData && rowData[columnDef.field] !== undefined ? 
+          rowData[columnDef.field] : self.fieldValue(rowData, columnDef.field);
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();
         let rangeData = null;
@@ -4213,13 +4213,12 @@ Datagrid.prototype = {
 
   /**
   * Export the grid contents to csv
-  * Consider Deprecated use excel.exportToCsv
-  *
   * @param {string} fileName The desired export filename in the download.
   * @param {string} customDs An optional customized version of the data to use.
+  * @param {string} separator (optional) If user's machine is configured for a locale with alternate default seperator.
   */
-  exportToCsv(fileName, customDs) {
-    excel.exportToCsv(fileName, customDs, this);
+  exportToCsv(fileName, customDs, separator) {
+    excel.exportToCsv(fileName, customDs, separator, this);
   },
 
   /**
@@ -7725,14 +7724,15 @@ Datagrid.prototype = {
 
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
-        const parts = col.field.split('.');
-        if (parts.length === 2) {
-          rowData[parts[0]][parts[1]] = coercedVal;
-        }
-
-        if (parts.length === 3) {
-          rowData[parts[0]][parts[1]][parts[2]] = coercedVal;
-        }
+        let rowDataObj = rowData;
+        const nbrParts = col.field.split('.').length;
+        col.field.split('.').forEach((part, index) => {
+          if (index === nbrParts - 1) {
+            rowDataObj[part] = coercedVal;
+          } else {
+            rowDataObj = rowDataObj[part];
+          }
+        });
       } else {
         rowData[col.field] = coercedVal;
       }

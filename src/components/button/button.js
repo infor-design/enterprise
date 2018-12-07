@@ -21,6 +21,7 @@ const COMPONENT_NAME = 'button';
 const BUTTON_DEFAULTS = {
   toggleOnIcon: null,
   toggleOffIcon: null,
+  hideMenuArrow: null,
   replaceText: false
 };
 
@@ -67,6 +68,10 @@ Button.prototype = {
         this.element.on('selected.content', function (e, a) {
           $(this).find('span').text(a.text());
         });
+      }
+
+      if (this.settings.hideMenuArrow) {
+        ddIcon.remove();
       }
     }
 

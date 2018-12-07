@@ -26,7 +26,7 @@ function prependLines(str, prepender) {
  * @returns {string} containing the bundle banner
  */
 function render(useComments) {
-  const startComment = useComments ? '/** ' : '';
+  const startComment = useComments ? '/*! ' : '';
   const comment = useComments ? ' *  ' : '';
   const endComment = useComments ? ' */ ' : '';
   const date = `Date: ${moment().toISOString()}`;

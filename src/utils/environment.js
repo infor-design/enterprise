@@ -70,6 +70,8 @@ const Environment = {
     if (ua.match(/Edge\//)) {
       cssClasses += 'ie ie-edge ';
       this.browser.name = 'edge';
+      this.browser.version = navigator.appVersion.indexOf('Edge/18') > -1 ? '18' : '17';
+      cssClasses += `ie-edge${this.browser.version}`;
     }
     if (ua.match(/Trident/)) {
       cssClasses += 'ie ';

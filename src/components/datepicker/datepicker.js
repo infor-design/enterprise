@@ -154,8 +154,8 @@ DatePicker.prototype = {
     this.trigger = $.createIconElement('calendar').insertAfter(this.element);
 
     // Hide icon if datepicker input is hidden
-    if ((this.element.is(':hidden') || this.element.css('visibility') === 'hidden') && this.element.parents('.modal').length === 0) {
-      this.trigger.hide();
+    if (this.element.hasClass('hidden')) {
+      this.trigger.addClass('hidden');
     }
 
     this.addAria();
@@ -1208,6 +1208,11 @@ DatePicker.prototype = {
       (s.range.start && s.range.end) ||
       (s.range.data && s.range.data.startDate && s.range.data.endDate))) {
       if (!this.setRangeValueFromField()) {
+        if (this.currentDate && typeof this.currentDate.getMonth === 'function') {
+          this.currentMonth = this.currentDate.getMonth();
+          this.currentYear = this.currentDate.getFullYear();
+          this.currentDay = this.currentDate.getDate();
+        }
         return;
       }
     }

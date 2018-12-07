@@ -232,9 +232,13 @@ Accordion.prototype = {
 
       if (this.settings.allowOnePane) {
         targetsToExpand = targetsToExpand.first();
+        this.expand(targetsToExpand);
+      } else {
+        targetsToExpand.each((idx) => {
+          this.expand($(targetsToExpand[idx]));
+        });
       }
 
-      this.expand(targetsToExpand);
       this.select(targetsToExpand.last());
       targetsToExpand.next('.accordion-pane').removeClass('no-transition');
     }
@@ -320,6 +324,16 @@ Accordion.prototype = {
       e.stopPropagation();
     }
 
+    const openPopup = $('.popupmenu.is-open');
+    if (openPopup.length) {
+      const headers = this.element.find('.accordion-header[aria-haspopup="true"]');
+      headers.each(function () {
+        const api = $(this).data('popupmenu');
+        api.close();
+        e.stopPropagation();
+      });
+    }
+
     /**
      * If the anchor is a real link, follow the link and die here.
      * This indicates the link has been followed.
@@ -395,7 +409,7 @@ Accordion.prototype = {
     }
 
     // If there's no accordion pane, attempt to simply follow the link.
-    return this.handleAnchorClick(null, header.children('a'));
+    return this.handleAnchorClick(e, header.children('a'));
   },
 
   /**
@@ -674,13 +688,9 @@ Accordion.prototype = {
     }
 
     const self = this;
-    let pane = header.nextAll().not('.audible').first('.accordion-pane');
+    const pane = header.nextAll().not('.audible').first('.accordion-pane');
     const a = header.children('a');
     const dfd = $.Deferred();
-
-    if (this.settings.allowOnePane) {
-      pane = header.next('.accordion-pane').not('.audible');
-    }
 
     const canExpand = this.element.triggerHandler('beforeexpand', [a]);
     if (canExpand === false) {

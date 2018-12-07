@@ -30,6 +30,7 @@ Trackdirty.prototype = {
 
   init() {
     this.isIe = env.browser.name === 'ie';
+    this.isIeEdge = env.browser.name === 'edge';
 
     this.handleEvents();
   },
@@ -229,8 +230,8 @@ Trackdirty.prototype = {
           current = this.valMethod(textArea);
         }
 
-        if (this.isIe) {
-          current = input[0].innerHTML;
+        if (this.isIe || this.isIeEdge) {
+          current = input[0].innerHTML || input[0].value;
         }
 
         if (current === original || (input.attr('multiple') && utils.equals(current, original))) {

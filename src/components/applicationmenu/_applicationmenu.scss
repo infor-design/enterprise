@@ -261,6 +261,14 @@
       width: 34px;
     }
   }
+
+  .hyperlink {
+    color: $accordion-inverse-text-color;
+
+    &:hover:not([disabled]) {
+      color: $accordion-inverse-text-hover-color;
+    }
+  }
 }
 
 // Generic CSS Class that allows block-level elements like "divs" to become "clickable" on iOS 8 and up
