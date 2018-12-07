@@ -5,18 +5,11 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-// Set page to test by url
-const setPage = async function (url) {
-  const pageurl = `${browser.baseUrl + url}?theme=${browser.params.theme}`;
-  await browser.waitForAngularEnabled(false);
-  await browser.driver.get(pageurl);
-};
-
 const inputId = 'first-name';
 
 describe('Input example-index tests', () => {
   beforeEach(async () => {
-    await setPage('/components/input/example-index?layout=nofrills');
+    await utils.setPage('/components/input/example-index?layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(inputId))), config.waitsFor);
