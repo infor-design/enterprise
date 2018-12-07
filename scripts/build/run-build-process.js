@@ -1,4 +1,5 @@
 const { spawn } = require('child_process');
+const commandLineArgs = require('yargs').argv;
 
 const logger = require('../logger');
 
@@ -29,9 +30,16 @@ module.exports = function runBuildProcess(terminalCommand, terminalArgs) {
   }
 
   return new Promise((resolve, reject) => {
+    if (commandLineArgs.verbose) {
+      logger('info', `Running "${terminalCommand}" with args "${terminalArgs.join('", "')}"`);
+    }
+
     const buildProcess = spawn(terminalCommand, terminalArgs);
     buildProcess.stdout.on('data', logLine);
     buildProcess.stderr.on('data', logLine);
+    buildProcess.on('error', (e) => {
+      logger('error', `[${terminalCommand}]: ${e.message}`);
+    });
     buildProcess.on('exit', (code) => {
       if (code !== 0) {
         reject(new Error(`"${terminalCommand}" process exited with error code (${code})\nArgs: ${terminalArgs.join(' ')}`));

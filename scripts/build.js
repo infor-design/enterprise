@@ -868,7 +868,7 @@ function runBuildProcesses(requested) {
   if (commandLineArgs.disableJs) {
     logger('alert', 'Ignoring build process for JS');
   } else if (!isCustom || (jsMatches.length || jQueryMatches.length)) {
-    buildPromises.push(runBuildProcess('rollup', rollupArgs));
+    buildPromises.push(runBuildProcess('npx', ['rollup', rollupArgs]));
   }
 
   // Build CSS
