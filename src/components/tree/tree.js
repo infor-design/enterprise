@@ -141,7 +141,7 @@ Tree.prototype = {
    * @returns {void}
    */
   // Added parameters - To show check box and icon on demand for particular node
-  decorateNode(a, icon, hideCheckbox) {
+  decorateNode(a, iconToSet, hideCheckbox) {
     a = this.isjQuery(a) ? a : $(a);
 
     let parentCount = 0;
@@ -202,8 +202,8 @@ Tree.prototype = {
     a[0].textContent = '';
     if (a.children('svg.icon-tree').length === 0) {
       // Show provided icon if any, if empty string provided then show empty icon otherwise show document icon.
-      if (icon || icon === '') {
-        a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: icon, classes: ['icon-tree'] }));
+      if (iconToSet || iconToSet === '') {
+        a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: iconToSet, classes: ['icon-tree'] }));
       } else {
         a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
       }
@@ -1587,7 +1587,7 @@ Tree.prototype = {
       a.attr('style', 'display: none');
 
       if (nodeData.data) {
-        selectHtml = `<select class="dropdown" close-on-select="true">`;
+        selectHtml = '<select class="dropdown" close-on-select="true">';
 
         for (let i = 0; i < nodeData.data.length; i++) {
           option = nodeData.data[i];
@@ -1609,7 +1609,7 @@ Tree.prototype = {
           li.find('select.dropdown').dropdown().disable();
         } else {
           li.find('select.dropdown').dropdown().on('selected.tree', function () {
-            let node = this.parentElement.previousElementSibling;
+            const node = this.parentElement.previousElementSibling;
             node.text = this.value;
             self.updateNode(node);
           });
@@ -1631,8 +1631,8 @@ Tree.prototype = {
       found = true;
     }
 
-     // Insert node in between the node
-     if (location instanceof jQuery && isBeforeOrAfter === 'before') {
+    // Insert node in between the node
+    if (location instanceof jQuery && isBeforeOrAfter === 'before') {
       li.insertBefore(location);
       found = true;
     } else if (location instanceof jQuery && isBeforeOrAfter === 'after') {
