@@ -398,15 +398,19 @@ MonthView.prototype = {
           const tMinutes = elementDate.getMinutes();
           const tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
 
-          if ((new Date(year, month, dayCnt))
-            .setHours(tHours, tMinutes, tSeconds, 0) === elementDate
-            .setHours(tHours, tMinutes, tSeconds, 0)) {
-            th.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true').attr('tabindex', '0');
+          const newDate = (new Date(year, month, dayCnt)).setHours(tHours, tMinutes, tSeconds, 0);
+
+          if (newDate === elementDate.setHours(tHours, tMinutes, tSeconds, 0)) {
+            th
+              .addClass(`is-selected${(s.range.useRange ? ' range' : '')}`)
+              .attr('aria-selected', 'true').attr('tabindex', '0');
           }
         }
 
-        if (dayCnt === self.todayDay && self.currentMonth === self.todayMonth &&
-          self.currentYear === self.todayYear) {
+        if (dayCnt === self.todayDay
+            && self.currentMonth === self.todayMonth
+            && self.currentYear === self.todayYear
+        ) {
           th.addClass('is-today');
         }
 

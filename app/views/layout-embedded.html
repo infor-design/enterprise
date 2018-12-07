@@ -1,0 +1,25 @@
+{{> includes/head}}
+<body class="scrollable layout-embedded">
+  {{> includes/svg-inline-refs}}
+  <header class="custom-header">
+    <button type="button" class="js-change-theme custom-active" title="Light" data-theme="light" data-init="false">Light</button>
+    <button type="button" class="js-change-theme" title="Dark" data-theme="dark" data-init="false">Dark</button>
+    <button type="button" class="js-change-theme" title="Contrast" data-theme="high-contrast" data-init="false">Contrast</button>
+  </header>
+  <div class="container" role="main">
+    {{> content}}
+    {{> includes/footer}}
+  </div>
+  <script>
+    // Initialize buttons to change theme
+    const $themeHeaderEl = $('.layout-embedded .custom-header');
+    $('.js-change-theme').click(e => {
+      const $el = $(e.currentTarget);
+      const theme = $el.data('theme');
+      Soho.personalization.setTheme(theme);
+      $themeHeaderEl.find('.custom-active').removeClass('custom-active')
+      $el.addClass('custom-active');
+    });
+  </script>
+</body>
+</html>

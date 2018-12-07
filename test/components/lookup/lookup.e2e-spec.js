@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Lookup', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/lookup/example-index?nofrills=true');
+    await utils.setPage('/components/lookup/example-index?layout=nofrills');
   });
 
   it('should be enabled', async () => {
