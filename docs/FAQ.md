@@ -15,7 +15,7 @@ $.fn.validation.rules.customRule = {
 };
 ```
 
-## I'm getting errors on windows for all files about linebreaks. Why?
+## I'm getting errors on windows for all files about line breaks. Why?
 
 The error will be similar to `Expected line breaks to be ‘LF’ but found ‘CRLF’`. The problem is on windows the default is CRLF but all our files are LF. To change this behavior you can run this.
 
