@@ -1839,7 +1839,6 @@ PopupMenu.prototype = {
     }
 
     const menu = wrapper.children('.popupmenu');
-    const mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
     let wrapperLeft = li.position().left + li.outerWidth();
     let wrapperWidth = 0;
 
@@ -1908,6 +1907,7 @@ PopupMenu.prototype = {
       if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
         // No. Bump the menu up higher based on the menu's height and the extra
         // space from the main wrapper.
+        const mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
         wrapper[0].style.top = `${($(window).height() + $(document).scrollTop()) -
           menuHeight - mainWrapperOffset}px`;
       }
