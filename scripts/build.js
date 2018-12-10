@@ -840,15 +840,15 @@ function runBuildProcesses(requested) {
   let isCustom = false;
   let hasCustom = '';
   let targetSassConfig = 'dist';
-  const rollupArgs = ['-c'];
+  let rollupArgs = '-c';
 
   // if Requested
   if (Array.isArray(requested) && requested.length) {
     isCustom = true;
     targetSassConfig = 'custom';
-    const componentsArg = `--components=${requested.join(',')}`;
+    const componentsArg = ` --components=${requested.join(',')}`;
     hasCustom = ' with custom entry points';
-    rollupArgs.push(componentsArg);
+    rollupArgs += componentsArg;
   }
 
   logger(`\nRunning build processes${hasCustom}...\n`);
@@ -857,25 +857,25 @@ function runBuildProcesses(requested) {
   if (commandLineArgs.disableCopy) {
     logger('alert', 'Ignoring build process for copied dependencies');
   } else {
-    buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:main']));
+    buildPromises.push(runBuildProcess('npx grunt copy:main'));
   }
 
   if (buckets['test-func'].length || buckets['test-e2e'].length) {
-    buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:custom-test']));
+    buildPromises.push(runBuildProcess('npx grunt copy:custom-test'));
   }
 
   // Build JS
   if (commandLineArgs.disableJs) {
     logger('alert', 'Ignoring build process for JS');
   } else if (!isCustom || (jsMatches.length || jQueryMatches.length)) {
-    buildPromises.push(runBuildProcess('npx', ['rollup', rollupArgs]));
+    buildPromises.push(runBuildProcess(`npx rollup ${rollupArgs}`));
   }
 
   // Build CSS
   if (commandLineArgs.disableCss) {
     logger('alert', 'Ignoring build process for CSS');
   } else if (!isCustom || sassMatches.length) {
-    buildPromises.push(runBuildProcess('node', ['./scripts/build-sass', `--type=${targetSassConfig}`]));
+    buildPromises.push(runBuildProcess(`node ${path.join('.', 'scripts', 'build-sass.js')} --type=${targetSassConfig}`));
   }
 
   return Promise.all(buildPromises);
@@ -883,17 +883,9 @@ function runBuildProcesses(requested) {
 
 /**
  * Handles a successful build
- * @param {array} logs contains the logs of all the build processes
  * @returns {Promise} resulting in a successful process exit
  */
-function buildSuccess(logs) {
-  if (commandLineArgs.verbose) {
-    logger(null, `\n${chalk.red('===== JS Build Output (Rollup) =====')}`);
-    logger(null, `${logs[1]}\n`);
-    logger(null, `${chalk.red('===== Sass Build Output (Node-Sass) =====')}`);
-    logger(null, `${logs[2]}`);
-  }
-
+function buildSuccess() {
   return cleanAll().then(() => {
     logger('success', `IDS Build was successfully created in "${chalk.yellow('dist/')}"`);
     process.exit(0);
@@ -994,7 +986,7 @@ cleanAll(true).then(() => {
   renderTargetFiles(normalBuild).then(() => {
     if (commandLineArgs.dryRun) {
       process.stdout.write('\n');
-      logger('success', `Completed dry run!  Generated files are avaiable in the "${chalk.yellow('temp/')}" folder.`);
+      logger('success', `Completed dry run!  Generated files are available in the "${chalk.yellow('temp/')}" folder.`);
       process.exit(0);
     }
 
