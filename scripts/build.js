@@ -347,11 +347,11 @@ function transformSlashesForFile(str) {
  */
 function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
   libFile = sanitizeLibFile(libFile, libPath);
-  const fixedRootDir = transformSlashesForFile(`${RELATIVE_SRC_DIR}`);
+  const importPath = transformSlashesForFile(`${RELATIVE_SRC_DIR}/${libPath}${libFile}`);
   const command = isExport ? 'export' : 'import';
 
   if (noConstructor) {
-    return `${command} '${fixedRootDir}/${libPath}${libFile}';`;
+    return `${command} '${importPath}';`;
   }
 
   // (Temporarily) replace the filename with one that dash-separates the words
@@ -366,7 +366,7 @@ function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
     constructorName = replaceDashesWithCaptials(libFile);
   }
 
-  return `${command} { ${constructorName} } from '${fixedRootDir}/${libPath}${libFile}';`;
+  return `${command} { ${constructorName} } from '${importPath}';`;
 }
 
 /**
@@ -377,8 +377,8 @@ function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
  */
 function writeSassImportStatement(libFile, libPath) {
   libFile = sanitizeLibFile(libFile, libPath);
-  const fixedRootDir = transformSlashesForFile(`${RELATIVE_SRC_DIR}`);
-  return `@import '${fixedRootDir}/${libPath}${libFile}';`;
+  const importPath = transformSlashesForFile(`${RELATIVE_SRC_DIR}/${libPath}${libFile}`);
+  return `@import '${importPath}';`;
 }
 
 /**
