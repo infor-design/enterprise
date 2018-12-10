@@ -6,8 +6,7 @@ const logger = require('../logger');
 
 /**
  * Runs a single build process
- * @param {string} terminalCommand the base terminal command
- * @param {array} terminalArgs series of command arguments
+ * @param {string} cmd the entire terminal command, with arguments
  * @returns {Promise} resolves the process's log
  */
 module.exports = function runBuildProcess(cmd) {
@@ -26,8 +25,6 @@ module.exports = function runBuildProcess(cmd) {
       stdio: 'inherit'
     });
 
-    // buildProcess.stdout.on('data', logLine);
-    // buildProcess.stderr.on('data', logLine);
     buildProcess.on('error', (e, fileName, lineNumber) => {
       let lineText = '';
       if (lineNumber) {
@@ -40,6 +37,7 @@ module.exports = function runBuildProcess(cmd) {
 
       logger('error', `[${cmd}]: ${e.message}${lineText}${fileText}`);
     });
+
     buildProcess.on('exit', (code) => {
       if (code !== 0) {
         reject(new Error(`"${cmd}" process exited with error code (${code})\nArgs:`));

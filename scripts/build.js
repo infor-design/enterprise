@@ -77,6 +77,9 @@ const TEMP_DIR = path.join(__dirname, '..', 'temp');
 const TEST_DIR = path.join(__dirname, '..', 'test');
 const RELATIVE_SRC_DIR = path.join('..', 'src');
 
+// CR-LF on Windows, LF on Linux/Mac
+const NL = process.platform === 'win32' ? '\r\n' : '\n';
+
 const bannerText = require('./generate-bundle-banner');
 
 const filePaths = {
@@ -596,7 +599,7 @@ function renderImportsToString(key, type) {
     } else {
       statement = writeJSImportStatement(lib, filePath, true);
     }
-    fileContents += `${statement}\n`;
+    fileContents += `${statement}${NL}`;
   });
 
   return fileContents;
@@ -637,9 +640,9 @@ function renderTargetJSFile(key, targetFilePath) {
     // be written to the target file in a specific order.
     const componentBuckets = ['foundational', 'mid', 'complex'];
     componentBuckets.forEach((thisBucket) => {
-      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += `// ${capitalize(thisBucket)} ====/${NL}`;
       targetFile += renderImportsToString(thisBucket, type);
-      targetFile += '\n';
+      targetFile += NL;
     });
   } else {
     // All other buckets simply get rendered directly
@@ -665,9 +668,9 @@ function renderTargetJQueryFile(key, targetFilePath) {
     // be written to the target file in a specific order.
     const componentBuckets = ['foundational', 'mid', 'complex'];
     componentBuckets.forEach((thisBucket) => {
-      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += `// ${capitalize(thisBucket)} ====/${NL}`;
       targetFile += renderImportsToString(thisBucket, type);
-      targetFile += '\n';
+      targetFile += NL;
     });
   } else if (key === 'initialize') {
     targetFile = getFileContents(filePaths.src.jQuery.initialize);
@@ -692,17 +695,17 @@ function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
   const type = 'scss';
 
   if (key === 'components') {
-    targetFile = '// Required ====/\n@import \'../src/core/required\';\n\n';
+    targetFile = `// Required ====/${NL}@import '../src/core/required';${NL}${NL}`;
 
     // 'component' source code files are comprised of three buckets that need to
     // be written to the target file in a specific order.
     const componentBuckets = ['foundational', 'mid', 'complex', 'patterns', 'layouts'];
     componentBuckets.forEach((thisBucket) => {
-      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += `// ${capitalize(thisBucket)} ====/${NL}`;
       targetFile += renderImportsToString(thisBucket, type);
-      targetFile += '\n';
+      targetFile += NL;
     });
-    targetFile += '// These controls must come last\n@import \'../src/components/colors/colors\';\n';
+    targetFile += `// These controls must come last${NL}@import '../src/components/colors/colors';${NL}`;
   } else if (key === 'banner') {
     targetFile += bannerText;
   } else {
@@ -711,7 +714,7 @@ function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
     const themeFile = getFileContents(themePath);
 
     // Inline the copyright banner
-    targetFile += '@import \'./banner\';\n\n';
+    targetFile += `@import './banner';${NL}`;
 
     // Add the theme contents
     targetFile += themeFile
@@ -739,7 +742,7 @@ function renderTestManifest(type) {
   }
 
   buckets[bucket].forEach((test) => {
-    targetFile += `${test}\n`;
+    targetFile += `${test}${NL}`;
   });
 
   return writeFile(filePaths.target.log[type], targetFile);
@@ -763,21 +766,21 @@ function renderSourceCodeList() {
   let targetFile = '';
 
   function logEmpty() {
-    targetFile += '\n';
+    targetFile += NL;
     if (commandLineArgs.verbose) {
-      process.stdout.write('\n');
+      process.stdout.write(NL);
     }
   }
 
   function logHeaderToBoth(str) {
-    targetFile += `${str}\n`;
+    targetFile += `${str}${NL}`;
     if (commandLineArgs.verbose) {
       logger(`${chalk.cyan(str)}`);
     }
   }
 
   function logItemToBoth(item) {
-    targetFile += `- ${item}\n`;
+    targetFile += `- ${item}${NL}`;
     if (commandLineArgs.verbose) {
       logger('bullet', `${item}`);
     }
@@ -866,7 +869,7 @@ function runBuildProcesses(requested) {
     rollupArgs += componentsArg;
   }
 
-  logger(`\nRunning build processes${hasCustom}...\n`);
+  logger(`${NL}Running build processes${hasCustom}...${NL}`);
 
   // Copy vendor libs/dependencies
   if (commandLineArgs.disableCopy) {
@@ -921,7 +924,7 @@ function buildFailure(reason) {
 // Main
 // -------------------------------------
 
-logger(`\n${chalk.red.bold('=========   IDS Enterprise Builder   =========')}\n`);
+logger(`${NL}${chalk.red.bold('=========   IDS Enterprise Builder   =========')}${NL}`);
 
 let requestedComponents = [];
 let normalBuild = false;
@@ -941,10 +944,10 @@ if (!commandLineArgs.components) {
 cleanAll(true).then(() => {
   if (!normalBuild) {
     // Display a list of requested components to the console
-    let loggedComponentList = `${(commandLineArgs.verbose ? '\n' : '')}${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
+    let loggedComponentList = `${(commandLineArgs.verbose ? `${NL}` : '')}${chalk.bold('Searching files in `src/` for the following terms:')}${NL}`;
     requestedComponents.forEach((comp) => {
-      componentList += `${comp}\n`;
-      loggedComponentList += `- ${comp}\n`;
+      componentList += `${comp}${NL}`;
+      loggedComponentList += `- ${comp}${NL}`;
     });
     logger(loggedComponentList);
 
@@ -1000,7 +1003,7 @@ cleanAll(true).then(() => {
 
   renderTargetFiles(normalBuild).then(() => {
     if (commandLineArgs.dryRun) {
-      process.stdout.write('\n');
+      process.stdout.write(`${NL}`);
       logger('success', `Completed dry run!  Generated files are available in the "${chalk.yellow('temp/')}" folder.`);
       process.exit(0);
     }
