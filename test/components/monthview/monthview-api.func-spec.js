@@ -18,6 +18,9 @@ describe('Monthview API', () => {
     monthviewEl = document.body.querySelector('.monthview');
     svgEl = document.body.querySelector('.svg-icons');
 
+    jasmine.clock().install();
+    jasmine.clock().mockDate(new Date(2018, 10, 10));
+
     Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA']); //eslint-disable-line
     Locale.addCulture('en-US', Soho.Locale.cultures['en-US']); //eslint-disable-line
     Locale.addCulture('ja-JP', Soho.Locale.cultures['ja-JP']); //eslint-disable-line
@@ -41,6 +44,7 @@ describe('Monthview API', () => {
 
     const rowEl = document.body.querySelector('.row');
     rowEl.parentNode.removeChild(rowEl);
+    jasmine.clock().uninstall();
   });
 
   it('Should be defined', () => {
