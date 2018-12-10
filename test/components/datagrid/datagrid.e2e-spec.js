@@ -1058,19 +1058,19 @@ describe('Datagrid tree single select tests', () => {
   });
 
   it('Should single select', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
 
-    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
+    expect(await element.all(await by.css('tr.is-selected')).count()).toEqual(1);
 
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
 
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(6) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(6) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
 
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
   });
