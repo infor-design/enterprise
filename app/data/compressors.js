@@ -59,6 +59,10 @@ module.exports = (req, res, next) => {
         filteredOut = false;
       }
 
+      if (req.query.filterColumn === 'productName' && req.query.filterOp === 'equals' && `compressor ${j}`.toString() === term) {
+        filteredOut = false;
+      }
+
       if (req.query.filterColumn === 'activity' && req.query.filterOp === 'contains' && 'assemble paint'.toString().indexOf(term) > -1) {
         filteredOut = false;
       }
