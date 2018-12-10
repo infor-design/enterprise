@@ -650,7 +650,7 @@ describe('Datepicker Timeformat Tests', () => {
       amPm = 'PM';
     }
     if (minutes.toString().length === 1) {
-      minutes = `0${minutes}`;
+      minutes = `0${minutes}`.padStart(2, '0');
     }
 
     expect([
