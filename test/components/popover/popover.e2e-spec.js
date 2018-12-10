@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Popover Index Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/popover/example-index?nofrills=true');
+    await utils.setPage('/components/popover/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {

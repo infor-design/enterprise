@@ -83,7 +83,7 @@ function generalRoute(req, res, next) {
     code: 404,
     message: 'File not found'
   };
-  res.opts.layout = 'layout-nofrills';
+  res.opts.layout = path.join(viewsRoot, 'layout-nofrills.html');
   res.status(404).render(path.join(viewsRoot, 'error.html'), res.opts);
   next();
 }

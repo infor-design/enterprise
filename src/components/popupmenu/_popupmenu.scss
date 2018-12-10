@@ -27,6 +27,42 @@
   }
 
   &.bottom {
+    .popupmenu {
+      .icon {
+        &.close {
+          padding-left: 6px;
+          padding-right: 6px;
+        }
+      }
+
+      &.has-submenu {
+        .dismissible {
+          .wrapper {
+            li {
+              a {
+                .icon {
+                  &.close {
+                    right: 6px;
+                  }
+                }
+              }
+            }
+          }
+
+          .icon {
+            &.close {
+              height: 15px;
+              padding-left: 6px;
+              padding-right: 6px;
+              position: absolute;
+              right: 17px;
+              top: 2px;
+            }
+          }
+        }
+      }
+    }
+
     .arrow {
       border-bottom-color: $popupmenu-border-color;
       //left: auto;

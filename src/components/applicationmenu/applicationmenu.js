@@ -209,7 +209,7 @@ ApplicationMenu.prototype = {
   handleKeyDown(e) {
     const key = e.which;
 
-    if (key === 121) { // F10
+    if (key === 121 && !e.shiftKey) { // F10 - opens the menu
       e.preventDefault();
 
       if (this.isOpen()) {
