@@ -326,6 +326,18 @@ function sanitizeLibFile(libFile, libFolder) {
 }
 
 /**
+ * When writing CSS/JS files to the temp directory, this replaces
+ * all instances of forward/backward slash to a forward slash.  It's possible
+ * for both to exist in a path on Windows machines.
+ * @param {string} str the string to fix
+ * @returns {string} the correctly formatted string
+ */
+function transformSlashesForFile(str) {
+  const slashRegex = /\\\//g;
+  return str.replace(slashRegex, '/');
+}
+
+/**
  * Returns a string representing a valid Javascript ES6 `import` statement
  * @param {string} libFile the target library file
  * @param {string} libPath the target library folder
@@ -335,10 +347,11 @@ function sanitizeLibFile(libFile, libFolder) {
  */
 function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
   libFile = sanitizeLibFile(libFile, libPath);
+  const fixedRootDir = transformSlashesForFile(`${RELATIVE_SRC_DIR}`);
   const command = isExport ? 'export' : 'import';
 
   if (noConstructor) {
-    return `${command} '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
+    return `${command} '${fixedRootDir}/${libPath}${libFile}';`;
   }
 
   // (Temporarily) replace the filename with one that dash-separates the words
@@ -353,7 +366,7 @@ function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
     constructorName = replaceDashesWithCaptials(libFile);
   }
 
-  return `${command} { ${constructorName} } from '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
+  return `${command} { ${constructorName} } from '${fixedRootDir}/${libPath}${libFile}';`;
 }
 
 /**
@@ -364,7 +377,8 @@ function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
  */
 function writeSassImportStatement(libFile, libPath) {
   libFile = sanitizeLibFile(libFile, libPath);
-  return `@import '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
+  const fixedRootDir = transformSlashesForFile(`${RELATIVE_SRC_DIR}`);
+  return `@import '${fixedRootDir}/${libPath}${libFile}';`;
 }
 
 /**
@@ -693,7 +707,8 @@ function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
     targetFile += bannerText;
   } else {
     // All other keys are "theme" entry points that just need their linked paths corrected.
-    const themeFile = getFileContents(path.join(SRC_DIR, 'themes', `${key}.scss`));
+    const themePath = transformSlashesForFile(path.join(SRC_DIR, 'themes', `${key}.scss`));
+    const themeFile = getFileContents(themePath);
 
     // Inline the copyright banner
     targetFile += '@import \'./banner\';\n\n';
