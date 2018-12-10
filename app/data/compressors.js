@@ -2,7 +2,6 @@
 // Example Call:
 // http://localhost:4000/api/compressors?pageNum=1&pageSize=10&sortField=productId&sortAsc=false
 module.exports = (req, res, next) => {
-  debugger;
   const products = [];
   const productsAll = [];
   let term;
