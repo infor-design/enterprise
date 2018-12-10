@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Dropdown Test Page: Disabled Enter Key Event</h2>
+    <p>You can configure it by changing the return to true if you want to allow enter key stroke, false will be disabled.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    
+    <div class="field">
+      <label for="dropdown" class="label">Disabled Enter key stroke</label>
+      <select id="dropdown" name="dropdown" class="dropdown">
+        <option value="FE1">Fire Level E1</option>
+        <option value="FE2">Fire Level E2</option>
+        <option value="FE3">Fire Level E3</option>
+        <option value="FE4">Fire Level E4</option>
+        <option value="FE5">Fire Level E5</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    $('#dropdown').dropdown({
+      onKeyDown: function (e) {
+        if (e.which === 13) {
+          console.log('Disabled Enter key!');
+          return false;
+        }
+        return true;
+      }
+    })
+
+  })
+</script>

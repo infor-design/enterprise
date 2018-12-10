@@ -1306,6 +1306,15 @@ Dropdown.prototype = {
       return false;
     }
 
+    if (this.settings.onKeyDown) {
+      const ret = this.settings.onKeyDown(e);
+      if (ret === false) {
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
+      }
+    }
+
     // Down arrow opens the list.
     // Down/Up are for IE/Edge.
     // ArrowDown/ArrowUp are for all others.
