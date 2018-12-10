@@ -26,8 +26,8 @@ if (commandLineArgs.verbose) {
 }
 
 const minifyPromises = [
-  runBuildProcess('node', cssArgs),
-  runBuildProcess('node', jsArgs)
+  runBuildProcess(`node ${cssArgs.join(' ')}`),
+  runBuildProcess(`node ${jsArgs.join(' ')}`)
 ];
 
 Promise.all(minifyPromises).then(() => {

@@ -255,6 +255,7 @@ describe('Datagrid paging (client side) tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
     await element(by.css('.pager-last a')).click();
+    await browser.driver.sleep(300);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('990');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('999');
