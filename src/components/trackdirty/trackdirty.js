@@ -221,19 +221,17 @@ Trackdirty.prototype = {
 
         d.field = field;
         this.settings.d = d;
-
         if (field.is('.editor-container')) {
           // editors values are further down it's tree in a textarea,
           // so get the elements with the value
           const textArea = field.find('textarea');
           original = textArea.data('original');
           current = this.valMethod(textArea);
-        }
 
-        if (this.isIe || this.isIeEdge) {
-          current = input[0].innerHTML || input[0].value;
+          if (this.isIe || this.isIeEdge) {
+            current = input[0].innerHTML;
+          }
         }
-
         if (current === original || (input.attr('multiple') && utils.equals(current, original))) {
           input.removeClass('dirty');
           $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();

@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Datepicker example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-index?nofrills=true');
+    await utils.setPage('/components/datepicker/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -857,6 +857,22 @@ describe('Datepicker restrict month selection tests', () => {
 
     expect(await element(by.css('.monthview-header .prev')).getAttribute('disabled')).toEqual('true');
     expect(await element(by.css('.monthview-header .next')).getAttribute('disabled')).not.toEqual('true');
+  });
+});
+
+describe('Datepicker set first day of week tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-set-first-day-of-week');
+  });
+
+  it('Should set first day of week', async () => {
+    const triggerEl = await element(by.tagName('thead'));
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('.is-focused'))).toBeTruthy();
+
+    const testEl = await triggerEl.all(by.tagName('th')).get(0);
+    expect(await testEl.getText()).toEqual('M');
   });
 });
 

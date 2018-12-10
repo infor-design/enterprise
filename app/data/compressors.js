@@ -44,6 +44,10 @@ module.exports = (req, res, next) => {
       term = req.query.filterValue.replace('\'', '').toLowerCase();
       filteredOut = true;
 
+      if (req.query.filterColumn === 'id' && req.query.filterOp === 'contains' && j.toString().indexOf(term) > -1) {
+        filteredOut = false;
+      }
+
       if (req.query.filterColumn === 'productId' && req.query.filterOp === 'contains' && (214220 + j).toString().indexOf(term) > -1) {
         filteredOut = false;
       }
@@ -51,7 +55,11 @@ module.exports = (req, res, next) => {
         filteredOut = false;
       }
 
-      if (req.query.filterColumn === 'productName' && req.query.filterOp === 'contains' && 'compressor'.toString().indexOf(term) > -1) {
+      if (req.query.filterColumn === 'productName' && req.query.filterOp === 'contains' && `compressor ${j}`.toString().indexOf(term) > -1) {
+        filteredOut = false;
+      }
+
+      if (req.query.filterColumn === 'productName' && req.query.filterOp === 'equals' && `compressor ${j}`.toString() === term) {
         filteredOut = false;
       }
 
@@ -66,6 +74,15 @@ module.exports = (req, res, next) => {
         filteredOut = false;
       }
       if (req.query.filterColumn === 'quantity' && req.query.filterOp === 'equals' && (1 + (j / 2)).toString() === term) {
+        filteredOut = false;
+      }
+
+      if (req.query.filterColumn === 'price' && req.query.filterOp === 'equals' && (210.99 - j).toString() === term) {
+        filteredOut = false;
+      }
+
+      const seedDate = `${(new Date(2014, 12, seed)).getMonth() + 1}/${((new Date(2014, 12, seed)).getDate())}/${(new Date(2014, 12, seed)).getFullYear()}`;
+      if (req.query.filterColumn === 'orderDate' && req.query.filterOp === 'equals' && seedDate === term) {
         filteredOut = false;
       }
     }

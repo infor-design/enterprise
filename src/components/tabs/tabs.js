@@ -3235,7 +3235,17 @@ Tabs.prototype = {
 
       e.preventDefault();
       e.stopPropagation();
-      self.closeDismissibleTab(li.children('a').attr('href'));
+
+      if (li.is('.dismissible') && li.is('.has-popupmenu') && li.is('.submenu')) {
+        const listMenu = li.find('.wrapper').children().children();
+        const hrefs = [];
+        $.each(listMenu, (i, item) => {
+          hrefs.push(item.children[0].href);
+        });
+        self.closeDismissibleTabs(hrefs);
+      } else {
+        self.closeDismissibleTab(li.children('a').attr('href'));
+      }
       self.popupmenu.close();
     }
 
