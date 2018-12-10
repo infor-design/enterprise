@@ -333,8 +333,8 @@ function sanitizeLibFile(libFile, libFolder) {
  * @returns {string} the correctly formatted string
  */
 function transformSlashesForFile(str) {
-  const slashRegex = /\\\//g;
-  return str.replace(slashRegex, '/');
+  const backslashRegex = /\\/g;
+  return str.replace(backslashRegex, '/');
 }
 
 /**
