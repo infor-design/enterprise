@@ -510,7 +510,6 @@ Spinbox.prototype = {
   updateVal(newVal) {
     this.element.val(newVal).trigger('change');
     this.updateAria(newVal);
-    this.element.focus();
   },
 
   /**
