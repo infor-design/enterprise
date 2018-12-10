@@ -13,6 +13,7 @@ const COMPONENT_NAME_DEFAULTS = {
   activeDateIslamic: null,
   isPopup: false,
   headerStyle: 'full',
+  firstDayOfWeek: null,
   disable: {
     dates: [],
     minDate: '',
@@ -54,6 +55,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {number} [settings.activeDateIslamic] The date to highlight as selected/today (as an array for islamic)
  * @param {number} [settings.isPopup] Is it in a popup (datepicker using it)
  * @param {number} [settings.headerStyle] Configure the header, this can be 'simple' or 'full'. Full adds a picker and today link.
+ * @param {number} [settings.firstDayOfWeek=null] Set first day of the week. '1' would be Monday.
  * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
@@ -325,7 +327,12 @@ MonthView.prototype = {
     this.currentYear = year;
 
     // Set the Days of the week
-    const firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
+    let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
+
+    if (this.settings.firstDayOfWeek) {
+      firstDayofWeek = this.settings.firstDayOfWeek;
+    }
+
     this.dayNames.find('th').each(function (i) {
       $(this).text(days[(i + firstDayofWeek) % 7]);
     });

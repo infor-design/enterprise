@@ -75,9 +75,8 @@ describe('Calendar ajax loading tests', () => {
   });
 
   it('Should render ajax loaded dates for august 2018', async () => {
-    const eventMore = await element(by.css('.calendar-event-more'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(eventMore), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event-more'))), 4000);
 
     expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(1);
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(4);
