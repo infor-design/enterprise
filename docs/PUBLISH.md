@@ -46,6 +46,10 @@ git config --global credential.helper wincred
 
 - Verify you are logged into NPM in your terminal to avoid `release-it` dying at the end.
 
+### Make sure you have Jenkins variables set
+
+- Check that you have both `JENKINS_JOB_TOKEN` and `JENKINS_API_TOKEN` exported
+
 ## Release
 
 1. Make sure you have release-it installed (`npm install release-it -g`)

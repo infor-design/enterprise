@@ -13,18 +13,47 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-data-message3">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-data-message4">
+    </div>
+  </div>
+</div>
+
 <script>
   $('body').on('initialized', function () {
     $('#no-data-message').emptymessage({
       title: 'No Data Available',
-      icon: 'icon-empty-no-data'
+      icon: 'icon-empty-search-data'
     });
 
     $('#no-data-message2').emptymessage({
       title: 'No New Alerts ',
-      icon: 'icon-empty-no-alerts',
+      icon: 'icon-empty-search-data',
       info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp. ',
       color: 'azure'
     });
+
+    $('#no-data-message3').emptymessage({
+      title: 'No New Alerts ',
+      icon: 'icon-empty-no-tasks',
+      info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp. ',
+      color: 'azure'
+    });
+
+
+    $('#no-data-message4').emptymessage({
+      title: 'No New Alerts ',
+      icon: 'icon-empty-no-tasks',
+      info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp. '
+    });
+
   });
 </script>
