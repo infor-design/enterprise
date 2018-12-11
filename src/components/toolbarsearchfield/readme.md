@@ -4,12 +4,12 @@ description: null
 demo:
   embedded:
   - name: Common Configuration
-    slug: example-index.html
+    slug: example-index
   pages:
   - name: Alternate In-Page Style
-    slug: example-alternate-style.html
+    slug: example-alternate-style
   - name: "`collapsibleOnMobile` Setting Demo"
-    slug: example-collapsible-on-mobile.html
+    slug: example-collapsible-on-mobile
 ---
 
 ## Important Notes
