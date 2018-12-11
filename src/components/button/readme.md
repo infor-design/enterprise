@@ -17,7 +17,7 @@ demo:
   - name: Toggle Buttons
     slug: example-toggle-button
   - name: Disabled Button Tooltip
-    slug: example-disabled-button-tooltip.html
+    slug: example-disabled-button-tooltip
 ---
 
 ## Code Example
