@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('MonthView index tests', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/monthview/example-index?nofrills=true');
+    await utils.setPage('/components/monthview/example-index?layout=nofrills');
   });
 
   it('Should render without error', async () => {
@@ -194,7 +194,7 @@ describe('Monthview keyboard tests', () => {
 
 describe('MonthView disable day tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/monthview/test-disable-weekends.html?nofrills=true');
+    await utils.setPage('/components/monthview/test-disable-weekends.html?layout=nofrills');
   });
 
   it('Should render without error', async () => {

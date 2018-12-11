@@ -972,11 +972,11 @@ Datagrid.prototype = {
       const isResizable = (column.resizable === undefined ? true : column.resizable);
       const isExportable = (column.exportable === undefined ? true : column.exportable);
       const isSelection = column.id === 'selectionCheckbox';
-      const alignmentClass = (column.align === 'center' ? ` l-${column.align}-text` : '');// Disable right align for now as this was acting wierd
+      const headerAlignmentClass = (column.headerAlign === undefined ? ` l-${column.align}-text` : ` l-${column.headerAlign}-text`); // note there is a space at the front of the classname
 
       headerRow += `<th scope="col" role="columnheader" class="${isSortable ? 'is-sortable' : ''}${isResizable ? ' is-resizable' : ''
       }${column.hidden ? ' is-hidden' : ''}${column.filterType ? ' is-filterable' : ''
-      }${alignmentClass || ''}" id="${id}" data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''
+      }${headerAlignmentClass || ''}" id="${id}" data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''
       }${column.headerTooltip ? `title="${column.headerTooltip}"` : ''
       }${column.reorderable === false ? ' data-reorder="false"' : ''
       }${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''}${isExportable ? 'data-exportable="yes"' : 'data-exportable="no"'}>`;
@@ -988,7 +988,14 @@ Datagrid.prototype = {
           `<span class="sort-desc">${$.createIcon({ icon: 'dropdown' })}</div>`;
       }
 
-      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${column.align === undefined ? '' : ` l-${column.align}-text`}"><span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${column.align === 'center' ? sortIndicator : ''}</span>`;
+      // If header text is center aligned, for proper styling,
+      // place the sortIndicator as a child of datagrid-header-text.
+      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}
+      ${headerAlignmentClass}"><span class="datagrid-header-text
+      ${column.required ? ' required' : ''}">
+      ${self.headerText(this.settings.columns[j])}
+      ${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}
+      </span>`;
       cols += `<col${this.columnWidth(column, j)}${column.hidden ? ' class="is-hidden"' : ''}>`;
 
       if (isSelection) {
@@ -999,7 +1006,10 @@ Datagrid.prototype = {
         }
       }
 
-      if (isSortable && column.align !== 'center') {
+      // Note the space in classname.
+      // Place sortIndicator via concatenation if
+      // header text is not center aligned.
+      if (isSortable && headerAlignmentClass !== ' l-center-text') {
         headerRow += sortIndicator;
       }
 
@@ -1544,7 +1554,7 @@ Datagrid.prototype = {
       for (let i = 0; i < conditions.length; i++) {
         const columnDef = self.columnById(conditions[i].columnId)[0];
 
-        let rowValue = rowData && rowData[columnDef.field] !== undefined ? 
+        let rowValue = rowData && rowData[columnDef.field] !== undefined ?
           rowData[columnDef.field] : self.fieldValue(rowData, columnDef.field);
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();

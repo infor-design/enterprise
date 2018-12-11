@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Calendar index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/example-index?nofrills=true');
+    await utils.setPage('/components/calendar/example-index?layout=nofrills');
     const dateField = await element(by.id('monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
@@ -75,9 +75,8 @@ describe('Calendar ajax loading tests', () => {
   });
 
   it('Should render ajax loaded dates for august 2018', async () => {
-    const eventMore = await element(by.css('.calendar-event-more'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(eventMore), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event-more'))), 4000);
 
     expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(1);
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(4);

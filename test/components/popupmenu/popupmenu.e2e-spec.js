@@ -40,7 +40,7 @@ describe('Contextmenu index tests', () => {
 
 describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/popupmenu/example-selectable?nofrills=true');
+    await utils.setPage('/components/popupmenu/example-selectable?layout=nofrills');
   });
 
   it('Should not have errors', async () => {

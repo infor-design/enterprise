@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Datagrid index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-index?nofrills=true');
+    await utils.setPage('/components/datagrid/example-index?layout=nofrills');
 
     const datagridEl = await element(by.id('datagrid'));
     await browser.driver
@@ -255,6 +255,7 @@ describe('Datagrid paging (client side) tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
     await element(by.css('.pager-last a')).click();
+    await browser.driver.sleep(300);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('990');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('999');
@@ -265,7 +266,9 @@ describe('Datagrid paging (client side) tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
     await element(by.css('.pager-last a')).click();
+    await browser.driver.sleep(300);
     await element(by.css('.pager-first a')).click();
+    await browser.driver.sleep(300);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
@@ -276,11 +279,13 @@ describe('Datagrid paging (client side) tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
     await element(await by.css('.pager-next a')).click();
+    await browser.driver.sleep(300);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('10');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('19');
 
     await element(await by.css('.pager-prev a')).click();
+    await browser.driver.sleep(300);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
@@ -293,6 +298,7 @@ describe('Datagrid paging (client side) tests', () => {
     await element(by.css('.pager-count input')).sendKeys(protractor.Key.BACK_SPACE);
     await element(by.css('.pager-count input')).sendKeys('5');
     await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(300);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('40');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
@@ -1053,19 +1059,19 @@ describe('Datagrid tree single select tests', () => {
   });
 
   it('Should single select', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
 
-    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
+    expect(await element.all(await by.css('tr.is-selected')).count()).toEqual(1);
 
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
 
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(6) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(6) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
 
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
   });
@@ -1144,8 +1150,7 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
 
     expect(await element(await by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).not.toContain('is-rowactivated');
-    const cell = await element(await by.css('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]'));
-    await cell.click();
+    await element(await by.css('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
 

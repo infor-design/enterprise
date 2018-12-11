@@ -53,7 +53,7 @@ describe('CAP jquery context tests no-flex', () => {
 
 describe('ContextualActionPanel example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/contextualactionpanel/example-index?nofrills=true');
+    await utils.setPage('/components/contextualactionpanel/example-index?layout=nofrills');
   });
 
   if (utils.isChrome() && utils.isCI()) {
