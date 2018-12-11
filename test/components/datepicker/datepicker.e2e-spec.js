@@ -654,8 +654,8 @@ describe('Datepicker Timeformat Tests', () => {
     }
 
     expect([
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${minutes} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${minutes - 1} ${amPm}` // for slow test
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes).toString().padStart(2, '0')} ${amPm}`,
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes).toString().padStart(2, '0')} ${amPm}` // for slow test
     ]).toContain(await element(by.id('dp3')).getAttribute('value'));
   });
 });
