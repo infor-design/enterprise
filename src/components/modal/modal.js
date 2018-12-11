@@ -917,6 +917,10 @@ Modal.prototype = {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
 
+    if (this.settings.trigger === 'immediate') {
+      this.open();
+    }
+
     return this;
   },
 
@@ -955,6 +959,9 @@ Modal.prototype = {
       self.element[0].removeAttribute('data-modal');
 
       $.removeData(self.element[0], 'modal');
+      if (self.isCAP && self.capAPI) {
+        self.capAPI.destroy();
+      }
     }
 
     if (!this.visible) {

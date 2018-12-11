@@ -64,11 +64,20 @@ ContextualActionPanel.prototype = {
 
   /**
   * Setup internal variables.
+  * NOTE: Does not do any building.
   * @private
   * @returns {object} The Api for chaining.
   */
   setup() {
     this.panel = this.element.next('.contextual-action-panel');
+
+    const dataModal = this.element.data('modal');
+    if (typeof dataModal === 'string') {
+      const panelFromID = $(`#${dataModal}`);
+      if (panelFromID.length) {
+        this.panel = panelFromID;
+      }
+    }
 
     // Handle case with popup triggered from a menu
     if (this.element.closest('.popupmenu').length === 1) {
@@ -79,6 +88,7 @@ ContextualActionPanel.prototype = {
       this.panel[0].style.display = 'none';
     }
     this.panel.addClass('is-animating');
+
     return this;
   },
 
@@ -90,7 +100,7 @@ ContextualActionPanel.prototype = {
   build() {
     const self = this;
 
-    // Build the Content
+    // Build the Content if it's not present
     if (this.panel.length === 0) {
       if (this.settings.content instanceof jQuery) {
         if (this.settings.content.is('.contextual-action-panel')) {
@@ -354,9 +364,6 @@ ContextualActionPanel.prototype = {
         // Focus the first focusable element inside the Contextual Panel's Body
         self.panel.find('.modal-body-wrapper').find(':focusable').first().focus();
         utils.fixSVGIcons(self.panel);
-      })
-      .on('beforedestroy.contextualactionpanel', () => {
-        self.teardown();
       });
 
     if (self.closeButton && self.closeButton.length) {
@@ -461,6 +468,9 @@ ContextualActionPanel.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    this.setup();
+
+    this.modalAPI.updated(settings);
     return this;
   },
 
