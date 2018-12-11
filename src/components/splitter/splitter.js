@@ -95,7 +95,7 @@ Splitter.prototype = {
 
       if (s.collapseButton) {
         let savedOffset = 0;
-        const $splitterButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn" title="Collapse"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-double-chevron"></use></svg></button>');
+        const $splitterButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-double-chevron"></use></svg></button>');
         $splitterButton.appendTo(splitter);
         if (splitter[0].offsetLeft > 10) {
           $('#splitter-collapse-btn').addClass('rotate');
@@ -105,19 +105,27 @@ Splitter.prototype = {
             if (splitter[0].offsetLeft <= 10) {
               self.splitTo(defaultOffset, parentHeight);
               $(this).addClass('rotate');
+
+              $splitterButton.tooltip({ content: 'Collapse' });
             } else {
               savedOffset = splitter[0].offsetLeft;
               self.splitTo(0, parentHeight);
               $(this).removeClass('rotate');
+
+              $splitterButton.tooltip({ content: 'Expand' });
             }
           } else if (splitter[0].offsetLeft > 10) {
             savedOffset = splitter[0].offsetLeft;
             self.splitTo(0, parentHeight);
             $(this).removeClass('rotate');
+
+            $splitterButton.tooltip({ content: 'Expand' });
           } else {
             self.splitTo(savedOffset, parentHeight);
             $(this).addClass('rotate');
             savedOffset = 0;
+
+            $splitterButton.tooltip({ content: 'Collapse' });
           }
         });
       }
@@ -152,6 +160,11 @@ Splitter.prototype = {
     }
 
     this.splitTo(w, parentHeight);
+
+    $('#splitter-collapse-btn').tooltip({ content: w <= 10 ? 'Expand' : 'Collapse' });
+    if (w <= 10) {
+      $('#splitter-collapse-btn').removeClass('rotate');
+    }
 
     // Add the Splitter Events
     this.documentWidth = 0;
