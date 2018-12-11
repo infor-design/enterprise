@@ -15,11 +15,11 @@ demo:
   - name: On the Page Body
     slug: example-body
   - name: Customize Loading Text
-    slug: example-custom-loading-text.html
+    slug: example-custom-loading-text
   - name: Nested Busy Indicators
-    slug: test-nested.html
+    slug: test-nested
   - name: transparent Overlay
-    slug: example-transparent-overlay.html
+    slug: example-transparent-overlay
   - name: Ajax Calls
     slug: test-ajax-calls
   - name: Block Entire UI
@@ -29,7 +29,7 @@ demo:
   - name: In Font-size Zero
     slug: test-contained-in-font-size-0
   - name: Delay before Display
-    slug: test-delayed-display.html
+    slug: test-delayed-display
 ---
 
 ## Code Example

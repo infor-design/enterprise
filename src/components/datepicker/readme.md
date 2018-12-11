@@ -7,25 +7,25 @@ demo:
     slug: example-index
   pages:
   - name: Month/Year Picker
-    slug: example-month-year-picker.html
+    slug: example-month-year-picker
   - name: Range Selection
-    slug: example-range.html
+    slug: example-range
   - name: Month/Year Only Selection
-    slug: example-month-year-format.html
+    slug: example-month-year-format
   - name: Anniversary Format (Month, Year)
     slug: example-anniversay-format
   - name: Date Picker With Legend
     slug: example-legend
   - name: Date Picker With Time
-    slug: example-timeformat.html
+    slug: example-timeformat
   - name: Disabling Calendar Days
-    slug: example-disabled-dates.html
+    slug: example-disabled-dates
   - name: Various Sizes
-    slug: example-sizes.html
+    slug: example-sizes
   - name: Islamic Umalqura Calendar
-    slug: example-umalqura.html
+    slug: example-umalqura
   - name: Using Validation
-    slug: example-validation.html
+    slug: example-validation
 ---
 
 The setup for a datepicker only involves creating an `<input>` with the class `datepicker`. You can optionally set a `placeholder`. The placeholder will get adjusted by the plugin based on the current locale. Remember to always associate a label with the input field. Always use four-digit dates in all locales for short date.
