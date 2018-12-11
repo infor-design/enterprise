@@ -29,11 +29,39 @@ const settings = {
       }],
       name: ''
     }
-  ]
+  ],
+  animate: false,
+  type: 'bar'
 };
 
+const twoSeriesData = [{
+  data: [{
+    name: '2008',
+    value: 123
+  }, {
+    name: '2009',
+    value: 234
+  }, {
+    name: '2010',
+    value: 345
+  }],
+  name: 'Series 1'
+}, {
+  data: [{
+    name: '2008',
+    value: 235
+  }, {
+    name: '2009',
+    value: 267
+  }, {
+    name: '2010',
+    value: 573
+  }],
+  name: 'Series 2'
+}];
+
 describe('Bar API', () => {
-  beforeEach(() => {
+  beforeEach((done) => {
     barEl = null;
     svgEl = null;
     barObj = null;
@@ -48,6 +76,9 @@ describe('Bar API', () => {
     Soho.Locale.set('en-US'); //eslint-disable-line
 
     barObj = new Bar(barEl, settings);
+    setTimeout(() => {
+      done();
+    });
   });
 
   afterEach(() => {
@@ -76,6 +107,7 @@ describe('Bar API', () => {
     barObj.setSelected(options);
 
     expect(barObj.getSelected()).toBeTruthy();
+    expect(barObj.getSelected()[0].data.name).toEqual('Category C');
   });
 
   it('Should toggle selected bar', () => {
@@ -108,6 +140,23 @@ describe('Bar API', () => {
     const dataLength = barObj.settings.dataset[0].data.length;
 
     expect(dataLength).toEqual(1);
+  });
+
+  it('Should be able to hide legend', (done) => {
+    barObj.destroy();
+    const newSettings = Object.assign({ showLegend: true, dataset: twoSeriesData }, settings);
+    newSettings.dataset = twoSeriesData;
+    barObj = new Bar(barEl, newSettings);
+
+    setTimeout(() => {
+      expect(document.body.querySelector('.chart-legend')).toBeTruthy();
+
+      newSettings.showLegend = false;
+      barObj.updated(newSettings);
+
+      expect(document.body.querySelector('.chart-legend')).toBeFalsy();
+      done();
+    });
   });
 
   it('Should destroy bar', () => {

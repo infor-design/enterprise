@@ -142,4 +142,66 @@ describe('Autocomplete API', () => {
     // The `clearResultsCallback` should have been triggered through the autocomplete `closeList()` method.
     expect(wasCalled).toBeTruthy();
   });
+
+  it('Can handle slashes in the source as a label', () => {
+    autocompleteAPI.destroy();
+    const newData = [
+      { label: 'Application Function Server' },
+      { label: 'application server' },
+      { label: "Server Error '/' Application" },
+      { label: "Server Error '/ReportManager' Application" },
+      { label: 'server error application' }
+    ];
+
+    autocompleteAPI.updated({
+      source: newData,
+      filterMode: 'startsWith'
+    });
+
+    autocompleteAPI.openList('S', newData);
+    const autocompleteListEl = document.querySelector('#autocomplete-list');
+
+    expect(autocompleteListEl).toBeDefined();
+
+    const resultItems = autocompleteListEl.querySelectorAll('li');
+
+    expect(resultItems[0].innerText.trim()).toEqual('Application Function Server');
+    expect(resultItems[1].innerText.trim()).toEqual('application server');
+    expect(resultItems[2].innerText.trim()).toEqual("Server Error '/' Application");
+    expect(resultItems[3].innerText.trim()).toEqual("Server Error '/ReportManager' Application");
+    expect(resultItems[4].innerText.trim()).toEqual('server error application');
+    expect(resultItems).toBeDefined();
+    expect(resultItems.length).toEqual(5);
+  });
+
+  it('Can handle slashes in the source as a string', () => {
+    autocompleteAPI.destroy();
+    const newData = [
+      'Application Function Server',
+      'application server',
+      "Server Error '/' Application",
+      "Server Error '/ReportManager' Application",
+      'server error application'
+    ];
+
+    autocompleteAPI.updated({
+      source: newData,
+      filterMode: 'startsWith'
+    });
+
+    autocompleteAPI.openList('S', newData);
+    const autocompleteListEl = document.querySelector('#autocomplete-list');
+
+    expect(autocompleteListEl).toBeDefined();
+
+    const resultItems = autocompleteListEl.querySelectorAll('li');
+
+    expect(resultItems[0].innerText.trim()).toEqual('Application Function Server');
+    expect(resultItems[1].innerText.trim()).toEqual('application server');
+    expect(resultItems[2].innerText.trim()).toEqual("Server Error '/' Application");
+    expect(resultItems[3].innerText.trim()).toEqual("Server Error '/ReportManager' Application");
+    expect(resultItems[4].innerText.trim()).toEqual('server error application');
+    expect(resultItems).toBeDefined();
+    expect(resultItems.length).toEqual(5);
+  });
 });

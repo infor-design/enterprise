@@ -5,9 +5,6 @@ demo:
   embedded:
   - name: Default Badge Example
     slug: example-index
-  pages:
-  - name: Additional Badges
-    slug: example-additional-badges
 ---
 
 The classes `error`, `info`, or `alert` associate the element with a status by color. In addition any of the classes from the color-palette can be used. (See [Colors](./colors) docs for more information).

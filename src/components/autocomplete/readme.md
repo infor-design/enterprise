@@ -18,12 +18,6 @@ demo:
     slug: example-templates
 test:
   pages:
-  - name: Test Autocomplete on a long scrolling page
-    slug: test-longpage-modal
-  - name: Test Autocomplete on a modal dialog
-    slug: test-modal-autocomplete
-  - name: Test Autocomplete Selected Event Fires
-    slug: test-selected-event
   - name: Test Turkish Keyboard Works
     slug: test-turkish-filters
   - name: Test Xss is prevented

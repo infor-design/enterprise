@@ -119,7 +119,6 @@ let options = {
 };
 ```
 
-
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.

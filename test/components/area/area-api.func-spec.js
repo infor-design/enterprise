@@ -117,7 +117,7 @@ describe('Area Menu API', () => {
     expect(document.body.querySelectorAll('.chart-legend')[0].innerText).toEqual('Component AComponent BComponent C');
   });
 
-  fit('Should render selected dot', () => { //eslint-disable-line
+  it('Should render selected dot', () => {
     expect(document.body.querySelectorAll('[data-group-id="0"]').length).toEqual(1);
     expect(document.body.querySelector('[data-group-id="0"]').classList.contains('is-selected')).toBeTruthy();
   });
@@ -137,19 +137,8 @@ describe('Area Menu API', () => {
   });
 
   it('Should be able to get the get and set the selected line', () => {
-    let options = {
-      groupIndex: 0,
-      fieldName: 'name',
-      fieldValue: 'Feb'
-    };
-
-    areaObj.setSelected(options);
-
-    expect(areaObj.getSelected()[0].data.value).toEqual(11);
-    expect(areaObj.getSelected()[0].data.name).toEqual('Feb');
-
     // Use group "name" to select
-    options = {
+    let options = {
       groupName: 'name',
       groupValue: 'Component B'
     };

@@ -482,6 +482,7 @@ describe('Tabs ajax as href tests', () => {
       await element(by.css('#example-tab-two a')).click();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(element(by.css('#ajaxified-tabs-tab-2.is-visible'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await element(by.id('ajaxified-tabs-tab-2')).getAttribute('innerHTML')).not.toBe('');
     });
