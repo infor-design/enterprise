@@ -33,11 +33,11 @@
       onKeyDown: function(e) {
         if (e.which === 40) { // down key
           console.log('You customized the down key (:');
-          return true;
+          return false;
         }
         if (e.which === 13) { // enter key
           console.log('Disabled Enter key!');
-          return true;
+          return false;
         }
       }
     })
