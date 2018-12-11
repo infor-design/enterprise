@@ -293,6 +293,8 @@ Spinbox.prototype = {
    * @returns {void}
    */
   handleClick(e) {
+    e.preventDefault();
+    
     if (this.isDisabled() || e.which !== 1 || this.isReadonly()) {
       return;
     }
