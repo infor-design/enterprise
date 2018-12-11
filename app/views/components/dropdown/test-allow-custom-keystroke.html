@@ -31,9 +31,13 @@
 
     $('#dropdown').dropdown({
       onKeyDown: function(e) {
-        if (e.which === 40) {
-          alert('You customized the down key (:');
-          return false;
+        if (e.which === 40) { // down key
+          console.log('You customized the down key (:');
+          return true;
+        }
+        if (e.which === 13) { // enter key
+          console.log('Disabled Enter key!');
+          return true;
         }
       }
     })
