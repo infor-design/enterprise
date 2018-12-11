@@ -77,6 +77,9 @@ const TEMP_DIR = path.join(__dirname, '..', 'temp');
 const TEST_DIR = path.join(__dirname, '..', 'test');
 const RELATIVE_SRC_DIR = path.join('..', 'src');
 
+// CR-LF on Windows, LF on Linux/Mac
+const NL = process.platform === 'win32' ? '\r\n' : '\n';
+
 const bannerText = require('./generate-bundle-banner');
 
 const filePaths = {
@@ -326,6 +329,18 @@ function sanitizeLibFile(libFile, libFolder) {
 }
 
 /**
+ * When writing CSS/JS files to the temp directory, this replaces
+ * all instances of forward/backward slash to a forward slash.  It's possible
+ * for both to exist in a path on Windows machines.
+ * @param {string} str the string to fix
+ * @returns {string} the correctly formatted string
+ */
+function transformSlashesForFile(str) {
+  const backslashRegex = /\\/g;
+  return str.replace(backslashRegex, '/');
+}
+
+/**
  * Returns a string representing a valid Javascript ES6 `import` statement
  * @param {string} libFile the target library file
  * @param {string} libPath the target library folder
@@ -335,10 +350,11 @@ function sanitizeLibFile(libFile, libFolder) {
  */
 function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
   libFile = sanitizeLibFile(libFile, libPath);
+  const importPath = transformSlashesForFile(`${RELATIVE_SRC_DIR}/${libPath}${libFile}`);
   const command = isExport ? 'export' : 'import';
 
   if (noConstructor) {
-    return `${command} '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
+    return `${command} '${importPath}';`;
   }
 
   // (Temporarily) replace the filename with one that dash-separates the words
@@ -353,7 +369,7 @@ function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
     constructorName = replaceDashesWithCaptials(libFile);
   }
 
-  return `${command} { ${constructorName} } from '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
+  return `${command} { ${constructorName} } from '${importPath}';`;
 }
 
 /**
@@ -364,7 +380,8 @@ function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
  */
 function writeSassImportStatement(libFile, libPath) {
   libFile = sanitizeLibFile(libFile, libPath);
-  return `@import '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
+  const importPath = transformSlashesForFile(`${RELATIVE_SRC_DIR}/${libPath}${libFile}`);
+  return `@import '${importPath}';`;
 }
 
 /**
@@ -582,7 +599,7 @@ function renderImportsToString(key, type) {
     } else {
       statement = writeJSImportStatement(lib, filePath, true);
     }
-    fileContents += `${statement}\n`;
+    fileContents += `${statement}${NL}`;
   });
 
   return fileContents;
@@ -623,9 +640,9 @@ function renderTargetJSFile(key, targetFilePath) {
     // be written to the target file in a specific order.
     const componentBuckets = ['foundational', 'mid', 'complex'];
     componentBuckets.forEach((thisBucket) => {
-      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += `// ${capitalize(thisBucket)} ====/${NL}`;
       targetFile += renderImportsToString(thisBucket, type);
-      targetFile += '\n';
+      targetFile += NL;
     });
   } else {
     // All other buckets simply get rendered directly
@@ -651,9 +668,9 @@ function renderTargetJQueryFile(key, targetFilePath) {
     // be written to the target file in a specific order.
     const componentBuckets = ['foundational', 'mid', 'complex'];
     componentBuckets.forEach((thisBucket) => {
-      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += `// ${capitalize(thisBucket)} ====/${NL}`;
       targetFile += renderImportsToString(thisBucket, type);
-      targetFile += '\n';
+      targetFile += NL;
     });
   } else if (key === 'initialize') {
     targetFile = getFileContents(filePaths.src.jQuery.initialize);
@@ -678,25 +695,26 @@ function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
   const type = 'scss';
 
   if (key === 'components') {
-    targetFile = '// Required ====/\n@import \'../src/core/required\';\n\n';
+    targetFile = `// Required ====/${NL}@import '../src/core/required';${NL}${NL}`;
 
     // 'component' source code files are comprised of three buckets that need to
     // be written to the target file in a specific order.
     const componentBuckets = ['foundational', 'mid', 'complex', 'patterns', 'layouts'];
     componentBuckets.forEach((thisBucket) => {
-      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += `// ${capitalize(thisBucket)} ====/${NL}`;
       targetFile += renderImportsToString(thisBucket, type);
-      targetFile += '\n';
+      targetFile += NL;
     });
-    targetFile += '// These controls must come last\n@import \'../src/components/colors/colors\';\n';
+    targetFile += `// These controls must come last${NL}@import '../src/components/colors/colors';${NL}`;
   } else if (key === 'banner') {
     targetFile += bannerText;
   } else {
     // All other keys are "theme" entry points that just need their linked paths corrected.
-    const themeFile = getFileContents(path.join(SRC_DIR, 'themes', `${key}.scss`));
+    const themePath = transformSlashesForFile(path.join(SRC_DIR, 'themes', `${key}.scss`));
+    const themeFile = getFileContents(themePath);
 
     // Inline the copyright banner
-    targetFile += '@import \'./banner\';\n\n';
+    targetFile += `@import './banner';${NL}`;
 
     // Add the theme contents
     targetFile += themeFile
@@ -724,7 +742,7 @@ function renderTestManifest(type) {
   }
 
   buckets[bucket].forEach((test) => {
-    targetFile += `${test}\n`;
+    targetFile += `${test}${NL}`;
   });
 
   return writeFile(filePaths.target.log[type], targetFile);
@@ -748,21 +766,21 @@ function renderSourceCodeList() {
   let targetFile = '';
 
   function logEmpty() {
-    targetFile += '\n';
+    targetFile += NL;
     if (commandLineArgs.verbose) {
-      process.stdout.write('\n');
+      process.stdout.write(NL);
     }
   }
 
   function logHeaderToBoth(str) {
-    targetFile += `${str}\n`;
+    targetFile += `${str}${NL}`;
     if (commandLineArgs.verbose) {
       logger(`${chalk.cyan(str)}`);
     }
   }
 
   function logItemToBoth(item) {
-    targetFile += `- ${item}\n`;
+    targetFile += `- ${item}${NL}`;
     if (commandLineArgs.verbose) {
       logger('bullet', `${item}`);
     }
@@ -840,42 +858,42 @@ function runBuildProcesses(requested) {
   let isCustom = false;
   let hasCustom = '';
   let targetSassConfig = 'dist';
-  const rollupArgs = ['-c'];
+  let rollupArgs = '-c';
 
   // if Requested
   if (Array.isArray(requested) && requested.length) {
     isCustom = true;
     targetSassConfig = 'custom';
-    const componentsArg = `--components=${requested.join(',')}`;
+    const componentsArg = ` --components=${requested.join(',')}`;
     hasCustom = ' with custom entry points';
-    rollupArgs.push(componentsArg);
+    rollupArgs += componentsArg;
   }
 
-  logger(`\nRunning build processes${hasCustom}...\n`);
+  logger(`${NL}Running build processes${hasCustom}...${NL}`);
 
   // Copy vendor libs/dependencies
   if (commandLineArgs.disableCopy) {
     logger('alert', 'Ignoring build process for copied dependencies');
   } else {
-    buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:main']));
+    buildPromises.push(runBuildProcess('npx grunt copy:main'));
   }
 
   if (buckets['test-func'].length || buckets['test-e2e'].length) {
-    buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:custom-test']));
+    buildPromises.push(runBuildProcess('npx grunt copy:custom-test'));
   }
 
   // Build JS
   if (commandLineArgs.disableJs) {
     logger('alert', 'Ignoring build process for JS');
   } else if (!isCustom || (jsMatches.length || jQueryMatches.length)) {
-    buildPromises.push(runBuildProcess('rollup', rollupArgs));
+    buildPromises.push(runBuildProcess(`npx rollup ${rollupArgs}`));
   }
 
   // Build CSS
   if (commandLineArgs.disableCss) {
     logger('alert', 'Ignoring build process for CSS');
   } else if (!isCustom || sassMatches.length) {
-    buildPromises.push(runBuildProcess('node', ['./scripts/build-sass', `--type=${targetSassConfig}`]));
+    buildPromises.push(runBuildProcess(`node ${path.join('.', 'scripts', 'build-sass.js')} --type=${targetSassConfig}`));
   }
 
   return Promise.all(buildPromises);
@@ -883,17 +901,9 @@ function runBuildProcesses(requested) {
 
 /**
  * Handles a successful build
- * @param {array} logs contains the logs of all the build processes
  * @returns {Promise} resulting in a successful process exit
  */
-function buildSuccess(logs) {
-  if (commandLineArgs.verbose) {
-    logger(null, `\n${chalk.red('===== JS Build Output (Rollup) =====')}`);
-    logger(null, `${logs[1]}\n`);
-    logger(null, `${chalk.red('===== Sass Build Output (Node-Sass) =====')}`);
-    logger(null, `${logs[2]}`);
-  }
-
+function buildSuccess() {
   return cleanAll().then(() => {
     logger('success', `IDS Build was successfully created in "${chalk.yellow('dist/')}"`);
     process.exit(0);
@@ -914,7 +924,7 @@ function buildFailure(reason) {
 // Main
 // -------------------------------------
 
-logger(`\n${chalk.red.bold('=========   IDS Enterprise Builder   =========')}\n`);
+logger(`${NL}${chalk.red.bold('=========   IDS Enterprise Builder   =========')}${NL}`);
 
 let requestedComponents = [];
 let normalBuild = false;
@@ -934,10 +944,10 @@ if (!commandLineArgs.components) {
 cleanAll(true).then(() => {
   if (!normalBuild) {
     // Display a list of requested components to the console
-    let loggedComponentList = `${(commandLineArgs.verbose ? '\n' : '')}${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
+    let loggedComponentList = `${(commandLineArgs.verbose ? `${NL}` : '')}${chalk.bold('Searching files in `src/` for the following terms:')}${NL}`;
     requestedComponents.forEach((comp) => {
-      componentList += `${comp}\n`;
-      loggedComponentList += `- ${comp}\n`;
+      componentList += `${comp}${NL}`;
+      loggedComponentList += `- ${comp}${NL}`;
     });
     logger(loggedComponentList);
 
@@ -993,8 +1003,8 @@ cleanAll(true).then(() => {
 
   renderTargetFiles(normalBuild).then(() => {
     if (commandLineArgs.dryRun) {
-      process.stdout.write('\n');
-      logger('success', `Completed dry run!  Generated files are avaiable in the "${chalk.yellow('temp/')}" folder.`);
+      process.stdout.write(`${NL}`);
+      logger('success', `Completed dry run!  Generated files are available in the "${chalk.yellow('temp/')}" folder.`);
       process.exit(0);
     }
 
