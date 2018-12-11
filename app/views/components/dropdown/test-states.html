@@ -1,0 +1,63 @@
+<div class="page-contents">
+
+   <div class="row">
+      <div class="twelve columns">
+
+         <div class="toolbar" role="toolbar" data-options="{maxVisibleButtons: 10}">
+            <div class="title">
+               Readonly Dropdown Test
+            </div>
+            <div class="buttonset">
+               <button class="btn-secondary" id="enable">
+                  <span>Enable</span>
+               </button>
+
+               <button class="btn-secondary" id="readonly">
+                  <span>Readonly</span>
+               </button>
+
+               <button class="btn-secondary" id="disable">
+                  <span>Disable</span>
+               </button>
+
+               <button class="btn-secondary" id="updated">
+                  <span>Updated</span>
+               </button>
+            </div>
+         </div>
+
+         <div class="field">
+            <label for="test-dropdown" class="label">Dropdown</label>
+            <select id="test-dropdown" class="dropdown" readonly="readonly">
+               <option value=""></option>
+               <option value="1" selected>Inquiry</option>
+               <option value="2">Setup</option>
+            </select>
+         </div>
+      </div>
+   </div>
+
+   <script>
+      $('body').one('initialized', function () {
+         Locale.set('en-US').done(function () {
+
+            $('#enable').on('click', function () {
+               $('#test-dropdown').enable();
+            });
+
+            $('#readonly').on('click', function () {
+               $('#test-dropdown').readonly();
+            });
+
+            $('#disable').on('click', function () {
+               $('#test-dropdown').disable();
+            });
+
+            $('#updated').on('click', function () {
+               $('#test-dropdown').data('dropdown').updated();
+            });
+
+         });
+      });
+   </script>
+</div>

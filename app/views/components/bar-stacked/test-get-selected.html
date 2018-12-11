@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Stacked Bar Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-stacked-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <button class="btn-secondary" type="button" id="btn-get-selected">Get selected</button>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var dataset = [{
+    data: [{
+        name: '2008',
+        value: 123
+    }, {
+        name: '2009',
+        value: 234
+    }, {
+        name: '2010',
+        value: 345,
+    }],
+    name: 'Series 1'
+  }, {
+    data: [{
+        name: '2008',
+        value: 235
+    }, {
+        name: '2009',
+        value: 267
+    }, {
+        name: '2010',
+        value: 573
+    }],
+    name: 'Series 2'
+  }];
+
+  var elem = $('#bar-stacked-example');
+
+  elem.chart({type: 'bar-stacked', dataset: dataset})
+  .on('selected', function (e, args) {
+    // console.log('args', args);
+   });
+
+   $('#btn-get-selected').on('click', function() {
+     var api = elem.data('chart');
+     console.log(api.getSelected());
+   });
+
+});
+</script>
