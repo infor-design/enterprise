@@ -694,8 +694,7 @@ describe('Datagrid paging client side multiselect tests', () => {
 
     await element(by.css('.pager-prev')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1).is-selected'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
   });
