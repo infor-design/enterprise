@@ -1,3 +1,4 @@
+import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
@@ -5,6 +6,7 @@ import { Locale } from '../locale/locale';
 // jQuery Components
 import '../button/button.jquery';
 import '../mask/mask-input.jquery';
+import '../zoom/zoom.jquery';
 
 // Component Name
 const COMPONENT_NAME = 'spinbox';
@@ -42,6 +44,14 @@ function Spinbox(element, settings) {
 
 // Plugin Methods
 Spinbox.prototype = {
+
+  /**
+   * @private
+   * @returns {boolean} whether or not touch controls are available
+   */
+  get isTouch() {
+    return env.features.touch;
+  },
 
   /**
    * @private
@@ -140,8 +150,6 @@ Spinbox.prototype = {
         this.element.wrap(spinboxWrapper);
       }
     }
-
-    this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
     if (this.isWrapped) {
       this.buttons = {
@@ -293,6 +301,8 @@ Spinbox.prototype = {
    * @returns {void}
    */
   handleClick(e) {
+    e.preventDefault();
+
     if (this.isDisabled() || e.which !== 1 || this.isReadonly()) {
       return;
     }
@@ -303,11 +313,7 @@ Spinbox.prototype = {
       this.decreaseValue();
     }
 
-    if (!this.isTouch) {
-      this.element.focus();
-    } else {
-      target.focus();
-    }
+    this.safeFocus();
   },
 
   /**
@@ -510,7 +516,6 @@ Spinbox.prototype = {
   updateVal(newVal) {
     this.element.val(newVal).trigger('change');
     this.updateAria(newVal);
-    this.element.focus();
   },
 
   /**
@@ -585,6 +590,23 @@ Spinbox.prototype = {
       target = $(e.currentTarget);
     }
     target.removeClass('is-active');
+  },
+
+  /**
+   * Focuses the main input field without a mobile zoom.
+   * @returns {void}
+   */
+  safeFocus() {
+    const isMobile = env.os.name === 'ios' || env.os.name === 'android';
+    if (isMobile) {
+      $('head').triggerHandler('disable-zoom');
+    }
+
+    this.element.focus();
+
+    if (isMobile) {
+      $('head').triggerHandler('enable-zoom');
+    }
   },
 
   /**
@@ -751,7 +773,7 @@ Spinbox.prototype = {
 
     // Up and Down Buttons
     const buttons = this.buttons.up.add(this.buttons.down[0]);
-    buttons.on('touchstart.spinbox mousedown.spinbox', function (e) {
+    buttons.on('touchstart.spinbox mousedown.spinbox', (e) => {
       if (e.which === 1) {
         if (!preventClick) {
           self.handleClick(e);
@@ -767,14 +789,8 @@ Spinbox.prototype = {
         $(document).one('mouseup', () => {
           self.disableLongPress(e, self);
           preventClick = false;
-          self.element.focus();
+          self.safeFocus();
         });
-
-        // Stop MouseDown From Running
-        if (this.isTouch) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
       }
     });
 
