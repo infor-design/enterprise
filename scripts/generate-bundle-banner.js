@@ -7,17 +7,20 @@ const childProcess = require('child_process');
 const pjson = require('../package.json');
 const args = require('yargs').argv;
 
+// CR-LF on Windows, LF on Linux/Mac
+const NL = process.platform === 'win32' ? '\r\n' : '\n';
+
 const projectName = 'IDS Enterprise Components';
 const commitHash = childProcess.execSync('git rev-parse HEAD') || '';
 
 function prependLines(str, prepender) {
   prepender = prepender || '';
-  const strArr = str.split('\n');
+  const strArr = str.split(NL);
   // eslint-disable-next-line
   for (let x in strArr) {
     strArr[x] = `${prepender}${strArr[x].trim()}`;
   }
-  return strArr.join('\n');
+  return strArr.join(NL);
 }
 
 /**
@@ -42,9 +45,9 @@ function render(useComments) {
 
     componentsList += 'Custom bundle containing the following components:';
     componentsArgs.forEach((comp) => {
-      componentsList += `\n${comment} - ${comp}`;
+      componentsList += `${NL}${comment} - ${comp}`;
     });
-    componentsList += `\n${comment}`;
+    componentsList += `${NL}${comment}`;
   }
 
   // Project Name and Version Headline
@@ -54,13 +57,13 @@ function render(useComments) {
   let license = fs.readFileSync(path.join(__dirname, '..', 'LICENSE'), 'utf8');
   license = prependLines(license, comment);
 
-  return `${startComment}\n${
-    comment}${headline}\n${
-    comment}${date}\n${
-    comment}${revision}\n${
-    comment}\n${
-    comment}${componentsList}\n${
-    license}\n${
+  return `${startComment}${NL}${
+    comment}${headline}${NL}${
+    comment}${date}${NL}${
+    comment}${revision}${NL}${
+    comment}${NL}${
+    comment}${componentsList}${NL}${
+    license}${NL}${
     endComment}`;
 }
 

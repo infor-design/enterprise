@@ -650,12 +650,12 @@ describe('Datepicker Timeformat Tests', () => {
       amPm = 'PM';
     }
     if (minutes.toString().length === 1) {
-      minutes = `0${minutes}`.padStart(2, '0');
+      minutes = `0${minutes}`;
     }
 
     expect([
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${minutes} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${minutes - 1} ${amPm}` // for slow test
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes).toString().padStart(2, '0')} ${amPm}`,
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 1).toString().padStart(2, '0')} ${amPm}` // for slow test
     ]).toContain(await element(by.id('dp3')).getAttribute('value'));
   });
 });
@@ -857,6 +857,22 @@ describe('Datepicker restrict month selection tests', () => {
 
     expect(await element(by.css('.monthview-header .prev')).getAttribute('disabled')).toEqual('true');
     expect(await element(by.css('.monthview-header .next')).getAttribute('disabled')).not.toEqual('true');
+  });
+});
+
+describe('Datepicker set first day of week tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-set-first-day-of-week');
+  });
+
+  it('Should set first day of week', async () => {
+    const triggerEl = await element(by.tagName('thead'));
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('.is-focused'))).toBeTruthy();
+
+    const testEl = await triggerEl.all(by.tagName('th')).get(0);
+    expect(await testEl.getText()).toEqual('M');
   });
 });
 

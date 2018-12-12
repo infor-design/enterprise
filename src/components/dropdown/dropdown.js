@@ -885,7 +885,7 @@ Dropdown.prototype = {
     const charCode = e.which;
 
     // Needed for browsers that use keypress events to manipulate the window.
-    if (e.altKey && (charCode === 38 || charCode === 40)) {
+    if (e.altKey && (charCode === 38)) {
       e.stopPropagation();
       e.preventDefault();
       return false;
@@ -1306,6 +1306,15 @@ Dropdown.prototype = {
       return false;
     }
 
+    if (this.settings.onKeyDown) {
+      const ret = this.settings.onKeyDown(e);
+      if (ret === false) {
+        e.stopPropagation();
+        e.preventDefault();
+        return false; //eslint-disable-line
+      }
+    }
+
     // Down arrow opens the list.
     // Down/Up are for IE/Edge.
     // ArrowDown/ArrowUp are for all others.
@@ -1351,16 +1360,6 @@ Dropdown.prototype = {
     // Allow some keys to pass through with no changes in functionality
     if (isEscapeKey || key === 'Tab') {
       return true;
-    }
-
-    // handle `onKeyDown` callback
-    if (this.settings.onKeyDown) {
-      const ret = this.settings.onKeyDown(e);
-      if (ret === false) {
-        e.stopPropagation();
-        e.preventDefault();
-        return false; //eslint-disable-line
-      }
     }
 
     this.handleAutoComplete(e);
