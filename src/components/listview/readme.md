@@ -18,7 +18,7 @@ demo:
   - name: Paging Client Side
     slug: example-paging-clientside
   - name: Single Select
-    slug: example-singleselect.html
+    slug: example-singleselect
   - name: Status Indicators
     slug: example-status
   - name: Click Events
