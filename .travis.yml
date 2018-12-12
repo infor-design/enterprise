@@ -3,7 +3,7 @@ addons:
 language: node_js
 dist: trusty
 node_js:
-  - "10"
+  - "lts"
 cache:
   directories:
     - node_modules
