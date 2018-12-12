@@ -18,11 +18,16 @@ demo:
 
 ## Configuration Options
 
-1. Bubble Chart Example <a href='https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-index?font=source-sans' target='_blank'>View Example</a>
-2. Defaulting a selected bubble <a href='https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-selected?font=source-sans' target='_blank'>View Example</a>
-3. Set animation speed <a href='https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-animation?font=source-sans' target='_blank'>View Example</a>
-4. Example showing Get Selected value <a href='https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-get-selected?font=source-sans' target='_blank'>View Example</a>
-5. Example showing Set Selected value <a href='https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-set-selected?font=source-sans' target='_blank'>View Example</a>
+1. Bubble Chart Example ```html
+<a href='https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-index?font=source-sans' target='_blank'>View Example</a> ```
+2. Defaulting a selected bubble ```html
+<a href='https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-selected?font=source-sans' target='_blank'>View Example</a> ```
+3. Set animation speed ```html
+<a href='https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-animation?font=source-sans' target='_blank'>View Example</a> ```
+4. Example showing Get Selected value ```html
+<a href='https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-get-selected?font=source-sans' target='_blank'>View Example</a>```
+5. Example showing Set Selected value ```html
+<a href='https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-set-selected?font=source-sans' target='_blank'>View Example</a> ```
 
 The bubble chart is a line chart with the isBubble set that adds the bubble. Plus the z dimension in the data.
 See the [line chart api]( ../line) for more details.
