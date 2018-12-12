@@ -9,7 +9,7 @@ demo:
 
 The SkipLink Component is a CSS-Only component and has no Javascript API. It's used by simply placing the markup in the page. When the skip link is focused from the browser URL using <kbd>Tab</kbd>, it will activate allowing you to jump to a different section.
 
-For more info on skip links see [this article](https://webaim.org/techniques/skipnav/).
+For more info on skip links see <a href='https://webaim.org/techniques/skipnav/' target='_blank'>this article</a>.
 
 ## Code Example
 

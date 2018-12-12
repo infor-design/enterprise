@@ -27,7 +27,7 @@ $('html').personalize({colors: ['80000'], theme: 'dark', font: 'source-sans'});
 ```
 
 The sample app can also be run with this font by adding the `?font=source-sans` parameter to any page. For example
-[Main Example Page](https://design.infor.com/code/ids-enterprise/latest/demo/personalize/example-index.html?font=source-sans)
+<a href='https://design.infor.com/code/ids-enterprise/latest/demo/personalize/example-index.html?font=source-sans' target='_blank'>Main Page Example</a>
 
 ## Typography Related Classes
 
