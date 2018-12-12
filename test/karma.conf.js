@@ -70,17 +70,11 @@ module.exports = function (config) {
     // },
     port: 9876,
     colors: true,
-    browsers: ['ChromeHeadlessNoSandbox'],
+    browsers: ['ChromeHeadless', 'ChromeHeadlessNoSandbox'],
     customLaunchers: {
       ChromeHeadlessNoSandbox: {
         base: 'ChromeHeadless',
-        flags: [
-          '--no-sandbox',
-          '--headless',
-          '--disable-gpu',
-          '--disable-translate',
-          '--disable-extensions'
-        ]
+        flags: ['--no-sandbox']
       }
     },
     singleRun: false
