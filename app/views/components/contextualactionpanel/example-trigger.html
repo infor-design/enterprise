@@ -6,8 +6,8 @@
   </div>
 </div>
 
-<script>
-  $('#manual-contextual-panel').off('click').on('click', function() {
+<script id="test-script">
+  $('#manual-contextual-panel').on('click.test', function() {
 
       $('body').contextualactionpanel({
         id: 'contextual-action-modal-xyz',
@@ -36,7 +36,5 @@
       }).on('close', function () {
         console.log('close');
       });
-
-
     });
 </script>

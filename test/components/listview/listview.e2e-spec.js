@@ -389,8 +389,7 @@ describe('Listview example-paging-clientside tests', () => {
   });
 
   it('Should click page next icon in pager-clientside bar, and display correct listings', async () => {
-    const listviewPagerNextEl = await element(by.css('.pager-next'));
-    listviewPagerNextEl.click();
+    await element(by.css('.pager-next')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="12"] .listview-heading'))), config.waitsFor);
 
