@@ -136,7 +136,7 @@
   }
 }
 
-@include respond-to(phone) {
+@include respond-to(phonedown) {
   .splitter {
     display: none;
 
