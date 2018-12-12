@@ -101,8 +101,8 @@ A standard Text Input is a basic input element with `type="text"`. Password type
 
 ## Responsive Guidelines
 
-- Default size is 300px wide but there are a number of widths [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/input/example-sizes?font=source-sans)
-- You can also use the responsive grid [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/form/example-inputs-simple?font=source-sans)
+- Default size is 300px wide but there are a number of widths <a href="https://design.infor.com/code/ids-enterprise/latest/demo/input/example-sizes?font=source-sans" target="_blank">View Example</a>
+- You can also use the responsive grid <a href="https://design.infor.com/code/ids-enterprise/latest/demo/form/example-inputs-simple?font=source-sans" target="_blank">View Example</a>
 
 ## Upgrading from 3.X
 

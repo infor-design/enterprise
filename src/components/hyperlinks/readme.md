@@ -23,7 +23,7 @@ A hyperlink uses a standard anchor tag element and styles it with CSS. No JS is 
 - Don't use the URL as the text in a link
 - Keep link text concise
 - You may use audible links if needed
-- Avoid [idioms](https://en.wikipedia.org/wiki/Idiom)
+- Avoid <a href="https://en.wikipedia.org/wiki/Idiom" target="_blank">idioms</a>
 - Be consistent; for example, use "Forward" and "Back" or "Next" and "Previous", but don't mix "Forward" and "Next"
 
 ## Testability

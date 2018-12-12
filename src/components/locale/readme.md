@@ -109,7 +109,7 @@ The following options are supported:
 
 - `pattern` - You can specify a specific date pattern to use.
 - `fromGregorian` - When using an arabic format, the date will first be converted to umalqura when specifying thie option.
-- `date` - This can be 'short', 'medium', 'long' or 'timestamp' and will return the current locales format for the corresponding length of the date. [Other examples can be found here](https://github.com/infor-design/enterprise/blob/master/src/components/locale/cultures/en-US.js#L15)
+- `date` - This can be 'short', 'medium', 'long' or 'timestamp' and will return the current locales format for the corresponding length of the date. <a href="https://github.com/infor-design/enterprise/blob/master/src/components/locale/cultures/en-US.js#L15" target="_blank">Other examples can be found here</a>
 
 ## Date and Time Format Patterns
 
@@ -135,7 +135,7 @@ A date format can be constructed by adding the needed date and time parts. For e
 
 ## Currently Supported Locales
 
-For a list of all the supported components see the [locale component source](https://github.com/infor-design/enterprise/tree/master/src/components/locale/cultures).
+For a list of all the supported components see the <a href="https://github.com/infor-design/enterprise/tree/master/src/components/locale/cultures" target="_blank">local component source</a>.
 
 ## Upgrading from 3.X
 
