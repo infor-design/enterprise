@@ -1,6 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { locale } from 'moment';
+import { Locale } from '../../components/locale/locale';
 
 // Component Name
 const COMPONENT_NAME = 'splitter';
@@ -107,26 +107,26 @@ Splitter.prototype = {
               self.splitTo(defaultOffset, parentHeight);
               $(this).addClass('rotate');
 
-              splitterButton.tooltip({ content: locale.translate('Collapse') });
+              splitterButton.tooltip({ content: Locale.translate('Collapse') });
             } else {
               savedOffset = splitter[0].offsetLeft;
               self.splitTo(0, parentHeight);
               $(this).removeClass('rotate');
 
-              splitterButton.tooltip({ content: locale.translate('Expand') });
+              splitterButton.tooltip({ content: Locale.translate('Expand') });
             }
           } else if (splitter[0].offsetLeft > 10) {
             savedOffset = splitter[0].offsetLeft;
             self.splitTo(0, parentHeight);
             $(this).removeClass('rotate');
 
-            splitterButton.tooltip({ content: locale.translate('Expand') });
+            splitterButton.tooltip({ content: Locale.translate('Expand') });
           } else {
             self.splitTo(savedOffset, parentHeight);
             $(this).addClass('rotate');
             savedOffset = 0;
 
-            splitterButton.tooltip({ content: locale.translate('Collapse') });
+            splitterButton.tooltip({ content: Locale.translate('Collapse') });
           }
         });
       }
@@ -162,7 +162,7 @@ Splitter.prototype = {
 
     this.splitTo(w, parentHeight);
 
-    $('#splitter-collapse-btn').tooltip({ content: w <= 10 ? locale.translate('Expand') : locale.translate('Collapse') });
+    $('#splitter-collapse-btn').tooltip({ content: w <= 10 ? Locale.translate('Expand') : Locale.translate('Collapse') });
     if (w <= 10) {
       $('#splitter-collapse-btn').removeClass('rotate');
     }
