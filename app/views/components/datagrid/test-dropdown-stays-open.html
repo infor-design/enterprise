@@ -17,10 +17,6 @@
 <div class="row">
   <div class="twelve columns">
     <div role="toolbar" class="toolbar">
-      <!-- <div class="title">
-        <span>Dropdown Editor Source Example</span>
-        <span class="datagrid-result-count">(N Results)</span>
-      </div> -->
 
       <div class="title">
         Data Grid Header Title
@@ -115,18 +111,12 @@
     columns.push({ id: 'id', name: 'Product Id', field: 'id', formatter: Formatters.Readonly });
     columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input });
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required' });  //maxLength: 2
-    columns.push({
-      id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row, cell, value, col, item) {
-        //For this fake logic just disable odd rows
-        return (row % 2 === 0);
-      }
-    });
     columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox });
     columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3 }, editor: Editors.Input, mask: '###.000' });
     columns.push({ id: 'action', name: 'Action', field: 'action', formatter: dropDownFormatter, editor: Editors.Dropdown, options: actionOptions, align: 'center' });
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date });
 
-    //Init and get the api for the grid
+    // Init and get the api for the grid
     grid = $('#datagrid').datagrid({
       columns: columns,
       dataset: data,
@@ -136,19 +126,6 @@
       cellNavigation: true,
       enableTooltips: true,
       toolbar: { title: 'DataGrid', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true, collapsibleFilter: true },
-    }).on('cellchange', function (e, args) {
-      console.log(e, args);
-    }).on('rowadd', function (e, args) {
-      console.log(e, args);
-    }).on('rowremove', function (e, args) {
-      console.log(e, args);
-    });
-
-    gridApi = $('#datagrid').data('datagrid');
-
-    $('#add-row').on('click', function () {
-      console.log('testing');
-      gridApi.addRow({ productName: '', price: 0.00 }, 0);
     });
   });
 </script>
