@@ -47,6 +47,14 @@ Spinbox.prototype = {
 
   /**
    * @private
+   * @returns {boolean} whether or not touch controls are available
+   */
+  get isTouch() {
+    return env.features.touch;
+  },
+
+  /**
+   * @private
    */
   init() {
     this.inlineLabel = this.element.closest('label');
@@ -142,8 +150,6 @@ Spinbox.prototype = {
         this.element.wrap(spinboxWrapper);
       }
     }
-
-    this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
     if (this.isWrapped) {
       this.buttons = {
@@ -767,7 +773,7 @@ Spinbox.prototype = {
 
     // Up and Down Buttons
     const buttons = this.buttons.up.add(this.buttons.down[0]);
-    buttons.on('touchstart.spinbox mousedown.spinbox', function (e) {
+    buttons.on('touchstart.spinbox mousedown.spinbox', (e) => {
       if (e.which === 1) {
         if (!preventClick) {
           self.handleClick(e);
@@ -785,12 +791,6 @@ Spinbox.prototype = {
           preventClick = false;
           self.safeFocus();
         });
-
-        // Stop MouseDown From Running
-        if (this.isTouch) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
       }
     });
 
