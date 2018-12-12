@@ -642,20 +642,18 @@ describe('Datepicker Timeformat Tests', () => {
     await todayEl.click();
 
     let hours = testDate.getHours();
-    let minutes = testDate.getMinutes();
+    const minutes = testDate.getMinutes();
     let amPm = 'AM';
 
     if (hours > 11) {
       hours -= hours > 12 ? 12 : 0;
       amPm = 'PM';
     }
-    if (minutes.toString().length === 1) {
-      minutes = `0${minutes}`;
-    }
 
     expect([
       `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes).toString().padStart(2, '0')} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 1).toString().padStart(2, '0')} ${amPm}` // for slow test
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 1).toString().padStart(2, '0')} ${amPm}`,
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 2).toString().padStart(2, '0')} ${amPm}` // for slow test on ci
     ]).toContain(await element(by.id('dp3')).getAttribute('value'));
   });
 });
