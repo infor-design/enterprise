@@ -127,7 +127,7 @@ describe('Tree context menu tests', () => {
 
 describe('Tree select by id tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tree/example-select-by-id');
+    await utils.setPage('/components/tree/test-select-by-id');
   });
 
   it('Should select node by id', async () => {

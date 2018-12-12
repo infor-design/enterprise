@@ -1156,6 +1156,7 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
 
     expect(await element(await by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
     await element(await by.css('li.pager-next a')).click();
+    await browser.driver.sleep(config.sleep);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
 
