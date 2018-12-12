@@ -21,11 +21,6 @@ $.fn.modal = function (settings) {
       // Examples have been updated to not show this.
       if (typeof instance[settings] === 'function') {
         instance[settings]();
-        return;
-      }
-
-      if (settings.trigger === 'immediate') {
-        instance.open();
       }
       return;
     }
