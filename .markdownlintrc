@@ -18,7 +18,8 @@
   },
   "MD033": {
     "allowed_elements": [
-      "kbd"
+      "kbd",
+      "a"
     ]
   },
   "MD035": {

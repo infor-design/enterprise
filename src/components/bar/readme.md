@@ -6,29 +6,19 @@ demo:
   - name: Standard Bar Chart
     slug: example-index
   pages:
-  - name: Example with More Elements and Longer Text
-    slug: example-alignment
   - name: Example showing how to set Colors
     slug: example-colors
-  - name: Example showing the formatter
-    slug: example-formatter
-  - name: Example showing the option to hide the formatter
-    slug: example-hide-legend
-  - name: Example showing an edge case of longer text
+  - name: Example showing handling longer text
     slug: example-long-text
   - name: Example showing with negative values
     slug: example-negative-value
-  - name: Set animation speed
-    slug: example-animation
-  - name: Example showing color patterns
-    slug: example-patterns
+  - name: Set animation speed and occurrence
+    slug: test-animation
   - name: Example showing defaulting a selected value
-    slug: example-selected
-  - name: Example showing Get Selected value
-    slug: example-get-selected
+    slug: test-selected
   - name: Example showing Set Selected value
-    slug: example-set-selected
-  - name: Example showing empty data set
+    slug: test-set-selected
+  - name: Example showing empty data set notice
     slug: test-empty
 ---
 
@@ -83,8 +73,21 @@ $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
     }, 400);
   }
 });
-
 ```
+
+If the bar chart has longer text it may not fit nicely since the layout is horizontal. To solve this we have the
+ability to reduce the size of the bars for the text to work. And as with other charts you can set various sizes of text that will be used as the chart is shown in a smaller width page size. An example of this would be:
+
+```javascript
+    name: 'Requirements Exceeding Net Change',
+    value: 373,
+    abbrName: 'Req ex Net Change',
+    shortName: 'RENC'
+```
+
+## Select Model
+
+The bar (and all other charts) have a built in selection model. Meaning that you can activate a selection by clicking a bar or bar group. When you do this the `selected` event will fire and you can use that data to update part of the screen or any other actions you want. You can also call `getSelected` method to get the currently selected elements and the `setSelected` to set the selected elements.
 
 ## Testability
 

@@ -8,7 +8,7 @@ let svgEl;
 let spinboxAPI;
 const spinboxId = '#regular-spinbox';
 
-describe('TimePicker ARIA', () => {
+describe('Spinbox ARIA', () => {
   beforeEach(() => {
     spinboxEl = null;
     svgEl = null;

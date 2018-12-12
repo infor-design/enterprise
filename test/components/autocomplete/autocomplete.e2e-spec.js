@@ -86,19 +86,70 @@ describe('Autocomplete example-index tests', () => {
       await utils.checkForErrors();
     });
   }
+});
 
-  xit('Should clear a dirty autocomplete field with `alt + backspace/del`', async () => { //eslint-disable-line
+describe('Autocomplete ajax tests', () => {
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get(`${browser.baseUrl}/components/autocomplete/example-ajax?theme=${browser.params.theme}`);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should handle ajax', async () => {
     await clickOnAutocomplete();
-    const autocompleteEl = await element(by.css('#autocomplete-default'));
+    const autocompleteEl = await element(by.id('autocomplete-default'));
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitsFor);
-    await autocompleteEl.click();
-    await browser.driver.switchTo().activeElement().clear();
-    await autocompleteEl.sendKeys('new');
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(await element(by.id('autocomplete-list'))), config.waitsFor);
-    await element(by.css('#autocomplete-default')).sendKeys(protractor.Key.chord(protractor.Key.ALT, protractor.Key.BACK_SPACE));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.stalenessOf(await element(by.id('autocomplete-list'))), config.waitsFor);
+    await autocompleteEl.sendKeys('a');
 
-    expect(await element(by.id('autocomplete-default')).getAttribute('value')).toEqual('');
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(await element(by.id('autocomplete-list'))), config.waitsFor);
+
+    expect(await element.all(by.css('#autocomplete-list li')).count()).toEqual(5);
+  });
+});
+
+describe('Autocomplete contains tests', () => {
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get(`${browser.baseUrl}/components/autocomplete/example-contains?theme=${browser.params.theme}`);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should handle ajax', async () => {
+    await clickOnAutocomplete();
+    const autocompleteEl = await element(by.id('autocomplete-default'));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitsFor);
+    await autocompleteEl.sendKeys('as');
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(await element(by.id('autocomplete-list'))), config.waitsFor);
+
+    expect(await element.all(by.css('#autocomplete-list li')).count()).toEqual(7);
+  });
+});
+
+describe('Autocomplete keyword tests', () => {
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get(`${browser.baseUrl}/components/autocomplete/example-keyword?theme=${browser.params.theme}`);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should handle ajax', async () => {
+    await clickOnAutocomplete();
+    const autocompleteEl = await element(by.id('autocomplete-default'));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitsFor);
+    await autocompleteEl.sendKeys('as');
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(await element(by.id('autocomplete-list'))), config.waitsFor);
+
+    expect(await element.all(by.css('#autocomplete-list li')).count()).toEqual(7);
   });
 });

@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Requirements</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+   var dataset = [{
+      data: [
+        { name: 'Due Next 7 Days', value: 10 },
+        { name: 'Due Today', value:10 },
+        { name: 'Requirements Exceeding Net Change', value: 20 },
+        { name: 'Schedules with Requirements Rejected', value: 20 },
+        { name: 'Emergency Requirements', value: 6 },
+        { name: 'Past Due', value: 39 },
+        { name: 'Open Premium Freight Authorizations', value: 7 },
+        { name: 'SMI Parts Over Maximum Quantity', value: 7 },
+        { name: 'SMI Parts Under Minimum Quantity', value: 10 }]
+    }];
+
+    $('#bar-example').chart({ type: 'bar', dataset: dataset });
+  });
+</script>
