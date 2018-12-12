@@ -1309,10 +1309,12 @@ Dropdown.prototype = {
     // Down arrow opens the list.
     // Down/Up are for IE/Edge.
     // ArrowDown/ArrowUp are for all others.
-    const openKeys = ['ArrowDown', 'ArrowUp', 'Down', 'Up', 'Enter', 'Spacebar', ' '];
+    const openKeys = ['ArrowDown', 'ArrowUp', 'Down', 'Up', 'Enter', 'Spacebar', 'Tab', ' '];
     if (openKeys.indexOf(key) > -1) {
       if (!this.isOpen()) {
         this.open();
+      } else {
+        this.closeList('tab');
       }
 
       // TODO: refactor this out so that `handleKeyDown` is no longer necessary.
