@@ -845,6 +845,10 @@ Autocomplete.prototype = {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
 
+    if (settings && settings.source) {
+      this.settings.source = settings.source;
+    }
+
     this.teardown().init();
     return this;
   },
