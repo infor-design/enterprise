@@ -71,6 +71,7 @@ const DEFAULT_RESPONSE_OPTS = {
   locale: 'en-US',
   title: 'IDS Enterprise',
   headerHamburger: false,
+  appMenuOpen: false,
   basepath: BASE_PATH,
   version: packageJSON.version,
   csp: true,

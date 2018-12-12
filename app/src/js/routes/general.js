@@ -14,7 +14,9 @@ function generalRoute(req, res, next) {
   if (req.query.headerHamburger === 'true') {
     res.opts.headerHamburger = true;
   }
-
+  if (req.query.appMenuOpen === 'true') {
+    res.opts.appMenuOpen = true;
+  }
   const viewsRoot = req.app.get('views');
   const directoryURL = utils.getDirectory(path.join(viewsRoot, req.originalUrl), viewsRoot);
   const filename = utils.getFileName(req.originalUrl);
