@@ -15,7 +15,7 @@ demo:
   - name: Hero Widget 2 Column
     slug: example-widget-two-column
   - name: More Test Layouts (replace a-o in url)
-    slug: example-scenario-a.html
+    slug: example-scenario-a
 ---
 
 ## Code Example

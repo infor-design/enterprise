@@ -13,7 +13,7 @@ demo:
   - name: Submenu With Icons
     slug: example-submenu-icons
   - name: RTL
-    slug: example-submenu-icons-rtl.html?locale=ar-SA
+    slug: example-submenu-icons-rtl?locale=ar-SA
   - name: Replace Text Content with Selection
     slug: example-replace-text
 ---

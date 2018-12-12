@@ -139,6 +139,8 @@ cd enterprise
 npm i
 ```
 
+Optional: We use [`nvm`](https://github.com/creationix/nvm) in development so the team is consistently on the same version of Node. If you want to use the version we've set for development, run `nvm use` from within the project folder.
+
 #### Basic commands
 
 - `npm start` : builds the IDS library and runs the demo server.  After running this, open a browser to [`localhost:4000`](http://localhost:4000).

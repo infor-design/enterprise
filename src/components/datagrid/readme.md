@@ -7,63 +7,63 @@ demo:
     slug: example-index
   pages:
   - name: Alternate Row Shading
-    slug: example-alternate-row-shading.html
+    slug: example-alternate-row-shading
   - name: Drilldown Formatter
-    slug: example-drilldown.html
+    slug: example-drilldown
   - name: Paging (Indeterminate)
-    slug: example-paging-indeterminate.html
+    slug: example-paging-indeterminate
   - name: Paging (Server Side)
-    slug: example-paging.html
+    slug: example-paging
   - name: Paging (Client Side)
-    slug: example-paging-client-side.html
+    slug: example-paging-client-side
   - name: Editing
-    slug: example-editable.html
+    slug: example-editable
   - name: Column Reordering
-    slug: example-reorder.html
+    slug: example-reorder
   - name: Expandable Row
-    slug: example-expandable-row.html
+    slug: example-expandable-row
   - name: Row Reordering
-    slug: example-row-reorder.html
+    slug: example-row-reorder
   - name: Filtering
-    slug: example-filter.html
+    slug: example-filter
   - name: Selection (Single)
-    slug: example-singleselect.html
+    slug: example-singleselect
   - name: Selection (Multiple)
-    slug: example-multiselect.html
+    slug: example-multiselect
   - name: Grouped Headers
-    slug: example-grouped-headers.html
+    slug: example-grouped-headers
   - name: Tooltips
-    slug: example-tooltips.html
+    slug: example-tooltips
   - name: Datagrid List Styling
-    slug: example-list.html
+    slug: example-list
   - name: Tree Grid
-    slug: example-tree.html
+    slug: example-tree
   - name: Using Nested Objects
-    slug: example-nested-objects.html
+    slug: example-nested-objects
   - name: Making a custom toolbar
-    slug: example-custom-toolbar.html
+    slug: example-custom-toolbar
   - name: Comments Grid (Flexible Row Size)
-    slug: example-comments.html
+    slug: example-comments
   - name: Fixed Header
-    slug: example-fixed-header.html
+    slug: example-fixed-header
   - name: Datagrid Grouping
-    slug: example-grouping.html
+    slug: example-grouping
   - name: Datagrid Grouping (Totals)
-    slug: example-grouping-totals.html
+    slug: example-grouping-totals
   - name: Selection (Mixed)
-    slug: example-mixed-selection.html
+    slug: example-mixed-selection
   - name: Summary Row
-    slug: example-summary-row.html
+    slug: example-summary-row
   - name: Export to Excel
-    slug: example-export-from-button.html
+    slug: example-export-from-button
   - name: Export with trailing negative signs moved in front
-    slug: example-export-convert-negative.html
+    slug: example-export-convert-negative
   - name: Empty Message Area
-    slug: example-empty-message.html
+    slug: example-empty-message
   - name: Expandable Cells
-    slug: example-expandable-cells.html
+    slug: example-expandable-cells
   - name: Dynamic Column Spans
-    slug: example-colspan.html
+    slug: example-colspan
 ---
 ## Code Example
 
