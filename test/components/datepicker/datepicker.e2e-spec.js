@@ -633,7 +633,7 @@ describe('Datepicker Timeformat Tests', () => {
     expect(await element(by.id('dp2')).getAttribute('value')).toEqual(`${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} 12:00 AM`);
   });
 
-  fit('Should set locale time to current time when selected ', async () => { //eslint-disable-line
+  it('Should set locale time to current time when selected ', async () => {
     const datepickerEl = await element(by.id('dp3'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
