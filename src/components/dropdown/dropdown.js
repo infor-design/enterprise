@@ -1319,14 +1319,12 @@ Dropdown.prototype = {
     // Down/Up are for IE/Edge.
     // ArrowDown/ArrowUp are for all others.
     const openKeys = ['ArrowDown', 'ArrowUp', 'Down', 'Up', 'Enter', 'Spacebar', ' '];
-    if (this.isOpen()) {
-      openKeys.push('Tab');
-    }
-
     if (openKeys.indexOf(key) > -1) {
       if (!this.isOpen()) {
         this.open();
-      } else {
+      }
+
+      if (key === 'Tab' && this.isOpen()) {
         this.closeList('tab');
       }
 
