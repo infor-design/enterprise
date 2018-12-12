@@ -2,8 +2,9 @@ addons:
   chrome: stable
 language: node_js
 dist: trusty
+# Leave node_js version blank to
+# use version in `.nvmrc`
 node_js:
-  - "10.14.1"
 cache:
   directories:
     - node_modules
