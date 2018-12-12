@@ -870,6 +870,7 @@ describe('Datepicker set first day of week tests', () => {
     expect(await element(by.css('.is-focused'))).toBeTruthy();
 
     const testEl = await triggerEl.all(by.tagName('th')).get(0);
+
     expect(await testEl.getText()).toEqual('M');
   });
 });
