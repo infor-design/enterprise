@@ -6,6 +6,7 @@ import { Locale } from '../locale/locale';
 // jQuery Components
 import '../button/button.jquery';
 import '../mask/mask-input.jquery';
+import '../zoom/zoom.jquery';
 
 // Component Name
 const COMPONENT_NAME = 'spinbox';
@@ -83,11 +84,6 @@ Spinbox.prototype = {
   setInitialValue() {
     const self = this;
     const val = self.checkForNumeric(self.element.val());
-
-    // Prevents zoom feature in spinbox to prevent zooming every click on spinbox
-    if (env.os.name === 'ios' || env.os.name === 'android') {
-      $('head').triggerHandler('disable-zoom');
-    }
 
     this.element.val(val);
     // If using Dirty Tracking, reset the "original" value of the dirty tracker to the current value
@@ -311,7 +307,7 @@ Spinbox.prototype = {
       this.decreaseValue();
     }
 
-    this.element.focus();
+    this.safeFocus();
   },
 
   /**
@@ -591,6 +587,23 @@ Spinbox.prototype = {
   },
 
   /**
+   * Focuses the main input field without a mobile zoom.
+   * @returns {void}
+   */
+  safeFocus() {
+    const isMobile = env.os.name === 'ios' || env.os.name === 'android';
+    if (isMobile) {
+      $('head').triggerHandler('disable-zoom');
+    }
+
+    this.element.focus();
+
+    if (isMobile) {
+      $('head').triggerHandler('enable-zoom');
+    }
+  },
+
+  /**
    * Enables the Spinbox
    * @returns {void}
    */
@@ -770,7 +783,7 @@ Spinbox.prototype = {
         $(document).one('mouseup', () => {
           self.disableLongPress(e, self);
           preventClick = false;
-          self.element.focus();
+          self.safeFocus();
         });
 
         // Stop MouseDown From Running
