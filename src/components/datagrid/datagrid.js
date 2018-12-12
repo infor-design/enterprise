@@ -8,7 +8,6 @@ import { debounce } from '../../utils/debounced-resize';
 import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
-import { Environment as env } from '../../utils/environment';
 
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
