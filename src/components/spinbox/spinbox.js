@@ -1,3 +1,4 @@
+import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
@@ -82,6 +83,11 @@ Spinbox.prototype = {
   setInitialValue() {
     const self = this;
     const val = self.checkForNumeric(self.element.val());
+
+    // Prevents zoom feature in spinbox to prevent zooming every click on spinbox
+    if (env.os.name === 'ios' || env.os.name === 'android') {
+      $('head').triggerHandler('disable-zoom');
+    }
 
     this.element.val(val);
     // If using Dirty Tracking, reset the "original" value of the dirty tracker to the current value
@@ -294,7 +300,7 @@ Spinbox.prototype = {
    */
   handleClick(e) {
     e.preventDefault();
-    
+
     if (this.isDisabled() || e.which !== 1 || this.isReadonly()) {
       return;
     }
@@ -305,11 +311,7 @@ Spinbox.prototype = {
       this.decreaseValue();
     }
 
-    if (!this.isTouch) {
-      this.element.focus();
-    } else {
-      target.focus();
-    }
+    this.element.focus();
   },
 
   /**
