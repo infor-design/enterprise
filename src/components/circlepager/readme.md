@@ -54,8 +54,7 @@ Use the below markup to create a circle pager, then call `$(elem).circlepager()`
 
 ## Accessibility
 
-- ```html
-<a href='https://www.w3.org/WAI/tutorials/carousels/' target='_blank'>Carousel</a> guidelines apply. ```
+- <a href='https://www.w3.org/WAI/tutorials/carousels/' target='_blank'>Carousel</a> guidelines apply.
 - We do not auto-move the carousel elements
 - User can <kbd>Tab</kbd> to the circles and activate
 
