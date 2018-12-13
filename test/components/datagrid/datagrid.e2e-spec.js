@@ -153,7 +153,7 @@ describe('Datagrid mixed selection tests', () => {
   });
 });
 
-fdescribe('Datagrid Lookup Editor', () => {
+describe('Datagrid Lookup Editor', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-lookup-mask');
 
