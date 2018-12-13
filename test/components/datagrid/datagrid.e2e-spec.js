@@ -153,6 +153,35 @@ describe('Datagrid mixed selection tests', () => {
   });
 });
 
+describe('Datagrid Lookup Editor', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-editable-lookup-mask');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('should be usable with a Mask', async () => {
+    await browser.actions()
+      .mouseMove(await element(by.css('#datagrid .datagrid-body tr:nth-child(3) td:nth-child(1)')))
+      .click(protractor.Button.LEFT)
+      .perform();
+
+    const editCellSelector = '.has-editor.is-editing';
+
+    const inputEl = await element(by.css(editCellSelector));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+    await element(by.css(editCellSelector)).sendKeys('aaa');
+
+    expect(await element(by.css(editCellSelector))).toEqual('');
+
+    await element(by.css(editCellSelector)).sendKeys('12345678');
+
+    expect(await element(by.css(editCellSelector))).toEqual('1234567');
+  });
+});
+
 describe('Datagrid editor dropdown source tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editor-dropdown-source');
