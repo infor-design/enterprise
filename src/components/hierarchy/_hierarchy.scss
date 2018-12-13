@@ -237,30 +237,58 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
 
     &.azure08 {
       border-left-color: $azure08;
+
+      .image-placeholder {
+        border: 2px solid $azure08;
+      }
     }
 
     &.turquoise02 {
       border-left-color: $turquoise02;
+
+      .image-placeholder {
+        border: 2px solid $turquoise02;
+      }
     }
 
     &.amethyst06 {
       border-left-color: $amethyst06;
+
+      .image-placeholder {
+        border: 2px solid $amethyst06;
+      }
     }
 
     &.slate06 {
       border-left-color: $slate06;
+
+      .image-placeholder {
+        border: 2px solid $slate06;
+      }
     }
 
     &.amber06 {
       border-left-color: $amber06;
+
+      .image-placeholder {
+        border: 2px solid $amber06;
+      }
     }
 
     &.emerald07 {
       border-left-color: $emerald07;
+
+      .image-placeholder {
+        border: 2px solid $emerald07;
+      }
     }
 
     &.ruby06 {
       border-left-color: $ruby06;
+
+      .image-placeholder {
+        border: 2px solid $ruby06;
+      }
     }
 
     &.is-selected {
@@ -844,6 +872,16 @@ html[dir='rtl'] {
         padding-left: 5px;
         padding-right: 30px;
       }
+    }
+  }
+}
+
+// For IE layout issues
+.ie,
+.ie11 {
+  .hierarchy {
+    .detail-fields {
+      padding: 10px 25px 10px 10px;
     }
   }
 }
