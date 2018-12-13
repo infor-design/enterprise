@@ -57,7 +57,8 @@ This example shows how to invoke a pie bar chart with a dataset controlling the 
 You can control the size of the donut chart by setting the size of the parent element the pie chart lives in.
 This may include possibly using an inset margin in some cases.
 
-See also <a href="https://design.infor.com/code/ids-enterprise/latest/demo/donut/example-index?font=source-sans" target="_blank">Donut Chart Example</a>
+See also [Donut Chart Example](./demo/components/donut/example-index?font=source-sans).
+
 
 ## Testability
 
