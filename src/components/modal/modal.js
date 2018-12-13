@@ -513,6 +513,9 @@ Modal.prototype = {
     let messageArea = null;
     let elemCanOpen = true;
 
+    // close any active tooltips
+    $('#validation-errors, #tooltip, #validation-tooltip').addClass('is-hidden');
+
     if (this.busyIndicator) {
       this.busyIndicator.remove();
       delete this.busyIndicator;
