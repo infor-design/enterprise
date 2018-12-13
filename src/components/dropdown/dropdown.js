@@ -1830,7 +1830,7 @@ Dropdown.prototype = {
 
       // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
       const ulHeight = parseInt(self.listUl[0].offsetHeight, 10);
-      const listHeight = parseInt(self.list[0].offsetHeight, 10);
+      const listHeight = parseInt(self.list[0].offsetHeight, 10) + 5;
       const searchInputHeight = $(this).hasClass('dropdown-short') ? 24 : 34;
 
       if (ulHeight + searchInputHeight >= listHeight) {
@@ -1940,7 +1940,7 @@ Dropdown.prototype = {
     this.activate(!this.settings.closeOnSelect);
 
     // Check/uncheck select all depending on no. of selected items
-    if (this.settings.showSelectAll) {
+    if (this.settings.showSelectAll && this.list) {
       const opts = this.element.find('option');
       const selectedOpts = opts.filter(':selected');
 
