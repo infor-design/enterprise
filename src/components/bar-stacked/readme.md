@@ -15,13 +15,13 @@ demo:
   - name: Formatting Tooltip Data
     slug: example-stacked-formatter-string
   - name: Set animation speed
-    slug: example-animation
+    slug: test-animation
   - name: Example showing defaulting a selected value
-    slug: example-stacked-selected
+    slug: test-stacked-selected
   - name: Example showing Get Selected value
-    slug: example-get-selected
+    slug: test-get-selected
   - name: Example showing Set Selected value
-    slug: example-set-selected
+    slug: test-set-selected
 ---
 
 ## Code Example
@@ -88,6 +88,10 @@ $('#bar-grouped-example').chart({type: 'bar-stacked', dataset: dataset,
   }
 });
 ```
+
+## Select Model
+
+The bar (and all other charts) have a built in selection model. Meaning that you can activate a selection by clicking a bar or bar group. When you do this the `selected` event will fire and you can use that data to update part of the screen or any other actions you want. You can also call `getSelected` method to get the currently selected elements and the `setSelected` to set the selected elements.
 
 ## Testability
 

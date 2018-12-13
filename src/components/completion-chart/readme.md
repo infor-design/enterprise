@@ -14,7 +14,7 @@ demo:
 
 ## Configuration Options
 
-Format used the [D3 formatter (v3)](https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format)
+Format used the <a href="https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format" target="_blank">D3 formatter (v3)</a>
 
 ## Code Example
 

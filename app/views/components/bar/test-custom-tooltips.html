@@ -1,16 +1,5 @@
 <div class="row">
   <div class="two-thirds column">
-    <h2 class="widget-title">Vertical Bar Chart &mdash; Set animation speed</h2>
-    <p>
-      <u>Use api settings "animate"</u><br>
-      <strong>true or false</strong> - will do or not do the animation.<br>
-      <strong>'initial'</strong> - will do only first time the animation.
-    </p>
-  </div>
-</div>
-
-<div class="row">
-  <div class="two-thirds column">
       <div class="widget">
         <div class="widget-header">
           <h2 class="widget-title">Vertical Bar Chart Title</h2>
@@ -30,17 +19,21 @@ $('body').on('initialized', function () {
       data: [{
           name: 'Category A',
           value: 373,
-          url: 'test'
+          url: 'test',
+          tooltip: 'Custom Tooltip One'
       }, {
           name: 'Category B',
-          value: 372
+          value: 372,
+          tooltip: 'Custom Tooltip Two'
       }, {
           name: 'Category C',
-          value: 236.35
+          value: 236.35,
+          tooltip: 'Custom Tooltip Three'
       }],
       name: ''
     }];
 
-  $('#bar-example').chart({type: 'bar', dataset: dataset, animate: false});
+  $('#bar-example').chart({type: 'bar', dataset: dataset});
+
 });
 </script>

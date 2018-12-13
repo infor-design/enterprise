@@ -62,7 +62,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
  * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last column will get filled with an empty spacer column.
- * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch we will add more options.
+ * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize. If 'lastInitial' it will resize only initially.
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends toolbar features fx..
  * @param {boolean}  [settings.selectChildren=true] Can prevent selecting of all child nodes on multiselect `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
@@ -204,8 +204,6 @@ Datagrid.prototype = {
 
     this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
-    this.isIe = html.is('.ie');
-    this.isIe9 = html.is('.ie9');
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
     this.appendTooltip();
@@ -3526,6 +3524,18 @@ Datagrid.prototype = {
 
       if (this.settings.stretchColumn === 'last') {
         if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
+          colWidth = '';
+          this.headerWidths[index] = {
+            id: col.id,
+            width: colWidth,
+            widthPercent: this.widthPercent
+          };
+          this.totalWidth = '100%';
+        }
+      }
+
+      if (this.settings.stretchColumn === 'lastInit') {
+        if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
           colWidth = diff - 2 - 10; // borders and last edge padding
           this.headerWidths[index] = {
             id: col.id,
@@ -3534,7 +3544,9 @@ Datagrid.prototype = {
           };
           this.totalWidth = this.elemWidth - 2;
         }
-      } else {
+      }
+
+      if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== 'lastInit') {
         this.headerWidths[index] = { id: col.id, width: colWidth, widthPercent: this.widthPercent };
         this.totalWidth += col.hidden ? 0 : colWidth;
         const diff2 = this.elemWidth - this.totalWidth;
@@ -3542,6 +3554,7 @@ Datagrid.prototype = {
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
           stretchColumn[0].width += diff2 - 2;
           this.totalWidth += diff2 - 2;
+          this.totalWidth = '100%';
         }
       }
 
