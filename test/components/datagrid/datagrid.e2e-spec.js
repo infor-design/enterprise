@@ -153,7 +153,7 @@ describe('Datagrid mixed selection tests', () => {
   });
 });
 
-describe('Datagrid Lookup Editor', () => {
+fdescribe('Datagrid Lookup Editor', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-lookup-mask');
 
@@ -163,22 +163,18 @@ describe('Datagrid Lookup Editor', () => {
   });
 
   it('should be usable with a Mask', async () => {
-    await browser.actions()
-      .mouseMove(await element(by.css('#datagrid .datagrid-body tr:nth-child(3) td:nth-child(1)')))
-      .click(protractor.Button.LEFT)
-      .perform();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(3) td:nth-child(2)')).click();
 
-    const editCellSelector = '.has-editor.is-editing';
-
+    const editCellSelector = '.has-editor.is-editing input';
     const inputEl = await element(by.css(editCellSelector));
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
     await element(by.css(editCellSelector)).sendKeys('aaa');
 
-    expect(await element(by.css(editCellSelector))).toEqual('');
+    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('');
 
     await element(by.css(editCellSelector)).sendKeys('12345678');
 
-    expect(await element(by.css(editCellSelector))).toEqual('1234567');
+    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('1234567');
   });
 });
 
