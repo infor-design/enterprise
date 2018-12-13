@@ -513,6 +513,10 @@ Modal.prototype = {
     let messageArea = null;
     let elemCanOpen = true;
 
+    if ($('.tooltip:visible').not('.is-hidden').length > 0) {
+      $('.tooltip:visible').hide();
+    }
+
     if (this.busyIndicator) {
       this.busyIndicator.remove();
       delete this.busyIndicator;
