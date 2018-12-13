@@ -847,3 +847,13 @@ html[dir='rtl'] {
     }
   }
 }
+
+// For IE layout issues
+.ie,
+.ie11 {
+  .hierarchy {
+    .detail-fields {
+      padding: 10px 25px 10px 10px;
+    }
+  }
+}
