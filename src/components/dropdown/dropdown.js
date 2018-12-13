@@ -1324,6 +1324,10 @@ Dropdown.prototype = {
         this.open();
       }
 
+      if (key === 'Tab' && this.isOpen()) {
+        this.closeList('tab');
+      }
+
       // TODO: refactor this out so that `handleKeyDown` is no longer necessary.
       // This is necessary here because in `noSearch` mode, there is no actionable searchInput.
       if (this.settings.noSearch && !e.ctrlKey) {

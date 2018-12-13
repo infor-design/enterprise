@@ -104,7 +104,7 @@ div.multiselect {
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: top;
-    width: inhert;
+    width: inherit;
 
     &:empty::before {
       color: $input-placeholder-color;

@@ -443,8 +443,10 @@ const editors = {
       // Check if isClick or cell touch and just open the list
       if (event.type === 'click') {
         this.input.trigger('openlist');
+        $('#dropdown-list input').focus();
+      } else {
+        this.input[0].parentNode.querySelector('div.dropdown').focus();
       }
-      this.input[0].parentNode.querySelector('div.dropdown').focus();
 
       this.input.off('listclosed').on('listclosed', (e, type) => {
         grid.commitCellEdit(self.input);
