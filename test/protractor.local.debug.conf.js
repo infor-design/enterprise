@@ -14,9 +14,7 @@ exports.config = {
   specs: specs,
   SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
-    browserName: 'chrome' || 'firefox',
-    shardTestFiles: true,
-    maxInstances: 2,
+    browserName: 'chrome' || 'firefox'
   },
   directConnect: true,
   baseUrl: 'http://localhost:4000',
