@@ -130,7 +130,7 @@
       "declarations"
     ],
     "order/properties-alphabetical-order": true,
-    "number-leading-zero": "always",
+    "number-leading-zero": "never",
     "number-no-trailing-zeros": true,
     "property-case": "lower",
     "rule-empty-line-before": [
