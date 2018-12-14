@@ -1,4 +1,5 @@
 import { DOM } from './dom';
+import { Environment as env } from './environment';
 
 /**
  * HideFocus Behavior
@@ -60,7 +61,7 @@ HideFocus.prototype = {
         $el.addClass('hide-focus');
         $el.triggerHandler('hidefocusadd', [e]);
       };
-      const isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isTouch = env.features.touch;
 
       if (isTouch) {
         $el.on('touchstart.hide-focus', (e) => {

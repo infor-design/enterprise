@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { Environment as env } from '../../utils/environment';
 
 // jQuery Components
 import '../listview/listview.jquery';
@@ -90,7 +91,7 @@ SwapList.prototype = {
   init() {
     const s = this.settings;
     s.draggable = $.extend(true, SWAPLIST_DEFAULTS.draggable, s.draggable);
-    this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    this.isTouch = env.features.touch;
     this.isAdditional = $(`${s.additionalClass} .listview`, this.element).length > 0;
 
     if (this.isTouch) {

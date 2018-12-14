@@ -8,6 +8,7 @@ import { debounce } from '../../utils/debounced-resize';
 import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
+import { Environment as env } from '../../utils/environment';
 
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
@@ -202,7 +203,7 @@ Datagrid.prototype = {
   init() {
     const html = $('html');
 
-    this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    this.isTouch = env.features.touch;
     this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
@@ -3698,6 +3699,7 @@ Datagrid.prototype = {
         const containerEl = isHeaderColumn ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
 
+        console.log(tooltip, tooltip.textwidth, (width - 35));
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
@@ -8893,6 +8895,12 @@ Datagrid.prototype = {
         }
       }
 
+      // Clean up text in selects
+      const select = tooltip.wrapper.querySelector('select');
+      if (select && select.selectedIndex && select.options[select.selectedIndex].innerHTML) {
+        tooltip.content = env.features.touch ? '' : select.options[select.selectedIndex].innerHTML.trim();
+      }
+
       if (tooltip.content !== '') {
         const isEllipsis = utils.hasClass(elem, 'text-ellipsis');
         const icons = [].slice.call(elem.querySelectorAll('.icon'));
@@ -8900,7 +8908,7 @@ Datagrid.prototype = {
         icons.forEach((icon) => {
           extraWidth += icon.getBBox().width + 8;
         });
-        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + extraWidth;
+        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (select ? 0 : extraWidth);
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
         if (title || isHeaderFilter) {
           tooltip.forced = true;
