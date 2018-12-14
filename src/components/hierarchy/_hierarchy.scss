@@ -885,3 +885,12 @@ html[dir='rtl'] {
     }
   }
 }
+
+// For Firefox layout issues
+.is-firefox {
+  .hierarchy {
+    .detail-fields {
+      padding: 10px 25px 10px 10px;
+    }
+  }
+}
