@@ -2,7 +2,6 @@
 const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
-const customSpecs = require('./helpers/detect-custom-spec-list')('e2e');
 const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
 exports.config = {
