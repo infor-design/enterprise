@@ -3699,7 +3699,6 @@ Datagrid.prototype = {
         const containerEl = isHeaderColumn ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
 
-        console.log(tooltip, tooltip.textwidth, (width - 35));
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
@@ -8901,6 +8900,10 @@ Datagrid.prototype = {
         tooltip.content = env.features.touch ? '' : select.options[select.selectedIndex].innerHTML.trim();
       }
 
+      if (isTh) {
+        tooltip.content = tooltip.content.trim();
+      }
+
       if (tooltip.content !== '') {
         const isEllipsis = utils.hasClass(elem, 'text-ellipsis');
         const icons = [].slice.call(elem.querySelectorAll('.icon'));
@@ -8909,6 +8912,11 @@ Datagrid.prototype = {
           extraWidth += icon.getBBox().width + 8;
         });
         tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (select ? 0 : extraWidth);
+
+        if (isTh) {
+          tooltip.textwidth = stringUtils.textWidth(tooltip.content);
+        }
+
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
         if (title || isHeaderFilter) {
           tooltip.forced = true;
