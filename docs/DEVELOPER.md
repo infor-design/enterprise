@@ -171,10 +171,10 @@ Documentation from within this project is deployed to [design.infor.com](https:/
 
 ### Linking
 
-- From a component readme and linking to another component's documentation, use a relative link like `[Read about buttons](./button)`. Using a relative like this will maintain the current version the website visitor has selected
-- The design system website automatically sets `target="_blank"` for any code documentation link which contains `/demo/` in it. It's not necessary for you to add this within the documentation itself
+- From a component readme and linking to another component's documentation, use a relative link like `[Read about buttons](./button)`. Using a relative link like this will maintain the current version the website visitor has selected.
+- The design system website automatically sets `target="_blank"` for any code documentation link which contains `/demo/` in it. It's not necessary for you to add this within the documentation itself.
 - Paths for demo links use the same URL structure as on the local development app.
-    - For example, to create a link to a pattern page, take the URI from the dev app such as `/patterns/navigation-breadcrumbs` and from a component readme page, create a relative like like `[see pattern demo](./demo/patterns/navigation-breadcrumbs)`
+    - For example, to create a link to a pattern page, take the URI from the dev app such as `/patterns/navigation-breadcrumbs` and from a component readme page, create a relative link like `[see pattern demo](./demo/patterns/navigation-breadcrumbs)`.
     - This works for `/components/`, `/patterns/`, etc.
 
 ## Guidelines for creating a new IDS Component
