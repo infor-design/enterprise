@@ -2906,6 +2906,14 @@ td .btn-actions {
     &.short-rowheight ul {
       text-indent: 10px;
     }
+
+    .is-ontop.dropdown-search {
+      margin-top: 11px;
+
+      .trigger {
+        margin-top: 12px;
+      }
+    }
   }
 
   input {
