@@ -45,3 +45,34 @@ describe('Input example-index tests', () => {
     });
   }
 });
+
+describe('Input tooltip tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/input/test-tooltips?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .presenceOf(element(by.id('first-name'))), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  // This test is more important as a windows test
+  it('Should be able to select text', async () => {
+    const inputEl = await element(by.id('first-name'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+
+    await inputEl.sendKeys(protractor.Key.chord(
+      protractor.Key.COMMAND,
+      protractor.Key.SHIFT,
+      protractor.Key.ARROW_LEFT
+    ));
+
+    // get highlighted text
+    const highligtedText = utils.getSelectedText();
+
+    expect(highligtedText).toEqual('John Johnson');
+  });
+});
