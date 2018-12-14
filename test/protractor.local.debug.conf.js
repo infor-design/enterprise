@@ -2,7 +2,6 @@
 const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
-const customSpecs = require('./helpers/detect-custom-spec-list')('e2e');
 const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
 exports.config = {
@@ -15,8 +14,7 @@ exports.config = {
   SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
     browserName: 'chrome' || 'firefox',
-    shardTestFiles: true,
-    maxInstances: 2,
+    shardTestFiles: false
   },
   directConnect: true,
   baseUrl: 'http://localhost:4000',
