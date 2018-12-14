@@ -1842,8 +1842,8 @@ Dropdown.prototype = {
       }
 
       if (isSmaller && isToBottom) {
-        self.listUl[0].style.height = `${listHeight - (searchInputHeight) - 5}px`;
-        self.list[0].style.height = `${parseInt(self.list[0].style.height, 10) - 5}px`;
+        self.listUl[0].style.height = `${listHeight - (searchInputHeight * 2)}px`;
+        self.list[0].style.height = `${parseInt(self.list[0].style.height, 10) - 10}px`;
       }
 
       return placementObj;
