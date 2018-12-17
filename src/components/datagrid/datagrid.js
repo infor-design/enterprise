@@ -2978,7 +2978,7 @@ Datagrid.prototype = {
     if (rowData && rowData.rowStatus) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
-      rowStatus.icon = (rowData.rowStatus.icon === 'confirm') ? '#icon-check' : '#icon-exclamation';
+      rowStatus.icon = (rowData.rowStatus.icon === 'success') ? '#icon-check' : '#icon-exclamation';
       rowStatus.title = (rowData.rowStatus.tooltip !== '') ? ` title="${rowData.rowStatus.tooltip}"` : '';
       rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"${rowStatus.title}><use xlink:href="${rowStatus.icon}"></use></svg>`;
     }
@@ -3686,11 +3686,11 @@ Datagrid.prototype = {
     }
 
     selector.iconAlert = `${selector.td} .icon-alert`;
-    selector.iconConfirm = `${selector.td} .icon-confirm`;
+    selector.iconSuccess = `${selector.td} .icon-success`;
     selector.iconError = `${selector.td} .icon-error`;
     selector.iconInfo = `${selector.td} .icon-info`;
 
-    selector.icons = `${selector.iconAlert}, ${selector.iconConfirm}, ${selector.iconError}, ${selector.iconInfo}`;
+    selector.icons = `${selector.iconAlert}, ${selector.iconSuccess}, ${selector.iconError}, ${selector.iconInfo}`;
 
     // Selector string
     if (rowstatus && this.settings.enableTooltips) {
@@ -7479,7 +7479,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearRowError(row) {
-    const classList = 'error alert rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-confirm';
+    const classList = 'error alert rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-success';
     const rowNode = this.dataRowNode(row);
 
     rowNode.removeClass(classList);
@@ -7823,7 +7823,7 @@ Datagrid.prototype = {
         cellNode[0].classList.add('rowstatus-cell');
 
         if (!svg.length) {
-          const svgIcon = rowData.rowStatus.icon === 'confirm' ? '#icon-check' : '#icon-exclamation';
+          const svgIcon = rowData.rowStatus.icon === 'success' ? '#icon-check' : '#icon-exclamation';
           cellNode.prepend(`<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${svgIcon}"></use></svg>`);
         }
       }

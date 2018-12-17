@@ -79,12 +79,12 @@
     }
   }
 
-  &.confirm {
-    border-color: $confirm-color;
+  &.success {
+    border-color: $success-color;
 
     &:focus {
       // Needed for printing
-      border-color: $confirm-color !important;
+      border-color: $success-color !important;
       color: $input-color !important;
     }
   }
