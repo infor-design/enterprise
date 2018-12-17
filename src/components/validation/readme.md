@@ -52,7 +52,7 @@ Its possible to skip fields that are normally validated from validation. You can
 
 ## Validation Types
 
-There are four standard validation types, and they can be extended or altered if required, error, alert, success, info. The type should be defined on the rule or duplicate messages may appear.
+There are four standard validation types, and thefy can be extended or altered if required, error, alert, success, info. The type should be defined on the rule or duplicate messages may appear.
 
 ```javascript
 $.fn.validation.rules.customWarningRule = {

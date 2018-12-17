@@ -20,10 +20,10 @@ function ValidationRules() {
     pagingMessageID: 'AlertOnPage',
     errorsForm: false
   };
-  this.ValidationTypes.confirm = {
-    type: 'confirm',
-    titleMessageID: 'Confirm',
-    pagingMessageID: 'ComfirmOnPage',
+  this.ValidationTypes.success = {
+    type: 'success',
+    titleMessageID: 'Success',
+    pagingMessageID: 'SuccessOnPage',
     errorsForm: false
   };
   this.ValidationTypes.info = {
