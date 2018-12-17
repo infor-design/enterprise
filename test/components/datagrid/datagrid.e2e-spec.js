@@ -184,7 +184,7 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
     await element(by.css('#datagrid thead th:nth-child(2) .datagrid-header-text')).click();
     await browser.driver.sleep(300);
     await element(by.css('#datagrid thead th:nth-child(2) input')).sendKeys('22');
-    await browser.driver.sleep(300);
+    await browser.driver.sleep(500);
 
     expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
     expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
