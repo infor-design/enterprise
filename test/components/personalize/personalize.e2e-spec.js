@@ -1,4 +1,5 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
+const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
 
@@ -14,7 +15,6 @@ describe('Personalization tests', () => { //eslint-disable-line
   });
 
   it('Should maintain chosen theme after reinitialization', async () => {
-    debugger;
     const pageChangerButtonEl = await element.all(by.css('.page-changer'));
     const themeChoices = await element.all(by.css('.popupmenu li.is-selectable a[data-theme]'));
     const arrayLength = await themeChoices.length;
@@ -27,6 +27,8 @@ describe('Personalization tests', () => { //eslint-disable-line
     const chosenTheme = await element.all(by.css('.popupmenu li.is-checked a[data-theme]')).getAttribute('data-theme');
 
     expect(await element.all(by.css('html')).get(0).getAttribute('class')).toContain(chosenTheme[0]);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.stalenessOf(await element(by.css('.personalize-overlay'))), config.waitsFor);
 
     await reinitButton.click();
 
@@ -34,7 +36,6 @@ describe('Personalization tests', () => { //eslint-disable-line
   });
 
   it('Should maintain chosen colors after reinitialization', async () => {
-    debugger;
     const pageChangerButtonEl = await element.all(by.css('.page-changer'));
     const colorChoices = await element.all(by.css('.popupmenu li.is-selectable a[data-rgbcolor]'));
     const arrayLength = await colorChoices.length;
@@ -45,6 +46,8 @@ describe('Personalization tests', () => { //eslint-disable-line
     await colorChoices[randomIndex].click();
 
     const beforeInitSheet = await element(by.id('soho-personalization'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.stalenessOf(await element(by.css('.personalize-overlay'))), config.waitsFor);
 
     await reinitButton.click();
 
