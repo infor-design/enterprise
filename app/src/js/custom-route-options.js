@@ -40,16 +40,9 @@ module.exports = function customRouteOptions(req, res) {
   // Distribution (AMD)
   if (url.match(/tests\/distribution/)) {
     customOpts.amd = true;
-    customOpts.layout = 'layout-nofrills'; // No layout for this one on purpose.
+    customOpts.layout = 'layout-nofrills';
     customOpts.subtitle = 'AMD Tests';
   }
-
-  /*
-  // Header
-  if (url.match(/components\/header/)) {
-    customOpts.layout = 'components/header/layout';
-  }
-  */
 
   // Placement Logic
   if (url.match(/place\/test-container-is-body/)) {
