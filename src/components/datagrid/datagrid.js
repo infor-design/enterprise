@@ -637,6 +637,13 @@ Datagrid.prototype = {
       this.unSelectAllRows();
     }
 
+    if (this.settings.disableClientFilter) {
+      this.restoreFilter = true;
+      this.restoreSortOrder = true;
+      this.savedFilter = this.filterConditions();
+      this.restoreFilterClientSide = true;
+    }
+
     // Resize and re-render if have a new dataset
     // (since automatic column sizing depends on the dataset)
     if (pagerInfo.type === 'initial') {
@@ -970,7 +977,14 @@ Datagrid.prototype = {
       const isResizable = (column.resizable === undefined ? true : column.resizable);
       const isExportable = (column.exportable === undefined ? true : column.exportable);
       const isSelection = column.id === 'selectionCheckbox';
-      const headerAlignmentClass = (column.headerAlign === undefined ? ` l-${column.align}-text` : ` l-${column.headerAlign}-text`); // note there is a space at the front of the classname
+      let headerAlignmentClass = '';
+
+      // note there is a space at the front of the classname
+      if (column.headerAlign === undefined) {
+        headerAlignmentClass = column.align ? ` l-${column.align}-text` : '';
+      } else {
+        headerAlignmentClass = ` l-${column.headerAlign}-text`;
+      }
 
       headerRow += `<th scope="col" role="columnheader" class="${isSortable ? 'is-sortable' : ''}${isResizable ? ' is-resizable' : ''
       }${column.hidden ? ' is-hidden' : ''}${column.filterType ? ' is-filterable' : ''
@@ -988,12 +1002,8 @@ Datagrid.prototype = {
 
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
-      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}
-      ${headerAlignmentClass}"><span class="datagrid-header-text
-      ${column.required ? ' required' : ''}">
-      ${self.headerText(this.settings.columns[j])}
-      ${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}
-      </span>`;
+      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
+      <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>`;
       cols += `<col${this.columnWidth(column, j)}${column.hidden ? ' class="is-hidden"' : ''}>`;
 
       if (isSelection) {
@@ -1830,6 +1840,11 @@ Datagrid.prototype = {
       this.renderRows();
     }
     this.setSearchActivePage();
+
+    if (this.restoreFilterClientSide) {
+      this.restoreFilterClientSide = false;
+      return;
+    }
 
     /**
     * Fires after a filter action ocurs
@@ -8482,17 +8497,18 @@ Datagrid.prototype = {
    * @private
    */
   sortDataset() {
+    if (this.settings.disableClientSort) {
+      this.restoreSortOrder = true;
+      return;
+    }
+
     if (this.originalDataset) {
       this.settings.dataset = this.originalDataset;
     }
     const sort = this.sortFunction(this.sortColumn.sortId, this.sortColumn.sortAsc);
 
     this.setDirtyBeforeSort();
-
-    if (!this.settings.disableClientSort) {
-      this.settings.dataset.sort(sort);
-    }
-
+    this.settings.dataset.sort(sort);
     this.setTreeDepth();
     this.setDirtyAfterSort();
 
