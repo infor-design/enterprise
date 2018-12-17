@@ -4,7 +4,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Personalization tests', () => {
+describe('Personalization tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/personalize/example-state');
   });
@@ -14,6 +14,7 @@ describe('Personalization tests', () => {
   });
 
   it('Should maintain chosen theme after reinitialization', async () => {
+    debugger;
     const pageChangerButtonEl = await element.all(by.css('.page-changer'));
     const themeChoices = await element.all(by.css('.popupmenu li.is-selectable a[data-theme]'));
     const arrayLength = await themeChoices.length;
@@ -33,6 +34,7 @@ describe('Personalization tests', () => {
   });
 
   it('Should maintain chosen colors after reinitialization', async () => {
+    debugger;
     const pageChangerButtonEl = await element.all(by.css('.page-changer'));
     const colorChoices = await element.all(by.css('.popupmenu li.is-selectable a[data-rgbcolor]'));
     const arrayLength = await colorChoices.length;
