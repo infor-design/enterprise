@@ -58,7 +58,7 @@
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
     columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal'});
-    columns.push({ id: 'status', name: 'Status', align: 'left', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'confirm', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
+    columns.push({ id: 'status', name: 'Status', align: 'left', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
 
     //Init and get the api for the grid
