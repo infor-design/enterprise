@@ -2170,22 +2170,18 @@ PopupMenu.prototype = {
 
     this.menu.off('dragstart.popupmenu');
 
-    if (this.originalLocation) {
-      this.originalLocation.after(this.menu);
-    } else {
-      // TODO: Fix when we have time - shouldn't be referencing other controls here
-      let insertTarget = this.element;
-      const searchfield = this.element.parent().children('.searchfield');
+    // TODO: Fix when we have time - shouldn't be referencing other controls here
+    let insertTarget = this.element;
+    const searchfield = this.element.parent().children('.searchfield');
 
-      if (searchfield.length) {
-        insertTarget = searchfield.first();
-      }
-      if (this.settings.attachToBody && insertTarget) {
-        this.menu.unwrap();
-      }
-      if (this.menu && insertTarget && !this.settings.attachToBody) {
-        this.menu.insertAfter(insertTarget);
-      }
+    if (searchfield.length) {
+      insertTarget = searchfield.first();
+    }
+    if (this.settings.attachToBody && insertTarget) {
+      this.menu.unwrap();
+    }
+    if (this.menu && insertTarget && !this.settings.attachToBody) {
+      this.menu.insertAfter(insertTarget);
     }
 
     this.menu.find('.submenu').children('a').each((i, item) => {
