@@ -142,16 +142,17 @@ utils.getClosestLayoutFile = function (directory, webroot) {
   let filePath;
 
   while (!directoryHasLayout && directory.length > 1) {
+    filePath = path.join('.', utils.getDirectory(directory, webroot), DEFAULT_LAYOUT);
     directoryHasLayout = utils.hasLayoutFile(path.join(webroot, directory));
     if (directoryHasLayout) {
-      filePath = path.join('.', utils.getDirectory(directory, webroot), DEFAULT_LAYOUT);
-
       // If it ends up being the root layout, return nothing so the default takes place
       if (filePath === `/${DEFAULT_LAYOUT}`) {
         return DEFAULT_LAYOUT;
       }
 
-      logger('info', `Using local template "${filePath}" to render this page..."`);
+      if (commandLineArgs.verbose) {
+        logger('info', `Using local template "${filePath}" to render this page..."`);
+      }
       break;
     }
 
