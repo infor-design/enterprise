@@ -89,6 +89,7 @@ Tooltip.prototype = {
    */
   init() {
     this.uniqueId = utils.uniqueId(this.element, 'tooltip');
+    this.isTouch = env.features.touch;
     this.setup();
     this.appendTooltip();
 
@@ -132,7 +133,7 @@ Tooltip.prototype = {
       this.element.removeAttr('title');
     }
 
-    if (this.settings.trigger === 'hover') {
+    if (this.settings.trigger === 'hover' && this.isTouch) {
       this.element.addClass('longpress-target');
     }
 
@@ -246,13 +247,16 @@ Tooltip.prototype = {
     if (this.settings.trigger === 'hover' && !this.settings.isError) {
       ((this.element.is('.dropdown, .multiselect, span.longpress-target')) ? this.activeElement : this.element)
         .on(`mouseenter.${COMPONENT_NAME}`, () => {
+          if (self.isTouch) {
+            return;
+          }
           showOnTimer();
         })
         .on(`mouseleave.${COMPONENT_NAME}`, () => {
           hideOnTimer();
         })
         .on(`click.${COMPONENT_NAME}`, () => {
-          if (!env.features.touch) {
+          if (self.isTouch) {
             return;
           }
           showImmediately();
@@ -618,7 +622,7 @@ Tooltip.prototype = {
      */
     this.element.trigger('show', [this.tooltip]);
 
-    const mouseUpEventName = env.features.touch ? 'touchend' : 'mouseup';
+    const mouseUpEventName = this.isTouch ? 'touchend' : 'mouseup';
 
     setTimeout(() => {
       $(document)

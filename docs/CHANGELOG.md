@@ -1,5 +1,60 @@
 # What's New with Enterprise
 
+## v4.14.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.14.0 Features
+
+- `[Datepicker/Monthview]` Added a setting for the day of week the calendar starts that can be used outside of the Locale setting. ([#1179](https://github.com/infor-design/enterprise/issues/1179))
+- `[Datagrid]` Made the tree datagrid work a lot better with filtering. ([#1281](https://github.com/infor-design/enterprise/issues/1281))
+- `[Autocomplete/SearchField]` Added a caseSensitive filtering option. ([#385](https://github.com/infor-design/enterprise/issues/385))
+- `[Datagrid]` Added an option `headerAlign` to set alignment on the header different than the rows. ([#420](https://github.com/infor-design/enterprise/issues/420))
+- `[Message]` Added the ability to use certain formatter html tags in the message content. ([#379](https://github.com/infor-design/enterprise/issues/379))
+
+### v4.14.0 Fixes
+
+- `[Swaplist]` Fixed a bug that if you drag really fast everything disappears. ([#1195](https://github.com/infor-design/enterprise/issues/1195))
+- `[Hierarchy]` Fixed a bug that part of the profile menu is cut off. ([#931](https://github.com/infor-design/enterprise/issues/931))
+- `[Datagrid/Dropdown]` Fixed a bug that part of the dropdown menu is cut off. ([#1420](https://github.com/infor-design/enterprise/issues/1420))
+- `[Modal]` Fixed bugs where with certain field types modal validation was not working. ([#1213](https://github.com/infor-design/enterprise/issues/1213))
+- `[Dropdown]` Fixed a regression where the tooltip was not showing when data is overflowed. ([#1400](https://github.com/infor-design/enterprise/issues/1400))
+- `[Tooltip]` Fixed a bugs where a tooltip would show up in unexpected places. ([#1396](https://github.com/infor-design/enterprise/issues/1396))
+- `[Datagrid/Dropdown]` Fixed a bug where an error would occur if showSelectAll is used. ([#1360](https://github.com/infor-design/enterprise/issues/1360))
+- `[Datagrid/Tooltip]` Fixed a bugs where a tooltip would show up in the header unexpectedly. ([#1395](https://github.com/infor-design/enterprise/issues/1395))
+- `[Popupmenu]` Fixed incorrect highlighting on disabled list items.  ([#982](https://github.com/infor-design/enterprise/issues/982))
+- `[Contextual Action Panel]` Fixed issues with certain styles of invoking the CAP where it would not reopen a second time. ([#1139](https://github.com/infor-design/enterprise/issues/1139))
+- `[Spinbox]` Added a fix so the page will not zoom when click + and - on mobile devices. ([#1070](https://github.com/infor-design/enterprise/issues/1070))
+- `[Splitter]` Removed the tooltip from the expand/collapse button as it was superfluous. ([#1180](https://github.com/infor-design/enterprise/issues/1180))
+- `[Datagrid]` Added a fix so the last column when stretching will do so with percentage so it will stay when the page resize or the menu opens/closes. ([#1168](https://github.com/infor-design/enterprise/issues/1168))
+- `[Datagrid]` Fixed bugs in the server side and filtering example. ([#396](https://github.com/infor-design/enterprise/issues/396))
+- `[Datagrid]` Fixed a bug in applyFilter with datefields. ([#1269](https://github.com/infor-design/enterprise/issues/1269))
+- `[Datagrid]` Fixed a bug in updateCellNode where sometimes it did not work. ([#1122](https://github.com/infor-design/enterprise/issues/1122))
+- `[Hierarchy]` Made the empty image ring the same color as the left edge. ([#932](https://github.com/infor-design/enterprise/issues/932))
+- `[Datagrid/Dropdown]` Fixed an issue that tab did not close dropdown editors. ([#1198](https://github.com/infor-design/enterprise/issues/1198))
+- `[Datagrid/Dropdown]` Fixed a bug that if you click open a dropdown editor then you cannot use arrow keys to select. ([#1387](https://github.com/infor-design/enterprise/issues/1387))
+- `[Datagrid/Dropdown]` Fixed a bug that if a smaller number of items the menu would be too short. ([#1298](https://github.com/infor-design/enterprise/issues/1298))
+- `[Searchfield]` Fixed a bug that the search field didnt work in safari. ([#225](https://github.com/infor-design/enterprise/issues/225))
+- `[Datagrid/Dropdown]` Fixed a bug that source is used the values may be cleared out when opening the list. ([#1185](https://github.com/infor-design/enterprise/issues/1185))
+- `[Personalization]` Fixed a bug that when calling initialize the personalization would reset. ([#1231](https://github.com/infor-design/enterprise/issues/1231))
+- `[Tabs]` Fixed the alignment of the closing icon. ([#1056](https://github.com/infor-design/enterprise/issues/1056))
+- `[Dropdown]` Fixed list alignment issues on mobile. ([#1069](https://github.com/infor-design/enterprise/issues/1069))
+- `[Dropdown]` Fixed issues where the listbox would not close on mobile. ([#1119](https://github.com/infor-design/enterprise/issues/1119))
+- `[Dropdown]` Fixed a bug where modals would close on url hash change. ([#1207](https://github.com/infor-design/enterprise/issues/1207))
+- `[Contextual Action Panel]` Fixed an issue where buttons would occasionally be out of view. ([#283](https://github.com/infor-design/enterprise/issues/283))
+- `[Empty Message]` Added a new icon to indicate using the search function. ([#1325](https://github.com/infor-design/enterprise/issues/1325))
+- `[Searchfield]` Added a fix for landscape mode on mobile. ([#1102](https://github.com/infor-design/enterprise/issues/1102))
+- `[Datagrid]` Added a fix for hard to read fields in high contrast mode. ([#1193](https://github.com/infor-design/enterprise/issues/1193))
+
+### v4.14.0 Chore & Maintenance
+
+- `[General]` Fixed problems with the css mapping where the line numbers were wrong in the map files. ([#962](https://github.com/infor-design/enterprise/issues/962))
+- `[Docs]` Added setting so themes can be shown in the documentation pages. ([#1327](https://github.com/infor-design/enterprise/issues/1327))
+- `[Docs]` Made links to example pages open in a new window. ([#1132](https://github.com/infor-design/enterprise/issues/1132))
+
+(43 Issues Solved this release, Backlog Enterprise 181, Backlog Ng 64, 682 Functional Tests, 612 e2e Test)
+
 ## v4.13.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
