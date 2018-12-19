@@ -12,8 +12,8 @@
       <label for="option1" class="radio-label">Error</label>
       <input type="radio" class="radio" name="optionsGroupVWO" id="option2" value="alert"/>
       <label for="option2" class="radio-label">Alert</label>
-      <input type="radio" class="radio" name="optionsGroupVWO" id="option3" value="confirm"/>
-      <label for="option3" class="radio-label">Confirm</label>
+      <input type="radio" class="radio" name="optionsGroupVWO" id="option3" value="success"/>
+      <label for="option3" class="radio-label">Success</label>
       <input type="radio" class="radio" name="optionsGroupVWO" id="option4" value="info"/>
       <label for="option4" class="radio-label">Info</label>
       <input type="radio" class="radio" name="optionsGroupVWO" id="option5" value="icon"/>
@@ -100,7 +100,7 @@
   }
 
   function getMessage() {
-    var types = ['error', 'alert', 'confirm', 'info', 'icon'];
+    var types = ['error', 'alert', 'success', 'info', 'icon'];
     var outputText = '';
     var outputDate = '';
 
@@ -125,7 +125,7 @@
     fields
       .removeMessage({ type: 'error' })
       .removeMessage({ type: 'alert' })
-      .removeMessage({ type: 'confirm' })
+      .removeMessage({ type: 'success' })
       .removeMessage({ type: 'info' })
       .removeMessage({ type: 'icon' });
   }
