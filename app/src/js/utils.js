@@ -1,6 +1,7 @@
 const fs = require('fs');
 const logger = require('./logger');
 const path = require('path');
+const commandLineArgs = require('yargs').argv;
 
 const utils = {};
 const FILENAME_REGEX = /[\w-]+\.html/;
@@ -128,22 +129,34 @@ utils.getTemplateUrl = function (filePath, viewsRoot) {
   return filePath;
 };
 
-utils.getLayout = function (directory, webroot) {
+/**
+ * Given a specific directory, this method returns the closest "layout.html" file to the current
+ * directory tree. This method cascades up the tree to the root views folder.
+ * @param {string} directory a string representing the directory path, relative to the `app/views` root folder
+ * @param {string} webroot the absolute path to the root views folder
+ * @returns {string} the relative path to use for the layout file.
+ */
+utils.getClosestLayoutFile = function (directory, webroot) {
+  const DEFAULT_LAYOUT = 'layout.html';
   let directoryHasLayout = false;
   let filePath;
 
   while (!directoryHasLayout && directory.length > 1) {
-    directoryHasLayout = utils.hasLayoutFile(directory);
+    directoryHasLayout = utils.hasLayoutFile(path.join(webroot, directory));
     if (directoryHasLayout) {
-      filePath = path.join('.', utils.getDirectory(directory, webroot), 'layout.html');
+      filePath = path.join('.', utils.getDirectory(directory, webroot), DEFAULT_LAYOUT);
 
       // If it ends up being the root layout, return nothing so the default takes place
-      if (filePath === '/layout.html') {
-        return '';
+      if (filePath === `/${DEFAULT_LAYOUT}`) {
+        return DEFAULT_LAYOUT;
       }
 
-      logger('options', `Using local template "${filePath}" to render this page..."`, 'warn');
+      logger('info', `Using local template "${filePath}" to render this page..."`);
       break;
+    }
+
+    if (commandLineArgs.verbose) {
+      logger('alert', `No layout found at "${filePath}"...`);
     }
 
     directory = utils.getParentDirectory(directory);

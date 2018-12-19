@@ -38,7 +38,7 @@ function generalRoute(req, res, next) {
   // in another piece of middleware.  Generally, this will attempt to use the `layout.html` in
   // the target view's directory, or the closest parent directory's `layout.html`.
   if (utils.canChangeLayout(req, res)) {
-    setLayout(req, res, path.join(directoryURL, 'layout.html'));
+    setLayout(req, res, utils.getClosestLayoutFile(directoryURL, viewsRoot));
   }
 
   // If a filename was part of the path, attempt to render it.
