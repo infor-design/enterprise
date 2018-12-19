@@ -133,17 +133,17 @@ utils.getTemplateUrl = function (filePath, viewsRoot) {
  * Given a specific directory, this method returns the closest "layout.html" file to the current
  * directory tree. This method cascades up the tree to the root views folder.
  * @param {string} directory a string representing the directory path, relative to the `app/views` root folder
- * @param {string} webroot the absolute path to the root views folder
+ * @param {string} viewsRoot the absolute path to the root views folder
  * @returns {string} the relative path to use for the layout file.
  */
-utils.getClosestLayoutFile = function (directory, webroot) {
+utils.getClosestLayoutFile = function (directory, viewsRoot) {
   const DEFAULT_LAYOUT = 'layout.html';
   let directoryHasLayout = false;
   let filePath;
 
   while (!directoryHasLayout && directory.length > 1) {
-    filePath = path.join('.', utils.getDirectory(directory, webroot), DEFAULT_LAYOUT);
-    directoryHasLayout = utils.hasLayoutFile(path.join(webroot, directory));
+    filePath = path.join('.', utils.getDirectory(directory, viewsRoot), DEFAULT_LAYOUT);
+    directoryHasLayout = utils.hasLayoutFile(path.join(viewsRoot, directory));
     if (directoryHasLayout) {
       // If it ends up being the root layout, return nothing so the default takes place
       if (filePath === `/${DEFAULT_LAYOUT}`) {

@@ -8,6 +8,7 @@ const DEFAULT_LAYOUT = 'layout.html';
 module.exports = function setLayout(req, res, layoutPath) {
   // All file paths are based off of `<project root>/app/views/`.
   const viewsRoot = req.app.get('views');
+  const directoryURL = utils.getDirectory(path.join(viewsRoot, req.originalUrl), viewsRoot);
 
   let targetLayoutPath = DEFAULT_LAYOUT;
 
@@ -31,7 +32,7 @@ module.exports = function setLayout(req, res, layoutPath) {
   // Check for file existence.
   if (!utils.hasFile(targetLayoutPath)) {
     logger('alert', `Layout "${targetLayoutPath}" did not exist, using default layout instead.`);
-    targetLayoutPath = path.join(viewsRoot, DEFAULT_LAYOUT);
+    targetLayoutPath = utils.getClosestLayoutFile(directoryURL, viewsRoot);
   } else {
     logger('info', `Setting layout path to "${targetLayoutPath}".`);
   }
