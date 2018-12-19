@@ -79,7 +79,6 @@
    var tree = elem.data('tree');
 
   function onTreeNodeSelected(e, args) {
-    debugger;
     if (args.data.isAddNode) {
       tree.unSelectedNode(args.node);
       var clickedNode = args.node[0].parentElement;
