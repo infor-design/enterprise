@@ -300,6 +300,10 @@ Modal.prototype = {
           }
         }
 
+        if (isVisible && field.is('.error')) {
+          allValid = false;
+        }
+
         if (allValid) {
           primaryButton.removeAttr('disabled');
         }
