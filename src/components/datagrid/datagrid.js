@@ -8,6 +8,7 @@ import { debounce } from '../../utils/debounced-resize';
 import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
+import { Environment as env } from '../../utils/environment';
 
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
@@ -202,7 +203,7 @@ Datagrid.prototype = {
   init() {
     const html = $('html');
 
-    this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    this.isTouch = env.features.touch;
     this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
@@ -637,6 +638,13 @@ Datagrid.prototype = {
       this.unSelectAllRows();
     }
 
+    if (this.settings.disableClientFilter) {
+      this.restoreFilter = true;
+      this.restoreSortOrder = true;
+      this.savedFilter = this.filterConditions();
+      this.restoreFilterClientSide = true;
+    }
+
     // Resize and re-render if have a new dataset
     // (since automatic column sizing depends on the dataset)
     if (pagerInfo.type === 'initial') {
@@ -970,7 +978,14 @@ Datagrid.prototype = {
       const isResizable = (column.resizable === undefined ? true : column.resizable);
       const isExportable = (column.exportable === undefined ? true : column.exportable);
       const isSelection = column.id === 'selectionCheckbox';
-      const headerAlignmentClass = (column.headerAlign === undefined ? ` l-${column.align}-text` : ` l-${column.headerAlign}-text`); // note there is a space at the front of the classname
+      let headerAlignmentClass = '';
+
+      // note there is a space at the front of the classname
+      if (column.headerAlign === undefined) {
+        headerAlignmentClass = column.align ? ` l-${column.align}-text` : '';
+      } else {
+        headerAlignmentClass = ` l-${column.headerAlign}-text`;
+      }
 
       headerRow += `<th scope="col" role="columnheader" class="${isSortable ? 'is-sortable' : ''}${isResizable ? ' is-resizable' : ''
       }${column.hidden ? ' is-hidden' : ''}${column.filterType ? ' is-filterable' : ''
@@ -988,12 +1003,8 @@ Datagrid.prototype = {
 
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
-      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}
-      ${headerAlignmentClass}"><span class="datagrid-header-text
-      ${column.required ? ' required' : ''}">
-      ${self.headerText(this.settings.columns[j])}
-      ${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}
-      </span>`;
+      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
+      <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>`;
       cols += `<col${this.columnWidth(column, j)}${column.hidden ? ' class="is-hidden"' : ''}>`;
 
       if (isSelection) {
@@ -1830,6 +1841,11 @@ Datagrid.prototype = {
       this.renderRows();
     }
     this.setSearchActivePage();
+
+    if (this.restoreFilterClientSide) {
+      this.restoreFilterClientSide = false;
+      return;
+    }
 
     /**
     * Fires after a filter action ocurs
@@ -4620,6 +4636,30 @@ Datagrid.prototype = {
   },
 
   /**
+   * Returns the row dom jQuery node.
+   * @param  {number} row The row index.
+   * @param  {boolean} includeGroups If true groups are taken into account.
+   * @returns {object} The dom jQuery node
+   */
+  rowNode(row, includeGroups) {
+    let thisRowNode = null;
+
+    if (row instanceof jQuery) {
+      thisRowNode = row;
+    } else {
+      thisRowNode = this.tableBody.find(`tr:not(.datagrid-expandable-row)[aria-rowindex="${row + 1}"]`);
+    }
+
+    if (includeGroups && this.settings.groupable) {
+      thisRowNode = this.tableBody.prevAll('.datagrid-rowgroup-header').eq(row);
+      if (thisRowNode) {
+        thisRowNode = this.tableBody.find('.datagrid-rowgroup-header').eq(row);
+      }
+    }
+    return thisRowNode;
+  },
+
+  /**
    * Returns the cell dom node.
    * @param  {number} row The row index.
    * @param  {number} cell The cell index.
@@ -4627,27 +4667,7 @@ Datagrid.prototype = {
    * @returns {object} The dom node
    */
   cellNode(row, cell, includeGroups) {
-    let cells = null;
-    let rowNode = null;
-
-    if (row instanceof jQuery) {
-      rowNode = row;
-    } else {
-      rowNode = this.tableBody.find(`tr:not(.datagrid-expandable-row)[aria-rowindex="${row + 1}"]`);
-    }
-
-    if (includeGroups && this.settings.groupable) {
-      rowNode = this.tableBody.prevAll('.datagrid-rowgroup-header').eq(row);
-      if (rowNode) {
-        rowNode = this.tableBody.find('.datagrid-rowgroup-header').eq(row);
-      }
-    }
-
-    if (cell === -1 || rowNode.length === 0) {
-      return $();
-    }
-
-    cells = rowNode.find('td');
+    const cells = this.rowNode(row, includeGroups).find('td');
     return cells.eq(cell >= cells.length ? cells.length - 1 : cell);
   },
 
@@ -7524,11 +7544,89 @@ Datagrid.prototype = {
     }
 
     // Clear dirty cells
-    this.dirtyArray = undefined;
-    const cells = [].slice.call(this.element[0].querySelectorAll('.is-dirty-cell'));
-    cells.forEach((cell) => {
-      cell.classList.remove('is-dirty-cell');
-    });
+    this.clearDirty();
+  },
+
+  /**
+   * Clear dirty css class on all cells for given parent element.
+   * @private
+   * @param  {object} elem The parent element.
+   * @returns {void}
+   */
+  clearDirtyClass(elem) {
+    elem = elem instanceof jQuery ? elem[0] : elem;
+    if (elem) {
+      const cells = [].slice.call(elem.querySelectorAll('.is-dirty-cell'));
+      cells.forEach((cell) => {
+        cell.classList.remove('is-dirty-cell');
+      });
+    }
+  },
+
+  /**
+   * Clear all dirty cells.
+   * @returns {void}
+   */
+  clearDirty() {
+    if (this.settings.showDirty && this.dirtyArray) {
+      this.clearDirtyClass(this.element);
+      this.dirtyArray = undefined;
+    }
+  },
+
+  /**
+   * Clear all dirty cells in given row.
+   * @param  {number} row The row index.
+   * @returns {void}
+   */
+  clearDirtyRow(row) {
+    if (this.settings.showDirty && this.dirtyArray && typeof row === 'number') {
+      const rowNode = this.rowNode(row);
+      this.clearDirtyClass(rowNode);
+      this.dirtyArray[row] = undefined;
+    }
+  },
+
+  /**
+   * Clear dirty on given cell.
+   * @param  {number} row The row index.
+   * @param  {number} cell The cell index.
+   * @returns {void}
+   */
+  clearDirtyCell(row, cell) {
+    if (this.settings.showDirty && this.dirtyArray &&
+      typeof row === 'number' && typeof cell === 'number') {
+      const dirtyRow = this.dirtyArray[row];
+      if (typeof dirtyRow !== 'undefined') {
+        this.cellNode(row, cell).removeClass('is-dirty-cell');
+        this.dirtyArray[row][cell] = undefined;
+      }
+    }
+  },
+
+  /**
+  * Return all of the currently dirty cells.
+  * @returns {array} An array of dirty cells.
+  */
+  dirtyCells() {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    const cells = [];
+
+    if (s.showDirty && this.dirtyArray && this.dirtyArray.length) {
+      for (let i = 0, l = dataset.length; i < l; i++) {
+        const row = this.dirtyArray[i];
+        if (typeof row !== 'undefined') {
+          for (let i2 = 0, l2 = row.length; i2 < l2; i2++) {
+            const col = row[i2];
+            if (typeof col !== 'undefined' && col.isDirty) {
+              cells.push(s.treeGrid ? dataset[i].node : dataset[i]);
+            }
+          }
+        }
+      }
+    }
+    return cells;
   },
 
   /**
@@ -7787,6 +7885,7 @@ Datagrid.prototype = {
         this.dirtyArray[row][cell].value = value;
         this.dirtyArray[row][cell].coercedVal = coercedVal;
         this.dirtyArray[row][cell].escapedCoercedVal = xssUtils.escapeHTML(coercedVal);
+        this.dirtyArray[row][cell].cellNodeText = cellNode.text();
         this.setIsDirtyAndIcon(row, cell, cellNode);
       }
     }
@@ -7848,7 +7947,8 @@ Datagrid.prototype = {
     const d = this.dirtyArray[row][cell];
     if ((d.originalVal === d.value) ||
       (d.originalVal === d.coercedVal) ||
-      (d.originalVal === d.escapedCoercedVal)) {
+      (d.originalVal === d.escapedCoercedVal) ||
+      (d.originalVal === d.cellNodeText)) {
       this.dirtyArray[row][cell].isDirty = false;
       cellNode[0].classList.remove('is-dirty-cell');
     } else {
@@ -8482,17 +8582,18 @@ Datagrid.prototype = {
    * @private
    */
   sortDataset() {
+    if (this.settings.disableClientSort) {
+      this.restoreSortOrder = true;
+      return;
+    }
+
     if (this.originalDataset) {
       this.settings.dataset = this.originalDataset;
     }
     const sort = this.sortFunction(this.sortColumn.sortId, this.sortColumn.sortAsc);
 
     this.setDirtyBeforeSort();
-
-    if (!this.settings.disableClientSort) {
-      this.settings.dataset.sort(sort);
-    }
-
+    this.settings.dataset.sort(sort);
     this.setTreeDepth();
     this.setDirtyAfterSort();
 
@@ -8893,6 +8994,16 @@ Datagrid.prototype = {
         }
       }
 
+      // Clean up text in selects
+      const select = tooltip.wrapper.querySelector('select');
+      if (select && select.selectedIndex && select.options[select.selectedIndex].innerHTML) {
+        tooltip.content = env.features.touch ? '' : select.options[select.selectedIndex].innerHTML.trim();
+      }
+
+      if (isTh) {
+        tooltip.content = tooltip.content.trim();
+      }
+
       if (tooltip.content !== '') {
         const isEllipsis = utils.hasClass(elem, 'text-ellipsis');
         const icons = [].slice.call(elem.querySelectorAll('.icon'));
@@ -8900,7 +9011,12 @@ Datagrid.prototype = {
         icons.forEach((icon) => {
           extraWidth += icon.getBBox().width + 8;
         });
-        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + extraWidth;
+        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (select ? 0 : extraWidth);
+
+        if (isTh) {
+          tooltip.textwidth = stringUtils.textWidth(tooltip.content);
+        }
+
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
         if (title || isHeaderFilter) {
           tooltip.forced = true;

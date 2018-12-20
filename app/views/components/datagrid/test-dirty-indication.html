@@ -1,3 +1,14 @@
+<div class="row">
+  <div class="two-thirds column">
+    <p>Make changes to any cells it should add dirty indicator to the cell<p>
+    <p>
+      Dirty cells can be clear by clicking the button &quot;Clear Dirty&quot;<br>
+      &ndash; Specific Cell (row: <span class="test-dirty-row"></span>, cell: <span class="test-dirty-cell"></span>)<br>
+      &ndash; All Cells in Row (row: <span class="test-dirty-row"></span>)<br>
+      &ndash; All (all cells in grid)
+    </p>
+  </div>
+</div>
 
 <div class="row">
   <div class="twelve columns">
@@ -9,12 +20,14 @@
       </div>
 
       <div class="buttonset">
-        <button class="btn" type="button" id="add-reset">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-reset"></use>
-          </svg>
-          <span>Reset</span>
+        <button type="button" id="clear-dirty" class="btn-menu">
+          <span>Clear Dirty</span>
         </button>
+        <ul class="popupmenu">
+          <li><a href="#" data-action="specific-cell">Specific Cell (row: <span class="test-dirty-row"></span>, cell: <span class="test-dirty-cell"></span>)</a></li>
+          <li><a href="#" data-action="all-cells-in-row">All Cells in Row (row: <span class="test-dirty-row"></span>)</a></li>
+          <li><a href="#" data-action="all">All</a></li>
+        </ul>
       </div>
 
       <div class="more">
@@ -57,56 +70,69 @@
 </div>
 
 <script>
-  var gridApi = null;
-
   $('body').one('initialized', function () {
-         var grid,
-          columns = [],
-          data = [];
+    var grid,
+      gridApi,
+      columns = [],
+      data = [];
 
-        // Some Sample Data
-        data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210.99, status: 'OK', orderDate:  '', portable: false, action: 'ac', description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
-        data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.991, status: '', orderDate: new Date(2016, 2, 15, 0, 30, 36), portable: false, action: 'oh', description: 'The kit has an air blow gun that can be used for cleaning'});
-        data.push({ id: 3, productId: 2342203, productName: 'Portable Compressor', activity:  '', portable: true, quantity: null, price: 120.992, status: null, orderDate: new Date(2014, 6, 3), action: 'ac'});
-        data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', portable: true, quantity: 3, price: null, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'ac', description: 'Compressor comes with with air tool kit'});
-        data.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity:  'Inspect and Repair', portable: false, quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'oh'});
-        data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', portable: false, quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
-        data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
+    // Some Sample Data
+    data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210.99, status: 'OK', orderDate:  '', portable: false, action: 'ac', description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
+    data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.991, status: '', orderDate: new Date(2016, 2, 15, 0, 30, 36), portable: false, action: 'oh', description: 'The kit has an air blow gun that can be used for cleaning'});
+    data.push({ id: 3, productId: 2342203, productName: 'Portable Compressor', activity:  '', portable: true, quantity: null, price: 120.992, status: null, orderDate: new Date(2014, 6, 3), action: 'ac'});
+    data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', portable: true, quantity: 3, price: null, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'ac', description: 'Compressor comes with with air tool kit'});
+    data.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity:  'Inspect and Repair', portable: false, quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'oh'});
+    data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', portable: false, quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
+    data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
 
-        //Define Columns for the Grid.
-        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, sortable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-        // columns.push({ id: 'rowStatus', resizable: false, sortable: false, formatter: Formatters.Status, align: 'center'});
-        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
-        columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required'});  //maxLength: 2
-        columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
-        columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, validate: 'required', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '####.00', maskMode: 'number'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date , validate: 'required date'});
-        columns.push({ id: 'action', name: 'Action', field: 'action', align: 'center', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required',
-          options: [{id: '', label: '', value: ''}, {id: 'oh1', label: 'On Hold', value: 'oh'}, {id: 'sh1', label: 'Shipped', value: 'sh'} , {id: 'ac1', label: 'Action', value: 'ac'}]
-          });
+    //Define Columns for the Grid.
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, sortable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    // columns.push({ id: 'rowStatus', resizable: false, sortable: false, formatter: Formatters.Status, align: 'center'});
+    columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
+    columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required'});  //maxLength: 2
+    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
+    columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, validate: 'required', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '####.00', maskMode: 'number'});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date , validate: 'required date'});
+    columns.push({ id: 'action', name: 'Action', field: 'action', align: 'center', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', options: [{ id: '', label: '', value: '' }, { id: 'oh1', label: 'On Hold', value: 'oh' }, { id: 'sh1', label: 'Shipped', value: 'sh' }, { id: 'ac1', label: 'Action', value: 'ac' }]});
 
-        //Init and get the api for the grid
-        grid = $('#datagrid').datagrid({
-          columns: columns,
-          dataset: data,
-          editable: true,
-          clickToSelect: false,
-          selectable: 'multiple',
-          toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true},
-          paging: true,
-          pagesize: 5,
-          showDirty: true,
-          pagesizes: [5, 10, 25, 50]
-        }).on('cellchange', function (e, args) {
-          console.log(args);
-        });
+    // Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      editable: true,
+      clickToSelect: false,
+      selectable: 'multiple',
+      toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true},
+      paging: true,
+      pagesize: 5,
+      showDirty: true,
+      pagesizes: [5, 10, 25, 50]
+    }).on('cellchange', function (e, args) {
+      console.log(args);
+    });
 
-        gridApi = grid.data('datagrid');
-  });
+    gridApi = grid.data('datagrid');
 
-  //Example of clearing all cell errors
-  $('#add-reset').on('click', function () {
-    gridApi.resetRowStatus();
+    var row = 1;
+    var cell = 5;
+
+    $('.test-dirty-row').html(row + 1); // zero-index based
+    $('.test-dirty-cell').html(cell);
+
+    // Example of clearing dirty
+    $('#clear-dirty').on('selected', function (e, args) {
+      var action = args.attr('data-action');
+
+      if (action === 'specific-cell') {
+        gridApi.clearDirtyCell(row, cell);
+      }
+      if (action === 'all-cells-in-row') {
+        gridApi.clearDirtyRow(row);
+      }
+      if (action === 'all') {
+        gridApi.clearDirty();
+      }
+    });
   });
 </script>

@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { Environment as env } from '../../utils/environment';
 
 // Component Name
 const COMPONENT_NAME = 'arrange';
@@ -41,7 +42,7 @@ Arrange.prototype = {
 
   // example from: https://github.com/farhadi/html5arrangeable/blob/master/jquery.arrangeable.js
   init() {
-    this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    this.isTouch = env.features.touch;
     this.handleEvents();
   },
 
