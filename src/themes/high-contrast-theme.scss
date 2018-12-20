@@ -77,8 +77,8 @@ $hyperlink-hover-color: $theme-color-brand-primary-alt;
 
 // Alert Colors
 $alert-info: $azure09;
-$alert-green: #397514;
-$alert-yellow: #ffd726;
+$alert-green: $emerald10;
+$alert-yellow: $alert-yellow;
 $alert-red: $ruby09;
 
 // Rules
@@ -174,7 +174,7 @@ $input-readonly-color: $input-color-readonly-font;
 //States
 $error-color: $alert-red;
 $error-icon-fill: $alert-red;
-$alert-color: #d66221;
+$alert-color: $amber10;
 $confirm-color: $alert-green;
 $info-color: $theme-color-brand-primary-base;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
@@ -567,7 +567,7 @@ $datagrid-list-filter-active-color: $azure09;
 
 $datagrid-rowgroup-header: $graphite02;
 $datagrid-rowgroup-color: $font-color;
-$datagrid-empty-bg-color: #f0f0f0; //$datagrid-cell-bg-color
+$datagrid-empty-bg-color: $graphite01; //$datagrid-cell-bg-color
 
 // Search Results
 $sr-masthead-text-color: $font-color;
@@ -578,7 +578,7 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 $tree-selected-color: $black;
 $tree-selected-bg-color: $theme-color-brand-secondary-alt;
 $tree-focus-border-color: $theme-color-brand-primary-alt;
-$tree-active-bg-color: #8fa8b7;
+$tree-active-bg-color: $graphite01;
 $tree-icon-color: $graphite09;
 $tree-link-color: $graphite09;
 $tree-disabled-color: $graphite05;
@@ -716,7 +716,7 @@ $step-chart-bg-color: $graphite02;
 $step-chart-border-color: $graphite01;
 $step-chart-inprogress-bg-color: $ruby02;
 $step-chart-completed-bg-color: $theme-color-brand-primary-base;
-$step-chart-totally-completed-bg-color: #80ce4d;
+$step-chart-totally-completed-bg-color: $alert-green;
 
 //Swaplist
 $swaplist-bg-color-hover: $theme-color-brand-secondary-alt;

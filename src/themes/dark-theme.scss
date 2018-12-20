@@ -543,7 +543,7 @@ $datagrid-list-filter-active-color: $theme-color-brand-primary-base;
 
 $datagrid-rowgroup-header: $slate07;
 $datagrid-rowgroup-color: $font-color;
-$datagrid-empty-bg-color: #414247; // $datagrid-cell-bg-color
+$datagrid-empty-bg-color: $slate07; // $datagrid-cell-bg-color
 
 // Search Results
 $sr-masthead-text-color: $font-color;
