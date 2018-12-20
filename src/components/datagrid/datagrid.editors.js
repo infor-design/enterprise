@@ -4,6 +4,70 @@ import { Locale } from '../locale/locale';
 import { Formatters } from './datagrid.formatters';
 import { xssUtils } from '../../utils/xss';
 
+// Adds all the basic input features to any Datagrid Editor.
+function addStandardInputFeatures(input, row, cell, value, container, column, e, api, item) {
+  if (column.align) {
+    input.addClass(`l-${column.align}-text`);
+  }
+
+  if (column.maxLength) {
+    input.attr('maxlength', column.maxLength);
+  }
+
+  if (column.uppercase) {
+    input.addClass('uppercase-text');
+  }
+
+  if (column.mask && typeof column.mask === 'function') {
+    const mask = column.mask(row, cell, value, column, item);
+    input.mask({ pattern: mask, mode: column.maskMode });
+  } else if (column.maskOptions && typeof column.maskOptions === 'function') {
+    const maskOptions = column.maskOptions(row, cell, value, column, item);
+    input.mask(maskOptions);
+  } else if (column.mask) {
+    input.mask({ pattern: column.mask, mode: column.maskMode });
+  }
+
+  let defaults = {
+    patternOptions: {
+      allowNegative: true,
+      allowDecimal: true,
+      integerLimit: 4,
+      decimalLimit: 2,
+      symbols: {
+        thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
+        decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal : '.',
+        negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign : '-'
+      }
+    },
+    process: 'number'
+  };
+
+  let useMask = false;
+
+  if (column.maskOptions) {
+    useMask = true;
+  }
+
+  if (column.numberFormat) {
+    useMask = true;
+    defaults = { patternOptions: { decimalLimit: column.numberFormat.maximumFractionDigits } };
+  }
+
+  if (column.maskOptions && typeof column.maskOptions === 'function') {
+    useMask = false;
+  }
+
+  if (useMask) {
+    column.maskOptions = utils.extend(true, {}, defaults, column.maskOptions);
+    input.mask(column.maskOptions);
+  }
+
+  if (!column.align || column.align !== 'right') {
+    input.removeClass('is-number-mask');
+  }
+}
+
 /**
 *  A object containing all the supported Editors
 * @private
@@ -24,66 +88,7 @@ const editors = {
           .appendTo(container);
       }
 
-      if (column.align) {
-        this.input.addClass(`l-${column.align}-text`);
-      }
-
-      if (column.maxLength) {
-        this.input.attr('maxlength', column.maxLength);
-      }
-
-      if (column.uppercase) {
-        this.input.addClass('uppercase-text');
-      }
-
-      if (column.mask && typeof column.mask === 'function') {
-        const mask = column.mask(row, cell, value, column, item);
-        this.input.mask({ pattern: mask, mode: column.maskMode });
-      } else if (column.maskOptions && typeof column.maskOptions === 'function') {
-        const maskOptions = column.maskOptions(row, cell, value, column, item);
-        this.input.mask(maskOptions);
-      } else if (column.mask) {
-        this.input.mask({ pattern: column.mask, mode: column.maskMode });
-      }
-
-      let defaults = {
-        patternOptions: {
-          allowNegative: true,
-          allowDecimal: true,
-          integerLimit: 4,
-          decimalLimit: 2,
-          symbols: {
-            thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
-            decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal : '.',
-            negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign : '-'
-          }
-        },
-        process: 'number'
-      };
-
-      let useMask = false;
-
-      if (column.maskOptions) {
-        useMask = true;
-      }
-
-      if (column.numberFormat) {
-        useMask = true;
-        defaults = { patternOptions: { decimalLimit: column.numberFormat.maximumFractionDigits } };
-      }
-
-      if (column.maskOptions && typeof column.maskOptions === 'function') {
-        useMask = false;
-      }
-
-      if (useMask) {
-        column.maskOptions = utils.extend(true, {}, defaults, column.maskOptions);
-        this.input.mask(column.maskOptions);
-      }
-
-      if (!column.align || column.align !== 'right') {
-        this.input.removeClass('is-number-mask');
-      }
+      addStandardInputFeatures(this.input, row, cell, value, container, column, e, api, item);
     };
 
     this.val = function (v) {
@@ -443,8 +448,10 @@ const editors = {
       // Check if isClick or cell touch and just open the list
       if (event.type === 'click') {
         this.input.trigger('openlist');
+        $('#dropdown-list input').focus();
+      } else {
+        this.input[0].parentNode.querySelector('div.dropdown').focus();
       }
-      this.input[0].parentNode.querySelector('div.dropdown').focus();
 
       this.input.off('listclosed').on('listclosed', (e, type) => {
         grid.commitCellEdit(self.input);
@@ -718,13 +725,10 @@ const editors = {
     this.init = function () {
       this.input = $(`<input class="lookup ${column.align === 'right' ? 'align-text-right' : ''}" data-init="false" />`).appendTo(container);
 
-      if (column.maxLength) {
-        this.input.attr('maxlength', column.maxLength);
-      }
-
-      if (column.uppercase) {
-        this.input.addClass('uppercase-text');
-      }
+      addStandardInputFeatures(
+        this.input,
+        row, cell, value, container, column, event, grid, rowData
+      );
 
       this.input.lookup(column.editorOptions);
 

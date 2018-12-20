@@ -1,11 +1,9 @@
 <div class="row">
   <div class="six columns">
     <h2>Dropdown Test: Allows custom keystoke</h2>
-    <p>
-      Related JIRA: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-4815" target="_blank">SOHO-4815</a>
-      This is a demo where a user will not be able to used the up/down arrows on selecting a value in the dropdown.
-      This will allow the developers to customized the event for the up/down arrows.
-    </p>
+    <p>This is a demo where a user will  not be able to used the enter key from opening the list, but able to accept, select the value highlighted when it is open</p>
+    <p>Will also disabled thed down arrows on selecting a value in the dropdown</p>
+    <p>You can use the onKeyDown function to override keys if you need to.</p>
   </div>
 </div>
 
@@ -30,13 +28,20 @@
   $('body').one('initialized', function () {
 
     $('#dropdown').dropdown({
-      onKeyDown: function(e) {
-        if (e.which === 40) {
-          alert('You customized the down key (:');
+      onKeyDown: function (e) {
+        if (e.which === 40) { // down key
+          console.log('You customized the down key (:');
+          return false;
+        }
+        if (e.which === 13) { // enter key
+          console.log('Disabled Enter key!');
+          if ($('#dropdown-list').is(':visible')) {
+            return;
+          }
           return false;
         }
       }
     })
 
-  })
+  });
 </script>

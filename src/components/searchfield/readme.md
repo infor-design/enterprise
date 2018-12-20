@@ -4,22 +4,22 @@ description: Displays an editable field. A user can enter and then search for an
 demo:
   embedded:
   - name: Common Configuration
-    slug: example-index.html
+    slug: example-index
   pages:
   - name: Context Search Style
-    slug: example-context-search-style.html
+    slug: example-context-search-style
   - name: Different Template
-    slug: example-different-template.html
+    slug: example-different-template
   - name: Searchfield + Go Button
-    slug: example-go-button.html
+    slug: example-go-button
   - name: Demo of `clearable` Setting
-    slug: example-clearable.html
+    slug: example-clearable
   - name: No "All Results For `x`" Link
-    slug: example-no-all-results-link.html
+    slug: example-no-all-results-link
   - name: Categories (Compact Size)
-    slug: example-categories-short.html
+    slug: example-categories-short
   - name: Categories (Full Size)
-    slug: example-categories-full.html
+    slug: example-categories-full
   - name: Header Search Field (Compact)
     slug: example-searchfield-expanded
   - name: Header Search Field (Large)

@@ -20,14 +20,14 @@ demo:
 
 ### Dataset Settings
 
-- `name` [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) - The name to show on the y axis for the bar
-- `value` [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) - The raw data value for the bar.
-- `target` [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) - Compare the value over this target
-- `tooltip`[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)  - The custom tooltip to show.
+- `name` <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">String</a> - The name to show on the y axis for the bar
+- `value` <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" target="_blank">Number</a> - The raw data value for the bar.
+- `target` <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" target="_blank">Number</a> - Compare the value over this target
+- `tooltip`<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">String</a>  - The custom tooltip to show.
 
 ### Extra Chart Settings
 
-- `formatterString` [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) - the d3 formatter string to show
+- `formatterString` <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">String</a> - the d3 formatter string to show
 
 ## Code Example
 

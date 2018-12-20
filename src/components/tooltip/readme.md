@@ -44,7 +44,7 @@ If using the [initializer]( ./initialize), any elements with a `title` attribute
 </button>
 ```
 
-The code above is demoed in the [common tooltip example](https://design.infor.com/code/ids-enterprise/latest/demo/tooltip/example-index?font=source-sans).
+The code above is demoed in the [common tooltip example](./demo/components/tooltip/example-index?font=source-sans).
 
 ### Custom HTML Tooltips
 
@@ -56,7 +56,7 @@ It's also possible to use inline HTML inside of the `title` attribute:
 </button>
 ```
 
-The code above is demoed in the [HTML tooltip example](https://design.infor.com/code/ids-enterprise/latest/demo/tooltip/example-html-tooltip?font=source-sans).
+The code above is demoed in the [HTML tooltip example](./demo/components/tooltip/example-html-tooltip?font=source-sans).
 
 Another possible method of defining custom tooltips is to create a hidden HTML element that will be referenced by its ID attribute.  When defining your `title` attribute on your trigger element, simply place use ID selector instead of the actual content, and the initializer will pick it up:
 
@@ -75,7 +75,7 @@ Another possible method of defining custom tooltips is to create a hidden HTML e
 
 To prevent Cross-site Scripting (XSS) attacks the tooltip plugin will strip all tags except for the following tags. `<div><p><span><ul><br><svg><use><li><a><abbr><b><i><kbd><small><strong><sub>`
 
-The code above is demoed in the [icons in tooltips example](https://design.infor.com/code/ids-enterprise/latest/demo/tooltip/example-icon-in-tooltip?font=source-sans).
+The code above is demoed in the [icons in tooltips example](./demo/components/tooltip/example-icon-in-tooltip?font=source-sans) icons in tooltips example</a>.
 
 ## Accessibility
 

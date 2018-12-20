@@ -640,23 +640,24 @@ describe('Datepicker Timeformat Tests', () => {
     const todayEl = await element(by.css('button.is-today'));
     const testDate = new Date();
     await todayEl.click();
+    const value = await element(by.id('dp3')).getAttribute('value');
 
     let hours = testDate.getHours();
-    let minutes = testDate.getMinutes();
+    const minutes = testDate.getMinutes();
     let amPm = 'AM';
 
     if (hours > 11) {
       hours -= hours > 12 ? 12 : 0;
       amPm = 'PM';
     }
-    if (minutes.toString().length === 1) {
-      minutes = `0${minutes}`.padStart(2, '0');
-    }
 
     expect([
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${minutes} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${minutes - 1} ${amPm}` // for slow test
-    ]).toContain(await element(by.id('dp3')).getAttribute('value'));
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes - 2).toString().padStart(2, '0')} ${amPm}`,
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes - 1).toString().padStart(2, '0')} ${amPm}`,
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes).toString().padStart(2, '0')} ${amPm}`,
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 1).toString().padStart(2, '0')} ${amPm}`,
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 2).toString().padStart(2, '0')} ${amPm}` // for slow test on ci
+    ]).toContain(value);
   });
 });
 
@@ -872,6 +873,7 @@ describe('Datepicker set first day of week tests', () => {
     expect(await element(by.css('.is-focused'))).toBeTruthy();
 
     const testEl = await triggerEl.all(by.tagName('th')).get(0);
+
     expect(await testEl.getText()).toEqual('M');
   });
 });

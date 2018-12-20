@@ -6,18 +6,20 @@ demo:
   - name: Standard Grouped Bar Chart
     slug: example-index
   pages:
+  - name: Example showing the axis formatter
+    slug: example-formatter
   - name: Example showing defaulting a selected value
-    slug: example-selected
+    slug: test-selected
   - name: Example showing with negative values
     slug: example-negative
-  - name: Adapts to handle a large number of groups
+  - name: Adapts to handle a several number of groups
     slug: test-many-groups
   - name: Set animation speed
-    slug: example-animation
+    slug: test-animation
   - name: Example showing Get Selected value
-    slug: example-get-selected
+    slug: test-get-selected
   - name: Example showing Set Selected value
-    slug: example-set-selected
+    slug: test-set-selected
 ---
 
 ## Code Example
@@ -86,6 +88,10 @@ $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
   }
 });
 ```
+
+## Select Model
+
+The bar (and all other charts) have a built in selection model. Meaning that you can activate a selection by clicking a bar or bar group. When you do this the `selected` event will fire and you can use that data to update part of the screen or any other actions you want. You can also call `getSelected` method to get the currently selected elements and the `setSelected` to set the selected elements.
 
 ## Testability
 

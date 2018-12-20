@@ -63,7 +63,7 @@ describe('Grouped Bar Chart example-negative-value tests', () => {
 
 describe('Grouped Bar Chart example-selected tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar-grouped/example-selected');
+    await utils.setPage('/components/bar-grouped/test-selected');
   });
 
   it('Should not have errors', async () => {

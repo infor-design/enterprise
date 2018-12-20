@@ -4,14 +4,14 @@ description: null
 demo:
   embedded:
   - name: Main Swaplist Example
-    slug: example-index.html
+    slug: example-index
   pages:
   - name: Swaplist with Selected Items
-    slug: example-selected.html
+    slug: example-selected
   - name: Swaplist with Filter/Search
-    slug: example-search.html
+    slug: example-search
   - name: Swaplist with Disable Dragging
-    slug: example-disable-dragging.html
+    slug: example-disable-dragging
 ---
 
 ## Behavior Guidelines

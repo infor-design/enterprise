@@ -63,18 +63,74 @@ Modal.prototype = {
     return this.element.is('.contextual-action-panel');
   },
 
+  /**
+   * @private
+   * @returns {ContextualActionPanel|undefined} a reference to a Contextual Action Panel
+   * API associated with this modal, if one exists.
+   */
+  get capAPI() {
+    let api;
+    if (this.trigger && this.trigger.length) {
+      api = this.trigger.data('contextualactionpanel');
+    } else if (this.mainContent.is('body')) {
+      api = this.mainContent.data('contextualactionpanel');
+    }
+    return api;
+  },
+
+  /**
+   * @returns {boolean} whether or not the body tag is this Modal's trigger element
+   */
+  get isAttachedToBody() {
+    return (this.trigger.length && this.trigger.is('body'));
+  },
+
+  /**
+   * @returns {boolean} whether or not this Modal is currently being displayed
+   */
+  get visible() {
+    return this.element.is('.is-visible');
+  },
+
+  /**
+   * @returns {boolean} whether or not this Modal instance is the top-level one
+   */
+  get isOnTop() {
+    let max = 0;
+    const dialog = this.element;
+
+    $('.modal.is-visible').each(function () {
+      if (max < this.style.zIndex) {
+        max = this.style.zIndex;
+      }
+    });
+
+    return max === dialog[0].style.zIndex;
+  },
+
+  /**
+   * @private
+   */
   init() {
     const self = this;
 
     // Used for tracking events tied to the Window object
     this.id = this.element.attr('id') || (parseInt($('.modal').length, 10) + 1);
+
     // Find the button or anchor with same dialog ID
-    this.trigger = $(`button[data-modal="${this.element.attr('id')}"], a[data-modal="${this.element.attr('id')}"]`);
+    this.trigger = $(`[data-modal="${this.element.attr('id')}"]`);
+    if (this.element.is('body')) {
+      this.trigger = this.element;
+    }
+
     this.overlay = $('<div class="overlay"></div>');
     this.oldActive = this.trigger;
 
-    if (this.settings.trigger === 'click') {
-      this.trigger.on('click.modal', () => {
+    if (this.settings.trigger === 'click' && !this.isAttachedToBody) {
+      this.trigger.on('click.modal', (e) => {
+        if (!$(e.currentTarget).is(self.trigger)) {
+          return;
+        }
         self.open();
       });
     }
@@ -209,9 +265,17 @@ Modal.prototype = {
    */
   disableSubmit() {
     const body = this.element;
-    const fields = body.find('[data-validate]:visible');
     const inlineBtns = body.find('.modal-buttonset button');
     const primaryButton = inlineBtns.filter('.btn-modal-primary').not('.no-validation');
+    const dropdowns = body.find('select.dropdown[data-validate]');
+    let fields = body.find('[data-validate]:visible');
+
+    dropdowns.each(function () {
+      const dropdown = $(this);
+      if (dropdown.next('.dropdown-wrapper').is(':visible')) {
+        fields = fields.add(this);
+      }
+    });
 
     if (fields.length > 0) {
       primaryButton.removeAttr('disabled');
@@ -223,7 +287,7 @@ Modal.prototype = {
           return;
         }
 
-        const isVisible = field[0].offsetParent !== null;
+        const isVisible = field.is('.dropdown') && field.next('.dropdown-wrapper').is(':visible') || field[0].offsetParent !== null;
 
         if (field.is('.required')) {
           if (isVisible && !field.val()) {
@@ -457,6 +521,9 @@ Modal.prototype = {
     let messageArea = null;
     let elemCanOpen = true;
 
+    // close any active tooltips
+    $('#validation-errors, #tooltip, #validation-tooltip').addClass('is-hidden');
+
     if (this.busyIndicator) {
       this.busyIndicator.remove();
       delete this.busyIndicator;
@@ -563,7 +630,6 @@ Modal.prototype = {
     $('body').on(`resize.modal-${this.id}`, () => {
       this.resize();
     });
-    this.resize();
 
     // Center
     this.root[0].style.display = '';
@@ -572,7 +638,7 @@ Modal.prototype = {
     setTimeout(() => {
       this.resize();
       this.element.addClass('is-visible').attr('role', (this.settings.isAlert ? 'alertdialog' : 'dialog'));
-      this.root.attr('aria-hidden', 'false');
+      this.root.removeAttr('aria-hidden');
       this.overlay.attr('aria-hidden', 'true');
       this.element.attr('aria-modal', 'true'); // This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
     }, 1);
@@ -591,7 +657,7 @@ Modal.prototype = {
         return;
       }
 
-      if (e.which === 13 && this.isOnTop() &&
+      if (e.which === 13 && this.isOnTop &&
           !target.closest('form').find(':submit').length &&
           this.element.find('.btn-modal-primary:enabled').length) {
         e.stopPropagation();
@@ -717,24 +783,11 @@ Modal.prototype = {
   },
 
   /**
-   * Utility function to check via the api if the modal is open.
+   * @deprecated as of v4.14.x
    * @returns {boolean} The current state open (true) or closed (false).
    */
   isOpen() {
-    return this.element.is('.is-visible');
-  },
-
-  isOnTop() {
-    let max = 0;
-    const dialog = this.element;
-
-    $('.modal.is-visible').each(function () {
-      if (max < this.style.zIndex) {
-        max = this.style.zIndex;
-      }
-    });
-
-    return max === dialog[0].style.zIndex;
+    return this.visible;
   },
 
   getTabbableElements() {
@@ -803,7 +856,7 @@ Modal.prototype = {
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
   close(destroy) {
-    if (!this.isOpen()) {
+    if (!this.visible) {
       return true;
     }
 
@@ -831,7 +884,7 @@ Modal.prototype = {
       this.root.attr('aria-hidden', 'true');
     }
 
-    if ($('.modal-page-container[aria-hidden="false"]').length < 1) {
+    if ($('.modal-page-container').length <= 1) {
       $('body').removeClass('modal-engaged');
       $('body > *').not(this.element.closest('.modal-page-container')).removeAttr('aria-hidden');
       $('.overlay').remove();
@@ -868,13 +921,17 @@ Modal.prototype = {
   },
 
   /**
-   * Destroy the modal.
+   * Update the modal
    * @param {settings} settings The settings to update on the modal
    * @returns {object} The modal object for chaining.
    */
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    }
+
+    if (this.settings.trigger === 'immediate') {
+      this.open();
     }
 
     return this;
@@ -900,15 +957,27 @@ Modal.prototype = {
         $('body').off(`resize.modal-${this.id}`);
       }
 
-      if (self.settings.trigger === 'click') {
-        self.trigger.off('click.modal');
+      // Properly teardown contexual action panels
+      if (self.isCAP && self.capAPI) {
+        self.capAPI.teardown();
       }
 
-      self.element.closest('.modal-page-container').remove();
+      self.trigger.off('click.modal');
+
+      if (self.root && self.root.length) {
+        self.root.remove();
+      } else {
+        self.element.closest('.modal-page-container').remove();
+      }
+      self.element[0].removeAttribute('data-modal');
+
       $.removeData(self.element[0], 'modal');
+      if (self.isCAP && self.capAPI) {
+        self.capAPI.destroy();
+      }
     }
 
-    if (!this.isOpen()) {
+    if (!this.visible) {
       destroyCallback();
       return;
     }

@@ -22,7 +22,7 @@ demo:
 
 ## Settings
 
-See the [Pie API]( ../pie) as this is just a pie setting.
+See the [Pie API](./pie) as this is just a pie setting.
 
 ## Code Example
 

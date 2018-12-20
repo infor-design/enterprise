@@ -7,7 +7,7 @@ demo:
     slug: example-index
   pages:
   - name: Add Node
-    slug: example-add-node
+    slug: test-add-node
   - name: Ajax
     slug: example-ajax
   - name: Badges
@@ -23,7 +23,7 @@ demo:
   - name: Enabled
     slug: example-enabled
   - name: Select By Id
-    slug: example-select-by-id
+    slug: test-select-by-id
   - name: Select Event
     slug: example-select-event
   - name: Select Multiple

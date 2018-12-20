@@ -495,7 +495,16 @@ Tree.prototype = {
         a.parentNode.classList.add('is-selected');
       });
     } else {
+      if (node[0].classList.contains('is-selected')) {
+        return;
+      }
       links.forEach((a) => {
+        const link = $(a);
+        const data = link.data('jsonData');
+        if (data) {
+          delete data.selected;
+          link.data('jsonData', data);
+        }
         a.setAttribute('aria-selected', 'false');
         a.classList.remove('is-selected');
         a.parentNode.classList.remove('is-selected');

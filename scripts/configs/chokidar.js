@@ -3,6 +3,7 @@ module.exports = {
   chokidar: {
     sass: {
       files: [
+        'src/behaviors/**/*.scss',
         'src/themes/*.scss',
         'src/core/**/*.scss',
         'src/layouts/**/*.scss',

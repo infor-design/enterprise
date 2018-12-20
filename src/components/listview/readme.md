@@ -18,7 +18,7 @@ demo:
   - name: Paging Client Side
     slug: example-paging-clientside
   - name: Single Select
-    slug: example-singleselect.html
+    slug: example-singleselect
   - name: Status Indicators
     slug: example-status
   - name: Click Events
@@ -37,7 +37,7 @@ demo:
 
 ### Basic List
 
-This example shows using a list with a [mustache template](https://mustache.github.io/mustache.1.html). The list itself is the div with the listview class. This example is showing the list in a card but this is optional.
+This example shows using a list with a <a href="https://mustache.github.io/mustache.1.html" target="_blank">mustache template</a>. The list itself is the div with the listview class. This example is showing the list in a card but this is optional.
 
 The template shows the use of an if/else to show a is-disabled class. And also shows the use of the three text sizes available. Note that `dataset` is required to loop over the dataset option passed into the control.
 
@@ -81,7 +81,7 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
 - <kbd>Tab</kbd> When a list is tabbed to, select the first item if nothing else is already selected. A second tab will take the user out of the widget to the next tab stop on the page.
 - <kbd>Up/down arrow</kbd> navigate up and down the list.
 - <kbd>Shift+F10</kbd> If the current item has an associated context menu, then this key combination will launch that menu.
-- <kbd>Space</kbd> toggles [checkboxes](http://access.aol.com/dhtml-style-guide-working-group/#checkbox) in the case of multi select or a list item in case of normal select
+- <kbd>Space</kbd> toggles <a href="http://access.aol.com/dhtml-style-guide-working-group/#checkbox" target="_blank">checkboxes</a> in the case of multi select or a list item in case of normal select
 
 ## States and Variations
 
