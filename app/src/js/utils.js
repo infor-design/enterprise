@@ -141,7 +141,11 @@ utils.getClosestLayoutFile = function (directory, viewsRoot) {
   let directoryHasLayout = false;
   let filePath;
 
-  while (!directoryHasLayout && directory.length > 1) {
+  while (!directoryHasLayout && directory.length > 0) {
+    if (directory === '/') {
+      return DEFAULT_LAYOUT;
+    }
+
     filePath = path.join('.', utils.getDirectory(directory, viewsRoot), DEFAULT_LAYOUT);
     directoryHasLayout = utils.hasLayoutFile(path.join(viewsRoot, directory));
     if (directoryHasLayout) {
