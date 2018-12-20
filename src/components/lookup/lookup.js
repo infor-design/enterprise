@@ -201,6 +201,11 @@ Lookup.prototype = {
         self.openDialog(e);
       }
     });
+
+    $(window).on('popstate.lookup', () => {
+      self.modal.close();
+      self.insertRows(self.grid.selectedRows());
+    });
   },
 
   /**
