@@ -786,7 +786,7 @@ Accordion.prototype = {
       } else {
         setTimeout(() => {
           pane.one('animateopencomplete', handleAfterExpand).css('display', 'block').animateOpen();
-        },150);
+        }, 150);
       }
     }
 
