@@ -1341,9 +1341,7 @@ Tree.prototype = {
     if (location instanceof jQuery && location.is('li')) {
       updatedNode = this.findById($(location[0].parentNode.parentNode).find('a')[0].id);
       const childNodes = updatedNode.children || updatedNode.node.data('jsonData').children;
-      index = childNodes.findIndex((element) => {
-        return element.text.trim() === $(location).text().trim();
-      });
+      index = childNodes.findIndex(element => element.text.trim() === $(location).text().trim());
 
       childNodes.splice(index, 0, node);
     }
