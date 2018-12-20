@@ -1,7 +1,9 @@
 <div class="row top-padding">
   <div class="six columns">
     <h3>Tree Control</h3>
-    <p>This example demonstrate how to add node between the clicked node.</p>
+    <p>This example demonstrate how to add node above the clicked node.</p>
+    <br />
+    <p>To add parent node please click on Add Parent Node. To add leaf node, expand any parent node and click on Add Leaf Node</p>
     <br />
   </div>
 </div>
@@ -14,6 +16,7 @@
 <script>
   var sampleData;
   var dropdownData;
+  var index = 8;
 
   dropdownData = [
     { value: 'any', text: 'Any' },
@@ -29,7 +32,7 @@
     "children": [
       {
       "id": "node2",
-      "text": "Any",
+      "text": "any",
       "type": 'dropdown',
       "data": dropdownData
       },
@@ -40,7 +43,7 @@
         "children": [
           {
           "id": "node4",
-          "text": "All",
+          "text": "all",
           "type": 'dropdown',
           "data": dropdownData
           },
@@ -69,17 +72,15 @@
 
   var elem = $('#json-tree').tree({
     dataset: sampleData,
-    folderIconOpen: 'plusminus-folder-closed',
-    folderIconClosed: 'plusminus-folder-open',
+    folderIconOpen: 'plusminus-folder-open',
+    folderIconClosed: 'plusminus-folder-closed',
     selectable: 'multiple',
     hideCheckboxes: true
   }).on('selected', onTreeNodeSelected);
 
-   //Add at Root
-   var tree = elem.data('tree');
-
   function onTreeNodeSelected(e, args) {
     if (args.data.isAddNode) {
+      var tree = elem.data('tree');
       tree.unSelectedNode(args.node);
       var clickedNode = args.node[0].parentElement;
       var nodeToAdd = getNode(args.data.fieldFqn);
@@ -91,18 +92,18 @@
     var node;
     if(fieldFqn == 'parent') {
       node = {
-        "id": "node3",
+        "id": "node" + index++,
         "text": "Node 1.1",
         "hideCheckbox": false,
         "children": [
           {
-          "id": "node4",
-          "text": "All",
+          "id": "node" + index++,
+          "text": "any",
           "type": 'dropdown',
           "data": dropdownData
           },
           {
-          "id": "node6",
+          "id": "node"  + index++,
           "text": "Add Leaf Node",
           "icon": "",
           "isAddNode": true,
@@ -112,7 +113,7 @@
       };
     } else {
       node = {
-          "id": "node5",
+          "id": "node" + index++,
           "text": "Node 1.1.1",
           "icon": ""
           };

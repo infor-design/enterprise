@@ -654,7 +654,7 @@ Tree.prototype = {
             self.selectNodeFinish(node, focus, e);
           }
         } else { // No Callback specified
-          self.selectNodeFinish(node, focus, e)
+          self.selectNodeFinish(node, focus, e);
         }
 
         self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), s.folderIconClosed);
@@ -694,7 +694,7 @@ Tree.prototype = {
             self.selectNodeFinish(node, focus, e);
           }
         } else { // No Callback specified
-          self.selectNodeFinish(node, focus, e)
+          self.selectNodeFinish(node, focus, e);
         }
 
         const nodeData = node.data('jsonData');
@@ -1046,10 +1046,9 @@ Tree.prototype = {
         $(dropdown).dropdown().disable();
       } else {
         $(dropdown).dropdown().on('selected.tree', function () {
-          const node = this.parentElement.previousElementSibling;
-          const nodeData = self.findById(node.id);
-          nodeData.text = this.value;
-          self.updateNode(nodeData);
+          const nodeToUpdate = self.findById(this.parentElement.previousElementSibling.id);
+          nodeToUpdate.text = this.value;
+          self.updateNode(nodeToUpdate);
         });
       }
     });
@@ -1342,7 +1341,9 @@ Tree.prototype = {
     if (location instanceof jQuery && location.is('li')) {
       updatedNode = this.findById($(location[0].parentNode.parentNode).find('a')[0].id);
       const childNodes = updatedNode.children || updatedNode.node.data('jsonData').children;
-      index = childNodes.findIndex((element) => element.text.trim() === $(location).text().trim());
+      index = childNodes.findIndex((element) => {
+        return element.text.trim() === $(location).text().trim();
+      });
 
       childNodes.splice(index, 0, node);
     }
@@ -1592,6 +1593,7 @@ Tree.prototype = {
 
   // Parameter added - to add node before or after the node
   addNode(nodeData, location, isBeforeOrAfter) {
+    const self = this;
     let selectedOptionText;
     let selectHtml;
     let option;
@@ -1625,9 +1627,15 @@ Tree.prototype = {
 
     let li = document.createElement('li');
 
+    if (nodeData.open) {
+      li.classList.add('is-open');
+    }
+
+    li.appendChild(a);
+
     // Insert dropdown start
     if (nodeData.type === 'dropdown') {
-      a.attr('style', 'display: none');
+      a.setAttribute('style', 'display: none');
 
       if (nodeData.data) {
         selectHtml = '<select class="dropdown" close-on-select="true">';
@@ -1649,24 +1657,17 @@ Tree.prototype = {
         $(`<div class="treeDropdown" style="width: 80px; margin-left: 35px; margin-bottom: -15px">${selectHtml}</div>`).appendTo(li);
 
         if (nodeData.disabled) {
-          li.find('select.dropdown').dropdown().disable();
+          $(li).find('select.dropdown').dropdown().disable();
         } else {
-          li.find('select.dropdown').dropdown().on('selected.tree', function () {
-            const node = this.parentElement.previousElementSibling;
-            const nodeData = self.findById(node.id);
-            nodeData.text = this.value;
-            self.updateNode(nodeData);
+          $(li).find('select.dropdown').dropdown().on('selected.tree', function () {
+            const nodeToUpdate = self.findById(this.parentElement.previousElementSibling.id);
+            nodeToUpdate.text = this.value;
+            self.updateNode(nodeToUpdate);
           });
         }
       }
     }
     // Insert dropdown end
-
-    if (nodeData.open) {
-      li.classList.add('is-open');
-    }
-
-    li.appendChild(a);
 
     // Handle Location
     let found = this.loading ? true : this.addToDataset(nodeData, location);
