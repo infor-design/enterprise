@@ -204,7 +204,7 @@ Lookup.prototype = {
 
     $(window).on('popstate.lookup', () => {
       self.modal.close();
-      self.insertRows(self.grid.selectedRows());
+      self.insertRows();
     });
   },
 
