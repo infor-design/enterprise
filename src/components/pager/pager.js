@@ -12,6 +12,8 @@ import '../tooltip/tooltip.jquery';
 // The name of this component.
 const COMPONENT_NAME = 'pager';
 
+const RECORD_PER_PAGE_TEXT = 'RecordsPerPage';
+
 /**
 * The Pager Component supports paging on lists.
 * @class Pager
@@ -62,6 +64,7 @@ const PAGER_DEFAULTS = {
   pagesizes: [15, 25, 50, 75],
   showPageSizeSelector: true,
   onPageSizeChange: null,
+  pageSizeLabelText: null,
   showFirstButton: true,
   enableFirstButton: true,
   showPreviousButton: true,
@@ -677,8 +680,10 @@ Pager.prototype = {
     // Add functionality to change page size.
     if (self.settings.showPageSizeSelector && this.pagerBar.find('.btn-menu').length === 0) {
       const pageSize = $('<li class="pager-pagesize"></li>');
+
+      const buttonText = self.settings.pageSizeLabelText || Locale.translate(RECORD_PER_PAGE_TEXT);
       const pageSizeButton = $(`${'<button type="button" class="btn-menu">' +
-        '<span>'}${Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize)}</span> ${
+        '<span>'}${buttonText.replace('{0}', this.settings.pagesize)}</span> ${
         $.createIcon({ icon: 'dropdown' })
       } </button>`).appendTo(pageSize);
 
@@ -731,8 +736,10 @@ Pager.prototype = {
         });
 
         // Update the number of records per page
+        const buttonText2 = self.settings.pageSizeLabelText ||
+          Locale.translate(RECORD_PER_PAGE_TEXT);
         self.pagerBar.find('.btn-menu span')
-          .text(Locale.translate('RecordsPerPage').replace('{0}', self.settings.pagesize));
+          .text(buttonText2.replace('{0}', self.settings.pagesize));
       });
     }
 
@@ -817,8 +824,9 @@ Pager.prototype = {
     }
 
     // Update the number of records per page
+    const buttonText = this.settings.pageSizeLabelText || Locale.translate(RECORD_PER_PAGE_TEXT);
     this.pagerBar.find('.btn-menu span')
-      .text(Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize));
+      .text(buttonText.replace('{0}', this.settings.pagesize));
 
     // Refresh Disabled
     const prev = pb.find('.pager-prev a');
@@ -1086,6 +1094,10 @@ Pager.prototype = {
 
     if (settings.pagesizes) {
       this.settings.pagesizes = settings.pagesizes;
+    }
+
+    if (settings.pageSizeLabelText) {
+      this.settings.pageSizeLabelText = settings.pageSizeLabelText;
     }
 
     this.updatePagingInfo(this.settings);
