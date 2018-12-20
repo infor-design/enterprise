@@ -53,10 +53,10 @@
       }
 
       &:hover {
-        border: 1px solid $white;
+        border: 1px solid $theme-color-palette-white;
 
         .icon {
-          fill: $white;
+          fill: $theme-color-palette-white;
         }
       }
     }

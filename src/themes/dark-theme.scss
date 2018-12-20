@@ -21,10 +21,10 @@
 $header-bg-color: $slate09;
 $subhead-bg-color: $slate06;
 $header-border-color: $slate10;
-$header-button-color: rgba($white, 0.7);
-$header-button-focus-color: rgba($white, 1);
-$header-button-hover-color: rgba($white, 1);
-$header-button-disabled-color: rgba($white, 0.3);
+$header-button-color: rgba($theme-color-palette-white, 0.7);
+$header-button-focus-color: rgba($theme-color-palette-white, 1);
+$header-button-hover-color: rgba($theme-color-palette-white, 1);
+$header-button-disabled-color: rgba($theme-color-palette-white, 0.3);
 $header-disabled-color: $slate05;
 $header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
 
@@ -47,13 +47,13 @@ $focus-box-shadow-spinbox-up: 0 -3px 3px 0 $focus-box-shadow-color,
   3px 0 3px 0 $focus-box-shadow-color;
 
 // Base Colors
-$inverse-color: #fff;
+$inverse-color: $theme-color-palette-white;
 
 // The hyperlink Style
 $hyperlink-color: $azure04;
 
 // Text Color
-$font-color-extrahighcontrast: $white;
+$font-color-extrahighcontrast: $theme-color-palette-white;
 $font-color-highcontrast: $slate01;
 $font-color: $slate02;
 $font-color-lowcontrast: $slate03;
@@ -63,7 +63,7 @@ $disabled-color: $slate05;
 $signin-title-color: $slate01;
 
 // New Text Colors
-$font-color-default: $white;
+$font-color-default: $theme-color-palette-white;
 $font-color-descriptive: $slate03;
 $font-color-hyperlink: $theme-color-brand-primary-base;
 $font-color-muted: $slate04;
@@ -107,12 +107,12 @@ $progress-border-color: $slate04;
 $progress-bar-bg-color: $theme-color-brand-primary-base;
 
 // Tooltips
-$tooltip-bg-color: $white;
-$tooltip-border-color: $white;
+$tooltip-bg-color: $theme-color-palette-white;
+$tooltip-border-color: $theme-color-palette-white;
 $tooltip-box-shadow: 0 2px 5px $drop-shadow-depth;
 $tooltip-color: $slate10;
 $tooltip-error-bg-color: $alert-red;
-$tooltip-error-color: $white;
+$tooltip-error-color: $theme-color-palette-white;
 
 // Badges
 $badge-neutral-color: $theme-color-palette-white;
@@ -130,7 +130,7 @@ $badge-neutral-icon-color: $slate03;
 $badge-neutral-hover-icon-color: $theme-color-palette-white;
 
 // Popup Menu
-$popupmenu-color: $white;
+$popupmenu-color: $theme-color-palette-white;
 $popupmenu-icon-color: $slate01;
 $popupmenu-heading-color: $slate04;
 $popupmenu-bg-color: $slate07;
@@ -143,9 +143,9 @@ $popupmenu-checked-color-inverse: $theme-color-brand-primary-base;
 // Secondary With Border
 $secondary-border-btn-color:  $slate03;
 $secondary-border-btn-border-color: $slate04;
-$secondary-border-btn-hover-color:  $white;
-$secondary-border-btn-hover-border-color: $white;
-$secondary-border-btn-ripple-color: $white;
+$secondary-border-btn-hover-color:  $theme-color-palette-white;
+$secondary-border-btn-hover-border-color: $theme-color-palette-white;
+$secondary-border-btn-ripple-color: $theme-color-palette-white;
 
 // Input Fields
 $input-color: $input-color-initial-font;
@@ -170,7 +170,7 @@ $autocomplete-box-shadow: 0 2px 5px 1px $focus-box-shadow-color;
 $autocomplete-box-shadow-flipped: 0 -2px 5px 1px $focus-box-shadow-color;
 $trigger-icon-fill-color: $slate03;
 $trigger-icon-fill-light-color: $slate04;
-$trigger-hover-color: $white;
+$trigger-hover-color: $theme-color-palette-white;
 $trigger-active-color: $theme-color-brand-primary-base;
 $trigger-focus-color: $theme-color-brand-primary-base;
 $trigger-disabled-color: $slate04;
@@ -184,14 +184,14 @@ $listview-color: $inverse-color;
 $listview-secondary-color: $slate03;
 $listview-tertiary-color: $slate04;
 $listview-disabled-color: $slate04;
-$listview-selected-text-color: $white;
+$listview-selected-text-color: $theme-color-palette-white;
 $listview-header-bg-color: $slate06;
-$listview-header-color: $white;
+$listview-header-color: $theme-color-palette-white;
 
 $listview-toolbar-button-text-color: $slate03;
 $listview-toolbar-button-icon-color: $slate03;
-$listview-toolbar-button-text-hover-color: $white;
-$listview-toolbar-button-icon-hover-color: $white;
+$listview-toolbar-button-text-hover-color: $theme-color-palette-white;
+$listview-toolbar-button-icon-hover-color: $theme-color-palette-white;
 $listview-toolbar-button-text-selected-color: $theme-color-brand-primary-base;
 $listview-toolbar-button-icon-selected-color: $theme-color-brand-primary-base;
 $listview-full-width-bg-color: $slate08;
@@ -206,8 +206,8 @@ $listview-search-disabled-icon-color: $slate05;
 $listbuilder-bg-color: $panel-bg-color;
 $listbuilder-bg-color-hover: $slate06;
 $listbuilder-border-color: $slate04;
-$listbuilder-icon-color-hover: $white;
-$listbuilder-text-color: $white;
+$listbuilder-icon-color-hover: $theme-color-palette-white;
+$listbuilder-text-color: $theme-color-palette-white;
 
 // Toolbar
 $toolbar-standalone-bg-color: $slate06;
@@ -282,12 +282,12 @@ $skip-link-color: $azure04;
 $swaplist-bg-color-hover: $slate06;
 $swaplist-border-color-card: $slate05;
 $swaplist-icon-color: $slate03;
-$swaplist-icon-color-hover: $white;
+$swaplist-icon-color-hover: $theme-color-palette-white;
 $swaplist-icon-svg-color: $slate01;
-$swaplist-icon-svg-color-hover: $white;
-$swaplist-border-color-hover: $white;
-$swaplist-title-text-color: $white;
-$swaplist-text-color: $white;
+$swaplist-icon-svg-color-hover: $theme-color-palette-white;
+$swaplist-border-color-hover: $theme-color-palette-white;
+$swaplist-title-text-color: $theme-color-palette-white;
+$swaplist-text-color: $theme-color-palette-white;
 
 // Mast Head
 $masthead-bg-color: $header-bg-color;
@@ -304,12 +304,12 @@ $fieldset-title-color: $font-color-highcontrast;
 
 // Expandable Area
 $expandable-area-border-color: $slate05;
-$expandable-area-title-color: $white;
+$expandable-area-title-color: $theme-color-palette-white;
 
 // Cardlist
 $cardlist-bg-color: $slate07;
 $cardlist-border-color: $slate05;
-$cardlist-header-color: $white;
+$cardlist-header-color: $theme-color-palette-white;
 $cardlist-actions-color: $slate03;
 
 // Checkboxes
@@ -341,7 +341,7 @@ $editor-color: $input-color;
 $editor-toolbar-bg-color: $slate06;
 $editor-middle-border-color: $slate04;
 $editor-btn-color: $slate03;
-$editor-btn-hover-color: $white;
+$editor-btn-hover-color: $theme-color-palette-white;
 $editor-btn-active-color: $theme-color-brand-primary-base;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
@@ -381,14 +381,14 @@ $modal-bg-color: $slate07;
 $modal-border-color: $slate05;
 $modal-box-shadow: 0 2px 5px $drop-shadow-depth;
 $modal-btn-color: $slate03;
-$modal-color: $white;
+$modal-color: $theme-color-palette-white;
 $modal-btn-border-color: $slate05;
-$modal-btn-hover-color: $white;
+$modal-btn-hover-color: $theme-color-palette-white;
 $modal-btn-primary-color: $azure04;
 $modal-btn-primary-hover-color: $azure03;
-$modal-btn-disabled-color: $white;
+$modal-btn-disabled-color: $theme-color-palette-white;
 $modal-btn-disabled-opacity: 0.3;
-$modal-primary-color: $white;
+$modal-primary-color: $theme-color-palette-white;
 $modal-secondary-color: $slate03;
 
 // Accordion
@@ -397,11 +397,11 @@ $accordion-border-color: $slate09;
 $accordion-toplevel-border-color: $slate05;
 $accordion-pane-bg-color: $slate09;
 $accordion-text-color: $slate02;
-$accordion-text-active-color: $white;
+$accordion-text-active-color: $theme-color-palette-white;
 $accordion-icon-color: $slate02;
-$accordion-icon-hover-color: $white;
-$accordion-hover-border-color: $white;
-$accordion-hover-text-color: $white;
+$accordion-icon-hover-color: $theme-color-palette-white;
+$accordion-hover-border-color: $theme-color-palette-white;
+$accordion-hover-text-color: $theme-color-palette-white;
 
 $accordion-panel-border-color: $slate09;
 
@@ -412,15 +412,15 @@ $accordion-alternate-pane-bg-color: $slate10;
 $accordion-inverse-bg-color: $slate08;
 $accordion-inverse-pane-bg-color: $slate09;
 $accordion-inverse-border-color: $slate09;
-$accordion-inverse-border-hover-color: $white;
+$accordion-inverse-border-hover-color: $theme-color-palette-white;
 $accordion-inverse-text-color: $slate02;
-$accordion-inverse-text-hover-color: $white;
-$accordion-inverse-focus-state-color: $white;
+$accordion-inverse-text-hover-color: $theme-color-palette-white;
+$accordion-inverse-focus-state-color: $theme-color-palette-white;
 
 $accordion-focused-text-color: $theme-color-brand-primary-base;
 $accordion-focused-border-color: $theme-color-brand-primary-base;
 $accordion-selected-bg-color: $theme-color-brand-primary-base;
-$accordion-selected-text-color: $white;
+$accordion-selected-text-color: $theme-color-palette-white;
 
 $accordion-highcontrast-text-decoration: none;
 
@@ -459,8 +459,8 @@ $tab-alt-bg-color: $slate10;
 $tab-alt-border-color: $slate08;
 
 // Vertical Tabs
-$vertical-tab-text-color: $white;
-$vertical-tab-text-hover-color: $white;
+$vertical-tab-text-color: $theme-color-palette-white;
+$vertical-tab-text-hover-color: $theme-color-palette-white;
 $vertical-tab-bg-hover-color: $slate06;
 
 $vertical-tab-panel-bg-color: $slate08;
@@ -493,10 +493,10 @@ $datagrid-sort-icon-color: $slate04;
 $datagrid-sort-icon-sorted-color: $slate10;
 $datagrid-required-icon-color: $slate10;
 
-$datagrid-cell-color: $white;
+$datagrid-cell-color: $theme-color-palette-white;
 $datagrid-cell-bg-color: $slate08;
 $datagrid-cell-readonly-bg-color: $slate07;
-$datagrid-cell-readonly-color: $white;
+$datagrid-cell-readonly-color: $theme-color-palette-white;
 $datagrid-cell-border-color: $slate05;
 $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(101, 104, 113, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
@@ -519,7 +519,7 @@ $datagrid-list-row-hover-color: transparent;
 $datagrid-list-sort-icon-color: $slate04;
 $datagrid-list-sort-icon-hover-color: $slate01;
 $datagrid-header-focus-bg-color: $datagrid-header-bg-color;
-$datagrid-header-focus-border-color: $white;
+$datagrid-header-focus-border-color: $theme-color-palette-white;
 $datagrid-list-header-checkbox-border-color: $slate05;
 $datagrid-list-header-active-color: $slate10;
 
@@ -533,9 +533,9 @@ $datagrid-filter-focus-color: $theme-color-brand-primary-alt;
 $datagrid-filter-active-color: $theme-color-brand-primary-alt;
 
 $datagrid-list-filter-border-color: $slate03;
-$datagrid-list-filter-hover-border-color: $white;
-$datagrid-list-filter-color: $white;
-$datagrid-list-filter-hover-color: $white;
+$datagrid-list-filter-hover-border-color: $theme-color-palette-white;
+$datagrid-list-filter-color: $theme-color-palette-white;
+$datagrid-list-filter-hover-color: $theme-color-palette-white;
 $datagrid-list-filter-icon-color: $slate03;
 $datagrid-list-filter-disabled-color: $slate06;
 $datagrid-list-filter-focus-color: $theme-color-brand-primary-base;
@@ -551,7 +551,7 @@ $sr-result-bottom-border-color: $hr-top-color;
 $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
-$tree-selected-color: $white;
+$tree-selected-color: $theme-color-palette-white;
 $tree-selected-bg-color: $slate06;
 $tree-isover-bg-color: $azure10;
 $tree-isover-border-color: $azure08;
@@ -560,8 +560,8 @@ $tree-active-bg-color: #3e586c;
 $tree-icon-color: $slate03;
 $tree-link-color: $slate03;
 $tree-disabled-color: $slate05;
-$tree-hover-color: $white;
-$tree-hover-icon-color: $white;
+$tree-hover-color: $theme-color-palette-white;
+$tree-hover-icon-color: $theme-color-palette-white;
 
 // Chart Progress Bar
 $chart-progressbar-bg-color: $slate04;
@@ -617,7 +617,7 @@ $searchfield-card-text-color: $font-color;
 
 $searchfield-header-bg-color: $slate08;
 $searchfield-header-border-color: $slate07;
-$searchfield-header-text-color: $white;
+$searchfield-header-text-color: $theme-color-palette-white;
 $searchfield-header-placeholder-text-color: $slate04;
 $searchfield-header-icon-color: $header-button-color;
 
@@ -628,16 +628,16 @@ $image-background-color: $slate04;
 // Toast
 $toast-bg-color: $slate07;
 $toast-border-color: $slate05;
-$toast-header-color: $white;
-$toast-text-color: $white;
+$toast-header-color: $theme-color-palette-white;
+$toast-text-color: $theme-color-palette-white;
 $toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
 
 // Builder Pattern
 $builder-header-bg-color: $slate08;
 
 // About
-$about-header-color: $white;
-$about-text-color: $white;
+$about-header-color: $theme-color-palette-white;
+$about-text-color: $theme-color-palette-white;
 $about-text-border-color: $slate05;
 $about-text-hover-border-color: $slate03;
 
@@ -648,7 +648,7 @@ $header-tab-normal-color: $slate03;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
 $header-tab-alt-bg-color: $slate10;
-$header-tab-alt-separator: $white;
+$header-tab-alt-separator: $theme-color-palette-white;
 $header-tab-alt-normal-color: $slate03;
 $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
@@ -656,7 +656,7 @@ $header-tab-alt-selected-color: $inverse-color;
 // Header Breadcrumb
 $header-breadcrumb-color: $slate01;
 $header-breadcrumb-alt-bg-color: $slate10;
-$header-breadcrumb-alt-color: $white;
+$header-breadcrumb-alt-color: $theme-color-palette-white;
 $header-breadcrumb-border-color: $slate05;
 
 // Module Tabs
@@ -666,9 +666,9 @@ $module-tabs-y-border-color: $header-border-color;
 $module-tabs-inactive-bg-color: $header-border-color;
 $module-tabs-active-bg-color: $slate06;
 $module-tabs-hover-bg-color: $slate06;
-$module-tabs-inactive-text-color: rgba($white, 0.85);
-$module-tabs-active-text-color: $white;
-$module-tabs-hover-text-color: $white;
+$module-tabs-inactive-text-color: rgba($theme-color-palette-white, 0.85);
+$module-tabs-active-text-color: $theme-color-palette-white;
+$module-tabs-hover-text-color: $theme-color-palette-white;
 $module-tabs-disabled-bg-color: $slate06;
 $module-tabs-disabled-x-border-color: $slate04;
 $module-tabs-disabled-y-border-color: $slate07;
@@ -680,7 +680,7 @@ $composite-tabs-panel-bg-color: $slate10;
 // Splitter
 $splitter-grip-bg-color: $slate03;
 $splitter-active-bg-color: $slate07;
-$splitter-active-grip-bg-color: $white;
+$splitter-active-grip-bg-color: $theme-color-palette-white;
 $splitter-box-shadow-color: rgba(54, 138, 192, 0.75);
 
 // Step Chart

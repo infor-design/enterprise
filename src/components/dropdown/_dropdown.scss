@@ -29,7 +29,7 @@
   }
 
   &.white {
-    fill: $white;
+    fill: $theme-color-palette-white;
   }
 }
 
@@ -495,7 +495,7 @@ div.multiselect {
     .icon {
       @include css3(transform, rotate(180deg));
 
-      background-color: rgba($white, 0);
+      background-color: rgba($theme-color-palette-white, 0);
       fill: $trigger-icon-fill-color;
       height: 32px;
       width: 18px;
