@@ -5,8 +5,8 @@ $masthead-bg-color: $slate07;
 $masthead-border-color: $slate08;
 $masthead-text-color: $slate03;
 $masthead-button-color: $slate04;
-$masthead-button-hover-color: $white;
-$masthead-button-focus-color: $white;
+$masthead-button-hover-color: $theme-color-palette-white;
+$masthead-button-focus-color: $theme-color-palette-white;
 
 .masthead {
   background-color: $masthead-bg-color;
@@ -112,7 +112,7 @@ $masthead-button-focus-color: $white;
       vertical-align: top;
 
       .ripple-effect {
-        background-color: $white;
+        background-color: $theme-color-palette-white;
       }
 
       &:active {

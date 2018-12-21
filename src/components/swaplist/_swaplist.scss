@@ -11,13 +11,13 @@
   @include is-dragging();
 
   background-color: $swaplist-bg-color-selected;
-  color: $white;
+  color: $theme-color-palette-white;
   opacity: 0.7;
   position: fixed;
   z-index: 2;
 
   p {
-    color: $white;
+    color: $theme-color-palette-white;
   }
 }
 

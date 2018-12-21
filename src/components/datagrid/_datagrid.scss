@@ -30,7 +30,7 @@
       }
 
       .icon-rowstatus {
-        fill: $white;
+        fill: $theme-color-palette-white;
         height: 10px;
         left: 1px;
         position: absolute;
@@ -1350,7 +1350,7 @@ $datagrid-short-row-height: 23px;
 
     .tag {
       &[class*='azure'] {
-        color: $white;
+        color: $theme-color-palette-white;
       }
     }
 
