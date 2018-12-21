@@ -98,7 +98,7 @@ $popover-arrow-border-color: $graphite03;
 $popover-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popover-color: $theme-color-font-base;
 $popover-separator-color: $graphite03;
-$popover-alternate-color: $graphite10;
+$popover-alternate-color: $theme-color-palette-graphite-100;
 $popover-alternate-subheader-color: $graphite06;
 $popover-alternate-bg-color: $graphite01;
 $popover-alternate-arrow-color: $graphite01;
@@ -115,19 +115,19 @@ $tooltip-error-border-color:  $theme-color-status-danger;
 $tooltip-error-color: $theme-color-palette-white;
 
 // Badges
-$badge-neutral-color: $graphite10;
+$badge-neutral-color: $theme-color-palette-graphite-100;
 $badge-neutral-bg-color: $graphite02;
 $badge-neutral-hover-bg-color: $graphite03;
-$badge-secondary-color: $graphite10;
+$badge-secondary-color: $theme-color-palette-graphite-100;
 $badge-secondary-bg-color: $theme-color-palette-white;
 $badge-secondary-border-color: $graphite03;
 $badge-error-color: $theme-color-palette-white;
-$badge-alert-color: $graphite10;
+$badge-alert-color: $theme-color-palette-graphite-100;
 $badge-good-color: $theme-color-palette-white;
 $badge-info-color: $theme-color-palette-white;
 $badge-info-bg-color: $azure07;
 $badge-neutral-icon-color: $graphite06;
-$badge-neutral-hover-icon-color: $graphite10;
+$badge-neutral-hover-icon-color: $theme-color-palette-graphite-100;
 
 // Popup Menu
 $popupmenu-color: $font-color-extrahighcontrast;
@@ -161,7 +161,7 @@ $tertiary-btn-dark-active-color: $theme-color-palette-white;
 $secondary-border-btn-color:  $graphite06;
 $secondary-border-btn-border-color: $theme-color-brand-secondary-alt;
 $secondary-border-btn-hover-color:  $theme-color-font-base;
-$secondary-border-btn-hover-border-color: $graphite10;
+$secondary-border-btn-hover-border-color: $theme-color-palette-graphite-100;
 $secondary-border-btn-ripple-color: $azure03;
 
 // Menu Button
@@ -336,7 +336,7 @@ $fileupload-droparea-dd-hover-bg-color: rgba(200, 233, 244, 0.3);
 $fileupload-status-color: $theme-color-palette-white;
 $fileupload-status-hover-color: $theme-color-palette-white;
 $fileupload-cancel-bg-color: $graphite06;
-$fileupload-cancel-hover-bg-color: $graphite10;
+$fileupload-cancel-hover-bg-color: $theme-color-palette-graphite-100;
 $fileupload-disabled-icon-color: $theme-color-brand-secondary-alt;
 $fileupload-disabled-border-color: $graphite03;
 $fileupload-disabled-bg-color: $graphite01;
@@ -458,7 +458,7 @@ $accordion-icon-color: $graphite06;
 $accordion-icon-hover-color: $theme-color-font-base;
 $accordion-text-color: $graphite06;
 $accordion-text-active-color: $theme-color-font-base;
-$accordion-hover-border-color: $graphite10;
+$accordion-hover-border-color: $theme-color-palette-graphite-100;
 $accordion-hover-text-color: $theme-color-font-base;
 
 $accordion-panel-border-color: $graphite02;
@@ -607,9 +607,9 @@ $datagrid-filter-focus-color: $azure04;
 $datagrid-filter-active-color: $azure04;
 
 $datagrid-list-filter-border-color: $slate04;
-$datagrid-list-filter-hover-border-color: $slate10;
-$datagrid-list-filter-color: $slate10;
-$datagrid-list-filter-hover-color: $slate10;
+$datagrid-list-filter-hover-border-color: $theme-color-palette-slate-100;
+$datagrid-list-filter-color: $theme-color-palette-slate-100;
+$datagrid-list-filter-hover-color: $theme-color-palette-slate-100;
 $datagrid-list-filter-icon-color: $slate04;
 $datagrid-list-filter-disabled-color: $slate03;
 $datagrid-list-filter-focus-color: $theme-color-brand-primary-base;
@@ -708,7 +708,7 @@ $searchfield-header-placeholder-text-color: $slate03;
 $searchfield-header-icon-color: $header-button-color;
 
 $searchfield-moduletabs-bg-color: $slate09;
-$searchfield-moduletabs-border-color: $slate10;
+$searchfield-moduletabs-border-color: $theme-color-palette-slate-100;
 $searchfield-moduletabs-disabled-bg-color: $slate07;
 $searchfield-moduletabs-disabled-border-color: $slate08;
 
@@ -719,7 +719,7 @@ $image-background-color: $graphite02;
 //Toast
 $toast-bg-color: $theme-color-palette-white;
 $toast-border-color: $graphite03;
-$toast-header-color: $graphite10;
+$toast-header-color: $theme-color-palette-graphite-100;
 $toast-text-color: $theme-color-font-base;
 $toast-shadow: none; //0 0 5px $drop-shadow-depth;
 
@@ -756,7 +756,7 @@ $module-tabs-x-border-color: $theme-color-brand-primary-base;
 $module-tabs-y-border-color: $azure09;
 $module-tabs-inactive-bg-color: $azure08;
 $module-tabs-active-bg-color: $theme-color-brand-primary-alt;
-$module-tabs-hover-bg-color: $azure10;
+$module-tabs-hover-bg-color: $theme-color-palette-azure-100;
 $module-tabs-inactive-text-color: rgba($theme-color-palette-white, 0.85);
 $module-tabs-active-text-color: $theme-color-palette-white;
 $module-tabs-hover-text-color: $theme-color-palette-white;
@@ -775,7 +775,7 @@ $composite-tabs-panel-bg-color: $theme-color-palette-white;
 // Splitter
 $splitter-grip-bg-color: $graphite06;
 $splitter-active-bg-color: $graphite02;
-$splitter-active-grip-bg-color: $graphite10;
+$splitter-active-grip-bg-color: $theme-color-palette-graphite-100;
 $splitter-box-shadow-color: rgba(54, 138, 192, 0.75);
 
 // Step Chart

@@ -20,7 +20,7 @@
 // Form Background Color
 $header-bg-color: $slate09;
 $subhead-bg-color: $slate06;
-$header-border-color: $slate10;
+$header-border-color: $theme-color-palette-slate-100;
 $header-button-color: rgba($theme-color-palette-white, 0.7);
 $header-button-focus-color: rgba($theme-color-palette-white, 1);
 $header-button-hover-color: rgba($theme-color-palette-white, 1);
@@ -110,7 +110,7 @@ $progress-bar-bg-color: $theme-color-brand-primary-base;
 $tooltip-bg-color: $theme-color-palette-white;
 $tooltip-border-color: $theme-color-palette-white;
 $tooltip-box-shadow: 0 2px 5px $drop-shadow-depth;
-$tooltip-color: $slate10;
+$tooltip-color: $theme-color-palette-slate-100;
 $tooltip-error-bg-color: $alert-red;
 $tooltip-error-color: $theme-color-palette-white;
 
@@ -122,8 +122,8 @@ $badge-secondary-color: $theme-color-palette-white;
 $badge-secondary-bg-color: $slate07;
 $badge-secondary-border-color: $slate05;
 $badge-error-color: $theme-color-palette-white;
-$badge-alert-color: $graphite10;
-$badge-good-color: $graphite10;
+$badge-alert-color: $theme-color-palette-graphite-100;
+$badge-good-color: $theme-color-palette-graphite-100;
 $badge-info-color: $theme-color-palette-white;
 $badge-info-bg-color: $theme-color-brand-primary-base;
 $badge-neutral-icon-color: $slate03;
@@ -266,7 +266,7 @@ $fileupload-droparea-hover-bg-color: $azure09;
 $fileupload-droparea-bg-color: rgba($slate07, 0.5);
 $fileupload-droparea-hover-bg-color: $slate07;
 $fileupload-droparea-dd-hover-border-color: $theme-color-brand-primary-base;
-$fileupload-droparea-dd-hover-bg-color: rgba($slate10, 0.3);
+$fileupload-droparea-dd-hover-bg-color: rgba($theme-color-palette-slate-100, 0.3);
 
 // Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
@@ -406,8 +406,8 @@ $accordion-hover-text-color: $theme-color-palette-white;
 $accordion-panel-border-color: $slate09;
 
 $accordion-alternate-bg-color: $slate09;
-$accordion-alternate-border-color: $slate10;
-$accordion-alternate-pane-bg-color: $slate10;
+$accordion-alternate-border-color: $theme-color-palette-slate-100;
+$accordion-alternate-pane-bg-color: $theme-color-palette-slate-100;
 
 $accordion-inverse-bg-color: $slate08;
 $accordion-inverse-pane-bg-color: $slate09;
@@ -431,7 +431,7 @@ $accordion-disabled-pane-bg-color: transparent;
 $accordion-disabled-pane-text-color: $slate05;
 
 // Application Menu (extends Accoridon)
-$application-menu-border-color: $slate10;
+$application-menu-border-color: $theme-color-palette-slate-100;
 $application-menu-trigger-icon-fill-color: $trigger-icon-fill-color;
 
 // Contextual Action Panel
@@ -455,7 +455,7 @@ $tab-selected-color: $theme-color-brand-primary-base;
 $tab-border-color: $slate07;
 $tab-hover-color: $font-color-extrahighcontrast;
 
-$tab-alt-bg-color: $slate10;
+$tab-alt-bg-color: $theme-color-palette-slate-100;
 $tab-alt-border-color: $slate08;
 
 // Vertical Tabs
@@ -481,7 +481,7 @@ $chart-arc-stroke: $slate07;
 
 // DataGrid
 $datagrid-border-color: $slate05;
-$datagrid-header-color: $slate10;
+$datagrid-header-color: $theme-color-palette-slate-100;
 $datagrid-header-bg-color: $slate03;
 $datagrid-nested-header-bg-color: $slate04;
 $datagrid-nested-header-border-color: $slate05;
@@ -490,8 +490,8 @@ $datagrid-header-hover-color: $slate02;
 $datagrid-header-active-color: $slate04;
 $datagrid-header-checkbox-border-color: $slate09;
 $datagrid-sort-icon-color: $slate04;
-$datagrid-sort-icon-sorted-color: $slate10;
-$datagrid-required-icon-color: $slate10;
+$datagrid-sort-icon-sorted-color: $theme-color-palette-slate-100;
+$datagrid-required-icon-color: $theme-color-palette-slate-100;
 
 $datagrid-cell-color: $theme-color-palette-white;
 $datagrid-cell-bg-color: $slate08;
@@ -521,12 +521,12 @@ $datagrid-list-sort-icon-hover-color: $slate01;
 $datagrid-header-focus-bg-color: $datagrid-header-bg-color;
 $datagrid-header-focus-border-color: $theme-color-palette-white;
 $datagrid-list-header-checkbox-border-color: $slate05;
-$datagrid-list-header-active-color: $slate10;
+$datagrid-list-header-active-color: $theme-color-palette-slate-100;
 
 $datagrid-filter-border-color: $slate05;
-$datagrid-filter-hover-border-color: $slate10;
-$datagrid-filter-color: $slate10;
-$datagrid-filter-hover-color: $slate10;
+$datagrid-filter-hover-border-color: $theme-color-palette-slate-100;
+$datagrid-filter-color: $theme-color-palette-slate-100;
+$datagrid-filter-hover-color: $theme-color-palette-slate-100;
 $datagrid-filter-disabled-color: $slate04;
 $datagrid-filter-icon-color: $slate05;
 $datagrid-filter-focus-color: $theme-color-brand-primary-alt;
@@ -553,7 +553,7 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 // Tree
 $tree-selected-color: $theme-color-palette-white;
 $tree-selected-bg-color: $slate06;
-$tree-isover-bg-color: $azure10;
+$tree-isover-bg-color: $theme-color-palette-azure-100;
 $tree-isover-border-color: $azure08;
 $tree-focus-border-color: $theme-color-brand-primary-base;
 $tree-active-bg-color: #3e586c;
@@ -593,7 +593,7 @@ $hierarchy-line-color: $slate04;
 
 // Searchfield Colors
 $searchfield-bg-color: $slate09;
-$searchfield-border-color: $slate10;
+$searchfield-border-color: $theme-color-palette-slate-100;
 $searchfield-icon-color: $button-color-tertiary-initial-font;
 $searchfield-text-color: $button-color-tertiary-initial-font;
 $searchfield-lighter-bg-color: $slate08;
@@ -604,7 +604,7 @@ $searchfield-alt-bg-color: $slate07;
 $searchfield-alt-border-color: $slate08;
 
 $searchfield-context-bg: $slate08;
-$searchfield-context-alt-bg: $slate10;
+$searchfield-context-alt-bg: $theme-color-palette-slate-100;
 $searchfield-context-border-color: $slate09;
 $searchfield-context-box-shadow-color: $slate09;
 $searchfield-context-icon-color: $slate06;
@@ -647,7 +647,7 @@ $header-tab-separator: rgba(255, 255, 255, 0.4);
 $header-tab-normal-color: $slate03;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
-$header-tab-alt-bg-color: $slate10;
+$header-tab-alt-bg-color: $theme-color-palette-slate-100;
 $header-tab-alt-separator: $theme-color-palette-white;
 $header-tab-alt-normal-color: $slate03;
 $header-tab-alt-hover-color: $inverse-color;
@@ -655,7 +655,7 @@ $header-tab-alt-selected-color: $inverse-color;
 
 // Header Breadcrumb
 $header-breadcrumb-color: $slate01;
-$header-breadcrumb-alt-bg-color: $slate10;
+$header-breadcrumb-alt-bg-color: $theme-color-palette-slate-100;
 $header-breadcrumb-alt-color: $theme-color-palette-white;
 $header-breadcrumb-border-color: $slate05;
 
@@ -675,7 +675,7 @@ $module-tabs-disabled-y-border-color: $slate07;
 $module-tabs-disabled-text-color: $slate04;
 
 // Composite Tabs
-$composite-tabs-panel-bg-color: $slate10;
+$composite-tabs-panel-bg-color: $theme-color-palette-slate-100;
 
 // Splitter
 $splitter-grip-bg-color: $slate03;
@@ -698,11 +698,11 @@ $blockgrid-focus-border-color: $theme-color-brand-primary-base;
 
 // Tree Map
 $treemap-title-bg-color: $slate03;
-$treemap-title-color: $slate10;
+$treemap-title-color: $theme-color-palette-slate-100;
 
 // Calendar
 $calendar-bg-color: $panel-bg-color;
-$calendar-event-color: $slate10;
+$calendar-event-color: $theme-color-palette-slate-100;
 $calendar-line-color: $slate05;
 $calendar-selected-border-color: $theme-color-brand-primary-base;
 $calendar-selected-bg-color: $slate08;

@@ -20,7 +20,7 @@
 // Form Background Color
 $header-bg-color: $azure09;
 $subhead-bg-color: $azure08;
-$header-border-color: $slate10;
+$header-border-color: $theme-color-palette-slate-100;
 $header-button-color: rgba($theme-color-palette-white, 1);
 $header-button-focus-color: rgba($theme-color-palette-white, 1);
 $header-button-hover-color: rgba($theme-color-palette-white, 0.85);
@@ -52,14 +52,14 @@ $focus-box-shadow-spinbox-up: 0 -3px 3px 0 $focus-box-shadow-color,
 $inverse-color: $theme-color-palette-white;
 
 // Text Color
-$font-color-extrahighcontrast: $graphite10;
-$font-color-highcontrast: $graphite10;
+$font-color-extrahighcontrast: $theme-color-palette-graphite-100;
+$font-color-highcontrast: $theme-color-palette-graphite-100;
 $font-color: $graphite09;
 $font-color-lowcontrast: $graphite07;
 $label-color: $graphite09;
 $label-disabled-color: $graphite05;
 $disabled-color: $graphite05;
-$signin-title-color: $slate10;
+$signin-title-color: $theme-color-palette-slate-100;
 
 // New Text Colors
 $font-color-default: $black;
@@ -71,13 +71,13 @@ $font-color-alert: $alert-red;
 // The hyperlink Style
 $hyperlink-color: $link-color-initial-font;
 $hyperlink-focus-border-color: $link-color-initial-font;
-$hyperlink-visited-color: $amethyst10;
+$hyperlink-visited-color: $theme-color-palette-amethyst-100;
 $hyperlink-disabled-color: $disabled-color;
 $hyperlink-hover-color: $theme-color-brand-primary-alt;
 
 // Alert Colors
 $alert-info: $azure09;
-$alert-green: $emerald10;
+$alert-green: $theme-color-palette-emerald-100;
 $alert-yellow: $alert-yellow;
 $alert-red: $ruby09;
 
@@ -161,8 +161,8 @@ $tertiary-btn-ripple-color: $theme-color-brand-primary-alt;
 // Secondary with Border
 $secondary-border-btn-color:  $graphite09;
 $secondary-border-btn-border-color: $graphite09;
-$secondary-border-btn-hover-color:  $graphite10;
-$secondary-border-btn-hover-border-color: $graphite10;
+$secondary-border-btn-hover-color:  $theme-color-palette-graphite-100;
+$secondary-border-btn-hover-border-color: $theme-color-palette-graphite-100;
 $secondary-border-btn-ripple-color: $theme-color-brand-primary-alt;
 
 // Input Fields
@@ -174,7 +174,7 @@ $input-readonly-color: $input-color-readonly-font;
 //States
 $error-color: $alert-red;
 $error-icon-fill: $alert-red;
-$alert-color: $amber10;
+$alert-color: $theme-color-palette-amber-100;
 $confirm-color: $alert-green;
 $info-color: $theme-color-brand-primary-base;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
@@ -229,7 +229,7 @@ $listbuilder-border-color: $input-color-initial-border;
 $listbuilder-border-color-focus: $theme-color-brand-primary-alt;
 $listbuilder-icon-color-hover: $font-color-highcontrast;
 $listbuilder-text-color: $black;
-$listbuilder-input-selection-bg-color: $azure10;
+$listbuilder-input-selection-bg-color: $theme-color-palette-azure-100;
 
 // Toolbar
 $toolbar-standalone-bg-color: $graphite01;
@@ -315,7 +315,7 @@ $skip-link-bg-color: $graphite01;
 $skip-link-color: $theme-color-brand-primary-base;
 
 //Mast Head
-$masthead-bg-color: $slate10;
+$masthead-bg-color: $theme-color-palette-slate-100;
 $masthead-border-color: $slate05;
 
 // Icons
@@ -422,7 +422,7 @@ $accordion-text-active-color: $black;
 $accordion-icon-color: $graphite09;
 $accordion-icon-hover-color: $black;
 $accordion-hover-border-color: $black;
-$accordion-hover-text-color: $graphite10;
+$accordion-hover-text-color: $theme-color-palette-graphite-100;
 
 $accordion-panel-border-color: $theme-color-brand-secondary-alt;
 
@@ -432,7 +432,7 @@ $accordion-alternate-pane-bg-color: $theme-color-brand-secondary-alt;
 
 $accordion-inverse-bg-color: $slate08;
 $accordion-inverse-pane-bg-color: $black;
-$accordion-inverse-border-color: $slate10;
+$accordion-inverse-border-color: $theme-color-palette-slate-100;
 $accordion-inverse-border-hover-color: $theme-color-palette-white;
 $accordion-inverse-text-color: $slate03;
 $accordion-inverse-text-hover-color: $theme-color-palette-white;
@@ -476,7 +476,7 @@ $rating-border-color: $graphite06;
 $rating-hover-color: $theme-color-brand-primary-base;
 
 // Tabs
-$tab-text-color: $graphite10;
+$tab-text-color: $theme-color-palette-graphite-100;
 $tab-selected-color: $azure09;
 $tab-border-color: $theme-color-brand-secondary-alt;
 $tab-hover-color: $font-color-extrahighcontrast;
@@ -511,7 +511,7 @@ $datagrid-header-bg-color: $graphite08;
 $datagrid-nested-header-bg-color: $graphite06;
 $datagrid-nested-header-border-color: $theme-color-brand-secondary-alt;
 $datagrid-header-border-color: $graphite06;
-$datagrid-header-hover-color: $graphite10;
+$datagrid-header-hover-color: $theme-color-palette-graphite-100;
 $datagrid-header-active-color: $graphite08;
 $datagrid-header-checkbox-border-color: $graphite05;
 $datagrid-sort-icon-color: $theme-color-brand-secondary-alt;
@@ -537,7 +537,7 @@ $datagrid-list-header-bg-color: $theme-color-brand-secondary-alt;
 $datagrid-list-header-focus-border-color: $theme-color-brand-primary-base;
 $datagrid-list-header-box-shadow: 0 0 4px 1px rgba(80, 83, 90, 0.4);
 $datagrid-list-header-border-color: transparent;
-$datagrid-list-header-color: $graphite10;
+$datagrid-list-header-color: $theme-color-palette-graphite-100;
 $datagrid-list-header-hover-color: $theme-color-brand-secondary-alt;
 $datagrid-list-row-hover-color: transparent;
 $datagrid-list-sort-icon-color: $theme-color-brand-secondary-alt;
@@ -557,9 +557,9 @@ $datagrid-filter-focus-color: $azure04;
 $datagrid-filter-active-color: $azure04;
 
 $datagrid-list-filter-border-color: $slate06;
-$datagrid-list-filter-hover-border-color: $slate10;
-$datagrid-list-filter-color: $slate10;
-$datagrid-list-filter-hover-color: $slate10;
+$datagrid-list-filter-hover-border-color: $theme-color-palette-slate-100;
+$datagrid-list-filter-color: $theme-color-palette-slate-100;
+$datagrid-list-filter-hover-color: $theme-color-palette-slate-100;
 $datagrid-list-filter-icon-color: $slate06;
 $datagrid-list-filter-disabled-color: $slate04;
 $datagrid-list-filter-focus-color: $azure09;
@@ -616,7 +616,7 @@ $wizard-active-text-color: $theme-color-brand-primary-base;
 $wizard-focus-box-shadow: 0 0 0 1px $theme-color-brand-primary-alt;
 
 //Org Chart
-$hierarchy-line-color: $graphite10;
+$hierarchy-line-color: $theme-color-palette-graphite-100;
 
 // Searchfield Colors
 $searchfield-bg-color: $theme-color-palette-white;
@@ -655,7 +655,7 @@ $image-background-color: $graphite03;
 //Toast
 $toast-bg-color: $theme-color-palette-white;
 $toast-border-color: $graphite03;
-$toast-header-color: $graphite10;
+$toast-header-color: $theme-color-palette-graphite-100;
 $toast-text-color: $theme-color-font-base;
 
 $toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
@@ -675,7 +675,7 @@ $header-tab-separator: rgba(255, 255, 255, 0.4);
 $header-tab-normal-color: $graphite01;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
-$header-tab-alt-bg-color: $slate10;
+$header-tab-alt-bg-color: $theme-color-palette-slate-100;
 $header-tab-alt-separator: $header-tabcontainer-border-color;
 $header-tab-alt-normal-color: $inverse-color;
 $header-tab-alt-hover-color: $inverse-color;
@@ -690,8 +690,8 @@ $header-breadcrumb-border-color: $graphite06;
 // Module Tabs
 $module-tabs-bg-color: $azure09;
 $module-tabs-x-border-color: $azure05;
-$module-tabs-y-border-color: $azure10;
-$module-tabs-inactive-bg-color: $azure10;
+$module-tabs-y-border-color: $theme-color-palette-azure-100;
+$module-tabs-inactive-bg-color: $theme-color-palette-azure-100;
 $module-tabs-active-bg-color: $theme-color-brand-primary-alt;
 $module-tabs-hover-bg-color: $azure06;
 $module-tabs-inactive-text-color: rgba($theme-color-palette-white, 0.85);
@@ -740,13 +740,13 @@ $treemap-title-color: $theme-color-palette-white;
 
 // Calendar
 $calendar-bg-color: $panel-bg-color;
-$calendar-event-color: $graphite10;
+$calendar-event-color: $theme-color-palette-graphite-100;
 $calendar-line-color: $graphite09;
 $calendar-selected-border-color: $theme-color-brand-primary-base;
 $calendar-selected-bg-color: $graphite03;
 $calendar-hover-bg-color: rgba(74, 74, 74, 0.1);
 $calendar-disabled-bg-color: $input-color-readonly-background;
-$calendar-disabled-color: $graphite10;
+$calendar-disabled-color: $theme-color-palette-graphite-100;
 
 //================================================== //
 // Special Control Overrides
