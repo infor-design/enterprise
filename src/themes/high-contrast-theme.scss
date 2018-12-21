@@ -66,7 +66,7 @@ $font-color-default: $theme-color-palette-black;
 $font-color-descriptive: $theme-color-palette-graphite-90;
 $font-color-hyperlink: $theme-color-brand-primary-base;
 $font-color-muted: $theme-color-palette-graphite-50;
-$font-color-alert: $alert-red;
+$font-color-alert: $theme-color-status-danger;
 
 // The hyperlink Style
 $hyperlink-color: $link-color-initial-font;
@@ -74,12 +74,6 @@ $hyperlink-focus-border-color: $link-color-initial-font;
 $hyperlink-visited-color: $theme-color-palette-amethyst-100;
 $hyperlink-disabled-color: $disabled-color;
 $hyperlink-hover-color: $theme-color-brand-primary-alt;
-
-// Alert Colors
-$alert-info: $theme-color-palette-azure-90;
-$alert-green: $theme-color-palette-emerald-100;
-$alert-yellow: $alert-yellow;
-$alert-red: $theme-color-palette-ruby-90;
 
 // Rules
 $hr-top-color: $theme-color-palette-graphite-30;
@@ -120,8 +114,8 @@ $tooltip-bg-color: $theme-color-palette-graphite-80;
 $tooltip-border-color: $theme-color-palette-graphite-80;
 $tooltip-box-shadow: 0 2px 5px $drop-shadow-depth;
 $tooltip-color: $theme-color-palette-white;
-$tooltip-error-bg-color: $alert-red;
-$tooltip-error-border-color:  $alert-red;
+$tooltip-error-bg-color: $theme-color-status-danger;
+$tooltip-error-border-color:  $theme-color-status-danger;
 $tooltip-error-color: $theme-color-palette-white;
 
 // Badges
@@ -172,14 +166,14 @@ $input-placeholder-color: $input-color-initial-placeholder;
 $input-readonly-color: $input-color-readonly-font;
 
 //States
-$error-color: $alert-red;
-$error-icon-fill: $alert-red;
+$error-color: $theme-color-status-danger;
+$error-icon-fill: $theme-color-status-danger;
 $alert-color: $theme-color-palette-amber-100;
-$confirm-color: $alert-green;
+$confirm-color: $theme-color-status-success;
 $info-color: $theme-color-brand-primary-base;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
-$dirty-icon-fill: $alert-yellow;
-$confirm-icon-fill: $alert-green;
+$dirty-icon-fill: $theme-color-status-caution;
+$confirm-icon-fill: $theme-color-status-success;
 $info-icon-fill: $theme-color-palette-azure-80;
 $selected-bg-color: rgba($theme-color-brand-primary-base, 0.3);
 
@@ -292,7 +286,7 @@ $colorpicker-popup-border-color: $theme-color-palette-graphite-60;
 $fileupload-border-color: $theme-color-palette-graphite-50;
 $fileupload-droparea-color: $theme-color-palette-graphite-50;
 $fileupload-secondary-color: $theme-color-palette-graphite-70;
-$fileupload-error-border-color: $alert01;
+$fileupload-error-border-color: $theme-color-status-danger;
 $fileupload-completed-color: #225800;
 $fileupload-completed-border-color: #225800;
 $fileupload-droparea-hover-color: $theme-color-palette-graphite-50;
@@ -716,7 +710,7 @@ $step-chart-bg-color: $theme-color-palette-graphite-20;
 $step-chart-border-color: $theme-color-palette-graphite-10;
 $step-chart-inprogress-bg-color: $theme-color-palette-ruby-20;
 $step-chart-completed-bg-color: $theme-color-brand-primary-base;
-$step-chart-totally-completed-bg-color: $alert-green;
+$step-chart-totally-completed-bg-color: $theme-color-status-success;
 
 //Swaplist
 $swaplist-bg-color-hover: $theme-color-brand-secondary-alt;

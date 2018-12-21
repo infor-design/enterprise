@@ -382,11 +382,11 @@
     }
 
     &.alert {
-      color: $alert-orange;
+      color: $theme-color-status-warning;
     }
 
     &.alert-yellow {
-      color: $alert-yellow;
+      color: $theme-color-status-caution;
     }
 
     &.alert-neutral {
@@ -398,7 +398,7 @@
     }
 
     &.good {
-      color: $alert-green;
+      color: $theme-color-status-success;
     }
 
     &.primary {

@@ -67,7 +67,7 @@ $font-color-default: $theme-color-palette-white;
 $font-color-descriptive: $theme-color-palette-slate-30;
 $font-color-hyperlink: $theme-color-brand-primary-base;
 $font-color-muted: $theme-color-palette-slate-40;
-$font-color-alert: $alert-red;
+$font-color-alert: $theme-color-status-danger;
 
 // The hyperlink Style
 $hyperlink-color: $theme-color-palette-azure-40;
@@ -111,7 +111,7 @@ $tooltip-bg-color: $theme-color-palette-white;
 $tooltip-border-color: $theme-color-palette-white;
 $tooltip-box-shadow: 0 2px 5px $drop-shadow-depth;
 $tooltip-color: $theme-color-palette-slate-100;
-$tooltip-error-bg-color: $alert-red;
+$tooltip-error-bg-color: $theme-color-status-danger;
 $tooltip-error-color: $theme-color-palette-white;
 
 // Badges
@@ -155,11 +155,11 @@ $input-placeholder-color: $input-color-initial-placeholder;
 $input-readonly-color: $input-color-readonly-font;
 
 // States
-$error-color: $alert-red;
+$error-color: $theme-color-status-danger;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
-$error-icon-fill: $alert-red;
-$dirty-icon-fill: $alert-yellow;
-$confirm-icon-fill: $alert-green;
+$error-icon-fill: $theme-color-status-danger;
+$dirty-icon-fill: $theme-color-status-caution;
+$confirm-icon-fill: $theme-color-status-success;
 $info-icon-fill: $theme-color-brand-primary-base;
 $selected-bg-color: rgba($theme-color-brand-primary-base, 0.3);
 
@@ -688,7 +688,7 @@ $step-chart-bg-color: $theme-color-palette-slate-70;
 $step-chart-border-color: $theme-color-palette-slate-50;
 $step-chart-inprogress-bg-color: $theme-color-palette-ruby-20;
 $step-chart-completed-bg-color: $theme-color-brand-primary-base;
-$step-chart-totally-completed-bg-color: $alert-green;
+$step-chart-totally-completed-bg-color: $theme-color-status-success;
 
 // Block Grid
 $blockgrid-selected-bg-color: $selected-bg-color;

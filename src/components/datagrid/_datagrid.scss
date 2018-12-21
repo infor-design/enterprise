@@ -1417,7 +1417,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.rowstatus-row-error {
-      @include rowstatus($alert-red);
+      @include rowstatus($theme-color-status-danger);
     }
 
     &.rowstatus-row-dirty {
@@ -1437,7 +1437,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.rowstatus-row-confirm {
-      @include rowstatus($alert-green);
+      @include rowstatus($theme-color-status-success);
     }
 
     &.rowstatus-row-new {
@@ -1538,7 +1538,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-red;
+        border-color: $theme-color-status-danger;
       }
 
       &.l-right-text {
@@ -1566,7 +1566,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-orange;
+        border-color: $theme-color-status-warning;
       }
 
       &.l-right-text {
@@ -1594,7 +1594,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-green;
+        border-color: $theme-color-status-success;
       }
 
       &.l-right-text {
@@ -1622,7 +1622,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-info;
+        border-color: $theme-color-status-base;
       }
 
       &.l-right-text {

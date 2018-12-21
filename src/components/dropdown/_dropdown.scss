@@ -9,11 +9,11 @@
   }
 
   &.alert {
-    fill: $alert-orange;
+    fill: $theme-color-status-warning;
   }
 
   &.alert-yellow {
-    fill: $alert-yellow;
+    fill: $theme-color-status-caution;
   }
 
   &.neutral {
@@ -21,11 +21,11 @@
   }
 
   &.good {
-    fill: $alert-green;
+    fill: $theme-color-status-success;
   }
 
   &.info {
-    fill: $alert-info;
+    fill: $theme-color-status-base;
   }
 
   &.white {

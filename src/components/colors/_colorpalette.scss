@@ -1,21 +1,11 @@
 // Color Variables
 //================================================== //
 
-$alert-red: #e84f4f;
 $alert-bg-red: rgba(232, 79, 79, 0.1);
-$alert-orange: #ff9426;
 $alert-bg-orange: rgba(255, 148, 38, 0.1);
-$alert-yellow: #ffd726;
-$alert-green: #80ce4d;
 $alert-bg-green: rgba(128, 206, 77, 0.1);
-$alert-info: $theme-color-palette-azure-60;
 $alert-bg-info: rgba(54, 138, 192, 0.1);
-$alert-neutral: #dbdbdb;
-
-$alert01: $alert-red;
-$alert02: $alert-orange;
-$alert03: $alert-yellow;
-$alert04: $alert-green;
+$alert-neutral: $theme-color-palette-graphite-30;
 
 // Generate Color Classes for The Sass Variables
 $color-names: ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09 ruby10
@@ -34,4 +24,4 @@ $color-vars: $theme-color-palette-ruby-10 $theme-color-palette-ruby-20 $theme-co
   $theme-color-palette-turquoise-10 $theme-color-palette-turquoise-20 $theme-color-palette-turquoise-30 $theme-color-palette-turquoise-40 $theme-color-palette-turquoise-50 $theme-color-palette-turquoise-60 $theme-color-palette-turquoise-70 $theme-color-palette-turquoise-80 $theme-color-palette-turquoise-90 $theme-color-palette-turquoise-100
   $theme-color-palette-amethyst-10 $theme-color-palette-amethyst-20 $theme-color-palette-amethyst-30 $theme-color-palette-amethyst-40 $theme-color-palette-amethyst-50 $theme-color-palette-amethyst-60 $theme-color-palette-amethyst-70 $theme-color-palette-amethyst-80 $theme-color-palette-amethyst-90 $theme-color-palette-amethyst-100
   $theme-color-palette-graphite-10 $theme-color-palette-graphite-20 $theme-color-palette-graphite-30 $theme-color-palette-graphite-40 $theme-color-palette-graphite-50 $theme-color-palette-graphite-60 $theme-color-palette-graphite-70 $theme-color-palette-graphite-80 $theme-color-palette-graphite-90 $theme-color-palette-graphite-100
-  $theme-color-palette-slate-10 $theme-color-palette-slate-20 $theme-color-palette-slate-30 $theme-color-palette-slate-40 $theme-color-palette-slate-50 $theme-color-palette-slate-60 $theme-color-palette-slate-70 $theme-color-palette-slate-80 $theme-color-palette-slate-90 $theme-color-palette-slate-100 $alert01 $alert02 $alert03 $alert04;
+  $theme-color-palette-slate-10 $theme-color-palette-slate-20 $theme-color-palette-slate-30 $theme-color-palette-slate-40 $theme-color-palette-slate-50 $theme-color-palette-slate-60 $theme-color-palette-slate-70 $theme-color-palette-slate-80 $theme-color-palette-slate-90 $theme-color-palette-slate-100 $theme-color-status-danger $theme-color-status-warning $theme-color-status-caution $theme-color-status-success;
