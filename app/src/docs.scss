@@ -2,11 +2,11 @@
 // Compiles down to what used to be `site.css`
 //================================================== //
 
-// Enterprise color palette
-@import '../../src/components/colors/colorpalette';
-
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/tokens/web/theme-soho';
+
+// Enterprise color palette
+@import '../../src/components/colors/colorpalette';
 
 // Soho Core/Helpers
 @import '../../src/core/config';
