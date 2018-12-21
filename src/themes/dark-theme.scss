@@ -374,7 +374,7 @@ $slider-readonly-active-bg-color: $theme-color-palette-graphite-70;
 $slider-readonly-labels-color: $theme-color-palette-graphite-60;
 $slider-readonly-handle-color: $theme-color-palette-graphite-70;
 $slider-readonly-range-color: $theme-color-palette-graphite-70;
-$slider-hover-shadow: 0 2px 5px 0 rgba($black, 0.4);
+$slider-hover-shadow: 0 2px 5px 0 rgba($theme-color-palette-black, 0.4);
 
 // Modal
 $modal-bg-color: $theme-color-palette-slate-70;
@@ -469,7 +469,7 @@ $vertical-tab-sidebar-border-color: $theme-color-palette-slate-50;
 
 // Multi-tabs
 $mutlitabs-section-border-color: $theme-color-palette-slate-70;
-$mutlitabs-section-alt-bg-color: $black;
+$mutlitabs-section-alt-bg-color: $theme-color-palette-black;
 $mutlitabs-section-alt-border-color: $theme-color-palette-slate-90;
 
 // Charts

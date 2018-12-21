@@ -278,8 +278,8 @@ $swaplist-border-color-card: $theme-color-palette-graphite-30;
 $swaplist-icon-color: $theme-color-palette-graphite-60;
 $swaplist-icon-color-hover: $theme-color-font-base;
 $swaplist-icon-svg-color: $theme-color-font-base;
-$swaplist-icon-svg-color-hover: $black;
-$swaplist-shadow-color: $black;
+$swaplist-icon-svg-color-hover: $theme-color-palette-black;
+$swaplist-shadow-color: $theme-color-palette-black;
 $swaplist-title-text-color: $theme-color-font-base;
 $swaplist-text-color: $theme-color-font-base;
 $swaplist-text-color-selected: $theme-color-palette-white;
@@ -431,7 +431,7 @@ $slider-readonly-active-bg-color: $theme-color-palette-graphite-60;
 $slider-readonly-labels-color: $theme-color-palette-graphite-60;
 $slider-readonly-handle-color: $theme-color-palette-graphite-50;
 $slider-readonly-range-color: $theme-color-brand-secondary-alt;
-$slider-hover-shadow: 0 2px 5px 0 rgba($black, 0.2);
+$slider-hover-shadow: 0 2px 5px 0 rgba($theme-color-palette-black, 0.2);
 
 //Modal
 $modal-bg-color: $theme-color-palette-white;

@@ -199,7 +199,7 @@
 .overlay {
   @include css3(transition, all 0.2s);
 
-  background: $black;
+  background: $theme-color-palette-black;
   height: 100%;
   left: 0;
   opacity: 0;
