@@ -52,7 +52,7 @@
 
   &.graphite03,
   &.graphite02 {
-    color: $graphite02;
+    color: $theme-color-palette-graphite-20;
   }
 
   &.round {
@@ -209,7 +209,7 @@
     background-color: transparent;
 
     svg {
-      fill: $slate03;
+      fill: $theme-color-palette-slate-30;
     }
   }
 }

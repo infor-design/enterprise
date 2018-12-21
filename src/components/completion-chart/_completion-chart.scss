@@ -13,7 +13,7 @@
     margin-top: 5px;
 
     .completed {
-      background-color: $turquoise06;
+      background-color: $theme-color-palette-turquoise-60;
 
       &.error-color,
       &.error {
@@ -231,7 +231,7 @@
   }
 
   .target-line {
-    background-color: $amethyst07;
+    background-color: $theme-color-palette-amethyst-70;
     border-radius: 1px;
     color: transparent;
     height: 20px;

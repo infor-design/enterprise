@@ -1332,7 +1332,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &.info .audible {
-        background-color: $graphite05;
+        background-color: $theme-color-palette-graphite-50;
       }
     }
 
@@ -1871,7 +1871,7 @@ $datagrid-short-row-height: 23px;
         }
 
         &:disabled .icon {
-          fill: $slate05;
+          fill: $theme-color-palette-slate-50;
         }
       }
 
