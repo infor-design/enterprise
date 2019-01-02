@@ -20,6 +20,15 @@ function ValidationRules() {
     pagingMessageID: 'AlertOnPage',
     errorsForm: false
   };
+
+  // to deprecate in favor of success at later date
+  this.ValidationTypes.confirm = {
+    type: 'success',
+    titleMessageID: 'Success',
+    pagingMessageID: 'SuccessOnPage',
+    errorsForm: false
+  };
+
   this.ValidationTypes.success = {
     type: 'success',
     titleMessageID: 'Success',
