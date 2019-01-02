@@ -21,20 +21,16 @@ function ValidationRules() {
     errorsForm: false
   };
 
-  // to deprecate in favor of success at later date
-  this.ValidationTypes.confirm = {
-    type: 'success',
-    titleMessageID: 'Success',
-    pagingMessageID: 'SuccessOnPage',
-    errorsForm: false
-  };
-
   this.ValidationTypes.success = {
     type: 'success',
     titleMessageID: 'Success',
     pagingMessageID: 'SuccessOnPage',
     errorsForm: false
   };
+
+  // TODO: deprecate confirm in favor of success
+  this.ValidationTypes.confirm = this.ValidationTypes.success;
+
   this.ValidationTypes.info = {
     type: 'info',
     titleMessageID: 'Info',
