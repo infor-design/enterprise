@@ -308,7 +308,7 @@
     checkShowEyebrow();
 
     function updateText(field, textarea) {
-      textarea.html(Soho.xss.escapeHTML(field.val()));
+      textarea.html(Soho.xss.sanitizeHTML(Soho.xss.escapeHTML(field.val())));
     }
 
     inputTitleText.on('change.test input.test', function() {

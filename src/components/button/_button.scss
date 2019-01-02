@@ -181,12 +181,12 @@ button {
     opacity: $button-color-secondary-disabled-opacity;
 
     .icon {
-      fill: $white;
+      fill: $theme-color-palette-white;
     }
   }
 
   .ripple-effect {
-    background-color: $white;
+    background-color: $theme-color-palette-white;
     opacity: 0.7;
     pointer-events: none;
   }
@@ -528,7 +528,7 @@ a.btn-close {
   }
 
   .ripple-circle {
-    fill: rgba($white, 0);
+    fill: rgba($theme-color-palette-white, 0);
   }
 }
 

@@ -5,7 +5,7 @@
   .chart-treemap-node {
     @include font-size(12);
 
-    color: $white;
+    color: $theme-color-palette-white;
     font-weight: lighter;
     overflow: hidden;
     padding-top: 8px;
