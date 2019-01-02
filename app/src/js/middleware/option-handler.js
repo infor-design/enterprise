@@ -1,6 +1,7 @@
 const extend = require('extend');
+
 const logger = require('../logger');
-const path = require('path');
+const setLayout = require('../set-layout');
 
 // Option Handling - Custom Middleware
 // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
@@ -21,8 +22,7 @@ module.exports = function (app, defaults) {
 
     // Global settings to change the layout.
     if (req.query.layout && req.query.layout.length > 0) {
-      res.opts.layout = path.join(req.app.get('views'), `layout-${req.query.layout}.html`);
-      logger('info', `"${req.query.layout.name}" layout active.`);
+      setLayout(req, res, `layout-${req.query.layout}.html`);
     }
 
     // Set the theme and colorScheme

@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const logger = require('../logger');
+const setLayout = require('../set-layout');
 const utils = require('../utils');
 
 // Excluded file names that should never appear in the DemoApp List Pages
@@ -97,8 +98,7 @@ module.exports = function directoryList(directory, viewsRoot, req, res, next) {
     const relativeDir = directory.replace(viewsRoot, '');
 
     if (utils.canChangeLayout(req, res)) {
-      res.opts.layout = path.join(viewsRoot, 'layout.html');
-      req.app.set('layout', res.opts.layout);
+      setLayout(req, res, 'layout.html');
     }
 
     res.opts.title = `Directory list: ${relativeDir}`;
