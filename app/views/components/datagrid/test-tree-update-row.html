@@ -1,0 +1,225 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="compound-field">
+      <p>Select value and click &quot;Update Row&quot;.</p>
+      <div class="field">
+        <label for="dd-rows" class="audible label">Pick row to update</label>
+        <select id="dd-rows" name="dd-rows"  class="dropdown dropdown-sm"></select>
+      </div>
+      <div class="field">
+        <button type="button" id="update-row" class="btn-secondary"><span>Update Row</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="full-height full-width">
+    <div id="datagrid" >
+    </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    // Some data
+    var data = [
+      {
+        somePrimaryKey: 1,
+        name: 'beijing',
+        hostName: 'localhost',
+        port: 21230,
+        dataPort: 21231
+      },
+      {
+        somePrimaryKey: 2,
+        name: 'default',
+        hostName: 'localhost',
+        port: 21230,
+        dataPort: 21231,
+        expanded: false,
+        children: [
+          {
+            somePrimaryKey: 3,
+            name: 'default1',
+            hostName: 'localhost',
+            port: 21230,
+            dataPort: 21231
+          }
+        ]
+      },
+      {
+        somePrimaryKey: 4,
+        name: 'guangzhou',
+        hostName: 'localhost',
+        port: 21230,
+        dataPort: 21231
+      },
+      {
+        somePrimaryKey: 5,
+        name: 'hangzhou',
+        hostName: 'localhost',
+        port: 21230,
+        dataPort: 21231
+      },
+      {
+        somePrimaryKey: 6,
+        name: 'shanghai',
+        hostName: 'localhost',
+        port: 21232,
+        dataPort: 21233
+      },
+      {
+        somePrimaryKey: 7,
+        name: 'suzhou',
+        hostName: 'localhost',
+        port: 21230,
+        dataPort: 21231,
+        expanded: true,
+        children: [
+          {
+            somePrimaryKey: 8,
+            name: 'suzhou1',
+            hostName: 'localhost',
+            port: 20033,
+            dataPort: 2000
+          },
+          {
+            somePrimaryKey: 9,
+            name: 'suzhou2',
+            hostName: 'localhost',
+            port: 20033,
+            dataPort: 2000
+          }
+        ]
+      },
+      {
+        somePrimaryKey: 10,
+        name: 'testg',
+        hostName: 'localhost',
+        port: 21230,
+        dataPort: 21231
+      },
+      {
+        somePrimaryKey: 11,
+        name: 'tianjing',
+        hostName: 'localhost',
+        port: 21230,
+        dataPort: 21233
+      },
+      {
+        somePrimaryKey: 12,
+        name: 'tibet',
+        hostName: 'localhost',
+        port: 21230,
+        dataPort: 21231
+      },
+      {
+        somePrimaryKey: 13,
+        name: 'xian',
+        hostName: 'localhost',
+        port: 21230,
+        dataPort: 21231
+      }
+    ];
+
+    // Define columns
+    var columns = [
+      {
+        id: 'selectionCheckbox',
+        sortable: false,
+        resizable: false,
+        width: 50,
+        formatter: Formatters.SelectionCheckbox,
+        align: 'center'
+      },
+      {
+        id: 'name',
+        name: 'Name',
+        field: 'name',
+        expanded: 'expanded',
+        formatter: Formatters.Tree
+      },
+      {
+        id: 'id',
+        name: 'Id',
+        field: 'somePrimaryKey'
+      },
+      {
+        id: 'hostName',
+        name: 'Host Name',
+        field: 'hostName',
+        width: 250
+      },
+      {
+        id: 'port',
+        name: 'Port',
+        field: 'port'
+      },
+      {
+        id: 'dataPort',
+        name: 'Data Port',
+        field: 'dataPort'
+      }
+    ];
+
+    // Cache vars
+    var gridEl = $('#datagrid');
+    var dropdownEl = $('#dd-rows');
+
+    // Initialized datagrid
+    gridEl.datagrid({
+      columns: columns,
+      dataset: data,
+      treeGrid: true
+    });
+
+    // Set datagrid api object
+    var gridApi = gridEl.data('datagrid');
+
+    // Set top dropdown to add list of rows
+    if (gridApi) {
+      var getOptionText = function (idx) {
+        var node = gridApi.settings.treeDepth[idx].node;
+        var optionText = 'Row: ' + idx;
+        optionText += ', Id: ' + node.somePrimaryKey;
+
+        return optionText;
+      };
+      var itemsHtml = '';
+      for (let i = 0, l = gridApi.settings.treeDepth.length; i < l; i++) {
+        itemsHtml += '<option value="'+ i +'">'+ getOptionText(i) +'</option>';
+      }
+      dropdownEl.append(itemsHtml).trigger('updated');
+    }
+
+    // Update row
+    $('#update-row').click(function () {
+      if (gridApi) {
+        var row = parseInt(dropdownEl.val(), 10);
+        var rowData = gridApi.settings.treeDepth[row];
+        if (rowData) {
+          var data = rowData.node;
+          data.hostName = 'Updatedxxxxxxxxx';
+          gridApi.updateRow(row);
+          console.log('Row is updated');
+        } else {
+          console.log('Can not find given row to update');
+        }
+
+        /***
+         *** Example to pass new dataset for row to be updated
+         ***/
+        /*
+        data = {
+          somePrimaryKey: 9999,
+          name: 'suzhou9999',
+          hostName: 'localhost9999',
+          port: 20033,
+          dataPort: 2000
+        };
+        gridApi.updateRow(7, data);
+        */
+      }
+    });
+
+  });
+</script>
