@@ -2,6 +2,7 @@
 import * as debug from '../../utils/debug';
 import { theme } from '../personalize/personalize';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
 
 // jQuery Components
@@ -1163,7 +1164,7 @@ Slider.prototype = {
       handle.off('mousedown.slider click.slider blur.slider keydown.slider keyup.slider');
     });
     this.wrapper.off('click.slider touchend.slider touchcancel.slider').remove();
-    this.element.attr('type', this.originalElement.type);
+    this.element.attr('type', xssUtils.ensureAlphaNumeric(this.originalElement.type));
 
     return this;
   },

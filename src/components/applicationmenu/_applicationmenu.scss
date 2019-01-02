@@ -9,7 +9,7 @@
   background-color: $slate08;
   border-right: 1px solid $application-menu-border-color;
   bottom: 0;
-  color: $white;
+  color: $theme-color-palette-white;
   height: 100%;
   left: -$application-menu-width;
   overflow-x: hidden;
@@ -23,7 +23,7 @@
   }
 
   .audible {
-    color: $white !important;
+    color: $theme-color-palette-white !important;
   }
 
   &.show-shadow.is-open {

@@ -321,7 +321,7 @@
 .calendar-event-header {
   @include font-size(18);
 
-  color: $white;
+  color: $theme-color-palette-white;
   display: block;
   height: 48px;
   line-height: 48px;

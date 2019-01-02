@@ -98,7 +98,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
 
           button {
             background: $theme-color-brand-primary-base;
-            color: $white;
+            color: $theme-color-palette-white;
             display: block;
             margin: 0 0 0 122px;
             max-width: 36px;
@@ -108,7 +108,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
             }
 
             svg {
-              fill: $white;
+              fill: $theme-color-palette-white;
             }
           }
         }
@@ -607,7 +607,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     }
 
     .dt-fields-cell {
-      color: $white;
+      color: $theme-color-palette-white;
       display: table-cell;
       font-size: 1.2rem;
       line-height: 1.4rem;

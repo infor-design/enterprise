@@ -6,7 +6,7 @@ import { Validation } from './validation';
 // jQuery Components
 import '../icons/icons.jquery';
 import '../toast/toast.jquery';
-import { Environment } from '../../utils/environment';
+import { Environment as env } from '../../utils/environment';
 
 // Component Name
 const COMPONENT_NAME = 'Validator';
@@ -210,7 +210,7 @@ Validator.prototype = {
         let tooltip = thisField.data('tooltip');
         const dropdownApi = thisField.data('dropdown');
 
-        if (Environment.features.touch) {
+        if (env.features.touch) {
           dropdownApi.pseudoElem.focus();
           setTimeout(() => {
             dropdownApi.pseudoElem.blur();

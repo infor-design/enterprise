@@ -38,7 +38,7 @@ Button.prototype = {
   init() {
     const self = this;
 
-    this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    this.isTouch = env.features.touch;
     this.isSafari = $('html').is('.is-safari');
     this.isFirefox = $('html').is('.is-firefox');
 
