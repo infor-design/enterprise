@@ -2286,6 +2286,42 @@ $datagrid-short-row-height: 23px;
 
       }
 
+      .lookup-wrapper {
+        background-color: transparent;
+        display: inline;
+        left: 2px;
+        vertical-align: top;
+        width: calc(100% - 44px);
+
+        > input.lookup {
+          left: 10px;
+          width: calc(100% - 41px);
+        }
+
+        > .trigger {
+          height: 24px;
+          margin-left: -18px;
+          width: 27px;
+
+          > .icon {
+            fill: $datagrid-filter-icon-color;
+            height: 30px;
+            top: -3px;
+            width: 13px;
+          }
+
+          &:not(:disabled) > .icon:hover,
+          &:hover:not(:disabled) > .icon {
+            fill: $datagrid-filter-hover-color !important;
+          }
+
+          &:disabled > .icon {
+            fill: $datagrid-list-filter-disabled-color !important;
+            opacity: 0.6;
+          }
+        }
+      }
+
       .btn-filter {
         height: 21px;
         left: 15px;
