@@ -8,6 +8,7 @@ import { debounce } from '../../utils/debounced-resize';
 import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
+import { Environment as env } from '../../utils/environment';
 
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
@@ -202,7 +203,7 @@ Datagrid.prototype = {
   init() {
     const html = $('html');
 
-    this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    this.isTouch = env.features.touch;
     this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
@@ -1778,7 +1779,7 @@ Datagrid.prototype = {
       let dataset;
       let isFiltered;
       let i;
-      let ii;
+      let i2;
       let len;
       let dataSetLen;
 
@@ -1817,9 +1818,9 @@ Datagrid.prototype = {
       } else if (this.settings.groupable) {
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
           let isGroupFiltered = true;
-          for (ii = 0, dataSetLen = this.settings.dataset[i].values.length; ii < dataSetLen; ii++) {
-            isFiltered = !checkRow(this.settings.dataset[i].values[ii]);
-            this.settings.dataset[i].values[ii].isFiltered = isFiltered;
+          for (i2 = 0, dataSetLen = this.settings.dataset[i].values.length; i2 < dataSetLen; i2++) {
+            isFiltered = !checkRow(this.settings.dataset[i].values[i2]);
+            this.settings.dataset[i].values[i2].isFiltered = isFiltered;
 
             if (!isFiltered) {
               isGroupFiltered = false;
@@ -2914,14 +2915,14 @@ Datagrid.prototype = {
       for (let i = 0; i < self.settings.treeDepth.length; i++) {
         const treeDepthItem = self.settings.treeDepth[i];
 
-        if (rowData.id === treeDepthItem.node.id) {
+        if (dataRowIdx === (treeDepthItem.idx - 1)) {
           let parentNode = null;
           let currentDepth = 0;
-          for (let ii = i; ii >= 0; ii--) {
-            currentDepth = self.settings.treeDepth[ii].node.depth < currentDepth ||
-            currentDepth === 0 ? self.settings.treeDepth[ii].node.depth : currentDepth;
-            if (currentDepth < treeDepthItem.node.depth) {
-              parentNode = self.settings.treeDepth[ii];
+          for (let i2 = i; i2 >= 0; i2--) {
+            currentDepth = self.settings.treeDepth[i2].depth < currentDepth ||
+            currentDepth === 0 ? self.settings.treeDepth[i2].depth : currentDepth;
+            if (currentDepth < treeDepthItem.depth) {
+              parentNode = self.settings.treeDepth[i2];
 
               if (parentNode.node.isExpanded !== undefined && !parentNode.node.isExpanded
                 || currentDepth === 1) {
@@ -3812,7 +3813,12 @@ Datagrid.prototype = {
    * @returns {void}
    */
   updateRow(idx, data) {
-    const rowData = (data || this.settings.dataset[idx]);
+    const s = this.settings;
+    let rowData = data;
+
+    if (!rowData) {
+      rowData = s.treeGrid ? s.treeDepth[idx].node : s.dataset[idx];
+    }
 
     for (let j = 0; j < this.settings.columns.length; j++) {
       const col = this.settings.columns[j];
@@ -7031,7 +7037,7 @@ Datagrid.prototype = {
       return false; // eslint-disable-line
     }
 
-    // In Show Ediitor mode the editor is on form already
+    // In Show Editor mode the editor is on form already
     if (!col.inlineEditor) {
       if (isEditor) {
         cellNode.css({ position: 'static', height: cellNode.outerHeight() });
@@ -7860,9 +7866,8 @@ Datagrid.prototype = {
 
     // update cell value
     const escapedVal = xssUtils.escapeHTML(coercedVal);
-    const rowIdx = (isTreeGrid ? row + 1 : row);
     const val = (isEditor ? coercedVal : escapedVal);
-    formatted = this.formatValue(formatter, rowIdx, cell, val, col, rowData);
+    formatted = this.formatValue(formatter, row, cell, val, col, rowData);
 
     if (col.contentVisible) {
       const canShow = col.contentVisible(row, cell, escapedVal, col, rowData);
@@ -8993,6 +8998,16 @@ Datagrid.prototype = {
         }
       }
 
+      // Clean up text in selects
+      const select = tooltip.wrapper.querySelector('select');
+      if (select && select.selectedIndex && select.options[select.selectedIndex].innerHTML) {
+        tooltip.content = env.features.touch ? '' : select.options[select.selectedIndex].innerHTML.trim();
+      }
+
+      if (isTh) {
+        tooltip.content = tooltip.content.trim();
+      }
+
       if (tooltip.content !== '') {
         const isEllipsis = utils.hasClass(elem, 'text-ellipsis');
         const icons = [].slice.call(elem.querySelectorAll('.icon'));
@@ -9000,7 +9015,12 @@ Datagrid.prototype = {
         icons.forEach((icon) => {
           extraWidth += icon.getBBox().width + 8;
         });
-        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + extraWidth;
+        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (select ? 0 : extraWidth);
+
+        if (isTh) {
+          tooltip.textwidth = stringUtils.textWidth(tooltip.content);
+        }
+
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
         if (title || isHeaderFilter) {
           tooltip.forced = true;

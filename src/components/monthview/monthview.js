@@ -363,7 +363,7 @@ MonthView.prototype = {
     // Adjust days of the week
     // lead days
     const firstDayOfMonth = this.firstDayOfMonth(year, month);
-    const leadDays = ((firstDayOfMonth - (this.currentCalendar.firstDayofWeek || 0)) + 7) % 7;
+    const leadDays = ((firstDayOfMonth - firstDayofWeek) + 7) % 7;
     const lastMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 1 : 0));
     const thisMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 0 : 1));
     let nextMonthDayCnt = 1;

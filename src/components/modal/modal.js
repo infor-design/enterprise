@@ -265,9 +265,17 @@ Modal.prototype = {
    */
   disableSubmit() {
     const body = this.element;
-    const fields = body.find('[data-validate]:visible');
     const inlineBtns = body.find('.modal-buttonset button');
     const primaryButton = inlineBtns.filter('.btn-modal-primary').not('.no-validation');
+    const dropdowns = body.find('select.dropdown[data-validate]');
+    let fields = body.find('[data-validate]:visible');
+
+    dropdowns.each(function () {
+      const dropdown = $(this);
+      if (dropdown.next('.dropdown-wrapper').is(':visible')) {
+        fields = fields.add(this);
+      }
+    });
 
     if (fields.length > 0) {
       primaryButton.removeAttr('disabled');
@@ -279,7 +287,7 @@ Modal.prototype = {
           return;
         }
 
-        const isVisible = field[0].offsetParent !== null;
+        const isVisible = field.is('.dropdown') && field.next('.dropdown-wrapper').is(':visible') || field[0].offsetParent !== null;
 
         if (field.is('.required')) {
           if (isVisible && !field.val()) {
@@ -290,6 +298,10 @@ Modal.prototype = {
           if (isVisible && !field.isValid()) {
             allValid = false;
           }
+        }
+
+        if (isVisible && field.is('.error')) {
+          allValid = false;
         }
 
         if (allValid) {

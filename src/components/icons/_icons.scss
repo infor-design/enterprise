@@ -12,7 +12,7 @@
 
 //Glyphs on the Header
 .header .icon {
-  fill: $white;
+  fill: $theme-color-palette-white;
 }
 
 // Specific Icon Types
@@ -149,7 +149,7 @@ svg.icon-dirty,
   background: $alert-yellow !important;
   border: 2px solid $alert-yellow;
   border-radius: 50%;
-  fill: $white !important;
+  fill: $theme-color-palette-white !important;
   height: 18px;
   width: 18px;
 }
@@ -246,7 +246,7 @@ svg.icon-logo {
 
   svg {
     display: inline-block;
-    fill: $white;
+    fill: $theme-color-palette-white;
     height: 45px;
     margin-left: 26px;
     margin-top: 25px;
@@ -662,7 +662,7 @@ html[dir='rtl'] {
 }
 
 .icon-empty-center-color {
-  fill: $white;
+  fill: $theme-color-palette-white;
 }
 
 .space-icons {
