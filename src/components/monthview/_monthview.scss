@@ -224,7 +224,7 @@
         box-shadow: none;
 
         .day-text::after {
-          border: 1px solid $white;
+          border: 1px solid $theme-color-palette-white;
           border-radius: 50%;
           box-shadow: 0 0 3px 3px $focus-box-shadow-color;
           content: '';

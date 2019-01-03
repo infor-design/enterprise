@@ -40,21 +40,16 @@ module.exports = function customRouteOptions(req, res) {
   // Distribution (AMD)
   if (url.match(/tests\/distribution/)) {
     customOpts.amd = true;
-    customOpts.layout = null; // No layout for this one on purpose.
+    customOpts.layout = 'layout-nofrills';
     customOpts.subtitle = 'AMD Tests';
   }
 
-  // Header
-  if (url.match(/header\/layout-header-gauntlet/)) {
-    customOpts.layout = 'components/header/layout-header-gauntlet';
-  }
-
   // Placement Logic
-  if (url.match(/place\/scrolling\/container-is-body/)) {
-    customOpts.layout = 'components/place/scrolling/layout-body';
+  if (url.match(/place\/test-container-is-body/)) {
+    customOpts.layout = 'components/place/layout-body';
   }
-  if (url.match(/place\/scrolling\/container-is-nested/)) {
-    customOpts.layout = 'components/place/scrolling/layout-nested';
+  if (url.match(/place\/test-container-is-nested/)) {
+    customOpts.layout = 'components/place/layout-nested';
   }
 
   // RenderLoop

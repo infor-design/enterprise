@@ -217,7 +217,7 @@
           }
 
           .audible {
-            color: $white;
+            color: $theme-color-palette-white;
           }
         }
 
@@ -599,7 +599,7 @@
     pointer-events: none;
 
     span.audible {
-      color: #fff !important;
+      color: $theme-color-palette-white !important;
     }
 
     a {
