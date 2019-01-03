@@ -18,7 +18,7 @@ const NOTIFICATION_DEFAULTS = {
  * @param {string} element The plugin element for the constuctor
  * @param {string} [settings] The settings element.
  * @param {string} [settings.message] The text message to show in the notification.
- * @param {string} [settings.type] The message type, this influences the icon and color, possible types are 'error', 'alert', 'info' and 'confirm'
+ * @param {string} [settings.type] The message type, this influences the icon and color, possible types are 'error', 'alert', 'info' and 'success'
  * @param {string} [settings.parent] The jQuery selector to find where to insert the message into (prepended). By default this will appear under the .header on the page.
  * @param {string} [settings.link] The url to use for the hyperlink
  * @param {string} [settings.linkText] The text to show in the hyperlink. Leave empty for no link.

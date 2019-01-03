@@ -59,7 +59,7 @@
     max-width: calc(100% - 40px);
   }
 
-  ~ .icon-confirm {
+  ~ .icon-success {
     right: 40px;
   }
 
@@ -488,7 +488,7 @@
 // RTL Styles ******************************************************************
 html[dir='rtl'] {
   .field-options {
-    ~ .icon-confirm {
+    ~ .icon-success {
       left: 40px;
       right: auto;
     }
