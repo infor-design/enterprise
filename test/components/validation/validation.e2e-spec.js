@@ -141,7 +141,7 @@ describe('Validation alert types', () => {
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(true);
     expect(await element(by.css('.alert-message')).isPresent()).toBe(true);
-    expect(await element(by.css('.confirm-message')).isPresent()).toBe(true);
+    expect(await element(by.css('.success-message')).isPresent()).toBe(true);
     expect(await element(by.css('.info-message')).isPresent()).toBe(true);
     expect(await element(by.css('.custom-icon-message')).isPresent()).toBe(true);
   });
@@ -370,7 +370,7 @@ describe('Validation Emails', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(false);
-    expect(await element(by.css('.icon-confirm')).isPresent()).toBe(true);
+    expect(await element(by.css('.icon-success')).isPresent()).toBe(true);
   });
 });
 
@@ -443,9 +443,9 @@ describe('Validation input tests', () => {
     await emailOkEl.sendKeys('test@test.com');
     await emailOkEl.sendKeys(protractor.Key.TAB);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.icon-confirm'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.icon-success'))), config.waitsFor);
 
-    expect(await element.all(by.css('.icon-confirm')).count()).toEqual(1);
+    expect(await element.all(by.css('.icon-success')).count()).toEqual(1);
 
     let emailEl = await element(by.id('email-address'));
     await emailEl.sendKeys(protractor.Key.TAB);

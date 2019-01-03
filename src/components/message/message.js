@@ -14,7 +14,7 @@ const COMPONENT_NAME = 'message';
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
  * @param {string} [settings.title='Message Title']  Title text or content shown in the message
- * @param {string} [settings.status='']  Pass a status to style icon and title color ('error', 'alert', 'confirm')
+ * @param {string} [settings.status='']  Pass a status to style icon and title color ('error', 'alert', 'success')
  * @param {string} [settings.message='Message Summary']  The message content or text
  * @param {number} [settings.width='auto']  Pass a specific with or defaults to auto
  * @param {object} [settings.buttons=null]  Array of buttons to add to the message (see modal examples as well)
@@ -121,10 +121,10 @@ Message.prototype = {
       this.title.addClass('has-status is-error').prepend($.createIconElement('error'));
     } else if (this.settings.status === 'alert') {
       this.title.addClass('has-status is-alert').prepend($.createIconElement('alert'));
-    } else if (this.settings.status === 'confirm') {
-      this.title.addClass('has-status is-confirm').prepend($.createIconElement('confirm'));
+    } else if (this.settings.status === 'success') {
+      this.title.addClass('has-status is-success').prepend($.createIconElement('success'));
     } else {
-      this.title.removeClass('has-status is-error is-alert is-confirm').find('svg').remove();
+      this.title.removeClass('has-status is-error is-alert is-success').find('svg').remove();
     }
   },
 

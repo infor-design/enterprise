@@ -92,13 +92,13 @@ describe('Validation API', () => {
 
     expect(document.body.querySelector('.alert-message')).toBeFalsy();
 
-    validatorAPI.addMessage($(emailID), { id: 'confirm', message: 'This is the message', type: 'confirm' }, true, false);
+    validatorAPI.addMessage($(emailID), { id: 'success', message: 'This is the message', type: 'success' }, true, false);
 
-    expect(document.body.querySelector('.confirm-message')).toBeTruthy();
+    expect(document.body.querySelector('.success-message')).toBeTruthy();
 
-    validatorAPI.removeMessage($(emailID), { id: 'confirm', type: 'confirm' });
+    validatorAPI.removeMessage($(emailID), { id: 'success', type: 'success' });
 
-    expect(document.body.querySelector('.confirm-message')).toBeFalsy();
+    expect(document.body.querySelector('.success-message')).toBeFalsy();
 
     validatorAPI.addMessage($(emailID), { id: 'info', message: 'This is the message', type: 'info' }, true, false);
 
