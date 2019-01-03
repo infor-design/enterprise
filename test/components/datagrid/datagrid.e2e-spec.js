@@ -1035,14 +1035,15 @@ describe('Datagrid select and filter tests', () => {
     await element(by.id('test-select-filter-issue-datagrid-1-header-filter-2')).sendKeys(protractor.Key.ENTER);
 
     await utils.checkForErrors();
-    await browser.driver.sleep(300);
 
-    expect(await element.all(by.css('tbody tr')).count()).toEqual(1, 'table have more than one row');
-    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0, 'some rows are selected');
+    expect(await element.all(by.css('tbody tr')).count()).toEqual(1);
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
 
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await utils.checkForErrors();
 
-    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1, 'filtered row is not selected');
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
   });
 });
 
