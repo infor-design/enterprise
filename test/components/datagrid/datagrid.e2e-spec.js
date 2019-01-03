@@ -1035,6 +1035,7 @@ describe('Datagrid select and filter tests', () => {
     await element(by.id('test-select-filter-issue-datagrid-1-header-filter-2')).sendKeys(protractor.Key.ENTER);
 
     await utils.checkForErrors();
+    await browser.driver.sleep(300);
 
     expect(await element.all(by.css('tbody tr')).count()).toEqual(1);
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
