@@ -676,9 +676,16 @@ Accordion.prototype = {
   * @returns {void}
   */
   toggle(header) {
-    if (!header || !header.length || this.isDisabled(header) || this.isFiltered(header)) {
+    if (!header || !header.length || this.isDisabled(header) || this.isFiltered(header)
+     || this.isAnimating) {
       return;
     }
+
+    this.isAnimating = true;
+
+    setTimeout(() => {
+      this.isAnimating = false;
+    }, 500);
 
     if (this.isExpanded(header)) {
       this.collapse(header);
@@ -714,10 +721,8 @@ Accordion.prototype = {
       // Change the expander button into "collapse" mode
       const expander = header.children('.btn');
       if (expander.length) {
-        setTimeout(() => {
-          expander.children('.plus-minus, .chevron').addClass('active');
-          expander.children('.audible').text(Locale.translate('Collapse'));
-        }, 150);
+        expander.children('.plus-minus, .chevron').addClass('active');
+        expander.children('.audible').text(Locale.translate('Collapse'));
       }
 
       const headerParents = header.parentsUntil(self.element).filter('.accordion-pane').prev('.accordion-header').add(header);
@@ -777,16 +782,12 @@ Accordion.prototype = {
 
       if (pane.hasClass('no-transition')) {
         for (let i = 0; i < pane.length; i++) {
-          setTimeout(() => {
-            pane[i].style.display = 'block';
-            pane[i].style.height = 'auto';
-          }, 150);
+          pane[i].style.display = 'block';
+          pane[i].style.height = 'auto';
         }
         handleAfterExpand();
       } else {
-        setTimeout(() => {
-          pane.one('animateopencomplete', handleAfterExpand).css('display', 'block').animateOpen();
-        }, 150);
+        pane.one('animateopencomplete', handleAfterExpand).css('display', 'block').animateOpen();
       }
     }
 
