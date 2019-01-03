@@ -1037,12 +1037,12 @@ describe('Datagrid select and filter tests', () => {
     await utils.checkForErrors();
     await browser.driver.sleep(300);
 
-    expect(await element.all(by.css('tbody tr')).count()).toEqual(1);
-    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    expect(await element.all(by.css('tbody tr')).count()).toEqual(1, 'table have more than one row');
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0, 'some rows are selected');
 
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
 
-    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1, 'filtered row is not selected');
   });
 });
 
