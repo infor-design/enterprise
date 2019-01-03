@@ -558,8 +558,6 @@ describe('Datagrid filter lookup tests', () => {
     await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
     await browser.driver.sleep(301);
 
-    await element(by.id('example-filter-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
-
     expect(await element.all(by.css('.datagrid-row')).count()).toEqual(0);
 
     await element(by.css('#example-filter-datagrid-1-header-filter-1 + span.trigger')).click();
@@ -567,8 +565,6 @@ describe('Datagrid filter lookup tests', () => {
 
     await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
     await browser.driver.sleep(301);
-
-    await element(by.id('example-filter-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
 
     expect(await element.all(by.css('.datagrid-row')).count()).toEqual(1);
 

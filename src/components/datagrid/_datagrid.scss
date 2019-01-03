@@ -2307,7 +2307,8 @@ $datagrid-short-row-height: 23px;
             fill: $datagrid-filter-icon-color;
             height: 30px;
             top: -3px;
-            width: 13px;
+            width: 16px;
+            right: -6px;
           }
 
           &:not(:disabled) > .icon:hover,

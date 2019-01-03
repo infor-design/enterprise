@@ -1386,10 +1386,11 @@ Datagrid.prototype = {
 
       if (typeof elem.find('.lookup').lookup === 'function') {
         elem.find('.lookup')
-          .lookup(col.editorOptions ? col.editorOptions : { })
-          .on('listclosed.lookup', () => {
-            self.applyFilter(null, 'selected');
-          });
+          .lookup(col.editorOptions ? col.editorOptions : { });
+
+        elem.on('change', () => {
+          self.applyFilter(null, 'selected');
+        });
       }
 
       if (typeof elem.find('.timepicker').datepicker === 'function') {
