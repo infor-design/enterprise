@@ -227,7 +227,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
   .leaf {
     background-color: $panel-bg-color;
     border: 1px solid $panel-border-color;
-    border-left: 5px solid $graphite06;
+    border-left: 5px solid $theme-color-palette-graphite-60;
     border-radius: 2px;
     cursor: pointer;
     display: flex;
@@ -236,58 +236,58 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     width: $hierarchy-node-width;
 
     &.azure08 {
-      border-left-color: $azure08;
+      border-left-color: $theme-color-palette-azure-80;
 
       .image-placeholder {
-        border: 2px solid $azure08;
+        border: 2px solid $theme-color-palette-azure-80;
       }
     }
 
     &.turquoise02 {
-      border-left-color: $turquoise02;
+      border-left-color: $theme-color-palette-turquoise-20;
 
       .image-placeholder {
-        border: 2px solid $turquoise02;
+        border: 2px solid $theme-color-palette-turquoise-20;
       }
     }
 
     &.amethyst06 {
-      border-left-color: $amethyst06;
+      border-left-color: $theme-color-palette-amethyst-60;
 
       .image-placeholder {
-        border: 2px solid $amethyst06;
+        border: 2px solid $theme-color-palette-amethyst-60;
       }
     }
 
     &.slate06 {
-      border-left-color: $slate06;
+      border-left-color: $theme-color-palette-slate-60;
 
       .image-placeholder {
-        border: 2px solid $slate06;
+        border: 2px solid $theme-color-palette-slate-60;
       }
     }
 
     &.amber06 {
-      border-left-color: $amber06;
+      border-left-color: $theme-color-palette-amber-60;
 
       .image-placeholder {
-        border: 2px solid $amber06;
+        border: 2px solid $theme-color-palette-amber-60;
       }
     }
 
     &.emerald07 {
-      border-left-color: $emerald07;
+      border-left-color: $theme-color-palette-emerald-70;
 
       .image-placeholder {
-        border: 2px solid $emerald07;
+        border: 2px solid $theme-color-palette-emerald-70;
       }
     }
 
     &.ruby06 {
-      border-left-color: $ruby06;
+      border-left-color: $theme-color-palette-ruby-60;
 
       .image-placeholder {
-        border: 2px solid $ruby06;
+        border: 2px solid $theme-color-palette-ruby-60;
       }
     }
 
@@ -581,15 +581,15 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
   }
 
   .popupmenu.has-detail-fields + .arrow {
-    border-bottom-color: $slate08;
+    border-bottom-color: $theme-color-palette-slate-80;
   }
 
   .popupmenu.has-detail-fields + .arrow::after {
-    border-bottom-color: $slate08;
+    border-bottom-color: $theme-color-palette-slate-80;
   }
 
   .detail-fields {
-    background: $slate08;
+    background: $theme-color-palette-slate-80;
     padding: 10px;
 
     .dt-fields-row {
@@ -757,41 +757,41 @@ html[dir='rtl'] {
     // A node in the tree
     .leaf {
       border-left: 1px solid $panel-border-color;
-      border-right: 5px solid $graphite06;
+      border-right: 5px solid $theme-color-palette-graphite-60;
 
       &.azure08 {
         border-left-color: $panel-border-color;
-        border-right-color: $azure08;
+        border-right-color: $theme-color-palette-azure-80;
       }
 
       &.turquoise02 {
         border-left-color: $panel-border-color;
-        border-right-color: $turquoise02;
+        border-right-color: $theme-color-palette-turquoise-20;
       }
 
       &.amethyst06 {
         border-left-color: $panel-border-color;
-        border-right-color: $amethyst06;
+        border-right-color: $theme-color-palette-amethyst-60;
       }
 
       &.slate06 {
         border-left-color: $panel-border-color;
-        border-right-color: $slate06;
+        border-right-color: $theme-color-palette-slate-60;
       }
 
       &.amber06 {
         border-left-color: $panel-border-color;
-        border-right-color: $amber06;
+        border-right-color: $theme-color-palette-amber-60;
       }
 
       &.emerald07 {
         border-left-color: $panel-border-color;
-        border-right-color: $emerald07;
+        border-right-color: $theme-color-palette-emerald-70;
       }
 
       &.ruby06 {
         border-left-color: $panel-border-color;
-        border-right-color: $ruby06;
+        border-right-color: $theme-color-palette-ruby-60;
       }
 
       //Styling for objects in the leafs
