@@ -2001,8 +2001,8 @@ Dropdown.prototype = {
     //  Also see "js/lifecycle.js" alias that works with the global "closeChildren" method.
     if (this.pseudoElem) {
       this.pseudoElem
-      .removeClass('is-open')
-      .attr('aria-expanded', 'false');
+        .removeClass('is-open')
+        .attr('aria-expanded', 'false');
     }
 
     if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {
