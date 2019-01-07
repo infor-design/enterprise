@@ -312,8 +312,10 @@ describe('Tree custom icon tests', () => {
   });
 
   it('Should display custom icon for leaf node', async () => {
-    expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"] .icon-tree use')).get(2).getAttribute('xlink:href')).toContain('#icon-star-filled');
-    expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"] .icon-tree use')).get(3).getAttribute('xlink:href')).toContain('#icon-next-page');
+    expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"] .icon-tree use')).get(2)
+    .getAttribute('xlink:href')).toContain('#icon-star-filled');
+    expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"] .icon-tree use')).get(3)
+    .getAttribute('xlink:href')).toContain('#icon-next-page');
   });
 });
 
