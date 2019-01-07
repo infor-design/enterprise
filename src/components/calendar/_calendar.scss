@@ -376,6 +376,13 @@
   }
 }
 
+// Styles to reset the modal
+.calendar-popup {
+  .tooltip-content {
+    padding: 20px 0;
+  }
+}
+
 // Responsive Styles
 @include respond-to(phabletdown) {
   .calendar {

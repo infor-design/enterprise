@@ -214,8 +214,7 @@ MonthView.prototype = {
         `<div class="monthview-header full">
           ${(Locale.isRTL() ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
           <span class="monthview-datepicker">
-            <label for="monthview-datepicker-field" class="label audible">${Locale.translate('Today')}</label>
-            <input id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
+            <input aria-label="${Locale.translate('Today')}" id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
           </span>
           <a class="hyperlink today" href="#">${Locale.translate('Today')}</a>
         </div>`);
@@ -314,6 +313,8 @@ MonthView.prototype = {
       this.currentMonth = month;
       this.currentYear = year;
     }
+
+    this.currentDay = now.getDate();
 
     let days = this.currentCalendar.days.narrow;
     days = days || this.currentCalendar.days.abbreviated;
@@ -456,10 +457,14 @@ MonthView.prototype = {
 
     if (!this.currentDate) {
       if (this.isIslamic) {
-        this.currentIslamicDate = [self.currentYear, self.currentMonth, 1];
-        this.currentDate = this.conversions.toGregorian(self.currentYear, self.currentMonth, 1);
+        this.currentIslamicDate = [self.currentYear, self.currentMonth, self.currentDay];
+        this.currentDate = this.conversions.toGregorian(
+          self.currentYear,
+          self.currentMonth,
+          self.currentDay
+        );
       } else {
-        this.currentDate = new Date(self.currentYear, self.currentMonth, 1);
+        this.currentDate = new Date(self.currentYear, self.currentMonth, self.currentDay);
       }
     }
 
@@ -916,13 +921,13 @@ MonthView.prototype = {
     };
 
     delete this.isKeyClick;
-    this.element.trigger('selected', args);
+    this.element.find('td.is-selected').removeClass('is-selected').removeAttr('tabindex');
+    $(node).addClass('is-selected').attr('tabindex', '0').focus();
+
     if (this.settings.onSelected) {
       this.settings.onSelected(node, args);
     }
-
-    this.element.find('td.is-selected').removeClass('is-selected').removeAttr('tabindex');
-    $(node).addClass('is-selected').attr('tabindex', '0').focus();
+    this.element.trigger('selected', args);
   },
 
   /**

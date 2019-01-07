@@ -30,7 +30,8 @@
             </svg>
           </button>
           <ul class="popupmenu">
-            <li><a href="#" data-action="add"><span data-translate="text">Add</span> <span data-translate="text">Event</span></a></li>
+            <li><a href="#" data-action="add-api"><span data-translate="text">Add</span> <span data-translate="text">Event</span>  (Api)</a></li>
+            <li><a href="#" data-action="add-modal"><span data-translate="text">Add</span> <span data-translate="text">Event</span> (Modal)</a></li>
             <li><a href="#" data-action="clear"><span data-translate="text">Clear</span> <span data-translate="text">Events</span></a></li>
           </ul>
         </div>
@@ -38,7 +39,7 @@
         {{> includes/header-actionbutton}}
       </div>
     </header>
-    <div class="page-container no-scroll" id="maincontent">
+    <div class="page-container no-scroll" id="maincontent" role="main">
       {{> content}}
     </div>
   {{> includes/footer}}

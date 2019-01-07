@@ -159,6 +159,22 @@ DOM.append = function append(el, contents, stripTags) {
 };
 
 /**
+ * Remove a DOM Element
+ * @param {HTMLElement|SVGElement|jQuery[]} el The element to remove.
+ */
+DOM.remove = function append(el) {
+  let domEl = el;
+
+  if (el instanceof $ && el.length) {
+    domEl = domEl[0];
+  }
+
+  if ((domEl instanceof HTMLElement || domEl instanceof SVGElement) && el.parentNode) {
+    el.parentNode.removeChild(el);
+  }
+};
+
+/**
  * Set an attribute with an extra check that the object exists.
  * @param {HTMLElement|SVGElement|jQuery[]} el The element to set the attribute on
  * @param {string} attribute The attribute name.
