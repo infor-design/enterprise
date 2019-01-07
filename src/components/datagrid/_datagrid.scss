@@ -2293,32 +2293,33 @@ $datagrid-short-row-height: 23px;
         vertical-align: top;
         width: calc(100% - 44px);
 
-        > input.lookup {
+        input.lookup {
           left: 10px;
           width: calc(100% - 41px);
+
+
+          &:not(:disabled) + .trigger  > .icon:hover,
+          &:hover:not(:disabled) + .trigger  > .icon {
+            fill: $datagrid-filter-hover-color;
+          }
+
+          &:disabled + .trigger  > .icon {
+            fill: $datagrid-list-filter-disabled-color;
+            opacity: 0.6;
+          }
         }
 
-        > .trigger {
+        .trigger {
           height: 24px;
           margin-left: -18px;
           width: 27px;
 
-          > .icon {
+          .icon {
             fill: $datagrid-filter-icon-color;
             height: 30px;
             right: -6px;
             top: -3px;
             width: 16px;
-          }
-
-          &:not(:disabled) > .icon:hover,
-          &:hover:not(:disabled) > .icon {
-            fill: $datagrid-filter-hover-color !important;
-          }
-
-          &:disabled > .icon {
-            fill: $datagrid-list-filter-disabled-color !important;
-            opacity: 0.6;
           }
         }
       }
