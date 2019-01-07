@@ -1999,6 +1999,12 @@ Dropdown.prototype = {
    */
   closeList(action) {
     //  Also see "js/lifecycle.js" alias that works with the global "closeChildren" method.
+    if (this.pseudoElem) {
+      this.pseudoElem
+      .removeClass('is-open')
+      .attr('aria-expanded', 'false');
+    }
+
     if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {
       return;
     }
@@ -2038,10 +2044,6 @@ Dropdown.prototype = {
         `mousewheel.${COMPONENT_NAME}`,
         `mouseenter.${COMPONENT_NAME}`].join(' '))
       .remove();
-
-    this.pseudoElem
-      .removeClass('is-open')
-      .attr('aria-expanded', 'false');
 
     this.searchInput
       .removeAttr('aria-activedescendant');
