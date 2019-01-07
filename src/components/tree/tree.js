@@ -1658,9 +1658,7 @@ Tree.prototype = {
         }
 
         selectHtml += `</select><div class="dropdown-wrapper"><div class="dropdown"><span>${selectedOptionText}`;
-
         selectHtml += '</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
-
         $(`<div class="treeDropdown" style="width: 80px; margin-left: 35px; margin-bottom: -15px">${selectHtml}</div>`).appendTo(li);
 
         if (nodeData.disabled) {
@@ -1692,8 +1690,7 @@ Tree.prototype = {
       found = true;
     }
 
-    if (location instanceof jQuery &&
-      (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)
+    if (location instanceof jQuery && (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)
       && !(isBeforeOrAfter === 'before' || isBeforeOrAfter === 'after')) {
       location[0].appendChild(li);
       found = true;

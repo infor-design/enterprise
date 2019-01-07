@@ -37,6 +37,7 @@
         "id": "node3",
         "text": "Node 1.1",
         "hideCheckbox": false,
+        "open": true,
         "children": [
           {
           "id": "node4",
@@ -51,29 +52,35 @@
           },
           {
           "id": "node6",
-          "text": "Node 1.1.2",
-          "icon": ""
+          "text": "Node 1.2.1",
+          "icon": "star-filled"
+          },
+          {
+          "id": "node7",
+          "text": "Node 1.2.2",
+          "icon": "next-page"
           }
         ]
       },
       {
-        "id": "node7",
+        "id": "node8",
         "text": "Node 1.2",
         "hideCheckbox": false,
+        "open": true,
         "children": [
           {
-          "id": "node8",
+          "id": "node9",
           "text": "any",
           "type": 'dropdown',
           "data": dropdownData
           },
           {
-          "id": "node9",
+          "id": "node10",
           "text": "Node 1.2.1",
           "icon": "star-filled"
           },
           {
-          "id": "node10",
+          "id": "node11",
           "text": "Node 1.2.2",
           "icon": "next-page"
           }
@@ -84,8 +91,8 @@
 
   $('#json-tree').tree({
     dataset: sampleData,
-    folderIconOpen: 'plusminus-folder-closed',
-    folderIconClosed: 'plusminus-folder-open',
+    folderIconOpen: 'plusminus-folder-open',
+    folderIconClosed: 'plusminus-folder-closed',
     selectable: 'multiple',
     hideCheckboxes: true
   });
