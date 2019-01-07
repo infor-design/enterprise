@@ -2297,13 +2297,12 @@ $datagrid-short-row-height: 23px;
           left: 10px;
           width: calc(100% - 41px);
 
-
-          &:not(:disabled) + .trigger  > .icon:hover,
-          &:hover:not(:disabled) + .trigger  > .icon {
+          &:not(:disabled) + .trigger > .icon:hover,
+          &:hover:not(:disabled) + .trigger > .icon {
             fill: $datagrid-filter-hover-color;
           }
 
-          &:disabled + .trigger  > .icon {
+          &:disabled + .trigger > .icon {
             fill: $datagrid-list-filter-disabled-color;
             opacity: 0.6;
           }
