@@ -129,7 +129,7 @@ svg.icon-dirty,
 
 .icon-dirtyerror,
 .icon-error {
-  fill: $alert-red !important;
+  fill: $theme-color-status-danger !important;
 }
 
 .icon-success {
@@ -142,12 +142,12 @@ svg.icon-dirty,
 }
 
 .icon-alert {
-  fill: $alert-orange !important;
+  fill: $theme-color-status-warning !important;
 }
 
 .icon-pending {
-  background: $alert-yellow !important;
-  border: 2px solid $alert-yellow;
+  background: $theme-color-status-caution !important;
+  border: 2px solid $theme-color-status-caution;
   border-radius: 50%;
   fill: $theme-color-palette-white !important;
   height: 18px;
@@ -282,11 +282,11 @@ svg.icon-dirty {
 }
 
 .icon-in-progress {
-  fill: $amethyst07;
+  fill: $theme-color-palette-amethyst-70;
 }
 
 .icon-new {
-  fill: $amber07;
+  fill: $theme-color-palette-amber-70;
 }
 
 // Psuedo-element Icons

@@ -85,7 +85,7 @@
   .calendar-event {
     @include font-size(11);
 
-    background-color: $azure02;
+    background-color: $theme-color-palette-azure-20;
     border-left: 5px solid $theme-color-brand-primary-alt;
     border-radius: 3px;
     color: $font-color-extrahighcontrast;
@@ -156,38 +156,38 @@
     }
 
     &.ruby {
-      background-color: $ruby02;
-      border-left: 5px solid $ruby07;
+      background-color: $theme-color-palette-ruby-20;
+      border-left: 5px solid $theme-color-palette-ruby-70;
     }
 
     &.amber {
-      background-color: $amber03;
-      border-left: 5px solid $amber07;
+      background-color: $theme-color-palette-amber-30;
+      border-left: 5px solid $theme-color-palette-amber-70;
     }
 
     &.emerald {
-      background-color: $emerald03;
-      border-left: 5px solid $emerald07;
+      background-color: $theme-color-palette-emerald-30;
+      border-left: 5px solid $theme-color-palette-emerald-70;
     }
 
     &.turquoise {
-      background-color: $turquoise03;
-      border-left: 5px solid $turquoise07;
+      background-color: $theme-color-palette-turquoise-30;
+      border-left: 5px solid $theme-color-palette-turquoise-70;
     }
 
     &.amethyst {
-      background-color: $amethyst03;
-      border-left: 5px solid $amethyst07;
+      background-color: $theme-color-palette-amethyst-30;
+      border-left: 5px solid $theme-color-palette-amethyst-70;
     }
 
     &.slate {
-      background-color: $slate03;
-      border-left: 5px solid $slate07;
+      background-color: $theme-color-palette-slate-30;
+      border-left: 5px solid $theme-color-palette-slate-70;
     }
 
     &.graphite {
-      background-color: $graphite03;
-      border-left: 5px solid $graphite07;
+      background-color: $theme-color-palette-graphite-30;
+      border-left: 5px solid $theme-color-palette-graphite-70;
     }
   }
 
@@ -232,7 +232,7 @@
     }
 
     .calendar-upcoming-event-color {
-      background-color: $azure06;
+      background-color: $theme-color-palette-azure-60;
       border-radius: 50%;
       color: transparent;
       display: inline-block;
@@ -243,35 +243,35 @@
       width: 8px;
 
       &.ruby {
-        background-color: $ruby06;
+        background-color: $theme-color-palette-ruby-60;
       }
 
       &.amber {
-        background-color: $amber06;
+        background-color: $theme-color-palette-amber-60;
       }
 
       &.emerald {
-        background-color: $emerald06;
+        background-color: $theme-color-palette-emerald-60;
       }
 
       &.azure {
-        background-color: $azure06;
+        background-color: $theme-color-palette-azure-60;
       }
 
       &.turquoise {
-        background-color: $turquoise06;
+        background-color: $theme-color-palette-turquoise-60;
       }
 
       &.amethyst {
-        background-color: $amethyst06;
+        background-color: $theme-color-palette-amethyst-60;
       }
 
       &.slate {
-        background-color: $slate06;
+        background-color: $theme-color-palette-slate-60;
       }
 
       &.graphite {
-        background-color: $graphite06;
+        background-color: $theme-color-palette-graphite-60;
       }
     }
 
@@ -331,35 +331,35 @@
   white-space: nowrap;
 
   &.ruby {
-    background-color: $ruby06;
+    background-color: $theme-color-palette-ruby-60;
   }
 
   &.amber {
-    background-color: $amber06;
+    background-color: $theme-color-palette-amber-60;
   }
 
   &.emerald {
-    background-color: $emerald06;
+    background-color: $theme-color-palette-emerald-60;
   }
 
   &.azure {
-    background-color: $azure06;
+    background-color: $theme-color-palette-azure-60;
   }
 
   &.turquoise {
-    background-color: $turquoise06;
+    background-color: $theme-color-palette-turquoise-60;
   }
 
   &.amethyst {
-    background-color: $amethyst06;
+    background-color: $theme-color-palette-amethyst-60;
   }
 
   &.slate {
-    background-color: $slate06;
+    background-color: $theme-color-palette-slate-60;
   }
 
   &.graphite {
-    background-color: $graphite06;
+    background-color: $theme-color-palette-graphite-60;
   }
 }
 

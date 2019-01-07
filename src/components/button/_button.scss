@@ -312,7 +312,7 @@ a.btn-close {
   }
 
   .ripple-effect {
-    background: $graphite02;
+    background: $theme-color-palette-graphite-20;
   }
 
   // Menu Button Form
@@ -510,7 +510,7 @@ a.btn-close {
     }
 
     &:hover .icon {
-      fill: $azure08;
+      fill: $theme-color-palette-azure-80;
     }
   }
 }

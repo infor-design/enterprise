@@ -7009,6 +7009,8 @@ Datagrid.prototype = {
     // Already in edit mode
     const cellNode = this.activeCell.node.find('.datagrid-cell-wrapper');
     const cellParent = cellNode.parent('td');
+    const treeNode = $('.datagrid-tree-node', cellNode).length > 0;
+    const treeExpandBtn = $('.datagrid-expand-btn', cellNode).length > 0;
 
     if (cellParent.hasClass('is-editing') || cellParent.hasClass('is-editing-inline')) {
       return false; // eslint-disable-line
@@ -7047,6 +7049,15 @@ Datagrid.prototype = {
 
     if (!this.isCellEditable(idx, cell)) {
       return false; // eslint-disable-line
+    }
+
+    if (treeExpandBtn || treeNode) {
+      if (treeExpandBtn) {
+        cellValue = $('> span', cellNode).text();
+      }
+      if (typeof cellValue === 'string') {
+        cellValue = cellValue.replace(/^\s/, '');
+      }
     }
 
     // In Show Editor mode the editor is on form already
