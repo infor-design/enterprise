@@ -153,6 +153,44 @@ describe('Datagrid mixed selection tests', () => {
   });
 });
 
+describe('Datagrid Client Side Filter and Sort Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-disable-client-filter-and-sort');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should retain sort indicator', async () => {
+    await element(by.css('#datagrid thead th:nth-child(2) .datagrid-header-text')).click();
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2)')).getText()).toEqual('Product Id');
+    await browser.driver.sleep(300);
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
+  });
+
+  it('Should retain filter criteria', async () => {
+    await element(by.css('#datagrid thead th:nth-child(2) input')).sendKeys('22');
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
+    await browser.driver.sleep(300);
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
+  });
+
+  it('Should retain both filter and sort criteria', async () => {
+    await element(by.css('#datagrid thead th:nth-child(2) .datagrid-header-text')).click();
+    await browser.driver.sleep(300);
+    await element(by.css('#datagrid thead th:nth-child(2) input')).sendKeys('22');
+    await browser.driver.sleep(500);
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
+    expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
+  });
+});
+
 describe('Datagrid Lookup Editor', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-lookup-mask');
@@ -678,15 +716,13 @@ describe('Datagrid paging multiselect tests', () => {
 
     await element(by.css('.pager-next')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev')).click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tr:nth-child(1) td[aria-colindex="2"]'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
   });
@@ -846,16 +882,12 @@ describe('Datagrid paging serverside multi select tests', () => {
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
     await element(await by.css('.pager-next')).click();
-
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev')).click();
-
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
   });

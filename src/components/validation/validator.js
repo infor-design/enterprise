@@ -6,7 +6,7 @@ import { Validation } from './validation';
 // jQuery Components
 import '../icons/icons.jquery';
 import '../toast/toast.jquery';
-import { Environment } from '../../utils/environment';
+import { Environment as env } from '../../utils/environment';
 
 // Component Name
 const COMPONENT_NAME = 'Validator';
@@ -210,7 +210,7 @@ Validator.prototype = {
         let tooltip = thisField.data('tooltip');
         const dropdownApi = thisField.data('dropdown');
 
-        if (Environment.features.touch) {
+        if (env.features.touch) {
           dropdownApi.pseudoElem.focus();
           setTimeout(() => {
             dropdownApi.pseudoElem.blur();
@@ -517,7 +517,7 @@ Validator.prototype = {
 
         if (rule.positive) {
           // FIX: In Contextual Action Panel control not sure why but need to add error,
-          // otherwise "icon-confirm" get misaligned,
+          // otherwise "icon-success" get misaligned,
           // so for this fix adding and then removing error here
 
           self.addMessage(field, rule, isInline, showResultTooltip);
@@ -716,7 +716,7 @@ Validator.prototype = {
         parent.append(svg);
       }
 
-      $('.icon-confirm', closestField).remove();
+      $('.icon-success', closestField).remove();
     } else {
       svg = closestField.find('svg.icon-error');
     }
@@ -893,7 +893,7 @@ Validator.prototype = {
 
     // Remove positive errors
     if (validationType.type === 'error') {
-      field.parent().find('.icon-confirm').remove();
+      field.parent().find('.icon-success').remove();
     }
 
     // Trigger an event
@@ -907,9 +907,9 @@ Validator.prototype = {
    * @param {jQuery[]} field the field being modified
    */
   addPositive(field) {
-    const svg = $.createIcon({ icon: 'confirm', classes: 'icon-confirm' });
+    const svg = $.createIcon({ icon: 'success', classes: 'icon-success' });
 
-    if (!$('.icon-confirm', field.parent('.field, .field-short')).length) {
+    if (!$('.icon-success', field.parent('.field, .field-short')).length) {
       field.parent('.field, .field-short').append(svg);
     }
   },
@@ -1009,7 +1009,7 @@ Validator.prototype = {
    * @param {jQuery[]} field the field being modified
    */
   removePositive(field) {
-    $('.icon-confirm', field.parent('.field, .field-short')).remove();
+    $('.icon-success', field.parent('.field, .field-short')).remove();
   },
 
   /**
@@ -1023,7 +1023,7 @@ Validator.prototype = {
     formFields.removeClass('error');
     form.find('.error').removeClass('error');
     form.find('.icon-error').remove();
-    form.find('.icon-confirm').remove();
+    form.find('.icon-success').remove();
     form.find('.error-message').remove();
 
     // Clear Warnings

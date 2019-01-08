@@ -12,8 +12,8 @@ demo:
 
 ## Settings
 
-- Icon Types - `icon-alert`, `icon-confirm`, `icon-dirty`, `icon-error`, `icon-info`, `icon-pending`, `icon-new`, `icon-in-progress`, `icon-info-field`
-- Icon Colors - This is done automatically by the type (alert, error, info, confirm)
+- Icon Types - `icon-alert`, `icon-success`, `icon-dirty`, `icon-error`, `icon-info`, `icon-pending`, `icon-new`, `icon-in-progress`, `icon-info-field`
+- Icon Colors - This is done automatically by the type (alert, error, info, success)
 
 ## Code Example
 

@@ -2,11 +2,11 @@
 // Compiles down to what used to be `site.css`
 //================================================== //
 
-// Enterprise color palette
-@import '../../src/components/colors/colorpalette';
-
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/tokens/web/theme-soho';
+
+// Enterprise color palette
+@import '../../src/components/colors/colorpalette';
 
 // Soho Core/Helpers
 @import '../../src/core/config';
@@ -46,7 +46,7 @@ html {
   font-size: 62.5%;
 
   body {
-    background-color: $white;
+    background-color: $theme-color-palette-white;
     color: $color-font-lighter;
     font-family: $font-family;
     font-size: 100%;
@@ -95,14 +95,14 @@ html {
 h1 {
   @include font-size(50);
 
-  color: $black;
+  color: $theme-color-palette-black;
   line-height: 60px;
 }
 
 h2 {
   @include font-size(26);
 
-  color: $black;
+  color: $theme-color-palette-black;
   font-weight: 400;
   line-height: 42px;
 }
@@ -110,7 +110,7 @@ h2 {
 h3 {
   @include font-size(14);
 
-  color: $black;
+  color: $theme-color-palette-black;
   letter-spacing: 1.17px;
   line-height: 16px;
   text-transform: uppercase;
@@ -119,7 +119,7 @@ h3 {
 h4 {
   @include font-size(14);
 
-  color: $black;
+  color: $theme-color-palette-black;
 }
 
 p,
@@ -221,7 +221,7 @@ p strong {
     @include font-size(16);
 
     border-bottom: 2px solid transparent;
-    color: $black;
+    color: $theme-color-palette-black;
     display: inline-block;
     margin: 29px 18px 29px 18.5px;
     padding: 15px 5px 1px;

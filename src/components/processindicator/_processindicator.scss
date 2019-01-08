@@ -3,12 +3,12 @@
 //
 // Also see: /sass/controls/_timeline.scss
 
-$indicator-darkest: $azure08;
+$indicator-darkest: $theme-color-palette-azure-80;
 $indicator-darker: $theme-color-brand-primary-alt;
 $indicator-lighter: $theme-color-brand-primary-base;
-$indicator-lightest: $azure05;
-$indicator-warning: $alert-red;
-$indicator-blank: $graphite02;
+$indicator-lightest: $theme-color-palette-azure-50;
+$indicator-warning: $theme-color-status-danger;
+$indicator-blank: $theme-color-palette-graphite-20;
 
 $indicator-size: 1.3em;
 $indicator-current-size: ($indicator-size * 1.6);
@@ -148,7 +148,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
     &::before,
     &::after {
-      background-color: #fff;
+      background-color: $theme-color-palette-white;
       border-radius: 0.2em;
       content: '';
       display: inline-block;
@@ -183,7 +183,7 @@ $indicator-current-size: ($indicator-size * 1.6);
     border: 0;
 
     &::before {
-      color: #fff;
+      color: $theme-color-palette-white;
       content: '!';
       display: inline-block;
       font-size: 1.4em;
@@ -207,7 +207,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
     // Clock circle
     &::before {
-      border: 0.15em solid #fff;
+      border: 0.15em solid $theme-color-palette-white;
       content: '';
       height: 50%;
       left: 0.37em;
@@ -218,8 +218,8 @@ $indicator-current-size: ($indicator-size * 1.6);
 
     // Clock hands
     &::after {
-      border-bottom: 0.15em solid #fff;
-      border-left: 0.15em solid #fff;
+      border-bottom: 0.15em solid $theme-color-palette-white;
+      border-left: 0.15em solid $theme-color-palette-white;
       content: '';
       height: 20%;
       left: 0.97em;

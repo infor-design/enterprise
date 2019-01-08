@@ -810,7 +810,7 @@ Editor.prototype = {
       })
       .off('open')
       .on('open', function () {
-        const isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isTouch = env.features.touch;
         const id = $(this).attr('id');
         const input = $('input:first', this);
         const button = $('.modal-buttonset .btn-modal-primary', this);
@@ -2021,6 +2021,7 @@ Editor.prototype = {
   colorpickerButtonState(action) {
     const cpBtn = $(`[data-action="${action}"]`, this.toolbar);
     const cpApi = cpBtn.data('colorpicker');
+    const preventColors = ['transparent', '#1a1a1a', '#f0f0f0', '#ffffff', '#313236'];
 
     let color = document.queryCommandValue(action);
 
@@ -2036,7 +2037,7 @@ Editor.prototype = {
       }
       color = cpApi.rgb2hex(color);
       cpBtn.attr('data-value', color)
-        .find('.icon').css('fill', color === 'transparent' ? '' : color);
+        .find('.icon').css('fill', preventColors.includes(color.toLowerCase()) ? '' : color);
     }
     return { cpBtn, cpApi, color };
   },

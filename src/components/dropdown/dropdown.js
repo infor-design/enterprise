@@ -108,6 +108,13 @@ Dropdown.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not the text inside the in-page pseudo element too big to fit
+   */
+  get overflowed() {
+    return this.pseudoElem.find('span').width() > this.pseudoElem.width();
+  },
+
+  /**
    * Initialize the dropdown.
    * @private
    * @returns {object} The api for chaining
@@ -315,9 +322,10 @@ Dropdown.prototype = {
     this.setInitial();
     this.setWidth();
 
-    this.tooltipApi = null;
-    if (this.pseudoElem.find('span').width() > this.pseudoElem.width()) {
+    if (this.overflowed) {
       this.setTooltip();
+    } else if (this.tooltipApi) {
+      this.removeTooltip();
     }
 
     this.element.triggerHandler('rendered');
@@ -488,14 +496,25 @@ Dropdown.prototype = {
 
   /**
    * Triggers tooltip in multiselect
+   * @returns {void}
    */
   setTooltip() {
     const opts = this.element.find('option:selected');
     const optText = this.getOptionText(opts);
     this.tooltipApi = this.pseudoElem.find('span').tooltip({
       content: optText,
+      parentElement: this.pseudoElem,
       trigger: 'hover',
     });
+  },
+
+  /**
+   * Removes a tooltip
+   * @returns {void}
+   */
+  removeTooltip() {
+    this.tooltipApi.destroy();
+    this.tooltipApi = null;
   },
 
   /**
@@ -1842,8 +1861,8 @@ Dropdown.prototype = {
       }
 
       if (isSmaller && isToBottom) {
-        self.listUl[0].style.height = `${listHeight - (searchInputHeight) - 5}px`;
-        self.list[0].style.height = `${parseInt(self.list[0].style.height, 10) - 5}px`;
+        self.listUl[0].style.height = `${listHeight - (searchInputHeight * 2)}px`;
+        self.list[0].style.height = `${parseInt(self.list[0].style.height, 10) - 10}px`;
       }
 
       return placementObj;
@@ -2405,10 +2424,10 @@ Dropdown.prototype = {
       // Fire the change event with the new value if the noTrigger flag isn't set
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
 
-      if (this.pseudoElem.find('span').width() > this.pseudoElem.width()) {
+      if (this.overflowed) {
         this.setTooltip();
       } else if (this.tooltipApi) {
-        this.tooltipApi.destroy();
+        this.removeTooltip();
       }
     }
 
