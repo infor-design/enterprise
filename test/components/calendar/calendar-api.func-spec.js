@@ -109,13 +109,18 @@ describe('Calendar API', () => {
   });
 
   it('Should handle adding events', () => {
+    const startsDate = new Date(baseTime);
+    startsDate.setHours(0, 0, 0, 0);
+    const endsDate = new Date(baseTime);
+    endsDate.setHours(23, 59, 59, 999);
+
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
     const newEvent = {
       id: (settings.events.length + 1).toString(),
       subject: 'New Random Event',
       comments: 'New Random Event Details',
-      starts: baseTime.toISOString(),
-      ends: baseTime.toISOString(),
+      starts: Locale.formatDate(startsDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      ends: Locale.formatDate(endsDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
       type: 'team',
       isAllDay: true
     };
@@ -130,5 +135,17 @@ describe('Calendar API', () => {
     calendarObj.clearEvents();
 
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(0);
+  });
+
+  it('Should handle deleting events', () => {
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
+
+    calendarObj.deleteEvent({ id: '13' });
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(17);
+
+    calendarObj.deleteEvent({ id: '11' });
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(3);
   });
 });

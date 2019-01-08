@@ -23,6 +23,10 @@
   </div>
 </div>
 
+<ul id="calendar-actions-menu" class="popupmenu">
+  <li><a href="#" id="action-1" data-action="delete-event">Delete Event</a></li>
+</ul>
+
 <script>
 $('body').one('initialized', function () {
   // Get the Event Type and Events to show in the calendar
@@ -34,17 +38,16 @@ $('body').one('initialized', function () {
 
     $.getJSON('{{basepath}}api/events', function(res) {
       events = res;
-
-
-        $('.calendar').calendar({
-          month: 9,
-          year: 2018,
-          eventTypes: eventTypes,
-          events: events,
-          template: 'tmpl-readonly'
-        });
+      $('.calendar').calendar({
+        month: 9,
+        year: 2018,
+        eventTypes: eventTypes,
+        events: events,
+        template: 'tmpl-readonly',
+        menuId: 'calendar-actions-menu'
       });
     });
+  });
 });
 </script>
 

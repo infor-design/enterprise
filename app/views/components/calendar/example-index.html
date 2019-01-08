@@ -23,6 +23,10 @@
   </div>
 </div>
 
+<ul id="calendar-actions-menu" class="popupmenu">
+  <li><a href="#" id="action-1" data-action="delete-event">Delete Event</a></li>
+</ul>
+
 <script id="test-script">
   var events = [];
   $('body').one('initialized', function () {
@@ -39,7 +43,8 @@
           eventTypes: eventTypes,
           events: events,
           template: 'tmpl-readonly',
-          modalTemplate: 'tmpl-modal'
+          modalTemplate: 'tmpl-modal',
+          menuId: 'calendar-actions-menu'
         });
       });
     });
@@ -63,7 +68,7 @@
 
     if (action === 'add-api') {
       var newEvent = {
-        id: (events.length + 1).toString(),
+        id: (parseInt(events[events.length - 1].id) + 1).toString(),
         subject: 'New Random Event',
         comments: 'New Random Event Details',
         starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
@@ -76,7 +81,7 @@
 
     if (action === 'add-modal') {
       var newEvent = {
-        id: (events.length + 1).toString(),
+        id: (parseInt(events[events.length - 1].id) + 1).toString(),
         title: 'Request Time Off',
         subject: 'New Random Event',
         comments: 'New Random Event Details',
@@ -87,9 +92,10 @@
       };
 
       var done = function(elem, event) {
+        // Collect the data and popuplate the event object
         var inputs = elem.querySelectorAll('input, textarea, select');
         for (var i = 0; i < inputs.length; i++) {
-          newEvent[inputs[i].id] = inputs[i].value;
+          newEvent[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
         }
 
         api.addEvent(newEvent);

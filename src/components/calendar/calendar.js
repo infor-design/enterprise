@@ -20,7 +20,9 @@ const COMPONENT_NAME_DEFAULTS = {
   onRenderMonth: null,
   template: null,
   upcomingEventDays: 14,
-  modalTemplate: null
+  modalTemplate: null,
+  menuId: null,
+  menuSelected: null
 };
 
 /**
@@ -38,6 +40,8 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {function} [settings.onSelected] Fires when a month day is clicked. Allowing you to do something.
  * @param {string} [settings.template] The ID of the template used for the events.
  * @param {string} [settings.modalTemplate] The ID of the template used for the modal dialog on events.
+ * @param {string} [settings.menuId=null] ID of the menu to use for an event right click context menu
+ * @param {string} [settings.menuSelected=null] Callback for the  right click context menu
  */
 function Calendar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -549,6 +553,8 @@ Calendar.prototype = {
    * @private
    */
   handleEvents() {
+    const self = this;
+
     this.element.on(`updated.${COMPONENT_NAME}`, () => {
       this.updated();
     });
@@ -569,6 +575,25 @@ Calendar.prototype = {
       const key = e.currentTarget.getAttribute('data-key');
       this.monthView.selectDay(key);
     });
+
+    if (this.settings.menuId) {
+      this.element.on(`contextmenu.${COMPONENT_NAME}`, '.calendar-event', (e) => {
+        e.preventDefault();
+        const event = $(e.currentTarget);
+        event.popupmenu({ attachToBody: true, menuId: this.settings.menuId, trigger: 'immediate', offset: { y: 5 } });
+
+        event.off('selected.calendar').on('selected.calendar', function (evt, elem) {
+          const eventId = this.getAttribute('data-id');
+          if (self.settings.menuSelected) {
+            self.settings.menuSelected(evt, elem, eventId);
+          }
+
+          if (elem.attr('data-action') === 'delete-event') {
+            self.deleteEvent({ id: eventId });
+          }
+        });
+      });
+    }
     return this;
   },
 
@@ -677,6 +702,21 @@ Calendar.prototype = {
   },
 
   /**
+   * Remove an event from the dataset and page. It uses the id property.
+   * @param {object} event The event object with common event properties.
+   */
+  deleteEvent(event) {
+    const eventId = event.id;
+
+    for (let i = this.settings.events.length - 1; i >= 0; i--) {
+      if (this.settings.events[i].id === eventId) {
+        this.settings.events.splice(i, 1);
+      }
+    }
+    this.renderAllEvents();
+  },
+
+  /**
    * Fix missing / incomlete event data
    * @param {object} event The event object with common event properties.
    * @private
@@ -693,14 +733,7 @@ Calendar.prototype = {
       event.isAllDay = false;
     }
 
-    if (event.starts === event.ends && isAllDay) {
-      event.starts = Locale.formatDate(new Date(event.starts), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
-      const endDate = new Date(event.ends);
-      endDate.setHours(23, 59, 59, 999);
-      event.ends = Locale.formatDate(new Date(event.endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
-      event.duration = 1;
-      event.isAllDay = true;
-    } else if (event.starts !== event.ends && isAllDay) {
+    if (isAllDay) {
       const startDate = new Date(event.starts);
       startDate.setHours(0, 0, 0, 0);
       event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
@@ -708,6 +741,7 @@ Calendar.prototype = {
       const endDate = new Date(event.ends);
       endDate.setHours(23, 59, 59, 999);
       event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
+      event.duration = event.starts === event.ends ? 1 : null;
       event.isAllDay = true;
     }
   },
@@ -771,6 +805,10 @@ Calendar.prototype = {
     this.activeElem = dayObj.elem;
   },
 
+  /**
+   * Remove and destroy the modal.
+   * @private
+   */
   removeModal() {
     this.modalContents = null;
     if (this.activeElem) {

@@ -1,7 +1,6 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
-const axePageObjects = requireHelper('axe-page-objects');
 requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
@@ -142,5 +141,21 @@ describe('Calendar specific month tests', () => {
 
     expect(await element(by.css('.calendar-event-header')).getText()).toEqual('Team Event');
     expect(await element(by.css('.calendar-event-body')).getText()).toBeTruthy();
+  });
+
+  it('should offer a right click menu', async () => {
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+
+    const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
+    await browser.actions().mouseMove(event).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('calendar-actions-menu'))), config.waitsFor);
+
+    expect(await element(by.id('calendar-actions-menu')).getAttribute('class')).toContain('is-open');
+    await element(by.css('#calendar-actions-menu a')).click();
+
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(15);
   });
 });
