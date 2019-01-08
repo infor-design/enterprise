@@ -1217,6 +1217,9 @@ Datagrid.prototype = {
         case 'time':
           filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" id="${filterId}"/>`;
           break;
+        case 'lookup':
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" id="${filterId}" >`;
+          break;
         default:
           filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" id="${filterId}"/>`;
           break;
@@ -1379,6 +1382,15 @@ Datagrid.prototype = {
           .on('listclosed.datepicker', () => {
             self.applyFilter(null, 'selected');
           });
+      }
+
+      if (typeof elem.find('.lookup').lookup === 'function') {
+        elem.find('.lookup')
+          .lookup(col.editorOptions ? col.editorOptions : { });
+
+        elem.on('change', () => {
+          self.applyFilter(null, 'selected');
+        });
       }
 
       if (typeof elem.find('.timepicker').datepicker === 'function') {
@@ -4773,7 +4785,7 @@ Datagrid.prototype = {
     this.element
       .off('click.datagrid')
       .on('click.datagrid', '> .datagrid-header th.is-sortable, > .datagrid-header th.btn-filter', function (e) {
-        if ($(e.target).parent().is('.datagrid-filter-wrapper')) {
+        if ($(e.target).parent().is('.datagrid-filter-wrapper') || $(e.target).parent().is('.lookup-wrapper')) {
           return;
         }
 
@@ -6939,7 +6951,7 @@ Datagrid.prototype = {
    * @returns {boolean} If it does or not
    */
   containsTriggerField(container) {
-    const selector = '.dropdown, .datepicker';
+    const selector = '.dropdown, .datepicker, .lookup';
     return !($(selector, container).length);
   },
 
