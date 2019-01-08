@@ -320,7 +320,7 @@
 
     .accordion-header {
       &.has-chevron > a {
-        width: 100%;
+        width: calc(100% - 3px);
       }
 
       .btn {
