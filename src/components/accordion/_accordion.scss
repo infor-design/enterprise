@@ -677,6 +677,11 @@
   .accordion-content {
     color: $accordion-text-color;
     overflow-x: visible;
+
+    span {
+      font-size: 1.4rem;
+      color: black;
+    }
   }
 
   @include left-align-cascade-styles-pane(20px, 40px, 40px);
