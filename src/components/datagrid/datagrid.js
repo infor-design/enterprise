@@ -4572,6 +4572,7 @@ Datagrid.prototype = {
       this.emptyMessageContainer = $('<div>');
       this.contentContainer.prepend(this.emptyMessageContainer);
       this.emptyMessage = this.emptyMessageContainer.emptymessage(emptyMessage).data('emptymessage');
+      this.checkEmptyMessage();
     } else {
       this.emptyMessage.settings = emptyMessage;
       this.emptyMessage.updated();
