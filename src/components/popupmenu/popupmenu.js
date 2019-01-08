@@ -148,11 +148,25 @@ PopupMenu.prototype = {
    */
   addMarkup() {
     let id;
+    let duplicateMenu;
+    let triggerId;
 
     switch (typeof this.settings.menu) {
       case 'string': // ID Selector
         id = this.settings.menu;
         this.menu = $(`#${this.settings.menu}`);
+
+        // duplicate menu if shared by multiple triggers
+        this.menu.data('trigger', this.element);
+        triggerId = this.menu.data('trigger')[0].id;
+        duplicateMenu = this.menu.clone();
+        if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
+          duplicateMenu.detach().appendTo('body');
+        }
+
+        // add data-id attr to menus
+        duplicateMenu.attr('data-trigger', triggerId);
+        this.menu.attr('data-trigger', triggerId);
         break;
       case 'object': // jQuery Object
         if (this.settings.menu === null) {
@@ -1291,6 +1305,11 @@ PopupMenu.prototype = {
       width: this.menu[0].offsetWidth,
       height: this.menu[0].offsetHeight
     };
+
+    // if (!this.menu.parent().is('.popupmenu-wrapper')) {
+    //   this.menu.wrap('<div class="popupmenu-wrapper"></div>');
+    //   console.log(this.menu);
+    // }
 
     if (!wrapper.length) {
       return;
