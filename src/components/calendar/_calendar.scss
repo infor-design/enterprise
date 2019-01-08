@@ -72,8 +72,13 @@
     border-left: 1px solid $calendar-line-color;
     display: inline-block;
     height: 100%;
+    overflow: auto;
     vertical-align: top;
     width: 220px;
+
+    &.has-many .calendar-event-detail {
+      height: auto;
+    }
   }
 
   .calendar-event-types {
@@ -316,6 +321,7 @@
 .calendar-event-detail {
   background-color: $calendar-bg-color;
   height: 100%;
+  padding-bottom: 5px;
 }
 
 .calendar-event-header {

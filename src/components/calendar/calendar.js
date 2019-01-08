@@ -190,9 +190,10 @@ Calendar.prototype = {
   /**
    * Render or re-render the events details section, using on the readonly or default eventTemplate
    * @param {string} eventId The event id
+   * @param {number} count The event count
    * @private
    */
-  renderEventDetails(eventId) {
+  renderEventDetails(eventId, count) {
     if (!this.settings.events) {
       return;
     }
@@ -204,7 +205,7 @@ Calendar.prototype = {
     }
 
     this.eventDetailsContainer = document.querySelector('.calendar-event-details');
-    this.renderTmpl(eventData[0], this.settings.template, this.eventDetailsContainer);
+    this.renderTmpl(eventData[0], this.settings.template, this.eventDetailsContainer, count > 1);
   },
 
   /**
@@ -212,14 +213,14 @@ Calendar.prototype = {
    * @private
    */
   renderSelectedEventDetails() {
-    const dayEvents = document.querySelectorAll('.calendar td.is-selected .calendar-event');
-    if (!dayEvents || dayEvents.length === 0) {
-      this.clearEventDetails();
+    const dayObj = this.getDayEvents();
+    this.clearEventDetails();
+    if (!dayObj.events || dayObj.events.length === 0) {
       return;
     }
 
-    for (let i = 0; i < dayEvents.length; i++) {
-      this.renderEventDetails(dayEvents[i].getAttribute('data-id'));
+    for (let i = 0; i < dayObj.events.length; i++) {
+      this.renderEventDetails(dayObj.events[i].id, dayObj.events.length);
     }
   },
 
@@ -296,7 +297,6 @@ Calendar.prototype = {
     const filters = this.filterEventTypes();
 
     // Cleanup from previous renders
-    this.visibleEvents = [];
     this.removeAllEvents();
     this.clearUpcomingEvents();
     this.clearEventDetails();
@@ -359,7 +359,7 @@ Calendar.prototype = {
         if (days.length - 1 === l) {
           cssClass = 'event-day-end';
         }
-        self.appendEvent(days[l].elem[0], event, cssClass, idx);
+        self.appendEvent(days[l].elem[0], event, cssClass, idx + l);
       }
     }
 
@@ -473,7 +473,6 @@ Calendar.prototype = {
         moreSpan.innerHTML = `+ ${cnt} ${moreText}`;
       }
 
-      this.visibleEvents.push({ id: event.id, type: event.type, elem: node });
       return this;
     }
 
@@ -505,7 +504,6 @@ Calendar.prototype = {
       });
     }
 
-    this.visibleEvents.push({ id: event.id, type: event.type, elem: node });
     return this;
   },
 
@@ -664,8 +662,9 @@ Calendar.prototype = {
    * @param {object} event The event object with common event properties.
    * @param {object} template The template id.
    * @param {object} container The container to put it in.
-   */
-  renderTmpl(event, template, container) {
+   * @param {boolean} append If true we append the template into the container.
+  */
+  renderTmpl(event, template, container, append) {
     if (typeof Tmpl !== 'object' || !template) {
       return;
     }
@@ -687,6 +686,13 @@ Calendar.prototype = {
     event.typeLabel = this.getEventTypeLabel(event.type);
 
     const renderedTmpl = Tmpl.compile(template, { event });
+    container.classList.remove('has-many');
+
+    if (append) {
+      DOM.append(container, renderedTmpl, '*');
+      container.classList.add('has-many');
+      return;
+    }
     container.innerHTML = renderedTmpl;
   },
 
