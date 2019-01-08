@@ -295,8 +295,8 @@
   }
 
   &.filled {
-    background-color: $azure07;
-    color: $white;
+    background-color: $theme-color-palette-azure-70;
+    color: $theme-color-palette-white;
     font-size: 1.8rem;
     -webkit-font-smoothing: antialiased;
     margin: -1px;
@@ -308,40 +308,40 @@
     }
 
     .icon-close {
-      fill: $white;
+      fill: $theme-color-palette-white;
     }
   }
 
   &.ruby {
-    background-color: $ruby06;
+    background-color: $theme-color-palette-ruby-60;
   }
 
   &.amber {
-    background-color: $amber06;
+    background-color: $theme-color-palette-amber-60;
   }
 
   &.emerald {
-    background-color: $emerald06;
+    background-color: $theme-color-palette-emerald-60;
   }
 
   &.azure {
-    background-color: $azure06;
+    background-color: $theme-color-palette-azure-60;
   }
 
   &.turquoise {
-    background-color: $turquoise06;
+    background-color: $theme-color-palette-turquoise-60;
   }
 
   &.amethyst {
-    background-color: $amethyst06;
+    background-color: $theme-color-palette-amethyst-60;
   }
 
   &.slate {
-    background-color: $slate06;
+    background-color: $theme-color-palette-slate-60;
   }
 
   &.graphite {
-    background-color: $graphite06;
+    background-color: $theme-color-palette-graphite-60;
   }
 }
 

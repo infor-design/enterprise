@@ -206,6 +206,12 @@ Calendar.prototype = {
 
     this.eventDetailsContainer = document.querySelector('.calendar-event-details');
     this.renderTmpl(eventData[0], this.settings.template, this.eventDetailsContainer, count > 1);
+
+    const api = $(this.eventDetailsContainer).data('accordion');
+    if (api) {
+      api.destroy();
+    }
+    $(this.eventDetailsContainer).accordion();
   },
 
   /**
@@ -344,7 +350,14 @@ Calendar.prototype = {
     event.endKey = endKey;
     event.startKey = startKey;
     event = this.addCalculatedFields(event);
-    const idx = self.monthView.dayMap.findIndex(day => day.key >= startKey && day.key <= endKey);
+    // const idx = self.monthView.dayMap.findIndex(day => day.key >= startKey && day.key <= endKey);
+    let idx = -1;
+    for (let i = 0; i < self.monthView.dayMap.length; ++i) {
+      if (self.monthView.dayMap[i].key >= startKey && self.monthView.dayMap[i].key <= endKey) {
+        idx = i;
+        break;
+      }
+    }
 
     // Event is only on this day
     if (days.length === 1) {
@@ -686,14 +699,14 @@ Calendar.prototype = {
     event.typeLabel = this.getEventTypeLabel(event.type);
 
     const renderedTmpl = Tmpl.compile(template, { event });
-    container.classList.remove('has-many');
+    container.classList.remove('has-only-one');
 
     if (append) {
       DOM.append(container, renderedTmpl, '*');
-      container.classList.add('has-many');
       return;
     }
     container.innerHTML = renderedTmpl;
+    container.classList.add('has-only-one');
   },
 
   /**
