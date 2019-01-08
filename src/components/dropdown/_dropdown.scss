@@ -9,11 +9,11 @@
   }
 
   &.alert {
-    fill: $alert-orange;
+    fill: $theme-color-status-warning;
   }
 
   &.alert-yellow {
-    fill: $alert-yellow;
+    fill: $theme-color-status-caution;
   }
 
   &.neutral {
@@ -21,15 +21,15 @@
   }
 
   &.good {
-    fill: $alert-green;
+    fill: $theme-color-status-success;
   }
 
   &.info {
-    fill: $alert-info;
+    fill: $theme-color-status-base;
   }
 
   &.white {
-    fill: $white;
+    fill: $theme-color-palette-white;
   }
 }
 
@@ -56,7 +56,7 @@ select.dropdown-xs {
   position: relative;
 
   .icon-error,
-  .icon-confirm,
+  .icon-success,
   .icon-alert,
   .icon-info,
   .icon-pending {
@@ -495,7 +495,7 @@ div.multiselect {
     .icon {
       @include css3(transform, rotate(180deg));
 
-      background-color: rgba($white, 0);
+      background-color: rgba($theme-color-palette-white, 0);
       fill: $trigger-icon-fill-color;
       height: 32px;
       width: 18px;
@@ -1014,7 +1014,7 @@ html[dir='rtl'] {
 
   .dropdown-wrapper {
     .icon-error,
-    .icon-confirm,
+    .icon-success,
     .icon-alert,
     .icon-info,
     .icon-pending {

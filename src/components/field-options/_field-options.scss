@@ -27,7 +27,7 @@
   &:focus,
   &:active {
     color: transparent;
-    text-shadow: 0 0 0 $black;
+    text-shadow: 0 0 0 $theme-color-palette-black;
   }
 
   &:focus:not(.hide-focus) {
@@ -59,7 +59,7 @@
     max-width: calc(100% - 40px);
   }
 
-  ~ .icon-confirm {
+  ~ .icon-success {
     right: 40px;
   }
 
@@ -365,7 +365,7 @@
   .field-options {
     ~ .btn-actions {
       color: transparent;
-      text-shadow: 0 0 0 $black;
+      text-shadow: 0 0 0 $theme-color-palette-black;
     }
   }
 }
@@ -488,7 +488,7 @@
 // RTL Styles ******************************************************************
 html[dir='rtl'] {
   .field-options {
-    ~ .icon-confirm {
+    ~ .icon-success {
       left: 40px;
       right: auto;
     }

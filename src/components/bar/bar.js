@@ -655,7 +655,8 @@ Bar.prototype = {
     const elems = document.querySelectorAll('.bar-chart .axis.y .tick text');
     const dataset = this.settings.dataset;
     for (let i = 0; i < dataset.length; i++) {
-      Object.values(dataset[i]).forEach((key) => {
+      const values = Object.keys(dataset[i]).map(e => dataset[i][e]);
+      values.forEach((key) => {
         if (key && key.constructor === Array) {
           for (let j = 0; j < key.length; j++) {
             if (innerWidth <= 480) {

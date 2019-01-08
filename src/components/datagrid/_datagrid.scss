@@ -30,7 +30,7 @@
       }
 
       .icon-rowstatus {
-        fill: $white;
+        fill: $theme-color-palette-white;
         height: 10px;
         left: 1px;
         position: absolute;
@@ -696,12 +696,12 @@ $datagrid-short-row-height: 23px;
           }
         }
 
-        &.confirm {
-          &.datagrid-trigger-cell .icon-confirm {
+        &.success {
+          &.datagrid-trigger-cell .icon-success {
             margin-top: auto;
           }
 
-          .datagrid-cell-wrapper .icon-confirm {
+          .datagrid-cell-wrapper .icon-success {
             top: 10px;
           }
         }
@@ -1065,12 +1065,12 @@ $datagrid-short-row-height: 23px;
           }
         }
 
-        &.confirm {
-          &.datagrid-trigger-cell .icon-confirm {
+        &.success {
+          &.datagrid-trigger-cell .icon-success {
             margin-top: auto;
           }
 
-          .datagrid-cell-wrapper .icon-confirm {
+          .datagrid-cell-wrapper .icon-success {
             height: 16px;
             top: 6px;
           }
@@ -1093,7 +1093,7 @@ $datagrid-short-row-height: 23px;
       &.rowstatus-row-alert,
       &.rowstatus-row-info,
       &.rowstatus-row-in-progress,
-      &.rowstatus-row-confirm,
+      &.rowstatus-row-success,
       &.rowstatus-row-dirty,
       &.rowstatus-row-new {
         .rowstatus-cell {
@@ -1332,7 +1332,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &.info .audible {
-        background-color: $graphite05;
+        background-color: $theme-color-palette-graphite-50;
       }
     }
 
@@ -1350,7 +1350,7 @@ $datagrid-short-row-height: 23px;
 
     .tag {
       &[class*='azure'] {
-        color: $white;
+        color: $theme-color-palette-white;
       }
     }
 
@@ -1417,7 +1417,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.rowstatus-row-error {
-      @include rowstatus($alert-red);
+      @include rowstatus($theme-color-status-danger);
     }
 
     &.rowstatus-row-dirty {
@@ -1436,8 +1436,8 @@ $datagrid-short-row-height: 23px;
       @include rowstatus($trigger-icon-fill-color);
     }
 
-    &.rowstatus-row-confirm {
-      @include rowstatus($alert-green);
+    &.rowstatus-row-success {
+      @include rowstatus($theme-color-status-success);
     }
 
     &.rowstatus-row-new {
@@ -1538,7 +1538,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-red;
+        border-color: $theme-color-status-danger;
       }
 
       &.l-right-text {
@@ -1566,7 +1566,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-orange;
+        border-color: $theme-color-status-warning;
       }
 
       &.l-right-text {
@@ -1578,13 +1578,13 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    &.confirm {
+    &.success {
       background-color: $alert-bg-green;
 
       .datagrid-cell-wrapper {
         position: relative;
 
-        .icon-confirm {
+        .icon-success {
           left: 100%;
           margin-left: -30px;
           position: absolute;
@@ -1594,11 +1594,11 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-green;
+        border-color: $theme-color-status-success;
       }
 
       &.l-right-text {
-        .datagrid-cell-wrapper .icon-confirm {
+        .datagrid-cell-wrapper .icon-success {
           left: 0;
           margin-left: 0;
           margin-right: -15px;
@@ -1622,7 +1622,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-info;
+        border-color: $theme-color-status-base;
       }
 
       &.l-right-text {
@@ -1871,7 +1871,7 @@ $datagrid-short-row-height: 23px;
         }
 
         &:disabled .icon {
-          fill: $slate05;
+          fill: $theme-color-palette-slate-50;
         }
       }
 
@@ -3659,7 +3659,7 @@ html[dir='rtl'] {
 //Ios Hacks
 .ios .datagrid:not(.short-rowheight):not(.medium-rowheight) {
   .icon-error,
-  .icon-confirm,
+  .icon-success,
   .icon-pending {
     top: 15px !important;
   }

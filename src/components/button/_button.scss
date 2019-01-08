@@ -181,12 +181,12 @@ button {
     opacity: $button-color-secondary-disabled-opacity;
 
     .icon {
-      fill: $white;
+      fill: $theme-color-palette-white;
     }
   }
 
   .ripple-effect {
-    background-color: $white;
+    background-color: $theme-color-palette-white;
     opacity: 0.7;
     pointer-events: none;
   }
@@ -312,7 +312,7 @@ a.btn-close {
   }
 
   .ripple-effect {
-    background: $graphite02;
+    background: $theme-color-palette-graphite-20;
   }
 
   // Menu Button Form
@@ -510,7 +510,7 @@ a.btn-close {
     }
 
     &:hover .icon {
-      fill: $azure08;
+      fill: $theme-color-palette-azure-80;
     }
   }
 }
@@ -528,7 +528,7 @@ a.btn-close {
   }
 
   .ripple-circle {
-    fill: rgba($white, 0);
+    fill: rgba($theme-color-palette-white, 0);
   }
 }
 

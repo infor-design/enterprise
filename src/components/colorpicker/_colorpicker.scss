@@ -8,7 +8,7 @@
   &::before {
     @include css3(transform, rotate(-45deg));
 
-    border-top: 2px solid $alert-red;
+    border-top: 2px solid $theme-color-status-danger;
     content: '';
     left: $offset;
     position: absolute;
@@ -247,7 +247,7 @@
       &.is-selected {
         &::after {
           @include css3(transform, scaleX(-1) rotate(135deg));
-          // border-color: $white $white $white transparent;
+          // border-color: $theme-color-palette-white $theme-color-palette-white $theme-color-palette-white transparent;
           border-style: solid;
           border-width: 2px 2px 0 0;
           content: '';

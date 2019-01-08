@@ -300,15 +300,15 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
 
 // Sectional Wizard (used as an alternative to Wizard in the Header)
 .section-wizard {
-  background-color: $white;
-  border-bottom: 1px solid $graphite02;
+  background-color: $theme-color-palette-white;
+  border-bottom: 1px solid $theme-color-palette-graphite-20;
   padding: 20px 0 0;
 
   .wizard-header {
     background-color: transparent;
 
     .tick:not(.complete):not(.current) {
-      background-color: $white;
+      background-color: $theme-color-palette-white;
     }
   }
 }

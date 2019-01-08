@@ -5,11 +5,11 @@
 @import '../core/reset';
 @import '../core/mixins';
 
-// Enterprise colors
-@import '../components/colors/colorpalette';
-
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/tokens/web/theme-uplift';
+
+// Enterprise colors
+@import '../components/colors/colorpalette';
 
 // Local vars
 @import '../core/config';
@@ -19,9 +19,9 @@
 
 // Temporary Banner - Remove this when not alpha.
 body::before {
-  background: $alert02;
+  background: $theme-color-status-warning;
   bottom: 12px;
-  color: $white;
+  color: $theme-color-palette-white;
   content: 'alpha';
   font-size: 13px;
   font-weight: 900;

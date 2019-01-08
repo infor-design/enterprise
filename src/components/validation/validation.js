@@ -20,12 +20,17 @@ function ValidationRules() {
     pagingMessageID: 'AlertOnPage',
     errorsForm: false
   };
-  this.ValidationTypes.confirm = {
-    type: 'confirm',
-    titleMessageID: 'Confirm',
-    pagingMessageID: 'ComfirmOnPage',
+
+  this.ValidationTypes.success = {
+    type: 'success',
+    titleMessageID: 'Success',
+    pagingMessageID: 'SuccessOnPage',
     errorsForm: false
   };
+
+  // TODO: deprecate confirm in favor of success
+  this.ValidationTypes.confirm = this.ValidationTypes.success;
+
   this.ValidationTypes.info = {
     type: 'info',
     titleMessageID: 'Info',

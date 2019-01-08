@@ -5,14 +5,14 @@
   height: 100%;
 
   .custom-header {
-    background-color: #fff;
+    background-color: $theme-color-palette-white;
     height: 38px;
     width: 100%;
     z-index: 100;
 
     button {
       border-bottom: 2px solid transparent;
-      color: #5c5c5c;
+      color: $theme-color-palette-graphite-60;
       display: block;
       float: left;
       font-size: 14px;

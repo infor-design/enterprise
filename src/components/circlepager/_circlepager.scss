@@ -33,7 +33,7 @@
     //Next and Previous Buttons
     .btn-next,
     .btn-previous {
-      background-color: $graphite10;
+      background-color: $theme-color-palette-graphite-100;
       border: 1px solid $theme-color-brand-secondary-alt;
       border-radius: 50%;
       display: none;
@@ -53,10 +53,10 @@
       }
 
       &:hover {
-        border: 1px solid $white;
+        border: 1px solid $theme-color-palette-white;
 
         .icon {
-          fill: $white;
+          fill: $theme-color-palette-white;
         }
       }
     }
@@ -150,7 +150,7 @@
         display: none;
 
         &.is-active {
-          background-color: $graphite10;
+          background-color: $theme-color-palette-graphite-100;
           border: 1px solid $theme-color-brand-secondary-alt;
           border-radius: 2px;
           color: $theme-color-brand-secondary-alt;
@@ -161,12 +161,12 @@
           width: auto;
 
           &:hover {
-            background-color: $graphite10;
+            background-color: $theme-color-palette-graphite-100;
             border-color: $theme-color-brand-secondary-alt;
           }
 
           &:focus {
-            background-color: $graphite10;
+            background-color: $theme-color-palette-graphite-100;
             border-color: $theme-color-brand-secondary-alt;
           }
         }

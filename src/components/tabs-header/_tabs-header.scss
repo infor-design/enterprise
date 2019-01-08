@@ -81,14 +81,14 @@
 
       &.dismissible {
         .icon {
-          fill: $white;
+          fill: $theme-color-palette-white;
           opacity: 0.6;
         }
 
         &:hover,
         &.is-selected {
           .icon:not(.is-error):not(.icon-error) {
-            fill: $white;
+            fill: $theme-color-palette-white;
             opacity: 1;
           }
         }

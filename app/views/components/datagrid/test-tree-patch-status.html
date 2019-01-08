@@ -16,7 +16,7 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'operation', name: 'Operation', field: 'operation', sortable: false, formatter: Formatters.Tree, width: 50});
-      columns.push({ id: 'status', name: 'Status', sortable: false, field: 'status', formatter: Formatters.Alert, ranges:[{'value':'OK', 'classes':'confirm', },{'value':'FAILED', 'classes':'error', },{'value':'TENANT_FAILED', 'classes':'error', },{'value':'RUNNING', 'classes':'pending', },{'value':'WARNING', 'classes':'alert', }], filterType:'select', options: []});
+      columns.push({ id: 'status', name: 'Status', sortable: false, field: 'status', formatter: Formatters.Alert, ranges:[{'value':'OK', 'classes':'success', },{'value':'FAILED', 'classes':'error', },{'value':'TENANT_FAILED', 'classes':'error', },{'value':'RUNNING', 'classes':'pending', },{'value':'WARNING', 'classes':'alert', }], filterType:'select', options: []});
       columns.push({ id: 'severity', name: 'Severity', sortable: false, field: 'severity'});
       columns.push({ id: 'message', name: 'Message', sortable: false, field: 'message', width: 100, formatter: Formatters.Template, template:"<div>{{message}}</div>"});
       columns.push({ id: 'startTime', name: 'Started', sortable: false, field: 'startTime', formatter: Formatters.Date, dateFormat: 'yyyy-MM-dd HH:mm:ss,SSS', filterType: 'date'});

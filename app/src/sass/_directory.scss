@@ -8,7 +8,7 @@
 
 .badge.azure07,
 .badge.ruby07 {
-  color: $white;
+  color: $theme-color-palette-white;
 }
 
 .directory-listing {
@@ -16,11 +16,11 @@
     fill: $theme-color-brand-primary-alt;
 
     &.example {
-      fill: $ruby05;
+      fill: $theme-color-palette-ruby-50;
     }
 
     &.test {
-      fill: $azure05;
+      fill: $theme-color-palette-azure-50;
     }
   }
 }
