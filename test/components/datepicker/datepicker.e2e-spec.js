@@ -519,7 +519,7 @@ describe('Datepicker Month Year Picker Tests', () => {
   });
 });
 
-describe('Datepicker Month Year Changer Tests', () => {
+describe('Datepicker Month Year Changer Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-picker');
     const Date = () => {  //eslint-disable-line
@@ -556,6 +556,7 @@ describe('Datepicker Month Year Changer Tests', () => {
     await lastButtonEl.sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
+    browser.executeScript('$("#dropdown-list").hide()');
     const buttonEl = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
     await buttonEl.click();
     await browser.driver.sleep(config.sleep);
