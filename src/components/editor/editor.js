@@ -13,7 +13,7 @@ import { DOM } from '../../utils/dom';
 const COMPONENT_NAME = 'editor';
 
 /**
-* The Editor Component is displays and edits markdown.
+* The Editor Component displays and edits markdown.
 *
 * @class Editor
 * @param {string} element The component element.
@@ -399,7 +399,7 @@ Editor.prototype = {
       h: 72, // {Ctrl + H} anchor
       i: 73, // {Ctrl + I} italic --------with SHIFT: {Ctrl + Shift + I} image
       l: 76, // {Ctrl + L} justifyLeft
-      bl: 55, // {Ctrl + + Shift + 7} bullet list
+      bl: 55, // {Ctrl + Shift + 7} bullet list
       n: 56, // {Ctrl + Shift + 8} numbered list
       q: 81, // {Ctrl + Q} blockquotes
       r: 82, // {Ctrl + R} justifyRight
@@ -1437,7 +1437,7 @@ Editor.prototype = {
               deferredIE11.reject();
               return;
             }
-            // If data has been processes by browser, process it
+            // If data has been processed by browser, process it
             if (elem.childNodes && elem.childNodes.length > 0) {
               // Retrieve pasted content via innerHTML
               // (Alternatively loop through elem.childNodes or elem.getElementsByTagName here)
@@ -1592,6 +1592,9 @@ Editor.prototype = {
     // Remove header tag and content
     s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
 
+    // Replace bullets with list item tags
+    s = s.replace(/(·|•)/g, '</li><li>');
+
     // Remove empty tags
     s = s.replace(/<[^/>]+>[\s]*<\/[^>]+>/gi, '');
 
@@ -1599,8 +1602,8 @@ Editor.prototype = {
   },
 
   htmlEntities(str) {
-    // converts special characters (like <) into their escaped/encoded values (like &lt;).
-    // This allows you to show to display the string without the browser reading it as HTML.
+    // converts special characters (e.g., <) into their escaped/encoded values (e.g., &lt;).
+    // This allows you to display the string without the browser reading it as HTML.
     return String(str)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
