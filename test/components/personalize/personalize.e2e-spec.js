@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Personalization tests', () => { //eslint-disable-line
+describe('Personalization tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/personalize/example-state');
   });

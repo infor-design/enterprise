@@ -274,7 +274,7 @@ describe('Tabs click example-add-tab button tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-add-tab-button', async () => {  //eslint-disable-line
+    it('Should not visual regress on example-add-tab-button', async () => {
       const tabsEl = await element(by.id('add-capable-tabs'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);

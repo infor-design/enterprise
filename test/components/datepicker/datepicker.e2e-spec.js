@@ -519,7 +519,7 @@ describe('Datepicker Month Year Picker Tests', () => {
   });
 });
 
-describe('Datepicker Month Year Changer Tests', () => { //eslint-disable-line
+describe('Datepicker Month Year Changer Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-picker');
     const Date = () => {  //eslint-disable-line
