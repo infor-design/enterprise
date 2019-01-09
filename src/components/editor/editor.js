@@ -1592,9 +1592,6 @@ Editor.prototype = {
     // Remove header tag and content
     s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
 
-    // Replace bullets with list item tags
-    s = s.replace(/(·|•)/g, '</li><li>');
-
     // Remove empty tags
     s = s.replace(/<[^/>]+>[\s]*<\/[^>]+>/gi, '');
 
@@ -2360,7 +2357,7 @@ Editor.prototype = {
     // Convert <s> into <strike> for line-though
     s = s.replace(/<(\/?)s>/gi, '<$1strike>');
 
-    // Replace nsbp entites to char since it's easier to handle
+    // Replace nbsp entites to char since it's easier to handle
     s = s.replace(/&nbsp;/gi, '\u00a0');
 
     // Convert <span style="mso-spacerun:yes"></span> to string of alternating
@@ -2370,6 +2367,9 @@ Editor.prototype = {
 
     // Remove line breaks / Mso classes
     s = s.replace(/(\n|\r| class=(\'|")?Mso[a-zA-Z]+(\'|")?)/g, ' ');
+
+    // Remove smart bullets
+    s = s.replace(/(·|•)/g, '');
 
     const badTags = ['style', 'script', 'applet', 'embed', 'noframes', 'noscript'];
 
