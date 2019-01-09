@@ -678,9 +678,9 @@
     color: $accordion-text-color;
     overflow-x: visible;
 
-    span {
-      color: #000;
+    p {
       font-size: 1.4rem;
+      -webkit-text-size-adjust: 100%;
     }
   }
 
