@@ -1,0 +1,86 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h3>Tree Control</h3>
+    <p>This example shows how to show checkbox for particular node.</p>
+    <br />
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul role="tree" selectable="multiple" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+  </div>
+</div>
+<script>
+  var sampleData;
+  var dropdownData;
+
+  dropdownData = [
+    { value: 'any', text: 'Any' },
+    { value: 'all', text: 'All' },
+  ];
+
+  sampleData = [
+    {
+    "id": "node1",
+    "text": "Node One",
+    "open": true,
+    "selected": false,
+    "children": [
+      {
+      "id": "node2",
+      "text": "any",
+      "type": 'dropdown',
+      "data": dropdownData
+      },
+      {
+        "id": "node3",
+        "text": "Node 1.1",
+        "hideCheckbox": false,
+        "children": [
+          {
+          "id": "node4",
+          "text": "all",
+          "type": 'dropdown',
+          "data": dropdownData
+          },
+          {
+          "id": "node5",
+          "text": "Node 1.1.1"
+          },
+          {
+          "id": "node6",
+          "text": "Node 1.1.2"
+          }
+        ]
+      },
+      {
+        "id": "node7",
+        "text": "Node 1.2",
+        "hideCheckbox": false,
+        "children": [
+          {
+          "id": "node8",
+          "text": "any",
+          "type": 'dropdown',
+          "data": dropdownData
+          },
+          {
+          "id": "node9",
+          "text": "Node 1.2.1"
+          },
+          {
+          "id": "node10",
+          "text": "Node 1.2.2"
+          }
+        ]
+      }]
+    }];
+
+
+  $('#json-tree').tree({
+    dataset: sampleData,
+    selectable: 'multiple',
+    hideCheckboxes: true
+  });
+</script>
