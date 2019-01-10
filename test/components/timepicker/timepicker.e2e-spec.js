@@ -68,7 +68,6 @@ describe('Timepicker example-index tests', () => {
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
 
     expect(await dropdownEl.getText()).toEqual('10');
@@ -158,6 +157,7 @@ describe('Timepicker with seconds example tests', () => {
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
 
     expect(await dropdownEl.getText()).toEqual('03');
@@ -171,6 +171,8 @@ describe('Timepicker with seconds example tests', () => {
     expect(await dropdownEl.getText()).toEqual('10');
     dropdownEl = await element(by.css(ddSelector('seconds')));
     await dropdownEl.sendKeys(protractor.Key.SPACE);
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
