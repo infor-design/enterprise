@@ -126,7 +126,7 @@
         <span class="data">
           {{status}}
           {{#icon}}
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation" data-status="Pending"><use xlink:href="#{{icon}}"></use></svg>
+          <svg class="icon {{icon}}" focusable="false" aria-hidden="true" role="presentation" data-status="{{status}}"><use xlink:href="#{{icon}}"></use></svg>
           {{/icon}}
         </span>
       </div>
@@ -158,7 +158,7 @@
       </div>
       <div class="field">
         <span class="label">Comments</span>
-        <span class="data">
+        <span class="data{{#noComments}} is-placeholder{{/noComments}}" >
           {{comments}}
         </span>
       </div>

@@ -218,5 +218,16 @@
     "ends": "2019-02-02T23:59:59.999",
     "type": "sick",
     "isAllDay": "true"
+  },
+  {
+    "id": "23",
+    "subject": "Out of Office",
+    "comments": "Out of office in afternoon",
+    "status": "Approved",
+    "icon": "icon-success",
+    "starts": "2019-02-10T12:00:00.000",
+    "ends": "2019-02-10T18:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
   }
 ]

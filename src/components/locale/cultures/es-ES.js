@@ -244,6 +244,7 @@ Soho.Locale.addCulture('es-ES', {
     NextPage: { id: 'NextPage', value: 'Siguiente página', comment: 'Next on Pager' },
     NextMonth: { id: 'NextMonth', value: 'Siguiente mes', comment: 'the label for the button that moves calendar to next/prev' },
     No: { id: 'No', value: 'No', comment: 'On a dialog button' },
+    NoCommentsEntered: { id: 'NoCommentsEntered', value: 'No hay comentarios introducidos', comment: 'Placeholder for where no comments are added.' },
     NoData: { id: 'NoData', value: 'No hay datos disponibles.', comment: 'Shown when there is no rows shown in a list' },
     NoDataFilter: { id: 'NoDataFilter', value: 'No hay datos disponibles. Cree un nuevo filtro para ver más resultados.', comment: 'Shown when there is no rows shown in a list' },
     NoDataList: { id: 'NoDataList', value: 'No hay datos disponibles. Haga una selección en la lista anterior para ver más resultados.', comment: 'Shown when there is no rows shown in a list' },
