@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('MonthView index tests', () => { //eslint-disable-line
+describe('MonthView index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/example-index?layout=nofrills');
   });
@@ -51,7 +51,7 @@ describe('Monthview keyboard tests', () => {
     await utils.setPage('/components/monthview/example-index');
   });
 
-  it('Should be able to use arrow down key', async () => { //eslint-disable-line
+  it('Should be able to use arrow down key', async () => {
     const testDate = new Date();
     testDate.setHours(0);
     testDate.setMinutes(0);

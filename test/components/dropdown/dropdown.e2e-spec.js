@@ -163,7 +163,7 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.id('dropdown-search')).getAttribute('value')).toEqual('New Jersey');
     });
 
-    it('Should close an open list and tab to the next element without re-opening', async () => { //eslint-disable-line
+    it('Should close an open list and tab to the next element without re-opening', async () => {
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);

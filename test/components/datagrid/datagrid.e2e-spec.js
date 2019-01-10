@@ -806,7 +806,7 @@ describe('Datagrid paging client side multiselect tests', () => {
   });
 });
 
-describe('Datagrid paging clientside single select tests', () => { //eslint-disable-line
+describe('Datagrid paging clientside single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-single');
 

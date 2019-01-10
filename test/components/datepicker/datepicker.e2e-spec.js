@@ -486,7 +486,7 @@ describe('Datepicker Month Year Picker Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     let dropdownEl = await element(by.css('#year-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownEl.click();
     dropdownEl = await element(by.css('.dropdown-search'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -556,6 +556,7 @@ describe('Datepicker Month Year Changer Tests', () => {
     await lastButtonEl.sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
+    browser.executeScript('$("#dropdown-list").hide()');
     const buttonEl = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
     await buttonEl.click();
     await browser.driver.sleep(config.sleep);
