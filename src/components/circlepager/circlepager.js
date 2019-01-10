@@ -543,6 +543,12 @@ CirclePager.prototype = {
     $('body').on('resize.circlepager', () => {
       self.responsiveSlidesToShow();
     });
+
+    if (this.element.parent().attr('id')) {
+      $('a[href="#' + this.element.parent().attr('id') + '"]').on('focus.tabparent', () => {
+        self.responsiveSlidesToShow();
+      });
+    }
   }
 
 };
