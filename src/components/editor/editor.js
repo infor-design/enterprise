@@ -1595,6 +1595,12 @@ Editor.prototype = {
     // Remove empty tags
     s = s.replace(/<[^/>]+>[\s]*<\/[^>]+>/gi, '');
 
+    // Replace span and paragraph tags from bulleted list pasting
+    if (s.includes('·')) {
+      s = s.replace(/<\/p>/gi, '</li>');
+      s = s.replace(/<p><span><span>·<\/span><\/span>/gi, '<li>');
+    }
+
     return s;
   },
 
@@ -2367,9 +2373,6 @@ Editor.prototype = {
 
     // Remove line breaks / Mso classes
     s = s.replace(/(\n|\r| class=(\'|")?Mso[a-zA-Z]+(\'|")?)/g, ' ');
-
-    // Remove smart bullets
-    s = s.replace(/(·|•)/g, '');
 
     const badTags = ['style', 'script', 'applet', 'embed', 'noframes', 'noscript'];
 
