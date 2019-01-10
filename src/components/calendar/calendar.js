@@ -200,7 +200,7 @@ Calendar.prototype = {
 
     // Find the event data
     const eventData = this.settings.events.filter(event => event.id === eventId);
-    if (!eventData) {
+    if (!eventData || eventData.length === 0) {
       return;
     }
 
@@ -393,6 +393,10 @@ Calendar.prototype = {
     for (let i = 0; i < calendarEvents.length; i++) {
       calendarEvents[i].parentNode.removeChild(calendarEvents[i]);
     }
+
+    for (let i = 0; i < this.monthView.dayMap.length; i++) {
+      this.monthView.dayMap[i].events = [];
+    }
   },
 
   /**
@@ -492,6 +496,7 @@ Calendar.prototype = {
     node = document.createElement('a');
     DOM.addClass(node, 'calendar-event', event.color, type);
     node.setAttribute('data-id', event.id);
+    node.setAttribute('data-key', event.startKey);
 
     node.innerHTML = `<div class="calendar-event-content">
       ${event.icon ? `<span class="calendar-event-icon"><svg class="icon" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use xlink:href="#${event.icon}"></use></svg></span>` : ''}
@@ -602,9 +607,30 @@ Calendar.prototype = {
           if (elem.attr('data-action') === 'delete-event') {
             self.deleteEvent({ id: eventId });
           }
+          if (elem.attr('data-action') === 'show-event') {
+            const key = this.getAttribute('data-key');
+            self.monthView.selectDay(key);
+          }
         });
       });
     }
+
+    this.element.on(`click.${COMPONENT_NAME}`, '.calendar-event', (e) => {
+      const eventId = e.currentTarget.getAttribute('data-id');
+      const eventData = this.settings.events.filter(event => event.id === eventId);
+      if (!eventData || eventData.length === 0) {
+        return;
+      }
+
+      this.showEventModal(eventData[0], (elem, event) => {
+        // Collect the data and popuplate the event object
+        const inputs = elem.querySelectorAll('input, textarea, select');
+        for (let i = 0; i < inputs.length; i++) {
+          event[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
+        }
+        this.updateEvent(event);
+      });
+    });
     return this;
   },
 
@@ -721,6 +747,24 @@ Calendar.prototype = {
   },
 
   /**
+   * Update an event via the event object and show it if it should be visible in the calendar.
+   * It uses the event id to do this.
+   * @param {object} event The event object with common event properties.
+   */
+  updateEvent(event) {
+    this.cleanEventData(event);
+
+    const eventId = event.id;
+    for (let i = this.settings.events.length - 1; i >= 0; i--) {
+      if (this.settings.events[i].id === eventId) {
+        this.settings.events[i] = event;
+      }
+    }
+
+    this.renderAllEvents();
+  },
+
+  /**
    * Remove an event from the dataset and page. It uses the id property.
    * @param {object} event The event object with common event properties.
    */
@@ -807,18 +851,21 @@ Calendar.prototype = {
       })
       .popover(modalOptions)
       .off('show.calendar')
-      .on('show.calendar', () => {
+      .on('show.calendar', (evt, elem) => {
         this.element.trigger('showmodal', { elem: this.modalContents, event });
 
         // Wire the click on isAllDay to disable spinbox.
-        $('#isAllDay').off().on('click.calendar', (e) => {
+        elem.find('#isAllDay').off().on('click.calendar', (e) => {
           const isDisabled = $(e.currentTarget).prop('checked');
           if (isDisabled) {
-            $('#durationHours').data('spinbox').disable();
+            elem.find('#durationHours').data('spinbox').disable();
           } else {
-            $('#durationHours').data('spinbox').enable();
+            elem.find('#durationHours').data('spinbox').enable();
           }
         });
+
+        // Wire the correct type selector
+        elem.find('#type').val(event.type).trigger('updated');
       });
 
     this.activeElem = dayObj.elem;

@@ -24,7 +24,8 @@
 </div>
 
 <ul id="calendar-actions-menu" class="popupmenu">
-  <li><a href="#" id="action-1" data-action="delete-event">Delete Event</a></li>
+  <li><a href="#" data-action="delete-event"><span data-translate="text">DeleteEvent</span></a></li>
+  <li><a href="#" data-action="show-event"><span data-translate="text">ShowEvent</span></a></li>
 </ul>
 
 <script id="test-script">
@@ -112,58 +113,6 @@
 </script>
 
 {{={{{ }}}=}}
-<script id="tmpl-readonly-old" type="text/html">
-  <div class="calendar-event-detail">
-    {{#event}}
-      <span class="calendar-event-header {{color}}">{{subject}}</span>
-      <div class="calendar-event-body">
-        {{#status}}
-        <div class="field">
-          <span class="label">Status</span>
-          <span class="data">
-            {{status}}
-            {{#icon}}
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation" data-status="Pending"><use xlink:href="#{{icon}}"></use></svg>
-            {{/icon}}
-          </span>
-        </div>
-        {{/status}}
-        <div class="field">
-          <span class="label">Date</span>
-          <span class="data">
-            {{startsLong}} to {{endsLong}}
-          </span>
-        </div>
-        <div class="field">
-          <span class="label">Event Type</span>
-          <span class="data">
-            {{typeLabel}}
-          </span>
-        </div>
-        <div class="field">
-          <span class="label">Duration</span>
-          {{#duration}}
-          <span class="data">
-            {{duration}} {{durationUnits}}
-          </span>
-          {{/duration}}
-          {{#durationHours}}
-          <span class="data">
-            {{durationHours}} {{durationUnits}}
-          </span>
-          {{/durationHours}}
-        </div>
-        <div class="field">
-          <span class="label">Comments</span>
-          <span class="data">
-            {{comments}}
-          </span>
-        </div>
-      </div>
-    {{/event}}
-  </div>
-</script>
-
 <script id="tmpl-readonly" type="text/html">
   {{#event}}
   <div class="accordion-header is-expanded {{color}}">

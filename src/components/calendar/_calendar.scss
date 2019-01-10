@@ -343,6 +343,10 @@
   }
 
   .accordion-header {
+    &.has-chevron > a {
+      width: calc(100% - 40px);
+    }
+
     a {
       @include font-size(18);
 
@@ -352,7 +356,7 @@
     }
 
     .btn {
-      margin-left: 10px;
+      margin-left: -4px;
       margin-top: -7px;
 
       .chevron {
