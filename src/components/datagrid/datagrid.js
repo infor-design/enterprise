@@ -571,11 +571,15 @@ Datagrid.prototype = {
       this.pager.pagerInfo.activePage = 1;
     }
 
+    /*
     this.renderPager(this.pager.pagerInfo, false, () => {
       if (callback && typeof callback === 'function') {
         callback();
       }
     });
+    */
+
+
   },
 
   /**
@@ -8856,6 +8860,21 @@ Datagrid.prototype = {
   },
 
   /**
+   * Render a page of datagrid items.
+   * @private
+   * @param {object} op The paging operation.
+   * @param {function} callback The pager callback.
+   * @param {string} trigger The triggering action.
+   */
+  renderPages(op, callback, trigger) {
+    if (this.settings.source) {
+      return;
+    }
+
+    // No source method, simply renders stuff
+  },
+
+  /**
   * Reset the pager to the first page.
   * @private
   * @param {string} type The action type, which gets sent to the source callback.
@@ -8866,6 +8885,7 @@ Datagrid.prototype = {
       return;
     }
 
+    /*
     if (!this.pager.pagingInfo) {
       this.pager.pagingInfo = {};
     }
@@ -8877,6 +8897,22 @@ Datagrid.prototype = {
     this.pager.pagingInfo.type = type;
     this.pager.pagingInfo.activePage = 1;
     this.renderPager(this.pager.pagingInfo);
+    */
+
+    this.pager.reset(type, trigger);
+  },
+
+  /**
+   * Reliably gets all the pre-rendered elements in the container and returns them for use.
+   * @private
+   * @returns {array} TThe pagable items
+   */
+  getPageableElements() {
+    let elements = this.element.children().not('.datagrid-expandable-row');
+    if (elements.is('table')) {
+      elements = elements.find('tr');
+    }
+    return elements;
   },
 
   /**
