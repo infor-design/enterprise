@@ -1,0 +1,88 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <h3>Api setting: <strong>allowChildExpandOnMatch</strong></h3>
+    <p>
+      if true
+      <ul>
+        <li>&mdash; and if only parent got match then add all children nodes too</li>
+        <li>&mdash; or if one or more child node got match then add parent node and all the children nodes</li>
+      </ul>
+    </p>
+    <p>
+      if false
+      <ul>
+        <li>&mdash; and if only parent got match then make expand/collapse button to be collapsed, disabled and do not add any children nodes</li>
+        <li>&mdash; or if one or more child node got match then add parent node and only matching children nodes</li>
+      </ul>
+    </p>
+    <br><br>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <div class="switch">
+      <input type="checkbox" class="switch" id="toggle" name="toggle" />
+      <label for="toggle">allowChildExpandOnMatch: <strong class="toggle-val"></strong></label>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    // Set vars
+    var elem = $('#datagrid');
+    var toggleSwitch = $('#toggle');
+    var toggleSwitchVal = $('.toggle-val');
+    var allowChildExpandOnMatch = true;
+    var columns = [];
+
+    // Make switch default to checked/unchecked
+    toggleSwitch.prop('checked', allowChildExpandOnMatch);
+    toggleSwitchVal.text(allowChildExpandOnMatch);
+
+    // Define columns for the grid.
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, filterType: 'text', width: 500});
+    columns.push({ id: 'id', name: 'Id', field: 'id', filterType: 'text', filterDisabled: true});
+    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, filterType: 'checkbox'});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc', filterType: 'text'});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
+
+    // Get some data via ajax
+    var url = '{{basepath}}api/tree-tasks';
+    $.getJSON(url, function(data) {
+
+      // Initialize the datagrid
+      elem.datagrid({
+        columns: columns,
+        dataset: data,
+        treeGrid: true,
+        filterable: true,
+        allowChildExpandOnMatch: allowChildExpandOnMatch,
+        toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
+      });
+
+      // Get datagrid api
+      var datagridApi = elem.data('datagrid');
+
+      // Bind switch toggles on change
+      toggleSwitch.on('change', function() {
+        allowChildExpandOnMatch = this.checked
+        toggleSwitchVal.text(allowChildExpandOnMatch);
+
+        if (datagridApi) {
+          datagridApi.settings.allowChildExpandOnMatch = allowChildExpandOnMatch;
+          datagridApi.applyFilter();
+        }
+      });
+
+    });
+
+  });
+</script>

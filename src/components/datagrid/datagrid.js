@@ -106,6 +106,14 @@ const COMPONENT_NAME = 'datagrid';
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
  * icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
  * or will default to 'No Data Found with an icon.'
+ * @param {boolean}  [settings.allowChildExpandOnMatch=false] use  with filter
+ * if true:
+ * and if only parent got match then add all children nodes too
+ * or if one or more child node got match then add parent node and all the children nodes
+ * if false:
+ * and if only parent got match then make expand/collapse button to be collapsed, disabled
+ * and do not add any children nodes
+ * or if one or more child node got match then add parent node and only matching children nodes
  */
 const DATAGRID_DEFAULTS = {
   // F2 - toggles actionableMode "true" and "false"
@@ -175,7 +183,8 @@ const DATAGRID_DEFAULTS = {
   onEditCell: null,
   onExpandRow: null,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
-  searchExpandableRow: true
+  searchExpandableRow: true,
+  allowChildExpandOnMatch: false
 };
 
 function Datagrid(element, settings) {
@@ -1376,25 +1385,27 @@ Datagrid.prototype = {
         elem.find('input').mask(col.mask);
       }
 
-      if (typeof elem.find('.datepicker').datepicker === 'function') {
-        elem.find('.datepicker')
-          .datepicker(col.editorOptions ? col.editorOptions : { dateFormat: col.dateFormat })
+      const datepickerEl = elem.find('.datepicker');
+      if (datepickerEl.length && typeof $().datepicker === 'function') {
+        datepickerEl
+          .datepicker(col.editorOptions || { dateFormat: col.dateFormat })
           .on('listclosed.datepicker', () => {
             self.applyFilter(null, 'selected');
           });
       }
 
-      if (typeof elem.find('.lookup').lookup === 'function') {
-        elem.find('.lookup')
-          .lookup(col.editorOptions ? col.editorOptions : { });
-
+      const lookupEl = elem.find('.lookup');
+      if (lookupEl.length && typeof $().lookup === 'function') {
+        lookupEl
+          .lookup(col.editorOptions || {});
         elem.on('change', () => {
           self.applyFilter(null, 'selected');
         });
       }
 
-      if (typeof elem.find('.timepicker').datepicker === 'function') {
-        elem.find('.timepicker').timepicker(col.editorOptions ? col.editorOptions : { timeFormat: col.timeFormat });
+      const timepickerEl = elem.find('.timepicker');
+      if (timepickerEl.length && typeof $().timepicker === 'function') {
+        timepickerEl.timepicker(col.editorOptions || { timeFormat: col.timeFormat });
       }
 
       // Attach Mask
@@ -1849,6 +1860,8 @@ Datagrid.prototype = {
       }
     }
 
+    this.setChildExpandOnMatch();
+
     if (!this.settings.source) {
       this.renderRows();
     }
@@ -1872,6 +1885,51 @@ Datagrid.prototype = {
     this.element.trigger('filtered', { op: 'apply', conditions, trigger });
     this.resetPager('filtered', trigger);
     this.saveUserSettings();
+  },
+
+  /**
+   * Set child nodes when use filter as
+   * settings.allowChildExpandOnMatch === true
+   * and if only parent got match then add all children nodes too
+   * or if one or more child node got match then add parent node and all the children nodes
+   * settings.allowChildExpandOnMatch === false
+   * and if only parent got match then make expand/collapse button to be collapsed, disabled
+   * and do not add any children nodes
+   * or if one or more child node got match then add parent node and only matching children nodes
+   * @private
+   * @returns {void}
+   */
+  setChildExpandOnMatch() {
+    const s = this.settings;
+    if (s.treeGrid) {
+      const checkNodes = function (nodeData, depth) {
+        for (let i = 0, l = nodeData.length; i < l; i++) {
+          const node = nodeData[i];
+          const children = node.children;
+          const childrenLen = children ? children.length : 0;
+
+          if (childrenLen) {
+            if (!node.isFiltered) {
+              if (s.allowChildExpandOnMatch) {
+                for (let i2 = 0; i2 < childrenLen; i2++) {
+                  children[i2].isFiltered = false;
+                }
+              } else {
+                let isAllChildrenFiltered = true;
+                for (let i2 = 0; i2 < childrenLen; i2++) {
+                  if (!children[i2].isFiltered) {
+                    isAllChildrenFiltered = false;
+                  }
+                }
+                node.isAllChildrenFiltered = isAllChildrenFiltered;
+              }
+            }
+            checkNodes(children, node, depth++);
+          }
+        }
+      };
+      checkNodes(s.dataset, 0);
+    }
   },
 
   /**
@@ -2536,7 +2594,7 @@ Datagrid.prototype = {
       }
 
       // Exclude Filtered Rows
-      if ((s.treeGrid ? s.treeRootNodes[i].node : s.dataset[i]).isFiltered) {
+      if ((!s.treeGrid && s.dataset[i]).isFiltered) {
         this.filteredCount++;
         continue; //eslint-disable-line
       }
