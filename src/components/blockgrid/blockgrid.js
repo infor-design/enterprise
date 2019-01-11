@@ -40,6 +40,13 @@ function Blockgrid(element, settings) {
 Blockgrid.prototype = {
 
   /**
+   * @returns {Pager|undefined} a pager API, if applicable
+   */
+  get pagerAPI() {
+    return this.element.data('pager');
+  },
+
+  /**
    * Do initialization, build up and / or add events ect.
    * @private
    * @returns {object} The Component prototype, useful for chaining.
@@ -59,7 +66,9 @@ Blockgrid.prototype = {
    * @private
    */
   build() {
-    this.renderBlock();
+    this.element.empty();
+
+    this.render();
     this.selectedRows = [];
     return this;
   },
@@ -108,6 +117,14 @@ Blockgrid.prototype = {
       self.updated();
     });
 
+    if (this.pagerAPI) {
+      this.element.on(`page.${COMPONENT_NAME}`, () => {
+        this.build();
+      }).on(`pagesizechange.${COMPONENT_NAME}`, () => {
+        this.build();
+      });
+    }
+
     return this;
   },
 
@@ -116,9 +133,8 @@ Blockgrid.prototype = {
       return;
     }
 
-    const pagerElem = this.element;
     this.element.addClass('paginated');
-    pagerElem.pager({
+    this.element.pager({
       componentAPI: this,
       dataset: this.settings.dataset,
       pagesize: this.settings.pagesize,
@@ -220,18 +236,28 @@ Blockgrid.prototype = {
   },
 
   /**
-   * Render an individual block element.
+   * Renders the blockgrid page.
    * @returns {void}
-   * @private
    */
-  renderBlock() {
+  render() {
     let blockelements = '';
-    const s = this.settings;
-    const dslength = s.dataset.length;
+    let displayedDataset = this.settings.dataset;
     const selectText = (Locale ? Locale.translate('Select') : 'Select');
 
-    for (let i = 0; i < dslength; i++) {
-      const data = s.dataset[i];
+    if (this.pagerAPI) {
+      // If the paging information sets limits on the dataset, customize the
+      // displayed dataset to fit the conditions.
+      const pagerInfo = this.pagerAPI.state;
+      if (pagerInfo.pages > 1) {
+        const trueActivePage = pagerInfo.activePage > 0 ? pagerInfo.activePage - 1 : 0;
+        const firstRecordIdx = pagerInfo.pagesize * trueActivePage;
+        const lastRecordIdx = pagerInfo.pagesize * (trueActivePage + 1);
+        displayedDataset = displayedDataset.slice(firstRecordIdx, lastRecordIdx);
+      }
+    }
+
+    for (let i = 0; i < displayedDataset.length; i++) {
+      const data = displayedDataset[i];
       const tabindex = this.settings.selectable === 'mixed' ? '0' : '-1';
 
       blockelements += `<div class="block is-selectable" role="listitem" tabindex="0">
@@ -245,23 +271,28 @@ Blockgrid.prototype = {
   },
 
   /**
+   * @deprecated as of v4.15.0
+   * @private
+   * Render an individual block element.
+   * @returns {void}
+   */
+  renderBlock() {
+    return this.render();
+  },
+
+  /**
    * Handle updated settings and values.
    * @param  {settings} settings The new settings to use.
    * @returns {void}
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
-
     if (settings && settings.dataset) {
       this.settings.dataset = settings.dataset;
     }
 
-    this.element.empty();
-    if (this.element[0].classList.contains('paginated')) {
-      this.element.data('pager').renderPages('initial');
-    }
-    this.build();
-
+    this.teardown();
+    this.init();
     return this;
   },
 
@@ -273,6 +304,8 @@ Blockgrid.prototype = {
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     this.element.off(`click.${COMPONENT_NAME}`);
+
+    this.element.empty();
     return this;
   },
 

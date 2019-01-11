@@ -254,13 +254,6 @@ ListView.prototype = {
       }
     }
 
-    /*
-    // Render Pager
-    if (this.settings.paging) {
-      this.renderPager(pagerInfo);
-    }
-    */
-
     // Add Aria
     $('ul', this.element).attr({ role: 'presentation' });
 
@@ -337,17 +330,6 @@ ListView.prototype = {
     }
 
     this.pagerAPI.updatePagingInfo(updatedPagerInfo);
-  },
-
-  /**
-   * Render a page of listview items.
-   * @private
-   * @param {object} op The paging operation.
-   * @param {function} callback The pager callback.
-   * @param {string} trigger The triggering action.
-   */
-  renderPages(op, callback, trigger) {
-
   },
 
   /**
@@ -1362,7 +1344,6 @@ ListView.prototype = {
    * @param {object} pagingOpts state information from the pager
    */
   handlePageChange(pagingOpts) {
-    console.dir(pagingOpts);
     this.loadData(undefined, pagingOpts);
   },
 };

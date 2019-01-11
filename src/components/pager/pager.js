@@ -383,10 +383,12 @@ Pager.prototype = {
       if (isNaN(activePageIdx)) {
         activePageIdx = 0;
       }
-      const types = ['table', 'pageof', 'standalone'];
+      /*
+      const types = ['table', 'pageof', 'standalone', 'list'];
       if (types.indexOf(self.settings.type) === -1) {
         activePageIdx += 1;
       }
+      */
       self.setActivePage(activePageIdx, false, 'page');
       self.element.trigger('page', self.state);
 
