@@ -27,7 +27,7 @@
 <script>
   // Share the popupmenu with the two context menus.
   const contextMenu = $('#input-menu');
-  contextMenu.popupmenu({ trigger: 'rightClick', menu: "action-popupmenu", attachToBody: true })
+  contextMenu.popupmenu({ trigger: 'rightClick', menu: "action-popupmenu", attachToBody: true, duplicateMenu: true })
   const contextMenuApi = contextMenu.data('popupmenu');
 
   const contextMenu2 = $('#input-menu2')

@@ -158,16 +158,16 @@ PopupMenu.prototype = {
         this.menu = $(`#${this.settings.menu}`);
 
         // duplicate menu if shared by multiple triggers
-        this.menu.data('trigger', this.element);
-        triggerId = this.menu.data('trigger')[0].id;
-        duplicateMenu = this.menu.clone();
-        if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
+        if (this.settings.duplicateMenu && this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
+          this.menu.data('trigger', this.element);
+          triggerId = this.menu.data('trigger')[0].id;
+          duplicateMenu = this.menu.clone();
           duplicateMenu.detach().appendTo('body');
-        }
 
-        // add data-id attr to menus
-        duplicateMenu.attr('data-trigger', triggerId);
-        this.menu.attr('data-trigger', triggerId);
+          // add data-id attr to menus
+          duplicateMenu.attr('data-trigger', triggerId);
+          this.menu.attr('data-trigger', triggerId);
+        }
         break;
       case 'object': // jQuery Object
         if (this.settings.menu === null) {
