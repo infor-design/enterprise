@@ -4796,7 +4796,10 @@ Datagrid.prototype = {
     this.table
       .off('click.datagrid')
       .on('click.datagrid', '.datagrid-row a', (e) => {
-        e.preventDefault();
+        const href = e.currentTarget.getAttribute('href');
+        if (!href || href === '#') {
+          e.preventDefault();
+        }
       });
 
     // Handle Row Clicking
