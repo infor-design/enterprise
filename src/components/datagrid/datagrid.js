@@ -1397,10 +1397,10 @@ Datagrid.prototype = {
       const lookupEl = elem.find('.lookup');
       if (lookupEl.length && typeof $().lookup === 'function') {
         lookupEl
-          .lookup(col.editorOptions || {});
-        elem.on('change', () => {
-          self.applyFilter(null, 'selected');
-        });
+          .lookup(col.editorOptions || {})
+          .on('change', () => {
+            self.applyFilter(null, 'selected');
+          });
       }
 
       const timepickerEl = elem.find('.timepicker');
