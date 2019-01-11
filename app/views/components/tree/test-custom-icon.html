@@ -1,0 +1,99 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h3>Tree Control</h3>
+    <p>This example demonstrate how to show custom icon for leaf node.</p>
+    <br />
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul role="tree" selectable="multiple" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+  </div>
+</div>
+<script>
+  var sampleData;
+  var dropdownData;
+
+  dropdownData = [
+    { value: 'any', text: 'Any' },
+    { value: 'all', text: 'All' },
+  ];
+
+  sampleData = [
+    {
+    "id": "node1",
+    "text": "Node One",
+    "open": true,
+    "selected": false,
+    "children": [
+      {
+      "id": "node2",
+      "text": "any",
+      "type": 'dropdown',
+      "data": dropdownData
+      },
+      {
+        "id": "node3",
+        "text": "Node 1.1",
+        "hideCheckbox": false,
+        "open": true,
+        "children": [
+          {
+          "id": "node4",
+          "text": "all",
+          "type": 'dropdown',
+          "data": dropdownData
+          },
+          {
+          "id": "node5",
+          "text": "Node 1.1.1",
+          "icon": ""
+          },
+          {
+          "id": "node6",
+          "text": "Node 1.2.1",
+          "icon": "star-filled"
+          },
+          {
+          "id": "node7",
+          "text": "Node 1.2.2",
+          "icon": "next-page"
+          }
+        ]
+      },
+      {
+        "id": "node8",
+        "text": "Node 1.2",
+        "hideCheckbox": false,
+        "open": true,
+        "children": [
+          {
+          "id": "node9",
+          "text": "any",
+          "type": 'dropdown',
+          "data": dropdownData
+          },
+          {
+          "id": "node10",
+          "text": "Node 1.2.1",
+          "icon": "star-filled"
+          },
+          {
+          "id": "node11",
+          "text": "Node 1.2.2",
+          "icon": "next-page"
+          }
+        ]
+      }]
+    }];
+
+
+  $('#json-tree').tree({
+    dataset: sampleData,
+    folderIconOpen: 'plusminus-folder-open',
+    folderIconClosed: 'plusminus-folder-closed',
+    selectable: 'multiple',
+    hideCheckboxes: true
+  });
+</script>
