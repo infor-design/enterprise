@@ -388,13 +388,13 @@ MonthView.prototype = {
         self.setLegendColor(th, exYear, exMonth, exDay);
         self.dayMap.push({ key: stringUtils.padDate(exYear, exMonth, exDay), elem: th });
         th.addClass('alternate prev-month').html(`<span class="day-container"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(exDay)}</span></span>`);
-        th.data('key', stringUtils.padDate(exYear, exMonth, exDay));
+        th.attr('data-key', stringUtils.padDate(exYear, exMonth, exDay));
       }
 
       if (i >= leadDays && dayCnt <= thisMonthDays) {
         self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
         th.html(`<span class="day-container"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(dayCnt)}</span></span>`);
-        th.data('key', stringUtils.padDate(year, month, dayCnt));
+        th.attr('data-key', stringUtils.padDate(year, month, dayCnt));
 
         // Add Selected Class to Selected Date
         if (self.isIslamic) {
@@ -423,6 +423,12 @@ MonthView.prototype = {
         }
 
         th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), { date: 'full' }));
+        const startKey = stringUtils.padDate(
+          self.currentYear,
+          self.currentMonth,
+          dayCnt
+        );
+        th.attr('data-key', startKey);
 
         self.setDisabled(th, year, month, dayCnt);
         self.setLegendColor(th, year, month, dayCnt);
@@ -442,7 +448,7 @@ MonthView.prototype = {
         self.setLegendColor(th, exYear, exMonth, exDay);
 
         th.addClass('alternate next-month').html(`<span class="day-container"><span aria-hidden="true" class="day-text">${nextMonthDayCnt}</span></span>`);
-        th.data('key', stringUtils.padDate(exYear, exMonth, exDay));
+        th.attr('data-key', stringUtils.padDate(exYear, exMonth, exDay));
         nextMonthDayCnt++;
       }
     });
@@ -849,8 +855,8 @@ MonthView.prototype = {
     // Allow dates to be selected
     if (self.settings.selectable) {
       self.element.addClass('is-selectable').off('click.monthview-day').on('click.monthview-day', 'td', (e) => {
-        const data = $(e.currentTarget).data();
-        const key = data.key;
+        const key = e.currentTarget.getAttribute('data-key');
+        self.lastClickedKey = key;
 
         if (e.currentTarget.classList.contains('is-disabled')) {
           return;

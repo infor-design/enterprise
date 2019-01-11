@@ -148,4 +148,14 @@ describe('Calendar API', () => {
 
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(3);
   });
+
+  it('Should handle updating events', () => {
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
+
+    calendarObj.updateEvent({ id: '13', subject: 'Updated Subject' });
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
+    expect(calendarObj.settings.events[12].subject).toEqual('Updated Subject');
+    expect(calendarObj.settings.events[12].id).toEqual('13');
+  });
 });

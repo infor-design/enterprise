@@ -26,16 +26,7 @@ DOM.classNameExists = function classNameExists(element) {
 };
 
 /**
- * Checks the contents of a string for the existence of a particular substring.
- * @param {string} classNameString a string to test
- * @param {string} targetContents the contents that need to exist inside the `classNameString`
- * @returns {boolean} whether or not a className exists
- */
-DOM.hasClassName = function has(classNameString, targetContents) {
-  return classNameString.indexOf(targetContents) > -1;
-};
-
-/**
+ * Checks the element for the existence of a particular class.
  * @param {HTMLElement|SVGElement} el a element being checked.
  * @param {string} className a string representing a class name to check for.
  * @returns {boolean} whether or not the element's class attribute contains the string.

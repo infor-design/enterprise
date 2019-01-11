@@ -22,7 +22,13 @@ const COMPONENT_NAME_DEFAULTS = {
   upcomingEventDays: 14,
   modalTemplate: null,
   menuId: null,
-  menuSelected: null
+  menuSelected: null,
+  newEventDefaults: {
+    title: 'NewEvent',
+    subject: '',
+    isAllDay: true,
+    comments: ''
+  }
 };
 
 /**
@@ -42,6 +48,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} [settings.modalTemplate] The ID of the template used for the modal dialog on events.
  * @param {string} [settings.menuId=null] ID of the menu to use for an event right click context menu
  * @param {string} [settings.menuSelected=null] Callback for the  right click context menu
+ * @param {string} [settings.newEventDefaults] Initial event properties for the new events dialog.
  */
 function Calendar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -212,6 +219,10 @@ Calendar.prototype = {
       api.destroy();
     }
     $(this.eventDetailsContainer).accordion();
+
+    if (DOM.hasClass(this.eventDetailsContainer, 'has-only-one')) {
+      $(this.eventDetailsContainer).find('.accordion-header, .accordion-header a').off('click');
+    }
   },
 
   /**
@@ -575,8 +586,14 @@ Calendar.prototype = {
       this.updated();
     });
 
+    this.isSwitchingMonth = false;
     this.element.on(`monthrendered.${COMPONENT_NAME}`, () => {
+      this.isSwitchingMonth = true;
       this.renderAllEvents();
+
+      setTimeout(() => {
+        this.isSwitchingMonth = false;
+      }, 500);
     });
 
     this.element.on(`change.${COMPONENT_NAME}`, '.checkbox', () => {
@@ -615,21 +632,47 @@ Calendar.prototype = {
       });
     }
 
+    const showModalWithCallback = (eventData, isAdd) => {
+      this.showEventModal(eventData, (elem, event) => {
+        // Collect the data and popuplate the event object
+        const inputs = elem.querySelectorAll('input, textarea, select');
+        for (let i = 0; i < inputs.length; i++) {
+          event[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
+        }
+
+        if (isAdd) {
+          this.addEvent(event);
+        } else {
+          this.updateEvent(event);
+        }
+      });
+    };
+
     this.element.on(`click.${COMPONENT_NAME}`, '.calendar-event', (e) => {
       const eventId = e.currentTarget.getAttribute('data-id');
       const eventData = this.settings.events.filter(event => event.id === eventId);
       if (!eventData || eventData.length === 0) {
         return;
       }
+      showModalWithCallback(eventData[0], false);
+    });
 
-      this.showEventModal(eventData[0], (elem, event) => {
-        // Collect the data and popuplate the event object
-        const inputs = elem.querySelectorAll('input, textarea, select');
-        for (let i = 0; i < inputs.length; i++) {
-          event[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
-        }
-        this.updateEvent(event);
-      });
+    this.element.on(`dblclick.${COMPONENT_NAME}`, 'td', (e) => {
+      // throw this case out or you can click the wrong day
+      if (this.isSwitchingMonth) {
+        return;
+      }
+      const key = e.currentTarget.getAttribute('data-key');
+      const day = new Date(key.substr(0, 4), key.substr(4, 2) - 1, key.substr(6, 2));
+
+      const eventData = utils.extend({ }, this.settings.newEventDefaults);
+      eventData.startKey = key;
+      eventData.endKey = key;
+      eventData.starts = day;
+      eventData.ends = day;
+
+      this.cleanEventData(eventData, false);
+      showModalWithCallback(eventData, true);
     });
     return this;
   },
@@ -740,7 +783,7 @@ Calendar.prototype = {
    * @param {object} event The event object with common event properties.
    */
   addEvent(event) {
-    this.cleanEventData(event);
+    this.cleanEventData(event, true);
     this.settings.events.push(event);
     this.renderEvent(event);
     this.renderSelectedEventDetails();
@@ -752,12 +795,11 @@ Calendar.prototype = {
    * @param {object} event The event object with common event properties.
    */
   updateEvent(event) {
-    this.cleanEventData(event);
-
     const eventId = event.id;
     for (let i = this.settings.events.length - 1; i >= 0; i--) {
       if (this.settings.events[i].id === eventId) {
-        this.settings.events[i] = event;
+        this.settings.events[i] = utils.extend(true, this.settings.events[i], event);
+        this.cleanEventData(this.settings.events[i], true);
       }
     }
 
@@ -782,9 +824,10 @@ Calendar.prototype = {
   /**
    * Fix missing / incomlete event data
    * @param {object} event The event object with common event properties.
+   * @param {boolean} addPlaceholder If true placeholder text will be added for some empty fields.
    * @private
    */
-  cleanEventData(event) {
+  cleanEventData(event, addPlaceholder) {
     const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
 
     if (event.starts === event.ends && !isAllDay) {
@@ -808,9 +851,18 @@ Calendar.prototype = {
       event.isAllDay = true;
     }
 
-    if (!event.comments) {
+    if (event.comments === undefined && addPlaceholder) {
       event.comments = Locale.translate('NoCommentsEntered');
       event.noComments = true;
+    }
+
+    if (!event.type) {
+      // Default to the first one
+      event.type = this.settings.eventTypes[0].id;
+    }
+
+    if (event.title === 'NewEvent') {
+      event.title = Locale.translate('NewEvent');
     }
   },
 
@@ -874,6 +926,7 @@ Calendar.prototype = {
 
         // Wire the correct comments
         elem.find('#comments').val(event.comments);
+        elem.find('#subject').focus();
       });
 
     this.activeElem = dayObj.elem;

@@ -237,6 +237,8 @@ Soho.Locale.addCulture('es-ES', {
     MoveToRight: { id: 'MoveToRight', value: 'Desplazar a la derecha', comment: 'Button tooltip used in a list of movable items' },
     MsgDirty: { id: 'MsgDirty', value: ', Modificado', comment: 'for modified form fields' },
     New: { id: 'New', value: 'Nuevo', comment: 'Add new rowstatus in datagrid' },
+    NewEvent: { id: 'NewEvent', value: 'Nuevo evento', comment: 'Menu item for adding a new calendar event.' },
+    NewEventDetails: { id: 'NewEventDetails', value: 'Nuevos detalles del evento', comment: 'Placholder text for adding a new calendar event.' },
     NewDocument: { id: 'NewDocument', value: 'Nuevo documento', comment: 'New Document tooltip' },
     NewItem: { id: 'NewItem', value: 'Nuevo elemento', comment: 'New item in listbuilder' },
     NewWindow: { id: 'NewWindow', value: 'Nueva ventana', comment: 'Contents open in a new browser window.' },

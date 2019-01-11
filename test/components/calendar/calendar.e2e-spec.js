@@ -127,22 +127,22 @@ describe('Calendar specific month tests', () => {
 
   it('should render icons on events', async () => {
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event.emerald.event-day-start .icon'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event.azure.event-day-start .icon'))), config.waitsFor);
 
-    expect(await element.all(by.css('.calendar-event.emerald.event-day-start .icon')).count()).toEqual(1);
+    expect(await element.all(by.css('.calendar-event.azure.event-day-start .icon')).count()).toEqual(1);
   });
 
   it('should allow event to span days', async () => {
-    expect(await element.all(by.css('.calendar-event.emerald.event-day-start')).count()).toEqual(2);
-    expect(await element.all(by.css('.calendar-event.emerald.event-day-span')).count()).toEqual(9);
-    expect(await element.all(by.css('.calendar-event.emerald.event-day-end')).count()).toEqual(2);
+    expect(await element.all(by.css('.calendar-event.azure.event-day-start')).count()).toEqual(2);
+    expect(await element.all(by.css('.calendar-event.azure.event-day-span')).count()).toEqual(9);
+    expect(await element.all(by.css('.calendar-event.azure.event-day-end')).count()).toEqual(2);
   });
 
   it('should show events on click', async () => {
     await element.all(by.cssContainingText('.monthview-table td', '1')).first().click();
 
-    expect(await element(by.css('.calendar-event-header')).getText()).toEqual('Team Event');
-    expect(await element(by.css('.calendar-event-body')).getText()).toBeTruthy();
+    expect(await element(by.css('.calendar-event-details .accordion-header a')).getText()).toEqual('Team Event');
+    expect(await element(by.css('.calendar-event-details .accordion-content')).getText()).toBeTruthy();
   });
 
   it('should offer a right click menu', async () => {
@@ -156,8 +156,24 @@ describe('Calendar specific month tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('calendar-actions-menu'))), config.waitsFor);
 
     expect(await element(by.id('calendar-actions-menu')).getAttribute('class')).toContain('is-open');
-    await element(by.css('#calendar-actions-menu a')).click();
+    await element.all(by.css('#calendar-actions-menu a')).first().click();
 
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(15);
+  });
+
+  it('should add new events on double click', async () => {
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+
+    const event = await element.all(by.cssContainingText('.monthview-table td', '2')).first();
+    await browser.actions().click(event).perform();
+    await browser.actions().doubleClick(event).perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.calendar-popup'))), config.waitsFor);
+
+    await element(by.id('subject')).sendKeys('New Event Name');
+    await element.all(by.css('.calendar-popup .btn-icon')).click();
+
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
   });
 });
