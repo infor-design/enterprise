@@ -690,6 +690,7 @@ Pager.prototype = {
   renderButtons() {
     // Only certain types of Pages get to have the `last` and `first` buttons
     const types = ['table', 'pageof', 'firstlast', 'standalone'];
+    const canHaveFirstLastButtons = types.indexOf(this.settings.type) > -1;
     const totalPages = this.state.pages;
     let buttonHTML = '';
     let doRenderFirstButton = false;
@@ -703,7 +704,7 @@ Pager.prototype = {
 
     // Determine whether or not special navigation buttons should eventually be rendered
     // First Button
-    if (this.settings.showFirstButton && types.indexOf(this.settings.type) > -1) {
+    if (this.settings.showFirstButton && canHaveFirstLastButtons) {
       if (this.activePage === 1) {
         disableFirstButton = true;
       }
@@ -724,7 +725,7 @@ Pager.prototype = {
       doRenderNextButton = true;
     }
     // Last Button
-    if (this.settings.showLastButton && types.indexOf(this.settings.type) > -1) {
+    if (this.settings.showLastButton && canHaveFirstLastButtons) {
       if (this.activePage === this.state.pages) {
         disableLastButton = true;
       }
@@ -735,20 +736,24 @@ Pager.prototype = {
     const AVG_PAGESIZESELECTOR_WIDTH = 190;
     const buttonsToRender = [];
 
-    let availableButtonWidth = this.pagerBar.width() / AVG_BUTTON_WIDTH;
-    if (this.settings.showPageSizeSelector) {
-      availableButtonWidth = (this.pagerBar.width() - AVG_PAGESIZESELECTOR_WIDTH) / AVG_BUTTON_WIDTH;
-    }
+    const pageSizeButtonSize = this.settings.showPageSizeSelector ? AVG_PAGESIZESELECTOR_WIDTH : 0;
+    const availableButtonWidth = (this.pagerBar.width() - pageSizeButtonSize) / AVG_BUTTON_WIDTH;
 
     // `maxAllowedButtons` does not include the Page Size Selector.
     // Subtract an allowed number button for each set of special controls.
     const maxAllowedButtons = Math.floor(availableButtonWidth);
     let maxNumberButtons = maxAllowedButtons;
+    if (doRenderPreviousButton || doRenderNextButton) {
+      maxNumberButtons -= 1;
+    }
     if (doRenderLastButton || doRenderFirstButton) {
       maxNumberButtons -= 1;
     }
-    if (doRenderPreviousButton || doRenderNextButton) {
-      maxNumberButtons -= 1;
+
+    // Disable first/last if we can display all available page numbers
+    if (maxNumberButtons >= totalPages) {
+      disableFirstButton = true;
+      disableLastButton = true;
     }
 
     // Figure out the distance on either side of the median value of the number button array.
