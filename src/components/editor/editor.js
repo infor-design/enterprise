@@ -1595,10 +1595,15 @@ Editor.prototype = {
     // Remove empty tags
     s = s.replace(/<[^/>]+>[\s]*<\/[^>]+>/gi, '');
 
-    // Replace span and paragraph tags from bulleted list pasting
     if (s.includes('·')) {
+      // Replace span and paragraph tags from bulleted list pasting
       s = s.replace(/<\/p>/gi, '</li>');
       s = s.replace(/<p><span><span>·<\/span><\/span>/gi, '<li>');
+      // Remove white space
+      s = s.replace(/<\/li>\s<li>/gi, '<\/li><li>');
+      // Add in opening and closing ul tags
+      s = [s.slice(0, s.indexOf('<li>')), '<ul>', s.slice(s.indexOf('<li>'))].join('');
+      s = [s.slice(0, s.lastIndexOf('</li>')), '</ul>', s.slice(s.lastIndexOf('</li>'))].join('');
     }
 
     return s;
