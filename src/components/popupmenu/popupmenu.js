@@ -62,7 +62,8 @@ const POPUPMENU_DEFAULTS = {
     x: 0,
     y: 0
   },
-  predefined: $()
+  predefined: $(),
+  duplicateMenu: null
 };
 
 function PopupMenu(element, settings) {
@@ -209,6 +210,7 @@ PopupMenu.prototype = {
     if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
       this.originalParent = this.menu.prev();
       this.menu.detach().appendTo('body');
+      this.menu.attr('id', `${this.settings.menu}-original`);
     }
 
     if (!this.menu.is('.popupmenu')) {
@@ -2198,6 +2200,7 @@ PopupMenu.prototype = {
     }
     if (this.settings.attachToBody && insertTarget) {
       this.menu.unwrap();
+      this.menu.off().remove();
     }
     if (this.menu && insertTarget && !this.settings.attachToBody) {
       this.menu.insertAfter(insertTarget);

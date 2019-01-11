@@ -31,7 +31,7 @@
   const contextMenuApi = contextMenu.data('popupmenu');
 
   const contextMenu2 = $('#input-menu2')
-  contextMenu2.popupmenu({ trigger: 'rightClick', menu: "action-popupmenu", attachToBody: true });
+  contextMenu2.popupmenu({ trigger: 'rightClick', menu: "action-popupmenu", attachToBody: true, duplicateMenu: true });
   const contextMenuApi2 = contextMenu2.data('popupmenu');
 
   // This emulates an *ngIf on the first field, where it's presence is toggled.
