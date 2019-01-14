@@ -210,7 +210,9 @@ PopupMenu.prototype = {
     if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
       this.originalParent = this.menu.prev();
       this.menu.detach().appendTo('body');
-      this.menu.attr('id', `${this.settings.menu}-original`);
+      if (this.settings.duplicateMenu) {
+        this.menu.attr('id', `${this.settings.menu}-original`);
+      }
     }
 
     if (!this.menu.is('.popupmenu')) {
