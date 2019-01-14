@@ -14,7 +14,7 @@ const clickOnDropdown = async () => {
   await dropdownEl.click();
 };
 
-fdescribe('Dropdown example-index tests', () => {
+describe('Dropdown example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-index');
   });
@@ -214,7 +214,7 @@ fdescribe('Dropdown example-index tests', () => {
   }
 });
 
-fdescribe('Dropdown example-ajax tests', () => {
+describe('Dropdown example-ajax tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-ajax');
   });
@@ -239,7 +239,7 @@ fdescribe('Dropdown example-ajax tests', () => {
   }
 });
 
-fdescribe('Dropdown example-no-search-lsf tests', () => {
+describe('Dropdown example-no-search-lsf tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-no-search-lsf');
   });
@@ -287,7 +287,7 @@ fdescribe('Dropdown example-no-search-lsf tests', () => {
   });
 });
 
-fdescribe('Dropdown example-no-search-filtering tests', () => {
+describe('Dropdown example-no-search-filtering tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-no-search-filtering');
   });
@@ -354,7 +354,7 @@ fdescribe('Dropdown example-no-search-filtering tests', () => {
   }
 });
 
-fdescribe('Dropdown example-no-search tests', () => {
+describe('Dropdown example-no-search tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-no-search');
   });
@@ -373,7 +373,7 @@ fdescribe('Dropdown example-no-search tests', () => {
   });
 });
 
-fdescribe('Dropdown typeahead-reloading tests', () => {
+describe('Dropdown typeahead-reloading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/test-reload-typeahead');
   });
@@ -419,7 +419,7 @@ fdescribe('Dropdown typeahead-reloading tests', () => {
   }
 });
 
-fdescribe('Dropdown placeholder tests', () => {
+describe('Dropdown placeholder tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-placeholder');
   });
