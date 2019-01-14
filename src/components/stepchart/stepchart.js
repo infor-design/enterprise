@@ -26,7 +26,7 @@ const DEFAULT_STEPCHART_OPTIONS = {
  * @param {number} [settings.steps = null] The number of steps to show.
  * @param {number} [settings.completed = null] The number of steps complete (linear).
  * @param {number} [settings.inProgress = null] The number of the in progress step (linear).
- * @param {boolean} [settings.iconType = null] The icon to display fx. 'icon-error', 'icon-confirm'
+ * @param {boolean} [settings.iconType = null] The icon to display fx. 'icon-error', 'icon-success'
  * @param {string} [settings.completedText = null] The completed text or uses a localized 'N of N Steps complete'.
  *  You can use {0} and {1} to replace n of n in the string.
  * @param {boolean} [settings.extraText = ''] The additional text to show on the right. Defaults to none. You
@@ -70,7 +70,7 @@ StepChart.prototype = {
     const container = $('<div class="step-chart-steps"></div>');
     const icon = `
       <svg class="icon {icon-name}" focusable="false" aria-hidden="true" role="presentation">
-        <use xlink:href="#icon-confirm"></use>
+        <use xlink:href="#icon-success"></use>
       </svg>
     `;
 
@@ -123,7 +123,7 @@ StepChart.prototype = {
 
     if (this.settings.steps === this.settings.completed) {
       container.addClass('is-complete');
-      label.append(icon.replace('{icon-name}', 'icon-confirm'));
+      label.append(icon.replace('{icon-name}', 'icon-success'));
     }
 
     if (this.settings.iconType) {

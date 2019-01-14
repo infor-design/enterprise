@@ -9,11 +9,11 @@
   }
 
   &.alert {
-    fill: $alert-orange;
+    fill: $theme-color-status-warning;
   }
 
   &.alert-yellow {
-    fill: $alert-yellow;
+    fill: $theme-color-status-caution;
   }
 
   &.neutral {
@@ -21,11 +21,11 @@
   }
 
   &.good {
-    fill: $alert-green;
+    fill: $theme-color-status-success;
   }
 
   &.info {
-    fill: $alert-info;
+    fill: $theme-color-status-base;
   }
 
   &.white {
@@ -56,7 +56,7 @@ select.dropdown-xs {
   position: relative;
 
   .icon-error,
-  .icon-confirm,
+  .icon-success,
   .icon-alert,
   .icon-info,
   .icon-pending {
@@ -1014,7 +1014,7 @@ html[dir='rtl'] {
 
   .dropdown-wrapper {
     .icon-error,
-    .icon-confirm,
+    .icon-success,
     .icon-alert,
     .icon-info,
     .icon-pending {

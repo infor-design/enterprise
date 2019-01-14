@@ -118,15 +118,15 @@ describe('Datagrid Validation API', () => {
     expect(document.body.querySelectorAll('tbody tr')[3].querySelectorAll('.icon-rowstatus').length).toEqual(0);
   });
 
-  it('Should be able to set/remove rowStatus type Confirm', () => {
-    datagridObj.rowStatus(4, 'confirm', 'Confirm');
+  it('Should be able to set/remove rowStatus type Success', () => {
+    datagridObj.rowStatus(4, 'success', 'Success');
 
-    expect(document.body.querySelectorAll('tbody tr')[4].classList.contains('rowstatus-row-confirm')).toBeTruthy();
+    expect(document.body.querySelectorAll('tbody tr')[4].classList.contains('rowstatus-row-success')).toBeTruthy();
     expect(document.body.querySelectorAll('tbody tr')[4].querySelectorAll('.icon-rowstatus').length).toEqual(1);
 
     datagridObj.resetRowStatus();
 
-    expect(document.body.querySelectorAll('tbody tr')[4].classList.contains('rowstatus-row-confirm')).toBeFalsy();
+    expect(document.body.querySelectorAll('tbody tr')[4].classList.contains('rowstatus-row-success')).toBeFalsy();
     expect(document.body.querySelectorAll('tbody tr')[4].querySelectorAll('.icon-rowstatus').length).toEqual(0);
   });
 

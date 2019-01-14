@@ -13,7 +13,7 @@
     margin-top: 5px;
 
     .completed {
-      background-color: $turquoise06;
+      background-color: $theme-color-palette-turquoise-60;
 
       &.error-color,
       &.error {
@@ -57,11 +57,11 @@
     }
 
     &.alert {
-      color: $alert-orange;
+      color: $theme-color-status-warning;
     }
 
     &.alert-yellow {
-      color: $alert-yellow;
+      color: $theme-color-status-caution;
     }
 
     &.alert-neutral {
@@ -73,7 +73,7 @@
     }
 
     &.good {
-      color: $alert-green;
+      color: $theme-color-status-success;
     }
 
     &.primary {
@@ -129,18 +129,18 @@
     }
 
     &.alert {
-      background-color: $alert-orange;
+      background-color: $theme-color-status-warning;
 
       span {
-        color: $alert-orange;
+        color: $theme-color-status-warning;
       }
     }
 
     &.alert-yellow {
-      background-color: $alert-yellow;
+      background-color: $theme-color-status-caution;
 
       span {
-        color: $alert-yellow;
+        color: $theme-color-status-caution;
       }
     }
 
@@ -153,10 +153,10 @@
     }
 
     &.good {
-      background-color: $alert-green;
+      background-color: $theme-color-status-success;
 
       span {
-        color: $alert-green;
+        color: $theme-color-status-success;
       }
     }
 
@@ -231,7 +231,7 @@
   }
 
   .target-line {
-    background-color: $amethyst07;
+    background-color: $theme-color-palette-amethyst-70;
     border-radius: 1px;
     color: transparent;
     height: 20px;
@@ -259,11 +259,11 @@
       }
 
       &.alert {
-        background-color: $alert-orange;
+        background-color: $theme-color-status-warning;
       }
 
       &.alert-yellow {
-        background-color: $alert-yellow;
+        background-color: $theme-color-status-caution;
       }
 
       &.alert-neutral {
@@ -275,7 +275,7 @@
       }
 
       &.good {
-        background-color: $alert-green;
+        background-color: $theme-color-status-success;
       }
 
       &.primary {
@@ -291,11 +291,11 @@
       }
 
       &.alert {
-        color: $alert-orange;
+        color: $theme-color-status-warning;
       }
 
       &.alert-yellow {
-        color: $alert-yellow;
+        color: $theme-color-status-caution;
       }
 
       &.alert-neutral {
@@ -307,7 +307,7 @@
       }
 
       &.good {
-        color: $alert-green;
+        color: $theme-color-status-success;
       }
 
       &.primary {
@@ -331,11 +331,11 @@
     }
 
     .alert {
-      color: $alert-orange;
+      color: $theme-color-status-warning;
     }
 
     .alert-yellow {
-      color: $alert-yellow;
+      color: $theme-color-status-caution;
     }
 
     .alert-neutral {
@@ -347,7 +347,7 @@
     }
 
     .good {
-      color: $alert-green;
+      color: $theme-color-status-success;
     }
 
     .primary {

@@ -9,7 +9,7 @@ demo:
     slug: example-object-count
 ---
 
-Use the icon types `icon-alert`, `icon-confirm`, `icon-dirty`, `icon-error`, `icon-info`, `icon-pending`, `icon-new`, `icon-in-progress`, `icon-info-field` within the count element. The icon color is set automatically based on the type of alert.
+Use the icon types `icon-alert`, `icon-success`, `icon-dirty`, `icon-error`, `icon-info`, `icon-pending`, `icon-new`, `icon-in-progress`, `icon-info-field` within the count element. The icon color is set automatically based on the type of alert.
 
 ## Code Example
 

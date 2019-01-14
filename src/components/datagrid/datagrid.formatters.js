@@ -365,14 +365,29 @@ const formatters = {
   },
 
   // Tree Expand / Collapse Button and Paddings
-  Tree(row, cell, value, col, item) {
-    const isOpen = item ? item.expanded : true;
-    const depth = item && item.depth ? item.depth : 0;
-    const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}>
+  Tree(row, cell, value, col, item, api) {
+    let isOpen = item ? item.expanded : true;
+    const depth = api && api.settings.treeDepth && api.settings.treeDepth[row] ?
+      api.settings.treeDepth[row].depth : 0;
+
+    // When use filter then
+    // If (settings.allowChildExpandOnMatch === false) and only parent node got match
+    // then make expand/collapse button to be collapsed and disabled
+    const isExpandedBtnDisabled = item && item.isAllChildrenFiltered;
+    const expandedBtnDisabledHtml = isExpandedBtnDisabled ? ' disabled' : '';
+    if (isOpen && isExpandedBtnDisabled) {
+      isOpen = false;
+    }
+    if (item && typeof item.isAllChildrenFiltered !== 'undefined') {
+      // Remove key after use to reset
+      delete item.isAllChildrenFiltered;
+    }
+
+    const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}${expandedBtnDisabledHtml}>
       <span class="icon plus-minus ${(isOpen ? ' active' : '')}"></span>
       <span class="audible">${Locale.translate('ExpandCollapse')}</span>
-      </button>${(value ? `<span> ${value}</span>` : '')}`;
-    const node = `<span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth))}px` : '')}"` : '')}> ${value}</span>`;
+      </button>${(value ? ` <span>${value}</span>` : '')}`;
+    const node = ` <span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth))}px` : '')}"` : '')}>${value}</span>`;
 
     return (item && item[col.children ? col.children : 'children'] ? button : node);
   },

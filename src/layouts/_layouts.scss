@@ -42,7 +42,7 @@
 
   .content {
     background-color: $inverse-color;
-    border: 1px solid $graphite02;
+    border: 1px solid $theme-color-palette-graphite-20;
   }
 }
 
@@ -235,8 +235,8 @@ body.no-scroll {
 
   .main {
     background-color: $panel-bg-color;
-    border-left: 1px solid $graphite02;
-    border-right: 1px solid $graphite02;
+    border-left: 1px solid $theme-color-palette-graphite-20;
+    border-right: 1px solid $theme-color-palette-graphite-20;
     width: calc(60% - 3px);
 
     &.scrollable,
@@ -321,7 +321,7 @@ body.no-scroll {
 
     > .main {
       border: 0;
-      border-bottom: 1px solid $graphite02;
+      border-bottom: 1px solid $theme-color-palette-graphite-20;
     }
 
     > .sidebar + .main {
@@ -753,7 +753,7 @@ body.no-scroll {
 
   .hero {
     background-color: $body-color-primary-background;
-    border-bottom: 1px solid $graphite02;
+    border-bottom: 1px solid $theme-color-palette-graphite-20;
     height: 350px;
   }
 
@@ -763,7 +763,7 @@ body.no-scroll {
     a {
       border-bottom: medium none;
       border-left: 3px solid transparent;
-      color: $graphite05;
+      color: $theme-color-palette-graphite-50;
       height: auto;
       line-height: 25px;
       padding: 5px 10px;

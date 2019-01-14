@@ -39,20 +39,20 @@
 
   .field {
     [data-error-type='tooltip'] ~ .icon-error,
-    [data-error-type='tooltip'] ~ .icon-confirm {
+    [data-error-type='tooltip'] ~ .icon-success {
       top: -7px;
     }
 
     .dropdown-wrapper {
       [data-error-type='tooltip'] ~ .icon-error,
-      [data-error-type='tooltip'] ~ .icon-confirm {
+      [data-error-type='tooltip'] ~ .icon-success {
         top: 1px;
       }
     }
 
     &.editor-container {
       [data-error-type='tooltip'] ~ .icon-error,
-      [data-error-type='tooltip'] ~ .icon-confirm {
+      [data-error-type='tooltip'] ~ .icon-success {
         top: 55px;
       }
     }
@@ -61,7 +61,7 @@
       width: 300px;
 
       &[data-error-type='tooltip'] ~ .icon-error,
-      &[data-error-type='tooltip'] ~ .icon-confirm {
+      &[data-error-type='tooltip'] ~ .icon-success {
         top: 20px;
       }
 
@@ -199,7 +199,7 @@
 .overlay {
   @include css3(transition, all 0.2s);
 
-  background: $black;
+  background: $theme-color-palette-black;
   height: 100%;
   left: 0;
   opacity: 0;
@@ -270,11 +270,11 @@
       }
     }
 
-    &.is-confirm {
-      color: $confirm-color;
+    &.is-success {
+      color: $success-color;
 
       .icon {
-        fill: $confirm-color;
+        fill: $success-color;
       }
     }
   }

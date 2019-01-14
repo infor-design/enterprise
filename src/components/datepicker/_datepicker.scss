@@ -68,7 +68,7 @@
   &.error,
   &.error:hover {
     ~ .icon {
-      fill: $alert-red !important;
+      fill: $theme-color-status-danger !important;
     }
   }
 

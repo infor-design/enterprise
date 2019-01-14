@@ -219,14 +219,14 @@ describe('Listview example-mixed selection tests', () => {
 
   it('Should deselect item on click on checkbox', async () => {
     const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .label-text'));
-    listviewItemInputEl.click();
+    await listviewItemInputEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewItemInputEl), config.waitsFor);
 
     expect(await element(by.className('is-selected'))).toBeTruthy();
     expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
 
-    listviewItemInputEl.click();
+    await listviewItemInputEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitsFor);
 

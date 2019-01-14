@@ -676,9 +676,16 @@ Accordion.prototype = {
   * @returns {void}
   */
   toggle(header) {
-    if (!header || !header.length || this.isDisabled(header) || this.isFiltered(header)) {
+    if (!header || !header.length || this.isDisabled(header) || this.isFiltered(header)
+     || this.isAnimating) {
       return;
     }
+
+    this.isAnimating = true;
+
+    setTimeout(() => {
+      this.isAnimating = false;
+    }, 500);
 
     if (this.isExpanded(header)) {
       this.collapse(header);

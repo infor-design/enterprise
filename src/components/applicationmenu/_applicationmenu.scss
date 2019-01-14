@@ -6,7 +6,7 @@
   @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
   box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
-  background-color: $slate08;
+  background-color: $theme-color-palette-slate-80;
   border-right: 1px solid $application-menu-border-color;
   bottom: 0;
   color: $theme-color-palette-white;
@@ -202,8 +202,8 @@
   }
 
   .accordion-static-panel {
-    background-color: $slate07;
-    border-bottom-color: $slate09 !important;
+    background-color: $theme-color-palette-slate-70;
+    border-bottom-color: $theme-color-palette-slate-90 !important;
     margin: 0 auto;
     min-height: 85px;
     padding: 10px 30px;
@@ -243,7 +243,7 @@
     h3,
     h4,
     p {
-      color: $slate01;
+      color: $theme-color-palette-slate-10;
     }
   }
 
@@ -283,7 +283,7 @@ html[dir='rtl'] {
     @include transition(right 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
     box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
-    background-color: $slate08;
+    background-color: $theme-color-palette-slate-80;
     border-left: 1px solid $application-menu-border-color;
     border-right: 0;
     left: initial;

@@ -164,17 +164,17 @@
     }
 
     &.alert {
-      border-left-color: $alert-orange !important;
+      border-left-color: $theme-color-status-warning !important;
 
       .days,
       .hours,
       .day-sign,
       .hour-sign {
-        color: $alert-orange;
+        color: $theme-color-status-warning;
       }
 
       .icon-alert {
-        fill: $alert-orange !important;
+        fill: $theme-color-status-warning !important;
       }
     }
 
@@ -679,7 +679,7 @@
 
 .ios .listview {
   .icon-error,
-  .icon-confirm,
+  .icon-success,
   .icon-pending {
     top: 3px !important;
   }
