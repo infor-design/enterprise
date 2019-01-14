@@ -1396,6 +1396,16 @@ Datagrid.prototype = {
 
       const lookupEl = elem.find('.lookup');
       if (lookupEl.length && typeof $().lookup === 'function') {
+        if (col.editorOptions) {
+          if (col.editorOptions.clickArguments) {
+            col.editorOptions.clickArguments.grid = self;
+          } else {
+            col.editorOptions.clickArguments = {
+              grid: self
+            };
+          }
+        }
+
         lookupEl
           .lookup(col.editorOptions || {})
           .on('change', () => {
