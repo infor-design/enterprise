@@ -1999,12 +1999,6 @@ Dropdown.prototype = {
    */
   closeList(action) {
     //  Also see "js/lifecycle.js" alias that works with the global "closeChildren" method.
-    if ((!this.list || this.list.is(':visible') || !this.isListClosable()) && this.pseudoElem.hasClass('is-open')) {
-      this.pseudoElem
-        .removeClass('is-open')
-        .attr('aria-expanded', 'false');
-    }
-
     if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {
       return;
     }
@@ -2829,6 +2823,12 @@ Dropdown.prototype = {
     }
 
     this.closeList('cancel');
+
+    if (this.pseudoElem && this.pseudoElem.hasClass('is-open')) {
+      this.pseudoElem
+        .removeClass('is-open')
+        .attr('aria-expanded', 'false');
+    }
 
     // Update the 'multiple' property
     if (this.settings.multiple && this.settings.multiple === true) {
