@@ -1310,11 +1310,6 @@ PopupMenu.prototype = {
       height: this.menu[0].offsetHeight
     };
 
-    // if (!this.menu.parent().is('.popupmenu-wrapper')) {
-    //   this.menu.wrap('<div class="popupmenu-wrapper"></div>');
-    //   console.log(this.menu);
-    // }
-
     if (!wrapper.length) {
       return;
     }
