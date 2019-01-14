@@ -593,8 +593,6 @@ describe('Datagrid filter lookup custom click function tests', () => {
   it('Should attempt to open the filter and have the correct popup', async () => {
     expect(await element.all(by.css('.datagrid-row')).count()).toEqual(9);
 
-    // spyOn(browser.driver., 'alert');
-
     await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-1 div.datagrid-filter-wrapper span.lookup-wrapper span.trigger')).click();
 
     expect(browser.driver.switchTo().alert().getText()).toBe('Grid information found');
