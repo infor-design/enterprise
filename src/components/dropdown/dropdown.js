@@ -1999,6 +1999,12 @@ Dropdown.prototype = {
    */
   closeList(action) {
     //  Also see "js/lifecycle.js" alias that works with the global "closeChildren" method.
+    if ((!this.list || this.list.is(':visible') || !this.isListClosable()) && this.pseudoElem.hasClass('is-open')) {
+      this.pseudoElem
+        .removeClass('is-open')
+        .attr('aria-expanded', 'false');
+    }
+
     if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {
       return;
     }
@@ -2099,15 +2105,6 @@ Dropdown.prototype = {
   */
   handleBlur() {
     const self = this;
-
-    /*
-    if (this.isOpen()) {
-      this.timer = setTimeout(() => {
-        self.closeList('cancel');
-      }, 40);
-    }
-    */
-
     self.closeList('cancel');
 
     return true;
