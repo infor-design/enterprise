@@ -551,7 +551,7 @@ function writeHtmlFile(hbsTemplate, componentName) {
       if (err) {
         reject(err);
       } else {
-        swlog.logTaskAction('Created', `${dest.replace(process.cwd(), '')}.html`);
+        swlog.logTaskAction('Created', `${dest.replace(process.cwd(), '')}`);
         resolve();
       }
     });
