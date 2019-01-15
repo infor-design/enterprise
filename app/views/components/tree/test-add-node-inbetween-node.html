@@ -1,0 +1,126 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h3>Tree Control</h3>
+    <p>This example demonstrate how to add node above the clicked node.</p>
+    <br />
+    <p>To add parent node please click on Add Parent Node. To add leaf node, expand any parent node and click on Add Leaf Node</p>
+    <br />
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul role="tree" selectable="multiple" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+  </div>
+</div>
+<script>
+  var sampleData;
+  var dropdownData;
+  var index = 8;
+
+  dropdownData = [
+    { value: 'any', text: 'Any' },
+    { value: 'all', text: 'All' },
+  ];
+
+  sampleData = [
+    {
+    "id": "node1",
+    "text": "Node One",
+    "open": true,
+    "selected": false,
+    "children": [
+      {
+      "id": "node2",
+      "text": "any",
+      "type": 'dropdown',
+      "data": dropdownData
+      },
+      {
+        "id": "node3",
+        "text": "Node 1.1",
+        "hideCheckbox": false,
+        "open": true,
+        "children": [
+          {
+          "id": "node4",
+          "text": "all",
+          "type": 'dropdown',
+          "data": dropdownData
+          },
+          {
+          "id": "node5",
+          "text": "Node 1.1.1",
+          "icon": ""
+          },
+          {
+          "id": "node6",
+          "text": "Add Leaf Node",
+          "icon": "",
+          "isAddNode": true,
+          "fieldFqn": 'leaf'
+          }
+        ]
+      },
+      {
+        "id": "node7",
+        "text": "Add Parent Node",
+        "icon": "",
+        "isAddNode": true,
+        "fieldFqn": 'parent'
+      }]
+    }];
+
+  var elem = $('#json-tree').tree({
+    dataset: sampleData,
+    folderIconOpen: 'plusminus-folder-open',
+    folderIconClosed: 'plusminus-folder-closed',
+    selectable: 'multiple',
+    hideCheckboxes: true
+  }).on('selected', onTreeNodeSelected);
+
+  function onTreeNodeSelected(e, args) {
+    if (args.data.isAddNode) {
+      var tree = elem.data('tree');
+      tree.unSelectedNode(args.node);
+      var clickedNode = args.node[0].parentElement;
+      var nodeToAdd = getNode(args.data.fieldFqn);
+      tree.addNode(nodeToAdd, $(clickedNode), 'before');
+    }
+  }
+
+  function getNode(fieldFqn) {
+    var node;
+    if(fieldFqn == 'parent') {
+      node = {
+        "id": "node" + index++,
+        "text": "Node 1.1",
+        "hideCheckbox": false,
+        "open": true,
+        "children": [
+          {
+          "id": "node" + index++,
+          "text": "any",
+          "type": 'dropdown',
+          "data": dropdownData
+          },
+          {
+          "id": "node"  + index++,
+          "text": "Add Leaf Node",
+          "icon": "",
+          "isAddNode": true,
+          "fieldFqn": 'leaf'
+          }
+        ]
+      };
+    } else {
+      node = {
+          "id": "node" + index++,
+          "text": "Node 1.1.1",
+          "icon": ""
+          };
+    }
+    return node;
+  }
+
+</script>
