@@ -119,6 +119,36 @@ Validator.prototype = {
   },
 
   /**
+   * Set error icon opacity for tooltip types, to avoid overlap text in the field
+   * @private
+   * @param {object} field validation element
+   * @returns {void}
+   */
+  setErrorIconOpacity(field) {
+    if (field.is(':text') && field.is('[data-error-type="tooltip"]')) {
+      const text = this.calculateTextWidth(field.val());
+      const fieldWidth = field.outerWidth() - 35; // 35: icon width + padding/margin
+      field.closest('.field, .field-short')
+        .find('.icon-error')[(text > fieldWidth) ? 'addClass' : 'removeClass']('lower-opacity');
+    }
+  },
+
+  /**
+   * Calculate the width for given text
+   * @param {string} text to calculate the width
+   * @param {string} font used with given text (e.g. `14px arial`).
+   * @returns {number} the calculated width
+   */
+  calculateTextWidth(text, font) {
+    // use cached canvas for better performance, else, create new canvas
+    this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+    const context = this.canvas.getContext('2d');
+    context.font = font || '14px arial';
+    const metrics = context.measureText(text);
+    return metrics.width;
+  },
+
+  /**
    * @private
    */
   attachEvents() {
@@ -153,8 +183,15 @@ Validator.prototype = {
 
       field.off(events).on(events, function (e) {
         // Skip on Tab
-        if (e.type === 'keyup' && e.keyCode === 9) {
-          return;
+        // if (e.type === 'keyup' && e.keyCode === 9) {
+        //   return;
+        // }
+
+        if (e.type === 'keyup') {
+          if (e.keyCode === 9) {
+            return;
+          }
+          self.setErrorIconOpacity(field);
         }
 
         const thisField = $(this);
@@ -804,6 +841,8 @@ Validator.prototype = {
     if (tooltipAPI) {
       field.attr('data-error-type', 'tooltip');
     }
+
+    this.setErrorIconOpacity(field);
 
     if (showTooltip && tooltipAPI) {
       tooltipAPI.show();

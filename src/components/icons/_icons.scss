@@ -57,6 +57,11 @@ svg.icon-dirty,
     width: 18px;
   }
 
+  .icon-error.lower-opacity {
+    opacity: 0.3;
+    z-index: -1;
+  }
+
   .icon-success {
     height: 15px;
     margin-top: -2px;
