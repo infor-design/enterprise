@@ -1,0 +1,96 @@
+<style>
+.main .columns {
+  margin-bottom: 50px;
+}
+.patterns {
+  height: 60px;
+  width: 200px;
+}
+.patterns rect {
+  fill: #999999;
+}
+.patterns rect.blue {
+  fill: #368AC0;
+}
+.patterns rect.green {
+  fill: #76B051;
+}
+.patterns rect.red {
+  fill: #E4882B;
+}
+
+.with-background {
+  height: 60px;
+  width: 200px;
+  background-color: #FBE9BF;
+  display: inline-block;
+}
+</style>
+
+{{> charts/svg-patterns}}
+
+  <div class="row">
+
+    <div class="three columns">
+      <h2>Hatch</h2>
+      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
+        <rect width="100%" height="100%" mask="url(#hatch)" class="blue"/>
+      </svg>
+    </div>
+
+    <div class="three columns">
+      <h2>Double hatch</h2>
+      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
+        <rect width="100%" height="100%" mask="url(#doublehatch)"/>
+      </svg>
+    </div>
+
+    <div class="three columns">
+      <h2>Cross hatch</h2>
+      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
+        <rect width="100%" height="100%" mask="url(#crosshatch)" class="green"/>
+      </svg>
+    </div>
+
+    <div class="three columns">
+      <h2>Stitch</h2>
+      <span class="with-background">
+      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
+        <rect width="100%" height="100%" mask="url(#stitch)" class="red"/>
+      </svg>
+      </span>
+    </div>
+
+  </div>
+
+  <div class="row top-padding">
+
+    <div class="three columns">
+      <h2>Dots</h2>
+      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
+        <rect width="100%" height="100%" mask="url(#dots)"/>
+      </svg>
+    </div>
+
+    <div class="three columns">
+      <h2>Squares</h2>
+      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
+        <rect width="100%" height="100%" mask="url(#squares)" class="red"/>
+      </svg>
+    </div>
+
+    <div class="three columns">
+      <h2>Xs</h2>
+      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
+        <rect width="100%" height="100%" mask="url(#xs)" class="blue"/>
+      </svg>
+    </div>
+
+    <div class="three columns">
+      <h2>Triangles</h2>
+      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
+        <rect width="100%" height="100%" mask="url(#triangles)"/>
+      </svg>
+    </div>
+
+  </div>
