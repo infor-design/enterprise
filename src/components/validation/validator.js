@@ -126,10 +126,10 @@ Validator.prototype = {
    */
   setErrorIconOpacity(field) {
     if (field.is(':text') && field.is('[data-error-type="tooltip"]')) {
-      const text = this.calculateTextWidth(field.val());
+      const textWidth = this.calculateTextWidth(field.val());
       const fieldWidth = field.outerWidth() - 35; // 35: icon width + padding/margin
       field.closest('.field, .field-short')
-        .find('.icon-error')[(text > fieldWidth) ? 'addClass' : 'removeClass']('lower-opacity');
+        .find('.icon-error')[(textWidth > fieldWidth) ? 'addClass' : 'removeClass']('lower-opacity');
     }
   },
 
@@ -182,12 +182,8 @@ Validator.prototype = {
       }
 
       field.off(events).on(events, function (e) {
-        // Skip on Tab
-        // if (e.type === 'keyup' && e.keyCode === 9) {
-        //   return;
-        // }
-
         if (e.type === 'keyup') {
+          // Skip on Tab
           if (e.keyCode === 9) {
             return;
           }
