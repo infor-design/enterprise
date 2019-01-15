@@ -16,9 +16,9 @@ describe('Breadcrumb example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const blockgridEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('breadcrumb')).toEqual(0);
@@ -37,9 +37,9 @@ describe('Breadcrumb as text tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const blockgridEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('blockgrid-text')).toEqual(0);
@@ -58,9 +58,9 @@ describe('Breadcrumb navigation alerternate tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const blockgridEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('blockgrid-text')).toEqual(0);
@@ -79,9 +79,9 @@ describe('Breadcrumb navigation tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const blockgridEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('blockgrid-text')).toEqual(0);

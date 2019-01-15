@@ -16,9 +16,9 @@ describe('Checkbox example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const blockgridEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('checkboxes')).toEqual(0);
@@ -37,9 +37,9 @@ describe('Checkbox group tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const blockgridEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('checkbox-groups')).toEqual(0);
@@ -58,9 +58,9 @@ describe('Horizontal checkbox group tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const blockgridEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('checkboxes-horizontal')).toEqual(0);

@@ -5,9 +5,9 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Bubble example-index tests', () => {
+describe('Circle pager example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bubble/example-index?layout=nofrills');
+    await utils.setPage('/components/circlepager/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -21,7 +21,7 @@ describe('Bubble example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('bubble')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('circlepager')).toEqual(0);
     });
   }
 });
