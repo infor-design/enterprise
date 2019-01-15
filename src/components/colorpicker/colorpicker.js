@@ -121,7 +121,7 @@ const COLORPICKER_DEFAULTS = {
   placeIn: null, // null|'editor'
   showLabel: false,
   editable: true,
-  disable: false,
+  disabled: false,
   uppercase: true,
   colorOnly: false,
   clearable: true,
@@ -205,7 +205,7 @@ ColorPicker.prototype = {
       this.setColor(initialValue);
     }
 
-    if (this.element.is(':disabled') || this.settings.disable) {
+    if (this.element.is(':disabled') || this.settings.disabled) {
       this.disable();
     }
 
@@ -213,7 +213,7 @@ ColorPicker.prototype = {
       this.readonly();
     }
 
-    if (!this.settings.editable && !this.settings.disable) {
+    if (!this.settings.editable && !this.settings.disabled) {
       this.readonly();
     }
 
