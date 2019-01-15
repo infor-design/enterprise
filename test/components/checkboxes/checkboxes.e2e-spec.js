@@ -28,7 +28,7 @@ describe('Checkbox example-index tests', () => {
 
 describe('Checkbox group tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bullet/example-checkbox-groups?layout=nofrills');
+    await utils.setPage('/components/checkboxes/example-checkbox-groups?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -49,7 +49,7 @@ describe('Checkbox group tests', () => {
 
 describe('Horizontal checkbox group tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bullet/example-horizontal?layout=nofrills');
+    await utils.setPage('/components/checkboxes/example-horizontal?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
