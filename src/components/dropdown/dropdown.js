@@ -1406,7 +1406,8 @@ Dropdown.prototype = {
       this.filterTerm = this.searchInput.val();
     } else {
       this.filterTerm += $.actualChar(e);
-      if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm) {
+      if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm
+          && !self.settings.noSearch) {
         this.filterTerm = e.key;
       }
     }
