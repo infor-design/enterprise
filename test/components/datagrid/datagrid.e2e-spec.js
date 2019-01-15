@@ -577,6 +577,29 @@ describe('Datagrid filter lookup tests', () => {
   });
 });
 
+describe('Datagrid filter lookup custom click function tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-filter-lookup-click-function');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should attempt to open the filter and have the correct popup', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(9);
+
+    await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-1 div.datagrid-filter-wrapper span.lookup-wrapper span.trigger')).click();
+
+    expect(browser.driver.switchTo().alert().getText()).toBe('Grid information found');
+    await browser.driver.switchTo().alert().accept();
+  });
+});
+
 describe('Datagrid grouping multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-grouping-multiselect');
