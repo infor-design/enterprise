@@ -418,6 +418,15 @@
   .tooltip-content {
     padding: 20px 0;
   }
+
+  .modal-buttonset {
+    margin-bottom: -21px;
+    margin-top: 0;
+
+    button {
+      width: 50%;
+    }
+  }
 }
 
 // Responsive Styles

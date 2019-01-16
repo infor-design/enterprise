@@ -69,7 +69,7 @@
 
     if (action === 'add-api') {
       var newEvent = {
-        id: (parseInt(events[events.length - 1].id) + 1).toString(),
+        id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
         subject: 'New Random Event',
         comments: 'New Random Event Details',
         starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
@@ -82,7 +82,7 @@
 
     if (action === 'add-modal') {
       var newEvent = {
-        id: (parseInt(events[events.length - 1].id) + 1).toString(),
+        id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
         title: 'Request Time Off',
         subject: 'New Random Event',
         comments: 'New Random Event Details',
@@ -226,4 +226,8 @@
     </div>
   </div>
   {{/event}}
+  <div class="modal-buttonset">
+    <button id="cancel" data-cancel="submit" type="button" class="btn-modal-secondary"><span data-translate="text">Cancel</span></button>
+    <button id="submit" data-action="submit" type="button" class="btn-modal-primary hide-focus"><span data-translate="text">Submit</span></button>
+  </div>
 </script>

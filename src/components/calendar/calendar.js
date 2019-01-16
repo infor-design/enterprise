@@ -856,9 +856,20 @@ Calendar.prototype = {
       event.noComments = true;
     }
 
+    if (!event.subject && addPlaceholder) {
+      event.subject = Locale.translate('NoTitle');
+    }
+
     if (!event.type) {
       // Default to the first one
       event.type = this.settings.eventTypes[0].id;
+    }
+
+    if (event.id === undefined && addPlaceholder) {
+      const lastId = this.settings.events.length === 0
+        ? 0
+        : parseInt(this.settings.events[this.settings.events.length - 1].id, 10);
+      event.id = (lastId + 1).toString();
     }
 
     if (event.title === 'NewEvent') {
@@ -899,12 +910,19 @@ Calendar.prototype = {
       headerClass: event.color
     };
 
+    let isCancel = true;
     dayObj.elem
       .off('hide.calendar')
       .on('hide.calendar', () => {
+        if (isCancel) {
+          this.removeModal();
+          return;
+        }
+
         done(this.modalContents, event);
         this.element.trigger('hidemodal', { elem: this.modalContents, event });
         this.removeModal();
+        isCancel = true;
       })
       .popover(modalOptions)
       .off('show.calendar')
@@ -927,6 +945,14 @@ Calendar.prototype = {
         // Wire the correct comments
         elem.find('#comments').val(event.comments);
         elem.find('#subject').focus();
+
+        // Wire the buttons
+        elem.find('button').on('click', (e) => {
+          const popupApi = dayObj.elem.data('tooltip');
+          const action = e.currentTarget.getAttribute('data-action');
+          isCancel = action !== 'submit';
+          popupApi.hide(true);
+        });
       });
 
     this.activeElem = dayObj.elem;
