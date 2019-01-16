@@ -296,7 +296,7 @@ describe('Button example-100-percent tests', () => {
 
 describe('Button secondary border tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/button/example-index');
+    await utils.setPage('/components/button/test-secondary-border.html?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -310,7 +310,7 @@ describe('Button secondary border tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('button-secondary-border')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('button-secondary')).toEqual(0);
     });
   }
 });

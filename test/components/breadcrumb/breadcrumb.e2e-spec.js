@@ -63,7 +63,7 @@ describe('Breadcrumb navigation alternate tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('breadcrumb-text')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('breadcrumb-alternate')).toEqual(0);
     });
   }
 });
