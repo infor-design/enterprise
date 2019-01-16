@@ -512,7 +512,11 @@ describe('Validation resetForm tests', () => {
     it('Should be able to set error icon opacity', async () => {
       const submitBtn = await element(by.id('test1'));
       await submitBtn.click();
-      const errorIcon = await element(by.css('#email-address-ok ~ .icon-error'));
+      let errorIcon = await element(by.css('#field-one ~ .icon-error'));
+
+      expect(await errorIcon.getAttribute('class')).toContain('lower-opacity');
+      expect(await errorIcon.getCssValue('opacity')).toBeLessThan(1);
+      errorIcon = await element(by.css('#field-two ~ .icon-error'));
 
       expect(await errorIcon.getAttribute('class')).toContain('lower-opacity');
       expect(await errorIcon.getCssValue('opacity')).toBeLessThan(1);
