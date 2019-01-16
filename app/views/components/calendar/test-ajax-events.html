@@ -25,9 +25,7 @@
 
 <script>
   $('body').one('initialized', function () {
-    $('.calendar').on('monthrendered', function(e, args) {
-      console.log('Month Rendered');
-    }).calendar({
+    $('.calendar').calendar({
       month: 7,
       year: 2018,
       onRenderMonth: function (ui, response) {

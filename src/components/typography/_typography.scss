@@ -388,6 +388,10 @@ small,
 // Label + Data Label
 .label + .data {
   color: $font-color-extrahighcontrast;
+
+  &.is-placeholder {
+    color: $input-placeholder-color;
+  }
 }
 
 // Specifically set Firefox's line-height to be base-16.
