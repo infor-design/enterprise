@@ -47,7 +47,7 @@ describe('Breadcrumb as text tests', () => {
   }
 });
 
-describe('Breadcrumb navigation alerternate tests', () => {
+describe('Breadcrumb navigation alternate tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/breadcrumb/example-navigation-breadcrumbs-alternate?layout=nofrills');
   });
