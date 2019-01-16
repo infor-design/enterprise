@@ -308,7 +308,6 @@ describe('Button secondary border tests', () => {
       const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
-      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('button-secondary')).toEqual(0);
     });
