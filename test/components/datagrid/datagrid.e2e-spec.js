@@ -1096,7 +1096,7 @@ describe('Datagrid select tree tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-multiselect');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
