@@ -1175,7 +1175,7 @@ describe('Datagrid tree single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-singleselect');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
