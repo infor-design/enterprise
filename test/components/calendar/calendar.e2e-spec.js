@@ -161,7 +161,7 @@ describe('Calendar specific month tests', () => {
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(15);
   });
 
-  it('should add new events on double click', async () => {
+  it('should add new events on double click and cancel', async () => {
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '2')).first();
@@ -172,7 +172,23 @@ describe('Calendar specific month tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.calendar-popup'))), config.waitsFor);
 
     await element(by.id('subject')).sendKeys('New Event Name');
-    await element.all(by.css('.calendar-popup .btn-icon')).click();
+    await element(by.css('.calendar-popup .btn-close')).click();
+
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+  });
+
+  it('should add new events on double click and submit', async () => {
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+
+    const event = await element.all(by.cssContainingText('.monthview-table td', '2')).first();
+    await browser.actions().click(event).perform();
+    await browser.actions().doubleClick(event).perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.calendar-popup'))), config.waitsFor);
+
+    await element(by.id('subject')).sendKeys('New Event Name');
+    await element(by.id('submit')).click();
 
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
   });
