@@ -4,7 +4,12 @@
     <h2 class="fieldset-title">Validation tests</h2>
     <form id="test" autocomplete="off" data-validate-on="submit">
 
-       <div class="field" id="zzzzzz">
+       <div class="field-short">
+        <label class="required" for="email-address-ok-sf" style="width: auto;">Email Address (short field)<span class="audible">Required</span></label>
+        <input type="text" id="email-address-ok-sf" name="email-address-ok-sf" data-validate="required test" data-error-type="tooltip" value="someone@someplace.com" style="width:50px;"/>
+      </div>
+
+       <div class="field">
         <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
         <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required test" data-error-type="tooltip" value="someone@someplace.com" style="width:50px;"/>
       </div>
