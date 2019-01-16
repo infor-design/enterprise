@@ -4,7 +4,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Column empty tests', () => {  //eslint-disable-line
+describe('Column empty tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/column/test-empty');
   });
