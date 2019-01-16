@@ -15,7 +15,7 @@ let datagridObj;
 
 // Define Columns for the Grid.
 const columns = [];
-columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree });
+columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, filterType: 'text' });
 columns.push({ id: 'id', name: 'Id', field: 'id' });
 columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Editors.Input });
 columns.push({ id: 'comments', name: 'Comments', field: 'comments', formatter: Formatters.Hyperlink });
@@ -160,5 +160,52 @@ describe('Datagrid Tree', () => {
 
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
     expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+  });
+
+  it('Should be able to set children by allowChildExpandOnMatch:true', () => {
+    const filter = [{ columnId: 'taskName', operator: 'contains', value: 'hmm' }];
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, {
+      columns,
+      dataset: data,
+      treeGrid: true,
+      filterable: true,
+      allowChildExpandOnMatch: true
+    });
+
+    expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(19);
+    datagridObj.applyFilter(filter);
+
+    expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(18);
+    datagridObj.clearFilter();
+
+    expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(19);
+  });
+
+  it('Should be able to set children by allowChildExpandOnMatch:false', () => {
+    const filter = [{ columnId: 'taskName', operator: 'contains', value: 'hmm' }];
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, {
+      columns,
+      dataset: data,
+      treeGrid: true,
+      filterable: true,
+      allowChildExpandOnMatch: false
+    });
+    let expandBtn = document.querySelector('tr:nth-child(1) .datagrid-expand-btn');
+
+    expect(expandBtn.disabled).toBeFalsy();
+    expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(19);
+    datagridObj.applyFilter(filter);
+    expandBtn = document.querySelector('tr:nth-child(1) .datagrid-expand-btn');
+
+    expect(expandBtn.disabled).toBeTruthy();
+    expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(6);
+    expect(expandBtn.querySelector('.plus-minus').classList.contains('active')).toBeFalsy();
+    datagridObj.clearFilter();
+    expandBtn = document.querySelector('tr:nth-child(1) .datagrid-expand-btn');
+
+    expect(expandBtn.disabled).toBeFalsy();
+    expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(19);
   });
 });

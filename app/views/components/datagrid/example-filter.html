@@ -31,13 +31,42 @@
                          {id: '', value: '', label: 'Default Activity'},
                          {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
 
+    //lookup data
+    var lookupOptions;
+
+    lookupOptions = {
+      // field: 'productId',
+      field: function (row, field, grid) {
+        return row.productId;
+      },
+      match: function (value, row, field, grid) {
+        return (row.productId) === value;
+      },
+      beforeShow: function (api, response) {
+        var url = '{{basepath}}api/lookupInfo';
+
+        $.getJSON(url, function(data) {
+          api.settings.options.columns = data[0].columns;
+          api.settings.options.dataset = data[0].dataset;
+          //If no rows and you dont want to open
+          //return false;
+          //if some rows
+          response();
+        });
+      },
+      options: {
+        selectable: 'single', //multiselect or single
+        toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: false, advancedFilter: true, actions: true, views: true , rowHeight: true}
+      }
+    };
+
       // Define Columns for the Grid.
       columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, validate: 'required', editorOptions: lookupOptions, width: 170, filterType: 'lookup' });
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterType: 'text', click: function(e, args){ console.log(e, args);} , mask: '*****************'});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true}});
       columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', width: 250});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
       columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
       columns.push({ id: 'status', name: 'Status', align: 'center', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
       columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});

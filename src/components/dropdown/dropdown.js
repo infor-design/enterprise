@@ -1406,7 +1406,8 @@ Dropdown.prototype = {
       this.filterTerm = this.searchInput.val();
     } else {
       this.filterTerm += $.actualChar(e);
-      if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm) {
+      if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm
+          && !self.settings.noSearch) {
         this.filterTerm = e.key;
       }
     }
@@ -2099,15 +2100,6 @@ Dropdown.prototype = {
   */
   handleBlur() {
     const self = this;
-
-    /*
-    if (this.isOpen()) {
-      this.timer = setTimeout(() => {
-        self.closeList('cancel');
-      }, 40);
-    }
-    */
-
     self.closeList('cancel');
 
     return true;
@@ -2832,6 +2824,12 @@ Dropdown.prototype = {
     }
 
     this.closeList('cancel');
+
+    if (this.pseudoElem && this.pseudoElem.hasClass('is-open')) {
+      this.pseudoElem
+        .removeClass('is-open')
+        .attr('aria-expanded', 'false');
+    }
 
     // Update the 'multiple' property
     if (this.settings.multiple && this.settings.multiple === true) {

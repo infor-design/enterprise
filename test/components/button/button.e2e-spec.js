@@ -7,7 +7,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Button example-index tests', () => { //eslint-disable-line
+describe('Button example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/button/example-index');
   });

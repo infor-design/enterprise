@@ -532,6 +532,74 @@ describe('Datagrid filter single select tests', () => {
   });
 });
 
+describe('Datagrid filter lookup tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-filter');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should single select row, filter and restore', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(9);
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+
+    await element(by.css('#example-filter-datagrid-1-header-filter-1 + span.trigger')).click();
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+    await browser.driver.sleep(301);
+
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(0);
+
+    await element(by.css('#example-filter-datagrid-1-header-filter-1 + span.trigger')).click();
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+    await browser.driver.sleep(301);
+
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(1);
+
+    await element(by.id('example-filter-datagrid-1-header-filter-1')).clear();
+    await element(by.id('example-filter-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(9);
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+  });
+});
+
+describe('Datagrid filter lookup custom click function tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-filter-lookup-click-function');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should attempt to open the filter and have the correct popup', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(9);
+
+    await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-1 div.datagrid-filter-wrapper span.lookup-wrapper span.trigger')).click();
+
+    expect(browser.driver.switchTo().alert().getText()).toBe('Grid information found');
+    await browser.driver.switchTo().alert().accept();
+  });
+});
+
 describe('Datagrid grouping multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-grouping-multiselect');
@@ -761,7 +829,7 @@ describe('Datagrid paging client side multiselect tests', () => {
   });
 });
 
-describe('Datagrid paging clientside single select tests', () => { //eslint-disable-line
+describe('Datagrid paging clientside single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-single');
 
@@ -994,7 +1062,9 @@ describe('Datagrid select and filter tests', () => {
     expect(await element.all(by.css('tbody tr')).count()).toEqual(1);
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
 
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await utils.checkForErrors();
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
   });
@@ -1026,7 +1096,7 @@ describe('Datagrid select tree tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-multiselect');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
