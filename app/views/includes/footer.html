@@ -14,5 +14,7 @@
   initialLocale = '{{locale}}';
   {{/locale}}
 
-  $('body').initialize({locale: initialLocale});
+  $('body').on('initialized', function() {
+    console.log("Initialized fired.");
+  }).initialize({locale: initialLocale});
 </script>
