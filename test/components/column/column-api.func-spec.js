@@ -47,7 +47,7 @@ const dataset = [{
   }]
 }];
 
-fdescribe('Column Chart API', () => { //eslint-disable-line
+describe('Column Chart API', () => {
   beforeEach((done) => {
     columnEl = null;
     svgEl = null;
@@ -72,12 +72,12 @@ fdescribe('Column Chart API', () => { //eslint-disable-line
 
   it('Should show on page', () => {
     expect(document.body.querySelectorAll('.bar').length).toEqual(7);
-    expect(document.body.querySelector('.x.axis .tick:nth-of-type(1) text').innerHTML).toEqual('Automotive');
-    expect(document.body.querySelector('.x.axis .tick:nth-of-type(2) text').innerHTML).toEqual('Distribution');
-    expect(document.body.querySelector('.x.axis .tick:nth-of-type(3) text').innerHTML).toEqual('Equipment');
-    expect(document.body.querySelector('.x.axis .tick:nth-of-type(4) text').innerHTML).toEqual('Fashion');
+    expect(document.body.querySelector('.x.axis .tick:nth-of-type(1) text').innerHTML).toEqual('Auto');
+    expect(document.body.querySelector('.x.axis .tick:nth-of-type(2) text').innerHTML).toEqual('Dist');
+    expect(document.body.querySelector('.x.axis .tick:nth-of-type(3) text').innerHTML).toEqual('Equip');
+    expect(document.body.querySelector('.x.axis .tick:nth-of-type(4) text').innerHTML).toEqual('Fash');
     expect(document.body.querySelector('.x.axis .tick:nth-of-type(5) text').innerHTML).toEqual('Food');
-    expect(document.body.querySelector('.x.axis .tick:nth-of-type(6) text').innerHTML).toEqual('Healthcare');
+    expect(document.body.querySelector('.x.axis .tick:nth-of-type(6) text').innerHTML).toEqual('Health');
     expect(document.body.querySelector('.x.axis .tick:nth-of-type(7) text').innerHTML).toEqual('Other');
   });
 
