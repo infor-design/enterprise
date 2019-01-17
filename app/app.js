@@ -89,6 +89,7 @@ app.use(require('./src/js/middleware/global-data-handler')(app));
 app.use(require('./src/js/middleware/response-throttler')(app));
 app.use(require('./src/js/middleware/remove-headers')(app));
 app.use(require('./src/js/middleware/csp-handler')(app));
+app.use(require('./src/js/middleware/info-handler')(app));
 
 app.use(router);
 app.use(require('./src/js/middleware/error-handler')(app));

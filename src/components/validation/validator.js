@@ -346,7 +346,7 @@ Validator.prototype = {
   },
 
   /**
-   *
+   * Get the types of validation from a field.
    * @private
    * @param {jQuery[]} field the field being checked
    * @param {jQuery.Event} e the `validate` event
@@ -464,8 +464,7 @@ Validator.prototype = {
   /**
    * @private
    * @param {jQuery[]} field the field being validated
-   * @param {boolean} showTooltip whether or not this field should display its
-   *  validation message in a tooltip
+   * @param {boolean} showTooltip whether or not this field should display its validation message in a tooltip
    * @param {jQuery.Event} e the `validate` event
    * @returns {array} of jQuery deferred objects
    */
@@ -681,7 +680,6 @@ Validator.prototype = {
 
   /**
    * Shows an error icon
-   *
    * @private
    * @param {jQuery[]} field the field being appended
    * @param {string} type the error type
@@ -812,7 +810,6 @@ Validator.prototype = {
 
   /**
    * Shows an tooltip error
-   *
    * @private
    * @param {jQuery[]} field the field being toggled
    * @param {string} message text content containing the validation message
@@ -844,7 +841,6 @@ Validator.prototype = {
   /**
    * Shows an inline error message on a field
    * @private
-   *
    * @param {jQuery[]} field the field being modified
    * @param {string} rule The validation rule data.
    * @param {string} type the validation type (error, warn, info, etc).

@@ -526,7 +526,7 @@ Tooltip.prototype = {
         $.createIcon({ classes: ['icon-close'], icon: 'close' })
       }<span>Close</span>` +
         '</button>').on('click', () => {
-        self.hide();
+        self.hide(true);
       });
 
       title.appendChild(closeBtnX[0]);
@@ -643,7 +643,7 @@ Tooltip.prototype = {
 
           if (target.closest('.popover').length === 0 &&
               target.closest('.dropdown-list').length === 0) {
-            self.hide(e);
+            self.hide();
           }
         })
         .on(`keydown.${COMPONENT_NAME}-${self.uniqueId}`, (e) => {
@@ -787,10 +787,11 @@ Tooltip.prototype = {
 
   /**
    * Hides the Tooltip/Popover
+   * @param {boolean} [force] Force to close regardless of other settings.
    * @returns {void}
    */
-  hide() {
-    if (this.settings.keepOpen || !this.visible) {
+  hide(force) {
+    if ((this.settings.keepOpen || !this.visible) && !force) {
       return;
     }
 

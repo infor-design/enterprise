@@ -178,7 +178,7 @@
 
     &.alternate {
       .arrow::after {
-        border-bottom-color: $popover-alternate-arrow-color;
+        border-bottom-color: $popover-bg-color;
       }
     }
   }
@@ -293,7 +293,8 @@
   padding: 10px 20px;
 
   .btn-close {
-    margin-top: -9px;
+    margin-left: 0;
+    margin-top: -10px;
   }
 }
 
