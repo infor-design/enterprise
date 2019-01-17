@@ -240,7 +240,7 @@ valueFormatterString: {
 
 ## Selection Model
 
-- You can initially mark a dot on the chart as selected by passing selected: true in the dataset element.
+- You can initially mark a dot on the chart as selected by passing `selected: true` in the dataset element.
 
 ```javascript
 {
