@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h2 class="fieldset-title">Validation tests</h2>
+    <form id="test" autocomplete="off" data-validate-on="submit">
+
+       <div class="field-short">
+        <label class="required" for="field-one" style="width: auto;">Field One (short field)<span class="audible">Required</span></label>
+        <input type="text" id="field-one" name="field-one" data-validate="required test" data-error-type="tooltip" value="some text" style="width:50px;"/>
+      </div>
+
+       <div class="field">
+        <label class="required" for="field-two">Field Two <span class="audible">Required</span></label>
+        <input type="text" id="field-two" name="field-two" data-validate="required test" data-error-type="tooltip" value="some text" style="width:50px;"/>
+      </div>
+
+      <div class="field">
+        <label class="required" for="field-three">Field Three <span class="audible">Required</span></label>
+        <input type="text" id="field-three" name="field-three" data-validate="required" value="xxxx-xxxx-xxxx-xxxx" data-error-type="tooltip" />
+      </div>
+
+      <button type="submit" id="test1" class="btn-primary">Submit</button>
+    </form>
+
+	<script>
+      $(function() {
+        $('#test').on('validated', function (e, isValid) {
+
+          if (isValid) {
+            // Do some stuff before it goes to postback/submit
+
+            //Manually post/submit or change window
+            //http://stackoverflow.com/questions/1200266/submit-a-form-using-jquery
+            window.location = 'http://www.google.com';
+            return;
+          }
+
+          // Do some stuff other than highlighting what's required and obviously cancel the submit.
+
+        });
+      });
+    </script>
+  </div>
+</div>

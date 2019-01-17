@@ -3,7 +3,6 @@ import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { DOM } from '../../utils/dom';
-import { Locale } from '../locale/locale';
 import { PlacementObject, Place } from '../place/place';
 
 // jQuery Components
@@ -62,7 +61,8 @@ const POPUPMENU_DEFAULTS = {
     x: 0,
     y: 0
   },
-  predefined: $()
+  predefined: $(),
+  duplicateMenu: null
 };
 
 function PopupMenu(element, settings) {
@@ -148,11 +148,25 @@ PopupMenu.prototype = {
    */
   addMarkup() {
     let id;
+    let duplicateMenu;
+    let triggerId;
 
     switch (typeof this.settings.menu) {
       case 'string': // ID Selector
         id = this.settings.menu;
         this.menu = $(`#${this.settings.menu}`);
+
+        // duplicate menu if shared by multiple triggers
+        if (this.settings.duplicateMenu && this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
+          this.menu.data('trigger', this.element);
+          triggerId = this.menu.data('trigger')[0].id;
+          duplicateMenu = this.menu.clone();
+          duplicateMenu.detach().appendTo('body');
+
+          // add data-id attr to menus
+          duplicateMenu.attr('data-trigger', triggerId);
+          this.menu.attr('data-trigger', triggerId);
+        }
         break;
       case 'object': // jQuery Object
         if (this.settings.menu === null) {
@@ -195,6 +209,9 @@ PopupMenu.prototype = {
     if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
       this.originalParent = this.menu.prev();
       this.menu.detach().appendTo('body');
+      if (this.settings.duplicateMenu) {
+        this.menu.attr('id', `${this.settings.menu}-original`);
+      }
     }
 
     if (!this.menu.is('.popupmenu')) {
@@ -551,8 +568,6 @@ PopupMenu.prototype = {
     }
 
     const lis = contextElement.find('li:not(.heading):not(.separator)');
-    const menuClassName = contextElement[0].className;
-    const isTranslatable = DOM.hasClassName(menuClassName, 'isTranslatable');
     let hasIcons = false;
 
     lis.each((i, li) => {
@@ -567,11 +582,6 @@ PopupMenu.prototype = {
       if (a) {
         a.setAttribute('tabindex', '-1');
         a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
-
-        // Should be translated
-        if (isTranslatable) {
-          span.innerText = Locale.translate(span.innerText) || span.innerText;
-        }
 
         // disabled menu items, by prop and by className
         const $a = $(a);
@@ -596,7 +606,7 @@ PopupMenu.prototype = {
           submenu = $(submenuWrapper).children('ul')[0];
           submenu.classList.add('popupmenu');
         }
-        if (DOM.hasClassName(li.className, 'submenu')) {
+        if (DOM.hasClass(li, 'submenu')) {
           // Add a span
           if (!span) {
             a.innerHTML = `<span>${a.innerHTML}</span>`;
@@ -612,13 +622,13 @@ PopupMenu.prototype = {
         }
 
         // is-checked
-        if (DOM.hasClassName(li.className, 'is-checked')) {
+        if (DOM.hasClass(li, 'is-checked')) {
           a.setAttribute('role', 'menuitemcheckbox');
           a.setAttribute('aria-checked', true);
         }
 
         // is-not-checked
-        if (DOM.hasClassName(li.className, 'is-not-checked')) {
+        if (DOM.hasClass(li, 'is-not-checked')) {
           li.className = li.className.replace('is-not-checked', '');
           a.setAttribute('role', 'menuitemcheckbox');
           a.removeAttribute('aria-checked');
@@ -1776,7 +1786,7 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   openSubmenu(li, ajaxReturn) {
-    if (DOM.hasClassName(li[0].className, 'is-disabled') || li[0].disabled) {
+    if (DOM.hasClass(li, 'is-disabled') || li[0].disabled) {
       return;
     }
 
@@ -2179,6 +2189,7 @@ PopupMenu.prototype = {
     }
     if (this.settings.attachToBody && insertTarget) {
       this.menu.unwrap();
+      this.menu.off().remove();
     }
     if (this.menu && insertTarget && !this.settings.attachToBody) {
       this.menu.insertAfter(insertTarget);

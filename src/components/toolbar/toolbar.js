@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 import { xssUtils } from '../../utils/xss';
 
@@ -916,6 +917,12 @@ Toolbar.prototype = {
 
       buttonsetElem.style.width = addPx(targetButtonsetWidth + 2);
       titleElem.style.width = addPx(targetTitleWidth - 2);
+
+      // Recheck if title is overflowed to ellipsis
+      if (titleElem.textContent &&
+        targetTitleWidth < stringUtils.textWidth(titleElem.textContent.trim())) {
+        this.cutoffTitle = true;
+      }
 
       return;
     }

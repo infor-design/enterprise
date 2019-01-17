@@ -26,16 +26,7 @@ DOM.classNameExists = function classNameExists(element) {
 };
 
 /**
- * Checks the contents of a string for the existence of a particular substring.
- * @param {string} classNameString a string to test
- * @param {string} targetContents the contents that need to exist inside the `classNameString`
- * @returns {boolean} whether or not a className exists
- */
-DOM.hasClassName = function has(classNameString, targetContents) {
-  return classNameString.indexOf(targetContents) > -1;
-};
-
-/**
+ * Checks the element for the existence of a particular class.
  * @param {HTMLElement|SVGElement} el a element being checked.
  * @param {string} className a string representing a class name to check for.
  * @returns {boolean} whether or not the element's class attribute contains the string.
@@ -155,6 +146,22 @@ DOM.append = function append(el, contents, stripTags) {
 
   if (domEl instanceof HTMLElement || domEl instanceof SVGElement) {
     domEl.insertAdjacentHTML('beforeend', this.xssClean(contents, stripTags));
+  }
+};
+
+/**
+ * Remove a DOM Element
+ * @param {HTMLElement|SVGElement|jQuery[]} el The element to remove.
+ */
+DOM.remove = function append(el) {
+  let domEl = el;
+
+  if (el instanceof $ && el.length) {
+    domEl = domEl[0];
+  }
+
+  if ((domEl instanceof HTMLElement || domEl instanceof SVGElement) && el.parentNode) {
+    el.parentNode.removeChild(el);
   }
 };
 

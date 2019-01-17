@@ -6,10 +6,6 @@ demo:
   - name: Common Configuration
     slug: example-index
   pages:
-  - name: Simple Popover Content
-    slug: example-simple
-  - name: Complex Form Layout Inside Popover
-    slug: example-complex-content
   - name: Attached To Textbox's Info Icon
     slug: example-attached-to-textbox
   - name: Alternate (Flipped) Positioning

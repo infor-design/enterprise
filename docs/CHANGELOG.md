@@ -1,5 +1,7 @@
 # What's New with Enterprise
 
+- `[Datagrid]` Added support for lookup in the datagrid filter
+
 ## v4.14.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)

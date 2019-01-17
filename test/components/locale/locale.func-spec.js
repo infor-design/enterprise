@@ -302,11 +302,15 @@ describe('Locale API', () => {
     expect(Locale.parseDate('10/10/010', 'M/d/yyyy')).toEqual(undefined);
   });
 
-  it('Should be able to parse UTC toISOString', () => {
+  it('Should be able to parse UTC toISOString', () => { //eslint-disable-line
     Locale.set('en-US');
 
     expect(Locale.parseDate('2000-01-01T00:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').getTime()).toEqual(new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).getTime());
-    expect(Locale.parseDate('2000-01-01T00:00:00.001Z', 'yyyy-MM-DDTHH:mm:ss.SSSZ').toISOString()).toEqual('2000-01-01T00:00:00.001Z');
+    expect(Locale.parseDate('2000-01-01T00:00:00.001Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').toISOString()).toEqual('2000-01-01T00:00:00.001Z');
+    expect(Locale.parseDate('2000-01-01T00:00:00.001Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').toISOString()).toEqual('2000-01-01T00:00:00.001Z');
+    expect(Locale.parseDate('2019-01-04T05:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').toISOString()).toEqual('2019-01-04T05:00:00.000Z');
+    expect(Locale.parseDate('2018-08-24T14:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').toISOString()).toEqual('2018-08-24T14:00:00.000Z');
+    expect(Locale.parseDate('2019-01-31T23:59:59.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').toISOString()).toEqual('2019-01-31T23:59:59.000Z');
   });
 
   // Test Long Formatting
