@@ -75,7 +75,7 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
 
 ## Auto Size
 
-Sometimes you might want to use a card in a form outside of the home pages / widget examples. To make it to  the same size as the content just add the class `auto-height`.
+Sometimes you might want to use a card in a form outside of the home pages / widget examples. To make it the same size as the content just add the class `auto-height`.
 
 ```html
 <div class="card auto-height">
