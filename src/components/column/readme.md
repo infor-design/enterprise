@@ -82,7 +82,7 @@ $('#column-bar-example').chart({type: 'column', dataset: dataset});
 
 ## Selection Model
 
-- You can initially mark a bar on the chart as selected by passing selected: true in the dataset element.
+- You can initially mark a bar on the chart as selected by passing `selected: true` in the dataset element.
 
 ```javascript
 {
