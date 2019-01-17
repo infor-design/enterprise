@@ -14,7 +14,7 @@ demo:
 
 ## Configuration Options
 
-The bubble chart is a line chart with the isBubble set that adds the bubble. Plus the z dimension in the data. This is based on the [line chart api]( ../line) see see that api for some more details.
+The bubble chart is a line chart with `isBubble` set. This adds the bubble and the z dimension in the data. This is based on the [line chart api]( ../line) see see that api for some more details.
 
 ## Code Example
 
