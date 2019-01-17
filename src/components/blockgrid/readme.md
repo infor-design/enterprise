@@ -20,7 +20,7 @@ demo:
 
 ## Code Example
 
-This example shows how to place several objects inside a block grid. The block grid will layout the elements across the parent width and flow to next line if need be. The block grid supports using markup in the block for example:
+This example shows how to place several objects inside a block grid. The block grid will lay out the elements across the parent width and flow to the next line if need be. The block grid supports using markup in the block for example:
 
 ```html
 <div class="row blockgrid l-center">
