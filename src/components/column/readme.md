@@ -34,7 +34,7 @@ demo:
 
 ## Code Example
 
-This example shows how to invoke a simple column chart with a dataset switch a value for each column. You can pass in a tooltip with a custom value, and also pass in 3 labels that are used at the various break points as will fit (name, showName, abbrName).
+This example shows how to invoke a simple column chart with a dataset with a value for each column. You can pass in a tooltip with a custom value, and also pass in three labels that are used at the various break points as will fit (name, showName, abbrName).
 
 ```javascript
 var dataset = [{
