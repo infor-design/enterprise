@@ -569,7 +569,7 @@ SearchField.prototype = {
     this.saveFocus();
 
     this.elemBeforeWrapper = this.wrapper.prev();
-    $(this.containmentParent).prepend(this.wrapper);
+    $(this.containmentParent).find('.buttonset').prepend(this.wrapper);
 
     utils.fixSVGIcons(this.wrapper);
 
