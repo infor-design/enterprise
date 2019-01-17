@@ -214,7 +214,7 @@ $('#line-example').chart({type: 'bubble', dataset: dataset});
 
 ## Axis Formatting
 
-- You can customize and round values on the y axis by setting the `formatterString` option. This uses the d3-format syntax which is documented on the [d3-format api page.](https://github.com/d3/d3-format#api-reference). As an example you can use this pattern to round the tooltip values to currency with 2 decimals.
+- You can customize and round values on the y axis by setting the `formatterString` option. This uses the d3-format syntax which is documented on the [d3-format api page.](https://github.com/d3/d3-format#api-reference). As an example you can use this pattern to round the tooltip values to currency and to two decimals.
 
 ```javascript
 formatterString: '$,.2f'
