@@ -53,7 +53,7 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-describe('Locale API', () => {
+fdescribe('Locale API', () => {
   const Locale = window.Soho.Locale;
 
   it('Should be possible to preset culturesPath', () => {
@@ -69,6 +69,12 @@ describe('Locale API', () => {
 
   it('Should be possible to set locale', () => {
     Locale.set('en-US');
+
+    expect(Locale.currentLocale.name).toEqual('en-US');
+  });
+
+  fit('Should be impossible to set locale that is not in the default list', () => {
+    Locale.set('xx-XX');
 
     expect(Locale.currentLocale.name).toEqual('en-US');
   });
