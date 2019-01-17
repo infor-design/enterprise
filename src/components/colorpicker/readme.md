@@ -71,4 +71,4 @@ The color picker consists of an input with `class="colorpicker"`. It can be init
 
 - inforColorPicker class renamed to colorpicker
 - Plugin renamed from .inforColorPicker() to .colorpicker()
-- Options mode, and title deprecated (this was never actually used)
+- Options mode and title are deprecated (these were never actually used)
