@@ -50,7 +50,7 @@ You can invoke a empty message manually by adding it in a widget container. This
 
 ## Accessibility
 
-- Do not use an icon alone, there should be text as well as the icon for screen reader users.
+- Do not use an icon alone, there should be text as well for screen reader users.
 
 ## Testability
 
