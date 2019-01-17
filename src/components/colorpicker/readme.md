@@ -38,7 +38,7 @@ The color picker consists of an input with `class="colorpicker"`. It can be init
 
 ## Accessibility
 
-- Currently implemented similar to aria combobox. This approach needs more testing.
+- Currently implemented similarly to aria combobox. This approach needs more testing.
 
 ## Keyboard Shortcuts
 
