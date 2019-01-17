@@ -34,7 +34,7 @@ The color picker consists of an input with `class="colorpicker"`. It can be init
 ## Behavior Guidelines
 
 - The Color Picker by default supports colors within a pre-configured palette of IDS colors. You can optionally add your own list of colors as specified by the developer.
-- There is also an option to allow the ability to clear color selection for example remove a color or restore a default color.
+- There is also an option to allow the ability to clear the color selection. For example, to remove a color or to restore a default color.
 
 ## Accessibility
 
