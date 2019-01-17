@@ -147,8 +147,10 @@ describe('Dropdown updates, events', () => {
     setTimeout(() => {
       document.body.querySelectorAll('.dropdown-option')[0].click();
 
-      expect(spyEvent).toHaveBeenTriggered();
-      done();
+      setTimeout(() => {
+        expect(spyEvent).toHaveBeenTriggered();
+        done();
+      }, 100);
     }, 100);
   });
 
