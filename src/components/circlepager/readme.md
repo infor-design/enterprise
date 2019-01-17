@@ -13,7 +13,7 @@ demo:
 ---
 ## Code Example
 
-Use the below example markup to create a circle pager, then call `$(elem).circlepager()` to invoke. The structure of the circle pager is that you have a `<div class="circlepager">` followed by a `slide` container and then one slider per "page". The page content goes inside a `slide-content` element. Make sure to have css to configure your slide content. The slides should be the same width and height.
+Use the below example markup to create a circle pager, then call `$(elem).circlepager()` to invoke. The structure of the circle pager is `<div class="circlepager">` followed by a `slide` container with one slider per "page". The page content goes inside a `slide-content` element. Make sure to have css to configure your slide content. The slides should be the same width and height.
 
 ```html
 <div class="circlepager example1">
