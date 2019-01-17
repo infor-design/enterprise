@@ -251,7 +251,7 @@ valueFormatterString: {
 ```
 
 - You can also use the `getSelected` method to get the current selected line.
-- You can also use the `setSelected` method to set the current selected line. For this function you can pass in options such as groupIndex, fieldName and fieldValue to find the associated values.
+- You can also use the `setSelected` method to set the current selected line. For this function you can pass in options such as `groupIndex`, `fieldName` and `fieldValue` to find the associated values.
 
 ```javascript
 let options = {
