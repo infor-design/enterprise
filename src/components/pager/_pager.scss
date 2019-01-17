@@ -80,6 +80,10 @@
       }
     }
 
+    svg {
+      pointer-events: none;
+    }
+
   }
 
   li:not(.selected) a:hover:not([disabled]) svg {

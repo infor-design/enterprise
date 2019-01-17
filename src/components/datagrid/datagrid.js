@@ -196,6 +196,17 @@ function Datagrid(element, settings) {
 Datagrid.prototype = {
 
   /**
+   * @returns {Pager} IDS Pager component API.
+   */
+  get pagerAPI() {
+    let api;
+    if (this.tableBody && this.tableBody.length) {
+      api = this.tableBody.data('pager');
+    }
+    return api;
+  },
+
+  /**
   * Init the datagrid from its uninitialized state.
   * @private
   * @returns {void}
@@ -559,27 +570,90 @@ Datagrid.prototype = {
 
   /**
   * Trigger the source method to call to the backend on demand.
-  *
-  * @param {object} pagerType The pager info object with information like activePage ect.
+  * @param {object|string} [pagerType] The pager info object with information like activePage ect.
   * @param {function} callback The call back functions
   */
-  triggerSource(pagerType, callback) {
-    this.pager.pagerInfo = this.pager.pagerInfo || {};
-    this.pager.pagerInfo.type = pagerType;
+  triggerSource(pagerType, callback, op) {
+    const self = this;
+    let pagingInfo = this.pager.state || {};
 
-    if (pagerType !== 'refresh') {
-      this.pager.pagerInfo.activePage = 1;
+    if (pagerType) {
+      if (pagerType.activePage) {
+        pagingInfo = utils.extend({}, pagingInfo, pagerType);
+      } else {
+        pagingInfo.type = pagerType;
+        pagingInfo.trigger = op;
+      }
     }
 
     /*
-    this.renderPager(this.pager.pagerInfo, false, () => {
-      if (callback && typeof callback === 'function') {
-        callback();
-      }
-    });
+    if (pagingInfo.type !== 'refresh') {
+      pagingInfo.activePage = 1;
+    }
     */
 
+    /**
+    * Fires just before changing page. Returning false from the request function will cancel paging.
+    * @event beforepaging
+    * @memberof Pager
+    * @property {object} event - The jquery event object
+    * @property {function} request - The paging request info
+    */
+    const doPaging = this.element.triggerHandler('beforepaging', pagingInfo);
+    if (doPaging === false) {
+      return;
+    }
 
+    function response(data, updatedPagingInfo) {
+      if (updatedPagingInfo.activePage > -1) {
+        self.activePage = updatedPagingInfo.activePage;
+      }
+
+      // Render Data
+      pagingInfo.preserveSelected = true;
+
+      // Set the remote dataset on the grid
+      self.loadData(data, updatedPagingInfo, true);
+
+      if (callback && typeof callback === 'function') {
+        callback(true);
+      }
+
+      /**
+      * Fires after changing paging has completed.
+      * @event afterpaging
+      * @memberof Pager
+      * @property {object} event - The jquery event object
+      * @property {object} pagingInfo - The paging info object
+      */
+      self.element.trigger('afterpaging', pagingInfo);
+    }
+
+    if (this.sortColumn && this.sortColumn.sortId) {
+      pagingInfo.sortAsc = this.sortColumn.sortAsc;
+      pagingInfo.sortField = this.sortColumn.sortField;
+      pagingInfo.sortId = this.sortColumn.sortId;
+    }
+
+    if (this.filterExpr) {
+      pagingInfo.filterExpr = this.filterExpr;
+    }
+
+    /**
+     * Fires when change page.
+     * @event paging
+     * @memberof Pager
+     * @property {object} event The jquery event object
+     * @property {object} request The paging request object
+     */
+    this.element.trigger('paging', pagingInfo);
+
+    if (typeof this.settings.source !== 'function') {
+      response(this.settings.dataset, pagingInfo);
+      return;
+    }
+
+    this.settings.source(pagingInfo, response);
   },
 
   /**
@@ -660,7 +734,6 @@ Datagrid.prototype = {
       this.renderRows();
     }
 
-    this.renderPager(pagerInfo, isResponse);
     this.syncSelectedUI();
     this.displayCounts(pagerInfo.total);
   },
@@ -1553,7 +1626,6 @@ Datagrid.prototype = {
   */
   applyFilter(conditions, trigger) {
     const self = this;
-    this.filteredDataset = null;
 
     if (conditions) {
       this.setFilterConditions(conditions);
@@ -2464,8 +2536,16 @@ Datagrid.prototype = {
     let tableHtml = '';
     const self = this;
     const s = self.settings;
-    const activePage = self.pager ? self.pager.activePage : 1;
     const body = self.table.find('tbody');
+    let activePage = 1;
+    if (self.pager) {
+      const pagerState = self.pager.state;
+      if (pagerState.filteredActivePage) {
+        activePage = pagerState.filteredActivePage;
+      } else {
+        activePage = pagerState.activePage;
+      }
+    }
 
     self.bodyColGroupHtml = '<colgroup>';
     self.triggerDestroyCell(); // Trigger Destroy on previous cells
@@ -4725,6 +4805,15 @@ Datagrid.prototype = {
         });
     }
 
+    // Handle Paging
+    if (this.pagerAPI) {
+      this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
+        this.triggerSource('page', pagingInfo);
+      }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
+        this.triggerSource('pagesize-change', pagingInfo);
+      });
+    }
+
     // Sync Header and Body During scrolling
     self.contentContainer
       .on('scroll.table', () => {
@@ -5437,7 +5526,7 @@ Datagrid.prototype = {
 
     this.filterKeywordSearch();
     this.renderRows();
-    this.resetPager('searched');
+    // this.resetPager('searched');
     this.setSearchActivePage();
 
     if (!this.settings.paging) {
@@ -5450,20 +5539,31 @@ Datagrid.prototype = {
    * @private
    */
   setSearchActivePage() {
-    if (this.pager && this.filterExpr && this.filterExpr.length === 1) {
+    if (!this.pagerAPI) {
+      return;
+    }
+
+    const pagingInfo = {};
+
+    if (this.filterExpr && this.filterExpr.length === 1) {
+      const filteredDataset = this.settings.dataset.filter(i => !i.isFiltered);
+
       if (this.filterExpr[0].value !== '') {
         if (this.pager.searchActivePage === undefined) {
-          this.pager.searchActivePage = this.pager.activePage;
+          pagingInfo.filteredTotal = filteredDataset.length;
+          pagingInfo.searchActivePage = 1;
         }
-        this.pager.setActivePage(1, true);
+        pagingInfo.activePage = 1;
       } else if (this.filterExpr[0].value === '' && this.pager.searchActivePage > -1) {
-        this.pager.setActivePage(this.pager.searchActivePage, true);
+        pagingInfo.activePage = 1;
         delete this.pager.searchActivePage;
       }
-    } else if (this.pager && this.pager.searchActivePage > -1) {
-      this.pager.setActivePage(this.pager.searchActivePage, true);
+    } else if (this.pager.searchActivePage > -1) {
+      pagingInfo.activePage = 1;
       delete this.pager.searchActivePage;
     }
+
+    this.pager.updatePagingInfo(pagingInfo);
   },
 
   /**
@@ -8843,35 +8943,18 @@ Datagrid.prototype = {
   * @param {function} callback The callback function.
   */
   renderPager(pagingInfo, isResponse, callback) {
-    const api = this.pager;
-
-    if (!api) {
+    if (!this.pager) {
       return;
     }
 
-    api.updatePagingInfo(pagingInfo);
+    this.pager.updatePagingInfo(pagingInfo);
 
     if (!isResponse) {
-      api.renderPages(pagingInfo.type, callback, pagingInfo.trigger);
+      this.triggerSource(pagingInfo, callback);
     }
 
     // Update selected and Sync header checkbox
     this.syncSelectedUI();
-  },
-
-  /**
-   * Render a page of datagrid items.
-   * @private
-   * @param {object} op The paging operation.
-   * @param {function} callback The pager callback.
-   * @param {string} trigger The triggering action.
-   */
-  renderPages(op, callback, trigger) {
-    if (this.settings.source) {
-      return;
-    }
-
-    // No source method, simply renders stuff
   },
 
   /**
@@ -8884,20 +8967,6 @@ Datagrid.prototype = {
     if (!this.pager) {
       return;
     }
-
-    /*
-    if (!this.pager.pagingInfo) {
-      this.pager.pagingInfo = {};
-    }
-
-    if (trigger) {
-      this.pager.pagingInfo.trigger = trigger;
-    }
-
-    this.pager.pagingInfo.type = type;
-    this.pager.pagingInfo.activePage = 1;
-    this.renderPager(this.pager.pagingInfo);
-    */
 
     this.pager.reset(type, trigger);
   },
