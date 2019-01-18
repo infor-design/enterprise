@@ -16,12 +16,10 @@ demo:
     slug: example-context-menu
   - name: Custom Folders
     slug: example-custom-folders
-  - name: Destroy
-    slug: example-destroy
-  - name: Disabled
-    slug: example-disabled
-  - name: Enabled
-    slug: example-enabled
+  - name: Disabled nodes
+    slug: example-disable
+  - name: Enable nodes
+    slug: example-enable
   - name: Select By Id
     slug: test-select-by-id
   - name: Select Event
@@ -32,12 +30,10 @@ demo:
     slug: example-sortable
   - name: Update Node
     slug: example-update-node
-  - name: Disable Tree
-    slug: example-disable
-  - name: Enable Tree
-    slug: example-enable
   - name: Preserve and Restore Tree
-    slug: example-preserve-restore
+    slug: test-preserve-restore
+  - name: Using Plus and Minus for Folders
+    slug: example-plus-minus-folders
 ---
 
 ## Testability

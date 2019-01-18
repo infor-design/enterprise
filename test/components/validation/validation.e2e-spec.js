@@ -66,7 +66,7 @@ describe('Validation multiple error tests', () => {
     await utils.setPage('/components/validation/example-multiple-errors');
   });
 
-  it('Should be able to show multiple errors', async () => {
+  fit('Should be able to show multiple errors', async () => { //eslint-disable-line
     const showlEl = await element(by.id('show'));
     await showlEl.click();
     await browser.driver.sleep(config.sleep);
