@@ -164,10 +164,11 @@ const Locale = {  // eslint-disable-line
 
       if (locale && locale[0]) {
         return locale[0].default;
-      } else {
-        return defaultLocale;
       }
+
+      locale = defaultLocale;
     }
+
     return locale;
   },
 
