@@ -570,8 +570,9 @@ Datagrid.prototype = {
 
   /**
   * Trigger the source method to call to the backend on demand.
-  * @param {object|string} [pagerType] The pager info object with information like activePage ect.
+  * @param {object|string} [pagerType=undefined] The pager info object with information like activePage ect.
   * @param {function} callback The call back functions
+  * @param {string} [op=undefined] an optional info string that can be applied to identify which operation cause the source call
   */
   triggerSource(pagerType, callback, op) {
     const self = this;
@@ -663,9 +664,8 @@ Datagrid.prototype = {
   * @param {object} dataset The array of objects to show in the grid.
   * Should match the column definitions.
   * @param {object} pagerInfo The pager info object with information like activePage ect.
-  * @param {object} isResponse Called internally if the load data is response
   */
-  loadData(dataset, pagerInfo, isResponse) {
+  loadData(dataset, pagerInfo) {
     this.settings.dataset = dataset;
 
     if (!pagerInfo) {
