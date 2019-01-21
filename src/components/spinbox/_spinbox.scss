@@ -178,6 +178,10 @@ input::-webkit-inner-spin-button {
   }
 }
 
+.field .spinbox {
+  width: calc(100% - 66px);
+}
+
 // Override for iOS to correctly align ".spinbox" as child of  ".field-short"
 .ios {
   .field-short {

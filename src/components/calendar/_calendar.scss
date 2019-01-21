@@ -66,16 +66,6 @@
     }
   }
 
-  // The details section
-  .calendar-event-details {
-    background-color: $body-color-primary-background;
-    border-left: 1px solid $calendar-line-color;
-    display: inline-block;
-    height: 100%;
-    vertical-align: top;
-    width: 220px;
-  }
-
   .calendar-event-types {
     margin-bottom: -3px;
     margin-right: 5px;
@@ -150,6 +140,7 @@
       .icon {
         fill: $font-color;
         height: 12px;
+        top: initial;
         vertical-align: top;
         width: 13px;
       }
@@ -313,66 +304,128 @@
 }
 
 // Calendar Event Details section
-.calendar-event-detail {
-  background-color: $calendar-bg-color;
+.calendar-event-details {
+  background-color: $body-color-primary-background;
+  border-left: 1px solid $calendar-line-color;
+  display: inline-block;
   height: 100%;
+  margin-top: -1px;
+  overflow: auto;
+  vertical-align: top;
+  width: 221px;
+
+  &.has-only-one {
+    .accordion-pane {
+      height: calc(100% - 49px) !important;
+    }
+
+    .accordion-header {
+      &.has-chevron > a {
+        width: calc(100% - 3px);
+      }
+
+      .btn {
+        display: none;
+      }
+    }
+  }
+
+  .accordion-pane {
+    background-color: $calendar-bg-color;
+
+    .data {
+      @include font-size(12);
+    }
+
+    .icon {
+      height: 14px;
+      margin-bottom: -3px;
+      margin-left: 0;
+      margin-top: -5px;
+    }
+
+    .field {
+      border-top: 1px solid $calendar-line-color;
+      margin-bottom: 15px;
+      padding-top: 15px;
+      width: calc(100% - 20px);
+
+      &:first-child {
+        border-top-color: transparent;
+      }
+    }
+  }
+
+  .accordion-header {
+    &.has-chevron > a {
+      line-height: 15px;
+      width: calc(100% - 40px);
+    }
+
+    a {
+      @include font-size(18);
+
+      color: $theme-color-palette-white;
+      -webkit-font-smoothing: antialiased;
+      font-weight: 400;
+    }
+
+    .btn {
+      margin-left: -4px;
+      margin-top: -7px;
+
+      .chevron {
+        fill: $theme-color-palette-white;
+      }
+    }
+
+    &.ruby {
+      background-color: $theme-color-palette-ruby-60;
+    }
+
+    &.amber {
+      background-color: $theme-color-palette-amber-60;
+    }
+
+    &.emerald {
+      background-color: $theme-color-palette-emerald-60;
+    }
+
+    &.azure {
+      background-color: $theme-color-palette-azure-60;
+    }
+
+    &.turquoise {
+      background-color: $theme-color-palette-turquoise-60;
+    }
+
+    &.amethyst {
+      background-color: $theme-color-palette-amethyst-60;
+    }
+
+    &.slate {
+      background-color: $theme-color-palette-slate-60;
+    }
+
+    &.graphite {
+      background-color: $theme-color-palette-graphite-60;
+    }
+  }
 }
 
-.calendar-event-header {
-  @include font-size(18);
-
-  color: $theme-color-palette-white;
-  display: block;
-  height: 48px;
-  line-height: 48px;
-  overflow: hidden;
-  padding: 0 15px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  &.ruby {
-    background-color: $theme-color-palette-ruby-60;
+// Styles to reset the modal
+.calendar-popup {
+  .tooltip-content {
+    padding: 20px 0;
   }
 
-  &.amber {
-    background-color: $theme-color-palette-amber-60;
-  }
+  .modal-buttonset {
+    margin-bottom: -21px;
+    margin-top: 0;
 
-  &.emerald {
-    background-color: $theme-color-palette-emerald-60;
-  }
-
-  &.azure {
-    background-color: $theme-color-palette-azure-60;
-  }
-
-  &.turquoise {
-    background-color: $theme-color-palette-turquoise-60;
-  }
-
-  &.amethyst {
-    background-color: $theme-color-palette-amethyst-60;
-  }
-
-  &.slate {
-    background-color: $theme-color-palette-slate-60;
-  }
-
-  &.graphite {
-    background-color: $theme-color-palette-graphite-60;
-  }
-}
-
-.calendar-event-body {
-  margin: 20px;
-
-  .data {
-    @include font-size(12);
-  }
-
-  .icon {
-    margin-bottom: -3px;
-    margin-top: -2px;
+    button {
+      width: 50%;
+    }
   }
 }
 

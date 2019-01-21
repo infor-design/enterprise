@@ -279,7 +279,6 @@ describe('Tree preserve and restore all nodes test', () => {
   });
 });
 
-
 describe('Tree dropdown tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tree/test-dropdown');
@@ -290,7 +289,6 @@ describe('Tree dropdown tests', () => {
   });
 });
 
-
 describe('Tree insert new node above another node tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tree/test-add-node-inbetween-node');
@@ -299,9 +297,11 @@ describe('Tree insert new node above another node tests', () => {
   it('Should insert new node before another node', async () => {
     expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"]')).count()).toBe(3);
     await element(by.id('node6')).click();
+
     expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"]')).count()).toBe(4);
     expect(await element.all(by.css('.tree li.folder ul.folder li.folder')).count()).toBe(1);
     await element(by.id('node7')).click();
+
     expect(await element.all(by.css('.tree li.folder ul.folder li.folder')).count()).toBe(2);
   });
 });
@@ -314,6 +314,7 @@ describe('Tree custom icon tests', () => {
   it('Should display custom icon for leaf node', async () => {
     expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"] .icon-tree use')).get(2)
       .getAttribute('xlink:href')).toContain('#icon-star-filled');
+
     expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"] .icon-tree use')).get(3)
       .getAttribute('xlink:href')).toContain('#icon-next-page');
   });

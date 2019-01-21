@@ -121,6 +121,7 @@ const COLORPICKER_DEFAULTS = {
   placeIn: null, // null|'editor'
   showLabel: false,
   editable: true,
+  disabled: false,
   uppercase: true,
   colorOnly: false,
   clearable: true,
@@ -204,7 +205,7 @@ ColorPicker.prototype = {
       this.setColor(initialValue);
     }
 
-    if (this.element.is(':disabled')) {
+    if (this.element.is(':disabled') || this.settings.disabled) {
       this.disable();
     }
 
@@ -212,7 +213,7 @@ ColorPicker.prototype = {
       this.readonly();
     }
 
-    if (!this.settings.editable) {
+    if (!this.settings.editable && !this.settings.disabled) {
       this.readonly();
     }
 
