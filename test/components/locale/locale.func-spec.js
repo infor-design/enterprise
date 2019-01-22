@@ -71,6 +71,20 @@ describe('Locale API', () => {
     Locale.set('en-US');
 
     expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.set('de');
+
+    expect(Locale.currentLocale.name).toEqual('de-DE');
+  });
+
+  it('Should be impossible to set locale that is not in the default list', () => {
+    Locale.set('xx-XX');
+
+    expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.set('xx');
+
+    expect(Locale.currentLocale.name).toEqual('en-US');
   });
 
   it('Should be possible to after set locale', () => {
@@ -824,7 +838,7 @@ describe('Locale API', () => {
 
       Locale.set('zz-ZZ');
 
-      expect(Locale.currentLocale.name).toEqual('fi-FI'); // not found so equals last one
+      expect(Locale.currentLocale.name).toEqual('en-US'); // not found
     }
   });
 

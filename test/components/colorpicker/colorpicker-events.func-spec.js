@@ -1,6 +1,6 @@
 import { ColorPicker } from '../../../src/components/colorpicker/colorpicker';
 
-const colorpickerHTML = require('../../../app/views/components/colorpicker/test-events.html');
+const colorpickerHTML = require('../../../app/views/components/colorpicker/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let colorpickerEl;
@@ -28,7 +28,7 @@ describe('ColorPicker Events', () => {
   });
 
   it('Should trigger "change" event', (done) => {
-    const spyEvent = spyOnEvent('#cp-event-change', 'change');
+    const spyEvent = spyOnEvent('#background-color', 'change');
     colorpickerObj.toggleList();
 
     setTimeout(() => {

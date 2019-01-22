@@ -5079,7 +5079,7 @@ Datagrid.prototype = {
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
       e.preventDefault();
 
-      if (self.settings.menuId) {
+      if (self.settings.menuId && $(`#${self.settings.menuId}`).length > 0) {
         $(e.currentTarget).popupmenu({
           menuId: self.settings.menuId,
           eventObj: e,
