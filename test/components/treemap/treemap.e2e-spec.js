@@ -15,13 +15,13 @@ describe('Treemap example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    fit('Should not visual regress', async () => {
       const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('breadcrumb')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('treemap')).toEqual(0);
     });
   }
 });
