@@ -185,6 +185,16 @@ $datagrid-short-row-height: 23px;
       background-color: $panel-bg-color;
     }
 
+    .datagrid {
+      tbody {
+        tr {
+          &.is-rowactivated:hover td:not(.is-editing) {
+            background-color: $datagrid-list-row-group-hover-color;
+          }
+        }
+      }
+    }
+
     tr:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
       background-color: $datagrid-list-row-hover-color;
 
