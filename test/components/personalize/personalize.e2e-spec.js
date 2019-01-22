@@ -51,6 +51,6 @@ describe('Personalization tests', () => {
 
     await reinitButton.click();
 
-    expect(element(by.id('soho-personalization')).getText()).toEqual(beforeInitSheet.getText());
+    expect(await element(by.id('soho-personalization')).getText()).toEqual(beforeInitSheet.getText());
   });
 });
