@@ -461,8 +461,7 @@ describe('Listview example-header-totals` tests', () => {
   }
 
   it('Should toggle listview on listviewer-header button click', async () => {
-    const listviewButtonToggleEl = await element(by.css('.listview-header button'));
-    listviewButtonToggleEl.click();
+    await element(by.css('.listview-header button')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.className('listview')).getCssValue('height')).toEqual('0px');

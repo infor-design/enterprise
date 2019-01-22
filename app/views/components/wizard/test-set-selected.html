@@ -1,14 +1,8 @@
 <div class="row">
   <div class="six columns">
-
     <h2>Wizard Test: Select Method</h2>
-
     <p>This test uses the <em>select()</em> method on the Wizard Control to set the selected tick after a timeout completes.</p>
-
-    <p>Time Until Select Completes: <span id="time-display" style="font-weight: bold;">300</span></p>
-
-    <p></p>
-
+    <p>Time Until Select Completes: <span id="time-display" style="font-weight: bold;">100</span></p>
   </div>
 </div>
 
@@ -51,7 +45,7 @@
       });
     });
 
-    var counter = 300;
+    var counter = 100;
     function countDown() {
       counter = counter - 1;
       $('#time-display').text(counter);
