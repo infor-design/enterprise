@@ -1,10 +1,10 @@
+import { cleanup } from '../../helpers/func-utils';
 import { Radar } from '../../../src/components/radar/radar';
 
 const radarHTML = require('../../../app/views/components/radar/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let radarEl;
-let svgEl;
 let radarObj;
 const dataset = [{
   data: [
@@ -48,13 +48,10 @@ const dataset = [{
 describe('Radar API', () => {
   beforeEach((done) => {
     radarEl = null;
-    svgEl = null;
     radarObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', radarHTML);
     radarEl = document.body.querySelector('#radar-chart-example');
-    svgEl = document.body.querySelector('.svg-icons');
-
     radarObj = new Radar(radarEl, { type: 'radar', dataset, animate: false });
     setTimeout(() => {
       done();
@@ -63,15 +60,17 @@ describe('Radar API', () => {
 
   afterEach(() => {
     radarObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    radarEl.parentNode.removeChild(radarEl);
 
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup([
+      '.svg-icons',
+      '#svg-tooltip',
+      '.row',
+      '#test-script'
+    ]);
   });
 
   it('Should show on page', () => {
-    expect(document.body.querySelectorAll('circle').length).toEqual(49);
+    expect(document.body.querySelectorAll('.chart-radar-circle').length).toEqual(21);
     expect(document.body.querySelectorAll('.chart-radar-area').length).toEqual(3);
     expect(document.body.querySelectorAll('.chart-legend-item-text')[0].innerText).toEqual('iPhone X');
   });
@@ -99,7 +98,7 @@ describe('Radar API', () => {
 
     radarObj.updated({ dataset: dataset2 });
 
-    expect(document.body.querySelectorAll('circle').length).toEqual(23);
+    expect(document.body.querySelectorAll('.chart-radar-circle').length).toEqual(8);
     expect(document.body.querySelectorAll('.chart-radar-area').length).toEqual(2);
     expect(document.body.querySelectorAll('.chart-legend-item-text')[0].innerText).toEqual('Thing X');
   });
@@ -112,7 +111,7 @@ describe('Radar API', () => {
     };
     radarObj.setSelected(options);
 
-    expect(document.querySelectorAll('.is-selected').length).toEqual(1);
+    expect(document.querySelectorAll('.chart-radar-area.is-selected').length).toEqual(1);
     expect(radarObj.getSelected().index).toEqual(0);
 
     radarObj.toggleSelected(options);
@@ -121,11 +120,11 @@ describe('Radar API', () => {
     options = { index: 2 };
     radarObj.setSelected(options);
 
-    expect(document.querySelectorAll('.is-selected').length).toEqual(1);
+    expect(document.querySelectorAll('.chart-radar-area.is-selected').length).toEqual(1);
     expect(radarObj.getSelected().index).toEqual(2);
 
     radarObj.toggleSelected(options);
 
-    expect(document.querySelectorAll('.is-selected').length).toEqual(0);
+    expect(document.querySelectorAll('.chart-radar-area.is-selected').length).toEqual(0);
   });
 });

@@ -14,8 +14,6 @@ const COMPONENT_NAME = 'popupmenu';
 /**
  * Responsive Popup Menu Control aka Context Menu when doing a right click action.
  * @class PopupMenu
- *
- * @constructor
  * @param {jquery[]|htmlelement} element The component element.
  * @param {object} [settings] The component settings.
  * @param {string} [settings.menu]  Menu's ID Selector, or a jQuery object representing a menu.
