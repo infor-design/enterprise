@@ -56,6 +56,7 @@ CirclePager.prototype = {
     this.slidesJQ = $('.slide', this.element);
     this.slidesToShow = s.slidesToShow;
     this.slides = [];
+    this.isVisible = true;
 
     for (let i = 0, l = this.slidesJQ.length; i < l; i++) {
       this.slides.push({ node: $(this.slidesJQ[i]) });
@@ -544,11 +545,16 @@ CirclePager.prototype = {
       self.responsiveSlidesToShow();
     });
 
-    if (this.element.parent().attr('id')) {
-      $(`a[href="#${this.element.parent().attr('id')}"]`).on('focus.tabparent', () => {
-        self.responsiveSlidesToShow();
-      });
-    }
+    setInterval(() => {
+      if ($('.circlepager').is(':visible')) {
+        if (!self.isVisible) {
+          self.isVisible = true;
+          self.responsiveSlidesToShow();
+        }
+      } else if (self.isVisible) {
+        self.isVisible = false;
+      }
+    }, 250);
   }
 
 };
