@@ -1903,6 +1903,7 @@ Editor.prototype = {
       };
       if (this.parentElements.indexOf(parentTag) > -1) {
         if (parentTag !== 'p') {
+          document.execCommand('removeFormat', false, null);
           replaceTag(parentEl);
         }
       } else {

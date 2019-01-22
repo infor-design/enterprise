@@ -3,7 +3,6 @@ import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { DOM } from '../../utils/dom';
-import { Locale } from '../locale/locale';
 import { PlacementObject, Place } from '../place/place';
 
 // jQuery Components
@@ -569,8 +568,6 @@ PopupMenu.prototype = {
     }
 
     const lis = contextElement.find('li:not(.heading):not(.separator)');
-    const menuClassName = contextElement[0].className;
-    const isTranslatable = DOM.hasClassName(menuClassName, 'isTranslatable');
     let hasIcons = false;
 
     lis.each((i, li) => {
@@ -585,11 +582,6 @@ PopupMenu.prototype = {
       if (a) {
         a.setAttribute('tabindex', '-1');
         a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
-
-        // Should be translated
-        if (isTranslatable) {
-          span.innerText = Locale.translate(span.innerText) || span.innerText;
-        }
 
         // disabled menu items, by prop and by className
         const $a = $(a);
@@ -614,7 +606,7 @@ PopupMenu.prototype = {
           submenu = $(submenuWrapper).children('ul')[0];
           submenu.classList.add('popupmenu');
         }
-        if (DOM.hasClassName(li.className, 'submenu')) {
+        if (DOM.hasClass(li, 'submenu')) {
           // Add a span
           if (!span) {
             a.innerHTML = `<span>${a.innerHTML}</span>`;
@@ -630,13 +622,13 @@ PopupMenu.prototype = {
         }
 
         // is-checked
-        if (DOM.hasClassName(li.className, 'is-checked')) {
+        if (DOM.hasClass(li, 'is-checked')) {
           a.setAttribute('role', 'menuitemcheckbox');
           a.setAttribute('aria-checked', true);
         }
 
         // is-not-checked
-        if (DOM.hasClassName(li.className, 'is-not-checked')) {
+        if (DOM.hasClass(li, 'is-not-checked')) {
           li.className = li.className.replace('is-not-checked', '');
           a.setAttribute('role', 'menuitemcheckbox');
           a.removeAttribute('aria-checked');
@@ -1794,7 +1786,7 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   openSubmenu(li, ajaxReturn) {
-    if (DOM.hasClassName(li[0].className, 'is-disabled') || li[0].disabled) {
+    if (DOM.hasClass(li, 'is-disabled') || li[0].disabled) {
       return;
     }
 

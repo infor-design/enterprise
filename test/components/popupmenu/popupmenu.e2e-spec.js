@@ -49,7 +49,7 @@ describe('Popupmenu example-selectable tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-selectable', async () => {
-      const popupmenuSection = await element(by.id('main-content'));
+      const popupmenuSection = await element(by.css('.no-frills'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
@@ -144,12 +144,12 @@ describe('Popupmenu example-selectable tests', () => {
 
 describe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/popupmenu/example-selectable-multiple');
+    await utils.setPage('/components/popupmenu/example-selectable-multiple?layout=nofrills');
   });
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-selectable-multiple', async () => {
-      const popupmenuSection = await element(by.id('maincontent'));
+      const popupmenuSection = await element(by.css('.no-frills'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));

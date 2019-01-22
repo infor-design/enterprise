@@ -1,6 +1,6 @@
 // Lifecycle Methods for jQuery Controls
 // Recursive methods that "globally" call certain methods on large groups of controls
-const EXCLUDED_FROM_CLOSE_CHILDREN = ['.expandable-area', '.accordion'];
+const EXCLUDED_FROM_CLOSE_CHILDREN = ['.expandable-area', '.accordion', ['soho-busyindicator'], '.busyindicator'];
 const EXCLUDED_FROM_HANDLE_RESIZE = [];
 
 // Used by several of these plugins to detect whether or not the "data" property in question
