@@ -89,7 +89,7 @@ const datasetFormat = [{
   name: 'Component C'
 }];
 
-describe('Area Menu API', () => {
+describe('Area API', () => {
   beforeEach(() => {
     areaEl = null;
     svgEl = null;
