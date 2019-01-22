@@ -1405,11 +1405,7 @@ Dropdown.prototype = {
     if (e.type === 'input') {
       this.filterTerm = this.searchInput.val();
     } else {
-      this.filterTerm += $.actualChar(e);
-
-      if (this.filterTerm.toLowerCase() !== this.filterTerm) {
-        this.filterTerm = this.filterTerm.toLowerCase();
-      }
+      this.filterTerm += $.actualChar(e).toLowerCase();
 
       if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm
           && !self.settings.noSearch) {
