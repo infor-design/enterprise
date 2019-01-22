@@ -9,36 +9,42 @@
   .custom-card {
     padding: 18px;
   }
+
   .custom-card h3 {
-    color: #1A1A1A;
+    color: #1a1a1a;
     font-size: 16px;
     line-height: 18px;
     padding-bottom: 14px;
   }
+
   .custom-card dl > div {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
   .custom-card dt,
   .custom-card dd {
-    display:inline-block;
+    display: inline-block;
     padding-bottom: 4px;
   }
+
   .custom-card dt {
-    min-width: 120px;
-    text-align: right;
-    color: #5C5C5C;
+    color: #5c5c5c;
     font-size: 12px;
     line-height: 14px;
+    min-width: 120px;
     padding-right: 18px;
+    text-align: right;
   }
-  .custom-card dt:after {
+
+  .custom-card dt::after {
     content: ':';
     display: inline-block;
   }
+
   .custom-card dd {
-    color: #1A1A1A;
+    color: #1a1a1a;
     font-size: 14px;
     line-height: 16px;
   }

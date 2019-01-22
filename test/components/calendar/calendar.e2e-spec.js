@@ -120,6 +120,7 @@ describe('Calendar specific month tests', () => {
     it('Should not visual regress', async () => {
       const calendarEl = await element(by.className('calendar'));
       await browser.driver.sleep(config.sleep);
+      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
       expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toBeLessThan(1);
     });
