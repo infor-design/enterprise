@@ -1407,7 +1407,7 @@ Dropdown.prototype = {
     } else {
       this.filterTerm += $.actualChar(e);
 
-      if (!env.browser.isOSX) {
+      if (this.filterTerm.toLowerCase() !== this.filterTerm) {
         this.filterTerm = this.filterTerm.toLowerCase();
       }
 
