@@ -124,9 +124,13 @@ Pager.prototype = {
       pages = Math.ceil(total / pagesize);
     }
 
-    if (this.filteredTotal) {
+    if (!isNaN(this.filteredTotal)) {
       filteredTotal = this.filteredTotal;
-      filteredPages = Math.ceil(filteredTotal / pagesize);
+      if (filteredTotal < 1) {
+        filteredPages = 1;
+      } else {
+        filteredPages = Math.ceil(filteredTotal / pagesize);
+      }
     }
 
     return {
@@ -527,10 +531,16 @@ Pager.prototype = {
     }
     let pageNum = this.filteredActivePage || this.activePage || this.settings.activePage;
 
-    if (typeof pagingInfo === 'object' && pagingInfo.searchActivePage) {
-      pageNum = pagingInfo.searchActivePage;
-    } else if (typeof pagingInfo === 'object' && pagingInfo.activePage) {
-      pageNum = pagingInfo.activePage;
+    if (typeof pagingInfo === 'object') {
+      if (pagingInfo.searchActivePage) {
+        pageNum = pagingInfo.searchActivePage;
+      } else if (pagingInfo.filteredActivePage) {
+        pageNum = pagingInfo.filteredActivePage;
+      } else if (pagingInfo.activePage) {
+        pageNum = pagingInfo.activePage;
+      } else {
+        pageNum = 1;
+      }
     } else if (!isNaN(pagingInfo)) {
       pageNum = pagingInfo;
     }
@@ -1198,7 +1208,7 @@ Pager.prototype = {
     }
 
     // If the dataset is filtered, store some extra meta-data for the state.
-    if (pagingInfo.filteredTotal) {
+    if (!isNaN(pagingInfo.filteredTotal)) {
       this.filteredTotal = pagingInfo.filteredTotal;
       this.filteredActivePage = pagingInfo.searchActivePage;
     } else if (this.filteredTotal || this.filteredActivePage) {
@@ -1211,6 +1221,7 @@ Pager.prototype = {
       // If we get a page number as a result, rendering has already happened and
       // we should not attempt to re-render.
       this.setActivePage(pagingInfo, false, 'pageinfo');
+      this.triggerPagingEvents();
       return;
     }
 

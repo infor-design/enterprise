@@ -101,6 +101,17 @@ ListFilter.prototype = {
       }
     }
 
+    // Gets the properties of an object and splices them into text
+    function getObjectPropsAsText(thisItem) {
+      let text = '';
+      const props = Object.keys(thisItem);
+      props.forEach((prop) => {
+        const pad = text.length ? ' ' : '';
+        text += `${pad}${thisItem[prop]}`;
+      });
+      return text;
+    }
+
     // If a custom callback for getting searchable content is defined, return a
     // string result from that callback. Otherwise, perform the standard method
     // of grabbing text content.
@@ -109,8 +120,18 @@ ListFilter.prototype = {
         return self.settings.searchableTextCallback(item);
       }
 
-      const isString = typeof item === 'string';
-      return xssUtils.sanitizeHTML((isString ? item : $(item).text()));
+      let targetContent;
+      if (typeof item === 'string') {
+        targetContent = item;
+      } else if (item instanceof $) {
+        targetContent = $(item).text();
+      } else if (item instanceof HTMLElement) {
+        targetContent = item.innerText;
+      } else { // Object
+        targetContent = getObjectPropsAsText(item);
+      }
+
+      return xssUtils.sanitizeHTML(targetContent);
     }
 
     // Iterates through each list item and attempts to find the provided search term.

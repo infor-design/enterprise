@@ -215,11 +215,17 @@ ListView.prototype = {
 
     // If the paging information sets limits on the dataset, customize the
     // displayed dataset to fit the conditions.
-    if (pagerInfo && pagerInfo.pages > 1) {
-      const trueActivePage = pagerInfo.activePage > 0 ? pagerInfo.activePage - 1 : 0;
-      const firstRecordIdx = pagerInfo.pagesize * trueActivePage;
-      const lastRecordIdx = pagerInfo.pagesize * (trueActivePage + 1);
-      displayedDataset = dataset.slice(firstRecordIdx, lastRecordIdx);
+    if (pagerInfo) {
+      const pages = this.filteredDataset ? pagerInfo.filteredPages : pagerInfo.pages;
+      if (pages > 1) {
+        let trueActivePage = pagerInfo.activePage > 0 ? pagerInfo.activePage - 1 : 0;
+        if (this.filteredDataset) {
+          trueActivePage = pagerInfo.filteredActivePage;
+        }
+        const firstRecordIdx = pagerInfo.pagesize * trueActivePage;
+        const lastRecordIdx = pagerInfo.pagesize * (trueActivePage + 1);
+        displayedDataset = dataset.slice(firstRecordIdx, lastRecordIdx);
+      }
     }
 
     // Render "mustache" Template
@@ -298,10 +304,16 @@ ListView.prototype = {
       if (item.hasClass('is-disabled')) {
         item.attr('aria-disabled', 'true');
       }
+
+      // If this dataset is filtered, hightlight the relevant search term inside the element.
+      if (self.settings.highlight && self.searchTerm) {
+        item.highlight(self.searchTerm);
+      }
     });
 
     // TODO: Invoke the "element" here after we write an updated method.
     this.element.children().initialize();
+
     /**
      * Fires after the listbox is fully rendered.
      *
@@ -373,6 +385,9 @@ ListView.prototype = {
     const self = this;
 
     ds = ds || this.settings.dataset;
+    if (this.filteredDataset) {
+      ds = this.filteredDataset;
+    }
 
     if (!pagerInfo) {
       if (this.pagerAPI) {
@@ -387,6 +402,12 @@ ListView.prototype = {
           activePage: 1
         };
       }
+    }
+
+    if (this.filteredDataset) {
+      pagerInfo.filteredTotal = ds.length;
+    } else {
+      pagerInfo.total = ds.length;
     }
 
     if (!Array.isArray(ds)) {
@@ -535,6 +556,9 @@ ListView.prototype = {
 
     // Get the search string and trim whitespace
     const searchFieldVal = searchfield.val().trim();
+    const pagingInfo = {
+      searchActivePage: 1
+    };
 
     // Clear
     if (!searchFieldVal) {
@@ -549,22 +573,31 @@ ListView.prototype = {
 
     // Set a global "searchTerm" and get the list of elements
     this.searchTerm = searchfield.val();
-    const list = this.element.find('li, tbody > tr');
-
-    this.resetSearch();
+    // const list = this.element.find('li, tbody > tr');
 
     // Filter the results and highlight things
-    const results = this.listfilter
-      .filter(list, this.searchTerm);
+    let results = this.listfilter.filter(this.settings.dataset, this.searchTerm);
+    if (!results.length) {
+      results = [];
+    }
+    pagingInfo.filteredTotal = results.length;
+    pagingInfo.searchActivePage = 1;
+    results.forEach((result) => {
+      result.isFiltered = true;
+    });
 
+    /*
     if (this.settings.highlight) {
       results.highlight(this.searchTerm);
     }
 
     // Hide elements that aren't in the results array
     list.not(results).addClass('hidden');
+    */
 
-    this.renderPager();
+    this.filteredDataset = results;
+    this.renderPager(pagingInfo);
+    this.render(results, pagingInfo);
   },
 
   /**
@@ -573,6 +606,14 @@ ListView.prototype = {
    * @returns {void}
    */
   resetSearch() {
+    if (this.filteredDataset) {
+      delete this.filteredDataset;
+    }
+    if (this.searchTerm) {
+      delete this.searchTerm;
+    }
+
+    /*
     const list = this.element.find('li, tbody > tr');
 
     list.removeClass('hidden');
@@ -582,6 +623,14 @@ ListView.prototype = {
         $(this).unhighlight();
       });
     }
+    */
+    const pagingInfo = {
+      activePage: 1,
+      filteredTotal: undefined,
+      searchActivePage: undefined
+    };
+    this.renderPager(pagingInfo);
+    this.render(null, pagingInfo);
   },
 
   /**
@@ -1066,7 +1115,10 @@ ListView.prototype = {
     $('body').off('resize.listview');
     this.element.prev('.listview-header').off('click.listview');
     if (this.searchfield) {
-      this.searchfield.off('contents-checked.searchable-listview');
+      this.searchfield.off([
+        'contents-checked.searchable-listview',
+        'cleared.searchable-listview'
+      ].join(' '));
     }
     this.element.off('change.selectable-listview', '.listview-checkbox input');
     this.element.off('contextmenu.listview dblclick.listview', 'li, tr');
@@ -1074,6 +1126,14 @@ ListView.prototype = {
     this.element.off('keydown.listview', 'li, tr, a');
     this.element.off('focus.listview', 'li, tbody tr');
     this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview updated.listview').empty();
+
+    if (this.filteredDataset) {
+      delete this.filteredDataset;
+    }
+    if (this.searchTerm) {
+      delete this.searchTerm;
+    }
+
     return this;
   },
 
@@ -1297,6 +1357,10 @@ ListView.prototype = {
         .off('contents-checked.searchable-listview')
         .on('contents-checked.searchable-listview', function (e) {
           self.handleSearch(e, $(this));
+        })
+        .off('cleared.searchable-listview')
+        .on('cleared.searchable-listview', () => {
+          self.resetSearch();
         });
     }
 
