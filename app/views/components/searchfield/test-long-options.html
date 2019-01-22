@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Searchfield Test: Long Options</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="searchfield-objects">Searchfield Long Option</label>
+      <input data-init="false" id="searchfield-objects" type="text" class="searchfield"/>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+
+    var items1 = ['Item One', 'Item Two', 'Item Three', 'Item Four','Item Five'];
+
+    var items2 = [
+      {value: '1', label: 'Item One Item One Item One Item One Item One Item One Item One'},
+      {value: '2', label: 'Item Two'},
+      {value: '3', label: 'Item Three Item Three Item Three Item Three Item Three Item Three'},
+      {value: '4', label: 'Item Four'},
+      {value: '4', label: 'Item Five'}
+    ];
+
+    // Objects Example
+    var objectsField = $('#searchfield-objects').searchfield({
+      filterMode: 'contains',
+      delay: 500,
+      source: function(term, response) {
+        console.log(this);
+        response(objectsField.val(), items2);
+      }
+    });
+
+  });
+</script>
+  
