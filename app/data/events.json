@@ -224,9 +224,53 @@
     "subject": "Out of Office",
     "comments": "Out of office in afternoon",
     "status": "Approved",
-    "icon": "icon-success",
+    "icon": "icon-success-solid",
     "starts": "2019-02-10T12:00:00.000",
     "ends": "2019-02-10T18:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "24",
+    "subject": "Out of Office",
+    "comments": "Out of office in afternoon",
+    "status": "Approved",
+    "icon": "icon-error-solid",
+    "starts": "2019-02-11T12:00:00.000",
+    "ends": "2019-02-11T18:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "25",
+    "subject": "Out of Office",
+    "comments": "Out of office in afternoon",
+    "status": "Approved",
+    "icon": "icon-info-solid",
+    "starts": "2019-02-12T12:00:00.000",
+    "ends": "2019-02-12T18:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "26",
+    "subject": "Out of Office",
+    "comments": "Out of office in afternoon",
+    "status": "Approved",
+    "icon": "icon-alert-solid",
+    "starts": "2019-02-13T12:00:00.000",
+    "ends": "2019-02-13T18:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "27",
+    "subject": "Out of Office",
+    "comments": "Out of office in afternoon",
+    "status": "Approved",
+    "icon": "icon-pending",
+    "starts": "2019-02-14T12:00:00.000",
+    "ends": "2019-02-14T18:00:00.000",
     "type": "dto",
     "isAllDay": "false"
   }
