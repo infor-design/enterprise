@@ -16,7 +16,7 @@ demo:
     slug: example-context-menu
   - name: Custom Folders
     slug: example-custom-folders
-  - name: Disabled nodes
+  - name: Disable nodes
     slug: example-disable
   - name: Enable nodes
     slug: example-enable
