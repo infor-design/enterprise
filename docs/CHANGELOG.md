@@ -1,6 +1,70 @@
 # What's New with Enterprise
 
-- `[Datagrid]` Added support for lookup in the datagrid filter
+## v4.15.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.15.0 Features
+
+- `[Datagrid]` Added support for lookup in the datagrid filter.
+- `[Datagrid]` Added support for masks on lookup editors.
+- `[Validation]` When using legacy mode validation, made the icon dim if the text was on top of it.
+- `[Calendar]` Now possible to edit events both with the API and by clicking/double clicking events. And other improvements.
+- `[Datagrid]` Added new methods to clear dirty cells on cells, rows and all.
+- `[Tree]` Added several improvements such as the ability to show a dropdown on the tree node. Ability to add nodes in between current nodes. Ability to set checkboxes for selection only on some nodes and the ability to customize icons.
+
+### v4.15.0 Fixes
+
+- `[Icons]` Icons with the word `confirm` have been changed to `success`. This is partially backwards compatible for now. We deprecated `confirm` and will remove in the next major version so rename your icons. Example `icon-confirm` to `icon-success`.
+- `[Icons]` Made the alert icons have a white background so they can appear on colored sections. There is now two versions for example `icon-error` and `icon-error-solid`. This is used in calendar.
+- `[Circle Pager]` Made the resizing work a lot better especially when on tabs.
+- `[Datagrid]` In high contrast mode the background is now white when editing cells.
+- `[Dropdown]` Fixed an issue where filter did not work in no-search mode with the Caps Lock key.
+- `[Popupmenu]` Fixed an issue when using the same menu on multiple inputs. When you destroyed one instance it destroyed all instances.
+- `[Swaplist]` Fixed a bug where Shift+M did not work when typing in the search.
+- `[Editor]` Fixed a bug where clear formatting did not clear the background color.
+- `[Popupmenu]` Fixed a bug in immediate mode where right click only worked the first time.
+- `[Editor]` Fixed a bug where clear formatting did not work in safari.
+- `[Colorpicker]` Fixed a bug in Angular where the picker did not respond correctly to editable = false and disabled = true.
+- `[Locale]` Fixed a bug where the callback did not complete on non existent locales.
+- `[Calendar]` Fixed a bug where the event details are still shown if filtering event types.
+- `[Busy Indicator]` Fixed a bug where the indicator closed on accordions when clicking them.
+- `[Datagrid Tree]` Fixed the need for unique IDs on the tree nodes.
+- `[Editor]` Improved the result of pasting bullet lists from MS Word.
+- `[Hierarchy]` Fixed layout issues in the context menu in RTL mode.
+- `[Datagrid]` Added a setting `allowChildExpandOnMatch` that optionally determines if a search/filter will show and allow non matching children to be shown.
+- `[Datagrid]` If a link is added with a href it will now be followed when clicking, rather than needing to use the click method setting on columns.
+- `[Datagrid Tree]` Fixed a bug where Expand/Collapse text is added into the +/- cell.
+- `[Dropdown]` Fixed a bug in NG where two dropdowns in different components would cause each other to freeze.
+- `[Editor]` Verified a past fixed where editor would not work with all buttons when in a modal.
+- `[Datagrid Tree]` Fixed a bug in updateRow that caused the indent of the tree grid to collapse.
+- `[Empty Message]` Fixed a bug where a null empty message would not be possible. This is used to show no empty message on initial load delays.
+- `[Lookup]` Fixed a bug where nothing is inserted when you click a link editor in the lookup.
+- `[About]` Fixed a bug where the version would not show when set it would show the IDS version.
+- `[Datagrid]` Fixed a bug in disableClientSort / disableClientFilter - so that it would keep visual indicators on sort and filter.
+- `[Tree]` Fixed a bug where selected nodes are being selected again after loading child nodes.
+- `[Input]` Fixed a bug where inputs that have tooltips will not be selectable with the cursor.
+- `[Accordion]` Fixed a bug where double clicking a header will open and then close the accordion.
+- `[Datagrid]` Fixed a bug on hover with taller cells that the hover state would not cover everything.
+- `[Editor]` Fixed a bug where the image would still be shown if you esc and cancel the image dialog.
+- `[Datagrid Lookup]` Added additional missing event info for ajax requests and filtering.
+- `[Tabs]` Added protection from inserting HTML tags in the add method (XSS).
+- `[App Menu]` Added better text wrapping for longer titles at the top.
+- `[Contextual Action Panel]` Fixed some examples so that they reopen more than one time.
+- `[Searchfield]` Fixed an a border styling issue on longer labels in the search.
+- `[Tabs Multi]` Improved the experience on mobile by collapsing the menus a bit.
+- `[Lookup]` Fixed missing ellipsis menu on mobile devices.
+- `[Accordion]` Fixed incorrect font size on p tags in the accordion.
+
+### v4.15.0 Chore & Maintenance
+
+- `[General]` Migrated sass to use IDS color variables.
+- `[Angular]` Added all settings from 4.13 in time for future 5.1.0
+- `[General]` Fixed some incorrect layouts.
+- `[Targeted Achievement]` Removed some older non working examples.
+
+(54 Issues Solved this release, Backlog Enterprise 180, Backlog Ng 66, 705 Functional Tests, 716 e2e Test)
 
 ## v4.14.0
 
