@@ -390,6 +390,9 @@ CirclePager.prototype = {
     $('.btn-previous, .btn-next', this.element).off('click.circlepager');
     $('.controls', this.element).remove();
     this.showExpandedView();
+
+    const possibleTab = this.element.closest('.tab-panel-container').prev('.tab-container');
+    possibleTab.off('activated.circlepager');
     return this;
   },
 
@@ -545,7 +548,8 @@ CirclePager.prototype = {
       self.responsiveSlidesToShow();
     });
 
-    $('#tabs-normal').on('activated', () => {
+    const possibleTab = self.element.closest('.tab-panel-container').prev('.tab-container');
+    possibleTab.off('activated.circlepager').on('activated.circlepager', () => {
       self.responsiveSlidesToShow();
     });
   }
