@@ -39,8 +39,8 @@ CirclePager.prototype = {
     if (this.slides.length) {
       this.createControls();
       this.handleEvents();
-      this.showCollapsedView();
       this.initActiveSlide();
+      this.showCollapsedView();
     }
   },
 
@@ -222,8 +222,8 @@ CirclePager.prototype = {
       setTimeout(() => {
         this.createControls();
         this.handleEvents();
-        this.showCollapsedView();
         this.initActiveSlide();
+        this.showCollapsedView();
       }, 0);
     }
   },
@@ -545,16 +545,9 @@ CirclePager.prototype = {
       self.responsiveSlidesToShow();
     });
 
-    setInterval(() => {
-      if ($('.circlepager').is(':visible')) {
-        if (!self.isVisible) {
-          self.isVisible = true;
-          self.responsiveSlidesToShow();
-        }
-      } else if (self.isVisible) {
-        self.isVisible = false;
-      }
-    }, 250);
+    $('#tabs-normal').on('activated', () => {
+      self.responsiveSlidesToShow();
+    });
   }
 
 };
