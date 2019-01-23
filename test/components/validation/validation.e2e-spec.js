@@ -67,6 +67,10 @@ describe('Validation multiple error tests', () => {
   });
 
   it('Should be able to show multiple errors', async () => {
+    await element(by.id('info-btn')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('info-popup'))), config.waitsFor);
+
     const showlEl = await element(by.id('show'));
     await showlEl.click();
     await browser.driver.sleep(config.sleep);

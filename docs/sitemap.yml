@@ -193,6 +193,8 @@ sections:
     slug: sparkline
   - name: Step Chart
     slug: stepchart
+  - name: Treemap
+    slug: treemap
   - name: Completion Chart
     slug: completion-chart
 - name: Unclassified

@@ -1,0 +1,65 @@
+// Demo Patterns
+// Used for the info popup on pages.
+//================================================== //
+.info-popup {
+  margin-bottom: -60px;
+  width: 200px;
+
+  > [class^='info-popup'] {
+    border-top: 1px solid $panel-header-bg-color;
+    -webkit-font-smoothing: antialiased;
+    line-height: 2rem;
+    margin-bottom: 8px;
+    padding-top: 8px;
+    width: 100%;
+
+    &:first-child {
+      border-top-color: transparent;
+      padding-top: 0;
+    }
+  }
+
+  ol li {
+    -webkit-font-smoothing: antialiased;
+    list-style-type: decimal;
+    margin-left: 15px;
+  }
+
+  ul li {
+    list-style-type: disc;
+    margin-left: 15px;
+
+    a {
+      @include font-size(12);
+    }
+  }
+
+  code {
+    font-family: 'Source Sans Pro', helvetica, arial;
+  }
+
+  .label {
+    margin-bottom: 2px;
+  }
+
+  .icon-success {
+    height: 14px;
+    left: 3px;
+    top: 3px;
+    width: 14px;
+  }
+}
+
+.popover.alternate .info-popup {
+  p {
+    @include font-size(12);
+
+    .hyperlink {
+      @include font-size(12);
+    }
+  }
+
+  .info-popup-version {
+    text-align: right;
+  }
+}

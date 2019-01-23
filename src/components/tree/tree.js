@@ -1049,7 +1049,8 @@ Tree.prototype = {
       }
     });
     const dropdowns = self.element[0].querySelectorAll('select.dropdown');
-    dropdowns.forEach((dropdown, i) => {
+    for (let i = 0; i < dropdowns.length; i++) {
+      const dropdown = dropdowns[i];
       const data = self.jsonData[i];
       if (data.disabled) {
         $(dropdown).dropdown().disable();
@@ -1060,7 +1061,7 @@ Tree.prototype = {
           self.updateNode(nodeToUpdate);
         });
       }
-    });
+    }
     self.jsonData = undefined;
     self.loading = false;
 
