@@ -2285,7 +2285,7 @@ Tabs.prototype = {
 
     // Build
     const tabHeaderMarkup = $('<li role="presentation" class="tab"></li>');
-    const anchorMarkup = $(`<a href="#${tabId}" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">${options.name}</a>`);
+    const anchorMarkup = $(`<a href="#${tabId}" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">${xssUtils.stripTags(options.name)}</a>`);
     const tabContentMarkup = this.createTabPanel(tabId, options.content);
 
     tabHeaderMarkup.html(anchorMarkup);
@@ -3235,7 +3235,17 @@ Tabs.prototype = {
 
       e.preventDefault();
       e.stopPropagation();
-      self.closeDismissibleTab(li.children('a').attr('href'));
+
+      if (li.is('.dismissible') && li.is('.has-popupmenu') && li.is('.submenu')) {
+        const listMenu = li.find('.wrapper').children().children();
+        const hrefs = [];
+        $.each(listMenu, (i, item) => {
+          hrefs.push(item.children[0].href);
+        });
+        self.closeDismissibleTabs(hrefs);
+      } else {
+        self.closeDismissibleTab(li.children('a').attr('href'));
+      }
       self.popupmenu.close();
     }
 

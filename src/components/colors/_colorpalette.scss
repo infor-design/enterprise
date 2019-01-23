@@ -1,112 +1,11 @@
 // Color Variables
 //================================================== //
 
-$white: #fff;
-$black: #000;
-
-$azure01: #c8e9f4;
-$azure02: #addbeb;
-$azure03: #8dc9e6;
-$azure04: #69b5dd;
-$azure05: #54a1d3;
-$azure06: #368ac0;
-$azure07: #2578a9;
-$azure08: #1d5f8a;
-$azure09: #134d71;
-$azure10: #133c59;
-
-$amber01: #fbe9bf;
-$amber02: #f8e09c;
-$amber03: #f7d475;
-$amber04: #f4c951;
-$amber05: #f2bc41;
-$amber06: #efa836;
-$amber07: #ee9a36;
-$amber08: #e4882b;
-$amber09: #db7726;
-$amber10: #d66221;
-
-$amethyst01: #ede3fc;
-$amethyst02: #daccec;
-$amethyst03: #c7b4db;
-$amethyst04: #b59eca;
-$amethyst05: #a38db7;
-$amethyst06: #9279a6;
-$amethyst07: #806594;
-$amethyst08: #6e5282;
-$amethyst09: #5d3e70;
-$amethyst10: #4b2a5e;
-
-$turquoise01: #c0ede3;
-$turquoise02: #a9e1d6;
-$turquoise03: #8ed1c6;
-$turquoise04: #7cc0b5;
-$turquoise05: #69ada3;
-$turquoise06: #579e95;
-$turquoise07: #448d83;
-$turquoise08: #317c73;
-$turquoise09: #206b62;
-$turquoise10: #0e5b52;
-
-$ruby01: #f4bcbc;
-$ruby02: #eb9d9d;
-$ruby03: #de8181;
-$ruby04: #d26d6d;
-$ruby05: #c65f5f;
-$ruby06: #b94e4a;
-$ruby07: #ad4242;
-$ruby08: #a13030;
-$ruby09: #941e1e;
-$ruby10: #880e0e;
-
-$emerald01: #d5f6c0;
-$emerald02: #c3e8ac;
-$emerald03: #afdc91;
-$emerald04: #9cce7c;
-$emerald05: #89bf65;
-$emerald06: #76b051;
-$emerald07: #66a140;
-$emerald08: #56932e;
-$emerald09: #488421;
-$emerald10: #397514;
-
-$graphite01: #f0f0f0;
-$graphite02: #d8d8d8;
-$graphite03: #bdbdbd;
-$graphite04: #999;
-$graphite05: #737373;
-$graphite06: #5c5c5c;
-$graphite07: #454545;
-$graphite08: #383838;
-$graphite09: #292929;
-$graphite10: #1a1a1a;
-
-$slate01: #dee1e8;
-$slate02: #c8cbd4;
-$slate03: #abaeb7;
-$slate04: #888b94;
-$slate05: #656871;
-$slate06: #50535a;
-$slate07: #414247;
-$slate08: #313236;
-$slate09: #212224;
-$slate10: #1c1819;
-
-$alert-red: #e84f4f;
 $alert-bg-red: rgba(232, 79, 79, 0.1);
-$alert-orange: #ff9426;
 $alert-bg-orange: rgba(255, 148, 38, 0.1);
-$alert-yellow: #ffd726;
-$alert-green: #80ce4d;
 $alert-bg-green: rgba(128, 206, 77, 0.1);
-$alert-info: $azure06;
 $alert-bg-info: rgba(54, 138, 192, 0.1);
-$alert-neutral: #dbdbdb;
-
-$alert01: $alert-red;
-$alert02: $alert-orange;
-$alert03: $alert-yellow;
-$alert04: $alert-green;
+$alert-neutral: $theme-color-palette-graphite-30;
 
 // Generate Color Classes for The Sass Variables
 $color-names: ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09 ruby10
@@ -118,11 +17,11 @@ $color-names: ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09 rub
   graphite01 graphite02 graphite03 graphite04 graphite05 graphite06 graphite07 graphite08 graphite09 graphite10
   slate01 slate02 slate03 slate04 slate05 slate06 slate07 slate08 slate09 slate10 alert01 alert02 alert03 alert04;
 
-$color-vars: $ruby01 $ruby02 $ruby03 $ruby04 $ruby05 $ruby06 $ruby07 $ruby08 $ruby09 $ruby10
-  $amber01 $amber02 $amber03 $amber04 $amber05 $amber06 $amber07 $amber08 $amber09 $amber10
-  $emerald01 $emerald02 $emerald03 $emerald04 $emerald05 $emerald06 $emerald07 $emerald08 $emerald09 $emerald10
-  $azure01 $azure02 $azure03 $azure04 $azure05 $azure06 $azure07 $azure08 $azure09 $azure10
-  $turquoise01 $turquoise02 $turquoise03 $turquoise04 $turquoise05 $turquoise06 $turquoise07 $turquoise08 $turquoise09 $turquoise10
-  $amethyst01 $amethyst02 $amethyst03 $amethyst04 $amethyst05 $amethyst06 $amethyst07 $amethyst08 $amethyst09 $amethyst10
-  $graphite01 $graphite02 $graphite03 $graphite04 $graphite05 $graphite06 $graphite07 $graphite08 $graphite09 $graphite10
-  $slate01 $slate02 $slate03 $slate04 $slate05 $slate06 $slate07 $slate08 $slate09 $slate10 $alert01 $alert02 $alert03 $alert04;
+$color-vars: $theme-color-palette-ruby-10 $theme-color-palette-ruby-20 $theme-color-palette-ruby-30 $theme-color-palette-ruby-40 $theme-color-palette-ruby-50 $theme-color-palette-ruby-60 $theme-color-palette-ruby-70 $theme-color-palette-ruby-80 $theme-color-palette-ruby-90 $theme-color-palette-ruby-100
+  $theme-color-palette-amber-10 $theme-color-palette-amber-20 $theme-color-palette-amber-30 $theme-color-palette-amber-40 $theme-color-palette-amber-50 $theme-color-palette-amber-60 $theme-color-palette-amber-70 $theme-color-palette-amber-80 $theme-color-palette-amber-90 $theme-color-palette-amber-100
+  $theme-color-palette-emerald-10 $theme-color-palette-emerald-20 $theme-color-palette-emerald-30 $theme-color-palette-emerald-40 $theme-color-palette-emerald-50 $theme-color-palette-emerald-60 $theme-color-palette-emerald-70 $theme-color-palette-emerald-80 $theme-color-palette-emerald-90 $theme-color-palette-emerald-100
+  $theme-color-palette-azure-10 $theme-color-palette-azure-20 $theme-color-palette-azure-30 $theme-color-palette-azure-40 $theme-color-palette-azure-50 $theme-color-palette-azure-60 $theme-color-palette-azure-70 $theme-color-palette-azure-80 $theme-color-palette-azure-90 $theme-color-palette-azure-100
+  $theme-color-palette-turquoise-10 $theme-color-palette-turquoise-20 $theme-color-palette-turquoise-30 $theme-color-palette-turquoise-40 $theme-color-palette-turquoise-50 $theme-color-palette-turquoise-60 $theme-color-palette-turquoise-70 $theme-color-palette-turquoise-80 $theme-color-palette-turquoise-90 $theme-color-palette-turquoise-100
+  $theme-color-palette-amethyst-10 $theme-color-palette-amethyst-20 $theme-color-palette-amethyst-30 $theme-color-palette-amethyst-40 $theme-color-palette-amethyst-50 $theme-color-palette-amethyst-60 $theme-color-palette-amethyst-70 $theme-color-palette-amethyst-80 $theme-color-palette-amethyst-90 $theme-color-palette-amethyst-100
+  $theme-color-palette-graphite-10 $theme-color-palette-graphite-20 $theme-color-palette-graphite-30 $theme-color-palette-graphite-40 $theme-color-palette-graphite-50 $theme-color-palette-graphite-60 $theme-color-palette-graphite-70 $theme-color-palette-graphite-80 $theme-color-palette-graphite-90 $theme-color-palette-graphite-100
+  $theme-color-palette-slate-10 $theme-color-palette-slate-20 $theme-color-palette-slate-30 $theme-color-palette-slate-40 $theme-color-palette-slate-50 $theme-color-palette-slate-60 $theme-color-palette-slate-70 $theme-color-palette-slate-80 $theme-color-palette-slate-90 $theme-color-palette-slate-100 $theme-color-status-danger $theme-color-status-warning $theme-color-status-caution $theme-color-status-success;

@@ -393,25 +393,25 @@ label,
   opacity: 1;
 }
 
-// Confirm States
-.confirm,
-.confirm-message,
-.confirm-message p {
-  color: $confirm-color;
+// Success States
+.success,
+.success-message,
+.success-message p {
+  color: $success-color;
 }
 
-.confirm::-webkit-input-placeholder {
-  color: $confirm-color;
+.success::-webkit-input-placeholder {
+  color: $success-color;
   opacity: 1;
 }
 
-.confirm::-moz-placeholder {
-  color: $confirm-color;
+.success::-moz-placeholder {
+  color: $success-color;
   opacity: 1;
 }
 
-.confirm:-ms-input-placeholder {
-  color: $confirm-color;
+.success:-ms-input-placeholder {
+  color: $success-color;
   opacity: 1;
 }
 
@@ -503,12 +503,17 @@ label,
   }
 
   .icon-error,
-  .icon-confirm {
+  .icon-success {
     height: 14px;
     margin-left: -27px;
     margin-top: 6px;
     top: auto;
     width: 18px;
+  }
+
+  .icon-error.lower-opacity {
+    opacity: 0.3;
+    z-index: -1;
   }
 }
 
@@ -651,13 +656,13 @@ label,
   }
 }
 
-// Confirm Field
-.confirm-message {
+// Success Field
+.success-message {
   $this-icon-width: 14px;
 
   @include font-size(12);
 
-  color: $confirm-color;
+  color: $success-color;
   display: block;
   line-height: 1.2rem;
   margin-top: 7px;
@@ -886,7 +891,7 @@ html[dir='rtl'] {
 
   .field-short {
     .icon-error,
-    .icon-confirm {
+    .icon-success {
       height: 14px;
       margin-left: inherit;
       right: 0;

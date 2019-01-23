@@ -6,24 +6,20 @@ demo:
   - name: Simple Card Example
     slug: example-index
   pages:
+  - name: A group action toolbar area
+    slug: example-action-menu-button
+  - name: Auto Height Cards
+    slug: example-auto-size
   - name: Expandable Card
     slug: example-expandable
   - name: Full Page Width Cards
-    slug: example-full-page
-  - name: A group action toolbar area
-    slug: example-group-action
+    slug: test-full-width
   - name: Menu Button in the Header
     slug: example-menubutton
+  - name: A group action toolbar area
+    slug: example-group-action
   - name: 3 Cards per column
-    slug: example-three-up
-test:
-  pages:
-  - name: Datagrid In a Card (Bad Practice)
-    slug: test-datagrid
-  - name: Datagrid With Pager (Bad Practice)
-    slug: test-paging-datagrid
-  - name: Toolbar In The Header
-    slug: test-toolbar-header
+    slug: test-three-up
 ---
 
 ## Code Example
@@ -74,6 +70,18 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
       </div>
     </div>
   </div>
+</div>
+```
+
+## Auto Size
+
+Sometimes you might want to use a card in a form outside of the home pages / widget examples. To make it the same size as the content just add the class `auto-height`.
+
+```html
+<div class="card auto-height">
+  <div>Content</div>
+  <div>Content</div>
+  <div>Content</div>
 </div>
 ```
 

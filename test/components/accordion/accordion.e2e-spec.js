@@ -112,7 +112,7 @@ describe('Accordion Collapse Children tests', () => {
     const buttonEl = await element(by.css('#start-test'));
     await buttonEl.click();
 
-    await browser.driver.sleep(1000);
+    await browser.driver.sleep(1200);
 
     expect(await element.all(by.css('#dropdown-list')).count()).toBe(0);
     expect(await element.all(by.css('#monthview-popup')).count()).toBe(0);
@@ -136,7 +136,7 @@ describe('Accordion example-disabled tests', () => {
 
 describe('Accordion example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/accordion/example-index?nofrills=true');
+    await utils.setPage('/components/accordion/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -204,7 +204,7 @@ describe('Accordion expand multiple tests', () => {
     await utils.checkForErrors();
   });
 
-  xit('Should expand both panes', async () => { // will remove this on another PR
+  it('Should expand both panes', async () => {
     expect(await element.all(by.css('#nested-accordion > .accordion-header.is-expanded')).count()).toEqual(2);
     await element.all(by.css('#nested-accordion > .accordion-header.is-expanded + .accordion-pane.is-expanded')).get(0).getSize().then((size) => {
       expect(size.height).not.toBeLessThan(50);

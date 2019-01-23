@@ -1,21 +1,19 @@
+import { cleanup } from '../../helpers/func-utils';
 import { Dropdown } from '../../../src/components/dropdown/dropdown';
 
 const dropdownHTML = require('../../../app/views/components/dropdown/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let dropdownEl;
-let svgEl;
 let dropdownObj;
 
 describe('Dropdown updates, events', () => {
   beforeEach(() => {
     dropdownEl = null;
-    svgEl = null;
     dropdownObj = null;
     document.body.insertAdjacentHTML('afterbegin', dropdownHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
     dropdownEl = document.body.querySelector('.dropdown');
-    svgEl = document.body.querySelector('.svg-icons');
     dropdownEl.classList.add('no-init');
     dropdownObj = new Dropdown(dropdownEl);
   });
@@ -23,8 +21,11 @@ describe('Dropdown updates, events', () => {
   afterEach(() => {
     dropdownObj.destroy();
     $('.dropdown').destroy();
-    dropdownEl.parentNode.removeChild(dropdownEl);
-    svgEl.parentNode.removeChild(svgEl);
+
+    cleanup([
+      '.svg-icons',
+      '.row'
+    ]);
   });
 
   it('Should set settings', () => {
@@ -140,12 +141,18 @@ describe('Dropdown updates, events', () => {
     done();
   });
 
-  it('should trigger change event on click', () => {
+  it('should trigger change event on click', (done) => {
     const spyEvent = spyOnEvent('select.dropdown', 'change');
     dropdownObj.open();
-    document.body.querySelectorAll('.dropdown-option')[0].click();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    setTimeout(() => {
+      document.body.querySelectorAll('.dropdown-option')[0].click();
+
+      setTimeout(() => {
+        expect(spyEvent).toHaveBeenTriggered();
+        done();
+      }, 300);
+    }, 300);
   });
 
   it('should trigger change event on duplicate label', () => {

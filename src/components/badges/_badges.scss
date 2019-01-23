@@ -31,7 +31,7 @@
   }
 
   &.alert {
-    background-color: $alert-yellow;
+    background-color: $theme-color-status-caution;
     color: $badge-alert-color !important;
   }
 
@@ -41,7 +41,7 @@
   }
 
   &.good {
-    background-color: $alert-green;
+    background-color: $theme-color-status-success;
     color: $badge-good-color !important;
   }
 
@@ -52,7 +52,7 @@
 
   &.graphite03,
   &.graphite02 {
-    color: $graphite02;
+    color: $theme-color-palette-graphite-20;
   }
 
   &.round {
@@ -133,7 +133,7 @@
 
     // Clock circle
     &::before {
-      border: 1px solid $white;
+      border: 1px solid $theme-color-palette-white;
       border-radius: 50%;
       content: '';
       height: 14px;
@@ -145,8 +145,8 @@
 
     // Clock hands
     &::after {
-      border-bottom: 1px solid $white;
-      border-left: 1px solid $white;
+      border-bottom: 1px solid $theme-color-palette-white;
+      border-left: 1px solid $theme-color-palette-white;
       content: '';
       height: 24%;
       left: 0.75em;
@@ -161,7 +161,7 @@
     }
 
     &.current {
-      background-color: $alert-orange;
+      background-color: $theme-color-status-warning;
     }
   }
 
@@ -209,7 +209,7 @@
     background-color: transparent;
 
     svg {
-      fill: $slate03;
+      fill: $theme-color-palette-slate-30;
     }
   }
 }

@@ -6,30 +6,20 @@ demo:
   - name: Busy Form Example
     slug: example-index
   pages:
+  - name: On the Page Body
+    slug: example-body
   - name: Busy Input Elements
     slug: example-inputs
   - name: Non Blocking Busy Indicator
     slug: example-non-blocking
   - name: Smaller Size
     slug: example-small
-  - name: On the Page Body
-    slug: example-body
-  - name: Customize Loading Text
-    slug: example-custom-loading-text.html
   - name: Nested Busy Indicators
-    slug: test-nested.html
+    slug: test-nested
   - name: transparent Overlay
-    slug: example-transparent-overlay.html
+    slug: example-transparent-overlay
   - name: Ajax Calls
     slug: test-ajax-calls
-  - name: Block Entire UI
-    slug: test-ajax-calls
-  - name: Block Specific Area
-    slug: test-ajax-calls
-  - name: In Font-size Zero
-    slug: test-contained-in-font-size-0
-  - name: Delay before Display
-    slug: test-delayed-display.html
 ---
 
 ## Code Example

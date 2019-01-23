@@ -6,7 +6,7 @@ import { Validation } from './validation';
 // jQuery Components
 import '../icons/icons.jquery';
 import '../toast/toast.jquery';
-import { Environment } from '../../utils/environment';
+import { Environment as env } from '../../utils/environment';
 
 // Component Name
 const COMPONENT_NAME = 'Validator';
@@ -119,6 +119,36 @@ Validator.prototype = {
   },
 
   /**
+   * Set error icon opacity for tooltip types, to avoid overlap text in the field
+   * @private
+   * @param {object} field validation element
+   * @returns {void}
+   */
+  setErrorIconOpacity(field) {
+    if (field.is(':text') && field.is('[data-error-type="tooltip"]')) {
+      const textWidth = this.calculateTextWidth(field.val());
+      const fieldWidth = field.outerWidth() - 35; // 35: icon width + padding/margin
+      field.closest('.field, .field-short')
+        .find('.icon-error')[(textWidth > fieldWidth) ? 'addClass' : 'removeClass']('lower-opacity');
+    }
+  },
+
+  /**
+   * Calculate the width for given text
+   * @param {string} text to calculate the width
+   * @param {string} font used with given text (e.g. `14px arial`).
+   * @returns {number} the calculated width
+   */
+  calculateTextWidth(text, font) {
+    // use cached canvas for better performance, else, create new canvas
+    this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+    const context = this.canvas.getContext('2d');
+    context.font = font || '14px arial';
+    const metrics = context.measureText(text);
+    return metrics.width;
+  },
+
+  /**
    * @private
    */
   attachEvents() {
@@ -152,9 +182,12 @@ Validator.prototype = {
       }
 
       field.off(events).on(events, function (e) {
-        // Skip on Tab
-        if (e.type === 'keyup' && e.keyCode === 9) {
-          return;
+        if (e.type === 'keyup') {
+          // Skip on Tab
+          if (e.keyCode === 9) {
+            return;
+          }
+          self.setErrorIconOpacity(field);
         }
 
         const thisField = $(this);
@@ -210,7 +243,7 @@ Validator.prototype = {
         let tooltip = thisField.data('tooltip');
         const dropdownApi = thisField.data('dropdown');
 
-        if (Environment.features.touch) {
+        if (env.features.touch) {
           dropdownApi.pseudoElem.focus();
           setTimeout(() => {
             dropdownApi.pseudoElem.blur();
@@ -346,7 +379,7 @@ Validator.prototype = {
   },
 
   /**
-   *
+   * Get the types of validation from a field.
    * @private
    * @param {jQuery[]} field the field being checked
    * @param {jQuery.Event} e the `validate` event
@@ -464,8 +497,7 @@ Validator.prototype = {
   /**
    * @private
    * @param {jQuery[]} field the field being validated
-   * @param {boolean} showTooltip whether or not this field should display its
-   *  validation message in a tooltip
+   * @param {boolean} showTooltip whether or not this field should display its validation message in a tooltip
    * @param {jQuery.Event} e the `validate` event
    * @returns {array} of jQuery deferred objects
    */
@@ -517,7 +549,7 @@ Validator.prototype = {
 
         if (rule.positive) {
           // FIX: In Contextual Action Panel control not sure why but need to add error,
-          // otherwise "icon-confirm" get misaligned,
+          // otherwise "icon-success" get misaligned,
           // so for this fix adding and then removing error here
 
           self.addMessage(field, rule, isInline, showResultTooltip);
@@ -681,7 +713,6 @@ Validator.prototype = {
 
   /**
    * Shows an error icon
-   *
    * @private
    * @param {jQuery[]} field the field being appended
    * @param {string} type the error type
@@ -716,7 +747,7 @@ Validator.prototype = {
         parent.append(svg);
       }
 
-      $('.icon-confirm', closestField).remove();
+      $('.icon-success', closestField).remove();
     } else {
       svg = closestField.find('svg.icon-error');
     }
@@ -805,6 +836,8 @@ Validator.prototype = {
       field.attr('data-error-type', 'tooltip');
     }
 
+    this.setErrorIconOpacity(field);
+
     if (showTooltip && tooltipAPI) {
       tooltipAPI.show();
     }
@@ -812,7 +845,6 @@ Validator.prototype = {
 
   /**
    * Shows an tooltip error
-   *
    * @private
    * @param {jQuery[]} field the field being toggled
    * @param {string} message text content containing the validation message
@@ -844,7 +876,6 @@ Validator.prototype = {
   /**
    * Shows an inline error message on a field
    * @private
-   *
    * @param {jQuery[]} field the field being modified
    * @param {string} rule The validation rule data.
    * @param {string} type the validation type (error, warn, info, etc).
@@ -893,7 +924,7 @@ Validator.prototype = {
 
     // Remove positive errors
     if (validationType.type === 'error') {
-      field.parent().find('.icon-confirm').remove();
+      field.parent().find('.icon-success').remove();
     }
 
     // Trigger an event
@@ -907,9 +938,9 @@ Validator.prototype = {
    * @param {jQuery[]} field the field being modified
    */
   addPositive(field) {
-    const svg = $.createIcon({ icon: 'confirm', classes: 'icon-confirm' });
+    const svg = $.createIcon({ icon: 'success', classes: 'icon-success' });
 
-    if (!$('.icon-confirm', field.parent('.field, .field-short')).length) {
+    if (!$('.icon-success', field.parent('.field, .field-short')).length) {
       field.parent('.field, .field-short').append(svg);
     }
   },
@@ -1009,7 +1040,7 @@ Validator.prototype = {
    * @param {jQuery[]} field the field being modified
    */
   removePositive(field) {
-    $('.icon-confirm', field.parent('.field, .field-short')).remove();
+    $('.icon-success', field.parent('.field, .field-short')).remove();
   },
 
   /**
@@ -1023,7 +1054,7 @@ Validator.prototype = {
     formFields.removeClass('error');
     form.find('.error').removeClass('error');
     form.find('.icon-error').remove();
-    form.find('.icon-confirm').remove();
+    form.find('.icon-success').remove();
     form.find('.error-message').remove();
 
     // Clear Warnings

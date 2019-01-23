@@ -3,10 +3,10 @@ title: Toast Component
 description: Displays a given data set in a visual way. Best for showing feedback about a system process that is not related to the current view.
 demo:
   embedded:
-  - name: Common Configuration
+  - name: Default Configuration
     slug: example-index
   pages:
-  - name: Demo of all Positions
+  - name: Showing Toast in all Positions
     slug: example-positions
 ---
 
@@ -19,7 +19,6 @@ This component is used to read out the error messages for validation as well.
 The toast component is a JS-based component that lets you send a quick feedback message to the user. The message will display and timeout after 6s, showing a progress bar with an option to immediately dismiss. To show a test message, call the toast function on the body element passing in the title and message content.
 
 ```javascript
-//Show a Visual Toast Message
 $('body').toast({
   title: 'Application Offline',
   message: 'This is a Toast message'
@@ -32,7 +31,7 @@ The toast component is made accessible by making an aria live region which means
 
 ## Responsive Guidelines
 
-- Will be placed in the top corner by default.
+- Will be placed in the top right corner by default.
 
 ## Testability
 

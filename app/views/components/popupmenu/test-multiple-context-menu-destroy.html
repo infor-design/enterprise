@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="six columns">
+
+    <button id="popdown-destroy" class="btn-primary" type="button">
+      <span>Destroy</span>
+    </button>
+
+    <div class="field" id="field1">
+      <label for="input-menu">Label</label>
+      <input type="text" value="Right Click Me" id="input-menu" />
+    </div>
+
+    <div class="field" id="field2">
+      <label for="input-menu2">Label2</label>
+      <input type="text" value="Right Click Me" id="input-menu2" />
+    </div>
+
+    <ul id="action-popupmenu" class="popupmenu">
+      <li><a href="#">Cut</a></li>
+      <li><a href="#">Copy</a></li>
+      <li><a href="#">Paste</a></li>
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  // Share the popupmenu with the two context menus.
+  const contextMenu = $('#input-menu');
+  contextMenu.popupmenu({ trigger: 'rightClick', menu: "action-popupmenu", attachToBody: true, duplicateMenu: true })
+  const contextMenuApi = contextMenu.data('popupmenu');
+
+  const contextMenu2 = $('#input-menu2')
+  contextMenu2.popupmenu({ trigger: 'rightClick', menu: "action-popupmenu", attachToBody: true, duplicateMenu: true });
+  const contextMenuApi2 = contextMenu2.data('popupmenu');
+
+  // This emulates an *ngIf on the first field, where it's presence is toggled.
+  $('#popdown-destroy').click(function(){
+    // turn off events
+    contextMenu.off();
+
+    // destroy the api
+    contextMenuApi.destroy();
+
+    // Remove the context.
+    contextMenu.parent().remove();
+  });
+</script>

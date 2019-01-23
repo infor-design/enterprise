@@ -35,7 +35,7 @@
     sortable: true
   });
 
-  //Add at Root
+  // Add at Root
   var api = elem.data('tree');
 
   api.addNode({text: 'New Item 1', id: 'new1'});
@@ -57,7 +57,7 @@
         }]
       }]});
 
-  //Add Children to parent ID
+  // Add Children to parent ID
   api.addNode({text: 'New Item 1.2', parent: 'new1', disabled: true});
   api.addNode({text: 'New Item 1.2', parent: 'new1', id: 'new12'});
   api.addNode({text: 'New Item 1.2.1', parent: 'new12', id: 'new121'});
@@ -66,6 +66,6 @@
   api.addNode({text: 'Node 2.3.1', parent: 'nod23', id: 'nod231'});
   api.addNode({text: 'Node 2.4', parent: 'new2', id: 'nod24'});
   api.addNode({text: 'New Item 5', parent: 'leadership', id: 'new5'});
-  api.addNode({text: 'New Item 3   <span class="round info badge">5</span>', id: 'new3'});
+  api.addNode({text: 'New Item 3', id: 'new3'});
 
 </script>

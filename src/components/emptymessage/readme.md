@@ -25,7 +25,7 @@ $('.empty-message').emptymessage({
 
 ### Invoking with Html/Css in a Card/Widget
 
-You can invoke a empty message manually by showing it on a widget container. This is shown in the [example page for widgets](https://design.infor.com/code/ids-enterprise/latest/demo/emptymessage/example-widgets?font=source-sans). The following structure and classes may be used.
+You can invoke an empty message manually by adding it in a widget container. This is shown in the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/emptymessage/example-widgets?font=source-sans" target="_blank">example page for widgets</a>. The following structure and classes may be used.
 
 ```html
 <div class="card-content">
@@ -50,11 +50,7 @@ You can invoke a empty message manually by showing it on a widget container. Thi
 
 ## Accessibility
 
-- Do not use only an icon. There should be text as well as the icon for screen reader users.
-
-## Code Tips
-
-- Submit a new example showing your usage, we would like to refactor these to be used on lists, pages ect.
+- Do not use an icon alone, there should be text as well for screen reader users.
 
 ## Testability
 
@@ -62,7 +58,7 @@ You can invoke a empty message manually by showing it on a widget container. Thi
 
 ## Keyboard Shortcuts
 
-- None
+- None - But screen readers can navigate the text.
 
 ## Upgrading from 3.X
 

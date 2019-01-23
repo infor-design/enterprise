@@ -355,20 +355,20 @@ $toolbarsearchfield-category-empty-width: 51px;
 .azure07 .active input {
   background-color: rgba(29, 95, 138, 0.5) !important;  //08
   border-bottom-color: rgba(19, 77, 113, 0.7) !important;  //09
-  color: $white;
+  color: $theme-color-palette-white;
 
   &::-webkit-input-placeholder {
-    color: $white !important;
+    color: $theme-color-palette-white !important;
     opacity: 0.7;
   }
 
   &::-moz-placeholder {
-    color: $white !important;
+    color: $theme-color-palette-white !important;
     opacity: 0.7;
   }
 
   &:-ms-input-placeholder {
-    color: $white !important;
+    color: $theme-color-palette-white !important;
     opacity: 0.7;
   }
 }
@@ -488,7 +488,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
 
       .ripple-effect {
-        background: $graphite02;
+        background: $theme-color-palette-graphite-20;
       }
     }
 

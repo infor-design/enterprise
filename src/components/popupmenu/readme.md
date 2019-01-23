@@ -150,7 +150,7 @@ Or it can be attached on the fly in the page.
 
 ## Keyboard Shortcuts
 
-- <kbd>Shift + F10</kbd> opens the popup menu when it is used as a [Contextual Menu](http://en.wikipedia.org/wiki/Context_menu) and places input focus on the first available menuitem in the Popup Menu. Note that the browser's contextual menu pops up if the element with input focus does not have a popup menu attached
+- <kbd>Shift + F10</kbd> opens the popup menu when it is used as a <a href="http://en.wikipedia.org/wiki/Context_menu" target="_blank">Context Menu</a> and places input focus on the first available menu item in the Popup Menu. Note that the browser's contextual menu pops up if the element with input focus does not have a popup menu attached
 - <kbd>ESC</kbd> causes no menu action and dismisses popup menu. Input focus is returned to the element from which the popup menu was called
 - <kbd>Up</kbd> and <kbd>Down</kbd> arrows moves input focus vertically between each menu item. Input focus wraps from the last to the first menu item on a <kbd>Down</kbd> key press and vice-versa when the <kbd>Up</kbd> key is pressed.
 - <kbd>Right</kbd> and <kbd>Left</kbd> arrows, where applicable, causes a sub-menu to open or close. Causes no action if there is no sub-menu

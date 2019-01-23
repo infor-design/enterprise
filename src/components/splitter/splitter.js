@@ -95,8 +95,8 @@ Splitter.prototype = {
 
       if (s.collapseButton) {
         let savedOffset = 0;
-        const $splitterButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn" title="Collapse"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-double-chevron"></use></svg></button>');
-        $splitterButton.appendTo(splitter);
+        const splitterButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-double-chevron"></use></svg></button>');
+        splitterButton.appendTo(splitter);
         if (splitter[0].offsetLeft > 10) {
           $('#splitter-collapse-btn').addClass('rotate');
         }
@@ -152,6 +152,10 @@ Splitter.prototype = {
     }
 
     this.splitTo(w, parentHeight);
+
+    if (w <= 10) {
+      $('#splitter-collapse-btn').removeClass('rotate');
+    }
 
     // Add the Splitter Events
     this.documentWidth = 0;

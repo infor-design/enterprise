@@ -1,6 +1,7 @@
 const fs = require('fs');
 const logger = require('./logger');
 const path = require('path');
+const commandLineArgs = require('yargs').argv;
 
 const utils = {};
 const FILENAME_REGEX = /[\w-]+\.html/;
@@ -128,22 +129,39 @@ utils.getTemplateUrl = function (filePath, viewsRoot) {
   return filePath;
 };
 
-utils.getLayout = function (directory, webroot) {
+/**
+ * Given a specific directory, this method returns the closest "layout.html" file to the current
+ * directory tree. This method cascades up the tree to the root views folder.
+ * @param {string} directory a string representing the directory path, relative to the `app/views` root folder
+ * @param {string} viewsRoot the absolute path to the root views folder
+ * @returns {string} the relative path to use for the layout file.
+ */
+utils.getClosestLayoutFile = function (directory, viewsRoot) {
+  const DEFAULT_LAYOUT = 'layout.html';
   let directoryHasLayout = false;
   let filePath;
 
-  while (!directoryHasLayout && directory.length > 1) {
-    directoryHasLayout = utils.hasLayoutFile(directory);
-    if (directoryHasLayout) {
-      filePath = path.join('.', utils.getDirectory(directory, webroot), 'layout.html');
+  while (!directoryHasLayout && directory.length > 0) {
+    if (directory === '/') {
+      return DEFAULT_LAYOUT;
+    }
 
+    filePath = path.join('.', utils.getDirectory(directory, viewsRoot), DEFAULT_LAYOUT);
+    directoryHasLayout = utils.hasLayoutFile(path.join(viewsRoot, directory));
+    if (directoryHasLayout) {
       // If it ends up being the root layout, return nothing so the default takes place
-      if (filePath === '/layout.html') {
-        return '';
+      if (filePath === `/${DEFAULT_LAYOUT}`) {
+        return DEFAULT_LAYOUT;
       }
 
-      logger('options', `Using local template "${filePath}" to render this page..."`, 'warn');
+      if (commandLineArgs.verbose) {
+        logger('info', `Using local template "${filePath}" to render this page..."`);
+      }
       break;
+    }
+
+    if (commandLineArgs.verbose) {
+      logger('alert', `No layout found at "${filePath}"...`);
     }
 
     directory = utils.getParentDirectory(directory);
@@ -180,11 +198,8 @@ utils.getParentDirectory = function getParentDirectory(filePath) {
 
 // Returns a true/false value that determines whether or not the layout is allowed to change
 // (use this instead of hardcoding settings for layout changes in multiple spots)
-utils.canChangeLayout = function (req, res) {
-  if (res.opts.nofrillslayout) {
-    return false;
-  }
-  return true;
+utils.canChangeLayout = function (req) {
+  return !(req.query.layout && req.query.layout.length > 0);
 };
 
 module.exports = utils;

@@ -9,11 +9,11 @@
   }
 
   &.alert {
-    fill: $alert-orange;
+    fill: $theme-color-status-warning;
   }
 
   &.alert-yellow {
-    fill: $alert-yellow;
+    fill: $theme-color-status-caution;
   }
 
   &.neutral {
@@ -21,15 +21,15 @@
   }
 
   &.good {
-    fill: $alert-green;
+    fill: $theme-color-status-success;
   }
 
   &.info {
-    fill: $alert-info;
+    fill: $theme-color-status-base;
   }
 
   &.white {
-    fill: $white;
+    fill: $theme-color-palette-white;
   }
 }
 
@@ -56,7 +56,7 @@ select.dropdown-xs {
   position: relative;
 
   .icon-error,
-  .icon-confirm,
+  .icon-success,
   .icon-alert,
   .icon-info,
   .icon-pending {
@@ -85,7 +85,6 @@ div.multiselect {
   cursor: pointer;
   overflow: hidden;
   padding: 8px 30px 8px 10px;
-  -webkit-text-fill-color: $dropdown-color-initial-font;
   text-overflow: ellipsis;
   vertical-align: middle;
   white-space: nowrap;
@@ -100,11 +99,10 @@ div.multiselect {
 
   > span {
     display: inline-block;
-    max-width: 100%;
+    // max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: top;
-    width: inhert;
 
     &:empty::before {
       color: $input-placeholder-color;
@@ -205,7 +203,7 @@ div.multiselect {
   border-radius: 3px;
   box-shadow: $dropdown-shadow-initial-boxshadow, $focus-box-shadow;
   font-size: 1.4rem;
-  max-height: 300px;
+  max-height: 340px;
   min-height: 30px;
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
@@ -497,7 +495,7 @@ div.multiselect {
     .icon {
       @include css3(transform, rotate(180deg));
 
-      background-color: rgba($white, 0);
+      background-color: rgba($theme-color-palette-white, 0);
       fill: $trigger-icon-fill-color;
       height: 32px;
       width: 18px;
@@ -775,6 +773,17 @@ div.dropdown-xs,
       }
     }
   }
+
+  &.ie-edge18 {
+    .dropdown-list {
+      &.multiple li {
+        &::before {
+          margin-left: 10px;
+          margin-top: 7px;
+        }
+      }
+    }
+  }
 }
 
 // Firefox needs a nudge on the list items
@@ -1005,7 +1014,7 @@ html[dir='rtl'] {
 
   .dropdown-wrapper {
     .icon-error,
-    .icon-confirm,
+    .icon-success,
     .icon-alert,
     .icon-info,
     .icon-pending {

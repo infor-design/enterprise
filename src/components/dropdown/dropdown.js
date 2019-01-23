@@ -108,6 +108,13 @@ Dropdown.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not the text inside the in-page pseudo element too big to fit
+   */
+  get overflowed() {
+    return this.pseudoElem.find('span').width() > this.pseudoElem.width();
+  },
+
+  /**
    * Initialize the dropdown.
    * @private
    * @returns {object} The api for chaining
@@ -315,9 +322,10 @@ Dropdown.prototype = {
     this.setInitial();
     this.setWidth();
 
-    this.tooltipApi = null;
-    if (this.pseudoElem.find('span').width() > this.pseudoElem.width()) {
+    if (this.overflowed) {
       this.setTooltip();
+    } else if (this.tooltipApi) {
+      this.removeTooltip();
     }
 
     this.element.triggerHandler('rendered');
@@ -488,14 +496,25 @@ Dropdown.prototype = {
 
   /**
    * Triggers tooltip in multiselect
+   * @returns {void}
    */
   setTooltip() {
     const opts = this.element.find('option:selected');
     const optText = this.getOptionText(opts);
     this.tooltipApi = this.pseudoElem.find('span').tooltip({
       content: optText,
+      parentElement: this.pseudoElem,
       trigger: 'hover',
     });
+  },
+
+  /**
+   * Removes a tooltip
+   * @returns {void}
+   */
+  removeTooltip() {
+    this.tooltipApi.destroy();
+    this.tooltipApi = null;
   },
 
   /**
@@ -885,7 +904,7 @@ Dropdown.prototype = {
     const charCode = e.which;
 
     // Needed for browsers that use keypress events to manipulate the window.
-    if (e.altKey && (charCode === 38 || charCode === 40)) {
+    if (e.altKey && (charCode === 38)) {
       e.stopPropagation();
       e.preventDefault();
       return false;
@@ -1306,6 +1325,15 @@ Dropdown.prototype = {
       return false;
     }
 
+    if (this.settings.onKeyDown) {
+      const ret = this.settings.onKeyDown(e);
+      if (ret === false) {
+        e.stopPropagation();
+        e.preventDefault();
+        return false; //eslint-disable-line
+      }
+    }
+
     // Down arrow opens the list.
     // Down/Up are for IE/Edge.
     // ArrowDown/ArrowUp are for all others.
@@ -1313,6 +1341,10 @@ Dropdown.prototype = {
     if (openKeys.indexOf(key) > -1) {
       if (!this.isOpen()) {
         this.open();
+      }
+
+      if (key === 'Tab' && this.isOpen()) {
+        this.closeList('tab');
       }
 
       // TODO: refactor this out so that `handleKeyDown` is no longer necessary.
@@ -1351,16 +1383,6 @@ Dropdown.prototype = {
       return true;
     }
 
-    // handle `onKeyDown` callback
-    if (this.settings.onKeyDown) {
-      const ret = this.settings.onKeyDown(e);
-      if (ret === false) {
-        e.stopPropagation();
-        e.preventDefault();
-        return false; //eslint-disable-line
-      }
-    }
-
     this.handleAutoComplete(e);
     return true;
   },
@@ -1383,8 +1405,10 @@ Dropdown.prototype = {
     if (e.type === 'input') {
       this.filterTerm = this.searchInput.val();
     } else {
-      this.filterTerm += $.actualChar(e);
-      if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm) {
+      this.filterTerm += $.actualChar(e).toLowerCase();
+
+      if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm
+          && !self.settings.noSearch) {
         this.filterTerm = e.key;
       }
     }
@@ -1827,11 +1851,20 @@ Dropdown.prototype = {
 
       // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
       const ulHeight = parseInt(self.listUl[0].offsetHeight, 10);
-      const listHeight = parseInt(self.list[0].offsetHeight, 10);
+      const listHeight = parseInt(self.list[0].offsetHeight, 10) + 5;
       const searchInputHeight = $(this).hasClass('dropdown-short') ? 24 : 34;
+      const isToBottom = parseInt(self.list[0].offsetTop, 10) +
+        parseInt(self.list[0].offsetHeight, 10) >= window.innerHeight;
+      const isSmaller = (searchInputHeight < listHeight - (searchInputHeight * 2))
+        && (ulHeight + searchInputHeight >= listHeight);
 
-      if (ulHeight + searchInputHeight >= listHeight) {
+      if (isSmaller && !isToBottom) {
         self.listUl[0].style.height = `${listHeight - (searchInputHeight * 2)}px`;
+      }
+
+      if (isSmaller && isToBottom) {
+        self.listUl[0].style.height = `${listHeight - (searchInputHeight * 2)}px`;
+        self.list[0].style.height = `${parseInt(self.list[0].style.height, 10) - 10}px`;
       }
 
       return placementObj;
@@ -1937,7 +1970,7 @@ Dropdown.prototype = {
     this.activate(!this.settings.closeOnSelect);
 
     // Check/uncheck select all depending on no. of selected items
-    if (this.settings.showSelectAll) {
+    if (this.settings.showSelectAll && this.list) {
       const opts = this.element.find('option');
       const selectedOpts = opts.filter(':selected');
 
@@ -2068,15 +2101,6 @@ Dropdown.prototype = {
   */
   handleBlur() {
     const self = this;
-
-    /*
-    if (this.isOpen()) {
-      this.timer = setTimeout(() => {
-        self.closeList('cancel');
-      }, 40);
-    }
-    */
-
     self.closeList('cancel');
 
     return true;
@@ -2393,10 +2417,10 @@ Dropdown.prototype = {
       // Fire the change event with the new value if the noTrigger flag isn't set
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
 
-      if (this.pseudoElem.find('span').width() > this.pseudoElem.width()) {
+      if (this.overflowed) {
         this.setTooltip();
       } else if (this.tooltipApi) {
-        this.tooltipApi.destroy();
+        this.removeTooltip();
       }
     }
 
@@ -2801,6 +2825,12 @@ Dropdown.prototype = {
     }
 
     this.closeList('cancel');
+
+    if (this.pseudoElem && this.pseudoElem.hasClass('is-open')) {
+      this.pseudoElem
+        .removeClass('is-open')
+        .attr('aria-expanded', 'false');
+    }
 
     // Update the 'multiple' property
     if (this.settings.multiple && this.settings.multiple === true) {

@@ -8,19 +8,12 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-// Set page to test by url
-const setPage = async function (url) {
-  const pageurl = `${browser.baseUrl + url}?theme=${browser.params.theme}`;
-  await browser.waitForAngularEnabled(false);
-  await browser.driver.get(pageurl);
-};
-
 const searchfieldId = 'searchfield';
 const searchfieldGoButtonId = 'searchfield-go-button--1';
 
 describe('Searchfield example-index tests', () => {
   beforeEach(async () => {
-    await setPage('/components/searchfield/example-index');
+    await utils.setPage('/components/searchfield/example-index');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(searchfieldId))), config.waitsFor);
@@ -94,7 +87,7 @@ describe('Searchfield example-index tests', () => {
 
 describe('Searchfield go-button tests', () => {
   beforeEach(async () => {
-    await setPage('/components/searchfield/example-go-button');
+    await utils.setPage('/components/searchfield/example-go-button');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(searchfieldId))), config.waitsFor);
@@ -123,7 +116,7 @@ const singleCategoryId = 'category-searchfield';
 
 describe('Searchfield full-text category tests', () => {
   beforeEach(async () => {
-    await setPage('/components/searchfield/example-categories-full');
+    await utils.setPage('/components/searchfield/example-categories-full');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(singleCategoryId))), config.waitsFor);
@@ -140,7 +133,7 @@ describe('Searchfield full-text category tests', () => {
 
 describe('Searchfield full-text category with go button tests', () => {
   beforeEach(async () => {
-    await setPage('/components/searchfield/example-categories-and-go-button');
+    await utils.setPage('/components/searchfield/example-categories-and-go-button');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(singleCategoryId))), config.waitsFor);

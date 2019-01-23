@@ -1,12 +1,4 @@
-<div class="row">
-  <div class="six columns">
-    <h2>Busy Indicator Test: Initial Calls</h2>
-    <p>You can initialize busy on initial load by adding the elements to the page upfront.</p>
-  </div>
-</div>
-
-<div class="overlay busy">
-</div>
+<div class="overlay busy"></div>
 <div class="busy-indicator-container blocked-ui" aria-live="polite" role="status">
   <div class="busy-indicator active">
     <div class="bar one"></div>
@@ -16,6 +8,44 @@
     <div class="bar five"></div>
   </div>
   <span>Loading...</span>
+</div>
+
+<div id="maincontent" class="page-container scrollable" role="main">
+  <div class="homepage" data-columns="3">
+    <div class="content">
+
+      <div class="widget double-height">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Widget 1x2 (Dom Order 1)</h2>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 2)</h2>
+        </div>
+      </div>
+
+      <div class="widget double-width">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Widget 2x1 (Dom Order 3)</h2>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 4)</h2>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 5)</h2>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <script>

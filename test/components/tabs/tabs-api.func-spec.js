@@ -187,6 +187,34 @@ describe('Tabs API', () => {
     expect(tab).toEqual(jasmine.any(Object));
   });
 
+  it('Should add new tab and strip markup', () => {
+    const settingsObj = {
+      name: '<img src="404" onerror="(function() { alert()})()" />',
+      content: 'Stuff',
+      isDismissible: true
+    };
+
+    const tab = tabsObj.add('tabs-normal-tags', settingsObj, 1);
+
+    expect(tab.anchors.length).toEqual(6);
+    expect(tab.element[0].querySelectorAll('.tab')[1].innerText).toEqual('');
+    expect(tab.container[0].querySelector('#tabs-normal-tags').innerText).toEqual('Stuff');
+  });
+
+  it('Should add new tab and strip markup leaving the text', () => {
+    const settingsObj = {
+      name: '<b>Name</b>',
+      content: 'Stuff',
+      isDismissible: true
+    };
+
+    const tab = tabsObj.add('tabs-normal-tags', settingsObj, 1);
+
+    expect(tab.anchors.length).toEqual(6);
+    expect(tab.element[0].querySelectorAll('.tab')[1].innerText).toEqual('Name');
+    expect(tab.container[0].querySelector('#tabs-normal-tags').innerText).toEqual('Stuff');
+  });
+
   it('Should add new tab, and set tab name', () => {
     const tab = tabsObj.add('tabs-normal-weird', { name: 'weird', content: 'Weirdness' }, 1);
 
@@ -289,11 +317,15 @@ describe('Tabs API', () => {
     expect(tab.length).toBeFalsy();
   });
 
-  it('Should select tab, and focus', () => {
+  it('Should select tab, and focus', (done) => {
     tabsObj.select('#tabs-normal-contracts');
 
     expect(document.querySelector('.tab.is-selected').innerText).toEqual('Contracts');
-    expect(parseInt(document.querySelector('.animated-bar').style.left, 10)).toBeCloseTo(0, 1);
+
+    setTimeout(() => {
+      expect(parseInt(document.querySelector('.animated-bar').style.left, 10)).toBeCloseTo(0, 1);
+      done();
+    }, 500);
   });
 
   it('Should return false whether tabs are overflowed at 300px', () => {

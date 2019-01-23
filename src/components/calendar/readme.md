@@ -87,7 +87,7 @@ The Calendar is a very complex control to code for accessibility.
 - Add `aria-selected=true` to selected day
 - Add instructional information like "Use down arrow to select" to the input as an audible label
 - Each calendar item should have an audible label to announce the day of week while arrowing through days
-- For comparison, see a similar [example](http://oaa-accessibility.org/example/15/)
+- For comparison, see a similar <a href="http://oaa-accessibility.org/example/15/" target="_blank">example</a>
 
 ## Keyboard Shortcuts
 

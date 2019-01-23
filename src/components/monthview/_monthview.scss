@@ -224,7 +224,7 @@
         box-shadow: none;
 
         .day-text::after {
-          border: 1px solid $white;
+          border: 1px solid $theme-color-palette-white;
           border-radius: 50%;
           box-shadow: 0 0 3px 3px $focus-box-shadow-color;
           content: '';
@@ -474,7 +474,8 @@
 
         &.is-selected {
           background-color: $calendar-selected-bg-color;
-          border-top: 4px solid $calendar-selected-border-color;
+          // border-top: 4px solid $calendar-selected-border-color;
+          box-shadow: inset 0 5px 0 0 $calendar-selected-border-color;
 
           .day-text {
             background-color: inherit;
@@ -483,8 +484,7 @@
 
           &:focus {
             border-color: transparent;
-            border-top: 4px solid $calendar-selected-border-color;
-            box-shadow: 0 0 2px 2px $focus-box-shadow-color;
+            box-shadow: 0 0 2px 2px $focus-box-shadow-color, inset 0 5px 0 0 $calendar-selected-border-color;
           }
         }
       }

@@ -6,16 +6,16 @@ demo:
   - name: Simple Menu Button
     slug: example-index
   pages:
-  - name: Menu Button Events
-    slug: example-events
   - name: Submenus
     slug: example-submenu
   - name: Submenu With Icons
     slug: example-submenu-icons
-  - name: RTL
-    slug: example-submenu-icons-rtl.html?locale=ar-SA
   - name: Replace Text Content with Selection
     slug: example-replace-text
+  - name: Menu Button Events
+    slug: test-events
+  - name: Selectable Menu Items
+    slug: example-selectable
 ---
 
 ## Code Example

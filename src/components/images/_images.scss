@@ -11,7 +11,7 @@ $images-size: (
 
 // Image Placeholder
 @mixin image-placeholder($this-width, $this-height, $this-icon-height) {
-  background: $white;
+  background: $theme-color-palette-white;
   border: 1px solid $image-border-color;
   height: $this-height;
   max-height: $this-height;
@@ -58,9 +58,9 @@ $images-size: (
 
 // Initials for when photo is absent
 .image-initials {
-  background: $amethyst05;
+  background: $theme-color-palette-amethyst-50;
   border-radius: 50%;
-  color: $white;
+  color: $theme-color-palette-white;
   display: inline-block;
   font-size: 1.8rem;
   height: 4.8rem;

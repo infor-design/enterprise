@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Tree example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tree/example-index?nofrills=true');
+    await utils.setPage('/components/tree/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -127,35 +127,12 @@ describe('Tree context menu tests', () => {
 
 describe('Tree select by id tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tree/example-select-by-id');
+    await utils.setPage('/components/tree/test-select-by-id');
   });
 
   it('Should select node by id', async () => {
     expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(1);
     expect(await element(by.id('node6')).getAttribute('class')).toContain('is-selected');
-  });
-});
-
-describe('Tree destroy invoke tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/tree/example-destroy');
-  });
-
-  it('Should destroy tree', async () => {
-    expect(await element.all(by.css('.tree li')).count()).toBe(2);
-    await element(by.id('destroy')).click();
-
-    expect(await element.all(by.css('.tree li')).count()).toBe(0);
-  });
-
-  it('Should invoke tree', async () => {
-    expect(await element.all(by.css('.tree li')).count()).toBe(2);
-    await element(by.id('destroy')).click();
-
-    expect(await element.all(by.css('.tree li')).count()).toBe(0);
-    await element(by.id('invoke')).click();
-
-    expect(await element.all(by.css('.tree li')).count()).toBe(2);
   });
 });
 
@@ -264,7 +241,7 @@ describe('Tree enable all nodes test', () => {
 
 describe('Tree preserve and restore all nodes test', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tree/example-preserve-restore');
+    await utils.setPage('/components/tree/test-preserve-restore');
   });
 
   it('Should preserve and restore enablement states of all nodes', async () => {
@@ -276,5 +253,57 @@ describe('Tree preserve and restore all nodes test', () => {
 
     expect(await element.all(by.css('.tree li a[role="treeitem"].is-disabled')).count()).toEqual(countDisabled);
     expect(await element.all(by.css('.tree li a[role="treeitem"]')).count()).toEqual(countTotal);
+  });
+});
+
+describe('Tree dropdown tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tree/test-dropdown');
+  });
+
+  it('Should display dropdown in tree node', async () => {
+    expect(await element.all(by.css('.tree li select.dropdown')).count()).toBeGreaterThan(0);
+  });
+});
+
+describe('Tree insert new node above another node tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tree/test-add-node-inbetween-node');
+  });
+
+  it('Should insert new node before another node', async () => {
+    expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"]')).count()).toBe(3);
+    await element(by.id('node6')).click();
+
+    expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"]')).count()).toBe(4);
+    expect(await element.all(by.css('.tree li.folder ul.folder li.folder')).count()).toBe(1);
+    await element(by.id('node7')).click();
+
+    expect(await element.all(by.css('.tree li.folder ul.folder li.folder')).count()).toBe(2);
+  });
+});
+
+describe('Tree custom icon tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tree/test-custom-icon');
+  });
+
+  it('Should display custom icon for leaf node', async () => {
+    expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"] .icon-tree use')).get(2)
+      .getAttribute('xlink:href')).toContain('#icon-star-filled');
+
+    expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"] .icon-tree use')).get(3)
+      .getAttribute('xlink:href')).toContain('#icon-next-page');
+  });
+});
+
+describe('Tree checkbox tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tree/test-checkbox-particular-node');
+  });
+
+  it('Should display checkbox for particular node', async () => {
+    expect(await element.all(by.css('.tree li.folder.is-open a[role="treeitem"]')).count()).toBe(10);
+    expect(await element.all(by.css('.tree li.folder.is-open ul.folder.is-open a[role="treeitem"] .tree-checkbox')).count()).toBe(2);
   });
 });

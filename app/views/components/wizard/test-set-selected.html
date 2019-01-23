@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Wizard Test: Select Method</h2>
+    <p>This test uses the <em>select()</em> method on the Wizard Control to set the selected tick after a timeout completes.</p>
+    <p>Time Until Select Completes: <span id="time-display" style="font-weight: bold;">100</span></p>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="wizard" id="wiz1">
+      <div class="wizard-header">
+        <div class="bar">
+          <div class="completed-range"></div>
+          <a id="context-apps" href="#" class="tick current">
+            <span class="label">Context Apps</span>
+          </a>
+          <a id="utility-apps" href="#" class="tick">
+            <span class="label">Utility Apps</span>
+          </a>
+          <a id="inbound-configuration" href="#" class="tick">
+            <span class="label">Inbound Configuration</span>
+          </a>
+          <a id="oid-mapping" href="#" class="tick">
+            <span class="label">OID Mapping</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    var wizard = $('#wiz1'),
+      api = wizard.data('wizard');
+
+    $('#wiz1').on('activated.test', function(e, tick) {
+      $('body').toast({
+        'title': 'Activated!',
+        'message': 'The tick with the label <span style="font-weight: bold;">' + tick.text().trim() + '</span> was activated!'
+      });
+    });
+
+    var counter = 100;
+    function countDown() {
+      counter = counter - 1;
+      $('#time-display').text(counter);
+
+      if (counter > 0) {
+        return window.requestAnimationFrame(countDown);
+      }
+
+      api.activate(null, $('#oid-mapping'));
+    }
+
+    // Start the countdown
+    $('#time-display').text(counter);
+    window.requestAnimationFrame(countDown);
+  });
+</script>

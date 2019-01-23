@@ -72,7 +72,7 @@ $subheader-height: 60px;
     }
 
     &:focus:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $theme-color-brand-primary-alt, 0 0 0 3px $white, $header-focus-box-shadow;
+      box-shadow: 0 0 0 2px $theme-color-brand-primary-alt, 0 0 0 3px $theme-color-palette-white, $header-focus-box-shadow;
 
       &:active {
         box-shadow: none;
@@ -173,22 +173,22 @@ $subheader-height: 60px;
     }
 
     [class^='btn']:hover:not([disabled]) {
-      color: #fff !important;
+      color: $theme-color-palette-white !important;
     }
 
     .btn-toggle {
       color: rgba(255, 255, 255, 0.7) !important;
 
       &.is-pressed {
-        color: #fff !important;
+        color: $theme-color-palette-white !important;
 
         svg {
-          fill: #fff !important;
+          fill: $theme-color-palette-white !important;
         }
       }
 
       &:hover svg {
-        fill: #fff !important;
+        fill: $theme-color-palette-white !important;
       }
 
       svg {
@@ -392,12 +392,12 @@ $subheader-height: 60px;
     .hyperlink {
       @include font-size(14);
 
-      color: $white;
+      color: $theme-color-palette-white;
       float: right;
 
       &:focus:not(.hide-focus)::after,
       &:active::after {
-        border-color: $white;
+        border-color: $theme-color-palette-white;
       }
 
     }
@@ -588,10 +588,10 @@ html[dir='rtl'] {
 
   header.header .title,
   header.header h1 {
-    color: $graphite07 !important;
+    color: $theme-color-palette-graphite-70 !important;
   }
 
   svg {
-    fill: $graphite07 !important;
+    fill: $theme-color-palette-graphite-70 !important;
   }
 }

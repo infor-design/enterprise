@@ -219,14 +219,14 @@ describe('Listview example-mixed selection tests', () => {
 
   it('Should deselect item on click on checkbox', async () => {
     const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .label-text'));
-    listviewItemInputEl.click();
+    await listviewItemInputEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewItemInputEl), config.waitsFor);
 
     expect(await element(by.className('is-selected'))).toBeTruthy();
     expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
 
-    listviewItemInputEl.click();
+    await listviewItemInputEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitsFor);
 
@@ -389,8 +389,7 @@ describe('Listview example-paging-clientside tests', () => {
   });
 
   it('Should click page next icon in pager-clientside bar, and display correct listings', async () => {
-    const listviewPagerNextEl = await element(by.css('.pager-next'));
-    listviewPagerNextEl.click();
+    await element(by.css('.pager-next')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="12"] .listview-heading'))), config.waitsFor);
 
@@ -462,8 +461,7 @@ describe('Listview example-header-totals` tests', () => {
   }
 
   it('Should toggle listview on listviewer-header button click', async () => {
-    const listviewButtonToggleEl = await element(by.css('.listview-header button'));
-    listviewButtonToggleEl.click();
+    await element(by.css('.listview-header button')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.className('listview')).getCssValue('height')).toEqual('0px');

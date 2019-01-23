@@ -5,6 +5,7 @@ const utils = require('../utils');
 const directoryListing = require('./directory-list');
 const sendGeneratedDocPage = require('./docs');
 const customRouteOptions = require('../custom-route-options');
+const setLayout = require('../set-layout');
 const express = require('express');
 
 const router = express.Router();
@@ -14,7 +15,9 @@ function generalRoute(req, res, next) {
   if (req.query.headerHamburger === 'true') {
     res.opts.headerHamburger = true;
   }
-
+  if (req.query.appMenuOpen === 'true') {
+    res.opts.appMenuOpen = true;
+  }
   const viewsRoot = req.app.get('views');
   const directoryURL = utils.getDirectory(path.join(viewsRoot, req.originalUrl), viewsRoot);
   const filename = utils.getFileName(req.originalUrl);
@@ -28,17 +31,15 @@ function generalRoute(req, res, next) {
     return;
   }
 
+  // In some rare cases, customize view options depending on the route
+  res.opts = customRouteOptions(req, res);
+
   // Only change the layout if it hasn't been previously set by an option
   // in another piece of middleware.  Generally, this will attempt to use the `layout.html` in
   // the target view's directory, or the closest parent directory's `layout.html`.
   if (utils.canChangeLayout(req, res)) {
-    const layoutFilename = utils.getLayout(directoryPath, viewsRoot);
-    res.opts.layout = layoutFilename || res.opts.layout;
-    req.app.set('layout', res.opts.layout);
+    setLayout(req, res, utils.getClosestLayoutFile(directoryURL, viewsRoot));
   }
-
-  // In some rare cases, customize view options depending on the route
-  res.opts = customRouteOptions(req, res);
 
   // If a filename was part of the path, attempt to render it.
   // Otherwise, try to render in a directory listing or default file.
@@ -83,7 +84,7 @@ function generalRoute(req, res, next) {
     code: 404,
     message: 'File not found'
   };
-  res.opts.layout = 'layout-nofrills';
+  setLayout(req, res, 'layout-nofrills.html');
   res.status(404).render(path.join(viewsRoot, 'error.html'), res.opts);
   next();
 }

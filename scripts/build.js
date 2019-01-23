@@ -54,20 +54,33 @@ const commandLineArgs = require('yargs')
     describe: 'Disables the build process for JS',
     default: false
   })
+  .option('disable-copy', {
+    alias: 'p',
+    describe: 'Disables the copying of all pre-built assets to the `/dist` folder',
+    default: false,
+  })
   .argv;
 
 const chalk = require('chalk');
-const { spawn } = require('child_process');
 const del = require('del');
 const fs = require('fs');
 const path = require('path');
 
 const logger = require('./logger');
+const createDirs = require('./build/create-dirs');
+const getFileContents = require('./build/get-file-contents');
+const runBuildProcess = require('./build/run-build-process');
+const writeFile = require('./build/write-file');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
 const TEST_DIR = path.join(__dirname, '..', 'test');
 const RELATIVE_SRC_DIR = path.join('..', 'src');
+
+// CR-LF on Windows, LF on Linux/Mac
+const NL = process.platform === 'win32' ? '\r\n' : '\n';
+
+const bannerText = require('./generate-bundle-banner');
 
 const filePaths = {
   src: {
@@ -111,6 +124,7 @@ const filePaths = {
     },
     sass: {
       controls: path.join(TEMP_DIR, '_controls.scss'),
+      banner: path.join(TEMP_DIR, '_banner.scss'),
       themes: {
         'dark-theme': path.join(TEMP_DIR, 'dark-theme.scss'),
         'high-contrast-theme': path.join(TEMP_DIR, 'high-contrast-theme.scss'),
@@ -315,6 +329,18 @@ function sanitizeLibFile(libFile, libFolder) {
 }
 
 /**
+ * When writing CSS/JS files to the temp directory, this replaces
+ * all instances of forward/backward slash to a forward slash.  It's possible
+ * for both to exist in a path on Windows machines.
+ * @param {string} str the string to fix
+ * @returns {string} the correctly formatted string
+ */
+function transformSlashesForFile(str) {
+  const backslashRegex = /\\/g;
+  return str.replace(backslashRegex, '/');
+}
+
+/**
  * Returns a string representing a valid Javascript ES6 `import` statement
  * @param {string} libFile the target library file
  * @param {string} libPath the target library folder
@@ -324,10 +350,11 @@ function sanitizeLibFile(libFile, libFolder) {
  */
 function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
   libFile = sanitizeLibFile(libFile, libPath);
+  const importPath = transformSlashesForFile(`${RELATIVE_SRC_DIR}/${libPath}${libFile}`);
   const command = isExport ? 'export' : 'import';
 
   if (noConstructor) {
-    return `${command} '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
+    return `${command} '${importPath}';`;
   }
 
   // (Temporarily) replace the filename with one that dash-separates the words
@@ -342,7 +369,7 @@ function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
     constructorName = replaceDashesWithCaptials(libFile);
   }
 
-  return `${command} { ${constructorName} } from '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
+  return `${command} { ${constructorName} } from '${importPath}';`;
 }
 
 /**
@@ -353,22 +380,8 @@ function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
  */
 function writeSassImportStatement(libFile, libPath) {
   libFile = sanitizeLibFile(libFile, libPath);
-  return `@import '${RELATIVE_SRC_DIR}/${libPath}${libFile}';`;
-}
-
-/**
- * @param {array} dirs an array of strings representing directories
- * @returns {void}
- */
-function createDirs(dirs) {
-  dirs.forEach((dir) => {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-      if (commandLineArgs.verbose) {
-        logger('info', `Created directory "${dir}"`);
-      }
-    }
-  });
+  const importPath = transformSlashesForFile(`${RELATIVE_SRC_DIR}/${libPath}${libFile}`);
+  return `@import '${importPath}';`;
 }
 
 /**
@@ -466,15 +479,6 @@ function pruneTest(file, components) {
   }
 
   return false;
-}
-
-/**
- * Gets a copy of the standard `index.js` file.
- * @param {string} filePath the target file to be read.
- * @returns {string} containing the imported file.
- */
-function getFileContents(filePath) {
-  return fs.readFileSync(filePath, 'utf8');
 }
 
 /**
@@ -595,44 +599,10 @@ function renderImportsToString(key, type) {
     } else {
       statement = writeJSImportStatement(lib, filePath, true);
     }
-    fileContents += `${statement}\n`;
+    fileContents += `${statement}${NL}`;
   });
 
   return fileContents;
-}
-
-/**
- * @private
- * @param {string} targetFilePath the path of the file that will be written
- * @param {string} targetFile the contents of the file to be written
- * @returns {void}
- */
-function logFileResults(targetFilePath, targetFile) {
-  if (!commandLineArgs.verbose) {
-    return;
-  }
-  const kbLength = (Buffer.byteLength(targetFile, 'utf8') / 1024).toFixed(2);
-  logger('success', `File "${chalk.yellow(targetFilePath)}\n" generated (${kbLength} KB)`);
-}
-
-/**
- * Wraps `fs.writeFile()` with actual async
- * @private
- * @param {string} targetFilePath the path of the file that will be written
- * @param {string} targetFile the contents of the file to be written
- * @returns {Promise} results of `fs.writeFile()`
- */
-function writeFile(targetFilePath, targetFile) {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(targetFilePath, targetFile, (err) => {
-      if (err) {
-        logger('error', `${err}`);
-        reject(err);
-      }
-      logFileResults(targetFilePath, targetFile);
-      resolve();
-    });
-  });
 }
 
 /**
@@ -670,9 +640,9 @@ function renderTargetJSFile(key, targetFilePath) {
     // be written to the target file in a specific order.
     const componentBuckets = ['foundational', 'mid', 'complex'];
     componentBuckets.forEach((thisBucket) => {
-      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += `// ${capitalize(thisBucket)} ====/${NL}`;
       targetFile += renderImportsToString(thisBucket, type);
-      targetFile += '\n';
+      targetFile += NL;
     });
   } else {
     // All other buckets simply get rendered directly
@@ -698,9 +668,9 @@ function renderTargetJQueryFile(key, targetFilePath) {
     // be written to the target file in a specific order.
     const componentBuckets = ['foundational', 'mid', 'complex'];
     componentBuckets.forEach((thisBucket) => {
-      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += `// ${capitalize(thisBucket)} ====/${NL}`;
       targetFile += renderImportsToString(thisBucket, type);
-      targetFile += '\n';
+      targetFile += NL;
     });
   } else if (key === 'initialize') {
     targetFile = getFileContents(filePaths.src.jQuery.initialize);
@@ -717,31 +687,43 @@ function renderTargetJQueryFile(key, targetFilePath) {
  * @private
  * @param {string} key the file path bucket to use
  * @param {string} targetFilePath the path of the file that will be written
+ * @param {boolean} isNormalBuild whether or not the build is normal (true) or custom (false)
  * @returns {Promise} containing the results of the file write
  */
-function renderTargetSassFile(key, targetFilePath) {
+function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
   let targetFile = '';
   const type = 'scss';
 
   if (key === 'components') {
-    targetFile = '// Required ====/\n@import \'../src/core/required\';\n\n';
+    targetFile = `// Required ====/${NL}@import '../src/core/required';${NL}${NL}`;
 
     // 'component' source code files are comprised of three buckets that need to
     // be written to the target file in a specific order.
     const componentBuckets = ['foundational', 'mid', 'complex', 'patterns', 'layouts'];
     componentBuckets.forEach((thisBucket) => {
-      targetFile += `// ${capitalize(thisBucket)} ====/\n`;
+      targetFile += `// ${capitalize(thisBucket)} ====/${NL}`;
       targetFile += renderImportsToString(thisBucket, type);
-      targetFile += '\n';
+      targetFile += NL;
     });
-    targetFile += '// These controls must come last\n@import \'../src/components/colors/colors\';\n';
+    targetFile += `// These controls must come last${NL}@import '../src/components/colors/colors';${NL}`;
+  } else if (key === 'banner') {
+    targetFile += bannerText;
   } else {
     // All other keys are "theme" entry points that just need their linked paths corrected.
-    const themeFile = getFileContents(path.join(SRC_DIR, 'themes', `${key}.scss`));
-    targetFile = themeFile
+    const themePath = transformSlashesForFile(path.join(SRC_DIR, 'themes', `${key}.scss`));
+    const themeFile = getFileContents(themePath);
+
+    // Inline the copyright banner
+    targetFile += `@import './banner';${NL}`;
+
+    // Add the theme contents
+    targetFile += themeFile
       .replace(/('\.\.\/)((?!\.))/g, '\'../src/') // replaces anything pointing to a source code file
-      .replace(/(\.\.\/)\1/g, '../') // fixes the node_modules link to IDS Identity
-      .replace('../src/core/controls', './controls');
+      .replace(/(\.\.\/)\1/g, '../'); // fixes the node_modules link to IDS Identity
+
+    if (!isNormalBuild) {
+      targetFile = targetFile.replace('../src/core/controls', './controls');
+    }
   }
 
   return writeFile(targetFilePath, targetFile);
@@ -760,7 +742,7 @@ function renderTestManifest(type) {
   }
 
   buckets[bucket].forEach((test) => {
-    targetFile += `${test}\n`;
+    targetFile += `${test}${NL}`;
   });
 
   return writeFile(filePaths.target.log[type], targetFile);
@@ -784,21 +766,21 @@ function renderSourceCodeList() {
   let targetFile = '';
 
   function logEmpty() {
-    targetFile += '\n';
+    targetFile += NL;
     if (commandLineArgs.verbose) {
-      process.stdout.write('\n');
+      process.stdout.write(NL);
     }
   }
 
   function logHeaderToBoth(str) {
-    targetFile += `${str}\n`;
+    targetFile += `${str}${NL}`;
     if (commandLineArgs.verbose) {
       logger(`${chalk.cyan(str)}`);
     }
   }
 
   function logItemToBoth(item) {
-    targetFile += `- ${item}\n`;
+    targetFile += `- ${item}${NL}`;
     if (commandLineArgs.verbose) {
       logger('bullet', `${item}`);
     }
@@ -826,13 +808,25 @@ function renderSourceCodeList() {
  */
 function renderTargetFiles(isNormalBuild) {
   const renderPromises = [];
-  if (isNormalBuild) {
-    return Promise.all([]);
-  }
 
   const jsEntryPoints = Object.keys(filePaths.target.js);
   const jQueryEntryPoints = Object.keys(filePaths.target.jQuery);
   const sassThemes = Object.keys(filePaths.target.sass.themes);
+
+  function runSassBuilds() {
+    sassThemes.forEach((filePathKey) => {
+      const theme = filePaths.target.sass.themes[filePathKey];
+      const promise = renderTargetSassFile(filePathKey, theme, isNormalBuild);
+      renderPromises.push(promise);
+    });
+    renderPromises.push(renderTargetSassFile('banner', filePaths.target.sass.banner, isNormalBuild));
+  }
+
+  // On normal builds, still generate the banner and inline it into each theme file.
+  if (isNormalBuild) {
+    runSassBuilds();
+    return Promise.all(renderPromises);
+  }
 
   jsEntryPoints.forEach((filePathKey) => {
     renderPromises.push(renderTargetJSFile(filePathKey, filePaths.target.js[filePathKey]));
@@ -843,10 +837,7 @@ function renderTargetFiles(isNormalBuild) {
     renderPromises.push(p);
   });
 
-  sassThemes.forEach((filePathKey) => {
-    const p = renderTargetSassFile(filePathKey, filePaths.target.sass.themes[filePathKey]);
-    renderPromises.push(p);
-  });
+  runSassBuilds();
   renderPromises.push(renderTargetSassFile('components', filePaths.target.sass.controls));
 
   renderPromises.push(renderComponentList(), renderSourceCodeList());
@@ -854,38 +845,6 @@ function renderTargetFiles(isNormalBuild) {
   renderPromises.push(renderTestManifest('e2e'));
 
   return Promise.all(renderPromises);
-}
-
-/**
- * Runs a single build process
- * @param {string} terminalCommand the base terminal command
- * @param {array} terminalArgs series of command arguments
- * @returns {Promise} resolves the process's log
- */
-function runBuildProcess(terminalCommand, terminalArgs) {
-  if (!terminalCommand) {
-    throw new Error(`"${terminalCommand}" must be a valid terminal command`);
-  }
-  if (!Array.isArray(terminalArgs)) {
-    terminalArgs = [];
-  }
-
-  return new Promise((resolve, reject) => {
-    const buildProcess = spawn(terminalCommand, terminalArgs);
-    let log = '';
-    buildProcess.stdout.on('data', (data) => {
-      log += data.toString('utf8');
-    });
-    buildProcess.stderr.on('data', (data) => {
-      log += data.toString('utf8');
-    });
-    buildProcess.on('exit', (code) => {
-      if (code !== 0) {
-        reject(new Error(`"${terminalCommand}" process exited with error code (${code})\nArgs: ${terminalArgs.join(' ')}`));
-      }
-      resolve(log);
-    });
-  });
 }
 
 /**
@@ -898,39 +857,43 @@ function runBuildProcesses(requested) {
   const buildPromises = [];
   let isCustom = false;
   let hasCustom = '';
-  const rollupArgs = ['-c'];
-  const sassArgs = ['build:sass'];
+  let targetSassConfig = 'dist';
+  let rollupArgs = '-c';
 
   // if Requested
   if (Array.isArray(requested) && requested.length) {
     isCustom = true;
-    const componentsArg = `--components=${requested.join(',')}`;
+    targetSassConfig = 'custom';
+    const componentsArg = ` --components=${requested.join(',')}`;
     hasCustom = ' with custom entry points';
-    rollupArgs.push(componentsArg);
-    sassArgs.push(componentsArg);
+    rollupArgs += componentsArg;
   }
 
-  logger(`\nRunning build processes${hasCustom}...\n`);
+  logger(`${NL}Running build processes${hasCustom}...${NL}`);
 
   // Copy vendor libs/dependencies
-  buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:main']));
+  if (commandLineArgs.disableCopy) {
+    logger('alert', 'Ignoring build process for copied dependencies');
+  } else {
+    buildPromises.push(runBuildProcess('npx grunt copy:main'));
+  }
 
   if (buckets['test-func'].length || buckets['test-e2e'].length) {
-    buildPromises.push(runBuildProcess('npx', ['grunt', 'copy:custom-test']));
+    buildPromises.push(runBuildProcess('npx grunt copy:custom-test'));
   }
 
   // Build JS
   if (commandLineArgs.disableJs) {
     logger('alert', 'Ignoring build process for JS');
   } else if (!isCustom || (jsMatches.length || jQueryMatches.length)) {
-    buildPromises.push(runBuildProcess('rollup', rollupArgs));
+    buildPromises.push(runBuildProcess(`npx rollup ${rollupArgs}`));
   }
 
   // Build CSS
   if (commandLineArgs.disableCss) {
     logger('alert', 'Ignoring build process for CSS');
   } else if (!isCustom || sassMatches.length) {
-    buildPromises.push(runBuildProcess('grunt', sassArgs));
+    buildPromises.push(runBuildProcess(`node ${path.join('.', 'scripts', 'build-sass.js')} --type=${targetSassConfig}`));
   }
 
   return Promise.all(buildPromises);
@@ -938,17 +901,9 @@ function runBuildProcesses(requested) {
 
 /**
  * Handles a successful build
- * @param {array} logs contains the logs of all the build processes
  * @returns {Promise} resulting in a successful process exit
  */
-function buildSuccess(logs) {
-  if (commandLineArgs.verbose) {
-    logger(null, `\n${chalk.red('===== JS Build Output (Rollup) =====')}`);
-    logger(null, `${logs[1]}\n`);
-    logger(null, `${chalk.red('===== Sass Build Output (Node-Sass) =====')}`);
-    logger(null, `${logs[2]}`);
-  }
-
+function buildSuccess() {
   return cleanAll().then(() => {
     logger('success', `IDS Build was successfully created in "${chalk.yellow('dist/')}"`);
     process.exit(0);
@@ -969,7 +924,7 @@ function buildFailure(reason) {
 // Main
 // -------------------------------------
 
-logger(`\n${chalk.red.bold('=========   IDS Enterprise Builder   =========')}\n`);
+logger(`${NL}${chalk.red.bold('=========   IDS Enterprise Builder   =========')}${NL}`);
 
 let requestedComponents = [];
 let normalBuild = false;
@@ -989,10 +944,10 @@ if (!commandLineArgs.components) {
 cleanAll(true).then(() => {
   if (!normalBuild) {
     // Display a list of requested components to the console
-    let loggedComponentList = `${(commandLineArgs.verbose ? '\n' : '')}${chalk.bold('Searching files in `src/` for the following terms:')}\n`;
+    let loggedComponentList = `${(commandLineArgs.verbose ? `${NL}` : '')}${chalk.bold('Searching files in `src/` for the following terms:')}${NL}`;
     requestedComponents.forEach((comp) => {
-      componentList += `${comp}\n`;
-      loggedComponentList += `- ${comp}\n`;
+      componentList += `${comp}${NL}`;
+      loggedComponentList += `- ${comp}${NL}`;
     });
     logger(loggedComponentList);
 
@@ -1048,8 +1003,8 @@ cleanAll(true).then(() => {
 
   renderTargetFiles(normalBuild).then(() => {
     if (commandLineArgs.dryRun) {
-      process.stdout.write('\n');
-      logger('success', `Completed dry run!  Generated files are avaiable in the "${chalk.yellow('temp/')}" folder.`);
+      process.stdout.write(`${NL}`);
+      logger('success', `Completed dry run!  Generated files are available in the "${chalk.yellow('temp/')}" folder.`);
       process.exit(0);
     }
 

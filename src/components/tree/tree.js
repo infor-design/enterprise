@@ -138,9 +138,12 @@ Tree.prototype = {
    * From the LI, Read props and add stuff
    * @private
    * @param {object} a an anchor tag reference wrapped in a jQuery object.
+   * @param {string} iconToSet icon for tree node.
+   * @param {bool} hideCheckbox to show or hide checkbox for tree node.
    * @returns {void}
    */
-  decorateNode(a) {
+  // Added parameters - To show check box and icon on demand for particular node
+  decorateNode(a, iconToSet, hideCheckbox) {
     a = this.isjQuery(a) ? a : $(a);
 
     let parentCount = 0;
@@ -200,7 +203,12 @@ Tree.prototype = {
 
     a[0].textContent = '';
     if (a.children('svg.icon-tree').length === 0) {
-      a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
+      // Show provided icon if any, if empty string provided then show empty icon otherwise show document icon.
+      if (iconToSet || iconToSet === '') {
+        a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: iconToSet, classes: ['icon-tree'] }));
+      } else {
+        a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
+      }
 
       if (this.settings.useStepUI) {
         a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: alertIcon, classes: ['step-alert', `icon-${alertIcon}`] }));
@@ -208,7 +216,8 @@ Tree.prototype = {
     }
 
     // Inject checkbox
-    if (this.isMultiselect && !this.settings.hideCheckboxes) {
+    // Show check box for particular node on demand
+    if (this.isMultiselect && (!this.settings.hideCheckboxes || hideCheckbox === false)) {
       a[0].insertAdjacentHTML('beforeend', '<span class="tree-checkbox"></span>');
     }
 
@@ -486,7 +495,16 @@ Tree.prototype = {
         a.parentNode.classList.add('is-selected');
       });
     } else {
+      if (node[0].classList.contains('is-selected')) {
+        return;
+      }
       links.forEach((a) => {
+        const link = $(a);
+        const data = link.data('jsonData');
+        if (data) {
+          delete data.selected;
+          link.data('jsonData', data);
+        }
         a.setAttribute('aria-selected', 'false');
         a.classList.remove('is-selected');
         a.parentNode.classList.remove('is-selected');
@@ -1019,6 +1037,7 @@ Tree.prototype = {
     for (let i = 0, l = dataset.length; i < l; i++) {
       html += self.getNodeHtml(dataset[i], i);
     }
+
     self.element[0].insertAdjacentHTML('beforeend', html);
     const nodes = [].slice.call(self.element[0].querySelectorAll('a[role="treeitem"]'));
     nodes.forEach((node, i) => {
@@ -1029,6 +1048,20 @@ Tree.prototype = {
         self.selectNode(a, data.focus);
       }
     });
+    const dropdowns = self.element[0].querySelectorAll('select.dropdown');
+    for (let i = 0; i < dropdowns.length; i++) {
+      const dropdown = dropdowns[i];
+      const data = self.jsonData[i];
+      if (data.disabled) {
+        $(dropdown).dropdown().disable();
+      } else {
+        $(dropdown).dropdown().on('selected.tree', function () {
+          const nodeToUpdate = self.findById(this.parentElement.previousElementSibling.id);
+          nodeToUpdate.text = this.value;
+          self.updateNode(nodeToUpdate);
+        });
+      }
+    }
     self.jsonData = undefined;
     self.loading = false;
 
@@ -1160,6 +1193,8 @@ Tree.prototype = {
    * @returns {string} created html
    */
   getNodeHtml(data, position, level, isParentsDisabled) {
+    let selectHtml = '';
+    let selectedOptionText = '';
     level = level || 0;
     position += 1;
     const s = this.settings;
@@ -1168,13 +1203,13 @@ Tree.prototype = {
       id: typeof data.id !== 'undefined' ? ` id="${data.id}"` : '',
       href: ` href="${typeof data.href !== 'undefined' ? data.href : '#'}"`,
       expanded: ` aria-expanded="${data.open ? 'true' : 'false'}"`,
-      icon: 'tree-node',
+      icon: (data.icon || data.icon === '') ? data.icon : 'tree-node',
       alertIcon: '',
       alertIconAttr: typeof data.alertIcon !== 'undefined' ? ` data-alert-icon="${data.alertIcon}"` : '',
       text: `<span class="tree-text">${data.text}</span>`,
       class: ['hide-focus'],
       ariaDisabled: isDisabled ? 'aria-disabled="true"' : '',
-      checkbox: this.isMultiselect && !this.settings.hideCheckboxes ? '<span class="tree-checkbox"></span>' : '',
+      checkbox: this.isMultiselect && (!this.settings.hideCheckboxes || data.hideCheckbox === false) ? '<span class="tree-checkbox"></span>' : '',
       badge: typeof data.badge === 'object' ? this.getBadgeHtml(data.badge) : ''
     };
     this.jsonData.push(data);
@@ -1209,17 +1244,43 @@ Tree.prototype = {
     }
     a.icon = `#icon-${a.icon.replace(/^#?icon-?/, '')}`;
     a.class = ` class="${a.class.join(' ')}"`;
+    a.style = '';
+
+    // Insert dropdown start
+    if (data.type === 'dropdown') {
+      a.style = 'style="display: none"';
+
+      if (data.data) {
+        selectHtml = '<select class="dropdown" close-on-select="true">';
+
+        for (let i = 0; i < data.data.length; i++) {
+          const option = data.data[i];
+          if (option.value === data.text) {
+            selectedOptionText = option.text;
+            selectHtml += `<option value="${option.value}" selected>${option.text}</option>`;
+          } else {
+            selectHtml += `<option value="${option.value}">${option.text}</option>`;
+          }
+        }
+
+        selectHtml += `</select><div class="dropdown-wrapper"><div class="dropdown"><span>${selectedOptionText}`;
+        selectHtml += '</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
+        selectHtml = `<div class="treeDropdown" style="width: 80px; margin-left: 35px; margin-bottom: -15px">${selectHtml}</div>`;
+      }
+    }
+    // Insert dropdown end
 
     let html = `
       <li${liClassList}>
-        <a role="treeitem" aria-selected="false" tabindex="-1"
+        <a role="treeitem" aria-selected="false" tabindex="-1" ${a.style}
           aria-level="${level}"
           aria-position="${position}"
           aria-setsize="${position}"
           ${a.id + a.href + a.class + a.expanded + a.ariaDisabled + a.alertIconAttr}>
             <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${a.icon}"></use>
             </svg>${a.checkbox + a.alertIcon + a.badge + a.text}
-        </a>`;
+        </a>
+        ${selectHtml}`;
 
     if (isChildren) {
       html += `<ul class="folder${data.open ? ' is-open' : ''}" role="group">`;
@@ -1279,9 +1340,20 @@ Tree.prototype = {
   // Functions to Handle Internal Data Store
   addToDataset(node, location) {
     let elem;
+    let updatedNode;
+    let index;
 
     if (node.parent) {
       elem = this.findById(node.parent);
+    }
+
+    // Update dataset after inserting node before or after other node
+    if (location instanceof jQuery && location.is('li')) {
+      updatedNode = this.findById($(location[0].parentNode.parentNode).find('a')[0].id);
+      const childNodes = updatedNode.children || updatedNode.node.data('jsonData').children;
+      index = childNodes.findIndex(element => element.text.trim() === $(location).text().trim());
+
+      childNodes.splice(index, 0, node);
     }
 
     if (location === 'bottom' && !node.parent && !elem) {
@@ -1323,8 +1395,8 @@ Tree.prototype = {
         return item;
       }
 
-      if (item.children) {
-        const subresult = self.findById(id, item.children);
+      if (item.children || item.node.data('jsonData').children) {
+        const subresult = self.findById(id, item.children || item.node.data('jsonData').children);
 
         if (subresult) {
           return subresult;
@@ -1523,9 +1595,17 @@ Tree.prototype = {
    * Add a node and all its related markup.
    * @param {object} nodeData to add.
    * @param {object} location in tree.
+   * @param {string} isBeforeOrAfter to insert node before or after selected tree node.
    * @returns {object} li added
    */
-  addNode(nodeData, location) {
+
+  // Parameter added - to add node before or after the node
+  addNode(nodeData, location, isBeforeOrAfter) {
+    const self = this;
+    let selectedOptionText;
+    let selectHtml;
+    let option;
+
     const badgeAttr = typeof nodeData.badge === 'object' ? JSON.stringify(nodeData.badge) : nodeData.badge;
 
     nodeData.href = typeof nodeData.href !== 'undefined' ? nodeData.href : '#';
@@ -1561,6 +1641,42 @@ Tree.prototype = {
 
     li.appendChild(a);
 
+    // Insert dropdown start
+    if (nodeData.type === 'dropdown') {
+      a.setAttribute('style', 'display: none');
+
+      if (nodeData.data) {
+        selectHtml = '<select class="dropdown" close-on-select="true">';
+
+        for (let i = 0; i < nodeData.data.length; i++) {
+          option = nodeData.data[i];
+          if (option.value === nodeData.text) {
+            selectedOptionText = option.text;
+            selectHtml += `<option value="${option.value}" selected>${option.text}</option>`;
+          } else {
+            selectHtml += `<option value="${option.value}">${option.text}</option>`;
+          }
+        }
+
+        selectHtml += `</select><div class="dropdown-wrapper"><div class="dropdown"><span>${selectedOptionText}`;
+
+        selectHtml += '</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
+
+        $(`<div class="treeDropdown" style="width: 80px; margin-left: 35px; margin-bottom: -15px">${selectHtml}</div>`).appendTo(li);
+
+        if (nodeData.disabled) {
+          $(li).find('select.dropdown').dropdown().disable();
+        } else {
+          $(li).find('select.dropdown').dropdown().on('selected.tree', function () {
+            const nodeToUpdate = self.findById(this.parentElement.previousElementSibling.id);
+            nodeToUpdate.text = this.value;
+            self.updateNode(nodeToUpdate);
+          });
+        }
+      }
+    }
+    // Insert dropdown end
+
     // Handle Location
     let found = this.loading ? true : this.addToDataset(nodeData, location);
 
@@ -1568,8 +1684,18 @@ Tree.prototype = {
       found = true;
     }
 
+    // Insert node in between the node
+    if (location instanceof jQuery && isBeforeOrAfter === 'before') {
+      $(li).insertBefore(location);
+      found = true;
+    } else if (location instanceof jQuery && isBeforeOrAfter === 'after') {
+      $(li).insertAfter(location);
+      found = true;
+    }
+
     if (location instanceof jQuery &&
-      (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)) {
+      (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)
+      && !(isBeforeOrAfter === 'before' || isBeforeOrAfter === 'after')) {
       location[0].appendChild(li);
       found = true;
     }
@@ -1610,7 +1736,8 @@ Tree.prototype = {
     }
 
     a = $(a);
-    this.decorateNode(a);
+    // Added parameter to show or hide checkbox according to node.
+    this.decorateNode(a, nodeData.icon, nodeData.hideCheckbox);
 
     if (nodeData.selected) {
       this.selectNode(a, nodeData.focus);

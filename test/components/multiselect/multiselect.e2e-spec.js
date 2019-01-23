@@ -64,9 +64,9 @@ describe('Multiselect example-states tests', () => {
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).get(2);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
+
       await multiselectEl.sendKeys(protractor.Key.TAB);
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('message-text'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await element(by.css('.message-text')).getText()).toEqual('Required');
     });

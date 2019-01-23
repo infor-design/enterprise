@@ -32,7 +32,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
   box-shadow 300ms $cubic-bezier-ease);
 
   > .icon {
-    background-color: rgba($white, 0); // IE 10
+    background-color: rgba($theme-color-palette-white, 0); // IE 10
     fill: $trigger-icon-fill-color;
     height: 14px;
     position: absolute;

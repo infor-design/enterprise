@@ -12,12 +12,12 @@
 
 //Glyphs on the Header
 .header .icon {
-  fill: $white;
+  fill: $theme-color-palette-white;
 }
 
 // Specific Icon Types
 .icon-error,
-.icon-confirm,
+.icon-success,
 .icon-alert,
 .icon-info,
 .icon-info-field,
@@ -38,7 +38,7 @@ svg.icon-dirty,
 
 .field {
   .icon-error,
-  .icon-confirm,
+  .icon-success,
   .icon-alert,
   .icon-info,
   .icon-pending {
@@ -49,7 +49,7 @@ svg.icon-dirty,
   }
 
   .icon-error,
-  .icon-confirm {
+  .icon-success {
     height: 14px;
     position: relative;
     right: 0;
@@ -57,7 +57,12 @@ svg.icon-dirty,
     width: 18px;
   }
 
-  .icon-confirm {
+  .icon-error.lower-opacity {
+    opacity: 0.3;
+    z-index: -1;
+  }
+
+  .icon-success {
     height: 15px;
     margin-top: -2px;
     position: relative;
@@ -66,7 +71,7 @@ svg.icon-dirty,
   }
 
   [data-error-type='tooltip'] ~ .icon-error,
-  [data-error-type='tooltip'] ~ .icon-confirm {
+  [data-error-type='tooltip'] ~ .icon-success {
     position: relative;
     right: auto;
     top: -5px;
@@ -74,7 +79,7 @@ svg.icon-dirty,
 
   .dropdown-wrapper {
     [data-error-type='tooltip'] ~ .icon-error,
-    [data-error-type='tooltip'] ~ .icon-confirm {
+    [data-error-type='tooltip'] ~ .icon-success {
       position: absolute;
       right: 25px;
       top: 1px;
@@ -83,7 +88,7 @@ svg.icon-dirty,
 
   &.editor-container {
     [data-error-type='tooltip'] ~ .icon-error,
-    [data-error-type='tooltip'] ~ .icon-confirm {
+    [data-error-type='tooltip'] ~ .icon-success {
       position: absolute;
       right: 10px;
       top: 55px;
@@ -92,7 +97,7 @@ svg.icon-dirty,
 
   textarea {
     &[data-error-type='tooltip'] ~ .icon-error,
-    &[data-error-type='tooltip'] ~ .icon-confirm {
+    &[data-error-type='tooltip'] ~ .icon-success {
       position: absolute;
       top: 20px;
     }
@@ -100,7 +105,7 @@ svg.icon-dirty,
 
   .lookup-wrapper {
     .icon-error,
-    .icon-confirm {
+    .icon-success {
       right: 31px;
       top: 1px;
     }
@@ -128,12 +133,14 @@ svg.icon-dirty,
 }
 
 .icon-dirtyerror,
-.icon-error {
-  fill: $alert-red !important;
+.icon-error,
+.icon-error-solid {
+  fill: $theme-color-status-danger !important;
 }
 
-.icon-confirm {
-  fill: $confirm-icon-fill !important;
+.icon-success,
+.icon-success-solid {
+  fill: $success-icon-fill !important;
 }
 
 .icon-empty-circle,
@@ -141,20 +148,26 @@ svg.icon-dirty,
   fill: $icon-color;
 }
 
-.icon-alert {
-  fill: $alert-orange !important;
+.icon-alert,
+.icon-alert-solid {
+  fill: $theme-color-status-warning !important;
+}
+
+.icon-solid-bgrnd {
+  fill: $theme-color-palette-white;
 }
 
 .icon-pending {
-  background: $alert-yellow !important;
-  border: 2px solid $alert-yellow;
+  background: $theme-color-status-caution !important;
+  border: 2px solid $theme-color-status-caution;
   border-radius: 50%;
-  fill: $white !important;
+  fill: $theme-color-palette-white !important;
   height: 18px;
   width: 18px;
 }
 
-.icon-info {
+.icon-info,
+.icon-info-solid {
   fill: $info-icon-fill !important;
 }
 
@@ -246,7 +259,7 @@ svg.icon-logo {
 
   svg {
     display: inline-block;
-    fill: $white;
+    fill: $theme-color-palette-white;
     height: 45px;
     margin-left: 26px;
     margin-top: 25px;
@@ -282,11 +295,11 @@ svg.icon-dirty {
 }
 
 .icon-in-progress {
-  fill: $amethyst07;
+  fill: $theme-color-palette-amethyst-70;
 }
 
 .icon-new {
-  fill: $amber07;
+  fill: $theme-color-palette-amber-70;
 }
 
 // Psuedo-element Icons
@@ -575,7 +588,7 @@ html[dir='rtl'] {
     }
 
     .icon-error,
-    .icon-confirm,
+    .icon-success,
     .icon-alert,
     .icon-info,
     .icon-pending {
@@ -586,7 +599,7 @@ html[dir='rtl'] {
     }
 
     .icon-error,
-    .icon-confirm {
+    .icon-success {
       left: auto;
       margin-left: inherit;
       margin-right: -30px;
@@ -601,7 +614,7 @@ html[dir='rtl'] {
 
     .lookup-wrapper {
       .icon-error,
-      .icon-confirm {
+      .icon-success {
         left: 50px;
         margin-left: -20px;
         margin-right: inherit;
@@ -662,7 +675,7 @@ html[dir='rtl'] {
 }
 
 .icon-empty-center-color {
-  fill: $white;
+  fill: $theme-color-palette-white;
 }
 
 .space-icons {

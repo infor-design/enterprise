@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Busy Indicator example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/busyindicator/example-index?nofrills=true');
+    await utils.setPage('/components/busyindicator/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -34,22 +34,6 @@ describe('Busy Indicator example-index tests', () => {
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'busy-indicator-index')).toEqual(0);
     });
   }
-});
-
-describe('Busy Indicator example-custom-loading-text tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/busyindicator/example-custom-loading-text');
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should display busy indicator with custom text', async () => {
-    await element(by.id('submit')).click();
-
-    expect(await element(by.className('busy-indicator-container')).element(by.tagName('span')).getAttribute('textContent')).toEqual('Hang Tough, Skippy...');
-  });
 });
 
 describe('Busy Indicator example-inputs tests', () => {
@@ -142,22 +126,6 @@ describe('Busy Indicator test-block-specific-area tests', () => {
     await startBtn.click();
 
     expect(await specificEl.element(by.className('busy-indicator-container'))).toBeTruthy();
-  });
-});
-
-describe('Busy Indicator test-block-whole-page tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/busyindicator/test-block-whole-page');
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should block whole page', async () => {
-    const busyindicatorEl = await element(by.css('#maincontent > .busy-indicator-container'));
-
-    expect(busyindicatorEl).toBeTruthy();
   });
 });
 

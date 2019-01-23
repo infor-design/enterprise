@@ -19,9 +19,14 @@
   </div>
   <div class="calendar-monthview">
   </div>
-  <div class="calendar-event-details">
+  <div class="calendar-event-details accordion" data-init="false" data-options="{'allowOnePane': false}">
   </div>
 </div>
+
+<ul id="calendar-actions-menu" class="popupmenu">
+  <li><a href="#" data-action="delete-event"><span data-translate="text">DeleteEvent</span></a></li>
+  <li><a href="#" data-action="show-event"><span data-translate="text">ShowEvent</span></a></li>
+</ul>
 
 <script>
 $('body').one('initialized', function () {
@@ -34,54 +39,137 @@ $('body').one('initialized', function () {
 
     $.getJSON('{{basepath}}api/events', function(res) {
       events = res;
-
-
-        $('.calendar').calendar({
-          month: 9,
-          year: 2018,
-          eventTypes: eventTypes,
-          events: events,
-          template: 'tmpl-readonly'
-        });
+      $('.calendar').calendar({
+        month: 9,
+        year: 2018,
+        eventTypes: eventTypes,
+        events: events,
+        upcomingEventDays: 0,
+        template: 'tmpl-readonly',
+        modalTemplate: 'tmpl-modal',
+        menuId: 'calendar-actions-menu'
       });
     });
+  });
 });
 </script>
 
 {{={{{ }}}=}}
 <script id="tmpl-readonly" type="text/html">
-  <div class="calendar-event-detail">
-    {{#event}}
-      <span class="calendar-event-header {{color}}">{{subject}}</span>
-      <div class="calendar-event-body">
-        <div class="field">
-          <span class="label">Status</span>
-          <span class="data">
-            {{status}}
-            {{#icon}}
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation" data-status="Pending"><use xlink:href="#{{icon}}"></use></svg>
-            {{/icon}}
-          </span>
-        </div>
-        <div class="field">
-          <span class="label">Date</span>
-          <span class="data">
-            {{startsLong}} to {{endsLong}}
-          </span>
-        </div>
-        <div class="field">
-          <span class="label">Event Type</span>
-          <span class="data">
-            {{typeLabel}}
-          </span>
-        </div>
-        <div class="field">
-          <span class="label">Comments</span>
-          <span class="data">
-            {{comments}}
-          </span>
-        </div>
+  {{#event}}
+  <div class="accordion-header is-expanded {{color}}">
+    <a href="#">{{subject}}</a>
+  </div>
+  <div class="accordion-pane is-expanded">
+    <div class="accordion-content">
+      {{#status}}
+      <div class="field">
+        <span class="label">Status</span>
+        <span class="data">
+          {{status}}
+          {{#icon}}
+          <svg class="icon {{icon}}" focusable="false" aria-hidden="true" role="presentation" data-status="{{status}}"><use xlink:href="#{{icon}}"></use></svg>
+          {{/icon}}
+        </span>
       </div>
-    {{/event}}
+      {{/status}}
+      <div class="field">
+        <span class="label">Date</span>
+        <span class="data">
+          {{startsLong}} to {{endsLong}}
+        </span>
+      </div>
+      <div class="field">
+        <span class="label">Event Type</span>
+        <span class="data">
+          {{typeLabel}}
+        </span>
+      </div>
+      <div class="field">
+        <span class="label">Duration</span>
+        {{#duration}}
+        <span class="data">
+          {{duration}} {{durationUnits}}
+        </span>
+        {{/duration}}
+        {{#durationHours}}
+        <span class="data">
+          {{durationHours}} {{durationUnits}}
+        </span>
+        {{/durationHours}}
+      </div>
+      <div class="field">
+        <span class="label">Comments</span>
+        <span class="data{{#noComments}} is-placeholder{{/noComments}}" >
+          {{comments}}
+        </span>
+      </div>
+    </div>
+  </div>
+  {{/event}}
+</script>
+
+<script id="tmpl-modal" type="text/html">
+  {{#event}}
+  <div class="form-responsive row">
+    <div class="twelve columns">
+      <div class="field">
+        <label for="subject" class="label">Subject</label>
+        <input id="subject" type="text" value="{{subject}}">
+      </div>
+    </div>
+  </div>
+  <div class="form-responsive row">
+    <div class="six columns">
+      <div class="field">
+        <label for="starts" class="label">From</label>
+        <input id="starts" class="datepicker" name="starts" type="text" value="{{startsLocale}}"/>
+      </div>
+    </div>
+    <div class="six columns">
+      <div class="field">
+        <label for="ends" class="label">To</label>
+        <input id="ends" class="datepicker" name="ends" type="text" value="{{endsLocale}}"/>
+      </div>
+    </div>
+  </div>
+  <div class="form-responsive row">
+    <div class="twelve columns">
+      <div class="field">
+        <label for="type" class="label">Type</label>
+        <select id="type" class="dropdown" name="type">
+          {{#eventTypes}}
+          <option value="{{id}}">{{label}}</option>
+          {{/eventTypes}}
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-responsive row">
+    <div class="six columns">
+      <div class="field">
+        <label for="durationHours">Hours</label>
+        <input id="durationHours" name="durationHours" type="text" class="spinbox"{{#isAllDay}}disabled="true"{{/isAllDay}}  data-options="{min: 0, max: 24}" value="8"/>
+      </div>
+    </div>
+    <div class="six columns">
+      <div class="field field-checkbox">
+        <input type="checkbox" class="checkbox" name="isAllDay" id="isAllDay" {{#isAllDay}}checked="true"{{/isAllDay}}>
+        <label for="isAllDay" class="checkbox-label">All Day</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-responsive row">
+    <div class="twelve columns">
+      <div class="field">
+        <label for="comments" class="label">Comments</label>
+        <textarea id="comments" type="text" value="{{comments}}"></textarea>
+      </div>
+    </div>
+  </div>
+  {{/event}}
+  <div class="modal-buttonset">
+    <button id="cancel" data-cancel="submit" type="button" class="btn-modal-secondary"><span data-translate="text">Cancel</span></button>
+    <button id="submit" data-action="submit" type="button" class="btn-modal-primary hide-focus"><span data-translate="text">Submit</span></button>
   </div>
 </script>

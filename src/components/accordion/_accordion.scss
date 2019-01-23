@@ -217,7 +217,7 @@
           }
 
           .audible {
-            color: $white;
+            color: $theme-color-palette-white;
           }
         }
 
@@ -599,7 +599,7 @@
     pointer-events: none;
 
     span.audible {
-      color: #fff !important;
+      color: $theme-color-palette-white !important;
     }
 
     a {
@@ -677,6 +677,11 @@
   .accordion-content {
     color: $accordion-text-color;
     overflow-x: visible;
+
+    p {
+      font-size: 1.4rem;
+      -webkit-text-size-adjust: 100%;
+    }
   }
 
   @include left-align-cascade-styles-pane(20px, 40px, 40px);

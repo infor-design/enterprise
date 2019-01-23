@@ -7,25 +7,14 @@ demo:
     slug: example-index
   pages:
   - name: Defaulting a selected bubble
-    slug: example-selected
+    slug: test-selected
   - name: Set animation speed
-    slug: example-animation
-  - name: Example showing Get Selected value
-    slug: example-get-selected
-  - name: Example showing Set Selected value
-    slug: example-set-selected
+    slug: test-animation
 ---
 
 ## Configuration Options
 
-1. Bubble Chart Example [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-index?font=source-sans)
-2. Defaulting a selected bubble [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-selected?font=source-sans)
-3. Set animation speed [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-animation?font=source-sans)
-4. Example showing Get Selected value [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-get-selected?font=source-sans)
-5. Example showing Set Selected value [View Example](https://design.infor.com/code/ids-enterprise/latest/demo/bubble/example-set-selected?font=source-sans)
-
-The bubble chart is a line chart with the isBubble set that adds the bubble. Plus the z dimension in the data.
-See the [line chart api]( ../line) for more details.
+The bubble chart is a line chart with `isBubble` set. This adds the bubble and the z dimension in the data. This is based on the [line chart api]( ../line) see see that api for some more details.
 
 ## Code Example
 
@@ -223,7 +212,15 @@ var dataset = [{
 $('#line-example').chart({type: 'bubble', dataset: dataset});
 ```
 
-To control the tooltip contents and formatting you can also provide data on the first series.
+## Axis Formatting
+
+- You can customize and round values on the y axis by setting the `formatterString` option. This uses the d3-format syntax which is documented on the [d3-format api page.](https://github.com/d3/d3-format#api-reference). As an example you can use this pattern to round the tooltip values to currency and to two decimals.
+
+```javascript
+formatterString: '$,.2f'
+```
+
+- To control the tooltip contents and formatting you can also provide data on the first series.
 
 ```javascript
 name: 'Series 01',
@@ -235,10 +232,33 @@ value: {
   z: 'Market Share'
 }
 },
-// Use d3 Format - only value will be formated
+// Use d3 Format - only value will be formatted
 valueFormatterString: {
-z: '0.0%'
+    z: '0.0%'
 }
+```
+
+## Selection Model
+
+- You can initially mark a dot on the chart as selected by passing `selected: true` in the dataset element.
+
+```javascript
+{
+    name: 'Mar',
+    value: 14,
+    selected: true
+}
+```
+
+- You can also use the `getSelected` method to get the current selected line.
+- You can also use the `setSelected` method to set the current selected line. For this function you can pass in options such as `groupIndex`, `fieldName` and `fieldValue` to find the associated values.
+
+```javascript
+let options = {
+    groupIndex: 0,
+    fieldName: 'name',
+    fieldValue: 'Feb'
+};
 ```
 
 ## Accessibility

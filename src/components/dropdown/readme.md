@@ -28,8 +28,6 @@ demo:
     slug: example-readonly
   - name: Set value
     slug: example-set-value
-  - name: States
-    slug: example-states
   - name: Tooltips
     slug: example-tooltips
   - name: Updating the Contents

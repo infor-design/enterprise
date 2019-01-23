@@ -7,63 +7,63 @@ demo:
     slug: example-index
   pages:
   - name: Alternate Row Shading
-    slug: example-alternate-row-shading.html
+    slug: example-alternate-row-shading
   - name: Drilldown Formatter
-    slug: example-drilldown.html
+    slug: example-drilldown
   - name: Paging (Indeterminate)
-    slug: example-paging-indeterminate.html
+    slug: example-paging-indeterminate
   - name: Paging (Server Side)
-    slug: example-paging.html
+    slug: example-paging
   - name: Paging (Client Side)
-    slug: example-paging-client-side.html
+    slug: example-paging-client-side
   - name: Editing
-    slug: example-editable.html
+    slug: example-editable
   - name: Column Reordering
-    slug: example-reorder.html
+    slug: example-reorder
   - name: Expandable Row
-    slug: example-expandable-row.html
+    slug: example-expandable-row
   - name: Row Reordering
-    slug: example-row-reorder.html
+    slug: example-row-reorder
   - name: Filtering
-    slug: example-filter.html
+    slug: example-filter
   - name: Selection (Single)
-    slug: example-singleselect.html
+    slug: example-singleselect
   - name: Selection (Multiple)
-    slug: example-multiselect.html
+    slug: example-multiselect
   - name: Grouped Headers
-    slug: example-grouped-headers.html
+    slug: example-grouped-headers
   - name: Tooltips
-    slug: example-tooltips.html
+    slug: example-tooltips
   - name: Datagrid List Styling
-    slug: example-list.html
+    slug: example-list
   - name: Tree Grid
-    slug: example-tree.html
+    slug: example-tree
   - name: Using Nested Objects
-    slug: example-nested-objects.html
+    slug: example-nested-objects
   - name: Making a custom toolbar
-    slug: example-custom-toolbar.html
+    slug: example-custom-toolbar
   - name: Comments Grid (Flexible Row Size)
-    slug: example-comments.html
+    slug: example-comments
   - name: Fixed Header
-    slug: example-fixed-header.html
+    slug: example-fixed-header
   - name: Datagrid Grouping
-    slug: example-grouping.html
+    slug: example-grouping
   - name: Datagrid Grouping (Totals)
-    slug: example-grouping-totals.html
+    slug: example-grouping-totals
   - name: Selection (Mixed)
-    slug: example-mixed-selection.html
+    slug: example-mixed-selection
   - name: Summary Row
-    slug: example-summary-row.html
+    slug: example-summary-row
   - name: Export to Excel
-    slug: example-export-from-button.html
+    slug: example-export-from-button
   - name: Export with trailing negative signs moved in front
-    slug: example-export-convert-negative.html
+    slug: example-export-convert-negative
   - name: Empty Message Area
-    slug: example-empty-message.html
+    slug: example-empty-message
   - name: Expandable Cells
-    slug: example-expandable-cells.html
+    slug: example-expandable-cells
   - name: Dynamic Column Spans
-    slug: example-colspan.html
+    slug: example-colspan
 ---
 ## Code Example
 
@@ -150,17 +150,17 @@ $('#datagrid').datagrid({
 |`Integer` | Formats the numeric data in the current columns integer format. Or you can use the `numberFormat` option for customization. See [locale]( ../locale) for number formatting patterns.|
 |`Hyperlink` | Formats the current data into a clickable hyperlink. You can use the `href` value to pass the links href value in the column (this defaults to '#'). You can use the `text` column value to change the text of the link, in doing so the column value becomes the link contents. `hyperlinkTooltip` can be added to give tooltip text for the link. The `icon` option can be added to provide a icon next to the link.|
 |`Drilldown` | Formats the cell with a drill down icon button in it. This type of column is used to drill into this records details. Use the `click` column option to provide the javascript for that logic.|
-|`RowReorder` | Formats the cell with a reorder icon button in it. This should be used in conjunction with the row-reorder feature. See [Example](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-row-reorder?font=source-sans)|
+|`RowReorder` | Formats the cell with a reorder icon button in it. This should be used in conjunction with the row-reorder feature. See <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-row-reorder?font=source-sans" target="_blank">Example</a>|
 |`Checkbox` | Formats the cell with a checkbox in it. It can made null or undefined to unchecked and handles either 1/0 as checked un/checked or true/false.|
 |`SelectionCheckbox` | Formats the cell with a selection checkbox in it. The selection functionality of the grid will populate this with the current rows selection attributes and populate the header with a select all / deselect all checkbox.|
 |`Actions` | Formats the cell with a .. actions button icon. You can use the `menuId` option to pass in an id of a ul item. The menu will be the same structure as the standard popupmenu.|
 |`Textarea` | Formats the cell with readonly multi line text area. The column rows will size to the contents of the largest Textarea cell.|
-|`Editor` | Formats the cell with readonly Rich Text Editor. See example [See example]( https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/test-editable-editor-singleline.html?font=source-sans). The `singleline` option if set to true will cut the text to single line and show a tooltip.|
-|`Expander` | Formats the cell with an expander chevron. This will act on the `click` option or toggle the collapsed row, when using the [expandable row option](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-expandable-row?font=source-sans)|
-|`GroupRow` | Formats this cell / column as the group row. If a `groupRowFormatter` is provided this can be used to return customized html for the group row details. If not it will show the expander icon with the data of the group name. You can pass `expanded` true in the column to expend the row, this can also be a function that dynamically can determine if the row should be expanded. See the [grouping examples](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-grouping?font=source-sans)|
-|`GroupFooterRow` | Formats this entire row as the last row in a group when using grouping. The option should be a function that returns the `<tr>` markup for the last group row. See the [group totals example](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-grouping-totals?font=source-sans)|
-|`SummaryRow` | Formats this entire column / row as the summary row. The option should be a function that returns the `<tr>` markup for the summary (last) row. See the [summary row example](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-summary-row?font=source-sans)|
-|`Tree` | Formats this entire column as the tree row when using the [tree grid example](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-tree?font=source-sans). This interacts with the `treeDepth`, `children` and `depth` options to format into a tree structure.|
+|`Editor` | Formats the cell with readonly Rich Text Editor. See example <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/test-editable-editor-singleline.html?font=source-sans" target="_blank">See example</a>. The `singleline` option if set to true will cut the text to single line and show a tooltip.|
+|`Expander` | Formats the cell with an expander chevron. This will act on the `click` option or toggle the collapsed row, when using the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-expandable-row?font=source-sans" target="_blank">expandable row option</a>|
+|`GroupRow` | Formats this cell / column as the group row. If a `groupRowFormatter` is provided this can be used to return customized html for the group row details. If not it will show the expander icon with the data of the group name. You can pass `expanded` true in the column to expend the row, this can also be a function that dynamically can determine if the row should be expanded. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-grouping?font=source-sans" target="_blank">grouping examples</a>|
+|`GroupFooterRow` | Formats this entire row as the last row in a group when using grouping. The option should be a function that returns the `<tr>` markup for the last group row. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-grouping-totals?font=source-sans" target="_blank">group totals example</a>|
+|`SummaryRow` | Formats this entire column / row as the summary row. The option should be a function that returns the `<tr>` markup for the summary (last) row. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-summary-row?font=source-sans" target="_blank">summary row example</a>
+|`Tree` | Formats this entire column as the tree row when using the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-tree?font=source-sans" target="_blank">tree grid example</a>. This interacts with the `treeDepth`, `children` and `depth` options to format into a tree structure.|
 |`Badge` | Formats this entire column as a badge element. You can pass in ranges option to format the badge colors for example `ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]` for example any value between 151 and 999 will add the info class which formats the color in info blue. Default color is grey.|
 |`Tag` | Formats this entire column as a tag element. You can use the ranges element like the tag and badge formatter.|
 |`Alert` | Formats this entire column as a alert element with text and an alert icon. You can use the ranges element like the tag and badge formatter.|
@@ -169,7 +169,7 @@ $('#datagrid').datagrid({
 |`Dropdown` | Formats the cell to go along with a dropdown editor. It will lookup the value in the column `options` array and display the label for the given key. This can be used to resolve code to label displays. It supports the `inlineEditor` option as well for list grids.|
 |`Spinbox` | Formats the cell as text for use with a Spinbox editor. Also supports the `inlineEditor` option as well for list grids.|
 |`Favorite` | Formats the cell with a favorite star. The star's value (checked or unchecked) is populated like the checkbox column with a boolean or truthy value in the data. The `isChecked` function or boolean can be used to more dynamically check set state.|
-|`TargetedAchievement` | Formats the cell with the a targeted achievement chart. The row value will be divided by 100 to form a percent and the chart will show the percent value. See the [targeted achievement example](https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/test-targeted-achievement.html?font=source-sans)|
+|`TargetedAchievement` | Formats the cell with the a targeted achievement chart. The row value will be divided by 100 to form a percent and the chart will show the percent value. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/test-targeted-achievement.html?font=source-sans" target="_blank">targeted achievement example</a>|
 
 ## Creating Custom Formatters
 

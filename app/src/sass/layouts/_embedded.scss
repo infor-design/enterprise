@@ -1,0 +1,35 @@
+// Embedded Layout
+// =====================================
+
+.layout-embedded {
+  height: 100%;
+
+  .custom-header {
+    background-color: $theme-color-palette-white;
+    height: 38px;
+    width: 100%;
+    z-index: 100;
+
+    button {
+      border-bottom: 2px solid transparent;
+      color: $theme-color-palette-graphite-60;
+      display: block;
+      float: left;
+      font-size: 14px;
+      line-height: 34px;
+      margin: 0 10px;
+      padding: 0 10px;
+      position: relative;
+
+      &:hover {
+        border-bottom: 2px solid $theme-color-palette-black;
+        color: $theme-color-palette-black;
+      }
+
+      &:active,
+      &.custom-active {
+        border-bottom: 2px solid $theme-color-brand-primary-base;
+      }
+    }
+  }
+}

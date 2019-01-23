@@ -7,7 +7,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Button example-index tests', () => { //eslint-disable-line
+describe('Button example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/button/example-index');
   });
@@ -290,6 +290,26 @@ describe('Button example-100-percent tests', () => {
       const buttonElContainer = await element(by.id('maincontent'));
 
       expect(await browser.protractorImageComparison.checkElement(buttonElContainer, 'button-width-320')).toEqual(0);
+    });
+  }
+});
+
+describe('Button secondary border tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/button/test-secondary-border.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.css('div[role=main]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkScreen('button-secondary')).toEqual(0);
     });
   }
 });

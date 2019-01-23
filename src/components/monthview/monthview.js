@@ -13,6 +13,7 @@ const COMPONENT_NAME_DEFAULTS = {
   activeDateIslamic: null,
   isPopup: false,
   headerStyle: 'full',
+  firstDayOfWeek: null,
   disable: {
     dates: [],
     minDate: '',
@@ -54,6 +55,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {number} [settings.activeDateIslamic] The date to highlight as selected/today (as an array for islamic)
  * @param {number} [settings.isPopup] Is it in a popup (datepicker using it)
  * @param {number} [settings.headerStyle] Configure the header, this can be 'simple' or 'full'. Full adds a picker and today link.
+ * @param {number} [settings.firstDayOfWeek=null] Set first day of the week. '1' would be Monday.
  * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
@@ -212,8 +214,7 @@ MonthView.prototype = {
         `<div class="monthview-header full">
           ${(Locale.isRTL() ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
           <span class="monthview-datepicker">
-            <label for="monthview-datepicker-field" class="label audible">${Locale.translate('Today')}</label>
-            <input id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
+            <input aria-label="${Locale.translate('Today')}" id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
           </span>
           <a class="hyperlink today" href="#">${Locale.translate('Today')}</a>
         </div>`);
@@ -313,6 +314,8 @@ MonthView.prototype = {
       this.currentYear = year;
     }
 
+    this.currentDay = now.getDate();
+
     let days = this.currentCalendar.days.narrow;
     days = days || this.currentCalendar.days.abbreviated;
 
@@ -325,7 +328,12 @@ MonthView.prototype = {
     this.currentYear = year;
 
     // Set the Days of the week
-    const firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
+    let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
+
+    if (this.settings.firstDayOfWeek) {
+      firstDayofWeek = this.settings.firstDayOfWeek;
+    }
+
     this.dayNames.find('th').each(function (i) {
       $(this).text(days[(i + firstDayofWeek) % 7]);
     });
@@ -356,7 +364,7 @@ MonthView.prototype = {
     // Adjust days of the week
     // lead days
     const firstDayOfMonth = this.firstDayOfMonth(year, month);
-    const leadDays = ((firstDayOfMonth - (this.currentCalendar.firstDayofWeek || 0)) + 7) % 7;
+    const leadDays = ((firstDayOfMonth - firstDayofWeek) + 7) % 7;
     const lastMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 1 : 0));
     const thisMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 0 : 1));
     let nextMonthDayCnt = 1;
@@ -380,13 +388,13 @@ MonthView.prototype = {
         self.setLegendColor(th, exYear, exMonth, exDay);
         self.dayMap.push({ key: stringUtils.padDate(exYear, exMonth, exDay), elem: th });
         th.addClass('alternate prev-month').html(`<span class="day-container"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(exDay)}</span></span>`);
-        th.data('key', stringUtils.padDate(exYear, exMonth, exDay));
+        th.attr('data-key', stringUtils.padDate(exYear, exMonth, exDay));
       }
 
       if (i >= leadDays && dayCnt <= thisMonthDays) {
         self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
         th.html(`<span class="day-container"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(dayCnt)}</span></span>`);
-        th.data('key', stringUtils.padDate(year, month, dayCnt));
+        th.attr('data-key', stringUtils.padDate(year, month, dayCnt));
 
         // Add Selected Class to Selected Date
         if (self.isIslamic) {
@@ -398,19 +406,29 @@ MonthView.prototype = {
           const tMinutes = elementDate.getMinutes();
           const tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
 
-          if ((new Date(year, month, dayCnt))
-            .setHours(tHours, tMinutes, tSeconds, 0) === elementDate
-            .setHours(tHours, tMinutes, tSeconds, 0)) {
-            th.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true').attr('tabindex', '0');
+          const newDate = (new Date(year, month, dayCnt)).setHours(tHours, tMinutes, tSeconds, 0);
+
+          if (newDate === elementDate.setHours(tHours, tMinutes, tSeconds, 0)) {
+            th
+              .addClass(`is-selected${(s.range.useRange ? ' range' : '')}`)
+              .attr('aria-selected', 'true').attr('tabindex', '0');
           }
         }
 
-        if (dayCnt === self.todayDay && self.currentMonth === self.todayMonth &&
-          self.currentYear === self.todayYear) {
+        if (dayCnt === self.todayDay
+            && self.currentMonth === self.todayMonth
+            && self.currentYear === self.todayYear
+        ) {
           th.addClass('is-today');
         }
 
         th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), { date: 'full' }));
+        const startKey = stringUtils.padDate(
+          self.currentYear,
+          self.currentMonth,
+          dayCnt
+        );
+        th.attr('data-key', startKey);
 
         self.setDisabled(th, year, month, dayCnt);
         self.setLegendColor(th, year, month, dayCnt);
@@ -430,7 +448,7 @@ MonthView.prototype = {
         self.setLegendColor(th, exYear, exMonth, exDay);
 
         th.addClass('alternate next-month').html(`<span class="day-container"><span aria-hidden="true" class="day-text">${nextMonthDayCnt}</span></span>`);
-        th.data('key', stringUtils.padDate(exYear, exMonth, exDay));
+        th.attr('data-key', stringUtils.padDate(exYear, exMonth, exDay));
         nextMonthDayCnt++;
       }
     });
@@ -445,10 +463,14 @@ MonthView.prototype = {
 
     if (!this.currentDate) {
       if (this.isIslamic) {
-        this.currentIslamicDate = [self.currentYear, self.currentMonth, 1];
-        this.currentDate = this.conversions.toGregorian(self.currentYear, self.currentMonth, 1);
+        this.currentIslamicDate = [self.currentYear, self.currentMonth, self.currentDay];
+        this.currentDate = this.conversions.toGregorian(
+          self.currentYear,
+          self.currentMonth,
+          self.currentDay
+        );
       } else {
-        this.currentDate = new Date(self.currentYear, self.currentMonth, 1);
+        this.currentDate = new Date(self.currentYear, self.currentMonth, self.currentDay);
       }
     }
 
@@ -833,8 +855,8 @@ MonthView.prototype = {
     // Allow dates to be selected
     if (self.settings.selectable) {
       self.element.addClass('is-selectable').off('click.monthview-day').on('click.monthview-day', 'td', (e) => {
-        const data = $(e.currentTarget).data();
-        const key = data.key;
+        const key = e.currentTarget.getAttribute('data-key');
+        self.lastClickedKey = key;
 
         if (e.currentTarget.classList.contains('is-disabled')) {
           return;
@@ -905,13 +927,13 @@ MonthView.prototype = {
     };
 
     delete this.isKeyClick;
-    this.element.trigger('selected', args);
+    this.element.find('td.is-selected').removeClass('is-selected').removeAttr('tabindex');
+    $(node).addClass('is-selected').attr('tabindex', '0').focus();
+
     if (this.settings.onSelected) {
       this.settings.onSelected(node, args);
     }
-
-    this.element.find('td.is-selected').removeClass('is-selected').removeAttr('tabindex');
-    $(node).addClass('is-selected').attr('tabindex', '0').focus();
+    this.element.trigger('selected', args);
   },
 
   /**

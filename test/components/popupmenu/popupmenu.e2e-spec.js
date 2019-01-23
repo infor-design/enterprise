@@ -40,7 +40,7 @@ describe('Contextmenu index tests', () => {
 
 describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/popupmenu/example-selectable?nofrills=true');
+    await utils.setPage('/components/popupmenu/example-selectable?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -49,7 +49,7 @@ describe('Popupmenu example-selectable tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-selectable', async () => {
-      const popupmenuSection = await element(by.id('main-content'));
+      const popupmenuSection = await element(by.css('.no-frills'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
@@ -144,12 +144,12 @@ describe('Popupmenu example-selectable tests', () => {
 
 describe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/popupmenu/example-selectable-multiple');
+    await utils.setPage('/components/popupmenu/example-selectable-multiple?layout=nofrills');
   });
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-selectable-multiple', async () => {
-      const popupmenuSection = await element(by.id('maincontent'));
+      const popupmenuSection = await element(by.css('.no-frills'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
@@ -228,5 +228,39 @@ describe('Contextmenu created dynamically tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('grid-actions-menu'))), config.waitsFor);
 
     expect(await element(by.id('grid-actions-menu')).getAttribute('class')).toContain('is-open');
+  });
+});
+
+describe('Contextmenu immediate tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tree/example-context-menu');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should more than once on right click', async () => {
+    let input = await element.all(by.css('.tree a')).first();
+    await browser.actions().mouseMove(input).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tree-popupmenu'))), config.waitsFor);
+
+    expect(await element(by.id('tree-popupmenu')).getAttribute('class')).toContain('is-open');
+    await element.all(by.css('#tree-popupmenu a')).first().sendKeys(protractor.Key.ESCAPE);
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('tree-popupmenu'))), config.waitsFor);
+
+    expect(await element(by.id('tree-popupmenu')).getAttribute('class')).not.toContain('is-open');
+
+    input = await element.all(by.css('.tree a')).first();
+    await browser.actions().mouseMove(input).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tree-popupmenu'))), config.waitsFor);
   });
 });

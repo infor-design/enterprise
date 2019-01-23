@@ -6,22 +6,26 @@
 // styles.
 //================================================== //
 
-// Enterprise color palette
-@import '../../src/components/colors/colorpalette';
-
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/tokens/web/theme-soho';
+
+// Enterprise color palette
+@import '../../src/components/colors/colorpalette';
 
 // Soho Core/Helpers
 @import '../../src/core/config';
 @import '../../src/core/mixins';
 
+// Layout styles
+@import 'sass/layouts/nofrills';
+@import 'sass/layouts/embedded';
+
 // Demo-specific styles
 @import 'sass/code';
-@import 'sass/nofrills';
 @import 'sass/directory';
 @import 'sass/grid';
 @import 'sass/forms';
 @import 'sass/patterns';
 @import 'sass/typography';
 @import 'sass/wizard';
+@import 'sass/info-popup';

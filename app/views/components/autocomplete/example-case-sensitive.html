@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <p>Try typing "california" or "California"</p>
+      </div>
+    <div class="field">
+      <label for="autocomplete-default">States</label>
+      <input type="text" autocomplete="off" class='autocomplete' placeholder="Type to Search" id="autocomplete-default">
+    </div>
+  </div>
+</div>
+
+<script id="test-scripts">
+  $('#autocomplete-default').autocomplete({
+    caseSensitive: true,
+    source: [
+      'California',
+      'cAlIfOrNiA',
+      'CaLiFoRnIa',
+      'california',
+      'CALIFORNIA'
+    ]
+  });
+
+  $('#autocomplete-default').on('selected', function (e, args) {
+    console.log(args.parent().attr('data-value'));
+  });
+</script>

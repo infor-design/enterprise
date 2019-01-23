@@ -20,13 +20,17 @@ columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: tru
 columns.push({
   id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, filterType: 'Text', editor: Editors.Input
 });
-columns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true, filterType: 'Text', required: true, validate: 'required' });
+columns.push({
+  id: 'activity', name: 'Activity', field: 'activity', reorderable: true, filterType: 'Text', required: true, validate: 'required', editor: Editors.Input
+});
 columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden', filterType: 'Text' });
 columns.push({
-  id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, validate: 'required', numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' }
+  id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, validate: 'required', numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' }, editor: Editors.Input
 });
 columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent' } });
-columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy', validate: 'required date' });
+columns.push({
+  id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy', validate: 'required date', editor: Editors.Date
+});
 columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, filterType: 'Text', formatter: Formatters.Text });
 
 describe('Datagrid Validation API', () => {
@@ -114,15 +118,15 @@ describe('Datagrid Validation API', () => {
     expect(document.body.querySelectorAll('tbody tr')[3].querySelectorAll('.icon-rowstatus').length).toEqual(0);
   });
 
-  it('Should be able to set/remove rowStatus type Confirm', () => {
-    datagridObj.rowStatus(4, 'confirm', 'Confirm');
+  it('Should be able to set/remove rowStatus type Success', () => {
+    datagridObj.rowStatus(4, 'success', 'Success');
 
-    expect(document.body.querySelectorAll('tbody tr')[4].classList.contains('rowstatus-row-confirm')).toBeTruthy();
+    expect(document.body.querySelectorAll('tbody tr')[4].classList.contains('rowstatus-row-success')).toBeTruthy();
     expect(document.body.querySelectorAll('tbody tr')[4].querySelectorAll('.icon-rowstatus').length).toEqual(1);
 
     datagridObj.resetRowStatus();
 
-    expect(document.body.querySelectorAll('tbody tr')[4].classList.contains('rowstatus-row-confirm')).toBeFalsy();
+    expect(document.body.querySelectorAll('tbody tr')[4].classList.contains('rowstatus-row-success')).toBeFalsy();
     expect(document.body.querySelectorAll('tbody tr')[4].querySelectorAll('.icon-rowstatus').length).toEqual(0);
   });
 
@@ -304,6 +308,120 @@ describe('Datagrid Validation API', () => {
     expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
     expect(cell2.classList.contains('is-dirty-cell')).toBeFalsy();
     expect(datagridObj.dirtyRows().length).toEqual(0);
+  });
+
+  it('Should clear dirty all cells', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+    expect(datagridObj.dirtyCells().length).toEqual(0);
+    expect(datagridObj.dirtyRows().length).toEqual(0);
+
+    const cell1 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+    const cell2 = document.querySelector('tr:nth-child(2) td:nth-child(3)');
+    const cell3 = document.querySelector('tr:nth-child(2) td:nth-child(2)');
+
+    cell1.click();
+    let input = cell1.querySelector('input');
+    input.value = 'Cell test value 1';
+    cell2.click();
+    input = cell2.querySelector('input');
+    input.value = 'Cell test value 2';
+    cell3.click();
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(2);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(cell2.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(datagridObj.dirtyCells().length).toEqual(2);
+    expect(datagridObj.dirtyRows().length).toEqual(2);
+
+    datagridObj.clearDirty();
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+    expect(cell2.classList.contains('is-dirty-cell')).toBeFalsy();
+    expect(datagridObj.dirtyCells().length).toEqual(0);
+    expect(datagridObj.dirtyRows().length).toEqual(0);
+  });
+
+  it('Should clear dirty all cells in row', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+    expect(datagridObj.dirtyCells().length).toEqual(0);
+    expect(datagridObj.dirtyRows().length).toEqual(0);
+
+    const cell1 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+    const cell2 = document.querySelector('tr:nth-child(2) td:nth-child(3)');
+    const cell3 = document.querySelector('tr:nth-child(2) td:nth-child(4)');
+    const cell4 = document.querySelector('tr:nth-child(3) td:nth-child(2)');
+
+    cell1.click();
+    let input = cell1.querySelector('input');
+    input.value = 'Cell test value 1';
+    cell2.click();
+    input = cell2.querySelector('input');
+    input.value = 'Cell test value 2';
+    cell3.click();
+    input = cell3.querySelector('input');
+    input.value = 'Cell test value 3';
+    cell4.click();
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(3);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(cell2.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(cell3.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(datagridObj.dirtyCells().length).toEqual(3);
+    expect(datagridObj.dirtyRows().length).toEqual(2);
+
+    const row = 1;
+    datagridObj.clearDirtyRow(row);
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(cell2.classList.contains('is-dirty-cell')).toBeFalsy();
+    expect(cell3.classList.contains('is-dirty-cell')).toBeFalsy();
+    expect(datagridObj.dirtyCells().length).toEqual(1);
+    expect(datagridObj.dirtyRows().length).toEqual(1);
+  });
+
+  it('Should clear dirty a specific cell', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+    expect(datagridObj.dirtyCells().length).toEqual(0);
+    expect(datagridObj.dirtyRows().length).toEqual(0);
+
+    const cell1 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+    const cell2 = document.querySelector('tr:nth-child(2) td:nth-child(3)');
+    const cell3 = document.querySelector('tr:nth-child(2) td:nth-child(2)');
+
+    cell1.click();
+    let input = cell1.querySelector('input');
+    input.value = 'Cell test value 1';
+    cell2.click();
+    input = cell2.querySelector('input');
+    input.value = 'Cell test value 2';
+    cell3.click();
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(2);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(cell2.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(datagridObj.dirtyCells().length).toEqual(2);
+    expect(datagridObj.dirtyRows().length).toEqual(2);
+
+    const row = 1;
+    const cell = 2;
+    datagridObj.clearDirtyCell(row, cell);
+    //
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(cell2.classList.contains('is-dirty-cell')).toBeFalsy();
+    expect(datagridObj.dirtyCells().length).toEqual(1);
+    expect(datagridObj.dirtyRows().length).toEqual(1);
   });
 
   it('Should show in title non visible error on another page', () => {

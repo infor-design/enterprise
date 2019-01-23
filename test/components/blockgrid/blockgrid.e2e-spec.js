@@ -61,14 +61,14 @@ describe('Blockgrid example-mixed-selection tests', () => {
 
 describe('Blockgrid example-mixed-selection responsive tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/blockgrid/example-mixed-selection?nofrills=true');
+    await utils.setPage('/components/blockgrid/example-mixed-selection?layout=nofrills');
   });
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-responsive', async () => {
-      const blockgridEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('blockgrid')).toEqual(0);
@@ -78,9 +78,9 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(500, 600);
       await browser.driver.sleep(config.sleep);
-      const blockgridEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('blockgrid-500px')).toEqual(0);
@@ -92,9 +92,9 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(320, 480);
       await browser.driver.sleep(config.sleep);
-      const blockgridEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('blockgrid-320px')).toEqual(0);
@@ -151,9 +151,9 @@ describe('Blockgrid example-multiselect tests', () => {
     await browser.driver.sleep(config.sleep);
     const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
     const blockEl2 = await element.all(by.css('.block.is-selectable')).get(2);
-    const blockgridEl = await element(by.id('blockgrid'));
+    const containerEl = await element(by.id('blockgrid'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(blockgridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
     await browser.driver.sleep(config.sleep);
 
     await blockEl1.click();

@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Bar Chart example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/example-index?nofrills=true');
+    await utils.setPage('/components/bar/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -26,6 +26,8 @@ describe('Bar Chart example-index tests', () => {
     const barTestEl = await element(by.css('.bar.series-1'));
 
     await barEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.is-selected'))), config.waitsFor);
 
     expect(await barEl.getAttribute('class')).toContain('is-selected');
     expect(await barTestEl.getCssValue('opacity')).toBe('0.6');
@@ -47,7 +49,7 @@ describe('Bar Chart example-index tests', () => {
 
 describe('Bar Chart example-selected tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/example-selected');
+    await utils.setPage('/components/bar/test-selected');
   });
 
   it('Should not have errors', async () => {
@@ -98,7 +100,7 @@ describe('Bar Chart example-hide-legend tests', () => {
 
 describe('Bar Chart example-patterns tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/example-patterns');
+    await utils.setPage('/components/bar/test-patterns');
   });
 
   it('Should not have errors', async () => {

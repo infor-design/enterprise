@@ -34,6 +34,7 @@ const COMPONENT_NAME = 'datepicker';
  *  rounds the minutes value to the nearest interval when the field is blurred.
  * @param {string} [settings.dateFormat='locale'] Defaults to current locale but can be
  * @param {string} [settings.placeholder=false] Text to show in input element while empty.
+ * @param {number} [settings.firstDayOfWeek=null] Set first day of the week. '1' would be Monday.
  * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
@@ -88,6 +89,7 @@ const DATEPICKER_DEFAULTS = {
   roundToInterval: undefined,
   dateFormat: 'locale', // or can be a specific format
   placeholder: false,
+  firstDayOfWeek: null,
   disable: {
     dates: [],
     minDate: '',
@@ -1208,6 +1210,11 @@ DatePicker.prototype = {
       (s.range.start && s.range.end) ||
       (s.range.data && s.range.data.startDate && s.range.data.endDate))) {
       if (!this.setRangeValueFromField()) {
+        if (this.currentDate && typeof this.currentDate.getMonth === 'function') {
+          this.currentMonth = this.currentDate.getMonth();
+          this.currentYear = this.currentDate.getFullYear();
+          this.currentDay = this.currentDate.getDate();
+        }
         return;
       }
     }

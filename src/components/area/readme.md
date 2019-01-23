@@ -6,16 +6,10 @@ demo:
   - name: Main Example
     slug: example-index
   pages:
-  - name: Make the Tooltip Formatted (Currency)
-    slug: example-formatter
   - name: Set animation speed
-    slug: example-animation
-  - name: Make a slice selected by default
-    slug: example-selected
-  - name: Example showing Get Selected value
-    slug: example-get-selected
-  - name: Example showing Set Selected value
-    slug: example-set-selected
+    slug: test-animation
+  - name: Show an empty message when there is no data
+    slug: test-empty
 ---
 
 The area chart is a line chart with the isArea set that adds the fills. See the [line chart api]( ../line) for more details.
@@ -92,6 +86,37 @@ var dataset = [{
 }];
 
 $('#area-example').chart({type: 'area', dataset: dataset});
+```
+
+## Axis Formatting
+
+- You can customize and round values on the y axis by setting the `formatterString` option. This uses the d3-format syntax which is documented on the [d3-format api page.](https://github.com/d3/d3-format#api-reference). As an example you can use this pattern to round the tooltip values to currency with 2 decimals.
+
+```javascript
+formatterString: '$,.2f'
+```
+
+## Selection Model
+
+- You can initially mark a dot on the chart as selected by passing selected: true in the dataset element.
+
+```javascript
+{
+  name: 'Mar',
+  value: 14,
+  selected: true
+}
+```
+
+- You can use the `getSelected` method to get the currently selected line.
+- You can use the `setSelected` method to set the current selected line. For this function you can pass in options such as groupIndex, fieldName and fieldValue to find the associated values.
+
+```javascript
+let options = {
+    groupIndex: 0,
+    fieldName: 'name',
+    fieldValue: 'Feb'
+};
 ```
 
 ## Accessibility

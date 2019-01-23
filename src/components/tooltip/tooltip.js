@@ -35,7 +35,8 @@ const COMPONENT_NAME = 'tooltip';
  * @param {string} [settings.extraClass] Extra css class.
  * @param {object} [settings.placementOpt] Placement options.
  * @param {string} [settings.maxWidth] Toolip max width.
-* @param {boolean} [settings.initializeContent] Init the content in the tooltip.
+ * @param {boolean} [settings.initializeContent] Init the content in the tooltip.
+ * @param {string} [settings.headerClass] If set this color will be used on the header (if a popover).
  */
 
 const TOOLTIP_DEFAULTS = {
@@ -55,7 +56,8 @@ const TOOLTIP_DEFAULTS = {
   extraClass: null,
   placementOpts: {},
   maxWidth: null,
-  initializeContent: true
+  initializeContent: true,
+  headerClass: null
 };
 
 function Tooltip(element, settings) {
@@ -89,6 +91,7 @@ Tooltip.prototype = {
    */
   init() {
     this.uniqueId = utils.uniqueId(this.element, 'tooltip');
+    this.isTouch = env.features.touch;
     this.setup();
     this.appendTooltip();
 
@@ -132,7 +135,7 @@ Tooltip.prototype = {
       this.element.removeAttr('title');
     }
 
-    if (this.settings.trigger === 'hover') {
+    if (this.settings.trigger === 'hover' && this.isTouch) {
       this.element.addClass('longpress-target');
     }
 
@@ -246,13 +249,16 @@ Tooltip.prototype = {
     if (this.settings.trigger === 'hover' && !this.settings.isError) {
       ((this.element.is('.dropdown, .multiselect, span.longpress-target')) ? this.activeElement : this.element)
         .on(`mouseenter.${COMPONENT_NAME}`, () => {
+          if (self.isTouch) {
+            return;
+          }
           showOnTimer();
         })
         .on(`mouseleave.${COMPONENT_NAME}`, () => {
           hideOnTimer();
         })
         .on(`click.${COMPONENT_NAME}`, () => {
-          if (!env.features.touch) {
+          if (self.isTouch) {
             return;
           }
           showImmediately();
@@ -507,6 +513,10 @@ Tooltip.prototype = {
         title = document.createElement('div');
         DOM.html(title, this.settings.title, '*');
         title.classList.add('tooltip-title');
+
+        if (this.settings.headerClass) {
+          DOM.addClass(title, this.settings.headerClass, 'filled');
+        }
         titleFrag.appendChild(title);
         this.tooltip[0].insertBefore(titleFrag, this.tooltip[0].firstChild);
       } else {
@@ -522,7 +532,7 @@ Tooltip.prototype = {
         $.createIcon({ classes: ['icon-close'], icon: 'close' })
       }<span>Close</span>` +
         '</button>').on('click', () => {
-        self.hide();
+        self.hide(true);
       });
 
       title.appendChild(closeBtnX[0]);
@@ -618,7 +628,7 @@ Tooltip.prototype = {
      */
     this.element.trigger('show', [this.tooltip]);
 
-    const mouseUpEventName = env.features.touch ? 'touchend' : 'mouseup';
+    const mouseUpEventName = this.isTouch ? 'touchend' : 'mouseup';
 
     setTimeout(() => {
       $(document)
@@ -639,6 +649,13 @@ Tooltip.prototype = {
 
           if (target.closest('.popover').length === 0 &&
               target.closest('.dropdown-list').length === 0) {
+            self.hide();
+          }
+
+          // Closes patepicker dialog closes when clicking on a parent popover
+          if (target.closest('.popover').length === 1 &&
+              target.closest('.popover').not('.monthview-popup').length &&
+              self.element.prev().is('.datepicker')) {
             self.hide(e);
           }
         })
@@ -783,10 +800,11 @@ Tooltip.prototype = {
 
   /**
    * Hides the Tooltip/Popover
+   * @param {boolean} [force] Force the tooltip to hide no matter the settings.
    * @returns {void}
    */
-  hide() {
-    if (this.settings.keepOpen || !this.visible) {
+  hide(force) {
+    if ((this.settings.keepOpen && !force) || !this.visible) {
       return;
     }
 
@@ -815,7 +833,7 @@ Tooltip.prototype = {
      * @property {object} event - The jquery event object
      * @property {object} tooltip - instance
      */
-    this.element.trigger('hide', [this.tooltip]);
+    this.element.triggerHandler('hide', [this.tooltip]);
   },
 
   /**

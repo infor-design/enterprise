@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { Environment as env } from '../../utils/environment';
 
 // jQuery Components
 import '../listview/listview.jquery';
@@ -90,7 +91,7 @@ SwapList.prototype = {
   init() {
     const s = this.settings;
     s.draggable = $.extend(true, SWAPLIST_DEFAULTS.draggable, s.draggable);
-    this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    this.isTouch = env.features.touch;
     this.isAdditional = $(`${s.additionalClass} .listview`, this.element).length > 0;
 
     if (this.isTouch) {
@@ -179,8 +180,8 @@ SwapList.prototype = {
       s.selectedBtnRight}`, this.element);
 
     this.tabButtonsStr = `${
-      s.availableBtn} ${
-      s.additionalBtn} ${
+      s.availableBtn}, ${
+      s.additionalBtn}, ${
       this.selectedButtons.length > 1 ?
         s.selectedBtnRight : s.selectedBtnLeft}`;
 
@@ -726,10 +727,15 @@ SwapList.prototype = {
           this.element.triggerHandler('swapupdate', [this.selections.move]);
         }
       }
+
+      this.selections.items.forEach((elem) => {
+        elem.show();
+      });
+
       this.clearDropeffects();
       this.clearSelections();
       this.items.removeClass('is-dragging is-dragging-touch');
-    }, 100);
+    }, 400);
   },
 
   /**
@@ -833,8 +839,9 @@ SwapList.prototype = {
    */
   unbind() {
     this.actionButtons.off('click.swaplist');
-    this.containers.off('keydown.swaplist');
+    this.containers.off('keydown.swaplist', '.listview');
     this.selectedButtons.off('keydown.swaplist');
+    this.element.off('keydown.swaplist', this.tabButtonsStr);
     this.element.off(`${this.dragStart} ${this.dragEnterWhileDragging} ${this.dragOverWhileDragging} ${this.dragEnd}`, this.dragElements);
 
     $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder-touch2, #sl-placeholder').remove();
@@ -906,8 +913,8 @@ SwapList.prototype = {
 
     // KEYSTROKE ===============================================================================
     // Keydown event to implement selections
-    self.containers.on('keydown.swaplist', function (e) {
-      const container = $(this);
+    self.containers.on('keydown.swaplist', '.listview', function (e) {
+      const container = $(this).closest(self.containers);
       e = e || window.event;
       if (e.keyCode === 77 && self.hasModifier(e)) { // Modifier + M
         if (!container.is(settings.selectedClass) ||
@@ -947,8 +954,24 @@ SwapList.prototype = {
       const keyCode = e.keyCode || e.which;
 
       if (keyCode === 9 && !e.shiftKey) { // Tab key
-        $('li:first-child', btn.closest('.card')).focus();
-        e.preventDefault();
+        const card = btn.closest('.card')[0];
+        const items = [].slice.call(card.querySelectorAll('li[tabindex]'));
+        const itemsLen = items.length;
+        let found = false;
+        if (itemsLen) {
+          items.forEach((item) => {
+            const tabindex = parseInt(item.getAttribute('tabindex'), 10);
+            if (tabindex !== -1) {
+              found = true;
+            }
+          });
+        }
+        if (!found) {
+          const item = card.querySelector('li');
+          if (item) {
+            item.setAttribute('tabindex', 0);
+          }
+        }
       }
     });
 
@@ -1167,6 +1190,8 @@ SwapList.prototype = {
             self.containers[i].style.zIndex = '';
           }
         }
+
+        self.makeDraggable();
 
         selections.isHandle = null;
         $('[aria-grabbed="true"]', self.element).show();

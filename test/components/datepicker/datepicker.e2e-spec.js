@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Datepicker example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-index?nofrills=true');
+    await utils.setPage('/components/datepicker/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -475,13 +475,19 @@ describe('Datepicker Modal Test', () => {
 describe('Datepicker Month Year Picker Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format');
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
   });
 
   it('Should be able to function as month/year picker', async () => {
     const datepickerEl = await element(by.id('month-year'));
+    await datepickerEl.sendKeys('10/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    const dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    let dropdownEl = await element(by.css('#year-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    await dropdownEl.click();
+    dropdownEl = await element(by.css('.dropdown-search'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ENTER);
@@ -489,15 +495,12 @@ describe('Datepicker Month Year Picker Tests', () => {
     const buttonEl = await element(by.css('.select-month.btn-tertiary'));
     await buttonEl.click();
 
-    const testDate = new Date();
-    await testDate.setDate(1);
-    await testDate.setMonth(testDate.getMonth() + 1);
-
-    expect(await element(by.id('month-year')).getAttribute('value')).toEqual(`${(testDate.getMonth()).toString().padStart(2, '0')}/${testDate.getFullYear()}`);
+    expect(await element(by.id('month-year')).getAttribute('value')).toEqual('10/2020');
   });
 
   it('Should be able to function as month/year picker long', async () => {
     const datepickerEl = await element(by.id('month-year-long'));
+    await datepickerEl.sendKeys('Oct 2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     const dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
@@ -519,21 +522,27 @@ describe('Datepicker Month Year Picker Tests', () => {
 describe('Datepicker Month Year Changer Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-picker');
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
   });
 
   it('Should be able to change month and year from the pickers', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('10/1/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver.sleep(config.sleep);
 
-    const dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    let dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+    dropdownEl = await element(by.css('.dropdown-search'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
-    const yearEl = await element(by.css('#year-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    let yearEl = await element(by.css('#year-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
     await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
+    yearEl = await element.all(by.css('.dropdown-search')).last();
     await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
     await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
     await yearEl.sendKeys(protractor.Key.ENTER);
@@ -547,15 +556,12 @@ describe('Datepicker Month Year Changer Tests', () => {
     await lastButtonEl.sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
+    browser.executeScript('$("#dropdown-list").hide()');
     const buttonEl = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
     await buttonEl.click();
     await browser.driver.sleep(config.sleep);
 
-    const testDate = new Date();
-    await testDate.setDate(1);
-    await testDate.setMonth(testDate.getMonth() + 1);
-
-    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual(`${(testDate.getMonth())}/1/${testDate.getFullYear()}`);
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('11/1/2020');
   });
 });
 
@@ -642,23 +648,24 @@ describe('Datepicker Timeformat Tests', () => {
     const todayEl = await element(by.css('button.is-today'));
     const testDate = new Date();
     await todayEl.click();
+    const value = await element(by.id('dp3')).getAttribute('value');
 
     let hours = testDate.getHours();
-    let minutes = testDate.getMinutes();
+    const minutes = testDate.getMinutes();
     let amPm = 'AM';
 
     if (hours > 11) {
       hours -= hours > 12 ? 12 : 0;
       amPm = 'PM';
     }
-    if (minutes.toString().length === 1) {
-      minutes = `0${minutes}`;
-    }
 
     expect([
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${minutes} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${minutes - 1} ${amPm}` // for slow test
-    ]).toContain(await element(by.id('dp3')).getAttribute('value'));
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes - 2).toString().padStart(2, '0')} ${amPm}`,
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes - 1).toString().padStart(2, '0')} ${amPm}`,
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes).toString().padStart(2, '0')} ${amPm}`,
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 1).toString().padStart(2, '0')} ${amPm}`,
+      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 2).toString().padStart(2, '0')} ${amPm}` // for slow test on ci
+    ]).toContain(value);
   });
 });
 
@@ -859,6 +866,23 @@ describe('Datepicker restrict month selection tests', () => {
 
     expect(await element(by.css('.monthview-header .prev')).getAttribute('disabled')).toEqual('true');
     expect(await element(by.css('.monthview-header .next')).getAttribute('disabled')).not.toEqual('true');
+  });
+});
+
+describe('Datepicker set first day of week tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-set-first-day-of-week');
+  });
+
+  it('Should set first day of week', async () => {
+    const triggerEl = await element(by.tagName('thead'));
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('.is-focused'))).toBeTruthy();
+
+    const testEl = await triggerEl.all(by.tagName('th')).get(0);
+
+    expect(await testEl.getText()).toEqual('M');
   });
 });
 

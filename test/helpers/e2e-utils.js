@@ -28,5 +28,16 @@ module.exports = {
       }
       expect(browserLog.length).toEqual(0);
     });
+  },
+  getSelectedText: async () => {
+    await browser.executeScript(() => {
+      let text = '';
+      if (window.getSelection) {
+        text = window.getSelection().toString();
+      } else if (document.selection && document.selection.type !== 'Control') {
+        text = document.selection.createRange().text;
+      }
+      return text;
+    });
   }
 };

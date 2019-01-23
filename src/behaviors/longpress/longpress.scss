@@ -3,3 +3,7 @@
 
   -webkit-touch-callout: none;
 }
+
+input.longpress-target {
+  @include css3(user-select, initial);
+}

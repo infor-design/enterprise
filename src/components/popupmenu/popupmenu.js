@@ -3,7 +3,6 @@ import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { DOM } from '../../utils/dom';
-import { Locale } from '../locale/locale';
 import { PlacementObject, Place } from '../place/place';
 
 // jQuery Components
@@ -15,8 +14,6 @@ const COMPONENT_NAME = 'popupmenu';
 /**
  * Responsive Popup Menu Control aka Context Menu when doing a right click action.
  * @class PopupMenu
- *
- * @constructor
  * @param {jquery[]|htmlelement} element The component element.
  * @param {object} [settings] The component settings.
  * @param {string} [settings.menu]  Menu's ID Selector, or a jQuery object representing a menu.
@@ -28,6 +25,7 @@ const COMPONENT_NAME = 'popupmenu';
  * @param {string} [settings.ariaListbox=false]   Switches aria to use listbox construct instead of menu construct (internal).
  * @param {string} [settings.eventObj]  Can pass in the event object so you can do a right click with immediate.
  * @param {string} [settings.triggerSelect]  If false select event will not be triggered.
+ * @param {string} [settings.removeOnDestroy] Dispose of the menu from the DOM on destroy
  * @param {string} [settings.showArrow]  If true you can explicitly set an arrow on the menu.
  * @param {boolean|function} [settings.returnFocus]  If set to false, focus will not be
   returned to the calling element. Can also be defined as a callback that can determine how
@@ -47,6 +45,7 @@ const POPUPMENU_DEFAULTS = {
   autoFocus: true,
   mouseFocus: true,
   attachToBody: false,
+  removeOnDestroy: false,
   beforeOpen: null,
   ariaListbox: false,
   eventObj: undefined,
@@ -62,7 +61,8 @@ const POPUPMENU_DEFAULTS = {
     x: 0,
     y: 0
   },
-  predefined: $()
+  predefined: $(),
+  duplicateMenu: null
 };
 
 function PopupMenu(element, settings) {
@@ -88,9 +88,7 @@ PopupMenu.prototype = {
     // Allow for an external click event to be passed in from outside this code.
     // This event can be used to pass clientX/clientY coordinates for mouse cursor positioning.
     if (this.settings.trigger === 'immediate') {
-      if (this.menu.length) {
-        this.open(this.settings.eventObj);
-      }
+      this.open(this.settings.eventObj);
     }
 
     // Use some css rules on submenu parents
@@ -148,13 +146,25 @@ PopupMenu.prototype = {
    */
   addMarkup() {
     let id;
-    const leftClick = this.settings.trigger !== 'rightClick';
-    const immediate = this.settings.trigger === 'immediate';
+    let duplicateMenu;
+    let triggerId;
 
     switch (typeof this.settings.menu) {
       case 'string': // ID Selector
         id = this.settings.menu;
         this.menu = $(`#${this.settings.menu}`);
+
+        // duplicate menu if shared by multiple triggers
+        if (this.settings.duplicateMenu && this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
+          this.menu.data('trigger', this.element);
+          triggerId = this.menu.data('trigger')[0].id;
+          duplicateMenu = this.menu.clone();
+          duplicateMenu.detach().appendTo('body');
+
+          // add data-id attr to menus
+          duplicateMenu.attr('data-trigger', triggerId);
+          this.menu.attr('data-trigger', triggerId);
+        }
         break;
       case 'object': // jQuery Object
         if (this.settings.menu === null) {
@@ -197,6 +207,9 @@ PopupMenu.prototype = {
     if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
       this.originalParent = this.menu.prev();
       this.menu.detach().appendTo('body');
+      if (this.settings.duplicateMenu) {
+        this.menu.attr('id', `${this.settings.menu}-original`);
+      }
     }
 
     if (!this.menu.is('.popupmenu')) {
@@ -274,20 +287,6 @@ PopupMenu.prototype = {
     this.element.attr('aria-controls', id);
 
     this.markupItems();
-
-    // Add an Audible Label
-    if (!leftClick && !immediate) {
-      const audibleSpanId = 'popupmenu-f10-label';
-      if ($(`#${audibleSpanId}`).length === 0) {
-        this.element.after(`
-          <span class="audible" id="${audibleSpanId}">
-            ${Locale.translate('PressShiftF10')}
-          </span>
-        `);
-      }
-      // PressShiftF10
-      this.element.attr('aria-describedby', audibleSpanId);
-    }
 
     // Unhide the menu markup, if hidden
     if (this.menu.is('.hidden')) {
@@ -567,8 +566,6 @@ PopupMenu.prototype = {
     }
 
     const lis = contextElement.find('li:not(.heading):not(.separator)');
-    const menuClassName = contextElement[0].className;
-    const isTranslatable = DOM.hasClassName(menuClassName, 'isTranslatable');
     let hasIcons = false;
 
     lis.each((i, li) => {
@@ -583,11 +580,6 @@ PopupMenu.prototype = {
       if (a) {
         a.setAttribute('tabindex', '-1');
         a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
-
-        // Should be translated
-        if (isTranslatable) {
-          span.innerText = Locale.translate(span.innerText) || span.innerText;
-        }
 
         // disabled menu items, by prop and by className
         const $a = $(a);
@@ -612,7 +604,7 @@ PopupMenu.prototype = {
           submenu = $(submenuWrapper).children('ul')[0];
           submenu.classList.add('popupmenu');
         }
-        if (DOM.hasClassName(li.className, 'submenu')) {
+        if (DOM.hasClass(li, 'submenu')) {
           // Add a span
           if (!span) {
             a.innerHTML = `<span>${a.innerHTML}</span>`;
@@ -628,13 +620,13 @@ PopupMenu.prototype = {
         }
 
         // is-checked
-        if (DOM.hasClassName(li.className, 'is-checked')) {
+        if (DOM.hasClass(li, 'is-checked')) {
           a.setAttribute('role', 'menuitemcheckbox');
           a.setAttribute('aria-checked', true);
         }
 
         // is-not-checked
-        if (DOM.hasClassName(li.className, 'is-not-checked')) {
+        if (DOM.hasClass(li, 'is-not-checked')) {
           li.className = li.className.replace('is-not-checked', '');
           a.setAttribute('role', 'menuitemcheckbox');
           a.removeAttribute('aria-checked');
@@ -1792,7 +1784,7 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   openSubmenu(li, ajaxReturn) {
-    if (DOM.hasClassName(li[0].className, 'is-disabled') || li[0].disabled) {
+    if (DOM.hasClass(li, 'is-disabled') || li[0].disabled) {
       return;
     }
 
@@ -1839,7 +1831,6 @@ PopupMenu.prototype = {
     }
 
     const menu = wrapper.children('.popupmenu');
-    const mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
     let wrapperLeft = li.position().left + li.outerWidth();
     let wrapperWidth = 0;
 
@@ -1908,6 +1899,7 @@ PopupMenu.prototype = {
       if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
         // No. Bump the menu up higher based on the menu's height and the extra
         // space from the main wrapper.
+        const mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
         wrapper[0].style.top = `${($(window).height() + $(document).scrollTop()) -
           menuHeight - mainWrapperOffset}px`;
       }
@@ -2186,22 +2178,22 @@ PopupMenu.prototype = {
 
     this.menu.off('dragstart.popupmenu');
 
-    if (this.originalLocation) {
-      this.originalLocation.after(this.menu);
-    } else {
-      // TODO: Fix when we have time - shouldn't be referencing other controls here
-      let insertTarget = this.element;
-      const searchfield = this.element.parent().children('.searchfield');
+    // TODO: Fix when we have time - shouldn't be referencing other controls here
+    let insertTarget = this.element;
+    const searchfield = this.element.parent().children('.searchfield');
 
-      if (searchfield.length) {
-        insertTarget = searchfield.first();
+    if (searchfield.length) {
+      insertTarget = searchfield.first();
+    }
+    if (this.settings.attachToBody && insertTarget) {
+      this.menu.unwrap();
+
+      if (this.settings.removeOnDestroy) {
+        this.menu.off().remove();
       }
-      if (this.settings.attachToBody && insertTarget) {
-        this.menu.unwrap();
-      }
-      if (this.menu && insertTarget && !this.settings.attachToBody) {
-        this.menu.insertAfter(insertTarget);
-      }
+    }
+    if (this.menu && insertTarget && !this.settings.attachToBody) {
+      this.menu.insertAfter(insertTarget);
     }
 
     this.menu.find('.submenu').children('a').each((i, item) => {

@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Lookup', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/lookup/example-index?nofrills=true');
+    await utils.setPage('/components/lookup/example-index?layout=nofrills');
   });
 
   it('should be enabled', async () => {
@@ -283,13 +283,13 @@ describe('Lookup multiselect serverside paging tests', () => {
     const lookupEl = await element(by.id('product-lookup'));
 
     await buttonEl.click();
-
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('datagrid-cell-wrapper'))), config.waitsFor);
+    await browser.driver.sleep(301);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('pager-next'))), config.waitsFor);
+    await browser.driver.sleep(301);
     await element(by.className('pager-next')).click();
+    await browser.driver.sleep(301);
 
     expect(await element(by.name('pager-pageno')).getAttribute('value')).toEqual('2');
 

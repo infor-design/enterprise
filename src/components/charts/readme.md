@@ -1,14 +1,6 @@
 ---
 title: Charts
 description: Displays a given data set in a visual way. A user can interpret the data to gain insights. Best for showing data distributions, comparisons, or trends.
-demo:
-  embedded:
-  - name: Using Patterns on Chart Colors
-    slug: example-chart-patterns
-  - name: How to Hide / Show a Chart
-    slug: example-hide-show
-  - name: How to Change Chart Type
-    slug: example-change-type
 ---
 
 All of the charts are documented separately by type. See the respective pages for each chart in addition to this shared API info page. The following charts are currently supported

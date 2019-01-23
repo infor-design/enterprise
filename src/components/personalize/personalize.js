@@ -12,18 +12,20 @@ const COMPONENT_NAME = 'personalize';
 const PERSONALIZE_DEFAULTS = {
   colors: '',
   theme,
-  font: ''
+  font: '',
+  blockUI: true
 };
 
 /**
  * The personalization routines for setting custom company colors.
  *
  * @class Personalize
- * @param {HTMLElement|jQuery[]} element the base element
- * @param {object} [settings] incoming settings
+ * @param {HTMLElement|jQuery[]} element The base element
+ * @param {object} [settings] Incoming settings
  * @param {string} [settings.colors]  The list of colors
  * @param {string} [settings.theme='light'] The theme name (light, dark or high-contrast)
  * @param {string} [settings.font='Helvetica'] Use the newer source sans font
+ * @param {boolean} [settings.blockUI=true] Cover the UI and animate when changing theme.
 */
 function Personalize(element, settings) {
   this.element = $(element);
@@ -104,7 +106,7 @@ Personalize.prototype = {
   },
 
   /**
-   * Validates a string containing a hexadecimal number
+   * Create new CSS rules in head and override any existing
    * @private
    * @param {object} cssRules The rules to append.
    */
@@ -187,7 +189,7 @@ Personalize.prototype = {
     colors.btnColorSubheader = this.validateHex(colors.btnColorSubheader ||
       this.getLuminousColorShade(colors.header, -0.025));
 
-    // not that the sheet is appended in backwards
+    // note that the sheet is appended in backwards
     const cssRules = `.tab-container.module-tabs.is-personalizable { border-top: 1px solid ${colors.horizontalBorder} !important; border-bottom: 1px solid ${colors.horizontalBorder} !important}` +
     ` .module-tabs.is-personalizable .tab:not(:first-child) { border-left: 1px solid ${colors.verticalBorder} !important}` +
     ` .module-tabs.is-personalizable { background-color: ${colors.inactive} !important}` +
@@ -238,6 +240,10 @@ Personalize.prototype = {
     }
 
     this.appendStyleSheet(this.getColorStyleSheet(colors));
+
+    // record state of colors in settings
+    this.settings.colors = colors;
+
     return this;
   },
 
@@ -334,7 +340,13 @@ Personalize.prototype = {
       href: xssUtils.stripTags(`${themePath}/${exports.theme}-theme${isMin ? '.min' : ''}.css`)
     });
     originalCss.removeAttr('id');
-    originalCss.after(newCss);
+
+    // Add new stylesheet before current stylesheet
+    // to give it time to parse/render before revealing it
+    originalCss.before(newCss);
+
+    // record state of theme in settings
+    this.settings.theme = theme;
   },
 
   /**
@@ -343,17 +355,27 @@ Personalize.prototype = {
    * @returns {void}
    */
   blockUi() {
+    const self = this;
+    if (!self.settings.blockUI) {
+      return;
+    }
+
     let backgroundColor = '#bdbdbd';
-    if (theme === 'light') {
-      backgroundColor = '#f0f0f0';
-    }
-    if (theme === 'dark') {
-      backgroundColor = '#313236';
+    switch (theme) {
+      case 'light':
+        backgroundColor = '#f0f0f0';
+        break;
+      case 'dark':
+        backgroundColor = '#313236';
+        break;
+      case 'high-contrast':
+        backgroundColor = '#d8d8d8';
+        break;
+      default:
+        backgroundColor = '#f0f0f0';
     }
 
-    this.pageOverlay = this.pageOverlay ||
-      $('<div class="personalize-overlay"></div>');
-
+    this.pageOverlay = this.pageOverlay || $('<div class="personalize-overlay"></div>');
     this.pageOverlay.css('background', backgroundColor);
     $('body').append(this.pageOverlay);
   },
@@ -365,6 +387,9 @@ Personalize.prototype = {
    */
   unBlockUi() {
     const self = this;
+    if (!self.settings.blockUI) {
+      return;
+    }
 
     self.pageOverlay.fadeOut(300, () => {
       self.pageOverlay.remove();

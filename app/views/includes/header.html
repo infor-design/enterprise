@@ -16,7 +16,12 @@
     </div>
 
     <div class="buttonset">
-      <input id="header-searchfield" class="searchfield" name="header-searchfield" />
+      <button type="button" id="info-btn" class="btn-icon" data-options="{'placement': 'below', 'keepOpen': 'true'}">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-info"></use>
+        </svg>
+        <span class="audible">Example Information</span>
+      </button>
     </div>
 
     {{> includes/header-actionbutton}}

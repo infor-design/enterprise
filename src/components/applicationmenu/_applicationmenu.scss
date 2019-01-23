@@ -6,10 +6,10 @@
   @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
   box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
-  background-color: $slate08;
+  background-color: $theme-color-palette-slate-80;
   border-right: 1px solid $application-menu-border-color;
   bottom: 0;
-  color: $white;
+  color: $theme-color-palette-white;
   height: 100%;
   left: -$application-menu-width;
   overflow-x: hidden;
@@ -23,7 +23,7 @@
   }
 
   .audible {
-    color: $white !important;
+    color: $theme-color-palette-white !important;
   }
 
   &.show-shadow.is-open {
@@ -58,6 +58,13 @@
       clear: both;
       content: '';
       display: table;
+    }
+
+    .accordion-content {
+      .content {
+        display: inline-block;
+        max-width: calc(100% - 46px);
+      }
     }
 
     .panel {
@@ -202,29 +209,30 @@
   }
 
   .accordion-static-panel {
-    background-color: $slate07;
-    border-bottom-color: $slate09 !important;
+    background-color: $theme-color-palette-slate-70;
+    border-bottom-color: $theme-color-palette-slate-90 !important;
     margin: 0 auto;
     min-height: 85px;
-    padding: 10px 30px;
+    padding: 10px 0 10px 30px;
 
     .icon.avatar {
       border-radius: 20px;
       height: 40px;
-      top: 18px;
+      top: 10px;
+      vertical-align: top;
       width: 40px;
     }
 
     .name {
       @include font-size(18);
 
+      display: block;
+      line-height: 1.5em;
       padding: 10px;
       position: relative;
-      top: -3px;
     }
 
     .btn-menu {
-      left: 43px;
       margin-top: -5px;
 
       span {
@@ -243,7 +251,7 @@
     h3,
     h4,
     p {
-      color: $slate01;
+      color: $theme-color-palette-slate-10;
     }
   }
 
@@ -283,7 +291,7 @@ html[dir='rtl'] {
     @include transition(right 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
     box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
-    background-color: $slate08;
+    background-color: $theme-color-palette-slate-80;
     border-left: 1px solid $application-menu-border-color;
     border-right: 0;
     left: initial;

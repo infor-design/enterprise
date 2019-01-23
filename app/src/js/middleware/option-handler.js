@@ -1,6 +1,7 @@
 const extend = require('extend');
+
 const logger = require('../logger');
-const path = require('path');
+const setLayout = require('../set-layout');
 
 // Option Handling - Custom Middleware
 // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
@@ -19,12 +20,9 @@ module.exports = function (app, defaults) {
     // Setting 'inlineSVG' to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
     res.opts.inlineSVG = true;
 
-    // Global settings for forcing a 'no frills' layout for test pages.
-    // This means no header with page title, hamburger, theme swap settings, etc.
-    if (req.query.nofrills && req.query.nofrills.length > 0) {
-      res.opts.nofrillslayout = true;
-      res.opts.layout = path.join(req.app.get('views'), 'layout-nofrills.html');
-      logger('info', '"No-frills" layout active.');
+    // Global settings to change the layout.
+    if (req.query.layout && req.query.layout.length > 0) {
+      setLayout(req, res, `layout-${req.query.layout}.html`);
     }
 
     // Set the theme and colorScheme

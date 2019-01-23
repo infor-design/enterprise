@@ -8,14 +8,16 @@ demo:
   pages:
   - name: Multiple Validation Errors on a Field
     slug: example-multiple-errors
-  - name: Legacy Short Fields
-    slug: example-short-fields
-  - name: Manually adding an Error
-    slug: example-standalone-error
   - name: Enabling a Button on Valid
     slug: example-validation-form
   - name: Validating on Form Submit
     slug: example-validation-on-submit
+  - name: Example of a Number Range Validator
+    slug: test-range-validation
+  - name: Example of a Email Validator
+    slug: test-email-validation
+  - name: Example Different Types of Alerts
+    slug: test-alert-types
 ---
 
 ## Code Example - Auto
@@ -44,7 +46,7 @@ $('#username-field').removeError()
 
 ## Code Example - Skipping Fields from Validation
 
-Its possible to skip fields that are normally validated from validation. You can do this in one of three ways.
+It is possible to skip fields that are normally validated. You can do this in one of three ways:
 
 1. Add a class of `disable-validation`  to the input.
 1. Add an attribute of `data-disable-validation="true"` to the input.
@@ -52,7 +54,7 @@ Its possible to skip fields that are normally validated from validation. You can
 
 ## Validation Types
 
-There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule or duplicate messages may appear.
+There are four standard validation types: error, alert, success, and info. These can be extended or altered if required. The type should be defined on the rule or duplicate messages may appear.
 
 ```javascript
 $.fn.validation.rules.customWarningRule = {
@@ -100,9 +102,40 @@ Or you can specify either different events for multiple rules as per as:
 <input id="email" data-validation-events="{'required': 'keydown', 'checkGivenNamesCount': 'keydown change blur'}">
 ```
 
+## Form Functions
+
+There a couple useful functions you can use on forms. To use them make sure you have `data-validate-on="submit"` and use the initializer to initialize them. When you do this the normal submit event will be blocked and you should use the `validated` event instead.
+
+```html
+<form id="test-form" autocomplete="off" data-validate-on="submit">`
+```
+
+Inside the `validated` event you might call `isFormValid` to check the current pass/fail state for the form.
+
+```javascript
+var api = $('#form-id').data('validate');
+
+if (api.isFormValid($(this))) {
+  // Whole form is valid
+} else {
+  // Something on the form form is invalid
+}
+```
+
+You can reset all form changes including dirty and error states with the `resetForm` utility.
+
+```javascript
+var form =  $('#form-id');
+api = form.data('validate');
+api.resetForm(form);
+
+//Or as a jquery plugin
+$('#form-id').resetForm();
+```
+
 ## Accessibility
 
-- On required fields always add an audible label for example
+- On required fields always add an audible label for example:
 
 ```html
 <label class="required" for="email-address-ok">

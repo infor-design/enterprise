@@ -3,13 +3,14 @@ module.exports = {
   chokidar: {
     sass: {
       files: [
+        'src/behaviors/**/*.scss',
         'src/themes/*.scss',
         'src/core/**/*.scss',
         'src/layouts/**/*.scss',
         'src/components/**/*.scss',
         'src/patterns/**/*.scss'
       ],
-      tasks: ['build:sass'],
+      tasks: ['exec:sass:dist'],
       options: {
         livereload: true
       }
