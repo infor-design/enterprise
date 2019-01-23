@@ -9,11 +9,9 @@ demo:
   - name: Shows Grouping a Series of Related Bullet Charts
     slug: example-data-group
   - name: Shows a Bullet Chart with Positive and Negative Values
-    slug: example-selected
+    slug: test-negative-positive-value
   - name: Shows a bullet with a negative value
-    slug: example-negative-value
-  - name: Set animation speed
-    slug: example-animation
+    slug: test-negative-value
 ---
 
 ## Code Example

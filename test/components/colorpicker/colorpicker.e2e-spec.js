@@ -389,3 +389,24 @@ describe('Colorpicker modal tests', () => {
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
   });
 });
+
+describe('Colorpicker sizes tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/colorpicker/example-sizes?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.css('div[role=main]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkScreen('colorpicker-sizes')).toEqual(0);
+    });
+  }
+});

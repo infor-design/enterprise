@@ -8,7 +8,7 @@ demo:
   pages:
   - name: 100% Width Button
     slug: example-100-percent
-  - name: Button on an `<a>` tag
+  - name: Anchor tags that look like buttons
     slug: example-as-link
   - name: Form Call to Action Button
     slug: example-secondary-border
