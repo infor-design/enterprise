@@ -649,7 +649,7 @@ Tooltip.prototype = {
 
           if (target.closest('.popover').length === 0 &&
               target.closest('.dropdown-list').length === 0) {
-            self.hide(e);
+            self.hide();
           }
 
           // Closes patepicker dialog closes when clicking on a parent popover

@@ -10,26 +10,18 @@ demo:
     slug: example-legend
   - name: Balance Widget
     slug: example-balance
-  - name: Changing Colors
+  - name: Changing Bar Colors
     slug: example-colors
   - name: Changing the Y Domain
     slug: example-domain-change
-  - name: Formatting the Values (Tooltip)
-    slug: example-formatter
   - name: Negative Values
     slug: example-negative-value
   - name: Testing Date Values
     slug: test-by-date
-  - name: Pattern Colors
-    slug: example-patterns
-  - name: Selecting a Section Colors
-    slug: example-selected
-  - name: Set animation speed
-    slug: example-animation
-  - name: Example showing Get Selected value
-    slug: example-get-selected
-  - name: Example showing Set Selected value
-    slug: example-set-selected
+  - name: Formatting the Tooltip Values
+    slug: test-formatter
+  - name: Right Click Menu on Bars
+    slug: example-rightclick
 ---
 
 ## Dataset Settings
@@ -42,7 +34,7 @@ demo:
 
 ## Code Example
 
-This example shows how to invoke a simple column chart with a dataset swith a value for each column. You can pass in a tooltip with a custom value, and also pass in 3 labels that are used at the various break points (L,M, S)
+This example shows how to invoke a simple column chart with a dataset with a value for each column. You can pass in a tooltip with a custom value, and also pass in three labels that are used at the various break points as will fit (name, showName, abbrName).
 
 ```javascript
 var dataset = [{
@@ -86,6 +78,31 @@ var dataset = [{
 }];
 
 $('#column-bar-example').chart({type: 'column', dataset: dataset});
+```
+
+## Selection Model
+
+- You can initially mark a bar on the chart as selected by passing `selected: true` in the dataset element.
+
+```javascript
+{
+  name: 'Automotive',
+  shortName: 'Auto',
+  abbrName: 'A',
+  value: 7,
+  selected: true
+}
+```
+
+- You can use the `getSelected` method to get the currently selected line.
+- You can use the `setSelected` method to set the current selected line. For this function you can pass in options such as groupIndex, fieldName and fieldValue to find the associated values.
+
+```javascript
+let options = {
+  groupIndex: 0,
+  fieldName: 'name',
+  fieldValue: 'Feb'
+};
 ```
 
 ## Accessibility

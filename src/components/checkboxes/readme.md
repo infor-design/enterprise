@@ -8,8 +8,10 @@ demo:
   pages:
   - name: Checkbox Groups
     slug: example-checkbox-groups
-  - name: Horizontal Checkbox Group
+  - name: Horizontal Checkboxes
     slug: example-horizontal
+  - name: Colored Checkboxes for legends
+    slug: example-legend-colors
 ---
 
 ## Attributes and Classes

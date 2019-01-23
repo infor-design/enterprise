@@ -60,6 +60,13 @@
       display: table;
     }
 
+    .accordion-content {
+      .content {
+        display: inline-block;
+        max-width: calc(100% - 46px);
+      }
+    }
+
     .panel {
       padding-left: 49px;
 
@@ -206,25 +213,26 @@
     border-bottom-color: $theme-color-palette-slate-90 !important;
     margin: 0 auto;
     min-height: 85px;
-    padding: 10px 30px;
+    padding: 10px 0 10px 30px;
 
     .icon.avatar {
       border-radius: 20px;
       height: 40px;
-      top: 18px;
+      top: 10px;
+      vertical-align: top;
       width: 40px;
     }
 
     .name {
       @include font-size(18);
 
+      display: block;
+      line-height: 1.5em;
       padding: 10px;
       position: relative;
-      top: -3px;
     }
 
     .btn-menu {
-      left: 43px;
       margin-top: -5px;
 
       span {

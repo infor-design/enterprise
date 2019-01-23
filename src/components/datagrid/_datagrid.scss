@@ -1693,7 +1693,7 @@ $datagrid-short-row-height: 23px;
 
     //Cell Editting
     &.is-editing {
-      background-color: $panel-bg-color;
+      background-color: $datagrid-cell-editing-bg-color;
       position: relative;
 
       .datagrid-cell-wrapper {

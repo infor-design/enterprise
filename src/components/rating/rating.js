@@ -10,7 +10,6 @@ const RATING_DEFAULTS = {
 
 /**
  * @class Rating
- * @constructor
  * @param {jQuery[]|HTMLElement} element The component element.
  * @param {object} [settings] The component settings.
  */
@@ -50,7 +49,6 @@ Rating.prototype = {
 
   /**
    * Set the value
-   * @private
    * @param {number} value to pass in.
    * @returns {number} current value
    */

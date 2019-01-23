@@ -1,23 +1,5 @@
 <div class="row">
-  <div class="six columns">
-    <h2>Validation Test: Multiple Validation Errors</h2>
-    <p>Related JIRA Tickets:
-      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6104" target="_blank">SOHO-6104</a>
-      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6833" target="_blank">SOHO-6833</a>
-      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6838" target="_blank">SOHO-6838</a>
-      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6860" target="_blank">SOHO-6860</a>
-    </p>
-  </div>
-</div>
-
-<div class="row">
   <div class="twelve columns">
-
-    <h2 class="fieldset-title">Some Form</h2>
-
-    <div class="field">
-      <button class="btn-secondary" type="button" id="goto">Go to Error</button>
-    </div>
 
     <div class="field">
       <label class="required label" for="username-display">Username</label>
@@ -27,7 +9,7 @@
     <div class="field">
       <label class="required label" for="states">States</label>
       <select id="states" data-validate="required" name="states" class="dropdown">
-        <option value="" selected>&nbsp;</option>
+        <option value="" selected="true">&nbsp;</option>
         <option value="AL" >Alabama</option>
         <option value="DE">Delaware</option>
         <option value="DC">District Of Columbia</option>
@@ -45,19 +27,49 @@
 
     <div class="field">
       <label class="required label" for="text">Text Field</label>
-      <input type="text" id="text" name="text" data-validate="required" >
-    </div>
-
-    <div class="field">
-      <button class="btn-secondary" type="button" id="show">Show Error</button>
-      <button class="btn-secondary" type="button" id="hide">Hide Error</button>
+      <input type="text" id="text" name="text" data-validate="required"/>
     </div>
 
   </div>
 </div>
 
+<div id="info-popup" class="info-popup hidden">
+  <span class="label">Description</span>
+  <p class="info-popup-description">
+    This example was added as a test for fields that have more than one error. And also to test the <code>scrollIntoView</code>
+    api method that is used to scroll to field in the page.
+  </p>
+  <span class="label">Instructions</span>
+  <ol class="info-popup-instructions">
+    <li>Click <a class="hyperlink" href="#" id="show">show error</a> to show an error. Notice there is there are two errors on the states field.</li>
+    <li>Click <a class="hyperlink" href="#" id="hide">hide error</a> to hide all errors.</li>
+    <li>Click <a class="hyperlink" href="#" id="show-again">show error</a> to show an error again.</li>
+    <li>Click <a class="hyperlink" href="#" id="goto">go to</a> error. The api function that a focused field is demonstrated.</li>
+  </ol>
+  <span class="label">Related Issues</span>
+  <p class="info-popup-related-issues">
+    <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6104" target="_blank">SOHO-6104</a><br/>
+    <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6833" target="_blank">SOHO-6833</a><br/>
+    <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6838" target="_blank">SOHO-6838</a><br/>
+    <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6860" target="_blank">SOHO-6860</a><br/>
+  </p>
+  <span class="label">Source Code</span>
+  <p class="info-popup-source">
+    <a class="hyperlink" href="https://github.com/infor-design/enterprise/blob/master/app/views/components/validation/example-multiple-errors.html" target="_blank">Github Source</a><br/>
+    <a class="hyperlink" href="https://github.com/infor-design/enterprise/blob/master/test/components/validation/validation.e2e-spec.js" target="_blank">
+      Has e2e test
+      <svg class="icon icon-success" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-success"></use>
+      </svg>
+    </a>
+  </p>
+  <p class="info-popup-version">
+    Added in v4.7.0
+  </p>
+</div>
+
 <script>
-  $('#show').button().on('click', function () {
+  $('#show, #show-again').on('click', function () {
     $('#username-display')
     .removeError()
     .addError({ message: 'I have an Error.', inline: true })
@@ -68,7 +80,7 @@
     .addError({ message: 'Dropdown is in Error.', inline: true })
   });
 
-  $('#hide').button().on('click', function () {
+  $('#hide').on('click', function () {
     console.log(['Username data-errormessage =', $('#username-display').data('data-errormessage') ]);
     console.log(['States data-errormessage =', $('#states').data('data-errormessage') ]);
 

@@ -136,29 +136,6 @@ describe('Tree select by id tests', () => {
   });
 });
 
-describe('Tree destroy invoke tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/tree/example-destroy');
-  });
-
-  it('Should destroy tree', async () => {
-    expect(await element.all(by.css('.tree li')).count()).toBe(2);
-    await element(by.id('destroy')).click();
-
-    expect(await element.all(by.css('.tree li')).count()).toBe(0);
-  });
-
-  it('Should invoke tree', async () => {
-    expect(await element.all(by.css('.tree li')).count()).toBe(2);
-    await element(by.id('destroy')).click();
-
-    expect(await element.all(by.css('.tree li')).count()).toBe(0);
-    await element(by.id('invoke')).click();
-
-    expect(await element.all(by.css('.tree li')).count()).toBe(2);
-  });
-});
-
 describe('Tree select-multiple tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tree/example-select-multiple');
@@ -264,7 +241,7 @@ describe('Tree enable all nodes test', () => {
 
 describe('Tree preserve and restore all nodes test', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tree/example-preserve-restore');
+    await utils.setPage('/components/tree/test-preserve-restore');
   });
 
   it('Should preserve and restore enablement states of all nodes', async () => {
