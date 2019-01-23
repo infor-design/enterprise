@@ -110,7 +110,7 @@ There a couple useful functions you can use on forms. To use them make sure you 
 <form id="test-form" autocomplete="off" data-validate-on="submit">`
 ```
 
-Inside the validated event you might call `isFormValid` to check the current pass/fail state for the form.
+Inside the `validated` event you might call `isFormValid` to check the current pass/fail state for the form.
 
 ```javascript
 var api = $('#form-id').data('validate');
