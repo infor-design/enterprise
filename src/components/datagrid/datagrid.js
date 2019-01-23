@@ -1103,6 +1103,7 @@ Datagrid.prototype = {
       options.range = { useRange: true };
       initDatepicker();
     } else if ((!datepickerApi || isRange) && operator !== 'in-range') {
+      options.range = { useRange: false };
       input.removeData('is-range');
       initDatepicker();
     }
@@ -1284,7 +1285,7 @@ Datagrid.prototype = {
               const input = rowElem.find('input');
               const svg = rowElem.find('.btn-filter .icon-dropdown:first');
               const operator = svg.getIconName().replace('filter-', '');
-              self.filterSetDatepicker(input, operator);
+              self.filterSetDatepicker(input, operator, col.editorOptions);
             }
             self.applyFilter(null, 'selected');
           })
