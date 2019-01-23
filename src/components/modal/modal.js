@@ -817,6 +817,8 @@ Modal.prototype = {
         if (keyCode === 27) {
           const modals = $('.modal.is-visible');
 
+          self.isCancelled = true;
+
           if (modals.length > 1) {
             modals.not(':last').on('beforeclose.modal', () => false);
             modals.on('afterclose.modal', () => {
