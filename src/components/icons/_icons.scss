@@ -133,11 +133,13 @@ svg.icon-dirty,
 }
 
 .icon-dirtyerror,
-.icon-error {
+.icon-error,
+.icon-error-solid {
   fill: $theme-color-status-danger !important;
 }
 
-.icon-success {
+.icon-success,
+.icon-success-solid {
   fill: $success-icon-fill !important;
 }
 
@@ -146,8 +148,13 @@ svg.icon-dirty,
   fill: $icon-color;
 }
 
-.icon-alert {
+.icon-alert,
+.icon-alert-solid {
   fill: $theme-color-status-warning !important;
+}
+
+.icon-solid-bgrnd {
+  fill: $theme-color-palette-white;
 }
 
 .icon-pending {
@@ -159,7 +166,8 @@ svg.icon-dirty,
   width: 18px;
 }
 
-.icon-info {
+.icon-info,
+.icon-info-solid {
   fill: $info-icon-fill !important;
 }
 

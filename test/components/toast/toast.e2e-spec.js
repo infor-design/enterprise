@@ -44,7 +44,7 @@ describe('Toast example-index tests', () => {
 
 describe('Toast example-positions tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/toast/example-positions');
+    await utils.setPage('/components/toast/test-positions');
   });
 
   it('Should top left button enabled', async () => {

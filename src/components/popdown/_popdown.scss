@@ -56,12 +56,12 @@
   &.bottom {
     .arrow {
       border-bottom-color: $popupmenu-border-color;
-      top: -24px !important;
+      top: -13px !important;
 
       &::after {
         border-bottom-color: $popupmenu-bg-color;
         left: -12px !important;
-        top: -11px !important;
+        top: 1px !important;
       }
     }
   }
@@ -90,6 +90,8 @@
   }
 
   .modal-buttonset {
+    height: 48px;
     margin: 0;
+    min-height: 48px;
   }
 }
