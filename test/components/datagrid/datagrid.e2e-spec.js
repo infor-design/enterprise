@@ -553,16 +553,14 @@ describe('Datagrid filter lookup tests', () => {
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
 
     await element(by.css('#example-filter-datagrid-1-header-filter-1 + span.trigger')).click();
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-
     await browser.driver.sleep(500);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('.datagrid-row')).count()).toEqual(0);
 
     await element(by.css('#example-filter-datagrid-1-header-filter-1 + span.trigger')).click();
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
-
     await browser.driver.sleep(500);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('.datagrid-row')).count()).toEqual(1);
 
