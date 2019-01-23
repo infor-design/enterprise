@@ -14,7 +14,7 @@ demo:
 
 ## Code Example
 
-This example shows how to invoke a Treemap with a dataset to controlling the values. It also shows how to structure the data. You need to use a children attribute on each node and those will be created within the nodes in the tree so you can nest and group.
+This example shows how to invoke a Treemap with a dataset controlling the values. It also shows how to structure the data. You need to use a children attribute on each node and those will be created within the nodes in the tree so you can nest and group.
 
 Treemaps are used to display hierarchical data and are useful when space is constrained and you have a large amount of hierarchical data that you need to see an overview of. Treemaps should primarily be used with values that can be aggregated. Treemaps are economical in that they can be used within a limited space and yet display a large number of items simultaneously. When there is a correlation between color and size in the tree structure, you are able to see patterns that would be difficult to spot in other ways, for example, when a certain color is particularly relevant.
 
