@@ -51,7 +51,7 @@
 - `[Tabs]` Added protection from inserting HTML tags in the add method (XSS). ([#1462](https://github.com/infor-design/enterprise/issues/1462))
 - `[App Menu]` Added better text wrapping for longer titles at the top. ([#1116](https://github.com/infor-design/enterprise/issues/1116))
 - `[Contextual Action Panel]` Fixed some examples so that they reopen more than one time. ([#1116](https://github.com/infor-design/enterprise/issues/506))
-- `[Searchfield]` Fixed an a border styling issue on longer labels in the search. ([#1500](https://github.com/infor-design/enterprise/issues/1500))
+- `[Searchfield]` Fixed a border styling issue on longer labels in the search. ([#1500](https://github.com/infor-design/enterprise/issues/1500))
 - `[Tabs Multi]` Improved the experience on mobile by collapsing the menus a bit. ([#971](https://github.com/infor-design/enterprise/issues/971))
 - `[Lookup]` Fixed missing ellipsis menu on mobile devices. ([#1068](https://github.com/infor-design/enterprise/issues/1068))
 - `[Accordion]` Fixed incorrect font size on p tags in the accordion. ([#1116](https://github.com/infor-design/enterprise/issues/1116))
