@@ -55,7 +55,7 @@ module.exports = {
     'no-plusplus': 'off',
 
     // disallow multiple empty lines and only one newline at the end
-    'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 1 }],
+    'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
 
     // set "no-trailing-spaces" to only a warning (this shouldn't fail builds)
     'no-trailing-spaces': ['warn'],
