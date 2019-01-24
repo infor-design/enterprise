@@ -28,7 +28,7 @@
 - `[Colorpicker]` Fixed a bug in Angular where the picker did not respond correctly to `editable=false` and `disabled=true`. ([#257](https://github.com/infor-design/enterprise-ng/issues/257))
 - `[Locale]` Fixed a bug where the callback did not complete on nonexistent locales. ([#1267](https://github.com/infor-design/enterprise/issues/1267))
 - `[Calendar]` Fixed a bug where event details remain when filtering event types. ([#1436](https://github.com/infor-design/enterprise/issues/1436))
-- `[Busy Indicator]` Fixed a bug where the indicator closed on accordions when clicking them. ([#281](https://github.com/infor-design/enterprise-ng/issues/281))
+- `[Busy Indicator]` Fixed a bug where the indicator closed when clicking on accordions. ([#281](https://github.com/infor-design/enterprise-ng/issues/281))
 - `[Datagrid Tree]` Fixed the need for unique IDs on the tree nodes. ([#1361](https://github.com/infor-design/enterprise/issues/1361))
 - `[Editor]` Improved the result of pasting bullet lists from MS Word. ([#1351](https://github.com/infor-design/enterprise/issues/1351))
 - `[Hierarchy]` Fixed layout issues in the context menu in RTL mode. ([#1310](https://github.com/infor-design/enterprise/issues/1310))
