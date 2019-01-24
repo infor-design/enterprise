@@ -2706,14 +2706,14 @@ Datagrid.prototype = {
               const drilldown = lineage.split('.');
               drilldown.push(rowIdx);
               let first = true;
-              drilldown.forEach(i => {
-                try {
-                  first ? value = value[i] : value = value.children[i];
-                } catch (e) {
-                  console.error('onPostRenderCell', 'error finding cell value', e);
+              drilldown.forEach((childIdx) => {
+                if (first && value[childIdx]) {
+                  value = value[childIdx];
+                } else if (value.children && value.children[childIdx]) {
+                  value = value.children[childIdx];
                 }
                 first = false;
-              })
+              });
             } else {
               value = value[rowIdx];
             }
@@ -2721,7 +2721,7 @@ Datagrid.prototype = {
             const args = {
               row: rowIdx,
               cell: colIdx,
-              value: value,
+              value,
               col,
               api: self
             };
@@ -3304,7 +3304,7 @@ Datagrid.prototype = {
     // Render Tree Children
     if (rowData.children) {
       for (let i = 0, l = rowData.children.length; i < l; i++) {
-        const lineage = actualIndexLineage ? `${actualIndexLineage}.${actualIndex}` : actualIndex + '';
+        const lineage = actualIndexLineage ? `${actualIndexLineage}.${actualIndex}` : `${actualIndex}`;
         this.recordCount++;
         rowHtml += self.rowHtml(rowData.children[i], this.recordCount, i, false, false, lineage);
       }
