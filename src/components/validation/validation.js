@@ -28,9 +28,6 @@ function ValidationRules() {
     errorsForm: false
   };
 
-  // TODO: deprecate confirm in favor of success
-  this.ValidationTypes.confirm = this.ValidationTypes.success;
-
   this.ValidationTypes.info = {
     type: 'info',
     titleMessageID: 'Info',
