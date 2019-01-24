@@ -21,7 +21,7 @@
 - `[Circle Pager]` Made significant improvements to resizing, especially on tabs. ([#1284](https://github.com/infor-design/enterprise/issues/1284))
 - `[Datagrid]` In high contrast mode the background is now white when editing cells. ([#1421](https://github.com/infor-design/enterprise/issues/1421))
 - `[Dropdown]` Fixed an issue where filter did not work in no-search mode with the Caps Lock key. ([#1500](https://github.com/infor-design/enterprise/issues/1500))
-- `[Popupmenu]` Fixed an issue when using the same menu on multiple inputs. When you destroyed one instance it destroyed all instances. ([#1025](https://github.com/infor-design/enterprise/issues/1025))
+- `[Popupmenu]` Fixed an issue when using the same menu on multiple inputs wherein destroying one instance actually destroyed all instances. ([#1025](https://github.com/infor-design/enterprise/issues/1025))
 - `[Swaplist]` Fixed a bug where Shift+M did not work when typing in the search. ([#1408](https://github.com/infor-design/enterprise/issues/1408))
 - `[Popupmenu]` Fixed a bug in immediate mode where right click only worked the first time. ([#1507](https://github.com/infor-design/enterprise/issues/1507))
 - `[Editor]` Fixed a bug where clear formatting did not work in safari. ([#911](https://github.com/infor-design/enterprise/issues/911))
