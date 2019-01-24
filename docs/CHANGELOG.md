@@ -25,7 +25,7 @@
 - `[Swaplist]` Fixed a bug where Shift+M did not work when typing in the search. ([#1408](https://github.com/infor-design/enterprise/issues/1408))
 - `[Popupmenu]` Fixed a bug in immediate mode where right click only worked the first time. ([#1507](https://github.com/infor-design/enterprise/issues/1507))
 - `[Editor]` Fixed a bug where clear formatting did not work in safari. ([#911](https://github.com/infor-design/enterprise/issues/911))
-- `[Colorpicker]` Fixed a bug in Angular where the picker did not respond correctly to editable = false and disabled = true. ([#257](https://github.com/infor-design/enterprise-ng/issues/257))
+- `[Colorpicker]` Fixed a bug in Angular where the picker did not respond correctly to `editable=false` and `disabled=true`. ([#257](https://github.com/infor-design/enterprise-ng/issues/257))
 - `[Locale]` Fixed a bug where the callback did not complete on non existent locales. ([#1267](https://github.com/infor-design/enterprise/issues/1267))
 - `[Calendar]` Fixed a bug where the event details are still shown if filtering event types. ([#1436](https://github.com/infor-design/enterprise/issues/1436))
 - `[Busy Indicator]` Fixed a bug where the indicator closed on accordions when clicking them. ([#281](https://github.com/infor-design/enterprise-ng/issues/281))
