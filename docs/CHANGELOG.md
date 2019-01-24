@@ -49,7 +49,7 @@
 - `[Editor]` Fixed a bug where the image would still be shown if you press the Esc key and cancel the image dialog. ([#1489](https://github.com/infor-design/enterprise/issues/1489))
 - `[Datagrid Lookup]` Added additional missing event info for ajax requests and filtering. ([#1486](https://github.com/infor-design/enterprise/issues/1486))
 - `[Tabs]` Added protection from inserting HTML tags in the add method (XSS). ([#1462](https://github.com/infor-design/enterprise/issues/1462))
-- `[App Menu]` Added better text wrapping for longer titles at the top. ([#1116](https://github.com/infor-design/enterprise/issues/1116))
+- `[App Menu]` Added better text wrapping for longer titles. ([#1116](https://github.com/infor-design/enterprise/issues/1116))
 - `[Contextual Action Panel]` Fixed some examples so that they reopen more than one time. ([#1116](https://github.com/infor-design/enterprise/issues/506))
 - `[Searchfield]` Fixed a border styling issue on longer labels in the search. ([#1500](https://github.com/infor-design/enterprise/issues/1500))
 - `[Tabs Multi]` Improved the experience on mobile by collapsing the menus a bit. ([#971](https://github.com/infor-design/enterprise/issues/971))
