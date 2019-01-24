@@ -32,7 +32,7 @@
 - `[Datagrid Tree]` Fixed the need for unique IDs on the tree nodes. ([#1361](https://github.com/infor-design/enterprise/issues/1361))
 - `[Editor]` Improved the result of pasting bullet lists from MS Word. ([#1351](https://github.com/infor-design/enterprise/issues/1351))
 - `[Hierarchy]` Fixed layout issues in the context menu in RTL mode. ([#1310](https://github.com/infor-design/enterprise/issues/1310))
-- `[Datagrid]` Added a setting `allowChildExpandOnMatch` that optionally determines if a search/filter will show and allow non matching children to be shown. ([#1422](https://github.com/infor-design/enterprise/issues/1422))
+- `[Datagrid]` Added a setting `allowChildExpandOnMatch` that optionally determines if a search/filter will show and allow nonmatching children to be shown. ([#1422](https://github.com/infor-design/enterprise/issues/1422))
 - `[Datagrid]` If a link is added with a href it will now be followed when clicking, rather than needing to use the click method setting on columns. ([#1473](https://github.com/infor-design/enterprise/issues/1473))
 - `[Datagrid Tree]` Fixed a bug where Expand/Collapse text is added into the +/- cell. ([#1145](https://github.com/infor-design/enterprise/issues/1145))
 - `[Dropdown]` Fixed a bug in NG where two dropdowns in different components would cause each other to freeze. ([#229](https://github.com/infor-design/enterprise-ng/issues/229))
