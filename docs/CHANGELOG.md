@@ -18,7 +18,7 @@
 
 - `[Icons]` Icons with the word `confirm` have been changed to `success`. This is partially backwards compatible for now. We deprecated `confirm` and will remove in the next major version so rename your icons. Example `icon-confirm` to `icon-success`. ([#963](https://github.com/infor-design/enterprise/issues/963))
 - `[Icons]` The alert icons now have a white background allowing them to appear on colored sections. There are now two versions, for example: `icon-error` and `icon-error-solid`. These are used in calendar. ([#1436](https://github.com/infor-design/enterprise/issues/1436))
-- `[Circle Pager]` Made the resizing work a lot better especially when on tabs. ([#1284](https://github.com/infor-design/enterprise/issues/1284))
+- `[Circle Pager]` Made significant improvements to resizing, especially on tabs. ([#1284](https://github.com/infor-design/enterprise/issues/1284))
 - `[Datagrid]` In high contrast mode the background is now white when editing cells. ([#1421](https://github.com/infor-design/enterprise/issues/1421))
 - `[Dropdown]` Fixed an issue where filter did not work in no-search mode with the Caps Lock key. ([#1500](https://github.com/infor-design/enterprise/issues/1500))
 - `[Popupmenu]` Fixed an issue when using the same menu on multiple inputs. When you destroyed one instance it destroyed all instances. ([#1025](https://github.com/infor-design/enterprise/issues/1025))
