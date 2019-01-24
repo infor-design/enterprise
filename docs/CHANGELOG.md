@@ -40,7 +40,7 @@
 - `[Datagrid Tree]` Fixed a bug in `updateRow` that caused the indent of the tree grid to collapse. ([#405](https://github.com/infor-design/enterprise/issues/405))
 - `[Empty Message]` Fixed a bug where a null empty message would not be possible. This is used to show no empty message on initial load delays. ([#1467](https://github.com/infor-design/enterprise/issues/1467))
 - `[Lookup]` Fixed a bug where nothing is inserted when you click a link editor in the lookup. ([#1315](https://github.com/infor-design/enterprise/issues/1315))
-- `[About]` Fixed a bug where the version would not show when set it would show the IDS version. ([#1414](https://github.com/infor-design/enterprise/issues/1414))
+- `[About]` Fixed a bug where the version would not show when set. It would show the IDS version. ([#1414](https://github.com/infor-design/enterprise/issues/1414))
 - `[Datagrid]` Fixed a bug in `disableClientSort` / `disableClientFilter`. It now retains visual indicators on sort and filter. ([#1248](https://github.com/infor-design/enterprise/issues/1248))
 - `[Tree]` Fixed a bug where selected nodes are selected again after loading child nodes. ([#1270](https://github.com/infor-design/enterprise/issues/1270))
 - `[Input]` Fixed a bug where inputs that have tooltips will not be selectable with the cursor. ([#1354](https://github.com/infor-design/enterprise/issues/1354))
