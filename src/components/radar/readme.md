@@ -1,6 +1,6 @@
 ---
 title: Radar Chart
-description: null
+description: A radar chart is a graphical method of displaying multivariate data in the form of a two-dimensional chart of three or more quantitative variables represented on axes starting from the same point.
 demo:
   embedded:
   - name: Standard Radar Chart
@@ -9,7 +9,7 @@ demo:
 
 ## Code Example
 
-This example shows how to invoke a pie bar chart with a dataset controlling the values.
+This example shows how to invoke a radar chart with a dataset controlling the values.
 
 ```javascript
 var radarData = [{

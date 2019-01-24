@@ -15,7 +15,6 @@ const WIZARD_DEFAULTS = {
 /**
  * A horizontal form based wizard component.
  * @class Wizard
- * @constructor
  * @param {jQuery[]|HTMLElement} element the Wizard container
  * @param {object} [settings] incoming settings
  * @param {jQuery[]} [settings.ticks]  Defines the data to use, must be specified.
@@ -161,6 +160,7 @@ Wizard.prototype = {
   },
 
   /**
+   * Update the wizard component with new settings.
    * @param {object} [settings] incoming settings
    * @returns {this} component instance
    */
@@ -294,7 +294,7 @@ Wizard.prototype = {
   },
 
   /**
-   * Teardown - Remove added markup and events
+   * Destroy and remove added markup and events
    */
   destroy() {
     this.teardown();

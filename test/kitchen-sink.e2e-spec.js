@@ -41,7 +41,7 @@ describe('Kitchen-sink tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonChangerEl), config.waitsFor);
       await buttonChangerEl.click();
-      const highContrastItem = await element.all(by.css('.popupmenu.is-open li')).get(3);
+      const highContrastItem = await element(by.cssContainingText('.popupmenu.is-open li', 'High Contrast'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(highContrastItem), config.waitsFor);
       await highContrastItem.click();

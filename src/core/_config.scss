@@ -571,6 +571,7 @@ $datagrid-required-icon-color: $theme-color-palette-white;
 
 $datagrid-cell-color: $theme-color-font-base;
 $datagrid-cell-bg-color: $theme-color-palette-white;
+$datagrid-cell-editing-bg-color: $theme-color-palette-white;
 $datagrid-cell-readonly-bg-color: $theme-color-palette-graphite-10;
 $datagrid-cell-readonly-color: $theme-color-font-base;
 $datagrid-cell-border-color: $theme-color-palette-graphite-30;
@@ -596,6 +597,7 @@ $datagrid-header-focus-bg-color: $datagrid-header-bg-color;
 $datagrid-header-focus-border-color: $theme-color-palette-white;
 $datagrid-list-header-checkbox-border-color: $theme-color-brand-secondary-alt;
 $datagrid-list-header-active-color: $theme-color-brand-secondary-base;
+$datagrid-list-row-group-hover-color: $datagrid-row-selected-color;
 
 $datagrid-filter-border-color: $theme-color-palette-slate-40;
 $datagrid-filter-hover-border-color: $theme-color-palette-slate-20;

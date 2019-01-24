@@ -1,3 +1,4 @@
+import { cleanup } from '../../helpers/func-utils';
 import { Bar } from '../../../src/components/bar/bar';
 import { Locale } from '../../../src/components/locale/locale';
 
@@ -5,7 +6,6 @@ const barHTML = require('../../../app/views/components/bar/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let barEl;
-let svgEl;
 let barObj;
 
 const settings = {
@@ -63,12 +63,10 @@ const twoSeriesData = [{
 describe('Bar API', () => {
   beforeEach((done) => {
     barEl = null;
-    svgEl = null;
     barObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', barHTML);
     barEl = document.body.querySelector('.chart-container');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA']); //eslint-disable-line
     Locale.addCulture('en-US', Soho.Locale.cultures['en-US']); //eslint-disable-line
@@ -82,13 +80,13 @@ describe('Bar API', () => {
   });
 
   afterEach(() => {
-    const rowEl = document.body.querySelector('.row');
-
     barObj.destroy();
-
-    rowEl.parentNode.removeChild(rowEl);
-    barEl.parentNode.removeChild(barEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup([
+      '.svg-icons',
+      '#svg-tooltip',
+      '.row',
+      '#test-script'
+    ]);
   });
 
   it('Should be defined on jQuery object', () => {

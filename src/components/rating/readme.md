@@ -64,7 +64,7 @@ Note that the name should be the same for all stars for it to function correctly
 
 ## Accessibility
 
-`aubible` labels are added for giving the star information.
+- `aubible` labels are added for screen readers to hear the star information.
 
 ## Testability
 

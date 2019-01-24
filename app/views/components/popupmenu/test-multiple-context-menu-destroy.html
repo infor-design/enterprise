@@ -35,7 +35,7 @@
   const contextMenuApi2 = contextMenu2.data('popupmenu');
 
   // This emulates an *ngIf on the first field, where it's presence is toggled.
-  $('#popdown-destroy').click(() => {
+  $('#popdown-destroy').click(function(){
     // turn off events
     contextMenu.off();
 

@@ -14,8 +14,6 @@ const COMPONENT_NAME = 'popupmenu';
 /**
  * Responsive Popup Menu Control aka Context Menu when doing a right click action.
  * @class PopupMenu
- *
- * @constructor
  * @param {jquery[]|htmlelement} element The component element.
  * @param {object} [settings] The component settings.
  * @param {string} [settings.menu]  Menu's ID Selector, or a jQuery object representing a menu.
@@ -27,6 +25,7 @@ const COMPONENT_NAME = 'popupmenu';
  * @param {string} [settings.ariaListbox=false]   Switches aria to use listbox construct instead of menu construct (internal).
  * @param {string} [settings.eventObj]  Can pass in the event object so you can do a right click with immediate.
  * @param {string} [settings.triggerSelect]  If false select event will not be triggered.
+ * @param {string} [settings.removeOnDestroy] Dispose of the menu from the DOM on destroy
  * @param {string} [settings.showArrow]  If true you can explicitly set an arrow on the menu.
  * @param {boolean|function} [settings.returnFocus]  If set to false, focus will not be
   returned to the calling element. Can also be defined as a callback that can determine how
@@ -46,6 +45,7 @@ const POPUPMENU_DEFAULTS = {
   autoFocus: true,
   mouseFocus: true,
   attachToBody: false,
+  removeOnDestroy: false,
   beforeOpen: null,
   ariaListbox: false,
   eventObj: undefined,
@@ -88,9 +88,7 @@ PopupMenu.prototype = {
     // Allow for an external click event to be passed in from outside this code.
     // This event can be used to pass clientX/clientY coordinates for mouse cursor positioning.
     if (this.settings.trigger === 'immediate') {
-      if (this.menu.length) {
-        this.open(this.settings.eventObj);
-      }
+      this.open(this.settings.eventObj);
     }
 
     // Use some css rules on submenu parents
@@ -2189,7 +2187,10 @@ PopupMenu.prototype = {
     }
     if (this.settings.attachToBody && insertTarget) {
       this.menu.unwrap();
-      this.menu.off().remove();
+
+      if (this.settings.removeOnDestroy) {
+        this.menu.off().remove();
+      }
     }
     if (this.menu && insertTarget && !this.settings.attachToBody) {
       this.menu.insertAfter(insertTarget);

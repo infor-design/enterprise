@@ -1,6 +1,6 @@
 import { Tree } from '../../../src/components/tree/tree';
 
-const treeHTML = require('../../../app/views/components/tree/example-select-event.html');
+const treeHTML = require('../../../app/views/components/tree/test-select-event.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 const sampleData = [{

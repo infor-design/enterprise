@@ -951,7 +951,9 @@ Calendar.prototype = {
           const popupApi = dayObj.elem.data('tooltip');
           const action = e.currentTarget.getAttribute('data-action');
           isCancel = action !== 'submit';
-          popupApi.hide(true);
+          if (popupApi) {
+            popupApi.hide(true);
+          }
         });
       });
 
