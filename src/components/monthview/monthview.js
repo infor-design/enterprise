@@ -28,7 +28,8 @@ const COMPONENT_NAME_DEFAULTS = {
   ],
   hideDays: false,
   showMonthYearPicker: false,
-  advanceMonths: 5,
+  displayedYearsAhead: 5,
+  displayedYearsBehind: 5,
   range: {
     useRange: false, // true - if datepicker using range dates
     start: '', // Start date '03/05/2018'
@@ -85,8 +86,8 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.range.includeDisabled=false] Include disable dates in range of dates.
  * @param {boolean} [settings.hideDays=false] If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
  * @param {boolean} [settings.showMonthYearPicker=false] If true the month and year will render as dropdowns.
- * @param {number} [settings.advanceMonths=5] The number of months in each direction to show in
- *  the dropdown for months (when initially opening)
+ * @param {number} [settings.displayedYearsAhead=5] The number of years forward to show in the year dropdown.
+ * @param {number} [settings.displayedYearsBehind=5] he number of years backwards to show in the year dropdown.
  * @param {array} [settings.legend]  Legend Build up
  * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
  * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
@@ -533,12 +534,11 @@ MonthView.prototype = {
       <select id="year-dropdown" class="dropdown year">`;
 
     const years = [];
-
-    for (let i = this.settings.advanceMonths; i >= 1; i--) {
+    for (let i = parseInt(this.settings.displayedYearsBehind, 10); i >= 1; i--) {
       years.push(parseInt(year, 10) - i);
     }
     years.push(year);
-    for (let j = 1; j <= this.settings.advanceMonths; j++) {
+    for (let j = 1; j <= parseInt(this.settings.displayedYearsAhead, 10); j++) {
       years.push(parseInt(year, 10) + j);
     }
 

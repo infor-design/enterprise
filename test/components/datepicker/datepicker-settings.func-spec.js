@@ -50,7 +50,8 @@ describe('DatePicker Settings', () => {
       showLegend: false,
       showMonthYearPicker: false,
       hideDays: false,
-      advanceMonths: 5,
+      displayedYearsAhead: 5,
+      displayedYearsBehind: 5,
       legend: [
         // Legend Build up example
         // Color in level 6 - http://usmvvwdev53:424/controls/colors

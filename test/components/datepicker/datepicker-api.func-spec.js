@@ -433,4 +433,36 @@ describe('DatePicker API', () => {
 
     expect($(datepickerEl).siblings('svg.icon').css('visibility')).toEqual('hidden');
   });
+
+  it('Should be able to control displayedYearsAhead and displayedYearsBehind', (done) => {
+    datepickerAPI.destroy();
+
+    datepickerAPI = new DatePicker(datepickerEl, {
+      showMonthYearPicker: true,
+      displayedYearsAhead: 8,
+      displayedYearsBehind: 1
+    });
+
+    datepickerAPI.openCalendar();
+    setTimeout(() => {
+      const allYears = document.querySelectorAll('#year-dropdown option');
+
+      expect(allYears.length).toEqual(10);
+      const currentYear = new Date().getFullYear();
+
+      expect(allYears[0].innerText).toEqual((currentYear - 1).toString());
+      expect(allYears[1].innerText).toEqual((currentYear).toString());
+      expect(allYears[2].innerText).toEqual((currentYear + 1).toString());
+      expect(allYears[3].innerText).toEqual((currentYear + 2).toString());
+      expect(allYears[4].innerText).toEqual((currentYear + 3).toString());
+      expect(allYears[5].innerText).toEqual((currentYear + 4).toString());
+      expect(allYears[6].innerText).toEqual((currentYear + 5).toString());
+      expect(allYears[7].innerText).toEqual((currentYear + 6).toString());
+      expect(allYears[8].innerText).toEqual((currentYear + 7).toString());
+      expect(allYears[9].innerText).toEqual((currentYear + 8).toString());
+
+      datepickerAPI.closeCalendar();
+      done();
+    }, 300);
+  });
 });

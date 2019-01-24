@@ -4,12 +4,12 @@
 
     <div class="field">
       <label for="month-year" class="label">Month / Year Together (more clicks)</label>
-      <input id="month-year" class="datepicker" name="month-year" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MM/yyyy'}" type="text">
+      <input id="month-year" class="datepicker" name="month-year" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MM/yyyy'}" type="text"/>
     </div>
 
     <div class="field">
       <label for="month-year-long" class="label">Month / Year Together - Long Version (more clicks)</label>
-      <input id="month-year-long" class="datepicker" name="month-year" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MMM yyyy'}" type="text">
+      <input id="month-year-long" class="datepicker" name="month-year" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MMM yyyy'}" type="text"/>
     </div>
 
     <div class="field">
@@ -60,13 +60,13 @@
     $('#together-month').append(months).trigger('updated');
 
     //Dynamically populate the month with an advance month range
-    var advanceMonths = 5, years= [], yearDropdown='', year = new Date().getFullYear();
+    var displayedYearsAhead = 5, years= [], yearDropdown='', year = new Date().getFullYear();
 
-    for (var i = advanceMonths; i >= 1; i--) {
+    for (var i = displayedYearsAhead; i >= 1; i--) {
       years.push(parseInt(year) - i);
     }
     years.push(year);
-    for (var j = 1; j <= advanceMonths; j++) {
+    for (var j = 1; j <= displayedYearsAhead; j++) {
       years.push(parseInt(year) + j);
     }
 
@@ -76,7 +76,6 @@
 
     $('#year-only').append(yearDropdown).trigger('updated');
     $('#together-year').append(yearDropdown).trigger('updated');
-
 
   });
 </script>

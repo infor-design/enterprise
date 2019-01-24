@@ -56,7 +56,8 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.showMonthYearPicker=false] If true the month and year will render as dropdowns.
  * @param {boolean} [settings.hideDays=false] If true the days portion of the calendar will be hidden.
  *  Usefull for Month/Year only formats.
- * @param {number} [settings.advanceMonths=5] The number of months in each direction to show in
+ * @param {number} [settings.displayedYearsAhead=5] The number of years forward to show in the year dropdown.
+ * @param {number} [settings.displayedYearsBehind=5] he number of years backwards to show in the year dropdown.
  *  the dropdown for months (when initially opening)
  * @param {array} [settings.legend]  Legend Build up
  * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
@@ -101,7 +102,8 @@ const DATEPICKER_DEFAULTS = {
   showLegend: false,
   showMonthYearPicker: false,
   hideDays: false,
-  advanceMonths: 5,
+  displayedYearsAhead: 5,
+  displayedYearsBehind: 5,
   legend: [
     // Legend Build up example
     // Color in level 6 - http://usmvvwdev53:424/controls/colors
