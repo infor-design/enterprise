@@ -12,7 +12,7 @@
 - `[Validation]` When using legacy mode validation, made the icon dim if the text was on top of it. ([#644](https://github.com/infor-design/enterprise/issues/644))
 - `[Calendar]` Now possible to edit events both with the API and by clicking/double clicking events. And other improvements. ([#1436](https://github.com/infor-design/enterprise/issues/1436))
 - `[Datagrid]` Added new methods to clear dirty cells on cells, rows, and all. ([#1303](https://github.com/infor-design/enterprise/issues/1303))
-- `[Tree]` Added several improvements such as the ability to show a dropdown on the tree node. Ability to add nodes in between current nodes. Ability to set checkboxes for selection only on some nodes and the ability to customize icons. ([#1364](https://github.com/infor-design/enterprise/issues/1364))
+- `[Tree]` Added several improvements: the ability to show a dropdown on the tree node, the ability to add nodes in between current nodes, the ability to set checkboxes for selection only on some nodes, and the ability to customize icons. ([#1364](https://github.com/infor-design/enterprise/issues/1364))
 
 ### v4.15.0 Fixes
 
