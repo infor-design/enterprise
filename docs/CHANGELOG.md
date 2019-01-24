@@ -45,7 +45,7 @@
 - `[Tree]` Fixed a bug where selected nodes are selected again after loading child nodes. ([#1270](https://github.com/infor-design/enterprise/issues/1270))
 - `[Input]` Fixed a bug where inputs that have tooltips will not be selectable with the cursor. ([#1354](https://github.com/infor-design/enterprise/issues/1354))
 - `[Accordion]` Fixed a bug where double clicking a header will open and then close the accordion. ([#1314](https://github.com/infor-design/enterprise/issues/1314))
-- `[Datagrid]` Fixed a bug on hover with taller cells that the hover state would not cover everything. ([#1490](https://github.com/infor-design/enterprise/issues/1490))
+- `[Datagrid]` Fixed a bug on hover with taller cells where the hover state would not cover the entire cell. ([#1490](https://github.com/infor-design/enterprise/issues/1490))
 - `[Editor]` Fixed a bug where the image would still be shown if you esc and cancel the image dialog. ([#1489](https://github.com/infor-design/enterprise/issues/1489))
 - `[Datagrid Lookup]` Added additional missing event info for ajax requests and filtering. ([#1486](https://github.com/infor-design/enterprise/issues/1486))
 - `[Tabs]` Added protection from inserting HTML tags in the add method (XSS). ([#1462](https://github.com/infor-design/enterprise/issues/1462))
