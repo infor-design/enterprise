@@ -142,17 +142,14 @@ describe('Dropdown updates, events', () => {
   });
 
   it('should trigger change event on click', (done) => {
-    const spyEvent = spyOnEvent('select.dropdown', 'change');
-    dropdownObj.open();
-
     setTimeout(() => {
+      const spyEvent = spyOnEvent('select.dropdown', 'change');
+      dropdownObj.open();
       document.body.querySelectorAll('.dropdown-option')[0].click();
 
-      setTimeout(() => {
-        expect(spyEvent).toHaveBeenTriggered();
-        done();
-      }, 300);
-    }, 300);
+      expect(spyEvent).toHaveBeenTriggered();
+      done();
+    }, 1);
   });
 
   it('should trigger change event on duplicate label', () => {
