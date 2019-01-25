@@ -9,6 +9,8 @@
 
 - `[Datepicker]` Renamed the setting `advanceMonths` to `displayedYearsAhead` because it  works on the year dropdown so it was incorrectly named. Also added a new setting `displayedYearsBehind` so that you can change both the number of years shown forward and backwards. This might be used for example if you only work with forward years and not that far backwards.
 
+- `[Icons]` Icons with the word `confirm` have been changed to `success`. Example: `icon-confirm` to `icon-success`. ([#1417](https://github.com/infor-design/enterprise/issues/1417))
+
 ### v5.0.0 Features
 
 ### v5.0.0 Fixes
