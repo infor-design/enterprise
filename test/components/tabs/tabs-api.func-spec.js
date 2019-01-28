@@ -197,7 +197,7 @@ describe('Tabs API', () => {
     const tab = tabsObj.add('tabs-normal-tags', settingsObj, 1);
 
     expect(tab.anchors.length).toEqual(6);
-    expect(tab.element[0].querySelectorAll('.tab')[1].innerText).toEqual('');
+    expect(tab.element[0].querySelectorAll('.tab')[1].innerText).toEqual('<img src="404" onerror="(function() { alert()})()" />');
     expect(tab.container[0].querySelector('#tabs-normal-tags').innerText).toEqual('Stuff');
   });
 
@@ -211,7 +211,21 @@ describe('Tabs API', () => {
     const tab = tabsObj.add('tabs-normal-tags', settingsObj, 1);
 
     expect(tab.anchors.length).toEqual(6);
-    expect(tab.element[0].querySelectorAll('.tab')[1].innerText).toEqual('Name');
+    expect(tab.element[0].querySelectorAll('.tab')[1].innerText).toEqual('<b>Name</b>');
+    expect(tab.container[0].querySelector('#tabs-normal-tags').innerText).toEqual('Stuff');
+  });
+
+  it('Should allow text in brackets', () => {
+    const settingsObj = {
+      name: '<Online>',
+      content: 'Stuff',
+      isDismissible: true
+    };
+
+    const tab = tabsObj.add('tabs-normal-tags', settingsObj, 1);
+
+    expect(tab.anchors.length).toEqual(6);
+    expect(tab.element[0].querySelectorAll('.tab')[1].innerText).toEqual('<Online>');
     expect(tab.container[0].querySelector('#tabs-normal-tags').innerText).toEqual('Stuff');
   });
 
