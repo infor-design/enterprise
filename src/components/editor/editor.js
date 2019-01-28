@@ -1894,10 +1894,6 @@ Editor.prototype = {
     };
 
     // Clear other formated tags.
-    const clearBlockquoteAndPre = () => {
-    };
-
-    // Clear other formated tags.
     const clearFormatedTags = () => {
       const replaceTag = (elem) => {
         const parent = elem.parentNode;
