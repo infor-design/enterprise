@@ -11,7 +11,7 @@ demo:
 
 ## Code Example
 
-The notification component is a component that inserts a banner at the top of the page for showing user dismissible alerts and messages. Its contents will be removed when the banner is closed. You have control over the message contents and if you would like a link. The message is triggered by selecting the parent content (usually `<body>`) and executing the `notification()` function with various options to create the notification banner.
+The notification component is a component that inserts a banner at the top of the page for showing user-dismissible alerts and messages. Its contents will be removed when the banner is closed. You have control over the message contents including the option for a link. The message is triggered by selecting the parent content (usually `<body>`) and executing the `notification()` function with various options to create the notification banner.
 
 ```javascript
   $('body').notification({
