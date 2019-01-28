@@ -118,12 +118,17 @@
     a {
       @include font-size(12);
 
+      float: left;
       font-weight: $theme-number-font-weight-bold;
       margin: 0 auto;
       overflow: hidden;
-      padding: 10px 10px 10px 0;
+      padding: 10px;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      @media (max-width: $breakpoint-slim - 25) {
+        width: 95px !important;
+      }
 
       @media (min-width: $breakpoint-phone + 60) {
         padding: 10px;
