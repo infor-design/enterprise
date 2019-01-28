@@ -1894,6 +1894,10 @@ Editor.prototype = {
     };
 
     // Clear other formated tags.
+    const clearBlockquoteAndPre = () => {
+    };
+
+    // Clear other formated tags.
     const clearFormatedTags = () => {
       const replaceTag = (elem) => {
         const parent = elem.parentNode;
@@ -1911,6 +1915,28 @@ Editor.prototype = {
           if (el !== 'p') {
             const nodes = [].slice.call(parentEl.querySelectorAll(el));
             nodes.forEach(node => replaceTag(node));
+          }
+        });
+        // Blockquote or Pre
+        const nodes = [].slice.call(this.element[0].querySelectorAll('blockquote, pre'));
+        nodes.forEach((node) => {
+          let found = false;
+          const children = [].slice.call(node.children);
+          const checkChildren = (childrenNodes) => {
+            childrenNodes.forEach((child) => {
+              const childChildren = [].slice.call(child.children);
+              if (child === parentEl) {
+                found = true;
+              }
+              if (childChildren.length && !found) {
+                checkChildren(childChildren);
+              }
+            });
+          };
+          checkChildren(children);
+          if (found) {
+            document.execCommand('removeFormat', false, null);
+            replaceTag(node);
           }
         });
       }
