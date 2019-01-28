@@ -1103,6 +1103,7 @@ Datagrid.prototype = {
       options.range = { useRange: true };
       initDatepicker();
     } else if ((!datepickerApi || isRange) && operator !== 'in-range') {
+      options.range = { useRange: false };
       input.removeData('is-range');
       initDatepicker();
     }
@@ -1284,7 +1285,7 @@ Datagrid.prototype = {
               const input = rowElem.find('input');
               const svg = rowElem.find('.btn-filter .icon-dropdown:first');
               const operator = svg.getIconName().replace('filter-', '');
-              self.filterSetDatepicker(input, operator);
+              self.filterSetDatepicker(input, operator, col.editorOptions);
             }
             self.applyFilter(null, 'selected');
           })
@@ -2700,11 +2701,28 @@ Datagrid.prototype = {
           self.tableBody.find('tr').each(function () {
             const row = $(this);
             const rowIdx = row.attr('data-index');
+            const lineage = row.attr('data-lineage');
+            let value = self.settings.dataset;
+            if (lineage) {
+              const drilldown = lineage.split('.');
+              drilldown.push(rowIdx);
+              let first = true;
+              drilldown.forEach((childIdx) => {
+                if (first && value[childIdx]) {
+                  value = value[childIdx];
+                } else if (value.children && value.children[childIdx]) {
+                  value = value.children[childIdx];
+                }
+                first = false;
+              });
+            } else {
+              value = value[rowIdx];
+            }
             const colIdx = self.columnIdxById(col.id);
             const args = {
               row: rowIdx,
               cell: colIdx,
-              value: self.settings.dataset[rowIdx],
+              value,
               col,
               api: self
             };
@@ -2969,9 +2987,10 @@ Datagrid.prototype = {
    * @param  {number} actualIndex The actual data index
    * @param  {boolean} isGroup If true we are building a group row.
    * @param  {object} isFooter If true we are building a footer row.
+   * @param  {string} actualIndexLineage Series of actualIndex values to reach a child actualIndex in a tree
    * @returns {string} The html used to construct the row.
    */
-  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter) {
+  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage) {
     let isEven = false;
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
@@ -3067,6 +3086,8 @@ Datagrid.prototype = {
 
     rowHtml = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
               ` data-index="${actualIndex}"${
+                actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
+              }${
                 self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
               }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
               }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
@@ -3284,8 +3305,9 @@ Datagrid.prototype = {
     // Render Tree Children
     if (rowData.children) {
       for (let i = 0, l = rowData.children.length; i < l; i++) {
+        const lineage = actualIndexLineage ? `${actualIndexLineage}.${actualIndex}` : `${actualIndex}`;
         this.recordCount++;
-        rowHtml += self.rowHtml(rowData.children[i], this.recordCount, i);
+        rowHtml += self.rowHtml(rowData.children[i], this.recordCount, i, false, false, lineage);
       }
     }
 
