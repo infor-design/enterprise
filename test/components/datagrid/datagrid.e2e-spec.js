@@ -959,6 +959,37 @@ describe('Datagrid paging serverside multi select tests', () => {
   });
 });
 
+describe('Datagrid paging serverside multi select tests 2nd page', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to select and have selections clear when paging 2nd page', async () => {
+    /*
+      STEPS TODO
+      - Go to 2nd page
+      - Click on checkbox in header row to Select All (10 rows)
+      - Unselect some of them
+      - See the number of selected items should change
+      - The "Select All" icon should change from tick to "-“ icon
+    */
+    await element(await by.css('.pager-next')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
+
+    await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox')).click();
+  });
+});
+
 describe('Datagrid paging serverside single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-serverside-single');
