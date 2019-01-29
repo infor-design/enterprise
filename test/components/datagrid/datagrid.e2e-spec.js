@@ -972,21 +972,28 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to select and have selections clear when paging 2nd page', async () => {
-    /*
-      STEPS TODO
-      - Go to 2nd page
-      - Click on checkbox in header row to Select All (10 rows)
-      - Unselect some of them
-      - See the number of selected items should change
-      - The "Select All" icon should change from tick to "-“ icon
-    */
-    await element(await by.css('.pager-next')).click();
+  it('Should be able to select and have selections clear when paging on 2nd page', async () => {
+    await element(await by.css('.pager-next a')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox')).click();
+    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkboxTd).perform();
+    await browser.actions().click(checkboxTd).perform();
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(10);
+    expect(await element.all(by.css('.contextual-toolbar .title.selection-count')).getText()).toEqual(['10 Selected']);
+    expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked.is-partial')).isPresent()).toBeFalsy();
+    expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked')).isPresent()).toBeTruthy();
+
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(8);
+    expect(await element.all(by.css('.contextual-toolbar .title.selection-count')).getText()).toEqual(['8 Selected']);
+    expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked.is-partial')).isPresent()).toBeTruthy();
+    expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked')).isPresent()).toBeTruthy();
   });
 });
 
