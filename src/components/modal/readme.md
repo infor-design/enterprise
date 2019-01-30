@@ -6,33 +6,27 @@ demo:
   - name: Modal Example
     slug: example-index
   pages:
-  - name: Accordian Modal
-    slug: example-accordion-modal
-  - name: Before Open
+  - name: Before Open Callback
     slug: example-before-open
-  - name: Close Button
+  - name: Canceling the Close Event
+    slug: example-cancel-close
+  - name: Adding a Close Button
     slug: example-close-btn
-  - name: Modal Event Handlers
-    slug: example-events
-  - name: Supplying Full Modal content
+  - name: Supplying Full Modal Content
     slug: example-full-content
   - name: Validation (enabling buttons) Example
     slug: example-validation
-  - name: Canceling Close Example
-    slug: example-cancel-close
 ---
 
 ## Code Example
 
 ### Modal Dialog
 
-To provide content for the modal dialog you can either append it directly in the page and access it by ID, or pass it as a string to the modal plugin. This example demonstrates both ways. You can also invoke the modal in a few ways: by linking it to a button or trigger action, or by invoking it immediately as needed.
+To provide content for the modal dialog you can either append it directly in the page and access it by ID, or pass it as a string to the modal plugin. This example demonstrates both ways. You can invoke the modal by either by linking it to a trigger button or link or immediately.
 
-When the modal is invoked, it animates and centers itself in the page using the content provided. It will expand to the content no bigger than the page plus some padding including on mobile devices.
+When the modal is invoked, it animates and centers itself in the page using the content provided. It will expand to the content no bigger than the page plus some padding. This includes mobile devices.
 
-Even if the user clicks outside of the dialog on the application which invoked the dialog, focus remains in the dialog.
-
-The modal animate behavior is that it animates from 90% to 100% and at the same time fades in.
+If the user clicks outside of the dialog on the application which invoked the dialog, focus remains in the dialog.
 
 ```html
    <button id="modal" class="btn" type="button" data-modal="modal-1">Add Context</button>
@@ -62,28 +56,27 @@ The modal animate behavior is that it animates from 90% to 100% and at the same 
     </div>
 
     <button class="btn" type="button" id="btn-add-comment">Add Comment</button>
-
 ```
 
 ### Veto / Cancel closing the modal
 
-In some cases you may want to cancel closing the modal. This can be done with the `beforeclose` event by returning false from it. It does not work asyncronously. To do this, one way is to attach to the `.modal` element in the page after the modal is opened. The sequence would look like this.
+In some cases you may want to cancel closing the modal. This can be done with the `beforeclose` event by returning false from it. Modals cannot not work asynchronously to return results. To get around this you can either do an action in the button clicks or on the close events of a dialog.
 
 ```javascript
-    $('body').modal({
-      title: 'Enter Problem',
-      content: $('#modal-add-context'),
-      buttons: [{
-        text: 'Cancel'
-      }, {
-        text: 'Save'
-      }]
-    });
+$('body').modal({
+  title: 'Enter Problem',
+  content: $('#modal-add-context'),
+  buttons: [{
+    text: 'Cancel'
+  }, {
+    text: 'Save'
+  }]
+});
 
-    $('.modal').on('beforeclose', function () {
-        $('body').toast({ title: 'Example Only', message: 'This Dialog May not be closed.'});
-        return false;
-    });
+$('.modal').on('beforeclose', function () {
+    $('body').toast({ title: 'Example Only', message: 'This Dialog May not be closed.'});
+    return false;
+});
 ```
 
 ## Accessibility
@@ -108,7 +101,7 @@ In some cases you may want to cancel closing the modal. This can be done with th
 
 ## Responsive Guidelines
 
-- Modal will resize to fit the visible area with some padding.
+- Modal will resize to fit the visible area with some left and right padding.
 
 ## Upgrading from 3.X
 
