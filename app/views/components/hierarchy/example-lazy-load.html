@@ -23,7 +23,7 @@
     var hierarchyControl = $('#hierarchy').data('hierarchy');
 
     if (eventInfo.allowLazyLoad) {
-      $.getJSON('{{basepath}}api/orgstructure-children', function(data) {
+      $.getJSON('{{basepath}}api/orgstructure-children', {_: new Date().getTime()}, function(data) {
         hierarchyControl.add(eventInfo.data.id, eventInfo.data, data);
       });
     }
