@@ -45,6 +45,10 @@ describe('Datagrid Settings', () => {
       rowNavigation: true,
       alternateRowShading: false,
       columns,
+      frozenColumns: {
+        left: [],
+        right: []
+      },
       dataset: data,
       columnReorder: false,
       saveColumns: false,

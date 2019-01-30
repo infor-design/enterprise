@@ -50,7 +50,7 @@ $datagrid-medium-row-height: 33px;
 $datagrid-short-header-height: 25px;
 $datagrid-short-row-height: 23px;
 
-//Main Datagrid Container
+// Main Datagrid Container
 .datagrid-container {
   background-color: transparent;
   border: 1px solid $datagrid-cell-border-color;
@@ -80,6 +80,14 @@ $datagrid-short-row-height: 23px;
 
     &.paginated {
       background-color: $datagrid-empty-bg-color;
+    }
+
+    &:not(.left) td:last-child {
+      border-right-color: transparent;
+    }
+
+    &.right td {
+      border-left: 1px solid $datagrid-cell-border-color;
     }
   }
 
@@ -140,10 +148,6 @@ $datagrid-short-row-height: 23px;
         }
       }
     }
-  }
-
-  td:last-child {
-    border-right-color: transparent;
   }
 
   tr:not(.datagrid-expandable-row):last-child td {
@@ -550,8 +554,6 @@ $datagrid-short-row-height: 23px;
 .datagrid-body {
   overflow-x: auto;
   overflow-y: auto;
-  position: relative;
-  width: 100%;
 
   table {
     empty-cells: show;
@@ -559,6 +561,11 @@ $datagrid-short-row-height: 23px;
 
   .empty-message {
     display: none;
+  }
+
+  &.left,
+  &.right {
+    overflow: visible;
   }
 }
 
@@ -2017,10 +2024,31 @@ $datagrid-short-row-height: 23px;
   }
 }
 
+.datagrid-header-container {
+  display: flex;
+}
+
+.datagrid-body-container {
+  display: flex;
+  height: 100%;
+}
+
 //Grid Headers
 .datagrid-header {
   background-color: $datagrid-header-bg-color;
   overflow: hidden;
+
+  &.left {
+    overflow: visible;
+  }
+
+  &.right {
+    overflow: visible;
+
+    th {
+      border-left: 1px solid $datagrid-header-border-color;
+    }
+  }
 
   table {
     border-collapse: separate;
@@ -2550,7 +2578,7 @@ td .btn-actions {
   }
 }
 
-//Grid Checkboxes
+// Grid Checkboxes
 .datagrid-checkbox {
   @include font-size(12);
 
@@ -2606,7 +2634,7 @@ td .btn-actions {
   }
 }
 
-//Datagrid Dropdown Formatter
+// Datagrid Dropdown Formatter
 .datagrid-trigger-cell {
   &:not(.is-readonly) {
     cursor: pointer;
@@ -2933,7 +2961,7 @@ td .btn-actions {
   line-height: 43px;
 }
 
-//Inline Editing - Dropdown
+// Inline Editing - Dropdown
 .datagrid-dropdown-list {
   border-radius: 0 0 3px 3px;
   margin-left: -1px;
@@ -3011,7 +3039,7 @@ td .btn-actions {
   }
 }
 
-//Inline Editing Date Picker
+// Inline Editing Date Picker
 .is-focused .trigger + .icon {
   visibility: visible;
 }
@@ -3494,7 +3522,7 @@ html[dir='rtl'] {
   }
 }
 
-//Columns Personalization
+// Columns Personalization
 .datagrid-columns-dialog {
   .label-text {
     @include font-size(14);
@@ -3523,7 +3551,7 @@ html[dir='rtl'] {
 
 }
 
-//Filter Dropdown Style
+// Filter Dropdown Style
 .datagrid-filter-dropdown {
   .dropdown-search {
     height: 28px;
@@ -3554,7 +3582,7 @@ html[dir='rtl'] {
   }
 }
 
-//Summary totals
+// Summary totals
 .datagrid-summary-row {
   td {
     border-right-color: transparent;
@@ -3605,7 +3633,7 @@ html[dir='rtl'] {
 
 }
 
-//Modal Lists
+// Modal Lists
 .modal table {
   width: auto;
 }
@@ -3703,7 +3731,7 @@ html[dir='rtl'] {
   top: -9px;
 }
 
-//Ios Hacks
+// Ios Hacks
 .ios .datagrid:not(.short-rowheight):not(.medium-rowheight) {
   .icon-error,
   .icon-success,
