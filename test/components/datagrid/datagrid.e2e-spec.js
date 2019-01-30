@@ -959,6 +959,44 @@ describe('Datagrid paging serverside multi select tests', () => {
   });
 });
 
+describe('Datagrid paging serverside multi select tests 2nd page', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to select and have selections clear when paging on 2nd page', async () => {
+    await element(await by.css('.pager-next a')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
+
+    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkboxTd).perform();
+    await browser.actions().click(checkboxTd).perform();
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(10);
+    expect(await element.all(by.css('.contextual-toolbar .title.selection-count')).getText()).toEqual(['10 Selected']);
+    expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked.is-partial')).isPresent()).toBeFalsy();
+    expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked')).isPresent()).toBeTruthy();
+
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(8);
+    expect(await element.all(by.css('.contextual-toolbar .title.selection-count')).getText()).toEqual(['8 Selected']);
+    expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked.is-partial')).isPresent()).toBeTruthy();
+    expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked')).isPresent()).toBeTruthy();
+  });
+});
+
 describe('Datagrid paging serverside single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-serverside-single');
