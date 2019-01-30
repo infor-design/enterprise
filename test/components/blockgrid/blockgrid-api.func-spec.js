@@ -68,16 +68,16 @@ describe('Blockgrid API', () => {
   });
 
   it('Should support updating text', () => {
-    expect(document.querySelectorAll('.block.is-selectable p')[0].innerText.replace(/\r?\n|\r/, '')).toEqual('Neyo Taylor Infor, Developer');
-    expect(document.querySelectorAll('.block.is-selectable p')[1].innerText.replace(/\r?\n|\r/, '')).toEqual('Jane Taylor Infor, Developer');
+    expect(document.querySelectorAll('.block.is-selectable p')[0].innerText.replace(/[\r\n]+/g, '')).toEqual('Neyo Taylor Infor, Developer');
+    expect(document.querySelectorAll('.block.is-selectable p')[1].innerText.replace(/[\r\n]+/g, '')).toEqual('Jane Taylor Infor, Developer');
 
     settings.dataset[0].maintxt = 'Updated';
     settings.dataset[1].title = 'Updated';
     blockgridObj.settings.dataset = settings.dataset;
     blockgridObj.updated();
 
-    expect(document.querySelectorAll('.block.is-selectable p')[0].innerText.replace(/\r?\n|\r/, '')).toEqual('Updated Infor, Developer');
-    expect(document.querySelectorAll('.block.is-selectable p')[1].innerText.replace(/\r?\n|\r/, '')).toEqual('Updated Infor, Developer');
+    expect(document.querySelectorAll('.block.is-selectable p')[0].innerText.replace(/[\r\n]+/g, '')).toEqual('Updated Infor, Developer');
+    expect(document.querySelectorAll('.block.is-selectable p')[1].innerText.replace(/[\r\n]+/g, '')).toEqual('Updated Infor, Developer');
   });
 
   it('Should have block', () => {
