@@ -145,9 +145,9 @@ describe('Dropdown updates, events', () => {
     setTimeout(() => {
       const spyEvent = spyOnEvent('select.dropdown', 'change');
       dropdownObj.open();
-      document.body.querySelectorAll('.dropdown-option')[0].click();
-
       setTimeout(() => {
+        document.body.querySelectorAll('.dropdown-option')[0].click();
+
         expect(spyEvent).toHaveBeenTriggered();
         done();
       }, 100);
