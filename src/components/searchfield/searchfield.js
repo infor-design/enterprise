@@ -1893,11 +1893,15 @@ SearchField.prototype = {
       return;
     }
 
-    $('<li class="separator" role="presentation"></li>').appendTo(list);
+    const separator = $('<li class="separator" role="presentation"></li>').appendTo(list);
     const more = $('<li role="presentation"></li>').appendTo(list);
     this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>')
       .html(`<span>${Locale.translate('AllResults')} "${xssUtils.ensureAlphaNumeric(val)}"</span>`)
       .appendTo(more);
+
+    if (this.autocomplete.maxWidth) {
+      separator.width(`${this.autocomplete.maxWidth}px`);
+    }
   },
 
   /**

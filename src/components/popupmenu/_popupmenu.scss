@@ -426,9 +426,7 @@
   // separator
   .separator {
     border-bottom: 1px solid $popupmenu-border-color;
-    left: 0;
     margin: 5px 0;
-    position: sticky;
 
     &:first-child {
       border: medium none;

@@ -333,6 +333,16 @@ Autocomplete.prototype = {
         self.closeList(true);
       });
 
+    // Adjust the widths of the LIs to the longest
+    const lis = self.list.find('li');
+    const width = $(lis[0]).find('span').outerWidth() + 20;
+    if (width > parseInt(this.element.outerWidth(), 10)) {
+      for (let i = 0; i < lis.length; i++) {
+        lis.width(width + 'px');
+      }
+      this.maxWidth = width;
+    }
+
     // Optionally select the first item in the list
     if (self.settings.autoSelectFirstItem) {
       self.list.children().filter(':not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)').first()

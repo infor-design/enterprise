@@ -6329,12 +6329,14 @@ Datagrid.prototype = {
 
     // Unselect it
     const unselectNode = function (elem, index) {
-      const removeSelected = function (node) {
+      const removeSelected = function (node, selIdx) {
         delete node._selected;
         self.selectedRowCount--;
-
+        if (typeof selIdx === 'undefined') {
+          selIdx = index;
+        }
         for (let i = 0; i < self._selectedRows.length; i++) {
-          if (self._selectedRows[i].idx === index) {
+          if (self._selectedRows[i].idx === selIdx) {
             self._selectedRows.splice(i, 1);
             break;
           }
@@ -6363,15 +6365,19 @@ Datagrid.prototype = {
         let rowData;
 
         if (selIdx !== undefined && selIdx > -1) {
-          rowData = self.settings.dataset[selIdx];
+          rowData = s.dataset[selIdx];
         }
         if (s.groupable) {
           const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
           const gData = self.groupArray[row];
-          rowData = self.settings.dataset[gData.group].values[gData.node];
+          rowData = s.dataset[gData.group].values[gData.node];
         }
         if (rowData !== undefined) {
-          removeSelected(rowData);
+          if (s.paging && s.source) {
+            removeSelected(rowData, selIdx);
+          } else {
+            removeSelected(rowData);
+          }
         }
       }
     };
