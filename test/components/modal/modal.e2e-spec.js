@@ -262,3 +262,27 @@ describe('Modal manual content loading', () => {
     expect(await element(by.css('#test-multiselect')).getAttribute('value')).toEqual('1');
   });
 });
+
+describe('Modal Full Content Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/example-full-content');
+  });
+
+  it('should be able to reopen', async () => {
+    await element(by.css('#show')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.id('modal'))), config.waitsFor);
+
+    expect(await element(by.id('modal')).getAttribute('class')).toContain('is-visible');
+    await element.all(by.css('.modal-buttonset button')).first().click();
+
+    expect(await element(by.id('modal')).getAttribute('class')).not.toContain('is-visible');
+    await browser.driver.sleep(config.sleep);
+
+    await element(by.css('#show')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('modal')).getAttribute('class')).toContain('is-visible');
+    await element.all(by.css('.modal-buttonset button')).first().click();
+  });
+});
