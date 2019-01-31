@@ -474,6 +474,7 @@ MonthView.prototype = {
       }
     }
 
+    this.setRangeSelection();
     this.validatePrevNext();
 
     /**
@@ -487,6 +488,22 @@ MonthView.prototype = {
     * @property {object} args.api - The MonthView api
     */
     this.element.trigger('monthrendered', { year, month, elem: this.element, api: this });
+  },
+
+  /**
+   * Set range selection
+   * @private
+   * @returns {void}
+   */
+  setRangeSelection() {
+    if (this.settings.range.useRange) {
+      const range = {};
+      range.date = new Date(this.currentYear, this.currentMonth, 1);
+      range.date.setDate(range.date.getDate() - (this.days.find('.prev-month:visible').length + 1));
+      range.formatedDate = Locale.formatDate(range.date, { date: 'full' });
+      range.cell = this.days.find(`[aria-label="${range.formatedDate}"]`);
+      this.setRangeOnCell(this.settings.range.second ? false : range.cell);
+    }
   },
 
   /**
