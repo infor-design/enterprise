@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="two-thirds column">
+    <div id="example-1" class="chart-container"></div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var dataset1 = [];
+    var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement'}).data('chart');
+  });
+</script>

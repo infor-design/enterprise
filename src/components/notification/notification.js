@@ -34,6 +34,7 @@ Notification.prototype = {
 
   /**
    * Do initialization, build up and / or add events ect.
+   * @private
    * @returns {object} The Notification prototype, useful for chaining.
    */
   init() {
@@ -44,8 +45,8 @@ Notification.prototype = {
 
   /**
    * Add any needed markup to the component.
-   * @returns {object} The Component prototype, useful for chaining.
    * @private
+   * @returns {object} The Component prototype, useful for chaining.
    */
   build() {
     this.notificationEl = document.createElement('div');
@@ -68,8 +69,8 @@ Notification.prototype = {
 
   /**
    * Sets up event handlers for this component and its sub-elements.
-   * @returns {object} The Component prototype, useful for chaining.
    * @private
+   * @returns {object} The Component prototype, useful for chaining.
    */
   handleEvents() {
     const self = this;
@@ -102,8 +103,8 @@ Notification.prototype = {
 
   /**
    * Simple Teardown - remove events & rebuildable markup.
-   * @returns {object} The Component prototype, useful for chaining.
    * @private
+   * @returns {object} The Component prototype, useful for chaining.
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
@@ -112,8 +113,7 @@ Notification.prototype = {
   },
 
   /**
-   * Teardown - Remove added markup and events.
-   * @private
+   * Destroy and remove added markup and detatch events.
    */
   destroy() {
     if (this.notificationEl && this.notificationEl.parentNode) {
