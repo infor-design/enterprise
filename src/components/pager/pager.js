@@ -119,8 +119,14 @@ Pager.prototype = {
     const type = this.previousOperation;
     const trigger = this.previousTrigger;
 
-    if (this.settings.dataset) {
+    if (!isNaN(this.serverDatasetTotal)) {
+      total = this.serverDatasetTotal;
+    } else if (this.settings.dataset.length) {
       total = this.settings.dataset.length;
+    }
+    if (total < 1) {
+      pages = 1;
+    } else {
       pages = Math.ceil(total / pagesize);
     }
 
@@ -334,7 +340,7 @@ Pager.prototype = {
       }
 
       if (DOM.hasClass(li, 'pager-next')) {
-        self.setActivePage((currentPage === -1 ? 0 : currentPage) + 1, false, 'next');
+        self.setActivePage((currentPage === -1 ? 1 : currentPage) + 1, false, 'next');
         self.triggerPagingEvents(currentPage);
         return false;
       }
@@ -353,8 +359,8 @@ Pager.prototype = {
 
       // Go to the page via the applied `data-page` attribute of the button
       let activePageIdx = Number(a.getAttribute('data-page'));
-      if (isNaN(activePageIdx)) {
-        activePageIdx = 0;
+      if (isNaN(activePageIdx) || activePageIdx < 1) {
+        activePageIdx = 1;
       }
       self.setActivePage(activePageIdx, false, 'page');
       self.triggerPagingEvents(currentPage);
@@ -525,10 +531,6 @@ Pager.prototype = {
    */
   setActivePage(pagingInfo, force, op) {
     const state = this.state;
-    let totalPages = state.pages;
-    if (state.filteredPages) {
-      totalPages = state.filteredPages;
-    }
     let pageNum = this.filteredActivePage || this.activePage || this.settings.activePage;
 
     if (typeof pagingInfo === 'object') {
@@ -549,7 +551,13 @@ Pager.prototype = {
     if (pageNum < 1) {
       pageNum = 1;
     }
-    // Never go above the total number of pages (determined internally by the state)
+
+    // Never go above the total number of pages (determined internally by the state,
+    // or externally by the incoming `pagingInfo` object)
+    let totalPages = state.pages;
+    if (state.filteredPages) {
+      totalPages = state.filteredPages;
+    }
     if (pageNum > totalPages) {
       pageNum = totalPages;
     }
@@ -835,39 +843,41 @@ Pager.prototype = {
     let lastValue = null;
     const pattern = (`${totalPages}`).replace(/\d/g, '#');
     const self = this;
+    const maskSettings = {
+      pattern,
+      mode: 'number',
+      processOnInitialize: false
+    };
+
+    function update(elem) {
+      let currentPage = self.activePage;
+      if (self.state.filteredPages) {
+        currentPage = self.state.filteredActivePage;
+      }
+      const newValue = parseInt(elem.val(), 10);
+
+      if (lastValue !== elem.val()) {
+        elem.val(self.setActivePage(newValue, false, 'page'));
+        self.triggerPagingEvents(currentPage);
+      }
+    }
 
     $(this.pageSelectorInput)
-      .mask({ pattern, mode: 'number', processOnInitialize: false })
+      .mask(maskSettings)
       .on('focus', function () {
         lastValue = $(this).val();
       })
       .on('blur', function () {
-        let currentPage = self.activePage;
-        if (self.state.filteredPages) {
-          currentPage = self.state.filteredActivePage;
-        }
-        const newValue = parseInt($(this).val(), 10);
-
-        if (lastValue !== $(this).val()) {
-          $(this).val(self.setActivePage(newValue, false, 'page'));
-          self.triggerPagingEvents(currentPage);
-        }
+        update($(this));
+        lastValue = null;
       })
       .on('keydown', function (e) {
-        let currentPage = self.activePage;
-        if (self.state.filteredPages) {
-          currentPage = self.state.filteredActivePage;
-        }
-
         if (e.which === 13) {
-          self.setActivePage(parseInt($(this).val(), 10), false, 'page');
-          self.triggerPagingEvents(currentPage);
-
+          update($(this));
           e.stopPropagation();
           e.preventDefault();
           return false;
         }
-
         return true;
       });
   },
@@ -1176,9 +1186,10 @@ Pager.prototype = {
    * last one
    * @param {boolean} [pagingInfo.hideDisabledPagers=false] - causes the pager to become completely
    * hidden if all buttons are disabled
+   * @param {boolean} [isResponse=false] if true, causes events not to be triggered (avoids infinite loops)
    * @returns {void}
    */
-  updatePagingInfo(pagingInfo) {
+  updatePagingInfo(pagingInfo, isResponse) {
     if (!pagingInfo) {
       return;
     }
@@ -1191,11 +1202,6 @@ Pager.prototype = {
       }
     }
 
-    // Set a default total if none are defined.
-    if (!pagingInfo.total) {
-      pagingInfo.total = 0;
-    }
-
     // Explicitly setting `firstPage` or `lastPage` to true/false will cause pager buttons
     // to be forced enabled/disabled
     if (pagingInfo.firstPage !== undefined) {
@@ -1205,6 +1211,17 @@ Pager.prototype = {
     if (pagingInfo.lastPage !== undefined) {
       this.settings.enableNextButton = !pagingInfo.lastPage;
       this.settings.enableLastButton = !pagingInfo.lastPage;
+    }
+
+    // For server-side paging, retain a separate "total" for the server dataset.
+    if (!isNaN(pagingInfo.grandTotal)) {
+      this.serverDatasetTotal = pagingInfo.grandTotal;
+    } else if (!isNaN(pagingInfo.filteredTotal)) {
+      this.serverDatasetTotal = pagingInfo.filteredTotal;
+    } else if (!isNaN(pagingInfo.total)) {
+      this.serverDatasetTotal = pagingInfo.total;
+    } else {
+      delete this.serverDatasetTotal;
     }
 
     // If the dataset is filtered, store some extra meta-data for the state.
@@ -1221,7 +1238,9 @@ Pager.prototype = {
       // If we get a page number as a result, rendering has already happened and
       // we should not attempt to re-render.
       this.setActivePage(pagingInfo, false, 'pageinfo');
-      this.triggerPagingEvents();
+      if (!isResponse) {
+        this.triggerPagingEvents();
+      }
       return;
     }
 

@@ -243,7 +243,6 @@ Datagrid.prototype = {
     this.setRowGrouping();
     this.setTreeRootNodes();
     this.firstRender();
-    this.handlePaging();
     this.handleEvents();
     this.handleKeys();
 
@@ -366,6 +365,9 @@ Datagrid.prototype = {
 
     self.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
     $(self.buttonSelector, self.table).button();
+
+    this.handlePaging();
+    this.triggerSource('initial');
   },
 
   /**
@@ -492,22 +494,24 @@ Datagrid.prototype = {
   * @param {object} location Deprecated - Can be set to 'top' or left off for bottom pager.
   */
   pagerRefresh(location) {
-    if (this.pager) {
-      if (typeof location === 'string') {
-        this.pager.activePage = location === 'top' ? 1 : this.pager._pageCount;
-      } else if (typeof location === 'number') {
-        this.pager.activePage = Math.floor(location / (this.pager.settings.pagesize + 1));
-      }
-
-      if (!this.settings.source) {
-        this.pager.pagingInfo = $.extend({}, this.pager.pagingInfo, {
-          activePage: this.pager.activePage,
-          total: this.settings.dataset.length,
-          pagesize: this.settings.pagesize
-        });
-      }
-      this.renderPager(this.pager.pagingInfo, true);
+    if (!this.pagerAPI) {
+      return;
     }
+
+    if (typeof location === 'string') {
+      this.pagerAPI.activePage = location === 'top' ? 1 : this.pagerAPI._pageCount;
+    } else if (typeof location === 'number') {
+      this.pagerAPI.activePage = Math.floor(location / (this.pagerAPI.settings.pagesize + 1));
+    }
+
+    if (!this.settings.source) {
+      this.pagerAPI.pagingInfo = $.extend({}, this.pagerAPI.pagingInfo, {
+        activePage: this.pagerAPI.activePage,
+        total: this.settings.dataset.length,
+        pagesize: this.settings.pagesize
+      });
+    }
+    this.renderPager(this.pagerAPI.pagingInfo, true);
   },
 
   /**
@@ -576,7 +580,7 @@ Datagrid.prototype = {
   */
   triggerSource(pagerType, callback, op) {
     const self = this;
-    let pagingInfo = this.pager.state || {};
+    let pagingInfo = this.pagerAPI.state || {};
 
     if (pagerType) {
       if (pagerType.activePage) {
@@ -586,12 +590,6 @@ Datagrid.prototype = {
         pagingInfo.trigger = op;
       }
     }
-
-    /*
-    if (pagingInfo.type !== 'refresh') {
-      pagingInfo.activePage = 1;
-    }
-    */
 
     /**
     * Fires just before changing page. Returning false from the request function will cancel paging.
@@ -610,11 +608,20 @@ Datagrid.prototype = {
         self.activePage = updatedPagingInfo.activePage;
       }
 
+      if (updatedPagingInfo.grandTotal) {
+        self.grandTotal = updatedPagingInfo.grandTotal;
+      }
+
       // Render Data
       pagingInfo.preserveSelected = true;
 
       // Set the remote dataset on the grid
       self.loadData(data, updatedPagingInfo, true);
+
+      // Need to update the total amount of records available in the backend somehow.
+      if (updatedPagingInfo.type === 'initial') {
+        self.pagerAPI.updatePagingInfo(updatedPagingInfo);
+      }
 
       if (callback && typeof callback === 'function') {
         callback(true);
@@ -636,7 +643,7 @@ Datagrid.prototype = {
       pagingInfo.sortId = this.sortColumn.sortId;
     }
 
-    if (this.filterExpr) {
+    if (this.filterExpr && this.filterExpr.length) {
       pagingInfo.filterExpr = this.filterExpr;
     }
 
@@ -673,7 +680,7 @@ Datagrid.prototype = {
     }
 
     if (pagerInfo.type === 'filterrow') {
-      pagerInfo.activePage = this.pager && this.pager.activePage || 1;
+      pagerInfo.activePage = this.pagerAPI && this.pagerAPI.activePage || 1;
       pagerInfo.pagesize = this.settings.pagesize;
       pagerInfo.total = pagerInfo.total || -1;
       pagerInfo.type = 'filterrow';
@@ -695,12 +702,7 @@ Datagrid.prototype = {
       this.grandTotal = null;
     }
 
-    if (this.pager) {
-      if (pagerInfo.activePage > -1) {
-        this.pager.activePage = pagerInfo.activePage;
-      }
-      this.pager.settings.dataset = dataset;
-
+    if (this.pagerAPI) {
       if (this.settings.showDirty && this.settings.source &&
         /first|last|next|prev|sorted/.test(pagerInfo.type)) {
         this.dirtyArray = undefined;
@@ -735,7 +737,6 @@ Datagrid.prototype = {
     }
 
     this.syncSelectedUI();
-    this.displayCounts(pagerInfo.total);
   },
 
   /**
@@ -2538,8 +2539,8 @@ Datagrid.prototype = {
     const s = self.settings;
     const body = self.table.find('tbody');
     let activePage = 1;
-    if (self.pager) {
-      const pagerState = self.pager.state;
+    if (self.pagerAPI) {
+      const pagerState = self.pagerAPI.state;
       if (pagerState.filteredActivePage) {
         activePage = pagerState.filteredActivePage;
       } else {
@@ -2858,9 +2859,9 @@ Datagrid.prototype = {
   */
   isRowVisible(rowIndex) {
     if (!this.settings.virtualized) {
-      if (this.settings.paging && !this.settings.source && rowIndex && this.pager) {
-        return (this.pager.activePage - 1) * this.settings.pagesize >= rowIndex &&
-            (this.pager.activePage) * this.settings.pagesize <= rowIndex;
+      if (this.settings.paging && !this.settings.source && rowIndex && this.pagerAPI) {
+        return (this.pagerAPI.activePage - 1) * this.settings.pagesize >= rowIndex &&
+            (this.pagerAPI.activePage) * this.settings.pagesize <= rowIndex;
       }
 
       return true;
@@ -2978,7 +2979,7 @@ Datagrid.prototype = {
     let isEven = false;
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
-    const activePage = self.pager ? self.pager.activePage : 1;
+    const activePage = self.pagerAPI ? self.pagerAPI.activePage : 1;
     let rowHtml = '';
     let d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0;
     let depth = null;
@@ -3988,7 +3989,7 @@ Datagrid.prototype = {
       sortOrder: this.sortColumn,
       pagesize: this.settings.pagesize,
       showPageSizeSelector: this.settings.showPageSizeSelector,
-      activePage: this.pager ? this.pager.activePage : 1,
+      activePage: this.pagerAPI ? this.pagerAPI.activePage : 1,
       filter: this.filterConditions()
     }]);
 
@@ -4024,8 +4025,8 @@ Datagrid.prototype = {
     }
 
     // Save Page Num
-    if (savedSettings.activePage && this.pager) {
-      localStorage[this.uniqueId('usersettings-active-page')] = this.pager.activePage;
+    if (savedSettings.activePage && this.pagerAPI) {
+      localStorage[this.uniqueId('usersettings-active-page')] = this.pagerAPI.activePage;
     }
 
     // Filter Conditions
@@ -4139,17 +4140,17 @@ Datagrid.prototype = {
 
       if (settings.pagesize) {
         this.settings.pagesize = parseInt(settings.pagesize, 10);
-        this.pager.settings.pagesize = parseInt(settings.pagesize, 10);
-        this.pager.setActivePage(1, true);
+        this.pagerAPI.settings.pagesize = parseInt(settings.pagesize, 10);
+        this.pagerAPI.setActivePage(1, true);
       }
 
       if (settings.showPageSizeSelector) {
         this.settings.showPageSizeSelector = settings.showPageSizeSelector;
-        this.pager.showPageSizeSelector(settings.showPageSizeSelector);
+        this.pagerAPI.showPageSizeSelector(settings.showPageSizeSelector);
       }
 
       if (settings.activePage) {
-        this.pager.setActivePage(parseInt(settings.activePage, 10), true);
+        this.pagerAPI.setActivePage(parseInt(settings.activePage, 10), true);
       }
 
       if (settings.filter) {
@@ -4807,6 +4808,25 @@ Datagrid.prototype = {
 
     // Handle Paging
     if (this.pagerAPI) {
+      this.pagerAPI.element.on(`afterpaging.${COMPONENT_NAME}`, (e, args) => {
+      // Hide the entire pager bar if we're only showing one page, if applicable
+        if (self.pagerAPI.hidePagerBar(args)) {
+          self.element.removeClass('paginated');
+        } else {
+          self.element.addClass('paginated');
+        }
+
+        self.recordCount = args.total;
+        self.displayCounts(args.total);
+
+        // Handle row selection across pages
+        self.syncSelectedUI();
+
+        if (self.filterExpr && self.filterExpr[0] && self.filterExpr[0].column === 'all') {
+          self.highlightSearchRows(self.filterExpr[0].value);
+        }
+      });
+
       this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
         this.triggerSource('page', pagingInfo);
       }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
@@ -5543,27 +5563,34 @@ Datagrid.prototype = {
       return;
     }
 
-    const pagingInfo = {};
+    let pagingInfo = {};
+    const self = this;
+
+    function reset(obj) {
+      obj.activePage = 1;
+      if (self.grandTotal) {
+        obj.grandTotal = self.grandTotal;
+      }
+      delete self.pagerAPI.filteredActivePage;
+      delete self.pagerAPI.filteredTotal;
+
+      return obj;
+    }
 
     if (this.filterExpr && this.filterExpr.length === 1) {
       const filteredDataset = this.settings.dataset.filter(i => !i.isFiltered);
 
       if (this.filterExpr[0].value !== '') {
-        if (this.pager.searchActivePage === undefined) {
-          pagingInfo.filteredTotal = filteredDataset.length;
-          pagingInfo.searchActivePage = 1;
-        }
-        pagingInfo.activePage = 1;
-      } else if (this.filterExpr[0].value === '' && this.pager.searchActivePage > -1) {
-        pagingInfo.activePage = 1;
-        delete this.pager.searchActivePage;
+        pagingInfo.filteredTotal = filteredDataset.length;
+        pagingInfo.searchActivePage = 1;
+      } else if (this.filterExpr[0].value === '' && this.pagerAPI.filteredActivePage) {
+        pagingInfo = reset(pagingInfo);
       }
-    } else if (this.pager.searchActivePage > -1) {
-      pagingInfo.activePage = 1;
-      delete this.pager.searchActivePage;
+    } else {
+      pagingInfo = reset(pagingInfo);
     }
 
-    this.pager.updatePagingInfo(pagingInfo);
+    this.renderPager(pagingInfo);
   },
 
   /**
@@ -5857,7 +5884,7 @@ Datagrid.prototype = {
             }
           });
         } else { // Default to Single element selection
-          rowData = s.treeDepth[self.pager && s.source ? rowNode.index() : idx].node;
+          rowData = s.treeDepth[self.pagerAPI && s.source ? rowNode.index() : idx].node;
           self.selectNode(rowNode, idx, rowData);
         }
         self.setNodeStatus(rowNode);
@@ -5887,7 +5914,7 @@ Datagrid.prototype = {
           idx: actualIdx,
           data: rowData,
           elem: self.visualRowNode(actualIdx),
-          page: this.pager ? this.pager.activePage : 1,
+          page: this.pagerAPI ? this.pagerAPI.activePage : 1,
           pagingIdx: idx,
           pagesize: this.settings.pagesize
         });
@@ -5968,7 +5995,7 @@ Datagrid.prototype = {
     let idx = null;
 
     for (let i = 0; i < this._selectedRows.length; i++) {
-      if (this.pager && this._selectedRows[i].page === this.pager.activePage) {
+      if (this.pagerAPI && this._selectedRows[i].page === this.pagerAPI.activePage) {
         idx = this._selectedRows[i].idx;
         this.selectNode(this.visualRowNode(idx), idx, this.settings.dataset[idx], true);
       }
@@ -5978,7 +6005,7 @@ Datagrid.prototype = {
         this.selectNode(this.visualRowNode(idx), idx, this.settings.dataset[idx], true);
         this._selectedRows[i].pagesize = this.settings.pagesize;
         this._selectedRows[i].idx = idx;
-        this._selectedRows[i].page = this.pager.activePage;
+        this._selectedRows[i].page = this.pagerAPI.activePage;
       }
 
       if (this._selectedRows[i].pagesize !== this.settings.pagesize &&
@@ -6007,7 +6034,7 @@ Datagrid.prototype = {
           idx: i,
           data: this.settings.dataset[i],
           elem: this.dataRowNode(i),
-          page: this.pager ? this.pager.activePage : 1,
+          page: this.pagerAPI ? this.pagerAPI.activePage : 1,
           pagingIdx: i,
           pagesize: this.settings.pagesize
         });
@@ -6133,8 +6160,8 @@ Datagrid.prototype = {
       row = this.tableBody[0].querySelector(`tr[aria-rowindex="${idx + 1}"]`);
       rowIndex = idx;
 
-      if (this.pager && s.source && s.indeterminate) {
-        const rowIdx = idx + ((this.pager.activePage - 1) * s.pagesize);
+      if (this.pagerAPI && s.source && s.indeterminate) {
+        const rowIdx = idx + ((this.pagerAPI.activePage - 1) * s.pagesize);
         row = this.tableBody[0].querySelector(`tr[aria-rowindex="${rowIdx + 1}"]`);
       }
     } else {
@@ -8102,7 +8129,7 @@ Datagrid.prototype = {
     let rowIdx = idx;
 
     if (this.settings.paging && this.settings.source) {
-      rowIdx += ((this.pager.activePage - 1) * this.settings.pagesize);
+      rowIdx += ((this.pagerAPI.activePage - 1) * this.settings.pagesize);
     }
 
     if (!this.isRowVisible(idx)) {
@@ -8143,7 +8170,7 @@ Datagrid.prototype = {
     let rowIdx = idx;
 
     if (this.settings.paging && this.settings.source && !this.settings.indeterminate) {
-      rowIdx += ((this.pager.activePage - 1) * this.settings.pagesize);
+      rowIdx += ((this.pagerAPI.activePage - 1) * this.settings.pagesize);
     }
     return rowIdx;
   },
@@ -8159,7 +8186,7 @@ Datagrid.prototype = {
     let rowIdx = idx;
 
     if (this.settings.paging && this.settings.source && !this.settings.indeterminate) {
-      rowIdx -= ((this.pager.activePage - 1) * this.settings.pagesize);
+      rowIdx -= ((this.pagerAPI.activePage - 1) * this.settings.pagesize);
     }
     return rowIdx;
   },
@@ -8509,7 +8536,7 @@ Datagrid.prototype = {
     let rowElement = self.actualRowNode(dataRowIndex);
     if (!rowElement.length && self.settings.paging &&
       (self.settings.rowTemplate || self.settings.expandableRow)) {
-      dataRowIndex += ((self.pager.activePage - 1) * self.settings.pagesize);
+      dataRowIndex += ((self.pagerAPI.activePage - 1) * self.settings.pagesize);
       rowElement = self.dataRowNode(dataRowIndex);
     }
     const expandRow = rowElement.next();
@@ -8775,7 +8802,7 @@ Datagrid.prototype = {
               data,
               elem: this.dataRowNode(idx),
               group: dataset[i],
-              page: this.pager ? this.pager.activePage : 1,
+              page: this.pagerAPI ? this.pagerAPI.activePage : 1,
               pagingIdx: idx,
               pagesize: this.settings.pagesize
             });
@@ -8789,7 +8816,7 @@ Datagrid.prototype = {
             data,
             elem: this.visualRowNode(i),
             pagesize: this.settings.pagesize,
-            page: this.pager ? this.pager.activePage : 1,
+            page: this.pagerAPI ? this.pagerAPI.activePage : 1,
             pagingIdx: idx
           });
         }
@@ -8887,15 +8914,12 @@ Datagrid.prototype = {
   * @private
   */
   handlePaging() {
-    const self = this;
-
     if (!this.settings.paging) {
       return;
     }
 
-    const pagerElem = this.tableBody;
     this.element.addClass('paginated');
-    pagerElem.pager({
+    this.tableBody.pager({
       componentAPI: this,
       dataset: this.settings.dataset,
       hideOnOnePage: this.settings.hidePagerOnOnePage,
@@ -8912,28 +8936,6 @@ Datagrid.prototype = {
       this.savedActivePage = null;
       this.restoreActivePage = false;
     }
-
-    this.pager = pagerElem.data('pager');
-
-    pagerElem.off('afterpaging')
-      .on('afterpaging', (e, args) => {
-      // Hide the entire pager bar if we're only showing one page, if applicable
-        if (self.pager.hidePagerBar(args)) {
-          self.element.removeClass('paginated');
-        } else {
-          self.element.addClass('paginated');
-        }
-
-        self.recordCount = args.total;
-        self.displayCounts(args.total);
-
-        // Handle row selection across pages
-        self.syncSelectedUI();
-
-        if (self.filterExpr && self.filterExpr[0] && self.filterExpr[0].column === 'all') {
-          self.highlightSearchRows(self.filterExpr[0].value);
-        }
-      });
   },
 
   /**
@@ -8943,11 +8945,11 @@ Datagrid.prototype = {
   * @param {function} callback The callback function.
   */
   renderPager(pagingInfo, isResponse, callback) {
-    if (!this.pager) {
+    if (!this.pagerAPI) {
       return;
     }
 
-    this.pager.updatePagingInfo(pagingInfo);
+    this.pagerAPI.updatePagingInfo(pagingInfo, isResponse);
 
     if (!isResponse) {
       this.triggerSource(pagingInfo, callback);
@@ -8964,11 +8966,11 @@ Datagrid.prototype = {
   * @param {string} trigger The triggering action
   */
   resetPager(type, trigger) {
-    if (!this.pager) {
+    if (!this.pagerAPI) {
       return;
     }
 
-    this.pager.reset(type, trigger);
+    this.pagerAPI.reset(type, trigger);
   },
 
   /**
@@ -9320,8 +9322,10 @@ Datagrid.prototype = {
     this.removeTooltip();
 
     // UnBind the pager
-    if (this.tableBody.data() && this.tableBody.data('pager')) {
-      this.tableBody.data('pager').destroy();
+    if (this.pagerAPI) {
+      this.pagerAPI.element.off(`afterpaging.${COMPONENT_NAME}`);
+      this.tableBody.off(`page.${COMPONENT_NAME} pagesizechange.${COMPONENT_NAME}`);
+      this.pagerAPI.destroy();
     }
 
     // Remove the toolbar, clean the div out and remove the pager
