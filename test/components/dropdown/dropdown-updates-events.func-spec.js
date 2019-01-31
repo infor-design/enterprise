@@ -147,9 +147,11 @@ describe('Dropdown updates, events', () => {
       dropdownObj.open();
       document.body.querySelectorAll('.dropdown-option')[0].click();
 
-      expect(spyEvent).toHaveBeenTriggered();
-      done();
-    }, 1);
+      setTimeout(() => {
+        expect(spyEvent).toHaveBeenTriggered();
+        done();
+      }, 100);
+    }, 100);
   });
 
   it('should trigger change event on duplicate label', () => {
