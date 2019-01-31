@@ -672,7 +672,6 @@ Hierarchy.prototype = {
       this.element.addClass('display-for-paging');
     }
 
-
     if (thisLegend.length !== 0) {
       this.element.prepend(structure.legend);
       const element = $('legend', chartContainer);
