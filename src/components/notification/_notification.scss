@@ -48,11 +48,11 @@
     }
 
     &:hover .icon {
-      fill: $theme-color-font-base;
+      color: $theme-color-font-base;
     }
 
     &:active .icon {
-      fill: $font-color-extrahighcontrast;
+      color: $font-color-extrahighcontrast;
     }
   }
 

@@ -71,7 +71,7 @@
         cursor: default;
 
         .icon {
-          fill: $pager-disabled-color;
+          color: $pager-disabled-color;
         }
       }
 
@@ -83,11 +83,11 @@
   }
 
   li:not(.selected) a:hover:not([disabled]) svg {
-    fill: $pager-hover-color;
+    color: $pager-hover-color;
   }
 
   li:not(.selected) a:active:not([disabled]) svg {
-    fill: $pager-hover-color;
+    color: $pager-hover-color;
   }
 
   &.is-listview {
@@ -116,7 +116,7 @@
   padding: 0;
 
   .icon {
-    fill: $font-color;
+    color: $font-color;
     height: 17px;
     width: 18px;
   }

@@ -23,7 +23,7 @@
   .axis {
     path,
     line {
-      fill: none;
+      color: none;
       shape-rendering: crispEdges;
       stroke: $chart-line-color;
     }
@@ -43,11 +43,11 @@
     @include font-size(12);
     @include antialiased();
 
-    fill: $chart-font-color;
+    color: $chart-font-color;
   }
 
   .inverse {
-    fill: $chart-font-color-inverse;
+    color: $chart-font-color-inverse;
   }
 
   .chart-donut-text {
@@ -59,7 +59,7 @@
   }
 
   .label-circle {
-    fill: $chart-line-color;
+    color: $chart-line-color;
   }
 
   // Svg Hidden
@@ -266,12 +266,12 @@
   // width: 200px;
 
   path {
-    fill: none;
+    color: none;
     stroke-width: 2px;
   }
 
   .bar-rect {
-    fill: transparent;
+    color: transparent;
     stroke-width: 0;
   }
 

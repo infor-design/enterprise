@@ -5,31 +5,31 @@
 
 @mixin list-icon-colors {
   &.error {
-    fill: $error-color;
+    color: $error-color;
   }
 
   &.alert {
-    fill: $theme-color-status-warning;
+    color: $theme-color-status-warning;
   }
 
   &.alert-yellow {
-    fill: $theme-color-status-caution;
+    color: $theme-color-status-caution;
   }
 
   &.neutral {
-    fill: $alert-neutral;
+    color: $alert-neutral;
   }
 
   &.good {
-    fill: $theme-color-status-success;
+    color: $theme-color-status-success;
   }
 
   &.info {
-    fill: $theme-color-status-base;
+    color: $theme-color-status-base;
   }
 
   &.white {
-    fill: $theme-color-palette-white;
+    color: $theme-color-palette-white;
   }
 }
 
@@ -114,7 +114,7 @@ div.multiselect {
   > .listoption-icon {
     @include list-icon-colors();
 
-    fill: $popupmenu-icon-color;
+    color: $popupmenu-icon-color;
     height: 16px;
     left: 14px;
     position: absolute;
@@ -143,8 +143,8 @@ div.multiselect {
     .icon,
     + .icon {
       background-color: $input-color-disabled-background;
+      color: $trigger-disabled-color;
       cursor: default;
-      fill: $trigger-disabled-color;
     }
   }
 
@@ -152,7 +152,7 @@ div.multiselect {
     border-color: $trigger-active-color;
 
     + .icon {
-      fill: $trigger-active-color;
+      color: $trigger-active-color;
     }
   }
 
@@ -160,7 +160,7 @@ div.multiselect {
     border-color: $trigger-hover-color;
 
     + .icon {
-      fill: $trigger-hover-color;
+      color: $trigger-hover-color;
     }
   }
 
@@ -168,9 +168,9 @@ div.multiselect {
   + .icon {
     background-color: inherit;
     border-radius: 1px;
+    color: $trigger-icon-fill-color;
     cursor: pointer;
     display: inline-block;
-    fill: $trigger-icon-fill-color;
     height: 32px;
     margin-left: -33px;
     pointer-events: none;
@@ -302,7 +302,7 @@ div.multiselect {
       }
 
       .listoption-icon {
-        fill: $inverse-color;
+        color: $inverse-color;
       }
 
       .badge {
@@ -315,7 +315,7 @@ div.multiselect {
     .listoption-icon {
       @include list-icon-colors();
 
-      fill: $popupmenu-icon-color;
+      color: $popupmenu-icon-color;
       height: 16px;
       left: 0;
       margin-right: 7px;
@@ -339,7 +339,7 @@ div.multiselect {
   > .listoption-icon {
     @include list-icon-colors();
 
-    fill: $popupmenu-icon-color;
+    color: $popupmenu-icon-color;
     height: 16px;
     left: 10px;
     position: absolute;
@@ -496,7 +496,7 @@ div.multiselect {
       @include css3(transform, rotate(180deg));
 
       background-color: rgba($theme-color-palette-white, 0);
-      fill: $trigger-icon-fill-color;
+      color: $trigger-icon-fill-color;
       height: 32px;
       width: 18px;
 

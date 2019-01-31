@@ -30,7 +30,7 @@
       }
 
       .icon-rowstatus {
-        fill: $theme-color-palette-white;
+        color: $theme-color-palette-white;
         height: 10px;
         left: 1px;
         position: absolute;
@@ -216,7 +216,7 @@ $datagrid-short-row-height: 23px;
       }
 
       .sort-indicator .icon {
-        fill: $datagrid-list-sort-icon-color;
+        color: $datagrid-list-sort-icon-color;
       }
 
       &:focus {
@@ -231,7 +231,7 @@ $datagrid-short-row-height: 23px;
 
       &.is-sorted-asc .sort-asc .icon,
       &.is-sorted-desc .sort-desc .icon {
-        fill: $datagrid-list-sort-icon-hover-color;
+        color: $datagrid-list-sort-icon-hover-color;
       }
 
       .datagrid-checkbox {
@@ -276,7 +276,7 @@ $datagrid-short-row-height: 23px;
             border-color: $datagrid-list-filter-disabled-color !important;
 
             + .icon {
-              fill: $datagrid-list-filter-disabled-color !important;
+              color: $datagrid-list-filter-disabled-color !important;
             }
           }
 
@@ -292,31 +292,31 @@ $datagrid-short-row-height: 23px;
         .btn-filter {
           .icon,
           .icon-dropdown {
-            fill: $datagrid-list-filter-icon-color !important;
+            color: $datagrid-list-filter-icon-color !important;
           }
 
           &:hover:not(.is-open):not(:disabled) .icon,
           &:hover:not(.is-open):not(:disabled) .icon-dropdown {
-            fill: $datagrid-list-filter-hover-color !important;
+            color: $datagrid-list-filter-hover-color !important;
           }
 
           &:disabled .icon {
-            fill: $datagrid-list-filter-disabled-color !important;
+            color: $datagrid-list-filter-disabled-color !important;
           }
 
           &.is-open .icon {
-            fill: $datagrid-list-filter-active-color !important;
+            color: $datagrid-list-filter-active-color !important;
           }
         }
 
         .datepicker,
         .dropdown {
           + .icon {
-            fill: $datagrid-list-filter-icon-color !important;
+            color: $datagrid-list-filter-icon-color !important;
           }
 
           &:hover:not(:disabled) + .icon {
-            fill: $datagrid-list-filter-hover-color !important;
+            color: $datagrid-list-filter-hover-color !important;
           }
         }
       }
@@ -1189,15 +1189,15 @@ $datagrid-short-row-height: 23px;
       cursor: move;
 
       .icon {
-        fill: $button-color-tertiary-initial-font;
+        color: $button-color-tertiary-initial-font;
         vertical-align: middle;
 
         &:hover {
-          fill: $button-color-tertiary-hover-font;
+          color: $button-color-tertiary-hover-font;
         }
 
         &:active {
-          fill: $button-color-tertiary-active-font;
+          color: $button-color-tertiary-active-font;
         }
       }
     }
@@ -1881,7 +1881,7 @@ $datagrid-short-row-height: 23px;
         }
 
         &:disabled .icon {
-          fill: $theme-color-palette-slate-50;
+          color: $theme-color-palette-slate-50;
         }
       }
 
@@ -2101,13 +2101,13 @@ $datagrid-short-row-height: 23px;
       outline-offset: -2px;
 
       .icon {
-        fill: $datagrid-sort-icon-color;
+        color: $datagrid-sort-icon-color;
         opacity: 1;
       }
 
       &.is-sorted-asc .sort-asc .icon,
       &.is-sorted-desc .sort-desc .icon {
-        fill: $datagrid-sort-icon-sorted-color;
+        color: $datagrid-sort-icon-sorted-color;
       }
     }
 
@@ -2222,7 +2222,7 @@ $datagrid-short-row-height: 23px;
           border-color: $datagrid-filter-hover-border-color !important;
 
           + .icon {
-            fill: $datagrid-filter-hover-color !important;
+            color: $datagrid-filter-hover-color !important;
           }
         }
 
@@ -2239,7 +2239,7 @@ $datagrid-short-row-height: 23px;
           border-color: $datagrid-filter-disabled-color;
 
           + .icon {
-            fill: $datagrid-filter-disabled-color;
+            color: $datagrid-filter-disabled-color;
           }
         }
 
@@ -2277,7 +2277,7 @@ $datagrid-short-row-height: 23px;
       .datepicker,
       .dropdown {
         + .icon {
-          fill: $datagrid-filter-icon-color;
+          color: $datagrid-filter-icon-color;
           height: 13px;
           margin-left: -9px;
           top: -3px;
@@ -2286,11 +2286,11 @@ $datagrid-short-row-height: 23px;
 
         &:not(:disabled) + .icon:hover,
         &:hover:not(:disabled) + .icon {
-          fill: $datagrid-filter-hover-color !important;
+          color: $datagrid-filter-hover-color !important;
         }
 
         &:disabled + .icon {
-          fill: $datagrid-list-filter-disabled-color !important;
+          color: $datagrid-list-filter-disabled-color !important;
           opacity: 0.6;
         }
 
@@ -2309,11 +2309,11 @@ $datagrid-short-row-height: 23px;
 
           &:not(:disabled) + .trigger > .icon:hover,
           &:hover:not(:disabled) + .trigger > .icon {
-            fill: $datagrid-filter-hover-color;
+            color: $datagrid-filter-hover-color;
           }
 
           &:disabled + .trigger > .icon {
-            fill: $datagrid-list-filter-disabled-color;
+            color: $datagrid-list-filter-disabled-color;
             opacity: 0.6;
           }
         }
@@ -2324,7 +2324,7 @@ $datagrid-short-row-height: 23px;
           width: 27px;
 
           .icon {
-            fill: $datagrid-filter-icon-color;
+            color: $datagrid-filter-icon-color;
             height: 30px;
             right: -6px;
             top: -3px;
@@ -2346,12 +2346,12 @@ $datagrid-short-row-height: 23px;
           opacity: 0.6;
 
           .icon {
-            fill: $datagrid-filter-disabled-color;
+            color: $datagrid-filter-disabled-color;
           }
         }
 
         .icon-dropdown {
-          fill: $datagrid-filter-icon-color !important;
+          color: $datagrid-filter-icon-color !important;
           height: 14px;
           left: -7px;
           margin-top: -3px;
@@ -2366,12 +2366,12 @@ $datagrid-short-row-height: 23px;
         }
 
         &.is-open .icon {
-          fill: $datagrid-filter-active-color !important;
+          color: $datagrid-filter-active-color !important;
         }
 
         &:hover:not(.is-open):not(:disabled) {
           .icon {
-            fill: $datagrid-filter-hover-color !important;
+            color: $datagrid-filter-hover-color !important;
           }
         }
 
@@ -2379,7 +2379,7 @@ $datagrid-short-row-height: 23px;
           border: 1px solid $datagrid-filter-focus-color;
 
           .icon {
-            fill: $datagrid-filter-focus-color !important;
+            color: $datagrid-filter-focus-color !important;
           }
         }
       }
@@ -2414,7 +2414,7 @@ $datagrid-short-row-height: 23px;
     }
 
     .icon {
-      fill: $datagrid-rowgroup-color;
+      color: $datagrid-rowgroup-color;
     }
   }
 
@@ -2437,7 +2437,7 @@ $datagrid-short-row-height: 23px;
   .icon {
     @include transition(all 250ms ease);
 
-    fill: $datagrid-sort-icon-color;
+    color: $datagrid-sort-icon-color;
     height: 18px;
     opacity: 0;
     width: 18px;
@@ -2471,7 +2471,7 @@ $datagrid-short-row-height: 23px;
   }
 
   .sort-asc .icon {
-    fill: $datagrid-sort-icon-sorted-color;
+    color: $datagrid-sort-icon-sorted-color;
   }
 }
 
@@ -2481,7 +2481,7 @@ $datagrid-short-row-height: 23px;
   }
 
   .sort-desc .icon {
-    fill: $datagrid-sort-icon-sorted-color;
+    color: $datagrid-sort-icon-sorted-color;
   }
 }
 
@@ -2516,7 +2516,7 @@ $datagrid-short-row-height: 23px;
   margin: 0 auto;
 
   .icon {
-    fill: $font-color;
+    color: $font-color;
     height: 20px;
     width: 20px;
   }
@@ -2619,7 +2619,7 @@ td .btn-actions {
   }
 
   .icon {
-    fill: $trigger-icon-fill-color;
+    color: $trigger-icon-fill-color;
     left: 4px;
     top: 4px;
     visibility: hidden;
@@ -3001,7 +3001,7 @@ td .btn-actions {
   }
 
   .icon {
-    fill: $theme-color-font-base;
+    color: $theme-color-font-base;
     margin-top: 9px;
     right: 2px;
 

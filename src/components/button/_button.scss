@@ -42,7 +42,7 @@ button {
   }
 
   > .icon {
-    fill: inherit;
+    color: inherit;
     position: static;
     width: 18px;
 
@@ -135,7 +135,7 @@ button {
   }
 
   .icon {
-    fill: $button-color-primary-initial-font;
+    color: $button-color-primary-initial-font;
   }
 
   // In case both are specified
@@ -181,7 +181,7 @@ button {
     opacity: $button-color-secondary-disabled-opacity;
 
     .icon {
-      fill: $theme-color-palette-white;
+      color: $theme-color-palette-white;
     }
   }
 
@@ -195,7 +195,7 @@ button {
     color: $button-color-primary-initial-font;
 
     .icon {
-      fill: $button-color-primary-initial-font;
+      color: $button-color-primary-initial-font;
     }
 
     &:hover,
@@ -203,7 +203,7 @@ button {
       color: $button-color-primary-initial-font;
 
       .icon {
-        fill: $button-color-primary-initial-font;
+        color: $button-color-primary-initial-font;
       }
     }
 
@@ -275,7 +275,7 @@ a.btn-close {
   color: $button-color-secondary-initial-font;
 
   .icon {
-    fill: $button-color-secondary-initial-font;
+    color: $button-color-secondary-initial-font;
   }
 
   &:hover {
@@ -320,7 +320,7 @@ a.btn-close {
     color: $button-color-secondary-initial-font;
 
     .icon {
-      fill: $button-color-secondary-initial-font;
+      color: $button-color-secondary-initial-font;
     }
 
     &:hover,
@@ -328,7 +328,7 @@ a.btn-close {
       color: $button-color-secondary-initial-font;
 
       .icon {
-        fill: $button-color-secondary-initial-font;
+        color: $button-color-secondary-initial-font;
       }
     }
   }
@@ -352,7 +352,7 @@ a.btn-close {
     color: $button-color-tertiary-hover-font;
 
     .icon {
-      fill: $button-color-tertiary-hover-font;
+      color: $button-color-tertiary-hover-font;
     }
   }
 
@@ -375,7 +375,7 @@ a.btn-close {
     opacity: $button-color-secondary-disabled-opacity;
 
     .icon {
-      fill: $button-color-tertiary-disabled-font;
+      color: $button-color-tertiary-disabled-font;
     }
   }
 
@@ -384,7 +384,7 @@ a.btn-close {
   }
 
   .icon {
-    fill: $button-color-tertiary-initial-font;
+    color: $button-color-tertiary-initial-font;
   }
 
   .ripple-effect {
@@ -415,7 +415,7 @@ a.btn-close {
     color: $theme-color-brand-primary-base;
 
     .icon {
-      fill: $theme-color-brand-primary-base;
+      color: $theme-color-brand-primary-base;
     }
   }
 }
@@ -431,7 +431,7 @@ a.btn-close {
     color: $tertiary-btn-dark-color;
 
     .icon {
-      fill: $tertiary-btn-dark-color;
+      color: $tertiary-btn-dark-color;
     }
 
     &:hover,
@@ -439,7 +439,7 @@ a.btn-close {
       color: $tertiary-btn-dark-hover-color;
 
       .icon {
-        fill: $tertiary-btn-dark-hover-color;
+        color: $tertiary-btn-dark-hover-color;
       }
     }
 
@@ -506,11 +506,11 @@ a.btn-close {
 
   &.has-content {
     .icon {
-      fill: $theme-color-brand-primary-base;
+      color: $theme-color-brand-primary-base;
     }
 
     &:hover .icon {
-      fill: $theme-color-palette-azure-80;
+      color: $theme-color-palette-azure-80;
     }
   }
 }
@@ -528,7 +528,7 @@ a.btn-close {
   }
 
   .ripple-circle {
-    fill: rgba($theme-color-palette-white, 0);
+    color: rgba($theme-color-palette-white, 0);
   }
 }
 
@@ -603,7 +603,7 @@ a.btn-close {
 
   &:active {
     .icon {
-      fill: $button-color-tertiary-active-font;
+      color: $button-color-tertiary-active-font;
     }
 
     .plus-minus {
@@ -625,7 +625,7 @@ a.btn-close {
     color: $button-color-primary-initial-background !important;
 
     svg {
-      fill: $button-color-primary-initial-background !important;
+      color: $button-color-primary-initial-background !important;
     }
   }
 }
@@ -807,14 +807,14 @@ html[lang^='fr-'] {
   color: $hyperlink-color;
 
   .icon {
-    fill: $hyperlink-color;
+    color: $hyperlink-color;
   }
 
   &:hover {
     color: $hyperlink-hover-color;
 
     .icon {
-      fill: $hyperlink-hover-color;
+      color: $hyperlink-hover-color;
     }
   }
 }

@@ -30,8 +30,8 @@
 
   // Rating Icons - Svg
   svg.icon {
+    color: transparent;
     display: inline-block;
-    fill: transparent;
     height: 22px;
     position: relative;
     stroke: $rating-border-color;
@@ -64,7 +64,7 @@
 .rating .is-filled + label > svg.icon {
   @include opacity(1);
 
-  fill: $rating-bg-color;
+  color: $rating-bg-color;
   stroke: $rating-bg-color;
 }
 
@@ -74,7 +74,7 @@
 .rating .is-half + label > svg.icon {
   @include opacity(1);
 
-  fill: $rating-bg-color;
+  color: $rating-bg-color;
   stroke: transparent;
 }
 

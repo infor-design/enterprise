@@ -258,7 +258,7 @@
       color: $error-color;
 
       .icon {
-        fill: $error-color;
+        color: $error-color;
       }
     }
 
@@ -266,7 +266,7 @@
       color: $alert-color;
 
       .icon {
-        fill: $alert-color;
+        color: $alert-color;
       }
     }
 
@@ -274,7 +274,7 @@
       color: $success-color;
 
       .icon {
-        fill: $success-color;
+        color: $success-color;
       }
     }
   }
