@@ -657,15 +657,15 @@ html[dir='rtl'] {
 //================================================== //
 
 .icon-empty-state {
+  color: $theme-color-brand-primary-base; // Themable Empty Icons
   display: inline-block;
-  fill: $theme-color-brand-primary-base; // Themable Empty Icons
   height: 65px;
   position: relative;
   width: 65px;
 }
 
 .is-graphite.icon-empty-state {
-  fill: $icon-empty-bg-color; // Grey Scale icon
+  color: $icon-empty-bg-color; // Grey Scale icon
 }
 
 // color defs
