@@ -4,19 +4,12 @@
 
 // Libs
 const fs = require('fs');
-const path = require('path');
 const glob = require('glob');
-const slash = require('slash');
-const swlog = require(`../helpers/stopwatch-log`)
+const logger = require('../logger');
+const path = require('path');
 
-// Internal
-const rootDir = slash(process.cwd());
-const iconComponentDir = `${rootDir}/src/components/icons`;
+const NL = process.platform === 'win32' ? '\r\n' : '\n';
 
-const paths = {
-  outputIconsBasic: `${iconComponentDir}/svg-generated.html`,
-  outputIconsExtended: `${iconComponentDir}/svg-generated-extended.html`,
-};
 
 /**
  * Cutomize the svgs into proper markup
@@ -26,8 +19,6 @@ const paths = {
 const convertSvgMarkup = (id, contents) => {
   let changed = contents.replace(/\<svg/, `<symbol id="icon-${id}"`);
   changed = changed.replace('</svg>', '</symbol>');
-  changed = changed.replace(/width=\"(.*?)\"\s/, '');
-  changed = changed.replace(/height=\"(.*?)\"\s/, '');
   changed = changed.replace(/\sxmlns=\"(.*?)\"/, '');
   return changed;
 }
@@ -67,7 +58,9 @@ const createHTMLfile = (files, iconObj) => {
       fs.writeFileSync(iconObj.dest, html, 'utf-8');
       return htmlIcons;
     })
-    .catch(swlog.error);
+    .catch(err => {
+      logger('error', err);
+    });
 };
 
 /**
@@ -75,9 +68,14 @@ const createHTMLfile = (files, iconObj) => {
  * @param {Object[]} iconSets - An array of objects for the svg icons
  * @param {string} iconsSets[].src - Glob path of the svg icon files
  * @param {string} iconsSets[].dest - The destination path
+ * @param {boolean} verbose - Whether to write out logs
  * @return {Promise}
  */
-function createHtmlIcons(iconSets) {
+function createHtmlIcons(iconSets, verbose) {
+  if (verbose) {
+    logger('info', `Running build processes create-htmlicons...${NL}`);
+  }
+
   return Promise.all(iconSets.map(iconSet => {
     Object.assign(iconSet, {
       header: `<div class="${iconSet.class}"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-icons">`,
@@ -88,27 +86,14 @@ function createHtmlIcons(iconSets) {
 
     return createHTMLfile(files, iconSet)
       .then(data => {
-        swlog.success(`${data.length} SVG icons compiled into "${iconSet.dest}"`);
+        if (verbose) {
+          logger('success', `${data.length} SVG icons compiled into "${iconSet.dest.replace(process.cwd(), '')}"`);
+        }
       })
-      .catch(swlog.error);
+      .catch(err => {
+        logger('error', err);
+      });
   }));
 }
 
-// module.exports = createHtmlIcons;
-createHtmlIcons([
-  {
-    src: `${rootDir}/node_modules/ids-identity/dist/theme-soho/icons/standard/svg/*.svg`,
-    dest: 'src/components/icons/svg.html',
-    class: 'svg-icons'
-  },
-  {
-    src: `${rootDir}/node_modules/ids-identity/dist/theme-soho/icons/extended/svg/*.svg`,
-    dest: 'src/components/icons/svg-extended.html',
-    class: 'svg-icons-extended'
-  },
-  {
-    src: `${rootDir}/node_modules/ids-identity/dist/theme-soho/icons/empty/svg/*.svg`,
-    dest: 'src/components/emptymessage/svg-empty.html',
-    class: 'svg-icons-empty'
-  }
-]);
+module.exports = createHtmlIcons;

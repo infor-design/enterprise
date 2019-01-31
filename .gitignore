@@ -47,8 +47,11 @@ xunit.xml
 .vscode
 
 
-# Deprecated #
+# Deprecated (or replaced by dynamic building #
 ##############
 ids-enterprise/
 package-lock.json
+src/components/emptymessage/svg-empty.html
+src/components/icons/svg-extended.html
+src/components/icons/svg.html
 yarn.lock
