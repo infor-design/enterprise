@@ -3133,9 +3133,10 @@ Datagrid.prototype = {
    * @param  {boolean} isGroup If true we are building a group row.
    * @param  {object} isFooter If true we are building a footer row.
    * @param  {string} actualIndexLineage Series of actualIndex values to reach a child actualIndex in a tree
+   * @param  {boolean} justColumns If true only the td's not the tr's for the export.
    * @returns {string} The html used to construct the row.
    */
-  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage) {
+  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage, justColumns) {
     let isEven = false;
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
@@ -3199,14 +3200,14 @@ Datagrid.prototype = {
     }
 
     // Group Rows
-    if (this.settings.groupable && isGroup && !isFooter) {
+    if (this.settings.groupable && isGroup && !isFooter && !justColumns) {
       containerHtml.center = `<tr class="datagrid-rowgroup-header${isHidden ? '' : ' is-expanded'}" role="rowgroup"><td role="gridcell" colspan="${this.visibleColumns().length}">${
         Formatters.GroupRow(dataRowIdx, 0, null, null, rowData, this)
       }</td></tr>`;
       return containerHtml;
     }
 
-    if (this.settings.groupable && isGroup && isFooter) {
+    if (this.settings.groupable && isGroup && isFooter && !justColumns) {
       containerHtml.center = `<tr class="datagrid-row datagrid-rowgroup-footer${isHidden ? '' : ' is-expanded'}" role="rowgroup">${
         Formatters.GroupFooterRow(dataRowIdx, 0, null, null, rowData, this)
       }</tr>`;
@@ -3229,25 +3230,31 @@ Datagrid.prototype = {
       rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"${rowStatus.title}><use xlink:href="${rowStatus.icon}"></use></svg>`;
     }
 
-    containerHtml.center = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
-      ` data-index="${actualIndex}"${
-        actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
-      }${
-        self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
-      }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
-      }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
-        isHidden ? ' is-hidden' : ''}${
-        rowData.isFiltered ? ' is-filtered' : ''
-      }${isActivated ? ' is-rowactivated' : ''
-      }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
-      }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
-      }${isSummaryRow ? ' datagrid-summary-row' : ''
-      }${!self.settings.cellNavigation && self.settings.selectable !== false ? ' is-clickable' : ''
-      }${self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : ''
-      }">`;
+    if (!justColumns) {
+      containerHtml.center = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
+        ` data-index="${actualIndex}"${
+          actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
+        }${
+          self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
+        }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
+        }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
+          isHidden ? ' is-hidden' : ''}${
+          rowData.isFiltered ? ' is-filtered' : ''
+        }${isActivated ? ' is-rowactivated' : ''
+        }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
+        }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
+        }${isSummaryRow ? ' datagrid-summary-row' : ''
+        }${!self.settings.cellNavigation && self.settings.selectable !== false ? ' is-clickable' : ''
+        }${self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : ''
+        }">`;
 
-    containerHtml.left = containerHtml.center;
-    containerHtml.right = containerHtml.center;
+      containerHtml.left = containerHtml.center;
+      containerHtml.right = containerHtml.center;
+    } else {
+      containerHtml.center = '';
+      containerHtml.right = '';
+      containerHtml.left = '';
+    }
 
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
@@ -3437,9 +3444,11 @@ Datagrid.prototype = {
       containerHtml[container] += `${formatted}</div></td>`;
     }
 
-    containerHtml.left += '</tr>';
-    containerHtml.center += '</tr>';
-    containerHtml.right += '</tr>';
+    if (!justColumns) {
+      containerHtml.left += '</tr>';
+      containerHtml.center += '</tr>';
+      containerHtml.right += '</tr>';
+    }
 
     if (self.settings.rowTemplate) {
       const tmpl = self.settings.rowTemplate;

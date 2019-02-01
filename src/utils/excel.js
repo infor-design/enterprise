@@ -6,7 +6,7 @@ import { Editors } from '../components/datagrid/datagrid.editors';
 const excel = {};
 
 /**
- * Clean all extra stuff
+ * Remove Hidden Columns and Non Exportable Columns.
  * @private
  * @param {string} customDs An optional customized version of the data to use.
  * @param {string} self The grid api to use (if customDs is not used)
@@ -69,9 +69,24 @@ excel.cleanExtra = function (customDs, self) {
     table = excel.appendRows(self.settings.dataset, self.table[0].cloneNode(true), self);
   }
 
+  // Create the header row
   if (!customDs && !table[0].querySelector('thead')) {
     const tbody = table[0].querySelector('tbody');
-    tbody.parentNode.insertBefore(self.headerRow[0].cloneNode(true), tbody);
+    const header = table[0].createTHead();
+    const row = table[0].insertRow(0);
+    const allHeaderNodes = self.headerNodes();
+
+    for (let i = 0; i < allHeaderNodes.length; i++) {
+      const headerNode = allHeaderNodes[i];
+      const cell = row.insertCell(i);
+      cell.innerHTML = headerNode.querySelector('.datagrid-header-text').textContent.trim();
+      cell.classList = headerNode.classList;
+      cell.setAttribute('id', headerNode.getAttribute('id'));
+      if (headerNode.getAttribute('data-exportable')) {
+        cell.setAttribute('data-exportable', headerNode.getAttribute('data-exportable'));
+      }
+    }
+    tbody.parentNode.insertBefore(header, tbody);
   }
 
   table = clean(table);
@@ -167,7 +182,11 @@ excel.appendRows = function (dataset, table, self) {
 
   dataset.forEach((d, i) => {
     if (!d.isFiltered) {
-      tableHtml += self.rowHtml(d, i, i);
+      tableHtml += '<tr>';
+      const rowHtml = self.rowHtml(d, i, i, false, false, i, true);
+      const mergedRow = rowHtml.left + rowHtml.center + rowHtml.right;
+      tableHtml += mergedRow;
+      tableHtml += '</tr>';
     }
   });
 
