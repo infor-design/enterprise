@@ -437,7 +437,6 @@ describe('Datepicker disabled date tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(elem), config.waitsFor);
 
-    expect(await element(by.css('.error-message')).isPresent()).toBe(true);
     expect(await element(by.css('.error-message')).getText()).toEqual('Unavailable Date');
   });
 });

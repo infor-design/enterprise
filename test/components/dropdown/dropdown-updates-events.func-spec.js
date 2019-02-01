@@ -143,7 +143,7 @@ describe('Dropdown updates, events', () => {
 
   it('should trigger change event on click', (done) => {
     setTimeout(() => {
-      const spyEvent = spyOnEvent('select.dropdown', 'change');
+      const spyEvent = spyOnEvent('#states', 'change');
       dropdownObj.open();
       setTimeout(() => {
         document.body.querySelectorAll('.dropdown-option')[0].click();
