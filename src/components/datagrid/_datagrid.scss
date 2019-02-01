@@ -565,7 +565,8 @@ $datagrid-short-row-height: 23px;
 
   &.left,
   &.right {
-    overflow: visible;
+    flex-shrink: 0;
+    overflow: hidden;
   }
 }
 
@@ -1725,7 +1726,7 @@ $datagrid-short-row-height: 23px;
 
         .lookup.is-not-editable {
           + .trigger {
-            margin-left: -10px;
+            margin-left: -5px;
           }
 
           &:focus {
@@ -2039,11 +2040,11 @@ $datagrid-short-row-height: 23px;
   overflow: hidden;
 
   &.left {
-    overflow: visible;
+    flex-shrink: 0;
   }
 
   &.right {
-    overflow: visible;
+    flex-shrink: 0;
 
     th {
       border-left: 1px solid $datagrid-header-border-color;
@@ -2123,7 +2124,6 @@ $datagrid-short-row-height: 23px;
     //Editing and Focus State
     &:focus {
       background-color: $datagrid-header-focus-bg-color;
-      box-shadow: $header-focus-box-shadow;
       color: $datagrid-header-color;
       outline: 1px solid $datagrid-header-focus-border-color;
       outline-offset: -2px;

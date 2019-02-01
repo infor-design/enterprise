@@ -90,7 +90,6 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.disableRowDeactivation=false] if a row is activated the user should not be able to deactivate it by clicking on the activated row
  * @param {boolean}  [settings.sizeColumnsEqually=false] If true make all the columns equal width
  * @param {boolean}  [settings.expandableRow=false] If true we append an expandable row area without the rowTemplate feature being needed.
- * @param {boolean}  [settings.redrawOnResize=false] Deprecated as shouldnt be needed. If set to false we skip redraw logic on the resize of the page.
  * @param {boolean}  [settings.exportConvertNegative=false] If set to true export data with trailing negative signs moved in front.
  * @param {array}    [settings.columnGroups=null] An array of columns to use for grouped column headers.
  * @param {boolean}  [settings.treeGrid=false] If true a tree grid is expected so addition calculations will be used to calculate of the row children
@@ -179,7 +178,6 @@ const DATAGRID_DEFAULTS = {
   disableRowDeactivation: false,
   sizeColumnsEqually: false, // If true make all the columns equal width
   expandableRow: false, // Supply an empty expandable row template
-  redrawOnResize: false, // Run column redraw logic on resize
   exportConvertNegative: false, // Export data with trailing negative signs moved in front
   columnGroups: null, // The columns to use for grouped column headings
   treeGrid: false,
@@ -314,11 +312,11 @@ Datagrid.prototype = {
   */
   firstRender() {
     const self = this;
-    const hasLeftPane = this.settings.frozenColumns.left.length > 0;
-    const hasRightPane = this.settings.frozenColumns.right.length > 0;
+    this.hasLeftPane = this.settings.frozenColumns.left.length > 0;
+    this.hasRightPane = this.settings.frozenColumns.right.length > 0;
     self.bodyContainer = $('<div class="datagrid-body-container"></div>');
 
-    if (hasLeftPane) {
+    if (this.hasLeftPane) {
       self.contentContainerLeft = $('<div class="datagrid-body left"></div>');
       self.tableLeft = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.contentContainerLeft);
       self.bodyContainer.append(self.contentContainerLeft);
@@ -328,7 +326,7 @@ Datagrid.prototype = {
     self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.contentContainer);
     self.bodyContainer.append(self.contentContainer);
 
-    if (hasRightPane) {
+    if (this.hasRightPane) {
       self.contentContainerRight = $('<div class="datagrid-body right"></div>');
       self.tableRight = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.contentContainerRight);
       self.bodyContainer.append(self.contentContainerRight);
@@ -342,11 +340,11 @@ Datagrid.prototype = {
 
     // initialize row height by a setting
     if (this.settings.rowHeight !== 'normal') {
-      if (hasLeftPane) {
+      if (this.hasLeftPane) {
         self.tableLeft.addClass(`${this.settings.rowHeight}-rowheight`);
       }
       self.table.addClass(`${this.settings.rowHeight}-rowheight`);
-      if (hasRightPane) {
+      if (this.hasRightPane) {
         self.tableRight.addClass(`${this.settings.rowHeight}-rowheight`);
       }
       this.element.addClass(`${this.settings.rowHeight}-rowheight`);
@@ -1070,18 +1068,15 @@ Datagrid.prototype = {
     headerColGroups.center += `${headerColGroupCols.center}</colgroup>`;
     headerColGroups.right += `${headerColGroupCols.right}</colgroup>`;
 
-    const hasLeftPane = this.settings.frozenColumns.left.length > 0;
-    const hasRightPane = this.settings.frozenColumns.right.length > 0;
-
     // TODO: FROZEN
     // Set Up Header Panes
     if (self.headerRow === undefined) {
-      self.headerContainerWrapper = $('<div class="datagrid-header-container"></div>').prependTo(self.element);
+      self.headerContainer = $('<div class="datagrid-header-container"></div>').prependTo(self.element);
       const headerHtml = '<div class="datagrid-header"><table role="grid"></table></div>';
 
-      if (hasLeftPane) {
+      if (self.hasLeftPane) {
         self.headerContainerLeft = $(headerHtml).addClass('left');
-        self.headerContainerWrapper.append(self.headerContainerLeft);
+        self.headerContainer.append(self.headerContainerLeft);
         self.headerTableLeft = self.headerContainerLeft.find('table');
         self.headerTableLeft.width(this.headerTableWidth('left'));
         self.headerColGroupLeft = $(headerColGroups.left).appendTo(self.headerTableLeft);
@@ -1089,25 +1084,25 @@ Datagrid.prototype = {
         self.headerRowLeft = self.headerContainerLeft.find('thead');
       }
 
-      self.headerContainer = $(headerHtml);
-      self.headerContainerWrapper.append(self.headerContainer);
-      self.headerTable = self.headerContainer.find('table');
+      self.headerContainerCenter = $(headerHtml);
+      self.headerContainer.append(self.headerContainerCenter);
+      self.headerTable = self.headerContainerCenter.find('table');
       self.headerTable.width(this.headerTableWidth('center'));
       self.headerColGroup = $(headerColGroups.center).appendTo(self.headerTable);
-      DOM.append(self.headerContainer.find('table'), `<thead>${headerRows.center}</thead>`, '*');
-      self.headerRow = self.headerContainer.find('thead');
+      DOM.append(self.headerContainerCenter.find('table'), `<thead>${headerRows.center}</thead>`, '*');
+      self.headerRow = self.headerContainerCenter.find('thead');
 
-      if (hasRightPane) {
+      if (self.hasRightPane) {
         self.headerContainerRight = $(headerHtml).addClass('right');
-        self.headerContainerWrapper.append(self.headerContainerRight);
+        self.headerContainer.append(self.headerContainerRight);
         self.headerTableRight = self.headerContainerRight.find('table');
         self.headerTableRight.width(this.headerTableWidth('right'));
-        self.headerColGroupRight = hasRightPane ? $(headerColGroups.right).appendTo(self.headerTableRight) : '';
+        self.headerColGroupRight = self.hasRightPane ? $(headerColGroups.right).appendTo(self.headerTableRight) : '';
         DOM.append(self.headerContainerRight.find('table'), `<thead>${headerRows.right}</thead>`, '*');
         self.headerRowRight = self.headerContainerRight.find('thead');
       }
     } else {
-      if (hasLeftPane) {
+      if (self.hasLeftPane) {
         self.headerTableLeft.width(this.headerTableWidth('left'));
         DOM.html(self.headerRowLeft, headerRows.left, '*');
         self.headerColGroupLeft.html(headerColGroupCols.left);
@@ -1117,7 +1112,7 @@ Datagrid.prototype = {
       DOM.html(self.headerRow, headerRows.center, '*');
       self.headerColGroup.html(headerColGroupCols.center);
 
-      if (hasRightPane) {
+      if (self.hasRightPane) {
         self.headerTableRight.width(this.headerTableWidth('right'));
         DOM.html(self.headerRowRight, headerRows.right, '*');
         self.headerColGroupRight.html(headerColGroupCols.right);
@@ -2087,7 +2082,7 @@ Datagrid.prototype = {
     this.filterExpr = [];
 
     // Create an array of objects with: field, id, filterType, operator, value
-    this.headerRow.find('th').each(function () {
+    this.headerContainer.find('th').each(function () {
       const rowElem = $(this);
       const btn = rowElem.find('.btn-filter');
       const input = rowElem.find('input, select');
@@ -2618,8 +2613,6 @@ Datagrid.prototype = {
     const s = self.settings;
     const activePage = self.pager ? self.pager.activePage : 1;
     const body = self.table.find('tbody');
-    const hasLeftPane = this.settings.frozenColumns.left.length > 0;
-    const hasRightPane = this.settings.frozenColumns.right.length > 0;
 
     self.bodyColGroupHtmlLeft = '<colgroup>';
     self.bodyColGroupHtml = '<colgroup>';
@@ -2632,13 +2625,13 @@ Datagrid.prototype = {
     }
 
     if (body.length === 0) {
-      if (hasLeftPane) {
+      if (self.hasLeftPane) {
         self.tableBodyLeft = $('<tbody></tbody>');
         self.tableLeft.append(self.tableBodyLeft);
       }
       self.tableBody = $('<tbody></tbody>');
       self.table.append(self.tableBody);
-      if (hasRightPane) {
+      if (self.hasRightPane) {
         self.tableBodyRight = $('<tbody></tbody>');
         self.tableRight.append(self.tableBodyRight);
       }
@@ -2702,7 +2695,16 @@ Datagrid.prototype = {
         // First push group row
         if (!this.settings.groupable.suppressGroupRow) {
           // Show the grouping row
-          tableHtml += self.rowHtml(s.dataset[i], this.recordCount, i, true);
+          const groupHtml = self.rowHtml(s.dataset[i], this.recordCount, i, true);
+          if (this.hasLeftPane && groupHtml.left) {
+            tableHtmlLeft += groupHtml.left;
+          }
+          if (groupHtml.center) {
+            tableHtml += groupHtml.center;
+          }
+          if (this.hasRightPane && groupHtml.right) {
+            tableHtmlRight += groupHtml.right;
+          }
         }
 
         if (this.settings.groupable.showOnlyGroupRow && s.dataset[i].values[0]) {
@@ -2713,7 +2715,17 @@ Datagrid.prototype = {
           }
 
           rowData.values = s.dataset[i].values;
-          tableHtml += self.rowHtml(rowData, this.recordCount, i);
+          const groupHtml = self.rowHtml(rowData, this.recordCount, i);
+          if (this.hasLeftPane && groupHtml.left) {
+            tableHtmlLeft += groupHtml.left;
+          }
+          if (groupHtml.center) {
+            tableHtml += groupHtml.center;
+          }
+          if (this.hasRightPane && groupHtml.right) {
+            tableHtmlRight += groupHtml.right;
+          }
+
           this.recordCount++;
           self.groupArray.push({ group: i, node: 0 });
           continue;  //eslint-disable-line
@@ -2722,7 +2734,16 @@ Datagrid.prototype = {
         // Now Push Groups
         for (let k = 0; k < s.dataset[i].values.length; k++) {
           if (!s.dataset[i].values[k].isFiltered) {
-            tableHtml += self.rowHtml(s.dataset[i].values[k], this.recordCount, i);
+            const rowHtml = self.rowHtml(s.dataset[i].values[k], this.recordCount, i);
+            if (self.hasLeftPane && rowHtml.left) {
+              tableHtmlLeft += rowHtml.left;
+            }
+            if (rowHtml.center) {
+              tableHtml += rowHtml.center;
+            }
+            if (self.hasRightPane && rowHtml.right) {
+              tableHtmlRight += rowHtml.right;
+            }
             this.recordCount++;
             self.groupArray.push({ group: i, node: k });
           }
@@ -2741,15 +2762,14 @@ Datagrid.prototype = {
         currentCount = this.recordCount;
       }
 
-      // TODO: FROZEN
       const rowHtml = self.rowHtml(s.dataset[i], currentCount, i);
-      if (hasLeftPane && rowHtml.left) {
+      if (self.hasLeftPane && rowHtml.left) {
         tableHtmlLeft += rowHtml.left;
       }
       if (rowHtml.center) {
         tableHtml += rowHtml.center;
       }
-      if (hasRightPane && rowHtml.right) {
+      if (self.hasRightPane && rowHtml.right) {
         tableHtmlRight += rowHtml.right;
       }
       this.recordCount++;
@@ -2781,7 +2801,7 @@ Datagrid.prototype = {
         self.bodyColGroupRight.remove();
       }
 
-      if (hasLeftPane) {
+      if (self.hasLeftPane) {
         self.bodyColGroupLeft = $(self.bodyColGroupHtmlLeft);
         self.tableBodyLeft.before(self.bodyColGroupLeft);
       }
@@ -2789,19 +2809,19 @@ Datagrid.prototype = {
       self.bodyColGroup = $(self.bodyColGroupHtml);
       self.tableBody.before(self.bodyColGroup);
 
-      if (hasRightPane) {
+      if (self.hasRightPane) {
         self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
         self.tableBodyRight.before(self.bodyColGroupRight);
       }
     }
 
-    if (hasLeftPane && tableHtmlLeft) {
+    if (self.hasLeftPane && tableHtmlLeft) {
       DOM.html(self.tableBodyLeft, tableHtmlLeft, '*');
     }
 
     DOM.html(self.tableBody, tableHtml, '*');
 
-    if (hasRightPane && tableHtmlRight) {
+    if (self.hasRightPane && tableHtmlRight) {
       DOM.html(self.tableBodyRight, tableHtmlRight, '*');
     }
     self.setVirtualHeight();
@@ -2889,7 +2909,7 @@ Datagrid.prototype = {
     self.createDraggableRows();
 
     if (!self.activeCell || !self.activeCell.node) {
-      self.activeCell = { node: self.cellNode(0, 0, true).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0 };
+      self.activeCell = { node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0 };
     }
 
     if (self.activeCell.isFocused) {
@@ -3670,8 +3690,6 @@ Datagrid.prototype = {
     const visibleColumns = this.visibleColumns(true);
     let lastColumn = (index === this.lastColumnIdx());
     const container = this.getContainer(col.id);
-    const hasLeftPane = this.settings.frozenColumns.left.length > 0;
-    const hasRightPane = this.settings.frozenColumns.right.length > 0;
 
     if (!this.elemWidth) {
       this.elemWidth = this.element.outerWidth();
@@ -3822,10 +3840,10 @@ Datagrid.prototype = {
       } else if (!isNaN(this.totalWidths[container])) {
         this.table.css('width', this.totalWidths.center);
       }
-      if (hasLeftPane) {
+      if (this.hasLeftPane) {
         this.tableLeft.css('width', this.totalWidths.left);
       }
-      if (hasRightPane) {
+      if (this.hasRightPane) {
         this.tableRight.css('width', this.totalWidths.right);
       }
       this.isInitialRender = false;
@@ -4051,7 +4069,7 @@ Datagrid.prototype = {
    * @returns {array} Array with all header dom nodes
    */
   headerNodes() {
-    return this.headerRow.find('tr:not(.datagrid-header-groups) th');
+    return this.headerContainer.find('tr:not(.datagrid-header-groups) th');
   },
 
   /**
@@ -4427,7 +4445,7 @@ Datagrid.prototype = {
 
     // Handle colSpans if present on the column
     if (this.hasColSpans) {
-      let colSpan = this.headerRow.find('th').eq(idx).attr('colspan');
+      let colSpan = this.headerContainer.find('th').eq(idx).attr('colspan');
 
       if (colSpan && colSpan > 0) {
         colSpan -= 1;
@@ -4482,7 +4500,7 @@ Datagrid.prototype = {
 
     // Handle colSpans if present on the column
     if (this.hasColSpans) {
-      let colSpan = this.headerRow.find('th').eq(idx).attr('colspan');
+      let colSpan = this.headerContainer.find('th').eq(idx).attr('colspan');
 
       if (colSpan && colSpan > 0) {
         colSpan -= 1;
@@ -4611,27 +4629,26 @@ Datagrid.prototype = {
   /**
   * Explicitly Set the width of a column
   * @private
-  * @param {boolean} idOrNode Specifies if the column info is provide by id or as a node reference.
+  * @param {string} id Specifies if the column info is provide by id or as a node reference.
   * @param {number} width The width of the column
   * @param {number} diff The difference between the old and new width
   */
-  setColumnWidth(idOrNode, width) {
+  setColumnWidth(id, width) {
     const self = this;
     const percent = parseFloat(width);
-    let columnNode = idOrNode;
-    const columnSettings = this.columnById(typeof idOrNode === 'string' ? idOrNode : idOrNode.attr('data-column-id'))[0];
-    const idx = columnNode.index();
+    const columnSettings = this.columnById(id)[0];
+    let idx = -1;
 
     if (!percent) {
       return;
     }
 
-    if (typeof idOrNode === 'string') {
-      self.headerNodes().each(function () {
+    if (typeof id === 'string') {
+      self.headerNodes().each(function (i) {
         const col = $(this);
 
-        if (col.attr('data-column-id') === idOrNode) {
-          columnNode = col;
+        if (col.attr('data-column-id') === id) {
+          idx = i;
         }
       });
     }
@@ -4669,6 +4686,7 @@ Datagrid.prototype = {
 
   /**
    * Change the width of the column as the user drags the resizeHandle
+   * @private
    * @param {boolean} idOrNode Specifies if the column info is provide by id or as a node reference.
    * @param {number} width The width of the column
    * @param {number} diff The difference between the old and new width
@@ -4706,10 +4724,11 @@ Datagrid.prototype = {
       this.resizeHandle[0].style.height = '62px';
     }
 
-    this.headerContainer.find('table').before(this.resizeHandle);
+    this.headerContainerCenter.find('table').before(this.resizeHandle);
 
     let columnId;
     let startingLeft;
+    let draggingLeft;
     let columnStartWidth;
     let column;
 
@@ -4743,12 +4762,13 @@ Datagrid.prototype = {
         }
 
         width = Math.round(width);
+        draggingLeft = ui.left;
         self.resizeColumnWidth(self.currentHeader, width, width - columnStartWidth);
       })
-      .on('dragend.datagrid', (e, ui) => {
-        const width = (ui.left - startingLeft - 1);
+      .on('dragend.datagrid', () => {
+        const width = (draggingLeft - startingLeft - 1);
         self.dragging = false;
-        self.setColumnWidth(self.currentHeader, width);
+        self.setColumnWidth(self.currentHeader.attr('data-column-id'), width);
       });
   },
 
@@ -4892,49 +4912,54 @@ Datagrid.prototype = {
   /**
    * Returns the row dom jQuery node.
    * @param  {number} row The row index.
-   * @param  {boolean} includeGroups If true groups are taken into account.
    * @returns {object} The dom jQuery node
    */
-  rowNode(row, includeGroups) {
-    let thisRowNode = null;
-
+  rowNode(row) {
     if (row instanceof jQuery) {
-      thisRowNode = row;
-    } else {
-      thisRowNode = this.tableBody.find(`tr:not(.datagrid-expandable-row)[aria-rowindex="${row + 1}"]`);
+      row = row.index();
     }
+    const leftNodes = this.tableBodyLeft ? this.tableBodyLeft.find('tr').eq(row) : $();
+    const centerNodes = this.tableBody.find('tr').eq(row);
+    const rightNodes = this.tableBodyRight ? this.tableBodyRight.find('tr').eq(row) : $();
 
-    if (includeGroups && this.settings.groupable) {
-      thisRowNode = this.tableBody.prevAll('.datagrid-rowgroup-header').eq(row);
-      if (thisRowNode) {
-        thisRowNode = this.tableBody.find('.datagrid-rowgroup-header').eq(row);
-      }
-    }
-    return thisRowNode;
+    return $(centerNodes)
+      .add(leftNodes)
+      .add(rightNodes);
   },
 
   /**
    * Returns the cell dom node.
    * @param  {number} row The row index.
    * @param  {number} cell The cell index.
-   * @param  {boolean} includeGroups If true groups are taken into account.
    * @returns {object} The dom node
    */
-  cellNode(row, cell, includeGroups) {
-    const cells = this.rowNode(row, includeGroups).find('td');
+  cellNode(row, cell) {
+    const cells = this.rowNode(row).find('td');
     return cells.eq(cell >= cells.length ? cells.length - 1 : cell);
   },
 
   /**
-  * Scroll event handler.
+  * Sync the containers when scrolling.
   * @private
   */
   handleScroll() {
     const left = this.contentContainer[0].scrollLeft;
+    const top = this.contentContainer[0].scrollTop;
 
-    if (left !== this.scrollLeft && this.headerContainer) {
+    if (left !== this.scrollLeft && this.headerContainerCenter) {
       this.scrollLeft = left;
-      this.headerContainer[0].scrollLeft = this.scrollLeft;
+      this.headerContainerCenter[0].scrollLeft = this.scrollLeft;
+    }
+
+    if (top !== this.scrollTop && this.contentContainer &&
+      (this.contentContainerLeft || this.contentContainerRight)) {
+      this.scrollTop = top;
+      if (this.contentContainerLeft) {
+        this.contentContainerLeft[0].scrollTop = this.scrollTop;
+      }
+      if (this.contentContainerRight) {
+        this.contentContainerRight[0].scrollTop = this.scrollTop;
+      }
     }
   },
 
@@ -5004,23 +5029,10 @@ Datagrid.prototype = {
       });
     }
 
-    // Handle Resize - Re do the columns
-    if (self.settings.redrawOnResize) {
-      let oldWidth = self.element.outerWidth();
-
-      $('body').on('resize.datagrid', () => {
-        const width = self.element.outerWidth();
-        if (width !== oldWidth) {
-          oldWidth = width;
-          self.handleResize();
-        }
-      });
-    }
-
     // Handle Sorting
-    this.element
+    this.headerContainer
       .off('click.datagrid')
-      .on('click.datagrid', '> .datagrid-header-container > .datagrid-header th.is-sortable, > .datagrid-header-container > .datagrid-header th.btn-filter', function (e) {
+      .on('click.datagrid', '.datagrid-header th.is-sortable, .datagrid-header th.btn-filter', function (e) {
         if ($(e.target).parent().is('.datagrid-filter-wrapper') || $(e.target).parent().is('.lookup-wrapper')) {
           return;
         }
@@ -5147,7 +5159,7 @@ Datagrid.prototype = {
 
       // Handle Cell Click Event
       const elem = $(this).closest('td');
-      const cell = elem.parent().children(':visible').index(elem);
+      const cell = elem.attr('aria-colindex') - 1;
       const col = self.columnSettings(cell, true);
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a') || target.parent().is('button')) {   //eslint-disable-line
@@ -5641,7 +5653,10 @@ Datagrid.prototype = {
       this.settings.rowHeight = height;
     }
 
-    this.element.add(this.table)
+    this.element
+      .add(this.table)
+      .add(this.tableLeft)
+      .add(this.tableRight)
       .removeClass('short-rowheight medium-rowheight normal-rowheight')
       .addClass(`${this.settings.rowHeight}-rowheight`);
 
@@ -6827,10 +6842,10 @@ Datagrid.prototype = {
     const checkbox = $('th .datagrid-checkbox', self.headerRow);
 
     // Handle header navigation
-    self.headerTable.on('keydown.datagrid', 'th', function (e) {
+    self.headerContainer.on('keydown.datagrid', 'th', function (e) {
       const key = e.which || e.keyCode || e.charCode || 0;
       const th = $(this);
-      const index = th.siblings(':visible').addBack().index(th);
+      const index = self.columnIdxById(th.attr('data-column-id'));
       const last = self.visibleColumns().length - 1;
       let triggerEl;
       let move;
@@ -6868,23 +6883,26 @@ Datagrid.prototype = {
         // Update active cell
         self.activeCell.cell = move;
 
-        // Making move
+        // Making moves
         th.removeAttr('tabindex').removeClass('is-active');
-        $('th:not(.is-hidden)', this.header).eq(move).attr('tabindex', '0').addClass('is-active')
+        $('th:not(.is-hidden)', this.headerContainer).eq(move).attr('tabindex', '0').addClass('is-active')
           .focus();
         e.preventDefault();
+
+        // Sync the body scroll area
+        self.syncBodyScroll(th);
       }
 
       // Down arrow
       if (key === 40) {
         th.removeAttr('tabindex');
-        self.activeCell.node = self.cellNode(0, self.settings.groupable ? 0 : self.activeCell.cell, true).attr('tabindex', '0').focus();
+        self.activeCell.node = self.cellNode(0, self.settings.groupable ? 0 : self.activeCell.cell).attr('tabindex', '0').focus();
         e.preventDefault();
       }
     });
 
     // Handle Editing / Keyboard
-    self.table.on('keydown.datagrid', 'td, input', (e) => { //eslint-disable-line
+    self.bodyContainer.on('keydown.datagrid', 'td, input', (e) => { //eslint-disable-line
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
 
@@ -6907,7 +6925,7 @@ Datagrid.prototype = {
     // set focus to the first row.
 
     // Handle rest of the keyboard
-    self.table.on('keydown.datagrid', 'td', function (e) {
+    self.bodyContainer.on('keydown.datagrid', 'td', function (e) {
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
       const isRTL = Locale.isRTL();
@@ -7009,12 +7027,13 @@ Datagrid.prototype = {
       if (key === 38 && !self.quickEditMode) {
         // Press [Control + Up] arrow to move to the first row on the first page.
         if (e.altKey || e.metaKey) {
-          self.setActiveCell(getVisibleRows(0), cell);
+          const firstRow = getVisibleRows(0);
+          self.setActiveCell(firstRow, cell);
           handled = true;
         } else { // Up arrow key to navigate by row.
           if (row === 0 && !prevRow.is('.datagrid-rowgroup-header')) {
             node.removeAttr('tabindex');
-            self.headerRow.find('th').eq(cell).attr('tabindex', '0').focus();
+            self.headerContainer.find('th').eq(cell).attr('tabindex', '0').focus();
             return;
           }
           self.setActiveCell(prevRow, cell);
@@ -7157,6 +7176,27 @@ Datagrid.prototype = {
         return false; // eslint-disable-line
       }
     });
+  },
+
+  /**
+   * Sync the body area with the header or other containers.
+   * @private
+   * @param  {element} elem The element to check.
+   */
+  syncBodyScroll(elem) {
+    let container = elem.closest('.datagrid-header');
+    if (container.length > 0) {
+      const left = container.scrollLeft();
+      if (!(elem.is(':last-child') && left === 0)) {
+        this.contentContainer.scrollLeft(container.scrollLeft());
+      }
+      return;
+    }
+
+    container = elem.closest('.datagrid-body.left, .datagrid-body.right');
+    if (container.length > 0) {
+      this.contentContainer.scrollTop(container.scrollTop());
+    }
   },
 
   /**
@@ -8488,6 +8528,8 @@ Datagrid.prototype = {
       self.activeCell.node.addClass('is-active');
     }
 
+    self.syncBodyScroll(self.activeCell.node);
+
     /**
     * Fires when a cell is focued.
     * @event activecellchange
@@ -8973,8 +9015,10 @@ Datagrid.prototype = {
     }
 
     // Set Visual Indicator
-    this.headerRow.find('.is-sorted-asc, .is-sorted-desc').removeClass('is-sorted-asc is-sorted-desc').attr('aria-sort', 'none');
-    this.headerRow.find(`[data-column-id="${id}"]`)
+    this.headerContainer.find('.is-sorted-asc, .is-sorted-desc')
+      .removeClass('is-sorted-asc is-sorted-desc')
+      .attr('aria-sort', 'none');
+    this.headerContainer.find(`[data-column-id="${id}"]`)
       .addClass(ascending ? 'is-sorted-asc' : 'is-sorted-desc')
       .attr('aria-sort', ascending ? 'ascending' : 'descending');
   },
@@ -9527,6 +9571,8 @@ Datagrid.prototype = {
   */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    this.hasLeftPane = this.settings.frozenColumns.left.length > 0;
+    this.hasRightPane = this.settings.frozenColumns.right.length > 0;
 
     if (settings && settings.dataset) {
       this.settings.dataset = settings.dataset;

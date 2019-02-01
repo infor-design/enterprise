@@ -97,7 +97,6 @@ describe('Datagrid Settings', () => {
       disableRowDeactivation: false,
       sizeColumnsEqually: false,
       expandableRow: false,
-      redrawOnResize: false,
       exportConvertNegative: false,
       columnGroups: null,
       treeGrid: false,

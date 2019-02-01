@@ -5,6 +5,104 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
+describe('Datagrid Alternate Row Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-alternate-row-shading?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render alternate rows', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(7);
+    expect(await element.all(by.css('.datagrid-row.alt-shading')).count()).toEqual(3);
+  });
+});
+
+describe('Datagrid Colspan Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-colspan?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+
+      const datagridEl = await element(by.id('datagrid'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-colspan')).toEqual(0);
+    });
+  }
+});
+
+describe('Datagrid Comments Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-comments?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+
+      const datagridEl = await element(by.id('datagrid'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-comments')).toEqual(0);
+    });
+  }
+});
+
+describe('Datagrid Custom Filter Option Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-custom-filter-conditions?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should have custom filter options', async () => {
+    const selector = '#example-custom-filter-conditions-datagrid-1-header-1 button';
+    await element(await by.css(selector)).click();
+
+    expect(await element.all(await by.css('.popupmenu')).count()).toEqual(4);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('popupmenu-2'))), config.waitsFor);
+
+    const text = await element(by.id('popupmenu-2')).getText();
+
+    expect(await text.replace(/[\s\r\n]+/g, '')).toEqual('ContainsEquals');
+  });
+});
+
 describe('Datagrid index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-index?layout=nofrills');

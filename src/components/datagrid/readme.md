@@ -8,6 +8,14 @@ demo:
   pages:
   - name: Alternate Row Shading
     slug: example-alternate-row-shading
+  - name: Spanning Columns
+    slug: example-colspan
+  - name: Comments Grid (Flexible Row Size)
+    slug: example-comments
+  - name: Customizing Filter Conditions
+    slug: example-custom-filter-conditions
+  - name: Making a custom toolbar
+    slug: example-custom-toolbar
   - name: Drilldown Formatter
     slug: example-drilldown
   - name: Paging (Indeterminate)
@@ -40,10 +48,6 @@ demo:
     slug: example-tree
   - name: Using Nested Objects
     slug: example-nested-objects
-  - name: Making a custom toolbar
-    slug: example-custom-toolbar
-  - name: Comments Grid (Flexible Row Size)
-    slug: example-comments
   - name: Fixed Header
     slug: example-fixed-header
   - name: Datagrid Grouping
@@ -62,8 +66,6 @@ demo:
     slug: example-empty-message
   - name: Expandable Cells
     slug: example-expandable-cells
-  - name: Dynamic Column Spans
-    slug: example-colspan
 ---
 ## Code Example
 
@@ -192,8 +194,6 @@ The formatter is then linked to the column on the formatter setting. `columns.pu
 
 ## Editors
 
-TODO
-
 ## Column Settings (Editor Specific)
 
 |Setting|Description|
@@ -203,6 +203,11 @@ TODO
 |`maskMode` | Used to pass in an input mask maskMode option. See [the mask component]( ../mask) for details on making a mask.|
 |`caseInsensitive` | Used in the dropdown editor to make it such case is not used to match keys to the key/value pairs in the options.|
 |`validate` | The validation function(s) to use. See [the validation component]( ../validation) for details on validation functions.|
+
+## Other Key features
+
+- Alternate row shading - For better scan-ability you can shade the rows with the `alternateRowShading=true` option. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-alternate-row-shading?font=source-sans" target="_blank">alternate row shading</a>|
+- Column Spanning - If possible to make a column span across other columns with the `colspan` column option. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-colspan?font=source-sans" target="_blank">Column Span Example</a>|
 
 ## Testability
 
