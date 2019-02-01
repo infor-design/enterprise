@@ -118,11 +118,12 @@ Pager.prototype = {
     const pagesize = this.settings.pagesize;
     const type = this.previousOperation;
     const trigger = this.previousTrigger;
+    const ds = this.settings.dataset;
 
     if (!isNaN(this.serverDatasetTotal)) {
       total = this.serverDatasetTotal;
-    } else if (this.settings.dataset.length) {
-      total = this.settings.dataset.length;
+    } else if (ds && ds.length) {
+      total = ds.length;
     }
     if (total < 1) {
       pages = 1;
@@ -479,6 +480,11 @@ Pager.prototype = {
     // Set the value in the settings
     this.settings[`show${stringUtils.capitalize(type)}Button`] = toggleOption;
 
+    // If the button hasn't been rendered, don't alter the DOM.
+    if (!a) {
+      return;
+    }
+
     // Change the DOM
     if (toggleOption) {
       a.parentNode.classList.remove('hidden');
@@ -509,6 +515,11 @@ Pager.prototype = {
 
     // Set the value in the settings
     this.settings[`enable${stringUtils.capitalize(type)}Button`] = toggleOption;
+
+    // If the button hasn't been rendered, don't alter the DOM.
+    if (!a) {
+      return;
+    }
 
     // Change the DOM
     if (toggleOption) {
@@ -646,7 +657,7 @@ Pager.prototype = {
     let doRenderLastButton = false;
     let disableFirstButton = !this.settings.enableFirstButton;
     let disablePreviousButton = !this.settings.enablePreviousButton;
-    let disableNextButton = !this.settings.enableFirstButton;
+    let disableNextButton = !this.settings.enableNextButton;
     let disableLastButton = !this.settings.enableLastButton;
 
     // If this is a filtered dataset, use the `filteredTotal` instead
@@ -658,28 +669,28 @@ Pager.prototype = {
     // Determine whether or not special navigation buttons should eventually be rendered
     // First Button
     if (this.settings.showFirstButton && canHaveFirstLastButtons) {
-      if (activePage === 1) {
+      if (this.settings.type !== 'standalone' && activePage === 1) {
         disableFirstButton = true;
       }
       doRenderFirstButton = true;
     }
     // Previous Button
     if (this.settings.showPreviousButton) {
-      if (activePage === 1) {
+      if (this.settings.type !== 'standalone' && activePage === 1) {
         disablePreviousButton = true;
       }
       doRenderPreviousButton = true;
     }
     // Next Button
     if (this.settings.showNextButton) {
-      if (activePage === totalPages) {
+      if (this.settings.type !== 'standalone' && activePage === totalPages) {
         disableNextButton = true;
       }
       doRenderNextButton = true;
     }
     // Last Button
     if (this.settings.showLastButton && canHaveFirstLastButtons) {
-      if (activePage === totalPages) {
+      if (this.settings.type !== 'standalone' && activePage === totalPages) {
         disableLastButton = true;
       }
       doRenderLastButton = true;
@@ -704,7 +715,7 @@ Pager.prototype = {
     }
 
     // Disable first/last if we can display all available page numbers
-    if (!this.isTable && maxNumberButtons >= totalPages) {
+    if (!this.isTable && this.settings.type !== 'standalone' && maxNumberButtons >= totalPages) {
       disableFirstButton = true;
       disableLastButton = true;
     }
@@ -1101,25 +1112,32 @@ Pager.prototype = {
 
     // Trigger events for specific special pages, and always trigger the `page` event
     // containing the new pager state.
-    if (activePage === 1) {
+    // if (activePage === 1) {
+    if (state.type === 'first') {
       // First Page
       if (this.settings.onFirstPage) {
         this.settings.onFirstPage(this, state);
       }
       this.element.trigger('firstpage', state);
-    } else if (activePage === previousActivePage - 1) {
+    }
+    // if (activePage === previousActivePage - 1) {
+    if (state.type === 'prev') {
       // Previous Page
       if (this.settings.onPreviousPage) {
         this.settings.onPreviousPage(this, state);
       }
       this.element.trigger('previouspage', state);
-    } else if (activePage === previousActivePage + 1) {
+    }
+    // if (activePage === previousActivePage + 1) {
+    if (state.type === 'next') {
       // Next Page
       if (this.settings.onNextPage) {
         this.settings.onNextPage(this, state);
       }
       this.element.trigger('nextpage', state);
-    } else if (activePage === this.pageCount()) {
+    }
+    // if (activePage === this.pageCount()) {
+    if (state.type === 'last') {
       // Last Page
       if (this.settings.onLastPage) {
         this.settings.onLastPage(this, state);
@@ -1276,8 +1294,15 @@ Pager.prototype = {
     if (this.numberButtons) {
       this.numberButtons.forEach((li) => {
         const a = li.querySelector('a');
-        $(a).data('button').destroy();
-        $(a).data('tooltip').destroy();
+        const buttonAPI = $(a).data('button');
+        const tooltipAPI = $(a).data('tooltip');
+
+        if (buttonAPI) {
+          buttonAPI.destroy();
+        }
+        if (tooltipAPI) {
+          tooltipAPI.destroy();
+        }
       });
     }
 

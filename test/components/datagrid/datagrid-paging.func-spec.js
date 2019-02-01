@@ -439,7 +439,7 @@ describe('Datagrid Paging API', () => {
       }, 1);
     });
 
-    it('test using previous paging bar button', (done) => {
+    fit('test using previous paging bar button', (done) => {
       data = JSON.parse(JSON.stringify(sampleData));
       const dataSourceContainer = { dataSource: pagingDataSource };
       const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();

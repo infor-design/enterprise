@@ -580,7 +580,10 @@ Datagrid.prototype = {
   */
   triggerSource(pagerType, callback, op) {
     const self = this;
-    let pagingInfo = this.pagerAPI.state || {};
+    let pagingInfo = {};
+    if (this.pagerAPI) {
+      pagingInfo = this.pagerAPI.state;
+    }
 
     if (pagerType) {
       if (pagerType.activePage) {
@@ -619,7 +622,7 @@ Datagrid.prototype = {
       self.loadData(data, updatedPagingInfo, true);
 
       // Need to update the total amount of records available in the backend somehow.
-      if (updatedPagingInfo.type === 'initial') {
+      if (self.pagerAPI && updatedPagingInfo.type === 'initial') {
         self.pagerAPI.updatePagingInfo(updatedPagingInfo);
       }
 
