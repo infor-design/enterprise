@@ -1016,6 +1016,15 @@ Datagrid.prototype = {
       const isSelection = column.id === 'selectionCheckbox';
       let headerAlignmentClass = '';
 
+      // Make frozen columns hideable: false
+      if ((self.hasLeftPane || self.hasRightPane)
+        && (self.settings.frozenColumns.left &&
+          self.settings.frozenColumns.left.indexOf(column.id) > -1 ||
+        self.settings.frozenColumns.right &&
+        self.settings.frozenColumns.right.indexOf(column.id) > -1)) {
+        column.hideable = false;
+      }
+
       // note there is a space at the front of the classname
       if (column.headerAlign === undefined) {
         headerAlignmentClass = column.align ? ` l-${column.align}-text` : '';
@@ -1068,7 +1077,6 @@ Datagrid.prototype = {
     headerColGroups.center += `${headerColGroupCols.center}</colgroup>`;
     headerColGroups.right += `${headerColGroupCols.right}</colgroup>`;
 
-    // TODO: FROZEN
     // Set Up Header Panes
     if (self.headerRow === undefined) {
       self.headerContainer = $('<div class="datagrid-header-container"></div>').prependTo(self.element);
@@ -5310,8 +5318,6 @@ Datagrid.prototype = {
         const rightEdge = leftEdge + self.currentHeader.outerWidth();
         const alignToLeft = (e.pageX - leftEdge > rightEdge - e.pageX);
         let leftPos = 0;
-
-        // TODO: Test Touch support - may need handles on each column
         leftPos = (alignToLeft ? (rightEdge - 6) : (leftEdge - 6));
 
         // Ignore First Column
@@ -9580,8 +9586,12 @@ Datagrid.prototype = {
   */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
-    this.hasLeftPane = this.settings.frozenColumns.left.length > 0;
-    this.hasRightPane = this.settings.frozenColumns.right.length > 0;
+
+    if (settings && settings.frozenColumns) {
+      this.headerRow = undefined;
+      this.element.empty();
+      this.firstRender();
+    }
 
     if (settings && settings.dataset) {
       this.settings.dataset = settings.dataset;

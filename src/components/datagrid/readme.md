@@ -18,14 +18,14 @@ demo:
     slug: example-custom-toolbar
   - name: Drilldown Formatter
     slug: example-drilldown
+  - name: Editing
+    slug: example-editable
   - name: Paging (Indeterminate)
     slug: example-paging-indeterminate
   - name: Paging (Server Side)
     slug: example-paging
   - name: Paging (Client Side)
     slug: example-paging-client-side
-  - name: Editing
-    slug: example-editable
   - name: Column Reordering
     slug: example-reorder
   - name: Expandable Row
