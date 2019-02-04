@@ -58,20 +58,21 @@ module.exports = function directoryList(directory, viewsRoot, req, res, next) {
       let icon = '#icon-document';
       let type = 'file';
       let tempDir = `${directory}`;
+      const sep = path.sep;
 
       function hasNoTrailingSlash(dir) {
-        return dir.lastIndexOf('/') !== (dir.length - 1);
+        return dir.lastIndexOf(sep) !== (dir.length - 1);
       }
       const hasExplicitList = req.url.lastIndexOf('/list') !== -1;
 
       // handle "list"
       if (hasExplicitList) {
-        tempDir = tempDir.substr(0, tempDir.lastIndexOf('/') + 1);
+        tempDir = tempDir.substr(0, tempDir.lastIndexOf(sep) + 1);
         href = link;
       } else if (hasNoTrailingSlash(tempDir)) {
       // Correct for a missing slash at the end of the URL
-        const subDir = tempDir.substring(tempDir.lastIndexOf('/') + 1);
-        tempDir = `${tempDir}/`;
+        const subDir = tempDir.substring(tempDir.lastIndexOf(sep) + 1);
+        tempDir = `${tempDir}${sep}`;
         href = `${subDir}/${link}`;
       }
 

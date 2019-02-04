@@ -808,7 +808,7 @@ $datagrid-short-row-height: 23px;
     }
 
     .chart-completion-target {
-      top: 2px;
+      top: -6px;
 
       .chart-targeted-text {
         margin-top: -33px;
@@ -1158,7 +1158,7 @@ $datagrid-short-row-height: 23px;
     }
 
     .chart-completion-target {
-      top: -2px;
+      top: -5px;
 
       .chart-targeted-text {
         margin-top: -27px;
@@ -1530,7 +1530,7 @@ $datagrid-short-row-height: 23px;
       height: 25px;
       margin-bottom: 0 !important;
       position: relative;
-      top: 8px;
+      top: 0;
     }
 
     .spinbox-wrapper {

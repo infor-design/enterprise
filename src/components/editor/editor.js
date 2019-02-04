@@ -1914,6 +1914,29 @@ Editor.prototype = {
           }
         });
       }
+      // Blockquote or Pre
+      const nodes = [].slice.call(this.element[0].querySelectorAll('blockquote, pre'));
+      for (let i = 0, l = nodes.length; i < l; i++) {
+        let found = false;
+        const children = [].slice.call(nodes[i].children);
+        const checkChildren = (childrenNodes) => {
+          for (let i2 = 0, l2 = childrenNodes.length; i2 < l2; i2++) {
+            const child = childrenNodes[i2];
+            const childChildren = [].slice.call(child.children);
+            if (child === parentEl) {
+              found = true;
+            }
+            if (childChildren.length && !found) {
+              checkChildren(childChildren);
+            }
+          }
+        };
+        checkChildren(children);
+        if (found) {
+          document.execCommand('removeFormat', false, null);
+          replaceTag(nodes[i]);
+        }
+      }
     };
 
     // Clear all lists belongs to selection area
@@ -2049,7 +2072,7 @@ Editor.prototype = {
       }
       color = cpApi.rgb2hex(color);
       cpBtn.attr('data-value', color)
-        .find('.icon').css('fill', preventColors.includes(color.toLowerCase()) ? '' : color);
+        .find('.icon').css('fill', (preventColors.indexOf(color.toLowerCase()) > -1) ? '' : color);
     }
     return { cpBtn, cpApi, color };
   },

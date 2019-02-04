@@ -54,6 +54,19 @@ describe('Xss Utils', () => {
     expect(xssUtils.stripTags(6)).toEqual(6);
   });
 
+  it('Should strip nested tags', () => {
+    let result = xssUtils.stripTags('<script>alert("testing");</script>');
+
+    expect(result).toEqual('alert("testing");');
+    result = xssUtils.stripTags('<<a/>script<a>>alert("testing");</<a/>script<a>>');
+
+    expect(result).toEqual('alert("testing");');
+
+    result = xssUtils.stripTags('<<bold/>script<bold>>alert("testing");</<bold/>script<bold>>');
+
+    expect(result).toEqual('alert("testing");');
+  });
+
   it('Should remove all html tags', () => {
     let result = xssUtils.stripHTML('<p>Test</p> <br /><b>Test</b> <i>Test</i>');
 

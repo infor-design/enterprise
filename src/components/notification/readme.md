@@ -1,15 +1,17 @@
 ---
 title: Notification
-description: null
+description: The notification banner is a non-dismissible banner that sits at the top of the page. It has alert colors, an optional link, and a dismiss button.
 demo:
   embedded:
-  - name: Showing a notfication banner
+  - name: Showing a notification
     slug: example-index
+  - name: No link
+    slug: example-no-link
 ---
 
 ## Code Example
 
-The auto initializer will search for `<ul>` elements with a `paginated` class and add a pager to them. You can add the option `data-options="{'pagesize': 10}"` to set the page size desired. For [listview](./listview) and [datagrid](./datagrid) components, this is built into those components.
+The notification component is a component that inserts a banner at the top of the page for showing user-dismissible alerts and messages. Its contents will be removed when the banner is closed. You have control over the message contents including the option for a link. The message is triggered by selecting the parent content (usually `<body>`) and executing the `notification()` function with various options to create the notification banner.
 
 ```javascript
   $('body').notification({
@@ -30,4 +32,4 @@ The auto initializer will search for `<ul>` elements with a `paginated` class an
 
 ## Upgrading from 3.X
 
-- This component is comparible to the inforSlideInDialog in 3.X
+- This component is comparable to the inforSlideInDialog in 3.X
