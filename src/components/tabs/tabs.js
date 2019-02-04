@@ -2987,6 +2987,7 @@ Tabs.prototype = {
     let a;
     let prevWidth;
     let cutoff = 'no';
+    const isSideBySide = this.element.closest('.side-by-side').length === 1;
 
     for (let i = 0; i < sizeableTabs.length; i++) {
       a = sizeableTabs.eq(i).children('a');
@@ -3004,8 +3005,8 @@ Tabs.prototype = {
       }
 
       let diff = 0;
-      if (env.os.name === 'ios' && env.devicespecs.isMobile) {
-        diff = 30;
+      if (env.os.name === 'ios' && env.devicespecs.isMobile && isSideBySide) {
+        diff = 25;
       }
       sizeableTabs[i].style.width = `${visibleTabSize - diff}px`;
       a[0].style.width = `${visibleTabSize - diff}px`;
