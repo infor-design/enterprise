@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils, math } from '../../utils/utils';
+import { Environment as env } from '../../utils/environment';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 import { breakpoints } from '../../utils/breakpoints';
@@ -2986,6 +2987,7 @@ Tabs.prototype = {
     let a;
     let prevWidth;
     let cutoff = 'no';
+    const isSideBySide = this.element.closest('.side-by-side').length === 1;
 
     for (let i = 0; i < sizeableTabs.length; i++) {
       a = sizeableTabs.eq(i).children('a');
@@ -3002,8 +3004,12 @@ Tabs.prototype = {
         a.data('cutoffTitle', cutoff);
       }
 
-      sizeableTabs[i].style.width = `${visibleTabSize}px`;
-      a[0].style.width = `${visibleTabSize}px`;
+      let diff = 0;
+      if (env.os.name === 'ios' && env.devicespecs.isMobile && isSideBySide) {
+        diff = 25;
+      }
+      sizeableTabs[i].style.width = `${visibleTabSize - diff}px`;
+      a[0].style.width = `${visibleTabSize - diff}px`;
     }
 
     this.adjustSpilloverNumber();
