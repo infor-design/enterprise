@@ -60,8 +60,8 @@ select.dropdown-xs {
   .icon-alert,
   .icon-info,
   .icon-pending {
-    right: 25px;
-    top: 1px;
+    right: 20px;
+    top: -5px;
   }
 
   .badge {
@@ -631,6 +631,7 @@ input.dropdown.error:focus {
     ~ .icon-error {
       margin-left: -38px;
       right: auto;
+      top: 0;
     }
 
   }

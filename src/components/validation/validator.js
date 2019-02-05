@@ -1015,7 +1015,7 @@ Validator.prototype = {
     }
 
     // Remove tooltip style message and tooltip
-    if (loc.attr(`data-${rule.type}-type`) === 'tooltip') {
+    if (field.attr(`data-${rule.type}-type`) === 'tooltip') {
       const errorIcon = field.closest('.field, .field-short').find('.icon-error');
       const tooltipAPI = errorIcon.data('tooltip');
       // Destroy tooltip
