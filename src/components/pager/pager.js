@@ -569,7 +569,7 @@ Pager.prototype = {
     if (state.filteredPages) {
       totalPages = state.filteredPages;
     }
-    if (pageNum > totalPages) {
+    if (!this.settings.indeterminate && pageNum > totalPages) {
       pageNum = totalPages;
     }
 
@@ -660,6 +660,9 @@ Pager.prototype = {
     let disableNextButton = !this.settings.enableNextButton;
     let disableLastButton = !this.settings.enableLastButton;
 
+    const disableFirstIndeterminate = this.settings.indeterminate && this.firstPage === true;
+    const disableLastIndeterminate = this.settings.indeterminate && this.lastPage === true;
+
     // If this is a filtered dataset, use the `filteredTotal` instead
     if (this.state.filteredPages) {
       activePage = this.state.filteredActivePage;
@@ -669,28 +672,28 @@ Pager.prototype = {
     // Determine whether or not special navigation buttons should eventually be rendered
     // First Button
     if (this.settings.showFirstButton && canHaveFirstLastButtons) {
-      if (this.settings.type !== 'standalone' && activePage === 1) {
+      if (disableFirstIndeterminate || (!this.settings.indeterminate && this.settings.type !== 'standalone' && activePage === 1)) {
         disableFirstButton = true;
       }
       doRenderFirstButton = true;
     }
     // Previous Button
     if (this.settings.showPreviousButton) {
-      if (this.settings.type !== 'standalone' && activePage === 1) {
+      if (disableFirstIndeterminate || (!this.settings.indeterminate && this.settings.type !== 'standalone' && activePage === 1)) {
         disablePreviousButton = true;
       }
       doRenderPreviousButton = true;
     }
     // Next Button
     if (this.settings.showNextButton) {
-      if (this.settings.type !== 'standalone' && activePage === totalPages) {
+      if (disableLastIndeterminate || (!this.settings.indeterminate && this.settings.type !== 'standalone' && activePage === totalPages)) {
         disableNextButton = true;
       }
       doRenderNextButton = true;
     }
     // Last Button
     if (this.settings.showLastButton && canHaveFirstLastButtons) {
-      if (this.settings.type !== 'standalone' && activePage === totalPages) {
+      if (disableLastIndeterminate || (!this.settings.indeterminate && this.settings.type !== 'standalone' && activePage === totalPages)) {
         disableLastButton = true;
       }
       doRenderLastButton = true;
@@ -723,23 +726,25 @@ Pager.prototype = {
     // Figure out the distance on either side of the median value of the number button array.
     // If either index goes out of page boundaries, shift the array to fit the same
     // number of pages by adding to the opposite side.
-    const maxDistanceFromCenter = Math.floor(maxNumberButtons / 2);
-    let startIndex = activePage - maxDistanceFromCenter;
-    let endIndex = activePage + maxDistanceFromCenter;
-    while (startIndex < 1) {
-      ++startIndex;
-      if (endIndex < totalPages) {
-        ++endIndex;
+    if (!this.settings.indeterminate) {
+      const maxDistanceFromCenter = Math.floor(maxNumberButtons / 2);
+      let startIndex = activePage - maxDistanceFromCenter;
+      let endIndex = activePage + maxDistanceFromCenter;
+      while (startIndex < 1) {
+        ++startIndex;
+        if (endIndex < totalPages) {
+          ++endIndex;
+        }
       }
-    }
-    while (endIndex > totalPages) {
-      if (startIndex > 1) {
-        --startIndex;
+      while (endIndex > totalPages) {
+        if (startIndex > 1) {
+          --startIndex;
+        }
+        --endIndex;
       }
-      --endIndex;
-    }
-    for (let i = startIndex; i < (endIndex + 1); i++) {
-      buttonsToRender.push(i);
+      for (let i = startIndex; i < (endIndex + 1); i++) {
+        buttonsToRender.push(i);
+      }
     }
 
     function renderButton(visibleContent = '', audibleContent = '', tooltipContent, targetPageNum, classAttr = '', selected = false, disabled = false, hidden = false) {
@@ -1222,11 +1227,15 @@ Pager.prototype = {
 
     // Explicitly setting `firstPage` or `lastPage` to true/false will cause pager buttons
     // to be forced enabled/disabled
+    delete this.firstPage;
+    delete this.lastPage;
     if (pagingInfo.firstPage !== undefined) {
+      this.firstPage = pagingInfo.firstPage;
       this.settings.enableFirstButton = !pagingInfo.firstPage;
       this.settings.enablePreviousButton = !pagingInfo.firstPage;
     }
     if (pagingInfo.lastPage !== undefined) {
+      this.lastPage = pagingInfo.lastPage;
       this.settings.enableNextButton = !pagingInfo.lastPage;
       this.settings.enableLastButton = !pagingInfo.lastPage;
     }
@@ -1326,6 +1335,9 @@ Pager.prototype = {
     }
 
     this.pagerBar[0].innerHTML = '';
+
+    delete this.firstPage;
+    delete this.lastPage;
   },
 
   /**

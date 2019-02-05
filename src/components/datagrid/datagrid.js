@@ -593,6 +593,11 @@ Datagrid.prototype = {
         pagingInfo.trigger = op;
       }
     }
+    if (callback && typeof callback !== 'function') {
+      if (typeof callback.type === 'string') {
+        pagingInfo.type = callback.type;
+      }
+    }
 
     /**
     * Fires just before changing page. Returning false from the request function will cancel paging.
@@ -622,8 +627,11 @@ Datagrid.prototype = {
       self.loadData(data, updatedPagingInfo, true);
 
       // Need to update the total amount of records available in the backend somehow.
-      if (self.pagerAPI && updatedPagingInfo.type === 'initial') {
-        self.pagerAPI.updatePagingInfo(updatedPagingInfo);
+      if (self.pagerAPI) {
+        const isIndeterminate = updatedPagingInfo.indeterminate;
+        if (updatedPagingInfo.type === 'initial' || isIndeterminate) {
+          self.pagerAPI.updatePagingInfo(updatedPagingInfo, isIndeterminate);
+        }
       }
 
       if (callback && typeof callback === 'function') {
