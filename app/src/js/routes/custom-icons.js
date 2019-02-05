@@ -44,7 +44,6 @@ const template = handlebars.compile(hbsTemplate);
  * @param {String} url - The route request
  */
 module.exports = url => {
-  console.log(url);
   const fileName = path.basename(url, '.html');
   const iconSet  = pageMap[fileName];
   const meta = JSON.parse(fs.readFileSync(`node_modules/ids-identity/dist/theme-soho/icons/${iconSet}/metadata.json`, 'utf-8').toString());
