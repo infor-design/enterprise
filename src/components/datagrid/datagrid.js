@@ -3483,7 +3483,7 @@ Datagrid.prototype = {
       for (let i = 0, l = rowData.children.length; i < l; i++) {
         const lineage = actualIndexLineage ? `${actualIndexLineage}.${actualIndex}` : `${actualIndex}`;
         this.recordCount++;
-        containerHtml.center += self.rowHtml(
+        const childRowHtml = self.rowHtml(
           rowData.children[i],
           this.recordCount,
           i,
@@ -3491,6 +3491,10 @@ Datagrid.prototype = {
           false,
           lineage
         );
+
+        containerHtml.center += childRowHtml.center;
+        containerHtml.left += childRowHtml.center;
+        containerHtml.right += childRowHtml.right;
       }
     }
 
@@ -4933,11 +4937,11 @@ Datagrid.prototype = {
    */
   rowNode(row) {
     if (row instanceof jQuery) {
-      row = row.index();
+      row = row.attr('aria-rowindex') - 1;
     }
-    const leftNodes = this.tableBodyLeft ? this.tableBodyLeft.find('tr').eq(row) : $();
-    const centerNodes = this.tableBody.find('tr').eq(row);
-    const rightNodes = this.tableBodyRight ? this.tableBodyRight.find('tr').eq(row) : $();
+    const leftNodes = this.tableBodyLeft ? this.tableBodyLeft.find(`tr[aria-rowindex="${row + 1}"]`) : $();
+    const centerNodes = this.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
+    const rightNodes = this.tableBodyRight ? this.tableBodyRight.find(`tr[aria-rowindex="${row + 1}"]`) : $();
 
     return $(centerNodes)
       .add(leftNodes)
@@ -5360,7 +5364,7 @@ Datagrid.prototype = {
 
     // Handle Clicking Header Checkbox
     this
-      .headerRow
+      .headerContainer
       .off('click.datagrid')
       .on('click.datagrid', 'th .datagrid-checkbox', function () {
         const checkbox = $(this);
@@ -5930,6 +5934,7 @@ Datagrid.prototype = {
 
   /**
    * Select a row node on the UI
+   * @private
    * @param {object} elem The row node to select
    * @param {number} index The row index to select
    * @param {object} data The object attached to the row
@@ -5939,14 +5944,23 @@ Datagrid.prototype = {
   selectNode(elem, index, data, force) {
     let checkbox = null;
     const self = this;
+    const selectClasses = `is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`;
 
     // do not add if already exists in selected
     if ((!data || self.isRowSelected(data)) && !force) {
       return;
     }
-    checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
-    elem.addClass(`is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`).attr('aria-selected', 'true')
+    checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
+    elem.addClass(selectClasses).attr('aria-selected', 'true')
       .find('td').attr('aria-selected', 'true');
+
+    if (this.hasLeftPane) {
+      this.tableBodyLeft.find('tr').eq(index).addClass(selectClasses);
+    }
+
+    if (this.hasRightPane) {
+      this.tableBodyRight.find('tr').eq(index).addClass(selectClasses);
+    }
 
     if (checkbox.length > 0) {
       checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
@@ -5975,7 +5989,7 @@ Datagrid.prototype = {
       return;
     }
 
-    rowNode = this.actualRowNode(idx);
+    rowNode = this.rowNode(idx);
     dataRowIndex = this.dataRowIndex(rowNode);
 
     if (isNaN(dataRowIndex)) {
@@ -6514,11 +6528,20 @@ Datagrid.prototype = {
           }
         }
       };
+      const selectClasses = 'is-selected hide-selected-color';
       checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
-      elem.removeClass('is-selected hide-selected-color').removeAttr('aria-selected')
+      elem.removeClass(selectClasses).removeAttr('aria-selected')
         .find('td').removeAttr('aria-selected');
       checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
         .removeClass('is-checked no-animate').attr('aria-checked', 'false');
+
+      if (self.hasLeftPane) {
+        self.tableBodyLeft.find('tr').eq(index).removeClass(selectClasses);
+      }
+
+      if (self.hasRightPane) {
+        self.tableBodyRight.find('tr').eq(index).removeClass(selectClasses);
+      }
 
       if (s.treeGrid) {
         for (let i = 0; i < s.treeDepth.length; i++) {

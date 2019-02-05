@@ -50,7 +50,7 @@ describe('Datagrid ARIA', () => {
     rowEl.parentNode.removeChild(rowEl);
   });
 
-  fit('Should set ARIA attributes', () => {
+  it('Should set ARIA attributes', () => {
     expect(document.querySelector('.sort-asc svg[aria-hidden="true"]')).toBeTruthy();
     expect(document.querySelector('.sort-desc svg[aria-hidden="true"]')).toBeTruthy();
     expect(document.querySelector('.icon-empty-state[aria-hidden="true"]')).toBeTruthy();

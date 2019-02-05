@@ -260,7 +260,7 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
 
-  it('Should retain sort indicator', async () => {
+  fit('Should retain sort indicator', async () => {
     await element(by.css('#datagrid thead th:nth-child(2) .datagrid-header-text')).click();
 
     expect(await element(by.css('#datagrid thead th:nth-child(2)')).getText()).toEqual('Product Id');
