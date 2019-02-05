@@ -437,7 +437,6 @@ describe('Datepicker disabled date tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(elem), config.waitsFor);
 
-    expect(await element(by.css('.error-message')).isPresent()).toBe(true);
     expect(await element(by.css('.error-message')).getText()).toEqual('Unavailable Date');
   });
 });
@@ -627,7 +626,7 @@ describe('Datepicker Month Year Picker Tests', () => {
 
   it('Should be able to function as month/year picker', async () => {
     const datepickerEl = await element(by.id('month-year'));
-    await datepickerEl.sendKeys('10/2018');
+    await datepickerEl.sendKeys('01/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     let dropdownEl = await element(by.css('#year-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
@@ -640,7 +639,7 @@ describe('Datepicker Month Year Picker Tests', () => {
     const buttonEl = await element(by.css('.select-month.btn-tertiary'));
     await buttonEl.click();
 
-    expect(await element(by.id('month-year')).getAttribute('value')).toEqual('10/2020');
+    expect(await element(by.id('month-year')).getAttribute('value')).toEqual('01/2020');
   });
 
   it('Should be able to function as month/year picker long', async () => {

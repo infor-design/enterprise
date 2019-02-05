@@ -79,6 +79,20 @@ describe('Validation multiple error tests', () => {
 
     expect(list.count()).toBe(3);
   });
+
+  it('Should be able to call removeError after addError', async () => {
+    await browser.executeScript('$("select.dropdown").removeError().addError({ message: "Dropdown error.", inline: false })');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.icon-error'))), config.waitsFor);
+
+    expect(await element(by.css('.icon-error'))).toBeTruthy();
+
+    await browser.executeScript('$("select.dropdown").removeError()');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.stalenessOf(await element(by.css('.icon-error'))), config.waitsFor);
+
+    expect(await element(by.css('.icon-error'))).toBeTruthy();
+  });
 });
 
 describe('Validation submit error tests', () => {
