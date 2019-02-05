@@ -1595,7 +1595,7 @@ Editor.prototype = {
     // Remove empty tags
     s = s.replace(/<[^/>]+>[\s]*<\/[^>]+>/gi, '');
 
-    if (s.includes('·')) {
+    if (s.indexOf('·') > -1) {
       // Replace span and paragraph tags from bulleted list pasting
       s = s.replace(/<\/p>/gi, '</li>');
       s = s.replace(/<p><span><span>·<\/span><\/span>/gi, '<li>');
