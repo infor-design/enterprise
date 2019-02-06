@@ -14,7 +14,7 @@ const settings = {
     subtitle: 'Infor, Developer',
     id: 1
   }, {
-    image: 'https://randomuser.me/api/portraits/med/women/9.jpg',
+    image: 'http://localhost:4000/images/9.jpg',
     title: 'Jane Taylor',
     subtitle: 'Infor, Developer',
     id: 2
