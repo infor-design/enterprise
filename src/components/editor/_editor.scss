@@ -338,7 +338,7 @@
     }
 
     .html-icon {
-      margin-left: -32px;
+      margin-left: -18px;
       width: 85px;
     }
 
@@ -374,11 +374,6 @@
 
     &[data-element='strike'] {
       margin-right: 8px;
-
-      svg {
-        height: 22px;
-        width: 15px;
-      }
     }
 
     &[data-element='foreColor'] {
