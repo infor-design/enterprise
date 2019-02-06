@@ -1,7 +1,7 @@
 [
   {
     "id": 3,
-    "photo": "https://randomuser.me/api/portraits/med/men/11.jpg",
+    "photo": "http://localhost:4000/images/11.jpg",
     "firstName": "Andy",
     "lastName": "Gabbett",
     "title": "Senior Manager",
@@ -41,7 +41,7 @@
   },
   {
     "id": 10,
-    "photo": "https://randomuser.me/api/portraits/med/men/12.jpg",
+    "photo": "http://localhost:4000/images/12.jpg",
     "firstName": "Nickolai",
     "lastName": "Yellowlees",
     "title": "Temp",
