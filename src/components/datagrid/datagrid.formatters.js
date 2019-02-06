@@ -63,7 +63,7 @@ const formatters = {
     if (typeof value === 'string' && value) {
       // Means no date in some applications
       if (value === '0000' || value === '000000' || value === '00000000') {
-        return '';
+        return `<span class="trigger"></span>${$.createIcon({ icon: 'calendar', classes: ['icon-calendar'] })}`;
       }
 
       if (col.sourceFormat) {
