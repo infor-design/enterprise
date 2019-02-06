@@ -150,8 +150,8 @@ describe('Dropdown updates, events', () => {
 
         expect(spyEvent).toHaveBeenTriggered();
         done();
-      }, 100);
-    }, 100);
+      }, 300);
+    }, 300);
   });
 
   it('should trigger change event on duplicate label', () => {
