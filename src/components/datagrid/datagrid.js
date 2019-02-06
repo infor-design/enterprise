@@ -1725,7 +1725,7 @@ Datagrid.prototype = {
               isMatch = false;
 
               for (let k = 0; k < conditions[i].value.length; k++) {
-                const match = conditions[i].value[k].toLowerCase().indexOf(rowValue) >= 0 && (rowValue.toString() !== '' || conditions[i].value[k] === '');
+                const match = conditions[i].value[k].toLowerCase() === rowValue && (rowValue.toString() !== '' || conditions[i].value[k] === '');
                 if (match) {
                   isMatch = true;
                 }
