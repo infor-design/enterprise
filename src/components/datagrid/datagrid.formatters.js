@@ -72,7 +72,7 @@ const formatters = {
       } else {
         formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat));
 
-        if ((formatted === 'NaN/NaN/NaN' || !formatted) && formatted !== '') { // show invalid dates not NA/NA/NA
+        if ((formatted === 'NaN/NaN/NaN' || !formatted) && formatted !== '') { // show invalid dates not NaN/NaN/NaN
           formatted = value;
         }
       }
