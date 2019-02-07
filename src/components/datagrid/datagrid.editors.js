@@ -486,7 +486,7 @@ const editors = {
     };
 
     this.val = function (v) {
-      if (v === '0000' ||v === '000000' || v === '00000000') {
+      if (v === '0000' || v === '000000' || v === '00000000') {
         // Means no date in some applications
         v = '';
       }
