@@ -1,6 +1,6 @@
 module.exports = (req, res, next) => {
-  const menPath = 'https://randomuser.me/api/portraits/med/men/';
-  const womenPath = 'https://randomuser.me/api/portraits/med/women/';
+  const menPath = 'http://localhost:4000/images/';
+  const womenPath = 'http://localhost:4000/images/';
   const orgdata = [{
     id: '1',
     Name: 'Jonathan Cargill',

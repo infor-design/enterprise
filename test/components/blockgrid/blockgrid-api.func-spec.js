@@ -9,12 +9,12 @@ let blockgridObj;
 
 const settings = {
   dataset: [{
-    image: 'https://randomuser.me/api/portraits/med/men/8.jpg',
+    image: 'http://localhost:4000/images/8.jpg',
     title: 'Neyo Taylor',
     subtitle: 'Infor, Developer',
     id: 1
   }, {
-    image: 'https://randomuser.me/api/portraits/med/women/9.jpg',
+    image: 'http://localhost:4000/images/9.jpg',
     title: 'Jane Taylor',
     subtitle: 'Infor, Developer',
     id: 2
