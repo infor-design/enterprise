@@ -48,3 +48,10 @@ jobs:
           skip_cleanup: true
           on:
             condition: $TRAVIS_EVENT_TYPE = cron
+
+# Specify stage(s) order and conditionals per stage
+stages:
+  - name: deploy
+    # do not run the deploy stage for Pull Request checks
+    # and require the branch name to be master (note for PRs this is the base branch name)
+    if: NOT type IN (pull_request) AND branch = master
