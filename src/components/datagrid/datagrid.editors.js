@@ -486,7 +486,10 @@ const editors = {
     };
 
     this.val = function (v) {
-      v = Locale.parseDate(v);
+      if (v === '0000' ||v === '000000' || v === '00000000') {
+        // Means no date in some applications
+        v = '';
+      }
       if (v) {
         // Note that the value should be formatted from the formatter.
         this.input.val(v);
