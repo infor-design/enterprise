@@ -30,20 +30,24 @@
 
   // Rating Icons - Svg
   svg.icon {
-    color: transparent;
+    // color: $rating-bg-color;
     display: inline-block;
     height: 22px;
     position: relative;
-    stroke: $rating-border-color;
-    stroke-width: 1px;
     width: 22px;
   }
 
-  .rating .inline input:focus + svg.icon,
-  input:focus + label > svg.icon {
-    stroke: $rating-hover-color !important;
+  input:focus + label {
+    box-shadow: $focus-box-shadow;
+    outline: $input-color-focus-border;
   }
 
+  &:not(.is-readonly) {
+    .inline input:active + svg.icon,
+    input:active + label > svg.icon {
+      color: $rating-hover-color;
+    }
+  }
 }
 
 .rating-text {
@@ -57,7 +61,7 @@
 
 .rating:not(.is-readonly) .inline input:hover + svg.icon,
 .rating:not(.is-readonly) input:hover + label > svg.icon {
-  stroke: $rating-hover-color;
+  color: $rating-hover-color;
 }
 
 .rating .inline .is-filled + svg.icon,
@@ -65,7 +69,6 @@
   @include opacity(1);
 
   color: $rating-bg-color;
-  stroke: $rating-bg-color;
 }
 
 .rating .inline input:checked + svg.icon,
@@ -75,10 +78,4 @@
   @include opacity(1);
 
   color: $rating-bg-color;
-  stroke: transparent;
-}
-
-.rating:not(.is-readonly) .inline input:active + svg.icon,
-.rating:not(.is-readonly) input:active + label > svg.icon {
-  stroke: $rating-hover-color;
 }
