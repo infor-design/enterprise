@@ -71,7 +71,7 @@ const createDirs = require('./build/create-dirs');
 const getFileContents = require('./build/get-file-contents');
 const runBuildProcess = require('./build/run-build-process');
 const writeFile = require('./build/write-file');
-const createHtmlIcons = require('./build/create-html-icons');
+const createSvgHtml = require('./build/create-svg-html');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
@@ -897,23 +897,7 @@ function runBuildProcesses(requested) {
     buildPromises.push(runBuildProcess(`node ${path.join('.', 'scripts', 'build-sass.js')} --type=${targetSassConfig}`));
   }
 
-  buildPromises.push(createHtmlIcons([
-    {
-      src: `${NM_DIR}/ids-identity/dist/theme-soho/icons/standard/svg/*.svg`,
-      dest: `${SRC_DIR}/components/icons/svg.html`,
-      class: 'svg-icons'
-    },
-    {
-      src: `${NM_DIR}/ids-identity/dist/theme-soho/icons/extended/svg/*.svg`,
-      dest: `${SRC_DIR}/components/icons/svg-extended.html`,
-      class: 'svg-icons-extended'
-    },
-    {
-      src: `${NM_DIR}/ids-identity/dist/theme-soho/icons/empty/svg/*.svg`,
-      dest: `${SRC_DIR}/components/emptymessage/svg-empty.html`,
-      class: 'svg-icons-empty'
-    }
-  ], commandLineArgs.verbose));
+  buildPromises.push(createSvgHtml(commandLineArgs.verbose));
 
   return Promise.all(buildPromises);
 }
