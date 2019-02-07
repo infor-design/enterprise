@@ -888,6 +888,5 @@ describe('Locale API', () => {
     expect(Locale.formatDate('0000')).toEqual('');
     expect(Locale.formatDate('000000')).toEqual('');
     expect(Locale.formatDate('00000000')).toEqual('');
-
   });
 });
