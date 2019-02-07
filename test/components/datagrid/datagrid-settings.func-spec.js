@@ -43,6 +43,7 @@ describe('Datagrid Settings', () => {
       actionableMode: false,
       cellNavigation: true,
       rowNavigation: true,
+      showHoverState: true,
       alternateRowShading: false,
       columns,
       frozenColumns: {

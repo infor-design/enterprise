@@ -827,6 +827,7 @@ $datagrid-short-row-height: 23px;
       &.datagrid-rowgroup-header {
         .datagrid-expand-btn {
           left: -10px;
+          top: 2px;
 
           .icon.plus-minus::before,
           .icon.plus-minus::after {
@@ -854,18 +855,18 @@ $datagrid-short-row-height: 23px;
         }
 
         .datagrid-expand-btn {
-          height: 24px;
-          line-height: 24px;
+          height: 22px;
+          line-height: 22px;
           margin-top: -6px;
-          min-height: 24px;
-          min-width: 24px;
+          min-height: 22px;
+          min-width: 22px;
           vertical-align: middle;
-          width: 24px;
+          width: 22px;
 
           .icon {
+            left: -4px;
             position: relative;
-            right: 4px;
-            top: -5px;
+            top: -9px;
           }
         }
 
@@ -1240,13 +1241,12 @@ $datagrid-short-row-height: 23px;
     }
 
     // Hover States
-    &:not(.error):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
+    &.is-hover-row:not(.error):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
         background-color: $datagrid-row-hover-color;
       }
-
     }
 
     &.is-selected:not(.hide-selected-color) td:not(.is-editing),
@@ -2742,22 +2742,22 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  height: 32px;
+  height: 30px;
   left: -10px;
   margin-top: -4px;
-  min-height: 32px;
-  min-width: 32px;
+  min-height: 30px;
+  min-width: 30px;
   vertical-align: middle;
-  width: 32px;
+  width: 30px;
 
   span:not(.icon) {
     color: transparent;
   }
 
   .plus-minus {
-    left: -8px;
+    left: -6px;
     position: relative;
-    top: -4px;
+    top: -5px;
   }
 
   + span {

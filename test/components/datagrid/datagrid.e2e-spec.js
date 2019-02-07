@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Datagrid Alternate Row Tests', () => {
+describe('Datagrid Alternate Row Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-alternate-row-shading?layout=nofrills');
 
@@ -24,7 +24,7 @@ describe('Datagrid Alternate Row Tests', () => {
   });
 });
 
-describe('Datagrid Colspan Tests', () => {
+describe('Datagrid Colspan Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-colspan?layout=nofrills');
 
@@ -50,7 +50,7 @@ describe('Datagrid Colspan Tests', () => {
   }
 });
 
-describe('Datagrid Comments Tests', () => {
+describe('Datagrid Comments Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-comments?layout=nofrills');
 
@@ -76,7 +76,7 @@ describe('Datagrid Comments Tests', () => {
   }
 });
 
-describe('Datagrid Custom Filter Option Tests', () => {
+describe('Datagrid Custom Filter Option Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-custom-filter-conditions?layout=nofrills');
 
@@ -103,7 +103,7 @@ describe('Datagrid Custom Filter Option Tests', () => {
   });
 });
 
-describe('Datagrid index tests', () => {
+describe('Datagrid index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-index?layout=nofrills');
 
@@ -159,7 +159,7 @@ describe('Datagrid index tests', () => {
   }
 });
 
-describe('Datagrid grouping with paging tests', () => {
+describe('Datagrid grouping with paging tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-grouping-paging');
 
@@ -220,7 +220,7 @@ describe('Datagrid grouping with paging tests', () => {
   });
 });
 
-describe('Datagrid mixed selection tests', () => {
+describe('Datagrid mixed selection tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-mixed-selection');
 
@@ -251,95 +251,7 @@ describe('Datagrid mixed selection tests', () => {
   });
 });
 
-describe('Datagrid Client Side Filter and Sort Tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-disable-client-filter-and-sort');
-
-    const datagridEl = await element(by.id('datagrid'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-  });
-
-  fit('Should retain sort indicator', async () => {
-    await element(by.css('#datagrid thead th:nth-child(2) .datagrid-header-text')).click();
-
-    expect(await element(by.css('#datagrid thead th:nth-child(2)')).getText()).toEqual('Product Id');
-    await browser.driver.sleep(300);
-
-    expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
-  });
-
-  it('Should retain filter criteria', async () => {
-    await element(by.css('#datagrid thead th:nth-child(2) input')).sendKeys('22');
-
-    expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
-    await browser.driver.sleep(500);
-
-    expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
-  });
-
-  it('Should retain both filter and sort criteria', async () => {
-    await element(by.css('#datagrid thead th:nth-child(2) .datagrid-header-text')).click();
-    await browser.driver.sleep(300);
-    await element(by.css('#datagrid thead th:nth-child(2) input')).sendKeys('22');
-    await browser.driver.sleep(500);
-
-    expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
-    expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
-  });
-});
-
-describe('Datagrid Lookup Editor', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-editable-lookup-mask');
-
-    const datagridEl = await element(by.id('datagrid'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-  });
-
-  it('should be usable with a Mask', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(3) td:nth-child(2)')).click();
-
-    const editCellSelector = '.has-editor.is-editing input';
-    const inputEl = await element(by.css(editCellSelector));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
-    await element(by.css(editCellSelector)).sendKeys('aaa');
-
-    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('');
-
-    await element(by.css(editCellSelector)).sendKeys('12345678');
-
-    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('1234567');
-  });
-});
-
-describe('Datagrid editor dropdown source tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-editor-dropdown-source');
-
-    const datagridEl = await element(by.id('datagrid'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-  });
-
-  it('Should datagrid exists', async () => {
-    expect(await element(by.css('.datagrid-container'))).toBeTruthy();
-  });
-
-  it('Should highlight the selected value', async () => {
-    const triggerEl = await element.all(await by.css('.datagrid-row')).first();
-    const testEl = await triggerEl.all(by.tagName('td')).get(4);
-    await testEl.click();
-
-    expect(await element(by.css('.is-focused'))).toBeTruthy();
-    const focusEl = await element(await by.css('.is-focused'));
-
-    expect(await focusEl.getText()).toEqual('Place On-Hold');
-  });
-});
-
-describe('Datagrid multiselect tests', () => {
+describe('Datagrid multiselect tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-multiselect');
 
@@ -398,7 +310,7 @@ describe('Datagrid multiselect tests', () => {
   });
 });
 
-describe('Datagrid paging (client side) tests', () => {
+describe('Datagrid paging tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging');
 
@@ -411,7 +323,7 @@ describe('Datagrid paging (client side) tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to move to last', async () => {
+  fit('Should be able to move to last', async () => { //eslint-disable-line
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
@@ -422,7 +334,7 @@ describe('Datagrid paging (client side) tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('999');
   });
 
-  it('Should be able to move to first', async () => {
+  fit('Should be able to move to first', async () => { //eslint-disable-line
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
@@ -435,7 +347,7 @@ describe('Datagrid paging (client side) tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
   });
 
-  it('Should be able to move to next/prev', async () => {
+  fit('Should be able to move to next/prev', async () => { //eslint-disable-line
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
@@ -452,7 +364,7 @@ describe('Datagrid paging (client side) tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
   });
 
-  it('Should be able to move to specific page', async () => {
+  fit('Should be able to move to specific page', async () => { //eslint-disable-line
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
@@ -465,7 +377,7 @@ describe('Datagrid paging (client side) tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
   });
 
-  it('Should not move on a page thats more than the max', async () => {
+  fit('Should not move on a page thats more than the max', async () => { //eslint-disable-line
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
@@ -478,7 +390,7 @@ describe('Datagrid paging (client side) tests', () => {
   });
 });
 
-describe('Datagrid page size selector tests', () => {
+describe('Datagrid page size selector tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging-page-size-selector');
 
@@ -502,7 +414,7 @@ describe('Datagrid page size selector tests', () => {
   });
 });
 
-describe('Datagrid single select tests', () => {
+describe('Datagrid single select tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-singleselect');
 
@@ -553,7 +465,115 @@ describe('Datagrid single select tests', () => {
   });
 });
 
-describe('Datagrid contextmenu tests', () => {
+describe('Datagrid Client Side Filter and Sort Tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-disable-client-filter-and-sort');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should retain sort indicator', async () => {
+    await element(by.css('#datagrid thead th:nth-child(2) .datagrid-header-text')).click();
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2)')).getText()).toEqual('Product Id');
+    await browser.driver.sleep(300);
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
+  });
+
+  it('Should retain filter criteria', async () => {
+    await element(by.css('#datagrid thead th:nth-child(2) input')).sendKeys('22');
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
+    await browser.driver.sleep(500);
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
+  });
+
+  it('Should retain both filter and sort criteria', async () => {
+    await element(by.css('#datagrid thead th:nth-child(2) .datagrid-header-text')).click();
+    await browser.driver.sleep(300);
+    await element(by.css('#datagrid thead th:nth-child(2) input')).sendKeys('22');
+    await browser.driver.sleep(500);
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
+    expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
+  });
+});
+
+describe('Datagrid Lookup Editor', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-editable-lookup-mask');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('should be usable with a Mask', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(3) td:nth-child(2)')).click();
+
+    const editCellSelector = '.has-editor.is-editing input';
+    const inputEl = await element(by.css(editCellSelector));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+    await element(by.css(editCellSelector)).sendKeys('aaa');
+
+    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('');
+
+    await element(by.css(editCellSelector)).sendKeys('12345678');
+
+    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('1234567');
+  });
+});
+
+describe('Datagrid editor dropdown source tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-editor-dropdown-source');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should datagrid exists', async () => {
+    expect(await element(by.css('.datagrid-container'))).toBeTruthy();
+  });
+
+  it('Should highlight the selected value', async () => {
+    const triggerEl = await element.all(await by.css('.datagrid-row')).first();
+    const testEl = await triggerEl.all(by.tagName('td')).get(4);
+    await testEl.click();
+
+    expect(await element(by.css('.is-focused'))).toBeTruthy();
+    const focusEl = await element(await by.css('.is-focused'));
+
+    expect(await focusEl.getText()).toEqual('Place On-Hold');
+  });
+});
+
+describe('Datagrid Empty Message Tests After Load', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-empty-message-after-load');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not show empty indicator initially', async () => {
+    expect(await element.all(by.css('.empty-message')).count()).toEqual(0);
+  });
+
+  it('Should show empty indicator on load', async () => {
+    await element(await by.id('show-empty-message')).click();
+
+    expect(await element.all(by.css('.empty-message')).count()).toEqual(1);
+  });
+});
+
+describe('Datagrid contextmenu tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-contextmenu');
 
@@ -596,7 +616,7 @@ describe('Datagrid contextmenu tests', () => {
   }
 });
 
-describe('Datagrid filter single select tests', () => {
+describe('Datagrid filter single select tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-singleselect');
 
@@ -630,7 +650,7 @@ describe('Datagrid filter single select tests', () => {
   });
 });
 
-describe('Datagrid filter lookup tests', () => {
+describe('Datagrid filter lookup tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-filter');
 
@@ -673,7 +693,7 @@ describe('Datagrid filter lookup tests', () => {
   });
 });
 
-describe('Datagrid filter lookup custom click function tests', () => {
+describe('Datagrid filter lookup custom click function tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-lookup-click-function');
 
@@ -696,7 +716,7 @@ describe('Datagrid filter lookup custom click function tests', () => {
   });
 });
 
-describe('Datagrid grouping multiselect tests', () => {
+describe('Datagrid grouping multiselect tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-grouping-multiselect');
 
@@ -709,25 +729,33 @@ describe('Datagrid grouping multiselect tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to select within groups', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+  fit('Should be able to select within groups', async () => { //eslint-disable-line
+    await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tr:nth-child(2) td:nth-child(1)')).click();
 
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(3)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tbody tr:nth-child(2)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tbody tr:nth-child(3)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) tbody tr:nth-child(2)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) tbody tr:nth-child(3)')).getAttribute('class')).not.toMatch('is-selected');
 
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(7) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tr:nth-child(7) td:nth-child(1)')).click();
 
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(7)')).getAttribute('class')).toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(8)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tbody tr:nth-child(7)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tbody tr:nth-child(8)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) tbody tr:nth-child(7)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) tbody tr:nth-child(8)')).getAttribute('class')).not.toMatch('is-selected');
 
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(11) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tr:nth-child(11) td:nth-child(1)')).click();
 
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(11)')).getAttribute('class')).toMatch('is-selected');
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(3);
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tr:nth-child(11)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) tr:nth-child(11)')).getAttribute('class')).toMatch('is-selected');
+
+    // Expect it marked as selected on both sides (frozenColumns)
+    expect(await element.all(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) .datagrid-row.is-selected')).count()).toEqual(3);
+    expect(await element.all(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) .datagrid-row.is-selected')).count()).toEqual(3);
   });
 });
 
-describe('Datagrid hide selection checkbox tests', () => {
+describe('Datagrid hide selection checkbox tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-hide-selection-checkbox');
 
@@ -745,7 +773,7 @@ describe('Datagrid hide selection checkbox tests', () => {
   });
 });
 
-describe('Datagrid loaddata selected rows tests', () => {
+describe('Datagrid loaddata selected rows tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-loaddata-selected-rows');
 
@@ -779,7 +807,7 @@ describe('Datagrid loaddata selected rows tests', () => {
   });
 });
 
-describe('Datagrid disableRowDeactivation setting tests', () => {
+describe('Datagrid disableRowDeactivation setting tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-mixed-selection-disable-row-dectivation');
 
@@ -803,7 +831,7 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
   });
 });
 
-describe('Datagrid multiselect with no selection checkbox', () => {
+describe('Datagrid multiselect with no selection checkbox', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-multiselect-no-checkboxes');
 
@@ -825,7 +853,7 @@ describe('Datagrid multiselect with no selection checkbox', () => {
   });
 });
 
-describe('Datagrid paging multiselect across pages', () => {
+describe('Datagrid paging multiselect across pages', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-multiselect-select-across-page');
 
@@ -859,7 +887,7 @@ describe('Datagrid paging multiselect across pages', () => {
   });
 });
 
-describe('Datagrid paging multiselect tests', () => {
+describe('Datagrid paging multiselect tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-multiselect');
 
@@ -892,7 +920,7 @@ describe('Datagrid paging multiselect tests', () => {
   });
 });
 
-describe('Datagrid paging client side multiselect tests', () => {
+describe('Datagrid paging client side multiselect tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-multiple');
 
@@ -925,7 +953,7 @@ describe('Datagrid paging client side multiselect tests', () => {
   });
 });
 
-describe('Datagrid paging clientside single select tests', () => {
+describe('Datagrid paging clientside single select tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-single');
 
@@ -958,7 +986,7 @@ describe('Datagrid paging clientside single select tests', () => {
   });
 });
 
-describe('Datagrid paging indeterminate multiple select tests', () => {
+describe('Datagrid paging indeterminate multiple select tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-multiple');
 
@@ -991,7 +1019,7 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
   });
 });
 
-describe('Datagrid paging indeterminate single select tests', () => {
+describe('Datagrid paging indeterminate single select tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single');
 
@@ -1026,7 +1054,7 @@ describe('Datagrid paging indeterminate single select tests', () => {
   });
 });
 
-describe('Datagrid paging serverside multi select tests', () => {
+describe('Datagrid paging serverside multi select tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-serverside-multiple');
 
@@ -1057,7 +1085,7 @@ describe('Datagrid paging serverside multi select tests', () => {
   });
 });
 
-describe('Datagrid paging serverside multi select tests 2nd page', () => {
+describe('Datagrid paging serverside multi select tests 2nd page', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging');
 
@@ -1070,7 +1098,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to select and have selections clear when paging on 2nd page', async () => {
+  fit('Should be able to select and have selections clear when paging on 2nd page', async () => { //eslint-disable-line
     await element(await by.css('.pager-next a')).click();
     await browser.driver.sleep(config.sleep);
 
@@ -1095,7 +1123,25 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
   });
 });
 
-describe('Datagrid paging serverside single select tests', () => {
+describe('Datagrid Paging with Summary Row test', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging-with-summary-row');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  fit('Should display summary row', async () => { //eslint-disable-line
+    expect(await element.all(by.css('tr.datagrid-summary-row')).count()).toEqual(1);
+  });
+});
+
+describe('Datagrid paging serverside single select tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-serverside-single');
 
@@ -1130,25 +1176,7 @@ describe('Datagrid paging serverside single select tests', () => {
   });
 });
 
-describe('Datagrid Paging with Summary Row test', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-paging-with-summary-row');
-
-    const datagridEl = await element(by.id('datagrid'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should display summary row', async () => {
-    expect(await element.all(by.css('tr.datagrid-summary-row')).count()).toEqual(1);
-  });
-});
-
-describe('Datagrid select and focus row', () => {
+describe('Datagrid select and focus row', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-select-and-focus-row');
 
@@ -1169,7 +1197,7 @@ describe('Datagrid select and focus row', () => {
   });
 });
 
-describe('Datagrid select and filter tests', () => {
+describe('Datagrid select and filter tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-select-filter-issue');
 
@@ -1204,7 +1232,7 @@ describe('Datagrid select and filter tests', () => {
   });
 });
 
-describe('Datagrid select event tests', () => {
+describe('Datagrid select event tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-selected-event');
 
@@ -1226,7 +1254,7 @@ describe('Datagrid select event tests', () => {
   });
 });
 
-describe('Datagrid select tree tests', () => {
+describe('Datagrid select tree tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-multiselect');
 
@@ -1253,7 +1281,7 @@ describe('Datagrid select tree tests', () => {
   });
 });
 
-describe('Datagrid tree do not select children tests', () => {
+describe('Datagrid tree do not select children tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-select-children');
 
@@ -1277,7 +1305,7 @@ describe('Datagrid tree do not select children tests', () => {
   });
 });
 
-describe('Datagrid tree do not select siblings tests', () => {
+describe('Datagrid tree do not select siblings tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-select-siblings');
 
@@ -1305,7 +1333,7 @@ describe('Datagrid tree do not select siblings tests', () => {
   });
 });
 
-describe('Datagrid tree single select tests', () => {
+describe('Datagrid tree single select tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-singleselect');
 
@@ -1337,7 +1365,7 @@ describe('Datagrid tree single select tests', () => {
   });
 });
 
-describe('Datagrid tooltip tests', () => {
+describe('Datagrid tooltip tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-tooltips');
 
@@ -1367,7 +1395,7 @@ describe('Datagrid tooltip tests', () => {
   });
 });
 
-describe('Datagrid Row Activation tests', () => {
+describe('Datagrid Row Activation tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-row-activated');
 
@@ -1392,7 +1420,7 @@ describe('Datagrid Row Activation tests', () => {
   });
 });
 
-describe('Datagrid Row Indeterminate Activation tests', () => {
+describe('Datagrid Row Indeterminate Activation tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging-indeterminate-landmark');
 
