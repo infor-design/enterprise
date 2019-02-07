@@ -295,6 +295,11 @@ const Locale = {  // eslint-disable-line
       return undefined;
     }
 
+    if (value === '0000' || value === '000000' || value === '00000000') {
+      // Means no date in some applications
+      return '';
+    }
+
     // Convert if a timezone string.
     if (!(value instanceof Date) && typeof value === 'string' && value.indexOf('Z') > -1) {
       const tDate1 = new Date(value);
@@ -473,6 +478,11 @@ const Locale = {  // eslint-disable-line
 
     if (!dateString) {
       return undefined;
+    }
+
+    if (dateString === '0000' || dateString === '000000' || dateString === '00000000') {
+      // Means no date in some applications
+      return '';
     }
 
     if (!dateFormat) {

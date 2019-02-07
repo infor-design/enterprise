@@ -486,6 +486,7 @@ const editors = {
     };
 
     this.val = function (v) {
+      v = Locale.parseDate(v);
       if (v) {
         // Note that the value should be formatted from the formatter.
         this.input.val(v);

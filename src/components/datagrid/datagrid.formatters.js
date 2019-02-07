@@ -61,11 +61,6 @@ const formatters = {
     let value2;
 
     if (typeof value === 'string' && value) {
-      // Means no date in some applications
-      if (value === '0000' || value === '000000' || value === '00000000') {
-        return `<span class="trigger"></span>${$.createIcon({ icon: 'calendar', classes: ['icon-calendar'] })}`;
-      }
-
       if (col.sourceFormat) {
         value2 = Locale.parseDate(value, (typeof col.sourceFormat === 'string' ? { pattern: col.sourceFormat } : col.sourceFormat));
       } else {
@@ -77,7 +72,7 @@ const formatters = {
       } else {
         formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat));
 
-        if (formatted === 'NaN/NaN/NaN' || !formatted) { // show invalid dates not NA/NA/NA
+        if ((formatted === 'NaN/NaN/NaN' || !formatted) && formatted !== '') { // show invalid dates not NA/NA/NA
           formatted = value;
         }
       }
