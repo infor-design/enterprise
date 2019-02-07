@@ -482,7 +482,7 @@ const Locale = {  // eslint-disable-line
 
     if (dateString === '0000' || dateString === '000000' || dateString === '00000000') {
       // Means no date in some applications
-      return '';
+      return undefined;
     }
 
     if (!dateFormat) {
