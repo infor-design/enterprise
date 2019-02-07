@@ -877,4 +877,17 @@ describe('Locale API', () => {
     expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[2]).toEqual(1);
     Locale.set('en-US');
   });
+
+  it('Should parse or format a string of four, six, or eight zeroes', () => {
+    Locale.set('en-US');
+
+    expect(Locale.parseDate('0000')).toEqual(undefined);
+    expect(Locale.parseDate('000000')).toEqual(undefined);
+    expect(Locale.parseDate('00000000')).toEqual(undefined);
+
+    expect(Locale.formatDate('0000')).toEqual('');
+    expect(Locale.formatDate('000000')).toEqual('');
+    expect(Locale.formatDate('00000000')).toEqual('');
+
+  });
 });
