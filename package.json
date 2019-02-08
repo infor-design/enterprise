@@ -139,7 +139,6 @@
     "stylelint": "^9.5.0",
     "stylelint-order": "^1.0.0",
     "uglify-es": "^3.3.10",
-    "vinyl-contents-tostring": "^1.0.0",
     "webpack": "4.20.2",
     "yargs": "^11.0.0"
   }
