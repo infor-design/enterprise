@@ -19,7 +19,7 @@ Include:
 -->
 
 <!-- Please include the following in your PR
-- [ ] A e2e or functional test for the bug / feature.
+- [ ] An e2e or functional test for the bug or feature.
 - [ ] Added a note to the change log.
 -->
 
