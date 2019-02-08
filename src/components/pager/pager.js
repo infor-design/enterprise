@@ -1107,9 +1107,6 @@ Pager.prototype = {
    */
   triggerPagingEvents(previousActivePage) {
     const state = this.state;
-    if (state.filteredTotal) {
-      activePage = state.filteredActivePage;
-    }
     if (!previousActivePage) {
       previousActivePage = this.state.activePage;
     }
