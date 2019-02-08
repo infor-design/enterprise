@@ -1006,9 +1006,8 @@ html[dir='rtl'] {
     }
 
     &.display-for-paging {
-
       .container {
-        margin-left: 25px
+        margin-left: 25px;
       }
 
       legend {
@@ -1032,6 +1031,7 @@ html[dir='rtl'] {
           }
         }
       }
-    } 
+    }
   }
+
 }
