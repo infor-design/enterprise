@@ -28,7 +28,7 @@
         columns.push({ id: 'rpm', name: 'Motor Rpm', field: 'rpm'});
         columns.push({ id: 'maxPressure', name: 'Max Pressure', field: 'maxPressure'});
         columns.push({ id: 'weight', name: 'Weight', field: 'weight'});
-        columns.push({ id: 'actionButton', name: 'Button', text: 'Buy Now', align: 'center', sortable: false, formatter: Formatters.Button, click: function (e, args) {console.log('Button was clicked', args);}, width: 160, exportable: false});
+        columns.push({ id: 'actionButton', name: 'Button', field: '', text: 'Buy Now', align: 'center', sortable: false, formatter: Formatters.Button, click: function (e, args) {console.log('Button was clicked', args);}, width: 160, exportable: false});
 
         // Init and get the api for the grid
         $('#datagrid').datagrid({

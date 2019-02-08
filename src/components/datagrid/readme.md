@@ -60,8 +60,6 @@ demo:
     slug: example-summary-row
   - name: Export to Excel
     slug: example-export-from-button
-  - name: Export with trailing negative signs moved in front
-    slug: example-export-convert-negative
   - name: Empty Message Area
     slug: example-empty-message
   - name: Expandable Cells
@@ -134,6 +132,7 @@ $('#datagrid').datagrid({
 |`options` | Used on the dropdown and multiselect editor/formatters. For example `[{'value': 1, 'id': 1, 'label': 'Some Value'}]`. This should map to a select elements id, value and text option when populating.|
 |`isChecked` | Used on checkbox and favorite columns. This can be a function that returns the checked state based on the dynamic data thats passed in.|
 |`postRender` | If postColumnRender is set to true on the grid. This will be called for each cell in that column passing you a container and args similar to the formatter. This can be used for more complicated render logic at the cost of performance.|
+|`exportable` | If set to false then this column will not be included in a css or csv export operation, the default is true.|
 
 ## Formatters
 

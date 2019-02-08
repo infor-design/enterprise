@@ -1118,19 +1118,19 @@ Datagrid.prototype = {
     } else {
       if (self.hasLeftPane) {
         self.headerTableLeft.width(this.headerTableWidth('left'));
-        self.headerTableLeft.minWidth(this.headerTableMinWidth('left'));
+        self.headerTableLeft.css('min-width', this.headerTableMinWidth('left'));
         DOM.html(self.headerRowLeft, headerRows.left, '*');
         self.headerColGroupLeft.html(headerColGroupCols.left);
       }
 
       self.headerTable.width(this.headerTableWidth('center'));
-      self.headerTable.minWidth(this.headerTableMinWidth('center'));
+      self.headerTable.css('min-width', this.headerTableMinWidth('center'));
       DOM.html(self.headerRow, headerRows.center, '*');
       self.headerColGroup.html(headerColGroupCols.center);
 
       if (self.hasRightPane) {
         self.headerTableRight.width(this.headerTableWidth('right'));
-        self.headerTableRight.minWidth(this.headerTableMinWidth('right'));
+        self.headerTableRight.css('min-width', this.headerTableMinWidth('right'));
         DOM.html(self.headerRowRight, headerRows.right, '*');
         self.headerColGroupRight.html(headerColGroupCols.right);
       }
@@ -3159,10 +3159,10 @@ Datagrid.prototype = {
    * @param  {boolean} isGroup If true we are building a group row.
    * @param  {object} isFooter If true we are building a footer row.
    * @param  {string} actualIndexLineage Series of actualIndex values to reach a child actualIndex in a tree
-   * @param  {boolean} justColumns If true only the td's not the tr's for the export.
+   * @param  {boolean} skipChildren If true we dont append children.
    * @returns {string} The html used to construct the row.
    */
-  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage, justColumns) {
+  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage, skipChildren) {
     let isEven = false;
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
@@ -3237,7 +3237,7 @@ Datagrid.prototype = {
         visibleColumnsLeft - visibleColumnsRight;
     }
 
-    if (this.settings.groupable && isGroup && !isFooter && !justColumns) {
+    if (this.settings.groupable && isGroup && !isFooter) {
       const groupRowHtml = Formatters.GroupRow(dataRowIdx, 0, null, null, rowData, this);
       containerHtml.left = `<tr class="datagrid-rowgroup-header${isHidden ? '' : ' is-expanded'}" role="rowgroup"><td role="gridcell" colspan="${visibleColumnsLeft}">${groupRowHtml.left || '<span>&nbsp;</span>'}</td></tr>`;
       containerHtml.center = `<tr class="datagrid-rowgroup-header${isHidden ? '' : ' is-expanded'}" role="rowgroup"><td role="gridcell" colspan="${visibleColumnsCenter}">${groupRowHtml.center || '<span>&nbsp;</span>'}</td></tr>`;
@@ -3245,7 +3245,7 @@ Datagrid.prototype = {
       return containerHtml;
     }
 
-    if (this.settings.groupable && isGroup && isFooter && !justColumns) {
+    if (this.settings.groupable && isGroup && isFooter) {
       const groupFooterHtml = Formatters.GroupFooterRow(dataRowIdx, 0, null, null, rowData, this);
       containerHtml.left = `<tr class="datagrid-row datagrid-rowgroup-footer${isHidden ? '' : ' is-expanded'}" role="rowgroup">${groupFooterHtml.left || '<span>&nbsp;</span>'}</tr>`;
       containerHtml.center = `<tr class="datagrid-row datagrid-rowgroup-footer${isHidden ? '' : ' is-expanded'}" role="rowgroup">${groupFooterHtml.center || '<span>&nbsp;</span>'}</tr>`;
@@ -3261,6 +3261,7 @@ Datagrid.prototype = {
     const isSelected = this.isRowSelected(rowData);
     const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
+
     if (rowData && rowData.rowStatus) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
@@ -3269,31 +3270,25 @@ Datagrid.prototype = {
       rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"${rowStatus.title}><use xlink:href="${rowStatus.icon}"></use></svg>`;
     }
 
-    if (!justColumns) {
-      containerHtml.center = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
-        ` data-index="${actualIndex}"${
-          actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
-        }${
-          self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
-        }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
-        }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
-          isHidden ? ' is-hidden' : ''}${
-          rowData.isFiltered ? ' is-filtered' : ''
-        }${isActivated ? ' is-rowactivated' : ''
-        }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
-        }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
-        }${isSummaryRow ? ' datagrid-summary-row' : ''
-        }${!self.settings.cellNavigation && self.settings.selectable !== false ? ' is-clickable' : ''
-        }${self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : ''
-        }">`;
+    containerHtml.center = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
+      ` data-index="${actualIndex}"${
+        actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
+      }${
+        self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
+      }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
+      }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
+        isHidden ? ' is-hidden' : ''}${
+        rowData.isFiltered ? ' is-filtered' : ''
+      }${isActivated ? ' is-rowactivated' : ''
+      }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
+      }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
+      }${isSummaryRow ? ' datagrid-summary-row' : ''
+      }${!self.settings.cellNavigation && self.settings.selectable !== false ? ' is-clickable' : ''
+      }${self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : ''
+      }">`;
 
-      containerHtml.left = containerHtml.center;
-      containerHtml.right = containerHtml.center;
-    } else {
-      containerHtml.center = '';
-      containerHtml.right = '';
-      containerHtml.left = '';
-    }
+    containerHtml.left = containerHtml.center;
+    containerHtml.right = containerHtml.center;
 
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
@@ -3483,11 +3478,9 @@ Datagrid.prototype = {
       containerHtml[container] += `${formatted}</div></td>`;
     }
 
-    if (!justColumns) {
-      containerHtml.left += '</tr>';
-      containerHtml.center += '</tr>';
-      containerHtml.right += '</tr>';
-    }
+    containerHtml.left += '</tr>';
+    containerHtml.center += '</tr>';
+    containerHtml.right += '</tr>';
 
     if (self.settings.rowTemplate) {
       const tmpl = self.settings.rowTemplate;
@@ -3510,7 +3503,7 @@ Datagrid.prototype = {
     }
 
     // Render Tree Children
-    if (rowData.children) {
+    if (rowData.children && !skipChildren) {
       for (let i = 0, l = rowData.children.length; i < l; i++) {
         const lineage = actualIndexLineage ? `${actualIndexLineage}.${actualIndex}` : `${actualIndex}`;
         this.recordCount++;
