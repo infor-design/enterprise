@@ -47,13 +47,13 @@ It is also possible to pass a dataset to the block grid to support paging and se
 ```javascript
 var data = [];
 data.push({
-  image: 'http://localhost:4000/images/11.jpg',
+  image: '/images//11.jpg',
   title: 'Mary Pane',
   subtitle: 'Infor, Developer',
   id: 1
 });
 data.push({
-  image: 'http://localhost:4000/images/12.jpg',
+  image: '/images//12.jpg',
   title: 'Paula Paulson',
   subtitle: 'Infor, Architect',
   id: 2
