@@ -48,31 +48,31 @@ describe('Blockgrid Mixed Selection Events', () => {
   beforeEach(() => {
     const data = [];
     data.push({
-      image: '/images//8.jpg',
+      image: '/images/8.jpg',
       title: 'Sheena Taylor',
       subtitle: 'Infor, Developer',
       id: 1
     });
     data.push({
-      image: '/images//9.jpg',
+      image: '/images/9.jpg',
       title: 'Jane Taylor',
       subtitle: 'Infor, Developer',
       id: 2
     });
     data.push({
-      image: '/images//10.jpg',
+      image: '/images/10.jpg',
       title: 'Sam Smith',
       subtitle: 'Infor, SVP',
       id: 3
     });
     data.push({
-      image: '/images//11.jpg',
+      image: '/images/11.jpg',
       title: 'Mary Pane',
       subtitle: 'Infor, Developer',
       id: 4
     });
     data.push({
-      image: '/images//12.jpg',
+      image: '/images/12.jpg',
       title: 'Paula Paulson',
       subtitle: 'Infor, Architect',
       id: 5

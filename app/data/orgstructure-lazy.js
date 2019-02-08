@@ -1,6 +1,6 @@
 module.exports = (req, res, next) => {
-  const menPath = '/images//';
-  const womenPath = '/images//';
+  const menPath = '/images/';
+  const womenPath = '/images/';
   const orgdata = [{
     id: '1',
     Name: 'Jonathan Cargill',
