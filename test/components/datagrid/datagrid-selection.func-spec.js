@@ -291,20 +291,22 @@ describe('Datagrid Selection API', () => {
       datagridObj.selectRows([1]);
 
       expect(datagridObj.selectedRows().length).toEqual(1);
-      datagridObj.pager.activePage = -1;
-      datagridObj.pager.setActivePage(1, false, 'next');
+      datagridObj.pagerAPI.updatePagingInfo({
+        activePage: 1,
+        type: 'next'
+      });
 
       setTimeout(() => {
         expect(datagridObj.selectedRows().length).toEqual(0);
         datagridObj.selectRow(2);
 
-        expect(datagridObj.selectedRows().length).toEqual(0);
+        expect(datagridObj.selectedRows().length).toEqual(1);
         datagridObj.selectRows([3, 4]);
 
-        expect(datagridObj.selectedRows().length).toEqual(1);
+        expect(datagridObj.selectedRows().length).toEqual(0);
         datagridObj.selectRows([1]);
 
-        expect(datagridObj.selectedRows().length).toEqual(0);
+        expect(datagridObj.selectedRows().length).toEqual(1);
 
         datagridObj.unSelectAllRows();
         done();
@@ -323,15 +325,17 @@ describe('Datagrid Selection API', () => {
       datagridObj.selectRows([1, 4]);
 
       expect(datagridObj.selectedRows().length).toEqual(2);
-      datagridObj.pager.activePage = -1;
-      datagridObj.pager.setActivePage(1, false, 'next');
+      datagridObj.pagerAPI.updatePagingInfo({
+        activePage: 1,
+        type: 'next'
+      });
 
       setTimeout(() => {
         expect(datagridObj.selectedRows().length).toEqual(0);
         datagridObj.selectRow(2);
         datagridObj.selectRows([1, 4]);
 
-        expect(datagridObj.selectedRows().length).toEqual(1);
+        expect(datagridObj.selectedRows().length).toEqual(2);
 
         datagridObj.unSelectAllRows();
         done();
@@ -355,8 +359,10 @@ describe('Datagrid Selection API', () => {
       datagridObj.selectRows([1]);
 
       expect(datagridObj.selectedRows().length).toEqual(1);
-      datagridObj.pager.activePage = -1;
-      datagridObj.pager.setActivePage(1, false, 'next');
+      datagridObj.pagerAPI.updatePagingInfo({
+        activePage: 1,
+        type: 'next'
+      });
 
       setTimeout(() => {
         expect(datagridObj.selectedRows().length).toEqual(0);
@@ -387,8 +393,10 @@ describe('Datagrid Selection API', () => {
       datagridObj.selectRows([1, 4]);
 
       expect(datagridObj.selectedRows().length).toEqual(2);
-      datagridObj.pager.activePage = -1;
-      datagridObj.pager.setActivePage(1, false, 'next');
+      datagridObj.pagerAPI.updatePagingInfo({
+        activePage: 1,
+        type: 'next'
+      });
 
       setTimeout(() => {
         expect(datagridObj.selectedRows().length).toEqual(0);

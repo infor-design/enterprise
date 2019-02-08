@@ -207,6 +207,14 @@ Datagrid.prototype = {
   },
 
   /**
+   * @deprecated as of v4.16.x
+   * @returns {Pager} IDS Pager component API.
+   */
+  get pager() {
+    return this.pagerAPI;
+  },
+
+  /**
   * Init the datagrid from its uninitialized state.
   * @private
   * @returns {void}
@@ -619,9 +627,6 @@ Datagrid.prototype = {
       if (updatedPagingInfo.grandTotal) {
         self.grandTotal = updatedPagingInfo.grandTotal;
       }
-
-      // Render Data
-      pagingInfo.preserveSelected = true;
 
       // Set the remote dataset on the grid
       self.loadData(data, updatedPagingInfo, true);

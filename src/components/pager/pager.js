@@ -559,7 +559,7 @@ Pager.prototype = {
     }
 
     // Never go below (1)
-    if (pageNum < 1) {
+    if (!this.settings.indeterminate && pageNum < 1) {
       pageNum = 1;
     }
 
@@ -1107,7 +1107,6 @@ Pager.prototype = {
    */
   triggerPagingEvents(previousActivePage) {
     const state = this.state;
-    let activePage = state.activePage;
     if (state.filteredTotal) {
       activePage = state.filteredActivePage;
     }
@@ -1117,7 +1116,6 @@ Pager.prototype = {
 
     // Trigger events for specific special pages, and always trigger the `page` event
     // containing the new pager state.
-    // if (activePage === 1) {
     if (state.type === 'first') {
       // First Page
       if (this.settings.onFirstPage) {
@@ -1125,7 +1123,6 @@ Pager.prototype = {
       }
       this.element.trigger('firstpage', state);
     }
-    // if (activePage === previousActivePage - 1) {
     if (state.type === 'prev') {
       // Previous Page
       if (this.settings.onPreviousPage) {
@@ -1133,7 +1130,6 @@ Pager.prototype = {
       }
       this.element.trigger('previouspage', state);
     }
-    // if (activePage === previousActivePage + 1) {
     if (state.type === 'next') {
       // Next Page
       if (this.settings.onNextPage) {
@@ -1141,7 +1137,6 @@ Pager.prototype = {
       }
       this.element.trigger('nextpage', state);
     }
-    // if (activePage === this.pageCount()) {
     if (state.type === 'last') {
       // Last Page
       if (this.settings.onLastPage) {
@@ -1260,11 +1255,15 @@ Pager.prototype = {
       delete this.filteredActivePage;
     }
 
+    if (!pagingInfo.type) {
+      pagingInfo.type = 'pageinfo';
+    }
+
     if (this.settings.source || this.settings.dataset) {
       // Set first and last page if passed
       // If we get a page number as a result, rendering has already happened and
       // we should not attempt to re-render.
-      this.setActivePage(pagingInfo, false, 'pageinfo');
+      this.setActivePage(pagingInfo, false, pagingInfo.type);
       if (!isResponse) {
         this.triggerPagingEvents();
       }

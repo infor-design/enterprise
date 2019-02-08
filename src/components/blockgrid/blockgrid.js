@@ -66,7 +66,9 @@ Blockgrid.prototype = {
    * @private
    */
   build() {
-    this.element.empty();
+    if (this.settings.paging) {
+      this.element.empty();
+    }
 
     this.render();
     this.selectedRows = [];
