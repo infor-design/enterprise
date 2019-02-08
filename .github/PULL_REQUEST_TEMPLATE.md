@@ -18,7 +18,7 @@ Include:
 - test scenarios
 -->
 
-<!-- Please include the following in your PR
+<!-- Please include the following in your PR:
 - [ ] An e2e or functional test for the bug or feature.
 - [ ] Added a note to the change log.
 -->
