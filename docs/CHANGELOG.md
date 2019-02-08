@@ -7,13 +7,13 @@
 
 ### v4.16.0 Features
 
-- `[Busy Indicator]` Mad a fix to make it possible to use a busy indicator on a modals. ([#827](https://github.com/infor-design/enterprise/issues/827))
+- `[Busy Indicator]` Made a fix to make it possible to use a busy indicator on a modals. ([#827](https://github.com/infor-design/enterprise/issues/827))
 
 ### v4.16.0 Fixes
 
 - `[Dropdown]` Fixed a bug where the ellipsis was not showing on long text in some browsers. ([#1550](https://github.com/infor-design/enterprise/issues/1550))
 - `[Datagrid]` Fixed a bug in equals filter on multiselect filters. ([#1586](https://github.com/infor-design/enterprise/issues/1586))
-- `[Datagrid]` Fixed a bug where incorrect data is shown in th events in tree grid. ([#315](https://github.com/infor-design/enterprise-ng/issues/315))
+- `[Datagrid]` Fixed a bug where incorrect data is shown in the events in tree grid. ([#315](https://github.com/infor-design/enterprise-ng/issues/315))
 - `[Datagrid]` Fixed a bug where showMonthYearPicker did not work correctly on date filters. ([#1532](https://github.com/infor-design/enterprise-ng/issues/1532))
 - `[Validation]` Fixed a bug in removeError where the icon is sometimes not removed. ([#1556](https://github.com/infor-design/enterprise/issues/1556))
 - `[Datepicker]` Fixed the range picker to clear when changing months in a filter. ([#1537](https://github.com/infor-design/enterprise/issues/1537))
