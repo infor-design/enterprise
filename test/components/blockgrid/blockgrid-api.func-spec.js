@@ -9,12 +9,12 @@ let blockgridObj;
 
 const settings = {
   dataset: [{
-    image: 'http://localhost:4000/images/8.jpg',
+    image: '/images/8.jpg',
     title: 'Neyo Taylor',
     subtitle: 'Infor, Developer',
     id: 1
   }, {
-    image: 'http://localhost:4000/images/9.jpg',
+    image: '/images/9.jpg',
     title: 'Jane Taylor',
     subtitle: 'Infor, Developer',
     id: 2
