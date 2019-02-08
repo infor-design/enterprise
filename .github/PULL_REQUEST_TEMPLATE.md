@@ -10,17 +10,17 @@ Provide a link to the related issue(s) to this Pull Request;
 auto-closing github issues if necessary (example: "Closes #100")
 -->
 
-**Additional Items needed on your pull request**
-<!-- Did you remember -->
-- [ ] A e2e or functional test for the bug / feature.
-- [ ] Added a note to the change log.
-
 **Steps necessary to review your pull request (required)**:
 <!--
 Include:
 - commands you ran and their output
 - screenshots / videos
 - test scenarios
+-->
+
+<!-- Please include the following in your PR
+- [ ] A e2e or functional test for the bug / feature.
+- [ ] Added a note to the change log.
 -->
 
 <!-- After submitting your PR, please check back to make sure tests pass on Travis. -->

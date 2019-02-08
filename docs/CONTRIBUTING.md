@@ -65,12 +65,9 @@ If you'd like to submit a pull request you'll need to do the following:
 1. **Make your changes** to your local fork for the proper branch.
 - Almost all development will be done on branches from `master`.
 - Occasionally there will be a need to contribute to a version branch (i.e. `4.9.x`) in which case you want to branch off of one of those.
-- Remember to make a e2e or functional test for your case.
-- Remember to add any notes to the [Change Log](docs/CHANGELOG.md)
-
-If you are unsure, just ask someone on the team so you don't have to redo your branch.
-1. Remember to make a e2e or functional test for your case.
-1. Remember to add a note to the [Change Log](docs/CHANGELOG.md).
+- If you are unsure, just ask someone on the team so you don't have to redo your branch.
+1. Remember to make a **e2e or functional test** for your case.
+1. Remember to add a **note to the [Change Log](docs/CHANGELOG.md)**.
 1. **Commit your changes locally.**  Try to follow the standards for your commit message outlined below.
     - Try to follow
         - [Github's commit message standards](https://github.com/erlang/otp/wiki/Writing-good-commit-messagesMore)

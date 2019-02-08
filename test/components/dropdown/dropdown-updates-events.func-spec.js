@@ -146,10 +146,12 @@ describe('Dropdown updates, events', () => {
       const spyEvent = spyOnEvent('#states', 'change');
       dropdownObj.open();
       setTimeout(() => {
-        document.body.querySelectorAll('.dropdown-option')[0].click();
+        document.body.querySelectorAll('.dropdown-option')[1].click();
 
-        expect(spyEvent).toHaveBeenTriggered();
-        done();
+        setTimeout(() => {
+          expect(spyEvent).toHaveBeenTriggered();
+          done();
+        });
       }, 300);
     }, 300);
   });
