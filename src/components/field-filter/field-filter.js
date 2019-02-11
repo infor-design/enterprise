@@ -165,7 +165,7 @@ FieldFilter.prototype = {
   },
 
   /**
-   * Get currently filter type
+   * Get current filter type
    * @returns {object} The current filter type
    */
   getFilterType() {
