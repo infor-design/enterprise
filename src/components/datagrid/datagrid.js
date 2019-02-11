@@ -149,7 +149,7 @@ const DATAGRID_DEFAULTS = {
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
   allowSelectAcrossPages: null,
   groupable: null,
-  spacerColumn: true,
+  spacerColumn: false,
   stretchColumn: 'last',
   twoLineHeader: false,
   clickToSelect: true,
