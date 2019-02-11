@@ -1,5 +1,6 @@
 import { cleanup } from '../../helpers/func-utils';
 import { Dropdown } from '../../../src/components/dropdown/dropdown';
+import { DOM } from '../../../src/utils/dom';
 
 const dropdownHTML = require('../../../app/views/components/dropdown/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -142,18 +143,13 @@ describe('Dropdown updates, events', () => {
   });
 
   it('should trigger change event on click', (done) => {
-    setTimeout(() => {
-      const spyEvent = spyOnEvent('#states', 'change');
-      dropdownObj.open();
-      setTimeout(() => {
-        document.body.querySelectorAll('.dropdown-option')[1].click();
+    DOM.remove(document.querySelector('#dropdown-list'));
+    const spyEvent = spyOnEvent('#states', 'change');
+    dropdownObj.open();
+    document.body.querySelectorAll('.dropdown-option')[1].click();
 
-        setTimeout(() => {
-          expect(spyEvent).toHaveBeenTriggered();
-          done();
-        });
-      }, 300);
-    }, 300);
+    expect(spyEvent).toHaveBeenTriggered();
+    done();
   });
 
   it('should trigger change event on duplicate label', () => {
