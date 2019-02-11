@@ -497,8 +497,8 @@ div.multiselect {
 
       background-color: rgba($theme-color-palette-white, 0);
       color: $trigger-icon-fill-color;
-      height: 32px;
-      width: 18px;
+      left: 1px;
+      top: 6px;
 
       &.search {
         @include css3(transform, rotate(0deg));
