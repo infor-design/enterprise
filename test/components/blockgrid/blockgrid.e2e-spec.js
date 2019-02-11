@@ -239,20 +239,22 @@ describe('Blockgrid example-paging tests', () => {
   });
 
   it('Should navigate to 2nd page, navigate back via keyboard', async () => {
-    const blockEl1 = await element.all(by.css('.block.is-selectable')).get(1);
-    await blockEl1.sendKeys(protractor.Key.TAB);
+    await element.all(by.css('.block.is-selectable')).get(1).sendKeys(protractor.Key.TAB);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-selected'))), config.waitsFor);
+
     await browser.driver.actions().sendKeys(protractor.Key.SPACE).perform();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.block.is-selected'))), config.waitsFor);
+
     await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
     await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
     await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
-    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+
     await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
     await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
     await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+
     await browser.driver.sleep(config.sleep);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.block.is-selectable')).get(1)), config.waitsFor);

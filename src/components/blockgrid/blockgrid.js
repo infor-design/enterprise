@@ -120,8 +120,10 @@ Blockgrid.prototype = {
 
     if (this.pagerAPI) {
       this.element.on(`page.${COMPONENT_NAME}`, () => {
+        this.previousFocusedElement = true;
         this.build();
       }).on(`pagesizechange.${COMPONENT_NAME}`, () => {
+        this.previousFocusedElement = true;
         this.build();
       });
     }
@@ -144,7 +146,7 @@ Blockgrid.prototype = {
   },
 
   /**
-   * @deprecated as of v4.15.0
+   * @deprecated as of v4.15.0, use `select()`
    * @private
    * Run selection over a block item
    * @param {jQuery[]} activeBlock the jQuery-wrapped DOM element that will be selected.
@@ -307,10 +309,18 @@ Blockgrid.prototype = {
     }
 
     this.element.attr('role', 'list').append(blockelements);
+
+    // If a Blockgrid element had focus before rendering, restore focus to the first new block
+    if (this.previousFocusedElement) {
+      setTimeout(() => {
+        this.element.find('.block').first().focus();
+        delete this.previousFocusedElement;
+      }, 0);
+    }
   },
 
   /**
-   * @deprecated as of v4.15.0
+   * @deprecated as of v4.15.0, use `render()`
    * @private
    * Render an individual block element.
    * @returns {void}
