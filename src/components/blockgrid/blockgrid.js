@@ -52,7 +52,7 @@ Blockgrid.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   init() {
-    // Do initialization. Build or Events ect
+    this.selectedRows = [];
     this.handlePaging();
 
     return this
@@ -71,7 +71,6 @@ Blockgrid.prototype = {
     }
 
     this.render();
-    this.selectedRows = [];
     return this;
   },
 
@@ -145,17 +144,29 @@ Blockgrid.prototype = {
   },
 
   /**
+   * @deprecated as of v4.15.0
+   * @private
    * Run selection over a block item
-   * @param {element} activeBlock Dom element to use
+   * @param {jQuery[]} activeBlock the jQuery-wrapped DOM element that will be selected.
    * @param {boolean} isCheckbox True if a checkbox, used for mixed mode.
-  */
+   * @returns {void}
+   */
   selectBlock(activeBlock, isCheckbox) {
+    return this.select(activeBlock, isCheckbox);
+  },
+
+  /**
+   * Run selection over a block item
+   * @param {jQuery[]} activeBlock the jQuery-wrapped DOM element that will be selected.
+   * @param {boolean} isCheckbox True if a checkbox, used for mixed mode.
+   */
+  select(activeBlock, isCheckbox) {
     const allBlocks = this.element.find('.block');
     const allChecks = this.element.find('.checkbox');
     const activeCheckbox = activeBlock.find('.checkbox');
     const isChecked = activeCheckbox.is(':checked');
     let action = '';
-    const idx = activeBlock.index();
+    const idx = Number(activeCheckbox.data('idx'));
 
     if (this.settings.selectable === 'single') {
       this.selectedRows = [];
@@ -255,18 +266,44 @@ Blockgrid.prototype = {
         const firstRecordIdx = pagerInfo.pagesize * trueActivePage;
         const lastRecordIdx = pagerInfo.pagesize * (trueActivePage + 1);
         displayedDataset = displayedDataset.slice(firstRecordIdx, lastRecordIdx);
+
+        // If the dataset doesn't actually have IDs, set temporary ones for
+        // tracking selected/deselected
+        if (displayedDataset.length !== this.settings.dataset.length) {
+          for (let j = 0; j < (lastRecordIdx - firstRecordIdx) + 1; j++) {
+            if (displayedDataset[j].id) {
+              break;
+            }
+            displayedDataset[j].id = firstRecordIdx + j;
+          }
+        }
       }
     }
+
+    const checkedIdxs = [];
+    this.selectedRows.forEach((row) => {
+      checkedIdxs.push(row.idx);
+    });
 
     for (let i = 0; i < displayedDataset.length; i++) {
       const data = displayedDataset[i];
       const tabindex = this.settings.selectable === 'mixed' ? '0' : '-1';
+      let selected = '';
+      let checked = '';
 
-      blockelements += `<div class="block is-selectable" role="listitem" tabindex="0">
-      <input type="checkbox" aria-hidden="true" role="presentation" class="checkbox" id="checkbox${i}" tabindex="${tabindex}" idx="${i}">
-      <label for="checkbox${i}" class="checkbox-label"><span class="audible">${selectText}</span></label>
-      <img alt="Placeholder Image" src="${data.img || data.image}" class="image-round">
-      <p> ${data.maintxt || data.title} <br> ${data.subtxt || data.subtitle} </p></div>`;
+      if (checkedIdxs.indexOf(data.id) > -1) {
+        selected = ' is-selected';
+        checked = ' checked';
+      }
+
+      blockelements += `<div class="block is-selectable${selected}" role="listitem" tabindex="0">
+        <input type="checkbox" aria-hidden="true" role="presentation" class="checkbox" id="checkbox${i}" tabindex="${tabindex}" data-idx="${data.id}"${checked}>
+        <label for="checkbox${i}" class="checkbox-label">
+          <span class="audible">${selectText}</span>
+        </label>
+        <img alt="Placeholder Image" src="${data.img || data.image}" class="image-round">
+        <p> ${data.maintxt || data.title} <br> ${data.subtxt || data.subtitle} </p>
+      </div>`;
     }
 
     this.element.attr('role', 'list').append(blockelements);
@@ -308,6 +345,7 @@ Blockgrid.prototype = {
     this.element.off(`click.${COMPONENT_NAME}`);
 
     this.element.empty();
+    this.selectedRows = [];
     return this;
   },
 
