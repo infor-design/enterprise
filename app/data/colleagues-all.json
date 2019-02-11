@@ -1,7 +1,7 @@
 [
   {
     "id": 3,
-    "photo": "https://randomuser.me/api/portraits/med/men/11.jpg",
+    "photo": "/images/11.jpg",
     "firstName": "Andy",
     "lastName": "Gabbett",
     "title": "Senior Manager",
@@ -41,7 +41,7 @@
   },
   {
     "id": 10,
-    "photo": "https://randomuser.me/api/portraits/med/men/12.jpg",
+    "photo": "/images/12.jpg",
     "firstName": "Nickolai",
     "lastName": "Yellowlees",
     "title": "Temp",
@@ -55,7 +55,7 @@
   },
   {
     "id": 12,
-    "photo": "https://randomuser.me/api/portraits/med/women/16.jpg",
+    "photo": "/images/16.jpg",
     "firstName": "Megyn",
     "lastName": "Till",
     "title": "Senior Developer",
@@ -69,7 +69,7 @@
   },
   {
     "id": 13,
-    "photo": "https://randomuser.me/api/portraits/med/women/17.jpg",
+    "photo": "/images/17.jpg",
     "firstName": "Cindy",
     "lastName": "Smith",
     "title": "Senior Developer",
@@ -83,7 +83,7 @@
   },
   {
     "id": 14,
-    "photo": "https://randomuser.me/api/portraits/med/women/17.jpg",
+    "photo": "/images/17.jpg",
     "firstName": "Mygyn",
     "lastName": "Mills",
     "title": "Senior Developer",
@@ -97,7 +97,7 @@
   },
   {
     "id": 15,
-    "photo": "https://randomuser.me/api/portraits/med/women/18.jpg",
+    "photo": "/images/18.jpg",
     "firstName": "Andriana",
     "lastName": "Smith",
     "title": "Senior Developer",
@@ -111,7 +111,7 @@
   },
   {
     "id": 16,
-    "photo": "https://randomuser.me/api/portraits/med/women/19.jpg",
+    "photo": "/images/19.jpg",
     "firstName": "Megyn",
     "lastName": "Till",
     "title": "Senior Developer",
@@ -125,7 +125,7 @@
   },
   {
     "id": 17,
-    "photo": "https://randomuser.me/api/portraits/med/women/20.jpg",
+    "photo": "/images/20.jpg",
     "firstName": "Cindy",
     "lastName": "Eastwoord",
     "title": "Senior Developer",
@@ -139,7 +139,7 @@
   },
   {
     "id": 18,
-    "photo": "https://randomuser.me/api/portraits/med/women/21.jpg",
+    "photo": "/images/21.jpg",
     "firstName": "Tamara",
     "lastName": "White",
     "title": "Senior Developer",
@@ -153,7 +153,7 @@
   },
   {
     "id": 19,
-    "photo": "https://randomuser.me/api/portraits/med/women/22.jpg",
+    "photo": "/images/22.jpg",
     "firstName": "Cara",
     "lastName": "Alex",
     "title": "Senior Developer",

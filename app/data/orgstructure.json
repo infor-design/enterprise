@@ -3,18 +3,18 @@
   "Name": "Jonathan Cargill",
   "Position": "Director",
   "EmploymentType": "FT",
-  "Picture": "https://randomuser.me/api/portraits/med/men/21.jpg",
+  "Picture": "/images/21.jpg",
   "children": [
     {
       "id": "1_3",
       "Name": "Kaylee Edwards",
       "Position": "Records Manager",
       "EmploymentType": "FT",
-      "Picture": "https://randomuser.me/api/portraits/med/women/11.jpg",
+      "Picture": "/images/11.jpg",
       "children": [
-        { "id": "1_3_1", "Name": "Tony Cleveland", "Position": "Records Clerk", "EmploymentType": "C", "Picture": "https://randomuser.me/api/portraits/med/men/6.jpg", "isLeaf": true },
-        { "id": "1_3_2", "Name": "Julie Dawes", "Position": "Records Clerk", "EmploymentType": "PT", "Picture": "https://randomuser.me/api/portraits/med/women/5.jpg", "isLeaf": true },
-        { "id": "1_3_3", "Name": "Richard Fairbanks", "Position": "Records Clerk", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/men/7.jpg", "isLeaf": true }
+        { "id": "1_3_1", "Name": "Tony Cleveland", "Position": "Records Clerk", "EmploymentType": "C", "Picture": "/images/6.jpg", "isLeaf": true },
+        { "id": "1_3_2", "Name": "Julie Dawes", "Position": "Records Clerk", "EmploymentType": "PT", "Picture": "/images/5.jpg", "isLeaf": true },
+        { "id": "1_3_3", "Name": "Richard Fairbanks", "Position": "Records Clerk", "EmploymentType": "FT", "Picture": "/images/7.jpg", "isLeaf": true }
       ],
       "menu" : {
         "details": [
@@ -45,13 +45,13 @@
       "Name": "Jason Ayers",
       "Position": "HR Manager",
       "EmploymentType": "FT",
-      "Picture": "https://randomuser.me/api/portraits/med/men/12.jpg",
+      "Picture": "/images/12.jpg",
       "children": [
-        { "id": "1_4_1", "Name": "William Moore", "Position": "Benefits Specialist", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/men/8.jpg", "isLeaf": true },
-        { "id": "1_4_2", "Name": "Rachel Smith", "Position": "Compliance Specialist", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/women/6.jpg", "isLeaf": true },
-        { "id": "1_4_3", "Name": "Jessica Peterson", "Position": "Employment Specialist", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/women/7.jpg", "isLeaf": true },
-        { "id": "1_4_4", "Name": "Sarah Lee", "Position": "HR Specialist", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/women/8.jpg", "isLeaf": true },
-        { "id": "1_4_5", "Name": "Jacob Williams", "Position": "HR Specialist", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/men/9.jpg", "isLeaf": true }
+        { "id": "1_4_1", "Name": "William Moore", "Position": "Benefits Specialist", "EmploymentType": "FT", "Picture": "/images/8.jpg", "isLeaf": true },
+        { "id": "1_4_2", "Name": "Rachel Smith", "Position": "Compliance Specialist", "EmploymentType": "FT", "Picture": "/images/6.jpg", "isLeaf": true },
+        { "id": "1_4_3", "Name": "Jessica Peterson", "Position": "Employment Specialist", "EmploymentType": "FT", "Picture": "/images/7.jpg", "isLeaf": true },
+        { "id": "1_4_4", "Name": "Sarah Lee", "Position": "HR Specialist", "EmploymentType": "FT", "Picture": "/images/8.jpg", "isLeaf": true },
+        { "id": "1_4_5", "Name": "Jacob Williams", "Position": "HR Specialist", "EmploymentType": "FT", "Picture": "/images/9.jpg", "isLeaf": true }
       ]
     },
     {
@@ -59,13 +59,13 @@
       "Name": "Daniel Calhoun",
       "Position": "Manager",
       "EmploymentType": "FT",
-      "Picture": "https://randomuser.me/api/portraits/med/men/4.jpg",
+      "Picture": "/images/4.jpg",
       "children": [
-        { "id": "1_5_1", "Name": "Michael Bolton", "Position": "Software Engineer", "EmploymentType": "C", "Picture": "https://randomuser.me/api/portraits/med/men/3.jpg", "isLeaf": true },
-        { "id": "1_5_2", "Name": "Emily Johnson", "Position": "Senior Software Engineer", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/women/9.jpg", "isLeaf": true },
-        { "id": "1_5_3", "Name": "Kari Anderson", "Position": "Principle Software Engineer", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/women/10.jpg", "isLeaf": true },
-        { "id": "1_5_4", "Name": "Michelle Bell", "Position": "Software Engineer", "EmploymentType": "PT", "Picture": "https://randomuser.me/api/portraits/med/women/11.jpg", "isLeaf": true },
-        { "id": "1_5_5", "Name": "Dave Davidson", "Position": "Software Engineer", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/men/10.jpg", "isLeaf": true }
+        { "id": "1_5_1", "Name": "Michael Bolton", "Position": "Software Engineer", "EmploymentType": "C", "Picture": "/images/3.jpg", "isLeaf": true },
+        { "id": "1_5_2", "Name": "Emily Johnson", "Position": "Senior Software Engineer", "EmploymentType": "FT", "Picture": "/images/9.jpg", "isLeaf": true },
+        { "id": "1_5_3", "Name": "Kari Anderson", "Position": "Principle Software Engineer", "EmploymentType": "FT", "Picture": "/images/10.jpg", "isLeaf": true },
+        { "id": "1_5_4", "Name": "Michelle Bell", "Position": "Software Engineer", "EmploymentType": "PT", "Picture": "/images/11.jpg", "isLeaf": true },
+        { "id": "1_5_5", "Name": "Dave Davidson", "Position": "Software Engineer", "EmploymentType": "FT", "Picture": "/images/10.jpg", "isLeaf": true }
       ]
     },
     {
@@ -73,10 +73,10 @@
       "Name": "Amber Carter",
       "Position": "Library Manager",
       "EmploymentType": "FT",
-      "Picture": "https://randomuser.me/api/portraits/med/women/2.jpg",
+      "Picture": "/images/2.jpg",
       "children": [
-        { "id": "1_6_1", "Name": "Hank Cruise", "Position": "Law Librarian", "EmploymentType": "C", "Picture": "https://randomuser.me/api/portraits/med/men/11.jpg", "isLeaf": true },
-        { "id": "1_6_2", "Name": "Peter Craig", "Position": "Law Librarian", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/men/12.jpg", "isLeaf": true }
+        { "id": "1_6_1", "Name": "Hank Cruise", "Position": "Law Librarian", "EmploymentType": "C", "Picture": "/images/11.jpg", "isLeaf": true },
+        { "id": "1_6_2", "Name": "Peter Craig", "Position": "Law Librarian", "EmploymentType": "FT", "Picture": "/images/12.jpg", "isLeaf": true }
       ]
     },
     {
@@ -84,14 +84,14 @@
       "Name": "Mary Butler",
       "Position": "Workers’ Compensation Manager",
       "EmploymentType": "FT",
-      "Picture": "https://randomuser.me/api/portraits/med/women/3.jpg",
+      "Picture": "/images/3.jpg",
       "children": [
         {
           "id": "1_7_1",
           "Name": "Katie Olland",
           "Position": "Workers’ Compensation Specialist",
           "EmploymentType": "FT",
-          "Picture": "https://randomuser.me/api/portraits/med/women/12.jpg",
+          "Picture": "/images/12.jpg",
           "isLeaf": true,
           "menu" : {
             "details": [
@@ -117,7 +117,7 @@
             ]
           }
         },
-        { "id": "1_7_2", "Name": "Tanya Wright", "Position": "Workers’ Compensation Specialist", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/women/13.jpg", "isLeaf": true },
+        { "id": "1_7_2", "Name": "Tanya Wright", "Position": "Workers’ Compensation Specialist", "EmploymentType": "FT", "Picture": "/images/13.jpg", "isLeaf": true },
         { "id": "1_7_3", "Name": "OPEN", "Position": "Workers’ Compensation Specialist", "EmploymentType": "O", "isLeaf": true },
         { "id": "1_7_4", "Name": "John Johnson", "Position": "Workers’ Compensation Specialist", "Initials": "JJ", "EmploymentType": "FT", "isLeaf": true }
       ]
@@ -127,7 +127,7 @@
       "Name": "Partricia Clark",
       "Position": "Administration",
       "EmploymentType": "FT",
-      "Picture": "https://randomuser.me/api/portraits/med/women/4.jpg",
+      "Picture": "/images/4.jpg",
       "isLeaf": true,
       "menu" : {
         "details": [
@@ -153,6 +153,6 @@
         ]
       }
     },
-    { "id": "1_2", "Name": "Drew Buchanan", "Position": "Assistant Director", "EmploymentType": "FT", "Picture": "https://randomuser.me/api/portraits/med/men/5.jpg", "isLeaf": true }
+    { "id": "1_2", "Name": "Drew Buchanan", "Position": "Assistant Director", "EmploymentType": "FT", "Picture": "/images/5.jpg", "isLeaf": true }
   ]
 }]
