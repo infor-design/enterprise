@@ -1559,6 +1559,10 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    &.is-spacer {
+      border-bottom-color: transparent;
+    }
+
     .word-wrap {
       word-wrap: break-word;
 

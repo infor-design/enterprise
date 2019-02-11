@@ -149,7 +149,7 @@ const DATAGRID_DEFAULTS = {
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
   allowSelectAcrossPages: null,
   groupable: null,
-  spacerColumn: false,
+  spacerColumn: true,
   stretchColumn: 'last',
   twoLineHeader: false,
   clickToSelect: true,
@@ -2851,13 +2851,13 @@ Datagrid.prototype = {
       }
     }
 
-    if (self.hasLeftPane && tableHtmlLeft) {
+    if (self.hasLeftPane) {
       DOM.html(self.tableBodyLeft, tableHtmlLeft, '*');
     }
 
     DOM.html(self.tableBody, tableHtml, '*');
 
-    if (self.hasRightPane && tableHtmlRight) {
+    if (self.hasRightPane) {
       DOM.html(self.tableBodyRight, tableHtmlRight, '*');
     }
     self.setVirtualHeight();
@@ -3921,9 +3921,10 @@ Datagrid.prototype = {
 
     if (lastColumn && this.isInitialRender && this.settings.spacerColumn) {
       const diff = this.elemWidth - this.totalWidths[container];
+      this.totalWidths[container] += diff;
 
-      if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
-        this.settings.columns.push({ id: 'spacerColumn', name: '', field: '', width: diff - 2 - colWidth });
+      if ((diff > 0) && !this.widthPercent && !col.width) {
+        this.settings.columns.push({ id: 'spacerColumn', cssClass: 'is-spacer', name: '', field: '', width: diff - 4 - colWidth });
       }
     }
 
@@ -4139,6 +4140,9 @@ Datagrid.prototype = {
    * @returns {array} Array with all header dom nodes
    */
   headerNodes() {
+    if (!this.headerContainer) {
+      return $();
+    }
     return this.headerContainer.find('tr:not(.datagrid-header-groups) th');
   },
 
@@ -6142,11 +6146,11 @@ Datagrid.prototype = {
   * @returns {void}
   */
   syncHeaderCheckbox(rows) {
-    if (!this.headerRow) {
+    if (this.headerNodes().length === 0) {
       return;
     }
 
-    const headerCheckbox = this.headerRow.find('.datagrid-checkbox');
+    const headerCheckbox = this.headerNodes().find('.datagrid-checkbox');
     const rowsLength = rows.length;
     const selectedRowsLength = this._selectedRows.length;
     const status = headerCheckbox.data('selected');

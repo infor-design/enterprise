@@ -20,6 +20,8 @@ demo:
     slug: example-drilldown
   - name: Editing
     slug: example-editable
+  - name: Empty Message Area
+    slug: example-empty-message
   - name: Paging (Indeterminate)
     slug: example-paging-indeterminate
   - name: Paging (Server Side)
@@ -60,8 +62,6 @@ demo:
     slug: example-summary-row
   - name: Export to Excel
     slug: example-export-from-button
-  - name: Empty Message Area
-    slug: example-empty-message
   - name: Expandable Cells
     slug: example-expandable-cells
 ---
