@@ -8,7 +8,7 @@
 ### v4.16.0 Features
 
 - `[Busy Indicator]` Made a fix to make it possible to use a busy indicator on a modals. ([#827](https://github.com/infor-design/enterprise/issues/827))
-- `[Hierarchy]` Add print media styles to decrease ink usage and increase presentability for print format. ([#456](https://github.com/infor-design/enterprise/issues/456))
+- `[Hierarchy]` Add print media styles to decrease ink usage and increase presentability for print format. Note that you may need to enable the setting to print background images, both Mac and PC have a setting for this. ([#456](https://github.com/infor-design/enterprise/issues/456))
 
 ### v4.16.0 Fixes
 
