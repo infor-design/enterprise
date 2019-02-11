@@ -360,7 +360,7 @@ const formatters = {
 
   SummaryRow(row, cell, value, col) {
     let afterText = '';
-    let beforeText = col.summaryText || `<b class="datagrid-summary-totals">${Locale.translate('Total')} </b>`;
+    let beforeText = col.summaryText || '';
 
     if (col.summaryTextPlacement === 'after') {
       afterText = beforeText;

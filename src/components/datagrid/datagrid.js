@@ -2807,7 +2807,17 @@ Datagrid.prototype = {
 
     // Append a Summary Row
     if (this.settings.summaryRow) {
-      tableHtml += self.rowHtml(self.calculateTotals(), this.recordCount, null, false, true);
+      const totals = self.calculateTotals();
+      const summaryRowHtml = self.rowHtml(totals, this.recordCount, null, false, true);
+      if (self.hasLeftPane && summaryRowHtml.left) {
+        tableHtmlLeft += summaryRowHtml.left;
+      }
+      if (summaryRowHtml.center) {
+        tableHtml += summaryRowHtml.center;
+      }
+      if (self.hasRightPane && summaryRowHtml.right) {
+        tableHtmlRight += summaryRowHtml.right;
+      }
     }
 
     if (self.bodyColGroupHtml !== '<colgroup>') {
@@ -4898,7 +4908,7 @@ Datagrid.prototype = {
   setEmptyMessage(emptyMessage) {
     if (!this.emptyMessage) {
       this.emptyMessageContainer = $('<div>');
-      this.bodyWrapperCenter.prepend(this.emptyMessageContainer);
+      this.bodyContainer.before(this.emptyMessageContainer);
       this.emptyMessage = this.emptyMessageContainer.emptymessage(emptyMessage).data('emptymessage');
       this.checkEmptyMessage();
     } else {
@@ -4967,35 +4977,6 @@ Datagrid.prototype = {
     }
 
     return false;
-  },
-
-  /**
-   * Returns the row dom jQuery node.
-   * @param  {number} row The row index.
-   * @returns {object} The dom jQuery node
-   */
-  rowNodes(row) {
-    if (row instanceof jQuery) {
-      row = row.attr('aria-rowindex') - 1;
-    }
-    const leftNodes = this.tableBodyLeft ? this.tableBodyLeft.find(`tr[aria-rowindex="${row + 1}"]`) : $();
-    const centerNodes = this.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
-    const rightNodes = this.tableBodyRight ? this.tableBodyRight.find(`tr[aria-rowindex="${row + 1}"]`) : $();
-
-    return $(centerNodes)
-      .add(leftNodes)
-      .add(rightNodes);
-  },
-
-  /**
-   * Returns the cell dom node.
-   * @param  {number} row The row index.
-   * @param  {number} cell The cell index.
-   * @returns {object} The dom node
-   */
-  cellNode(row, cell) {
-    const cells = this.rowNodes(row).find('td');
-    return cells.eq(cell >= cells.length ? cells.length - 1 : cell);
   },
 
   /**
@@ -7556,7 +7537,7 @@ Datagrid.prototype = {
       dataRowIndex = this.dataRowIndex(cellNode.parent());
     }
 
-    const cell = cellNode.index();
+    const cell = cellNode.attr('aria-colindex') - 1;
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.settings.dataset[dataRowIndex];
@@ -8159,14 +8140,14 @@ Datagrid.prototype = {
    */
   updateCellNode(row, cell, value, fromApiCall, isInline) {
     let coercedVal;
-    let rowNode = this.actualRowNode(row);
-    let cellNode = rowNode.find('td').eq(cell);
+    let rowNodes = this.rowNodes(row);
+    let cellNode = rowNodes.find('td').eq(cell);
     const col = this.settings.columns[cell] || {};
     let formatted = '';
     const formatter = (col.formatter ? col.formatter : this.defaultFormatter);
     const isEditor = $('.editor', cellNode).length > 0;
     const isTreeGrid = this.settings.treeGrid;
-    let dataRowIndex = this.dataRowIndex(rowNode);
+    let dataRowIndex = this.dataRowIndex(rowNodes);
     if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }
@@ -8174,9 +8155,10 @@ Datagrid.prototype = {
       this.settings.treeDepth[row].node :
       this.settings.dataset[dataRowIndex];
 
-    if (rowNode.length === 0 && this.settings.paging) {
-      rowNode = this.visualRowNode(row);
-      cellNode = rowNode.find('td').eq(cell);
+    if (rowNodes.length === 0 && this.settings.paging) {
+      // TODO Frozen Editing with Paging
+      rowNodes = this.visualRowNode(row);
+      cellNode = rowNodes.find('td').eq(cell);
     }
     const oldVal = this.fieldValue(rowData, col.field);
 
@@ -8193,8 +8175,8 @@ Datagrid.prototype = {
     }
 
     // Remove rowStatus icon
-    if (rowNode.length && rowData && !rowData.rowStatus) {
-      const rowstatusIcon = rowNode.find('svg.icon-rowstatus');
+    if (rowNodes.length && rowData && !rowData.rowStatus) {
+      const rowstatusIcon = rowNodes.find('svg.icon-rowstatus');
       if (rowstatusIcon.length) {
         rowstatusIcon.remove();
       }
@@ -8207,8 +8189,10 @@ Datagrid.prototype = {
     if (cell === 0 && rowData && rowData.rowStatus) {
       let svg = cellNode.find('svg.icon-rowstatus');
 
-      if (rowNode[0] && cellNode[0]) {
-        rowNode[0].classList.add(`rowstatus-row-${rowData.rowStatus.icon}`);
+      if (rowNodes && cellNode[0]) {
+        for (let i = 0; i < rowNodes.length; i++) {
+          rowNodes[i].classList.add(`rowstatus-row-${rowData.rowStatus.icon}`);
+        }
         cellNode[0].classList.add('rowstatus-cell');
 
         if (!svg.length) {
@@ -8410,8 +8394,37 @@ Datagrid.prototype = {
   },
 
   /**
+   * Returns the row dom jQuery node.
+   * @param  {number} row The row index.
+   * @returns {object} The dom jQuery node
+   */
+  rowNodes(row) {
+    if (row instanceof jQuery) {
+      row = row.attr('aria-rowindex') - 1;
+    }
+    const leftNodes = this.tableBodyLeft ? this.tableBodyLeft.find(`tr[aria-rowindex="${row + 1}"]`) : $();
+    const centerNodes = this.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
+    const rightNodes = this.tableBodyRight ? this.tableBodyRight.find(`tr[aria-rowindex="${row + 1}"]`) : $();
+
+    return $(centerNodes)
+      .add(leftNodes)
+      .add(rightNodes);
+  },
+  /**
+   * Returns the cell dom node.
+   * @param  {number} row The row index.
+   * @param  {number} cell The cell index.
+   * @returns {object} The dom node
+   */
+  cellNode(row, cell) {
+    const cells = this.rowNodes(row).find('td');
+    return cells.eq(cell >= cells.length ? cells.length - 1 : cell);
+  },
+
+  /**
    * For an internal row node, get the dataset row index
    * @private
+   * @deprecated Should use rowNodes for frozen columns.
    * @param {number} row The row node.
    * @returns {object} The row index in the dataset.
    */

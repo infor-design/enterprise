@@ -6,14 +6,6 @@
     border-bottom: 1px solid $color !important;
     box-shadow: 0 -1px 1px -1px $color;
 
-    &:first-child {
-      border-left: 1px solid $color;
-    }
-
-    &:last-child {
-      border-right: 1px solid $color;
-    }
-
     &.rowstatus-cell {
       position: relative;
 
@@ -38,6 +30,16 @@
         width: 10px;
       }
     }
+  }
+}
+
+@mixin rowstatusEndBorders($color) {
+  &:first-child {
+    border-left: 1px solid $color;
+  }
+
+  &:last-child {
+    border-right: 1px solid $color;
   }
 }
 
@@ -78,6 +80,66 @@ $datagrid-short-row-height: 23px;
   .datagrid-body {
     height: calc(100% - 40px);
 
+    &:first-of-type {
+      tr.rowstatus-row-error td:first-child {
+        @include rowstatusEndBorders($theme-color-status-danger);
+      }
+
+      tr.rowstatus-row-dirty td:first-child {
+        @include rowstatusEndBorders($dirty-icon-fill);
+      }
+
+      tr.rowstatus-row-alert td:first-child {
+        @include rowstatusEndBorders($alert-color);
+      }
+
+      tr.rowstatus-row-info td:first-child {
+        @include rowstatusEndBorders($theme-color-brand-primary-base);
+      }
+
+      tr.rowstatus-row-in-progress td:first-child {
+        @include rowstatusEndBorders($trigger-icon-fill-color);
+      }
+
+      tr.rowstatus-row-success td:first-child {
+        @include rowstatusEndBorders($theme-color-status-success);
+      }
+
+      tr.rowstatus-row-new td:first-child {
+        @include rowstatusEndBorders($trigger-icon-fill-color);
+      }
+    }
+
+    &:last-of-type {
+      tr.rowstatus-row-error td:last-child {
+        @include rowstatusEndBorders($theme-color-status-danger);
+      }
+
+      tr.rowstatus-row-dirty td:last-child {
+        @include rowstatusEndBorders($dirty-icon-fill);
+      }
+
+      tr.rowstatus-row-alert td:last-child {
+        @include rowstatusEndBorders($alert-color);
+      }
+
+      tr.rowstatus-row-info td:last-child {
+        @include rowstatusEndBorders($theme-color-brand-primary-base);
+      }
+
+      tr.rowstatus-row-in-progress td:last-child {
+        @include rowstatusEndBorders($trigger-icon-fill-color);
+      }
+
+      tr.rowstatus-row-success td:last-child {
+        @include rowstatusEndBorders($theme-color-status-success);
+      }
+
+      tr.rowstatus-row-new td:last-child {
+        @include rowstatusEndBorders($trigger-icon-fill-color);
+      }
+    }
+
     &.paginated {
       background-color: $datagrid-empty-bg-color;
     }
@@ -91,7 +153,7 @@ $datagrid-short-row-height: 23px;
     }
   }
 
-  //Heights for scrollbars
+  // Heights for scrollbars
   &.paginated {
     height: calc(100% - 40px);
   }
@@ -100,10 +162,10 @@ $datagrid-short-row-height: 23px;
     height: calc(100% - 90px);
   }
 
-  //Adjust borders and IE adjustment for vertical scrollbars
+  // Adjust borders and IE adjustment for vertical scrollbars
   &.has-vertical-scroll {
-    //Fix IE Scrollbar Offset Issue
-    &.is-windows .datagrid-header {
+    // Fix IE Scrollbar Offset Issue
+    &.is-windows .datagrid-header:not(.left):not(.right) {
       margin-right: 18px;
     }
   }
