@@ -1,0 +1,35 @@
+{
+  "ancestorPath": [{
+    "id": "1",
+    "name": "Charles Phillips",
+    "position": "CEO",
+    "employmentType": "FT",
+    "picture": "../../www/images/1.jpg",
+    "childrenUrl": "../charles-phillips.json"
+  }],
+  "centeredNode": {
+    "id": "2",
+    "name": "Pam Murphy",
+    "position": "COO",
+    "employmentType": "FT",
+    "avatarInitials": "PM"
+  },
+  "children": [
+    {
+      "id": "3",
+      "name": "Anne Benedict",
+      "position": "SVP, Human Resources",
+      "employmentType": "FT",
+      "avatarInitials": "AB",
+      "isLeaf": true
+    },
+    {
+      "id": "4",
+      "name": "Susan beal",
+      "position": "SVP, Chief Customer Officer",
+      "employmentType": "FT",
+      "avatarInitials": "SS",
+      "isLeaf": true
+    }
+  ]
+}

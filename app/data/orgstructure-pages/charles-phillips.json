@@ -1,0 +1,28 @@
+{
+  "ancestorPath": null,
+  "centeredNode": {
+    "id": "1",
+    "name": "Charles Phillips",
+    "position": "CEO",
+    "employmentType": "FT",
+    "picture": "../../www/images/1.jpg"
+  },
+  "children": [
+    {
+      "id": "2",
+      "name": "Pam Murphy",
+      "position": "COO",
+      "employmentType": "FT",
+      "avatarInitials": "KE",
+      "childrenUrl": "../pam-murphy.json"
+    },
+    {
+      "id": "3",
+      "name": "Soma Somasundaram",
+      "position": "CTO",
+      "employmentType": "FT",
+      "avatarInitials": "SS",
+      "childrenUrl": "./soma-somasundaram.json"
+    }
+  ]
+}
