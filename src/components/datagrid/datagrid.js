@@ -144,6 +144,7 @@ const DATAGRID_DEFAULTS = {
   allowSelectAcrossPages: null,
   groupable: null,
   spacerColumn: false,
+  showNewRowIndicator: true,
   stretchColumn: 'last',
   twoLineHeader: false,
   clickToSelect: true,
@@ -3076,7 +3077,7 @@ Datagrid.prototype = {
     const isSelected = this.isRowSelected(rowData);
     const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
-    if (rowData && rowData.rowStatus) {
+    if (rowData && rowData.rowStatus && self.settings.showNewRowIndicator) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
       rowStatus.icon = (rowData.rowStatus.icon === 'success') ? '#icon-check' : '#icon-exclamation';
