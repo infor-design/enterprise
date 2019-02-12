@@ -25,19 +25,19 @@ This example shows how to place several objects inside a block grid. The block g
 ```html
 <div class="row blockgrid l-center">
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
+    <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/ffffff"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
+    <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/ffffff"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
+    <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/ffffff"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
+    <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/ffffff"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
+    <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/ffffff"/>
   </div>
 </div>
 ```
@@ -47,13 +47,13 @@ It is also possible to pass a dataset to the block grid to support paging and se
 ```javascript
 var data = [];
 data.push({
-  image: 'https://randomuser.me/api/portraits/med/women/11.jpg',
+  image: '/images/11.jpg',
   title: 'Mary Pane',
   subtitle: 'Infor, Developer',
   id: 1
 });
 data.push({
-  image: 'https://randomuser.me/api/portraits/med/women/12.jpg',
+  image: '/images/12.jpg',
   title: 'Paula Paulson',
   subtitle: 'Infor, Architect',
   id: 2

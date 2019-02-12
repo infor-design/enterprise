@@ -194,6 +194,10 @@
       width: 300px;
     }
   }
+
+  .busy.overlay {
+    background-color: $modal-bg-color;
+  }
 }
 
 .overlay {

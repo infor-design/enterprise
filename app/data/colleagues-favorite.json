@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "photo": "https://randomuser.me/api/portraits/med/women/10.jpg",
+    "photo": "/images/10.jpg",
     "firstName": "Evyn",
     "lastName": "Shrive",
     "title": "Senior Developer",
@@ -30,7 +30,7 @@
   },
   {
     "id": 5,
-    "photo": "https://randomuser.me/api/portraits/med/women/12.jpg",
+    "photo": "/images/12.jpg",
     "firstName": "Jane",
     "title": "Senior Manager",
     "lastName": "Atger",
@@ -59,7 +59,7 @@
   },
   {
     "id": 8,
-    "photo": "https://randomuser.me/api/portraits/med/women/14.jpg",
+    "photo": "/images/14.jpg",
     "firstName": "Arluene",
     "lastName": "Danielczyk",
     "title": "Developer",
@@ -74,7 +74,7 @@
   },
   {
     "id": 9,
-    "photo": "https://randomuser.me/api/portraits/med/women/23.jpg",
+    "photo": "/images/23.jpg",
     "firstName": "Karese",
     "lastName": "Duncan",
     "title": "Senior Developer",
@@ -88,7 +88,7 @@
   },
   {
     "id": 10,
-    "photo": "https://randomuser.me/api/portraits/med/women/24.jpg",
+    "photo": "/images/24.jpg",
     "firstName": "Catie",
     "lastName": "Culp",
     "title": "Senior Developer",
@@ -102,7 +102,7 @@
   },
   {
     "id": 11,
-    "photo": "https://randomuser.me/api/portraits/med/women/25.jpg",
+    "photo": "/images/25.jpg",
     "firstName": "Oprah",
     "lastName": "Smitherson",
     "title": "Senior Developer",
@@ -116,7 +116,7 @@
   },
   {
     "id": 12,
-    "photo": "https://randomuser.me/api/portraits/med/women/26.jpg",
+    "photo": "/images/26.jpg",
     "firstName": "Andie",
     "lastName": "Andrewsen",
     "title": "Senior Developer",
