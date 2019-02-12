@@ -57,11 +57,11 @@ Rating.prototype = {
       .addClass('is-filled')
       .removeClass('is-half')
       .next(svg)
-        .find('svg')
-        .changeIcon('star-filled');
+      .find('svg')
+      .changeIcon('star-filled');
   },
 
-    /**
+  /**
    * Icon empty star
    * @param {jQuery|HTMLElement} inpt - Input element
    * @param {jQuery|HTMLElement} svg - SVG element
@@ -71,8 +71,8 @@ Rating.prototype = {
       .removeClass('is-filled')
       .removeClass('is-half')
       .next(svg)
-        .find('svg')
-        .changeIcon('star-outlined');
+      .find('svg')
+      .changeIcon('star-outlined');
   },
 
   /**
@@ -85,8 +85,8 @@ Rating.prototype = {
       .addClass('is-half')
       .removeClass('is-filled')
       .next(svg)
-        .find('svg')
-        .changeIcon('star-half');
+      .find('svg')
+      .changeIcon('star-half');
   },
 
   /**
@@ -107,19 +107,16 @@ Rating.prototype = {
     const chkIdx = Math.floor(this.currentValue);
 
     for (let i = 0, l = this.allInputs.length; i < l; i++) {
-
       const input = $(this.allInputs[i]);
       const svgSelector = input.parent().is('.inline') ? 'svg' : 'label';
       const valNotAWholeNumber = (value % 1 !== 0 && chkIdx === i);
 
       if (valNotAWholeNumber) {
         this.halfStar(input, svgSelector);
+      } else if (i < value) {
+        this.fillStar(input, svgSelector);
       } else {
-        if (i < value) {
-          this.fillStar(input, svgSelector);
-        } else {
-          this.emptyStar(input, svgSelector);
-        }
+        this.emptyStar(input, svgSelector);
       }
 
       if (i + 1 === chkIdx) {
