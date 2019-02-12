@@ -3112,7 +3112,7 @@ td .btn-actions {
 // RTL Styles
 html[dir='rtl'] {
   .datagrid {
-    //Restore right Border
+    // Restore right Border
     th:last-child {
       border-right: 1px solid $datagrid-header-border-color;
     }
@@ -3377,6 +3377,9 @@ html[dir='rtl'] {
       top: 0;
     }
 
+    &.left th:last-child {
+      border-left: 1px solid $datagrid-header-border-color;
+    }
   }
 
   //Contextual toolbar
@@ -3404,6 +3407,18 @@ html[dir='rtl'] {
         margin-left: 18px;
         margin-right: 0;
       }
+    }
+
+    .datagrid-body:not(.left) td:last-child {
+      border-right-color: $datagrid-cell-border-color;
+    }
+
+    .datagrid-body.left td:last-child {
+      border-left: 1px solid $datagrid-cell-border-color;
+    }
+
+    .datagrid-body:not(.left):not(.right) td:first-child {
+      border-right-color: transparent;
     }
   }
 

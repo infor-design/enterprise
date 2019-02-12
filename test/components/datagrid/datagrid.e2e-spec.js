@@ -221,47 +221,17 @@ describe('Datagrid filter tests', () => {
   });
 });
 
-describe('Datagrid index tests', () => {
+describe('Datagrid frozen column tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-index?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-frozen-columns?layout=nofrills');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-    await element(by.css('body')).sendKeys(protractor.Key.TAB);
-    await element(by.css('body')).sendKeys(protractor.Key.TAB);
   });
 
   it('Should not have errors', async () => {
     await utils.checkForErrors();
-  });
-
-  it('Should show results', async () => {
-    expect(await element(by.className('datagrid-result-count')).getText()).toBe('(7 Results)');
-  });
-
-  it('Should navigate with arrow keys', async () => {
-    await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-    await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-
-    let cellEl = await browser.driver.switchTo().activeElement();
-
-    expect(await cellEl.getAttribute('aria-colindex')).toBe('1');
-
-    await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
-    cellEl = await browser.driver.switchTo().activeElement();
-
-    expect(await cellEl.getAttribute('aria-colindex')).toBe('2');
-
-    await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
-    cellEl = await browser.driver.switchTo().activeElement();
-
-    expect(await cellEl.getAttribute('aria-colindex')).toBe('1');
-
-    await browser.driver.actions().sendKeys(protractor.Key.ARROW_UP).perform();
-    cellEl = await browser.driver.switchTo().activeElement();
-
-    expect(await cellEl.getAttribute('aria-colindex')).toBe('1');
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -272,9 +242,63 @@ describe('Datagrid index tests', () => {
       const datagridEl = await element(by.id('datagrid'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-frozen')).toEqual(0);
     });
   }
+
+  it('Should render frozen columns', async () => {
+    // Check all containers rendered on the header
+    expect(await element.all(by.css('.datagrid-header th')).count()).toEqual(15);
+    expect(await element.all(by.css('.datagrid-header.left th')).count()).toEqual(2);
+    expect(await element.all(by.css('.datagrid-header.right th')).count()).toEqual(1);
+
+    // Check all containers rendered on the body
+    expect(await element.all(by.css('.datagrid-body tr:first-child td')).count()).toEqual(15);
+    expect(await element.all(by.css('.datagrid-body.left tr:first-child td')).count()).toEqual(2);
+    expect(await element.all(by.css('.datagrid-body.right tr:first-child td')).count()).toEqual(1);
+
+    // Check all rows rendered on the body
+    expect(await element.all(by.css('.datagrid-body tr')).count()).toEqual(150);
+    expect(await element.all(by.css('.datagrid-body.left tr')).count()).toEqual(50);
+    expect(await element.all(by.css('.datagrid-body.right tr')).count()).toEqual(50);
+  });
+});
+
+describe('Datagrid grouping headers and filter tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-grouping-filter?layout=nofrills');
+
+    const datagridEl = await element(by.css('.datagrid-rowgroup-header'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+
+      const datagridEl = await element(by.id('datagrid'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-group-filter')).toEqual(0);
+    });
+  }
+
+  it('Should filter and show groups', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(16);
+    expect(await element.all(by.css('.datagrid-rowgroup-header')).count()).toEqual(7);
+
+    await element(by.css('#example-grouping-filter-datagrid-1-header-filter-1')).sendKeys('Ha');
+    await element(by.css('#example-grouping-filter-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(5);
+    expect(await element.all(by.css('.datagrid-rowgroup-header')).count()).toEqual(2);
+  });
 });
 
 describe('Datagrid grouping with paging tests', () => {
@@ -335,6 +359,94 @@ describe('Datagrid grouping with paging tests', () => {
     await element(by.css(cell)).click();
 
     expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
+  });
+});
+
+describe('Datagrid index tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-index?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await element(by.css('body')).sendKeys(protractor.Key.TAB);
+    await element(by.css('body')).sendKeys(protractor.Key.TAB);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show results', async () => {
+    expect(await element(by.className('datagrid-result-count')).getText()).toBe('(7 Results)');
+  });
+
+  it('Should navigate with arrow keys', async () => {
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+
+    let cellEl = await browser.driver.switchTo().activeElement();
+
+    expect(await cellEl.getAttribute('aria-colindex')).toBe('1');
+
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
+    cellEl = await browser.driver.switchTo().activeElement();
+
+    expect(await cellEl.getAttribute('aria-colindex')).toBe('2');
+
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
+    cellEl = await browser.driver.switchTo().activeElement();
+
+    expect(await cellEl.getAttribute('aria-colindex')).toBe('1');
+
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_UP).perform();
+    cellEl = await browser.driver.switchTo().activeElement();
+
+    expect(await cellEl.getAttribute('aria-colindex')).toBe('1');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+
+      const datagridEl = await element(by.id('datagrid'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-index')).toEqual(0);
+    });
+  }
+});
+
+describe('Datagrid keyword search tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-keyword-search?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should filter keyword results', async () => {
+    expect(await element.all(by.css('.datagrid-body tr')).count()).toEqual(12);
+    await element(by.id('gridfilter')).sendKeys('T');
+    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('.datagrid-body tr')).count()).toEqual(11);
+  });
+
+  it('Should highlight keyword results', async () => {
+    expect(await element.all(by.css('.datagrid-body tr')).count()).toEqual(12);
+    await element(by.id('gridfilter')).sendKeys('26');
+    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('.datagrid-body tr')).count()).toEqual(6);
+    expect(await element.all(by.css('.search-mode i')).count()).toEqual(6);
+    expect(await element.all(by.css('.search-mode i')).get(0).getText()).toEqual('26');
   });
 });
 
