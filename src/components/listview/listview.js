@@ -212,6 +212,13 @@ ListView.prototype = {
     const self = this;
     let totals = {};
     let displayedDataset = dataset;
+    let firstRecordIdx = 0;
+    let lastRecordIdx = displayedDataset.length;
+    let setSize = pagerInfo.total;
+
+    if (pagerInfo.filteredTotal) {
+      setSize = pagerInfo.filteredTotal;
+    }
 
     // If the paging information sets limits on the dataset, customize the
     // displayed dataset to fit the conditions.
@@ -222,8 +229,8 @@ ListView.prototype = {
         if (this.filteredDataset) {
           trueActivePage = pagerInfo.filteredActivePage;
         }
-        const firstRecordIdx = pagerInfo.pagesize * trueActivePage;
-        const lastRecordIdx = pagerInfo.pagesize * (trueActivePage + 1);
+        firstRecordIdx = pagerInfo.pagesize * trueActivePage;
+        lastRecordIdx = pagerInfo.pagesize * (trueActivePage + 1);
         displayedDataset = dataset.slice(firstRecordIdx, lastRecordIdx);
       }
     }
@@ -298,7 +305,7 @@ ListView.prototype = {
       }
 
       // Add Aria
-      item.attr({ 'aria-posinset': i + 1, 'aria-setsize': items.length });
+      item.attr({ 'aria-posinset': (firstRecordIdx + i + 1), 'aria-setsize': setSize });
 
       // Add Aria disabled
       if (item.hasClass('is-disabled')) {

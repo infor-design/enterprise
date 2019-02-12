@@ -752,6 +752,9 @@ Datagrid.prototype = {
       this.renderRows();
     }
 
+    // Setup focus on the first cell
+    this.cellNode(0, 0, true).attr('tabindex', '0');
+
     this.syncSelectedUI();
   },
 
