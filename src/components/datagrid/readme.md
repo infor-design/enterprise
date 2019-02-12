@@ -22,6 +22,14 @@ demo:
     slug: example-editable
   - name: Empty Message Area
     slug: example-empty-message
+  - name: Expandable Cells
+    slug: example-expandable-cells
+  - name: Expandable Row
+    slug: example-expandable-row
+  - name: Export to Excel
+    slug: example-export-from-button
+  - name: Filtering
+    slug: example-filter
   - name: Paging (Indeterminate)
     slug: example-paging-indeterminate
   - name: Paging (Server Side)
@@ -30,12 +38,8 @@ demo:
     slug: example-paging-client-side
   - name: Column Reordering
     slug: example-reorder
-  - name: Expandable Row
-    slug: example-expandable-row
   - name: Row Reordering
     slug: example-row-reorder
-  - name: Filtering
-    slug: example-filter
   - name: Selection (Single)
     slug: example-singleselect
   - name: Selection (Multiple)
@@ -60,10 +64,6 @@ demo:
     slug: example-mixed-selection
   - name: Summary Row
     slug: example-summary-row
-  - name: Export to Excel
-    slug: example-export-from-button
-  - name: Expandable Cells
-    slug: example-expandable-cells
 ---
 ## Code Example
 

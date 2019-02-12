@@ -3236,16 +3236,10 @@ Datagrid.prototype = {
     }
 
     // Group Rows
-    let visibleColumnsLeft = 0;
-    let visibleColumnsCenter = 0;
-    let visibleColumnsRight = 0;
-
-    if (this.settings.groupable && isGroup) {
-      visibleColumnsLeft = this.settings.frozenColumns.left.length;
-      visibleColumnsRight = this.settings.frozenColumns.right.length;
-      visibleColumnsCenter = this.visibleColumns().length -
-        visibleColumnsLeft - visibleColumnsRight;
-    }
+    const visibleColumnsLeft = this.settings.frozenColumns.left.length;
+    const visibleColumnsRight = this.settings.frozenColumns.right.length;
+    const visibleColumnsCenter = this.visibleColumns().length -
+      visibleColumnsLeft - visibleColumnsRight;
 
     if (this.settings.groupable && isGroup && !isFooter) {
       const groupRowHtml = Formatters.GroupRow(dataRowIdx, 0, null, null, rowData, this);
@@ -3501,13 +3495,27 @@ Datagrid.prototype = {
         renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });
       }
 
-      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${this.visibleColumns().length}">` +
-        `<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>` +
-        '</td></tr>';
+      if (this.hasLeftPane) {
+        containerHtml.left += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsLeft}">
+          <div class="datagrid-row-detail"><div style="height: ${self.settings.rowTemplateHeight || '107'}px"></div></div>
+          </td></tr>`;
+      }
+      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">
+        <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
+        </td></tr>`;
+      if (this.hasRightPane) {
+        containerHtml.right += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsLeft}">
+          </td></tr>`;
+      }
     }
 
     if (self.settings.expandableRow) {
-      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${this.visibleColumns().length}">` +
+      if (this.hasLeftPane) {
+        containerHtml.left += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsLeft}">` +
+          '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>' +
+          '</td></tr>';
+      }
+      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">` +
         '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>' +
         '</td></tr>';
     }
@@ -8812,7 +8820,7 @@ Datagrid.prototype = {
    */
   toggleRowDetail(dataRowIndex) {
     const self = this;
-    let rowElement = self.actualRowNode(dataRowIndex);
+    let rowElement = self.rowNodes(dataRowIndex);
     if (!rowElement.length && self.settings.paging &&
       (self.settings.rowTemplate || self.settings.expandableRow)) {
       dataRowIndex += ((self.pager.activePage - 1) * self.settings.pagesize);
@@ -8867,7 +8875,11 @@ Datagrid.prototype = {
     }
 
     if (expandRow.hasClass('is-expanded')) {
-      expandRow.removeClass('is-expanded');
+      // expandRow.removeClass('is-expanded');
+      detail.one('animateclosedcomplete', () => {
+        expandRow.removeClass('is-expanded');
+      }).animateClosed();
+
       expandButton.removeClass('is-expanded')
         .find('.plus-minus').removeClass('active');
 
@@ -8875,7 +8887,7 @@ Datagrid.prototype = {
         rowElement.removeClass('is-rowactivated');
       }
 
-      detail.animateClosed();
+      // detail.animateClosed();
       self.element.triggerHandler('collapserow', [{ grid: self, row: dataRowIndex, detail, item }]);
     } else {
       expandRow.addClass('is-expanded');
