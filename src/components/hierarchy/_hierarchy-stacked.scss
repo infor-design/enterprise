@@ -1,0 +1,95 @@
+.hierarchy.layout-is-stacked {
+  legend {
+    margin: 10px 0;
+    text-align: center;
+
+    .key {
+      margin-left: 0;
+    }
+  }
+
+  .root + .sub-level {
+    padding-left: 0;
+  }
+
+  .leaf.root.ancestor {
+    margin-bottom: 25px;
+  }
+
+  // Centered node
+  .leaf.root.ancestor:last-of-type {
+    margin-bottom: 0;
+
+    // Centered node should not have a visible expand/collapse button
+    .btn {
+      display: none;
+    }
+  }
+
+  .sub-level > li:last-child::before {
+    border-right: none;
+    margin: 0 0 0 -40px;
+    width: calc(100% + 40px);
+  }
+
+  .sub-level > li:first-child::before {
+    border-left: none;
+    margin: 0;
+    width: 100%;
+  }
+
+  .leaf.root .btn-actions,
+  .leaf.root .btn-expand,
+  .leaf.root .btn-collapse {
+    height: 30px;
+    left: auto;
+    min-height: 30px;
+    min-width: 30px;
+    right: 13px;
+    top: 22px;
+    width: 30px;
+
+    .icon {
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  .leaf.root .btn-icon {
+    top: 16px;
+  }
+
+  @media (min-width: $breakpoint-phablet) {
+    ul > li > .leaf {
+      max-width: 260px;
+    }
+  }
+
+  @media (max-width: $breakpoint-phablet) {
+    legend {
+      text-align: left;
+    }
+
+    .root {
+      width: 100%;
+    }
+
+    .root + .sub-level::before {
+      height: 25px;
+      left: 50%;
+      width: auto;
+    }
+
+    .container .chart .sub-level {
+      padding-left: 0;
+    }
+
+    .sub-level > li {
+      padding-bottom: 25px;
+    }
+
+    .container .chart .sub-level li .leaf {
+      max-width: 100%;
+    }
+  }
+}

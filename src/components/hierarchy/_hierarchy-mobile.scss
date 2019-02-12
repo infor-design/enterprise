@@ -1,0 +1,118 @@
+// Media Query for Mobile View
+@mixin hierarchy-mobile {
+  margin: 0 auto;
+  text-align: center;
+
+  legend {
+    text-align: left;
+
+    li {
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+  }
+
+  .container {
+    display: inline-block;
+    margin: 0;
+
+    .chart {
+      .sub-level {
+        padding-left: 45px;
+
+        li {
+          .leaf {
+            max-width: 315px;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  &.layout-is-paging .container {
+    display: table;
+  }
+
+  // Top of the Chain
+  .root {
+    margin: 0;
+
+    &::after {
+      background: transparent;
+      height: 0;
+      width: 0;
+    }
+
+    + .sub-level {
+      .leaf::before {
+        background-color: transparent;
+        border-bottom: 1px solid $hierarchy-line-color;
+        content: '';
+        height: 1px;
+        left: -29px;
+        position: absolute;
+        top: 35px;
+        width: 24px;
+      }
+
+      &::before {
+        background-color: transparent;
+        border-bottom: 1px solid $hierarchy-line-color;
+        border-left: 1px solid $hierarchy-line-color;
+        height: calc(100% - 73px);
+        left: 20px;
+        width: 300px;
+        z-index: -1;
+      }
+    }
+  }
+
+  .sub-level {
+    margin-left: 0;
+  }
+
+  //Top level attached to root
+  .top-level::after {
+    left: 158px;
+  }
+
+  .top-level li {
+    display: block;
+    padding: 10px 0;
+  }
+
+  // TODO: borders look weird on mobile view.
+  // Hiding for now
+  .top-level > li:first-child::before,
+  .sub-level > li:first-child::before,
+  .sub-level > li::before,
+  .top-level > li::before,
+  .sub-level > li:last-child::before,
+  .top-level > li:last-child::before {
+    display: none;
+  }
+
+  //Bottom Nodes
+  .sub-level > li {
+    display: block;
+    padding: 0;
+    padding-bottom: 30px;
+  }
+
+  .sub-level > li.branch-collapsed {
+    padding-bottom: 30px;
+    padding-right: 5px;
+  }
+}
+
+@include respond-to(phablet) {
+  .hierarchy {
+    @include hierarchy-mobile;
+  }
+}
+
+.layout-is-mobile-only {
+  @include hierarchy-mobile;
+}
