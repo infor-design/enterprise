@@ -1,12 +1,14 @@
 {
-  "ancestorPath": [{
-    "id": "1",
-    "name": "Charles Phillips",
-    "position": "CEO",
-    "employmentType": "FT",
-    "picture": "../../www/images/1.jpg",
-    "childrenUrl": "../charles-phillips.json"
-  }],
+  "ancestorPath": [
+    {
+      "id": "1",
+      "name": "Charles Phillips",
+      "position": "CEO",
+      "employmentType": "FT",
+      "picture": "../../www/images/1.jpg",
+      "childrenUrl": "../charles-phillips.json"
+    }
+  ],
   "centeredNode": {
     "id": "2",
     "name": "Pam Murphy",

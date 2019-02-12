@@ -1,29 +1,45 @@
 {
-  "ancestorPath": null,
+  "ancestorPath": [
+    {
+      "id": "1",
+      "name": "Charles Phillips",
+      "position": "CEO",
+      "employmentType": "FT",
+      "picture": "../../www/images/1.jpg",
+      "childrenUrl": "./charles-phillips.json"
+    }
+  ],
   "centeredNode": {
-    "id": "1",
-    "name": "Charles Phillips",
-    "position": "CEO",
+    "id": "2",
+    "name": "Soma Somasundaram",
+    "position": "CTO",
     "employmentType": "FT",
-    "picture": "../../www/images/1.jpg",
-    "childrenUrl": "../charles-phillips.json"
+    "avatarInitials": "SS"
   },
   "children": [
     {
-      "id": "2",
-      "name": "Pam Murphy",
-      "position": "COO",
+      "id": "3",
+      "name": "John Mulchrone",
+      "position": "SVP, Software Development",
       "employmentType": "FT",
-      "avatarInitials": "KE",
-      "childrenUrl": "../pam-murphy.json",
+      "avatarInitials": "JM",
+      "isLeaf": true
     },
     {
-      "id": "3",
-      "name": "Soma Somasundaram",
-      "position": "CTO",
+      "id": "4",
+      "name": "Massimo Capoccia",
+      "position": "VP, Hook & Loop\nDevelopment",
       "employmentType": "FT",
-      "avatarInitials": "SS",
-      "childrenUrl": "./soma-somasundaram.json"
+      "avatarInitials": "NE",
+      "childrenUrl": "../massimo-capoccia.json"
+    },
+    {
+      "id": "5",
+      "name": "Nunzio Esposito",
+      "position": "VP, Hook & Loop Development",
+      "employmentType": "FT",
+      "avatarInitials": "NE",
+      "isLeaf": true
     }
   ]
 }

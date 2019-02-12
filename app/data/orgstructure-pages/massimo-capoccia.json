@@ -1,0 +1,44 @@
+{
+  "ancestorPath": [
+    {
+      "id": "1",
+      "name": "Charles Phillips",
+      "position": "CEO",
+      "employmentType": "FT",
+      "picture": "../../www/images/1.jpg",
+      "childrenUrl": "./charles-phillips.json"
+    },
+    {
+      "id": "2",
+      "name": "Soma Somasundaram",
+      "position": "CTO",
+      "employmentType": "FT",
+      "avatarInitials": "SS"
+    }
+  ],
+  "centeredNode": {
+    "id": "3",
+    "name": "Massimo Capoccia",
+    "position": "SVP, Software Development Development",
+    "employmentType": "FT",
+    "avatarInitials": "MC"
+  },
+  "children": [
+    {
+      "id": "4",
+      "name": "Eric Kneer",
+      "position": "SVP, Human Resources",
+      "employmentType": "FT",
+      "avatarInitials": "EK",
+      "childrenUrl": "./eric-kneer.json"
+    },
+    {
+      "id": "5",
+      "name": "Richard Patton",
+      "position": "SVP, Chief Customer Officer",
+      "employmentType": "FT",
+      "avatarInitials": "RP",
+      "isLeaf": true
+    }
+  ]
+}
