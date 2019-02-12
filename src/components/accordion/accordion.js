@@ -30,6 +30,7 @@ const COMPONENT_NAME = 'accordion';
 const ACCORDION_DEFAULTS = {
   allowOnePane: true,
   displayChevron: true,
+  enableTooltips: false,
   rerouteOnLinkClick: true,
   source: null
 };
