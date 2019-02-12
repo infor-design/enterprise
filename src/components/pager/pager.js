@@ -1252,7 +1252,7 @@ Pager.prototype = {
       delete this.filteredActivePage;
     }
 
-    if (!pagingInfo.type) {
+    if (!this.settings.inderterminate || !pagingInfo.type) {
       pagingInfo.type = 'pageinfo';
     }
 
