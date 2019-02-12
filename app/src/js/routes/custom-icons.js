@@ -20,7 +20,7 @@ const hbsTemplate = `
 {{#each categories as |cat catKey|}}
   <div class="row top-padding">
     <div class="twelve columns">
-      <h2 class="fieldset-title" style="text-transform: capitalize;">{{cat.name}}({{cat.icons.length}} icons)</h2>
+      <h2 class="fieldset-title" style="text-transform: capitalize;">{{cat.name}} ({{cat.icons.length}} icons)</h2>
     </div>
   </div>
 
