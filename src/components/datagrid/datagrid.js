@@ -258,7 +258,7 @@ Datagrid.prototype = {
     * @property {object} event - The jquery event object
     * @property {array} ui - An array with references to the domElement, header and pagerBar
     */
-    this.element.trigger('rendered', [this.element, this.headerRow, this.pagerBar]);
+    this.element.trigger('rendered', [this.element, this.headerContainer.find('thead'), this.pagerBar]);
   },
 
   /**
@@ -1347,7 +1347,7 @@ Datagrid.prototype = {
     }
 
     // Attach Keyboard support
-    this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
+    this.headerContainer.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
       const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
       const popupmenu = $(this).data('popupmenu');
 
@@ -1385,7 +1385,7 @@ Datagrid.prototype = {
     });
 
     let typingTimer;
-    this.headerRow.off('keydown.datagrid').on('keydown.datagrid', '.datagrid-filter-wrapper input', (e) => {
+    this.headerContainer.off('keydown.datagrid').on('keydown.datagrid', '.datagrid-filter-wrapper input', (e) => {
       clearTimeout(typingTimer);
       e.stopPropagation();
 
@@ -1399,7 +1399,7 @@ Datagrid.prototype = {
     });
 
     if (this.settings.filterWhenTyping) {
-      this.headerRow.off('keyup.datagrid').on('keyup.datagrid', '.datagrid-filter-wrapper input', (e) => {
+      this.headerContainer.off('keyup.datagrid').on('keyup.datagrid', '.datagrid-filter-wrapper input', (e) => {
         if (e.which === 13) {
           return;
         }
@@ -1415,7 +1415,7 @@ Datagrid.prototype = {
       });
     }
 
-    this.headerRow.find('tr:last th').each(function () {
+    this.headerContainer.find('tr:last th').each(function () {
       const col = self.columnById($(this).attr('data-column-id'))[0];
       const elem = $(this);
 
@@ -1622,9 +1622,9 @@ Datagrid.prototype = {
   */
   toggleFilterRow() {
     if (this.settings.filterable) {
-      this.headerRow.removeClass('is-filterable');
-      this.headerRow.find('.is-filterable').removeClass('is-filterable');
-      this.headerRow.find('.datagrid-filter-wrapper').hide();
+      this.headerContainer.find('thead').removeClass('is-filterable');
+      this.headerContainer.find('.is-filterable').removeClass('is-filterable');
+      this.headerContainer.find('.datagrid-filter-wrapper').hide();
       this.settings.filterable = false;
       this.filterRowRendered = false;
       this.element.removeClass('has-filterable-columns');
@@ -1646,9 +1646,9 @@ Datagrid.prototype = {
         this.element.addClass('has-two-line-header');
       }
 
-      this.headerRow.addClass('is-filterable');
-      this.headerRow.find('.is-filterable').addClass('is-filterable');
-      this.headerRow.find('.datagrid-filter-wrapper').show();
+      this.headerContainer.find('thead').addClass('is-filterable');
+      this.headerContainer.find('.is-filterable').addClass('is-filterable');
+      this.headerContainer.find('.datagrid-filter-wrapper').show();
 
       /**
       * Fires after the filter row is opened by the user.
@@ -1786,7 +1786,7 @@ Datagrid.prototype = {
           let values = null;
           if (conditions[i].operator === 'in-range') {
             const cell = self.settings.columns.indexOf(columnDef);
-            const input = self.headerRow.find(`th:eq(${cell}) .datagrid-filter-wrapper input`);
+            const input = self.headerContainer.find(`th:eq(${cell}) .datagrid-filter-wrapper input`);
             const datepickerApi = input.data('datepicker');
             if (datepickerApi) {
               rangeData = datepickerApi.settings.range.data;
@@ -2036,9 +2036,9 @@ Datagrid.prototype = {
       return;
     }
 
-    this.headerRow.find('input, select').val('').trigger('updated');
+    this.headerContainer.find('input, select').val('').trigger('updated');
     // reset all the filters to first item
-    this.headerRow.find('.btn-filter').each(function () {
+    this.headerContainer.find('.btn-filter').each(function () {
       const btn = $(this);
       const ul = btn.next();
       const first = ul.find('li:first');
@@ -2059,7 +2059,7 @@ Datagrid.prototype = {
   setFilterConditions(conditions) {
     for (let i = 0; i < conditions.length; i++) {
       // Find the filter row
-      const rowElem = this.headerRow.find(`th[data-column-id="${conditions[i].columnId}"]`);
+      const rowElem = this.headerContainer.find(`th[data-column-id="${conditions[i].columnId}"]`);
       const input = rowElem.find('input, select');
       const btn = rowElem.find('.btn-filter');
 
@@ -2980,7 +2980,9 @@ Datagrid.prototype = {
     * @property {HTMLElement} header Object table header area
     * @property {HTMLElement} pager Object pager body area
     */
-    self.element.trigger('afterrender', { body: self.tableBody, header: self.headerRow, pager: self.pagerBar });
+    setTimeout(() => {
+      self.element.trigger('afterrender', { body: self.bodyContainer, header: self.headerContainer, pager: self.pagerBar });
+    });
   },
 
   /**
@@ -5824,7 +5826,7 @@ Datagrid.prototype = {
 
       // Check in all visible columns
       if (filterExpr.column === 'all') {
-        self.headerRow.find('th:visible').each(function () { //eslint-disable-line
+        self.headerContainer.find('th:visible').each(function () { //eslint-disable-line
           const th = $(this);
           const columnId = th.attr('data-column-id');
 

@@ -27,7 +27,6 @@
                       {id:'Error', value:'Error', label:'Error'}];
 
       var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
-                         {id: '', value: '', label: 'Default Activity'},
                          {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
 
     var lookupOptions = {
@@ -54,7 +53,7 @@
 
       // Define Columns for the Grid.
       columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, validate: 'required', editorOptions: lookupOptions, width: 170, filterType: 'lookup' });
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editorOptions: lookupOptions, width: 120, filterType: 'lookup' });
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterType: 'text', click: function(e, args){ console.log(e, args);} , mask: '*****************'});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true}});
       columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});
