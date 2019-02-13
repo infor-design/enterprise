@@ -32,18 +32,22 @@ demo:
     slug: example-filter
   - name: Fixed Header
     slug: example-fixed-header
-  - name: Frozen Colums
+  - name: Frozen Columns
     slug: example-frozen-columns
   - name: Grouped Headers
     slug: example-grouped-headers
-  - name: Datagrid Grouping
+  - name: Grouping
     slug: example-grouping
   - name: Grouped Grouping (Filtering)
     slug: example-grouping-filter
-  - name: Datagrid Grouping (Totals)
+  - name: Grouping (Totals)
     slug: example-grouping-totals
-  - name: Datagrid Keyword Search
+  - name: Keyword Search
     slug: example-keyword-search
+  - name: List Styling
+    slug: example-list
+  - name: Selection (Mixed)
+    slug: example-mixed-selection
   - name: Paging (Indeterminate)
     slug: example-paging-indeterminate
   - name: Paging (Server Side)
@@ -60,14 +64,10 @@ demo:
     slug: example-multiselect
   - name: Tooltips
     slug: example-tooltips
-  - name: Datagrid List Styling
-    slug: example-list
   - name: Tree Grid
     slug: example-tree
   - name: Using Nested Objects
     slug: example-nested-objects
-  -- name: Selection (Mixed)
-    slug: example-mixed-selection
   - name: Summary Row
     slug: example-summary-row
 ---

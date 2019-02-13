@@ -28,9 +28,9 @@
 
       // Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Id', field: 'productId',  formatter: Formatters.Text});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, width: 300});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
-      // columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
+      columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
       columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
       columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
@@ -40,7 +40,7 @@
       $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
-        frozenColumns: {left: ['productId', 'productName']},
+        frozenColumns: {left: ['productId']},
         toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true, results: true, keywordFilter: true, actions: true, rowHeight: true}
       });
 

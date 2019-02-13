@@ -1,7 +1,6 @@
 import { Environment as env } from './environment';
 import { Formatters } from '../components/datagrid/datagrid.formatters';
 import { Editors } from '../components/datagrid/datagrid.editors';
-import { xssUtils } from '../utils/xss';
 
 /* eslint-disable import/prefer-default-export */
 const excel = {};

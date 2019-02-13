@@ -3749,7 +3749,6 @@ Datagrid.prototype = {
     if (this.headerWidths[index]) {
       const cacheWidths = this.headerWidths[index];
 
-      // TODO #1456
       if (cacheWidths.width === 'default' || !cacheWidths.width) {
         return '';
       }
@@ -4735,11 +4734,6 @@ Datagrid.prototype = {
           idx = i;
         }
       });
-    }
-
-    // Handles min width on some browsers
-    if ((columnSettings.minWidth && width > parseInt(columnSettings.minWidth, 10))) {
-      return;
     }
 
     // calculate percentage
@@ -5740,10 +5734,10 @@ Datagrid.prototype = {
   * @param  {string} term The term to search for.
   */
   keywordSearch(term) {
-    this.tableBody.find('tr[role="row"]').removeClass('is-filtered').show();
+    this.bodyContainer.find('tr[role="row"]').removeClass('is-filtered').show();
     this.filterExpr = [];
 
-    this.tableBody.find('.datagrid-expandable-row').each(function () {
+    this.bodyContainer.find('.datagrid-expandable-row').each(function () {
       const row = $(this);
       // Collapse All rows
       row.prev().find('.datagrid-expand-btn').removeClass('is-expanded');
@@ -5752,7 +5746,7 @@ Datagrid.prototype = {
       row.find('.datagrid-row-detail').css('height', '');
     });
 
-    this.tableBody.find('.search-mode').each(function () {
+    this.bodyContainer.find('.search-mode').each(function () {
       const cell = $(this);
       const text = cell.text();
       cell.text(text.replace('<i>', '').replace('</i>', ''));
@@ -5876,39 +5870,45 @@ Datagrid.prototype = {
       return;
     }
 
-    // Move across all visible cells and rows, highlighting
-    this.tableBody.find('tr').each(function () {
+    const findInRows = (rowNodes) => {
       let found = false;
-      const row = $(this);
+      rowNodes.toArray().forEach((row) => {
+        row.querySelectorAll('td').forEach((cell) => {
+          const cellText = cell.innerText.toLowerCase();
+          const isSearchExpandableRow = self.settings.searchExpandableRow ? true : !DOM.hasClass(this, 'datagrid-expandable-row');
 
-      row.find('td').each(function () {
-        const cell = $(this);
-        const cellText = cell.text().toLowerCase();
-        const isSearchExpandableRow = self.settings.searchExpandableRow ? true : !row.hasClass('datagrid-expandable-row');
+          if (cellText.indexOf(term) > -1 && isSearchExpandableRow) {
+            found = true;
+            cell.querySelectorAll('*').forEach((node) => {
+              if (xssUtils.unescapeHTML(node.innerHTML) === node.textContent) {
+                const contents = node.textContent;
+                const exp = new RegExp(`(${stringUtils.escapeRegExp(term)})`, 'gi');
 
-        if (cellText.indexOf(term) > -1 && isSearchExpandableRow) {
-          found = true;
-          cell.find('*').each(function () {
-            if (xssUtils.unescapeHTML(this.innerHTML) === this.textContent) {
-              const contents = this.textContent;
-              const node = $(this);
-              const exp = new RegExp(`(${stringUtils.escapeRegExp(term)})`, 'gi');
-
-              node.addClass('search-mode').html(contents.replace(exp, '<i>$1</i>'));
-            }
-          });
-        }
+                DOM.addClass(node, 'search-mode');
+                DOM.html(node, contents.replace(exp, '<i>$1</i>'));
+              }
+            });
+          }
+        });
       });
+      return found;
+    };
+
+    // Move across all visible cells and rows, highlighting
+    const visibleRows = self.tableBody.find('tr');
+    visibleRows.toArray().forEach((row) => {
+      const rowContainers = self.rowNodes(row.getAttribute('aria-rowindex') - 1);
+      const found = findInRows(rowContainers);
 
       // Hide non matching rows and non detail rows
-      if (!found && !row.find('.datagrid-row-detail').length) {
-        row.addClass('is-filtered').hide();
-      } else if (self.settings.searchExpandableRow && found && row.is('.datagrid-expandable-row') && term !== '') {
-        row.prev().show();
-        row.prev().find('.datagrid-expand-btn').addClass('is-expanded');
-        row.prev().find('.plus-minus').addClass('active');
-        row.addClass('is-expanded').css('display', 'table-row');
-        row.find('.datagrid-row-detail').css('height', 'auto');
+      if (!found && !rowContainers.find('.datagrid-row-detail').length) {
+        rowContainers.addClass('is-filtered').hide();
+      } else if (self.settings.searchExpandableRow && found && rowContainers.is('.datagrid-expandable-row') && term !== '') {
+        rowContainers.prev().show();
+        rowContainers.prev().find('.datagrid-expand-btn').addClass('is-expanded');
+        rowContainers.prev().find('.plus-minus').addClass('active');
+        rowContainers.addClass('is-expanded').css('display', 'table-row');
+        rowContainers.find('.datagrid-row-detail').css('height', 'auto');
       }
     });
   },
