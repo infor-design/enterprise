@@ -4096,7 +4096,7 @@ Datagrid.prototype = {
       if (orgColumn) {
         isHidden = columns[i].hidden;
 
-        $.extend(columns[i], orgColumn[0]);
+        $.extend(columns[i], orgColumn[i]);
 
         if (isHidden !== undefined) {
           columns[i].hidden = isHidden;
