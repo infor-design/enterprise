@@ -16,12 +16,23 @@
     display: none;
   }
 
+  .root + .sub-level::before {
+    top: -32px;
+  }
+
   .root + .sub-level {
     padding-left: 0;
   }
 
   .sub-level {
+    border-top: 1px solid $hierarchy-line-color;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 25px;
     overflow: visible;
+    padding-top: 5px;
   }
 
   .leaf.root.ancestor {
@@ -46,16 +57,10 @@
     }
   }
 
-  .sub-level > li:last-child::before {
-    border-right: none;
-    margin: 0 0 0 -40px;
-    width: calc(100% + 40px);
-  }
-
+  .sub-level > li::before,
+  .sub-level > li:last-child::before,
   .sub-level > li:first-child::before {
-    border-left: none;
-    margin: 0;
-    width: calc(100% + 20px);
+    display: none;
   }
 
   .leaf.root .btn-actions,
