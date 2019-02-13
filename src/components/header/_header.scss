@@ -577,7 +577,7 @@ html[dir='rtl'] {
 // Print Style Sheet
 @media print {
   body {
-    background-color: transparent;
+    background-color: transparent !important;
     width: 100%;
   }
 
