@@ -804,7 +804,12 @@ Hierarchy.prototype = {
       leaf = xssUtils.sanitizeHTML(leaf);
       rootNodeHTML.push(leaf);
       $(rootNodeHTML[0]).addClass('root is-selected').appendTo(chart);
-      this.updateState($('.leaf.root'), true, data, undefined);
+
+      if (data.centeredNode) {
+        this.updateState($('.leaf.root'), true, data.centeredNode, undefined);
+      } else {
+        this.updateState($('.leaf.root'), true, data, undefined);
+      }
     }
 
     function renderSubChildren(self, subArray, thisData) {
