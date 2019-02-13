@@ -2,7 +2,7 @@
 
 /**
  * @overview
- * This script is a node script wrapper to build the icon svg htmlm files
+ * This script is a node script wrapper to build the icon svg html files
  */
 
 // -------------------------------------
