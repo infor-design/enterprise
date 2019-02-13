@@ -1018,19 +1018,24 @@ Hierarchy.prototype = {
   },
 
   /**
-  * Determine the color from settings
+  * Set leaf colors matching data to key in legend
   * @private
   * @param {object} data contains info.
   * @returns {void}
   */
   setColor(data) {
     const s = this.settings;
-    for (let i = 0, l = s.legend.length; i < l; i++) {
-      if (data[s.legendKey] === s.legend[i].value) {
-        data.colorClass = s.colorClass[i];
-        break;
-      } else if (data[s.legendKey] === '') {
-        data.colorClass = 'default-color';
+    this.setRootColor(data);
+
+    if (s.layout === 'stacked') {
+      if (data.ancestorPath && data.ancestorPath !== null) {
+        data.ancestorPath.forEach((d) => {
+          this.setRootColor(d);
+        });
+      }
+
+      if (data.centeredNode) {
+        this.setRootColor(data.centeredNode);
       }
     }
 
@@ -1041,6 +1046,24 @@ Hierarchy.prototype = {
             data.children[k].colorClass = s.colorClass[j];
           }
         }
+      }
+    }
+  },
+
+  /**
+   * Set
+   * @private
+   * @param data
+   * @returns {void}
+   */
+  setRootColor(data) {
+    const s = this.settings;
+    for (let i = 0, l = s.legend.length; i < l; i++) {
+      if (data[s.legendKey] === s.legend[i].value) {
+        data.colorClass = s.colorClass[i];
+        break;
+      } else if (data[s.legendKey] === '') {
+        data.colorClass = 'default-color';
       }
     }
   },
