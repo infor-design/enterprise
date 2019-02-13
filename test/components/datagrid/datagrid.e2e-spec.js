@@ -78,6 +78,7 @@ describe('Datagrid grouping with paging tests', () => {
     const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
 
     expect(await element(by.css(cell)).getText()).toEqual('214220');
+
     await element(await by.css(cell)).click();
 
     expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
@@ -88,6 +89,7 @@ describe('Datagrid grouping with paging tests', () => {
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
 
     expect(await element(by.css(cell)).getText()).toEqual('214225');
+
     await element(by.css(cell)).click();
 
     expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
@@ -686,7 +688,7 @@ describe('Datagrid paging multiselect across pages', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    await element(by.css('.pager-prev')).click();
+    await element(await by.css('.pager-prev')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1).is-selected'))), config.waitsFor);

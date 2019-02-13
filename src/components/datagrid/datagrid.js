@@ -628,6 +628,14 @@ Datagrid.prototype = {
         self.grandTotal = updatedPagingInfo.grandTotal;
       }
 
+      updatedPagingInfo.preserveSelected = true;
+
+      /*
+      if (updatedPagingInfo && !updatedPagingInfo.preserveSelected) {
+        self.unSelectAllRows();
+      }
+      */
+
       // Set the remote dataset on the grid
       self.loadData(data, updatedPagingInfo, true);
 
