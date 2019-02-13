@@ -51,6 +51,7 @@
             lastPage = Math.floor(res.total / req.pagesize);
             req.total = res.total;
 
+            /*
             if (req.activePage === 1) {
               req.firstPage = true;
               req.lastPage = false;
@@ -61,6 +62,7 @@
               req.firstPage = false;
               req.lastPage = false;
             }
+            */
             response(res.data, req);  //Option 1, return paging info here.
           });
         },

@@ -558,19 +558,18 @@ Pager.prototype = {
       pageNum = pagingInfo;
     }
 
-    // Never go below (1)
-    if (!this.settings.indeterminate && pageNum < 1) {
-      pageNum = 1;
-    }
-
     // Never go above the total number of pages (determined internally by the state,
     // or externally by the incoming `pagingInfo` object)
     let totalPages = state.pages;
     if (state.filteredPages) {
       totalPages = state.filteredPages;
     }
-    if (!this.settings.indeterminate && pageNum > totalPages) {
-      pageNum = totalPages;
+
+    // If the page number provided is out of bounds, reset it to the one previously set.
+    if (!this.settings.indeterminate) {
+      if (pageNum < 1 || pageNum > totalPages) {
+        pageNum = this.filteredActivePage || this.activePage;
+      }
     }
 
     // Set the active page interally and render the new state.
@@ -647,7 +646,7 @@ Pager.prototype = {
   renderButtons() {
     // Only certain types of Pages get to have the `last` and `first` buttons
     const types = ['table', 'pageof', 'firstlast', 'standalone'];
-    const canHaveFirstLastButtons = types.indexOf(this.settings.type) > -1;
+    const canHaveFirstLastButtons = types.indexOf(this.settings.type) > -1 && !this.isListView;
     let activePage = this.activePage;
     let totalPages = this.state.pages;
     let buttonHTML = '';

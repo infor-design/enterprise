@@ -213,7 +213,7 @@ ListView.prototype = {
     let totals = {};
     let displayedDataset = dataset;
     let firstRecordIdx = 0;
-    let lastRecordIdx = displayedDataset.length;
+    let lastRecordIdx = displayedDataset ? displayedDataset.length : 0;
     let setSize = pagerInfo.total;
 
     if (pagerInfo.filteredTotal) {
@@ -569,7 +569,11 @@ ListView.prototype = {
 
     // Clear
     if (!searchFieldVal) {
+      if (!this.searchTerm) {
+        return;
+      }
       this.resetSearch();
+      return;
     }
 
     // Make sure there is a search term...and its not the
@@ -580,7 +584,6 @@ ListView.prototype = {
 
     // Set a global "searchTerm" and get the list of elements
     this.searchTerm = searchfield.val();
-    // const list = this.element.find('li, tbody > tr');
 
     // Filter the results and highlight things
     let results = this.listfilter.filter(this.settings.dataset, this.searchTerm);
@@ -592,15 +595,6 @@ ListView.prototype = {
     results.forEach((result) => {
       result.isFiltered = true;
     });
-
-    /*
-    if (this.settings.highlight) {
-      results.highlight(this.searchTerm);
-    }
-
-    // Hide elements that aren't in the results array
-    list.not(results).addClass('hidden');
-    */
 
     this.filteredDataset = results;
     this.renderPager(pagingInfo);
@@ -620,22 +614,12 @@ ListView.prototype = {
       delete this.searchTerm;
     }
 
-    /*
-    const list = this.element.find('li, tbody > tr');
-
-    list.removeClass('hidden');
-
-    if (this.settings.highlight) {
-      list.each(function () {
-        $(this).unhighlight();
-      });
-    }
-    */
     const pagingInfo = {
       activePage: 1,
       filteredTotal: undefined,
       searchActivePage: undefined
     };
+
     this.renderPager(pagingInfo);
     this.render(null, pagingInfo);
   },
