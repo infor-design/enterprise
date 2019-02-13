@@ -1629,7 +1629,7 @@ describe('Datagrid Row Activation tests', () => {
 
 describe('Datagrid Row Indeterminate Activation tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-paging-indeterminate-landmark');
+    await utils.setPage('/components/datagrid/example-paging-indeterminate');
 
     const datagridEl = await element(by.id('datagrid'));
     await browser.driver

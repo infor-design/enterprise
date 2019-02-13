@@ -6384,23 +6384,22 @@ Datagrid.prototype = {
 
     // Toggle it
     if (isActivated) {
-      this.deactivateMixedSelectionRow(row, rowIndex, dataset);
+      this.deactivateRowNode(rowIndex, dataset);
     } else {
-      this.deactivateAllMixedSelectionRows(dataset);
-      this.activateMixedSelectionRow(row, rowIndex, dataset);
+      this.deactivateAllRowNodes(dataset);
+      this.activateAllRowNodes(rowIndex, dataset);
     }
   },
 
   /**
    * Activate given row with mixed selection mode.
    * @private
-   * @param  {object} row The row to activated
    * @param  {number} idx The row index to activated
    * @param  {object} dataset Optional data to use
    * @returns {void}
    */
-  activateMixedSelectionRow(row, idx, dataset) {
-    if (typeof row === 'undefined' || typeof idx !== 'number' || idx < 0) {
+  activateAllRowNodes(idx, dataset) {
+    if (typeof idx !== 'number' || idx < 0) {
       return;
     }
     const s = this.settings;
@@ -6410,7 +6409,10 @@ Datagrid.prototype = {
     }
 
     if (dataset[idx]) {
-      row.classList.add('is-rowactivated');
+      const rowNodes = this.rowNodes(idx).toArray();
+      rowNodes.forEach((rowElem) => {
+        rowElem.classList.add('is-rowactivated');
+      });
       dataset[idx]._rowactivated = true;
 
       /**
@@ -6429,13 +6431,12 @@ Datagrid.prototype = {
   /**
   * Deactivate given row with mixed selection mode.
   * @private
-  * @param  {object} row The row to deactivated
   * @param  {number} idx The row index to deactivated
   * @param  {object} dataset Optional data to use
   * @returns {void}
   */
-  deactivateMixedSelectionRow(row, idx, dataset) {
-    if (typeof row === 'undefined' || typeof idx !== 'number' || idx < 0) {
+  deactivateRowNode(idx, dataset) {
+    if (typeof idx !== 'number' || idx < 0) {
       return;
     }
     const s = this.settings;
@@ -6445,7 +6446,10 @@ Datagrid.prototype = {
     }
 
     if (dataset[idx] && !s.disableRowDeactivation) {
-      row.classList.remove('is-rowactivated');
+      const rowNodes = this.rowNodes(idx).toArray();
+      rowNodes.forEach((row) => {
+        row.classList.remove('is-rowactivated');
+      });
       delete dataset[idx]._rowactivated;
 
       /**
@@ -6467,7 +6471,7 @@ Datagrid.prototype = {
   * @param  {object} dataset Optional data to use
   * @returns {void}
   */
-  deactivateAllMixedSelectionRows(dataset) {
+  deactivateAllRowNodes(dataset) {
     const s = this.settings;
     let triggerData = null;
 
@@ -6476,9 +6480,11 @@ Datagrid.prototype = {
     }
 
     // Deselect activated row
-    const activated = this.tableBody[0].querySelector('tr.is-rowactivated');
-    if (activated) {
-      activated.classList.remove('is-rowactivated');
+    const activated = this.bodyContainer[0].querySelectorAll('tr.is-rowactivated');
+    if (activated.length > 0) {
+      activated.forEach((row) => {
+        row.classList.remove('is-rowactivated');
+      });
       const idx = (s.treeGrid || s.groupable) ?
         this.actualRowIndex($(activated)) : this.dataRowIndex($(activated));
       triggerData = { row: idx, item: dataset[idx] };
