@@ -9,7 +9,10 @@
   }
 
   .root::after {
-    display: none;
+    background: $hierarchy-line-color;
+    height: 25px;
+    top: -25px;
+    width: $hierarchy-line-width;
   }
 
   .root + .sub-level .leaf::before {
@@ -22,6 +25,10 @@
 
   .root + .sub-level {
     padding-left: 0;
+  }
+
+  .chart .root:first-child::after {
+    display: none;
   }
 
   .sub-level {
@@ -84,12 +91,6 @@
     top: 16px;
   }
 
-  @media (min-width: $breakpoint-phablet) {
-    ul > li > .leaf {
-      max-width: 260px;
-    }
-  }
-
   @media (max-width: $breakpoint-phablet) {
     legend {
       text-align: left;
@@ -103,19 +104,21 @@
       width: 100%;
     }
 
-    .root::after {
-      background: $hierarchy-line-color;
-      bottom: -25px;
-      height: 25px;
-      width: 1px;
-    }
-
     .root + .sub-level::before {
-      display: none;
+      height: 25px;
+      left: 50%;
+      top: -25px;
+      width: $hierarchy-line-width;
     }
 
     .container .chart .sub-level {
       padding-left: 0;
+    }
+
+    .sub-level {
+      border-top: none;
+      display: block;
+      padding: 0;
     }
 
     .sub-level > li {
