@@ -68,7 +68,7 @@
       "position": "CTO",
       "employmentType": "FT",
       "avatarInitials": "SS",
-      "childrenUrl": "./soma-somasundaram.json",
+      "childrenUrl": "../soma-somasundaram.json",
       "menu" : {
         "details": [
           {"key": "Organization Unit", "value": "U.S Headquarters"},

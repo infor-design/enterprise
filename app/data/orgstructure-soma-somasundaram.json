@@ -1,29 +1,36 @@
 {
-  "ancestorPath": null,
-  "centeredNode": {
+  "ancestorPath": [{
     "id": "1",
     "name": "Charles Phillips",
     "position": "CEO",
     "employmentType": "FT",
     "picture": "/images/4.jpg",
     "childrenUrl": "../charles-phillips.json"
+  }],
+  "centeredNode": {
+    "id": "3",
+    "name": "Soma Somasundaram",
+    "position": "CTO",
+    "employmentType": "FT",
+    "avatarInitials": "SS",
+    "childrenUrl": "../soma-somasundaram.json"
   },
   "children": [
     {
-      "id": "2",
-      "name": "Pam Murphy",
-      "position": "COO",
+      "id": "4",
+      "name": "Andrew Woodward",
+      "position": "VP, Software Development",
       "employmentType": "FT",
-      "avatarInitials": "KE",
-      "childrenUrl": "../pam-murphy.json",
+      "avatarInitials": "AW",
+      "isLeaf": true
     },
     {
-      "id": "3",
-      "name": "Soma Somasundaram",
-      "position": "CTO",
+      "id": "5",
+      "name": "Daniel Miller",
+      "position": "VP, Software Development",
       "employmentType": "FT",
-      "avatarInitials": "SS",
-      "childrenUrl": "./soma-somasundaram.json"
+      "avatarInitials": "DM",
+      "isLeaf": true
     }
   ]
 }

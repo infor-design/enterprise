@@ -173,6 +173,12 @@ Hierarchy.prototype = {
 
     // Expand or Collapse
     self.element.off('click.hierarchy').on('click.hierarchy', '.btn', function (e) {
+
+      // Stacked layout doesn't expand/collapse
+      if (s.layout === 'stacked') {
+        return;
+      }
+
       if (s.newData.length > 0) {
         s.newData = [];
       }
@@ -237,6 +243,7 @@ Hierarchy.prototype = {
       const isForward = svgHref ? svgHref.baseVal === '#icon-caret-right' : false;
       const isActions = target.hasClass('btn-actions');
       const isAction = target.is('a') && target.parent().parent().is('ul.popupmenu');
+      const isAncestor = leaf.hasClass('ancestor');
       let eventType = 'selected';
 
       e.stopImmediatePropagation();
@@ -250,7 +257,7 @@ Hierarchy.prototype = {
 
       // Is collapse event
       if (isButton && isCollapseButton && isNotBack) {
-        eventType = 'collapse';
+        eventType = isAncestor ? 'back' : 'collapse';
       }
 
       // Is expand event
@@ -285,6 +292,7 @@ Hierarchy.prototype = {
       }
 
       const eventInfo = {
+        id: nodeId,
         data: nodeData,
         actionReference: isAction ? target.data('actionReference') : null,
         targetInfo,
@@ -783,13 +791,21 @@ Hierarchy.prototype = {
       rootNodeHTML.push(ancestorHTML);
       $(rootNodeHTML[0]).addClass('root ancestor').appendTo(chart);
 
-      // $(ancestorHTML).last().addClass('centered-node');
+      const roots = $('.leaf.root');
+
+      roots.each((index, root) => {
+        this.updateState(root, false, data, 'add');
+
+        if (index === roots.length - 1) {
+          $(root).addClass('is-selected');
+        }
+      });
     } else {
       let leaf = s.layout === 'stacked' ? this.getTemplate(data.centeredNode) : this.getTemplate(data);
       leaf = xssUtils.sanitizeHTML(leaf);
       rootNodeHTML.push(leaf);
-      $(rootNodeHTML[0]).addClass('root').appendTo(chart);
-      this.updateState($('.leaf.root'), true, data);
+      $(rootNodeHTML[0]).addClass('root is-selected').appendTo(chart);
+      this.updateState($('.leaf.root'), true, data, undefined);
     }
 
     function renderSubChildren(self, subArray, thisData) {
@@ -985,7 +1001,7 @@ Hierarchy.prototype = {
 
         let childLength = thisNodeData.children.length;
         while (childLength--) {
-          self.updateState($(`#${thisNodeData.children[childLength].id}`), false, thisNodeData.children[childLength]);
+          self.updateState($(`#${thisNodeData.children[childLength].id}`), false, thisNodeData.children[childLength], undefined);
         }
       }
     }
@@ -994,11 +1010,11 @@ Hierarchy.prototype = {
       for (let i = 0, l = nodeData.length; i < l; i++) {
         const isLast = (i === (nodeData.length - 1));
         processDataForLeaf(nodeData[i], isLast);
-        self.updateState($(`#${xssUtils.stripTags(nodeData[i].id)}`), false, nodeData[i]);
+        self.updateState($(`#${xssUtils.stripTags(nodeData[i].id)}`), false, nodeData[i], undefined);
       }
     } else {
       processDataForLeaf(nodeData, true);
-      self.updateState($(`#${xssUtils.stripTags(nodeData.id)}`), false, nodeData);
+      self.updateState($(`#${xssUtils.stripTags(nodeData.id)}`), false, nodeData, undefined);
     }
   },
 
@@ -1060,8 +1076,8 @@ Hierarchy.prototype = {
    * get the current state via .data() and re-attach the new state
    * @private
    * @param {string} leaf .
-   * @param {string} isRoot .
-   * @param {string} nodeData .
+   * @param {boolean} isRoot .
+   * @param {object} nodeData .
    * @param {string} eventType .
    * @returns {void}
    */
@@ -1115,7 +1131,9 @@ Hierarchy.prototype = {
     }
 
     // Keep reference of the parent dataset for paging
-    data.parentDataSet = s.dataset;
+    if (this.settings.layout === 'paging') {
+      data.parentDataSet = s.dataset;
+    }
 
     // Reset data
     $(leaf).data(data);

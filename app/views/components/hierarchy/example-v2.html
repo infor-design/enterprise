@@ -2,7 +2,7 @@
 
 <script>
 
-  var options = {
+  const options = {
     templateId: 'hierarchyChartTemplate',
     legendKey: 'EmploymentType',
     legend: [
@@ -15,6 +15,11 @@
     layout: 'stacked'
   };
 
+  const urls = {
+    '1': `{{basepath}}api/orgstructure-charles-phillips.json`,
+    '2': `{{basepath}}api/orgstructure-pam-murphy.json`,
+    '3': `{{basepath}}api/orgstructure-soma-somasundaram.json`
+  };
 
   $.getJSON('{{basepath}}api/orgstructure-charles-phillips', function(data) {
     options.dataset = data;
@@ -22,19 +27,23 @@
   });
 
   $('#hierarchy').on('selected', function(event, eventInfo) {
-    var hierarchyControl = $('#hierarchy').data('hierarchy');
+    const hierarchyControl = $('#hierarchy').data('hierarchy');
     console.log(event, eventInfo);
 
-    if (eventInfo.eventType === 'expand') {
-      if (eventInfo.data.id === '2') {
-        $.getJSON('{{basepath}}api/orgstructure-pam-murphy.json', function(newData) {
-          eventInfo.data.children = newData;
-          options.dataset = eventInfo.data.children;
-          hierarchyControl.reload(options);
+    for (let key in urls) {
+      if (eventInfo.id === key && (eventInfo.eventType === 'expand' || eventInfo.eventType === 'back')) {
+        $.getJSON(urls[key], function(newData) {
+          reload(eventInfo, hierarchyControl, newData);
         });
       }
     }
   });
+
+  function reload(eventInfo, hierarchyControl, newData) {
+    eventInfo.data.children = newData;
+    options.dataset = eventInfo.data.children;
+    hierarchyControl.reload(options);
+  }
 </script>
 
 

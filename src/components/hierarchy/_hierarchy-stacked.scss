@@ -16,6 +16,10 @@
     margin-bottom: 25px;
   }
 
+  .leaf .detail {
+    max-width: 100%;
+  }
+
   // Centered node
   .leaf.root.ancestor:last-of-type {
     margin-bottom: 0;
