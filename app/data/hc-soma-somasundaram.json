@@ -1,0 +1,35 @@
+{
+  "ancestorPath": [{
+    "id": "1",
+    "name": "Charles Phillips",
+    "position": "CEO",
+    "employmentType": "FT",
+    "picture": "/images/4.jpg",
+    "childrenUrl": "../charles-phillips.json"
+  }],
+  "centeredNode": {
+    "id": "3",
+    "name": "Soma Somasundaram",
+    "position": "CTO",
+    "employmentType": "FT",
+    "avatarInitials": "SS",
+  },
+  "children": [
+    {
+      "id": "4",
+      "name": "Andrew Woodward",
+      "position": "VP, Software Development",
+      "employmentType": "FT",
+      "avatarInitials": "AW",
+      "isLeaf": true
+    },
+    {
+      "id": "5",
+      "name": "Daniel Miller",
+      "position": "VP, Software Development",
+      "employmentType": "FT",
+      "avatarInitials": "DM",
+      "isLeaf": true
+    }
+  ]
+}
