@@ -8,6 +8,10 @@
     }
   }
 
+  .root::after {
+    display: none;
+  }
+
   .root + .sub-level .leaf::before {
     display: none;
   }
@@ -22,6 +26,10 @@
 
   .leaf.root.ancestor {
     margin-bottom: 25px;
+  }
+
+  .leaf.is-selected {
+    z-index: 1;
   }
 
   .leaf .detail {
@@ -47,7 +55,7 @@
   .sub-level > li:first-child::before {
     border-left: none;
     margin: 0;
-    width: 100%;
+    width: calc(100% + 20px);
   }
 
   .leaf.root .btn-actions,
