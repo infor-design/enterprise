@@ -817,7 +817,7 @@ Hierarchy.prototype = {
     }
 
     // Create children nodes
-    if (thisChildren.length > 0) {
+    if (thisChildren && thisChildren.length > 0) {
       for (let i = 0, l = thisChildren.length; i < l; i++) {
         const childObject = data.children[i].children;
 
