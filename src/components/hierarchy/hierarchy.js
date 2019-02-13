@@ -1152,7 +1152,7 @@ Hierarchy.prototype = {
     }
 
     // Keep reference of the parent dataset for paging
-    if (this.settings.layout === 'paging') {
+    if (this.settings.layout === 'paging' || this.settings.paging) {
       data.parentDataSet = s.dataset;
     }
 
