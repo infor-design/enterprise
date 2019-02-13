@@ -6,21 +6,23 @@
       "position": "CEO",
       "employmentType": "FT",
       "picture": "../../www/images/1.jpg",
-      "childrenUrl": "./charles-phillips.json"
+      "childrenUrl": "./hc-charles-phillips.json"
     },
     {
       "id": "2",
       "name": "Soma Somasundaram",
       "position": "CTO",
       "employmentType": "FT",
-      "avatarInitials": "SS"
+      "avatarInitials": "SS",
+      "childrenUrl": "./hc-soma-somasundaram.json"
     },
     {
       "id": "3",
       "name": "Massimo Capoccia",
       "position": "SVP, Software Development Development",
       "employmentType": "FT",
-      "avatarInitials": "MC"
+      "avatarInitials": "MC",
+      "childrenUrl": "./hc-mossimo-copoccia.json"
     }
   ],
   "centeredNode": {
