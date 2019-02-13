@@ -65,6 +65,7 @@ describe('Datagrid Settings', () => {
       allowSelectAcrossPages: null,
       groupable: null,
       spacerColumn: false,
+      showNewRowIndicator: true,
       stretchColumn: 'last',
       twoLineHeader: false,
       clickToSelect: true,
