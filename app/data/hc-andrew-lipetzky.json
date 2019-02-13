@@ -82,6 +82,30 @@
       "isLeaf": true
     },
     {
+      "id": "101",
+      "name": "John Gustafson",
+      "position": "Contractor",
+      "employmentType": "PT",
+      "avatarInitials": "JG",
+      "isLeaf": true
+    },
+    {
+      "id": "102",
+      "name": "John Louis",
+      "position": "Contractor",
+      "employmentType": "C",
+      "avatarInitials": "JL",
+      "isLeaf": true
+    },
+    {
+      "id": "103",
+      "name": "Jean-Marc Debaud",
+      "position": "Open",
+      "employmentType": "O",
+      "avatarInitials": "JMD",
+      "isLeaf": true
+    },
+    {
       "id": "11",
       "name": "Kris Hollenbeck",
       "position": "Software Engineer, Senior",
