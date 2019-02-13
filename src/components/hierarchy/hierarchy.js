@@ -173,7 +173,6 @@ Hierarchy.prototype = {
 
     // Expand or Collapse
     self.element.off('click.hierarchy').on('click.hierarchy', '.btn', function (e) {
-
       // Stacked layout doesn't expand/collapse
       if (s.layout === 'stacked') {
         return;
