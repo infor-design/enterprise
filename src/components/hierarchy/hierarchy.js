@@ -28,7 +28,7 @@ const COMPONENT_NAME = 'hierarchy';
 * @param {boolean} [settings.paging=false] If true show pagination.
 * @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
 * @param {boolean} [settings.layout=string]
-* Which layout should be rendered {'horizontal', 'mobileOnly', 'stacked', 'paging'}
+* Which layout should be rendered {'horizontal', 'mobile-only', 'stacked', 'paging'}
 * @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
 * An empty message will be displayed when there is no chart data. This accepts an object of the form
 * `emptyMessage: {
@@ -51,7 +51,7 @@ const HIERARCHY_DEFAULTS = {
   beforeExpand: null,
   paging: false,
   renderSubLevel: false,
-  layout: 'horizontal', // stacked, horizontal, paging, mobileOnly
+  layout: 'horizontal', // stacked, horizontal, paging, mobile-only
   rootClass: 'hierarchy',
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
@@ -103,7 +103,7 @@ Hierarchy.prototype = {
       console.error('Hierarchy dataset is undefined.');
     }
 
-    if (s.layout === 'horizontal' || s.layout === 'paging' || s.layout === 'mobileOnly') {
+    if (s.layout === 'horizontal' || s.layout === 'paging' || s.layout === 'mobile-only') {
       if (s.dataset.length === 0) {
         this.element.emptymessage(s.emptyMessage);
         return;
@@ -141,7 +141,7 @@ Hierarchy.prototype = {
     }
 
     if (this.settings.mobileView) {
-      layout = 'mobileOnly';
+      layout = 'mobile-only';
     }
 
     switch (layout) {
@@ -154,7 +154,7 @@ Hierarchy.prototype = {
       case 'paging':
         this.element.addClass('layout-is-paging');
         break;
-      case 'mobileOnly':
+      case 'mobile-only':
         this.element.addClass('layout-is-mobile-only');
         break;
       default:
@@ -1053,8 +1053,7 @@ Hierarchy.prototype = {
    */
   isLeaf(dataNode) {
     const s = this.settings;
-    if (dataNode.children === undefined && dataNode.childrenUrl === undefined) {
-      dataNode.isLeaf = true;
+    if (dataNode.isLeaf) {
       return dataNode.isLeaf;
     }
 
@@ -1063,7 +1062,7 @@ Hierarchy.prototype = {
     }
 
     // Node is not a leaf and should display and expand/collapse icon
-    if ((dataNode.children && dataNode.children.length > 0) || dataNode.childrenUrl !== undefined) {
+    if ((dataNode.children && dataNode.children.length > 0)) {
       return false;
     }
 

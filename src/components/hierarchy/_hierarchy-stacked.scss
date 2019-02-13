@@ -8,13 +8,6 @@
     }
   }
 
-  .root::after {
-    background: $hierarchy-line-color;
-    bottom: -25px;
-    height: 25px;
-    width: 1px;
-  }
-
   .root + .sub-level .leaf::before {
     display: none;
   }
@@ -95,6 +88,13 @@
 
     .root {
       width: 100%;
+    }
+
+    .root::after {
+      background: $hierarchy-line-color;
+      bottom: -25px;
+      height: 25px;
+      width: 1px;
     }
 
     .root + .sub-level::before {
