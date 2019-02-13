@@ -16,12 +16,13 @@
   };
 
   const urls = {
-    '1': `{{basepath}}api/orgstructure-charles-phillips.json`,
-    '2': `{{basepath}}api/orgstructure-pam-murphy.json`,
-    '3': `{{basepath}}api/orgstructure-soma-somasundaram.json`
+    '1': `{{basepath}}api/hc-charles-phillips.json`,
+    '2': `{{basepath}}api/hc-pam-murphy.json`,
+    '3': `{{basepath}}api/hc-soma-somasundaram.json`
   };
 
-  $.getJSON('{{basepath}}api/orgstructure-charles-phillips', function(data) {
+  // Initial load
+  $.getJSON('{{basepath}}api/hc-charles-phillips', function(data) {
     options.dataset = data;
     $('#hierarchy').hierarchy(options);
   });
