@@ -131,6 +131,7 @@
     "protractor-image-comparison": "^2.0.1",
     "pygmentize-bundled": "^2.3.0",
     "r2": "^2.0.1",
+    "release-it": "^10.1.0",
     "rollup": "^0.60.7",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-json": "^3.0.0",

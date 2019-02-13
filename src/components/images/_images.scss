@@ -75,3 +75,10 @@ $images-size: (
     top: 22px;
   }
 }
+
+// Print Support
+@media print {
+  .image-initials {
+    background-color: $theme-color-palette-graphite-30;
+  }
+}

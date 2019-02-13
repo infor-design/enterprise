@@ -165,6 +165,51 @@ FieldFilter.prototype = {
   },
 
   /**
+   * Get current filter type
+   * @returns {object} The current filter type
+   */
+  getFilterType() {
+    this.setFiltered();
+    return this.filtered;
+  },
+
+  /**
+   * Set filter type to given value
+   * @param {number|string} value to be set, index or value.
+   * @returns {void}
+   */
+  setFilterType(value) {
+    if (this.ddApi) {
+      let newIdx = -1;
+      const s = this.settings;
+      const dataset = s.dropdownOpts.source && this.ddApi ? this.ddApi.dataset : s.dataset;
+
+      if (typeof value === 'number' && value > -1 && value < dataset.length) {
+        newIdx = value;
+      } else if (typeof value === 'string') {
+        let option = this.ffdropdown.find(`option[value="${value}"]`);
+        if (!option.length) {
+          option = this.ffdropdown.find('option').filter(function () {
+            return $(this).text() === value;
+          });
+        }
+        if (option.length) {
+          newIdx = option.index();
+        }
+      }
+
+      // Make filtered
+      if (newIdx !== -1 && newIdx !== this.ffdropdown[0].selectedIndex) {
+        this.ffdropdown[0].selectedIndex = newIdx;
+        this.ddApi.updated();
+        this.ffdropdown.triggerHandler('change');
+        this.setFiltered();
+        this.element.triggerHandler('filtered', [this.filtered]);
+      }
+    }
+  },
+
+  /**
    * Attach Events used by the Control
    * @private
    * @returns {object} The api
