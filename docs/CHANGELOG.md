@@ -30,6 +30,11 @@
 
 (TBD Issues Solved this release, Backlog Enterprise TBD, Backlog Ng TBD, TBD Functional Tests, TBD e2e Test)
 
+
+### v4.16.0 Future Deprecation
+- `[Hierarchy]` DATE: TBD, The following options will be removed. `paging` and `mobileView`. ([#1629](https://github.com/infor-design/enterprise/issues/1629))
+- `[Hierarchy]` DATE: TBD, Stacked layout will become the default layout in favor of the existing horizontal layout. ([#1629](https://github.com/infor-design/enterprise/issues/1629))
+
 ## v4.15.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
