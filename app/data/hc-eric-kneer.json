@@ -32,5 +32,47 @@
     "employmentType": "FT",
     "avatarInitials": "EK",
     "isLeaf": true
-  }
+  },
+  "children": [
+    {
+      "id": "5",
+      "name": "Allen Burgett",
+      "position": "Development Operations Engineer",
+      "employmentType": "FT",
+      "avatarInitials": "AB",
+      "isLeaf": true
+    },
+    {
+      "id": "6",
+      "name": "Amanda Eckhardt",
+      "position": "Software Engineer",
+      "employmentType": "FT",
+      "avatarInitials": "AE",
+      "isLeaf": true
+    },
+    {
+      "id": "7",
+      "name": "Andrew Lipetzky",
+      "position": "Director, Software Development",
+      "employmentType": "FT",
+      "avatarInitials": "AL",
+      "childrenUrl": "hc-andrew-lipetzky.json"
+    },
+    {
+      "id": "8",
+      "name": "Andrew Schneider",
+      "position": "Software Engineer",
+      "employmentType": "FT",
+      "avatarInitials": "AS",
+      "isLeaf": true
+    },
+    {
+      "id": "9",
+      "name": "Ed O'Connell",
+      "position": "Architect, Senior",
+      "employmentType": "FT",
+      "avatarInitials": "EO",
+      "isLeaf": true
+    }
+  ]
 }
