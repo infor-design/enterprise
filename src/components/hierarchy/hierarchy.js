@@ -27,6 +27,8 @@ const COMPONENT_NAME = 'hierarchy';
 * @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
 * @param {boolean} [settings.paging=false] If true show pagination.
 * @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
+* @param {boolean} [settings.layout=string]
+* Which layout should be rendered {'horizontal', 'mobileOnly', 'stacked', 'paging'}
 * @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
 * An empty message will be displayed when there is no chart data. This accepts an object of the form
 * `emptyMessage: {
@@ -49,6 +51,7 @@ const HIERARCHY_DEFAULTS = {
   beforeExpand: null,
   paging: false,
   renderSubLevel: false,
+  layout: 'horizontal', // stacked, horizontal, paging, mobileOnly
   rootClass: 'hierarchy',
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
@@ -65,17 +68,42 @@ function Hierarchy(element, settings) {
 // Hierarchy Methods
 Hierarchy.prototype = {
   init() {
-    const isMobile = this.settings.mobileView;
     const s = this.settings;
     this.settings.rootClass = 'hierarchy';
 
     s.colorClass = [
       'azure08', 'turquoise02', 'amethyst06', 'slate06', 'amber06', 'emerald07', 'ruby06'
     ];
+
+    // Setup events
     this.handleEvents();
 
+    // Warn about deprecated settings
+    if (s.paging) {
+      console.warn(`
+      Hierarchy,
+      WARNING: Paging setting will be deprecated.
+      Date of Message: 02/12/2019
+      Date of deprecation: TBD. 
+      `);
+    }
+
+    if (s.mobileView) {
+      console.warn(`
+      Hierarchy,
+      WARNING: MobileView setting will be deprecated.
+      Date of Message: 02/12/2019
+      Date of deprecation: TBD. 
+      `);
+    }
+
     // Safety check, check for data
-    if (s.dataset) {
+
+    if (s.dataset === undefined) {
+      console.error('Hierarchy dataset is undefined.');
+    }
+
+    if (s.layout === 'horizontal' || s.layout === 'paging' || s.layout === 'mobileOnly') {
       if (s.dataset.length === 0) {
         this.element.emptymessage(s.emptyMessage);
         return;
@@ -86,14 +114,51 @@ Hierarchy.prototype = {
       }
     }
 
+    if (s.layout === 'stacked') {
+      const data = [s.dataset][0];
+      this.render(data);
+    }
+
     if (s.leafHeight !== null && s.leafWidth !== null) {
       const style = `'body .hierarchy .leaf,body .hierarchy .sublevel .leaf,body .hierarchy .container .root.leaf { width: ${s.leafWidth}px;  height: ${s.leafHeight}px;  }'`;
 
       $(`<style type="text/css" id="hierarchyLeafStyles">${style}</style>`).appendTo('body');
     }
 
-    if (isMobile) {
-      this.element.addClass('is-mobile');
+    if (s.layout) {
+      this.setLayout(s.layout);
+    }
+  },
+
+  /**
+   * @private
+   * @param {string} Sets the layout to display
+   * @returns {void}
+   */
+  setLayout(layout) {
+    if (this.settings.paging) {
+      layout = 'paging';
+    }
+
+    if (this.settings.mobileView) {
+      layout = 'mobileOnly';
+    }
+
+    switch (layout) {
+      case 'horizontal':
+        this.element.addClass('layout-is-horizontal');
+        break;
+      case 'stacked':
+        this.element.addClass('layout-is-stacked');
+        break;
+      case 'paging':
+        this.element.addClass('layout-is-paging');
+        break;
+      case 'mobileOnly':
+        this.element.addClass('layout-is-mobile-only');
+        break;
+      default:
+        this.element.addClass('layout-is-horizontal');
     }
   },
 
@@ -108,6 +173,12 @@ Hierarchy.prototype = {
 
     // Expand or Collapse
     self.element.off('click.hierarchy').on('click.hierarchy', '.btn', function (e) {
+
+      // Stacked layout doesn't expand/collapse
+      if (s.layout === 'stacked') {
+        return;
+      }
+
       if (s.newData.length > 0) {
         s.newData = [];
       }
@@ -172,6 +243,7 @@ Hierarchy.prototype = {
       const isForward = svgHref ? svgHref.baseVal === '#icon-caret-right' : false;
       const isActions = target.hasClass('btn-actions');
       const isAction = target.is('a') && target.parent().parent().is('ul.popupmenu');
+      const isAncestor = leaf.hasClass('ancestor');
       let eventType = 'selected';
 
       e.stopImmediatePropagation();
@@ -185,7 +257,7 @@ Hierarchy.prototype = {
 
       // Is collapse event
       if (isButton && isCollapseButton && isNotBack) {
-        eventType = 'collapse';
+        eventType = isAncestor ? 'back' : 'collapse';
       }
 
       // Is expand event
@@ -220,6 +292,7 @@ Hierarchy.prototype = {
       }
 
       const eventInfo = {
+        id: nodeId,
         data: nodeData,
         actionReference: isAction ? target.data('actionReference') : null,
         targetInfo,
@@ -668,10 +741,6 @@ Hierarchy.prototype = {
     const chartContainer = this.element.append(structure.chart);
     const chart = $('.chart', chartContainer);
 
-    if (s.paging) {
-      this.element.addClass('display-for-paging');
-    }
-
     if (thisLegend.length !== 0) {
       this.element.prepend(structure.legend);
       const element = $('legend', chartContainer);
@@ -715,12 +784,28 @@ Hierarchy.prototype = {
       multiRootHTML = xssUtils.sanitizeHTML(multiRootHTML);
       rootNodeHTML.push(multiRootHTML);
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
+    } else if (data.ancestorPath !== null && data.ancestorPath !== undefined) {
+      data.ancestorPath.push(data.centeredNode);
+      let ancestorHTML = `${data.ancestorPath.map(a => ` ${this.getTemplate(a)} `).join('')}`;
+      ancestorHTML = xssUtils.sanitizeHTML(ancestorHTML);
+      rootNodeHTML.push(ancestorHTML);
+      $(rootNodeHTML[0]).addClass('root ancestor').appendTo(chart);
+
+      const roots = $('.leaf.root');
+
+      roots.each((index, root) => {
+        this.updateState(root, false, data, 'add');
+
+        if (index === roots.length - 1) {
+          $(root).addClass('is-selected');
+        }
+      });
     } else {
-      let leaf = this.getTemplate(data);
+      let leaf = s.layout === 'stacked' ? this.getTemplate(data.centeredNode) : this.getTemplate(data);
       leaf = xssUtils.sanitizeHTML(leaf);
       rootNodeHTML.push(leaf);
-      $(rootNodeHTML[0]).addClass('root').appendTo(chart);
-      this.updateState($('.leaf.root'), true, data);
+      $(rootNodeHTML[0]).addClass('root is-selected').appendTo(chart);
+      this.updateState($('.leaf.root'), true, data, undefined);
     }
 
     function renderSubChildren(self, subArray, thisData) {
@@ -916,7 +1001,7 @@ Hierarchy.prototype = {
 
         let childLength = thisNodeData.children.length;
         while (childLength--) {
-          self.updateState($(`#${thisNodeData.children[childLength].id}`), false, thisNodeData.children[childLength]);
+          self.updateState($(`#${thisNodeData.children[childLength].id}`), false, thisNodeData.children[childLength], undefined);
         }
       }
     }
@@ -925,11 +1010,11 @@ Hierarchy.prototype = {
       for (let i = 0, l = nodeData.length; i < l; i++) {
         const isLast = (i === (nodeData.length - 1));
         processDataForLeaf(nodeData[i], isLast);
-        self.updateState($(`#${xssUtils.stripTags(nodeData[i].id)}`), false, nodeData[i]);
+        self.updateState($(`#${xssUtils.stripTags(nodeData[i].id)}`), false, nodeData[i], undefined);
       }
     } else {
       processDataForLeaf(nodeData, true);
-      self.updateState($(`#${xssUtils.stripTags(nodeData.id)}`), false, nodeData);
+      self.updateState($(`#${xssUtils.stripTags(nodeData.id)}`), false, nodeData, undefined);
     }
   },
 
@@ -969,7 +1054,7 @@ Hierarchy.prototype = {
    */
   isLeaf(dataNode) {
     const s = this.settings;
-    if (dataNode.children === undefined) {
+    if (dataNode.children === undefined && dataNode.childrenUrl === undefined) {
       dataNode.isLeaf = true;
       return dataNode.isLeaf;
     }
@@ -978,7 +1063,8 @@ Hierarchy.prototype = {
       return dataNode.isLeaf;
     }
 
-    if (dataNode.children && dataNode.children.length > 0) {
+    // Node is not a leaf and should display and expand/collapse icon
+    if ((dataNode.children && dataNode.children.length > 0) || dataNode.childrenUrl !== undefined) {
       return false;
     }
 
@@ -990,8 +1076,8 @@ Hierarchy.prototype = {
    * get the current state via .data() and re-attach the new state
    * @private
    * @param {string} leaf .
-   * @param {string} isRoot .
-   * @param {string} nodeData .
+   * @param {boolean} isRoot .
+   * @param {object} nodeData .
    * @param {string} eventType .
    * @returns {void}
    */
@@ -1045,7 +1131,9 @@ Hierarchy.prototype = {
     }
 
     // Keep reference of the parent dataset for paging
-    data.parentDataSet = s.dataset;
+    if (this.settings.layout === 'paging') {
+      data.parentDataSet = s.dataset;
+    }
 
     // Reset data
     $(leaf).data(data);
