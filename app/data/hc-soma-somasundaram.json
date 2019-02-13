@@ -30,6 +30,14 @@
       "employmentType": "FT",
       "avatarInitials": "DM",
       "isLeaf": true
+    },
+    {
+      "id": "6",
+      "name": "Massimo Cappoccia",
+      "position": "VP, Software Development",
+      "employmentType": "FT",
+      "avatarInitials": "AW",
+      "childrenUrl": "hc-massimo-capoccia.json"
     }
   ]
 }
