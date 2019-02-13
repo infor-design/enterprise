@@ -15,12 +15,6 @@
     layout: 'stacked'
   };
 
-  const urls = {
-    '1': `{{basepath}}api/hc-charles-phillips.json`,
-    '2': `{{basepath}}api/hc-pam-murphy.json`,
-    '3': `{{basepath}}api/hc-soma-somasundaram.json`
-  };
-
   // Initial load
   $.getJSON('{{basepath}}api/hc-charles-phillips', function(data) {
     options.dataset = data;
@@ -31,12 +25,10 @@
     const hierarchyControl = $('#hierarchy').data('hierarchy');
     console.log(event, eventInfo);
 
-    for (let key in urls) {
-      if (eventInfo.id === key && (eventInfo.eventType === 'expand' || eventInfo.eventType === 'back')) {
-        $.getJSON(urls[key], function(newData) {
-          reload(eventInfo, hierarchyControl, newData);
-        });
-      }
+    if (eventInfo.eventType === 'expand' || eventInfo.eventType === 'back') {
+      $.getJSON(`{{basepath}}api/${eventInfo.data.childrenUrl}`, function(newData) {
+        reload(eventInfo, hierarchyControl, newData);
+      });
     }
   });
 

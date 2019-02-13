@@ -6,7 +6,7 @@
       "position": "CEO",
       "employmentType": "FT",
       "picture": "../../www/images/1.jpg",
-      "childrenUrl": "./hc-charles-phillips.json"
+      "childrenUrl": "hc-charles-phillips.json"
     },
     {
       "id": "2",
@@ -14,7 +14,7 @@
       "position": "CTO",
       "employmentType": "FT",
       "avatarInitials": "SS",
-      "childrenUrl": "./hc-soma-somasundaram.json"
+      "childrenUrl": "hc-soma-somasundaram.json"
     },
     {
       "id": "3",
@@ -22,7 +22,7 @@
       "position": "SVP, Software Development Development",
       "employmentType": "FT",
       "avatarInitials": "MC",
-      "childrenUrl": "./hc-mossimo-copoccia.json"
+      "childrenUrl": "hc-mossimo-copoccia.json"
     }
   ],
   "centeredNode": {

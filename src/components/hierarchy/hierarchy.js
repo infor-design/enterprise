@@ -793,7 +793,7 @@ Hierarchy.prototype = {
       const roots = $('.leaf.root');
 
       roots.each((index, root) => {
-        this.updateState(root, false, data, 'add');
+        this.updateState(root, false, data.ancestorPath[index], 'add');
 
         if (index === roots.length - 1) {
           $(root).addClass('is-selected');

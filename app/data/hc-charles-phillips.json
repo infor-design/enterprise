@@ -37,7 +37,7 @@
       "position": "COO",
       "employmentType": "FT",
       "avatarInitials": "PM",
-      "childrenUrl": "../hc-pam-murphy.json",
+      "childrenUrl": "hc-pam-murphy.json",
       "menu" : {
         "details": [
           {"key": "Organization Unit", "value": "U.S Headquarters"},
@@ -68,7 +68,7 @@
       "position": "CTO",
       "employmentType": "FT",
       "avatarInitials": "SS",
-      "childrenUrl": "../hc-soma-somasundaram.json",
+      "childrenUrl": "hc-soma-somasundaram.json",
       "menu" : {
         "details": [
           {"key": "Organization Unit", "value": "U.S Headquarters"},

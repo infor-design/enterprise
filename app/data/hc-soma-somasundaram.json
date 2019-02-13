@@ -5,14 +5,14 @@
     "position": "CEO",
     "employmentType": "FT",
     "picture": "/images/4.jpg",
-    "childrenUrl": "../charles-phillips.json"
+    "childrenUrl": "hc-charles-phillips.json"
   }],
   "centeredNode": {
     "id": "3",
     "name": "Soma Somasundaram",
     "position": "CTO",
     "employmentType": "FT",
-    "avatarInitials": "SS",
+    "avatarInitials": "SS"
   },
   "children": [
     {
