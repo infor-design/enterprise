@@ -1,0 +1,35 @@
+{
+  "ancestorPath": [
+    {
+      "id": "1",
+      "name": "Charles Phillips",
+      "position": "CEO",
+      "employmentType": "FT",
+      "picture": "/images/4.jpg",
+      "childrenUrl": "hc-charles-phillips.json"
+    },
+    {
+      "id": "2",
+      "name": "Soma Somasundaram",
+      "position": "CTO",
+      "employmentType": "FT",
+      "avatarInitials": "SS",
+      "childrenUrl": "hc-soma-somasundaram.json"
+    },
+    {
+      "id": "3",
+      "name": "Massimo Capoccia",
+      "position": "SVP, Software Development Development",
+      "employmentType": "FT",
+      "avatarInitials": "MC",
+      "childrenUrl": "hc-mossimo-copoccia.json"
+    }
+  ],
+  "centeredNode": {
+    "id": "4",
+    "name": "Richard Patton",
+    "position": "Architect, Sr. Master Principal",
+    "employmentType": "FT",
+    "avatarInitials": "RP"
+  }
+}

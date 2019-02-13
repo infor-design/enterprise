@@ -35,10 +35,10 @@
     {
       "id": "5",
       "name": "Richard Patton",
-      "position": "SVP, Chief Customer Officer",
+      "position": "Architect, Sr. Master Principal",
       "employmentType": "FT",
       "avatarInitials": "RP",
-      "isLeaf": true
+      "childrenUrl": "hc-richard-patton.json"
     }
   ]
 }
