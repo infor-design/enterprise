@@ -40,6 +40,7 @@ const COMPONENT_NAME = 'listview';
  * @param {boolean} [settings.disableItemDeactivation=false] If true when an item is
   activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
  * @param {boolean} [settings.showPageSizeSelector=false] If true the page size select will be shown when paging.
+ * @param {object} [settings.listFilterSettings=null] If defined as an object, passes settings into the internal ListFilter component
  */
 
 const LISTVIEW_DEFAULTS = {
@@ -58,7 +59,8 @@ const LISTVIEW_DEFAULTS = {
   source: null,
   forceToRenderOnEmptyDs: false,
   disableItemDeactivation: false,
-  showPageSizeSelector: false
+  showPageSizeSelector: false,
+  listFilterSettings: null
 };
 
 function ListView(element, settings) {
@@ -164,9 +166,15 @@ ListView.prototype = {
         // TODO: Create Searchfield somehow
       }
 
-      this.listfilter = new ListFilter({
+      // Setup the ListFilter with externally-defined settings, if applicable
+      let listFilterSettings = {
         filterMode: 'contains'
-      });
+      };
+      if (typeof this.settings.listFilterSettings === 'object') {
+        listFilterSettings = utils.extend({}, listFilterSettings, this.settings.listFilterSettings);
+      }
+
+      this.listfilter = new ListFilter(listFilterSettings);
     }
 
     if (this.settings.emptyMessage) {
@@ -424,6 +432,7 @@ ListView.prototype = {
     function done(response, pagingInfo) {
       self.settings.dataset = response;
       ds = response;
+      self.renderPager(pagingInfo);
       self.render(ds, pagingInfo);
     }
 
@@ -437,7 +446,7 @@ ListView.prototype = {
     // If paging is not active, and a source is present, attempt to retrieve
     // information from the datasource.
     // TODO: Potentially abstract this datasource concept out for use elsewhere
-    if ((s || ajaxDs) && !isResponse) {
+    if ((s || ajaxDs) && !this.filteredDataset && !isResponse) {
       switch (typeof s) {
         case 'function':
           s(pagerInfo, done);
@@ -583,7 +592,7 @@ ListView.prototype = {
     }
 
     // Set a global "searchTerm" and get the list of elements
-    this.searchTerm = searchfield.val();
+    this.searchTerm = searchFieldVal;
 
     // Filter the results and highlight things
     let results = this.listfilter.filter(this.settings.dataset, this.searchTerm);
@@ -597,8 +606,7 @@ ListView.prototype = {
     });
 
     this.filteredDataset = results;
-    this.renderPager(pagingInfo);
-    this.render(results, pagingInfo);
+    this.loadData(null, pagingInfo);
   },
 
   /**
@@ -620,8 +628,7 @@ ListView.prototype = {
       searchActivePage: undefined
     };
 
-    this.renderPager(pagingInfo);
-    this.render(null, pagingInfo);
+    this.refresh(null, pagingInfo);
   },
 
   /**

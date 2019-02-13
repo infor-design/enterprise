@@ -273,7 +273,7 @@ describe('Listview example-search tests', () => {
     });
   }
 
-  it('Should hide unmatching items based on search term, and highlight pattern', async () => {
+  it('Should not render items that don\'t match the search term', async () => {
     const searchListviewEl = await element(by.id('gridfilter'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchListviewEl), config.waitsFor);
@@ -283,11 +283,21 @@ describe('Listview example-search tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElementValue(await element(by.id('gridfilter')), 'to'), config.waitsFor);
 
-    expect(await element(by.css('li[aria-posinset="2"]')).getText()).toContain('Update pending quotes and send out again to customers.');
-    expect(await element(by.css('li[aria-posinset="2"]')).isDisplayed()).toBeTruthy();
-    expect(await element.all(by.css('li[aria-posinset="2"] .highlight')).first().getText()).toContain('to');
-    expect(await element(by.css('li[aria-posinset="1"]')).isDisplayed()).toBeFalsy();
-    expect(await element(by.css('li[aria-posinset="1"]')).getAttribute('class')).toContain('hidden');
+    // Should only be one search result
+    expect(await element.all(by.css('#search-listview li')).count()).toEqual(1);
+  });
+
+  it('Should highlight the matching parts of search results', async () => {
+    const searchListviewEl = await element(by.id('gridfilter'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchListviewEl), config.waitsFor);
+    await searchListviewEl.click();
+    await browser.driver.switchTo().activeElement().clear();
+    await browser.driver.switchTo().activeElement().sendKeys('to');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.textToBePresentInElementValue(await element(by.id('gridfilter')), 'to'), config.waitsFor);
+
+    expect(await element.all(by.css('#search-listview li .highlight')).first().getText()).toContain('to');
   });
 });
 

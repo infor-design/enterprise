@@ -449,11 +449,9 @@ Pager.prototype = {
   showPageSizeSelector(toggleOption) {
     toggleOption = (`${toggleOption}`).toLowerCase() === 'true';
     this.settings.showPageSizeSelector = toggleOption;
+
     if (toggleOption) {
       this.isShowPageSizeSelectorCall = toggleOption;
-      this.pageCount();
-    } else {
-      this.pagerBar.find('.pager-pagesize').remove();
     }
   },
 
@@ -1153,7 +1151,15 @@ Pager.prototype = {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
-    this.updatePagingInfo(this.settings);
+
+    // Limit updated paging info to a specific subset
+    const pagingInfo = {
+      activePage: this.settings.activePage,
+      indeterminate: this.settings.indeterminate,
+      pagesize: this.settings.pagesize
+    };
+
+    this.updatePagingInfo(pagingInfo);
     return this;
   },
 
