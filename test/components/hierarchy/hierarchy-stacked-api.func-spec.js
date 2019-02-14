@@ -96,7 +96,7 @@ describe('hierarchy API', () => {
     expect(document.body.querySelector('legend li').innerText).toEqual('Full Time');
   });
 
-  it('Collapse button should not execute collapse() function', () => {
+  it('Should not trigger collapsed function when using stacked layout', () => {
     const collapseButtons = document.body.querySelectorAll('.btn-collapse');
     const spyEvent = spyOnEvent(collapseButtons[1], 'click');
     const collapseFunction = spyOn(hierarchyAPI, 'collapse');
