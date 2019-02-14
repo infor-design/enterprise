@@ -211,7 +211,7 @@ fdescribe('Datagrid filter tests', () => {
 
 fdescribe('Datagrid frozen column tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-frozen-columns?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-frozen-columns');
 
     const datagridEl = await element(by.css('#datagrid'));
     await browser.driver
@@ -224,7 +224,7 @@ fdescribe('Datagrid frozen column tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
+      const containerEl = await element(by.id('datagrid'));
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-frozen')).toEqual(0);
@@ -251,7 +251,7 @@ fdescribe('Datagrid frozen column tests', () => {
 
 fdescribe('Datagrid grouping headers and filter tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-grouping-filter?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-grouping-filter');
 
     const datagridEl = await element(by.css('.datagrid-rowgroup-header'));
     await browser.driver
@@ -261,15 +261,6 @@ fdescribe('Datagrid grouping headers and filter tests', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-group-filter')).toEqual(0);
-    });
-  }
 
   it('Should filter and show groups', async () => {
     expect(await element.all(by.css('.datagrid-row')).count()).toEqual(16);
