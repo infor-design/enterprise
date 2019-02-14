@@ -428,14 +428,12 @@ describe('Datepicker disabled date tests', () => {
     expect(await element.all(by.css('.monthview-table td:not(.is-disabled)')).count()).toEqual(28);
   });
 
-  it('Should show error on disabled dates', async () => {
+  it('Should show errors on disabled dates', async () => {
     await element(by.css('#date-field')).clear();
     await element(by.css('#date-field')).sendKeys('5/2/2015');
     await element(by.css('#date-field')).sendKeys(protractor.Key.TAB);
-
-    const elem = await element(by.css('.error-message'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(elem), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.error-message'))), config.waitsFor);
 
     expect(await element(by.css('.error-message')).getText()).toEqual('Unavailable Date');
   });
@@ -631,7 +629,7 @@ describe('Datepicker Month Year Picker Tests', () => {
 
     let dropdownEl = await element(by.css('#year-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
     await dropdownEl.click();
-    dropdownEl = await element(by.css('.dropdown-search'));
+    dropdownEl = await element(by.css('#dropdown-list .dropdown-search'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ENTER);

@@ -65,7 +65,12 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
  * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last column will get filled with an empty spacer column.
+<<<<<<< HEAD
  * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize.
+=======
+ * @param {boolean}  [settings.showNewRowIndicator=true] If true, the new row indicator will display after adding a row.
+ * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize. If 'lastInitial' it will resize only initially.
+>>>>>>> 0bf1b65fafb3281f5b001154d0eb8194ab7376f1
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
@@ -150,6 +155,7 @@ const DATAGRID_DEFAULTS = {
   allowSelectAcrossPages: null,
   groupable: null,
   spacerColumn: false,
+  showNewRowIndicator: true,
   stretchColumn: 'last',
   twoLineHeader: false,
   clickToSelect: true,
@@ -1809,7 +1815,7 @@ Datagrid.prototype = {
               isMatch = false;
 
               for (let k = 0; k < conditions[i].value.length; k++) {
-                const match = conditions[i].value[k].toLowerCase().indexOf(rowValue) >= 0 && (rowValue.toString() !== '' || conditions[i].value[k] === '');
+                const match = conditions[i].value[k].toLowerCase() === rowValue && (rowValue.toString() !== '' || conditions[i].value[k] === '');
                 if (match) {
                   isMatch = true;
                 }
@@ -3268,7 +3274,7 @@ Datagrid.prototype = {
     const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
 
-    if (rowData && rowData.rowStatus) {
+    if (rowData && rowData.rowStatus && self.settings.showNewRowIndicator) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
       rowStatus.icon = (rowData.rowStatus.icon === 'success') ? '#icon-check' : '#icon-exclamation';

@@ -12,7 +12,7 @@
         data = [];
 
       // Define Some Sample Data
-      data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble Paint', quantity: 1, price: 410.99, orderDate: new Date(2014, 12, 8), action: 'Action', status: 'Error'});
+      data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble', quantity: 1, price: 410.99, orderDate: new Date(2014, 12, 8), action: 'Action', status: 'Error'});
       data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, orderDate: new Date(2015, 7, 3), action: 'On Hold', status: 'Error'});
       data.push({ id: 3, productId: 2342203, productName: 'Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 1, price: 620.99, orderDate: new Date(2014, 6, 3), action: 'Action', status: 'Error'});
       data.push({ id: 4, productId: 2445204, productName: undefined, inStock: false, activity:  'Assemble Paint', quantity: 3, price: 1210.99, orderDate: new Date(2015, 3, 3), action: 'Action', status: 'Confirmed'});
@@ -27,6 +27,7 @@
                       {id:'Error', value:'Error', label:'Error'}];
 
       var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
+                         {id: 'Assemble', value:'Assemble', label: 'Assemble'},
                          {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
 
     var lookupOptions = {
