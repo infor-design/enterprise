@@ -48,28 +48,28 @@ demo:
     slug: example-list
   - name: Selection (Mixed)
     slug: example-mixed-selection
+  - name: Selection (Multiple)
+    slug: example-multiselect
+  - name: Nested Grids
+    slug: example-nested-grids
+  - name: Paging (Client Side)
+    slug: example-paging-client-side
   - name: Paging (Indeterminate)
     slug: example-paging-indeterminate
   - name: Paging (Server Side)
     slug: example-paging
-  - name: Paging (Client Side)
-    slug: example-paging-client-side
   - name: Column Reordering
     slug: example-reorder
   - name: Row Reordering
     slug: example-row-reorder
   - name: Selection (Single)
     slug: example-singleselect
-  - name: Selection (Multiple)
-    slug: example-multiselect
+  - name: Summary Row
+    slug: example-summary-row
   - name: Tooltips
     slug: example-tooltips
   - name: Tree Grid
     slug: example-tree
-  - name: Using Nested Objects
-    slug: example-nested-objects
-  - name: Summary Row
-    slug: example-summary-row
 ---
 ## Code Example
 
