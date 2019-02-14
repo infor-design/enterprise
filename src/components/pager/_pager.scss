@@ -10,10 +10,6 @@
   padding-top: 4px;
   text-align: center;
 
-  > * {
-    vertical-align: middle;
-  }
-
   > li {
     cursor: pointer;
     display: inline-block;
@@ -93,7 +89,8 @@
   &.is-listview {
     .pager-prev,
     .pager-next {
-      position: static;
+      position: relative;
+      top: 2px;
     }
 
     li + .pager-count {
@@ -117,8 +114,6 @@
 
   .icon {
     color: $font-color;
-    height: 17px;
-    width: 18px;
   }
 
   a {
