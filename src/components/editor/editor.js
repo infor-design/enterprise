@@ -33,6 +33,7 @@ const COMPONENT_NAME = 'editor';
 * @param {string} [settings.image = { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' }] Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
 * @param {function} [settings.onLinkClick = null] Call back for clicking on links to control link behavior.
 * @param {function} [settings.showHtmlView = false] If set to true, editor should be displayed in HTML view initialy.
+* @param {function} [settings.preview = false] If set to true, editor should be displayed in preview mode non editable content.
 */
 const EDITOR_DEFAULTS = {
   buttons: {
@@ -64,7 +65,8 @@ const EDITOR_DEFAULTS = {
   anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false },
   image: { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' },
   onLinkClick: null,
-  showHtmlView: false
+  showHtmlView: false,
+  preview: false
 };
 
 function Editor(element, settings) {
@@ -92,6 +94,16 @@ Editor.prototype = {
     this.id = `${utils.uniqueId(this.element, 'editor')}-id`;
 
     this.container = this.element.parent('.field, .field-short').addClass('editor-container');
+
+    // Preview mode
+    if (!this.previewRendered && (this.element.hasClass('is-preview') || this.settings.preview)) {
+      this.container[0].classList.add('is-preview');
+      this.element[0].classList.remove('is-disabled', 'is-readonly', 'is-preview');
+      this.element[0].setAttribute('contenteditable', false);
+      this.element[0].removeAttribute('aria-multiline');
+      this.element[0].removeAttribute('role');
+      return;
+    }
 
     s.anchor = $.extend({}, EDITOR_DEFAULTS.anchor, s.anchor);
     s.image = $.extend({}, EDITOR_DEFAULTS.image, s.image);
@@ -2196,6 +2208,10 @@ Editor.prototype = {
 
   destroyToolbar() {
     // Unbind all events attached to the old element that involve triggering the toolbar hide/show
+    const checkJQ = el => el || $();
+    this.toolbar = checkJQ(this.toolbar);
+    this.element = checkJQ(this.element);
+    this.textarea = checkJQ(this.textarea);
 
     const toolbarApi = this.toolbar.data('toolbar');
     if (toolbarApi) {
@@ -2253,6 +2269,76 @@ Editor.prototype = {
   },
 
   /**
+   * Setup the preview mode.
+   * @private
+   * @returns {void}
+   */
+  setPreviewMode() {
+    const containerClassList = this.container[0].classList;
+    const elementClassList = this.element[0].classList;
+
+    if (!containerClassList.contains('is-preview')) {
+      if (!this.isEditable()) {
+        const classes = ['is-disabled', 'is-readonly', 'is-preview'];
+        containerClassList.remove(...classes);
+        elementClassList.remove(...classes);
+      }
+      if (this.sourceViewActive()) {
+        this.toggleSource();
+      }
+      containerClassList.add('is-preview');
+      elementClassList.remove('is-preview');
+      this.element[0].setAttribute('contenteditable', false);
+      this.element[0].removeAttribute('aria-multiline');
+      this.element[0].removeAttribute('role');
+
+      // Remove tooltip for links in editor
+      const links = [].slice.call(this.element[0].querySelectorAll('a'));
+      links.forEach((link) => {
+        const tooltipApi = $(link).data('tooltip');
+        if (tooltipApi && typeof tooltipApi.destroy === 'function') {
+          tooltipApi.destroy();
+        }
+      });
+    }
+  },
+
+  /**
+   * Destroy preview mode.
+   * @private
+   * @returns {void}
+   */
+  destroyPreviewMode() {
+    const classList = this.container[0].classList;
+    if (classList.contains('is-preview')) {
+      classList.remove('is-preview');
+      if (!this.previewRendered) {
+        this.previewRendered = true;
+        this.init();
+      } else {
+        this.element[0].setAttribute('aria-multiline', true);
+        this.element[0].setAttribute('role', 'textbox');
+        this.bindAnchorPreview();
+      }
+    }
+  },
+
+  /**
+   * Check for the editor is in editable mode.
+   * @returns {boolean} true if editor is editabled
+   */
+  isEditable() {
+    let isEnabled = true;
+    const isContains = (el, className) => el.classList.contains(className);
+    ['is-disabled', 'is-readonly', 'is-preview'].forEach((className) => {
+      if (isContains(this.container[0], className) || isContains(this.element[0], className)) {
+        isEnabled = false;
+      }
+    });
+    return isEnabled;
+  },
+
+  /**
    * Updates the component instance.  Can be used after being passed new settings.
    * @param {object} settings The settings to apply.
    * @returns {object} The api
@@ -2267,6 +2353,7 @@ Editor.prototype = {
   },
 
   teardown() {
+    this.element.attr('contenteditable', 'false');
     this.element.off('input.editor keyup.editor');
     $('html').off('mouseup.editor');
 
@@ -2298,6 +2385,7 @@ Editor.prototype = {
   * @returns {void}
   */
   disable() {
+    this.destroyPreviewMode();
     this.element.addClass('is-disabled').attr('contenteditable', 'false');
     this.container.addClass('is-disabled');
   },
@@ -2307,6 +2395,7 @@ Editor.prototype = {
   * @returns {void}
   */
   enable() {
+    this.destroyPreviewMode();
     this.element.removeClass('is-disabled is-readonly').attr('contenteditable', 'true');
     this.container.removeClass('is-disabled is-readonly');
   },
@@ -2316,8 +2405,27 @@ Editor.prototype = {
   * @returns {void}
   */
   readonly() {
+    this.destroyPreviewMode();
     this.element.removeClass('is-readonly').attr('contenteditable', 'false');
     this.container.addClass('is-readonly');
+  },
+
+  /**
+   * Make the editable mode.
+   * @returns {void}
+   */
+  editable() {
+    this.enable();
+  },
+
+  /**
+   * Make the preview mode.
+   * @returns {void}
+   */
+  preview() {
+    if (!this.container[0].classList.contains('is-preview')) {
+      this.setPreviewMode();
+    }
   },
 
   // Fix to Firefox get focused by keyboard
