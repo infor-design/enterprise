@@ -522,6 +522,10 @@
     padding: 13px 0 13px 20px;
     white-space: nowrap;
     width: calc(100% - 1px);
+
+    > span {
+      display: inline-block; // to allow js width calculation
+    }
   }
 
   > [class^='btn'] {
@@ -1408,6 +1412,25 @@ html[dir='rtl'] {
           right: 0;
           width: 50px;
         }
+      }
+    }
+  }
+}
+
+// Windows-style popup for truncated text elements
+.tooltip {
+  &.tooltip-accordion-style {
+    background-color: $theme-color-palette-white;
+
+    .arrow {
+      display: none;
+    }
+
+    .tooltip-content {
+      padding: 5px;
+
+      p {
+        color: $theme-color-palette-black;
       }
     }
   }
