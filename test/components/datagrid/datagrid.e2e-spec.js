@@ -484,20 +484,20 @@ describe('Datagrid mixed selection tests', () => {
   });
 
   it('Should allow activation and deactivation', async () => {
-    expect(await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('52106');
-    await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
+    expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('52106');
+    await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1) td:nth-child(2)')).click();
 
-    expect(await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-rowactivated');
-    await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
+    expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-rowactivated');
+    await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1) td:nth-child(2)')).click();
 
-    expect(await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-rowactivated');
+    expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-rowactivated');
   });
 
   it('Should handle selection ', async () => {
-    await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1) td:nth-child(1)')).click();
 
-    expect(await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-rowactivated');
-    expect(await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-rowactivated');
+    expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
   });
 });
 
@@ -642,7 +642,7 @@ describe('Datagrid paging tests', () => {
 
 describe('Datagrid page size selector tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-paging-page-size-selector');
+    await utils.setPage('/components/datagrid/test-paging-page-size-selector');
 
     const datagridEl = await element(by.id('datagrid'));
     await browser.driver
@@ -1332,7 +1332,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
 
 describe('Datagrid Paging with Summary Row test', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-paging-with-summary-row');
+    await utils.setPage('/components/datagrid/test-paging-with-summary-row');
 
     const datagridEl = await element(by.id('datagrid'));
     await browser.driver
