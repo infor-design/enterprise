@@ -174,7 +174,7 @@
       }
 
       .icon-alert {
-        fill: $theme-color-status-warning !important;
+        color: $theme-color-status-warning !important;
       }
     }
 
@@ -631,7 +631,7 @@
       }
 
       ~ svg.icon {
-        fill: $listview-search-disabled-icon-color;
+        color: $listview-search-disabled-icon-color;
       }
     }
   }

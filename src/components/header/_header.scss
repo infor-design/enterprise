@@ -183,16 +183,16 @@ $subheader-height: 60px;
         color: $theme-color-palette-white !important;
 
         svg {
-          fill: $theme-color-palette-white !important;
+          color: $theme-color-palette-white !important;
         }
       }
 
       &:hover svg {
-        fill: $theme-color-palette-white !important;
+        color: $theme-color-palette-white !important;
       }
 
       svg {
-        fill: rgba(255, 255, 255, 0.7) !important;
+        color: rgba(255, 255, 255, 0.7) !important;
       }
     }
 
@@ -306,12 +306,12 @@ $subheader-height: 60px;
       color: $header-button-color;
 
       .icon {
-        fill: $header-button-color;
+        color: $header-button-color;
       }
 
       &.is-open .icon,
       &.btn-menu.is-open .icon {
-        fill: $header-button-hover-color !important;
+        color: $header-button-hover-color !important;
       }
 
       .audible {
@@ -324,7 +324,7 @@ $subheader-height: 60px;
         color: $header-button-hover-color;
 
         .icon {
-          fill: $header-button-hover-color;
+          color: $header-button-hover-color;
         }
       }
 
@@ -332,7 +332,7 @@ $subheader-height: 60px;
         color: $header-button-focus-color;
 
         .icon {
-          fill: $header-button-focus-color;
+          color: $header-button-focus-color;
         }
       }
 
@@ -341,7 +341,7 @@ $subheader-height: 60px;
         color: $header-button-focus-color;
 
         .icon {
-          fill: $header-button-focus-color;
+          color: $header-button-focus-color;
         }
       }
 
@@ -350,7 +350,7 @@ $subheader-height: 60px;
           color: $header-button-focus-color;
 
           .icon {
-            fill: $header-button-focus-color;
+            color: $header-button-focus-color;
           }
         }
       }
@@ -359,7 +359,7 @@ $subheader-height: 60px;
         color: $header-button-disabled-color !important;
 
         .icon {
-          fill: $header-button-disabled-color !important;
+          color: $header-button-disabled-color !important;
         }
 
         &:hover {
@@ -419,7 +419,7 @@ $subheader-height: 60px;
     color: $header-button-color;
 
     .icon {
-      fill: $header-button-color;
+      color: $header-button-color;
     }
 
     &:focus:not(.hide-focus) {
@@ -592,6 +592,6 @@ html[dir='rtl'] {
   }
 
   svg {
-    fill: $theme-color-palette-graphite-70 !important;
+    color: $theme-color-palette-graphite-70 !important;
   }
 }

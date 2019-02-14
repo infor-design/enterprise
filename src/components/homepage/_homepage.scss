@@ -163,14 +163,14 @@
       color: $header-button-color;
 
       .icon {
-        fill: $header-button-color;
+        color: $header-button-color;
       }
 
       &:hover {
         color: $header-text-color;
 
         .icon {
-          fill: $header-text-color;
+          color: $header-text-color;
         }
       }
 
@@ -191,7 +191,7 @@
       }
 
       text {
-        fill: $header-text-color;
+        color: $header-text-color;
       }
 
       .chart-legend-item-text {

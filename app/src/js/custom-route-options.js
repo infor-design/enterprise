@@ -1,4 +1,6 @@
 const extend = require('extend');
+const fs = require('fs');
+const path = require('path');
 const utils = require('./utils');
 
 // Object with settings that gets stringify
@@ -42,6 +44,11 @@ module.exports = function customRouteOptions(req, res) {
     customOpts.amd = true;
     customOpts.layout = 'layout-nofrills';
     customOpts.subtitle = 'AMD Tests';
+  }
+
+  // Icons
+  if (url.match(/icons\/example-index/) || url.match(/icons\/example-extended/) || url.match(/icons\/example-empty/)) {
+    customOpts.iconHtml = require('./routes/custom-icons')(url);
   }
 
   // Placement Logic
