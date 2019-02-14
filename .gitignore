@@ -1,46 +1,45 @@
 # Compiled #
 ############
-designs/
 app/dist/css/*
-dist/
 app/docs/*.html
-dist/
 app/docs/components/*.html
-docs/ids-website/dist/
+designs/
+dist/
+dist/
 docs/ids-website/dist.zip
+docs/ids-website/dist/
 documentation/
-public/svg/
 public/js/
 public/stylesheets/
+public/svg/
 temp/
-views/docs
 templates/**/doc.html
 test-reports/
-
+views/docs
 # Packages #
 ############
 node_modules/
 
 # Misc #
 ########
-junit.xml
-junit-unit.xml
+*.iml
+.idea
+.idea/
+.tmp/
+config.json
+coverage
+dist.zip
+docs/api
+eslint.log
 junit-functional.xml
+junit-unit.xml
+junit.xml
 npm-debug.log
 phantomjsdriver.log
 report.xml
 sohoxi-test-report.html
-xunit.xml
-.idea/
-.idea
-*.iml
 views/docs/changelog-contents.html
-config.json
-docs/api
-eslint.log
-coverage
-.tmp/
-dist.zip
+xunit.xml
 
 # OS generated files #
 ######################
@@ -48,8 +47,11 @@ dist.zip
 .vscode
 
 
-# Deprecated #
+# Deprecated (or replaced by dynamic building #
 ##############
 ids-enterprise/
-yarn.lock
 package-lock.json
+src/components/emptymessage/svg-empty.html
+src/components/icons/svg-extended.html
+src/components/icons/svg.html
+yarn.lock

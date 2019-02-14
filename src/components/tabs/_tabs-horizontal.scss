@@ -53,7 +53,7 @@ $horizontal-tabs-height: 40px;
 
   > .tab-list-container {
     .icon:not(.icon-error) {
-      fill: $tab-text-color;
+      color: $tab-text-color;
     }
 
     .tab {
@@ -67,7 +67,7 @@ $horizontal-tabs-height: 40px;
         color: $tab-hover-color;
 
         .icon:not(.is-error):not(.icon-error) {
-          fill: $tab-hover-color;
+          color: $tab-hover-color;
         }
       }
 
@@ -75,7 +75,7 @@ $horizontal-tabs-height: 40px;
         color: $tab-selected-color;
 
         .icon:not(.is-error):not(.icon-error) {
-          fill: $tab-selected-color;
+          color: $tab-selected-color;
         }
       }
     }
@@ -90,14 +90,14 @@ $horizontal-tabs-height: 40px;
     line-height: 12px;
 
     .icon {
-      fill: $tab-text-color;
+      color: $tab-text-color;
     }
 
     &:hover {
       color: $tab-hover-color;
 
       .icon:not(.is-error):not(.icon-error) {
-        fill: $tab-hover-color;
+        color: $tab-hover-color;
       }
     }
 
@@ -110,7 +110,7 @@ $horizontal-tabs-height: 40px;
       }
 
       .icon:not(.is-error):not(.icon-error) {
-        fill: $tab-selected-color;
+        color: $tab-selected-color;
       }
     }
   }

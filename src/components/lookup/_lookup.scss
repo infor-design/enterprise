@@ -16,12 +16,12 @@
       cursor: default;
 
       .icon {
-        fill: $input-color-disabled-background;
+        color: $input-color-disabled-background;
       }
     }
 
     &[disabled] + .trigger > .icon {
-      fill: $input-disabled-color;
+      color: $input-disabled-color;
     }
 
     &.is-not-editable {
@@ -51,7 +51,7 @@
 
     .icon {
       background-color: inherit;
-      fill: $trigger-icon-fill-color;
+      color: $trigger-icon-fill-color;
       height: 18px;
       pointer-events: none;
       right: -7px;
@@ -60,7 +60,7 @@
     }
 
     &:hover .icon {
-      fill: $trigger-hover-color;
+      color: $trigger-hover-color;
     }
   }
 

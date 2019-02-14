@@ -3,8 +3,8 @@
 
 // Svg Styles
 .icon {
+  color: $icon-color-fill;
   display: inline-block;
-  fill: $icon-color-fill;
   height: 18px; //Older ones at 32 but now based on 40
   position: relative;
   width: 22px;
@@ -12,7 +12,7 @@
 
 //Glyphs on the Header
 .header .icon {
-  fill: $theme-color-palette-white;
+  color: $theme-color-palette-white;
 }
 
 // Specific Icon Types
@@ -33,7 +33,7 @@ svg.icon-dirty,
 }
 
 .icon-info-field {
-  fill: $theme-color-brand-primary-base;
+  color: $theme-color-brand-primary-base;
 }
 
 .field {
@@ -135,40 +135,40 @@ svg.icon-dirty,
 .icon-dirtyerror,
 .icon-error,
 .icon-error-solid {
-  fill: $theme-color-status-danger !important;
+  color: $theme-color-status-danger !important;
 }
 
 .icon-success,
 .icon-success-solid {
-  fill: $success-icon-fill !important;
+  color: $success-icon-fill !important;
 }
 
 .icon-empty-circle,
 .icon-half-empty-circle {
-  fill: $icon-color;
+  color: $icon-color;
 }
 
 .icon-alert,
 .icon-alert-solid {
-  fill: $theme-color-status-warning !important;
+  color: $theme-color-status-warning !important;
 }
 
 .icon-solid-bgrnd {
-  fill: $theme-color-palette-white;
+  color: $theme-color-palette-white;
 }
 
 .icon-pending {
   background: $theme-color-status-caution !important;
   border: 2px solid $theme-color-status-caution;
   border-radius: 50%;
-  fill: $theme-color-palette-white !important;
+  color: $theme-color-palette-white !important;
   height: 18px;
   width: 18px;
 }
 
 .icon-info,
 .icon-info-solid {
-  fill: $info-icon-fill !important;
+  color: $info-icon-fill !important;
 }
 
 svg.icon-close {
@@ -176,7 +176,7 @@ svg.icon-close {
 }
 
 .icon-sohoxi {
-  fill: $inverse-color;
+  color: $inverse-color;
   height: 22px;
   left: -15px;
   top: 5px;
@@ -185,7 +185,7 @@ svg.icon-close {
 
 .icon-favorite {
   svg {
-    fill: $rating-bg-color !important;
+    color: $rating-bg-color !important;
   }
 }
 
@@ -258,8 +258,8 @@ svg.icon-logo {
   width: 100px;
 
   svg {
+    color: $theme-color-palette-white;
     display: inline-block;
-    fill: $theme-color-palette-white;
     height: 45px;
     margin-left: 26px;
     margin-top: 25px;
@@ -287,7 +287,7 @@ svg.icon-logo {
 }
 
 svg.icon-dirty {
-  fill: $dirty-icon-fill;
+  color: $dirty-icon-fill;
   height: 12px;
   stroke: $dirty-icon-fill;
   top: 7px;
@@ -295,11 +295,11 @@ svg.icon-dirty {
 }
 
 .icon-in-progress {
-  fill: $theme-color-palette-amethyst-70;
+  color: $theme-color-palette-amethyst-70;
 }
 
 .icon-new {
-  fill: $theme-color-palette-amber-70;
+  color: $theme-color-palette-amber-70;
 }
 
 // Psuedo-element Icons
@@ -657,6 +657,7 @@ html[dir='rtl'] {
 //================================================== //
 
 .icon-empty-state {
+  color: $theme-color-brand-primary-base; // Themable Empty Icons
   display: inline-block;
   fill: $theme-color-brand-primary-base; // Themable Empty Icons
   height: 65px;
@@ -665,7 +666,7 @@ html[dir='rtl'] {
 }
 
 .is-graphite.icon-empty-state {
-  fill: $icon-empty-bg-color; // Grey Scale icon
+  color: $icon-empty-bg-color; // Grey Scale icon
 }
 
 // color defs
@@ -675,7 +676,7 @@ html[dir='rtl'] {
 }
 
 .icon-empty-center-color {
-  fill: $theme-color-palette-white;
+  color: $theme-color-palette-white;
 }
 
 .space-icons {

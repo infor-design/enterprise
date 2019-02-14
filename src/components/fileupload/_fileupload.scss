@@ -21,7 +21,7 @@
     }
 
     .icon {
-      fill: $trigger-icon-fill-color;
+      color: $trigger-icon-fill-color;
       height: 14px;
       top: 2px;
       vertical-align: baseline;
@@ -30,12 +30,12 @@
 
     &:hover {
       .icon {
-        fill: $trigger-hover-color;
+        color: $trigger-hover-color;
       }
     }
 
     &:active .icon {
-      fill: $trigger-active-color;
+      color: $trigger-active-color;
     }
   }
 
@@ -77,12 +77,12 @@
     &:disabled + span:not(.audible),
     &:disabled + label.fileupload {
       svg {
-        fill: $input-color-disabled-border;
+        color: $input-color-disabled-border;
       }
 
       &:hover {
         svg {
-          fill: $input-color-disabled-border;
+          color: $input-color-disabled-border;
         }
       }
     }
@@ -136,8 +136,8 @@
         }
 
         .icon {
+          color: $fileupload-disabled-icon-color;
           cursor: default;
-          fill: $fileupload-disabled-icon-color;
         }
 
         &:hover {
@@ -146,8 +146,8 @@
           color: $fileupload-disabled-color;
 
           .icon {
+            color: $fileupload-disabled-icon-color;
             cursor: default;
-            fill: $fileupload-disabled-icon-color;
           }
         }
       }
@@ -232,7 +232,7 @@
       }
 
       .icon {
-        fill: $fileupload-droparea-color;
+        color: $fileupload-droparea-color;
       }
 
       p {
@@ -246,7 +246,7 @@
         color: $fileupload-droparea-hover-color;
 
         .icon {
-          fill: $fileupload-droparea-hover-icon-color;
+          color: $fileupload-droparea-hover-icon-color;
         }
       }
 
@@ -256,7 +256,7 @@
         color: $fileupload-droparea-dd-hover-color;
 
         .icon {
-          fill: $fileupload-droparea-dd-hover-color;
+          color: $fileupload-droparea-dd-hover-color;
         }
       }
     }
@@ -304,7 +304,7 @@
         }
 
         .icon {
-          fill: $fileupload-status-color;
+          color: $fileupload-status-color;
           height: 10px;
           left: 3px;
           top: 3px;
@@ -315,7 +315,7 @@
           background-color: $fileupload-cancel-hover-bg-color;
 
           .icon {
-            fill: $fileupload-status-hover-color;
+            color: $fileupload-status-hover-color;
           }
         }
       }
@@ -343,12 +343,12 @@
         margin-top: 7px;
 
         .icon {
-          fill: $fileupload-secondary-color;
+          color: $fileupload-secondary-color;
         }
 
         &:hover {
           .icon {
-            fill: $fileupload-hover-color;
+            color: $fileupload-hover-color;
           }
         }
       }
@@ -369,7 +369,7 @@
           background-color: $fileupload-completed-color;
 
           .icon {
-            fill: $fileupload-status-color;
+            color: $fileupload-status-color;
           }
         }
       }
@@ -394,7 +394,7 @@
           background-color: $fileupload-error-hover-color;
 
           .icon {
-            fill: $fileupload-status-color;
+            color: $fileupload-status-color;
           }
         }
       }

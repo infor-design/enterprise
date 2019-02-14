@@ -141,14 +141,14 @@
 
 //Clearable input fx on search or input/clearable
 .icon.close {
+  color: $trigger-icon-fill-color;
   cursor: pointer;
-  fill: $trigger-icon-fill-color;
   height: 14px;
   right: 29px;
   top: 3px;
 
   &:hover {
-    fill: $trigger-hover-color;
+    color: $trigger-hover-color;
   }
 
   &.is-empty {
@@ -165,7 +165,7 @@
     top: -2px;
 
     &:hover {
-      fill: $trigger-hover-color;
+      color: $trigger-hover-color;
     }
   }
 }
@@ -441,14 +441,12 @@ label,
 ::selection {
   background: $theme-color-brand-primary-base;
   color: $inverse-color;
-  fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
 }
 
 ::-moz-selection {
   background: $theme-color-brand-primary-base;
   color: $inverse-color;
-  fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
 }
 

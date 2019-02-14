@@ -33,7 +33,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   > .icon {
     background-color: rgba($theme-color-palette-white, 0); // IE 10
-    fill: $trigger-icon-fill-color;
+    color: $trigger-icon-fill-color;
     height: 14px;
     position: absolute;
     top: 10px;
@@ -49,7 +49,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     }
 
     &.icon-error {
-      fill: $error-color;
+      color: $error-color;
       left: auto;
       right: auto;
       top: auto;
@@ -58,7 +58,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   &:hover input:not([disabled]):not(:focus) {
     + svg {
-      fill: $button-color-tertiary-hover-font;
+      color: $button-color-tertiary-hover-font;
     }
   }
 
@@ -101,7 +101,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     }
 
     > .icon {
-      fill: $searchfield-context-icon-color;
+      color: $searchfield-context-icon-color;
       top: 9px;
 
       &:not(.close) {
@@ -116,7 +116,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
     &.popup-is-open {
       > .icon:not(.close) {
-        fill: $searchfield-active-icon-color;
+        color: $searchfield-active-icon-color;
       }
     }
 
@@ -183,7 +183,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
       color: $input-color-hover-border;
 
       .icon {
-        fill: $input-color-hover-border;
+        color: $input-color-hover-border;
       }
     }
 
@@ -207,7 +207,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
         color: $input-color-focus-border;
 
         .icon {
-          fill: $input-color-focus-border;
+          color: $input-color-focus-border;
         }
       }
     }
@@ -268,7 +268,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     }
 
     .icon {
-      fill: $font-color;
+      color: $font-color;
       width: 14px;
     }
 
@@ -281,7 +281,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
       color: $input-color-focus-border;
 
       .icon {
-        fill: $input-color-focus-border;
+        color: $input-color-focus-border;
       }
     }
   }
