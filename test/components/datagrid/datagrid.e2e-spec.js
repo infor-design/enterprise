@@ -1183,18 +1183,18 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
   });
 
   it('Should be able to select and have it clear when paging', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
 
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
+    expect(await element.all(await by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
     await element(await by.css('.pager-next')).click();
 
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
+    expect(await element.all(await by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    await element(by.css('.pager-prev')).click();
+    await element(await by.css('.pager-prev')).click();
 
     await browser.driver.sleep(config.sleep);
 
