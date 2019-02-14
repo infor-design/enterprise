@@ -65,12 +65,8 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
  * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last column will get filled with an empty spacer column.
-<<<<<<< HEAD
- * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize.
-=======
  * @param {boolean}  [settings.showNewRowIndicator=true] If true, the new row indicator will display after adding a row.
- * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize. If 'lastInitial' it will resize only initially.
->>>>>>> 0bf1b65fafb3281f5b001154d0eb8194ab7376f1
+ * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize.
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
@@ -103,21 +99,21 @@ const COMPONENT_NAME = 'datagrid';
  * @param {Function} [settings.onDestroyCell=null] A call back that goes along with onPostRenderCel and will fire when this cell is destroyed and you need noification of that.
  * @param {Function} [settings.onEditCell=null] A callback that fires when a cell is edited, the editor object is passed in to the function
  * @param {Function} [settings.onExpandRow=null] A callback function that fires when expanding rows. To be used. when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
+ * @param {boolean}  [settings.searchExpandableRow=true] If true keywordSearch will search in expandable rows (default). If false it will not search expandable rows.
  * @param {object}   [settings.emptyMessage]
  * @param {object}   [settings.emptyMessage.title='No Data Available']
  * @param {object}   [settings.emptyMessage.info='']
  * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
- * @param {boolean}  [settings.searchExpandableRow=true] If true enable expanding of row on search
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
  * icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
  * or will default to 'No Data Found with an icon.'
  * @param {boolean}  [settings.allowChildExpandOnMatch=false] use  with filter
  * if true:
- * and if only parent got match then add all children nodes too
+ * and if only parent has a match then add all children nodes too
  * or if one or more child node got match then add parent node and all the children nodes
  * if false:
- * and if only parent got match then make expand/collapse button to be collapsed, disabled
+ * and if only parent has a match then make expand/collapse button to be collapsed, disabled
  * and do not add any children nodes
  * or if one or more child node got match then add parent node and only matching children nodes
  */
@@ -3727,6 +3723,19 @@ Datagrid.prototype = {
     this.elemWidth = 0;
     this.lastColumn = null;
     this.isInitialRender = true;
+    this.cacheColumnWidths();
+  },
+
+  /**
+   * Calculate and cache the width for all the columns
+   * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
+   * @private
+   */
+  cacheColumnWidths() {
+    for (let i = 0; i < this.settings.columns.length; i++) {
+      const col = this.settings.columns[i];
+      this.calculateColumnWidth(col, i);
+    }
   },
 
   /**
@@ -3850,6 +3859,11 @@ Datagrid.prototype = {
       col.width = colWidth;
     }
 
+    if (col.id === 'favorite') {
+      colWidth = 62;
+      col.width = colWidth;
+    }
+
     if (col.id === 'expander') {
       colWidth = 55;
       col.width = colWidth;
@@ -3905,7 +3919,6 @@ Datagrid.prototype = {
         const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
           stretchColumn[0].width += diff2 - 2;
-          this.totalWidths[container] += diff2 - 2;
           this.totalWidths[container] = '100%';
         }
       }

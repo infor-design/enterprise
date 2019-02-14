@@ -29,13 +29,6 @@
         '</svg></div>';
       };
 
-      var myCustom2 = function (row, cell, value, columnDef, dataContext) {
-        var cell = '<div style="display:table">';
-        cell += '<div class="table-row"><a href="" onclick="console.log(' + value + ')" class="hyperlink" >' + value + '</a>';
-        cell += '<button type="button" class="btn-icon row-btn" tabindex="-1" onclick="console.log(' + value + ')"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-edit"></use></svg><span></span></button></div>';
-        return cell;
-      }
-
       // Some Sample Data
       data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'Error', orderDate: new Date(2014, 12, 8), action: 'Action'});
       data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold', ordered: true});
@@ -49,7 +42,7 @@
       columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId',  formatter: Formatters.Readonly });
       columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 240, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
-      columns.push({ id: 'status', name: 'Exception', field: 'status', formatter: myCustom2, tooltip: 'Error Info', width: 100});
+      columns.push({ id: 'status', name: 'Exception', field: 'status', formatter: myCustom, tooltip: 'Error Info', width: 100});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
 
       //Init and get the api for the grid
