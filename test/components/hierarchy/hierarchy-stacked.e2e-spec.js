@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Hierarchy index tests', () => {
+describe('Hierarchy stacked layout', () => {
   beforeEach(async () => {
     await utils.setPage('/components/hierarchy/example-stacked?layout=nofrills');
   });
