@@ -1493,24 +1493,6 @@ Accordion.prototype = {
     return this;
   },
 
-
-  /**
-   * Check for tooltip type spantooltip or component
-   * @private
-   * @returns {boolean} True if is spantooltip
-   */
-  isSpantooltip() {
-    debugger
-    let isSpantooltipType = false;
-    if (self.tooltip) {
-      const tooltipJQ = this.tooltip instanceof jQuery ? this.tooltip : $(this.tooltip);
-      if (tooltipJQ.data('gridtooltip')) {
-        isSpantooltipType = true;
-      }
-    }
-    return isSpantooltipType;
-  },
-
   /**
    * Hide the visible tooltip.
    * @private
