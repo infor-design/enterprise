@@ -211,10 +211,53 @@ The formatter is then linked to the column on the formatter setting. `columns.pu
 |`caseInsensitive` | Used in the dropdown editor to make it such case is not used to match keys to the key/value pairs in the options.|
 |`validate` | The validation function(s) to use. See [the validation component]( ../validation) for details on validation functions.|
 
-## Other Key features
+## Other Features
 
 - Alternate row shading - For better scan-ability you can shade the rows with the `alternateRowShading=true` option. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-alternate-row-shading?font=source-sans" target="_blank">alternate row shading</a>|
 - Column Spanning - If possible to make a column span across other columns with the `colspan` column option. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-colspan?font=source-sans" target="_blank">Column Span Example</a>|
+
+## Frozen Columns
+
+Its possible to freeze columns on the left or right of the scroll area to keep them in view. To do this use the `frozenColumns` setting. When using set the column id for the columns you want to freeze. Id is required for this to work. For example
+
+```javascript
+frozenColumns: {
+ left: ['productId', 'productName'],
+  right: ['actionButton']
+}
+```
+
+### Frozen Columns Works with
+
+- Alternate row shading
+- Drilldown (can be frozen on the left)
+- Export
+- Selection (can freeze on the left)
+- Row Status
+- Data Grouping and Totals
+- Empty Message (will stay centered)
+- Summary Row (you can freeze columns on the left)
+- Editing
+- Expandable Row -> But the expandable row is only in the middle section
+- Filtering - Filtered columns can be frozen
+- Row Activation
+
+### Frozen Columns Limitations
+
+- Wont work with columns with colspans
+- Wont work with dynamically height rows (example-comments.html)
+- You can’t resize frozen columns
+- Frozen columns cant be moved or hidden from the personalize dialog
+- Ids are required for the frozen columns and should be used in general to avoid bugs
+- If freezing the group column all the group by columns will be frozen
+- If the total sum of the frozen columns is wider than the device - then it's not possible to scroll. Will want a future solution
+- Percent Columns - Percent column widths will not work on frozen sections at this time.
+- Will not work with expandOnActivate setting
+- Grouped Headers will not work with frozen columns at this time
+- Row Reorder will not work with frozen columns at this time
+- Will not work with nested grids
+- Will not work with clickToSelect setting
+- Will not yet work with tree grid
 
 ## Testability
 
