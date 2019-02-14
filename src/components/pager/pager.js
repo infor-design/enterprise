@@ -1257,7 +1257,7 @@ Pager.prototype = {
       delete this.filteredActivePage;
     }
 
-    if (!this.settings.inderterminate || !pagingInfo.type) {
+    if (!pagingInfo.type) {
       pagingInfo.type = 'pageinfo';
     }
 
@@ -1266,7 +1266,7 @@ Pager.prototype = {
       // If we get a page number as a result, rendering has already happened and
       // we should not attempt to re-render.
       this.setActivePage(pagingInfo, false, pagingInfo.type);
-      if (!isResponse) {
+      if (pagingInfo.type !== 'initial' && !isResponse) {
         this.triggerPagingEvents();
       }
       return;

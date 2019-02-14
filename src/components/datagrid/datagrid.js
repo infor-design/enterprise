@@ -628,8 +628,6 @@ Datagrid.prototype = {
         self.grandTotal = updatedPagingInfo.grandTotal;
       }
 
-      updatedPagingInfo.preserveSelected = true;
-
       // Set the remote dataset on the grid
       self.loadData(data, updatedPagingInfo, true);
 
@@ -675,6 +673,7 @@ Datagrid.prototype = {
     this.element.trigger('paging', pagingInfo);
 
     if (typeof this.settings.source !== 'function') {
+      pagingInfo.preserveSelected = true;
       response(this.settings.dataset, pagingInfo);
       return;
     }
