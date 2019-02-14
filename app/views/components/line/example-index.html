@@ -36,7 +36,9 @@ $('body').on('initialized', function () {
           name: 'Jun',
           value: 8111
       }],
-      name: 'Component A'
+      name: 'Component A',
+      legendShortName: 'Comp A',
+      legendAbbrName: 'A'
     }, {
       data: [{
           name: 'Jan',
@@ -57,7 +59,9 @@ $('body').on('initialized', function () {
           name: 'Jun',
           value: 2811
       }],
-      name: 'Component B'
+      name: 'Component B',
+      legendShortName: 'Comp B',
+      legendAbbrName: 'A'
     }, {
       data: [{
           name: 'Jan',
@@ -78,7 +82,9 @@ $('body').on('initialized', function () {
           name: 'Jun',
           value: 3811
       }],
-      name: 'Component C'
+      name: 'Component C',
+      legendShortName: 'Comp C',
+      legendAbbrName: 'C'
     }];
 
   $('#line-example').chart({type: 'line', dataset: dataset, yAxis: {ticks: {number: 10, format: 's'} } });
