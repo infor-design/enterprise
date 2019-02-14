@@ -3,7 +3,7 @@
 
 // Alternate Text message
 .chart-message {
-  background-color: $ruby01;
+  background-color: $theme-color-palette-ruby-10;
   color: $font-color-highcontrast;
   padding: 20px;
   text-align: center;
@@ -319,10 +319,10 @@
   .remaining {
     background: repeating-linear-gradient(
       150deg,
-      $azure04,
-      $azure04 1px,
-      $azure02 1px,
-      $azure02 10px
+      $theme-color-palette-azure-40,
+      $theme-color-palette-azure-40 1px,
+      $theme-color-palette-azure-20 1px,
+      $theme-color-palette-azure-20 10px
     );
   }
 
@@ -357,14 +357,14 @@
 }
 
 .colored.label {
-  color: $turquoise06;
+  color: $theme-color-palette-turquoise-60;
 
   &.amethyst07 {
     background-color: transparent;
-    color: $amethyst07;
+    color: $theme-color-palette-amethyst-70;
 
     .value {
-      color: $amethyst07;
+      color: $theme-color-palette-amethyst-70;
     }
   }
 
@@ -374,7 +374,7 @@
   }
 
   .value {
-    color: $turquoise06;
+    color: $theme-color-palette-turquoise-60;
 
     &.error-color,
     &.error {
@@ -382,11 +382,11 @@
     }
 
     &.alert {
-      color: $alert-orange;
+      color: $theme-color-status-warning;
     }
 
     &.alert-yellow {
-      color: $alert-yellow;
+      color: $theme-color-status-caution;
     }
 
     &.alert-neutral {
@@ -398,7 +398,7 @@
     }
 
     &.good {
-      color: $alert-green;
+      color: $theme-color-status-success;
     }
 
     &.primary {

@@ -6,10 +6,12 @@ demo:
   - name: Main Target to Achievement Example (shows 3 examples)
     slug: example-index
   pages:
-  - name: Showing Percentage Text
-    slug: example-percent-text
-  - name: Used on a Datagrid
+  - name: Used as a Datagrid Formatter
     slug: example-datagrid
+  - name: When the data is empty.
+    slug: example-empty
+  - name: Colors for errors/states
+    slug: example-error-color
 ---
 
 ## Settings
@@ -23,7 +25,7 @@ demo:
 
 ## Code Example
 
-This example shows how to invoke a simple target to achievement chart with a dataset with a value several of the key points of the chart.
+This example shows how to invoke a simple target to achievement chart. A dataset is passed as a setting that has several key data points to form the chart (name, completed, remaining, total).
 
 ```javascript
 var dataset1 = [{
@@ -36,6 +38,16 @@ var dataset1 = [{
 }];
 
 var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement'}).data('chart');
+```
+
+The chart can be updated the same way all components are by using the `updated` method. For example:
+
+```javascript
+// Initialize
+var api = $('#example-1').chart({ dataset: dataset1, type: 'targeted-achievement' });
+
+// Later on
+api.data('chart').updated({ dataset: dataset2 });
 ```
 
 ## Accessibility

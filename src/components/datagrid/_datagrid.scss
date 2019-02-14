@@ -185,6 +185,16 @@ $datagrid-short-row-height: 23px;
       background-color: $panel-bg-color;
     }
 
+    .datagrid {
+      tbody {
+        tr {
+          &.is-rowactivated:hover td:not(.is-editing) {
+            background-color: $datagrid-list-row-group-hover-color;
+          }
+        }
+      }
+    }
+
     tr:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
       background-color: $datagrid-list-row-hover-color;
 
@@ -790,7 +800,7 @@ $datagrid-short-row-height: 23px;
     }
 
     .chart-completion-target {
-      top: 2px;
+      top: -6px;
 
       .chart-targeted-text {
         margin-top: -33px;
@@ -1140,7 +1150,7 @@ $datagrid-short-row-height: 23px;
     }
 
     .chart-completion-target {
-      top: -2px;
+      top: -5px;
 
       .chart-targeted-text {
         margin-top: -27px;
@@ -1332,7 +1342,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &.info .audible {
-        background-color: $graphite05;
+        background-color: $theme-color-palette-graphite-50;
       }
     }
 
@@ -1417,7 +1427,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.rowstatus-row-error {
-      @include rowstatus($alert-red);
+      @include rowstatus($theme-color-status-danger);
     }
 
     &.rowstatus-row-dirty {
@@ -1437,7 +1447,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.rowstatus-row-success {
-      @include rowstatus($alert-green);
+      @include rowstatus($theme-color-status-success);
     }
 
     &.rowstatus-row-new {
@@ -1512,7 +1522,7 @@ $datagrid-short-row-height: 23px;
       height: 25px;
       margin-bottom: 0 !important;
       position: relative;
-      top: 8px;
+      top: 0;
     }
 
     .spinbox-wrapper {
@@ -1538,7 +1548,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-red;
+        border-color: $theme-color-status-danger;
       }
 
       &.l-right-text {
@@ -1566,7 +1576,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-orange;
+        border-color: $theme-color-status-warning;
       }
 
       &.l-right-text {
@@ -1594,7 +1604,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-green;
+        border-color: $theme-color-status-success;
       }
 
       &.l-right-text {
@@ -1622,7 +1632,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $alert-info;
+        border-color: $theme-color-status-base;
       }
 
       &.l-right-text {
@@ -1683,7 +1693,7 @@ $datagrid-short-row-height: 23px;
 
     //Cell Editting
     &.is-editing {
-      background-color: $panel-bg-color;
+      background-color: $datagrid-cell-editing-bg-color;
       position: relative;
 
       .datagrid-cell-wrapper {
@@ -1871,7 +1881,7 @@ $datagrid-short-row-height: 23px;
         }
 
         &:disabled .icon {
-          fill: $slate05;
+          fill: $theme-color-palette-slate-50;
         }
       }
 
@@ -2284,6 +2294,43 @@ $datagrid-short-row-height: 23px;
           opacity: 0.6;
         }
 
+      }
+
+      .lookup-wrapper {
+        background-color: transparent;
+        display: inline;
+        left: 2px;
+        vertical-align: top;
+        width: calc(100% - 44px);
+
+        input.lookup {
+          left: 10px;
+          width: calc(100% - 41px);
+
+          &:not(:disabled) + .trigger > .icon:hover,
+          &:hover:not(:disabled) + .trigger > .icon {
+            fill: $datagrid-filter-hover-color;
+          }
+
+          &:disabled + .trigger > .icon {
+            fill: $datagrid-list-filter-disabled-color;
+            opacity: 0.6;
+          }
+        }
+
+        .trigger {
+          height: 24px;
+          margin-left: -18px;
+          width: 27px;
+
+          .icon {
+            fill: $datagrid-filter-icon-color;
+            height: 30px;
+            right: -6px;
+            top: -3px;
+            width: 16px;
+          }
+        }
       }
 
       .btn-filter {

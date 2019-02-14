@@ -33,6 +33,29 @@ describe('Radios example-index tests', () => {
   }
 });
 
+describe('Radios Horizontal tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/radios/example-horizontal?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .presenceOf(element(by.id(radioId))), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      const container = await element(by.css('.container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(container), config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(container, 'radio-horizontal')).toEqual(0);
+    });
+  }
+});
+
 describe('Radios validation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/radios/test-validation');

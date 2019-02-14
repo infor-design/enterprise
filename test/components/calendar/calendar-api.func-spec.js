@@ -1,5 +1,6 @@
 import { Calendar } from '../../../src/components/calendar/calendar';
 import { Locale } from '../../../src/components/locale/locale';
+import { cleanup } from '../../helpers/func-utils';
 
 const calendarHTML = require('../../../app/views/components/calendar/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -7,23 +8,23 @@ const events = require('../../../app/data/events');
 const eventTypes = require('../../../app/data/event-types');
 
 let calendarEl;
-let svgEl;
 let calendarObj;
+let baseTime;
 
 const settings = {
   eventTypes,
-  events
+  events,
+  month: 10,
+  year: 2018,
 };
 
 describe('Calendar API', () => {
   beforeEach(() => {
     calendarEl = null;
-    svgEl = null;
     calendarObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', calendarHTML);
     calendarEl = document.body.querySelector('.calendar');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA']); //eslint-disable-line
     Locale.addCulture('en-US', Soho.Locale.cultures['en-US']); //eslint-disable-line
@@ -34,13 +35,24 @@ describe('Calendar API', () => {
     Locale.set('en-US');
     Soho.Locale.set('en-US'); //eslint-disable-line
 
+    jasmine.clock().install();
+    baseTime = new Date(2018, 10, 10);
+    jasmine.clock().mockDate(baseTime);
     calendarObj = new Calendar(calendarEl, settings);
   });
 
   afterEach(() => {
     calendarObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    calendarEl.parentNode.removeChild(calendarEl);
+    cleanup([
+      '.svg-icons',
+      '#tooltip',
+      '.calendar',
+      '.row',
+      '#tmpl-readonly',
+      '#test-script',
+      '#tmpl-modal'
+    ]);
+
     jasmine.clock().uninstall();
   });
 
@@ -71,10 +83,6 @@ describe('Calendar API', () => {
   });
 
   it('Should render upcoming dates', () => {
-    jasmine.clock().install();
-    const baseTime = new Date(2018, 10, 10);
-    jasmine.clock().mockDate(baseTime);
-
     calendarObj.destroy();
     const start = new Date();
     start.setDate(start.getDate() + 1);
@@ -87,8 +95,8 @@ describe('Calendar API', () => {
       events: [{
         id: '15',
         subject: 'Days Off',
-        starts: start,
-        ends: end,
+        starts: start.toISOString(),
+        ends: end.toISOString(),
         type: 'dto',
         isAllDay: true
       }]
@@ -98,5 +106,56 @@ describe('Calendar API', () => {
     const compareDate = `${start.toLocaleDateString('en-US', { month: 'long' })} ${start.getDate()}-${end.getDate()}, ${start.toLocaleDateString('en-US', { year: 'numeric' })}`;
 
     expect(document.querySelector('.calendar-upcoming-date').innerText).toEqual(compareDate);
+  });
+
+  it('Should handle adding events', () => {
+    const startsDate = new Date(baseTime);
+    startsDate.setHours(0, 0, 0, 0);
+    const endsDate = new Date(baseTime);
+    endsDate.setHours(23, 59, 59, 999);
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
+    const newEvent = {
+      id: (settings.events.length + 1).toString(),
+      subject: 'New Random Event',
+      comments: 'New Random Event Details',
+      starts: Locale.formatDate(startsDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      ends: Locale.formatDate(endsDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      type: 'team',
+      isAllDay: true
+    };
+    calendarObj.addEvent(newEvent);
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+  });
+
+  it('Should handle clearing events', () => {
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
+
+    calendarObj.clearEvents();
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(0);
+  });
+
+  it('Should handle deleting events', () => {
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
+
+    calendarObj.deleteEvent({ id: '13' });
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(17);
+
+    calendarObj.deleteEvent({ id: '11' });
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(3);
+  });
+
+  it('Should handle updating events', () => {
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
+
+    calendarObj.updateEvent({ id: '13', subject: 'Updated Subject' });
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
+    expect(calendarObj.settings.events[12].subject).toEqual('Updated Subject');
+    expect(calendarObj.settings.events[12].id).toEqual('13');
   });
 });

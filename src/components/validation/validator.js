@@ -119,6 +119,36 @@ Validator.prototype = {
   },
 
   /**
+   * Set error icon opacity for tooltip types, to avoid overlap text in the field
+   * @private
+   * @param {object} field validation element
+   * @returns {void}
+   */
+  setErrorIconOpacity(field) {
+    if (field.is(':text') && field.is('[data-error-type="tooltip"]')) {
+      const textWidth = this.calculateTextWidth(field.val());
+      const fieldWidth = field.outerWidth() - 35; // 35: icon width + padding/margin
+      field.closest('.field, .field-short')
+        .find('.icon-error')[(textWidth > fieldWidth) ? 'addClass' : 'removeClass']('lower-opacity');
+    }
+  },
+
+  /**
+   * Calculate the width for given text
+   * @param {string} text to calculate the width
+   * @param {string} font used with given text (e.g. `14px arial`).
+   * @returns {number} the calculated width
+   */
+  calculateTextWidth(text, font) {
+    // use cached canvas for better performance, else, create new canvas
+    this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+    const context = this.canvas.getContext('2d');
+    context.font = font || '14px arial';
+    const metrics = context.measureText(text);
+    return metrics.width;
+  },
+
+  /**
    * @private
    */
   attachEvents() {
@@ -152,9 +182,12 @@ Validator.prototype = {
       }
 
       field.off(events).on(events, function (e) {
-        // Skip on Tab
-        if (e.type === 'keyup' && e.keyCode === 9) {
-          return;
+        if (e.type === 'keyup') {
+          // Skip on Tab
+          if (e.keyCode === 9) {
+            return;
+          }
+          self.setErrorIconOpacity(field);
         }
 
         const thisField = $(this);
@@ -346,7 +379,7 @@ Validator.prototype = {
   },
 
   /**
-   *
+   * Get the types of validation from a field.
    * @private
    * @param {jQuery[]} field the field being checked
    * @param {jQuery.Event} e the `validate` event
@@ -464,8 +497,7 @@ Validator.prototype = {
   /**
    * @private
    * @param {jQuery[]} field the field being validated
-   * @param {boolean} showTooltip whether or not this field should display its
-   *  validation message in a tooltip
+   * @param {boolean} showTooltip whether or not this field should display its validation message in a tooltip
    * @param {jQuery.Event} e the `validate` event
    * @returns {array} of jQuery deferred objects
    */
@@ -681,7 +713,6 @@ Validator.prototype = {
 
   /**
    * Shows an error icon
-   *
    * @private
    * @param {jQuery[]} field the field being appended
    * @param {string} type the error type
@@ -805,6 +836,8 @@ Validator.prototype = {
       field.attr('data-error-type', 'tooltip');
     }
 
+    this.setErrorIconOpacity(field);
+
     if (showTooltip && tooltipAPI) {
       tooltipAPI.show();
     }
@@ -812,7 +845,6 @@ Validator.prototype = {
 
   /**
    * Shows an tooltip error
-   *
    * @private
    * @param {jQuery[]} field the field being toggled
    * @param {string} message text content containing the validation message
@@ -844,7 +876,6 @@ Validator.prototype = {
   /**
    * Shows an inline error message on a field
    * @private
-   *
    * @param {jQuery[]} field the field being modified
    * @param {string} rule The validation rule data.
    * @param {string} type the validation type (error, warn, info, etc).
@@ -984,7 +1015,7 @@ Validator.prototype = {
     }
 
     // Remove tooltip style message and tooltip
-    if (loc.attr(`data-${rule.type}-type`) === 'tooltip') {
+    if (field.attr(`data-${rule.type}-type`) === 'tooltip') {
       const errorIcon = field.closest('.field, .field-short').find('.icon-error');
       const tooltipAPI = errorIcon.data('tooltip');
       // Destroy tooltip

@@ -39,9 +39,13 @@ xssUtils.stripTags = function (html, allowed) {
 
   const tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
   const commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
-
-  return html.replace(commentsAndPhpTags, '')
+  let returnHTML = '';
+  returnHTML = html.replace(commentsAndPhpTags, '')
     .replace(tags, ($0, $1) => whitelist.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''); //eslint-disable-line
+  returnHTML = returnHTML.replace(tags, ($0, $1) => whitelist.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''); //eslint-disable-line
+  returnHTML = returnHTML.replace(tags, ($0, $1) => whitelist.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''); //eslint-disable-line
+
+  return returnHTML;
 };
 
 /**

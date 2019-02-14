@@ -1,0 +1,41 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <button id="show-empty-message" class="btn-secondary" type="button">
+      <span>Show Empty Message</span>
+    </button>
+    <br><br>
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var grid, columns = [];
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterType: 'text'});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
+    columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'text'});
+    columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
+    columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Alert});
+    columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal'});
+
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: [],
+      filterable: true,
+      selectable: 'single',
+      editable: true,
+      emptyMessage: null, // start out with no empty message while loading the data from a server
+    }).data('datagrid');
+
+    $('#show-empty-message').on('click', function() {
+      var emptyMessage = {title: 'No Data Found', icon: 'icon-empty-generic'};
+      grid.setEmptyMessage(emptyMessage);
+    });
+  });
+</script>

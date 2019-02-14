@@ -199,6 +199,11 @@ BusyIndicator.prototype = {
       if (self.overlay) {
         self.overlay.removeClass('is-hidden');
       }
+
+      // Add in view from scroll parent.
+      if (self.blockUI) {
+        self.addScrollParent();
+      }
     }, self.delay);
 
     // Lets external code know that we've successully kicked off.
@@ -229,6 +234,8 @@ BusyIndicator.prototype = {
     if (!self.isActive()) {
       return; // safety, don't try and close this if not already active
     }
+
+    this.removeScrollParent();
 
     // If closed from an event, fire the necessary event triggers
     // and removes the 'is-loading' CSS class.
@@ -336,6 +343,68 @@ BusyIndicator.prototype = {
   },
 
   /**
+   * Adjust top position, if any of the parents is scrollable
+   * @private
+   * @returns {void}
+   */
+  addScrollParent() {
+    if (this.blockUI) {
+      this.scrollParent = $(this.getScrollParent(this.element[0]));
+      const scrollParentHeight = this.scrollParent.length ? this.scrollParent.outerHeight() : 0;
+      if (scrollParentHeight && (scrollParentHeight < this.element.outerHeight())) {
+        const locTop = (scrollParentHeight / 2) - 58;
+        this.container.css({ top: locTop });
+
+        this.scrollParent
+          .off('scroll.parent.busyindicator')
+          .on('scroll.parent.busyindicator', () => {
+            const offset = locTop + this.scrollParent.scrollTop();
+            this.container.css({ top: offset });
+          });
+      }
+    }
+  },
+
+  /**
+   * Remove scroll parent.
+   * @private
+   * @returns {void}
+   */
+  removeScrollParent() {
+    if (this.scrollParent) {
+      this.scrollParent.off('scroll.parent.busyindicator');
+      delete this.scrollParent;
+    }
+  },
+
+  /**
+   * Get if any of the parents is scrollable.
+   * @private
+   * @param {object} elem to get scroll parent.
+   * @returns {object} the scroll parent.
+   */
+  getScrollParent(elem) {
+    const properties = ['overflow', 'overflow-x', 'overflow-y'];
+    const style = (el, prop) => getComputedStyle(el, null).getPropertyValue(prop);
+    const styleMerged = el => properties.reduce((a, b) => a + style(el, b), 0);
+    const regex = /(auto|scroll)/;
+    const isScroll = el => regex.test(styleMerged(el));
+    const scrollParent = (el) => {
+      let found = false;
+      let parent = el.parentNode;
+      while (!found && parent && parent.tagName.toLowerCase() !== 'body') {
+        if (isScroll(parent)) {
+          found = true;
+          break;
+        }
+        parent = parent.parentNode;
+      }
+      return found ? parent : null;
+    };
+    return scrollParent(elem);
+  },
+
+  /**
    * Update the component and apply current settings.
    * @param {object} settings the settings to update to.
    * @returns {this} component instance.
@@ -361,6 +430,7 @@ BusyIndicator.prototype = {
    * @returns {void}
    */
   destroy() {
+    this.removeScrollParent();
     this.close(true);
     this.element.off('start.busyindicator complete.busyindicator afterstart.busyindicator aftercomplete.busyindicator updated.busyindicator');
     $.removeData(this.element[0], COMPONENT_NAME);

@@ -67,6 +67,10 @@ describe('Validation multiple error tests', () => {
   });
 
   it('Should be able to show multiple errors', async () => {
+    await element(by.id('info-btn')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('info-popup'))), config.waitsFor);
+
     const showlEl = await element(by.id('show'));
     await showlEl.click();
     await browser.driver.sleep(config.sleep);
@@ -74,6 +78,20 @@ describe('Validation multiple error tests', () => {
     const list = $$('.message-text');
 
     expect(list.count()).toBe(3);
+  });
+
+  it('Should be able to call removeError after addError', async () => {
+    await browser.executeScript('$("select.dropdown").removeError().addError({ message: "Dropdown error.", inline: false })');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.icon-error'))), config.waitsFor);
+
+    expect(await element(by.css('.icon-error'))).toBeTruthy();
+
+    await browser.executeScript('$("select.dropdown").removeError()');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.stalenessOf(await element(by.css('.icon-error'))), config.waitsFor);
+
+    expect(await element(by.css('.icon-error'))).toBeTruthy();
   });
 });
 
@@ -502,5 +520,24 @@ describe('Validation resetForm tests', () => {
     expect(await element(by.css('.message-text')).getText()).toBe('Required');
     expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
     expect(await element(by.id('email-address-ok')).getAttribute('class')).toContain('error');
+  });
+
+  describe('Validation narrow field', () => {
+    beforeEach(async () => {
+      await utils.setPage('/components/validation/test-legacy-tooltip-narrow-field');
+    });
+
+    it('Should be able to set error icon opacity', async () => {
+      const submitBtn = await element(by.id('test1'));
+      await submitBtn.click();
+      let errorIcon = await element(by.css('#field-one ~ .icon-error'));
+
+      expect(await errorIcon.getAttribute('class')).toContain('lower-opacity');
+      expect(await errorIcon.getCssValue('opacity')).toBeLessThan(1);
+      errorIcon = await element(by.css('#field-two ~ .icon-error'));
+
+      expect(await errorIcon.getAttribute('class')).toContain('lower-opacity');
+      expect(await errorIcon.getCssValue('opacity')).toBeLessThan(1);
+    });
   });
 });

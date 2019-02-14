@@ -95,7 +95,7 @@
     @include font-size(12);
 
     color: $module-tabs-inactive-text-color;
-    min-width: 120px;
+    min-width: 135px;
     overflow: hidden;
     text-align: center;
 
@@ -118,12 +118,21 @@
     a {
       @include font-size(12);
 
+      float: left;
       font-weight: $theme-number-font-weight-bold;
       margin: 0 auto;
       overflow: hidden;
       padding: 10px;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      @media (max-width: $breakpoint-slim - 25) {
+        width: 95px !important;
+      }
+
+      @media (min-width: $breakpoint-phone + 60) {
+        padding: 10px;
+      }
 
       > * {
         display: inline-block;
@@ -219,7 +228,11 @@
   }
 
   .tab-more {
-    width: 120px;
+    width: 70px;
+
+    @media (min-width: $breakpoint-big-phone) {
+      width: 120px;
+    }
   }
 
   .tab-more,
@@ -460,12 +473,24 @@
   // Change state when the spillover button is necessary
   &.has-more-button {
     .tab-list {
-      width: calc(100% - 119px);
+      width: calc(100% - 70px);
+
+      @media (min-width: $breakpoint-big-phone) {
+        width: calc(100% - 120px);
+      }
     }
 
     .tab-more {
       right: 0;
       top: 0;
+
+      .more-text {
+        display: none;
+
+        @media (min-width: $breakpoint-big-phone) {
+          display: inline-block;
+        }
+      }
     }
 
     &.has-toolbar {

@@ -111,7 +111,12 @@ Dropdown.prototype = {
    * @returns {boolean} whether or not the text inside the in-page pseudo element too big to fit
    */
   get overflowed() {
-    return this.pseudoElem.find('span').width() > this.pseudoElem.width();
+    const span = this.pseudoElem.find('span').css('max-width', '');
+    if (span.width() > this.pseudoElem.width()) {
+      span.css('max-width', '100%');
+      return true;
+    }
+    return false;
   },
 
   /**
@@ -1405,8 +1410,10 @@ Dropdown.prototype = {
     if (e.type === 'input') {
       this.filterTerm = this.searchInput.val();
     } else {
-      this.filterTerm += $.actualChar(e);
-      if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm) {
+      this.filterTerm += $.actualChar(e).toLowerCase();
+
+      if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm
+          && !self.settings.noSearch) {
         this.filterTerm = e.key;
       }
     }
@@ -1865,6 +1872,10 @@ Dropdown.prototype = {
         self.list[0].style.height = `${parseInt(self.list[0].style.height, 10) - 10}px`;
       }
 
+      if (placementObj.wasFlipped) {
+        self.listUl[0].style.height = `${parseInt(self.listUl[0].style.height, 10) + (searchInputHeight - 5)}px`;
+      }
+
       return placementObj;
     }
 
@@ -2099,15 +2110,6 @@ Dropdown.prototype = {
   */
   handleBlur() {
     const self = this;
-
-    /*
-    if (this.isOpen()) {
-      this.timer = setTimeout(() => {
-        self.closeList('cancel');
-      }, 40);
-    }
-    */
-
     self.closeList('cancel');
 
     return true;
@@ -2832,6 +2834,12 @@ Dropdown.prototype = {
     }
 
     this.closeList('cancel');
+
+    if (this.pseudoElem && this.pseudoElem.hasClass('is-open')) {
+      this.pseudoElem
+        .removeClass('is-open')
+        .attr('aria-expanded', 'false');
+    }
 
     // Update the 'multiple' property
     if (this.settings.multiple && this.settings.multiple === true) {

@@ -660,13 +660,17 @@ Hierarchy.prototype = {
     const rootNodeHTML = [];
     const structure = {
       legend: '<legend><ul></ul></legend>',
-      chart: s.paging ? '<ul class="container"><li class="chart display-for-paging"></li></ul>' : '<ul class="container"><li class="chart"></li></ul>',
+      chart: '<ul class="container"><li class="chart"></li></ul>',
       toplevel: s.paging ? '<ul class="child-nodes"></ul>' : '<ul class="top-level"></ul>',
       sublevel: s.paging ? '' : '<ul class="sub-level"></ul>'
     };
 
     const chartContainer = this.element.append(structure.chart);
     const chart = $('.chart', chartContainer);
+
+    if (s.paging) {
+      this.element.addClass('display-for-paging');
+    }
 
     if (thisLegend.length !== 0) {
       this.element.prepend(structure.legend);
@@ -695,6 +699,9 @@ Hierarchy.prototype = {
 
       // Append back button to chart to go back to view previous level
       const backButton = $(backMarkup).appendTo(chart);
+
+      // Wrap back button and leaf after leaf has been rendered
+      setTimeout(() => backButton.next($('.leaf')).addBack($('.back')).wrapAll('<div class="back-container"></div>'));
 
       // Attach data reference to back button
       backButton.children('button').data(data);

@@ -61,11 +61,6 @@ const formatters = {
     let value2;
 
     if (typeof value === 'string' && value) {
-      // Means no date in some applications
-      if (value === '0000' || value === '000000' || value === '00000000') {
-        return '';
-      }
-
       if (col.sourceFormat) {
         value2 = Locale.parseDate(value, (typeof col.sourceFormat === 'string' ? { pattern: col.sourceFormat } : col.sourceFormat));
       } else {
@@ -77,7 +72,7 @@ const formatters = {
       } else {
         formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat));
 
-        if (formatted === 'NaN/NaN/NaN' || !formatted) { // show invalid dates not NA/NA/NA
+        if ((formatted === 'NaN/NaN/NaN' || !formatted) && formatted !== '') { // show invalid dates not NaN/NaN/NaN
           formatted = value;
         }
       }
@@ -366,10 +361,24 @@ const formatters = {
 
   // Tree Expand / Collapse Button and Paddings
   Tree(row, cell, value, col, item, api) {
-    const isOpen = item ? item.expanded : true;
+    let isOpen = item ? item.expanded : true;
     const depth = api && api.settings.treeDepth && api.settings.treeDepth[row] ?
       api.settings.treeDepth[row].depth : 0;
-    const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}>
+
+    // When use filter then
+    // If (settings.allowChildExpandOnMatch === false) and only parent node got match
+    // then make expand/collapse button to be collapsed and disabled
+    const isExpandedBtnDisabled = item && item.isAllChildrenFiltered;
+    const expandedBtnDisabledHtml = isExpandedBtnDisabled ? ' disabled' : '';
+    if (isOpen && isExpandedBtnDisabled) {
+      isOpen = false;
+    }
+    if (item && typeof item.isAllChildrenFiltered !== 'undefined') {
+      // Remove key after use to reset
+      delete item.isAllChildrenFiltered;
+    }
+
+    const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}${expandedBtnDisabledHtml}>
       <span class="icon plus-minus ${(isOpen ? ' active' : '')}"></span>
       <span class="audible">${Locale.translate('ExpandCollapse')}</span>
       </button>${(value ? ` <span>${value}</span>` : '')}`;

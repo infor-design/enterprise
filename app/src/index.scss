@@ -6,11 +6,11 @@
 // styles.
 //================================================== //
 
-// Enterprise color palette
-@import '../../src/components/colors/colorpalette';
-
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/tokens/web/theme-soho';
+
+// Enterprise color palette
+@import '../../src/components/colors/colorpalette';
 
 // Soho Core/Helpers
 @import '../../src/core/config';
@@ -28,3 +28,4 @@
 @import 'sass/patterns';
 @import 'sass/typography';
 @import 'sass/wizard';
+@import 'sass/info-popup';

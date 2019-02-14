@@ -194,6 +194,7 @@ Modal.prototype = {
 
     if ($(this.settings.content).is('.modal')) {
       this.element = $(this.settings.content);
+      isAppended = this.element.parent().hasClass('modal-wrapper');
     } else if (this.settings.content && this.settings.content.length > 0) {
       if (this.settings.content instanceof jQuery && this.settings.content.parent().is('.modal-body')) {
         isAppended = true;
@@ -816,6 +817,8 @@ Modal.prototype = {
         const keyCode = e.which || e.keyCode;
         if (keyCode === 27) {
           const modals = $('.modal.is-visible');
+
+          self.isCancelled = true;
 
           if (modals.length > 1) {
             modals.not(':last').on('beforeclose.modal', () => false);

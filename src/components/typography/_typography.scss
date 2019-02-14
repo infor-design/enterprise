@@ -135,7 +135,7 @@ p {
 }
 
 .text-alert {
-  color: $alert-red;
+  color: $theme-color-status-danger;
 }
 
 .text-primary,
@@ -233,12 +233,12 @@ small,
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2rem);
 
-  color: $alert-red;
+  color: $theme-color-status-danger;
   font-weight: $theme-number-font-weight-bold;
   padding-left: 15px;
 
   &::before {
-    background-color: $alert-red;
+    background-color: $theme-color-status-danger;
     border-radius: 50%;
     content: '';
     height: 8px;
@@ -252,21 +252,21 @@ small,
 .error-text {
   @include font-size(11);
 
-  color: $alert01;
+  color: $theme-color-status-danger;
   font-weight: $theme-number-font-weight-bold;
 }
 
 .warning-text {
   @include font-size(11);
 
-  color: $alert02;
+  color: $theme-color-status-warning;
   font-weight: $theme-number-font-weight-bold;
 }
 
 .good-text {
   @include font-size(11);
 
-  color: $alert04;
+  color: $theme-color-status-success;
   font-weight: $theme-number-font-weight-bold;
 }
 
@@ -388,6 +388,10 @@ small,
 // Label + Data Label
 .label + .data {
   color: $font-color-extrahighcontrast;
+
+  &.is-placeholder {
+    color: $input-placeholder-color;
+  }
 }
 
 // Specifically set Firefox's line-height to be base-16.

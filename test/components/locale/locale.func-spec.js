@@ -71,6 +71,20 @@ describe('Locale API', () => {
     Locale.set('en-US');
 
     expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.set('de');
+
+    expect(Locale.currentLocale.name).toEqual('de-DE');
+  });
+
+  it('Should be impossible to set locale that is not in the default list', () => {
+    Locale.set('xx-XX');
+
+    expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.set('xx');
+
+    expect(Locale.currentLocale.name).toEqual('en-US');
   });
 
   it('Should be possible to after set locale', () => {
@@ -296,11 +310,15 @@ describe('Locale API', () => {
     expect(Locale.parseDate('10/10/010', 'M/d/yyyy')).toEqual(undefined);
   });
 
-  it('Should be able to parse UTC toISOString', () => {
+  it('Should be able to parse UTC toISOString', () => { //eslint-disable-line
     Locale.set('en-US');
 
     expect(Locale.parseDate('2000-01-01T00:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').getTime()).toEqual(new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).getTime());
-    expect(Locale.parseDate('2000-01-01T00:00:00.001Z', 'yyyy-MM-DDTHH:mm:ss.SSSZ').toISOString()).toEqual('2000-01-01T00:00:00.001Z');
+    expect(Locale.parseDate('2000-01-01T00:00:00.001Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').toISOString()).toEqual('2000-01-01T00:00:00.001Z');
+    expect(Locale.parseDate('2000-01-01T00:00:00.001Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').toISOString()).toEqual('2000-01-01T00:00:00.001Z');
+    expect(Locale.parseDate('2019-01-04T05:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').toISOString()).toEqual('2019-01-04T05:00:00.000Z');
+    expect(Locale.parseDate('2018-08-24T14:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').toISOString()).toEqual('2018-08-24T14:00:00.000Z');
+    expect(Locale.parseDate('2019-01-31T23:59:59.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').toISOString()).toEqual('2019-01-31T23:59:59.000Z');
   });
 
   // Test Long Formatting
@@ -820,7 +838,7 @@ describe('Locale API', () => {
 
       Locale.set('zz-ZZ');
 
-      expect(Locale.currentLocale.name).toEqual('fi-FI'); // not found so equals last one
+      expect(Locale.currentLocale.name).toEqual('en-US'); // not found
     }
   });
 
@@ -858,5 +876,17 @@ describe('Locale API', () => {
     expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[1]).toEqual(11);
     expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[2]).toEqual(1);
     Locale.set('en-US');
+  });
+
+  it('Should parse or format a string of four, six, or eight zeroes', () => {
+    Locale.set('en-US');
+
+    expect(Locale.parseDate('0000')).toEqual(undefined);
+    expect(Locale.parseDate('000000')).toEqual(undefined);
+    expect(Locale.parseDate('00000000')).toEqual(undefined);
+
+    expect(Locale.formatDate('0000')).toEqual('');
+    expect(Locale.formatDate('000000')).toEqual('');
+    expect(Locale.formatDate('00000000')).toEqual('');
   });
 });

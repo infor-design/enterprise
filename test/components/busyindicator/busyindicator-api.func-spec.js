@@ -28,13 +28,24 @@ describe('Busy Indicator API', () => {
     expect(busyindicatorObj).toEqual(jasmine.any(Object));
   });
 
+  it('Should handle custom text', (done) => {
+    busyindicatorObj.destroy();
+    busyindicatorObj = new BusyIndicator(busyindicatorEl, { text: 'Hang Tough, Skippy...' });
+    busyindicatorObj.activate();
+
+    setTimeout(() => {
+      expect(document.querySelector('.busy-indicator-container > span').textContent).toEqual('Hang Tough, Skippy...');
+      done();
+    }, 500);
+  });
+
   it('Should return correct value for isActive', (done) => {
     busyindicatorObj.activate();
 
     setTimeout(() => {
       expect(busyindicatorObj.isActive()).toEqual(true);
       done();
-    }, 1000);
+    }, 500);
   });
 
   it('Should display busy indicator when triggering "start.busyindicator"', (done) => {
@@ -43,7 +54,7 @@ describe('Busy Indicator API', () => {
     setTimeout(() => {
       expect(document.body.querySelector('.busy-indicator-container')).toBeTruthy();
       done();
-    }, 1000);
+    }, 500);
   });
 
   it('Should hide busy indicator when triggering complete/close', (done) => {
@@ -56,7 +67,7 @@ describe('Busy Indicator API', () => {
         expect(document.querySelector('.busy-indicator-container')).toBeFalsy();
         done();
       }, 1000);
-    }, 1000);
+    }, 500);
   });
 
   it('Should update text of busy indicator', (done) => {
@@ -64,7 +75,7 @@ describe('Busy Indicator API', () => {
 
     setTimeout(() => {
       busyindicatorObj.updated({ text: 'Custom Text 1' });
-    }, 1000);
+    }, 500);
 
     setTimeout(() => {
       const customTextEl = $('.busy-indicator-container > span');
@@ -72,7 +83,7 @@ describe('Busy Indicator API', () => {
       expect(customTextEl.text()).toEqual('Custom Text 1');
       busyindicatorObj.destroy();
       done();
-    }, 1000);
+    }, 500);
   });
 
   it('Should destroy busy indicator', (done) => {
@@ -85,6 +96,6 @@ describe('Busy Indicator API', () => {
         expect(document.querySelector('.busy-indicator-container')).toBeFalsy();
         done();
       }, 1000);
-    }, 1000);
+    }, 500);
   });
 });

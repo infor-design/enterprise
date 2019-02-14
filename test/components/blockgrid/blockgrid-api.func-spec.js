@@ -8,7 +8,17 @@ let blockgridEl;
 let blockgridObj;
 
 const settings = {
-  dataset: [],
+  dataset: [{
+    image: '/images/8.jpg',
+    title: 'Neyo Taylor',
+    subtitle: 'Infor, Developer',
+    id: 1
+  }, {
+    image: '/images/9.jpg',
+    title: 'Jane Taylor',
+    subtitle: 'Infor, Developer',
+    id: 2
+  }],
   selectable: 'single', // false, 'single' or 'multiple' or mixed
   paging: false,
   pagesize: 25,
@@ -57,6 +67,19 @@ describe('Blockgrid API', () => {
     blockgridObj.updated({ selectable: false });
 
     expect(blockgridObj.settings.selectable).toEqual(false);
+  });
+
+  it('Should support updating text', () => {
+    expect(document.querySelectorAll('.block.is-selectable p')[0].innerText.replace(/[\s\r\n]+/g, '')).toEqual('NeyoTaylorInfor,Developer');
+    expect(document.querySelectorAll('.block.is-selectable p')[1].innerText.replace(/[\s\r\n]+/g, '')).toEqual('JaneTaylorInfor,Developer');
+
+    settings.dataset[0].maintxt = 'Updated';
+    settings.dataset[1].title = 'Updated';
+    blockgridObj.settings.dataset = settings.dataset;
+    blockgridObj.updated();
+
+    expect(document.querySelectorAll('.block.is-selectable p')[0].innerText.replace(/[\s\r\n]+/g, '')).toEqual('UpdatedInfor,Developer');
+    expect(document.querySelectorAll('.block.is-selectable p')[1].innerText.replace(/[\s\r\n]+/g, '')).toEqual('UpdatedInfor,Developer');
   });
 
   it('Should have block', () => {

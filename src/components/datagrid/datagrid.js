@@ -63,10 +63,11 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
  * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last column will get filled with an empty spacer column.
+ * @param {boolean}  [settings.showNewRowIndicator=true] If true, the new row indicator will display after adding a row.
  * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize. If 'lastInitial' it will resize only initially.
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
- * @param {object}   [settings.toolbar=false]  Toggles and appends toolbar features fx..
- * @param {boolean}  [settings.selectChildren=true] Can prevent selecting of all child nodes on multiselect `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
+ * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
+ * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
  * @param {boolean}  [settings.allowSelectAcrossPages=null] Makes it possible to save selections when changing pages on server side paging. You may want to also use showSelectAllCheckBox: false
  * @param {boolean}  [settings.initializeToolbar=true] Set to false if you will initialize the toolbar yourself
  * @param {boolean}  [settings.paging=false] Enable paging mode
@@ -106,6 +107,14 @@ const COMPONENT_NAME = 'datagrid';
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
  * icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
  * or will default to 'No Data Found with an icon.'
+ * @param {boolean}  [settings.allowChildExpandOnMatch=false] use  with filter
+ * if true:
+ * and if only parent got match then add all children nodes too
+ * or if one or more child node got match then add parent node and all the children nodes
+ * if false:
+ * and if only parent got match then make expand/collapse button to be collapsed, disabled
+ * and do not add any children nodes
+ * or if one or more child node got match then add parent node and only matching children nodes
  */
 const DATAGRID_DEFAULTS = {
   // F2 - toggles actionableMode "true" and "false"
@@ -136,6 +145,7 @@ const DATAGRID_DEFAULTS = {
   allowSelectAcrossPages: null,
   groupable: null,
   spacerColumn: false,
+  showNewRowIndicator: true,
   stretchColumn: 'last',
   twoLineHeader: false,
   clickToSelect: true,
@@ -175,7 +185,8 @@ const DATAGRID_DEFAULTS = {
   onEditCell: null,
   onExpandRow: null,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
-  searchExpandableRow: true
+  searchExpandableRow: true,
+  allowChildExpandOnMatch: false
 };
 
 function Datagrid(element, settings) {
@@ -369,6 +380,7 @@ Datagrid.prototype = {
 
     if (this.settings.emptyMessage) {
       self.setEmptyMessage(this.settings.emptyMessage);
+      self.checkEmptyMessage();
     }
 
     self.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
@@ -1191,6 +1203,7 @@ Datagrid.prototype = {
       options.range = { useRange: true };
       initDatepicker();
     } else if ((!datepickerApi || isRange) && operator !== 'in-range') {
+      options.range = { useRange: false };
       input.removeData('is-range');
       initDatepicker();
     }
@@ -1315,6 +1328,9 @@ Datagrid.prototype = {
         case 'time':
           filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" id="${filterId}"/>`;
           break;
+        case 'lookup':
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" id="${filterId}" >`;
+          break;
         default:
           filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" id="${filterId}"/>`;
           break;
@@ -1369,7 +1385,7 @@ Datagrid.prototype = {
               const input = rowElem.find('input');
               const svg = rowElem.find('.btn-filter .icon-dropdown:first');
               const operator = svg.getIconName().replace('filter-', '');
-              self.filterSetDatepicker(input, operator);
+              self.filterSetDatepicker(input, operator, col.editorOptions);
             }
             self.applyFilter(null, 'selected');
           })
@@ -1471,16 +1487,37 @@ Datagrid.prototype = {
         elem.find('input').mask(col.mask);
       }
 
-      if (typeof elem.find('.datepicker').datepicker === 'function') {
-        elem.find('.datepicker')
-          .datepicker(col.editorOptions ? col.editorOptions : { dateFormat: col.dateFormat })
+      const datepickerEl = elem.find('.datepicker');
+      if (datepickerEl.length && typeof $().datepicker === 'function') {
+        datepickerEl
+          .datepicker(col.editorOptions || { dateFormat: col.dateFormat })
           .on('listclosed.datepicker', () => {
             self.applyFilter(null, 'selected');
           });
       }
 
-      if (typeof elem.find('.timepicker').datepicker === 'function') {
-        elem.find('.timepicker').timepicker(col.editorOptions ? col.editorOptions : { timeFormat: col.timeFormat });
+      const lookupEl = elem.find('.lookup');
+      if (lookupEl.length && typeof $().lookup === 'function') {
+        if (col.editorOptions) {
+          if (col.editorOptions.clickArguments) {
+            col.editorOptions.clickArguments.grid = self;
+          } else {
+            col.editorOptions.clickArguments = {
+              grid: self
+            };
+          }
+        }
+
+        lookupEl
+          .lookup(col.editorOptions || {})
+          .on('change', () => {
+            self.applyFilter(null, 'selected');
+          });
+      }
+
+      const timepickerEl = elem.find('.timepicker');
+      if (timepickerEl.length && typeof $().timepicker === 'function') {
+        timepickerEl.timepicker(col.editorOptions || { timeFormat: col.timeFormat });
       }
 
       // Attach Mask
@@ -1787,7 +1824,7 @@ Datagrid.prototype = {
               isMatch = false;
 
               for (let k = 0; k < conditions[i].value.length; k++) {
-                const match = conditions[i].value[k].toLowerCase().indexOf(rowValue) >= 0 && (rowValue.toString() !== '' || conditions[i].value[k] === '');
+                const match = conditions[i].value[k].toLowerCase() === rowValue && (rowValue.toString() !== '' || conditions[i].value[k] === '');
                 if (match) {
                   isMatch = true;
                 }
@@ -1934,6 +1971,8 @@ Datagrid.prototype = {
       }
     }
 
+    this.setChildExpandOnMatch();
+
     if (!this.settings.source) {
       this.renderRows();
     }
@@ -1957,6 +1996,51 @@ Datagrid.prototype = {
     this.element.trigger('filtered', { op: 'apply', conditions, trigger });
     this.resetPager('filtered', trigger);
     this.saveUserSettings();
+  },
+
+  /**
+   * Set child nodes when use filter as
+   * settings.allowChildExpandOnMatch === true
+   * and if only parent got match then add all children nodes too
+   * or if one or more child node got match then add parent node and all the children nodes
+   * settings.allowChildExpandOnMatch === false
+   * and if only parent got match then make expand/collapse button to be collapsed, disabled
+   * and do not add any children nodes
+   * or if one or more child node got match then add parent node and only matching children nodes
+   * @private
+   * @returns {void}
+   */
+  setChildExpandOnMatch() {
+    const s = this.settings;
+    if (s.treeGrid) {
+      const checkNodes = function (nodeData, depth) {
+        for (let i = 0, l = nodeData.length; i < l; i++) {
+          const node = nodeData[i];
+          const children = node.children;
+          const childrenLen = children ? children.length : 0;
+
+          if (childrenLen) {
+            if (!node.isFiltered) {
+              if (s.allowChildExpandOnMatch) {
+                for (let i2 = 0; i2 < childrenLen; i2++) {
+                  children[i2].isFiltered = false;
+                }
+              } else {
+                let isAllChildrenFiltered = true;
+                for (let i2 = 0; i2 < childrenLen; i2++) {
+                  if (!children[i2].isFiltered) {
+                    isAllChildrenFiltered = false;
+                  }
+                }
+                node.isAllChildrenFiltered = isAllChildrenFiltered;
+              }
+            }
+            checkNodes(children, node, depth++);
+          }
+        }
+      };
+      checkNodes(s.dataset, 0);
+    }
   },
 
   /**
@@ -2629,7 +2713,7 @@ Datagrid.prototype = {
       }
 
       // Exclude Filtered Rows
-      if ((s.treeGrid ? s.treeRootNodes[i].node : s.dataset[i]).isFiltered) {
+      if ((!s.treeGrid && s.dataset[i]).isFiltered) {
         this.filteredCount++;
         continue; //eslint-disable-line
       }
@@ -2724,11 +2808,28 @@ Datagrid.prototype = {
           self.tableBody.find('tr').each(function () {
             const row = $(this);
             const rowIdx = row.attr('data-index');
+            const lineage = row.attr('data-lineage');
+            let value = self.settings.dataset;
+            if (lineage) {
+              const drilldown = lineage.split('.');
+              drilldown.push(rowIdx);
+              let first = true;
+              drilldown.forEach((childIdx) => {
+                if (first && value[childIdx]) {
+                  value = value[childIdx];
+                } else if (value.children && value.children[childIdx]) {
+                  value = value.children[childIdx];
+                }
+                first = false;
+              });
+            } else {
+              value = value[rowIdx];
+            }
             const colIdx = self.columnIdxById(col.id);
             const args = {
               row: rowIdx,
               cell: colIdx,
-              value: self.settings.dataset[rowIdx],
+              value,
               col,
               api: self
             };
@@ -2993,9 +3094,10 @@ Datagrid.prototype = {
    * @param  {number} actualIndex The actual data index
    * @param  {boolean} isGroup If true we are building a group row.
    * @param  {object} isFooter If true we are building a footer row.
+   * @param  {string} actualIndexLineage Series of actualIndex values to reach a child actualIndex in a tree
    * @returns {string} The html used to construct the row.
    */
-  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter) {
+  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage) {
     let isEven = false;
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
@@ -3081,7 +3183,7 @@ Datagrid.prototype = {
     const isSelected = this.isRowSelected(rowData);
     const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
-    if (rowData && rowData.rowStatus) {
+    if (rowData && rowData.rowStatus && self.settings.showNewRowIndicator) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
       rowStatus.icon = (rowData.rowStatus.icon === 'success') ? '#icon-check' : '#icon-exclamation';
@@ -3091,6 +3193,8 @@ Datagrid.prototype = {
 
     rowHtml = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
               ` data-index="${actualIndex}"${
+                actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
+              }${
                 self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
               }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
               }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
@@ -3308,8 +3412,9 @@ Datagrid.prototype = {
     // Render Tree Children
     if (rowData.children) {
       for (let i = 0, l = rowData.children.length; i < l; i++) {
+        const lineage = actualIndexLineage ? `${actualIndexLineage}.${actualIndex}` : `${actualIndex}`;
         this.recordCount++;
-        rowHtml += self.rowHtml(rowData.children[i], this.recordCount, i);
+        rowHtml += self.rowHtml(rowData.children[i], this.recordCount, i, false, false, lineage);
       }
     }
 
@@ -4677,6 +4782,7 @@ Datagrid.prototype = {
       this.emptyMessageContainer = $('<div>');
       this.contentContainer.prepend(this.emptyMessageContainer);
       this.emptyMessage = this.emptyMessageContainer.emptymessage(emptyMessage).data('emptymessage');
+      this.checkEmptyMessage();
     } else {
       this.emptyMessage.settings = emptyMessage;
       this.emptyMessage.updated();
@@ -4905,7 +5011,7 @@ Datagrid.prototype = {
     this.element
       .off('click.datagrid')
       .on('click.datagrid', '> .datagrid-header th.is-sortable, > .datagrid-header th.btn-filter', function (e) {
-        if ($(e.target).parent().is('.datagrid-filter-wrapper')) {
+        if ($(e.target).parent().is('.datagrid-filter-wrapper') || $(e.target).parent().is('.lookup-wrapper')) {
           return;
         }
 
@@ -4916,7 +5022,10 @@ Datagrid.prototype = {
     this.table
       .off('click.datagrid')
       .on('click.datagrid', '.datagrid-row a', (e) => {
-        e.preventDefault();
+        const href = e.currentTarget.getAttribute('href');
+        if (!href || href === '#') {
+          e.preventDefault();
+        }
       });
 
     // Handle Row Clicking
@@ -5127,7 +5236,7 @@ Datagrid.prototype = {
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
       e.preventDefault();
 
-      if (self.settings.menuId) {
+      if (self.settings.menuId && $(`#${self.settings.menuId}`).length > 0) {
         $(e.currentTarget).popupmenu({
           menuId: self.settings.menuId,
           eventObj: e,
@@ -6373,12 +6482,14 @@ Datagrid.prototype = {
 
     // Unselect it
     const unselectNode = function (elem, index) {
-      const removeSelected = function (node) {
+      const removeSelected = function (node, selIdx) {
         delete node._selected;
         self.selectedRowCount--;
-
+        if (typeof selIdx === 'undefined') {
+          selIdx = index;
+        }
         for (let i = 0; i < self._selectedRows.length; i++) {
-          if (self._selectedRows[i].idx === index) {
+          if (self._selectedRows[i].idx === selIdx) {
             self._selectedRows.splice(i, 1);
             break;
           }
@@ -6407,15 +6518,19 @@ Datagrid.prototype = {
         let rowData;
 
         if (selIdx !== undefined && selIdx > -1) {
-          rowData = self.settings.dataset[selIdx];
+          rowData = s.dataset[selIdx];
         }
         if (s.groupable) {
           const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
           const gData = self.groupArray[row];
-          rowData = self.settings.dataset[gData.group].values[gData.node];
+          rowData = s.dataset[gData.group].values[gData.node];
         }
         if (rowData !== undefined) {
-          removeSelected(rowData);
+          if (s.paging && s.source) {
+            removeSelected(rowData, selIdx);
+          } else {
+            removeSelected(rowData);
+          }
         }
       }
     };
@@ -7089,7 +7204,7 @@ Datagrid.prototype = {
    * @returns {boolean} If it does or not
    */
   containsTriggerField(container) {
-    const selector = '.dropdown, .datepicker';
+    const selector = '.dropdown, .datepicker, .lookup';
     return !($(selector, container).length);
   },
 
@@ -7148,6 +7263,8 @@ Datagrid.prototype = {
     // Already in edit mode
     const cellNode = this.activeCell.node.find('.datagrid-cell-wrapper');
     const cellParent = cellNode.parent('td');
+    const treeNode = $('.datagrid-tree-node', cellNode).length > 0;
+    const treeExpandBtn = $('.datagrid-expand-btn', cellNode).length > 0;
 
     if (cellParent.hasClass('is-editing') || cellParent.hasClass('is-editing-inline')) {
       return false; // eslint-disable-line
@@ -7186,6 +7303,15 @@ Datagrid.prototype = {
 
     if (!this.isCellEditable(idx, cell)) {
       return false; // eslint-disable-line
+    }
+
+    if (treeExpandBtn || treeNode) {
+      if (treeExpandBtn) {
+        cellValue = $('> span', cellNode).text();
+      }
+      if (typeof cellValue === 'string') {
+        cellValue = cellValue.replace(/^\s/, '');
+      }
     }
 
     // In Show Editor mode the editor is on form already

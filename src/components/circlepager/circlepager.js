@@ -39,8 +39,8 @@ CirclePager.prototype = {
     if (this.slides.length) {
       this.createControls();
       this.handleEvents();
-      this.showCollapsedView();
       this.initActiveSlide();
+      this.showCollapsedView();
     }
   },
 
@@ -56,6 +56,7 @@ CirclePager.prototype = {
     this.slidesJQ = $('.slide', this.element);
     this.slidesToShow = s.slidesToShow;
     this.slides = [];
+    this.isVisible = true;
 
     for (let i = 0, l = this.slidesJQ.length; i < l; i++) {
       this.slides.push({ node: $(this.slidesJQ[i]) });
@@ -221,8 +222,8 @@ CirclePager.prototype = {
       setTimeout(() => {
         this.createControls();
         this.handleEvents();
-        this.showCollapsedView();
         this.initActiveSlide();
+        this.showCollapsedView();
       }, 0);
     }
   },
@@ -389,6 +390,9 @@ CirclePager.prototype = {
     $('.btn-previous, .btn-next', this.element).off('click.circlepager');
     $('.controls', this.element).remove();
     this.showExpandedView();
+
+    const possibleTab = this.element.closest('.tab-panel-container').prev('.tab-container');
+    possibleTab.off('activated.circlepager');
     return this;
   },
 
@@ -541,6 +545,11 @@ CirclePager.prototype = {
 
     // Set max number of slides can view on resize
     $('body').on('resize.circlepager', () => {
+      self.responsiveSlidesToShow();
+    });
+
+    const possibleTab = self.element.closest('.tab-panel-container').prev('.tab-container');
+    possibleTab.off('activated.circlepager').on('activated.circlepager', () => {
       self.responsiveSlidesToShow();
     });
   }

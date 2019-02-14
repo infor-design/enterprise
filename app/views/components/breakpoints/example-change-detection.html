@@ -21,7 +21,7 @@
   $('body').on('breakpoint-change', function(e, breakpointState) {
     $(this).toast({
       title: 'Breakpoint Change',
-      message: '<b>Current: </b>' + breakpointState.current + '<br /><b>Previous: </b>' + breakpointState.previous
+      message: '<b>Current: </b>' + breakpointState.current + '<br> <b>Previous: </b>' + breakpointState.previous
     });
   });
 </script>

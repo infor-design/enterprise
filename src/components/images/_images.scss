@@ -58,7 +58,7 @@ $images-size: (
 
 // Initials for when photo is absent
 .image-initials {
-  background: $amethyst05;
+  background: $theme-color-palette-amethyst-50;
   border-radius: 50%;
   color: $theme-color-palette-white;
   display: inline-block;
@@ -73,5 +73,12 @@ $images-size: (
     left: 6px;
     position: relative;
     top: 22px;
+  }
+}
+
+// Print Support
+@media print {
+  .image-initials {
+    background-color: $theme-color-palette-graphite-30;
   }
 }

@@ -1,5 +1,102 @@
 # What's New with Enterprise
 
+## v4.16.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.16.0 Features
+
+- `[Busy Indicator]` Made a fix to make it possible to use a busy indicator on a modals. ([#827](https://github.com/infor-design/enterprise/issues/827))
+- `[Field Filter]` Added support to get and set filter type programmatically. ([#1181](https://github.com/infor-design/enterprise/issues/1181))
+- `[Hierarchy]` Add print media styles to decrease ink usage and increase presentability for print format. Note that you may need to enable the setting to print background images, both Mac and PC have a setting for this. ([#456](https://github.com/infor-design/enterprise/issues/456))
+
+### v4.16.0 Fixes
+
+- `[Dropdown]` Fixed a bug where the ellipsis was not showing on long text in some browsers. ([#1550](https://github.com/infor-design/enterprise/issues/1550))
+- `[Datagrid]` Fixed a bug in equals filter on multiselect filters. ([#1586](https://github.com/infor-design/enterprise/issues/1586))
+- `[Datagrid]` Fixed a bug where incorrect data is shown in the events in tree grid. ([#315](https://github.com/infor-design/enterprise-ng/issues/315))
+- `[Datagrid]` Fixed a bug where showMonthYearPicker did not work correctly on date filters. ([#1532](https://github.com/infor-design/enterprise-ng/issues/1532))
+- `[Validation]` Fixed a bug in removeError where the icon is sometimes not removed. ([#1556](https://github.com/infor-design/enterprise/issues/1556))
+- `[Datepicker]` Fixed the range picker to clear when changing months in a filter. ([#1537](https://github.com/infor-design/enterprise/issues/1537))
+- `[Datepicker]` Fixed disabled dates example to validate again on disabled dates. ([#1445](https://github.com/infor-design/enterprise/issues/1445))
+- `[Dategrid]` Fixed a Date Editor bug when passing a series of zeroes to a datagrid cell with an editable date. ([#1020](https://github.com/infor-design/enterprise/issues/1020))
+
+### v4.16.0 Chore & Maintenance
+
+- `[Demo App]` Removed the search icon from the header on test pages as it doesn't function. ([#1449](https://github.com/infor-design/enterprise/issues/1449))
+- `[Docs]` Added a fix to prevent the documentation generator from failing intermittently. ([#1377](https://github.com/infor-design/enterprise/issues/1377))
+- `[Demo App]` Added a fix for incorrect links when running on windows. ([#1549](https://github.com/infor-design/enterprise/issues/1549))
+
+(TBD Issues Solved this release, Backlog Enterprise TBD, Backlog Ng TBD, TBD Functional Tests, TBD e2e Test)
+
+## v4.15.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.15.0 Features
+
+- `[Datagrid]` Added support for lookup in the datagrid filter. ([#653](https://github.com/infor-design/enterprise/issues/653))
+- `[Datagrid]` Added support for masks on lookup editors. ([#406](https://github.com/infor-design/enterprise/issues/406))
+- `[Validation]` When using legacy mode validation, made the icon dim if the text was on top of it. ([#644](https://github.com/infor-design/enterprise/issues/644))
+- `[Calendar]` Now possible to edit events both with the API and by clicking/double clicking events. And other improvements. ([#1436](https://github.com/infor-design/enterprise/issues/1436))
+- `[Datagrid]` Added new methods to clear dirty cells on cells, rows, and all. ([#1303](https://github.com/infor-design/enterprise/issues/1303))
+- `[Tree]` Added several improvements: the ability to show a dropdown on the tree node, the ability to add nodes in between current nodes, the ability to set checkboxes for selection only on some nodes, and the ability to customize icons. ([#1364](https://github.com/infor-design/enterprise/issues/1364))
+- `[Datagrid]` Added the ability to display or hide the new row indicator with a new `showNewIndicator` option. ([#1589](https://github.com/infor-design/enterprise/issues/1589))
+
+### v4.15.0 Fixes
+
+- `[Icons]` Icons with the word `confirm` have been changed to `success`. This is partially backwards compatible for now. We deprecated `confirm` and will remove in the next major version so rename your icons. Example `icon-confirm` to `icon-success`. ([#963](https://github.com/infor-design/enterprise/issues/963))
+- `[Icons]` The alert icons now have a white background allowing them to appear on colored sections. There are now two versions, for example: `icon-error` and `icon-error-solid`. These are used in calendar. ([#1436](https://github.com/infor-design/enterprise/issues/1436))
+- `[Circle Pager]` Made significant improvements to resizing, especially on tabs. ([#1284](https://github.com/infor-design/enterprise/issues/1284))
+- `[Datagrid]` In high contrast mode the background is now white when editing cells. ([#1421](https://github.com/infor-design/enterprise/issues/1421))
+- `[Dropdown]` Fixed an issue where filter did not work in no-search mode with the Caps Lock key. ([#1500](https://github.com/infor-design/enterprise/issues/1500))
+- `[Popupmenu]` Fixed an issue when using the same menu on multiple inputs wherein destroying one instance actually destroyed all instances. ([#1025](https://github.com/infor-design/enterprise/issues/1025))
+- `[Swaplist]` Fixed a bug where Shift+M did not work when typing in the search. ([#1408](https://github.com/infor-design/enterprise/issues/1408))
+- `[Popupmenu]` Fixed a bug in immediate mode where right click only worked the first time. ([#1507](https://github.com/infor-design/enterprise/issues/1507))
+- `[Editor]` Fixed a bug where clear formatting did not work in safari. ([#911](https://github.com/infor-design/enterprise/issues/911))
+- `[Colorpicker]` Fixed a bug in Angular where the picker did not respond correctly to `editable=false` and `disabled=true`. ([#257](https://github.com/infor-design/enterprise-ng/issues/257))
+- `[Locale]` Fixed a bug where the callback did not complete on nonexistent locales. ([#1267](https://github.com/infor-design/enterprise/issues/1267))
+- `[Calendar]` Fixed a bug where event details remain when filtering event types. ([#1436](https://github.com/infor-design/enterprise/issues/1436))
+- `[Busy Indicator]` Fixed a bug where the indicator closed when clicking on accordions. ([#281](https://github.com/infor-design/enterprise-ng/issues/281))
+- `[Datagrid Tree]` Fixed the need for unique IDs on the tree nodes. ([#1361](https://github.com/infor-design/enterprise/issues/1361))
+- `[Editor]` Improved the result of pasting bullet lists from MS Word. ([#1351](https://github.com/infor-design/enterprise/issues/1351))
+- `[Hierarchy]` Fixed layout issues in the context menu in RTL mode. ([#1310](https://github.com/infor-design/enterprise/issues/1310))
+- `[Datagrid]` Added a setting `allowChildExpandOnMatch` that optionally determines if a search/filter will show and allow nonmatching children to be shown. ([#1422](https://github.com/infor-design/enterprise/issues/1422))
+- `[Datagrid]` If a link is added with a href it will now be followed when clicking, rather than needing to use the click method setting on columns. ([#1473](https://github.com/infor-design/enterprise/issues/1473))
+- `[Datagrid Tree]` Fixed a bug where Expand/Collapse text is added into the +/- cell. ([#1145](https://github.com/infor-design/enterprise/issues/1145))
+- `[Dropdown]` Fixed a bug in NG where two dropdowns in different components would cause each other to freeze. ([#229](https://github.com/infor-design/enterprise-ng/issues/229))
+- `[Editor]` Verified a past fix where editor would not work with all buttons when in a modal. ([#408](https://github.com/infor-design/enterprise/issues/408))
+- `[Datagrid Tree]` Fixed a bug in `updateRow` that caused the indent of the tree grid to collapse. ([#405](https://github.com/infor-design/enterprise/issues/405))
+- `[Empty Message]` Fixed a bug where a null empty message would not be possible. This is used to show no empty message on initial load delays. ([#1467](https://github.com/infor-design/enterprise/issues/1467))
+- `[Lookup]` Fixed a bug where nothing is inserted when you click a link editor in the lookup. ([#1315](https://github.com/infor-design/enterprise/issues/1315))
+- `[About]` Fixed a bug where the version would not show when set. It would show the IDS version. ([#1414](https://github.com/infor-design/enterprise/issues/1414))
+- `[Datagrid]` Fixed a bug in `disableClientSort` / `disableClientFilter`. It now retains visual indicators on sort and filter. ([#1248](https://github.com/infor-design/enterprise/issues/1248))
+- `[Tree]` Fixed a bug where selected nodes are selected again after loading child nodes. ([#1270](https://github.com/infor-design/enterprise/issues/1270))
+- `[Input]` Fixed a bug where inputs that have tooltips will not be selectable with the cursor. ([#1354](https://github.com/infor-design/enterprise/issues/1354))
+- `[Accordion]` Fixed a bug where double clicking a header will open and then close the accordion. ([#1314](https://github.com/infor-design/enterprise/issues/1314))
+- `[Datagrid]` Fixed a bug on hover with taller cells where the hover state would not cover the entire cell. ([#1490](https://github.com/infor-design/enterprise/issues/1490))
+- `[Editor]` Fixed a bug where the image would still be shown if you press the Esc key and cancel the image dialog. ([#1489](https://github.com/infor-design/enterprise/issues/1489))
+- `[Datagrid Lookup]` Added additional missing event info for ajax requests and filtering. ([#1486](https://github.com/infor-design/enterprise/issues/1486))
+- `[Tabs]` Added protection from inserting HTML tags in the add method (XSS). ([#1462](https://github.com/infor-design/enterprise/issues/1462))
+- `[App Menu]` Added better text wrapping for longer titles. ([#1116](https://github.com/infor-design/enterprise/issues/1116))
+- `[Contextual Action Panel]` Fixed some examples so that they reopen more than one time. ([#1116](https://github.com/infor-design/enterprise/issues/506))
+- `[Searchfield]` Fixed a border styling issue on longer labels in the search. ([#1500](https://github.com/infor-design/enterprise/issues/1500))
+- `[Tabs Multi]` Improved the experience on mobile by collapsing the menus a bit. ([#971](https://github.com/infor-design/enterprise/issues/971))
+- `[Lookup]` Fixed missing ellipsis menu on mobile devices. ([#1068](https://github.com/infor-design/enterprise/issues/1068))
+- `[Accordion]` Fixed incorrect font size on p tags in the accordion. ([#1116](https://github.com/infor-design/enterprise/issues/1116))
+- `[Line Chart]` Fixed and improved the legend text on mobile viewport. ([#609](https://github.com/infor-design/enterprise/issues/609))
+
+### v4.15.0 Chore & Maintenance
+
+- `[General]` Migrated sass to use IDS color variables. ([#1435](https://github.com/infor-design/enterprise/issues/1435))
+- `[Angular]` Added all settings from 4.13 in time for future 5.1.0 ([#274](https://github.com/infor-design/enterprise-ng/issues/274))
+- `[General]` Fixed some incorrect layouts. ([#1357](https://github.com/infor-design/enterprise/issues/1357))
+- `[Targeted Achievement]` Removed some older non working examples. ([#520](https://github.com/infor-design/enterprise/issues/520))
+
+(54 Issues Solved this release, Backlog Enterprise 180, Backlog Ng 66, 705 Functional Tests, 716 e2e Test)
+
 ## v4.14.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)

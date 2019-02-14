@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="twelve columns"><div id="datagrid"></div></div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    //Locale.set('en-US').done(function () {
+    var columns = [],
+      data = [];
+
+    var url = '{{basepath}}api/tree-tasks';
+
+    $.getJSON(url, function(data) {
+      //Define Columns for the Grid.
+      columns.push({
+        id: 'taskName',
+        name: 'Task',
+        field: 'taskName',
+        expanded: 'expanded',
+        formatter: Formatters.Tree,
+        filterType: 'text',
+        width: 250
+      });
+      columns.push({
+        id: 'id',
+        name: 'Id',
+        field: 'id',
+        filterType: 'text',
+        filterDisabled: true,
+        component: new Object()
+      });
+      columns.push({
+        id: 'portable',
+        name: 'Portable',
+        field: 'portable',
+        align: 'center',
+        formatter: Formatters.Checkbox,
+        filterType: 'checkbox'
+      });
+      columns.push({
+        id: 'desc',
+        name: 'Description',
+        field: 'desc',
+        filterType: 'text'
+      });
+      columns.push({
+        id: 'orderDate',
+        name: 'Order Date',
+        field: 'orderDate',
+        formatter: Formatters.Date,
+        dateFormat: 'MM/dd/yyyy',
+        filterType: 'date'
+      });
+
+      //Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        treeGrid: true,
+        filterable: true,
+        onPostRenderCell: function(container, args) {
+          console.log('Post Render Row', args.row, args);
+          if (args.row !== 1) {
+            container.innerHTML = `<span style="font-weight: bold">${
+              args && args.value && args.value.id ? args.value.id : ''
+            }</span>`;
+          }
+        },
+        onDestroyCell: function(container, args) {
+          console.log('Destroy Row', args.row, args);
+        }
+      });
+    });
+  });
+</script>

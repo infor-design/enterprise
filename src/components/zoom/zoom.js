@@ -86,7 +86,6 @@ Zoom.prototype = {
 
   /**
   * Enable zoom by un-setting the meta tag.
-  * @returns {void}
   */
   enableZoom() {
     // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation
@@ -95,7 +94,6 @@ Zoom.prototype = {
 
   /**
   * Disable zoom by setting the meta tag.
-  * @returns {void}
   */
   disableZoom() {
     // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation

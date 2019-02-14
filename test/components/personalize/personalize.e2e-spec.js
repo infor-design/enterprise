@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Personalization tests', () => { //eslint-disable-line
+describe('Personalization tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/personalize/example-state');
   });
@@ -51,6 +51,6 @@ describe('Personalization tests', () => { //eslint-disable-line
 
     await reinitButton.click();
 
-    expect(element(by.id('soho-personalization')).getText()).toEqual(beforeInitSheet.getText());
+    expect(await element(by.id('soho-personalization')).getText()).toEqual(beforeInitSheet.getText());
   });
 });

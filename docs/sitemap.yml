@@ -193,6 +193,8 @@ sections:
     slug: sparkline
   - name: Step Chart
     slug: stepchart
+  - name: Treemap
+    slug: treemap
   - name: Completion Chart
     slug: completion-chart
 - name: Unclassified
@@ -227,6 +229,8 @@ sections:
     slug: masthead
   - name: Message
     slug: message
+  - name: Notification Banner
+    slug: notification
   - name: Process Indicator
     slug: processindicator
   - name: Tabs-multi

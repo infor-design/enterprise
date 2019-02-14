@@ -178,7 +178,7 @@
 
     &.alternate {
       .arrow::after {
-        border-bottom-color: $popover-alternate-arrow-color;
+        border-bottom-color: $popover-bg-color;
       }
     }
   }
@@ -229,11 +229,6 @@
 
   .tooltip-content {
     padding: 20px;
-
-    // SOHO-6032
-    //> div {
-    //  overflow: hidden;
-    //}
   }
 
   &.alternate {
@@ -269,6 +264,9 @@
     }
   }
 
+  .row:last-child {
+    margin-bottom: -15px;
+  }
 }
 
 .popover p,
@@ -293,7 +291,58 @@
   padding: 10px 20px;
 
   .btn-close {
-    margin-top: -9px;
+    margin-left: 0;
+    margin-top: -10px;
+  }
+
+  &.filled {
+    background-color: $theme-color-palette-azure-70;
+    color: $theme-color-palette-white;
+    font-size: 1.8rem;
+    -webkit-font-smoothing: antialiased;
+    margin: -1px;
+    padding: 15px 5px 15px 15px;
+
+    .btn-close {
+      margin-left: 5px;
+      margin-top: -10px;
+    }
+
+    .icon-close {
+      fill: $theme-color-palette-white;
+    }
+  }
+
+  &.ruby {
+    background-color: $theme-color-palette-ruby-60;
+  }
+
+  &.amber {
+    background-color: $theme-color-palette-amber-60;
+  }
+
+  &.emerald {
+    background-color: $theme-color-palette-emerald-60;
+  }
+
+  &.azure {
+    background-color: $theme-color-palette-azure-60;
+  }
+
+  &.turquoise {
+    background-color: $theme-color-palette-turquoise-60;
+  }
+
+  &.amethyst {
+    background-color: $theme-color-palette-amethyst-60;
+  }
+
+  &.slate {
+    background-color: $theme-color-palette-slate-60;
+  }
+
+  &.graphite {
+    background-color: $theme-color-palette-graphite-60;
   }
 }
 

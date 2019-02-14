@@ -157,6 +157,7 @@ const Locale = {  // eslint-disable-line
       'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
       'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
       'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'];
+    const defaultLocale = 'en-US';
 
     if (allLocales.indexOf(locale) === -1) {
       locale = defaults.filter(a => a.lang === lang);
@@ -164,8 +165,10 @@ const Locale = {  // eslint-disable-line
       if (locale && locale[0]) {
         return locale[0].default;
       }
-      return '';
+
+      locale = defaultLocale;
     }
+
     return locale;
   },
 
@@ -290,6 +293,11 @@ const Locale = {  // eslint-disable-line
 
     if (!value) {
       return undefined;
+    }
+
+    if (value === '0000' || value === '000000' || value === '00000000') {
+      // Means no date in some applications
+      return '';
     }
 
     // Convert if a timezone string.
@@ -469,6 +477,11 @@ const Locale = {  // eslint-disable-line
     const orgDatestring = dateString;
 
     if (!dateString) {
+      return undefined;
+    }
+
+    if (dateString === '0000' || dateString === '000000' || dateString === '00000000') {
+      // Means no date in some applications
       return undefined;
     }
 
