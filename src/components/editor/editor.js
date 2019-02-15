@@ -33,7 +33,7 @@ const COMPONENT_NAME = 'editor';
 * @param {string} [settings.image = { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' }] Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
 * @param {function} [settings.onLinkClick = null] Call back for clicking on links to control link behavior.
 * @param {function} [settings.showHtmlView = false] If set to true, editor should be displayed in HTML view initialy.
-* @param {function} [settings.preview = false] If set to true, editor should be displayed in preview mode non editable content.
+* @param {function} [settings.preview = false] If set to true, editor should be displayed in preview mode with noneditable content.
 */
 const EDITOR_DEFAULTS = {
   buttons: {
