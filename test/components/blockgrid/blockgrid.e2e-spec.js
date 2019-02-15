@@ -253,6 +253,7 @@ describe('Blockgrid example-paging tests', () => {
 
     await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
     await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
     await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
 
     await browser.driver.sleep(config.sleep);
