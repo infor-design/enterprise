@@ -744,7 +744,7 @@ Datagrid.prototype = {
     this.setTreeRootNodes();
 
     if (pagerInfo && !pagerInfo.preserveSelected) {
-      this.unSelectAllRows();
+      this._selectedRows = [];
     }
 
     if (this.settings.disableClientFilter) {
