@@ -2,7 +2,7 @@
   "ancestorPath": null,
   "centeredNode": {
     "id": "1",
-    "name": "Charles Phillips",
+    "name": "John Randolph",
     "position": "CEO",
     "employmentType": "FT",
     "picture": "/images/4.jpg",
@@ -33,11 +33,11 @@
   "children": [
     {
       "id": "2",
-      "name": "Pam Murphy",
+      "name": "Barb Wire",
       "position": "COO",
       "employmentType": "FT",
-      "avatarInitials": "PM",
-      "childrenUrl": "hc-pam-murphy.json",
+      "avatarInitials": "BW",
+      "childrenUrl": "hc-barb-wire.json",
       "menu" : {
         "details": [
           {"key": "Organization Unit", "value": "U.S Headquarters"},
@@ -64,11 +64,11 @@
     },
     {
       "id": "3",
-      "name": "Soma Somasundaram",
+      "name": "Greg Ford",
       "position": "CTO",
       "employmentType": "FT",
-      "avatarInitials": "SS",
-      "childrenUrl": "hc-soma-somasundaram.json",
+      "avatarInitials": "GF",
+      "childrenUrl": "hc-greg-ford.json",
       "menu" : {
         "details": [
           {"key": "Organization Unit", "value": "U.S Headquarters"},

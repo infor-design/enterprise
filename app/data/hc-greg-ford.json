@@ -1,44 +1,43 @@
 {
   "ancestorPath": [{
     "id": "1",
-    "name": "Charles Phillips",
+    "name": "John Randolph",
     "position": "CEO",
     "employmentType": "FT",
     "picture": "/images/4.jpg",
-    "childrenUrl": "hc-charles-phillips.json"
+    "childrenUrl": "hc-john-randolph.json"
   }],
   "centeredNode": {
     "id": "3",
-    "name": "Soma Somasundaram",
+    "name": "Greg Ford",
     "position": "CTO",
     "employmentType": "FT",
-    "avatarInitials": "SS",
-    "childrenUrl": "hc-soma-somasundaram.json"
+    "avatarInitials": "GF"
   },
   "children": [
     {
       "id": "4",
-      "name": "Andrew Woodward",
+      "name": "Gilbert Quincey",
       "position": "VP, Software Development",
       "employmentType": "FT",
-      "avatarInitials": "AW",
+      "avatarInitials": "GQ",
       "isLeaf": true
     },
     {
       "id": "5",
-      "name": "Daniel Miller",
+      "name": "Louis Owens",
       "position": "VP, Software Development",
       "employmentType": "FT",
-      "avatarInitials": "DM",
+      "avatarInitials": "LO",
       "isLeaf": true
     },
     {
       "id": "6",
-      "name": "Massimo Cappoccia",
+      "name": "Nicolas Grant",
       "position": "VP, Software Development",
       "employmentType": "FT",
-      "avatarInitials": "AW",
-      "childrenUrl": "hc-massimo-capoccia.json"
+      "avatarInitials": "NG",
+      "childrenUrl": "hc-nicolas-grant.json"
     }
   ]
 }

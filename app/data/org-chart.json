@@ -1,7 +1,7 @@
 [
    {
       "id":"60476",
-      "Name":"Charles Phillips",
+      "Name":"John Randolph",
       "Picture":"",
       "Position":"CEO",
       "EmploymentType":null,
@@ -845,6 +845,6 @@
       ],
       "isLeaf":false,
       "isLoaded":true,
-      "initials":"CP"
+      "initials":"JR"
    }
 ]

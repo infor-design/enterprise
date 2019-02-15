@@ -2,7 +2,7 @@ import { Hierarchy } from '../../../src/components/hierarchy/hierarchy';
 
 const hierarchyHTML = require('../../../app/views/components/hierarchy/example-stacked.html');
 const svg = require('../../../src/components/icons/svg.html');
-const data = require('../../../app/data/hc-charles-phillips.json');
+const data = require('../../../app/data/hc-john-randolph.json');
 
 const legendData = [
   { value: 'FT', label: 'Full Time' },

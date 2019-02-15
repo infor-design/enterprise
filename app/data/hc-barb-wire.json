@@ -1,34 +1,34 @@
 {
   "ancestorPath": [{
     "id": "1",
-    "name": "Charles Phillips",
+    "name": "John Randolph",
     "position": "CEO",
     "employmentType": "FT",
     "picture": "/images/4.jpg",
-    "childrenUrl": "hc-charles-phillips.json"
+    "childrenUrl": "hc-john-randolph.json"
   }],
   "centeredNode": {
     "id": "2",
-    "name": "Pam Murphy",
+    "name": "Barb Wire",
     "position": "COO",
     "employmentType": "FT",
-    "avatarInitials": "PM"
+    "avatarInitials": "BW"
   },
   "children": [
     {
       "id": "3",
-      "name": "Anne Benedict",
+      "name": "Monica Edwards",
       "position": "SVP, Human Resources",
       "employmentType": "FT",
-      "avatarInitials": "AB",
+      "avatarInitials": "ME",
       "isLeaf": true
     },
     {
       "id": "4",
-      "name": "Susan beal",
+      "name": "Fiona Nelson",
       "position": "SVP, Chief Customer Officer",
       "employmentType": "FT",
-      "avatarInitials": "SS",
+      "avatarInitials": "FN",
       "isLeaf": true
     }
   ]
