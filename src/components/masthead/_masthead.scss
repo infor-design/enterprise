@@ -52,7 +52,7 @@ $masthead-button-focus-color: $theme-color-palette-white;
 
   .toolbar-searchfield-wrapper {
     > .icon:not(.close, .error) {
-      fill: $masthead-button-color;
+      color: $masthead-button-color;
       height: 18px;
       opacity: 1;
     }
@@ -124,7 +124,7 @@ $masthead-button-focus-color: $theme-color-palette-white;
       }
 
       .icon {
-        fill: $masthead-button-color;
+        color: $masthead-button-color;
 
         &.app-drawer {
           left: -6px;
@@ -137,7 +137,7 @@ $masthead-button-focus-color: $theme-color-palette-white;
         color: $masthead-button-hover-color;
 
         .icon {
-          fill: $masthead-button-hover-color;
+          color: $masthead-button-hover-color;
         }
       }
 
@@ -146,7 +146,7 @@ $masthead-button-focus-color: $theme-color-palette-white;
         color: $masthead-button-hover-color;
 
         .icon {
-          fill: $masthead-button-hover-color;
+          color: $masthead-button-hover-color;
         }
       }
 
@@ -154,7 +154,7 @@ $masthead-button-focus-color: $theme-color-palette-white;
         box-shadow: 0 0 0 2px transparent, 0 0 0 1px $masthead-button-focus-color, $header-focus-box-shadow;
 
         .icon {
-          fill: $masthead-button-focus-color;
+          color: $masthead-button-focus-color;
         }
       }
 
@@ -163,7 +163,7 @@ $masthead-button-focus-color: $theme-color-palette-white;
           color: $masthead-button-focus-color;
 
           .icon {
-            fill: $masthead-button-focus-color;
+            color: $masthead-button-focus-color;
           }
         }
       }

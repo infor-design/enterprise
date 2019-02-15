@@ -72,7 +72,7 @@
       }
 
       .icon {
-        fill: $accordion-disabled-text-color !important;
+        color: $accordion-disabled-text-color !important;
 
         &.plus-minus {
           &::before,
@@ -201,12 +201,12 @@
         }
 
         > .icon {
-          fill: $accordion-selected-text-color;
+          color: $accordion-selected-text-color;
         }
 
         > [class^='btn'] {
           .icon {
-            fill: $accordion-selected-text-color;
+            color: $accordion-selected-text-color;
 
             &.plus-minus {
               &::before,
@@ -244,7 +244,7 @@
         }
 
         > .icon {
-          fill: $accordion-filtered-text-color !important;
+          color: $accordion-filtered-text-color !important;
         }
 
         > .btn > .icon {
@@ -339,7 +339,7 @@
         color: $accordion-inverse-text-color;
 
         .icon {
-          fill: $accordion-inverse-text-color;
+          color: $accordion-inverse-text-color;
 
           &.plus-minus {
             &::before,
@@ -378,7 +378,7 @@
           color: $accordion-selected-text-color;
 
           .icon {
-            fill: $accordion-selected-text-color;
+            color: $accordion-selected-text-color;
 
             &.plus-minus {
               &::before,
@@ -400,7 +400,7 @@
           color: $accordion-inverse-text-hover-color;
 
           .icon {
-            fill: $accordion-inverse-text-hover-color;
+            color: $accordion-inverse-text-hover-color;
 
             &.plus-minus {
               &::before,
@@ -441,7 +441,7 @@
             color: $accordion-selected-text-color;
 
             .icon {
-              fill: $accordion-selected-text-color;
+              color: $accordion-selected-text-color;
             }
           }
 
@@ -540,8 +540,7 @@
   }
 
   .icon {
-    fill: $accordion-icon-color;
-    height: 16px;
+    color: $accordion-icon-color;
     top: -1px;
     width: 18px;
   }
@@ -564,7 +563,7 @@
     }
 
     .icon {
-      fill: $accordion-hover-text-color;
+      color: $accordion-hover-text-color;
 
       &.plus-minus {
         &::before,
@@ -611,7 +610,7 @@
     }
 
     .icon {
-      fill: $accordion-disabled-text-color !important;
+      color: $accordion-disabled-text-color !important;
 
       &.plus-minus {
         &::before,
@@ -634,7 +633,7 @@
         }
 
         .icon {
-          fill: $accordion-disabled-text-color !important;
+          color: $accordion-disabled-text-color !important;
 
           &.plus-minus {
             &::before,
@@ -651,7 +650,7 @@
     color: $accordion-filtered-text-color;
 
     &.icon {
-      fill: $accordion-filtered-text-color;
+      color: $accordion-filtered-text-color;
     }
 
     &:not(.has-filtered-children) {

@@ -644,19 +644,21 @@ Stepprocess.prototype = {
     const allStepLinksJq = $(this.settings.stepLink, this.stepListJq);
     const stepJq = stepLink.closest(this.settings.stepLi);
 
-    allStepLinksJq
-      .attr({
-        tabindex: '-1',
-        'aria-selected': 'false'
-      })
-      .parent().removeClass('is-selected');
+    if (!this.isFolder(stepJq)) {
+      allStepLinksJq
+        .attr({
+          tabindex: '-1',
+          'aria-selected': 'false'
+        })
+        .parent().removeClass('is-selected');
 
-    stepLink.attr({
-      tabindex: '0',
-      'aria-selected': 'true'
-    });
+      stepLink.attr({
+        tabindex: '0',
+        'aria-selected': 'true'
+      });
 
-    stepJq.addClass('is-selected');
+      stepJq.addClass('is-selected');
+    }
 
     if (this.isFolder(stepJq)) {
       // It is a folder

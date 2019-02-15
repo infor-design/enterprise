@@ -48,12 +48,58 @@ Rating.prototype = {
   },
 
   /**
-   * Set the value
-   * @param {number} value to pass in.
-   * @returns {number} current value
+   * Icon filled star
+   * @param {jQuery|HTMLElement} inpt - Input element
+   * @param {jQuery|HTMLElement} svg - SVG element
+   */
+  fillStar(inpt, svg) {
+    $(inpt)
+      .addClass('is-filled')
+      .removeClass('is-half')
+      .next(svg)
+      .find('svg')
+      .changeIcon('star-filled');
+  },
+
+  /**
+   * Icon empty star
+   * @param {jQuery|HTMLElement} inpt - Input element
+   * @param {jQuery|HTMLElement} svg - SVG element
+   */
+  emptyStar(inpt, svg) {
+    $(inpt)
+      .removeClass('is-filled')
+      .removeClass('is-half')
+      .next(svg)
+      .find('svg')
+      .changeIcon('star-outlined');
+  },
+
+  /**
+   * Icon half star
+   * @param {jQuery|HTMLElement} inpt - Input element
+   * @param {jQuery|HTMLElement} svg - SVG element
+   */
+  halfStar(inpt, svg) {
+    $(inpt)
+      .addClass('is-half')
+      .removeClass('is-filled')
+      .next(svg)
+      .find('svg')
+      .changeIcon('star-half');
+  },
+
+  /**
+   * Optionally set the value and return the current value
+   * @param {number} [value] - A new value
+   * @returns {number}- The current value
    */
   val(value) {
-    if (value === '' || isNaN(value) || math.sign(value) === -1) {
+    if (arguments.length === 0
+      || value === ''
+      || isNaN(value)
+      || math.sign(value) === -1
+    ) {
       return this.currentValue;
     }
 
@@ -63,24 +109,21 @@ Rating.prototype = {
     for (let i = 0, l = this.allInputs.length; i < l; i++) {
       const input = $(this.allInputs[i]);
       const svgSelector = input.parent().is('.inline') ? 'svg' : 'label';
+      const valNotAWholeNumber = (value % 1 !== 0 && chkIdx === i);
 
-      if (i < value) {
-        input.addClass('is-filled').removeClass('is-half');
+      if (valNotAWholeNumber) {
+        this.halfStar(input, svgSelector);
+      } else if (i < value) {
+        this.fillStar(input, svgSelector);
       } else {
-        input.removeClass('is-filled').removeClass('is-half').prop('checked', false);
+        this.emptyStar(input, svgSelector);
       }
-
-      // Handle Half Star
-      input.next(svgSelector).find('svg').changeIcon('star-filled');
 
       if (i + 1 === chkIdx) {
         input.prop('checked', true);
       }
-
-      if (chkIdx !== this.currentValue && i === chkIdx) {
-        input.addClass('is-half').next(svgSelector).find('svg').changeIcon('star-half');
-      }
     }
+
     if (chkIdx <= 0 && value > 0) {
       $(this.allInputs[0]).prop('checked', true);
     }

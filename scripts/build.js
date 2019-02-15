@@ -71,10 +71,12 @@ const createDirs = require('./build/create-dirs');
 const getFileContents = require('./build/get-file-contents');
 const runBuildProcess = require('./build/run-build-process');
 const writeFile = require('./build/write-file');
+const createSvgHtml = require('./build/create-svg-html');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
 const TEST_DIR = path.join(__dirname, '..', 'test');
+const NM_DIR = path.join(__dirname, '..', 'node_modules');
 const RELATIVE_SRC_DIR = path.join('..', 'src');
 
 // CR-LF on Windows, LF on Linux/Mac
@@ -139,7 +141,6 @@ const filePaths = {
       source: path.join(TEMP_DIR, 'source.txt')
     }
   }
-
 };
 
 // These search terms are used when scanning existing index files to determine
@@ -895,6 +896,8 @@ function runBuildProcesses(requested) {
   } else if (!isCustom || sassMatches.length) {
     buildPromises.push(runBuildProcess(`node ${path.join('.', 'scripts', 'build-sass.js')} --type=${targetSassConfig}`));
   }
+
+  buildPromises.push(createSvgHtml(commandLineArgs.verbose));
 
   return Promise.all(buildPromises);
 }

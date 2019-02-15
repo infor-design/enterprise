@@ -8,6 +8,8 @@
 ### v4.16.0 Features
 
 - `[Busy Indicator]` Made a fix to make it possible to use a busy indicator on a modals. ([#827](https://github.com/infor-design/enterprise/issues/827))
+- `[Field Filter]` Added support to get and set filter type programmatically. ([#1181](https://github.com/infor-design/enterprise/issues/1181))
+- `[Hierarchy]` Add print media styles to decrease ink usage and increase presentability for print format. Note that you may need to enable the setting to print background images, both Mac and PC have a setting for this. ([#456](https://github.com/infor-design/enterprise/issues/456))
 
 ### v4.16.0 Fixes
 
@@ -20,6 +22,8 @@
 - `[Datepicker]` Fixed the range picker to clear when changing months in a filter. ([#1537](https://github.com/infor-design/enterprise/issues/1537))
 - `[Datepicker]` Fixed disabled dates example to validate again on disabled dates. ([#1445](https://github.com/infor-design/enterprise/issues/1445))
 - `[Dategrid]` Fixed a Date Editor bug when passing a series of zeroes to a datagrid cell with an editable date. ([#1020](https://github.com/infor-design/enterprise/issues/1020))
+- `[Icons]` Established missing icon sourcing and sizing consistency from ids-identity icon/svg assets. ([PR#1628](https://github.com/infor-design/enterprise/pull/1628))
+- `[Stepprocess]` Fixed a bug where the step folder was still selected when it was collapsed or expanded. ([#1633](https://github.com/infor-design/enterprise/issues/1633))
 
 ### v4.16.0 Chore & Maintenance
 
@@ -42,6 +46,7 @@
 - `[Calendar]` Now possible to edit events both with the API and by clicking/double clicking events. And other improvements. ([#1436](https://github.com/infor-design/enterprise/issues/1436))
 - `[Datagrid]` Added new methods to clear dirty cells on cells, rows, and all. ([#1303](https://github.com/infor-design/enterprise/issues/1303))
 - `[Tree]` Added several improvements: the ability to show a dropdown on the tree node, the ability to add nodes in between current nodes, the ability to set checkboxes for selection only on some nodes, and the ability to customize icons. ([#1364](https://github.com/infor-design/enterprise/issues/1364))
+- `[Datagrid]` Added the ability to display or hide the new row indicator with a new `showNewIndicator` option. ([#1589](https://github.com/infor-design/enterprise/issues/1589))
 
 ### v4.15.0 Fixes
 
@@ -84,6 +89,7 @@
 - `[Tabs Multi]` Improved the experience on mobile by collapsing the menus a bit. ([#971](https://github.com/infor-design/enterprise/issues/971))
 - `[Lookup]` Fixed missing ellipsis menu on mobile devices. ([#1068](https://github.com/infor-design/enterprise/issues/1068))
 - `[Accordion]` Fixed incorrect font size on p tags in the accordion. ([#1116](https://github.com/infor-design/enterprise/issues/1116))
+- `[Line Chart]` Fixed and improved the legend text on mobile viewport. ([#609](https://github.com/infor-design/enterprise/issues/609))
 
 ### v4.15.0 Chore & Maintenance
 
