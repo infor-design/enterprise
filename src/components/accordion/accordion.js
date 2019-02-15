@@ -1536,8 +1536,8 @@ Accordion.prototype = {
 
     const self = this;
     const selector = '.accordion-header a span';
+    const delay = 400;
     let tooltipTimer;
-    let delay = 400;
 
     // Handle tooltip to show
     const handleShow = (elem) => {
