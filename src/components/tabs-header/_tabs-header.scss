@@ -59,7 +59,7 @@
         }
 
         .icon:not(.is-error):not(.icon-error) {
-          fill: $header-tab-hover-color;
+          color: $header-tab-hover-color;
         }
       }
 
@@ -81,14 +81,14 @@
 
       &.dismissible {
         .icon {
-          fill: $theme-color-palette-white;
+          color: $theme-color-palette-white;
           opacity: 0.6;
         }
 
         &:hover,
         &.is-selected {
           .icon:not(.is-error):not(.icon-error) {
-            fill: $theme-color-palette-white;
+            color: $theme-color-palette-white;
             opacity: 1;
           }
         }
@@ -114,14 +114,14 @@
     }
 
     .icon {
-      fill: $header-tab-normal-color;
+      color: $header-tab-normal-color;
     }
 
     &:hover {
       color: $header-tab-hover-color;
 
       .icon:not(.is-error):not(.icon-error) {
-        fill: $header-tab-hover-color;
+        color: $header-tab-hover-color;
       }
     }
 
@@ -130,7 +130,7 @@
       color: $header-tab-selected-color;
 
       .icon:not(.is-error):not(.icon-error) {
-        fill: $header-tab-selected-color;
+        color: $header-tab-selected-color;
       }
     }
   }
@@ -211,7 +211,7 @@
           }
 
           .icon:not(.is-error):not(.icon-error) {
-            fill: $header-tab-alt-selected-color;
+            color: $header-tab-alt-selected-color;
           }
         }
       }
@@ -237,14 +237,14 @@
       }
 
       .icon {
-        fill: $header-tab-alt-normal-color;
+        color: $header-tab-alt-normal-color;
       }
 
       &:hover {
         color: $header-tab-alt-hover-color;
 
         .icon:not(.is-error):not(.icon-error) {
-          fill: $header-tab-alt-hover-color;
+          color: $header-tab-alt-hover-color;
         }
       }
 
@@ -253,7 +253,7 @@
         color: $header-tab-alt-selected-color;
 
         .icon:not(.is-error):not(.icon-error) {
-          fill: $header-tab-alt-selected-color;
+          color: $header-tab-alt-selected-color;
         }
       }
     }

@@ -13,14 +13,14 @@
 
 .directory-listing {
   .icon {
-    fill: $theme-color-brand-primary-alt;
+    color: $theme-color-brand-primary-alt;
 
     &.example {
-      fill: $theme-color-palette-ruby-50;
+      color: $theme-color-palette-ruby-50;
     }
 
     &.test {
-      fill: $theme-color-palette-azure-50;
+      color: $theme-color-palette-azure-50;
     }
   }
 }
