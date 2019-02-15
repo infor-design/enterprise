@@ -1536,15 +1536,19 @@ Accordion.prototype = {
 
     const self = this;
     const selector = '.accordion-header a span';
+    let delay = 400;
+    let tooltipTimer;
 
     // Handle tooltip to show
     const handleShow = (elem) => {
       if (elem.offsetWidth > elem.parentElement.offsetWidth) {
-        $(elem).tooltip({
-          trigger: 'immediate',
-          content: `${elem.innerText}`,
-          extraClass: 'tooltip-accordion-style'
-        });
+        tooltipTimer = setTimeout(() => {
+          $(elem).tooltip({
+            trigger: 'immediate',
+            content: `${elem.innerText}`,
+            extraClass: 'tooltip-accordion-style'
+          });
+        }, delay);
       }
     };
 
@@ -1552,6 +1556,7 @@ Accordion.prototype = {
     const handleHide = (elem) => {
       if (elem.offsetWidth > elem.parentElement.offsetWidth) {
         self.hideTooltip();
+        clearTimeout(tooltipTimer);
       }
     };
 
