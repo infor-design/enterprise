@@ -74,8 +74,8 @@
 
     .icon:not(.icon-error),
     .icon:hover {
+      color: $trigger-disabled-color !important;
       cursor: default;
-      fill: $trigger-disabled-color !important;
     }
   }
 
@@ -112,8 +112,8 @@
 
       .icon:not(.icon-error),
       .icon:hover {
+        color: $trigger-icon-fill-color;
         cursor: pointer;
-        fill: $trigger-icon-fill-color;
       }
 
     }
@@ -124,8 +124,8 @@
 
     .icon:not(.icon-error),
     .icon:hover {
+      color: $trigger-disabled-color;
       cursor: default;
-      fill: $trigger-disabled-color;
     }
   }
 
@@ -143,7 +143,7 @@
   }
 
   .icon:not(.icon-error) {
-    fill: $trigger-icon-fill-color;
+    color: $trigger-icon-fill-color;
     height: 16px;
     left: 9px;
     position: relative;
@@ -151,7 +151,7 @@
     width: 16px;
 
     &:hover {
-      fill: $trigger-hover-color;
+      color: $trigger-hover-color;
     }
   }
 
@@ -181,11 +181,11 @@
     }
 
     &:hover:not(:disabled) .icon {
-      fill: $theme-color-brand-primary-base;
+      color: $theme-color-brand-primary-base;
     }
 
     &:active .icon {
-      fill: $theme-color-brand-primary-base;
+      color: $theme-color-brand-primary-base;
     }
 
     &.is-empty,

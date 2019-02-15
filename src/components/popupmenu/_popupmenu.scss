@@ -132,7 +132,7 @@
       }
 
       .icon {
-        fill: $popupmenu-dark-icon-color;
+        color: $popupmenu-dark-icon-color;
       }
 
       .heading {
@@ -200,7 +200,7 @@
   //Icon Positioning
   .icon,
   b {
-    fill: $popupmenu-icon-color;
+    color: $popupmenu-icon-color;
     height: 18px;
   }
 
@@ -369,7 +369,7 @@
     }
 
     .icon {
-      fill: $disabled-color !important;
+      color: $disabled-color !important;
     }
 
     &:hover {

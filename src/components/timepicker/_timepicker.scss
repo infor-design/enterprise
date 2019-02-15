@@ -8,19 +8,19 @@
   + .tooltip-description + .icon {
     @include css3(user-select, none);
 
+    color: $trigger-icon-fill-color;
     cursor: pointer;
-    fill: $trigger-icon-fill-color;
     height: 18px;
     margin-left: -32px;
     margin-top: 9px;
     position: absolute;
 
     &:hover {
-      fill: $trigger-hover-color;
+      color: $trigger-hover-color;
     }
 
     &:active {
-      fill: $trigger-active-color;
+      color: $trigger-active-color;
     }
 
   }
@@ -32,7 +32,7 @@
 
   &.error {
     ~ .icon {
-      fill: $error-color;
+      color: $error-color;
     }
   }
 
@@ -40,7 +40,7 @@
     border-color: $input-color-focus-border;
 
     + .icon {
-      fill: $trigger-active-color;
+      color: $trigger-active-color;
     }
   }
 
@@ -56,15 +56,15 @@
     border-color: $timepicker-disabled-border-color;
 
     + .icon {
+      color: $timepicker-disabled-icon-color;
       cursor: default;
-      fill: $timepicker-disabled-icon-color;
     }
   }
 
   &[readonly] {
     + .icon {
+      color: $trigger-icon-fill-color;
       cursor: default;
-      fill: $trigger-icon-fill-color;
     }
   }
 }

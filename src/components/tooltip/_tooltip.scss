@@ -109,8 +109,8 @@
   }
 
   .icon {
+    color: $tooltip-color;
     display: inline-block;
-    fill: $tooltip-color;
     height: 14px;
     margin-top: 2px;
     width: 14px;
@@ -309,7 +309,7 @@
     }
 
     .icon-close {
-      fill: $theme-color-palette-white;
+      color: $theme-color-palette-white;
     }
   }
 

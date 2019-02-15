@@ -108,7 +108,7 @@
       position: relative;
 
       .icon {
-        fill: $badge-neutral-icon-color;
+        color: $badge-neutral-icon-color;
         height: 10px;
         left: 2px;
         top: 1px;
@@ -117,7 +117,7 @@
 
       &:hover {
         .icon {
-          fill: $badge-neutral-hover-icon-color;
+          color: $badge-neutral-hover-icon-color;
         }
       }
 
@@ -209,7 +209,7 @@
     background-color: transparent;
 
     svg {
-      fill: $theme-color-palette-slate-30;
+      color: $theme-color-palette-slate-30;
     }
   }
 }

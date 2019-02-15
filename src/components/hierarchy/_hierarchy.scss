@@ -301,11 +301,6 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
       right: 13px;
       top: 22px;
       width: 30px;
-
-      .icon {
-        height: 24px;
-        width: 24px;
-      }
     }
 
     .btn-actions svg {
@@ -574,7 +569,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
           }
 
           svg {
-            fill: $theme-color-palette-white;
+            color: $theme-color-palette-white;
           }
         }
       }
@@ -985,4 +980,53 @@ html[dir='rtl'] {
       padding: 10px 25px 10px 10px;
     }
   }
+}
+
+@media print {
+  .hierarchy {
+    padding: 0;
+
+    .container {
+      margin-left: 15px;
+    }
+
+    .leaf {
+      &.is-selected {
+        box-shadow: none;
+      }
+    }
+
+    legend {
+      margin: 0 0 10px 5px;
+    }
+
+    &.display-for-paging {
+      .container {
+        margin-left: 25px;
+      }
+
+      legend {
+        margin: 0 0 10px 5px;
+      }
+
+      .chart {
+        &.has-back {
+          .root {
+            &::after {
+              display: none;
+            }
+          }
+        }
+
+        .back {
+          display: none;
+
+          button {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+
 }

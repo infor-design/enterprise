@@ -54,7 +54,7 @@
       z-index: 1001;
 
       .icon {
-        fill: $icon-color-fill;
+        color: $icon-color-fill;
         height: 18px;
         width: 18px;
       }
@@ -63,7 +63,7 @@
         border: 1px solid $theme-color-palette-white;
 
         .icon {
-          fill: $theme-color-palette-white;
+          color: $theme-color-palette-white;
         }
       }
     }

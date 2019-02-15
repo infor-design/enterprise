@@ -221,7 +221,7 @@ nvm install 10
 nvm use 10
 ```
 
-1. Go to your home directory `(`cd ~`)`
+1. Go to your home directory `(cd ~)`
 1. Clone IDS Enterprise repo, and navigate to it
 
 ```sh
@@ -247,6 +247,7 @@ npx grunt
 
 1. Run the `npm run quickstart` command in your current docker session to run the demoapp.
 1. Open a second session in the docker container, and run `npm run e2e:ci` to start the tests.
+    - Or you can `pico|vi` into one of the e2e test files, `fdescribe|fit` and `npm run e2e:ci:debug` to run individual tests instead of the whole suite
 
 ```sh
 npm run quickstart
