@@ -524,7 +524,7 @@
     width: calc(100% - 1px);
 
     > span {
-      display: inline-block; // to force offsetWidth
+      display: inline-block; // to allow offsetWidth
     }
   }
 
