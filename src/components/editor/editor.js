@@ -2324,6 +2324,14 @@ Editor.prototype = {
   },
 
   /**
+   * Check for the editor is in preview mode.
+   * @returns {boolean} true if editor in preview mode
+   */
+  isPreview() {
+    return this.container[0] ? this.container[0].classList.contains('is-preview') : false;
+  },
+
+  /**
    * Check for the editor is in editable mode.
    * @returns {boolean} true if editor is editabled
    */

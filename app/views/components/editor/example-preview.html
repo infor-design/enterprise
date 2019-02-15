@@ -1,5 +1,10 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="btn-toggle"></button>
+  </div>
+</div>
 
-<div class="row">
+<div class="row top-padding">
   <div class="twelve columns">
     <div class="field">
       <label class="label" for="title">Title</label>
@@ -17,3 +22,31 @@
 
   </div>
 </div>
+
+<script>
+  $('body').one('initialized', function () {
+    // Cache variable
+    var btnToggle = $('#btn-toggle');
+    var editorApi = $('#editor1').data('editor');
+    var textEditable = 'Change to Editable Mode';
+    var textPreview = 'Change to Preview Mode';
+
+    // Initialy set button text
+    if (editorApi) {
+      btnToggle.text(editorApi.isPreview() ? textEditable : textPreview);
+    }
+
+    // Bind toggle
+    btnToggle.on('click', function () {
+      if (editorApi) {
+        if (editorApi.isPreview()) {
+          editorApi.editable();
+          btnToggle.text(textPreview);
+        } else {
+          editorApi.preview();
+          btnToggle.text(textEditable);
+        }
+      }
+    });
+  });
+</script>
