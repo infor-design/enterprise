@@ -5774,11 +5774,12 @@ Datagrid.prototype = {
     if ((!data || self.isRowSelected(data)) && !force) {
       return;
     }
-    checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
+    
     elem.addClass(`is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`).attr('aria-selected', 'true')
       .find('td').attr('aria-selected', 'true');
 
-    if (checkbox.length > 0) {
+    if (self.columnIdxById('selectionCheckbox') !== -1) {
+      checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
       checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
         .addClass('is-checked').attr('aria-checked', 'true');
     }
@@ -6344,11 +6345,15 @@ Datagrid.prototype = {
           }
         }
       };
-      checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
+      
       elem.removeClass('is-selected hide-selected-color').removeAttr('aria-selected')
         .find('td').removeAttr('aria-selected');
-      checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-        .removeClass('is-checked no-animate').attr('aria-checked', 'false');
+
+      if (self.columnIdxById('selectionCheckbox') !== -1) {
+        checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
+        checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+          .removeClass('is-checked no-animate').attr('aria-checked', 'false');
+      }
 
       if (s.treeGrid) {
         for (let i = 0; i < s.treeDepth.length; i++) {
