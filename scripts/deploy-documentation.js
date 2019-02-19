@@ -32,7 +32,6 @@ const marked = require('marked');
 const path = require('path');
 const slash = require('slash');
 const swlog = require(`./helpers/stopwatch-log`)
-const vinylToString = require('vinyl-contents-tostring');
 const yaml = require('js-yaml');
 
 const argv = require('yargs')
@@ -176,17 +175,14 @@ cleanAll()
       }
     });
 
-    Promise.all(writePromises)
-      .catch(err => {
-        console.error(chalk.red('Error!'), err);
-      })
-      .then(() => {
-        swlog.logTaskEnd(writeStart);
-        if (deployTo !== 'static') {
-          zipAndDeploy();
-        }
-      });
-  });
+    return Promise.all(writePromises).then(() => {
+      swlog.logTaskEnd(writeStart);
+      if (deployTo !== 'static') {
+        zipAndDeploy();
+      }
+    });
+  })
+  .catch(swlog.error);
 
 // -------------------------------------
 //   Functions
@@ -203,6 +199,10 @@ function compileComponents() {
     let compName = '';
 
     glob(`${paths.components}/*/`, (err, componentDirs) => {
+      if (err) {
+        swlog.error(err);
+      }
+
       componentStats.total += componentDirs.length;
 
       componentDirs.forEach(compDir => {
@@ -379,7 +379,7 @@ function markdownToHtml(filePath, fileName) {
             reject(err);
           } else {
             componentStats.numConverted++;
-            swlog.logTaskAction('Converting to html', `${filePath.replace(process.cwd(), '')}`);
+            swlog.logTaskAction('Readme processed', `${filePath.replace(process.cwd(), '')}`);
             resolve(allDocsObjMap[fileName].body = content);
           }
         });
@@ -416,20 +416,22 @@ function documentationExists(componentName) {
  * @param  {string} componentName - the name of the component
  * @returns {Promise} - A promise
  */
-async function documentJsToHtml(componentName) {
+function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
   const themeName = 'theme-ids-website';
 
-
-  const comments = await documentation.build([compFilePath], { extension: 'js', shallow: true })
-  const output = await documentation.formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}` })
-
-  const results = output.map(async file => {
-    const contents = await vinylToString(file, 'utf8');
-    componentStats.numDocumented++;
-    swlog.logTaskAction('JSDoc parsed', `${componentName}.js`);
-    allDocsObjMap[componentName].api = contents;
-  });
+  return documentation
+    .build([compFilePath], { extension: 'js', shallow: true })
+    .then(comments => {
+      return documentation.formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}` });
+    })
+    .then(res => {
+      const results = res.map(async file => {
+        componentStats.numDocumented++;
+        swlog.logTaskAction('API processed', `${componentName}.js`);
+        allDocsObjMap[componentName].api = file.contents.toString().trim();
+      });
+    });
 }
 
 /**
