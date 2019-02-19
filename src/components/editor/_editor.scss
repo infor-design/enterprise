@@ -100,6 +100,32 @@
     top: 54px;
   }
 
+  &.is-preview {
+    .editor-toolbar {
+      display: none;
+    }
+
+    .hyperlink {
+      cursor: pointer;
+    }
+
+    .editor {
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+      height: auto;
+      min-height: auto;
+      padding: 0;
+    }
+
+    &.is-active,
+    &.is-active:hover {
+      .editor {
+        box-shadow: none;
+      }
+    }
+  }
+
 }
 
 .editor {
