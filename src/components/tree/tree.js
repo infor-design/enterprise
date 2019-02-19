@@ -1048,7 +1048,7 @@ Tree.prototype = {
         self.selectNode(a, data.focus);
       }
     });
-    const dropdowns = self.element[0].querySelectorAll('select.dropdown');
+    const dropdowns = [].slice.call(self.element[0].querySelectorAll('select.dropdown'));
     for (let i = 0; i < dropdowns.length; i++) {
       const dropdown = dropdowns[i];
       const data = self.jsonData[i];
@@ -2404,7 +2404,7 @@ Tree.prototype = {
    * @returns {void}
    */
   disable() {
-    const nodes = this.element[0].querySelectorAll('a');
+    const nodes = [].slice.call(this.element[0].querySelectorAll('a'));
     nodes.forEach((node) => {
       node.classList.add('is-disabled');
       node.setAttribute('aria-disabled', 'true');
@@ -2416,7 +2416,7 @@ Tree.prototype = {
    * @returns {void}
    */
   enable() {
-    const nodes = this.element[0].querySelectorAll('a');
+    const nodes = [].slice.call(this.element[0].querySelectorAll('a'));
     nodes.forEach((node) => {
       node.classList.remove('is-disabled');
       node.removeAttribute('aria-disabled');
@@ -2428,7 +2428,7 @@ Tree.prototype = {
    * @returns {array} of node objects containing attributes nodeId and state (enablement state)
    */
   preserveEnablementState() {
-    const nodes = this.element[0].querySelectorAll('a');
+    const nodes = [].slice.call(this.element[0].querySelectorAll('a'));
     const enablementStates = [];
 
     nodes.forEach((node) => {
@@ -2448,7 +2448,7 @@ Tree.prototype = {
    * @returns {void}
    */
   restoreEnablementState() {
-    const nodes = this.element[0].querySelectorAll('a');
+    const nodes = [].slice.call(this.element[0].querySelectorAll('a'));
 
     // check to prevent error if preserveEnablementState() has not been invoked
     if (!(this.settings.originalEnablementState === null)) {
