@@ -315,15 +315,17 @@ Datagrid.prototype = {
   * Render or render both the header and row area.
   * @param {string} isToggleFilter Check if filterrow type should be passed to the data source request
   */
-  render(isToggleFilter) {
-    const pagingInfo = {};
+  render(isToggleFilter, pagingInfo) {
+    if (!pagingInfo) {
+      pagingInfo = {};
+    }
+
     if (isToggleFilter) {
       pagingInfo.type = 'filterrow';
     }
 
     if (this.settings.source) {
       pagingInfo.preserveSelected = true;
-      // pagingInfo.activePage = this.activePage;
       this.triggerSource(pagingInfo);
       return;
     }
@@ -695,14 +697,6 @@ Datagrid.prototype = {
      */
     this.element.trigger('paging', pagingInfo);
 
-    /*
-    if (typeof this.settings.source !== 'function') {
-      pagingInfo.preserveSelected = true;
-      response(this.settings.dataset, pagingInfo);
-      return;
-    }
-    */
-
     this.settings.source(pagingInfo, response);
   },
 
@@ -733,7 +727,7 @@ Datagrid.prototype = {
       pagerInfo.pagesize = this.settings.pagesize;
       pagerInfo.total = -1;
       pagerInfo.type = 'initial';
-      if (this.settings.treeGrid || !this.settings.source) {
+      if (this.settings.treeGrid) {
         pagerInfo.preserveSelected = true;
       }
     }
@@ -756,7 +750,14 @@ Datagrid.prototype = {
     this.setRowGrouping();
     this.setTreeRootNodes();
 
-    if (pagerInfo && !pagerInfo.preserveSelected) {
+    // Figure out whether or not to preserve previously selected rows
+    if (pagerInfo.preserveSelected === undefined) {
+      if (this.settings.source) {
+        this._selectedRows = [];
+      } else if (pagerInfo.type === 'initial') {
+        this.unSelectAllRows();
+      }
+    } else if (pagerInfo.preserveSelected === false) {
       if (this.settings.source) {
         this._selectedRows = [];
       } else {
@@ -4970,10 +4971,10 @@ Datagrid.prototype = {
         }
       });
 
-      this.tableBody.on(`page.${COMPONENT_NAME}`, () => {
-        self.render();
-      }).on(`pagesizechange.${COMPONENT_NAME}`, () => {
-        self.render();
+      this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
+        self.render(null, pagingInfo);
+      }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
+        self.render(null, pagingInfo);
       });
     }
 

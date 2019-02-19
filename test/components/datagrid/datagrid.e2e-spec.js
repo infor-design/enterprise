@@ -801,7 +801,7 @@ describe('Datagrid paging multiselect tests', () => {
   });
 });
 
-describe('Datagrid paging client side multiselect tests', () => {
+describe('Datagrid paging clientside multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-multiple');
 
