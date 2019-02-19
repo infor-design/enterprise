@@ -84,7 +84,7 @@ Hierarchy.prototype = {
       Hierarchy,
       WARNING: Paging setting will be deprecated.
       Date of Message: 02/12/2019
-      Date of deprecation: TBD. 
+      Date of deprecation: 05/15/2019. 
       `);
     }
 
@@ -93,7 +93,7 @@ Hierarchy.prototype = {
       Hierarchy,
       WARNING: MobileView setting will be deprecated.
       Date of Message: 02/12/2019
-      Date of deprecation: TBD. 
+      Date of deprecation: 05/15/2019. 
       `);
     }
 
