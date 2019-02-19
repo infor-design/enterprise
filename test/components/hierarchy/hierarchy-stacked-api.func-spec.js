@@ -1,3 +1,4 @@
+import { cleanup } from '../../helpers/func-utils';
 import { Hierarchy } from '../../../src/components/hierarchy/hierarchy';
 
 const hierarchyHTML = require('../../../app/views/components/hierarchy/example-stacked.html');
@@ -40,9 +41,14 @@ describe('hierarchy API', () => {
   });
 
   afterEach(() => {
-    hierarchyAPI.destroy();
     svgEl.parentNode.removeChild(svgEl);
     hierarchyEl.parentNode.removeChild(hierarchyEl);
+
+    cleanup(['#hierarchyChartTemplate', '#hierarchy', '#hierarchyInit']);
+
+    if (hierarchyAPI) {
+      hierarchyAPI.destroy();
+    }
   });
 
   it('Can be invoked', () => {
