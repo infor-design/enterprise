@@ -794,7 +794,7 @@ Pager.prototype = {
 
     // Draw all relevant page numbers, if applicable
     // Page Number Buttons are only rendered if there is visible space available to fit them.
-    if (!this.isTable) {
+    if (!this.isTable && (this.settings.dataset && this.settings.dataset.length)) {
       let numberButtonHTML = '';
       buttonsToRender.forEach((i) => {
         if (i === (activePage || 1)) {
