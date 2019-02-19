@@ -316,11 +316,19 @@ Datagrid.prototype = {
   * @param {string} isToggleFilter Check if filterrow type should be passed to the data source request
   */
   render(isToggleFilter) {
+    const pagingInfo = {};
     if (isToggleFilter) {
-      this.loadData(this.settings.dataset, { type: 'filterrow' });
-    } else {
-      this.loadData(this.settings.dataset);
+      pagingInfo.type = 'filterrow';
     }
+
+    if (this.settings.source) {
+      pagingInfo.preserveSelected = true;
+      // pagingInfo.activePage = this.activePage;
+      this.triggerSource(pagingInfo);
+      return;
+    }
+
+    this.loadData(this.settings.dataset, pagingInfo);
   },
 
   /**
@@ -599,20 +607,23 @@ Datagrid.prototype = {
   * @param {string} [op=undefined] an optional info string that can be applied to identify which operation cause the source call
   */
   triggerSource(pagerType, callback, op) {
+    if (!this.settings.source) {
+      return;
+    }
+
     const self = this;
     let pagingInfo = {};
     if (this.pagerAPI) {
       pagingInfo = this.pagerAPI.state;
     }
 
-    if (pagerType) {
-      if (pagerType.activePage) {
-        pagingInfo = utils.extend({}, pagingInfo, pagerType);
-      } else {
-        pagingInfo.type = pagerType;
-        pagingInfo.trigger = op;
-      }
+    if (typeof pagerType === 'string') {
+      pagingInfo.type = pagerType;
+      pagingInfo.trigger = op;
+    } else if (pagerType) {
+      pagingInfo = utils.extend({}, pagingInfo, pagerType);
     }
+
     if (callback && typeof callback !== 'function') {
       if (typeof callback.type === 'string') {
         pagingInfo.type = callback.type;
@@ -684,11 +695,13 @@ Datagrid.prototype = {
      */
     this.element.trigger('paging', pagingInfo);
 
+    /*
     if (typeof this.settings.source !== 'function') {
       pagingInfo.preserveSelected = true;
       response(this.settings.dataset, pagingInfo);
       return;
     }
+    */
 
     this.settings.source(pagingInfo, response);
   },
@@ -744,7 +757,11 @@ Datagrid.prototype = {
     this.setTreeRootNodes();
 
     if (pagerInfo && !pagerInfo.preserveSelected) {
-      this._selectedRows = [];
+      if (this.settings.source) {
+        this._selectedRows = [];
+      } else {
+        this.unSelectAllRows();
+      }
     }
 
     if (this.settings.disableClientFilter) {
@@ -4953,10 +4970,10 @@ Datagrid.prototype = {
         }
       });
 
-      this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
-        this.triggerSource('page', pagingInfo);
-      }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
-        this.triggerSource('pagesize-change', pagingInfo);
+      this.tableBody.on(`page.${COMPONENT_NAME}`, () => {
+        self.render();
+      }).on(`pagesizechange.${COMPONENT_NAME}`, () => {
+        self.render();
       });
     }
 

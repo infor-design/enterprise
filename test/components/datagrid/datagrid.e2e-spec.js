@@ -445,11 +445,16 @@ describe('Datagrid single select tests', () => {
 
     // Sort
     await element(by.css('#datagrid .datagrid-header th:nth-child(4)')).click();
+    await browser.driver.sleep(300);
     await element(by.css('#datagrid .datagrid-header th:nth-child(4)')).click();
 
     expect(await element(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).getText()).toEqual('2142201');
 
+    await browser.driver.sleep(300);
+
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    await browser.driver.sleep(300);
 
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
