@@ -34,7 +34,7 @@
 
 ### v4.16.0 Future Deprecation
 
-- `[Hierarchy]` DATE: 05/15/2019, The following options will be removed. `paging` and `mobileView`. ([#1629](https://github.com/infor-design/enterprise/issues/1629))
+- `[Hierarchy]` The following options are now deprecated and will be removed approximately 2019-05-15. `paging` and `mobileView`. ([#1629](https://github.com/infor-design/enterprise/issues/1629))
 - `[Hierarchy]` Stacked layout will become the default layout in favor of the existing horizontal layout, so the horizontal layout is now considered deprecated and will be removed approximately 2019-05-15. ([#1629](https://github.com/infor-design/enterprise/issues/1629))
 
 ## v4.15.0
