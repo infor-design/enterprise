@@ -1,0 +1,97 @@
+{
+  "ancestorPath": null,
+  "centeredNode": {
+    "id": "1",
+    "name": "John Randolph",
+    "position": "CEO",
+    "employmentType": "FT",
+    "picture": "/images/4.jpg",
+    "menu" : {
+      "details": [
+        {"key": "Organization Unit", "value": "U.S Headquarters"},
+        {"key": "Position", "value": "Project Manager"},
+        {"key": "Work Phone", "value": "612-555-1212"},
+        {"key": "Location", "value": "St. Paul"},
+        {"key": "Position Family", "value": "ITS"},
+        {"key": "Position Category", "value": "PMO"},
+        {"key": "Position Sub Category", "value": "Some subcategory"},
+        {"key": "Position Level", "value": "Career"},
+        {"key": "Years of Service", "value": "4.33"}
+      ],
+      "actions": [
+        {"value": "Profile", "url": "#", "data": {"id":"Profile","label":"Profile","type":"action","index":1}},
+        {"value": "Change Pay Rate", "url": "#", "data": {}, "disabled": true},
+        {"value": "Add work assignment", "url" : "#", "data": {}},
+        {"value": "Promote", "url" : "#", "data": {}},
+        {"value": "Transfer", "url" : "#", "data": {}},
+        {"value": "Terminate", "url" : "#", "data": {}},
+        {"value": "Update", "url" : "#", "data": {}},
+        {"value": "Options", "url" : "#", "data": {}, "menu": [{"value": "Sub Item", "url" : "#", "data": {}}]}
+      ]
+    }
+  },
+  "children": [
+    {
+      "id": "2",
+      "name": "Barb Wire",
+      "position": "COO",
+      "employmentType": "FT",
+      "avatarInitials": "BW",
+      "childrenUrl": "hc-barb-wire.json",
+      "menu" : {
+        "details": [
+          {"key": "Organization Unit", "value": "U.S Headquarters"},
+          {"key": "Position", "value": "Project Manager"},
+          {"key": "Work Phone", "value": "612-555-1212"},
+          {"key": "Location", "value": "St. Paul"},
+          {"key": "Position Family", "value": "ITS"},
+          {"key": "Position Category", "value": "PMO"},
+          {"key": "Position Sub Category", "value": "Some subcategory"},
+          {"key": "Position Level", "value": "Career"},
+          {"key": "Years of Service", "value": "4.33"}
+        ],
+        "actions": [
+          {"value": "Profile", "url": "#", "data": {"id":"Profile","label":"Profile","type":"action","index":1}},
+          {"value": "Change Pay Rate", "url": "#", "data": {}, "disabled": true},
+          {"value": "Add work assignment", "url" : "#", "data": {}},
+          {"value": "Promote", "url" : "#", "data": {}},
+          {"value": "Transfer", "url" : "#", "data": {}},
+          {"value": "Terminate", "url" : "#", "data": {}},
+          {"value": "Update", "url" : "#", "data": {}},
+          {"value": "Options", "url" : "#", "data": {}, "menu": [{"value": "Sub Item", "url" : "#", "data": {}}]}
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "name": "Greg Ford",
+      "position": "CTO",
+      "employmentType": "FT",
+      "avatarInitials": "GF",
+      "childrenUrl": "hc-greg-ford.json",
+      "menu" : {
+        "details": [
+          {"key": "Organization Unit", "value": "U.S Headquarters"},
+          {"key": "Position", "value": "Project Manager"},
+          {"key": "Work Phone", "value": "612-555-1212"},
+          {"key": "Location", "value": "St. Paul"},
+          {"key": "Position Family", "value": "ITS"},
+          {"key": "Position Category", "value": "PMO"},
+          {"key": "Position Sub Category", "value": "Some subcategory"},
+          {"key": "Position Level", "value": "Career"},
+          {"key": "Years of Service", "value": "4.33"}
+        ],
+        "actions": [
+          {"value": "Profile", "url": "#", "data": {"id":"Profile","label":"Profile","type":"action","index":1}},
+          {"value": "Change Pay Rate", "url": "#", "data": {}, "disabled": true},
+          {"value": "Add work assignment", "url" : "#", "data": {}},
+          {"value": "Promote", "url" : "#", "data": {}},
+          {"value": "Transfer", "url" : "#", "data": {}},
+          {"value": "Terminate", "url" : "#", "data": {}},
+          {"value": "Update", "url" : "#", "data": {}},
+          {"value": "Options", "url" : "#", "data": {}, "menu": [{"value": "Sub Item", "url" : "#", "data": {}}]}
+        ]
+      }
+    }
+  ]
+}

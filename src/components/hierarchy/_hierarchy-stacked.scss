@@ -1,0 +1,140 @@
+.hierarchy.layout-is-stacked {
+  legend {
+    margin: 10px 0;
+    text-align: center;
+
+    .key {
+      margin-left: 0;
+    }
+  }
+
+  .root::after {
+    background: $hierarchy-line-color;
+    height: 25px;
+    top: -25px;
+    width: $hierarchy-line-width;
+  }
+
+  .root + .sub-level .leaf::before {
+    display: none;
+  }
+
+  .root + .sub-level::before {
+    top: -32px;
+  }
+
+  .root + .sub-level {
+    padding-left: 0;
+  }
+
+  .chart .root:first-child::after {
+    display: none;
+  }
+
+  .sub-level {
+    border-top: 1px solid $hierarchy-line-color;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 25px;
+    overflow: visible;
+    padding-top: 5px;
+  }
+
+  .leaf.root.ancestor {
+    margin-bottom: 25px;
+  }
+
+  .leaf.is-selected {
+    z-index: 1;
+  }
+
+  .leaf .detail {
+    max-width: 100%;
+  }
+
+  // Centered node
+  .leaf.root.ancestor:last-of-type {
+    margin-bottom: 0;
+
+    // Centered node should not have a visible expand/collapse button
+    .btn {
+      display: none;
+    }
+  }
+
+  .sub-level > li::before,
+  .sub-level > li:last-child::before,
+  .sub-level > li:first-child::before {
+    display: none;
+  }
+
+  .leaf.root .btn-actions,
+  .leaf.root .btn-expand,
+  .leaf.root .btn-collapse {
+    height: 30px;
+    left: auto;
+    min-height: 30px;
+    min-width: 30px;
+    right: 13px;
+    top: 22px;
+    width: 30px;
+
+    .icon {
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  .leaf.root .btn-icon {
+    top: 16px;
+  }
+
+  @media (max-width: $breakpoint-phablet) {
+    legend {
+      text-align: left;
+    }
+
+    .container {
+      width: 100%;
+    }
+
+    .root {
+      width: 100%;
+    }
+
+    .root + .sub-level::before {
+      height: 25px;
+      left: 50%;
+      top: -25px;
+      width: $hierarchy-line-width;
+    }
+
+    .container .chart .sub-level {
+      padding-left: 0;
+    }
+
+    .sub-level {
+      border-top: none;
+      display: block;
+      padding: 0;
+    }
+
+    .sub-level > li {
+      padding-bottom: 0;
+
+      .leaf {
+        border-top: none;
+      }
+    }
+
+    .sub-level > li:first-child .leaf {
+      border-top: 1px solid $hierarchy-line-color;
+    }
+
+    .container .chart .sub-level li .leaf {
+      max-width: 100%;
+    }
+  }
+}
