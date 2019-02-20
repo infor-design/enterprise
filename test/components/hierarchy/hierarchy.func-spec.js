@@ -13,19 +13,15 @@ const legendData = [
 
 let hierarchyEl;
 let hierarchyAPI;
-let svgEl;
 const hierarchyId = '#hierarchy';
 
 describe('hierarchy API', () => {
   beforeEach(() => {
     hierarchyEl = null;
     hierarchyAPI = null;
-    svgEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', hierarchyHTML);
-
-    svgEl = document.body.querySelector('.svg-icons');
     hierarchyEl = document.body.querySelector(hierarchyId);
 
     hierarchyAPI = new Hierarchy(hierarchyEl, {
