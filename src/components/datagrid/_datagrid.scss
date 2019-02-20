@@ -78,7 +78,7 @@ $datagrid-short-row-height: 23px;
   }
 
   .datagrid-body {
-    height: calc(100% - 40px);
+    height: calc(100% - 39px);
 
     &:first-of-type {
       tr.rowstatus-row-error td:first-child {
@@ -163,9 +163,8 @@ $datagrid-short-row-height: 23px;
   }
 
   // Adjust borders and IE adjustment for vertical scrollbars
-  &.has-vertical-scroll {
-    // Fix IE Scrollbar Offset Issue
-    &.is-windows .datagrid-header:not(.left):not(.right) {
+  &.has-vertical-scroll.is-windows:not(.has-frozen-right-columns) {
+    .datagrid-header:not(.left):not(.right) {
       margin-right: 18px;
     }
   }
@@ -609,13 +608,19 @@ $datagrid-short-row-height: 23px;
     }
 
   }
-
 }
 
 // Grid Body container
 .datagrid-body {
-  overflow-x: auto;
-  overflow-y: auto;
+  overflow: hidden;
+
+  &.scroll-x {
+    overflow-x: auto;
+  }
+
+  &.scroll-y {
+    overflow-y: auto;
+  }
 
   table {
     empty-cells: show;
@@ -625,10 +630,16 @@ $datagrid-short-row-height: 23px;
     display: none;
   }
 
+  &.left + &.center.scroll-x,
+  &.left {
+    overflow-y: hidden;
+  }
+
   &.left,
   &.right {
     flex-shrink: 0;
-    overflow: hidden;
+    // Make bottom visible to prevent space different at the bottom.
+    overflow-x: scroll;
   }
 }
 
@@ -2117,6 +2128,12 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.center {
+    th:last-child {
+      border-right-color: transparent;
+    }
+  }
+
   table {
     border-collapse: separate;
     border-spacing: 0;
@@ -2904,12 +2921,6 @@ td .btn-actions {
   top: 0;
 }
 
-.ie-edge {
-  .datagrid-container.has-vertical-scroll.is-windows .datagrid-header {
-    margin-right: 12px;
-  }
-}
-
 .is-firefox {
   .is-inline.dropdown-wrapper {
     .icon {
@@ -3419,13 +3430,6 @@ html[dir='rtl'] {
 
     .datagrid-body:not(.left):not(.right) td:first-child {
       border-right-color: transparent;
-    }
-  }
-
-  &.ie-edge {
-    .datagrid-container.has-vertical-scroll.is-windows .datagrid-header {
-      margin-left: 12px;
-      margin-right: 0;
     }
   }
 }

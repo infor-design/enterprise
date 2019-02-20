@@ -327,12 +327,12 @@ Datagrid.prototype = {
       self.bodyContainer.append(self.bodyWrapperLeft);
     }
 
-    self.bodyWrapperCenter = $('<div class="datagrid-body"></div>');
+    self.bodyWrapperCenter = $(`<div class="datagrid-body center scroll-x${!this.hasRightPane ? ' scroll-y' : ''}"></div>`);
     self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.bodyWrapperCenter);
     self.bodyContainer.append(self.bodyWrapperCenter);
 
     if (this.hasRightPane) {
-      self.bodyWrapperRight = $('<div class="datagrid-body right"></div>');
+      self.bodyWrapperRight = $('<div class="datagrid-body right scroll-y"></div>');
       self.tableRight = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.bodyWrapperRight);
       self.bodyContainer.append(self.bodyWrapperRight);
     }
@@ -1098,7 +1098,7 @@ Datagrid.prototype = {
         self.headerRowLeft = self.headerContainerLeft.find('thead');
       }
 
-      self.headerContainerCenter = $(headerHtml);
+      self.headerContainerCenter = $(headerHtml).addClass('center');
       self.headerContainer.append(self.headerContainerCenter);
       self.headerTable = self.headerContainerCenter.find('table');
       self.headerTable.width(this.headerTableWidth('center'));
@@ -1143,6 +1143,7 @@ Datagrid.prototype = {
     }
 
     self.syncHeaderCheckbox(this.settings.dataset);
+    self.setScrollClass();
 
     if (self.settings.columnReorder) {
       self.createDraggableColumns();
@@ -1586,7 +1587,7 @@ Datagrid.prototype = {
 
     if (col.filterType !== 'checkbox' && col.filterType !== 'text') {
       btnMarkup += renderButton('equals') +
-        render('equals', 'Equals', (col.filterType === 'integer' || col.filterType === 'decimal' || col.filterType === 'date' || col.filterType === 'time')) +
+        render('equals', 'Equals', (col.filterType === 'lookup' || col.filterType === 'integer' || col.filterType === 'decimal' || col.filterType === 'date' || col.filterType === 'time')) +
         render('does-not-equal', 'DoesNotEqual') +
         render('is-empty', 'IsEmpty') +
         render('is-not-empty', 'IsNotEmpty');
@@ -2975,7 +2976,7 @@ Datagrid.prototype = {
 
     /**
     * Fires after the entire grid is rendered.
-    * @event rowremove
+    * @event afterrender
     * @memberof Datagrid
     * @property {object} event The jquery event object
     * @property {HTMLElement} body Object table body area
@@ -2984,6 +2985,14 @@ Datagrid.prototype = {
     */
     setTimeout(() => {
       self.element.trigger('afterrender', { body: self.bodyContainer, header: self.headerContainer, pager: self.pagerBar });
+
+      // Hack for scrolling issue on windows
+      if (self.hasRightPane && this.isWindows) {
+        const w = self.tableRight.width() + 17;
+        self.tableRight.parent().width(w);
+        self.tableRight.parent().find('.datagrid-column-wrapper').eq(0).width(w);
+        self.headerTableRight.width(w);
+      }
     });
   },
 
@@ -3664,7 +3673,6 @@ Datagrid.prototype = {
     if (!cacheWidths) {
       return '';
     }
-    this.setScrollClass();
 
     if (cacheWidths.widthPercent) {
       return '100%';
@@ -3695,7 +3703,6 @@ Datagrid.prototype = {
   setScrollClass() {
     const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
     const hasScrollBar = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
-
     this.element.removeClass('has-vertical-scroll has-less-rows');
 
     if (hasScrollBar) {
@@ -3704,6 +3711,10 @@ Datagrid.prototype = {
 
     if (!hasScrollBar && this.tableBody[0].offsetHeight < height) {
       this.element.addClass('has-less-rows');
+    }
+
+    if (this.hasRightPane) {
+      this.element.addClass('has-frozen-right-columns');
     }
   },
 
@@ -5007,27 +5018,38 @@ Datagrid.prototype = {
   },
 
   /**
-  * Sync the containers when scrolling.
-  * @private
-  */
-  handleScroll() {
+   * Sync the containers when scrolling on the y axis.
+   * @private
+   */
+  handleScrollX() {
     const left = this.bodyWrapperCenter[0].scrollLeft;
-    const top = this.bodyWrapperCenter[0].scrollTop;
 
     if (left !== this.scrollLeft && this.headerContainerCenter) {
       this.scrollLeft = left;
       this.headerContainerCenter[0].scrollLeft = this.scrollLeft;
     }
+  },
+
+  /**
+   * Sync the containers when scrolling on the y axis.
+   * @private
+   * @param  {jQuery} e The event object
+   */
+  handleScrollY(e) {
+    const elem = e.currentTarget;
+    const top = elem.scrollTop;
 
     if (top !== this.scrollTop && this.bodyWrapperCenter &&
       (this.bodyWrapperLeft || this.bodyWrapperRight)) {
       this.scrollTop = top;
+
       if (this.bodyWrapperLeft) {
         this.bodyWrapperLeft[0].scrollTop = this.scrollTop;
       }
       if (this.bodyWrapperRight) {
         this.bodyWrapperRight[0].scrollTop = this.scrollTop;
       }
+      this.bodyWrapperCenter[0].scrollTop = this.scrollTop;
     }
   },
 
@@ -5077,9 +5099,25 @@ Datagrid.prototype = {
     }
 
     // Sync Header and Body During scrolling
-    self.bodyWrapperCenter
-      .on('scroll.table', () => {
-        self.handleScroll();
+    self.bodyContainer.find('.datagrid-body')
+      .on('scroll.table', (e) => {
+        self.handleScrollY(e);
+      });
+
+    if (this.hasLeftPane || this.hasRightPane) {
+      self.bodyContainer.find('.datagrid-body')
+        .on('wheel.table', (e) => {
+          if (e.originalEvent.deltaY !== 0) {
+            e.currentTarget.scrollTop += (e.originalEvent.deltaY);
+            e.preventDefault();
+            self.handleScrollY(e);
+          }
+        });
+    }
+
+    self.bodyContainer.find('.datagrid-body.scroll-x')
+      .on('scroll.tablex', (e) => {
+        self.handleScrollX(e);
       });
 
     if (this.settings.virtualized) {
