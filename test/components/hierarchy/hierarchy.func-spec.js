@@ -40,8 +40,6 @@ describe('hierarchy API', () => {
     cleanup(['.svg-icons', '#hierarchyChartTemplate', '#hierarchy', '#hierarchyInit', '.hierarchy']);
 
     hierarchyAPI.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    hierarchyEl.parentNode.removeChild(hierarchyEl);
   });
 
   it('Can be invoked', () => {
