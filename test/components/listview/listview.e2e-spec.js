@@ -483,6 +483,7 @@ describe('Listview Pager inside of List/Detail Pattern tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(listviewItem), config.waitsFor);
   });
 
+  // Added for #922
   it('should handle paging', async () => {
     expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(10);
     expect(await element(by.css('.pager-toolbar.is-listview')).isPresent()).toBeTruthy();
@@ -492,6 +493,7 @@ describe('Listview Pager inside of List/Detail Pattern tests', () => {
     expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
 
     await element(by.css('.pager-toolbar .pager-next')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(2);
     expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeFalsy();
