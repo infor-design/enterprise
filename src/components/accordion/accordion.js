@@ -1499,6 +1499,8 @@ Accordion.prototype = {
    * @returns {void}
    */
   hideTooltip() {
+    const self = window;
+
     if (self.tooltip) {
       this.removeTooltipData(self.tooltip); // Remove flag as spantooltip
       self.tooltip.classList.add('is-hidden');
