@@ -1,0 +1,35 @@
+{
+  "ancestorPath": [
+    {
+      "id": "1",
+      "name": "John Randolph",
+      "position": "CEO",
+      "employmentType": "FT",
+      "picture": "/images/4.jpg",
+      "childrenUrl": "hc-john-randolph.json"
+    },
+    {
+      "id": "2",
+      "name": "Greg Ford",
+      "position": "CTO",
+      "employmentType": "FT",
+      "avatarInitials": "GF",
+      "childrenUrl": "hc-greg-ford.json"
+    },
+    {
+      "id": "3",
+      "name": "Nicolas Grant",
+      "position": "SVP, Software Development Development",
+      "employmentType": "FT",
+      "avatarInitials": "NG",
+      "childrenUrl": "hc-nicolas-grant.json"
+    }
+  ],
+  "centeredNode": {
+    "id": "4",
+    "name": "Nicole Cargill",
+    "position": "Architect, Sr. Master Principal",
+    "employmentType": "FT",
+    "avatarInitials": "NC"
+  }
+}
