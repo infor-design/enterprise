@@ -1,31 +1,24 @@
 import { Editor } from '../../../src/components/editor/editor';
+import { cleanup } from '../../helpers/func-utils';
 
 const editorHTML = require('../../../app/views/components/editor/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let editorEl;
-let svgEl;
 let editorObj;
 
 describe('Editor API', () => {
   beforeEach(() => {
     editorEl = null;
-    svgEl = null;
     editorObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', editorHTML);
     editorEl = document.body.querySelector('.editor');
-    svgEl = document.body.querySelector('.svg-icons');
     editorObj = new Editor(editorEl);
   });
 
   afterEach(() => {
-    editorObj.destroy();
-    editorEl.parentNode.removeChild(editorEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup(['.editor', '.svg-icons', '.modal', '.row']);
   });
 
   it('Should be defined on jQuery object', () => {

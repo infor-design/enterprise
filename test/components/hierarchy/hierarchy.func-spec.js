@@ -1,4 +1,5 @@
 import { Hierarchy } from '../../../src/components/hierarchy/hierarchy';
+import { cleanup } from '../../helpers/func-utils';
 
 const hierarchyHTML = require('../../../app/views/components/hierarchy/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -36,6 +37,8 @@ describe('hierarchy API', () => {
   });
 
   afterEach(() => {
+    cleanup(['.svg-icons', '#hierarchyChartTemplate', '#hierarchy', '#hierarchyInit', '.hierarchy']);
+
     hierarchyAPI.destroy();
     svgEl.parentNode.removeChild(svgEl);
     hierarchyEl.parentNode.removeChild(hierarchyEl);
