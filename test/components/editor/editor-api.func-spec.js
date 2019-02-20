@@ -18,7 +18,7 @@ describe('Editor API', () => {
   });
 
   afterEach(() => {
-    cleanup(['.editor', '.svg-icons', '.modal', '.row']);
+    cleanup(['.editor', '.svg-icons', '.modal', '.row', '.modal-page-container']);
   });
 
   it('Should be defined on jQuery object', () => {
