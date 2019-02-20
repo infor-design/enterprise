@@ -143,7 +143,7 @@ ListView.prototype = {
         pagesize: this.settings.pagesize,
         showPageSizeSelector: this.settings.showPageSizeSelector,
         source: this.settings.source,
-        type: 'standalone'
+        type: 'list'
       });
     }
 
@@ -349,14 +349,15 @@ ListView.prototype = {
    * Add and update the pager (if used)
    * @private
    * @param {object} updatedPagerInfo contains updated paging settings
+   * @param {boolean} isResponse represents whether or not this render call was caused by an AJAX response
    * @returns {void}
    */
-  renderPager(updatedPagerInfo) {
+  renderPager(updatedPagerInfo, isResponse) {
     if (!this.pagerAPI) {
       return;
     }
 
-    this.pagerAPI.updatePagingInfo(updatedPagerInfo);
+    this.pagerAPI.updatePagingInfo(updatedPagerInfo, isResponse);
   },
 
   /**
@@ -432,7 +433,21 @@ ListView.prototype = {
     function done(response, pagingInfo) {
       self.settings.dataset = response;
       ds = response;
-      self.renderPager(pagingInfo);
+      const activePage = self.pagerAPI ? self.pagerAPI.activePage : 1;
+
+      if (typeof pagingInfo === 'string') {
+        pagingInfo = {
+          activePage,
+          pagesize: self.settings.pagesize,
+          total: ds.length,
+          type: pagingInfo
+        };
+      }
+
+      if (self.pagerAPI) {
+        self.renderPager(pagingInfo, true);
+        pagingInfo = self.pagerAPI.state;
+      }
       self.render(ds, pagingInfo);
     }
 

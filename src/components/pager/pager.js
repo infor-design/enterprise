@@ -274,7 +274,11 @@ Pager.prototype = {
     }
 
     if (this.settings.type === 'standalone') {
-      this.element.append(this.pagerBar);
+      if (this.isListView) {
+        this.mainContainer.after(this.pagerBar);
+      } else {
+        this.element.append(this.pagerBar);
+      }
     } else if (this.isTable) {
       this.mainContainer.after(this.pagerBar);
     } else if (this.settings.position === 'bottom') {
