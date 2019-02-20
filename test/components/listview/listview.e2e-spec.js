@@ -474,3 +474,27 @@ describe('Listview example-header-totals` tests', () => {
     expect(await element(by.className('listview')).getCssValue('height')).toEqual('0px');
   });
 });
+
+describe('Listview Pager inside of List/Detail Pattern tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/patterns/list-detail-paging');
+    const listviewItem = await element(by.css('.listview li[role="option"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(listviewItem), config.waitsFor);
+  });
+
+  it('should handle paging', async () => {
+    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(10);
+    expect(await element(by.css('.pager-toolbar.is-listview')).isPresent()).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-prev')).isPresent()).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-next')).isPresent()).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
+
+    await element(by.css('.pager-toolbar .pager-next')).click();
+
+    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(2);
+    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeTruthy();
+  });
+});
