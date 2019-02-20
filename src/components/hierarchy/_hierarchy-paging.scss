@@ -1,0 +1,216 @@
+.hierarchy.layout-is-paging {
+  legend {
+    margin: 10px;
+  }
+
+  .root {
+    margin-left: -10px;
+
+    @media (min-width: $breakpoint-slim) and (max-width: $breakpoint-phablet) {
+      margin-left: -25px;
+    }
+  }
+
+  ul > li > .leaf {
+    width: 300px;
+  }
+
+  .child-nodes {
+    padding: 30px 0;
+    position: relative;
+
+    > li .leaf {
+      margin: 0 0 20px 6px;
+      overflow: visible;
+      position: relative;
+
+      @media (min-width: $breakpoint-phablet) {
+        margin: 0 0 20px 40px;
+      }
+
+      &::after {
+        border-top: $hierarchy-line-width solid $hierarchy-line-color;
+        content: '';
+        display: block;
+        left: -25px;
+        position: absolute;
+        top: 50%;
+        width: 50%;
+        z-index: -1;
+
+        @media (min-width: $breakpoint-phablet) {
+          left: -45px;
+        }
+      }
+    }
+  }
+
+  .chart {
+    @media (min-width: $breakpoint-slim) and (max-width: $breakpoint-phablet) {
+      left: 35px;
+    }
+
+    &::after {
+      @include hierarchy-vertical-line;
+
+      height: calc(100% - 124px);
+      left: -15px;
+      top: 38px;
+
+      @media (min-width: $breakpoint-phablet) {
+        left: 0;
+      }
+    }
+
+    .back {
+      position: relative;
+
+      button {
+        background: $theme-color-brand-primary-base;
+        color: $theme-color-palette-white;
+        display: block;
+        margin: 0 0 0 122px;
+        max-width: 36px;
+
+        @media (min-width: $breakpoint-slim) {
+          margin: 0 auto;
+        }
+
+        svg {
+          color: $theme-color-palette-white;
+        }
+      }
+    }
+
+    .back-container {
+      display: flex;
+
+      .back {
+        left: -10px;
+        top: 20px;
+      }
+
+      button {
+        margin: 0;
+      }
+
+      @media (max-width: $breakpoint-phablet) {
+        margin-left: -35px;
+      }
+
+      @media (max-width: $breakpoint-slim) {
+        margin-left: 0;
+      }
+    }
+
+    .root {
+      overflow: visible;
+      position: relative;
+
+      &::after {
+        background: $hierarchy-line-color;
+        content: '';
+        display: none;
+        height: $hierarchy-line-width;
+        left: 0;
+        position: absolute;
+        top: 50%;
+        width: 50%;
+        z-index: -1;
+
+        @media (min-width: $breakpoint-slim) {
+          display: block;
+        }
+      }
+    }
+
+    // Back button is displayed
+    &.has-back {
+      .root {
+        &::after {
+          left: -25px;
+        }
+      }
+
+      // Vertical line for child nodes
+      &::after {
+        left: 6px;
+      }
+
+      .child-nodes {
+        margin-left: 20px;
+      }
+
+      .child-nodes .leaf {
+        width: 280px;
+      }
+
+      @media (min-width: $breakpoint-phablet) {
+        .child-nodes {
+          margin-left: 45px;
+        }
+
+        &::after {
+          left: 45px;
+        }
+      }
+
+      @media (max-width: $breakpoint-slim) {
+        .child-nodes {
+          margin-left: 60px;
+        }
+
+        &::after {
+          height: calc(100% - 161px);
+          left: 45px;
+          top: 75px;
+        }
+      }
+
+      @media (max-width: $breakpoint-slim) {
+        .child-nodes {
+          margin-left: 60px;
+        }
+
+        &::after {
+          height: calc(100% - 161px);
+          left: 45px;
+          top: 75px;
+        }
+      }
+
+      // iPhone 5
+      @media (max-width: $breakpoint-phone) {
+        .back-container .leaf,
+        .child-nodes .leaf {
+          width: 220px;
+        }
+      }
+
+      // Galaxy S5
+      @media (min-width: $breakpoint-phone + 1) and (max-width: 360px) {
+        .back-container .leaf,
+        .child-nodes .leaf {
+          width: 260px;
+        }
+      }
+    }
+
+    // Back button is not displayed
+    @media (max-width: $breakpoint-slim) {
+      .child-nodes {
+        margin-left: 20px;
+      }
+
+      &::after {
+        left: 5px;
+      }
+    }
+
+    @media (max-width: $breakpoint-phone) {
+      .child-nodes .leaf {
+        width: 260px;
+      }
+    }
+  }
+}
