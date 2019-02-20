@@ -23,6 +23,7 @@ const COMPONENT_NAME = 'accordion';
  * @param {string} [settings.allowOnePane=true] If set to true, allows only one pane of the Accordion to be open at a
  * time.  If an Accordion pane is open, and that pane contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
  * @param {string} [settings.displayChevron=true]  Displays a "Chevron" icon that sits off to the right-most
+ * @param {boolean} [settings.enableTooltips=true] If false, does not run logic to apply tooltips to elements with truncated text.
  * side of a top-level accordion header. Used in place of an Expander (+/-) if enabled.
  * @param {string} [settings.rerouteOnLinkClick=true]  Can be set to false if routing is externally handled
  * @param {boolean} [settings.source=null]  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
@@ -30,6 +31,7 @@ const COMPONENT_NAME = 'accordion';
 const ACCORDION_DEFAULTS = {
   allowOnePane: true,
   displayChevron: true,
+  enableTooltips: true,
   rerouteOnLinkClick: true,
   source: null
 };
@@ -55,7 +57,8 @@ Accordion.prototype = {
   init(headers) {
     this
       .build(headers)
-      .handleEvents(headers);
+      .handleEvents(headers)
+      .setupTooltips();
   },
 
   /**
@@ -1488,6 +1491,87 @@ Accordion.prototype = {
     }
 
     return this;
+  },
+
+  /**
+   * Hide the visible tooltip.
+   * @private
+   * @returns {void}
+   */
+  hideTooltip() {
+    const self = window;
+
+    if (self.tooltip) {
+      this.removeTooltipData(self.tooltip); // Remove flag as spantooltip
+      self.tooltip.classList.add('is-hidden');
+      self.tooltip.classList.remove('content-tooltip');
+    }
+
+    // Remove scroll events
+    $('body, .scrollable').off('scroll.spantooltip', () => {
+      this.hideTooltip();
+    });
+  },
+
+  /**
+   * Remove the tooltip data from given node
+   * @private
+   * @param {object} elem The DOM element to remove data
+   * @returns {void}
+   */
+  removeTooltipData(elem) {
+    elem = elem instanceof jQuery ? elem : $(elem);
+    if (elem.data('spantooltip')) {
+      $.removeData(elem[0], 'spantooltip');
+    }
+  },
+
+  /**
+   * Setup tooltips on truncated text elements.
+   * @private
+   * @returns {void}
+   */
+  setupTooltips() {
+    if (!this.settings.enableTooltips) {
+      return;
+    }
+
+    const self = this;
+    const selector = '.accordion-header a span';
+    const delay = 400;
+    let tooltipTimer;
+
+    // Handle tooltip to show
+    const handleShow = (elem) => {
+      if (elem.offsetWidth > elem.parentElement.offsetWidth) {
+        tooltipTimer = setTimeout(() => {
+          $(elem).tooltip({
+            trigger: 'immediate',
+            content: `${elem.innerText}`,
+            extraClass: 'tooltip-accordion-style'
+          });
+        }, delay);
+      }
+    };
+
+    // Handle tooltip to hide
+    const handleHide = (elem) => {
+      if (elem.offsetWidth > elem.parentElement.offsetWidth) {
+        self.hideTooltip();
+        clearTimeout(tooltipTimer);
+      }
+    };
+
+    // Bind events
+    this.element
+      .off('mouseenter.spantooltip', selector)
+      .on('mouseenter.spantooltip', selector, function () {
+        handleShow(this);
+      })
+      .off('mouseleave.spantooltip click.spantooltip', selector)
+      .on('mouseleave.spantooltip click.spantooltip', selector, function () {
+        handleHide(this);
+      });
   }
 
 };
