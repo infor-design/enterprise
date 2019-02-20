@@ -1,0 +1,47 @@
+@media print {
+  .hierarchy {
+    padding: 0;
+
+    .container {
+      margin-left: 15px;
+    }
+
+    .leaf {
+      &.is-selected {
+        box-shadow: none;
+      }
+    }
+
+    legend {
+      margin: 0 0 10px 5px;
+    }
+
+    &.display-for-paging {
+      .container {
+        margin-left: 25px;
+      }
+
+      legend {
+        margin: 0 0 10px 5px;
+      }
+
+      .chart {
+        &.has-back {
+          .root {
+            &::after {
+              display: none;
+            }
+          }
+        }
+
+        .back {
+          display: none;
+
+          button {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}
