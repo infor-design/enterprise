@@ -109,6 +109,29 @@ ListView.prototype = {
     const selectable = this.element.attr('data-selectable');
     const selectOnFocus = this.element.attr('data-select-onfocus');
 
+    // Check for legacy data attributes
+    if (this.element.attr('data-pagesize')) {
+      const pagesize = Number(this.element.attr('data-pagesize'));
+      if (!isNaN(pagesize)) {
+        this.settings.pagesize = pagesize;
+      }
+      this.element.removeAttr('data-pagesize');
+    }
+
+    // Convert a DOM-based list into a stored dataset (legacy)
+    if (!this.settings.dataset.length) {
+      if (this.element.is('ul') && this.element.children('li').length) {
+        const items = this.element.children('li');
+        if (!this.settings.template) {
+          this.settings.template = '{{#dataset}}<li>{{text}}</li>{{/dataset}}';
+        }
+        items.each((i, item) => {
+          this.settings.dataset.push({ text: $(item).text() });
+        });
+        items.remove();
+      }
+    }
+
     // Search the global variable space for a dataset variable name, if provided.
     if (this.settings.dataset && typeof this.settings.dataset === 'string') {
       const globalDataset = window[this.settings.dataset];

@@ -220,6 +220,15 @@ Pager.prototype = {
    * @returns {void}
    */
   setup() {
+    // Check for legacy data attributes
+    if (this.element.attr('data-pagesize')) {
+      const pagesize = Number(this.element.attr('data-pagesize'));
+      if (!isNaN(pagesize)) {
+        this.settings.pagesize = pagesize;
+      }
+      this.element.removeAttr('data-pagesize');
+    }
+
     // Add [pagesize] if not found in [pagesizes]
     if (this.settings.pagesizes.indexOf(this.settings.pagesize) === -1) {
       const sortNumber = function (a, b) {
@@ -947,11 +956,6 @@ Pager.prototype = {
    * @returns {void}
    */
   render() {
-    // Check Data Attr
-    if (this.element.attr('data-pagesize')) {
-      this.settings.pagesize = this.element.attr('data-pagesize');
-    }
-
     // Adjust Page count numbers
     const state = this.state;
     let totalPages = state.pages;
