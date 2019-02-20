@@ -222,15 +222,17 @@ ListView.prototype = {
     let displayedDataset = dataset;
     let firstRecordIdx = 0;
     let lastRecordIdx = displayedDataset ? displayedDataset.length : 0;
-    let setSize = pagerInfo.total;
+    let pagesize = this.settings.pagesize;
+    let setSize = dataset.length;
 
-    if (pagerInfo.filteredTotal) {
-      setSize = pagerInfo.filteredTotal;
+    if (pagerInfo) {
+      pagesize = pagerInfo.pagesize;
+      setSize = pagerInfo.filteredTotal || setSize;
     }
 
     // If the paging information sets limits on the dataset, customize the
     // displayed dataset to fit the conditions.
-    if (pagerInfo) {
+    if (setSize > pagesize) {
       const pages = this.filteredDataset ? pagerInfo.filteredPages : pagerInfo.pages;
       if (pages > 1) {
         let trueActivePage = pagerInfo.activePage > 0 ? pagerInfo.activePage - 1 : 0;
@@ -1413,6 +1415,7 @@ ListView.prototype = {
    * @param {object} pagingOpts state information from the pager
    */
   handlePageSizeChange(pagingOpts) {
+    pagingOpts.activePage = 1;
     this.loadData(undefined, pagingOpts);
   },
 

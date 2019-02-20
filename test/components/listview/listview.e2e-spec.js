@@ -417,6 +417,44 @@ describe('Listview example-paging-clientside tests', () => {
   });
 });
 
+describe('Listview server-side indeterminate paging tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/listview/test-paging-indeterminate?layout=nofrills');
+    const listviewItem = await element(by.css('.listview li[role="option"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(listviewItem), config.waitsFor);
+  });
+
+  it('can navigate to page 2', async () => {
+    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(10);
+    expect(await element(by.css('.listview li[role="option"]:first-child .listview-heading')).getText()).toEqual('Compressor 0');
+
+    await element(by.css('.pager-toolbar .pager-next')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(10);
+    expect(await element(by.css('.listview li[role="option"]:first-child .listview-heading')).getText()).toEqual('Compressor 10');
+  });
+
+  it('can navigate to page 2, change page size, and reset', async () => {
+    await element(by.css('.pager-toolbar .pager-next')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(10);
+    expect(await element(by.css('.listview li[role="option"]:first-child .listview-heading')).getText()).toEqual('Compressor 10');
+
+    await element(by.css('.pager-toolbar .pager-pagesize button')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('popupmenu-1'))), config.waitsFor);
+    await element(by.css('#popupmenu-1 li:nth-child(2) a')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('popupmenu-1'))), config.waitsFor);
+
+    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(15);
+    expect(await element(by.css('.listview li[role="option"]:last-child .listview-heading')).getText()).toEqual('Compressor 14');
+  });
+});
+
 describe('Listview remove-clear tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/remove-clear');
@@ -475,7 +513,7 @@ describe('Listview example-header-totals` tests', () => {
   });
 });
 
-describe('Listview Pager inside of List/Detail Pattern tests', () => {
+describe('Listview inside of List/Detail Pattern', () => {
   beforeEach(async () => {
     await utils.setPage('/patterns/list-detail-paging');
     const listviewItem = await element(by.css('.listview li[role="option"]'));
@@ -498,5 +536,34 @@ describe('Listview Pager inside of List/Detail Pattern tests', () => {
     expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(2);
     expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeFalsy();
     expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeTruthy();
+  });
+});
+
+describe('Listview with indeterminate paging inside of List/Detail Pattern', () => {
+  beforeEach(async () => {
+    await utils.setPage('/patterns/list-detail-paging-indeterminate');
+    const listviewItem = await element(by.css('.listview li[role="option"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(listviewItem), config.waitsFor);
+  });
+
+  it('should handle indeterminate paging', async () => {
+    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(20);
+    expect(await element(by.css('.listview li[role="option"]:first-child .listview-heading')).getText()).toEqual('Compressor 0');
+    expect(await element(by.css('.listview li[role="option"]:last-child .listview-heading')).getText()).toEqual('Compressor 19');
+    expect(await element(by.css('.pager-toolbar.is-listview')).isPresent()).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-prev')).isPresent()).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-next')).isPresent()).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
+
+    await element(by.css('.pager-toolbar .pager-next')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(20);
+    expect(await element(by.css('.listview li[role="option"]:first-child .listview-heading')).getText()).toEqual('Compressor 20');
+    expect(await element(by.css('.listview li[role="option"]:last-child .listview-heading')).getText()).toEqual('Compressor 39');
+    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
   });
 });
