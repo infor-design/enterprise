@@ -50,4 +50,49 @@ describe('Editor API', () => {
 
     expect(editorObj.getCleanedHtml(startHtml)).toEqual(endHtml);
   });
+
+  it('Should render preview mode', () => {
+    editorObj.destroy();
+    editorObj = new Editor(editorEl, { preview: true });
+
+    expect(editorEl.parentNode.classList.contains('is-preview')).toBeTruthy();
+    expect(editorEl.parentNode.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.parentNode.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.classList.contains('is-preview')).toBeFalsy();
+    expect(editorEl.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.getAttribute('contenteditable')).toBe('false');
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).not.toBeVisible();
+  });
+
+  it('Should switch to preview mode', () => {
+    editorObj.preview();
+
+    expect(editorEl.parentNode.classList.contains('is-preview')).toBeTruthy();
+    expect(editorEl.parentNode.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.parentNode.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.classList.contains('is-preview')).toBeFalsy();
+    expect(editorEl.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.getAttribute('contenteditable')).toBe('false');
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).not.toBeVisible();
+  });
+
+  it('Should switch to preview and editable modes', () => {
+    editorObj.preview();
+
+    expect(editorEl.parentNode.classList.contains('is-preview')).toBeTruthy();
+    expect(editorEl.parentNode.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.parentNode.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.classList.contains('is-preview')).toBeFalsy();
+    expect(editorEl.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.getAttribute('contenteditable')).toBe('false');
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).not.toBeVisible();
+    editorObj.enable();
+
+    expect(editorEl.parentNode.classList.contains('is-preview')).toBeFalsy();
+    expect(editorEl.getAttribute('contenteditable')).toBe('true');
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).toBeVisible();
+  });
 });
