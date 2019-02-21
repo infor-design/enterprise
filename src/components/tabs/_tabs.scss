@@ -471,7 +471,7 @@
       }
 
       .icon-error {
-        fill: $error-icon-fill;
+        color: $error-icon-fill;
         height: 14px;
         position: absolute;
         right: -10px;
@@ -561,7 +561,7 @@
       }
 
       .icon {
-        fill: $disabled-color !important;
+        color: $disabled-color !important;
       }
 
     }

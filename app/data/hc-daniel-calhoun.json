@@ -1,0 +1,77 @@
+{
+  "ancestorPath": [
+    {
+      "id": "1",
+      "name": "John Randolph",
+      "position": "CEO",
+      "employmentType": "FT",
+      "picture": "/images/4.jpg",
+      "childrenUrl": "hc-john-randolph.json"
+    },
+    {
+      "id": "2",
+      "name": "Greg Ford",
+      "position": "CTO",
+      "employmentType": "FT",
+      "avatarInitials": "GF",
+      "childrenUrl": "hc-greg-ford.json"
+    },
+    {
+      "id": "3",
+      "name": "Nicolas Grant",
+      "position": "SVP, Software Development Development",
+      "employmentType": "FT",
+      "avatarInitials": "NG",
+      "childrenUrl": "hc-nicolas-grant.json"
+    }
+  ],
+  "centeredNode": {
+    "id": "4",
+    "name": "Daniel Calhoun",
+    "position": "SVP, Human Resources",
+    "employmentType": "FT",
+    "avatarInitials": "DC"
+  },
+  "children": [
+    {
+      "id": "5",
+      "name": "Anne Paulson",
+      "position": "Development Operations Engineer",
+      "employmentType": "FT",
+      "avatarInitials": "AP",
+      "isLeaf": true
+    },
+    {
+      "id": "6",
+      "name": "Tori Robard",
+      "position": "Software Engineer",
+      "employmentType": "FT",
+      "avatarInitials": "TR",
+      "isLeaf": true
+    },
+    {
+      "id": "7",
+      "name": "Charles Babbage",
+      "position": "Director, Software Development",
+      "employmentType": "FT",
+      "avatarInitials": "CB",
+      "childrenUrl": "hc-charles-babbage.json"
+    },
+    {
+      "id": "8",
+      "name": "Raymond Franke",
+      "position": "Software Engineer",
+      "employmentType": "FT",
+      "avatarInitials": "RF",
+      "isLeaf": true
+    },
+    {
+      "id": "9",
+      "name": "Ivan Brown",
+      "position": "Architect, Senior",
+      "employmentType": "FT",
+      "avatarInitials": "IB",
+      "isLeaf": true
+    }
+  ]
+}

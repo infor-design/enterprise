@@ -10,10 +10,6 @@
   padding-top: 4px;
   text-align: center;
 
-  > * {
-    vertical-align: middle;
-  }
-
   > li {
     cursor: pointer;
     display: inline-block;
@@ -71,7 +67,7 @@
         cursor: default;
 
         .icon {
-          fill: $pager-disabled-color;
+          color: $pager-disabled-color;
         }
       }
 
@@ -83,17 +79,18 @@
   }
 
   li:not(.selected) a:hover:not([disabled]) svg {
-    fill: $pager-hover-color;
+    color: $pager-hover-color;
   }
 
   li:not(.selected) a:active:not([disabled]) svg {
-    fill: $pager-hover-color;
+    color: $pager-hover-color;
   }
 
   &.is-listview {
     .pager-prev,
     .pager-next {
-      position: static;
+      position: relative;
+      top: 2px;
     }
 
     li + .pager-count {
@@ -116,9 +113,7 @@
   padding: 0;
 
   .icon {
-    fill: $font-color;
-    height: 17px;
-    width: 18px;
+    color: $font-color;
   }
 
   a {

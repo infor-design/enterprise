@@ -100,6 +100,32 @@
     top: 54px;
   }
 
+  &.is-preview {
+    .editor-toolbar {
+      display: none;
+    }
+
+    .hyperlink {
+      cursor: pointer;
+    }
+
+    .editor {
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+      height: auto;
+      min-height: auto;
+      padding: 0;
+    }
+
+    &.is-active,
+    &.is-active:hover {
+      .editor {
+        box-shadow: none;
+      }
+    }
+  }
+
 }
 
 .editor {
@@ -288,7 +314,7 @@
     }
 
     .icon {
-      fill: $editor-btn-color;
+      color: $editor-btn-color;
       height: 18px;
       margin: -1px 0 0;
       padding: 0;
@@ -305,7 +331,7 @@
       }
 
       .icon {
-        fill: $editor-btn-active-color;
+        color: $editor-btn-active-color;
       }
 
       &:not(.hide-focus) {
@@ -323,7 +349,7 @@
       color: $editor-btn-hover-color;
 
       .icon {
-        fill: $editor-btn-hover-color;
+        color: $editor-btn-hover-color;
       }
 
       span {
@@ -338,7 +364,7 @@
     }
 
     .html-icon {
-      margin-left: -32px;
+      margin-left: -18px;
       width: 85px;
     }
 
@@ -374,18 +400,11 @@
 
     &[data-element='strike'] {
       margin-right: 8px;
-
-      svg {
-        height: 22px;
-        width: 15px;
-      }
     }
 
     &[data-element='foreColor'] {
       .icon {
-        height: 17px;
         margin-top: 1px;
-        width: 16px;
       }
 
       .trigger {

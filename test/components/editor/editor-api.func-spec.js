@@ -1,31 +1,24 @@
 import { Editor } from '../../../src/components/editor/editor';
+import { cleanup } from '../../helpers/func-utils';
 
 const editorHTML = require('../../../app/views/components/editor/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let editorEl;
-let svgEl;
 let editorObj;
 
 describe('Editor API', () => {
   beforeEach(() => {
     editorEl = null;
-    svgEl = null;
     editorObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', editorHTML);
     editorEl = document.body.querySelector('.editor');
-    svgEl = document.body.querySelector('.svg-icons');
     editorObj = new Editor(editorEl);
   });
 
   afterEach(() => {
-    editorObj.destroy();
-    editorEl.parentNode.removeChild(editorEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup(['.editor', '.svg-icons', '.modal', '.row', '.modal-page-container']);
   });
 
   it('Should be defined on jQuery object', () => {
@@ -49,5 +42,50 @@ describe('Editor API', () => {
     endHtml = '<meta charset="utf-8"><span> cutting-edge</span>';
 
     expect(editorObj.getCleanedHtml(startHtml)).toEqual(endHtml);
+  });
+
+  it('Should render preview mode', () => {
+    editorObj.destroy();
+    editorObj = new Editor(editorEl, { preview: true });
+
+    expect(editorEl.parentNode.classList.contains('is-preview')).toBeTruthy();
+    expect(editorEl.parentNode.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.parentNode.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.classList.contains('is-preview')).toBeFalsy();
+    expect(editorEl.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.getAttribute('contenteditable')).toBe('false');
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).not.toBeVisible();
+  });
+
+  it('Should switch to preview mode', () => {
+    editorObj.preview();
+
+    expect(editorEl.parentNode.classList.contains('is-preview')).toBeTruthy();
+    expect(editorEl.parentNode.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.parentNode.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.classList.contains('is-preview')).toBeFalsy();
+    expect(editorEl.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.getAttribute('contenteditable')).toBe('false');
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).not.toBeVisible();
+  });
+
+  it('Should switch to preview and editable modes', () => {
+    editorObj.preview();
+
+    expect(editorEl.parentNode.classList.contains('is-preview')).toBeTruthy();
+    expect(editorEl.parentNode.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.parentNode.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.classList.contains('is-preview')).toBeFalsy();
+    expect(editorEl.classList.contains('is-disabled')).toBeFalsy();
+    expect(editorEl.classList.contains('is-readonly')).toBeFalsy();
+    expect(editorEl.getAttribute('contenteditable')).toBe('false');
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).not.toBeVisible();
+    editorObj.enable();
+
+    expect(editorEl.parentNode.classList.contains('is-preview')).toBeFalsy();
+    expect(editorEl.getAttribute('contenteditable')).toBe('true');
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).toBeVisible();
   });
 });

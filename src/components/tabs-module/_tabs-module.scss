@@ -35,7 +35,7 @@
     }
 
     .icon {
-      fill: $module-tabs-inactive-text-color;
+      color: $module-tabs-inactive-text-color;
     }
 
     span {
@@ -100,7 +100,7 @@
     text-align: center;
 
     .icon {
-      fill: $module-tabs-inactive-text-color;
+      color: $module-tabs-inactive-text-color;
     }
 
     &:not(:first-child) {
@@ -246,7 +246,7 @@
     text-align: center;
 
     .icon {
-      fill: $module-tabs-inactive-text-color;
+      color: $module-tabs-inactive-text-color;
     }
 
     .more-text {
@@ -260,7 +260,7 @@
       color: $module-tabs-active-text-color;
 
       .icon {
-        fill: $module-tabs-active-text-color;
+        color: $module-tabs-active-text-color;
       }
     }
 
@@ -270,7 +270,7 @@
       color: $module-tabs-hover-text-color;
 
       .icon {
-        fill: $module-tabs-hover-text-color;
+        color: $module-tabs-hover-text-color;
       }
     }
   }
@@ -308,7 +308,7 @@
       }
 
       .icon {
-        fill: $module-tabs-inactive-text-color;
+        color: $module-tabs-inactive-text-color;
       }
 
       span {
@@ -319,7 +319,7 @@
         color: $module-tabs-hover-text-color;
 
         .icon {
-          fill: $module-tabs-hover-text-color;
+          color: $module-tabs-hover-text-color;
         }
       }
 
@@ -328,7 +328,7 @@
         color: $module-tabs-active-text-color;
 
         .icon {
-          fill: $module-tabs-active-text-color;
+          color: $module-tabs-active-text-color;
         }
 
         &:not(.hide-focus) {
@@ -343,7 +343,7 @@
         }
 
         .icon {
-          fill: $module-tabs-active-text-color;
+          color: $module-tabs-active-text-color;
         }
       }
     }
@@ -359,7 +359,7 @@
     color: $module-tabs-active-text-color;
 
     .icon:not(.error) {
-      fill: $module-tabs-inactive-text-color;
+      color: $module-tabs-inactive-text-color;
     }
 
     .searchfield {
@@ -436,7 +436,7 @@
       }
 
       .icon:not(.error) {
-        fill: $module-tabs-active-text-color;
+        color: $module-tabs-active-text-color;
       }
     }
 
@@ -523,12 +523,12 @@
       color: $module-tabs-disabled-text-color;
 
       .icon {
-        fill: $module-tabs-disabled-text-color;
+        color: $module-tabs-disabled-text-color;
       }
     }
 
     .icon {
-      fill: $module-tabs-disabled-text-color;
+      color: $module-tabs-disabled-text-color;
 
       &.app-header {
         span:not(.audible) {
@@ -569,7 +569,7 @@
       color: $module-tabs-disabled-text-color;
 
       .icon {
-        fill: $module-tabs-disabled-text-color;
+        color: $module-tabs-disabled-text-color;
       }
 
       &.is-selected {
@@ -577,7 +577,7 @@
         color: $module-tabs-disabled-text-color;
 
         .icon {
-          fill: $module-tabs-disabled-text-color;
+          color: $module-tabs-disabled-text-color;
         }
       }
 
@@ -588,7 +588,7 @@
         color: $module-tabs-disabled-text-color;
 
         .icon {
-          fill: $module-tabs-disabled-text-color;
+          color: $module-tabs-disabled-text-color;
         }
       }
     }
@@ -608,14 +608,14 @@
         }
 
         .icon {
-          fill: $module-tabs-disabled-text-color;
+          color: $module-tabs-disabled-text-color;
         }
 
         &:hover {
           color: $module-tabs-disabled-text-color;
 
           .icon {
-            fill: $module-tabs-disabled-text-color;
+            color: $module-tabs-disabled-text-color;
           }
         }
 
@@ -624,7 +624,7 @@
           color: $module-tabs-disabled-text-color;
 
           .icon {
-            fill: $module-tabs-disabled-text-color;
+            color: $module-tabs-disabled-text-color;
           }
 
           &:not(.hide-focus) {
@@ -636,7 +636,7 @@
 
         &.is-open {
           .icon {
-            fill: $module-tabs-disabled-text-color;
+            color: $module-tabs-disabled-text-color;
           }
         }
       }
@@ -644,7 +644,7 @@
 
     .toolbar-searchfield-wrapper {
       .icon:not(.error) {
-        fill: $module-tabs-disabled-text-color;
+        color: $module-tabs-disabled-text-color;
       }
 
       .searchfield {
@@ -667,7 +667,7 @@
         }
 
         .icon:not(.error) {
-          fill: $module-tabs-disabled-text-color;
+          color: $module-tabs-disabled-text-color;
         }
       }
     }

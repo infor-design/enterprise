@@ -1,4 +1,5 @@
 import { Hierarchy } from '../../../src/components/hierarchy/hierarchy';
+import { cleanup } from '../../helpers/func-utils';
 
 const hierarchyHTML = require('../../../app/views/components/hierarchy/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -12,19 +13,15 @@ const legendData = [
 
 let hierarchyEl;
 let hierarchyAPI;
-let svgEl;
 const hierarchyId = '#hierarchy';
 
 describe('hierarchy API', () => {
   beforeEach(() => {
     hierarchyEl = null;
     hierarchyAPI = null;
-    svgEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', hierarchyHTML);
-
-    svgEl = document.body.querySelector('.svg-icons');
     hierarchyEl = document.body.querySelector(hierarchyId);
 
     hierarchyAPI = new Hierarchy(hierarchyEl, {
@@ -36,9 +33,9 @@ describe('hierarchy API', () => {
   });
 
   afterEach(() => {
+    cleanup(['.svg-icons', '#hierarchyChartTemplate', '#hierarchy', '#hierarchyInit', '.hierarchy']);
+
     hierarchyAPI.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    hierarchyEl.parentNode.removeChild(hierarchyEl);
   });
 
   it('Can be invoked', () => {

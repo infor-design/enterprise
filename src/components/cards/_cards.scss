@@ -137,7 +137,7 @@
     }
 
     .icon {
-      fill: $listview-toolbar-button-icon-color;
+      color: $listview-toolbar-button-icon-color;
     }
 
     &:focus,
@@ -149,7 +149,7 @@
       }
 
       .icon {
-        fill: $listview-toolbar-button-icon-hover-color;
+        color: $listview-toolbar-button-icon-hover-color;
       }
     }
 
@@ -164,7 +164,7 @@
       }
 
       .icon {
-        fill: $listview-toolbar-button-icon-selected-color;
+        color: $listview-toolbar-button-icon-selected-color;
       }
     }
   }
@@ -180,7 +180,7 @@
     background-color: transparent;
 
     .icon {
-      fill: $cardlist-actions-color;
+      color: $cardlist-actions-color;
     }
 
     .audible {

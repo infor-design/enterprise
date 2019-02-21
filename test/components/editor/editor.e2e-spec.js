@@ -62,3 +62,28 @@ describe('Editor example-index tests', () => {
     });
   }
 });
+
+describe('Editor preview mode tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/editor/example-preview?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render editor in preview mode', async () => {
+    const container = await element(by.css('.editor-container'));
+    const elem = await element(by.css('.editor'));
+
+    expect(await container.getAttribute('class')).toContain('is-preview');
+    expect(await container.getAttribute('class')).not.toContain('is-disabled');
+    expect(await container.getAttribute('class')).not.toContain('is-readonly');
+    expect(await elem.getAttribute('class')).not.toContain('is-preview');
+    expect(await elem.getAttribute('class')).not.toContain('is-disabled');
+    expect(await elem.getAttribute('class')).not.toContain('is-readonly');
+    expect(await elem.isDisplayed()).toBeTruthy();
+    expect(await elem.getAttribute('contenteditable')).toBe('false');
+    expect(await element(by.css('.editor-toolbar')).isPresent()).toBeFalsy();
+  });
+});

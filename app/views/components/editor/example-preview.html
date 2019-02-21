@@ -1,0 +1,52 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="btn-toggle"></button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="field">
+      <label class="label" for="title">Title</label>
+      <input type="text" id="title" value="The Page Title"/>
+    </div>
+
+    <div class="field">
+      <span class="label">Comments</span>
+      <div class="editor" id="editor1" role="textbox" aria-multiline="true" aria-label="Comments" data-options="{preview: true}">
+        <p>Embrace <a href="http://en.wikipedia.org/wiki/e-commerce" class="hyperlink hide-focus">e-commerce action-items</a>, reintermediate, ecologies paradigms wireless share life-hacks create innovative harness. <b>Evolve solutions rich-clientAPIs</b> synergies harness relationships <i>virtual vertical facilitate end-to-end</i>, wireless, evolve synergistic synergies.</p>
+        <p>Cross-platform, <font color="#de7223">evolve, ROI scale cultivate eyeballs</font> <font color="#56932e">addelivery</font>, e-services content cross-platform l<strike>everage extensible viral incentivize</strike> integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge.</p><blockquote>Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, cross-media exploit infomediaries innovative integrate integrateAJAX-enabled.</blockquote>
+        <p>Killer interactive reinvent, cultivate widgets leverage morph.</p><ul><li>Item One</li><li>Item Two</li><li>Item Three</li></ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    // Cache variable
+    var btnToggle = $('#btn-toggle');
+    var editorApi = $('#editor1').data('editor');
+    var textEditable = 'Change to Editable Mode';
+    var textPreview = 'Change to Preview Mode';
+
+    // Initialy set button text
+    if (editorApi) {
+      btnToggle.text(editorApi.isPreview() ? textEditable : textPreview);
+    }
+
+    // Bind toggle
+    btnToggle.on('click', function () {
+      if (editorApi) {
+        if (editorApi.isPreview()) {
+          editorApi.editable();
+          btnToggle.text(textPreview);
+        } else {
+          editorApi.preview();
+          btnToggle.text(textEditable);
+        }
+      }
+    });
+  });
+</script>
