@@ -56,16 +56,16 @@ describe('Hierarchy Stacked API', () => {
   });
 
   it('Can correctly draw the hierarchy', () => {
-    const nodes = document.body.querySelectorAll('.leaf');
+    const nodes = document.body.querySelectorAll('.hierarchy .leaf');
 
     expect(nodes.length).toEqual(3);
     expect(nodes[0]).toHaveClass('is-selected');
 
-    const actionMenuButtons = document.body.querySelectorAll('.btn-actions');
+    const actionMenuButtons = document.body.querySelectorAll('.hierarchy .btn-actions');
 
     expect(actionMenuButtons.length).toEqual(3);
 
-    const collapseButtons = document.body.querySelectorAll('.btn-collapse');
+    const collapseButtons = document.body.querySelectorAll('.hierarchy .btn-collapse');
 
     expect(collapseButtons.length).toEqual(3);
     expect(collapseButtons[0]).toHaveClass('btn-hidden');
