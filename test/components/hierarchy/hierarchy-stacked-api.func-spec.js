@@ -17,7 +17,7 @@ let hierarchyAPI;
 let svgEl;
 const hierarchyId = '#hierarchy';
 
-describe('hierarchy API', () => {
+describe('Hierarchy Stacked API', () => {
   beforeEach(() => {
     hierarchyEl = null;
     hierarchyAPI = null;
@@ -44,7 +44,7 @@ describe('hierarchy API', () => {
     svgEl.parentNode.removeChild(svgEl);
     hierarchyEl.parentNode.removeChild(hierarchyEl);
 
-    cleanup(['#hierarchyChartTemplate', '#hierarchy', '#hierarchyInit']);
+    cleanup(['.svg-icons', '#hierarchy', '#hierarchyInit', '.hierarchy']);
 
     if (hierarchyAPI) {
       hierarchyAPI.destroy();
@@ -56,14 +56,17 @@ describe('hierarchy API', () => {
   });
 
   it('Can correctly draw the hierarchy', () => {
-    const nodes = document.body.querySelectorAll('.leaf');
+    const nodes = document.body.querySelectorAll('.hierarchy .leaf');
+
     expect(nodes.length).toEqual(3);
     expect(nodes[0]).toHaveClass('is-selected');
 
-    const actionMenuButtons = document.body.querySelectorAll('.btn-actions');
+    const actionMenuButtons = document.body.querySelectorAll('.hierarchy .btn-actions');
+
     expect(actionMenuButtons.length).toEqual(3);
 
-    const collapseButtons = document.body.querySelectorAll('.btn-collapse');
+    const collapseButtons = document.body.querySelectorAll('.hierarchy .btn-collapse');
+
     expect(collapseButtons.length).toEqual(3);
     expect(collapseButtons[0]).toHaveClass('btn-hidden');
   });
@@ -72,6 +75,7 @@ describe('hierarchy API', () => {
     hierarchyAPI.selectLeaf('3');
 
     const nodes = document.body.querySelectorAll('.leaf');
+
     expect(nodes[2]).toHaveClass('is-selected');
   });
 
