@@ -48,7 +48,6 @@ describe('Hierarchy stacked layout', () => {
     // Go back
     await element.all(by.css('.btn')).get(0).click();
     expect(await element.all(by.css('.leaf')).count()).toEqual(3);
-    expect(await element.all(by.css('.btn-actions')).count()).toEqual(3);
     expect(await element.all(by.css('.btn-collapse')).count()).toEqual(3);
   });
 
