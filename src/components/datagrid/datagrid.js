@@ -312,9 +312,11 @@ Datagrid.prototype = {
   },
 
   /**
-  * Render or render both the header and row area.
-  * @param {string} isToggleFilter Check if filterrow type should be passed to the data source request
-  */
+   * Render or render both the header and row area.
+   * @param {string} isToggleFilter Check if filterrow type should be passed to the data source request
+   * @param {object} pagingInfo information about the pager state
+   * @returns {void}
+   */
   render(isToggleFilter, pagingInfo) {
     if (!pagingInfo) {
       pagingInfo = {};
@@ -656,12 +658,9 @@ Datagrid.prototype = {
       // Set the remote dataset on the grid
       self.loadData(data, updatedPagingInfo, true);
 
-      // Need to update the total amount of records available in the backend somehow.
+      // Pass in updated paging information from the backend, if applicable
       if (self.pagerAPI) {
-        const isIndeterminate = updatedPagingInfo.indeterminate;
-        if (updatedPagingInfo.type === 'initial' || isIndeterminate) {
-          self.pagerAPI.updatePagingInfo(updatedPagingInfo, isIndeterminate);
-        }
+        self.pagerAPI.updatePagingInfo(updatedPagingInfo, true);
       }
 
       if (callback && typeof callback === 'function') {
@@ -1998,7 +1997,6 @@ Datagrid.prototype = {
     if (!this.settings.source) {
       this.renderRows();
     }
-    this.setSearchActivePage();
 
     if (this.restoreFilterClientSide) {
       this.restoreFilterClientSide = false;
@@ -2016,7 +2014,10 @@ Datagrid.prototype = {
     * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
     */
     this.element.trigger('filtered', { op: 'apply', conditions, trigger });
-    this.resetPager('filtered', trigger);
+    this.setSearchActivePage({
+      trigger,
+      type: 'filtered'
+    });
     this.saveUserSettings();
   },
 
@@ -5698,7 +5699,7 @@ Datagrid.prototype = {
     this.filterKeywordSearch();
     this.renderRows();
     // this.resetPager('searched');
-    this.setSearchActivePage();
+    this.setSearchActivePage({ trigger: 'searched' });
 
     if (!this.settings.paging) {
       this.highlightSearchRows(term);
@@ -5706,34 +5707,33 @@ Datagrid.prototype = {
   },
 
   /**
-   * Set search active page
+   * Sets optional filtering conditions on the pager during changes
+   * in searching/filtering of datagrid rows
    * @private
+   * @param {object} pagingInfo incoming paging state information
+   * @returns {void}
    */
-  setSearchActivePage() {
+  setSearchActivePage(pagingInfo) {
     if (!this.pagerAPI) {
       return;
     }
 
-    let pagingInfo = {};
     const self = this;
+    if (!pagingInfo) {
+      pagingInfo = {};
+    }
 
     function reset(obj) {
       obj.activePage = 1;
       if (self.grandTotal) {
         obj.grandTotal = self.grandTotal;
       }
-      delete self.pagerAPI.filteredActivePage;
-      delete self.pagerAPI.filteredTotal;
-
       return obj;
     }
 
     if (this.filterExpr && this.filterExpr.length === 1) {
-      const filteredDataset = this.settings.dataset.filter(i => !i.isFiltered);
-
       if (this.filterExpr[0].value !== '') {
-        pagingInfo.filteredTotal = filteredDataset.length;
-        pagingInfo.searchActivePage = 1;
+        pagingInfo.activePage = this.pagerAPI.filteredActivePage || 1;
       } else if (this.filterExpr[0].value === '' && this.pagerAPI.filteredActivePage) {
         pagingInfo = reset(pagingInfo);
       }

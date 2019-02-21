@@ -115,25 +115,40 @@ Pager.prototype = {
     let pages = 1;
     let filteredPages;
     let filteredTotal;
+    let grandTotal;
+    const indeterminate = this.settings.indeterminate;
+    const indeterminatePageCount = 999999999;
     const pagesize = this.settings.pagesize;
     const type = this.previousOperation;
     const trigger = this.previousTrigger;
     const ds = this.settings.dataset;
 
+    // pass in total number of records
     if (!isNaN(this.serverDatasetTotal)) {
       total = this.serverDatasetTotal;
     } else if (ds && ds.length) {
       total = ds.length;
     }
-    if (total < 1) {
+
+    if (this.grandTotal) {
+      grandTotal = this.grandTotal;
+    }
+
+    // calculate number of pages
+    if (indeterminate) {
+      pages = indeterminatePageCount;
+    } else if (total < 1) {
       pages = 1;
     } else {
       pages = Math.ceil(total / pagesize);
     }
 
+    // calculate number of filtered pages, if applicable
     if (!isNaN(this.filteredTotal)) {
       filteredTotal = this.filteredTotal;
-      if (filteredTotal < 1) {
+      if (indeterminate) {
+        pages = indeterminatePageCount;
+      } else if (filteredTotal < 1) {
         filteredPages = 1;
       } else {
         filteredPages = Math.ceil(filteredTotal / pagesize);
@@ -143,6 +158,7 @@ Pager.prototype = {
     return {
       activePage: this.activePage,
       indeterminate: this.settings.indeterminate,
+      grandTotal,
       pagesize,
       pages,
       trigger,
@@ -552,14 +568,14 @@ Pager.prototype = {
    * @returns {void}
    */
   setActivePage(pagingInfo, force, op) {
-    const state = this.state;
-    let pageNum = this.filteredActivePage || this.activePage || this.settings.activePage;
+    const useFiltering = typeof pagingInfo.searchActivePage === 'number' ||
+      typeof pagingInfo.filteredActivePage === 'number' ||
+      typeof this.filteredActivePage === 'number';
 
+    let pageNum = this.filteredActivePage || this.activePage || this.settings.activePage;
     if (typeof pagingInfo === 'object') {
-      if (pagingInfo.searchActivePage) {
-        pageNum = pagingInfo.searchActivePage;
-      } else if (pagingInfo.filteredActivePage) {
-        pageNum = pagingInfo.filteredActivePage;
+      if (useFiltering) {
+        pageNum = pagingInfo.filteredActivePage || pagingInfo.searchActivePage;
       } else if (pagingInfo.activePage) {
         pageNum = pagingInfo.activePage;
       } else {
@@ -569,28 +585,15 @@ Pager.prototype = {
       pageNum = pagingInfo;
     }
 
-    // Never go above the total number of pages (determined internally by the state,
-    // or externally by the incoming `pagingInfo` object)
-    let totalPages = state.pages;
-    if (state.filteredPages) {
-      totalPages = state.filteredPages;
-    }
-
-    // If the page number provided is out of bounds, reset it to the one previously set.
-    if (!this.settings.indeterminate) {
-      if (pageNum < 1 || pageNum > totalPages) {
-        pageNum = this.filteredActivePage || this.activePage;
-      }
-    }
-
     // Set the active page interally and render the new state.
     // If working against a filtered dataset, use the filtered active page instead of
     // the standard one.
-    if (typeof this.filteredActivePage === 'number') {
+    if (useFiltering) {
       this.filteredActivePage = pageNum;
     } else {
       this.activePage = pageNum;
     }
+
     this.previousOperation = op;
     this.render();
 
@@ -599,7 +602,6 @@ Pager.prototype = {
     if (pageNum === undefined ||
         pageNum === 0 ||
         isNaN(pageNum) ||
-        (pageNum > this.state.pages && this.state.pages > 0) ||
         (pageNum === this.activePage && !force)) {
       return this.activePage;
     }
@@ -607,6 +609,31 @@ Pager.prototype = {
     // TODO: This is datagrid specific, need to move this specifically back there
     if (this.settings.componentAPI && this.settings.componentAPI.saveUserSettings) {
       this.settings.componentAPI.saveUserSettings();
+    }
+
+    return pageNum;
+  },
+
+  /**
+   * Adjust an integer representing a Page Number to fit within the boundaries of the page count limits
+   * @param {number} [pageNum=1] the incoming number to be analyzed
+   * @returns {number} the adjusted value
+   */
+  adjustPageCount(pageNum) {
+    const state = this.state;
+    const useFiltering = typeof state.filteredActivePage === 'number' ||
+      typeof this.filteredActivePage === 'number';
+
+    // Never go above the total number of pages (determined internally by the state,
+    // or externally by the incoming `pagingInfo` object)
+    let totalPages = state.pages;
+    if (useFiltering && state.filteredPages) {
+      totalPages = state.filteredPages;
+    }
+
+    // If the page number provided is out of bounds, reset it to the one previously set.
+    if (pageNum < 1 || pageNum > totalPages) {
+      pageNum = this.filteredActivePage || this.activePage;
     }
 
     return pageNum;
@@ -876,22 +903,24 @@ Pager.prototype = {
     };
 
     function update(elem) {
+      const newValue = self.adjustPageCount(parseInt(elem.val(), 10));
+      if (lastValue === newValue) {
+        elem.val(lastValue);
+        return;
+      }
+
       let currentPage = self.activePage;
       if (self.state.filteredPages) {
         currentPage = self.state.filteredActivePage;
       }
-      const newValue = parseInt(elem.val(), 10);
-
-      if (lastValue !== elem.val()) {
-        elem.val(self.setActivePage(newValue, false, 'page'));
-        self.triggerPagingEvents(currentPage);
-      }
+      elem.val(self.setActivePage(newValue, false, 'page'));
+      self.triggerPagingEvents(currentPage);
     }
 
     $(this.pageSelectorInput)
       .mask(maskSettings)
       .on('focus', function () {
-        lastValue = $(this).val();
+        lastValue = parseInt($(this).val(), 10);
       })
       .on('blur', function () {
         update($(this));
@@ -1147,6 +1176,10 @@ Pager.prototype = {
       this.element.trigger('lastpage', state);
     }
 
+    if (state.type === 'pageinfo') {
+      return;
+    }
+
     this.element.trigger('page', state);
   },
 
@@ -1245,21 +1278,20 @@ Pager.prototype = {
       this.settings.enableLastButton = !pagingInfo.lastPage;
     }
 
-    // For server-side paging, retain a separate "total" for the server dataset.
+    // Track "grandTotal" for all records, including filtered-out, if applicable
     if (!isNaN(pagingInfo.grandTotal)) {
-      this.serverDatasetTotal = pagingInfo.grandTotal;
-    } else if (!isNaN(pagingInfo.filteredTotal)) {
-      this.serverDatasetTotal = pagingInfo.filteredTotal;
-    } else if (!isNaN(pagingInfo.total)) {
+      this.grandTotal = pagingInfo.grandTotal;
+    }
+
+    // For server-side paging, retain a separate "total" for the server dataset.
+    if (!isNaN(pagingInfo.total)) {
       this.serverDatasetTotal = pagingInfo.total;
-    } else {
-      delete this.serverDatasetTotal;
     }
 
     // If the dataset is filtered, store some extra meta-data for the state.
     if (!isNaN(pagingInfo.filteredTotal)) {
       this.filteredTotal = pagingInfo.filteredTotal;
-      this.filteredActivePage = pagingInfo.searchActivePage;
+      this.filteredActivePage = pagingInfo.searchActivePage || pagingInfo.filteredActivePage || 1;
     } else if (this.filteredTotal || this.filteredActivePage) {
       delete this.filteredTotal;
       delete this.filteredActivePage;
