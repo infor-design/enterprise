@@ -766,12 +766,14 @@ describe('Datagrid paging force disabled', () => {
   });
 
   it('Should be able force disable and reenable the pager', async () => {
+    await browser.driver.sleep(config.sleep);
     await element(await by.id('force-disabled')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(4);
 
     await element(await by.id('force-enabled')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(0);
   });
