@@ -55,40 +55,12 @@ describe('Hierarchy Stacked API', () => {
     expect(hierarchyAPI).toEqual(jasmine.any(Object));
   });
 
-  it('Can correctly draw the hierarchy', () => {
-    const nodes = document.body.querySelectorAll('.hierarchy .leaf');
-
-    expect(nodes.length).toEqual(3);
-    expect(nodes[0]).toHaveClass('is-selected');
-
-    const actionMenuButtons = document.body.querySelectorAll('.hierarchy .btn-actions');
-
-    expect(actionMenuButtons.length).toEqual(3);
-
-    const collapseButtons = document.body.querySelectorAll('.hierarchy .btn-collapse');
-
-    expect(collapseButtons.length).toEqual(3);
-    expect(collapseButtons[0]).toHaveClass('btn-hidden');
-  });
-
   it('Can select a leaf', () => {
     hierarchyAPI.selectLeaf('3');
 
     const nodes = document.body.querySelectorAll('.leaf');
 
     expect(nodes[2]).toHaveClass('is-selected');
-  });
-
-  it('Can update actions menu', () => {
-    const actionMenuButtons = document.body.querySelectorAll('.btn-actions');
-    const nodes = document.body.querySelectorAll('.leaf');
-    const mockEventInfo = {
-      data: $(nodes[2]).data(),
-      targetInfo: { target: actionMenuButtons[2] }
-    };
-    const newActions = [{ value: 'Delete' }, { value: 'Move' }];
-
-    hierarchyAPI.updateActions(mockEventInfo, newActions);
   });
 
   it('Can be empty', () => {
@@ -118,18 +90,6 @@ describe('Hierarchy Stacked API', () => {
 
     // Should not trigger collapsed function when using stacked layout
     expect(collapseFunction.calls.count()).toEqual(0);
-  });
-
-  it('Can build the actions menu', () => {
-    const actionMenuButtons = document.body.querySelectorAll('.btn-actions');
-    const spyEvent = spyOnEvent(actionMenuButtons[1], 'mouseup');
-    const buildActionsMenuFunction = spyOn(hierarchyAPI, 'buildActionsMenu');
-
-    $(actionMenuButtons[1]).trigger('mouseup');
-    buildActionsMenuFunction.and.callThrough();
-
-    expect(spyEvent).toHaveBeenTriggered();
-    expect(buildActionsMenuFunction).toHaveBeenCalledTimes(1);
   });
 
   it('Can be destroyed', () => {
