@@ -709,6 +709,7 @@ Datagrid.prototype = {
   * @param {object} pagerInfo The pager info object with information like activePage ect.
   */
   loadData(dataset, pagerInfo) {
+    const hasPagerInfo = arguments.length >= 2;
     this.settings.dataset = dataset;
 
     if (!pagerInfo) {
@@ -785,6 +786,9 @@ Datagrid.prototype = {
 
     // Setup focus on the first cell
     this.cellNode(0, 0, true).attr('tabindex', '0');
+    if (hasPagerInfo) {
+      this.renderPager(pagerInfo, true);
+    }
     this.syncSelectedUI();
     this.displayCounts(pagerInfo.total);
   },

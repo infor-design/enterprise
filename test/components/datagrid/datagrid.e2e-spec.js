@@ -734,6 +734,49 @@ describe('Datagrid multiselect with no selection checkbox', () => {
   });
 });
 
+describe('Datagrid disable last page', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-disable-lastpage');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be have last and next page disabled', async () => {
+    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(2);
+  });
+});
+
+describe('Datagrid paging force disabled', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-force-disabled');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able force disable and reenable the pager', async () => {
+    await element(await by.id('force-disabled')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(4);
+
+    await element(await by.id('force-enabled')).click();
+
+    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(0);
+  });
+});
+
 describe('Datagrid paging multiselect across pages', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-multiselect-select-across-page');
