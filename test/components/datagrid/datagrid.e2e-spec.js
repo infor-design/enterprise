@@ -1377,3 +1377,37 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
     expect(await element(await by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
   });
 });
+
+describe('Datagrid paging with empty dataset', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-empty-dataset?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('datagrid'))), config.waitsFor);
+  });
+
+  it('should increase total page count when the pagesize is exceeded', async () => {
+    expect(await element(by.css('#datagrid tbody tr[aria-rowindex]')).isPresent()).toBeFalsy();
+
+    // Click 11 Times
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+
+    expect(await element.all(by.css('#datagrid tbody tr[aria-rowindex]')).count()).toEqual(10);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(11 Results)');
+    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
+
+    await element(by.css('.pager-toolbar .pager-next')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('#datagrid tbody tr[aria-rowindex]')).count()).toEqual(1);
+  });
+});

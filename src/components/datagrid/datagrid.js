@@ -530,20 +530,19 @@ Datagrid.prototype = {
       return;
     }
 
+    const pagingInfo = {};
+
     if (typeof location === 'string') {
-      this.pagerAPI.activePage = location === 'top' ? 1 : this.pagerAPI._pageCount;
+      pagingInfo.activePage = location === 'top' ? 1 : this.pagerAPI._pageCount;
     } else if (typeof location === 'number') {
-      this.pagerAPI.activePage = Math.floor(location / (this.pagerAPI.settings.pagesize + 1));
+      pagingInfo.activePage = Math.floor(location / (this.pagerAPI.settings.pagesize + 1));
     }
 
     if (!this.settings.source) {
-      this.pagerAPI.pagingInfo = $.extend({}, this.pagerAPI.pagingInfo, {
-        activePage: this.pagerAPI.activePage,
-        total: this.settings.dataset.length,
-        pagesize: this.settings.pagesize
-      });
+      pagingInfo.total = this.settings.dataset.length;
+      pagingInfo.pagesize = this.settings.pagesize;
     }
-    this.renderPager(this.pagerAPI.pagingInfo, true);
+    this.renderPager(pagingInfo, true);
   },
 
   /**
