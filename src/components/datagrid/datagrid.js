@@ -786,6 +786,7 @@ Datagrid.prototype = {
     // Setup focus on the first cell
     this.cellNode(0, 0, true).attr('tabindex', '0');
     this.syncSelectedUI();
+    this.displayCounts(pagerInfo.total);
   },
 
   /**
