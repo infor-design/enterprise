@@ -5817,8 +5817,16 @@ Datagrid.prototype = {
       return;
     }
 
-    if (s.selectable === 'single' && this._selectedRows.length > 0) {
-      this.unselectRow(this._selectedRows[0].idx, true, true);
+    if (s.selectable === 'single') {
+      let selectedIndex = -1;
+      if (this._selectedRows.length > 0) {
+        selectedIndex = this._selectedRows[0].idx;
+      } else if (rowNode[0] && rowNode[0].classList.contains('is-selected')) {
+        selectedIndex = dataRowIndex;
+      }
+      if (selectedIndex !== -1) {
+        this.unselectRow(selectedIndex, true, true);
+      }
     }
 
     if (!rowNode.hasClass('is-selected')) {

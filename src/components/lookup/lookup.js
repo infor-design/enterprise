@@ -642,7 +642,7 @@ Lookup.prototype = {
     }
 
     if (this.grid && selectedRows.length > 0) {
-      this.grid.selectRows(selectedRows);
+      this.grid.selectRows(selectedRows, true, true);
       return true;
     }
     return false;
