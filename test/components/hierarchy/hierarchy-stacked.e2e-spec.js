@@ -30,9 +30,11 @@ describe('Hierarchy stacked layout', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('hierarchy'))), config.waitsFor);
 
     await element.all(by.css('.btn')).get(2).click();
+
     expect(await element.all(by.css('.leaf')).count()).toEqual(5);
 
     await element.all(by.css('.btn')).get(4).click();
+
     expect(await element.all(by.css('.leaf')).count()).toEqual(5);
     expect(await element.all(by.css('.ancestor')).count()).toEqual(3);
   });
@@ -43,10 +45,12 @@ describe('Hierarchy stacked layout', () => {
 
     // Load children
     await element.all(by.css('.btn')).get(2).click();
+
     expect(await element.all(by.css('.leaf')).count()).toEqual(5);
 
     // Go back
     await element.all(by.css('.btn')).get(0).click();
+
     expect(await element.all(by.css('.leaf')).count()).toEqual(3);
     expect(await element.all(by.css('.btn-actions')).count()).toEqual(3);
     expect(await element.all(by.css('.btn-collapse')).count()).toEqual(3);

@@ -84,7 +84,7 @@ Hierarchy.prototype = {
       Hierarchy,
       WARNING: Paging setting will be deprecated.
       Date of Message: 02/12/2019
-      Date of deprecation: 05/15/2019. 
+      Date of deprecation: 05/15/2019.
       `);
     }
 
@@ -93,14 +93,14 @@ Hierarchy.prototype = {
       Hierarchy,
       WARNING: MobileView setting will be deprecated.
       Date of Message: 02/12/2019
-      Date of deprecation: 05/15/2019. 
+      Date of deprecation: 05/15/2019.
       `);
     }
 
     // Safety check, check for data
 
     if (s.dataset === undefined) {
-      console.error('Hierarchy dataset is undefined.');
+      console.warn('Hierarchy dataset is undefined.');
     }
 
     if (s.layout === 'horizontal' || s.layout === 'paging' || s.layout === 'mobile-only') {
@@ -131,8 +131,9 @@ Hierarchy.prototype = {
   },
 
   /**
+   * Setup the hierarchy layout.
    * @private
-   * @param {string} Sets the layout to display
+   * @param {string} layout The layout to display
    * @returns {void}
    */
   setLayout(layout) {
@@ -1056,10 +1057,9 @@ Hierarchy.prototype = {
   },
 
   /**
-   * Set
+   * Set the color of the root element.
    * @private
-   * @param data
-   * @returns {void}
+   * @param {object} data  The data object to use.
    */
   setRootColor(data) {
     const s = this.settings;
