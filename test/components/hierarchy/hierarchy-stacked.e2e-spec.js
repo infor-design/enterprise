@@ -30,6 +30,7 @@ describe('Hierarchy stacked layout', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('hierarchy'))), config.waitsFor);
 
     await element.all(by.css('.btn')).get(2).click();
+    await browser.driver.sleep(config.sleep)
     expect(await element.all(by.css('.leaf')).count()).toEqual(5);
 
     await element.all(by.css('.btn')).get(4).click();
