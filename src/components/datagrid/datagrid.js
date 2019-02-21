@@ -785,8 +785,8 @@ Datagrid.prototype = {
 
     // Setup focus on the first cell
     this.cellNode(0, 0, true).attr('tabindex', '0');
-
     this.syncSelectedUI();
+    this.displayCounts(pagerInfo.total);
   },
 
   /**
@@ -4951,8 +4951,8 @@ Datagrid.prototype = {
     }
 
     // Handle Paging
-    if (this.pagerAPI) {
-      this.pagerAPI.element.on(`afterpaging.${COMPONENT_NAME}`, (e, args) => {
+    if (this.settings.paging) {
+      this.element.on(`afterpaging.${COMPONENT_NAME}`, (e, args) => {
       // Hide the entire pager bar if we're only showing one page, if applicable
         if (self.pagerAPI.hidePagerBar(args)) {
           self.element.removeClass('paginated');
