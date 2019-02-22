@@ -25,7 +25,7 @@
     const hierarchyControl = $('#hierarchy').data('hierarchy');
     console.log(event, eventInfo);
 
-    if (eventInfo.data.childrenUrl) {
+    if (eventInfo.eventType === 'expand' || eventInfo.eventType === 'back') {
       $.getJSON(`{{basepath}}api/${eventInfo.data.childrenUrl}`, function(newData) {
         reload(eventInfo, hierarchyControl, newData);
       });
@@ -48,12 +48,14 @@
     <img src="{{picture}}" class="image" alt="Image of {{name}}"/>
     {{/picture}}
     {{^picture}}
-      {{#avatarInitials}}
-      <div class="image-initials {{imageInitialBackground}}">{{avatarInitials}}</div>
-      {{/avatarInitials}}
-      {{^avatarInitials}}
-      <span class="image-placeholder"></span>
-      {{/avatarInitials}}
+
+    {{#avatarInitials}}
+    <div class="image-initials">{{avatarInitials}}</div>
+    {{/avatarInitials}}
+    {{^avatarInitials}}
+    <span class="image-placeholder"></span>
+    {{/avatarInitials}}
+
     {{/picture}}
 
     <div class="detail">
@@ -62,12 +64,21 @@
       <p class="micro">{{employmentType}}</p>
     </div>
 
+    {{#menu}}
+    <button class="btn-actions btn-icon" type="button" data-init="false" id="btn-{{id}}">
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use xlink:href="#icon-more"></use>
+      </svg>
+      <span class="audible">More Info & Additional Actions</span>
+    </button>
+    <ul class="popupmenu"></ul>
+    {{/menu}}
+
     <button class="btn btn-icon" type="button">
       <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
         <use xlink:href="#icon-caret-up"></use>
       </svg>
       <span class="audible">Expand/Collapse</span>
     </button>
-
   </div>
 </script>
