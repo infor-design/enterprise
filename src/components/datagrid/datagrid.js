@@ -657,11 +657,6 @@ Datagrid.prototype = {
       // Set the remote dataset on the grid
       self.loadData(data, updatedPagingInfo, true);
 
-      // Pass in updated paging information from the backend, if applicable
-      if (self.pagerAPI) {
-        self.pagerAPI.updatePagingInfo(updatedPagingInfo, true);
-      }
-
       if (callback && typeof callback === 'function') {
         callback(true);
       }
@@ -705,9 +700,10 @@ Datagrid.prototype = {
   * @param {object} dataset The array of objects to show in the grid.
   * Should match the column definitions.
   * @param {object} pagerInfo The pager info object with information like activePage ect.
+  * @param {boolean} [isResponse=false] if true, doesn't trigger reloading from source
   */
-  loadData(dataset, pagerInfo) {
-    const hasPagerInfo = arguments.length >= 2;
+  loadData(dataset, pagerInfo, isResponse) {
+    //const hasPagerInfo = arguments.length >= 2;
     this.settings.dataset = dataset;
 
     if (!pagerInfo) {
@@ -784,9 +780,7 @@ Datagrid.prototype = {
 
     // Setup focus on the first cell
     this.cellNode(0, 0, true).attr('tabindex', '0');
-    if (hasPagerInfo) {
-      this.renderPager(pagerInfo, true);
-    }
+    this.renderPager(pagerInfo, true);
     this.syncSelectedUI();
     this.displayCounts(pagerInfo.total);
   },
@@ -5945,7 +5939,7 @@ Datagrid.prototype = {
     if ((!data || self.isRowSelected(data)) && !force) {
       return;
     }
-    
+
     elem.addClass(`is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`).attr('aria-selected', 'true')
       .find('td').attr('aria-selected', 'true');
 
@@ -6519,7 +6513,7 @@ Datagrid.prototype = {
           }
         }
       };
-      
+
       elem.removeClass('is-selected hide-selected-color').removeAttr('aria-selected')
         .find('td').removeAttr('aria-selected');
 
@@ -9124,6 +9118,7 @@ Datagrid.prototype = {
     }
 
     if (!this.settings.source) {
+      this.pagerAPI.settings.dataset = this.settings.dataset;
       pagingInfo.isFilteredClientside = true;
     }
 
