@@ -1,11 +1,11 @@
 <div class="row">
   <div class="twelve columns">
     <div class="field">
-      <label for="product-lookup1" class="label">Products 1</label>
+      <label for="product-lookup1" class="label">Products One</label>
       <input id="product-lookup1" name="product-lookup1" data-init="false" class="lookup" type="text" value="214221" />
     </div>
     <div class="field">
-      <label for="product-lookup2" class="label">Products 2</label>
+      <label for="product-lookup2" class="label">Products Two</label>
       <input id="product-lookup2" name="product-lookup2" data-init="false" class="lookup" type="text" />
     </div>
   </div>
@@ -15,11 +15,13 @@
   var columns = [];
 
   // Columns for the Lookup Datagrid
-  columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
-  columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
-  columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
-  columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-  columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+  columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
+  columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink});
+  columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+  columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+  columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+  columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
 
   // Initialize the Lookup
   $('#product-lookup1, #product-lookup2').lookup({
@@ -29,18 +31,7 @@
         dataset: [],
         paging: true,
         pagesize: 5,
-        pagesizes: [5, 10, 25],
         selectable: 'single',
-        allowSelectAcrossPages: true,
-        toolbar: {
-          results: true,
-          keywordFilter: false,
-          actions: true,
-          rowHeight: false,
-          collapsibleFilter: false,
-          fullWidth: true,
-          contextualToolbar: true
-        },
         source: function (req, response) {
           var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
