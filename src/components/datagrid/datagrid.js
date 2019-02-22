@@ -789,7 +789,7 @@ Datagrid.prototype = {
     this.cellNode(0, 0, true).attr('tabindex', '0');
     this.renderPager(pagerInfo, true);
     this.syncSelectedUI();
-    this.displayCounts(pagerInfo.total);
+    this.displayCounts();
   },
 
   /**
