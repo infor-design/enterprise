@@ -31,6 +31,13 @@
       columns.push({ id: 'quantity1', name: 'Quantity 1', field: 'quantity'});
       columns.push({ id: 'quantity2', name: 'Quantity 2', field: 'quantity'});
       columns.push({ id: 'quantity3', name: 'Quantity 3', field: 'quantity'});
+      columns.push({ id: 'quantity4', name: 'Quantity 4', field: 'quantity'});
+      columns.push({ id: 'quantity5', name: 'Quantity 5', field: 'quantity'});
+      columns.push({ id: 'quantity6', name: 'Quantity 6', field: 'quantity'});
+      columns.push({ id: 'quantity7', name: 'Quantity 7', field: 'quantity'});
+      columns.push({ id: 'quantity8', name: 'Quantity 8', field: 'quantity'});
+      columns.push({ id: 'quantity9', name: 'Quantity 9', field: 'quantity'});
+      columns.push({ id: 'quantity10', name: 'Quantity 10', field: 'quantity'});
 
       var rowTemplate = '<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div>'+
                         '<div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>' +
@@ -44,7 +51,10 @@
         idProperty:'officeId',
         dataset: data,
         filterable: true,
+        // Required for Frozen Columns and Expandable Areas to sync the areas
+        rowTemplateHeight: 167,
         rowTemplate: rowTemplate,
+        frozenColumns: { left: ['productId'] },
         toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true,
           results: true, keywordFilter: true, actions: true, exportToExcel: true, rowHeight: true, personalize: true}
       });

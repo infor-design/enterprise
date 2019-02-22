@@ -31,6 +31,7 @@ describe('Personalization tests', () => {
       .wait(protractor.ExpectedConditions.stalenessOf(await element(by.css('.personalize-overlay'))), config.waitsFor);
 
     await reinitButton.click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('html')).get(0).getAttribute('class')).toContain(chosenTheme[0]);
   });
@@ -45,12 +46,13 @@ describe('Personalization tests', () => {
     await pageChangerButtonEl[0].click();
     await colorChoices[randomIndex].click();
 
-    const beforeInitSheet = await element(by.id('soho-personalization'));
+    const beforeInitSheet = await element(by.id('soho-personalization')).getText();
     await browser.driver
       .wait(protractor.ExpectedConditions.stalenessOf(await element(by.css('.personalize-overlay'))), config.waitsFor);
 
     await reinitButton.click();
+    await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('soho-personalization')).getText()).toEqual(beforeInitSheet.getText());
+    expect(await element(by.id('soho-personalization')).getText()).toEqual(beforeInitSheet);
   });
 });

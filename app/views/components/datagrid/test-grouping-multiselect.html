@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="full column">
-			<h2>Datagrid Groupable - selection test</h2>
-			<p><strong>Note: </strong>Currently Paging not supported with Groupable</p>
+			<h2>Datagrid Groupable - Selection Test Page</h2>
+			<p><strong>Note: </strong>Also includes frozenColumns option</p>
 	</div>
 </div>
 
@@ -23,36 +23,41 @@
 		columns.push({id: 'col2', name: 'col2', field: 'col2',  selectable: false });
 		columns.push({id: 'col3', name: 'col3', field: 'col3',  selectable: false });
 		columns.push({id: 'col4', name: 'col4', field: 'col4',  selectable: false });
-
+		columns.push({id: 'col5', name: 'col5', field: 'col5',  selectable: false });
+		columns.push({id: 'col6', name: 'col6', field: 'col6',  selectable: false });
+		columns.push({id: 'col7', name: 'col7', field: 'col7',  selectable: false });
+		columns.push({id: 'col8', name: 'col8', field: 'col8',  selectable: false });
+		columns.push({id: 'col9', name: 'col9', field: 'col9',  selectable: false });
 
 		var data = [];
 
-		data.push({id: 0, col0: 'data0', col1: 'data1', col2: 'data2', col3: 'data3', col4: 2});
-		data.push({id: 1, col0: 'data1', col1: 'data2', col2: 'data2', col3: 'data3', col4: 5});
-		data.push({id: 2, col0: 'data0', col1: 'data3', col2: 'data2', col3: 'data3', col4: 3});
-		data.push({id: 3, col0: 'data2', col1: 'data4', col2: 'data2', col3: 'data3', col4: 15});
-		data.push({id: 4, col0: 'data0', col1: 'data5', col2: 'data2', col3: 'data3', col4: 27});
-		data.push({id: 5, col0: 'data1', col1: 'data6', col2: 'data2', col3: 'data3', col4: 33});
-
+		data.push({id: 0, col0: 'data0', col1: 'data1', col2: 'data2', col3: 'data3', col4: 2, col5: 2, col6: 2, col7: 2, col8: 2, col9: 2});
+		data.push({id: 1, col0: 'data1', col1: 'data2', col2: 'data2', col3: 'data3', col4: 5, col5: 2, col6: 2, col7: 2, col8: 2, col9: 2});
+		data.push({id: 2, col0: 'data0', col1: 'data3', col2: 'data2', col3: 'data3', col4: 3, col5: 2, col6: 2, col7: 2, col8: 2, col9: 2});
+		data.push({id: 3, col0: 'data2', col1: 'data4', col2: 'data2', col3: 'data3', col4: 15, col5: 2, col6: 2, col7: 2, col8: 2, col9: 2});
+		data.push({id: 4, col0: 'data0', col1: 'data5', col2: 'data2', col3: 'data3', col4: 27, col5: 2, col6: 2, col7: 2, col8: 2, col9: 2});
+		data.push({id: 5, col0: 'data1', col1: 'data6', col2: 'data2', col3: 'data3', col4: 33, col5: 2, col6: 2, col7: 2, col8: 2, col9: 2});
+		data.push({id: 6, col0: 'data1', col1: 'data6', col2: 'data2', col3: 'data3', col4: 33, col5: 2, col6: 2, col7: 2, col8: 2, col9: 2});
+		data.push({id: 7, col0: 'data1', col1: 'data6', col2: 'data2', col3: 'data3', col4: 33, col5: 2, col6: 2, col7: 2, col8: 2, col9: 2});
+		data.push({id: 8, col0: 'data1', col1: 'data6', col2: 'data2', col3: 'data3', col4: 33, col5: 2, col6: 2, col7: 2, col8: 2, col9: 2});
 
 	  var options = {
 			columns: columns,
 			idProperty: 'id',
 			dataset: data,
-			editable: true,
-			clickToSelect: false,
-			alternateRowShading: true,
 			rowHeight: 'short',
-			cellNavigation: false,
 			selectable: 'multiple',
+      frozenColumns: {
+        left: ['selectionCheckbox', 'col0', 'col1']
+      },
 			groupable: {
         fields: ['col0'],
         expanded: true,
 				aggregator: 'sum', //sum, averge, max ect
-				aggregate: 'col4',
-				groupFooterRow: true
-				,groupFooterRowFormatter: function (idx, row, cell, value, col, item, api) {
-					return '<td role="gridcell" colspan=' + (idx-1) + ' style="border-right: 0"><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell" style="border-right: 0"><div class="datagrid-cell-wrapper"> <b style="float: right;">Total</b> </div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
+				aggregate: 'col9',
+				groupFooterRow: true,
+				groupFooterRowFormatter: function (idx, row, cell, value, col, item, api) {
+					return '<td role="gridcell" colspan=' + (columns.length - options.frozenColumns.left.length - 2) + ' style="border-right: 0"><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell" style="border-right: 0"><div class="datagrid-cell-wrapper"> <b style="float: right;">Total</b> </div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
 				}
       },
 			toolbar: {title: 'Title', results: true, dateFilter: false,

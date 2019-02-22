@@ -55,23 +55,23 @@ describe('Datagrid ARIA', () => {
     expect(document.querySelector('.sort-desc svg[aria-hidden="true"]')).toBeTruthy();
     expect(document.querySelector('.icon-empty-state[aria-hidden="true"]')).toBeTruthy();
 
-    expect(document.querySelectorAll('tbody tr')[0].getAttribute('aria-rowindex')).toEqual('1');
-    expect(document.querySelectorAll('tbody tr')[3].getAttribute('aria-rowindex')).toEqual('4');
-    expect(document.querySelectorAll('tbody tr')[6].getAttribute('aria-rowindex')).toEqual('7');
+    expect(document.querySelectorAll('.datagrid-body tbody tr')[0].getAttribute('aria-rowindex')).toEqual('1');
+    expect(document.querySelectorAll('.datagrid-body tbody tr')[3].getAttribute('aria-rowindex')).toEqual('4');
+    expect(document.querySelectorAll('.datagrid-body tbody tr')[6].getAttribute('aria-rowindex')).toEqual('7');
 
-    expect(document.querySelectorAll('tbody tr')[0].querySelector('td').getAttribute('aria-readonly')).toEqual('true');
-    expect(document.querySelectorAll('tbody tr')[0].querySelector('td').getAttribute('aria-colindex')).toEqual('1');
-    expect(document.querySelectorAll('tbody tr')[0].querySelectorAll('td')[1].getAttribute('aria-colindex')).toEqual('2');
-    expect(document.querySelectorAll('tbody tr')[0].querySelector('td').getAttribute('aria-describedby')).toBeTruthy();
+    expect(document.querySelectorAll('.datagrid-body tbody tr')[0].querySelector('td').getAttribute('aria-readonly')).toEqual('true');
+    expect(document.querySelectorAll('.datagrid-body tbody tr')[0].querySelector('td').getAttribute('aria-colindex')).toEqual('1');
+    expect(document.querySelectorAll('.datagrid-body tbody tr')[0].querySelectorAll('td')[1].getAttribute('aria-colindex')).toEqual('2');
+    expect(document.querySelectorAll('.datagrid-body tbody tr')[0].querySelector('td').getAttribute('aria-describedby')).toBeTruthy();
   });
 
   it('Should set ARIA attributes for selection', () => {
     datagridObj.selectRow(1);
 
-    expect(document.querySelectorAll('tbody tr')[1].getAttribute('aria-selected')).toBe('true');
+    expect(document.querySelectorAll('.datagrid-body tbody tr')[1].getAttribute('aria-selected')).toBe('true');
 
     datagridObj.unSelectAllRows(1);
 
-    expect(document.querySelectorAll('tbody tr')[1].getAttribute('aria-selected')).toBeFalsy();
+    expect(document.querySelectorAll('.datagrid-body tbody tr')[1].getAttribute('aria-selected')).toBeFalsy();
   });
 });
