@@ -1400,6 +1400,7 @@ describe('Datagrid paging with empty dataset', () => {
     await element(by.id('add-btn')).click();
     await element(by.id('add-btn')).click();
     await element(by.id('add-btn')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('#datagrid tbody tr[aria-rowindex]')).count()).toEqual(10);
     expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(11 Results)');
