@@ -664,7 +664,7 @@ Datagrid.prototype = {
       }
 
       // Set the remote dataset on the grid
-      self.loadData(data, updatedPagingInfo, true);
+      self.loadData(data, updatedPagingInfo);
 
       if (callback && typeof callback === 'function') {
         callback(true);
@@ -709,10 +709,8 @@ Datagrid.prototype = {
   * @param {object} dataset The array of objects to show in the grid.
   * Should match the column definitions.
   * @param {object} pagerInfo The pager info object with information like activePage ect.
-  * @param {boolean} [isResponse=false] if true, doesn't trigger reloading from source
   */
-  loadData(dataset, pagerInfo, isResponse) {
-    //const hasPagerInfo = arguments.length >= 2;
+  loadData(dataset, pagerInfo) {
     this.settings.dataset = dataset;
 
     if (!pagerInfo) {
