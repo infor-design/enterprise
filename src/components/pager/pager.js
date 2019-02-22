@@ -128,6 +128,10 @@ Pager.prototype = {
       total = this.serverDatasetTotal;
     } else if (ds && ds.length) {
       total = ds.length;
+      if (this.isFilteredClientside) {
+        const filteredDs = ds.filter(i => !i.isFiltered);
+        total = filteredDs.length;
+      }
     }
 
     if (this.grandTotal) {
@@ -1263,6 +1267,14 @@ Pager.prototype = {
       }
     }
 
+    // Detect client-side filtering in the other component's API
+    if (pagingInfo.isFilteredClientside) {
+      this.isFilteredClientside = true;
+      delete this.serverDatasetTotal;
+    } else if (this.isFilteredClientside) {
+      delete this.isFilteredClientside;
+    }
+
     // Explicitly setting `firstPage` or `lastPage` to true/false will cause pager buttons
     // to be forced enabled/disabled
     delete this.firstPage;
@@ -1284,7 +1296,7 @@ Pager.prototype = {
     }
 
     // For server-side paging, retain a separate "total" for the server dataset.
-    if (!isNaN(pagingInfo.total)) {
+    if (!this.isFilteredClientside) {
       this.serverDatasetTotal = pagingInfo.total;
     }
 

@@ -5697,7 +5697,6 @@ Datagrid.prototype = {
 
     this.filterKeywordSearch();
     this.renderRows();
-    // this.resetPager('searched');
     this.setSearchActivePage({ trigger: 'searched' });
 
     if (!this.settings.paging) {
@@ -9122,6 +9121,10 @@ Datagrid.prototype = {
   renderPager(pagingInfo, isResponse, callback) {
     if (!this.pagerAPI) {
       return;
+    }
+
+    if (!this.settings.source) {
+      pagingInfo.isFilteredClientside = true;
     }
 
     this.pagerAPI.updatePagingInfo(pagingInfo, isResponse);
