@@ -99,20 +99,12 @@ Hierarchy.prototype = {
 
     // Safety check, check for data
 
-    if (s.dataset === undefined) {
-      console.error('Hierarchy dataset is undefined.');
-      return;
-    }
-
-    if (!Array.isArray(s.dataset)) {
-      console.error('Hierarchy dataset must be an Array');
-      return;
-    }
-
-    if (s.dataset.length === 0) {
+    if (s.dataset === undefined || s.dataset.length === 0 || !Array.isArray(s.dataset)) {
       this.element.emptymessage(s.emptyMessage);
-      return;
-    } else if ((s.dataset[0] && s.dataset[0].children) &&
+      return this;
+    }
+
+    if ((s.dataset[0] && s.dataset[0].children) &&
       s.dataset[0].children.length > 0 || this.isStackedLayout()) {
       this.render(s.dataset[0]);
     } else if (s.dataset && s.dataset.children.length > 0) {
