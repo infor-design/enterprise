@@ -43,7 +43,7 @@
 - `[Docs]` Added a fix to prevent the documentation generator from failing intermittently. ([#1377](https://github.com/infor-design/enterprise/issues/1377))
 - `[Demo App]` Added a fix for incorrect links when running on windows. ([#1549](https://github.com/infor-design/enterprise/issues/1549))
 
-(27 Issues Solved this release, Backlog Enterprise 210, Backlog Ng 69, 735 Functional Tests, 670 e2e Test)
+(27 Issues Solved this release, Backlog Enterprise 203, Backlog Ng 69, 735 Functional Tests, 670 e2e Test)
 
 ## v4.15.0
 
