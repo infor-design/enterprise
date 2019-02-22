@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="twelve columns">
-    <div id="readonly-datagrid">
+    <div id="datagrid">
     </div>
   </div>
 </div>
@@ -30,7 +30,7 @@
       columns.push({ id: 'comment', resizable: false, name: 'Comment', field: 'comment', formatter: Formatters.Textarea, width: '60%'});
 
       //Init and get the api for the grid
-      $('#readonly-datagrid').datagrid({
+      $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
         menuId: 'grid-actions-menu',

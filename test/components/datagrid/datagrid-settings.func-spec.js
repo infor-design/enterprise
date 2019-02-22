@@ -43,8 +43,13 @@ describe('Datagrid Settings', () => {
       actionableMode: false,
       cellNavigation: true,
       rowNavigation: true,
+      showHoverState: true,
       alternateRowShading: false,
       columns,
+      frozenColumns: {
+        left: [],
+        right: []
+      },
       dataset: data,
       columnReorder: false,
       saveColumns: false,
@@ -94,7 +99,6 @@ describe('Datagrid Settings', () => {
       disableRowDeactivation: false,
       sizeColumnsEqually: false,
       expandableRow: false,
-      redrawOnResize: false,
       exportConvertNegative: false,
       columnGroups: null,
       treeGrid: false,

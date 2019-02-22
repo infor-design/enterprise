@@ -1,4 +1,3 @@
-
 <div class="master-detail">
   <div class="master">
     <div class="toolbar" role="toolbar">
@@ -92,7 +91,8 @@
         selectable: 'mixed',
         paging: true,
         pagesize: 4,
-        pagesizes: [4, 8, 15]
+        pagesizes: [4, 8, 15],
+        frozenColumns: {left: ['selectionCheckbox', 'id']},
       }).on('rowactivated', function (e, args) {
         console.log('Row ' + args.row + ' Was Activated');
         syncDetail(args.row);

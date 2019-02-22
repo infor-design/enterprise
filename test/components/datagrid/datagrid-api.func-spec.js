@@ -61,15 +61,18 @@ describe('Datagrid API', () => {
     expect(datagridObj).toEqual(jasmine.any(Object));
   });
 
-  it('Should render datagrid', () => {
+  it('Should render datagrid', (done) => {
     datagridObj.destroy();
     const spyEvent = spyOnEvent($(datagridEl), 'rendered');
     const spyEventAfter = spyOnEvent($(datagridEl), 'afterrender');
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
 
-    expect(spyEvent).toHaveBeenTriggered();
-    expect(spyEventAfter).toHaveBeenTriggered();
-    expect(document.body.querySelectorAll('tr').length).toEqual(8);
+    setTimeout(() => {
+      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEventAfter).toHaveBeenTriggered();
+      expect(document.body.querySelectorAll('tr').length).toEqual(8);
+      done();
+    });
   });
 
   it('Should destroy datagrid', () => {

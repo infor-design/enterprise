@@ -98,21 +98,5 @@
 		"location": "New Manilla, TX",
 		"contact": "Paul Strayer",
 		"customerSince": "04/21/2016"
-	},
-	{
-		"id": 13,
-		"companyName": "Construction City",
-		"phone": "399-166-7067",
-		"location": "Joanestown, UT",
-		"contact": "Andy Nasmith",
-		"customerSince": "06/25/2015"
-	},
-	{
-		"id": 14,
-		"companyName": "Stone City Supply Company",
-		"phone": "202-504-5299",
-		"location": "River Ridge, PA",
-		"contact": "Winter Adams",
-		"customerSince": "01/25/2015"
 	}
 ]

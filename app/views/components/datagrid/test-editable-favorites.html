@@ -17,12 +17,12 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'companyName', name: 'Company Name', field: 'companyName', formatter: Formatters.Hyperlink, width: 350});
+      columns.push({ id: 'favorite', name: '', field: 'favorite', showEmpty: true, formatter: Formatters.Favorite, editor: Editors.Favorite});
+      columns.push({ id: 'companyName', name: 'Company Name', field: 'companyName', formatter: Formatters.Hyperlink});
       columns.push({ id: 'phone', name: 'Phone', field: 'phone', editor: Editors.Input});
       columns.push({ id: 'location', name: 'Location', field: 'location', editor: Editors.Input});
       columns.push({ id: 'contact', name: 'Contact Name', field: 'contact', editor: Editors.Input});
       columns.push({ id: 'customerSince', name: 'Customer Since', field: 'customerSince', editor: Editors.Input});
-      columns.push({ id: 'favorite', name: '', field: 'favorite', showEmpty: true, formatter: Formatters.Favorite, editor: Editors.Favorite});
 
        var url = '{{basepath}}api/companies';
 
@@ -32,7 +32,6 @@
           columns: columns,
           editable: true,
           dataset: res,
-          rowHeight: 'short',
           toolbar: {results: true}
         }).on('cellchange', function (e, args) {
           console.log(args);

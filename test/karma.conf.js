@@ -26,6 +26,9 @@ module.exports = function (config) {
       '**/behaviors/*/*.js': ['webpack', 'sourcemap'],
       '**/components/*/*.js': ['webpack', 'sourcemap'],
     },
+    proxies: {
+      '/images/': 'app/www/images/'
+    },
     webpack: {
       optimization: {
         minimize: false

@@ -8,62 +8,68 @@ demo:
   pages:
   - name: Alternate Row Shading
     slug: example-alternate-row-shading
-  - name: Drilldown Formatter
-    slug: example-drilldown
-  - name: Paging (Indeterminate)
-    slug: example-paging-indeterminate
-  - name: Paging (Server Side)
-    slug: example-paging
-  - name: Paging (Client Side)
-    slug: example-paging-client-side
-  - name: Editing
-    slug: example-editable
-  - name: Column Reordering
-    slug: example-reorder
-  - name: Expandable Row
-    slug: example-expandable-row
-  - name: Row Reordering
-    slug: example-row-reorder
-  - name: Filtering
-    slug: example-filter
-  - name: Selection (Single)
-    slug: example-singleselect
-  - name: Selection (Multiple)
-    slug: example-multiselect
-  - name: Grouped Headers
-    slug: example-grouped-headers
-  - name: Tooltips
-    slug: example-tooltips
-  - name: Datagrid List Styling
-    slug: example-list
-  - name: Tree Grid
-    slug: example-tree
-  - name: Using Nested Objects
-    slug: example-nested-objects
-  - name: Making a custom toolbar
-    slug: example-custom-toolbar
+  - name: Spanning Columns
+    slug: example-colspan
   - name: Comments Grid (Flexible Row Size)
     slug: example-comments
-  - name: Fixed Header
-    slug: example-fixed-header
-  - name: Datagrid Grouping
-    slug: example-grouping
-  - name: Datagrid Grouping (Totals)
-    slug: example-grouping-totals
-  - name: Selection (Mixed)
-    slug: example-mixed-selection
-  - name: Summary Row
-    slug: example-summary-row
-  - name: Export to Excel
-    slug: example-export-from-button
-  - name: Export with trailing negative signs moved in front
-    slug: example-export-convert-negative
+  - name: Customizing Filter Conditions
+    slug: example-custom-filter-conditions
+  - name: Making a custom toolbar
+    slug: example-custom-toolbar
+  - name: Drilldown Formatter
+    slug: example-drilldown
+  - name: Editing
+    slug: example-editable
   - name: Empty Message Area
     slug: example-empty-message
   - name: Expandable Cells
     slug: example-expandable-cells
-  - name: Dynamic Column Spans
-    slug: example-colspan
+  - name: Expandable Row
+    slug: example-expandable-row
+  - name: Export to Excel
+    slug: example-export-from-button
+  - name: Filtering
+    slug: example-filter
+  - name: Fixed Header
+    slug: example-fixed-header
+  - name: Frozen Columns
+    slug: example-frozen-columns
+  - name: Grouped Headers
+    slug: example-grouped-headers
+  - name: Grouping
+    slug: example-grouping
+  - name: Grouped Grouping (Filtering)
+    slug: example-grouping-filter
+  - name: Grouping (Totals)
+    slug: example-grouping-totals
+  - name: Keyword Search
+    slug: example-keyword-search
+  - name: List Styling
+    slug: example-list
+  - name: Selection (Mixed)
+    slug: example-mixed-selection
+  - name: Selection (Multiple)
+    slug: example-multiselect
+  - name: Nested Grids
+    slug: example-nested-grids
+  - name: Paging (Client Side)
+    slug: example-paging-client-side
+  - name: Paging (Indeterminate)
+    slug: example-paging-indeterminate
+  - name: Paging (Server Side)
+    slug: example-paging
+  - name: Column Reordering
+    slug: example-reorder
+  - name: Row Reordering
+    slug: example-row-reorder
+  - name: Selection (Single)
+    slug: example-singleselect
+  - name: Summary Row
+    slug: example-summary-row
+  - name: Tooltips
+    slug: example-tooltips
+  - name: Tree Grid
+    slug: example-tree
 ---
 ## Code Example
 
@@ -129,9 +135,12 @@ $('#datagrid').datagrid({
 |`expanded` | Used on `Group` and `Expander` formatter, if true it will make the row expanded. This can be a boolean or a javascript function, that can dynamically be used to return if the row should be expanded.|
 |`groupRowFormatter` | Used on the `Group` formatter, this function will pass in info  about the row group and data and allow you to return dynamic html for formatting the group rows appearance.|
 |`ranges` | For example `[{'min': 151, '(max': 9999, 'classes': 'info'}]` for example any value between 151 and 999 will add the info class which formats the color in info blue. Default color is grey. Used on badges and alerts.|
+|`summaryText` | Used on the summary row formatter tp allow you to put text in front or behind the summary totals. You need to unsure the column is wide enough to show the text.|
+|`summaryTextPlacement` | When using the summaryText option you can set this to `after` or `before` to allow you to choose on what side to place the summary text.|
 |`options` | Used on the dropdown and multiselect editor/formatters. For example `[{'value': 1, 'id': 1, 'label': 'Some Value'}]`. This should map to a select elements id, value and text option when populating.|
 |`isChecked` | Used on checkbox and favorite columns. This can be a function that returns the checked state based on the dynamic data thats passed in.|
 |`postRender` | If postColumnRender is set to true on the grid. This will be called for each cell in that column passing you a container and args similar to the formatter. This can be used for more complicated render logic at the cost of performance.|
+|`exportable` | If set to false then this column will not be included in a css or csv export operation, the default is true.|
 
 ## Formatters
 
@@ -192,8 +201,6 @@ The formatter is then linked to the column on the formatter setting. `columns.pu
 
 ## Editors
 
-TODO
-
 ## Column Settings (Editor Specific)
 
 |Setting|Description|
@@ -203,6 +210,54 @@ TODO
 |`maskMode` | Used to pass in an input mask maskMode option. See [the mask component]( ../mask) for details on making a mask.|
 |`caseInsensitive` | Used in the dropdown editor to make it such case is not used to match keys to the key/value pairs in the options.|
 |`validate` | The validation function(s) to use. See [the validation component]( ../validation) for details on validation functions.|
+
+## Other Features
+
+- Alternate row shading - For better scan-ability you can shade the rows with the `alternateRowShading=true` option. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-alternate-row-shading?font=source-sans" target="_blank">alternate row shading</a>|
+- Column Spanning - If possible to make a column span across other columns with the `colspan` column option. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-colspan?font=source-sans" target="_blank">Column Span Example</a>|
+
+## Frozen Columns
+
+Its possible to freeze columns on the left or right of the scroll area to keep them in view. To do this use the `frozenColumns` setting. When using set the column id for the columns you want to freeze. Id is required for this to work. For example
+
+```javascript
+frozenColumns: {
+ left: ['productId', 'productName'],
+  right: ['actionButton']
+}
+```
+
+### Frozen Columns Works with
+
+- Alternate row shading
+- Drilldown (can be frozen on the left)
+- Export
+- Selection (can freeze on the left)
+- Row Status
+- Data Grouping and Totals
+- Empty Message (will stay centered)
+- Summary Row (you can freeze columns on the left)
+- Editing
+- Expandable Row -> But the expandable row is only in the middle section
+- Filtering - Filtered columns can be frozen
+- Row Activation
+
+### Frozen Columns Limitations
+
+- Wont work with columns with colspans
+- Wont work with dynamically height rows (example-comments.html)
+- You can’t resize frozen columns
+- Frozen columns cant be moved or hidden from the personalize dialog
+- Ids are required for the frozen columns and should be used in general to avoid bugs
+- If freezing the group column all the group by columns will be frozen
+- If the total sum of the frozen columns is wider than the device - then it's not possible to scroll. Will want a future solution
+- Percent Columns - Percent column widths will not work on frozen sections at this time.
+- Will not work with expandOnActivate setting
+- Grouped Headers will not work with frozen columns at this time
+- Row Reorder will not work with frozen columns at this time
+- Will not work with nested grids
+- Will not work with clickToSelect setting
+- Will not yet work with tree grid
 
 ## Testability
 
