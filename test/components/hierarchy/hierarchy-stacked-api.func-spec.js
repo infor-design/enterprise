@@ -33,7 +33,7 @@ describe('Hierarchy Stacked API', () => {
       templateId: 'hierarchyChartTemplate',
       legendKey: 'employmentType',
       legend: legendData,
-      dataset: data,
+      dataset: [data],
       layout: 'stacked'
     });
 
