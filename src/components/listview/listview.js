@@ -241,6 +241,7 @@ ListView.prototype = {
    */
   render(dataset, pagerInfo) {
     const self = this;
+    const isServerSide = typeof this.settings.source === 'function';
     let totals = {};
     let displayedDataset = dataset;
     let firstRecordIdx = 0;
@@ -249,8 +250,13 @@ ListView.prototype = {
     let setSize = dataset.length;
 
     if (pagerInfo) {
-      pagesize = pagerInfo.pagesize;
+      pagesize = pagerInfo.pagesize || pagesize;
       setSize = pagerInfo.filteredTotal || setSize;
+    }
+
+    if (!isServerSide && this.pagerAPI) {
+      this.renderPager(pagerInfo, true);
+      pagerInfo = this.pagerAPI.state;
     }
 
     // If the paging information sets limits on the dataset, customize the
@@ -260,7 +266,7 @@ ListView.prototype = {
       if (pages > 1) {
         let trueActivePage = pagerInfo.activePage > 0 ? pagerInfo.activePage - 1 : 0;
         if (this.filteredDataset) {
-          trueActivePage = pagerInfo.filteredActivePage;
+          trueActivePage = pagerInfo.filteredActivePage - 1;
         }
         firstRecordIdx = pagerInfo.pagesize * trueActivePage;
         lastRecordIdx = pagerInfo.pagesize * (trueActivePage + 1);
@@ -405,9 +411,10 @@ ListView.prototype = {
    * Get the Data Source. Can be an array, Object or Url and render the list.
    * @private
    * @param {array} dataset contains a potential new dataset to display inside the listview.
+   * @param {object} [pagingInfo=undefined] information about desired pager state
    */
-  refresh(dataset) {
-    this.loadData(dataset);
+  refresh(dataset, pagingInfo) {
+    this.loadData(dataset, pagingInfo);
 
     if (this.list) {
       this.render(this.list.data);
