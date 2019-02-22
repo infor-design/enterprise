@@ -27,17 +27,12 @@ const COMPONENT_NAME = 'hierarchy';
  * @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
  * @param {boolean} [settings.paging=false] If true show pagination.
  * @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
- * @param {boolean} [settings.layout=string]
- * Which layout should be rendered {'horizontal', 'mobile-only', 'stacked', 'paging'}
- * @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
- * An empty message will be displayed when there is no chart data. This accepts an object of the form
- * `emptyMessage: {
- *   title: 'No Data Available',
- *   info: 'Make a selection on the list above to see results',
- *   icon: 'icon-empty-no-data',
- *   button: {text: 'xxx', click: <function>
- *   }`
- * Set this to null for no message or will default to 'No Data Found with an icon.'
+ * @param {boolean} [settings.layout=string] Which layout should be rendered {'horizontal', 'mobile-only', 'stacked', 'paging'}
+ * @param {object} [settings.emptyMessage] An optional settings object for the empty message when there is no data.
+ * @param {string} [settings.emptyMessage.title=(Locale ? Locale.translate('NoData')] The text to show
+ * @param {string} [settings.emptyMessage.info=''] Longer block of test to show.
+ * @param {string} [settings.emptyMessage.icon='icon-empty-no-data'] The icon to show.
+ * @param {object} [settings.emptyMessage.button='{}'] The button and text to show with an optional click function.
  */
 const HIERARCHY_DEFAULTS = {
   legend: [],
