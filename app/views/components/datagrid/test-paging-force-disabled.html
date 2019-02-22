@@ -23,7 +23,7 @@
   <div class="twelve columns">
     <div class="toolbar">
       <div class="title">
-        This datagrid will refresh in <span id="reset-counter-time" style="font-family: Courier;"></span>ms.
+        &nbsp;
       </div>
       <div class="buttonset"></div>
       <div class="more">
@@ -77,7 +77,7 @@
       columns: columns,
       selectable: 'multiple',
       paging: true,
-      pagesize: 10,
+      pagesize: 5,
       source: gridSource,
       toolbar: {
         title: 'Data Grid Header Title',
@@ -110,38 +110,6 @@
       gridSource(pagingInfo, function(data, req) {
         gridApi.loadData(data, pagingInfo, true);
       });
-
-      $('body').toast({
-        title: 'Grid Refresh',
-        message: 'The Datagrid has been refreshed.'
-      });
-
-      startCounting();
-    }
-
-    var countTimer = 500,
-      forceStop = false;
-
-    function count() {
-      countTimer = countTimer - 1;
-      $('#reset-counter-time').html('<b>'+countTimer+'</b>');
-
-      while(countTimer > 0 && forceStop === false) {
-        return requestAnimationFrame(count);
-      }
-
-      if (forceStop === true) {
-        forceStop = false;
-        return;
-      }
-
-      $('#go-for-closechildren').trigger('done');
-      reloadGrid();
-    }
-
-    function startCounting() {
-      countTimer = 500;
-      count();
     }
 
     $('#force-disabled').on('click', function() {
@@ -153,10 +121,5 @@
       forceStop = true;
       reloadGrid(false);
     });
-
-    //==================================
-    // -- Kickoff ----------------------
-    //==================================
-    startCounting();
   });
 </script>

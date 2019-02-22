@@ -40,7 +40,9 @@
         var toggleOption = false;
         $('#toggle-pagesize-selector').on('click', function() {
           toggleOption = !toggleOption;
-          grid.pager.showPageSizeSelector(toggleOption);
+          grid.pagerAPI.updated({
+            showPageSizeSelector: toggleOption
+          });
         });
 
       });

@@ -55,7 +55,7 @@
       paging: true,
       pagesize: 20,
       pagingType: 'firstlast',
-      showPageSizeSelector: true,
+      showPageSizeSelector: false,
       source: function(req, response) {
         // Build the URL
         var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
