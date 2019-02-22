@@ -172,43 +172,39 @@ describe('Lookup paging tests', () => {
   });
 
   it('should have a pager component', async () => {
-    const buttonEl = await element(by.className('trigger'));
-    await buttonEl.click();
+    await element(by.css('.trigger')).click();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.pager-toolbar'))), config.waitsFor);
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('pager-toolbar'))), config.waitsFor);
-
-    expect(await element(by.className('pager-toolbar'))).toBeTruthy();
+    expect(await element(by.className('pager-toolbar')).isPresent()).toBeTruthy();
   });
 
   it('should have a search and actions', async () => {
-    const buttonEl = await element.all(by.className('trigger')).first();
+    await element(by.css('.trigger')).click();
+    await browser.driver.sleep(config.sleep);
 
-    await buttonEl.click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.searchfield'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.btn-actions'))), config.waitsFor);
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('searchfield'))), config.waitsFor);
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('btn-actions'))), config.waitsFor);
-
-    expect(await element(by.className('searchfield'))).toBeTruthy();
-    expect(await element(by.className('btn-actions'))).toBeTruthy();
+    expect(await element(by.css('.searchfield')).isPresent()).toBeTruthy();
+    expect(await element(by.css('.btn-actions')).isPresent()).toBeTruthy();
   });
 
   it('should have an enabled next page button', async () => {
-    const buttonEl = await element.all(by.className('trigger')).first();
+    await element(by.css('.trigger')).click();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.pager-next'))), config.waitsFor);
 
-    await buttonEl.click();
-
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('pager-next'))), config.waitsFor);
-
-    expect(await element(by.className('pager-next')).isEnabled()).toBe(true);
+    expect(await element(by.css('.pager-next')).isEnabled()).toBe(true);
   });
 
   it('should be able to go the next page', async () => {
-    const buttonEl = await element.all(by.className('trigger')).first();
+    await element(by.css('.trigger')).click();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.pager-next'))), config.waitsFor);
 
-    await buttonEl.click();
-
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('pager-next'))), config.waitsFor);
-    await element(by.className('pager-next')).click();
+    await element(by.css('.pager-next')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.name('pager-pageno')).getAttribute('value')).toEqual('2');
   });
