@@ -17,7 +17,7 @@
 
   // Initial load
   $.getJSON('{{basepath}}api/hc-john-randolph', function(data) {
-    options.dataset = data;
+    options.dataset = [data];
     $('#hierarchy').hierarchy(options);
   });
 
@@ -34,7 +34,7 @@
 
   function reload(eventInfo, hierarchyControl, newData) {
     eventInfo.data.children = newData;
-    options.dataset = eventInfo.data.children;
+    options.dataset = [eventInfo.data.children];
     hierarchyControl.reload(options);
   }
 </script>

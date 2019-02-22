@@ -11,34 +11,29 @@ import '../../utils/animations';
 const COMPONENT_NAME = 'hierarchy';
 
 /**
-* The displays customizable hierarchical data such as an org chart.
-*
-* @class Hierarchy
-* @param {string} element The component element.
-* @param {string} [settings] The component settings.
-* @param {string} [settings.legend] Pass in custom markdown for the legend structure.
-* @param {string} [settings.legendKey] Key to use for the legend matching
-* @param {string} [settings.dataset=[]] Hierarchical Data to display
-* @param {boolean} [settings.newData=[]] New data to be appended into dataset
-* @param {string} [settings.templateId] Additional product name information to display
-* @param {boolean} [settings.mobileView=false] If true will only show mobile view, default using device info.
-* @param {number} [settings.leafHeight=null] Set the height of the leaf
-* @param {number} [settings.leafWidth=null] Set the width of the leaf
-* @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
-* @param {boolean} [settings.paging=false] If true show pagination.
-* @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
-* @param {boolean} [settings.layout=string]
-* Which layout should be rendered {'horizontal', 'mobile-only', 'stacked', 'paging'}
-* @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
-* An empty message will be displayed when there is no chart data. This accepts an object of the form
-* `emptyMessage: {
-*   title: 'No Data Available',
-*   info: 'Make a selection on the list above to see results',
-*   icon: 'icon-empty-no-data',
-*   button: {text: 'xxx', click: <function>
-*   }`
-* Set this to null for no message or will default to 'No Data Found with an icon.'
-*/
+ * The displays customizable hierarchical data such as an org chart.
+ *
+ * @class Hierarchy
+ * @param {string} element The component element.
+ * @param {string} [settings] The component settings.
+ * @param {string} [settings.legend] Pass in custom markdown for the legend structure.
+ * @param {string} [settings.legendKey] Key to use for the legend matching
+ * @param {array} [settings.dataset=[]] Hierarchical Data to display
+ * @param {boolean} [settings.newData=[]] New data to be appended into dataset
+ * @param {string} [settings.templateId] Additional product name information to display
+ * @param {boolean} [settings.mobileView=false] If true will only show mobile view, default using device info.
+ * @param {number} [settings.leafHeight=null] Set the height of the leaf
+ * @param {number} [settings.leafWidth=null] Set the width of the leaf
+ * @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
+ * @param {boolean} [settings.paging=false] If true show pagination.
+ * @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
+ * @param {boolean} [settings.layout=string] Which layout should be rendered {'horizontal', 'mobile-only', 'stacked', 'paging'}
+ * @param {object} [settings.emptyMessage] An optional settings object for the empty message when there is no data.
+ * @param {string} [settings.emptyMessage.title=(Locale ? Locale.translate('NoData')] The text to show
+ * @param {string} [settings.emptyMessage.info=''] Longer block of test to show.
+ * @param {string} [settings.emptyMessage.icon='icon-empty-no-data'] The icon to show.
+ * @param {object} [settings.emptyMessage.button='{}'] The button and text to show with an optional click function.
+ */
 const HIERARCHY_DEFAULTS = {
   legend: [],
   legendKey: '',
@@ -98,25 +93,16 @@ Hierarchy.prototype = {
     }
 
     // Safety check, check for data
-
-    if (s.dataset === undefined) {
-      console.warn('Hierarchy dataset is undefined.');
+    if (s.dataset === undefined || s.dataset.length === 0 || !Array.isArray(s.dataset)) {
+      this.element.emptymessage(s.emptyMessage);
+      return;
     }
 
-    if (s.layout === 'horizontal' || s.layout === 'paging' || s.layout === 'mobile-only') {
-      if (s.dataset.length === 0) {
-        this.element.emptymessage(s.emptyMessage);
-        return;
-      } else if (s.dataset[0] && s.dataset[0].children.length > 0) {
-        this.render(s.dataset[0]);
-      } else if (s.dataset && s.dataset.children.length > 0) {
-        this.render(s.dataset);
-      }
-    }
-
-    if (s.layout === 'stacked') {
-      const data = [s.dataset][0];
-      this.render(data);
+    if ((s.dataset[0] && s.dataset[0].children) &&
+      s.dataset[0].children.length > 0 || this.isStackedLayout()) {
+      this.render(s.dataset[0]);
+    } else if (s.dataset && s.dataset.children.length > 0) {
+      this.render(s.dataset);
     }
 
     if (s.leafHeight !== null && s.leafWidth !== null) {
@@ -175,7 +161,7 @@ Hierarchy.prototype = {
     // Expand or Collapse
     self.element.off('click.hierarchy').on('click.hierarchy', '.btn', function (e) {
       // Stacked layout doesn't expand/collapse
-      if (s.layout === 'stacked') {
+      if (self.isStackedLayout()) {
         return;
       }
 
@@ -221,12 +207,12 @@ Hierarchy.prototype = {
     });
 
     /**
-    * Fires when node is selected
-    * @event selected
-    * @memberof Hierarchy
-    * @param {object} event - The jquery event object
-    * @param {object} eventInfo - More info to identify the node.
-    */
+     * Fires when node is selected
+     * @event selected
+     * @memberof Hierarchy
+     * @param {object} event - The jquery event object
+     * @param {object} eventInfo - More info to identify the node.
+     */
     self.element.on('mouseup', '.leaf, .back button', function (e) {
       const leaf = $(this);
       const target = $(e.target);
@@ -662,14 +648,14 @@ Hierarchy.prototype = {
 
     nodeTopLevel.animateOpen();
     /**
-    * Fires when leaf expanded.
-    *
-    * @event expanded
-    * @memberof Hierarchy
-    * @type {object}
-    * @param {object} event - The jquery event object
-    * @param {array} args [nodeData, dataset]
-    */
+     * Fires when leaf expanded.
+     *
+     * @event expanded
+     * @memberof Hierarchy
+     * @type {object}
+     * @param {object} event - The jquery event object
+     * @param {array} args [nodeData, dataset]
+     */
     this.element.trigger('expanded', [nodeData, s.dataset]);
 
     if (node.hasClass('root')) {
@@ -699,14 +685,14 @@ Hierarchy.prototype = {
 
     nodeTopLevel.animateClosed().on('animateclosedcomplete', () => {
       /**
-      * Fires when leaf collapsed.
-      *
-      * @event collapsed
-      * @memberof Hierarchy
-      * @type {object}
-      * @param {object} event - The jquery event object
-      * @param {array} args [nodeData, dataset]
-      */
+       * Fires when leaf collapsed.
+       *
+       * @event collapsed
+       * @memberof Hierarchy
+       * @type {object}
+       * @param {object} event - The jquery event object
+       * @param {array} args [nodeData, dataset]
+       */
       this.element.trigger('collapsed', [nodeData, s.dataset]);
     });
 
@@ -720,11 +706,11 @@ Hierarchy.prototype = {
   },
 
   /**
-  * Main render method
-  * @private
-  * @param {object} data info.
-  * @returns {void}
-  */
+   * Main render method
+   * @private
+   * @param {object} data info.
+   * @returns {void}
+   */
   render(data) {
     /* eslint-disable no-use-before-define */
     const s = this.settings;
@@ -758,12 +744,12 @@ Hierarchy.prototype = {
     if (s.paging && data.parentDataSet) {
       const backMarkup = '' +
         '<div class="back">' +
-          '<button type="button" class="btn-icon hide-focus btn-back">' +
-            '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-              '<use xlink:href="#icon-caret-left"></use>' +
-            '</svg>' +
-            '<span>Back</span>' +
-          '</button>' +
+        '<button type="button" class="btn-icon hide-focus btn-back">' +
+        '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
+        '<use xlink:href="#icon-caret-left"></use>' +
+        '</svg>' +
+        '<span>Back</span>' +
+        '</button>' +
         '</div>';
 
       // Append back button to chart to go back to view previous level
@@ -801,7 +787,8 @@ Hierarchy.prototype = {
         }
       });
     } else {
-      let leaf = s.layout === 'stacked' ? this.getTemplate(data.centeredNode) : this.getTemplate(data);
+      const centeredNode = data.centeredNode;
+      let leaf = this.isStackedLayout() ? this.getTemplate(centeredNode) : this.getTemplate(data);
       leaf = xssUtils.sanitizeHTML(leaf);
       rootNodeHTML.push(leaf);
       $(rootNodeHTML[0]).addClass('root is-selected').appendTo(chart);
@@ -879,11 +866,23 @@ Hierarchy.prototype = {
   },
 
   /**
-  * Checks to see if children have children
-  * @private
-  * @returns {boolean} true if have children
-  */
+   * @private
+   * @returns {boolean} true if stacked layout
+   */
+  isStackedLayout() {
+    return this.settings.layout && this.settings.layout === 'stacked';
+  },
+
+  /**
+   * Checks to see if children have children
+   * @private
+   * @returns {boolean} true if have children
+   */
   isSingleChildWithChildren() {
+    if (this.isStackedLayout()) {
+      return false;
+    }
+
     const s = this.settings;
     if (s.dataset && (s.dataset[0] && s.dataset[0].children)) {
       let i = s.dataset[0].children.length;
@@ -921,11 +920,11 @@ Hierarchy.prototype = {
   },
 
   /**
-  * Add the legend from the Settings
-  * @private
-  * @param {object} element .
-  * @returns {void}
-  */
+   * Add the legend from the Settings
+   * @private
+   * @param {object} element .
+   * @returns {void}
+   */
   createLegend(element) {
     const s = this.settings;
     const mod = 4;
@@ -949,12 +948,12 @@ Hierarchy.prototype = {
   },
 
   /**
-  * Creates a leaf node under element for nodeData
-  * @private
-  * @param {object} nodeData contains info.
-  * @param {object} container .
-  * @returns {void}
-  */
+   * Creates a leaf node under element for nodeData
+   * @private
+   * @param {object} nodeData contains info.
+   * @param {object} container .
+   * @returns {void}
+   */
   createLeaf(nodeData, container) {
     const self = this;
     const chartClassName = self.settings.rootClass;
@@ -1024,16 +1023,16 @@ Hierarchy.prototype = {
   },
 
   /**
-  * Set leaf colors matching data to key in legend
-  * @private
-  * @param {object} data contains info.
-  * @returns {void}
-  */
+   * Set leaf colors matching data to key in legend
+   * @private
+   * @param {object} data contains info.
+   * @returns {void}
+   */
   setColor(data) {
     const s = this.settings;
     this.setRootColor(data);
 
-    if (s.layout === 'stacked') {
+    if (this.isStackedLayout()) {
       if (data.ancestorPath && data.ancestorPath !== null) {
         data.ancestorPath.forEach((d) => {
           this.setRootColor(d);
