@@ -166,14 +166,14 @@ describe('Lookup (multiselect)', () => {
   });
 });
 
-describe('Lookup paging tests', () => {
+fdescribe('Lookup paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-paging');
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.trigger'))), config.waitsFor);
   });
 
   it('should have a pager component', async () => {
     await element(by.css('.trigger')).click();
-    await browser.driver.sleep(config.sleep);
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.pager-toolbar'))), config.waitsFor);
 
     expect(await element(by.className('pager-toolbar')).isPresent()).toBeTruthy();
@@ -181,7 +181,6 @@ describe('Lookup paging tests', () => {
 
   it('should have a search and actions', async () => {
     await element(by.css('.trigger')).click();
-    await browser.driver.sleep(config.sleep);
 
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.searchfield'))), config.waitsFor);
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.btn-actions'))), config.waitsFor);
@@ -192,7 +191,6 @@ describe('Lookup paging tests', () => {
 
   it('should have an enabled next page button', async () => {
     await element(by.css('.trigger')).click();
-    await browser.driver.sleep(config.sleep);
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.pager-next'))), config.waitsFor);
 
     expect(await element(by.css('.pager-next')).isEnabled()).toBe(true);
@@ -200,7 +198,6 @@ describe('Lookup paging tests', () => {
 
   it('should be able to go the next page', async () => {
     await element(by.css('.trigger')).click();
-    await browser.driver.sleep(config.sleep);
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.pager-next'))), config.waitsFor);
 
     await element(by.css('.pager-next')).click();
