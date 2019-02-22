@@ -98,10 +98,9 @@ Hierarchy.prototype = {
     }
 
     // Safety check, check for data
-
     if (s.dataset === undefined || s.dataset.length === 0 || !Array.isArray(s.dataset)) {
       this.element.emptymessage(s.emptyMessage);
-      return this;
+      return;
     }
 
     if ((s.dataset[0] && s.dataset[0].children) &&
