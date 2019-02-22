@@ -136,7 +136,6 @@ const formatters = {
 
   Lookup(row, cell, value, col, item) {
     let formatted = ((value === null || value === undefined) ? '' : value);
-
     if (!col.editor) {
       return formatted;
     }
@@ -145,6 +144,9 @@ const formatters = {
       formatted = col.editorOptions.field(item, null, null);
     }
 
+    if (formatted === null || formatted === undefined || formatted === '') {
+      formatted = '';
+    }
     return `<span class="trigger ${col.align === 'right' ? 'align-text-right' : ''}">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
   },
 
@@ -300,6 +302,7 @@ const formatters = {
   // Datagrid Group Row
   GroupRow(row, cell, value, col, item, api) {
     const groupSettings = api.settings.groupable;
+    const rowHtml = { left: '', center: '', right: '' };
     let groups = '';
     let isOpen = groupSettings.expanded === undefined ? true : groupSettings.expanded;
 
@@ -320,31 +323,41 @@ const formatters = {
     <span class="audible">${Locale.translate('ExpandCollapse')}</span>
     </button><span> ${groups}</span>`;
 
-    return button;
+    // Take the first
+    const container = api.getContainer(groupSettings.fields ? groupSettings.fields[0] : '');
+    rowHtml[container] = button;
+    return rowHtml;
   },
 
   GroupFooterRow(row, cell, value, col, item, api) {
     const groupSettings = api.settings.groupable;
-    // eslint-disable-next-line
-    let isOpen = groupSettings.expanded === undefined ? true : groupSettings.expanded;
-
-    if (groupSettings.expanded && typeof groupSettings.expanded === 'function') {
-      isOpen = groupSettings.expanded(row, cell, value, col, item, api);
-    }
-
+    const rowHtml = { left: '', center: '', right: '' };
+    const visibleColumnsLeft = api.settings.frozenColumns.left.length;
+    const visibleColumnsRight = api.settings.frozenColumns.right.length;
     const idx = api.columnIdxById(groupSettings.aggregate);
-    let html = `<td role="gridcell" colspan=${idx}><div class="datagrid-cell-wrapper"></div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> ${item.sum}</div></td>`;
+    const container = api.getContainer(groupSettings.aggregate);
+    rowHtml.left = `<td role="gridcell" colspan="${visibleColumnsLeft}"><div class="datagrid-cell-wrapper"></div></td><td role="gridcell"><div class="datagrid-cell-wrapper">${container === 'left' ? item.sum : '<span>&nbsp;</span>'}</div></td>`;
+    rowHtml.center = `<td role="gridcell" colspan="${idx - visibleColumnsLeft - visibleColumnsRight}"><div class="datagrid-cell-wrapper"></div></td><td role="gridcell"><div class="datagrid-cell-wrapper">${container === 'center' ? item.sum : '<span>&nbsp;</span>'}</div></td>`;
+    rowHtml.right = `<td role="gridcell" colspan="${visibleColumnsRight}"><div class="datagrid-cell-wrapper"></div></td><td role="gridcell"><div class="datagrid-cell-wrapper">${container === 'right' ? item.sum : '<span>&nbsp;</span>'}</div></td>`;
 
     if (groupSettings.groupFooterRowFormatter) {
-      html = groupSettings.groupFooterRowFormatter(idx, row, cell, value, col, item, api);
+      rowHtml[container] = groupSettings.groupFooterRowFormatter(
+        idx,
+        row,
+        cell,
+        value,
+        col,
+        item,
+        api
+      );
     }
 
-    return html;
+    return rowHtml;
   },
 
   SummaryRow(row, cell, value, col) {
     let afterText = '';
-    let beforeText = col.summaryText || `<b class="datagrid-summary-totals">${Locale.translate('Total')} </b>`;
+    let beforeText = col.summaryText || '';
 
     if (col.summaryTextPlacement === 'after') {
       afterText = beforeText;

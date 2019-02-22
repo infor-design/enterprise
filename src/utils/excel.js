@@ -6,7 +6,7 @@ import { Editors } from '../components/datagrid/datagrid.editors';
 const excel = {};
 
 /**
- * Clean all extra stuff
+ * Remove Hidden Columns and Non Exportable Columns.
  * @private
  * @param {string} customDs An optional customized version of the data to use.
  * @param {string} self The grid api to use (if customDs is not used)
@@ -28,24 +28,24 @@ excel.cleanExtra = function (customDs, self) {
       }
 
       // THEAD
-      const attrId = el.getAttribute('id');
       const attrExportable = el.getAttribute('data-exportable');
-      if (attrExportable && attrExportable === 'no' && typeof attrId !== 'undefined') {
-        nonExportables.push(parseInt(attrId.charAt(attrId.length - 1), 10) + 1);
+      if (attrExportable && attrExportable === 'no') {
+        const index = Array.prototype.slice.call(el.parentElement.children).indexOf(el);
+        nonExportables.push(index + 1);
         removeNode(el);
         return;
       }
 
       // TBODY
       const attrAriaColindex = el.getAttribute('aria-colindex');
-      if (el.tagName.toLowerCase() !== 'th' && typeof attrAriaColindex !== 'undefined') {
+      if (el.tagName.toLowerCase() === 'td' && attrAriaColindex) {
         if (nonExportables.indexOf(parseInt(attrAriaColindex, 10)) !== -1) {
           removeNode(el);
           return;
         }
       }
 
-      const innerElements = [].slice.call(table[0].querySelectorAll('.is-hidden, .is-draggable-target, .handle, .sort-indicator, .datagrid-filter-wrapper'));
+      const innerElements = [].slice.call(table[0].querySelectorAll('.is-hidden, .datagrid-expand-btn, .is-draggable-target, .handle, .sort-indicator, .datagrid-filter-wrapper'));
       innerElements.forEach(innerEl => removeNode(innerEl));
 
       while (el.attributes.length > 0) {
@@ -69,9 +69,24 @@ excel.cleanExtra = function (customDs, self) {
     table = excel.appendRows(self.settings.dataset, self.table[0].cloneNode(true), self);
   }
 
+  // Create the header row
   if (!customDs && !table[0].querySelector('thead')) {
     const tbody = table[0].querySelector('tbody');
-    tbody.parentNode.insertBefore(self.headerRow[0].cloneNode(true), tbody);
+    const header = table[0].createTHead();
+    const row = table[0].insertRow(0);
+    const allHeaderNodes = self.headerNodes();
+
+    for (let i = 0; i < allHeaderNodes.length; i++) {
+      const headerNode = allHeaderNodes[i];
+      const cell = row.insertCell(i);
+      cell.innerHTML = headerNode.querySelector('.datagrid-header-text').textContent.trim();
+      cell.classList = headerNode.classList;
+      cell.setAttribute('id', headerNode.getAttribute('id'));
+      if (headerNode.getAttribute('data-exportable')) {
+        cell.setAttribute('data-exportable', headerNode.getAttribute('data-exportable'));
+      }
+    }
+    tbody.parentNode.insertBefore(header, tbody);
   }
 
   table = clean(table);
@@ -164,11 +179,24 @@ excel.appendRows = function (dataset, table, self) {
   let tableHtml = '';
   const body = table.querySelector('tbody');
   body.innerHTML = '';
+  const appendRow = function (d, i) {
+    if (!d.isFiltered) {
+      const rowHtml = self.rowHtml(d, i, i, false, false, i, true);
+      const tr = document.createElement('tr');
+      tr.innerHTML = rowHtml.left + rowHtml.center + rowHtml.right;
+      tableHtml += tr.outerHTML;
+
+      // Add tree rows
+      if (d.children) {
+        for (let j = 0, l = d.children.length; j < l; j++) {
+          appendRow(d.children[j], j);
+        }
+      }
+    }
+  };
 
   dataset.forEach((d, i) => {
-    if (!d.isFiltered) {
-      tableHtml += self.rowHtml(d, i, i);
-    }
+    appendRow(d, i);
   });
 
   body.insertAdjacentHTML('beforeend', tableHtml);
