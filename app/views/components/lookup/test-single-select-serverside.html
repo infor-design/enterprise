@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="product-lookup1" class="label">Products One</label>
+      <input id="product-lookup1" name="product-lookup1" data-init="false" class="lookup" type="text" value="214221" />
+    </div>
+    <div class="field">
+      <label for="product-lookup2" class="label">Products Two</label>
+      <input id="product-lookup2" name="product-lookup2" data-init="false" class="lookup" type="text" />
+    </div>
+  </div>
+</div>
+
+<script>
+  var columns = [];
+
+  // Columns for the Lookup Datagrid
+  columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
+  columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink});
+  columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+  columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+  columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+  columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+
+  // Initialize the Lookup
+  $('#product-lookup1, #product-lookup2').lookup({
+     field: 'productId',
+     options: {
+        columns: columns,
+        dataset: [],
+        paging: true,
+        pagesize: 5,
+        selectable: 'single',
+        source: function (req, response) {
+          var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+          if (req.sortId) {
+            url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
+          }
+
+          if (req.filterExpr && req.filterExpr[0]) {
+            url += '&filterValue=' + req.filterExpr[0].value;
+            url += '&filterOp=' + req.filterExpr[0].operator;
+            url += '&filterColumn=' + req.filterExpr[0].columnId;
+          }
+
+          // Get Page Based on info in Req, return results into response;
+          $.getJSON(url, function(res) {
+            // This is the total going into the grid so the pager works (filtered total or total)
+            req.total = res.total;
+
+            if ((req.filterExpr && req.filterExpr[0])) {
+              req.total = res.total;
+              req.grandTotal = res.grandTotal; // This is the total amount on the server
+            }
+            // Set a timeout to simulate time for server to respond
+            setTimeout(() => {
+              response(res.data, req);
+            }, 1000);
+          });
+        }
+     }
+  });
+</script>
