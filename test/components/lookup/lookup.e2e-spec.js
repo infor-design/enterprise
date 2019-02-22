@@ -166,7 +166,7 @@ describe('Lookup (multiselect)', () => {
   });
 });
 
-fdescribe('Lookup paging tests', () => {
+describe('Lookup paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-paging');
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.trigger'))), config.waitsFor);
