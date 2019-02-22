@@ -52,7 +52,8 @@ const TOOLBAR_FLEX_ITEM_DEFAULTS = {
   disabled: false,
   readOnly: false,
   hidden: false,
-  componentSettings: undefined
+  componentSettings: undefined,
+  beforeOpen: undefined
 };
 
 /**
@@ -345,6 +346,9 @@ ToolbarFlexItem.prototype = {
    *  of its container element.
    */
   get overflowed() {
+    if (this.type === 'searchfield') {
+      return false;
+    }
     const isRTL = env.rtl;
     const elemRect = this.element.getBoundingClientRect();
     const sectionRect = this.section.getBoundingClientRect();
@@ -736,6 +740,7 @@ ToolbarFlexItem.prototype = {
     if (this.type === 'menubutton') {
       const menuElem = this.componentAPI.menu;
       const originalSubmenuData = this.componentAPI.toData({ noMenuWrap: true });
+      itemData.id = this.componentAPI.element[0].id;
       itemData.submenu = addMenuElementLinks(menuElem[0], originalSubmenuData);
     }
 
