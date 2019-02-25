@@ -27,7 +27,6 @@ const COMPONENT_NAME = 'listview';
  * @param {string} [settings.description] Audible Label (or use parent title)
  * @param {boolean} [settings.paging=false] If true, activates paging
  * @param {number} [settings.pagesize=10] If paging is activated, sets the number of listview items available per page
- * @param {string} [settings.pagingType='list'] The paging type to use, this can be 'list', 'table' or 'firstlast'
  * @param {boolean} [settings.searchable=false] If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
  * @param {boolean} [settings.highlight=true] If false the highlighting of text when using searchable is disabled. You may want to disable this on larger lists.
  * @param {string|boolean} [settings.selectable='single'] selection mode, can be false, 'single', 'multiple' or 'mixed'
@@ -41,6 +40,7 @@ const COMPONENT_NAME = 'listview';
  * @param {boolean} [settings.disableItemDeactivation=false] If true when an item is
   activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
  * @param {boolean} [settings.showPageSizeSelector=false] If true the page size select will be shown when paging.
+ * @param {object} [settings.listFilterSettings=null] If defined as an object, passes settings into the internal ListFilter component
  */
 
 const LISTVIEW_DEFAULTS = {
@@ -49,7 +49,6 @@ const LISTVIEW_DEFAULTS = {
   description: null,
   paging: false,
   pagesize: 10,
-  pagingType: 'list',
   searchable: false,
   highlight: true,
   selectable: 'single',
@@ -60,7 +59,8 @@ const LISTVIEW_DEFAULTS = {
   source: null,
   forceToRenderOnEmptyDs: false,
   disableItemDeactivation: false,
-  showPageSizeSelector: false
+  showPageSizeSelector: false,
+  listFilterSettings: null
 };
 
 function ListView(element, settings) {
@@ -74,6 +74,13 @@ function ListView(element, settings) {
 }
 
 ListView.prototype = {
+
+  /**
+   * @returns {Pager|undefined} Pager component instance, if one exists
+   */
+  get pagerAPI() {
+    return this.element.data('pager');
+  },
 
   /**
    * Initialize this component.
@@ -102,6 +109,37 @@ ListView.prototype = {
     const selectable = this.element.attr('data-selectable');
     const selectOnFocus = this.element.attr('data-select-onfocus');
 
+    // Check for legacy data attributes
+    if (this.element.attr('data-pagesize')) {
+      const pagesize = Number(this.element.attr('data-pagesize'));
+      if (!isNaN(pagesize)) {
+        this.settings.pagesize = pagesize;
+      }
+      this.element.removeAttr('data-pagesize');
+    }
+
+    // Convert a DOM-based list into a stored dataset (legacy)
+    if (!this.settings.dataset.length) {
+      if (this.element.is('ul') && this.element.children('li').length) {
+        const items = this.element.children('li');
+        if (!this.settings.template) {
+          this.settings.template = '{{#dataset}}<li>{{text}}</li>{{/dataset}}';
+        }
+        items.each((i, item) => {
+          this.settings.dataset.push({ text: $(item).text() });
+        });
+        items.remove();
+      }
+    }
+
+    // Search the global variable space for a dataset variable name, if provided.
+    if (this.settings.dataset && typeof this.settings.dataset === 'string') {
+      const globalDataset = window[this.settings.dataset];
+      if (globalDataset && globalDataset.length) {
+        this.settings.dataset = globalDataset;
+      }
+    }
+
     if (selectable && selectable.length) {
       this.settings.selectable = selectable;
     }
@@ -124,14 +162,12 @@ ListView.prototype = {
     // Configure Paging
     if (this.element.is('.paginated') || this.settings.paging === true) {
       this.element.pager({
-        componentAPI: this,
+        dataset: this.settings.dataset,
         pagesize: this.settings.pagesize,
-        source: this.settings.source,
         showPageSizeSelector: this.settings.showPageSizeSelector,
-        type: this.settings.pagingType || 'list'
+        source: this.settings.source,
+        type: 'list'
       });
-
-      this.pager = this.element.data('pager');
     }
 
     const cardWidgetContent = this.element.parent('.card-content, .widget-content');
@@ -153,24 +189,20 @@ ListView.prototype = {
         // TODO: Create Searchfield somehow
       }
 
-      this.listfilter = new ListFilter({
+      // Setup the ListFilter with externally-defined settings, if applicable
+      let listFilterSettings = {
         filterMode: 'contains'
-      });
+      };
+      if (typeof this.settings.listFilterSettings === 'object') {
+        listFilterSettings = utils.extend({}, listFilterSettings, this.settings.listFilterSettings);
+      }
+
+      this.listfilter = new ListFilter(listFilterSettings);
     }
 
     if (this.settings.emptyMessage) {
       // Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
       self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
-    }
-
-    if (this.settings.dataset) {
-      // Search the global variable space for a dataset variable name, if provided.
-      if (typeof this.settings.dataset === 'string') {
-        const dataset = window[this.settings.dataset];
-        if (dataset && dataset.length) {
-          this.settings.dataset = dataset;
-        }
-      }
     }
   },
 
@@ -209,10 +241,41 @@ ListView.prototype = {
    */
   render(dataset, pagerInfo) {
     const self = this;
+    const isServerSide = typeof this.settings.source === 'function';
     let totals = {};
+    let displayedDataset = dataset;
+    let firstRecordIdx = 0;
+    let lastRecordIdx = displayedDataset ? displayedDataset.length : 0;
+    let pagesize = this.settings.pagesize;
+    let setSize = dataset.length;
+
+    if (pagerInfo) {
+      pagesize = pagerInfo.pagesize || pagesize;
+      setSize = pagerInfo.filteredTotal || setSize;
+    }
+
+    if (!isServerSide && this.pagerAPI) {
+      this.renderPager(pagerInfo, true);
+      pagerInfo = this.pagerAPI.state;
+    }
+
+    // If the paging information sets limits on the dataset, customize the
+    // displayed dataset to fit the conditions.
+    if (setSize > pagesize) {
+      const pages = this.filteredDataset ? pagerInfo.filteredPages : pagerInfo.pages;
+      if (pages > 1) {
+        let trueActivePage = pagerInfo.activePage > 0 ? pagerInfo.activePage - 1 : 0;
+        if (this.filteredDataset) {
+          trueActivePage = pagerInfo.filteredActivePage - 1;
+        }
+        firstRecordIdx = pagerInfo.pagesize * trueActivePage;
+        lastRecordIdx = pagerInfo.pagesize * (trueActivePage + 1);
+        displayedDataset = dataset.slice(firstRecordIdx, lastRecordIdx);
+      }
+    }
 
     // Render "mustache" Template
-    if (typeof Tmpl === 'object' && dataset && this.settings.template) {
+    if (typeof Tmpl === 'object' && displayedDataset && this.settings.template) {
       // create a copy of an inlined template
       if (this.settings.template instanceof $) {
         this.settings.template = `${this.settings.template.html()}`;
@@ -228,22 +291,19 @@ ListView.prototype = {
         totals = this.getTotals(dataset);
       }
 
-      const renderedTmpl = Tmpl.compile(this.settings.template, { dataset, totals });
+      const renderedTmpl = Tmpl.compile(this.settings.template, {
+        dataset: displayedDataset,
+        totals
+      });
 
-      if (dataset.length > 0 || this.settings.forceToRenderOnEmptyDs) {
+      if (displayedDataset.length > 0 || this.settings.forceToRenderOnEmptyDs) {
         this.element.html(renderedTmpl);
       } else if (self.emptyMessageContainer) {
         this.element.empty();
         DOM.append(this.element, this.emptyMessageContainer[0].outerHTML, '<div><svg><use><span><b>');
-      } else if (dataset.length === 0) {
+      } else if (displayedDataset.length === 0) {
         this.element.html(renderedTmpl || '<ul></ul>');
       }
-    }
-
-    // Render Pager
-    if (this.settings.paging) {
-      this.renderPager(pagerInfo);
-      this.pager.setActivePage(this.pager.settings.activePage, true);
     }
 
     // Add Aria
@@ -284,16 +344,22 @@ ListView.prototype = {
       }
 
       // Add Aria
-      item.attr({ 'aria-posinset': i + 1, 'aria-setsize': items.length });
+      item.attr({ 'aria-posinset': (firstRecordIdx + i + 1), 'aria-setsize': setSize });
 
       // Add Aria disabled
       if (item.hasClass('is-disabled')) {
         item.attr('aria-disabled', 'true');
       }
+
+      // If this dataset is filtered, hightlight the relevant search term inside the element.
+      if (self.settings.highlight && self.searchTerm) {
+        item.highlight(self.searchTerm);
+      }
     });
 
     // TODO: Invoke the "element" here after we write an updated method.
     this.element.children().initialize();
+
     /**
      * Fires after the listbox is fully rendered.
      *
@@ -302,7 +368,7 @@ ListView.prototype = {
      * @property {object} event - The jquery event object
      * @property {array} dataset .
      */
-    this.element.trigger('rendered', [dataset]);
+    this.element.trigger('rendered', [displayedDataset]);
 
     // Handle refresh
     this.element.off('updated.listview').on('updated.listview', (e, settings) => {
@@ -314,24 +380,41 @@ ListView.prototype = {
    * Add and update the pager (if used)
    * @private
    * @param {object} updatedPagerInfo contains updated paging settings
+   * @param {boolean} isResponse represents whether or not this render call was caused by an AJAX response
    * @returns {void}
    */
-  renderPager(updatedPagerInfo) {
-    if (!this.pager) {
+  renderPager(updatedPagerInfo, isResponse) {
+    if (!this.pagerAPI) {
       return;
     }
 
-    this.pager.updatePagingInfo(updatedPagerInfo);
-    // this.pager.setActivePage(1, true);
+    this.pagerAPI.updatePagingInfo(updatedPagerInfo, isResponse);
+  },
+
+  /**
+   * Reliably gets all the pre-rendered elements in the container and returns them for use.
+   * @private
+   * @returns {array} TThe pagable items
+   */
+  getPageableElements() {
+    let elements = this.element.children();
+
+    // Adjust for cases where the root is a <ul>
+    if (elements.is('ul')) {
+      elements = elements.children();
+    }
+
+    return elements;
   },
 
   /**
    * Get the Data Source. Can be an array, Object or Url and render the list.
    * @private
    * @param {array} dataset contains a potential new dataset to display inside the listview.
+   * @param {object} [pagingInfo=undefined] information about desired pager state
    */
-  refresh(dataset) {
-    this.loadData(dataset);
+  refresh(dataset, pagingInfo) {
+    this.loadData(dataset, pagingInfo);
 
     if (this.list) {
       this.render(this.list.data);
@@ -350,7 +433,30 @@ ListView.prototype = {
     const self = this;
 
     ds = ds || this.settings.dataset;
-    pagerInfo = pagerInfo || {};
+    if (this.filteredDataset) {
+      ds = this.filteredDataset;
+    }
+
+    if (!pagerInfo) {
+      if (this.pagerAPI) {
+        if (ds.length !== this.pagerAPI.settings.dataset.length) {
+          this.pagerAPI.updated({
+            dataset: ds
+          });
+        }
+        pagerInfo = this.pagerAPI.state;
+      } else {
+        pagerInfo = {
+          activePage: 1
+        };
+      }
+    }
+
+    if (this.filteredDataset) {
+      pagerInfo.filteredTotal = ds.length;
+    } else {
+      pagerInfo.total = ds.length;
+    }
 
     if (!Array.isArray(ds)) {
       return;
@@ -359,6 +465,21 @@ ListView.prototype = {
     function done(response, pagingInfo) {
       self.settings.dataset = response;
       ds = response;
+      const activePage = self.pagerAPI ? self.pagerAPI.activePage : 1;
+
+      if (typeof pagingInfo === 'string') {
+        pagingInfo = {
+          activePage,
+          pagesize: self.settings.pagesize,
+          total: ds.length,
+          type: pagingInfo
+        };
+      }
+
+      if (self.pagerAPI) {
+        self.renderPager(pagingInfo, true);
+        pagingInfo = self.pagerAPI.state;
+      }
       self.render(ds, pagingInfo);
     }
 
@@ -372,7 +493,7 @@ ListView.prototype = {
     // If paging is not active, and a source is present, attempt to retrieve
     // information from the datasource.
     // TODO: Potentially abstract this datasource concept out for use elsewhere
-    if ((s || ajaxDs) && !isResponse) {
+    if ((s || ajaxDs) && !this.filteredDataset && !isResponse) {
       switch (typeof s) {
         case 'function':
           s(pagerInfo, done);
@@ -469,8 +590,8 @@ ListView.prototype = {
       items[0].style.width = `${item1W}px`;
     }
 
-    if (this.element.data('pager')) {
-      this.element.data('pager').renderBar();
+    if (this.pagerAPI) {
+      this.pagerAPI.render();
     }
   },
 
@@ -498,10 +619,17 @@ ListView.prototype = {
 
     // Get the search string and trim whitespace
     const searchFieldVal = searchfield.val().trim();
+    const pagingInfo = {
+      searchActivePage: 1
+    };
 
     // Clear
     if (!searchFieldVal) {
+      if (!this.searchTerm) {
+        return;
+      }
       this.resetSearch();
+      return;
     }
 
     // Make sure there is a search term...and its not the
@@ -511,23 +639,21 @@ ListView.prototype = {
     }
 
     // Set a global "searchTerm" and get the list of elements
-    this.searchTerm = searchfield.val();
-    const list = this.element.find('li, tbody > tr');
-
-    this.resetSearch();
+    this.searchTerm = searchFieldVal;
 
     // Filter the results and highlight things
-    const results = this.listfilter
-      .filter(list, this.searchTerm);
-
-    if (this.settings.highlight) {
-      results.highlight(this.searchTerm);
+    let results = this.listfilter.filter(this.settings.dataset, this.searchTerm);
+    if (!results.length) {
+      results = [];
     }
+    pagingInfo.filteredTotal = results.length;
+    pagingInfo.searchActivePage = 1;
+    results.forEach((result) => {
+      result.isFiltered = true;
+    });
 
-    // Hide elements that aren't in the results array
-    list.not(results).addClass('hidden');
-
-    this.renderPager();
+    this.filteredDataset = results;
+    this.loadData(null, pagingInfo);
   },
 
   /**
@@ -536,15 +662,20 @@ ListView.prototype = {
    * @returns {void}
    */
   resetSearch() {
-    const list = this.element.find('li, tbody > tr');
-
-    list.removeClass('hidden');
-
-    if (this.settings.highlight) {
-      list.each(function () {
-        $(this).unhighlight();
-      });
+    if (this.filteredDataset) {
+      delete this.filteredDataset;
     }
+    if (this.searchTerm) {
+      delete this.searchTerm;
+    }
+
+    const pagingInfo = {
+      activePage: 1,
+      filteredTotal: undefined,
+      searchActivePage: undefined
+    };
+
+    this.refresh(null, pagingInfo);
   },
 
   /**
@@ -999,8 +1130,8 @@ ListView.prototype = {
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
+      this.refresh(settings.dataset ? settings.dataset : null);
     }
-    this.refresh(settings ? settings.dataset : null);
     return this;
   },
 
@@ -1029,7 +1160,10 @@ ListView.prototype = {
     $('body').off('resize.listview');
     this.element.prev('.listview-header').off('click.listview');
     if (this.searchfield) {
-      this.searchfield.off('contents-checked.searchable-listview');
+      this.searchfield.off([
+        'contents-checked.searchable-listview',
+        'cleared.searchable-listview'
+      ].join(' '));
     }
     this.element.off('change.selectable-listview', '.listview-checkbox input');
     this.element.off('contextmenu.listview dblclick.listview', 'li, tr');
@@ -1037,6 +1171,14 @@ ListView.prototype = {
     this.element.off('keydown.listview', 'li, tr, a');
     this.element.off('focus.listview', 'li, tbody tr');
     this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview updated.listview').empty();
+
+    if (this.filteredDataset) {
+      delete this.filteredDataset;
+    }
+    if (this.searchTerm) {
+      delete this.searchTerm;
+    }
+
     return this;
   },
 
@@ -1260,19 +1402,27 @@ ListView.prototype = {
         .off('contents-checked.searchable-listview')
         .on('contents-checked.searchable-listview', function (e) {
           self.handleSearch(e, $(this));
+        })
+        .off('cleared.searchable-listview')
+        .on('cleared.searchable-listview', () => {
+          self.resetSearch();
         });
     }
 
     // If used with a Pager Control, listen for the end of the page and scroll
     // the Listview to the top
-    if (this.element.data('pager')) {
-      this.element.off('afterpaging.listview').on('afterpaging.listview', () => {
-        self.element.scrollTop(0);
-      });
+    if (this.pagerAPI) {
+      this.element
+        .off('page.listview').on('page.listview', (e, pagingInfo) => {
+          self.handlePageChange(pagingInfo);
+        })
+        .off('pagesizechange.listview').on('pagesizechange.listview', (e, pagingInfo) => {
+          self.handlePageSizeChange(pagingInfo);
+        });
     }
 
-    $('body').off('resize.listview').on('resize.listview', () => {
-      self.handleResize();
+    $('body').off('resize.listview').on('resize.listview', (e) => {
+      self.handleResize(e);
     });
 
     // Animate open and Closed from the header
@@ -1288,7 +1438,24 @@ ListView.prototype = {
           self.element.animateOpen();
         }
       });
-  }
+  },
+
+  /**
+   * Listens for a `pagesizechange` event from the dropdown that recalculates page size
+   * @param {object} pagingOpts state information from the pager
+   */
+  handlePageSizeChange(pagingOpts) {
+    pagingOpts.activePage = 1;
+    this.loadData(undefined, pagingOpts);
+  },
+
+  /**
+   * Listens for `page` events from the Pager.
+   * @param {object} pagingOpts state information from the pager
+   */
+  handlePageChange(pagingOpts) {
+    this.loadData(undefined, pagingOpts);
+  },
 };
 
 export { ListView, COMPONENT_NAME, LISTVIEW_DEFAULTS };

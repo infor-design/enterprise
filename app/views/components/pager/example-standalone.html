@@ -77,13 +77,13 @@
       nextPageTooltip: 'Custom Next Tooltip',
       lastPageTooltip: 'Custom Last Tooltip'
     }).on('firstpage', function (e, args) {
-      console.log(args);
+      console.log('First Page:', args);
     }).on('previouspage', function (e, args) {
-      console.log(args);
+      console.log('Previous Page:', args);
     }).on('nextpage', function (e, args) {
-      console.log(args);
+      console.log('Next Page:', args);
     }).on('lastpage', function (e, args) {
-      console.log(args);
+      console.log('Last Page:', args);
     }).data('pager');
 
     //TODO: Make func tests for these (api.updated calls)

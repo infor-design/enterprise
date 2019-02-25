@@ -5,6 +5,338 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
+describe('Datagrid Alternate Row Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-alternate-row-shading?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render alternate rows', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(7);
+    expect(await element.all(by.css('.datagrid-row.alt-shading')).count()).toEqual(3);
+  });
+});
+
+describe('Datagrid Colspan Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-colspan?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-colspan')).toEqual(0);
+    });
+  }
+});
+
+describe('Datagrid Comments Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-comments?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-comments')).toEqual(0);
+    });
+  }
+});
+
+describe('Datagrid Custom Filter Option Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-custom-filter-conditions?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should have custom filter options', async () => {
+    const selector = '#example-custom-filter-conditions-datagrid-1-header-1 button';
+    await element(await by.css(selector)).click();
+
+    expect(await element.all(await by.css('.popupmenu')).count()).toEqual(4);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('popupmenu-2'))), config.waitsFor);
+
+    const text = await element(by.id('popupmenu-2')).getText();
+
+    expect(await text.replace(/[\s\r\n]+/g, '')).toEqual('ContainsEquals');
+  });
+});
+
+describe('Datagrid Empty Message Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-empty-message?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render empty message', async () => {
+    expect(await element(await by.css('.datagrid-header-container + .empty-message'))).toBeTruthy();
+  });
+});
+
+describe('Datagrid Expandable Cells Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-expandable-cells?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should expand on cell click', async () => {
+    const elem = await element(by.css('#datagrid tbody tr:nth-child(3) td:nth-child(4)'));
+    await elem.getSize().then((size) => {
+      expect(size.height).toEqual(50);
+    });
+    await elem.click();
+    await elem.getSize().then((size) => {
+      expect(size.height).toBeGreaterThan(100);
+    });
+  });
+});
+
+describe('Datagrid Expandable Row Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-expandable-row?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should expand/collapse on row click', async () => {
+    const detailRow = await element(by.css('#datagrid tbody tr:nth-child(4)'));
+    const button = await element(by.css('#datagrid tbody tr:nth-child(3) td:nth-child(1) button'));
+    await detailRow.getSize().then((size) => {
+      expect(size.height).toEqual(0);
+    });
+    await button.click();
+    await browser.driver.sleep(config.sleep);
+    await detailRow.getSize().then((size) => {
+      expect(size.height).toEqual(167);
+    });
+    await button.click();
+    await browser.driver.sleep(config.sleep);
+    await detailRow.getSize().then((size) => {
+      expect(size.height).toEqual(0);
+    });
+  });
+});
+
+describe('Datagrid filter tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-filter?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should single select row, filter and restore', async () => {
+    expect(await element.all(by.css('.datagrid-body:nth-child(2) .datagrid-row')).count()).toEqual(9);
+    await element(by.css('#datagrid .datagrid-body:nth-child(2) tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-body:nth-child(2) tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body:nth-child(2) tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+
+    await element(by.id('example-filter-datagrid-1-header-filter-1')).clear();
+    await element(by.id('example-filter-datagrid-1-header-filter-1')).sendKeys('2241202');
+    await element(by.id('example-filter-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(300);
+
+    expect(await element.all(by.css('.datagrid-body:nth-child(2) .datagrid-row')).count()).toEqual(1);
+
+    await element(by.id('example-filter-datagrid-1-header-filter-1')).clear();
+    await element(by.id('example-filter-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(300);
+
+    expect(await element.all(by.css('.datagrid-body:nth-child(2) .datagrid-row')).count()).toEqual(9);
+    expect(await element(by.css('#datagrid .datagrid-body:nth-child(2) tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body:nth-child(2) tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+  });
+});
+
+describe('Datagrid frozen column tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-frozen-columns');
+
+    const datagridEl = await element(by.css('#datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.id('datagrid'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-frozen')).toEqual(0);
+    });
+  }
+
+  it('Should render frozen columns', async () => {
+    // Check all containers rendered on the header
+    expect(await element.all(by.css('.datagrid-header th')).count()).toEqual(15);
+    expect(await element.all(by.css('.datagrid-header.left th')).count()).toEqual(2);
+    expect(await element.all(by.css('.datagrid-header.right th')).count()).toEqual(1);
+
+    // Check all containers rendered on the body
+    expect(await element.all(by.css('.datagrid-body tr:first-child td')).count()).toEqual(15);
+    expect(await element.all(by.css('.datagrid-body.left tr:first-child td')).count()).toEqual(2);
+    expect(await element.all(by.css('.datagrid-body.right tr:first-child td')).count()).toEqual(1);
+
+    // Check all rows rendered on the body
+    expect(await element.all(by.css('.datagrid-body tr')).count()).toEqual(150);
+    expect(await element.all(by.css('.datagrid-body.left tr')).count()).toEqual(50);
+    expect(await element.all(by.css('.datagrid-body.right tr')).count()).toEqual(50);
+  });
+});
+
+describe('Datagrid grouping headers and filter tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-grouping-filter');
+
+    const datagridEl = await element(by.css('.datagrid-rowgroup-header'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should filter and show groups', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(16);
+    expect(await element.all(by.css('.datagrid-rowgroup-header')).count()).toEqual(7);
+
+    await element(by.css('#example-grouping-filter-datagrid-1-header-filter-1')).sendKeys('Ha');
+    await element(by.css('#example-grouping-filter-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(5);
+    expect(await element.all(by.css('.datagrid-rowgroup-header')).count()).toEqual(2);
+  });
+});
+
+describe('Datagrid grouping with paging tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-grouping-paging');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should handle click', async () => {
+    const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
+
+    expect(await element(by.css(cell)).getText()).toEqual('214220');
+
+    await element(await by.css(cell)).click();
+
+    expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
+
+    await element(await by.css('.pager-next')).click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
+
+    expect(await element(by.css(cell)).getText()).toEqual('214225');
+
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
+  });
+
+  it('Should handle selection', async () => {
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next a'))), config.waitsFor);
+
+    const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
+    const row = '#datagrid .datagrid-body tbody tr:nth-child(2)';
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
+
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
+
+    await element(await by.css('.pager-next')).click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev a'))), config.waitsFor);
+
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
+
+    await element(by.css(cell)).click();
+
+    expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
+  });
+});
+
 describe('Datagrid index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-index?layout=nofrills');
@@ -61,9 +393,9 @@ describe('Datagrid index tests', () => {
   }
 });
 
-describe('Datagrid grouping with paging tests', () => {
+describe('Datagrid keyword search tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-grouping-paging');
+    await utils.setPage('/components/datagrid/example-keyword-search?layout=nofrills');
 
     const datagridEl = await element(by.id('datagrid'));
     await browser.driver
@@ -74,52 +406,46 @@ describe('Datagrid grouping with paging tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should handle click', async () => {
-    const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
+  it('Should filter keyword results', async () => {
+    expect(await element.all(by.css('.datagrid-body:nth-child(2) tr')).count()).toEqual(12);
+    await element(by.id('gridfilter')).sendKeys('T');
+    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
 
-    expect(await element(by.css(cell)).getText()).toEqual('214220');
-    await element(await by.css(cell)).click();
-
-    expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
-
-    await element(await by.css('.pager-next')).click();
-
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
-
-    expect(await element(by.css(cell)).getText()).toEqual('214225');
-    await element(by.css(cell)).click();
-
-    expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
+    expect(await element.all(by.css('.datagrid-body:nth-child(2) tr')).count()).toEqual(11);
   });
 
-  it('Should handle selection', async () => {
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next a'))), config.waitsFor);
+  it('Should highlight keyword results', async () => {
+    expect(await element.all(by.css('.datagrid-body:nth-child(2) tr')).count()).toEqual(12);
+    await element(by.id('gridfilter')).sendKeys('26');
+    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
 
-    const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
-    const row = '#datagrid .datagrid-body tbody tr:nth-child(2)';
-    await element(by.css(cell)).click();
-
-    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
-
-    await element(by.css(cell)).click();
-
-    expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
-
-    await element(await by.css('.pager-next')).click();
-
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev a'))), config.waitsFor);
-
-    await element(by.css(cell)).click();
-
-    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
-
-    await element(by.css(cell)).click();
-
-    expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element.all(by.css('.datagrid-body:nth-child(2) tr')).count()).toEqual(6);
+    expect(await element.all(by.css('.search-mode i')).count()).toEqual(6);
+    expect(await element.all(by.css('.search-mode i')).get(0).getText()).toEqual('26');
   });
+});
+
+describe('Datagrid List Styles Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-list?layout=nofrills');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-islist')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid mixed selection tests', () => {
@@ -136,20 +462,239 @@ describe('Datagrid mixed selection tests', () => {
   });
 
   it('Should allow activation and deactivation', async () => {
-    expect(await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('52106');
-    await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
+    expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('52106');
+    await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1) td:nth-child(2)')).click();
 
-    expect(await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-rowactivated');
-    await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
+    expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-rowactivated');
+    await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1) td:nth-child(2)')).click();
 
-    expect(await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-rowactivated');
+    expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-rowactivated');
   });
 
   it('Should handle selection ', async () => {
-    await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1) td:nth-child(1)')).click();
 
-    expect(await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-rowactivated');
-    expect(await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-rowactivated');
+    expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+  });
+});
+
+describe('Datagrid multiselect tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-multiselect');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should allow selection and deselection', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)')).click();
+
+    expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
+
+    expect(await element(by.css('.selection-count')).getText()).toEqual('1 Selected');
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
+  });
+
+  it('Should handle removing selected rows ', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(7);
+
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)')).click();
+
+    await element(by.id('remove-btn')).click();
+
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(5);
+  });
+
+  it('Should work with sort', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)')).click();
+
+    expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
+
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
+
+    expect(await element(by.css('.selection-count')).getText()).toEqual('3 Selected');
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(3);
+
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(6) td:nth-child(2)')).click();
+
+    expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
+  });
+});
+
+describe('Datagrid paging tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to move to last', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+
+    await element(by.css('.pager-last a')).click();
+    await browser.driver.sleep(300);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('990');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('999');
+  });
+
+  it('Should be able to move to first', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+
+    await element(by.css('.pager-last a')).click();
+    await browser.driver.sleep(300);
+    await element(by.css('.pager-first a')).click();
+    await browser.driver.sleep(300);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+  });
+
+  it('Should be able to move to next/prev', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+
+    await element(await by.css('.pager-next a')).click();
+    await browser.driver.sleep(300);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('10');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('19');
+
+    await element(await by.css('.pager-prev a')).click();
+    await browser.driver.sleep(300);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+  });
+
+  it('Should be able to move to specific page', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+
+    await element(by.css('.pager-count input')).sendKeys(protractor.Key.BACK_SPACE);
+    await element(by.css('.pager-count input')).sendKeys('5');
+    await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(300);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('40');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
+  });
+
+  it('Should not move on a page thats more than the max', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+
+    await element(by.css('.pager-count input')).clear();
+    await element(by.css('.pager-count input')).sendKeys('101');
+    await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+  });
+});
+
+describe('Datagrid page size selector tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-page-size-selector');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should toggle and use pagesize selector', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(3);
+    await element(by.id('toggle-pagesize-selector')).click();
+    await element(by.css('.pager-pagesize .btn-menu')).click();
+
+    await element(by.css('#popupmenu-3 li:nth-child(2) a')).click();
+
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(10);
+  });
+});
+
+describe('Datagrid single select tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-singleselect');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should single select rows', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).toMatch('is-selected');
+
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+  });
+
+  it('Should work with sort', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).getText()).toEqual('2142201');
+
+    // Sort
+    await element(by.css('#datagrid .datagrid-header th:nth-child(4)')).click();
+    await browser.driver.sleep(300);
+    await element(by.css('#datagrid .datagrid-header th:nth-child(4)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).getText()).toEqual('2142201');
+
+    await browser.driver.sleep(300);
+
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    await browser.driver.sleep(300);
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).getText()).toEqual('2642205');
   });
 });
 
@@ -241,217 +786,23 @@ describe('Datagrid editor dropdown source tests', () => {
   });
 });
 
-describe('Datagrid multiselect tests', () => {
+describe('Datagrid Empty Message Tests After Load', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-multiselect');
+    await utils.setPage('/components/datagrid/test-empty-message-after-load');
 
     const datagridEl = await element(by.id('datagrid'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
+  it('Should not show empty indicator initially', async () => {
+    expect(await element.all(by.css('.empty-message')).count()).toEqual(0);
   });
 
-  it('Should allow selection and deselection', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)')).click();
+  it('Should show empty indicator on load', async () => {
+    await element(await by.id('show-empty-message')).click();
 
-    expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
-
-    expect(await element(by.css('.selection-count')).getText()).toEqual('1 Selected');
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
-
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
-  });
-
-  it('Should handle removing selected rows ', async () => {
-    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(7);
-
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)')).click();
-
-    await element(by.id('remove-btn')).click();
-
-    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(5);
-  });
-
-  it('Should work with sort', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)')).click();
-
-    expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
-
-    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
-    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
-
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
-
-    expect(await element(by.css('.selection-count')).getText()).toEqual('3 Selected');
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(3);
-
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(6) td:nth-child(2)')).click();
-
-    expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
-  });
-});
-
-describe('Datagrid paging (client side) tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-paging');
-
-    const datagridEl = await element(by.id('datagrid'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should be able to move to last', async () => {
-    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
-    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
-
-    await element(by.css('.pager-last a')).click();
-    await browser.driver.sleep(300);
-
-    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('990');
-    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('999');
-  });
-
-  it('Should be able to move to first', async () => {
-    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
-    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
-
-    await element(by.css('.pager-last a')).click();
-    await browser.driver.sleep(300);
-    await element(by.css('.pager-first a')).click();
-    await browser.driver.sleep(300);
-
-    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
-    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
-  });
-
-  it('Should be able to move to next/prev', async () => {
-    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
-    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
-
-    await element(await by.css('.pager-next a')).click();
-    await browser.driver.sleep(300);
-
-    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('10');
-    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('19');
-
-    await element(await by.css('.pager-prev a')).click();
-    await browser.driver.sleep(300);
-
-    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
-    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
-  });
-
-  it('Should be able to move to specific page', async () => {
-    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
-    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
-
-    await element(by.css('.pager-count input')).sendKeys(protractor.Key.BACK_SPACE);
-    await element(by.css('.pager-count input')).sendKeys('5');
-    await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
-    await browser.driver.sleep(300);
-
-    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('40');
-    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
-  });
-
-  it('Should not move on a page thats more than the max', async () => {
-    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
-    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
-
-    await element(by.css('.pager-count input')).clear();
-    await element(by.css('.pager-count input')).sendKeys('101');
-    await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
-
-    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
-    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
-  });
-});
-
-describe('Datagrid page size selector tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-paging-page-size-selector');
-
-    const datagridEl = await element(by.id('datagrid'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should toggle and use pagesize selector', async () => {
-    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(3);
-    await element(by.id('toggle-pagesize-selector')).click();
-    await element(by.css('.pager-pagesize .btn-menu')).click();
-
-    await element(by.css('#popupmenu-3 li:nth-child(2) a')).click();
-
-    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(10);
-  });
-});
-
-describe('Datagrid single select tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-singleselect');
-
-    const datagridEl = await element(by.id('datagrid'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should single select rows', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
-
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
-
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).toMatch('is-selected');
-
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
-
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
-  });
-
-  it('Should work with sort', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).getText()).toEqual('2142201');
-
-    // Sort
-    await element(by.css('#datagrid .datagrid-header th:nth-child(4)')).click();
-    await element(by.css('#datagrid .datagrid-header th:nth-child(4)')).click();
-
-    expect(await element(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).getText()).toEqual('2142201');
-
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).getText()).toEqual('2642205');
+    expect(await element.all(by.css('.empty-message')).count()).toEqual(1);
   });
 });
 
@@ -532,49 +883,6 @@ describe('Datagrid filter single select tests', () => {
   });
 });
 
-describe('Datagrid filter lookup tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-filter');
-
-    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5)'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should single select row, filter and restore', async () => {
-    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(9);
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
-
-    await element(by.css('#example-filter-datagrid-1-header-filter-1 + span.trigger')).click();
-    await browser.driver.sleep(300);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-    await browser.driver.sleep(300);
-
-    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(0);
-
-    await element(by.css('#example-filter-datagrid-1-header-filter-1 + span.trigger')).click();
-    await browser.driver.sleep(300);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
-    await browser.driver.sleep(300);
-
-    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(1);
-
-    await element(by.id('example-filter-datagrid-1-header-filter-1')).clear();
-    await element(by.id('example-filter-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
-
-    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(9);
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
-  });
-});
-
 describe('Datagrid filter lookup custom click function tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-lookup-click-function');
@@ -612,20 +920,28 @@ describe('Datagrid grouping multiselect tests', () => {
   });
 
   it('Should be able to select within groups', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tr:nth-child(2) td:nth-child(1)')).click();
 
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(3)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tbody tr:nth-child(2)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tbody tr:nth-child(3)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) tbody tr:nth-child(2)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) tbody tr:nth-child(3)')).getAttribute('class')).not.toMatch('is-selected');
 
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(7) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tr:nth-child(7) td:nth-child(1)')).click();
 
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(7)')).getAttribute('class')).toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(8)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tbody tr:nth-child(7)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tbody tr:nth-child(8)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) tbody tr:nth-child(7)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) tbody tr:nth-child(8)')).getAttribute('class')).not.toMatch('is-selected');
 
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(11) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tr:nth-child(11) td:nth-child(1)')).click();
 
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(11)')).getAttribute('class')).toMatch('is-selected');
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(3);
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) tr:nth-child(11)')).getAttribute('class')).toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) tr:nth-child(11)')).getAttribute('class')).toMatch('is-selected');
+
+    // Expect it marked as selected on both sides (frozenColumns)
+    expect(await element.all(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(1) .datagrid-row.is-selected')).count()).toEqual(3);
+    expect(await element.all(by.css('#datagrid .datagrid-body-container .datagrid-body:nth-child(2) .datagrid-row.is-selected')).count()).toEqual(3);
   });
 });
 
@@ -727,6 +1043,51 @@ describe('Datagrid multiselect with no selection checkbox', () => {
   });
 });
 
+describe('Datagrid disable last page', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-disable-lastpage');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be have last and next page disabled', async () => {
+    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(2);
+  });
+});
+
+describe('Datagrid paging force disabled', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-force-disabled');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able force disable and reenable the pager', async () => {
+    await browser.driver.sleep(config.sleep);
+    await element(await by.id('force-disabled')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(4);
+
+    await element(await by.id('force-enabled')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(0);
+  });
+});
+
 describe('Datagrid paging multiselect across pages', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-multiselect-select-across-page');
@@ -752,7 +1113,7 @@ describe('Datagrid paging multiselect across pages', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    await element(by.css('.pager-prev')).click();
+    await element(await by.css('.pager-prev')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1).is-selected'))), config.waitsFor);
@@ -794,7 +1155,7 @@ describe('Datagrid paging multiselect tests', () => {
   });
 });
 
-describe('Datagrid paging client side multiselect tests', () => {
+describe('Datagrid paging clientside multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-multiple');
 
@@ -874,18 +1235,18 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
   });
 
   it('Should be able to select and have it clear when paging', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
 
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
+    expect(await element.all(await by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
     await element(await by.css('.pager-next')).click();
 
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
+    expect(await element.all(await by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    await element(by.css('.pager-prev')).click();
+    await element(await by.css('.pager-prev')).click();
 
     await browser.driver.sleep(config.sleep);
 
@@ -997,6 +1358,24 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
   });
 });
 
+describe('Datagrid Paging with Summary Row test', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-with-summary-row');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should display summary row', async () => {
+    expect(await element.all(by.css('tr.datagrid-summary-row')).count()).toEqual(1);
+  });
+});
+
 describe('Datagrid paging serverside single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-serverside-single');
@@ -1029,24 +1408,6 @@ describe('Datagrid paging serverside single select tests', () => {
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
-  });
-});
-
-describe('Datagrid Paging with Summary Row test', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-paging-with-summary-row');
-
-    const datagridEl = await element(by.id('datagrid'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should display summary row', async () => {
-    expect(await element.all(by.css('tr.datagrid-summary-row')).count()).toEqual(1);
   });
 });
 
@@ -1296,7 +1657,7 @@ describe('Datagrid Row Activation tests', () => {
 
 describe('Datagrid Row Indeterminate Activation tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-paging-indeterminate-landmark');
+    await utils.setPage('/components/datagrid/example-paging-indeterminate');
 
     const datagridEl = await element(by.id('datagrid'));
     await browser.driver
@@ -1323,5 +1684,40 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
 
     expect(await element(await by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
+  });
+});
+
+describe('Datagrid paging with empty dataset', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-empty-dataset?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('datagrid'))), config.waitsFor);
+  });
+
+  it('should increase total page count when the pagesize is exceeded', async () => {
+    expect(await element(by.css('#datagrid tbody tr[aria-rowindex]')).isPresent()).toBeFalsy();
+
+    // Click 11 Times
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await element(by.id('add-btn')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('#datagrid tbody tr[aria-rowindex]')).count()).toEqual(10);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(11 Results)');
+    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
+
+    await element(by.css('.pager-toolbar .pager-next')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('#datagrid tbody tr[aria-rowindex]')).count()).toEqual(1);
   });
 });

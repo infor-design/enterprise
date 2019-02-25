@@ -6,14 +6,6 @@
     border-bottom: 1px solid $color !important;
     box-shadow: 0 -1px 1px -1px $color;
 
-    &:first-child {
-      border-left: 1px solid $color;
-    }
-
-    &:last-child {
-      border-right: 1px solid $color;
-    }
-
     &.rowstatus-cell {
       position: relative;
 
@@ -41,6 +33,16 @@
   }
 }
 
+@mixin rowstatusEndBorders($color) {
+  &:first-child {
+    border-left: 1px solid $color;
+  }
+
+  &:last-child {
+    border-right: 1px solid $color;
+  }
+}
+
 $datagrid-header-height: 39px;  //1px border in parent
 $datagrid-filterable-header-height: 61px;
 
@@ -50,7 +52,7 @@ $datagrid-medium-row-height: 33px;
 $datagrid-short-header-height: 25px;
 $datagrid-short-row-height: 23px;
 
-//Main Datagrid Container
+// Main Datagrid Container
 .datagrid-container {
   background-color: transparent;
   border: 1px solid $datagrid-cell-border-color;
@@ -76,14 +78,82 @@ $datagrid-short-row-height: 23px;
   }
 
   .datagrid-body {
-    height: calc(100% - 40px);
+    height: calc(100% - 39px);
+
+    &:first-of-type {
+      tr.rowstatus-row-error td:first-child {
+        @include rowstatusEndBorders($theme-color-status-danger);
+      }
+
+      tr.rowstatus-row-dirty td:first-child {
+        @include rowstatusEndBorders($dirty-icon-fill);
+      }
+
+      tr.rowstatus-row-alert td:first-child {
+        @include rowstatusEndBorders($alert-color);
+      }
+
+      tr.rowstatus-row-info td:first-child {
+        @include rowstatusEndBorders($theme-color-brand-primary-base);
+      }
+
+      tr.rowstatus-row-in-progress td:first-child {
+        @include rowstatusEndBorders($trigger-icon-fill-color);
+      }
+
+      tr.rowstatus-row-success td:first-child {
+        @include rowstatusEndBorders($theme-color-status-success);
+      }
+
+      tr.rowstatus-row-new td:first-child {
+        @include rowstatusEndBorders($trigger-icon-fill-color);
+      }
+    }
+
+    &:last-of-type {
+      tr.rowstatus-row-error td:last-child {
+        @include rowstatusEndBorders($theme-color-status-danger);
+      }
+
+      tr.rowstatus-row-dirty td:last-child {
+        @include rowstatusEndBorders($dirty-icon-fill);
+      }
+
+      tr.rowstatus-row-alert td:last-child {
+        @include rowstatusEndBorders($alert-color);
+      }
+
+      tr.rowstatus-row-info td:last-child {
+        @include rowstatusEndBorders($theme-color-brand-primary-base);
+      }
+
+      tr.rowstatus-row-in-progress td:last-child {
+        @include rowstatusEndBorders($trigger-icon-fill-color);
+      }
+
+      tr.rowstatus-row-success td:last-child {
+        @include rowstatusEndBorders($theme-color-status-success);
+      }
+
+      tr.rowstatus-row-new td:last-child {
+        @include rowstatusEndBorders($trigger-icon-fill-color);
+      }
+    }
 
     &.paginated {
       background-color: $datagrid-empty-bg-color;
     }
+
+    &:not(.left) td:last-child {
+      border-right-color: transparent;
+    }
+
+    &.right td {
+      border-left: 1px solid $datagrid-cell-border-color;
+    }
   }
 
-  //Heights for scrollbars
+  // Heights for scrollbars
   &.paginated {
     height: calc(100% - 40px);
   }
@@ -92,10 +162,9 @@ $datagrid-short-row-height: 23px;
     height: calc(100% - 90px);
   }
 
-  //Adjust borders and IE adjustment for vertical scrollbars
-  &.has-vertical-scroll {
-    //Fix IE Scrollbar Offset Issue
-    &.is-windows .datagrid-header {
+  // Adjust borders and IE adjustment for vertical scrollbars
+  &.has-vertical-scroll.is-windows:not(.has-frozen-right-columns) {
+    .datagrid-header:not(.left):not(.right) {
       margin-right: 18px;
     }
   }
@@ -140,10 +209,6 @@ $datagrid-short-row-height: 23px;
         }
       }
     }
-  }
-
-  td:last-child {
-    border-right-color: transparent;
   }
 
   tr:not(.datagrid-expandable-row):last-child td {
@@ -339,7 +404,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.has-filterable-columns .datagrid-body {
-      height: calc(100% - 54px);
+      height: calc(100% - 49px);
     }
 
     &.has-toolbar {
@@ -543,15 +608,19 @@ $datagrid-short-row-height: 23px;
     }
 
   }
-
 }
 
 // Grid Body container
 .datagrid-body {
-  overflow-x: auto;
-  overflow-y: auto;
-  position: relative;
-  width: 100%;
+  overflow: hidden;
+
+  &.scroll-x {
+    overflow-x: auto;
+  }
+
+  &.scroll-y {
+    overflow-y: auto;
+  }
 
   table {
     empty-cells: show;
@@ -559,6 +628,18 @@ $datagrid-short-row-height: 23px;
 
   .empty-message {
     display: none;
+  }
+
+  &.left + &.center.scroll-x,
+  &.left {
+    overflow-y: hidden;
+  }
+
+  &.left,
+  &.right {
+    flex-shrink: 0;
+    // Make bottom visible to prevent space different at the bottom.
+    overflow-x: scroll;
   }
 }
 
@@ -819,6 +900,7 @@ $datagrid-short-row-height: 23px;
       &.datagrid-rowgroup-header {
         .datagrid-expand-btn {
           left: -10px;
+          top: 2px;
 
           .icon.plus-minus::before,
           .icon.plus-minus::after {
@@ -846,18 +928,18 @@ $datagrid-short-row-height: 23px;
         }
 
         .datagrid-expand-btn {
-          height: 24px;
-          line-height: 24px;
+          height: 22px;
+          line-height: 22px;
           margin-top: -6px;
-          min-height: 24px;
-          min-width: 24px;
+          min-height: 22px;
+          min-width: 22px;
           vertical-align: middle;
-          width: 24px;
+          width: 22px;
 
           .icon {
+            left: -4px;
             position: relative;
-            right: 4px;
-            top: -5px;
+            top: -9px;
           }
         }
 
@@ -1232,13 +1314,12 @@ $datagrid-short-row-height: 23px;
     }
 
     // Hover States
-    &:not(.error):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
+    &.is-hover-row:not(.error):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
         background-color: $datagrid-row-hover-color;
       }
-
     }
 
     &.is-selected:not(.hide-selected-color) td:not(.is-editing),
@@ -1489,6 +1570,10 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    &.is-spacer {
+      border-bottom-color: transparent;
+    }
+
     .word-wrap {
       word-wrap: break-word;
 
@@ -1718,7 +1803,7 @@ $datagrid-short-row-height: 23px;
 
         .lookup.is-not-editable {
           + .trigger {
-            margin-left: -10px;
+            margin-left: -5px;
           }
 
           &:focus {
@@ -2017,10 +2102,37 @@ $datagrid-short-row-height: 23px;
   }
 }
 
+.datagrid-header-container {
+  display: flex;
+}
+
+.datagrid-body-container {
+  display: flex;
+  height: 100%;
+}
+
 //Grid Headers
 .datagrid-header {
   background-color: $datagrid-header-bg-color;
   overflow: hidden;
+
+  &.left {
+    flex-shrink: 0;
+  }
+
+  &.right {
+    flex-shrink: 0;
+
+    th {
+      border-left: 1px solid $datagrid-header-border-color;
+    }
+  }
+
+  &.center {
+    th:last-child {
+      border-right-color: transparent;
+    }
+  }
 
   table {
     border-collapse: separate;
@@ -2095,7 +2207,6 @@ $datagrid-short-row-height: 23px;
     //Editing and Focus State
     &:focus {
       background-color: $datagrid-header-focus-bg-color;
-      box-shadow: $header-focus-box-shadow;
       color: $datagrid-header-color;
       outline: 1px solid $datagrid-header-focus-border-color;
       outline-offset: -2px;
@@ -2119,7 +2230,6 @@ $datagrid-short-row-height: 23px;
         opacity: 1;
       }
     }
-
   }
 
   //Grouped Headers
@@ -2548,7 +2658,7 @@ td .btn-actions {
   }
 }
 
-//Grid Checkboxes
+// Grid Checkboxes
 .datagrid-checkbox {
   @include font-size(12);
 
@@ -2604,7 +2714,7 @@ td .btn-actions {
   }
 }
 
-//Datagrid Dropdown Formatter
+// Datagrid Dropdown Formatter
 .datagrid-trigger-cell {
   &:not(.is-readonly) {
     cursor: pointer;
@@ -2712,22 +2822,22 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  height: 32px;
+  height: 30px;
   left: -10px;
   margin-top: -4px;
-  min-height: 32px;
-  min-width: 32px;
+  min-height: 30px;
+  min-width: 30px;
   vertical-align: middle;
-  width: 32px;
+  width: 30px;
 
   span:not(.icon) {
     color: transparent;
   }
 
   .plus-minus {
-    left: -8px;
+    left: -6px;
     position: relative;
-    top: -4px;
+    top: -5px;
   }
 
   + span {
@@ -2807,12 +2917,6 @@ td .btn-actions {
   display: inline-block;
   position: relative;
   top: 0;
-}
-
-.ie-edge {
-  .datagrid-container.has-vertical-scroll.is-windows .datagrid-header {
-    margin-right: 12px;
-  }
 }
 
 .is-firefox {
@@ -2931,7 +3035,7 @@ td .btn-actions {
   line-height: 43px;
 }
 
-//Inline Editing - Dropdown
+// Inline Editing - Dropdown
 .datagrid-dropdown-list {
   border-radius: 0 0 3px 3px;
   margin-left: -1px;
@@ -3009,7 +3113,7 @@ td .btn-actions {
   }
 }
 
-//Inline Editing Date Picker
+// Inline Editing Date Picker
 .is-focused .trigger + .icon {
   visibility: visible;
 }
@@ -3017,7 +3121,7 @@ td .btn-actions {
 // RTL Styles
 html[dir='rtl'] {
   .datagrid {
-    //Restore right Border
+    // Restore right Border
     th:last-child {
       border-right: 1px solid $datagrid-header-border-color;
     }
@@ -3282,6 +3386,9 @@ html[dir='rtl'] {
       top: 0;
     }
 
+    &.left th:last-child {
+      border-left: 1px solid $datagrid-header-border-color;
+    }
   }
 
   //Contextual toolbar
@@ -3310,12 +3417,17 @@ html[dir='rtl'] {
         margin-right: 0;
       }
     }
-  }
 
-  &.ie-edge {
-    .datagrid-container.has-vertical-scroll.is-windows .datagrid-header {
-      margin-left: 12px;
-      margin-right: 0;
+    .datagrid-body:not(.left) td:last-child {
+      border-right-color: $datagrid-cell-border-color;
+    }
+
+    .datagrid-body.left td:last-child {
+      border-left: 1px solid $datagrid-cell-border-color;
+    }
+
+    .datagrid-body:not(.left):not(.right) td:first-child {
+      border-right-color: transparent;
     }
   }
 }
@@ -3492,7 +3604,7 @@ html[dir='rtl'] {
   }
 }
 
-//Columns Personalization
+// Columns Personalization
 .datagrid-columns-dialog {
   .label-text {
     @include font-size(14);
@@ -3521,7 +3633,7 @@ html[dir='rtl'] {
 
 }
 
-//Filter Dropdown Style
+// Filter Dropdown Style
 .datagrid-filter-dropdown {
   .dropdown-search {
     height: 28px;
@@ -3552,7 +3664,7 @@ html[dir='rtl'] {
   }
 }
 
-//Summary totals
+// Summary totals
 .datagrid-summary-row {
   td {
     border-right-color: transparent;
@@ -3603,7 +3715,7 @@ html[dir='rtl'] {
 
 }
 
-//Modal Lists
+// Modal Lists
 .modal table {
   width: auto;
 }
@@ -3701,7 +3813,7 @@ html[dir='rtl'] {
   top: -9px;
 }
 
-//Ios Hacks
+// Ios Hacks
 .ios .datagrid:not(.short-rowheight):not(.medium-rowheight) {
   .icon-error,
   .icon-success,

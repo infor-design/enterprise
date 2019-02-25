@@ -61,15 +61,18 @@ describe('Datagrid API', () => {
     expect(datagridObj).toEqual(jasmine.any(Object));
   });
 
-  it('Should render datagrid', () => {
+  it('Should render datagrid', (done) => {
     datagridObj.destroy();
     const spyEvent = spyOnEvent($(datagridEl), 'rendered');
     const spyEventAfter = spyOnEvent($(datagridEl), 'afterrender');
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
 
-    expect(spyEvent).toHaveBeenTriggered();
-    expect(spyEventAfter).toHaveBeenTriggered();
-    expect(document.body.querySelectorAll('tr').length).toEqual(8);
+    setTimeout(() => {
+      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEventAfter).toHaveBeenTriggered();
+      expect(document.body.querySelectorAll('tr').length).toEqual(8);
+      done();
+    });
   });
 
   it('Should destroy datagrid', () => {
@@ -78,24 +81,14 @@ describe('Datagrid API', () => {
     expect(document.body.querySelector('.datagrid')).toBeFalsy();
   });
 
-  it('Should be able to call render', (done) => {
-    let didCall = false;
-
+  it('Should be able to call render', () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, {
       filterable: true,
       dataset: data,
       columns,
       paging: true,
-      pagesize: 10,
-      source(e) {
-        if (e.type === 'filterrow') {
-          didCall = true;
-
-          expect(didCall).toBeTruthy();
-          done();
-        }
-      }
+      pagesize: 10
     });
 
     expect(document.body.querySelectorAll('tr').length).toEqual(8);

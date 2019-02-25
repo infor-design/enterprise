@@ -1,0 +1,43 @@
+<figure class="hierarchy" id="hierarchy"></figure>
+
+<script>
+
+  const options = {
+    templateId: 'hierarchyChartTemplate',
+    dataset: [],
+    layout: 'stacked'
+  };
+
+  // Initial load
+  $.getJSON('{{basepath}}api/hc-john-randolph', function(data) {
+    options.dataset = [data];
+    $('#hierarchy').hierarchy(options);
+  });
+
+  $('#hierarchy').on('selected', function(event, eventInfo) {
+    const hierarchyControl = $('#hierarchy').data('hierarchy');
+    console.log(event, eventInfo);
+
+    if (eventInfo.data.childrenUrl) {
+      $.getJSON(`{{basepath}}api/${eventInfo.data.childrenUrl}`, function(newData) {
+        reload(eventInfo, hierarchyControl, newData);
+      });
+    }
+  });
+
+  function reload(eventInfo, hierarchyControl, newData) {
+    eventInfo.data.children = newData;
+    options.dataset = [eventInfo.data.children];
+    hierarchyControl.reload(options);
+  }
+</script>
+
+
+{{={{{ }}}=}}
+<script type="text/html" id="hierarchyChartTemplate">
+  <div class="leaf" id="{{id}}">
+    <div class="detail">
+      <p class="heading">{{id}}</p>
+    </div>
+  </div>
+</script>

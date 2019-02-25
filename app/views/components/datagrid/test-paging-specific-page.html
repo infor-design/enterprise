@@ -1,20 +1,22 @@
-
 <div class="row">
-  <div class="twelve columns">
-    <div id="datagrid">
-    </div>
+  <div class="six colums">
+    <p>This datagrid will have its page programmatically set to "2" after 1000ms</p>
   </div>
 </div>
 
-<script>
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid"></div>
+  </div>
+</div>
 
+<script id="test-script">
   $('body').one('initialized', function () {
-
       var columns = [],
         data = [],
         pageSize = 8;
 
-      //Define Columns for the Grid.
+      // Define Columns for the Grid
       columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
@@ -23,8 +25,8 @@
       columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
-      //Init and get the api for the grid
-      gridApi = $('#datagrid').datagrid({
+      // Init and get the api for the grid
+      var gridAPI = $('#datagrid').datagrid({
         columns: columns,
         selectable: 'multiple',
         paging: true,
@@ -39,18 +41,11 @@
         toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
       }).data('datagrid');
 
+      // On a timeout, cause `triggerSource` to fire
       setTimeout(function() {
-        var activePage = gridApi.pager.activePage,
-          pagerInfo = gridApi.pager.pagerInfo;
-
-        pagerInfo.activePage = activePage;
-
-        var url = '{{basepath}}api/compressors?pageNum='+ activePage +'&pageSize='+ pageSize;
-
-        $.getJSON(url, function(res) {
-          pagerInfo.total = res.total;
-          gridApi.loadData(res.data, pagerInfo, true);
+        gridAPI.triggerSource({
+          activePage: 2
         });
-      }, 5000);
+      }, 1000);
   });
 </script>

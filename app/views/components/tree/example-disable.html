@@ -172,14 +172,14 @@
 <script>
 
   // button click direct call to method
-  // $('#disable').on('click', () => {
+  // $('#disable').on('click', function () {
   //   $('#tree').disable();
   // });
 
   const tree = $('#tree').tree().data('tree');
 
   // method call on tree api
-  $('#disable').on('click', () => {
+  $('#disable').on('click', function () {
     tree.disable();
   });
 

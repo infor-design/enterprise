@@ -3,7 +3,7 @@
     <div class="content darker">
        <ul role="tree" id="tree" aria-label="Asset Types" class="tree">
         <li>
-            <a id="home" href="#">Home</a>
+            <a id="home" href="#" class="is-disabled">Home</a>
         </li>
         <li><a id="about-us" href="#" class="is-disabled">About Us</a></li>
         <li class="is-open mycustom">
@@ -157,14 +157,14 @@
  <script>
 
   // button click direct call to method
-  // $('#enable').on('click', () => {
+  // $('#enable').on('click', function () {
   //   $('#tree').enable();
   // });
 
   const tree = $('#tree').tree().data('tree');
 
   // method call on tree api
-  $('#enable').on('click', () => {
+  $('#enable').on('click', function () {
     tree.enable();
   });
 

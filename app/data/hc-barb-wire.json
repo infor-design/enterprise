@@ -1,0 +1,35 @@
+{
+  "ancestorPath": [{
+    "id": "1",
+    "name": "John Randolph",
+    "position": "CEO",
+    "employmentType": "FT",
+    "picture": "/images/4.jpg",
+    "childrenUrl": "hc-john-randolph.json"
+  }],
+  "centeredNode": {
+    "id": "2",
+    "name": "Barb Wire",
+    "position": "COO",
+    "employmentType": "FT",
+    "avatarInitials": "BW"
+  },
+  "children": [
+    {
+      "id": "3",
+      "name": "Monica Edwards",
+      "position": "SVP, Human Resources",
+      "employmentType": "FT",
+      "avatarInitials": "ME",
+      "isLeaf": true
+    },
+    {
+      "id": "4",
+      "name": "Fiona Nelson",
+      "position": "SVP, Chief Customer Officer",
+      "employmentType": "FT",
+      "avatarInitials": "FN",
+      "isLeaf": true
+    }
+  ]
+}

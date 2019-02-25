@@ -7,23 +7,38 @@
 
 ### v4.16.0 Features
 
+- `[Datagrid]` Added an option to freeze columns from scrolling on the left and/or right. The new option is called `frozenColumns`. See notes on what works and doesnt with frozen column in the datagrid docs frozen column section. ([#464](https://github.com/infor-design/enterprise/issues/464))
 - `[Busy Indicator]` Made a fix to make it possible to use a busy indicator on a modals. ([#827](https://github.com/infor-design/enterprise/issues/827))
 - `[Editor]` Added new state called "preview" a non editable mode to editor. Where it only shows the HTML with no toolbar, borders etc. ([#1413](https://github.com/infor-design/enterprise/issues/1413))
 - `[Field Filter]` Added support to get and set filter type programmatically. ([#1181](https://github.com/infor-design/enterprise/issues/1181))
 - `[Hierarchy]` Add print media styles to decrease ink usage and increase presentability for print format. Note that you may need to enable the setting to print background images, both Mac and PC have a setting for this. ([#456](https://github.com/infor-design/enterprise/issues/456))
+- `[Hierarchy]` Added a new "stacked" layout to eventually replace the current layouts. This works better responsively and prevents horizontal scrolling. ([#1629](https://github.com/infor-design/enterprise/issues/1629))
+
+### v4.16.0 Future Deprecation
+
+- `[Hierarchy]` The following options are now deprecated and will be removed approximately 2019-05-15. `paging` and `mobileView`. ([#1629](https://github.com/infor-design/enterprise/issues/1629))
+- `[Hierarchy]` Stacked layout will become the default layout in favor of the existing horizontal layout, so the horizontal layout is now considered deprecated and will be removed approximately 2019-05-15. ([#1629](https://github.com/infor-design/enterprise/issues/1629))
 
 ### v4.16.0 Fixes
 
-- `[Stepprocess]` Fixed a bug where the step folder was still selected when it was collapsed or expanded. ([#1633](https://github.com/infor-design/enterprise/issues/1633))
+- `[Application Menu]` Fixed the truncation of long text in an accordion element in the application menu by adding a tooltip to truncated elements. ([#457](https://github.com/infor-design/enterprise/issues/457))
 - `[Dropdown]` Fixed a bug where the ellipsis was not showing on long text in some browsers. ([#1550](https://github.com/infor-design/enterprise/issues/1550))
 - `[Datagrid]` Fixed a bug in equals filter on multiselect filters. ([#1586](https://github.com/infor-design/enterprise/issues/1586))
 - `[Datagrid]` Fixed a bug where incorrect data is shown in the events in tree grid. ([#315](https://github.com/infor-design/enterprise-ng/issues/315))
+- `[Datagrid]` Fixed a bug where when using minWidth on a column and sorting the column will become misaligned. ([#1481](https://github.com/infor-design/enterprise/issues/1481))
+- `[Datagrid]` Fixed a bug where when resizing the last column may become invisible. ([#1456](https://github.com/infor-design/enterprise/issues/1456))
+- `[Datagrid]` Fixed a bug where a checkbox column will become checked when selecting if there is no selection checkbox. ([#1641](https://github.com/infor-design/enterprise/issues/1641))
+- `[Datagrid]` Fixed a bug where the last column would sometimes not render fully for buttons with longer text. ([#1246](https://github.com/infor-design/enterprise/issues/1246))
 - `[Datagrid]` Fixed a bug where showMonthYearPicker did not work correctly on date filters. ([#1532](https://github.com/infor-design/enterprise-ng/issues/1532))
 - `[Validation]` Fixed a bug in removeError where the icon is sometimes not removed. ([#1556](https://github.com/infor-design/enterprise/issues/1556))
 - `[Datepicker]` Fixed the range picker to clear when changing months in a filter. ([#1537](https://github.com/infor-design/enterprise/issues/1537))
 - `[Datepicker]` Fixed disabled dates example to validate again on disabled dates. ([#1445](https://github.com/infor-design/enterprise/issues/1445))
-- `[Dategrid]` Fixed a Date Editor bug when passing a series of zeroes to a datagrid cell with an editable date. ([#1020](https://github.com/infor-design/enterprise/issues/1020))
+- `[Datagrid]` Fixed a Date Editor bug when passing a series of zeroes to a datagrid cell with an editable date. ([#1020](https://github.com/infor-design/enterprise/issues/1020))
 - `[Icons]` Established missing icon sourcing and sizing consistency from ids-identity icon/svg assets. ([PR#1628](https://github.com/infor-design/enterprise/pull/1628))
+- `[Listview]` Addressed performance issues with paging on all platforms, especially Windows and IE/Edge browsers. As part of this, reworked all components that integrate with the Pager component to render their contents based on a dataset, as opposed to DOM elements. ([#922](https://github.com/infor-design/enterprise/issues/922))
+- `[Lookup]` Fixed a bug with settings: async, server-side, and single select modes.  The grid was not deselecting the previously selected value when a new row was clicked.  If the value is preselected in the markup, the lookup modal will no longer close prematurely. ([PR#1654](https://github.com/infor-design/enterprise/issues/1654))
+- `[Tree]` Fixed a bug when calling the disable or enable methods of the tree. This was not working with ie11. ([PR#1600](https://github.com/infor-design/enterprise/issues/1600))
+- `[Stepprocess]` Fixed a bug where the step folder was still selected when it was collapsed or expanded. ([#1633](https://github.com/infor-design/enterprise/issues/1633))
 
 ### v4.16.0 Chore & Maintenance
 
@@ -31,7 +46,7 @@
 - `[Docs]` Added a fix to prevent the documentation generator from failing intermittently. ([#1377](https://github.com/infor-design/enterprise/issues/1377))
 - `[Demo App]` Added a fix for incorrect links when running on windows. ([#1549](https://github.com/infor-design/enterprise/issues/1549))
 
-(TBD Issues Solved this release, Backlog Enterprise TBD, Backlog Ng TBD, TBD Functional Tests, TBD e2e Test)
+(27 Issues Solved this release, Backlog Enterprise 203, Backlog Ng 69, 735 Functional Tests, 670 e2e Test)
 
 ## v4.15.0
 

@@ -89,7 +89,7 @@ describe('Datagrid Paging API', () => {
       rowEl.parentNode.removeChild(rowEl);
     });
 
-    it('Should be able to track dirty cells with pagging', (done) => {
+    it('Should be able to track dirty cells with paging', (done) => {
       const options = { dataset: sampleData, columns, paging: true, pagesize: 3, editable: true, showDirty: true }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 

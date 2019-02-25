@@ -10,7 +10,7 @@
         columns = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
+      columns.push({ id: 'taskName', hideable: false, name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
       columns.push({ id: 'id', name: 'Id', field: 'id'});
       columns.push({ id: 'desc', name: 'Description', field: 'desc'});
       columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink});

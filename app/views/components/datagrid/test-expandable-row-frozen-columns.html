@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2142201, sku: '<b>SKU #9000001-237</b>', productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      data.push({ id: 2, productId: 2241202, sku: '<b>SKU #9000001-236</b>', productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+      data.push({ id: 3, productId: 2342203, sku: '<b>SKU #9000001-235</b>', productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+      data.push({ id: 4, productId: 2445204, sku: '<b>SKU #9000001-234</b>', productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+      data.push({ id: 5, productId: 2542205, sku: '<b>SKU #9000001-233</b>', productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+      data.push({ id: 5, productId: 2642205, sku: '<b>SKU #9000001-232</b>', productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 6, productId: 2642206, sku: '<b>SKU #9000001-231</b>', productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+
+      // Define Columns for the Grid.
+
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander, filterType: 'text', textOverflow: 'ellipsis', width: 150, hideable: false});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
+      columns.push({ id: 'quantity1', name: 'Quantity 1', field: 'quantity'});
+      columns.push({ id: 'quantity2', name: 'Quantity 2', field: 'quantity'});
+      columns.push({ id: 'quantity3', name: 'Quantity 3', field: 'quantity'});
+      columns.push({ id: 'quantity4', name: 'Quantity 4', field: 'quantity'});
+      columns.push({ id: 'quantity5', name: 'Quantity 5', field: 'quantity'});
+      columns.push({ id: 'quantity6', name: 'Quantity 6', field: 'quantity'});
+      columns.push({ id: 'quantity7', name: 'Quantity 7', field: 'quantity'});
+      columns.push({ id: 'quantity8', name: 'Quantity 8', field: 'quantity'});
+      columns.push({ id: 'quantity9', name: 'Quantity 9', field: 'quantity'});
+      columns.push({ id: 'quantity10', name: 'Quantity 10', field: 'quantity'});
+
+      var rowTemplate = '<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div>'+
+                        '<div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>' +
+                        '<p class="datagrid-row-micro-text">{{{sku}}}</p>'+
+                        '<span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span>'+
+                        '<a class="hyperlink" href="https://design.infor.com/" target="_blank" >Read more</a>';
+
+      // Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        idProperty:'officeId',
+        dataset: data,
+        filterable: true,
+        // Required for Frozen Columns and Expandable Areas to sync the areas
+        rowTemplateHeight: 167,
+        rowTemplate: rowTemplate,
+        frozenColumns: { left: ['productId'] },
+        toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true,
+          results: true, keywordFilter: true, actions: true, exportToExcel: true, rowHeight: true, personalize: true}
+      });
+
+      grid.on('expandrow', function (e, args) {
+        console.log('expandrow', args);
+      });
+
+      grid.on('collapserow', function (e, args) {
+        console.log('collapserow', args);
+      });
+
+});
+
+</script>

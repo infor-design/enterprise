@@ -1,0 +1,136 @@
+
+// RTL Styles
+html[dir='rtl'] {
+  .hierarchy {
+    legend {
+      li {
+        margin-left: 20px;
+        margin-right: inherit;
+      }
+
+      .key {
+        float: right;
+      }
+    }
+
+    // A node in the tree
+    .leaf {
+      border-left: 1px solid $panel-border-color;
+      border-right: 5px solid $theme-color-palette-graphite-60;
+
+      &.azure08 {
+        border-left-color: $panel-border-color;
+        border-right-color: $theme-color-palette-azure-80;
+      }
+
+      &.turquoise02 {
+        border-left-color: $panel-border-color;
+        border-right-color: $theme-color-palette-turquoise-20;
+      }
+
+      &.amethyst06 {
+        border-left-color: $panel-border-color;
+        border-right-color: $theme-color-palette-amethyst-60;
+      }
+
+      &.slate06 {
+        border-left-color: $panel-border-color;
+        border-right-color: $theme-color-palette-slate-60;
+      }
+
+      &.amber06 {
+        border-left-color: $panel-border-color;
+        border-right-color: $theme-color-palette-amber-60;
+      }
+
+      &.emerald07 {
+        border-left-color: $panel-border-color;
+        border-right-color: $theme-color-palette-emerald-70;
+      }
+
+      &.ruby06 {
+        border-left-color: $panel-border-color;
+        border-right-color: $theme-color-palette-ruby-60;
+      }
+
+      //Styling for objects in the leafs
+      img,
+      .image-placeholder {
+        float: right;
+        margin-left: 0;
+        margin-right: 14px;
+      }
+
+      .btn-icon {
+        left: auto;
+        right: 0;
+      }
+    }
+
+    //Adjust size for buttons
+    ul > li > .leaf {
+      .btn-expand,
+      .btn-collapse {
+        left: auto;
+        right: calc(100% - 40px);
+      }
+    }
+
+    //The Top Level Node
+    .root {
+
+      //draw a line down
+      &::after {
+        margin-left: inherit;
+        margin-right: -65px;
+      }
+    }
+
+    //The Second to Top Level - Flows left to right
+    .top-level {
+      li {
+        //Draw Line Up and Left
+        &::before {
+          margin-left: inherit;
+          margin-right: 150px;
+        }
+      }
+    }
+
+    //The Bottom Levels - Flow Down and Up
+    .sub-level {
+      // Top Level Nodes still follow left to right
+      > li {
+        //Draw Line Up and Left
+        &::before {
+          border-bottom: 0;
+          border-left: 0 solid $hierarchy-line-color;
+          border-right: $hierarchy-line-width solid $hierarchy-line-color;
+          margin-left: inherit;
+          margin-right: 160px;
+          width: 110%;
+        }
+
+        &:last-child::before {
+          margin-left: 127px;
+          width: 0;
+        }
+
+        > ul .leaf::before {
+          border-left: 0;
+          border-right: $hierarchy-line-width solid $hierarchy-line-color;
+          left: auto;
+          right: -35px;
+        }
+      }
+
+      // Child Nodes - 4th level down
+      li ul:not(.popupmenu) {
+        margin-left: inherit;
+        margin-right: 45px;
+        padding-left: 5px;
+        padding-right: 30px;
+      }
+    }
+  }
+}

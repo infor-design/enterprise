@@ -422,6 +422,10 @@ describe('Dropdown typeahead-reloading tests', () => {
 describe('Dropdown placeholder tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-placeholder');
+
+    const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
   });
 
   it('Show a placeholder', async () => {

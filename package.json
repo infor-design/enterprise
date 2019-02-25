@@ -1,7 +1,7 @@
 {
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
-  "version": "4.16.0-dev",
+  "version": "4.16.0-beta.0",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "repository": {
     "type": "git",
@@ -57,9 +57,9 @@
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d dist infor-devops-core-soho-us-east-1/sohoxi/4.12.0 -v",
-    "release:beta": "npx release-it minor --preRelease=beta --no-github.release",
-    "release:rc": "npx release-it --preRelease=rc --no-github.release",
-    "release:final": "npx release-it",
+    "release:beta": "release-it minor --preRelease=beta --no-github.release",
+    "release:rc": "release-it --preRelease=rc --no-github.release",
+    "release:final": "release-it",
     "test": "npm run mdlint && npm run eslint && npm run stylelint && npm run functional:ci && npm run e2e:ci"
   },
   "dependencies": {

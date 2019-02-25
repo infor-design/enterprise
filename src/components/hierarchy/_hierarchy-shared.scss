@@ -1,0 +1,16 @@
+// Hierarchy
+//================================================== //
+
+$hierarchy-padding: 20px;
+$hierarchy-node-height: 75px;
+$hierarchy-node-width: 275px;
+$hierarchy-line-width: 1.34px; //Fixes zoom somewhat
+
+// placeholder
+@mixin hierarchy-vertical-line {
+  background: $hierarchy-line-color none repeat scroll 0 0;
+  content: '';
+  position: absolute;
+  width: $hierarchy-line-width;
+  z-index: -1;
+}
