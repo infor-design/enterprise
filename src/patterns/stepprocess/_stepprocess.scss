@@ -47,6 +47,12 @@
       position: absolute;
       top: 13px;
     }
+
+    &.phone-visible .title {
+      left: 4px;
+      position: relative;
+      top: 2px;
+    }
   }
 
   .tree {
@@ -129,11 +135,9 @@
     li.folder > a {
       .icon-tree {
         display: block;
-        height: 28px;
         position: absolute;
         right: 15px;
-        top: calc(50% - 14px);
-        width: 28px;
+        top: calc(50% - 8px);
       }
     }
 
@@ -229,6 +233,7 @@
     .toolbar-collapsible {
       @include transition(margin-top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
+      padding-right: 10px;
       position: absolute;
       top: 0;
       width: 100%;
@@ -312,6 +317,7 @@
     }
 
     .phone-action-bar {
+      border-bottom: 1px solid $panel-border-color;
       bottom: 0;
       position: absolute;
       width: 100%;
