@@ -213,8 +213,6 @@ describe('Pager API (Standalone)', () => {
     expect(typeof pagerObj.settings.onLastPage).toEqual('function');
     expect(pagerObj.settings.indeterminate).toBeTruthy();
     expect(pagerObj.settings.pagesize).toEqual(16);
-
-    debugger;
     expect(pagerObj.settings.pagesizes.length).toEqual(3);
   });
 });
