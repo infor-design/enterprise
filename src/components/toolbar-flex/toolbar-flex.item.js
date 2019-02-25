@@ -52,8 +52,7 @@ const TOOLBAR_FLEX_ITEM_DEFAULTS = {
   disabled: false,
   readOnly: false,
   hidden: false,
-  componentSettings: undefined,
-  beforeOpen: undefined
+  componentSettings: undefined
 };
 
 /**
