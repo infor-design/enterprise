@@ -162,7 +162,7 @@ describe('Datagrid Expandable Row Tests', () => {
     await button.click();
     await browser.driver.sleep(config.sleep);
     await detailRow.getSize().then((size) => {
-      expect(size.height).toEqual(167);
+      expect(size.height).toBeGreaterThan(150);
     });
     await button.click();
     await browser.driver.sleep(config.sleep);
