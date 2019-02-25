@@ -346,9 +346,6 @@ ToolbarFlexItem.prototype = {
    *  of its container element.
    */
   get overflowed() {
-    if (this.type === 'searchfield') {
-      return false;
-    }
     const isRTL = env.rtl;
     const elemRect = this.element.getBoundingClientRect();
     const sectionRect = this.section.getBoundingClientRect();
