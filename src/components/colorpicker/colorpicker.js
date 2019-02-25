@@ -611,7 +611,6 @@ ColorPicker.prototype = {
 
     /* eslint-disable no-bitwise */
     return `rgb(${n & 0xFF}, ${(n & 0xFF00) >> 8}, ${(n & 0xFF0000) >> 16})`;
-    /* eslint-disable no-console */
   },
 
   rgb2hex(rgb) {

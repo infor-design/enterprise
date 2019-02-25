@@ -108,6 +108,10 @@ module.exports = {
       enforceForRenamedProperties: false,
     }],
 
+    // Allow warns for deprecation messages
+    // https://eslint.org/docs/rules/no-console
+    'no-console': ['warn', { allow: ['warn'] }],
+
     // don't enforce arrow functions
     // https://eslint.org/docs/rules/prefer-arrow-callback
     'prefer-arrow-callback': ['warn', {}],

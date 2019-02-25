@@ -1,10 +1,10 @@
 import { Blockgrid } from '../../../src/components/blockgrid/blockgrid';
+import { cleanup } from '../../helpers/func-utils';
 
 const blockgridHTML = require('../../../app/views/components/blockgrid/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let blockgridEl;
-let svgEl;
 let blockgridObj;
 
 const settings = {
@@ -28,18 +28,20 @@ const settings = {
 describe('Blockgrid API', () => {
   beforeEach(() => {
     blockgridEl = null;
-    svgEl = null;
     blockgridObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', blockgridHTML);
     blockgridEl = document.body.querySelector('.blockgrid');
-    svgEl = document.body.querySelector('.svg-icons');
     blockgridObj = new Blockgrid(blockgridEl, settings);
   });
 
   afterEach(() => {
     blockgridObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '#test-script'
+    ]);
   });
 
   it('Should be defined', () => {

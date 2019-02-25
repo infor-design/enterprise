@@ -40,12 +40,19 @@ function Blockgrid(element, settings) {
 Blockgrid.prototype = {
 
   /**
+   * @returns {Pager|undefined} a pager API, if applicable
+   */
+  get pagerAPI() {
+    return this.element.data('pager');
+  },
+
+  /**
    * Do initialization, build up and / or add events ect.
    * @private
    * @returns {object} The Component prototype, useful for chaining.
    */
   init() {
-    // Do initialization. Build or Events ect
+    this.selectedRows = [];
     this.handlePaging();
 
     return this
@@ -59,8 +66,11 @@ Blockgrid.prototype = {
    * @private
    */
   build() {
-    this.renderBlock();
-    this.selectedRows = [];
+    if (this.settings.paging) {
+      this.element.empty();
+    }
+
+    this.render();
     return this;
   },
 
@@ -108,6 +118,16 @@ Blockgrid.prototype = {
       self.updated();
     });
 
+    if (this.pagerAPI) {
+      this.element.on(`page.${COMPONENT_NAME}`, () => {
+        this.previousFocusedElement = true;
+        this.build();
+      }).on(`pagesizechange.${COMPONENT_NAME}`, () => {
+        this.previousFocusedElement = true;
+        this.build();
+      });
+    }
+
     return this;
   },
 
@@ -116,9 +136,8 @@ Blockgrid.prototype = {
       return;
     }
 
-    const pagerElem = this.element;
     this.element.addClass('paginated');
-    pagerElem.pager({
+    this.element.pager({
       componentAPI: this,
       dataset: this.settings.dataset,
       pagesize: this.settings.pagesize,
@@ -127,17 +146,29 @@ Blockgrid.prototype = {
   },
 
   /**
+   * @deprecated as of v4.15.0, use `select()`
+   * @private
    * Run selection over a block item
-   * @param {element} activeBlock Dom element to use
+   * @param {jQuery[]} activeBlock the jQuery-wrapped DOM element that will be selected.
    * @param {boolean} isCheckbox True if a checkbox, used for mixed mode.
-  */
+   * @returns {void}
+   */
   selectBlock(activeBlock, isCheckbox) {
+    return this.select(activeBlock, isCheckbox);
+  },
+
+  /**
+   * Run selection over a block item
+   * @param {jQuery[]} activeBlock the jQuery-wrapped DOM element that will be selected.
+   * @param {boolean} isCheckbox True if a checkbox, used for mixed mode.
+   */
+  select(activeBlock, isCheckbox) {
     const allBlocks = this.element.find('.block');
     const allChecks = this.element.find('.checkbox');
     const activeCheckbox = activeBlock.find('.checkbox');
     const isChecked = activeCheckbox.is(':checked');
     let action = '';
-    const idx = activeBlock.index();
+    const idx = Number(activeCheckbox.data('idx'));
 
     if (this.settings.selectable === 'single') {
       this.selectedRows = [];
@@ -220,28 +251,82 @@ Blockgrid.prototype = {
   },
 
   /**
-   * Render an individual block element.
+   * Renders the blockgrid page.
    * @returns {void}
-   * @private
    */
-  renderBlock() {
+  render() {
     let blockelements = '';
-    const s = this.settings;
-    const dslength = s.dataset.length;
+    let displayedDataset = this.settings.dataset;
     const selectText = (Locale ? Locale.translate('Select') : 'Select');
 
-    for (let i = 0; i < dslength; i++) {
-      const data = s.dataset[i];
-      const tabindex = this.settings.selectable === 'mixed' ? '0' : '-1';
+    if (this.pagerAPI) {
+      // If the paging information sets limits on the dataset, customize the
+      // displayed dataset to fit the conditions.
+      const pagerInfo = this.pagerAPI.state;
+      if (pagerInfo.pages > 1) {
+        const trueActivePage = pagerInfo.activePage > 0 ? pagerInfo.activePage - 1 : 0;
+        const firstRecordIdx = pagerInfo.pagesize * trueActivePage;
+        const lastRecordIdx = pagerInfo.pagesize * (trueActivePage + 1);
+        displayedDataset = displayedDataset.slice(firstRecordIdx, lastRecordIdx);
 
-      blockelements += `<div class="block is-selectable" role="listitem" tabindex="0">
-      <input type="checkbox" aria-hidden="true" role="presentation" class="checkbox" id="checkbox${i}" tabindex="${tabindex}" idx="${i}">
-      <label for="checkbox${i}" class="checkbox-label"><span class="audible">${selectText}</span></label>
-      <img alt="Placeholder Image" src="${data.img || data.image}" class="image-round">
-      <p> ${data.maintxt || data.title} <br> ${data.subtxt || data.subtitle} </p></div>`;
+        // If the dataset doesn't actually have IDs, set temporary ones for
+        // tracking selected/deselected
+        if (displayedDataset.length !== this.settings.dataset.length) {
+          for (let j = 0; j < (lastRecordIdx - firstRecordIdx) + 1; j++) {
+            if (displayedDataset[j].id) {
+              break;
+            }
+            displayedDataset[j].id = firstRecordIdx + j;
+          }
+        }
+      }
+    }
+
+    const checkedIdxs = [];
+    this.selectedRows.forEach((row) => {
+      checkedIdxs.push(row.idx);
+    });
+
+    for (let i = 0; i < displayedDataset.length; i++) {
+      const data = displayedDataset[i];
+      const tabindex = this.settings.selectable === 'mixed' ? '0' : '-1';
+      let selected = '';
+      let checked = '';
+
+      if (checkedIdxs.indexOf(data.id) > -1) {
+        selected = ' is-selected';
+        checked = ' checked';
+      }
+
+      blockelements += `<div class="block is-selectable${selected}" role="listitem" tabindex="0">
+        <input type="checkbox" aria-hidden="true" role="presentation" class="checkbox" id="checkbox${i}" tabindex="${tabindex}" data-idx="${data.id}"${checked}>
+        <label for="checkbox${i}" class="checkbox-label">
+          <span class="audible">${selectText}</span>
+        </label>
+        <img alt="Placeholder Image" src="${data.img || data.image}" class="image-round">
+        <p> ${data.maintxt || data.title} <br> ${data.subtxt || data.subtitle} </p>
+      </div>`;
     }
 
     this.element.attr('role', 'list').append(blockelements);
+
+    // If a Blockgrid element had focus before rendering, restore focus to the first new block
+    if (this.previousFocusedElement) {
+      setTimeout(() => {
+        this.element.find('.block').first().focus();
+        delete this.previousFocusedElement;
+      }, 0);
+    }
+  },
+
+  /**
+   * @deprecated as of v4.15.0, use `render()`
+   * @private
+   * Render an individual block element.
+   * @returns {void}
+   */
+  renderBlock() {
+    return this.render();
   },
 
   /**
@@ -251,17 +336,12 @@ Blockgrid.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
-
     if (settings && settings.dataset) {
       this.settings.dataset = settings.dataset;
     }
 
-    this.element.empty();
-    if (this.element[0].classList.contains('paginated')) {
-      this.element.data('pager').renderPages('initial');
-    }
-    this.build();
-
+    this.teardown();
+    this.init();
     return this;
   },
 
@@ -273,6 +353,9 @@ Blockgrid.prototype = {
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     this.element.off(`click.${COMPONENT_NAME}`);
+
+    this.element.empty();
+    this.selectedRows = [];
     return this;
   },
 

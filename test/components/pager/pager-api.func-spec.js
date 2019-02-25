@@ -58,7 +58,7 @@ describe('Pager API (Standalone)', () => {
     pagerObj.destroy();
     pagerObj = new Pager(pagerEl, { type: 'standalone', showFirstButton: false });
 
-    expect(document.body.querySelector('.pager-first a')).toBeHidden();
+    expect(document.body.querySelector('.pager-first a')).not.toExist();
     expect(document.body.querySelector('.pager-prev a')).toBeVisible();
     expect(document.body.querySelector('.pager-next a')).toBeVisible();
     expect(document.body.querySelector('.pager-last a')).toBeVisible();
@@ -83,7 +83,7 @@ describe('Pager API (Standalone)', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', showPreviousButton: false });
 
     expect(document.body.querySelector('.pager-first a')).toBeVisible();
-    expect(document.body.querySelector('.pager-prev a')).toBeHidden();
+    expect(document.body.querySelector('.pager-prev a')).not.toExist();
     expect(document.body.querySelector('.pager-next a')).toBeVisible();
     expect(document.body.querySelector('.pager-last a')).toBeVisible();
   });
@@ -104,7 +104,7 @@ describe('Pager API (Standalone)', () => {
 
     expect(document.body.querySelector('.pager-first a')).toBeVisible();
     expect(document.body.querySelector('.pager-prev a')).toBeVisible();
-    expect(document.body.querySelector('.pager-next a')).toBeHidden();
+    expect(document.body.querySelector('.pager-next a')).not.toExist();
     expect(document.body.querySelector('.pager-last a')).toBeVisible();
   });
 
@@ -125,7 +125,7 @@ describe('Pager API (Standalone)', () => {
     expect(document.body.querySelector('.pager-first a')).toBeVisible();
     expect(document.body.querySelector('.pager-prev a')).toBeVisible();
     expect(document.body.querySelector('.pager-next a')).toBeVisible();
-    expect(document.body.querySelector('.pager-last a')).toBeHidden();
+    expect(document.body.querySelector('.pager-last a')).not.toExist();
 
     pagerObj.updated({ showLastButton: true });
   });
