@@ -1,39 +1,47 @@
 import { Pager } from '../../../src/components/pager/pager';
+import { cleanup } from '../../helpers/func-utils';
 
 const pagerHTML = require('../../../app/views/components/pager/example-standalone.html');
 const svg = require('../../../src/components/icons/svg.html');
 
+// Custom tooltip settings
+const firstContent = 'In The Beginning...';
+const previousContent = 'Before Long...';
+const nextContent = 'The Next Day...';
+const lastContent = 'In Closing...';
+
 let pagerEl;
-let svgEl;
 let pagerObj;
 
 describe('Pager API (Standalone)', () => {
   beforeEach(() => {
     pagerEl = null;
-    svgEl = null;
     pagerObj = null;
+
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', pagerHTML);
     pagerEl = document.body.querySelector('.pager-container');
-    svgEl = document.body.querySelector('.svg-icons');
-    pagerObj = new Pager(pagerEl, { type: 'standalone' });
   });
 
   afterEach(() => {
-    pagerObj.updated({ type: 'standalone' });
     pagerObj.destroy();
-    pagerEl.parentNode.removeChild(pagerEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup([
+      '.pager-container',
+      '.svg-icons',
+      '.row',
+      '#test-script'
+    ]);
   });
 
   it('Should be defined on jQuery object', () => {
+    pagerObj = new Pager(pagerEl, { type: 'standalone' });
+
     expect(pagerObj).toEqual(jasmine.any(Object));
   });
 
   it('Should render', () => {
+    pagerObj = new Pager(pagerEl, { type: 'standalone' });
+
     expect(document.body.querySelector('.pager-toolbar')).toBeTruthy();
     expect(document.body.querySelector('.pager-first')).toBeTruthy();
     expect(document.body.querySelector('.pager-prev')).toBeTruthy();
@@ -42,20 +50,19 @@ describe('Pager API (Standalone)', () => {
   });
 
   it('Should destroy pager', () => {
+    pagerObj = new Pager(pagerEl, { type: 'standalone' });
     pagerObj.destroy();
 
     expect(document.body.querySelector('.pager-toolbar')).toBeFalsy();
   });
 
   it('Should be show page size selector', () => {
-    pagerObj.destroy();
     pagerObj = new Pager(pagerEl, { type: 'standalone', showPageSizeSelector: true });
 
     expect(document.body.querySelector('.pager-pagesize')).toBeTruthy();
   });
 
   it('Should hide first button', () => {
-    pagerObj.destroy();
     pagerObj = new Pager(pagerEl, { type: 'standalone', showFirstButton: false });
 
     expect(document.body.querySelector('.pager-first a')).not.toExist();
@@ -67,7 +74,6 @@ describe('Pager API (Standalone)', () => {
   });
 
   it('Should disable first button', () => {
-    pagerObj.destroy();
     pagerObj = new Pager(pagerEl, { type: 'standalone', enableFirstButton: false });
 
     expect(document.body.querySelector('.pager-first a[disabled]')).toBeTruthy();
@@ -79,7 +85,6 @@ describe('Pager API (Standalone)', () => {
   });
 
   it('Should hide previous button', () => {
-    pagerObj.destroy();
     pagerObj = new Pager(pagerEl, { type: 'standalone', showPreviousButton: false });
 
     expect(document.body.querySelector('.pager-first a')).toBeVisible();
@@ -89,7 +94,6 @@ describe('Pager API (Standalone)', () => {
   });
 
   it('Should disable previous button', () => {
-    pagerObj.destroy();
     pagerObj = new Pager(pagerEl, { type: 'standalone', enablePreviousButton: false });
 
     expect(document.body.querySelector('.pager-first a[disabled]')).toBeFalsy();
@@ -99,7 +103,6 @@ describe('Pager API (Standalone)', () => {
   });
 
   it('Should hide next button', () => {
-    pagerObj.destroy();
     pagerObj = new Pager(pagerEl, { type: 'standalone', showNextButton: false });
 
     expect(document.body.querySelector('.pager-first a')).toBeVisible();
@@ -109,7 +112,6 @@ describe('Pager API (Standalone)', () => {
   });
 
   it('Should disable next button', () => {
-    pagerObj.destroy();
     pagerObj = new Pager(pagerEl, { type: 'standalone', enableNextButton: false });
 
     expect(document.body.querySelector('.pager-first a[disabled]')).toBeFalsy();
@@ -119,7 +121,6 @@ describe('Pager API (Standalone)', () => {
   });
 
   it('Should hide last button', () => {
-    pagerObj.destroy();
     pagerObj = new Pager(pagerEl, { type: 'standalone', showLastButton: false });
 
     expect(document.body.querySelector('.pager-first a')).toBeVisible();
@@ -131,7 +132,6 @@ describe('Pager API (Standalone)', () => {
   });
 
   it('Should disable last button', () => {
-    pagerObj.destroy();
     pagerObj = new Pager(pagerEl, { type: 'standalone', enableLastButton: false });
 
     expect(document.body.querySelector('.pager-first a[disabled]')).toBeFalsy();
@@ -140,5 +140,81 @@ describe('Pager API (Standalone)', () => {
     expect(document.body.querySelector('.pager-last a[disabled]')).toBeTruthy();
 
     pagerObj.updated({ enableLastButton: true });
+  });
+
+  it('Can have custom tooltips on the first, previous, next, and last buttons', () => {
+    pagerObj = new Pager(pagerEl, {
+      type: 'standalone',
+      firstPageTooltip: firstContent,
+      previousPageTooltip: previousContent,
+      nextPageTooltip: nextContent,
+      lastPageTooltip: lastContent
+    });
+
+    const firstBtnTooltipAPI = $(document.body.querySelector('.pager-first a')).data('tooltip');
+    const previousBtnTooltipAPI = $(document.body.querySelector('.pager-prev a')).data('tooltip');
+    const nextBtnTooltipAPI = $(document.body.querySelector('.pager-next a')).data('tooltip');
+    const lastBtnTooltipAPI = $(document.body.querySelector('.pager-last a')).data('tooltip');
+
+    expect(firstBtnTooltipAPI.settings.content).toEqual(firstContent);
+    expect(previousBtnTooltipAPI.settings.content).toEqual(previousContent);
+    expect(nextBtnTooltipAPI.settings.content).toEqual(nextContent);
+    expect(lastBtnTooltipAPI.settings.content).toEqual(lastContent);
+  });
+
+  it('Can be updated with new settings', () => {
+    pagerObj = new Pager(pagerEl, { type: 'standalone' });
+
+    function updateJunk(api, state) {
+      console.log(`This function is junk! ${state}`);
+    }
+
+    const newSettings = {
+      firstPageTooltip: firstContent,
+      previousPageTooltip: previousContent,
+      nextPageTooltip: nextContent,
+      lastPageTooltip: lastContent,
+      enableFirstButton: false,
+      enablePreviousButton: false,
+      enableNextButton: false,
+      enableLastButton: false,
+      showPageSizeSelector: false,
+      showFirstButton: false,
+      showPreviousButton: false,
+      showNextButton: false,
+      showLastButton: false,
+      indeterminate: true,
+      onFirstPage: updateJunk,
+      onPreviousPage: updateJunk,
+      onNextPage: updateJunk,
+      onLastPage: updateJunk,
+      pagesize: 16,
+      pagesizes: [16, 32, 64]
+    };
+
+    pagerObj.updated(newSettings);
+
+    expect(pagerObj.settings.firstPageTooltip).toEqual(firstContent);
+    expect(pagerObj.settings.previousPageTooltip).toEqual(previousContent);
+    expect(pagerObj.settings.nextPageTooltip).toEqual(nextContent);
+    expect(pagerObj.settings.lastPageTooltip).toEqual(lastContent);
+    expect(pagerObj.settings.enableFirstButton).toBeFalsy();
+    expect(pagerObj.settings.enablePreviousButton).toBeFalsy();
+    expect(pagerObj.settings.enableNextButton).toBeFalsy();
+    expect(pagerObj.settings.enableLastButton).toBeFalsy();
+    expect(pagerObj.settings.showPageSizeSelector).toBeFalsy();
+    expect(pagerObj.settings.showFirstButton).toBeFalsy();
+    expect(pagerObj.settings.showPreviousButton).toBeFalsy();
+    expect(pagerObj.settings.showNextButton).toBeFalsy();
+    expect(pagerObj.settings.showLastButton).toBeFalsy();
+    expect(typeof pagerObj.settings.onFirstPage).toEqual('function');
+    expect(typeof pagerObj.settings.onPreviousPage).toEqual('function');
+    expect(typeof pagerObj.settings.onNextPage).toEqual('function');
+    expect(typeof pagerObj.settings.onLastPage).toEqual('function');
+    expect(pagerObj.settings.indeterminate).toBeTruthy();
+    expect(pagerObj.settings.pagesize).toEqual(16);
+
+    debugger;
+    expect(pagerObj.settings.pagesizes.length).toEqual(3);
   });
 });
