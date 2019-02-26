@@ -265,7 +265,7 @@ describe('Popupmenu renderItem() API', () => {
     };
     const markup = popupmenuObj.renderItem(data);
 
-    expect(markup).toBe('<li class="popupmenu-item"><a id="my-new-popup-item" href="#"><span>New Popup Item</span></a></li>');
+    expect(markup).toBe('<li id="my-new-popup-item" class="popupmenu-item"><a id="my-new-popup-item" href="#"><span>New Popup Item</span></a></li>');
   });
 
   it('Should build HTML for a single Popupmenu Item that\'s disabled', () => {
