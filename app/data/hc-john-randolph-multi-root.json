@@ -5,9 +5,7 @@
     "name": "John Randolph",
     "position": "CEO",
     "employmentType": "FT",
-    "picture": "/images/4.jpg",
-    "childrenUrl": "hc-multi-root.json",
-    "isMultiRoot": true
+    "picture": "/images/4.jpg"
   },
   "children": [
     {

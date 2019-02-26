@@ -1160,7 +1160,7 @@ Hierarchy.prototype = {
       btn.addClass('btn-collapse').removeClass('btn-expand');
     }
 
-    if (data.isLeaf || data.isRootNode && !data.isMultiRoot) {
+    if (data.isLeaf || data.isRootNode) {
       btn.addClass('btn-hidden');
     }
 
