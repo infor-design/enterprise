@@ -1490,7 +1490,7 @@ describe('Datagrid select event tests', () => {
   });
 });
 
-describe('Datagrid timezone tests', () => {
+fdescribe('Datagrid timezone tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-timezone-formats?nofrills=true&locale=nl-NL');
 
