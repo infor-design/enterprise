@@ -86,9 +86,9 @@ describe('Calendar ajax loading tests', () => {
   it('Should render ajax loaded dates for october 2018', async () => {
     const eventMore = await element(by.css('.monthview-header .next'));
     await eventMore.click();
+    await browser.driver.sleep(config.sleep);
 
     const event = await element(by.css('.calendar-event.graphite'));
-    await browser.driver.sleep(config.sleep);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(event), config.waitsFor);
 
