@@ -6,7 +6,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Track Dirty Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/input/example-index?nofrills=true');
+    await utils.setPage('/components/input/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
