@@ -169,46 +169,39 @@ describe('Lookup (multiselect)', () => {
 describe('Lookup paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-paging');
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.trigger'))), config.waitsFor);
   });
 
   it('should have a pager component', async () => {
-    const buttonEl = await element(by.className('trigger'));
-    await buttonEl.click();
+    await element(by.css('.trigger')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.pager-toolbar'))), config.waitsFor);
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('pager-toolbar'))), config.waitsFor);
-
-    expect(await element(by.className('pager-toolbar'))).toBeTruthy();
+    expect(await element(by.className('pager-toolbar')).isPresent()).toBeTruthy();
   });
 
   it('should have a search and actions', async () => {
-    const buttonEl = await element.all(by.className('trigger')).first();
+    await element(by.css('.trigger')).click();
 
-    await buttonEl.click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.searchfield'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.btn-actions'))), config.waitsFor);
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('searchfield'))), config.waitsFor);
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('btn-actions'))), config.waitsFor);
-
-    expect(await element(by.className('searchfield'))).toBeTruthy();
-    expect(await element(by.className('btn-actions'))).toBeTruthy();
+    expect(await element(by.css('.searchfield')).isPresent()).toBeTruthy();
+    expect(await element(by.css('.btn-actions')).isPresent()).toBeTruthy();
   });
 
   it('should have an enabled next page button', async () => {
-    const buttonEl = await element.all(by.className('trigger')).first();
+    await element(by.css('.trigger')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.pager-next'))), config.waitsFor);
 
-    await buttonEl.click();
-
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('pager-next'))), config.waitsFor);
-
-    expect(await element(by.className('pager-next')).isEnabled()).toBe(true);
+    expect(await element(by.css('.pager-next')).isEnabled()).toBe(true);
   });
 
   it('should be able to go the next page', async () => {
-    const buttonEl = await element.all(by.className('trigger')).first();
+    await element(by.css('.trigger')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.pager-next'))), config.waitsFor);
 
-    await buttonEl.click();
-
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('pager-next'))), config.waitsFor);
-    await element(by.className('pager-next')).click();
+    await element(by.css('.pager-next')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.name('pager-pageno')).getAttribute('value')).toEqual('2');
   });
@@ -356,5 +349,54 @@ describe('Lookup modal tests', () => {
     await browser.driver.sleep(301);
 
     expect(await lookupEl.getAttribute('value')).toEqual('2241202|Different Compressor');
+  });
+});
+
+describe('Lookup single select serverside tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/lookup/test-single-select-serverside');
+  });
+
+  it('should be able to reselect value', async () => {
+    const lookupEl = await element(by.id('product-lookup1'));
+
+    expect(await lookupEl.getAttribute('value')).toEqual('214221');
+    await element(by.id('product-lookup1')).element(by.xpath('..')).element(by.className('trigger')).click();
+    await browser.driver.sleep(1000);
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    expect(await lookupEl.getAttribute('value')).toEqual('214220');
+  });
+
+  it('should be able to keep selected value only one', async () => {
+    const lookupEl = await element(by.id('product-lookup2'));
+    await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
+    await browser.driver.sleep(1000);
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    expect(await lookupEl.getAttribute('value')).toEqual('214220');
+
+    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+    await browser.driver.sleep(301);
+    await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
+    await browser.driver.sleep(1000);
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+
+    expect(await lookupEl.getAttribute('value')).toEqual('214221');
+
+    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+    await browser.driver.sleep(301);
+    await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
+    await browser.driver.sleep(1000);
+
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+
+    expect(await element.all(by.css('#lookup-datagrid .datagrid-body tbody tr.datagrid-row.is-selected')).count()).toEqual(1);
   });
 });

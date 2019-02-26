@@ -31,6 +31,7 @@ describe('Hierarchy stacked layout', () => {
 
     await element.all(by.css('.btn')).get(2).click();
     await browser.driver.sleep(config.sleep);
+    
     expect(await element.all(by.css('.leaf')).count()).toEqual(5);
 
     await element.all(by.css('.btn')).get(4).click();
@@ -46,11 +47,13 @@ describe('Hierarchy stacked layout', () => {
     // Load children
     await element.all(by.css('.btn')).get(2).click();
     await browser.driver.sleep(config.sleep);
+
     expect(await element.all(by.css('.leaf')).count()).toEqual(5);
 
     // Go back
     await element.all(by.css('.btn')).get(0).click();
     await browser.driver.sleep(config.sleep);
+
     expect(await element.all(by.css('.leaf')).count()).toEqual(3);
     expect(await element.all(by.css('.btn-collapse')).count()).toEqual(3);
   });

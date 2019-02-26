@@ -1,0 +1,27 @@
+{
+  "activePage" : 1,
+  "filterExpr": [
+    {
+      "columnId": "activity",
+      "operator": "equals",
+      "value": [
+        "Assemble Paint"
+      ]
+    }
+  ],
+  "filtered": {
+    "activePage": 1,
+    "pages": 1,
+    "total": 0
+  },
+  "filteredActivePage": 1,
+  "filteredPages": 1,
+  "filteredTotal": 0,
+  "indeterminate": false,
+  "pages": 100,
+  "pagesize": 10,
+  "preserveSelected": true,
+  "total": 0,
+  "trigger": "render",
+  "type": "page"
+}

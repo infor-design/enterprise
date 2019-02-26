@@ -76,6 +76,10 @@
       }
     }
 
+    svg {
+      pointer-events: none;
+    }
+
   }
 
   li:not(.selected) a:hover:not([disabled]) svg {
@@ -227,14 +231,6 @@ li + .pager-count {
   .pager-prev,
   .pager-next {
     position: absolute;
-  }
-
-  .pager-prev {
-    left: 15px;
-  }
-
-  .pager-next {
-    right: 15px;
   }
 
   &.card .card-footer .pager-toolbar {

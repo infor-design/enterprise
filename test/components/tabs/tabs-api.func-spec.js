@@ -331,15 +331,10 @@ describe('Tabs API', () => {
     expect(tab.length).toBeFalsy();
   });
 
-  it('Should select tab, and focus', (done) => {
+  it('Should select tab, and focus', () => {
     tabsObj.select('#tabs-normal-contracts');
 
     expect(document.querySelector('.tab.is-selected').innerText).toEqual('Contracts');
-
-    setTimeout(() => {
-      expect(parseInt(document.querySelector('.animated-bar').style.left, 10)).toBeCloseTo(0, 1);
-      done();
-    }, 500);
   });
 
   it('Should return false whether tabs are overflowed at 300px', () => {

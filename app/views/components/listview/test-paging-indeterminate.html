@@ -15,7 +15,7 @@
         <h2 class="card-title">Pagable Listview</h2>
       </div>
       <div class="card-content">
-        <div class="paginated listview scrollable" data-init="false" id="projects-listview" data-tmpl="project-tmpl" data-dataset="testData"></div>
+        <div class="paginated listview scrollable" data-init="false" id="projects-listview" data-tmpl="project-tmpl"></div>
       </div>
       <div class="card-footer">
 
@@ -49,9 +49,11 @@
         // Build the URL
         var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize,
             testData;
+
         //Get Page Based on info in Req, return results into response.
         $.getJSON(url, function(res) {
           req.total = res.total;
+          req.grandTotal = req.total;
           req.firstPage = req.activePage === 1;
           req.lastPage  = (req.activePage * req.pagesize) >= res.total;
           testData = res.data;
