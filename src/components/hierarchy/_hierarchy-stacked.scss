@@ -27,6 +27,11 @@
     padding-left: 0;
   }
 
+  .chart > .sub-level:first-child {
+    border-top: none;
+    margin-top: 0;
+  }
+
   .chart .root:first-child::after {
     display: none;
   }
