@@ -148,9 +148,9 @@ Soho.Locale.formatDate(new Date(), {pattern: 'dd-MM-yyyy HH:mm zz'});
 // 26-02-2019 14:08 EST
 Soho.Locale.formatDate(new Date(), {pattern: 'dd-MM-yyyy HH:mm zzzz'});
 // 26-02-2019 14:08 Eastern Standard Time
-Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' });
+Soho.Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' });
 // 22-03-2000 20:11 EST
-Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' });
+Soho.Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' });
 // 22-03-2000 20:11 Eastern Standard Time
 ```
 
