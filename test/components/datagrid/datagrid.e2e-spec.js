@@ -1492,7 +1492,7 @@ describe('Datagrid select event tests', () => {
 
 describe('Datagrid timezone tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-timezone-formats?nofrills=true&locale=nl-NL');
+    await utils.setPage('/components/datagrid/test-timezone-formats?layout=nofrills&locale=nl-NL');
 
     const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
     await browser.driver
