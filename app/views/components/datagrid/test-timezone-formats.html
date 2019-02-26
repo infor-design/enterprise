@@ -1,0 +1,36 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+    $('body').on('initialized', function () {
+      var columns = [],
+        data = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'orderDate', name: 'Raw Format', field: 'orderDate'});
+      columns.push({ id: 'orderDate', name: 'Short Timezone (Locale)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: { date: 'timezone' }});
+      columns.push({ id: 'orderDate', name: 'Long Timezone (Locale)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: { date: 'timezoneLong' }});
+      columns.push({ id: 'orderDate', name: 'Short Timezone (Custom)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'dd-MM-yyyy HH:mm zz'});
+      columns.push({ id: 'orderDate', name: 'Long Timezone (Custom)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'dd-MM-yyyy HH:mm zz'});
+
+      //Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        editable: true
+      });
+
+      //Pass data in
+      $.get('{{basepath}}api/compressors?pageNum=1&sort=productId&pageSize=10', function(data) {
+        grid = grid.data('datagrid');
+        grid.loadData(data.data);
+      });
+
+    });
+
+</script>

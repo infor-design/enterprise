@@ -88,6 +88,7 @@ describe('Calendar ajax loading tests', () => {
     await eventMore.click();
 
     const event = await element(by.css('.calendar-event.graphite'));
+    await browser.driver.sleep(config.sleep);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(event), config.waitsFor);
 

@@ -22,7 +22,9 @@ Soho.Locale.addCulture('fi-FI', {
       month: 'd. MMMM',
       year: 'MMMM yyyy',
       timestamp: 'H:mm:ss',
-      datetime: 'd.M.y H:mm'
+      datetime: 'd.M.y H:mm',
+      timezone: 'd.M.y H:mm zz',
+      timezoneLong: 'd.M.y H:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
