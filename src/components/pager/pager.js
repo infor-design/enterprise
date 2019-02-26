@@ -874,6 +874,12 @@ Pager.prototype = {
     // Render all elements into the pager container element
     this.pagerBar[0].innerHTML = buttonHTML;
 
+    if (!doRenderLastButton && !doRenderFirstButton && !this.settings.showPageSizeSelector) {
+      this.pagerBar[0].classList.add('two-button');
+    } else {
+      this.pagerBar[0].classList.remove('two-button');
+    }
+
     // Invoke all sub-components
     this.pagerBar.children('li').children('a')
       .button()
@@ -885,6 +891,10 @@ Pager.prototype = {
    * @returns {void}
    */
   renderPageSelectorInput() {
+    if (!this.isTable || this.settings.indeterminate) {
+      return;
+    }
+
     let activePage = this.activePage;
     let totalPages = this.state.pages || 1;
 
@@ -957,36 +967,42 @@ Pager.prototype = {
    * @returns {void}
    */
   renderPageSizeSelectorButton() {
+    if (!this.settings.showPageSizeSelector || this.settings.pagesizes.length < 2) {
+      return;
+    }
+
     if (!this.pageSizeSelectorButton) {
-      const pageSize = $('<li class="pager-pagesize"></li>');
+      const pageSizeLi = $('<li class="pager-pagesize"></li>');
       const dropdownIcon = $.createIcon({ icon: 'dropdown' });
-      let icon = '';
+      let translatedText = Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize);
       let isAudible = '';
+      let recordHtml = `<span>${translatedText}</span>`;
+
+      // Change to the condensed layout, if applicable
       if (this.showSmallPageSizeSelector) {
-        icon = $.createIcon({ icon: 'document' });
         isAudible = ' class="audible"';
+        translatedText = Locale.translate('RecordsPerPage').replace('{0}', '');
+        recordHtml = `<span class="record-count">${this.settings.pagesize}</span>
+        <span${isAudible}>${translatedText}</span>`;
       }
 
+      // Render the button
       const pageSizeButton = $(`<button type="button" class="btn-menu">
-        ${icon}
-        <span class="record-count">${this.settings.pagesize}</span>
-        <span${isAudible}>${Locale.translate('RecordsPerPage').replace('{0}', '')}</span>
+        ${recordHtml}
         ${dropdownIcon}
-      </button>`).appendTo(pageSize);
+      </button>`).appendTo(pageSizeLi);
+      pageSizeLi.appendTo(this.pagerBar);
 
-      let last = this.pagerBar.find('.pager-last');
-      if (last.length === 0) {
-        last = this.pagerBar.find('.pager-next');
+      // Render menu items that render available records per page
+      let menuItems = '';
+      if (this.showSmallPageSizeSelector) {
+        menuItems = `<li class="heading">${translatedText}</li>`;
       }
-      pageSize.insertAfter(last);
-
-      const menu = $('<ul class="popupmenu is-selectable"></ul>');
-
       for (let k = 0; k < this.settings.pagesizes.length; k++) {
         const size = this.settings.pagesizes[k];
-        menu.append(`<li ${size === this.settings.pagesize ? ' class="is-checked"' : ''}><a href="#">${size}</a></li>`);
+        menuItems += `<li class="${size === this.settings.pagesize ? ' is-checked' : ''}"><a href="#">${size}</a></li>`;
       }
-
+      const menu = $(`<ul class="popupmenu is-selectable">${menuItems}</ul>`);
       pageSizeButton.after(menu);
 
       const popupOpts = {
@@ -998,6 +1014,13 @@ Pager.prototype = {
       };
 
       pageSizeButton.popupmenu(popupOpts);
+
+      // Show additional context on the condensed version.
+      if (this.showSmallPageSizeSelector) {
+        pageSizeButton.tooltip({
+          content: translatedText
+        });
+      }
     }
 
     $(this.pageSizeSelectorButton).on('selected.pager', (e, args) => {
@@ -1019,15 +1042,8 @@ Pager.prototype = {
     this.pageCount(totalPages);
 
     this.renderButtons();
-
-    if (this.isTable && !this.settings.indeterminate) {
-      this.renderPageSelectorInput();
-    }
-
-    if (this.settings.showPageSizeSelector) {
-      this.renderPageSizeSelectorButton();
-    }
-
+    this.renderPageSelectorInput();
+    this.renderPageSizeSelectorButton();
     this.renderBar();
   },
 
@@ -1406,6 +1422,11 @@ Pager.prototype = {
     if (this.pageSizeSelectorButton) {
       $(this.pageSizeSelectorButton).off(`selected.${COMPONENT_NAME}`);
       $(this.pageSizeSelectorButton).data('popupmenu').destroy();
+
+      const tooltipAPI = $(this.pageSizeSelectorButton).data('tooltip');
+      if (tooltipAPI) {
+        tooltipAPI.destroy();
+      }
     }
 
     this.pagerBar[0].innerHTML = '';
