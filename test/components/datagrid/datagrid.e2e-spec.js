@@ -1504,11 +1504,11 @@ describe('Datagrid timezone tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    fit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(1500);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-timezones')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-timezone')).toEqual(0);
     });
   }
 });
