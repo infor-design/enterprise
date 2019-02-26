@@ -71,28 +71,32 @@
   </ul></script>
 
 <script id="test-script-2">
-  $('#list-detail-sidebar-search').searchfield({
-    clearable: true
-  });
+  $('body').on('initialized', function () {
+    $('#list-detail-sidebar-search').searchfield({
+      clearable: true
+    });
 
-  $('#task-listview').listview({
-    template: $('#task-tmpl').html(),
-    source: function(req, response) {
-      $.getJSON(path, function(res) {
-        req.total = res.length;
-        req.firstPage = req.activePage === 1;
-        req.lastPage  = (req.activePage * req.pagesize) >= res.total;
-        response(res, req);
-      });
-    },
-    pagesize: 5,
-    paging: true,
-    searchable: true
-  });
+    $('#task-listview').listview({
+      paging: true,
+      pagerSettings: {
+        pagesize: 5
+      },
+      template: $('#task-tmpl').html(),
+      searchable: true,
+      source: function(req, response) {
+        $.getJSON(path, function(res) {
+          req.total = res.length;
+          req.firstPage = req.activePage === 1;
+          req.lastPage  = (req.activePage * req.pagesize) >= res.total;
+          response(res, req);
+        });
+      }
+    });
 
-  $('#list-detail-container').listdetail({
-    listElement: '#task-listview',
-    detailElement: '#maincontent',
-    backElement: '#header-hamburger',
+    $('#list-detail-container').listdetail({
+      listElement: '#task-listview',
+      detailElement: '#maincontent',
+      backElement: '#header-hamburger',
+    });
   });
 </script>

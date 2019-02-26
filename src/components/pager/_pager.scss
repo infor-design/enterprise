@@ -14,6 +14,7 @@
     cursor: pointer;
     display: inline-block;
     overflow: hidden;
+    vertical-align: middle;
     width: auto;
 
     &.pager-no:hover {
@@ -89,23 +90,6 @@
   li:not(.selected) a:active:not([disabled]) svg {
     color: $pager-hover-color;
   }
-
-  &.is-listview {
-    .pager-prev,
-    .pager-next {
-      position: relative;
-      top: 2px;
-    }
-
-    li + .pager-count {
-      margin-top: 2px;
-    }
-
-    .pager-pagesize {
-      padding: 0;
-    }
-  }
-
 }
 
 // Buttons
@@ -228,11 +212,6 @@ li + .pager-count {
     margin: 0;
   }
 
-  .pager-prev,
-  .pager-next {
-    position: absolute;
-  }
-
   &.card .card-footer .pager-toolbar {
     height: 30px;
 
@@ -252,11 +231,6 @@ li + .pager-count {
       }
     }
   }
-}
-
-// Adjacent to Listview (list/detail & builder)
-.list-detail .listview + .pager-toolbar {
-  padding-top: 5px;
 }
 
 // RTL Styles

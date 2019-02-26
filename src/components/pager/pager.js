@@ -223,6 +223,17 @@ Pager.prototype = {
   },
 
   /**
+   * @returns {boolean} if true, shows the condensed version of the Page Size
+   * Selector Button for smaller viewing areas.
+   */
+  get showSmallPageSizeSelector() {
+    if (!this.settings.showPageSizeSelector) {
+      return false;
+    }
+    return this.isListView && this.element.parents('.list-detail').length;
+  },
+
+  /**
    * Init the pager.
    * @private
    * @returns {void}
@@ -687,8 +698,8 @@ Pager.prototype = {
    */
   renderButtons() {
     // Only certain types of Pages get to have the `last` and `first` buttons
-    const types = ['table', 'pageof', 'firstlast', 'standalone'];
-    const canHaveFirstLastButtons = types.indexOf(this.settings.type) > -1 && !this.isListView;
+    // const types = ['table', 'pageof', 'firstlast', 'standalone'];
+    // const canHaveFirstLastButtons = types.indexOf(this.settings.type) > -1 || !this.isListView;
     let activePage = this.activePage;
     let totalPages = this.state.pages;
     let buttonHTML = '';
@@ -712,7 +723,7 @@ Pager.prototype = {
 
     // Determine whether or not special navigation buttons should eventually be rendered
     // First Button
-    if (this.settings.showFirstButton && canHaveFirstLastButtons) {
+    if (this.settings.showFirstButton) {
       if (disableFirstIndeterminate || (!this.settings.indeterminate && this.settings.type !== 'standalone' && activePage === 1)) {
         disableFirstButton = true;
       }
@@ -733,7 +744,7 @@ Pager.prototype = {
       doRenderNextButton = true;
     }
     // Last Button
-    if (this.settings.showLastButton && canHaveFirstLastButtons) {
+    if (this.settings.showLastButton) {
       if (disableLastIndeterminate || (!this.settings.indeterminate && this.settings.type !== 'standalone' && activePage === totalPages)) {
         disableLastButton = true;
       }
@@ -948,10 +959,20 @@ Pager.prototype = {
   renderPageSizeSelectorButton() {
     if (!this.pageSizeSelectorButton) {
       const pageSize = $('<li class="pager-pagesize"></li>');
-      const pageSizeButton = $(`${'<button type="button" class="btn-menu">' +
-        '<span>'}${Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize)}</span> ${
-        $.createIcon({ icon: 'dropdown' })
-      } </button>`).appendTo(pageSize);
+      const dropdownIcon = $.createIcon({ icon: 'dropdown' });
+      let icon = '';
+      let isAudible = '';
+      if (this.showSmallPageSizeSelector) {
+        icon = $.createIcon({ icon: 'document' });
+        isAudible = ' class="audible"';
+      }
+
+      const pageSizeButton = $(`<button type="button" class="btn-menu">
+        ${icon}
+        <span class="record-count">${this.settings.pagesize}</span>
+        <span${isAudible}>${Locale.translate('RecordsPerPage').replace('{0}', '')}</span>
+        ${dropdownIcon}
+      </button>`).appendTo(pageSize);
 
       let last = this.pagerBar.find('.pager-last');
       if (last.length === 0) {
