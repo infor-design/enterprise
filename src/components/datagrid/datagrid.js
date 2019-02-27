@@ -501,6 +501,9 @@ Datagrid.prototype = {
     // Add to ui
     self.renderRows();
 
+    // Sync with others
+    self.syncSelectedUI();
+
     // Set active and fire handler
     setTimeout(() => {
       row = isTop ? row : self.settings.dataset.length - 1;
@@ -523,7 +526,6 @@ Datagrid.prototype = {
       * @property {object} args.oldValue - Always an empty object added for consistent api.
       */
       self.element.triggerHandler('addrow', args);
-      self.syncSelectedUI();
     }, 100);
   },
 
@@ -3881,9 +3883,6 @@ Datagrid.prototype = {
       if (this.elemWidth === 0) { // handle on invisible tab container
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
-      if (!this.elemWidth || this.elemWidth === 0) { // handle on invisible modal
-        this.elemWidth = this.element.closest('.modal-contents').outerWidth();
-      }
 
       this.widthSpecified = false;
     }
@@ -3919,9 +3918,6 @@ Datagrid.prototype = {
 
       if (this.elemWidth === 0) { // handle on invisible tab container
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
-      }
-      if (!this.elemWidth || this.elemWidth === 0) { // handle on invisible modal
-        this.elemWidth = this.element.closest('.modal-contents').outerWidth();
       }
 
       this.widthSpecified = false;
@@ -4028,7 +4024,7 @@ Datagrid.prototype = {
       const diff = this.elemWidth - this.totalWidths[container];
 
       if (this.settings.stretchColumn === 'last') {
-        if ((diff > 0) && !this.widthPercent && !col.width) {
+        if (diff > 0 && diff > colWidth && !this.widthPercent && !col.width) {
           colWidth = '';
           this.headerWidths[index] = {
             id: col.id,
@@ -4037,6 +4033,16 @@ Datagrid.prototype = {
           };
           this.totalMinWidths[container] = this.totalWidths[container];
           this.totalWidths[container] = '100%';
+        }
+        if (diff > 0 && diff < colWidth && !this.widthPercent && !col.width) {
+          colWidth += diff;
+          this.headerWidths[index] = {
+            id: col.id,
+            width: colWidth,
+            widthPercent: this.widthPercent
+          };
+          this.totalWidths[container] += colWidth;
+          this.totalMinWidths[container] = this.totalWidths[container];
         }
       }
 
