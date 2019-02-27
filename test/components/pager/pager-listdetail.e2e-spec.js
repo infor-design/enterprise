@@ -64,8 +64,10 @@ describe('Pager (List/Detail, with page size selector)', () => {
       await element(by.css('.pager-toolbar li.pager-pagesize button')).click();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#popupmenu-1'))), config.waitsFor);
+      const menu = await element(by.css('#popupmenu-1'));
 
-      expect(await browser.protractorImageComparison.checkElement(pagerToolbar, 'pager-listdetail-pagesize-open')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(pagerToolbar, 'pager-listdetail-pagesize-open-bar')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(menu, 'pager-listdetail-pagesize-open-menu')).toEqual(0);
     });
   }
 });
