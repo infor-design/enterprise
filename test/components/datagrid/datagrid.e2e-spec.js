@@ -1490,11 +1490,11 @@ describe('Datagrid select event tests', () => {
   });
 });
 
-describe('Datagrid timezone tests', () => {
+fdescribe('Datagrid timezone tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-timezone-formats?layout=nofrills&locale=nl-NL');
 
-    const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
+    const datagridEl = await element(by.css('.datagrid tr:nth-child(5)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1506,7 +1506,6 @@ describe('Datagrid timezone tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(400);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-timezone')).toEqual(0);
     });
