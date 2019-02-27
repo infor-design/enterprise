@@ -906,6 +906,30 @@ describe('Datagrid filter lookup custom click function tests', () => {
   });
 });
 
+describe('Datagrid filter masks', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-filter-mask');
+
+    const datagridEl = await element(by.id('datagrid'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should mask on text filters', async () => {
+    await element(by.id('test-filter-mask-datagrid-1-header-filter-2')).sendKeys('Compressor');
+    await element(by.id('test-filter-mask-datagrid-1-header-filter-2')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('test-filter-mask-datagrid-1-header-filter-4')).sendKeys('999999');
+    await element(by.id('test-filter-mask-datagrid-1-header-filter-2')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.id('test-filter-mask-datagrid-1-header-filter-2')).getAttribute('value')).toEqual('Compr');
+    expect(await element(by.id('test-filter-mask-datagrid-1-header-filter-4')).getAttribute('value')).toEqual('999');
+  });
+});
+
 describe('Datagrid grouping multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-grouping-multiselect');
