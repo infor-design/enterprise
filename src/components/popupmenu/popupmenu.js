@@ -1595,7 +1595,13 @@ PopupMenu.prototype = {
     }
 
     // Close open dropdowns
-    $('#dropdown-list').remove();
+    const openDropdown = $('.dropdown.is-open');
+    if (openDropdown.length > 0) {
+      const dropDownApi = openDropdown.parent().prev().data('dropdown');
+      if (dropDownApi) {
+        dropDownApi.closeList('cancel');
+      }
+    }
 
     this.element.addClass('is-open');
     this.menu.addClass('is-open').attr('aria-hidden', 'false');
