@@ -2076,20 +2076,20 @@ Datagrid.prototype = {
 
     if (this.restoreFilterClientSide) {
       this.restoreFilterClientSide = false;
-      return;
+    } else {
+      /**
+      * Fires after a filter action ocurs
+      * @event filtered
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Object with the arguments
+      * @property {number} args.op The filter operation, this can be 'apply', 'clear'
+      * @property {object} args.conditions An object with all the condition data.
+      * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
+      */
+      this.element.trigger('filtered', { op: 'apply', conditions, trigger });
     }
 
-    /**
-    * Fires after a filter action ocurs
-    * @event filtered
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Object with the arguments
-    * @property {number} args.op The filter operation, this can be 'apply', 'clear'
-    * @property {object} args.conditions An object with all the condition data.
-    * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
-    */
-    this.element.trigger('filtered', { op: 'apply', conditions, trigger });
     this.setSearchActivePage({
       trigger,
       type: 'filtered'
