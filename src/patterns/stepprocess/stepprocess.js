@@ -254,7 +254,6 @@ Stepprocess.prototype = {
   getNextNode(stepLink) {
     const s = this.settings;
     let next = stepLink.parent().next().find(`${s.stepLink}:first`);
-    const nextStepJq = next.closest(s.stepLi);
 
     // Possibly Move Into Children
     if (stepLink.next().is(s.stepFolder) && stepLink.next().hasClass('is-open')) {
@@ -263,7 +262,7 @@ Stepprocess.prototype = {
 
     // Skip disabled
     if (next.hasClass('is-disabled')) {
-      next = nextStepJq.next().find(`${s.stepLink}:first`);
+      next = this.getNextNode(next);
     }
 
     // Bottom of a group..{l=2: max folders to be deep }
@@ -276,6 +275,7 @@ Stepprocess.prototype = {
         }
       }
     }
+
     return next;
   },
 
@@ -283,10 +283,10 @@ Stepprocess.prototype = {
    * Get the next step in the tree
    * (not to be confused with getNextNode, which includes folders)
    * @private
+   * @param  {object} curStepJq - The step link element
    * @returns {object} next step
    */
-  getNextStep() {
-    const curStepJq = this.getSelectedStep();
+  getNextStep(curStepJq) {
     const curStepLinkJq = curStepJq.children(this.settings.stepLink);
     const curStepFolderJq = curStepJq.next(this.settings.stepFolder);
     const nextStepLinkJq = this.getNextNode(curStepLinkJq);
@@ -309,6 +309,11 @@ Stepprocess.prototype = {
     } else {
       // Neither folders options work so select the next node
       stepLinkToSelect = nextStepLinkJq;
+    }
+
+    // Skip disabled
+    if (stepLinkToSelect.hasClass('is-disabled')) {
+      stepLinkToSelect = this.getNextStep(stepLinkToSelect.parent());
     }
 
     return stepLinkToSelect;
@@ -334,7 +339,7 @@ Stepprocess.prototype = {
 
     // Skip disabled
     if (prev.hasClass('is-disabled')) {
-      prev = prevStepJq.prev().find(`${s.stepLink}:first`);
+      this.getPreviousNode(prev);
     }
 
     // Top of a group
@@ -348,13 +353,11 @@ Stepprocess.prototype = {
    * Get the previous step in the tree
    * (not to be confused with getPreviousNode, which includes folders)
    * @private
-   * @param  {object} stepLink - The step link element
+   * @param  {object} curStepJq - The step link element
    * @returns {object} previous step
    */
-  getPreviousStep() {
+  getPreviousStep(curStepJq) {
     const s = this.settings;
-    // Get the currently select node
-    const curStepJq = this.getSelectedStep();
     const curStepLinkJq = curStepJq.children(s.stepLink);
 
     // Get the previous step to switch to
@@ -377,6 +380,12 @@ Stepprocess.prototype = {
         }
       }
     }
+
+    // Skip disabled
+    if (stepLinkToSelect.hasClass('is-disabled')) {
+      stepLinkToSelect = this.getPreviousStep(stepLinkToSelect.parent());
+    }
+
     return stepLinkToSelect;
   },
 
@@ -387,7 +396,8 @@ Stepprocess.prototype = {
    */
   goToNextStep() {
     const self = this;
-    const stepLink = self.getNextStep();
+    const curStepJq = this.getSelectedStep();
+    const stepLink = self.getNextStep(curStepJq);
     if (stepLink.length) {
       self.selectStep(stepLink, 'next');
     } else if (typeof self.settings.beforeSelectStep === 'function') {
@@ -402,7 +412,8 @@ Stepprocess.prototype = {
    * @returns {void}
    */
   goToPreviousStep() {
-    const stepLink = this.getPreviousStep();
+    const curStepJq = this.getSelectedStep();
+    const stepLink = this.getPreviousStep(curStepJq);
     if (stepLink.length) {
       this.selectStep(stepLink, 'prev');
     }
