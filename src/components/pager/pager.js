@@ -1196,6 +1196,9 @@ Pager.prototype = {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
+    if (Array.isArray(settings.pagesizes) && settings.pagesizes.length) {
+      this.settings.pagesizes = settings.pagesizes;
+    }
 
     // Limit updated paging info to a specific subset
     const pagingInfo = {
