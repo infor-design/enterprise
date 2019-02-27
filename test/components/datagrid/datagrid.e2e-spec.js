@@ -839,7 +839,7 @@ describe('Datagrid contextmenu tests', () => {
 
       expect(await element(by.css('#grid-actions-menu .submenu .popupmenu')).isDisplayed()).toBeFalsy();
 
-      browser.actions().mouseMove(element(by.css('#grid-actions-menu .submenu'))).perform();
+      await browser.actions().mouseMove(element(by.css('#grid-actions-menu .submenu'))).perform();
 
       await browser.driver
         .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#grid-actions-menu .submenu .popupmenu'))), config.waitsFor);
