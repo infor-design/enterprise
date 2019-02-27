@@ -52,10 +52,14 @@ describe('Pager (List/Detail, with page size selector)', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visually regress', async () => {
+    it('Should not visually regress when closed', async () => {
       const pagerToolbar = await element(by.css('.pager-toolbar'));
 
       expect(await browser.protractorImageComparison.checkElement(pagerToolbar, 'pager-listdetail-pagesize-closed')).toEqual(0);
+    });
+
+    it('Should not visually regress when opened', async () => {
+      const pagerToolbar = await element(by.css('.pager-toolbar'));
 
       await element(by.css('.pager-toolbar li.pager-pagesize button')).click();
       await browser.driver
