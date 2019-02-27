@@ -1494,7 +1494,7 @@ describe('Datagrid timezone tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-timezone-formats?layout=nofrills&locale=nl-NL');
 
-    const datagridEl = await element(by.css('.datagrid tr:nth-child(5)'));
+    const datagridEl = await element(by.css('.datagrid tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1503,13 +1503,13 @@ describe('Datagrid timezone tests', () => {
     await utils.checkForErrors();
   });
 
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
-
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-timezone')).toEqual(0);
-    });
-  }
+  it('Should Render Timezones', async () => {
+    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('03-04-2019');
+    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('3/4/2019 00:00 GMT-5');
+    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(3)')).getText()).toEqual('3/4/2019 00:00 Eastern-standaardtijd');
+    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(4)')).getText()).toEqual('03-04-2019 00:00 GMT-5');
+    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(5)')).getText()).toEqual('03-04-2019 00:00 GMT-5');
+  });
 });
 
 describe('Datagrid select tree tests', () => {
