@@ -12,7 +12,10 @@ const COMPONENT_NAME = 'toolbar-flex';
  * Component Default Settings
  * @namespace
  */
-const TOOLBAR_FLEX_DEFAULTS = {};
+const TOOLBAR_FLEX_DEFAULTS = {
+  // ajax function to be called before the more menu is opened
+  beforeMoreMenuOpen: null
+};
 
 /**
  * @constructor
@@ -44,8 +47,13 @@ ToolbarFlex.prototype = {
   init() {
     this.sections = utils.getArrayFromList(this.element.querySelectorAll('.toolbar-section'));
     this.items = this.getElements().map((item) => {
+      const itemComponentSettings = {};
+      if ($(item).hasClass('btn-actions') && !!this.settings.beforeMoreMenuOpen) {
+        itemComponentSettings.beforeOpen = this.settings.beforeMoreMenuOpen;
+      }
       $(item).toolbarflexitem({
-        toolbarAPI: this
+        toolbarAPI: this,
+        componentSettings: itemComponentSettings
       });
       return $(item).data('toolbarflexitem');
     });

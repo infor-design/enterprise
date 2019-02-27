@@ -1,7 +1,6 @@
 <div class="row">
   <div class="six columns">
-      <div class="pager-container">
-      </div>
+    <div class="pager-container"></div>
   </div>
   <div class="six columns">
     <div class="field">
@@ -40,10 +39,29 @@
       <input type="checkbox" class="checkbox" name="disable-last-button" id="disable-last-button"/>
       <label for="disable-last-button" class="checkbox-label">Disable Last Button</label>
     </div>
+
+    <div class="field">
+      <label for="firstPageButtonTooltip">First Pager Button Tooltip</label>
+      <input type="text" id="firstPageButtonTooltip" value="Custom First Tooltip"/>
+    </div>
+    <div class="field">
+      <label for="firstPageButtonTooltip">Previous Pager Button Tooltip</label>
+      <input type="text" id="previousPageButtonTooltip" value="Custom Previous Tooltip"/>
+    </div>
+    <div class="field">
+      <label for="firstPageButtonTooltip">Next Pager Button Tooltip</label>
+      <input type="text" id="nextPageButtonTooltip" value="Custom Next Tooltip"/>
+    </div>
+    <div class="field">
+      <label for="firstPageButtonTooltip">Last Pager Button Tooltip</label>
+      <input type="text" id="lastPageButtonTooltip" value="Custom Last Tooltip"/>
+    </div>
+
+    <button class="btn-primary" type="button" id="reset-tooltips">Reset Tooltips</button>
   </div>
 </div>
 
-<script>
+<script id="test-script">
   $('body').one('initialized', function () {
     var api = $('.pager-container').pager({
       type: 'standalone',
@@ -77,13 +95,13 @@
       nextPageTooltip: 'Custom Next Tooltip',
       lastPageTooltip: 'Custom Last Tooltip'
     }).on('firstpage', function (e, args) {
-      console.log('First Page:', args);
+      console.log(args);
     }).on('previouspage', function (e, args) {
-      console.log('Previous Page:', args);
+      console.log(args);
     }).on('nextpage', function (e, args) {
-      console.log('Next Page:', args);
+      console.log(args);
     }).on('lastpage', function (e, args) {
-      console.log('Last Page:', args);
+      console.log(args);
     }).data('pager');
 
     //TODO: Make func tests for these (api.updated calls)
@@ -134,6 +152,51 @@
     $('#disable-last-button').on('change.test', function() {
       var isChecked = !this.checked;
       api.updated({enableLastButton: isChecked});
+    });
+
+    var startingFirstVal = $('#firstPageButtonTooltip').val();
+    var startingPreviousVal = $('#previousPageButtonTooltip').val();
+    var startingNextVal = $('#nextPageButtonTooltip').val();
+    var startingLastVal = $('#lastPageButtonTooltip').val();
+    var doUpdate = true;
+
+    $('#firstPageButtonTooltip').on('change.test', function () {
+      var val = Soho.xss.stripTags($(this).val());
+      if (!val.length) val = startingFirstVal;
+      if (doUpdate) api.updated({ firstPageTooltip: val });
+    });
+
+    $('#previousPageButtonTooltip').on('change.test', function () {
+      var val = Soho.xss.stripTags($(this).val());
+      if (!val.length) val = startingPreviousVal;
+      if (doUpdate) api.updated({ previousPageTooltip: val });
+    });
+
+    $('#nextPageButtonTooltip').on('change.test', function () {
+      var val = Soho.xss.stripTags($(this).val());
+      if (!val.length) val = startingNextVal;
+      if (doUpdate) api.updated({ nextPageTooltip: val });
+    });
+
+    $('#lastPageButtonTooltip').on('change.test', function () {
+      var val = Soho.xss.stripTags($(this).val());
+      if (!val.length) val = startingLastVal;
+      if (doUpdate) api.updated({ lastPageTooltip: val });
+    });
+
+    $('#reset-tooltips').on('click', function() {
+      doUpdate = false;
+      $('#firstPageButtonTooltip').val(startingFirstVal);
+      $('#previousPageButtonTooltip').val(startingPreviousVal);
+      $('#nextPageButtonTooltip').val(startingNextVal);
+      $('#lastPageButtonTooltip').val(startingLastVal);
+      api.updated({
+        firstPageTooltip: startingFirstVal,
+        previousPageTooltip: startingPreviousVal,
+        nextPageTooltip: startingNextVal,
+        lastPageTooltip: startingLastVal
+      });
+      doUpdate = true;
     });
 
     // Add functionality to trigger the pager events of the items

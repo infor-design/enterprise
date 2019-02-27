@@ -67,7 +67,7 @@ function SearchField(element, settings) {
   this.element = $(element);
 
   // Backwards compatibility for old toolbars that had `collapsible` and `clearable` as the defaults
-  if (this.toolbarParent && settings !== undefined) {
+  if (this.toolbarParent && !this.isContainedByFlexToolbar && settings !== undefined) {
     if (settings.clearable === undefined) {
       settings.clearable = true;
     }
