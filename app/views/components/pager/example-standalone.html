@@ -8,6 +8,10 @@
       <label for="toggle-pagesize" class="checkbox-label">Show Page Size Selector</label>
     </div>
     <div class="field">
+      <input type="checkbox" class="checkbox" name="toggle-small-pagesize" id="toggle-small-pagesize" disabled />
+      <label for="toggle-small-pagesize" class="checkbox-label">Use Small Page Size Selector</label>
+      </div>
+    <div class="field">
       <input type="checkbox" class="checkbox" name="toggle-first-button" id="toggle-first-button"/>
       <label for="toggle-first-button" class="checkbox-label">Hide First Button</label>
     </div>
@@ -108,10 +112,22 @@
     // Add functionality to toggle the pager items such as hasPageSizeChooser, hasFirstButton
     $('#toggle-pagesize').on('change.test', function() {
       var isChecked = this.checked;
-      api.updated({showPageSizeSelector: isChecked}); //maps to hasPageSizeChooser
+      var opts = {
+        showPageSizeSelector: isChecked,
+        smallPageSizeSelector: document.querySelector('#toggle-small-pagesize').checked
+      };
+
       if (isChecked) {
-        api.updated({pagesizes: [10, 20, 30, 40]});
+        opts.pagesizes = [10, 20, 30, 40];
       }
+
+      $('#toggle-small-pagesize').prop('disabled', !isChecked);
+      api.updated(opts);
+    });
+
+    $('#toggle-small-pagesize').on('change.test', function() {
+      var isChecked = this.checked;
+      api.updated({smallPageSizeSelector: isChecked});
     });
 
     $('#toggle-first-button').on('change.test', function() {

@@ -46,6 +46,7 @@ const FOCUSABLE_SELECTOR = [
 * @param {number} [settings.pagesize = 15]  Can be calculated or a specific number
 * @param {array} [settings.pagesizes = [15, 25, 50, 75]] Array of numbers of the page size selector
 * @param {boolean} [settings.showPageSizeSelector = true] If false will not show page size selector
+* @param {boolean} [settings.smallPageSizeSelector = false] If true, shows a condensed view of the page size selector
 * @param {boolean} [settings.onPageSizeChange] Call back function for page change
 * @param {boolean} [settings.showFirstButton = true] If false the first button will be hidden (standalone mode)
 * @param {boolean} [settings.enableFirstButton = true] If false the first button will be disabled (standalone mode)
@@ -75,6 +76,7 @@ const PAGER_DEFAULTS = {
   pagesize: 15,
   pagesizes: [15, 25, 50, 75],
   showPageSizeSelector: true,
+  smallPageSizeSelector: false,
   onPageSizeChange: null,
   showFirstButton: true,
   enableFirstButton: true,
@@ -229,6 +231,9 @@ Pager.prototype = {
   get showSmallPageSizeSelector() {
     if (!this.settings.showPageSizeSelector) {
       return false;
+    }
+    if (this.settings.smallPageSizeSelector === true) {
+      return true;
     }
     return this.isListView && this.element.parents('.list-detail').length;
   },
