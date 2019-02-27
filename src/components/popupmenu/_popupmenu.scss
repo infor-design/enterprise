@@ -245,6 +245,7 @@
     @include font-size(12);
 
     color: $popupmenu-heading-color;
+    cursor: default;
     font-weight: $theme-number-font-weight-bold;
     line-height: 25px;
     padding: 0 10px;

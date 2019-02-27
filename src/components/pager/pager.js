@@ -46,6 +46,7 @@ const FOCUSABLE_SELECTOR = [
 * @param {number} [settings.pagesize = 15]  Can be calculated or a specific number
 * @param {array} [settings.pagesizes = [15, 25, 50, 75]] Array of numbers of the page size selector
 * @param {boolean} [settings.showPageSizeSelector = true] If false will not show page size selector
+* @param {boolean} [settings.smallPageSizeSelector = false] If true, shows a condensed view of the page size selector
 * @param {boolean} [settings.onPageSizeChange] Call back function for page change
 * @param {boolean} [settings.showFirstButton = true] If false the first button will be hidden (standalone mode)
 * @param {boolean} [settings.enableFirstButton = true] If false the first button will be disabled (standalone mode)
@@ -75,6 +76,7 @@ const PAGER_DEFAULTS = {
   pagesize: 15,
   pagesizes: [15, 25, 50, 75],
   showPageSizeSelector: true,
+  smallPageSizeSelector: false,
   onPageSizeChange: null,
   showFirstButton: true,
   enableFirstButton: true,
@@ -220,6 +222,20 @@ Pager.prototype = {
       return undefined;
     }
     return this.pagerBar[0].querySelector('.pager-pagesize button');
+  },
+
+  /**
+   * @returns {boolean} if true, shows the condensed version of the Page Size
+   * Selector Button for smaller viewing areas.
+   */
+  get showSmallPageSizeSelector() {
+    if (!this.settings.showPageSizeSelector) {
+      return false;
+    }
+    if (this.settings.smallPageSizeSelector === true) {
+      return true;
+    }
+    return this.isListView && this.element.parents('.list-detail').length;
   },
 
   /**
@@ -687,8 +703,8 @@ Pager.prototype = {
    */
   renderButtons() {
     // Only certain types of Pages get to have the `last` and `first` buttons
-    const types = ['table', 'pageof', 'firstlast', 'standalone'];
-    const canHaveFirstLastButtons = types.indexOf(this.settings.type) > -1 && !this.isListView;
+    // const types = ['table', 'pageof', 'firstlast', 'standalone'];
+    // const canHaveFirstLastButtons = types.indexOf(this.settings.type) > -1 || !this.isListView;
     let activePage = this.activePage;
     let totalPages = this.state.pages;
     let buttonHTML = '';
@@ -712,7 +728,7 @@ Pager.prototype = {
 
     // Determine whether or not special navigation buttons should eventually be rendered
     // First Button
-    if (this.settings.showFirstButton && canHaveFirstLastButtons) {
+    if (this.settings.showFirstButton) {
       if (disableFirstIndeterminate || (!this.settings.indeterminate && this.settings.type !== 'standalone' && activePage === 1)) {
         disableFirstButton = true;
       }
@@ -733,7 +749,7 @@ Pager.prototype = {
       doRenderNextButton = true;
     }
     // Last Button
-    if (this.settings.showLastButton && canHaveFirstLastButtons) {
+    if (this.settings.showLastButton) {
       if (disableLastIndeterminate || (!this.settings.indeterminate && this.settings.type !== 'standalone' && activePage === totalPages)) {
         disableLastButton = true;
       }
@@ -863,6 +879,12 @@ Pager.prototype = {
     // Render all elements into the pager container element
     this.pagerBar[0].innerHTML = buttonHTML;
 
+    if (!doRenderLastButton && !doRenderFirstButton && !this.settings.showPageSizeSelector) {
+      this.pagerBar[0].classList.add('two-button');
+    } else {
+      this.pagerBar[0].classList.remove('two-button');
+    }
+
     // Invoke all sub-components
     this.pagerBar.children('li').children('a')
       .button()
@@ -874,6 +896,10 @@ Pager.prototype = {
    * @returns {void}
    */
   renderPageSelectorInput() {
+    if (!this.isTable || this.settings.indeterminate) {
+      return;
+    }
+
     let activePage = this.activePage;
     let totalPages = this.state.pages || 1;
 
@@ -946,26 +972,42 @@ Pager.prototype = {
    * @returns {void}
    */
   renderPageSizeSelectorButton() {
+    if (!this.settings.showPageSizeSelector || this.settings.pagesizes.length < 2) {
+      return;
+    }
+
     if (!this.pageSizeSelectorButton) {
-      const pageSize = $('<li class="pager-pagesize"></li>');
-      const pageSizeButton = $(`${'<button type="button" class="btn-menu">' +
-        '<span>'}${Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize)}</span> ${
-        $.createIcon({ icon: 'dropdown' })
-      } </button>`).appendTo(pageSize);
+      const pageSizeLi = $('<li class="pager-pagesize"></li>');
+      const dropdownIcon = $.createIcon({ icon: 'dropdown' });
+      let translatedText = Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize);
+      let isAudible = '';
+      let recordHtml = `<span>${translatedText}</span>`;
 
-      let last = this.pagerBar.find('.pager-last');
-      if (last.length === 0) {
-        last = this.pagerBar.find('.pager-next');
+      // Change to the condensed layout, if applicable
+      if (this.showSmallPageSizeSelector) {
+        isAudible = ' class="audible"';
+        translatedText = Locale.translate('RecordsPerPage').replace('{0}', '');
+        recordHtml = `<span class="record-count">${this.settings.pagesize}</span>
+        <span${isAudible}>${translatedText}</span>`;
       }
-      pageSize.insertAfter(last);
 
-      const menu = $('<ul class="popupmenu is-selectable"></ul>');
+      // Render the button
+      const pageSizeButton = $(`<button type="button" class="btn-menu">
+        ${recordHtml}
+        ${dropdownIcon}
+      </button>`).appendTo(pageSizeLi);
+      pageSizeLi.appendTo(this.pagerBar);
 
+      // Render menu items that render available records per page
+      let menuItems = '';
+      if (this.showSmallPageSizeSelector) {
+        menuItems = `<li class="heading">${translatedText}</li>`;
+      }
       for (let k = 0; k < this.settings.pagesizes.length; k++) {
         const size = this.settings.pagesizes[k];
-        menu.append(`<li ${size === this.settings.pagesize ? ' class="is-checked"' : ''}><a href="#">${size}</a></li>`);
+        menuItems += `<li class="${size === this.settings.pagesize ? ' is-checked' : ''}"><a href="#">${size}</a></li>`;
       }
-
+      const menu = $(`<ul class="popupmenu is-selectable">${menuItems}</ul>`);
       pageSizeButton.after(menu);
 
       const popupOpts = {
@@ -998,15 +1040,8 @@ Pager.prototype = {
     this.pageCount(totalPages);
 
     this.renderButtons();
-
-    if (this.isTable && !this.settings.indeterminate) {
-      this.renderPageSelectorInput();
-    }
-
-    if (this.settings.showPageSizeSelector) {
-      this.renderPageSizeSelectorButton();
-    }
-
+    this.renderPageSelectorInput();
+    this.renderPageSizeSelectorButton();
     this.renderBar();
   },
 
