@@ -11,8 +11,18 @@
       var columns = [],
         data = [];
 
+      data.push({id: 1, productId: 2445201, orderDate: new Date(2019, 3, 3) });
+      data.push({id: 2, productId: 2445202, orderDate: new Date(2019, 3, 3) });
+      data.push({id: 3, productId: 2445203, orderDate: new Date(2019, 3, 3) });
+      data.push({id: 4, productId: 2445204, orderDate: new Date(2019, 3, 3) });
+      data.push({id: 5, productId: 2445205, orderDate: new Date(2019, 3, 3) });
+      data.push({id: 6, productId: 2445206, orderDate: new Date(2019, 3, 3) });
+      data.push({id: 7, productId: 2445207, orderDate: new Date(2019, 3, 3) });
+      data.push({id: 8, productId: 2445208, orderDate: new Date(2019, 3, 3) });
+      data.push({id: 9, productId: 2445209, orderDate: new Date(2019, 3, 3) });
+
       //Define Columns for the Grid.
-      columns.push({ id: 'orderDate', name: 'Raw Format', field: 'orderDate'});
+      columns.push({ id: 'orderDate', name: 'Default Format', field: 'orderDate', formatter: Soho.Formatters.Date});
       columns.push({ id: 'orderDate', name: 'Short Timezone (Locale)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: { date: 'timezone' }});
       columns.push({ id: 'orderDate', name: 'Long Timezone (Locale)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: { date: 'timezoneLong' }});
       columns.push({ id: 'orderDate', name: 'Short Timezone (Custom)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'dd-MM-yyyy HH:mm zz'});
@@ -24,13 +34,5 @@
         dataset: data,
         editable: true
       });
-
-      //Pass data in
-      $.get('{{basepath}}api/compressors?pageNum=1&sort=productId&pageSize=10', function(data) {
-        grid = grid.data('datagrid');
-        grid.loadData(data.data);
-      });
-
     });
-
 </script>
