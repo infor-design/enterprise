@@ -2082,7 +2082,7 @@ Editor.prototype = {
       if (typeof color === 'number') {
         color = cpApi.decimal2rgb(color);
       }
-      color = cpApi.rgb2hex(color);
+      color = color ? cpApi.rgb2hex(color) : '';
       cpBtn.attr('data-value', color)
         .find('.icon').css('fill', (preventColors.indexOf(color.toLowerCase()) > -1) ? '' : color);
     }
