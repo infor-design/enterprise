@@ -645,6 +645,8 @@ Lookup.prototype = {
       this.grid.selectRows(selectedRows, true, true);
       return true;
     }
+
+    this.grid.syncSelectedUI();
     return false;
   },
 

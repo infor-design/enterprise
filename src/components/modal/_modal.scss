@@ -367,7 +367,7 @@
 }
 
 .modal-body {
-  > *:last-child {
+  > *:not(.pager-toolbar):last-child {
     margin-bottom: 0;
   }
 

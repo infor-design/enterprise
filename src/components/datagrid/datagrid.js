@@ -501,9 +501,6 @@ Datagrid.prototype = {
     // Add to ui
     self.renderRows();
 
-    // Sync with others
-    self.syncSelectedUI();
-
     // Set active and fire handler
     setTimeout(() => {
       row = isTop ? row : self.settings.dataset.length - 1;
@@ -526,6 +523,7 @@ Datagrid.prototype = {
       * @property {object} args.oldValue - Always an empty object added for consistent api.
       */
       self.element.triggerHandler('addrow', args);
+      self.syncSelectedUI();
     }, 100);
   },
 
