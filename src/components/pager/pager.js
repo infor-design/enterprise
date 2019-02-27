@@ -1014,13 +1014,6 @@ Pager.prototype = {
       };
 
       pageSizeButton.popupmenu(popupOpts);
-
-      // Show additional context on the condensed version.
-      if (this.showSmallPageSizeSelector) {
-        pageSizeButton.tooltip({
-          content: translatedText
-        });
-      }
     }
 
     $(this.pageSizeSelectorButton).on('selected.pager', (e, args) => {
@@ -1422,11 +1415,6 @@ Pager.prototype = {
     if (this.pageSizeSelectorButton) {
       $(this.pageSizeSelectorButton).off(`selected.${COMPONENT_NAME}`);
       $(this.pageSizeSelectorButton).data('popupmenu').destroy();
-
-      const tooltipAPI = $(this.pageSizeSelectorButton).data('tooltip');
-      if (tooltipAPI) {
-        tooltipAPI.destroy();
-      }
     }
 
     this.pagerBar[0].innerHTML = '';
