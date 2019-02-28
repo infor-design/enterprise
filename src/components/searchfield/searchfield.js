@@ -1873,7 +1873,7 @@ SearchField.prototype = {
    */
   checkContents() {
     let textMethod = 'remove';
-    if (this.input.value.trim() !== '') {
+    if (!this.input.value || this.input.value.trim() !== '') {
       textMethod = 'add';
     }
     this.wrapper[0].classList[textMethod]('has-text');
