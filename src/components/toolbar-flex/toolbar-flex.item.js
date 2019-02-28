@@ -428,7 +428,7 @@ ToolbarFlexItem.prototype = {
               itemLinkAPI.selectedAnchor = $(elementLink).children('a');
             } else {
               // case of a menu button overflowed into more actions
-              // itemLinkAPI.selectedAnchor = anchor;
+              itemLinkAPI.selectedAnchor = anchor;
             }
             itemLinkAPI.selected = true;
             return;
@@ -504,12 +504,10 @@ ToolbarFlexItem.prototype = {
     }
 
     // Action Buttons need more stuff
-    if (this.type !== 'actionbutton') {
-      return;
+    if (this.type === 'actionbutton') {
+      this.renderMoreActionsMenu();
+      this.refreshMoreActionsMenu();
     }
-
-    this.renderMoreActionsMenu();
-    this.refreshMoreActionsMenu();
 
     this.handleEvents();
   },
