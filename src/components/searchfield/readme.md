@@ -12,20 +12,16 @@ demo:
     slug: example-categories-full
   - name: Categories (Compact Size)
     slug: example-categories-short
-  - name: Setting to add an x to clear
-    slug: example-clearable
-  - name: Context Search Style
-    slug: example-context-search-style
   - name: Different Template
     slug: example-different-template
   - name: Searchfield + Go Button
     slug: example-go-button
-  - name: No "All Results For `x`" Link
-    slug: example-no-all-results-link
   - name: Header Search Field (Compact)
     slug: example-searchfield-expanded
   - name: Header Search Field (Large)
     slug: example-searchfield-large
+  - name: No "All Results For `x`" Link
+    slug: example-no-all-results-link
 ---
 
 There is a specific component wrapper for searchfield components that reside inside of [toolbars]( ./toolbar/) entitled [toolbar searchfield]( ./toolbar-searchfield). These components are very different from regular searchfields and have an expanded API.
