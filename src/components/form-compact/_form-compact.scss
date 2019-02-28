@@ -1,5 +1,4 @@
 .form-compact-container {
-
   .summary-area {
 
   }
@@ -7,9 +6,192 @@
   .content-area {
 
   }
-
 }
 
 .form-compact {
   background-color: $body-color-primary-background;
+  margin: 0 auto;
+  max-width: 1280px;
+
+  .row {
+    display: flex;
+    min-height: 50px;
+  }
+
+  .column,
+  .columns {
+    float: none;
+
+    &:not(.form-section-header),
+    &:empty {
+      background-color: $panel-bg-color;
+    }
+
+    label {
+      @include font-size(14);
+
+      margin-bottom: 0;
+      padding: 10px 11px 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    input {
+      @include font-size(18);
+
+      background-color: transparent;
+      border-bottom: 1px solid $theme-color-palette-black;
+      border-left: 0;
+      border-radius: 0;
+      border-right: 1px solid $theme-color-palette-black;
+      border-top: 0;
+      padding: 0 10px 10px;
+      text-overflow: ellipsis;
+      width: 100%;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    &.is-focused {
+      background-color: $theme-color-palette-azure-20;
+
+      input {
+        border-bottom-color: $theme-color-brand-primary-base;
+        border-right-color: $theme-color-brand-primary-base;
+      }
+    }
+  }
+}
+
+.form-section-header {
+  @include font-size(16);
+
+  align-items: center;
+  display: flex;
+  font-weight: 700;
+
+  > * {
+    vertical-align: middle;
+  }
+}
+
+// Overrides for the gutters in `../grid/_grid.scss`, which are not present
+// on grids inside of the Form Compact component.
+// For tabledevices larger than 550px
+@media (min-width: $breakpoint-phone-to-tablet) {
+  .form-compact {
+    .row {
+      padding-right: 0;
+    }
+
+    .column,
+    .columns {
+      padding: 0;
+
+      &.form-section-header {
+        padding: 0 10px;
+      }
+    }
+
+    .one.column,
+    .one.columns {
+      margin-left: 0;
+      width: 8.33333333333%;
+    }
+
+    .one-one-half.column,
+    .one-one-half.columns {
+      margin-left: 0;
+      width: 12.499999999965%;
+    }
+
+    .two.columns {
+      margin-left: 0;
+      width: 16.6666666666%;
+    }
+
+    .three.columns {
+      margin-left: 0;
+      width: 25%;
+    }
+
+    .four.columns {
+      margin-left: 0;
+      width: 33.3333333333%;
+    }
+
+    .five.columns {
+      margin-left: 0;
+      width: 41.6666666666%;
+    }
+
+    .six.columns {
+      margin-left: 0;
+      width: 50%;
+    }
+
+    .seven.columns {
+      margin-left: 0;
+      width: 58.3333333333%;
+    }
+
+    .eight.columns {
+      margin-left: 0;
+      width: 66.6666666666%;
+    }
+
+    .nine.columns {
+      margin-left: 0;
+      width: 75%;
+    }
+
+    .ten.columns {
+      margin-left: 0;
+      width: 83.3333333333%;
+    }
+
+    .eleven.columns {
+      margin-left: 0;
+      width: 91.6666666666%;
+    }
+
+    .twelve.columns,
+    .full.column {
+      margin-left: $gutter-size;
+      width: 100%;
+
+      &.center {
+        display: block;
+        min-width: 300px;
+        text-align: center;
+      }
+    }
+
+    .one-fifth.column {
+      margin-left: 0;
+      width: 20%;
+    }
+
+    .one-fourth.column {
+      margin-left: 0;
+      width: 25%;
+    }
+
+    .one-third.column {
+      margin-left: 0;
+      width: 33.3333333%;
+    }
+
+    .two-thirds.column {
+      margin-left: 0;
+      width: 66.6666666666%;
+    }
+
+    .one-half.column {
+      margin-left: 0;
+      width: 50%;
+    }
+  }
 }
