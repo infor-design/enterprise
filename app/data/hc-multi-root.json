@@ -1,0 +1,30 @@
+{
+  "ancestorPath": null,
+  "centeredNode": null,
+  "children": [
+    {
+      "id": "1",
+      "name": "John Randolph",
+      "position": "CEO",
+      "employmentType": "FT",
+      "picture": "/images/4.jpg",
+      "childrenUrl": "hc-john-randolph-multi-root.json"
+    },
+    {
+      "id": "2",
+      "name": "Barb Wire",
+      "position": "COO",
+      "employmentType": "FT",
+      "avatarInitials": "BW",
+      "isLeaf": true
+    },
+    {
+      "id": "3",
+      "name": "Greg Ford",
+      "position": "CTO",
+      "employmentType": "FT",
+      "avatarInitials": "GF",
+      "isLeaf": true
+    }
+  ]
+}
