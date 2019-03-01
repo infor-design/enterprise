@@ -39,6 +39,14 @@
       padding: 4px 9px 0;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      &.required:not(.inline) {
+        &::after {
+          color: $theme-color-brand-primary-base;
+          content: '●';
+          top: 0;
+        }
+      }
     }
 
     input {
