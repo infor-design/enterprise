@@ -385,7 +385,7 @@ describe('Lookup single select serverside tests', () => {
     await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
     await browser.driver.sleep(1000);
 
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)'))), config.waitsFor);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('214221');

@@ -542,7 +542,7 @@ describe('Datagrid paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('.pager-toolbar'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -605,7 +605,7 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
   });
 
-  it('Should not move on a page thats more than the max', async () => {
+  it('Should not move on a page thats more than the max', async () => { //eslint-disable-line
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
