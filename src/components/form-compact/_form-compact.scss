@@ -2,10 +2,6 @@
   .summary-area {
 
   }
-
-  .content-area {
-
-  }
 }
 
 .form-compact {
@@ -19,6 +15,8 @@
 
   .column,
   .columns {
+    @include transition(background-color 100ms $cubic-ease);
+
     float: none;
     padding: 0;
 
@@ -51,6 +49,7 @@
 
     input {
       @include font-size(18);
+      @include transition(border-color 100ms $cubic-ease, color 100ms $cubic-ease);
 
       background-color: transparent;
       border-bottom: 1px solid $theme-color-palette-black;
