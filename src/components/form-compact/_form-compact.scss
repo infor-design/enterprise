@@ -109,6 +109,27 @@
   font-weight: 700;
 }
 
+// Specific paddings for non-Blink-based browsers (IE, FF)
+.ie,
+.is-firefox {
+  .form-compact {
+    .column,
+    .columns {
+      &.form-section-header {
+        padding: 16px 10px 15px;
+      }
+
+      label {
+        padding: 6px 9px 0;
+      }
+
+      input {
+        padding: 0 8px 6px;
+      }
+    }
+  }
+}
+
 // Ensures a common min-height on headers
 @media (max-width: $breakpoint-phone-to-tablet + 1) {
   .form-compact {
