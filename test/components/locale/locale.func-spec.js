@@ -889,4 +889,87 @@ describe('Locale API', () => {
     expect(Locale.formatDate('000000')).toEqual('');
     expect(Locale.formatDate('00000000')).toEqual('');
   });
+
+  it('Should format dates with short timezones', () => {
+    Locale.set('en-US');
+
+    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' })).toEqual('3/22/2018 8:11 PM EST');
+    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' })).toEqual('22-03-2018 20:11 EST');
+    Locale.set('nl-NL');
+
+    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' })).toEqual('22/3/2018 20:11 GMT-5');
+    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' })).toEqual('22-03-2018 20:11 GMT-5');
+  });
+
+  it('Should format dates with long timezones', () => {
+    Locale.set('en-US');
+
+    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' })).toEqual('3/22/2018 8:11 PM Eastern Standard Time');
+    expect(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' })).toEqual('22-03-2000 20:11 Eastern Standard Time');
+    Locale.set('nl-NL');
+
+    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' })).toEqual('22/3/2018 20:11 Eastern-standaardtijd');
+    expect(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' })).toEqual('22-03-2000 20:11 Eastern-standaardtijd');
+  });
+
+  it('Should parse dates with short timezones in current timezone', () => {
+    Locale.set('en-US');
+
+    expect(Locale.parseDate('3/22/2018 8:11 PM EST', { date: 'timezone' }).getTime()).toEqual(new Date(2018, 2, 22, 20, 11).getTime());
+    expect(Locale.parseDate('22-03-2018 20:11 EST', { pattern: 'dd-MM-yyyy HH:mm zz' }).getTime()).toEqual(new Date(2018, 2, 22, 20, 11).getTime());
+    Locale.set('nl-NL');
+
+    expect(Locale.parseDate('22/3/2018 20:11 GMT-5', { date: 'timezone' }).getTime()).toEqual(new Date(2018, 2, 22, 20, 11).getTime());
+    expect(Locale.parseDate('22-03-2018 20:11 GMT-5', { pattern: 'dd-MM-yyyy HH:mm zz' }).getTime()).toEqual(new Date(2018, 2, 22, 20, 11).getTime());
+  });
+
+  it('Should parse dates with long timezones in current timezone', () => {
+    Locale.set('en-US');
+
+    expect(Locale.parseDate('3/22/2018 8:11 PM Eastern Standard Time', { date: 'timezoneLong' }).getTime()).toEqual(new Date(2018, 2, 22, 20, 11).getTime());
+    expect(Locale.parseDate('22-03-2000 20:11 Eastern Standard Time', { pattern: 'dd-MM-yyyy HH:mm zzzz' }).getTime()).toEqual(new Date(2000, 2, 22, 20, 11).getTime());
+    Locale.set('nl-NL');
+
+    expect(Locale.parseDate('22/3/2018 20:11 Eastern-standaardtijd', { date: 'timezoneLong' }).getTime()).toEqual(new Date(2018, 2, 22, 20, 11).getTime());
+    expect(Locale.parseDate('22-03-2000 20:11 Eastern-standaardtijd', { pattern: 'dd-MM-yyyy HH:mm zzzz' }).getTime()).toEqual(new Date(2000, 2, 22, 20, 11).getTime());
+  });
+
+  fit('Should be able to display dates into another timezone', () => { //eslint-disable-line
+    Locale.set('en-US');
+
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane')).toEqual('3/26/2018, 2:00:00 PM');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai')).toEqual('3/26/2018, 12:00:00 PM');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York')).toEqual('3/26/2018, 12:00:00 AM');
+    Locale.set('nl-NL');
+
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane')).toEqual('26-3-2018 14:00:00');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai')).toEqual('26-3-2018 12:00:00');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York')).toEqual('26-3-2018 00:00:00');
+  });
+
+  fit('Should be able to display dates into another timezone including short timezone name', () => { //eslint-disable-line
+    Locale.set('en-US');
+
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'short')).toEqual('3/26/2018, 2:00:00 PM GMT+10');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai', 'short')).toEqual('3/26/2018, 12:00:00 PM GMT+8');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'short')).toEqual('3/26/2018, 12:00:00 AM EDT');
+    Locale.set('nl-NL');
+
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'short')).toEqual('26-3-2018 14:00:00 GMT+10');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai', 'short')).toEqual('26-3-2018 12:00:00 GMT+8');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'short')).toEqual('26-3-2018 00:00:00 GMT-4');
+  });
+
+  fit('Should be able to display dates into another timezone including long timezone name', () => { //eslint-disable-line
+    Locale.set('en-US');
+
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'long')).toEqual('3/26/2018, 2:00:00 PM Australian Eastern Standard Time');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai', 'long')).toEqual('3/26/2018, 12:00:00 PM China Standard Time');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'long')).toEqual('3/26/2018, 12:00:00 AM Eastern Daylight Time');
+    Locale.set('nl-NL');
+
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'long')).toEqual('26-3-2018 14:00:00 Oost-Australische standaardtijd');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai', 'long')).toEqual('26-3-2018 12:00:00 Chinese standaardtijd');
+    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'long')).toEqual('26-3-2018 00:00:00 Eastern-zomertijd');
+  });
 });

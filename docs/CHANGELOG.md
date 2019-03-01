@@ -1,5 +1,24 @@
 # What's New with Enterprise
 
+## v4.17.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.17.0 Features
+
+- `[Locale]` Added support for showing timezones in the current language with a fall back for IE 11. ([#592](https://github.com/infor-design/enterprise/issues/592))
+
+### v4.17.0 Fixes
+
+- `[Component Name]` An explanation and description. ([#123](https://github.com/infor-design/enterprise/issues/12))
+
+### v4.17.0 Chore & Maintenance
+
+- `[Component Name]` An explanation and description. ([#123](https://github.com/infor-design/enterprise/issues/12))
+
+(n Issues Solved this release, Backlog Enterprise n, Backlog Ng n, n Functional Tests, n e2e Test)
+
 ## v4.16.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
