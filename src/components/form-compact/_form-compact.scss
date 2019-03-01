@@ -14,24 +14,29 @@
   max-width: 1280px;
 
   .row {
-    display: flex;
     min-height: 50px;
   }
 
   .column,
   .columns {
     float: none;
+    padding: 0;
 
     &:not(.form-section-header),
     &:empty {
       background-color: $panel-bg-color;
     }
 
+    &.form-section-header {
+      padding: 0 10px;
+    }
+
     label {
       @include font-size(14);
 
       margin-bottom: 0;
-      padding: 10px 11px 0;
+      overflow: hidden;
+      padding: 4px 9px 0;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -45,7 +50,7 @@
       border-radius: 0;
       border-right: 1px solid $theme-color-palette-black;
       border-top: 0;
-      padding: 0 10px 10px;
+      padding: 0 8px 4px;
       text-overflow: ellipsis;
       width: 100%;
 
@@ -55,11 +60,29 @@
     }
 
     &.is-focused {
-      background-color: $theme-color-palette-azure-20;
+      background-color: $theme-color-palette-azure-10;
 
       input {
         border-bottom-color: $theme-color-brand-primary-base;
         border-right-color: $theme-color-brand-primary-base;
+      }
+    }
+
+    &.is-readonly {
+      background-color: $body-color-primary-background;
+
+      input {
+        border-bottom-color: $input-color-readonly-border;
+        border-right-color: $input-color-readonly-border;
+        color: $input-color-readonly-font;
+      }
+    }
+
+    &.is-disabled {
+      input {
+        border-bottom-color: $input-color-disabled-border;
+        border-right-color: $input-color-disabled-border;
+        color: $input-color-disabled-font;
       }
     }
   }
@@ -69,11 +92,20 @@
   @include font-size(16);
 
   align-items: center;
+  border-bottom: 1px solid $input-color-readonly-border;
   display: flex;
   font-weight: 700;
+}
 
-  > * {
-    vertical-align: middle;
+// Ensures a common min-height on headers
+@media (max-width: $breakpoint-phone-to-tablet + 1) {
+  .form-compact {
+    .row {
+      .column,
+      .columns {
+        min-height: 50px;
+      }
+    }
   }
 }
 
@@ -83,16 +115,13 @@
 @media (min-width: $breakpoint-phone-to-tablet) {
   .form-compact {
     .row {
+      display: flex;
       padding-right: 0;
     }
 
     .column,
     .columns {
       padding: 0;
-
-      &.form-section-header {
-        padding: 0 10px;
-      }
     }
 
     .one.column,
