@@ -1,5 +1,8 @@
 # What's New with Enterprise
 
+## v4.17.0 Fixes
+- `[Datagrid]` Added a fix to allow the commit of a cell edit after tabbing into a cell once having clicked into a previous cell.([#1608](https://github.com/infor-design/enterprise/issues/1608))
+
 ## v4.16.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
