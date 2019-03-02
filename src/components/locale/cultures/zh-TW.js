@@ -22,7 +22,9 @@ Soho.Locale.addCulture('zh-TW', {
       month: 'M月d日',
       year: 'yyyy年M月',
       timestamp: 'hh:mm:ss a',
-      datetime: 'M/d/yyyy hh:mm'
+      datetime: 'M/d/yyyy hh:mm',
+      timezone: 'M/d/yyyy hh:mm zz',
+      timezoneLong: 'M/d/yyyy hh:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {

@@ -144,6 +144,7 @@ describe('Dropdown example-index tests', () => {
   if (!utils.isSafari()) {
     it('Should keep the filter term in tact when pausing between keyboard presses', async () => {
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver.sleep(config.sleep);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
 
@@ -158,6 +159,8 @@ describe('Dropdown example-index tests', () => {
       await dropdownSearchEl.sendKeys(' Jersey');
 
       await browser.driver.sleep(config.sleep);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
 
       // SearchInput should display "New Jersey" and not just " Jersey"
       expect(await element(by.id('dropdown-search')).getAttribute('value')).toEqual('New Jersey');

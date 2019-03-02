@@ -1,4 +1,5 @@
 /* eslint-disable no-nested-ternary, no-useless-escape */
+import { Environment as env } from '../../utils/environment';
 
 // If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
 // culture files. This allows manually setting the directory for the culture files.
@@ -429,7 +430,61 @@ const Locale = {  // eslint-disable-line
     ret = ret.replace('t1áng', 'tháng');
     ret = ret.replace('nnn', 'den');
 
+    // Timezone
+    if (ret.indexOf('zz') > -1) {
+      const timezoneDate = new Date(); // TODO Handle attribs.timeZone
+      const shortName = this.getTimeZone(timezoneDate, 'short');
+      const longName = this.getTimeZone(timezoneDate, 'long');
+
+      ret = ret.replace('zzzz', longName);
+      ret = ret.replace('zz', shortName);
+    }
+
     return ret.trim();
+  },
+
+  /**
+   * Get the timezone part of a date
+   * @param  {date} date The date object to use.
+   * @param  {string} timeZoneName Can be short or long.
+   * @returns {string} The time zone as a string.
+   */
+  getTimeZone(date, timeZoneName) {
+    const time = date.toLocaleTimeString(Locale.currentLocale.name);
+    let name = '';
+
+    if (env.browser.name === 'ie' && env.browser.version === '11') {
+      return (date).toTimeString().match(new RegExp('[A-Z](?!.*[\(])', 'g')).join('');
+    }
+
+    if (timeZoneName === 'long') {
+      name = date.toLocaleTimeString(
+        Locale.currentLocale.name,
+        { timeZoneName: 'long' }
+      );
+      return name.replace(`${time} `, '');
+    }
+
+    name = date.toLocaleTimeString(
+      Locale.currentLocale.name,
+      { timeZoneName: 'short' }
+    );
+    return name.replace(`${time} `, '');
+  },
+
+  /**
+  * Takes a date object in the current locale and adjusts it for the given timezone.
+  * @param {date} date The utc date to show in the desired timezone.
+  * @param {string} timeZone The timezone name to show.
+  * @param {string} timeZoneName How to display the time zone name. Defaults to none. But can be short or long.
+  * @returns {date} the utc date
+  */
+  dateToTimeZone(date, timeZone, timeZoneName) {
+    if (env.browser.name === 'ie' && env.browser.version === '11') {
+      return `${(date).toLocaleString(Locale.currentLocale.name)} ${(date).toTimeString().match(new RegExp('[A-Z](?!.*[\(])', 'g')).join('')}`;
+    }
+
+    return (date).toLocaleString(Locale.currentLocale.name, { timeZone, timeZoneName });
   },
 
   /**
@@ -468,8 +523,7 @@ const Locale = {  // eslint-disable-line
    * Takes a formatted date string and parses back it into a date object
    * @param {string} dateString  The string to parse in the current format
    * @param {string} dateFormat  The source format fx yyyy-MM-dd
-   * @param {boolean} isStrict  If true missing date parts will be considered
-   *  invalid. If false the current month/day.
+   * @param {boolean} isStrict  If true missing date parts will be considered invalid. If false the current month/day.
    * @returns {date|array|undefined} A correct date object, if islamic calendar then an array is used or undefined if invalid.
    */
   parseDate(dateString, dateFormat, isStrict) {
@@ -506,7 +560,14 @@ const Locale = {  // eslint-disable-line
     let l;
 
     if (isDateTime) {
-      // replace [space & colon & dot] with "/"
+      // Remove Timezone
+      const shortTimeZone = Locale.getTimeZone(new Date(), 'short');
+      const longTimeZone = Locale.getTimeZone(new Date(), 'long');
+      dateString = dateString.replace(` ${shortTimeZone}`, '');
+      dateString = dateString.replace(` ${longTimeZone}`, '');
+      dateFormat = dateFormat.replace(' zzzz', '').replace(' zz', '');
+
+      // Replace [space & colon & dot] with "/"
       dateFormat = dateFormat.replace(/[T\s:.-]/g, '/').replace(/z/i, '');
       dateString = dateString.replace(/[T\s:.-]/g, '/').replace(/z/i, '');
     }
@@ -844,10 +905,27 @@ const Locale = {  // eslint-disable-line
     return (this.isValidDate(dateObj.return) ? dateObj.return : undefined);
   },
 
+  /**
+   * Convert the two digit year year to the correct four digit year.
+   * @private
+   * @param  {number} twoDigitYear The two digit year.
+   * @returns {number} Converted 3 digit year.
+   */
   twoToFourDigitYear(twoDigitYear) {
     return parseInt((twoDigitYear > 39 ? '19' : '20') + twoDigitYear, 10);
   },
 
+  /**
+   * Format out the date into parts.
+   * @private
+   * @param  {array} formatParts An array of the format bits.
+   * @param  {array} dateStringParts An array of the date parts.
+   * @param  {string} filter1 The first option to filter.
+   * @param  {string} filter2 The second option to filter.
+   * @param  {string} filter3 The third option to filter.
+   * @param  {string} filter4 The fourth option to filter.
+   * @returns {string} The filtered out date part.
+   */
   getDatePart(formatParts, dateStringParts, filter1, filter2, filter3, filter4) {
     let ret = 0;
 
@@ -962,6 +1040,12 @@ const Locale = {  // eslint-disable-line
     return formattedNum;
   },
 
+  /**
+   * Return the number of decimal places in a number
+   * @private
+   * @param  {number} number The starting number.
+   * @returns {number} The number of decimal places.
+   */
   decimalPlaces(number) {
     if (Math.floor(number) === number) {
       return 0;
@@ -973,6 +1057,15 @@ const Locale = {  // eslint-disable-line
     return number.toString().split('.')[1].length || 0;
   },
 
+  /**
+   * Truncate a number to a specific min and max digits.
+   * @private
+   * @param  {number} number The starting number.
+   * @param  {number} minDigits Minimum number of digits to show on the decimal portion.
+   * @param  {number} maxDigits Maximum number of digits to show on the decimal portion.
+   * @param  {boolean} round If true round, if false truncate.
+   * @returns {number} The updated number.
+   */
   truncateDecimals(number, minDigits, maxDigits, round) {
     let multiplier = Math.pow(10, maxDigits);
     let adjustedNum = number * multiplier;

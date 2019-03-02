@@ -883,6 +883,10 @@ Calendar.prototype = {
    * @param {function} done The callback for when the modal closes.
    */
   showEventModal(event, done) {
+    if (!this.settings.modalTemplate) {
+      return;
+    }
+    
     this.modalContents = document.querySelector('.calendar-event-modal');
     if (!this.modalContents) {
       this.modalContents = document.createElement('div');

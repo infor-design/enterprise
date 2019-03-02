@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field-info hidden" id="fallback-text">
+      <svg class="icon icon-alert" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-alert"></use></svg>
+      <p class="message-text">Timezone Parsing is not supported in IE11, as a fallback using browser time and browser timeZone.</p>
+    </div>
+    <div class="field">
+      <span class="label">Timestamp Field (Short Timezone)</span>
+      <span class="data" id="timestamp-short">10/11/2010</span>
+    </div>
+    <div class="field">
+      <span class="label">Timestamp Field (Long Timezone)</span>
+      <span class="data" id="timestamp-long">10/11/2010</span>
+    </div>
+    <div class="field">
+      <span class="label">Current Time in Australia/Brisbane</span>
+      <span class="data" id="timestamp-aus">10/11/2010</span>
+    </div>
+    <div class="field">
+      <span class="label">Current Time in Asia/Shanghai</span>
+      <span class="data" id="timestamp-shan">10/11/2010</span>
+    </div>
+    <div class="field">
+      <span class="label">Current Time in America/New_York</span>
+      <span class="data" id="timestamp-ny">10/11/2010</span>
+    </div>
+    <div class="field">
+      <span class="label">Current Time in Australia/Brisbane (Including Short Timezone)</span>
+      <span class="data" id="timestamp-aus-short">10/11/2010</span>
+    </div>
+    <div class="field">
+      <span class="label">Current Time in Australia/Brisbane (Including Long Timezone)</span>
+      <span class="data" id="timestamp-aus-long">10/11/2010</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    $('#timestamp-short').text(Locale.formatDate(new Date(), {pattern: 'dd-MM-yyyy HH:mm zz'}));
+    $('#timestamp-long').text(Locale.formatDate(new Date(), {pattern: 'dd-MM-yyyy HH:mm zzzz'}));
+    $('#timestamp-aus').text(Locale.dateToTimeZone(new Date(), 'Australia/Brisbane'));
+    $('#timestamp-shan').text(Locale.dateToTimeZone(new Date(), 'Asia/Shanghai'));
+    $('#timestamp-ny').text(Locale.dateToTimeZone(new Date(), 'America/New_York'));
+    $('#timestamp-aus-short').text(Locale.dateToTimeZone(new Date(), 'America/New_York', 'short'));
+    $('#timestamp-aus-long').text(Locale.dateToTimeZone(new Date(), 'America/New_York', 'long'));
+
+    if (Soho.env.browser.isIE11()) {
+      $('#fallback-text').removeClass('hidden');
+    }
+  });
+</script>

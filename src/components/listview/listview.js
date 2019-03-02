@@ -41,8 +41,8 @@ const COMPONENT_NAME = 'listview';
   activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
  * @param {boolean} [settings.showPageSizeSelector=false] If true the page size select will be shown when paging.
  * @param {object} [settings.listFilterSettings=null] If defined as an object, passes settings into the internal ListFilter component
+ * @param {object} [settings.pagerSettings=null] If defined as an object, passes settings into the internal Pager component
  */
-
 const LISTVIEW_DEFAULTS = {
   dataset: [],
   template: null,
@@ -60,7 +60,11 @@ const LISTVIEW_DEFAULTS = {
   forceToRenderOnEmptyDs: false,
   disableItemDeactivation: false,
   showPageSizeSelector: false,
-  listFilterSettings: null
+  listFilterSettings: null,
+  pagerSettings: {
+    showFirstButton: false,
+    showLastButton: false
+  }
 };
 
 function ListView(element, settings) {
@@ -80,6 +84,29 @@ ListView.prototype = {
    */
   get pagerAPI() {
     return this.element.data('pager');
+  },
+
+  /**
+   * @returns {object} containing valid Pager Component settings
+   */
+  get pagerSettings() {
+    let pagerSettings = {};
+    if (this.settings.pagerSettings) {
+      pagerSettings = this.settings.pagerSettings;
+    }
+    pagerSettings.dataset = this.settings.dataset;
+    pagerSettings.source = this.settings.source;
+    pagerSettings.type = 'list';
+
+    // Backwards compatibility for direct pager settings
+    const oldSettingTypes = ['pagesize', 'showPageSizeSelector'];
+    for (let i = 0; i < oldSettingTypes.length; i++) {
+      if (this.settings[oldSettingTypes[i]] !== undefined && !pagerSettings[oldSettingTypes[i]]) {
+        pagerSettings[oldSettingTypes[i]] = this.settings[oldSettingTypes[i]];
+      }
+    }
+
+    return pagerSettings;
   },
 
   /**
@@ -161,13 +188,7 @@ ListView.prototype = {
 
     // Configure Paging
     if (this.element.is('.paginated') || this.settings.paging === true) {
-      this.element.pager({
-        dataset: this.settings.dataset,
-        pagesize: this.settings.pagesize,
-        showPageSizeSelector: this.settings.showPageSizeSelector,
-        source: this.settings.source,
-        type: 'list'
-      });
+      this.element.pager(this.pagerSettings);
     }
 
     const cardWidgetContent = this.element.parent('.card-content, .widget-content');

@@ -179,6 +179,7 @@ describe('Pager API (Standalone)', () => {
       enableNextButton: false,
       enableLastButton: false,
       showPageSizeSelector: false,
+      smallPageSizeSelector: true,
       showFirstButton: false,
       showPreviousButton: false,
       showNextButton: false,
@@ -203,6 +204,7 @@ describe('Pager API (Standalone)', () => {
     expect(pagerObj.settings.enableNextButton).toBeFalsy();
     expect(pagerObj.settings.enableLastButton).toBeFalsy();
     expect(pagerObj.settings.showPageSizeSelector).toBeFalsy();
+    expect(pagerObj.settings.smallPageSizeSelector).toBeTruthy();
     expect(pagerObj.settings.showFirstButton).toBeFalsy();
     expect(pagerObj.settings.showPreviousButton).toBeFalsy();
     expect(pagerObj.settings.showNextButton).toBeFalsy();
@@ -214,5 +216,23 @@ describe('Pager API (Standalone)', () => {
     expect(pagerObj.settings.indeterminate).toBeTruthy();
     expect(pagerObj.settings.pagesize).toEqual(16);
     expect(pagerObj.settings.pagesizes.length).toEqual(3);
+  });
+
+  it('Can display a small page selector', () => {
+    pagerObj = new Pager(pagerEl, {
+      type: 'standalone',
+      pagesize: 20,
+      pagesizes: [5, 10, 15, 20, 25, 30],
+      showPageSizeSelector: true,
+      smallPageSizeSelector: true
+    });
+
+    expect(pagerObj.settings.smallPageSizeSelector).toBeTruthy();
+
+    const button = pagerEl.querySelector('.pager-pagesize > button');
+    const recordCountEl = button.querySelector('.record-count');
+
+    expect(recordCountEl).toBeDefined();
+    expect(recordCountEl.innerText).toBe('20');
   });
 });

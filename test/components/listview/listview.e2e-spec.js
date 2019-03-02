@@ -130,6 +130,7 @@ describe('Listview example-multiselect tests', () => {
   it('Should deselect item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemEl.click();
+    await browser.driver.sleep(config.sleep);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
@@ -137,6 +138,7 @@ describe('Listview example-multiselect tests', () => {
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
 
     listviewItemEl.click();
+    await browser.driver.sleep(config.sleep);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitsFor);
 

@@ -84,17 +84,27 @@
       position: relative;
     }
 
-    .pager-prev,
-    .pager-next {
-      position: absolute;
+    .pager-toolbar {
+      display: flex;
+      justify-content: center;
+      padding: 4px 10px 0;
+
+      &.two-button {
+        justify-content: space-between;
+      }
+
+      > li {
+        align-items: stretch;
+      }
     }
 
-    .pager-prev {
-      left: 10px;
-    }
+    .pager-pagesize {
+      float: none;
 
-    .pager-next {
-      right: 10px;
+      .btn-menu {
+        margin-right: 0;
+        min-width: 0;
+      }
     }
 
     .expandable-area {

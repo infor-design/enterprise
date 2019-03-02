@@ -788,13 +788,22 @@ Hierarchy.prototype = {
       });
     } else {
       const centeredNode = data.centeredNode;
-      let leaf = this.isStackedLayout() ? this.getTemplate(centeredNode) : this.getTemplate(data);
-      leaf = xssUtils.sanitizeHTML(leaf);
-      rootNodeHTML.push(leaf);
-      $(rootNodeHTML[0]).addClass('root is-selected').appendTo(chart);
+      let leaf;
 
-      if (data.centeredNode) {
-        this.updateState($('.leaf.root'), true, data.centeredNode, undefined);
+      if (this.isStackedLayout() && centeredNode !== null) {
+        leaf = this.getTemplate(centeredNode);
+      } else if (!this.isStackedLayout()) {
+        leaf = this.getTemplate(data);
+      }
+
+      if (leaf) {
+        leaf = xssUtils.sanitizeHTML(leaf);
+        rootNodeHTML.push(leaf);
+        $(rootNodeHTML[0]).addClass('root is-selected').appendTo(chart);
+      }
+
+      if (centeredNode && centeredNode !== null) {
+        this.updateState($('.leaf.root'), true, centeredNode, undefined);
       } else {
         this.updateState($('.leaf.root'), true, data, undefined);
       }
@@ -1005,7 +1014,8 @@ Hierarchy.prototype = {
 
         let childLength = thisNodeData.children.length;
         while (childLength--) {
-          self.updateState($(`#${thisNodeData.children[childLength].id}`), false, thisNodeData.children[childLength], undefined);
+          const lf = $(`#${thisNodeData.children[childLength].id}`);
+          self.updateState(lf, false, thisNodeData.children[childLength], undefined);
         }
       }
     }
@@ -1039,7 +1049,7 @@ Hierarchy.prototype = {
         });
       }
 
-      if (data.centeredNode) {
+      if (data.centeredNode && data.centeredNode !== null) {
         this.setRootColor(data.centeredNode);
       }
     }
@@ -1115,8 +1125,12 @@ Hierarchy.prototype = {
 
     const s = this.settings;
     const btn = $(leaf).find('.btn');
-    const data = $(leaf).data();
     const expandCaret = s.paging ? 'caret-right' : 'caret-up';
+    let data = $(leaf).data();
+
+    if (data === undefined && nodeData !== undefined) {
+      data = nodeData;
+    }
 
     // data has been loaded if it has children
     if ((data.children && data.children.length !== 0) || eventType === 'add') {

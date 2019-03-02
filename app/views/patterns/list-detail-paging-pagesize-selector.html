@@ -79,9 +79,11 @@
     $('#task-listview').listview({
       paging: true,
       pagerSettings: {
-        pagesize: 5
+        pagesize: 5,
+        showPageSizeSelector: true,
+        showFirstButton: true,
+        showLastButton: true
       },
-      template: $('#task-tmpl').html(),
       searchable: true,
       source: function(req, response) {
         $.getJSON(path, function(res) {
@@ -90,7 +92,8 @@
           req.lastPage  = (req.activePage * req.pagesize) >= res.total;
           response(res, req);
         });
-      }
+      },
+      template: $('#task-tmpl').html()
     });
 
     $('#list-detail-container').listdetail({

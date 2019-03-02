@@ -10,13 +10,9 @@
           <div class="title">
             <h1>Deployments</h1>
           </div>
-
-          <div class="buttonset">
-            <input class="searchfield" placeholder="Search">
-          </div>
         </div>
       </header>
-      <div class="paginated listview scrollable" id="task-listview" data-options="{'template': 'task-tmpl', 'source': '{{basepath}}api/inventory-tasks', 'pagesize': 10}"></div>
+      <div class="paginated listview scrollable" id="task-listview" data-options="{'template': 'task-tmpl', 'source': '{{basepath}}api/inventory-tasks', 'pagesize': 10, 'searchable': true}"></div>
     </div>
 
     <div id="maincontent" class="main scrollable" role="main">

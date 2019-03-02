@@ -22,7 +22,9 @@ Soho.Locale.addCulture('ko-KR', {
       month: 'M월 d일',
       year: 'yyyy년 M월',
       timestamp: 'a h:mm:ss',
-      datetime: 'yyyy-MM-dd a h:mm'
+      datetime: 'yyyy-MM-dd a h:mm',
+      timezone: 'yyyy-MM-dd a h:mm zz',
+      timezoneLong: 'yyyy-MM-dd a h:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {

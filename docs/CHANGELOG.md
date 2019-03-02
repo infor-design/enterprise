@@ -1,7 +1,23 @@
 # What's New with Enterprise
 
-## v4.17.0 Fixes
+## v4.17.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.17.0 Features
+
+- `[Locale]` Added support for showing timezones in the current language with a fall back for IE 11. ([#592](https://github.com/infor-design/enterprise/issues/592))
+
+### v4.17.0 Fixes
+
 - `[Datagrid]` Added a fix to allow the commit of a cell edit after tabbing into a cell once having clicked into a previous cell.([#1608](https://github.com/infor-design/enterprise/issues/1608))
+
+### v4.17.0 Chore & Maintenance
+
+- `[Component Name]` An explanation and description. ([#123](https://github.com/infor-design/enterprise/issues/12))
+
+(n Issues Solved this release, Backlog Enterprise n, Backlog Ng n, n Functional Tests, n e2e Test)
 
 ## v4.16.0
 
@@ -16,6 +32,7 @@
 - `[Field Filter]` Added support to get and set filter type programmatically. ([#1181](https://github.com/infor-design/enterprise/issues/1181))
 - `[Hierarchy]` Add print media styles to decrease ink usage and increase presentability for print format. Note that you may need to enable the setting to print background images, both Mac and PC have a setting for this. ([#456](https://github.com/infor-design/enterprise/issues/456))
 - `[Hierarchy]` Added a new "stacked" layout to eventually replace the current layouts. This works better responsively and prevents horizontal scrolling. ([#1629](https://github.com/infor-design/enterprise/issues/1629))
+- `[Pager]` Added a "condensed" page size selector button for use on pagers in smaller containers, such as the list side of the list/detail pattern. ([#1459](https://github.com/infor-design/enterprise/issues/1459))
 
 ### v4.16.0 Future Deprecation
 
@@ -25,6 +42,7 @@
 ### v4.16.0 Fixes
 
 - `[Application Menu]` Fixed the truncation of long text in an accordion element in the application menu by adding a tooltip to truncated elements. ([#457](https://github.com/infor-design/enterprise/issues/457))
+- `[Calendar]` Disable the new event modal when no template is defined. ([#1700](https://github.com/infor-design/enterprise/issues/1700))
 - `[Dropdown]` Fixed a bug where the ellipsis was not showing on long text in some browsers. ([#1550](https://github.com/infor-design/enterprise/issues/1550))
 - `[Datagrid]` Fixed a bug in equals filter on multiselect filters. ([#1586](https://github.com/infor-design/enterprise/issues/1586))
 - `[Datagrid]` Fixed a bug where incorrect data is shown in the events in tree grid. ([#315](https://github.com/infor-design/enterprise-ng/issues/315))
@@ -45,6 +63,7 @@
 - `[Tree]` Fixed a bug when calling the disable or enable methods of the tree. This was not working with ie11. ([PR#1600](https://github.com/infor-design/enterprise/issues/1600))
 - `[Stepprocess]` Fixed a bug where the step folder was still selected when it was collapsed or expanded. ([#1633](https://github.com/infor-design/enterprise/issues/1633))
 - `[Toolbar Flex]` Added the ability to pass in a `beforeOpen` callback to the More Actions menu (fixes a bug where it wasn't possible to dynamically add content to the More Actions menu in same way that was possible on the original Toolbar component)
+- `[Toolbar Flex]` Fixed a bug where selected events were not bubbling up for a menu button on a flex toolbar. ([#1709](https://github.com/infor-design/enterprise/issues/1709))
 
 ### v4.16.0 Chore & Maintenance
 
