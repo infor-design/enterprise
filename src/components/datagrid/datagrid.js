@@ -1957,7 +1957,11 @@ Datagrid.prototype = {
             isMatch = (rowValueStr === '');
             break;
           case 'is-not-empty':
-            isMatch = (rowValue !== '');
+            if (rowValue === '') {
+              isMatch = (rowValue !== '');
+              break;
+            }
+            isMatch = !(rowValue === null);
             break;
           case 'in-range':
             isMatch = false;

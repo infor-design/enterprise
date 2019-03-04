@@ -13,6 +13,8 @@
 
 - `[Component Name]` An explanation and description. ([#123](https://github.com/infor-design/enterprise/issues/12))
 
+- `[Datagrid]` Fixed a bug where filtering Order Date with `is-not-empty` on a null value would not correctly filter out results. ([#1718](https://github.com/infor-design/enterprise/issues/1718))
+
 ### v4.17.0 Chore & Maintenance
 
 - `[Component Name]` An explanation and description. ([#123](https://github.com/infor-design/enterprise/issues/12))
