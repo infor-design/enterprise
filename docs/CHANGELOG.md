@@ -11,7 +11,7 @@
 
 ### v4.17.0 Fixes
 
-- `[Component Name]` An explanation and description. ([#123](https://github.com/infor-design/enterprise/issues/12))
+- `[Datagrid]` :Stretch column not working in Edge browser. ([#1716](https://github.com/infor-design/enterprise/issues/1716))
 
 ### v4.17.0 Chore & Maintenance
 
