@@ -766,43 +766,6 @@ SwapList.prototype = {
     }
   },
 
-  afterUpdateOOOOOOOOOOOOOOOGGGGGGG(list) {
-    setTimeout(() => {
-      if (list) {
-        if (this.selections.placeholder) {
-          list.select(this.selections.placeholder);
-          this.selections.placeholder.focus();
-        }
-        this.unselectElements(list);
-        this.syncDataset(this.selections.owner, this.selections.droptarget);
-        this.updateAttributes($('.listview', this.selections.owner));
-        this.updateAttributes($('.listview', this.selections.droptarget));
-        if (this.selections.items.length) {
-          this.selections.move = $.extend(true, this.selections.move, {
-            to: this.getContainer(this.selections.itemsData)
-          });
-          /**
-          * Fires when any bucket has its content changed.
-          * @event swapupdate
-          * @memberof SwapList
-          * @type {object}
-          * @property {object} event - The jquery event object
-          * @property {array} items - List of items data
-          */
-          this.element.triggerHandler('swapupdate', [this.selections.move]);
-        }
-      }
-
-      this.selections.items.forEach((elem) => {
-        elem.show();
-      });
-
-      this.clearDropeffects();
-      this.clearSelections();
-      this.items.removeClass('is-dragging is-dragging-touch');
-    }, 400);
-  },
-
   /**
    * Get items from provided container
    * @private
