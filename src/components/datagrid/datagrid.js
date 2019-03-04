@@ -239,7 +239,6 @@ Datagrid.prototype = {
     const html = $('html');
 
     this.isTouch = env.features.touch;
-    this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
     this.appendTooltip();
@@ -3788,14 +3787,22 @@ Datagrid.prototype = {
    */
   headerTableWidth(container) {
     const cacheWidths = this.headerWidths[this.settings.columns.length - 1];
+    let hasVisibleScrollbars = false;
 
     if (!cacheWidths) {
       return '';
     }
 
+    if (this.hasRightPane && container === 'right') {
+      hasVisibleScrollbars = env.os.name === 'Mac OS X' && this.bodyWrapperRight.width() - this.tableRight.width() > 0;
+    }
+
     if (cacheWidths.widthPercent) {
       return '100%';
     } else if (!isNaN(this.totalWidths[container])) {
+      if (hasVisibleScrollbars) {
+        return `${parseFloat(this.totalWidths[container]) + 14}px`;
+      }
       return `${parseFloat(this.totalWidths[container])}px`;
     }
 
@@ -3821,14 +3828,19 @@ Datagrid.prototype = {
    */
   setScrollClass() {
     const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
-    const hasScrollBar = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
+    const hasScrollBarV = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
+    const width = parseInt(this.bodyWrapperCenter[0].offsetWidth, 10);
+    const hasScrollBarH = parseInt(this.bodyWrapperCenter[0].scrollWidth, 10) > width;
     this.element.removeClass('has-vertical-scroll has-less-rows');
 
-    if (hasScrollBar) {
+    if (hasScrollBarV) {
       this.element.addClass('has-vertical-scroll');
     }
+    if (hasScrollBarH) {
+      this.element.addClass('has-horizontal-scroll');
+    }
 
-    if (!hasScrollBar && this.tableBody[0].offsetHeight < height) {
+    if (!hasScrollBarV && this.tableBody[0].offsetHeight < height) {
       this.element.addClass('has-less-rows');
     }
 

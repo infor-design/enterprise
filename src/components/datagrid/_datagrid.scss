@@ -71,6 +71,14 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.has-horizontal-scroll {
+    .datagrid-body.left,
+    .datagrid-body.right {
+      // Make bottom visible to prevent space different at the bottom.
+      overflow-x: scroll;
+    }
+  }
+
   // Empty Area Scrolling
   &.is-empty .datagrid {
     border-bottom: 1px solid transparent;
@@ -638,8 +646,7 @@ $datagrid-short-row-height: 23px;
   &.left,
   &.right {
     flex-shrink: 0;
-    // Make bottom visible to prevent space different at the bottom.
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 }
 
