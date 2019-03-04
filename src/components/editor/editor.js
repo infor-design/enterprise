@@ -2309,6 +2309,10 @@ Editor.prototype = {
    * @returns {void}
    */
   destroyPreviewMode() {
+    if (!this.container[0]) {
+      return;
+    }
+
     const classList = this.container[0].classList;
     if (classList.contains('is-preview')) {
       classList.remove('is-preview');
