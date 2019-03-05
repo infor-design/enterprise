@@ -15,6 +15,13 @@ module.exports = function customRouteOptions(req, res) {
   const customOpts = {};
   const url = req.originalUrl;
 
+  // All patterns will use the "empty" layout
+  if (url.match(/patterns\//)) {
+    if (url.indexOf('/list') === -1) {
+      customOpts.layout = 'layout-empty';
+    }
+  }
+
   // Application Menu
   if (url.match(/components\/applicationmenu/)) {
     if (url.indexOf('/list') === -1) {
@@ -44,6 +51,11 @@ module.exports = function customRouteOptions(req, res) {
     customOpts.amd = true;
     customOpts.layout = 'layout-nofrills';
     customOpts.subtitle = 'AMD Tests';
+  }
+
+  // Form Compact's List/Detail Example
+  if (url.match(/components\/form-compact\/example-list-detail/)) {
+    customOpts.layout = 'layout-empty';
   }
 
   // Icons
@@ -79,6 +91,11 @@ module.exports = function customRouteOptions(req, res) {
   // stringify and pass it to the view options
   if (Object.keys(SohoConfig).length) {
     customOpts.SohoConfig = JSON.stringify(SohoConfig);
+  }
+
+  // Set `forceLayout` to true if there has been a layout defined.
+  if (customOpts.layout) {
+    customOpts.forceLayout = true;
   }
 
   return extend({}, res.opts, customOpts);
