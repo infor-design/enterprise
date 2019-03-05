@@ -33,7 +33,7 @@ columns.push({
 });
 columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, filterType: 'Text', formatter: Formatters.Text });
 
-fdescribe('Datagrid Validation API', () => {
+describe('Datagrid Validation API', () => {
   const Locale = window.Soho.Locale;
 
   beforeEach(() => {
