@@ -542,7 +542,7 @@ describe('Datagrid paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('.pager-toolbar'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -605,7 +605,7 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
   });
 
-  it('Should not move on a page thats more than the max', async () => {
+  it('Should not move on a page thats more than the max', async () => { //eslint-disable-line
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
@@ -839,7 +839,7 @@ describe('Datagrid contextmenu tests', () => {
 
       expect(await element(by.css('#grid-actions-menu .submenu .popupmenu')).isDisplayed()).toBeFalsy();
 
-      browser.actions().mouseMove(element(by.css('#grid-actions-menu .submenu'))).perform();
+      await browser.actions().mouseMove(element(by.css('#grid-actions-menu .submenu'))).perform();
 
       await browser.driver
         .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#grid-actions-menu .submenu .popupmenu'))), config.waitsFor);
@@ -1487,6 +1487,28 @@ describe('Datagrid select event tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('toast-container'))), config.waitsFor);
 
     expect(await element.all(by.css('#toast-container .toast-message')).getText()).toEqual(['The row #1 containing the product name Compressor triggered a selected event']);
+  });
+});
+
+describe('Datagrid timezone tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-timezone-formats?layout=nofrills&locale=nl-NL');
+
+    const datagridEl = await element(by.css('.datagrid tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should Render Timezones', async () => {
+    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('03-04-2019');
+    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('3/4/2019 00:00 GMT-5');
+    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(3)')).getText()).toEqual('3/4/2019 00:00 Eastern-standaardtijd');
+    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(4)')).getText()).toEqual('03-04-2019 00:00 GMT-5');
+    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(5)')).getText()).toEqual('03-04-2019 00:00 GMT-5');
   });
 });
 
