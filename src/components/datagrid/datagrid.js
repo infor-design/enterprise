@@ -7327,6 +7327,13 @@ Datagrid.prototype = {
           }
         }
 
+        if (key === 9 && self.editor && self.editor.name === 'input') {
+          // Editor.destroy
+          self.editor.destroy();
+          self.editor = null;
+          return;
+        }
+
         if (key === 9 && !self.settings.actionableMode) {
           return;
         }
