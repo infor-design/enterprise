@@ -1957,7 +1957,11 @@ Datagrid.prototype = {
             isMatch = (rowValueStr === '');
             break;
           case 'is-not-empty':
-            isMatch = (rowValue !== '');
+            if (rowValue === '') {
+              isMatch = (rowValue !== '');
+              break;
+            }
+            isMatch = !(rowValue === null);
             break;
           case 'in-range':
             isMatch = false;
@@ -4044,7 +4048,6 @@ Datagrid.prototype = {
 
       if (this.settings.stretchColumn !== 'last') {
         this.headerWidths[index] = { id: col.id, width: colWidth, widthPercent: this.widthPercent };
-        this.totalWidths[container] += col.hidden ? 0 : colWidth;
         const diff2 = this.elemWidth - this.totalWidths[container];
         const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
