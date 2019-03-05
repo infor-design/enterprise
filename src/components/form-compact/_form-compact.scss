@@ -1,18 +1,39 @@
-.form-compact-container {
-  .summary-area {
+// Depends on:
+// - 12 Column Grid
+// - Summary Form
+// Overrides some things in:
+// - Input Fields
 
+.form-compact-container {
+  .row {
+    max-width: 100%;
+  }
+
+  .banner {
+    display: flex;
+
+    .thumbnail {
+      flex-grow: 0;
+      flex-shrink: 0;
+      padding: 15px;
+    }
+
+    .summary-form {
+      flex-grow: 1;
+      flex-shrink: 1;
+      padding: 10px;
+    }
   }
 }
 
 .form-compact {
   background-color: $body-color-primary-background;
   margin: 0 auto;
-  max-width: 1280px;
 
   .row {
     min-height: 50px;
 
-    .row:last-child {
+    &:last-child {
       margin-bottom: 0;
     }
   }
@@ -109,9 +130,36 @@
   font-weight: 700;
 }
 
-// Specific paddings for non-Blink-based browsers (IE, FF)
-.ie,
+// Firefox has different column padding needs
 .is-firefox {
+  .form-compact {
+    .column,
+    .columns {
+      label {
+        padding: 8px 9px 0;
+      }
+
+      input {
+        padding: 0 8px 8px;
+      }
+    }
+  }
+}
+
+// IE has different header padding needs
+.ie {
+  .form-compact {
+    .column,
+    .columns {
+      &.form-section-header {
+        padding: 16px 10px 15px;
+      }
+    }
+  }
+}
+
+// Change the padding when the font is not "Source Sans" (Legacy)
+html:not(.font-source-sans) {
   .form-compact {
     .column,
     .columns {
@@ -128,10 +176,41 @@
       }
     }
   }
+
+  // Non-source-sans Firefox has ever-different column padding needs
+  &.is-firefox {
+    .form-compact {
+      .column,
+      .columns {
+        label {
+          padding: 8px 9px 0;
+        }
+
+        input {
+          padding: 0 8px 8px;
+        }
+      }
+    }
+  }
 }
 
-// Ensures a common min-height on headers
 @media (max-width: $breakpoint-phone-to-tablet + 1) {
+  // Responsive View of Summary Area
+  .form-compact-container {
+    .banner {
+      flex-direction: column;
+
+      > * {
+        align-items: center;
+      }
+    }
+
+    .thumbnail {
+      text-align: center;
+    }
+  }
+
+  // Ensures a common min-height on headers
   .form-compact {
     .row {
       .column,
@@ -146,6 +225,19 @@
 // on grids inside of the Form Compact component.
 // For tabledevices larger than 550px
 @media (min-width: $breakpoint-phone-to-tablet) {
+  .form-compact-container {
+    .summary-form {
+      .column,
+      .columns {
+        margin-left: 0;
+
+        .field:first-child {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
   .form-compact {
     .row {
       display: flex;
