@@ -45,6 +45,7 @@ describe('Pager (List/Detail, with page size selector)', () => {
     expect(await element.all(by.css('.pager-toolbar > li.pager-pagesize')).isPresent()).toBeTruthy();
 
     await element(by.css('.pager-toolbar li.pager-pagesize button')).click();
+    await browser.driver.sleep(config.sleep);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#popupmenu-1'))), config.waitsFor);
 
@@ -62,6 +63,7 @@ describe('Pager (List/Detail, with page size selector)', () => {
       const pagerToolbar = await element(by.css('.pager-toolbar'));
 
       await element(by.css('.pager-toolbar li.pager-pagesize button')).click();
+      await browser.driver.sleep(config.sleep);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#popupmenu-1'))), config.waitsFor);
       const menu = await element(by.css('#popupmenu-1'));
