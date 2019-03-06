@@ -464,9 +464,9 @@ div.multiselect {
 
   .group-label {
     @include css3(user-select, none);
-    @include font-size(12);
 
     color: $label-color-initial-font;
+    font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
     line-height: 20px;
     min-height: 20px;
@@ -603,8 +603,7 @@ input.dropdown.error:focus {
 //Shorter Field Size
 .field-short {
   div.dropdown {
-    @include font-size(12);
-
+    font-size: $theme-size-font-sm;
     margin-bottom: 0;
     padding: 5px 21px 5px 5px;
 
@@ -675,8 +674,7 @@ div.dropdown-xs,
 // Shorter Drop Down Lists
 .dropdown-list.dropdown-short {
   .dropdown-search {
-    @include font-size(12);
-
+    font-size: $theme-size-font-sm;
     padding: 5px 32px 5px 5px;
   }
 
@@ -687,8 +685,7 @@ div.dropdown-xs,
   }
 
   ul {
-    @include font-size(12);
-
+    font-size: $theme-size-font-sm;
     text-indent: 5px;
   }
 
@@ -819,8 +816,7 @@ div.dropdown-xs,
 
     &.dropdown-short {
       .dropdown-search {
-        @include font-size(12);
-
+        font-size: $theme-size-font-sm;
         padding: 5px 21px 5px 5px;
       }
     }

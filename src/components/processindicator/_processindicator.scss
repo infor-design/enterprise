@@ -245,21 +245,20 @@ $indicator-current-size: ($indicator-size * 1.6);
 .process-indicator,
 .timeline {
   .heading {
-    @include font-size(12);
+    @include antialiased();
 
+    font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
     line-height: 1.5;
-
-    @include antialiased();
   }
 
   .sub-heading {
+    @include antialiased();
+
     color: $font-color;
+    font-size: $theme-size-font-sm;
     line-height: 1.5;
     margin-bottom: 10px;
-
-    @include font-size(12);
-    @include antialiased();
   }
 
 }

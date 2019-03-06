@@ -267,9 +267,8 @@
     }
 
     .calendar-upcoming-description {
-      @include font-size(12);
-
       display: inline-block;
+      font-size: $theme-size-font-sm;
       left: 5px;
       position: relative;
       top: -4px;
@@ -277,9 +276,8 @@
     }
 
     .calendar-upcoming-status-text {
-      @include font-size(12);
-
       display: block;
+      font-size: $theme-size-font-sm;
       font-style: italic;
       left: 25px;
       position: relative;
@@ -291,10 +289,9 @@
     }
 
     .calendar-upcoming-duration {
-      @include font-size(12);
-
       display: block;
       float: right;
+      font-size: $theme-size-font-sm;
       font-style: italic;
       position: relative;
       right: 5px;
@@ -334,7 +331,7 @@
     background-color: $calendar-bg-color;
 
     .data {
-      @include font-size(12);
+      font-size: $theme-size-font-sm;
     }
 
     .icon {

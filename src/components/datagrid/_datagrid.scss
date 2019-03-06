@@ -1746,7 +1746,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &.micro-text {
-        @include font-size(12);
+        font-size: $theme-size-font-sm;
       }
     }
 
@@ -2169,12 +2169,12 @@ $datagrid-short-row-height: 23px;
     }
 
     .datagrid-header-text {
-      @include font-size(12);
       @include no-select();
 
       color: $datagrid-header-color;
       direction: ltr;
       display: table-cell;
+      font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
       text-align: left;
       vertical-align: middle;
@@ -2612,9 +2612,8 @@ $datagrid-short-row-height: 23px;
 }
 
 .datagrid-row-micro {
-  @include font-size(12);
-
   color: $datagrid-cell-color;
+  font-size: $theme-size-font-sm;
   line-height: 2rem;
 }
 
@@ -2660,10 +2659,9 @@ td .btn-actions {
 
 // Grid Checkboxes
 .datagrid-checkbox {
-  @include font-size(12);
-
   cursor: pointer;
   display: inline-block;
+  font-size: $theme-size-font-sm;
   left: -7px;
   position: relative;
   top: -14px;
@@ -2810,8 +2808,7 @@ td .btn-actions {
 }
 
 .datagrid-checkbox-wrapper {
-  @include font-size(12);
-
+  font-size: $theme-size-font-sm;
   position: relative;
 
   & + .datagrid-filter-wrapper {
@@ -2899,9 +2896,8 @@ td .btn-actions {
   }
 
   .datagrid-row-micro-text {
-    @include font-size(12);
-
     color: $font-color-lowcontrast;
+    font-size: $theme-size-font-sm;
   }
 
   .datagrid-cell-layout {
@@ -3763,9 +3759,8 @@ html[dir='rtl'] {
 
 .content-tooltip {
   &.popover.alternate {
-    @include font-size(12);
-
     background-color: $datagrid-cell-bg-color;
+    font-size: $theme-size-font-sm;
     padding-bottom: inherit;
 
     &.top .arrow::after {

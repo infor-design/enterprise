@@ -159,16 +159,15 @@ a.text-base {
 
 .text-small,
 a.text-small {
-  @include font-size(12);
+  font-size: $theme-size-font-sm;
 }
 
 // Labels
 label,
 .label {
-  @include font-size(12);
-
   color: $label-color;
   display: block;
+  font-size: $theme-size-font-sm;
   margin-bottom: 8px;
   min-height: 13px; //prevents need to use &nbsp; for blank labels
 }
@@ -222,11 +221,11 @@ label.side,
 
 small,
 .micro-text {
-  @include font-size(12);
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 1.5rem);
 
   color: $font-color-default;
+  font-size: $theme-size-font-sm;
 }
 
 .alert-text {

@@ -23,12 +23,12 @@ $toolbarsearchfield-category-empty-width: 51px;
 
   .searchfield {
     @include antialiased();
-    @include font-size(12);
 
     background-color: transparent;
     border: 1px solid transparent;
     box-shadow: none;
     color: $searchfield-text-color;
+    font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
     height: 34px;
     outline: 0;
@@ -37,24 +37,11 @@ $toolbarsearchfield-category-empty-width: 51px;
     text-overflow: ellipsis;
     width: 100%;
 
-    &::-webkit-input-placeholder {
-      @include font-size(12);
-
-      color: $searchfield-text-color;
-      font-weight: $theme-number-font-weight-bold;
-    }
-
-    &::-moz-placeholder {
-      @include font-size(12);
-
-      color: $searchfield-text-color;
-      font-weight: $theme-number-font-weight-bold;
-    }
-
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder,
     &:-ms-input-placeholder {
-      @include font-size(12);
-
       color: $searchfield-text-color;
+      font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
     }
   }

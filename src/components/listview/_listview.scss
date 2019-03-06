@@ -1,5 +1,5 @@
-// Simple List
 //================================================== //
+// Simple List
 
 .listview {
   background-color: inherit;
@@ -59,9 +59,8 @@
 
   .listview-subheading,
   .listview-data-label {
-    @include font-size(12);
-
     color: $listview-secondary-color;
+    font-size: $theme-size-font-sm;
     overflow-wrap: break-word;
   }
 
@@ -82,9 +81,8 @@
   }
 
   .listview-micro {
-    @include font-size(12);
-
     color: $listview-tertiary-color;
+    font-size: $theme-size-font-sm;
 
     &::after {
       clear: both;
@@ -492,10 +490,9 @@
     }
 
     th {
-      @include font-size(12);
-
       color: $listview-header-color;
       display: table-cell;
+      font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
       padding: 15px;
 

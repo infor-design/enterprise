@@ -40,10 +40,10 @@
 
   // Text Color
   text {
-    @include font-size(12);
     @include antialiased();
 
     fill: $chart-font-color;
+    font-size: $theme-size-font-sm;
   }
 
   .inverse {
@@ -240,9 +240,9 @@
 
   .chart-legend-item-text {
     @include ellipsis;
-    @include font-size(12);
 
     color: $chart-font-color;
+    font-size: $theme-size-font-sm;
     width: auto;
   }
 

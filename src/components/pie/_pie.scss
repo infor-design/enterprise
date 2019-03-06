@@ -33,7 +33,7 @@
 
   .labels text {
     color: $chart-font-color;
-    font-size: 12px;
+    font-size: $theme-size-font-sm;
   }
 
   .slices path {

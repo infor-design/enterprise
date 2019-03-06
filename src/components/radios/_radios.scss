@@ -164,9 +164,8 @@
   position: relative;
 
   legend {
-    @include font-size(12);
-
     color: $label-color;
+    font-size: $theme-size-font-sm;
     padding-bottom: 5px;
   }
 
