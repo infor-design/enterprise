@@ -1162,9 +1162,10 @@ ListView.prototype = {
       if (settings && settings.dataset) {
         this.settings.dataset = settings.dataset;
       }
-      this.updateSearch();
-      this.refresh(settings.dataset || null);
     }
+
+    this.updateSearch();
+    this.refresh(settings && settings.dataset ? settings.dataset : null);
     return this;
   },
 
