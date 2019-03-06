@@ -934,7 +934,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('22-03-2000 20:11 Eastern-standaardtijd', { pattern: 'dd-MM-yyyy HH:mm zzzz' }).getTime()).toEqual(new Date(2000, 2, 22, 20, 11).getTime());
   });
 
-  fit('Should be able to display dates into another timezone', () => { //eslint-disable-line
+  it('Should be able to display dates into another timezone', () => {
     Locale.set('en-US');
 
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane')).toEqual('3/26/2018, 2:00:00 PM');
@@ -947,7 +947,7 @@ describe('Locale API', () => {
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York')).toEqual('26-3-2018 00:00:00');
   });
 
-  fit('Should be able to display dates into another timezone including short timezone name', () => { //eslint-disable-line
+  it('Should be able to display dates into another timezone including short timezone name', () => {
     Locale.set('en-US');
 
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'short')).toEqual('3/26/2018, 2:00:00 PM GMT+10');
@@ -960,7 +960,7 @@ describe('Locale API', () => {
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'short')).toEqual('26-3-2018 00:00:00 GMT-4');
   });
 
-  fit('Should be able to display dates into another timezone including long timezone name', () => { //eslint-disable-line
+  it('Should be able to display dates into another timezone including long timezone name', () => {
     Locale.set('en-US');
 
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'long')).toEqual('3/26/2018, 2:00:00 PM Australian Eastern Standard Time');

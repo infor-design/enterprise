@@ -6643,12 +6643,15 @@ Datagrid.prototype = {
       dataset = s.treeGrid ? s.treeDepth : s.dataset;
     }
 
-    if (dataset[idx]) {
+    let args = [{ row: idx, item: dataset[idx] }];
+
+    const doRowactivated = () => {
       const rowNodes = this.rowNodes(idx).toArray();
       rowNodes.forEach((rowElem) => {
         rowElem.classList.add('is-rowactivated');
       });
       dataset[idx]._rowactivated = true;
+      args = [{ row: idx, item: dataset[idx] }];
 
       /**
        * Fires after a row is activated in mixed selection mode.
@@ -6659,7 +6662,18 @@ Datagrid.prototype = {
        * @property {array} args.row An array of selected rows.
        * @property {object} args.item The current sort column.
        */
-      this.element.triggerHandler('rowactivated', [{ row: idx, item: dataset[idx] }]);
+      this.element.triggerHandler('rowactivated', args);
+    };
+
+    if (dataset[idx]) {
+      $.when(this.element.triggerHandler('beforerowactivated', args)).done((response) => {
+        const isFalse = v => ((typeof v === 'string' && v.toLowerCase() === 'false') ||
+          (typeof v === 'boolean' && v === false) ||
+          (typeof v === 'number' && v === 0));
+        if (!isFalse(response)) {
+          doRowactivated();
+        }
+      });
     }
   },
 
@@ -7311,6 +7325,13 @@ Datagrid.prototype = {
             e.preventDefault();
             return;
           }
+        }
+
+        if (key === 9 && self.editor && self.editor.name === 'input') {
+          // Editor.destroy
+          self.editor.destroy();
+          self.editor = null;
+          return;
         }
 
         if (key === 9 && !self.settings.actionableMode) {
