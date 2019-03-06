@@ -224,9 +224,8 @@
     }
 
     .name {
-      @include font-size(18);
-
       display: block;
+      font-size: $theme-size-font-lg;
       line-height: 1.5em;
       padding: 10px;
       position: relative;

@@ -178,11 +178,11 @@
   }
 
   h4 {
-    @include font-size(18);
     @include rem(line-height, 1.8rem);
     @include rem(margin-bottom, 1.5rem);
 
     color: $editor-color;
+    font-size: $theme-size-font-lg;
   }
 
   ul,

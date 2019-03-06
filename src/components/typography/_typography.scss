@@ -56,10 +56,10 @@ ol {
 }
 
 h1 {
-  @include font-size(18);
   @include rem(line-height, 2.5rem);
 
   color: $font-color-default;
+  font-size: $theme-size-font-lg;
 
   + p {
     margin: 20px 0;
@@ -140,8 +140,9 @@ p {
 
 .text-primary,
 a.text-primary {
-  @include font-size(18);
   @include rem(line-height, 2.5rem);
+
+  font-size: $theme-size-font-lg;
 }
 
 .text-secondary,

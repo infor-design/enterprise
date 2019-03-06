@@ -40,9 +40,8 @@
   }
 
   .listview-heading-lg {
-    @include font-size(18);
-
     display: block;
+    font-size: $theme-size-font-lg;
     margin: 8px 0 5px;
     vertical-align: top;
 
@@ -521,7 +520,7 @@
   padding: 20px;
 
   .listview-heading {
-    @include font-size(18);
+    font-size: $theme-size-font-lg;
   }
 
   .btn-expand {

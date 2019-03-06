@@ -234,9 +234,8 @@
 
   // Messages/Content
   h1 {
-    @include font-size(18);
-
     color: $modal-primary-color;
+    font-size: $theme-size-font-lg;
     font-weight: $theme-number-font-weight-base;
     -webkit-margin-after: 0;
     text-align: left;

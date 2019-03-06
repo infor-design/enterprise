@@ -51,7 +51,7 @@
   }
 
   .chart-donut-text {
-    @include font-size(18);
+    font-size: $theme-size-font-lg;
   }
 
   .label-line {

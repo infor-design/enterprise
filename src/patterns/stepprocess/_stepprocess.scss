@@ -18,10 +18,9 @@
     }
 
     .heading {
-      @include font-size(18);
-
       color: $font-color-extrahighcontrast;
       display: table-cell;
+      font-size: $theme-size-font-lg;
       height: 60px;
       padding-left: 20px;
       vertical-align: middle;

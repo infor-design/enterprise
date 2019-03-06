@@ -102,11 +102,10 @@
 
 // Required Indicator
 @mixin required-indicator() {
-  @include font-size(18);
-
   color: $error-color;
   content: '*';
   display: inline-block;
+  font-size: $theme-size-font-lg;
   left: 3px;
   line-height: 0;
   position: relative;

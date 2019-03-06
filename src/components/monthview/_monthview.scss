@@ -547,9 +547,8 @@
 
   .month,
   .year {
-    @include font-size(18);
-
     color: $datepicker-month-year-color;
+    font-size: $theme-size-font-lg;
   }
 
   .dropdown-wrapper {
