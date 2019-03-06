@@ -3590,6 +3590,13 @@ html[dir='rtl'] {
   }
 }
 
+.is-mac.is-firefox,
+.is-mac.is-safari {
+  .has-visible-scrollbars .datagrid-body.right table {
+    margin-right: 15px;
+  }
+}
+
 //Contextual toolbar
 .datagrid-contextual-toolbar.contextual-toolbar {
   &.toolbar {

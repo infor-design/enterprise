@@ -3801,7 +3801,7 @@ Datagrid.prototype = {
       return '100%';
     } else if (!isNaN(this.totalWidths[container])) {
       if (hasVisibleScrollbars) {
-        return `${parseFloat(this.totalWidths[container]) + 14}px`;
+        return `${parseFloat(this.totalWidths[container]) + 15}px`;
       }
       return `${parseFloat(this.totalWidths[container])}px`;
     }
@@ -3846,6 +3846,10 @@ Datagrid.prototype = {
 
     if (this.hasRightPane) {
       this.element.addClass('has-frozen-right-columns');
+
+      if (utils.getScrollbarWidth() > 0) {
+        this.element.addClass('has-visible-scrollbars');
+      }
     }
   },
 
