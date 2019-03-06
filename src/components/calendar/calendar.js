@@ -659,7 +659,7 @@ Calendar.prototype = {
 
     this.element.on(`dblclick.${COMPONENT_NAME}`, 'td', (e) => {
       // throw this case out or you can click the wrong day
-      if (this.isSwitchingMonth) {
+      if (this.isSwitchingMonth || this.modalVisible()) {
         return;
       }
       const key = e.currentTarget.getAttribute('data-key');
@@ -887,12 +887,13 @@ Calendar.prototype = {
       return;
     }
     
-    this.modalContents = document.querySelector('.calendar-event-modal');
-    if (!this.modalContents) {
-      this.modalContents = document.createElement('div');
-      DOM.addClass(this.modalContents, 'calendar-event-modal', 'hidden');
-      document.getElementsByTagName('body')[0].appendChild(this.modalContents);
+    if (this.modalVisible()) {
+      this.removeModal();
     }
+    
+    this.modalContents = document.createElement('div');
+    DOM.addClass(this.modalContents, 'calendar-event-modal', 'hidden');
+    document.getElementsByTagName('body')[0].appendChild(this.modalContents);
 
     event = this.addCalculatedFields(event);
     this.renderTmpl(event || {}, this.settings.modalTemplate, this.modalContents);
@@ -962,6 +963,13 @@ Calendar.prototype = {
       });
 
     this.activeElem = dayObj.elem;
+  },
+  
+  /**
+   * @returns {boolean} whether or not this Modal is currently being displayed
+   */
+  modalVisible() {
+    return (document.querySelector('.calendar-event-modal') !== null);
   },
 
   /**
