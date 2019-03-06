@@ -950,7 +950,7 @@ describe('Datagrid hide selection checkbox tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-hide-selection-checkbox');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid .datagrid-header thead .datagrid-checkbox'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
