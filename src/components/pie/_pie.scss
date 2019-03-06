@@ -16,7 +16,7 @@
   }
 
   .label-text {
-    @include font-size(14);
+    font-size: $theme-size-font-md;
   }
 
   .label-line {

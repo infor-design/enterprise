@@ -202,7 +202,7 @@ div.multiselect {
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
   box-shadow: $dropdown-shadow-initial-boxshadow, $focus-box-shadow;
-  font-size: 1.4rem;
+  font-size: $theme-size-font-md;
   max-height: 340px;
   min-height: 30px;
   overflow: hidden;
@@ -234,10 +234,9 @@ div.multiselect {
   }
 
   ul {
-    @include font-size(14);
-
     background-color: $popupmenu-bg-color;
     color: $popupmenu-color;
+    font-size: $theme-size-font-md;
     height: auto;
     line-height: 32px;
     overflow-x: hidden;

@@ -42,9 +42,8 @@
   }
 
   .chart-percent-text {
-    @include font-size(14);
-
     cursor: default;
+    font-size: $theme-size-font-md;
     height: 25px;
     margin-top: -25px;
     position: relative;

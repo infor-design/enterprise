@@ -83,8 +83,7 @@
         }
 
         .content {
-          @include font-size(14);
-
+          font-size: $theme-size-font-md;
           max-width: calc(100% - 52px);
           padding-left: 0.5em;
 

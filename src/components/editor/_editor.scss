@@ -129,7 +129,6 @@
 }
 
 .editor {
-  @include font-size(14);
   @include rem(line-height, 2.2rem);
 
   background-color: $editor-bg-color;
@@ -138,6 +137,7 @@
   border-radius: 0 0 2px 2px;
   color: $editor-color;
   display: block;
+  font-size: $theme-size-font-md;
   height: 320px;
   margin-bottom: 20px;
   min-height: 128px;
@@ -158,10 +158,10 @@
 
   // Element Style
   p {
-    @include font-size(14);
     @include rem(line-height, 2.2rem);
 
     color: $editor-color;
+    font-size: $theme-size-font-md;
     margin-bottom: 15px;
 
     .hyperlink {
@@ -189,9 +189,9 @@
   ol {
     @include rem(line-height, 2.2rem);
     @include rem(margin-left, 2rem);
-    @include font-size(14);
 
     color: $input-color;
+    font-size: $theme-size-font-md;
     list-style: disc;
     margin-bottom: 10px;
 
@@ -234,9 +234,8 @@
   }
 
   .hyperlink {
-    @include font-size(14);
-
     cursor: auto;
+    font-size: $theme-size-font-md;
     position: static;
     text-decoration: none;
 
@@ -497,11 +496,10 @@
 // Dialog Styling
 
 .editor-source {
-  @include font-size(14);
-
   border: 1px solid;
   border-color: transparent $editor-border-color $editor-border-color;
   border-radius: 0 0 2px 2px;
+  font-size: $theme-size-font-md;
   height: 320px;
   margin: 0 0 10px;
   min-height: 88px;
@@ -511,11 +509,10 @@
   width: 100%;
 
   textarea {
-    @include font-size(14);
-
     background-color: $editor-bg-color;
     border: 0;
     color: $editor-color;
+    font-size: $theme-size-font-md;
     font-weight: $theme-number-font-weight-base;
     height: 100%;
     line-height: 2.4rem;
@@ -580,9 +577,8 @@
 }
 
 .editor-placeholder::after {
-  @include font-size(14);
-
   content: attr(data-placeholder);
+  font-size: $theme-size-font-md;
   font-weight: 100;
   left: 10px;
   margin-top: -38px;

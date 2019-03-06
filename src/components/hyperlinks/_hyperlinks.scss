@@ -144,8 +144,7 @@
 
 //Inline text should be 14px to match content
 p .hyperlink {
-  @include font-size(14);
-
+  font-size: $theme-size-font-md;
   white-space: nowrap;
 }
 

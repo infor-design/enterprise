@@ -6,10 +6,9 @@
 // Field Style
 .field .checkbox-label,
 .field .checkbox > label {
-  @include font-size(14);
-
   color: $checkbox-color-unchecked-initial-font;
   display: inline-block;
+  font-size: $theme-size-font-md;
   margin-bottom: 0;
   margin-top: 0;
 }
@@ -318,28 +317,11 @@ label,
 }
 
 // Placeholder - Inline help
-::-webkit-input-placeholder {
-  @include font-size(14);
-
-  color: $input-placeholder-color;
-  font-weight: $theme-number-font-weight-base;
-  line-height: 16px;
-  opacity: 1;
-}
-
-::-moz-placeholder {
-  @include font-size(14);
-
-  color: $input-placeholder-color;
-  font-weight: $theme-number-font-weight-base;
-  line-height: 16px;
-  opacity: 1;
-}
-
+::-webkit-input-placeholder,
+::-moz-placeholder,
 :-ms-input-placeholder {
-  @include font-size(14);
-
   color: $input-placeholder-color;
+  font-size: $theme-size-font-md;
   font-weight: $theme-number-font-weight-base;
   line-height: 16px;
   opacity: 1;

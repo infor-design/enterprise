@@ -94,9 +94,8 @@ $subheader-height: 60px;
   }
 
   .section-title {
-    @include font-size(14);
-
     color: $header-text-color;
+    font-size: $theme-size-font-md;
     margin-top: 2px;
     padding: 0;
     text-transform: capitalize;
@@ -202,8 +201,7 @@ $subheader-height: 60px;
     }
 
     .panel-subhead {
-      @include font-size(14);
-
+      font-size: $theme-size-font-md;
       line-height: 1;
     }
 
@@ -389,10 +387,9 @@ $subheader-height: 60px;
     }
 
     .hyperlink {
-      @include font-size(14);
-
       color: $theme-color-palette-white;
       float: right;
+      font-size: $theme-size-font-md;
 
       &:focus:not(.hide-focus)::after,
       &:active::after {

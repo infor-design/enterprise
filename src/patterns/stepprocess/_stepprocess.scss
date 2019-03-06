@@ -26,9 +26,8 @@
       vertical-align: middle;
 
       small {
-        @include font-size(14);
-
         display: block;
+        font-size: $theme-size-font-md;
         margin: 2px 0 0;
         padding: 0;
         text-transform: capitalize;
@@ -119,9 +118,8 @@
 
         span {
           display: inline-block;
+          font-size: $theme-size-font-md;
           max-width: 80%;
-
-          @include font-size(14);
         }
 
         .tree-text {

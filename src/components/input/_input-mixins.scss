@@ -4,7 +4,6 @@
 @mixin input-style() {
   @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
   @include antialiased();
-  @include font-size(14);
 
   -webkit-appearance: none;
   background-color: $input-color-initial-background;
@@ -13,6 +12,7 @@
   border-radius: 2px;
   color: $input-color;
   display: inline-block;
+  font-size: $theme-size-font-md;
   max-width: 100%;
   padding: 8px 10px;
   resize: none;

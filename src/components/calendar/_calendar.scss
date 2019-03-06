@@ -216,9 +216,8 @@
     }
 
     .calendar-upcoming-date {
-      @include font-size(14);
-
       display: block;
+      font-size: $theme-size-font-md;
       padding: 10px;
     }
 

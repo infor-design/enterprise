@@ -87,11 +87,11 @@ input.checkbox + label,
 input.checkbox + input[type='hidden'] + label,
 span.checkbox > label {
   @include no-select();
-  @include font-size(14);
 
   color: $checkbox-color-unchecked-initial-font;
   cursor: pointer;
   display: inline-block;
+  font-size: $theme-size-font-md;
   padding-left: 26px;
   position: relative;
 }

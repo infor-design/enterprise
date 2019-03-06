@@ -23,9 +23,9 @@
   .listview-heading,
   .listview-data {
     @include ellipsis();
-    @include font-size(14);
 
     color: $listview-color;
+    font-size: $theme-size-font-md;
     font-weight: $theme-number-font-weight-base;
     overflow-wrap: break-word;
 
@@ -196,9 +196,9 @@
 
     > a {
       @include ellipsis();
-      @include font-size(14);
 
       color: $listview-color;
+      font-size: $theme-size-font-md;
       font-weight: $theme-number-font-weight-base;
       text-decoration: none;
 
@@ -296,9 +296,8 @@
   }
 
   p {
-    @include font-size(14);
-
     color: $listview-color;
+    font-size: $theme-size-font-md;
     line-height: 23px;
   }
 
@@ -466,9 +465,8 @@
 
   tr,
   td {
-    @include font-size(14);
-
     color: $listview-color;
+    font-size: $theme-size-font-md;
     padding: 13px 15px;
   }
 
@@ -532,9 +530,8 @@
   }
 
   .listview-subheading {
-    @include font-size(14);
-
     color: $font-color-lowcontrast;
+    font-size: $theme-size-font-md;
     font-weight: $theme-number-font-weight-bold;
     padding-top: 3px;
   }

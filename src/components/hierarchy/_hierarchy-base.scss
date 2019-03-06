@@ -10,9 +10,8 @@
   }
 
   legend {
-    @include font-size(14);
-
     display: inline-block;
+    font-size: $theme-size-font-md;
     margin: 20px 40px;
 
     li {
@@ -236,9 +235,9 @@
 
     .subheading {
       @include ellipsis();
-      @include font-size(14);
 
       color: $listview-color;
+      font-size: $theme-size-font-md;
       line-height: 20px;
       margin-top: 0;
     }

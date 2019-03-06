@@ -15,8 +15,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
 // Container
 .process-indicator {
-  @include font-size(14);
-
+  font-size: $theme-size-font-md;
   margin-bottom: 20px;
 
   // Main blocks:  .display, .header, .details

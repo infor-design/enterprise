@@ -343,7 +343,7 @@
 
   .message {
     color: $modal-color;
-    font-size: 1.4rem;
+    font-size: $theme-size-font-md;
     line-height: 20px;
     max-width: 369px;
     padding: 15px 0 25px;
@@ -387,7 +387,6 @@
   padding: 2px;// Keep 2px padding around for border to show around on focus
 
   button {
-    @include font-size(14);
     @include css3(transition, color 0.3s ease 0s);
 
     border: 1px solid transparent;
@@ -396,6 +395,7 @@
     color: $modal-btn-color;
     cursor: pointer;
     float: left;
+    font-size: $theme-size-font-md;
     font-weight: $theme-number-font-weight-bold;
     height: 46px;
     line-height: 46px; // Used same value as height to get accurate measurement of vertical height
