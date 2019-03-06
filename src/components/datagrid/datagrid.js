@@ -8344,6 +8344,7 @@ Datagrid.prototype = {
 
   /**
    * Get the settings for a column by index.
+   * @private
    * @param  {number} idx The column index.
    * @returns {array} The settings array
    */
