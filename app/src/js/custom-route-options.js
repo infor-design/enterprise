@@ -17,7 +17,9 @@ module.exports = function customRouteOptions(req, res) {
 
   // All patterns will use the "empty" layout
   if (url.match(/patterns\//)) {
-    if (url.indexOf('/list') === -1) {
+    if (url.includes('tree-detail') || url.includes('master-detail')) {
+      customOpts.layout = 'layout';
+    } else if (!url.endsWith('/list')) {
       customOpts.layout = 'layout-empty';
     }
   }
