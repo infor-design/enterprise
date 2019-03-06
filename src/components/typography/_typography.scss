@@ -278,9 +278,8 @@ small,
 }
 
 .small-thin-text {
-  @include font-size(10);
-
   color: $font-color;
+  font-size: $theme-size-font-xs;
   font-weight: $theme-number-font-weight-bold;
 
   + .small-thin-text {

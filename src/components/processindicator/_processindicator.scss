@@ -15,9 +15,9 @@ $indicator-current-size: ($indicator-size * 1.6);
 
 // Container
 .process-indicator {
-  margin-bottom: 20px;
-
   @include font-size(14);
+
+  margin-bottom: 20px;
 
   // Main blocks:  .display, .header, .details
   .display {
@@ -60,10 +60,10 @@ $indicator-current-size: ($indicator-size * 1.6);
   }
 
   .details {
-    color: $font-color;
-
-    @include font-size(10);
     @include antialiased();
+
+    color: $font-color;
+    font-size: $theme-size-font-xs;
 
     > * {
       vertical-align: middle;

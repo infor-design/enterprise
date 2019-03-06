@@ -10,9 +10,8 @@
     list-style: none;
 
     &::after {
-      @include font-size(10);
-
       content: '\002F';
+      font-size: $theme-size-font-xs;
       padding: 0 10px;
     }
 
