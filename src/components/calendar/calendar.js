@@ -589,6 +589,9 @@ Calendar.prototype = {
     this.isSwitchingMonth = false;
     this.element.on(`monthrendered.${COMPONENT_NAME}`, () => {
       this.isSwitchingMonth = true;
+      if (this.modalVisible()) {
+        this.removeModal();
+      }
       this.renderAllEvents();
 
       setTimeout(() => {
