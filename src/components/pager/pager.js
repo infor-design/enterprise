@@ -296,6 +296,9 @@ Pager.prototype = {
    * @private
    */
   createPagerBar() {
+    if (this.pagerBar) {
+      return;
+    }
     this.pagerBar = this.element.prev('.pager-toolbar');
 
     if (this.pagerBar.length === 0) {
