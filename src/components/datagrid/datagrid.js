@@ -5446,7 +5446,7 @@ Datagrid.prototype = {
       // Handle Cell Click Event
       const elem = $(this).closest('td');
       const cell = elem.attr('aria-colindex') - 1;
-      const col = self.columnSettings(cell, true);
+      const col = self.columnSettings(cell);
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a') || target.parent().is('button')) {   //eslint-disable-line
         const rowElem = $(this).closest('tr');
@@ -8345,16 +8345,10 @@ Datagrid.prototype = {
   /**
    * Get the settings for a column by index.
    * @param  {number} idx The column index.
-   * @param  {boolean} onlyVisible If only the visible columns should be included.
    * @returns {array} The settings array
    */
-  columnSettings(idx, onlyVisible) {
-    let foundColumn = this.settings.columns[idx];
-
-    if (onlyVisible) {
-      foundColumn = this.visibleColumns()[idx];
-    }
-
+  columnSettings(idx) {
+    const foundColumn = this.settings.columns[idx];
     return foundColumn || {};
   },
 
