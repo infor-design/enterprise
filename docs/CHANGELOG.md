@@ -8,6 +8,7 @@
 ### v4.17.0 Features
 
 - `[Datagrid]` Added support to cancel `rowactivated` event. Now it will trigger the new event `beforerowactivated` which will wait/sync to cancel or proceed to do `rowactivated` event. ([#1021](https://github.com/infor-design/enterprise/issues/1021))
+- `[Form Compact]` Implemented design for field-heavy forms. ([#1699](https://github.com/infor-design/enterprise/issues/1699))
 - `[Locale]` Added support for showing timezones in the current language with a fall back for IE 11. ([#592](https://github.com/infor-design/enterprise/issues/592))
 
 ### v4.17.0 Fixes
