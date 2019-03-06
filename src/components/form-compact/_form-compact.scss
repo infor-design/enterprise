@@ -194,6 +194,38 @@ html:not(.font-source-sans) {
   }
 }
 
+html[dir='rtl'] {
+  .form-compact {
+    .row {
+      padding-left: 0;
+      padding-right: inherit;
+    }
+
+    .one.column,
+    .one.columns,
+    .one-one-half.column,
+    .one-one-half.columns,
+    .two.columns,
+    .three.columns,
+    .four.columns,
+    .five.columns,
+    .six.columns,
+    .seven.columns,
+    .eight.columns,
+    .nine.columns,
+    .ten.columns,
+    .eleven.columns,
+    .twelve.columns,
+    .full.column,
+    .one-third.column,
+    .two-thirds.column,
+    .one-half.column {
+      margin-left: inherit;
+      margin-right: 0;
+    }
+  }
+}
+
 @media (max-width: $breakpoint-phone-to-tablet + 1) {
   // Responsive View of Summary Area
   .form-compact-container {
