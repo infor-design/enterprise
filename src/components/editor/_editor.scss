@@ -170,11 +170,11 @@
   }
 
   h3 {
-    @include font-size(24);
     @include rem(line-height, 2.4rem);
     @include rem(margin-bottom, 1.5rem);
 
     color: $editor-color;
+    font-size: $theme-size-font-xl;
   }
 
   h4 {

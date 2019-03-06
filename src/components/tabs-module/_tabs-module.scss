@@ -202,8 +202,7 @@
   }
 
   .add-tab-button {
-    @include font-size(24);
-
+    font-size: $theme-size-font-xl;
     font-weight: $theme-number-font-weight-base;
     height: 34px;
     padding-bottom: 5px;
@@ -211,8 +210,7 @@
     width: 41px;
 
     span {
-      @include font-size(24);
-
+      font-size: $theme-size-font-xl;
       font-weight: $theme-number-font-weight-base;
     }
 
