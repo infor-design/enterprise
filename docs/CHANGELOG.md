@@ -7,11 +7,14 @@
 
 ### v4.17.0 Features
 
+- `[Datagrid]` Added support to cancel `rowactivated` event. Now it will trigger the new event `beforerowactivated` which will wait/sync to cancel or proceed to do `rowactivated` event. ([#1021](https://github.com/infor-design/enterprise/issues/1021))
 - `[Locale]` Added support for showing timezones in the current language with a fall back for IE 11. ([#592](https://github.com/infor-design/enterprise/issues/592))
 
 ### v4.17.0 Fixes
 
-- `[Component Name]` An explanation and description. ([#123](https://github.com/infor-design/enterprise/issues/12))
+- `[Datagrid]` Added a fix to allow the commit of a cell edit after tabbing into a cell once having clicked into a previous cell.([#1608](https://github.com/infor-design/enterprise/issues/1608))
+- `[Datagrid]` :Stretch column not working in Edge browser. ([#1716](https://github.com/infor-design/enterprise/issues/1716))
+- `[Datagrid]` Fixed a bug where filtering Order Date with `is-not-empty` on a null value would not correctly filter out results. ([#1718](https://github.com/infor-design/enterprise/issues/1718))
 
 ### v4.17.0 Chore & Maintenance
 
