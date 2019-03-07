@@ -8,7 +8,7 @@
   </div>
 </div>
 
-<div id="modal-contents" class="modal-contents hidden">
+<div id="example-modal" class="hidden">
   <div class="toolbar has-more-button" role="toolbar">
     <div class="title">Custom Toolbar</div>
     <div class="buttonset">
@@ -60,7 +60,7 @@
     //Init the Lookup
     $('#custom').lookup({
       field: 'productId',
-      modalContent: $('#modal-contents'),
+      modalContent: $('#example-modal'),
       options: {
         columns: columns,
         dataset:data,

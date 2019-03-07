@@ -71,6 +71,14 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.has-horizontal-scroll {
+    .datagrid-body.left,
+    .datagrid-body.right {
+      // Make bottom visible to prevent space different at the bottom.
+      overflow-x: scroll;
+    }
+  }
+
   // Empty Area Scrolling
   &.is-empty .datagrid {
     border-bottom: 1px solid transparent;
@@ -638,8 +646,7 @@ $datagrid-short-row-height: 23px;
   &.left,
   &.right {
     flex-shrink: 0;
-    // Make bottom visible to prevent space different at the bottom.
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 }
 
@@ -3580,6 +3587,13 @@ html[dir='rtl'] {
 
   .datagrid-filter-wrapper .dropdown {
     padding-top: 4px !important;
+  }
+}
+
+.is-mac.is-firefox,
+.is-mac.is-safari {
+  .has-visible-scrollbars .datagrid-body.right table {
+    margin-right: 15px;
   }
 }
 
