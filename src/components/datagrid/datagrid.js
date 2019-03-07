@@ -1957,7 +1957,11 @@ Datagrid.prototype = {
             isMatch = (rowValueStr === '');
             break;
           case 'is-not-empty':
-            isMatch = (rowValue !== '');
+            if (rowValue === '') {
+              isMatch = (rowValue !== '');
+              break;
+            }
+            isMatch = !(rowValue === null);
             break;
           case 'in-range':
             isMatch = false;
@@ -2076,20 +2080,20 @@ Datagrid.prototype = {
 
     if (this.restoreFilterClientSide) {
       this.restoreFilterClientSide = false;
-      return;
+    } else {
+      /**
+      * Fires after a filter action ocurs
+      * @event filtered
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Object with the arguments
+      * @property {number} args.op The filter operation, this can be 'apply', 'clear'
+      * @property {object} args.conditions An object with all the condition data.
+      * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
+      */
+      this.element.trigger('filtered', { op: 'apply', conditions, trigger });
     }
 
-    /**
-    * Fires after a filter action ocurs
-    * @event filtered
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Object with the arguments
-    * @property {number} args.op The filter operation, this can be 'apply', 'clear'
-    * @property {object} args.conditions An object with all the condition data.
-    * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
-    */
-    this.element.trigger('filtered', { op: 'apply', conditions, trigger });
     this.setSearchActivePage({
       trigger,
       type: 'filtered'
@@ -4044,7 +4048,6 @@ Datagrid.prototype = {
 
       if (this.settings.stretchColumn !== 'last') {
         this.headerWidths[index] = { id: col.id, width: colWidth, widthPercent: this.widthPercent };
-        this.totalWidths[container] += col.hidden ? 0 : colWidth;
         const diff2 = this.elemWidth - this.totalWidths[container];
         const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
@@ -6640,12 +6643,15 @@ Datagrid.prototype = {
       dataset = s.treeGrid ? s.treeDepth : s.dataset;
     }
 
-    if (dataset[idx]) {
+    let args = [{ row: idx, item: dataset[idx] }];
+
+    const doRowactivated = () => {
       const rowNodes = this.rowNodes(idx).toArray();
       rowNodes.forEach((rowElem) => {
         rowElem.classList.add('is-rowactivated');
       });
       dataset[idx]._rowactivated = true;
+      args = [{ row: idx, item: dataset[idx] }];
 
       /**
        * Fires after a row is activated in mixed selection mode.
@@ -6656,7 +6662,18 @@ Datagrid.prototype = {
        * @property {array} args.row An array of selected rows.
        * @property {object} args.item The current sort column.
        */
-      this.element.triggerHandler('rowactivated', [{ row: idx, item: dataset[idx] }]);
+      this.element.triggerHandler('rowactivated', args);
+    };
+
+    if (dataset[idx]) {
+      $.when(this.element.triggerHandler('beforerowactivated', args)).done((response) => {
+        const isFalse = v => ((typeof v === 'string' && v.toLowerCase() === 'false') ||
+          (typeof v === 'boolean' && v === false) ||
+          (typeof v === 'number' && v === 0));
+        if (!isFalse(response)) {
+          doRowactivated();
+        }
+      });
     }
   },
 
@@ -7308,6 +7325,13 @@ Datagrid.prototype = {
             e.preventDefault();
             return;
           }
+        }
+
+        if (key === 9 && self.editor && self.editor.name === 'input') {
+          // Editor.destroy
+          self.editor.destroy();
+          self.editor = null;
+          return;
         }
 
         if (key === 9 && !self.settings.actionableMode) {

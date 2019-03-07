@@ -22,7 +22,9 @@ Soho.Locale.addCulture('ms-MY', {
       month: 'dd MMMM',
       year: 'MMMM yyyy',
       timestamp: 'h:mm:ss a',
-      datetime: 'd/MM/yyyy h:mm'
+      datetime: 'd/MM/yyyy h:mm',
+      timezone: 'd/MM/yyyy h:mm zz',
+      timezoneLong: 'd/MM/yyyy h:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {

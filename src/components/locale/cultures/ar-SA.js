@@ -22,7 +22,9 @@ Soho.Locale.addCulture('ar-SA', {
         month: 'dd MMMM',
         year: 'MMMM yyyy',
         timestamp: 'h:mm:ss a',
-        datetime: 'yyyy/MM/dd h:mm a'
+        datetime: 'yyyy/MM/dd h:mm a',
+        timezone: 'yyyy/MM/dd h:mm a zz',
+        timezoneLong: 'yyyy/MM/dd h:mm a zzzz'
       }, // Infered short + short gregorian/dateTimeFormats
       days: {
         wide: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],

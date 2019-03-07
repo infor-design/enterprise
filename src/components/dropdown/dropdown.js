@@ -1348,10 +1348,6 @@ Dropdown.prototype = {
         this.open();
       }
 
-      if (key === 'Tab' && this.isOpen()) {
-        this.closeList('tab');
-      }
-
       // TODO: refactor this out so that `handleKeyDown` is no longer necessary.
       // This is necessary here because in `noSearch` mode, there is no actionable searchInput.
       if (this.settings.noSearch && !e.ctrlKey) {
@@ -1375,16 +1371,14 @@ Dropdown.prototype = {
       return true;
     }
 
-    // In nosearch mode, bypass the typeahead autocomplete and pass keydown events
-    // along to the list elements
-    if (this.settings.noSearch && isEscapeKey) {
-      if (this.isOpen()) {
+    if (isEscapeKey || key === 'Tab') {
+      // In nosearch mode, bypass the typeahead autocomplete and pass keydown events
+      // along to the list elements
+      if (this.settings.noSearch && this.isOpen()) {
         return this.handleKeyDown(target, e);
       }
-    }
 
-    // Allow some keys to pass through with no changes in functionality
-    if (isEscapeKey || key === 'Tab') {
+      // Allow some keys to pass through with no changes in functionality
       return true;
     }
 
