@@ -317,14 +317,18 @@ label,
 }
 
 // Placeholder - Inline help
-::-webkit-input-placeholder,
-::-moz-placeholder,
+// for browser support, these need to be
+// separate declarations rather than comma-separated
+::-webkit-input-placeholder {
+  @include placeholder();
+}
+
+::-moz-placeholder {
+  @include placeholder();
+}
+
 :-ms-input-placeholder {
-  color: $input-placeholder-color;
-  font-size: $theme-size-font-base;
-  font-weight: $theme-number-font-weight-base;
-  line-height: 16px;
-  opacity: 1;
+  @include placeholder();
 }
 
 ::-ms-clear {
