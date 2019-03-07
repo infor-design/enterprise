@@ -8,7 +8,7 @@
 .field .checkbox > label {
   color: $checkbox-color-unchecked-initial-font;
   display: inline-block;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   margin-bottom: 0;
   margin-top: 0;
 }
@@ -321,7 +321,7 @@ label,
 ::-moz-placeholder,
 :-ms-input-placeholder {
   color: $input-placeholder-color;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   font-weight: $theme-number-font-weight-base;
   line-height: 16px;
   opacity: 1;

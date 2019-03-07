@@ -95,7 +95,7 @@ $subheader-height: 60px;
 
   .section-title {
     color: $header-text-color;
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
     margin-top: 2px;
     padding: 0;
     text-transform: capitalize;
@@ -201,7 +201,7 @@ $subheader-height: 60px;
     }
 
     .panel-subhead {
-      font-size: $theme-size-font-md;
+      font-size: $theme-size-font-base;
       line-height: 1;
     }
 
@@ -389,7 +389,7 @@ $subheader-height: 60px;
     .hyperlink {
       color: $theme-color-palette-white;
       float: right;
-      font-size: $theme-size-font-md;
+      font-size: $theme-size-font-base;
 
       &:focus:not(.hide-focus)::after,
       &:active::after {

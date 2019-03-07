@@ -93,7 +93,7 @@ h4 {
 
 p {
   color: $font-color-default;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   line-height: 2rem;
 
   + h1,
@@ -154,7 +154,7 @@ a.text-secondary {
 a.text-base {
   @include rem(line-height, 1.5rem);
 
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
 }
 
 .text-small,
@@ -181,7 +181,7 @@ label.is-disabled,
 
 .data-description {
   color: $font-color-extrahighcontrast;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   margin-left: 6px;
 }
 
@@ -189,7 +189,7 @@ label.side,
 .label.side {
   color: $label-color;
   display: inline-block;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   height: 100%;
   line-height: 1.5;
   min-width: 120px;
@@ -287,7 +287,7 @@ small,
 
 .larger-heavy-text {
   color: $font-color-highcontrast;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   font-weight: $theme-number-font-weight-bold;
 }
 
@@ -363,12 +363,12 @@ small,
 // Left aligned fields
 .field.label-left {
   display: flex;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   margin: 5px 0;
 
   .label {
     color: $input-color;
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
     line-height: normal;
     padding-right: 8px;
     position: relative;

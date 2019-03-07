@@ -60,7 +60,7 @@
   }
 
   > .busy-indicator-container {
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
   }
 
 }
@@ -212,7 +212,7 @@
   }
 
   > .busy-indicator-container {
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
   }
 
 }
@@ -294,7 +294,7 @@
   .tab-more,
   .add-tab-button {
     background-color: transparent;
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
     padding: 16px;
     position: relative;
     vertical-align: top;
@@ -451,7 +451,7 @@
         @include antialiased();
 
         color: inherit;
-        font-size: $theme-size-font-md;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-decoration: none;
 

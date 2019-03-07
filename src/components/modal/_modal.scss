@@ -343,7 +343,7 @@
 
   .message {
     color: $modal-color;
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
     line-height: 20px;
     max-width: 369px;
     padding: 15px 0 25px;
@@ -395,7 +395,7 @@
     color: $modal-btn-color;
     cursor: pointer;
     float: left;
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
     font-weight: $theme-number-font-weight-bold;
     height: 46px;
     line-height: 46px; // Used same value as height to get accurate measurement of vertical height

@@ -172,27 +172,27 @@ $toolbarsearchfield-category-empty-width: 51px;
     // Searchfield changes text style to match other input fields
     .searchfield {
       color: $searchfield-text-color;
-      font-size: $theme-size-font-md;
+      font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
       text-transform: none;
 
       &::-webkit-input-placeholder {
         color: $searchfield-text-color;
-        font-size: $theme-size-font-md;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }
 
       &::-moz-placeholder {
         color: $searchfield-text-color;
-        font-size: $theme-size-font-md;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }
 
       &:-ms-input-placeholder {
         color: $searchfield-text-color;
-        font-size: $theme-size-font-md;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }
@@ -595,27 +595,27 @@ $toolbarsearchfield-category-empty-width: 51px;
       border-bottom-color: rgba($searchfield-border-color, 1);
       border-radius: 0;
       color: $searchfield-text-color;
-      font-size: $theme-size-font-md;
+      font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
       text-transform: none;
 
       &::-webkit-input-placeholder {
         color: $searchfield-text-color;
-        font-size: $theme-size-font-md;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }
 
       &::-moz-placeholder {
         color: $searchfield-text-color;
-        font-size: $theme-size-font-md;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }
 
       &:-ms-input-placeholder {
         color: $searchfield-text-color;
-        font-size: $theme-size-font-md;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }

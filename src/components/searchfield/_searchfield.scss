@@ -3,13 +3,13 @@
 
 @mixin searchfield-text-style() {
   color: $font-color;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   font-weight: $theme-number-font-weight-bold;
 }
 
 @mixin searchfield-text-style-hover() {
   color: $theme-color-brand-primary-base;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   font-weight: $theme-number-font-weight-bold;
 }
 

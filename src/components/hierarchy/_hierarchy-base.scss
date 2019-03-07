@@ -11,7 +11,7 @@
 
   legend {
     display: inline-block;
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
     margin: 20px 40px;
 
     li {
@@ -237,7 +237,7 @@
       @include ellipsis();
 
       color: $listview-color;
-      font-size: $theme-size-font-md;
+      font-size: $theme-size-font-base;
       line-height: 20px;
       margin-top: 0;
     }

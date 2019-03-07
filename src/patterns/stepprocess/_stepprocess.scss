@@ -27,7 +27,7 @@
 
       small {
         display: block;
-        font-size: $theme-size-font-md;
+        font-size: $theme-size-font-base;
         margin: 2px 0 0;
         padding: 0;
         text-transform: capitalize;
@@ -118,7 +118,7 @@
 
         span {
           display: inline-block;
-          font-size: $theme-size-font-md;
+          font-size: $theme-size-font-base;
           max-width: 80%;
         }
 

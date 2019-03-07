@@ -137,7 +137,7 @@
   border-radius: 0 0 2px 2px;
   color: $editor-color;
   display: block;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   height: 320px;
   margin-bottom: 20px;
   min-height: 128px;
@@ -161,7 +161,7 @@
     @include rem(line-height, 2.2rem);
 
     color: $editor-color;
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
     margin-bottom: 15px;
 
     .hyperlink {
@@ -191,7 +191,7 @@
     @include rem(margin-left, 2rem);
 
     color: $input-color;
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
     list-style: disc;
     margin-bottom: 10px;
 
@@ -235,7 +235,7 @@
 
   .hyperlink {
     cursor: auto;
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
     position: static;
     text-decoration: none;
 
@@ -499,7 +499,7 @@
   border: 1px solid;
   border-color: transparent $editor-border-color $editor-border-color;
   border-radius: 0 0 2px 2px;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   height: 320px;
   margin: 0 0 10px;
   min-height: 88px;
@@ -512,7 +512,7 @@
     background-color: $editor-bg-color;
     border: 0;
     color: $editor-color;
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
     font-weight: $theme-number-font-weight-base;
     height: 100%;
     line-height: 2.4rem;
@@ -578,7 +578,7 @@
 
 .editor-placeholder::after {
   content: attr(data-placeholder);
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   font-weight: 100;
   left: 10px;
   margin-top: -38px;

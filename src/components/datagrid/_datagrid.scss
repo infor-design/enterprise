@@ -654,7 +654,7 @@ $datagrid-short-row-height: 23px;
   background-color: transparent;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   //This lets us resize to lower than content width but it causes layout issues with default col sizes
   table-layout: fixed;
   width: 100%;
@@ -1735,7 +1735,7 @@ $datagrid-short-row-height: 23px;
     .hyperlink {
       color: $hyperlink-color;
       display: inline-block;
-      font-size: $theme-size-font-md;
+      font-size: $theme-size-font-base;
       margin-top: -1px;
       vertical-align: middle;
 
@@ -2603,7 +2603,7 @@ $datagrid-short-row-height: 23px;
 
 .datagrid-row-subheading {
   color: $datagrid-cell-color;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   line-height: 22px;
   margin-top: -4px;
 }
@@ -2906,7 +2906,7 @@ td .btn-actions {
 
 .datagrid-result-count {
   display: inline-block;
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
   position: relative;
   top: 0;
 }
@@ -3016,7 +3016,7 @@ td .btn-actions {
     }
 
     tbody tr.arrange-dragging td {
-      font-size: $theme-size-font-md;
+      font-size: $theme-size-font-base;
       height: $datagrid-row-height;
     }
   }
@@ -3598,7 +3598,7 @@ html[dir='rtl'] {
 // Columns Personalization
 .datagrid-columns-dialog {
   .label-text {
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
   }
 
   label.inline {

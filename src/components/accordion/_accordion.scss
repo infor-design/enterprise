@@ -481,7 +481,7 @@
 }
 
 .accordion-content {
-  font-size: $theme-size-font-md;
+  font-size: $theme-size-font-base;
 }
 
 .accordion-header {
@@ -510,7 +510,7 @@
 
   a {
     color: inherit;
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-base;
     text-decoration: none;
     text-overflow: ellipsis;
   }
@@ -681,7 +681,7 @@
     overflow-x: visible;
 
     p {
-      font-size: $theme-size-font-md;
+      font-size: $theme-size-font-base;
       -webkit-text-size-adjust: 100%;
     }
   }
