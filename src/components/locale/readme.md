@@ -32,6 +32,48 @@ Soho.Locale.set('es-ES').done(function () {
 
 By default it will fetch the js files on your server from the cultures folder that is assumed to be in the same localtion as where the sohoxi.js script is. However, this can be adjusted by setting `SohoConfig.culturesPath = 'myserver/path/cultures/`
 
+## Code Example - Using a different Language and Locale
+
+It is possible to use the strings in another language, independently of the locale settings for date and numbers ect. to do this just call the `setLanguage` api function. As with the `set` function if the locale with the strings is not loaded there may be a delay while the script is loaded in. So use the callback `done` function before initializing components or using the strings.
+
+```javascript
+Soho.Locale.set('en-US');
+Soho.Locale.setLanguage('da').done(function () => {
+  Locale.translate('Actions'); // Returns 'Handlinger'
+});
+```
+
+## Code Example - Extending a Locale/Language with your own strings.
+
+It is possible to add your own strings to an existing locale's language. To do this just set the locale or language to the desired language and then when the locale is loaded call `extendTranslations` with a new set of strings. A string is an object with minimum an id and value of the string.
+
+```javascript
+Locale.set('it-lT').done(() => {
+  const myStrings = {
+    Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
+    YourWelcome: { id: 'YourWelcome', value: 'Prego', comment: '' }
+  };
+
+  Locale.extendTranslations(Locale.currentLanguage.name, myStrings);
+  Locale.translate('Comments'); // Returns Commenti
+  Locale.translate('Thanks'); // Returns Grazie
+  Locale.translate('YourWelcome'); // Returns Prego
+});
+```
+
+## Code Example - Adding an entirely new Locale
+
+It is possible to add a new locale that is not supported by Infor (yet). To do this you need to make a new file like <a href="https://github.com/infor-design/enterprise/tree/master/src/components/locale/cultures" target="_blank">any of these locales</a> and place this file in your cultures folder on the server. You also need to add the new locale to the `defaultLocales` and `supportedLocales` sets. Then you can use it. If you do this consider making a Pull Request to get your new locale added to the core code for others.
+
+```javascript
+Locale.defaultLocales.push({ lang: 'la', default: 'la-IT' });
+Locale.supportedLocales.push('la-IT');
+
+Locale.set('la-lT').done(function () {
+  Locale.translate('Comments');
+});
+```
+
 ## Code Example - Numbers
 
 You can use the formatNumber to display a numeric type in a localized format. You can use parseNumber to convert that number back to the numeric type. Note that by default the formatNumber function uses truncation (.129 becomes .12). To use rounding add the `round: true` option.
