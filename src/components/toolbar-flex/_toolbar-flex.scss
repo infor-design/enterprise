@@ -65,7 +65,7 @@
     }
 
     .section-title {
-      @include font-size(12);
+      font-size: $theme-size-font-sm;
     }
 
     + .toolbar-section.buttonset {

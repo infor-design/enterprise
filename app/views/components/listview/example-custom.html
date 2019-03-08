@@ -1,0 +1,84 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <h2 class="fieldset-title">ListView - Custom Html</h2>
+    <button class="btn-secondary" type="button" id="single-selection">Single Selection</button>
+    <button class="btn-secondary" type="button" id="multiple-selection">Multiple Selection</button>
+    <button class="btn-secondary" type="button" id="mixed-selection">Mixed Selection</button>
+    <button class="btn-secondary" type="button" id="show-dataset-1">Show Dataset 1</button>
+    <button class="btn-secondary" type="button" id="show-dataset-2">Show Dataset 2</button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="listview" id="custom-listview">
+      <ul id="custom-listview-items" id=role="presentation" class="validation-active"></ul>
+    </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+<script>
+  $('body').on('initialized', function () {
+    const listview = $('#custom-listview').listview().data('listview');
+    const loadDataset = (data) => {
+      $('#custom-listview-items').empty().html(data);
+      listview.updated();
+    };
+    $('#custom-listview-items').html(htmlContent1);
+
+    $("#single-selection").on('click', () => listview.updated({ selectable: 'single' }));
+    $("#multiple-selection").on('click', () => listview.updated({ selectable: 'multiple' }));
+    $("#mixed-selection").on('click', () => listview.updated({ selectable: 'mixed' }));
+    $("#show-dataset-1").on('click', () => loadDataset(htmlContent1));
+    $("#show-dataset-2").on('click', () => loadDataset(htmlContent2));
+
+  });
+
+  const htmlContent1 = `
+    <li tabindex="0" role="option" aria-posinset="1" aria-setsize="12">
+      <p class="listview-heading">Task #Task 191/2001</p>
+      <p class="listview-subheading">Special fields test - New item has been created. </p>
+      <p class="listview-micro">Due: 10/11/2015</p>
+    </li>
+
+    <li role="option" aria-posinset="2" aria-setsize="12">
+      <p class="listview-heading">Task #Task #063002</p>
+      <p class="listview-subheading">Part #4212132 has low inventory level </p>
+      <p class="listview-micro">Due: 10/11/2015</p>
+    </li>
+
+    <li role="option" aria-posinset="3" aria-setsize="12">
+      <p class="listview-heading">Task #Task #063003</p>
+      <p class="listview-subheading">Check #112412 parts ordering. </p>
+      <p class="listview-micro">Due: 10/07/2015</p>
+    </li>
+  `;
+
+  const htmlContent2 = `
+    <li role="option" aria-posinset="4" aria-setsize="12">
+      <p class="listview-heading">Task #Task #063004</p>
+      <p class="listview-subheading">Special fields test - New item has been created. </p>
+      <p class="listview-micro">Due: 10/07/2015</p>
+    </li>
+
+    <li role="option" aria-posinset="5" aria-setsize="12">
+      <p class="listview-heading">Task #Task #063005</p>
+      <p class="listview-subheading">Call XYZ Inc at 5 PM </p>
+      <p class="listview-micro">Due: 10/11/2015</p>
+    </li>
+
+    <li role="option" aria-posinset="6" aria-setsize="12">
+      <p class="listview-heading">Task #Task 191/2002</p>
+      <p class="listview-subheading">Part #4212132 has low inventory level </p>
+      <p class="listview-micro">Due: 10/11/2015</p>
+    </li>
+
+    <li role="option" aria-posinset="7" aria-setsize="12">
+      <p class="listview-heading">Task #(888) 888-8888</p>
+      <p class="listview-subheading">Special fields test - New item has been created. </p>
+      <p class="listview-micro">Due: 07/11/2015</p>
+    </li>
+  `;
+</script>

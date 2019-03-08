@@ -71,6 +71,14 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.has-horizontal-scroll {
+    .datagrid-body.left,
+    .datagrid-body.right {
+      // Make bottom visible to prevent space different at the bottom.
+      overflow-x: scroll;
+    }
+  }
+
   // Empty Area Scrolling
   &.is-empty .datagrid {
     border-bottom: 1px solid transparent;
@@ -638,8 +646,7 @@ $datagrid-short-row-height: 23px;
   &.left,
   &.right {
     flex-shrink: 0;
-    // Make bottom visible to prevent space different at the bottom.
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 }
 
@@ -651,11 +658,10 @@ $datagrid-short-row-height: 23px;
 
 // Grid Styling
 .datagrid {
-  @include font-size(14);
-
   background-color: transparent;
   border-collapse: separate;
   border-spacing: 0;
+  font-size: $theme-size-font-base;
   //This lets us resize to lower than content width but it causes layout issues with default col sizes
   table-layout: fixed;
   width: 100%;
@@ -1734,10 +1740,9 @@ $datagrid-short-row-height: 23px;
     }
 
     .hyperlink {
-      @include font-size(14);
-
       color: $hyperlink-color;
       display: inline-block;
+      font-size: $theme-size-font-base;
       margin-top: -1px;
       vertical-align: middle;
 
@@ -1746,7 +1751,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &.micro-text {
-        @include font-size(12);
+        font-size: $theme-size-font-sm;
       }
     }
 
@@ -2169,12 +2174,12 @@ $datagrid-short-row-height: 23px;
     }
 
     .datagrid-header-text {
-      @include font-size(12);
       @include no-select();
 
       color: $datagrid-header-color;
       direction: ltr;
       display: table-cell;
+      font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
       text-align: left;
       vertical-align: middle;
@@ -2604,17 +2609,15 @@ $datagrid-short-row-height: 23px;
 }
 
 .datagrid-row-subheading {
-  @include font-size(14);
-
   color: $datagrid-cell-color;
+  font-size: $theme-size-font-base;
   line-height: 22px;
   margin-top: -4px;
 }
 
 .datagrid-row-micro {
-  @include font-size(12);
-
   color: $datagrid-cell-color;
+  font-size: $theme-size-font-sm;
   line-height: 2rem;
 }
 
@@ -2660,10 +2663,9 @@ td .btn-actions {
 
 // Grid Checkboxes
 .datagrid-checkbox {
-  @include font-size(12);
-
   cursor: pointer;
   display: inline-block;
+  font-size: $theme-size-font-sm;
   left: -7px;
   position: relative;
   top: -14px;
@@ -2810,8 +2812,7 @@ td .btn-actions {
 }
 
 .datagrid-checkbox-wrapper {
-  @include font-size(12);
-
+  font-size: $theme-size-font-sm;
   position: relative;
 
   & + .datagrid-filter-wrapper {
@@ -2899,9 +2900,8 @@ td .btn-actions {
   }
 
   .datagrid-row-micro-text {
-    @include font-size(12);
-
     color: $font-color-lowcontrast;
+    font-size: $theme-size-font-sm;
   }
 
   .datagrid-cell-layout {
@@ -2912,9 +2912,8 @@ td .btn-actions {
 }
 
 .datagrid-result-count {
-  @include font-size(14);
-
   display: inline-block;
+  font-size: $theme-size-font-base;
   position: relative;
   top: 0;
 }
@@ -3024,8 +3023,7 @@ td .btn-actions {
     }
 
     tbody tr.arrange-dragging td {
-      @include font-size(14);
-
+      font-size: $theme-size-font-base;
       height: $datagrid-row-height;
     }
   }
@@ -3583,6 +3581,13 @@ html[dir='rtl'] {
   }
 }
 
+.is-mac.is-firefox,
+.is-mac.is-safari {
+  .has-visible-scrollbars .datagrid-body.right table {
+    margin-right: 15px;
+  }
+}
+
 //Contextual toolbar
 .datagrid-contextual-toolbar.contextual-toolbar {
   &.toolbar {
@@ -3607,7 +3612,7 @@ html[dir='rtl'] {
 // Columns Personalization
 .datagrid-columns-dialog {
   .label-text {
-    @include font-size(14);
+    font-size: $theme-size-font-base;
   }
 
   label.inline {
@@ -3763,9 +3768,8 @@ html[dir='rtl'] {
 
 .content-tooltip {
   &.popover.alternate {
-    @include font-size(12);
-
     background-color: $datagrid-cell-bg-color;
+    font-size: $theme-size-font-sm;
     padding-bottom: inherit;
 
     &.top .arrow::after {
