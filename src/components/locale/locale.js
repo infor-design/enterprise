@@ -201,22 +201,26 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Internally stores a new culture file for future use.
-   * @param {string} locale the 4-character Locale ID
-   * @param {object} data translation data and locale-specific functions, such as calendars.
+   * @private
+   * @param {string} locale The 4-character Locale ID
+   * @param {object} data Translation data and locale-specific functions, such as calendars.
+   * @param {object} langData Translation data if deperated.
    * @returns {void}
    */
-  addCulture(locale, data) {
+  addCulture(locale, data, langData) {
     const lang = locale.substr(0, 2);
 
     this.cultures[locale] = data;
     this.languages[lang] = {
       name: lang,
-      direction: data.direction,
-      nativeName: data.nativeName,
-      messages: data.messages
+      direction: data.direction || (langData ? langData.direction : ''),
+      nativeName: data.nativeName || (langData ? langData.nativeName : ''),
+      messages: data.messages || (langData ? langData.messages : {})
     };
-    delete this.cultures[locale].direction;
-    delete this.cultures[locale].messages;
+    if (!langData) {
+      delete this.cultures[locale].direction;
+      delete this.cultures[locale].messages;
+    }
   },
 
   /**

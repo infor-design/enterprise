@@ -2,7 +2,6 @@ import { About } from '../../../src/components/about/about';
 
 const aboutHTML = require('../../../app/views/components/about/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
-require('../../../src/components/locale/cultures/en-US.js');
 
 let aboutEl;
 let svgEl;
@@ -20,7 +19,9 @@ describe('About API', () => {
     aboutEl = document.body.querySelector('.about');
     svgEl = document.body.querySelector('.svg-icons');
 
+    Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
     Locale.set('en-US');
+
     aboutObj = new About(aboutEl);
   });
 

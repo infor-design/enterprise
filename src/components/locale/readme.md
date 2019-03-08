@@ -43,7 +43,7 @@ Soho.Locale.setLanguage('da').done(function () => {
 });
 ```
 
-## Code Example - Extending a Locale/Language with your own strings.
+## Code Example - Extending a Locale/Language with your own strings
 
 It is possible to add your own strings to an existing locale's language. To do this just set the locale or language to the desired language and then when the locale is loaded call `extendTranslations` with a new set of strings. A string is an object with minimum an id and value of the string.
 

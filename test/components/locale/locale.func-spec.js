@@ -102,7 +102,7 @@ describe('Locale API', () => {
 
     let html = window.document.getElementsByTagName('html')[0];
 
-    expect(html.getAttribute('lang')).toEqual('de-DE');
+    expect(html.getAttribute('lang')).toEqual('de');
 
     Locale.set('ar-SA');
 
@@ -110,7 +110,7 @@ describe('Locale API', () => {
 
     html = window.document.getElementsByTagName('html')[0];
 
-    expect(html.getAttribute('lang')).toEqual('ar-SA');
+    expect(html.getAttribute('lang')).toEqual('ar');
     expect(html.getAttribute('dir')).toEqual('rtl');
     Locale.set('en-US');
   });
@@ -538,7 +538,7 @@ describe('Locale API', () => {
 
   it('Should be possible to add translations', () => {
     Locale.set('en-US');
-    Locale.currentLocale.data.messages.CustomValue = { id: 'CustomValue', value: 'Added Custom Value' };
+    Locale.currentLanguage.messages.CustomValue = { id: 'CustomValue', value: 'Added Custom Value' };
 
     expect(Locale.translate('CollapseAppTray')).toEqual('Collapse App Tray');
     expect(Locale.translate('CustomValue')).toEqual('Added Custom Value');
