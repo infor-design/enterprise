@@ -41,7 +41,7 @@ const SWAPLIST_DEFAULTS = {
     '<ul data-swap-handle=".handle">' +
       '{{#dataset}}' +
         '{{#text}}' +
-          '<li' +
+          '<li data-id="{{id}}"' +
             '{{#value}} data-value="{{value}}"{{/value}}' +
             '{{#selected}} selected="selected"{{/selected}}' +
             '{{#disabled}} class="is-disabled"{{/disabled}}' +
@@ -126,7 +126,7 @@ SwapList.prototype = {
       const c = containers[i];
       const lv = $(`${c.class} .listview`, this.element);
       const list = lv.data('listview');
-      const options = { selectable: 'multiple', showCheckboxes: false };
+      const options = { dataset: c.dataset || [], selectable: 'multiple', showCheckboxes: false };
       const isSearchable = ((s.searchable === true || s.searchable === 'true') && ($(`${c.class} .searchfield`, this.element).length > 0));
 
       if (isSearchable) {
@@ -141,8 +141,21 @@ SwapList.prototype = {
         if (list) {
           list.destroy();
         }
+
+        // Force to have id attribute
+        if (s.template.indexOf('data-id="{{id}}"') === -1) {
+          s.template = s.template.replace('<li', '<li data-id="{{id}}"');
+        }
+
         options.template = s.template;
         options.dataset = c.dataset || [];
+
+        // Generate unique id
+        options.dataset.forEach((node) => {
+          if (!(/string|number/.test(typeof node.id)) || node.id === '') {
+            node.id = `sw${(Date.now().toString(36) + Math.round((Math.random() * 36 ** 12)).toString(36).substr(2, 5)).toLowerCase()}`;
+          }
+        });
 
         if (options.dataset.length === 0) {
           options.forceToRenderOnEmptyDs = true;
@@ -325,9 +338,6 @@ SwapList.prototype = {
       }
 
       this.afterUpdate($('.listview', to).data('listview'));
-      $('li:last-child', to).focus()
-        // Fix: not sure why it added selected class and attribute on focus
-        .removeAttr('aria-selected').removeClass('is-selected');
     }
   },
 
@@ -652,8 +662,17 @@ SwapList.prototype = {
    */
   syncDataset(owner, droptarget) {
     const droptargetNodes = $('.listview li', droptarget);
+    const ownerAPI = owner.find('.listview').data('listview');
+    const dropTargetAPI = droptarget.find('.listview').data('listview');
     const ownerDataList = this.getDataList(owner);
     const dtDataList = this.getDataList(droptarget);
+    const isMoved = (mOwner, mItem) => {
+      if (mOwner && mItem) {
+        const id = { owner: mOwner.getAttribute('data-id'), item: mItem.getAttribute('data-id') };
+        return ((typeof id.owner !== 'undefined') && (typeof id.item !== 'undefined') && (id.owner === id.item));
+      }
+      return false;
+    };
 
     for (let i = 0, l = this.selections.items.length; i < l; i++) {
       const item = this.selections.items[i];
@@ -661,7 +680,7 @@ SwapList.prototype = {
         if ($(droptargetNodes[dtIndex]).is(item)) {
           for (let ownerIndex = 0, l3 = ownerDataList.length; ownerIndex < l3; ownerIndex++) {
             const ownerItem = ownerDataList[ownerIndex];
-            if (ownerItem.node && ownerItem.node.is(item)) {
+            if (isMoved(ownerItem.node[0], item[0])) {
               dtDataList.push(ownerItem);
               ownerDataList.splice(ownerIndex, 1);
               this.arrayIndexMove(dtDataList, dtDataList.length - 1, dtIndex);
@@ -671,6 +690,10 @@ SwapList.prototype = {
         }
       }
     }
+
+    ownerAPI.updated({ dataset: ownerDataList });
+    dropTargetAPI.updated({ dataset: dtDataList });
+    this.makeDraggable();
   },
 
   /**
@@ -702,40 +725,45 @@ SwapList.prototype = {
    * @param {jQuery[]} list the target element to change after an update
    */
   afterUpdate(list) {
-    setTimeout(() => {
-      if (list) {
-        if (this.selections.placeholder) {
-          list.select(this.selections.placeholder);
-          this.selections.placeholder.focus();
-        }
-        this.unselectElements(list);
-        this.syncDataset(this.selections.owner, this.selections.droptarget);
-        this.updateAttributes($('.listview', this.selections.owner));
-        this.updateAttributes($('.listview', this.selections.droptarget));
-        if (this.selections.items.length) {
-          this.selections.move = $.extend(true, this.selections.move, {
-            to: this.getContainer(this.selections.itemsData)
-          });
-          /**
-          * Fires when any bucket has its content changed.
-          * @event swapupdate
-          * @memberof SwapList
-          * @type {object}
-          * @property {object} event - The jquery event object
-          * @property {array} items - List of items data
-          */
-          this.element.triggerHandler('swapupdate', [this.selections.move]);
-        }
+    const focusIdx = this.selections.droptarget.find('li:focus').index();
+    const focusClass = `.card.${this.selections.droptarget[0].classList[1]} li`;
+
+    if (list) {
+      if (this.selections.placeholder) {
+        list.select(this.selections.placeholder);
+        this.selections.placeholder.focus();
       }
+      this.unselectElements(list);
+      this.syncDataset(this.selections.owner, this.selections.droptarget);
+      this.updateAttributes($('.listview', this.selections.owner));
+      this.updateAttributes($('.listview', this.selections.droptarget));
+      if (this.selections.items.length) {
+        this.selections.move = $.extend(true, this.selections.move, {
+          to: this.getContainer(this.selections.itemsData)
+        });
+        /**
+        * Fires when any bucket has its content changed.
+        * @event swapupdate
+        * @memberof SwapList
+        * @type {object}
+        * @property {object} event - The jquery event object
+        * @property {array} items - List of items data
+        */
+        this.element.triggerHandler('swapupdate', [this.selections.move]);
+      }
+    }
 
-      this.selections.items.forEach((elem) => {
-        elem.show();
-      });
+    this.selections.items.forEach((elem) => {
+      elem.show();
+    });
 
-      this.clearDropeffects();
-      this.clearSelections();
-      this.items.removeClass('is-dragging is-dragging-touch');
-    }, 400);
+    this.clearDropeffects();
+    this.clearSelections();
+    this.items.removeClass('is-dragging is-dragging-touch');
+
+    if (focusIdx >= 0) {
+      this.element.find(focusClass).eq(focusIdx).focus();
+    }
   },
 
   /**
@@ -973,6 +1001,11 @@ SwapList.prototype = {
           }
         }
       }
+    });
+
+    // SEARCHFIELD =============================================================================
+    self.containers.on('filtered.swaplist', '.listview', () => {
+      self.makeDraggable();
     });
 
     // DRAGGABLE ===============================================================================

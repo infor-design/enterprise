@@ -27,8 +27,7 @@
   }
 
   span:not(.audible) {
-    @include font-size(12);
-
+    font-size: $theme-size-font-sm;
     position: absolute;
     right: 2px;
     text-align: right;
@@ -43,9 +42,8 @@
   }
 
   .chart-percent-text {
-    @include font-size(14);
-
     cursor: default;
+    font-size: $theme-size-font-base;
     height: 25px;
     margin-top: -25px;
     position: relative;
@@ -195,9 +193,8 @@
     width: 60%;
 
     span {
-      @include font-size(12);
-
       color: $font-color;
+      font-size: $theme-size-font-sm;
       position: absolute;
       text-align: right;
       top: 34px;

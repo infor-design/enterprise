@@ -10,9 +10,8 @@
     list-style: none;
 
     &::after {
-      @include font-size(10);
-
       content: '\002F';
+      font-size: $theme-size-font-xs;
       padding: 0 10px;
     }
 
@@ -23,19 +22,18 @@
 
     .current,
     &.current {
-      @include font-size(12);
-
       color: $breadcrumb-color;
+      font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
     }
 
   }
 
   .hyperlink {
-    @include font-size(12);
     @include antialiased();
 
     color: $breadcrumb-color;
+    font-size: $theme-size-font-sm;
     line-height: 2em;
     text-decoration: none;
 
@@ -81,7 +79,7 @@
 
   a,
   span {
-    @include font-size(14);
+    font-size: $theme-size-font-base;
   }
 }
 
