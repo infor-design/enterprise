@@ -5,12 +5,12 @@
 .tag,
 .badge {
   @include antialiased();
-  @include font-size(12);
 
   background-color: $badge-neutral-bg-color;
   border-radius: 15px;
   color: $badge-neutral-color;
   display: inline-block;
+  font-size: $theme-size-font-sm;
   font-weight: $theme-number-font-weight-base;
   height: 22px;
   line-height: 22px;

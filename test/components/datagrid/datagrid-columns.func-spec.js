@@ -76,4 +76,39 @@ describe('Datagrid Columns API', () => {
 
     expect(datagridObj.visibleColumns().length).toEqual(8);
   });
+
+  it('Should fire the column click event on button and link columns', (done) => {
+    const newColumns = [];
+    // One Hidden column to try to trip it up
+    newColumns.push({ id: 'quantity2', name: 'Quantity2', hidden: true, field: 'quantity2' });
+    newColumns.push({
+      id: 'actionLink',
+      name: 'As Link',
+      formatter: Formatters.Hyperlink,
+      icon: 'reset',
+      click: (e, args) => {
+        expect(args[0].cell).toEqual(1);
+        expect(args[0].row).toEqual(1);
+        expect(args[0].item.id).toEqual('2');
+        expect(args[0].item.productId).toEqual('200');
+      }
+    });
+    newColumns.push({
+      id: 'action',
+      name: 'Active',
+      formatter: Formatters.Button,
+      icon: 'reset',
+      click: (e, args) => {
+        expect(args[0].cell).toEqual(2);
+        expect(args[0].row).toEqual(2);
+        expect(args[0].item.id).toEqual('3');
+        expect(args[0].item.productId).toEqual('300');
+        done();
+      }
+    });
+    newColumns.push({ id: 'activity', name: 'Activity', field: 'activity' });
+    datagridObj.updateColumns(newColumns);
+    document.querySelector('.datagrid tr:nth-child(2) td:nth-child(2) a').click();
+    document.querySelector('.datagrid tr:nth-child(3) td:nth-child(3) button').click();
+  });
 });

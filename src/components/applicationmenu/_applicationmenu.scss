@@ -83,8 +83,7 @@
         }
 
         .content {
-          @include font-size(14);
-
+          font-size: $theme-size-font-base;
           max-width: calc(100% - 52px);
           padding-left: 0.5em;
 
@@ -224,9 +223,8 @@
     }
 
     .name {
-      @include font-size(18);
-
       display: block;
+      font-size: $theme-size-font-lg;
       line-height: 1.5em;
       padding: 10px;
       position: relative;

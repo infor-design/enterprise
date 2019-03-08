@@ -675,6 +675,17 @@ ListView.prototype = {
 
     this.filteredDataset = results;
     this.loadData(null, pagingInfo);
+
+    /**
+     * Fires after filtering the list.
+     * @event filtered
+     * @memberof ListView
+     * @property {object} event - The jquery event object
+     * @property {object} args.elem The list element
+     * @property {array} args.filteredResults The filter list items
+     * @property {term} args.term The search term used.
+     */
+    this.element.trigger('filtered', { elem: this.element, filteredResults: results, term: this.searchTerm });
   },
 
   /**
@@ -835,7 +846,7 @@ ListView.prototype = {
     this.list.sort = { field };
     this.list.sort[field] = { reverse };
     /**
-     * Fires after sorted.
+     * Fires after sorting the list.
      *
      * @event sorted
      * @memberof ListView
@@ -1144,6 +1155,24 @@ ListView.prototype = {
   },
 
   /**
+   * Handle to update the search data
+   * @private
+   * @returns {void}
+   */
+  updateSearch() {
+    if (this.settings.searchable && this.filteredDataset) {
+      delete this.filteredDataset;
+      if (this.searchTerm) {
+        delete this.searchTerm;
+      }
+      const searchfieldApi = this.searchfield.data('searchfield');
+      if (searchfieldApi && searchfieldApi.xButton) {
+        searchfieldApi.xButton.trigger('click');
+      }
+    }
+  },
+
+  /**
    * Refresh the list with any optioned options that might have been set.
    * @param {object} [settings] incoming settings
    * @returns {object} component instance
@@ -1151,8 +1180,13 @@ ListView.prototype = {
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
-      this.refresh(settings.dataset ? settings.dataset : null);
+      if (settings && settings.dataset) {
+        this.settings.dataset = settings.dataset;
+      }
     }
+
+    this.updateSearch();
+    this.refresh(settings && settings.dataset ? settings.dataset : null);
     return this;
   },
 
@@ -1427,6 +1461,7 @@ ListView.prototype = {
         .off('cleared.searchable-listview')
         .on('cleared.searchable-listview', () => {
           self.resetSearch();
+          self.element.trigger('filtered', { elem: self.element, filteredResults: [], term: '' });
         });
     }
 
