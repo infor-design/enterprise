@@ -45,7 +45,7 @@ Soho.Locale.formatNumber(12345.12, {
       style: 'currency',
       decimal: '.',
       group: ',',
-      currencyFormat: '¤ #,##0.00',
+      currencyFormat: '¤ ###',
       currencySign: '$'
     }));
 // Returns $ 12,345.12
@@ -77,7 +77,8 @@ The following options are supported:
 - `currencySign` - You can specify a specific sign to use for currency, otherwise it uses the default one for the current locale.
 - `decimal` - You can specify a specific character to use for the decimal point, otherwise it uses the default one for the current locale.
 - `group` - You can specify a specific character to use for the number group (usually 1000s), otherwise it uses the default one for the current locale.
-- `currencyFormat` - You can specify a specific currencyFormat to use, otherwise it uses the current one for the local. The ¤ is where the currencySign will go. # is used for the numbers, and the max decimals can be specified with 0's.
+- `currencyFormat` - You can specify a specific currencyFormat to use, otherwise it uses the current one for the local. The ¤ is where the currencySign will go. ### is used for the number replacement.
+- `groupSize` - You can specify a specific where the thousands group separators will be placed. For example `[3, 0]` means that only the first group will have a seperator, for example 1234,567. `[3, 2]` means the first group will have 3 digits and the other groups will all have 2, for example 12,34,567. The default for many locales is `[3, 3]`.
 
 ## Code Example - Dates
 

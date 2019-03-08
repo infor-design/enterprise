@@ -639,7 +639,7 @@ describe('Locale API', () => {
       style: 'currency',
       decimal: '.',
       group: ',',
-      currencyFormat: '¤ #,##0.00',
+      currencyFormat: '¤ ###',
       currencySign: '$'
     })).toEqual('$ 12,345.12');
   });

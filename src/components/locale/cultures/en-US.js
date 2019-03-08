@@ -45,14 +45,15 @@ Soho.Locale.addCulture('en-US', {
 
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '$', // (Replace Sign http://www.currencysymbols.in)
-  currencyFormat: '¤#,##0.00',
+  currencyFormat: '¤###',
   // numbers/symbols-numberSystem-latn
   numbers: {
     percentSign: '%',
-    percentFormat: '#,##0 %',
+    percentFormat: '### %',
     minusSign: '-',
     decimal: '.',
-    group: ','
+    group: ',',
+    groupSizes: [3, 0]
   },
   // Resx - Provided By Translation Team
   messages: {
