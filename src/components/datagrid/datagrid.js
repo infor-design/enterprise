@@ -239,7 +239,6 @@ Datagrid.prototype = {
     const html = $('html');
 
     this.isTouch = env.features.touch;
-    this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
     this.appendTooltip();
@@ -3792,14 +3791,22 @@ Datagrid.prototype = {
    */
   headerTableWidth(container) {
     const cacheWidths = this.headerWidths[this.settings.columns.length - 1];
+    let hasVisibleScrollbars = false;
 
     if (!cacheWidths) {
       return '';
     }
 
+    if (this.hasRightPane && container === 'right') {
+      hasVisibleScrollbars = env.os.name === 'Mac OS X' && this.bodyWrapperRight.width() - this.tableRight.width() > 0;
+    }
+
     if (cacheWidths.widthPercent) {
       return '100%';
     } else if (!isNaN(this.totalWidths[container])) {
+      if (hasVisibleScrollbars) {
+        return `${parseFloat(this.totalWidths[container]) + 15}px`;
+      }
       return `${parseFloat(this.totalWidths[container])}px`;
     }
 
@@ -3825,19 +3832,28 @@ Datagrid.prototype = {
    */
   setScrollClass() {
     const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
-    const hasScrollBar = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
+    const hasScrollBarV = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
+    const width = parseInt(this.bodyWrapperCenter[0].offsetWidth, 10);
+    const hasScrollBarH = parseInt(this.bodyWrapperCenter[0].scrollWidth, 10) > width;
     this.element.removeClass('has-vertical-scroll has-less-rows');
 
-    if (hasScrollBar) {
+    if (hasScrollBarV) {
       this.element.addClass('has-vertical-scroll');
     }
+    if (hasScrollBarH) {
+      this.element.addClass('has-horizontal-scroll');
+    }
 
-    if (!hasScrollBar && this.tableBody[0].offsetHeight < height) {
+    if (!hasScrollBarV && this.tableBody[0].offsetHeight < height) {
       this.element.addClass('has-less-rows');
     }
 
     if (this.hasRightPane) {
       this.element.addClass('has-frozen-right-columns');
+
+      if (utils.getScrollbarWidth() > 0) {
+        this.element.addClass('has-visible-scrollbars');
+      }
     }
   },
 
@@ -3887,9 +3903,6 @@ Datagrid.prototype = {
       if (this.elemWidth === 0) { // handle on invisible tab container
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
-      if (!this.elemWidth || this.elemWidth === 0) { // handle on invisible modal
-        this.elemWidth = this.element.closest('.modal-contents').outerWidth();
-      }
 
       this.widthSpecified = false;
     }
@@ -3925,9 +3938,6 @@ Datagrid.prototype = {
 
       if (this.elemWidth === 0) { // handle on invisible tab container
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
-      }
-      if (!this.elemWidth || this.elemWidth === 0) { // handle on invisible modal
-        this.elemWidth = this.element.closest('.modal-contents').outerWidth();
       }
 
       this.widthSpecified = false;
@@ -4034,7 +4044,7 @@ Datagrid.prototype = {
       const diff = this.elemWidth - this.totalWidths[container];
 
       if (this.settings.stretchColumn === 'last') {
-        if ((diff > 0) && !this.widthPercent && !col.width) {
+        if (diff > 0 && diff > colWidth && !this.widthPercent && !col.width) {
           colWidth = '';
           this.headerWidths[index] = {
             id: col.id,
@@ -4043,6 +4053,16 @@ Datagrid.prototype = {
           };
           this.totalMinWidths[container] = this.totalWidths[container];
           this.totalWidths[container] = '100%';
+        }
+        if (diff > 0 && diff < colWidth && !this.widthPercent && !col.width) {
+          colWidth += diff;
+          this.headerWidths[index] = {
+            id: col.id,
+            width: colWidth,
+            widthPercent: this.widthPercent
+          };
+          this.totalWidths[container] += colWidth;
+          this.totalMinWidths[container] = this.totalWidths[container];
         }
       }
 
@@ -5429,7 +5449,7 @@ Datagrid.prototype = {
       // Handle Cell Click Event
       const elem = $(this).closest('td');
       const cell = elem.attr('aria-colindex') - 1;
-      const col = self.columnSettings(cell, true);
+      const col = self.columnSettings(cell);
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a') || target.parent().is('button')) {   //eslint-disable-line
         const rowElem = $(this).closest('tr');
@@ -8348,17 +8368,12 @@ Datagrid.prototype = {
 
   /**
    * Get the settings for a column by index.
+   * @private
    * @param  {number} idx The column index.
-   * @param  {boolean} onlyVisible If only the visible columns should be included.
    * @returns {array} The settings array
    */
-  columnSettings(idx, onlyVisible) {
-    let foundColumn = this.settings.columns[idx];
-
-    if (onlyVisible) {
-      foundColumn = this.visibleColumns()[idx];
-    }
-
+  columnSettings(idx) {
+    const foundColumn = this.settings.columns[idx];
     return foundColumn || {};
   },
 

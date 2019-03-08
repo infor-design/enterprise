@@ -40,10 +40,10 @@
 
   // Text Color
   text {
-    @include font-size(12);
     @include antialiased();
 
     fill: $chart-font-color;
+    font-size: $theme-size-font-sm;
   }
 
   .inverse {
@@ -51,7 +51,7 @@
   }
 
   .chart-donut-text {
-    @include font-size(18);
+    font-size: $theme-size-font-lg;
   }
 
   .label-line {
@@ -240,9 +240,9 @@
 
   .chart-legend-item-text {
     @include ellipsis;
-    @include font-size(12);
 
     color: $chart-font-color;
+    font-size: $theme-size-font-sm;
     width: auto;
   }
 
@@ -294,8 +294,7 @@
   margin-bottom: 17px !important;
 
   .label {
-    @include font-size(14);
-
+    font-size: $theme-size-font-base;
     margin-top: 2px;
   }
 
@@ -333,9 +332,8 @@
     }
 
     span {
-      @include font-size(14);
-
       color: $font-color !important;
+      font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
       right: unset;
       top: 20px;

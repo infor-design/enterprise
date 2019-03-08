@@ -51,10 +51,9 @@
 }
 
 .rating-text {
-  @include font-size(14);
-
   color: $rating-border-color;
   display: inline-block;
+  font-size: $theme-size-font-base;
   line-height: 20px;
   padding-left: 40px;
 }

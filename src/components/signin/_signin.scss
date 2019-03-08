@@ -30,9 +30,8 @@
   }
 
   h1 {
-    @include font-size(24);
-
     color: $signin-title-color;
+    font-size: $theme-size-font-xl;
     margin-bottom: 30px;
     margin-top: -20px;
     padding: 0;

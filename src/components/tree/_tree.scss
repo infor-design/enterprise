@@ -5,7 +5,6 @@
 
   // Tree Items
   a {
-    @include font-size(14);
     @include antialiased();
     @include transition(background-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
     opacity 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
@@ -13,6 +12,7 @@
     border: 1px solid transparent;
     border-radius: 2px;
     color: $tree-link-color;
+    font-size: $theme-size-font-base;
     line-height: 28px;
     padding: 6px 5px 3px;
     text-decoration: none;

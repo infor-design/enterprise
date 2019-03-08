@@ -26,7 +26,7 @@
       // Define Columns for the Grid.
       columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterConditions: ['contains', 'equals'], filterType: 'text'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterConditions: ['contains', 'equals'], filterType: 'text'});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterConditions: ['contains', 'equals'], filterType: 'text', click: function(e, args){ console.log(e, args);} , mask: '*****************'});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterConditions: ['contains', 'equals'], filterType: 'text'});
 
       // Init and get the api for the grid
       $('#datagrid').datagrid({
