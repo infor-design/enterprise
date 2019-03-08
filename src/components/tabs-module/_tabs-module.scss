@@ -22,11 +22,10 @@
   }
 
   [class^='btn'] {
-    @include font-size(12);
-
     background-color: $module-tabs-bg-color;
     border: 0;
     color: $module-tabs-inactive-text-color;
+    font-size: $theme-size-font-sm;
     min-width: 0;
 
     > * {
@@ -92,9 +91,9 @@
 
   .tab {
     @include transition(background-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94), border-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
-    @include font-size(12);
 
     color: $module-tabs-inactive-text-color;
+    font-size: $theme-size-font-sm;
     min-width: 135px;
     overflow: hidden;
     text-align: center;
@@ -116,9 +115,8 @@
     }
 
     a {
-      @include font-size(12);
-
       float: left;
+      font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
       margin: 0 auto;
       overflow: hidden;
@@ -202,8 +200,7 @@
   }
 
   .add-tab-button {
-    @include font-size(24);
-
+    font-size: $theme-size-font-xl;
     font-weight: $theme-number-font-weight-base;
     height: 34px;
     padding-bottom: 5px;
@@ -211,8 +208,7 @@
     width: 41px;
 
     span {
-      @include font-size(24);
-
+      font-size: $theme-size-font-xl;
       font-weight: $theme-number-font-weight-base;
     }
 
@@ -237,10 +233,9 @@
 
   .tab-more,
   .add-tab-button {
-    @include font-size(12);
-
     border-left: 1px solid $module-tabs-x-border-color;
     color: $module-tabs-inactive-text-color;
+    font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
     padding: 8px 10px;
     text-align: center;
@@ -250,8 +245,7 @@
     }
 
     .more-text {
-      @include font-size(12);
-
+      font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
     }
 

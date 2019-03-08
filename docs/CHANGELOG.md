@@ -23,7 +23,7 @@
 
 ### v4.17.0 Chore & Maintenance
 
-- `[Component Name]` An explanation and description. ([#123](https://github.com/infor-design/enterprise/issues/12))
+- `[Css/Sass]` Replaced font-size numerical declarations with their ids-identity token counterpart. ([#1640](https://github.com/infor-design/enterprise/issues/1640))
 
 (n Issues Solved this release, Backlog Enterprise n, Backlog Ng n, n Functional Tests, n e2e Test)
 

@@ -261,9 +261,8 @@ $toolbar-buttonset-height: 40px;
     padding: 0 20px;
 
     .title {
-      @include font-size(14);
-
       color: $contextual-toolbar-color;
+      font-size: $theme-size-font-base;
       height: 42px;
     }
 

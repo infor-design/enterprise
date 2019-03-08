@@ -14,10 +14,9 @@
 
 .inline .radio ~ .label-text,
 .radio + label {
-  @include font-size(14);
-
   color: $checkbox-color-unchecked-initial-font;
   cursor: pointer;
+  font-size: $theme-size-font-base;
   line-height: 24px;
   margin-bottom: 6px;
   outline: none;
@@ -162,9 +161,8 @@
   position: relative;
 
   legend {
-    @include font-size(12);
-
     color: $label-color;
+    font-size: $theme-size-font-sm;
     padding-bottom: 5px;
   }
 
@@ -213,7 +211,7 @@
     }
 
     .large-txt {
-      @include font-size(14);
+      font-size: $theme-size-font-base;
     }
 
     .line-through {
@@ -224,8 +222,7 @@
       margin-bottom: 2.3em;
 
       .in-label {
-        @include font-size(14);
-
+        font-size: $theme-size-font-base;
         line-height: 25px;
         margin-top: -10px;
       }

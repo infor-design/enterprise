@@ -3,16 +3,14 @@
 
 @mixin searchfield-text-style() {
   color: $font-color;
+  font-size: $theme-size-font-base;
   font-weight: $theme-number-font-weight-bold;
-
-  @include font-size(14);
 }
 
 @mixin searchfield-text-style-hover() {
   color: $theme-color-brand-primary-base;
+  font-size: $theme-size-font-base;
   font-weight: $theme-number-font-weight-bold;
-
-  @include font-size(14);
 }
 
 @mixin context-searchfield-box-shadow() {

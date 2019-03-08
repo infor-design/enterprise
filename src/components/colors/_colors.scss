@@ -17,10 +17,10 @@
 
 // Palette Shapes
 .palette-column {
-  @include font-size(14);
   @include antialiased();
 
   display: inline-block;
+  font-size: $theme-size-font-base;
   margin: 10px;
   padding-top: 15px;
   text-align: center;

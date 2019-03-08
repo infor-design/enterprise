@@ -11,10 +11,9 @@
   }
 
   .label {
-    @include font-size(12);
-
     color: $label-color;
     display: block;
+    font-size: $theme-size-font-sm;
     margin: 0;
     max-width: 300px;
     padding-bottom: 0.3rem;
@@ -29,10 +28,9 @@
   }
 
   .data {
-    @include font-size(14);
-
     color: $font-color-extrahighcontrast;
     display: block;
+    font-size: $theme-size-font-base;
     line-height: 2rem;
     margin-bottom: 2rem;
 
