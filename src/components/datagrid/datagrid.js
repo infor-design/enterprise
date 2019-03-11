@@ -5256,10 +5256,12 @@ Datagrid.prototype = {
     if (self.settings.showHoverState) {
       self.bodyContainer
         .off('mouseenter.datagrid, mouseleave.datagrid')
-        .on('mouseenter.datagrid', 'tbody > tr', function () {
+        .on('mouseenter.datagrid', 'tbody > tr', function (e) {
+          console.log('mouseenter', this, e);
           const rowNodes = self.rowNodes($(this));
           rowNodes.addClass('is-hover-row');
-        }).on('mouseleave.datagrid', 'tbody > tr', function () {
+        }).on('mouseleave.datagrid', 'tbody > tr', function (e) {
+          console.log('mouseleave', this, e);
           const rowNodes = self.rowNodes($(this));
           rowNodes.removeClass('is-hover-row');
         });
