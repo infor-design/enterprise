@@ -3397,7 +3397,7 @@ Datagrid.prototype = {
     const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
 
-    if (rowData && rowData.rowStatus && self.settings.showNewRowIndicator) {
+    if (rowData && rowData.rowStatus && (rowData.rowStatus.icon === 'new' ? self.settings.showNewRowIndicator : true)) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
       rowStatus.icon = (rowData.rowStatus.icon === 'success') ? '#icon-check' : '#icon-exclamation';
@@ -5256,12 +5256,10 @@ Datagrid.prototype = {
     if (self.settings.showHoverState) {
       self.bodyContainer
         .off('mouseenter.datagrid, mouseleave.datagrid')
-        .on('mouseenter.datagrid', 'tbody > tr', function (e) {
-          console.log('mouseenter', this, e);
+        .on('mouseenter.datagrid', 'tbody > tr', function () {
           const rowNodes = self.rowNodes($(this));
           rowNodes.addClass('is-hover-row');
-        }).on('mouseleave.datagrid', 'tbody > tr', function (e) {
-          console.log('mouseleave', this, e);
+        }).on('mouseleave.datagrid', 'tbody > tr', function () {
           const rowNodes = self.rowNodes($(this));
           rowNodes.removeClass('is-hover-row');
         });
