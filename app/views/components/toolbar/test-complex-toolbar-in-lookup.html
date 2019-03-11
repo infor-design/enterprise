@@ -16,7 +16,7 @@
 </div>
 
 <!-- Lookup Window -->
-<div id="modal-contents" class="modal-contents" style="display: none; width: 600px;">
+<div id="example-modal" style="display: none; width: 600px;">
   <div class="toolbar" role="toolbar" data-options="{ maxVisibleButtons: 4, favorButtonset: true }">
     <div class="title">
       Products
@@ -108,7 +108,7 @@
         return ((row.productId + '|' + row.productName) === value);
       },
       beforeShow: function(api, response) {
-        api.settings.modalContent = $('#modal-contents');
+        api.settings.modalContent = $('#example-modal');
         response($('#my-datagrid'));
       }
     }).on('change', function (e, args) {

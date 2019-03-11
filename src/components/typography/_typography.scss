@@ -56,10 +56,10 @@ ol {
 }
 
 h1 {
-  @include font-size(18);
   @include rem(line-height, 2.5rem);
 
   color: $font-color-default;
+  font-size: $theme-size-font-lg;
 
   + p {
     margin: 20px 0;
@@ -92,9 +92,8 @@ h4 {
 }
 
 p {
-  @include font-size(14);
-
   color: $font-color-default;
+  font-size: $theme-size-font-base;
   line-height: 2rem;
 
   + h1,
@@ -140,8 +139,9 @@ p {
 
 .text-primary,
 a.text-primary {
-  @include font-size(18);
   @include rem(line-height, 2.5rem);
+
+  font-size: $theme-size-font-lg;
 }
 
 .text-secondary,
@@ -152,22 +152,22 @@ a.text-secondary {
 
 .text-base,
 a.text-base {
-  @include font-size(14);
   @include rem(line-height, 1.5rem);
+
+  font-size: $theme-size-font-base;
 }
 
 .text-small,
 a.text-small {
-  @include font-size(12);
+  font-size: $theme-size-font-sm;
 }
 
 // Labels
 label,
 .label {
-  @include font-size(12);
-
   color: $label-color;
   display: block;
+  font-size: $theme-size-font-sm;
   margin-bottom: 8px;
   min-height: 13px; //prevents need to use &nbsp; for blank labels
 }
@@ -180,18 +180,16 @@ label.is-disabled,
 }
 
 .data-description {
-  @include font-size(14);
-
   color: $font-color-extrahighcontrast;
+  font-size: $theme-size-font-base;
   margin-left: 6px;
 }
 
 label.side,
 .label.side {
-  @include font-size(14);
-
   color: $label-color;
   display: inline-block;
+  font-size: $theme-size-font-base;
   height: 100%;
   line-height: 1.5;
   min-width: 120px;
@@ -221,11 +219,11 @@ label.side,
 
 small,
 .micro-text {
-  @include font-size(12);
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 1.5rem);
 
   color: $font-color-default;
+  font-size: $theme-size-font-sm;
 }
 
 .alert-text {
@@ -278,9 +276,8 @@ small,
 }
 
 .small-thin-text {
-  @include font-size(10);
-
   color: $font-color;
+  font-size: $theme-size-font-xs;
   font-weight: $theme-number-font-weight-bold;
 
   + .small-thin-text {
@@ -289,9 +286,8 @@ small,
 }
 
 .larger-heavy-text {
-  @include font-size(14);
-
   color: $font-color-highcontrast;
+  font-size: $theme-size-font-base;
   font-weight: $theme-number-font-weight-bold;
 }
 
@@ -366,15 +362,13 @@ small,
 
 // Left aligned fields
 .field.label-left {
-  @include font-size(14);
-
   display: flex;
+  font-size: $theme-size-font-base;
   margin: 5px 0;
 
   .label {
-    @include font-size(14);
-
     color: $input-color;
+    font-size: $theme-size-font-base;
     line-height: normal;
     padding-right: 8px;
     position: relative;

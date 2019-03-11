@@ -2,7 +2,7 @@
 //==================================================//
 
 .bullet-chart {
-  @include font-size(12);
+  font-size: $theme-size-font-sm;
 
   .range {
     cursor: pointer;
@@ -20,8 +20,7 @@
   }
 
   .title {
-    @include font-size(12);
-
+    font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
   }
 

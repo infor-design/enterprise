@@ -215,6 +215,31 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.css('div[aria-controls="dropdown-list"]')).getAttribute('class')).not.toContain('is-open');
     });
   }
+
+  it('Should be able to reopen when closed by a menu button', async () => {
+    let dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+    await dropdownEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+
+    expect(await element(by.id('dropdown-search')).isDisplayed()).toBeTruthy();
+
+    await element(by.css('.btn-actions')).click();
+
+    expect(await element(by.id('dropdown-search')).isPresent()).toBeFalsy();
+    await browser.driver.sleep(config.sleep);
+
+    dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+    await dropdownEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+
+    expect(await element(by.id('dropdown-search')).isDisplayed()).toBeTruthy();
+  });
 });
 
 describe('Dropdown example-ajax tests', () => {

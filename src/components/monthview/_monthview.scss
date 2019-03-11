@@ -403,8 +403,7 @@
         }
 
         .today {
-          @include font-size(12);
-
+          font-size: $theme-size-font-sm;
           font-weight: $theme-number-font-weight-bold;
           margin-left: 10px;
           text-decoration: none;
@@ -547,9 +546,8 @@
 
   .month,
   .year {
-    @include font-size(18);
-
     color: $datepicker-month-year-color;
+    font-size: $theme-size-font-lg;
   }
 
   .dropdown-wrapper {

@@ -18,18 +18,16 @@
     }
 
     .heading {
-      @include font-size(18);
-
       color: $font-color-extrahighcontrast;
       display: table-cell;
+      font-size: $theme-size-font-lg;
       height: 60px;
       padding-left: 20px;
       vertical-align: middle;
 
       small {
-        @include font-size(14);
-
         display: block;
+        font-size: $theme-size-font-base;
         margin: 2px 0 0;
         padding: 0;
         text-transform: capitalize;
@@ -120,9 +118,8 @@
 
         span {
           display: inline-block;
+          font-size: $theme-size-font-base;
           max-width: 80%;
-
-          @include font-size(14);
         }
 
         .tree-text {

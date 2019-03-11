@@ -31,11 +31,12 @@ describe('Hierarchy stacked layout', () => {
 
     await element.all(by.css('.btn')).get(2).click();
     await browser.driver.sleep(config.sleep);
-    
+
     expect(await element.all(by.css('.leaf')).count()).toEqual(5);
 
     await element.all(by.css('.btn')).get(4).click();
     await browser.driver.sleep(config.sleep);
+
     expect(await element.all(by.css('.leaf')).count()).toEqual(5);
     expect(await element.all(by.css('.ancestor')).count()).toEqual(3);
   });

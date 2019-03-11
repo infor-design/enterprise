@@ -8,10 +8,9 @@
 
   // Text Label
   label {
-    @include font-size(14);
-
     color: $font-color-extrahighcontrast;
     display: inline-block;
+    font-size: $theme-size-font-base;
     padding-left: 42px;
 
     &.inline {

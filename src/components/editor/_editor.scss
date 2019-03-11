@@ -129,7 +129,6 @@
 }
 
 .editor {
-  @include font-size(14);
   @include rem(line-height, 2.2rem);
 
   background-color: $editor-bg-color;
@@ -138,6 +137,7 @@
   border-radius: 0 0 2px 2px;
   color: $editor-color;
   display: block;
+  font-size: $theme-size-font-base;
   height: 320px;
   margin-bottom: 20px;
   min-height: 128px;
@@ -158,10 +158,10 @@
 
   // Element Style
   p {
-    @include font-size(14);
     @include rem(line-height, 2.2rem);
 
     color: $editor-color;
+    font-size: $theme-size-font-base;
     margin-bottom: 15px;
 
     .hyperlink {
@@ -170,28 +170,28 @@
   }
 
   h3 {
-    @include font-size(24);
     @include rem(line-height, 2.4rem);
     @include rem(margin-bottom, 1.5rem);
 
     color: $editor-color;
+    font-size: $theme-size-font-xl;
   }
 
   h4 {
-    @include font-size(18);
     @include rem(line-height, 1.8rem);
     @include rem(margin-bottom, 1.5rem);
 
     color: $editor-color;
+    font-size: $theme-size-font-lg;
   }
 
   ul,
   ol {
     @include rem(line-height, 2.2rem);
     @include rem(margin-left, 2rem);
-    @include font-size(14);
 
     color: $input-color;
+    font-size: $theme-size-font-base;
     list-style: disc;
     margin-bottom: 10px;
 
@@ -234,9 +234,8 @@
   }
 
   .hyperlink {
-    @include font-size(14);
-
     cursor: auto;
+    font-size: $theme-size-font-base;
     position: static;
     text-decoration: none;
 
@@ -497,11 +496,10 @@
 // Dialog Styling
 
 .editor-source {
-  @include font-size(14);
-
   border: 1px solid;
   border-color: transparent $editor-border-color $editor-border-color;
   border-radius: 0 0 2px 2px;
+  font-size: $theme-size-font-base;
   height: 320px;
   margin: 0 0 10px;
   min-height: 88px;
@@ -511,11 +509,10 @@
   width: 100%;
 
   textarea {
-    @include font-size(14);
-
     background-color: $editor-bg-color;
     border: 0;
     color: $editor-color;
+    font-size: $theme-size-font-base;
     font-weight: $theme-number-font-weight-base;
     height: 100%;
     line-height: 2.4rem;
@@ -548,8 +545,7 @@
     padding: 15px 10px 10px;
 
     > li {
-      @include font-size(12);
-
+      font-size: $theme-size-font-sm;
       line-height: 2.41rem;
       text-align: center;
     }
@@ -581,9 +577,8 @@
 }
 
 .editor-placeholder::after {
-  @include font-size(14);
-
   content: attr(data-placeholder);
+  font-size: $theme-size-font-base;
   font-weight: 100;
   left: 10px;
   margin-top: -38px;

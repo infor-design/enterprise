@@ -15,9 +15,8 @@ $indicator-current-size: ($indicator-size * 1.6);
 
 // Container
 .process-indicator {
+  font-size: $theme-size-font-base;
   margin-bottom: 20px;
-
-  @include font-size(14);
 
   // Main blocks:  .display, .header, .details
   .display {
@@ -60,10 +59,10 @@ $indicator-current-size: ($indicator-size * 1.6);
   }
 
   .details {
-    color: $font-color;
-
-    @include font-size(10);
     @include antialiased();
+
+    color: $font-color;
+    font-size: $theme-size-font-xs;
 
     > * {
       vertical-align: middle;
@@ -245,21 +244,20 @@ $indicator-current-size: ($indicator-size * 1.6);
 .process-indicator,
 .timeline {
   .heading {
-    @include font-size(12);
+    @include antialiased();
 
+    font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
     line-height: 1.5;
-
-    @include antialiased();
   }
 
   .sub-heading {
+    @include antialiased();
+
     color: $font-color;
+    font-size: $theme-size-font-sm;
     line-height: 1.5;
     margin-bottom: 10px;
-
-    @include font-size(12);
-    @include antialiased();
   }
 
 }
