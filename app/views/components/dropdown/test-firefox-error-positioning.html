@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Dropdown Test: Overlapping Firefox Error Icon</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field-short">
+      <label class="label" for="validated-dd">LSF Dropdown</label>
+      <select id="validated-dd" class="dropdown">
+        <option value=""></option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+
+    <br><br><br>
+
+    <button id="showError" class="btn-primary">Show error</button>
+    <button id="removeError" class="btn-primary">Remove error</button>
+  </div>
+</div>
+
+<script>
+  $('#showError').on('click', function() {
+    $('#validated-dd').removeError().addError({
+      message: 'Error message',
+      inline: false,
+      showTooltip: true
+    });
+  });
+  $('#removeError').on('click', function() {
+    $('#validated-dd').removeError();
+  });
+</script>
