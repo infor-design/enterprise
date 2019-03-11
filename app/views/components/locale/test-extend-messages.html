@@ -1,24 +1,29 @@
 <div class="row">
   <div class="twelve columns">
-    <h1 class="fieldset-title">Locale - Tests</h1>
-
-    <div id="output" class="output" style="background-color: white; display: block; line-height: 15px;height: 80%; width: 100%">
-      <br><br>
+    <h1 class="fieldset-title">Locale - Adding strings to a locale (Italian)</h1>
+    <div id="output" >
     </div>
-
-    {{^amd}}
-    <script>
-      $('body').on('initialized', function () {
-        var output = $('#output');
-        var append = function (value) {
-          output.append('<span>' + value + '</span><br>');
-        };
-
-        Locale.currentLocale.data.messages.NewKey = {id: 'NewKey', value: 'New Key', comment: 'Translator Info if needed'},
-        append(Locale.translate('NewKey'));
-
-    });
-    </script>
-    {{/amd}}
   </div>
 </div>
+
+<script>
+  $('body').on('initialized', function() {
+    var output = $('#output');
+    var append = function (value) {
+      output.append('<span>' + value + '</span><br>');
+    };
+
+    Locale.set('it-lT').done(function () {
+      // Add Extra strings
+      var myStrings = {
+        Thanks: { id: 'Thanks', value: 'Grazie', comment: ''},
+        YourWelcome: { id: 'YourWelcome', value: 'Prego', comment: ''}
+      }
+      Locale.extendTranslations(Locale.currentLanguage.name, myStrings);
+
+      append(Locale.translate('Comments') + '<br>');
+      append(Locale.translate('Thanks') + '<br>');
+      append(Locale.translate('YourWelcome') + '<br>');
+    });
+  });
+</script>

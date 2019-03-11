@@ -18,8 +18,8 @@ describe('DatePicker Aria', () => {
     datepickerEl = document.body.querySelector('.datepicker');
     svgEl = document.body.querySelector('.svg-icons');
 
-    Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA']); //eslint-disable-line
-    Locale.addCulture('en-US', Soho.Locale.cultures['en-US']); //eslint-disable-line
+    Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA'], Soho.Locale.languages['ar']); //eslint-disable-line
+    Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
     Locale.set('en-US');
 
     datepickerAPI = new DatePicker(datepickerEl);

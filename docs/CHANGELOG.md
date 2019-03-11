@@ -9,6 +9,9 @@
 
 - `[Datagrid]` Added support to cancel `rowactivated` event. Now it will trigger the new event `beforerowactivated` which will wait/sync to cancel or proceed to do `rowactivated` event. ([#1021](https://github.com/infor-design/enterprise/issues/1021))
 - `[Locale]` Added support for showing timezones in the current language with a fall back for IE 11. ([#592](https://github.com/infor-design/enterprise/issues/592))
+- `[Locale]` Its now possible to add new locales in by adding them to the `defaultLocales` and `supportedLocales` sets. ([#402](https://github.com/infor-design/enterprise/issues/402))
+- `[Locale]` Added an example to show extending locales with new strings and an api method to make it easier. because of the way this is split, if your directly adding to `Locale.cultures` you will need to adjust your code to extend from `Locale.languages` instead. ([#402](https://github.com/infor-design/enterprise/issues/402))
+- `[Locale]` Added for having a different language that the locale. This is done by calling the new `setLanguage` function. ([#1552](https://github.com/infor-design/enterprise/issues//1552))
 
 ### v4.17.0 Fixes
 
