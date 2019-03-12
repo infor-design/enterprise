@@ -467,7 +467,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('Dezember 2015', 'MMMM yyyy').getTime()).toEqual(new Date(2015, 11, 1, 0, 0, 0).getTime());
   });
 
-  it('Should parse Dates with - in them', () => {
+  it('Should parse Dates with dashes in them', () => {
     Locale.set('en-US');
 
     // Test date only
@@ -544,15 +544,12 @@ describe('Locale API', () => {
     expect(Locale.translate('CustomValue')).toEqual('Added Custom Value');
   });
 
-  /*
-   *  it('Not error on a non existant locale', () => {
-   *    // TODO Fix this test when we add better error handling
-   *    Locale.set('en-US');
-   *    Locale.set('xx-XX');
-   *
-   *    expect(Locale.translate('Required')).toEqual('Required');
-   *  });
-   */
+   it('Not error on a non existant locale', () => {
+     Locale.set('en-US');
+     Locale.set('xx-XX');
+
+     expect(Locale.translate('Required')).toEqual('Required');
+   });
 
   it('Should format decimals', () => {
     Locale.set('en-US');
@@ -984,7 +981,83 @@ describe('Locale API', () => {
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'long')).toEqual('26-3-2018 00:00:00 Eastern-zomertijd');
   });
 
-<<<<<<< HEAD
+  it('Should be possible to set the langauge to something other than the current locale', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.translate('Actions')).toEqual('Actions');
+    expect(Locale.currentLanguage.name).toEqual('en');
+    expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.setLanguage('da').done(() => {
+      expect(Locale.translate('Actions')).toEqual('Handlinger');
+      expect(Locale.currentLanguage.name).toEqual('da');
+      expect(Locale.currentLocale.name).toEqual('en-US');
+
+      Locale.setLanguage('ar').done(() => {
+        expect(Locale.translate('Actions')).toEqual('الإجراءات');
+        expect(Locale.currentLanguage.name).toEqual('ar');
+        expect(Locale.currentLocale.name).toEqual('en-US');
+        done();
+      });
+    });
+  });
+
+  it('Should be possible to extend the langauge strings for a locale', (done) => {
+    Locale.set('it-lT').done(() => {
+      const myStrings = {
+        Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
+        YourWelcome: { id: 'YourWelcome', value: 'Prego', comment: '' }
+      };
+      Locale.extendTranslations(Locale.currentLanguage.name, myStrings);
+
+      expect(Locale.translate('Comments')).toEqual('Commenti');
+      expect(Locale.translate('Thanks')).toEqual('Grazie');
+      expect(Locale.translate('YourWelcome')).toEqual('Prego');
+      done();
+    });
+  });
+
+  it('Should be possible to extend the langauge strings for a language', (done) => {
+    Locale.set('fr-FR').done(() => {
+      Locale.setLanguage('it').done(() => {
+        const myStrings = {
+          Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
+          YourWelcome: { id: 'YourWelcome', value: 'Prego', comment: '' }
+        };
+        Locale.extendTranslations(Locale.currentLanguage.name, myStrings);
+
+        expect(Locale.translate('Comments')).toEqual('Commenti');
+        expect(Locale.translate('Thanks')).toEqual('Grazie');
+        expect(Locale.translate('YourWelcome')).toEqual('Prego');
+        done();
+      });
+    });
+  });
+
+  it('Should still trigger done on a non existent locale', (done) => {
+    Locale.set('xx-XX').done(() => {
+      expect(Locale.currentLocale.name).toEqual('en-US');
+      done();
+    });
+  });
+
+  it('Should be possible to add a locale not in the current set', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.translate('Comments')).toEqual('Comments');
+    expect(Locale.translate('SomeTextThatDoesntExist')).toEqual('[SomeTextThatDoesntExist]');
+
+    // Add a new locale not in the setup ones
+    Locale.defaultLocales.push({ lang: 'la', default: 'la-IT' });
+    Locale.supportedLocales.push('la-IT');
+
+    Locale.set('la-lT').done(() => {
+      expect(Locale.translate('Comments')).toEqual('Commenti');
+      expect(Locale.translate('SomeTextThatDoesntExist')).toEqual('[SomeTextThatDoesntExist]');
+      done();
+    });
+  });
+
   it('Should handle group size', () => {
     Locale.set('en-US'); // 3, 0
 
@@ -1083,82 +1156,5 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('1,23,45,67,890.123')).toEqual((1234567890.123));
     expect(Locale.parseNumber('₹12,34,56,789.12')).toEqual((123456789.12));
     expect(Locale.parseNumber('10,000 %')).toEqual((10000));
-=======
-  it('Should be possible to set the langauge to something other than the current locale', (done) => {
-    Locale.set('en-US');
-
-    expect(Locale.translate('Actions')).toEqual('Actions');
-    expect(Locale.currentLanguage.name).toEqual('en');
-    expect(Locale.currentLocale.name).toEqual('en-US');
-
-    Locale.setLanguage('da').done(() => {
-      expect(Locale.translate('Actions')).toEqual('Handlinger');
-      expect(Locale.currentLanguage.name).toEqual('da');
-      expect(Locale.currentLocale.name).toEqual('en-US');
-
-      Locale.setLanguage('ar').done(() => {
-        expect(Locale.translate('Actions')).toEqual('الإجراءات');
-        expect(Locale.currentLanguage.name).toEqual('ar');
-        expect(Locale.currentLocale.name).toEqual('en-US');
-        done();
-      });
-    });
-  });
-
-  it('Should be possible to extend the langauge strings for a locale', (done) => {
-    Locale.set('it-lT').done(() => {
-      const myStrings = {
-        Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
-        YourWelcome: { id: 'YourWelcome', value: 'Prego', comment: '' }
-      };
-      Locale.extendTranslations(Locale.currentLanguage.name, myStrings);
-
-      expect(Locale.translate('Comments')).toEqual('Commenti');
-      expect(Locale.translate('Thanks')).toEqual('Grazie');
-      expect(Locale.translate('YourWelcome')).toEqual('Prego');
-      done();
-    });
-  });
-
-  it('Should be possible to extend the langauge strings for a language', (done) => {
-    Locale.set('fr-FR').done(() => {
-      Locale.setLanguage('it').done(() => {
-        const myStrings = {
-          Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
-          YourWelcome: { id: 'YourWelcome', value: 'Prego', comment: '' }
-        };
-        Locale.extendTranslations(Locale.currentLanguage.name, myStrings);
-
-        expect(Locale.translate('Comments')).toEqual('Commenti');
-        expect(Locale.translate('Thanks')).toEqual('Grazie');
-        expect(Locale.translate('YourWelcome')).toEqual('Prego');
-        done();
-      });
-    });
-  });
-
-  it('Should still trigger done on a non existent locale', (done) => {
-    Locale.set('xx-XX').done(() => {
-      expect(Locale.currentLocale.name).toEqual('en-US');
-      done();
-    });
-  });
-
-  it('Should be possible to add a locale not in the current set', (done) => {
-    Locale.set('en-US');
-
-    expect(Locale.translate('Comments')).toEqual('Comments');
-    expect(Locale.translate('SomeTextThatDoesntExist')).toEqual('[SomeTextThatDoesntExist]');
-
-    // Add a new locale not in the setup ones
-    Locale.defaultLocales.push({ lang: 'la', default: 'la-IT' });
-    Locale.supportedLocales.push('la-IT');
-
-    Locale.set('la-lT').done(() => {
-      expect(Locale.translate('Comments')).toEqual('Commenti');
-      expect(Locale.translate('SomeTextThatDoesntExist')).toEqual('[SomeTextThatDoesntExist]');
-      done();
-    });
->>>>>>> f12e7aee732db0c83d527fa6982381bea520c529
   });
 });
