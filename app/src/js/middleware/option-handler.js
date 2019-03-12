@@ -50,15 +50,6 @@ module.exports = function (app, defaults) {
       logger('info', 'Using the minified version of "sohoxi.js"');
     }
 
-    if ((req.query.font && req.query.font.length > 0) || res.opts.theme === 'uplift-alpha') {
-      res.opts.font = req.query.font;
-      logger('info', `Using the ${req.query.font} font`);
-    }
-
-    if (res.opts.theme === 'uplift-alpha') {
-      res.opts.font = true;
-    }
-
     let useLiveReload = false;
     process.argv.forEach((val) => {
       if (val === '--livereload') {
