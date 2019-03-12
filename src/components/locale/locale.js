@@ -1053,7 +1053,7 @@ const Locale = {  // eslint-disable-line
     if (options && options.style === 'percent') {
       const percentSign = !this.currentLocale.data.numbers ? '%' : this.currentLocale.data.numbers.percentSign;
 
-      percentFormat = !this.currentLocale.data.numbers ? '#,##0 %' : this.currentLocale.data.numbers.percentFormat;
+      percentFormat = !this.currentLocale.data.numbers ? '### %' : this.currentLocale.data.numbers.percentFormat;
       percentFormat = percentFormat.replace('¤', percentSign);
     }
 
@@ -1345,7 +1345,7 @@ const Locale = {  // eslint-disable-line
   numbers() {
     return this.currentLocale.data.numbers ? this.currentLocale.data.numbers : {
       percentSign: '%',
-      percentFormat: '#,##0 %',
+      percentFormat: '### %',
       minusSign: '-',
       decimal: '.',
       group: ','
