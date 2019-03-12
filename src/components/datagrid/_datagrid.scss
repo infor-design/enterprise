@@ -177,6 +177,18 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.has-group-headers {
+    .datagrid-body {
+      height: calc(100% - 78px);
+    }
+  }
+
+  &.has-group-headers.has-filterable-columns {
+    .datagrid-body {
+      height: calc(100% - 100px);
+    }
+  }
+
   &.has-filterable-columns {
     .datagrid-body {
       height: calc(100% - 60px);
@@ -408,23 +420,15 @@ $datagrid-short-row-height: 23px;
     }
 
     &.has-group-headers .datagrid-body {
-      height: calc(100% - 50px);
+      height: calc(100% - 51px);
     }
 
     &.has-filterable-columns .datagrid-body {
       height: calc(100% - 49px);
     }
 
-    &.has-toolbar {
-      height: calc(100% - 45px);
-
-      &.paginated {
-        height: calc(100% - 103px);
-      }
-    }
-
-    &.paginated {
-      height: calc(100% - 58px);
+    &.has-group-headers.has-filterable-columns .datagrid-body {
+      height: calc(100% - 76px);
     }
 
     //Resize Drag Arrows
@@ -525,6 +529,18 @@ $datagrid-short-row-height: 23px;
     //Set Container Heights for scrolling
     .datagrid-body {
       height: calc(100% - 30px);
+    }
+
+    &.has-group-headers .datagrid-body {
+      height: calc(100% - 61px);
+    }
+
+    &.has-filterable-columns .datagrid-body {
+      height: calc(100% - 55px);
+    }
+
+    &.has-group-headers.has-filterable-columns .datagrid-body {
+      height: calc(100% - 86px);
     }
 
     .drag-target-arrows {
