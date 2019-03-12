@@ -165,8 +165,7 @@ describe('Pager API (Standalone)', () => {
   it('Can be updated with new settings', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone' });
 
-    function updateJunk(api, state) {
-      console.log(`This function is junk! ${state}`);
+    function updateJunk() {
     }
 
     const newSettings = {

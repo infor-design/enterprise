@@ -342,6 +342,7 @@ describe('Flex Toolbar', () => {
       const buttonSpyEvent = spyOnEvent('div.buttonset button:first-child', 'selected');
 
       button.click();
+
       expect(buttonSpyEvent).toHaveBeenTriggered();
     });
 
@@ -352,6 +353,7 @@ describe('Flex Toolbar', () => {
 
       menuButton.componentAPI.open();
       firstMenuEntry.click();
+
       expect(menuButtonSpyEvent).toHaveBeenTriggered();
     });
 
@@ -362,6 +364,7 @@ describe('Flex Toolbar', () => {
 
       moreMenuButton.componentAPI.open();
       firstMoreMenuEntry.click();
+
       expect(moreActionsSpyEvent).toHaveBeenTriggered();
     });
 
@@ -376,6 +379,7 @@ describe('Flex Toolbar', () => {
       $(overflowedMenuButton).trigger('mouseover');
 
       firstMoreMenuEntry.click();
+
       expect(moreActionsSpyEvent).toHaveBeenTriggered();
     });
   });

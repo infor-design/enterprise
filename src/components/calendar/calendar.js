@@ -889,11 +889,11 @@ Calendar.prototype = {
     if (!this.settings.modalTemplate) {
       return;
     }
-    
+
     if (this.modalVisible()) {
       this.removeModal();
     }
-    
+
     this.modalContents = document.createElement('div');
     DOM.addClass(this.modalContents, 'calendar-event-modal', 'hidden');
     document.getElementsByTagName('body')[0].appendChild(this.modalContents);
@@ -967,7 +967,7 @@ Calendar.prototype = {
 
     this.activeElem = dayObj.elem;
   },
-  
+
   /**
    * @returns {boolean} whether or not this Modal is currently being displayed
    */
