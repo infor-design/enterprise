@@ -27,7 +27,7 @@
 }
 
 .form-compact {
-  background-color: $body-color-primary-background;
+  background-color: $formcompact-bg-color;
   margin: 0 auto;
 
   .row {
@@ -51,7 +51,7 @@
       @include font-size(14);
       @include transition(background-color 100ms $cubic-ease, color 100ms $cubic-ease);
 
-      background-color: $panel-bg-color;
+      background-color: $formcompact-field-bg-color;
       margin-bottom: 0;
       overflow: hidden;
       padding: 4px 9px 0;
@@ -60,7 +60,9 @@
 
       &.required:not(.inline) {
         &::after {
-          color: $theme-color-brand-primary-base;
+          @include font-size(18);
+
+          color: $formcompact-field-required-color;
           content: '●';
           top: 0;
         }
@@ -71,11 +73,11 @@
       @include font-size(18);
       @include transition(background-color 100ms $cubic-ease, border-color 100ms $cubic-ease, color 100ms $cubic-ease);
 
-      background-color: $panel-bg-color;
-      border-bottom: 1px solid $theme-color-palette-black;
+      background-color: $formcompact-field-bg-color;
+      border-bottom: 1px solid $formcompact-field-border-color;
       border-left: 0;
       border-radius: 0;
-      border-right: 1px solid $theme-color-palette-black;
+      border-right: 1px solid $formcompact-field-border-color;
       border-top: 0;
       padding: 0 8px 4px;
       text-overflow: ellipsis;
@@ -88,19 +90,19 @@
 
     &.is-focused {
       input {
-        background-color: $theme-color-palette-azure-10;
-        border-bottom-color: $theme-color-brand-primary-base;
-        border-right-color: $theme-color-brand-primary-base;
+        background-color: $formcompact-field-bg-focus-color;
+        border-bottom-color: $formcompact-field-border-focus-color;
+        border-right-color: $formcompact-field-border-focus-color;
       }
 
       label {
-        background-color: $theme-color-palette-azure-10;
+        background-color: $formcompact-field-bg-focus-color;
       }
     }
 
     &.is-readonly {
       input {
-        background-color: $body-color-primary-background;
+        background-color: $formcompact-bg-color;
         border-bottom-color: $input-color-readonly-border;
         border-right-color: $input-color-readonly-border;
         color: $input-color-readonly-font;
