@@ -544,12 +544,12 @@ describe('Locale API', () => {
     expect(Locale.translate('CustomValue')).toEqual('Added Custom Value');
   });
 
-   it('Not error on a non existant locale', () => {
-     Locale.set('en-US');
-     Locale.set('xx-XX');
+  it('Not error on a non existant locale', () => {
+    Locale.set('en-US');
+    Locale.set('xx-XX');
 
-     expect(Locale.translate('Required')).toEqual('Required');
-   });
+    expect(Locale.translate('Required')).toEqual('Required');
+  });
 
   it('Should format decimals', () => {
     Locale.set('en-US');
@@ -611,22 +611,6 @@ describe('Locale API', () => {
     expect(Locale.formatNumber('12345', { style: 'integer' })).toEqual('12,345');
   });
 
-  it('Should format percent', () => {
-    Locale.set('en-US');
-
-    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
-    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
-    expect(Locale.formatNumber(0.10, { style: 'percent' })).toEqual('10 %');
-    expect(Locale.formatNumber(1, { style: 'percent' })).toEqual('100 %');
-
-    Locale.set('de-DE');
-
-    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253,00 %');
-    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
-    expect(Locale.formatNumber(0.10, { style: 'percent' })).toEqual('10 %');
-    expect(Locale.formatNumber(1, { style: 'percent' })).toEqual('100 %');
-  });
-
   it('Should format currency', () => {
     Locale.set('en-US');
 
@@ -658,12 +642,15 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(0.0500000, { style: 'percent' })).toEqual('5 %');
     expect(Locale.formatNumber(0.050000, { style: 'percent', maximumFractionDigits: 0 })).toEqual('5 %');
     expect(Locale.formatNumber(0.05234, { style: 'percent', minimumFractionDigits: 4, maximumFractionDigits: 4 })).toEqual('5.2340 %');
-
     expect(Locale.formatNumber(0.57, { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 })).toEqual('57 %');
     expect(Locale.formatNumber(0.57, { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('57.00 %');
     expect(Locale.formatNumber(0.5700, { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('57.00 %');
     expect(Locale.formatNumber(0.57010, { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('57.01 %');
     expect(Locale.formatNumber(0.5755, { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('57.55 %');
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
+    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
+    expect(Locale.formatNumber(0.10, { style: 'percent' })).toEqual('10 %');
+    expect(Locale.formatNumber(1, { style: 'percent' })).toEqual('100 %');
 
     Locale.set('tr-TR');
 
@@ -672,6 +659,13 @@ describe('Locale API', () => {
     Locale.set('it-IT');
 
     expect(Locale.formatNumber(0.0500000, { style: 'percent' })).toEqual('5%');
+
+    Locale.set('de-DE');
+
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253,00 %');
+    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
+    expect(Locale.formatNumber(0.10, { style: 'percent' })).toEqual('10 %');
+    expect(Locale.formatNumber(1, { style: 'percent' })).toEqual('100 %');
   });
 
   it('Should parse numbers back', () => {

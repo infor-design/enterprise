@@ -1461,7 +1461,7 @@ describe('Datagrid select and filter tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-select-filter-issue');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1476,19 +1476,19 @@ describe('Datagrid select and filter tests', () => {
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(2);
 
-    await element(by.id('test-select-filter-issue-datagrid-1-header-filter-2')).sendKeys('love');
+    await element(by.id('test-select-filter-issue-datagrid-1-header-filter-2')).sendKeys('1');
     await element(by.id('test-select-filter-issue-datagrid-1-header-filter-2')).sendKeys(protractor.Key.ENTER);
 
     await utils.checkForErrors();
 
-    expect(await element.all(by.css('tbody tr')).count()).toEqual(1);
-    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    expect(await element.all(by.css('tbody tr')).count()).toEqual(2);
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
+    await utils.checkForErrors();
 
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
     await utils.checkForErrors();
 
-    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
   });
 });
 
