@@ -1421,6 +1421,7 @@ describe('Datagrid paging serverside single select tests', () => {
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
 
     await element(by.css('.pager-next a')).click();
+    await browser.driver.sleep(config.sleep);
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
@@ -1428,6 +1429,7 @@ describe('Datagrid paging serverside single select tests', () => {
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev a')).click();
+    await browser.driver.sleep(config.sleep);
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
