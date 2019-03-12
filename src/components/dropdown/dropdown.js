@@ -1317,6 +1317,11 @@ Dropdown.prototype = {
     const target = $(e.target);
     const key = e.key;
 
+    // No need to execute if readonly
+    if (target.is('.is-readonly')) {
+      return true;
+    }
+
     // "Esc" is used by IE11
     const isEscapeKey = key === 'Esc' || key === 'Escape';
 
@@ -2811,7 +2816,7 @@ Dropdown.prototype = {
     this.pseudoElem
       .removeClass('is-disabled')
       .addClass('is-readonly')
-      .attr('tabindex', '0')
+      .attr('tabindex', this.element.attr('tabindex') || '0')
       .prop('disabled', false)
       .prop('readonly', true);
     this.closeList('cancel');
