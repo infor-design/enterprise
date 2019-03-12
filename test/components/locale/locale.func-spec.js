@@ -613,20 +613,30 @@ describe('Locale API', () => {
     expect(Locale.formatNumber('12345', { style: 'integer' })).toEqual('12,345');
   });
 
+  it('Should format percent', () => {
+    Locale.set('en-US');
+
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
+    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
+    expect(Locale.formatNumber(0.10, { style: 'percent' })).toEqual('10 %');
+    expect(Locale.formatNumber(1, { style: 'percent' })).toEqual('100 %');
+
+    Locale.set('de-DE');
+
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253,00 %');
+    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
+    expect(Locale.formatNumber(0.10, { style: 'percent' })).toEqual('10 %');
+    expect(Locale.formatNumber(1, { style: 'percent' })).toEqual('100 %');
+  });
+
   it('Should format currency', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber(12345.129, { style: 'currency' })).toEqual('$12,345.12');
 
-    // Added due to SOHO-5487
-    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
-    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
-
     Locale.set('de-DE');
 
     expect(Locale.formatNumber(12345.123, { style: 'currency' })).toEqual('12.345,12 €');
-    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253,00 %');
-    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
   });
 
   it('Should allow currency override', () => {
@@ -737,7 +747,7 @@ describe('Locale API', () => {
   it('Should format negative numbers', () => {
     Locale.set('en-US');
 
-    expect(Locale.formatNumber(-1000000, { style: 'currency' })).toEqual('-$1,000,000.00');
+    expect(Locale.formatNumber(-1000000, { style: 'currency' })).toEqual('-$1000,000.00');
 
     Locale.set('de-DE');
 
@@ -893,23 +903,23 @@ describe('Locale API', () => {
   it('Should format dates with short timezones', () => {
     Locale.set('en-US');
 
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' })).toEqual('3/22/2018 8:11 PM EST');
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' })).toEqual('22-03-2018 20:11 EST');
+    expect(['3/22/2018 8:11 PM EST', '3/22/2018 8:11 PM EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
+    expect(['22-03-2018 20:11 EST', '22-03-2018 20:11 EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
     Locale.set('nl-NL');
 
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' })).toEqual('22/3/2018 20:11 GMT-5');
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' })).toEqual('22-03-2018 20:11 GMT-5');
+    expect(['22/3/2018 20:11 GMT-5', '22/3/2018 20:11 GMT-4']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
+    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
   });
 
   it('Should format dates with long timezones', () => {
     Locale.set('en-US');
 
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' })).toEqual('3/22/2018 8:11 PM Eastern Standard Time');
-    expect(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' })).toEqual('22-03-2000 20:11 Eastern Standard Time');
+    expect(['3/22/2018 8:11 PM Eastern Standard Time', '3/22/2018 8:11 PM Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
+    expect(['22-03-2000 20:11 Eastern Standard Time', '22-03-2000 20:11 Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' }));
     Locale.set('nl-NL');
 
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' })).toEqual('22/3/2018 20:11 Eastern-standaardtijd');
-    expect(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' })).toEqual('22-03-2000 20:11 Eastern-standaardtijd');
+    expect(['22/3/2018 20:11 Eastern-standaardtijd', '22/3/2018 20:11 Eastern-zomertijd']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
+    expect(['22-03-2000 20:11 Eastern-standaardtijd', '22-03-2000 20:11 Eastern-zomertijd']).toContain(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' }));
   });
 
   it('Should parse dates with short timezones in current timezone', () => {
@@ -971,5 +981,105 @@ describe('Locale API', () => {
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'long')).toEqual('26-3-2018 14:00:00 Oost-Australische standaardtijd');
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai', 'long')).toEqual('26-3-2018 12:00:00 Chinese standaardtijd');
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'long')).toEqual('26-3-2018 00:00:00 Eastern-zomertijd');
+  });
+
+  it('Should handle group size', () => {
+    Locale.set('en-US'); // 3, 0
+
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
+    expect(Locale.formatNumber(1.1234)).toEqual('1.123');
+    expect(Locale.formatNumber(12.1234)).toEqual('12.123');
+    expect(Locale.formatNumber(123.1234)).toEqual('123.123');
+    expect(Locale.formatNumber(1234.1234)).toEqual('1,234.123');
+    expect(Locale.formatNumber(12345.1234)).toEqual('12,345.123');
+    expect(Locale.formatNumber(123456.1234)).toEqual('123,456.123');
+    expect(Locale.formatNumber(1234567.1234)).toEqual('1234,567.123');
+    expect(Locale.formatNumber(12345678.1234)).toEqual('12345,678.123');
+    expect(Locale.formatNumber(123456789.1234)).toEqual('123456,789.123');
+    expect(Locale.formatNumber(1234567890.1234)).toEqual('1234567,890.123');
+    expect(Locale.formatNumber(123456789.1234, { style: 'currency' })).toEqual('$123456,789.12');
+    expect(Locale.formatNumber(100, { style: 'percent' })).toEqual('10,000 %');
+
+    Locale.set('nl-NL'); // 3, 3
+
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253,00 %');
+    expect(Locale.formatNumber(1.1234)).toEqual('1,123');
+    expect(Locale.formatNumber(12.1234)).toEqual('12,123');
+    expect(Locale.formatNumber(123.1234)).toEqual('123,123');
+    expect(Locale.formatNumber(1234.1234)).toEqual('1.234,123');
+    expect(Locale.formatNumber(12345.1234)).toEqual('12.345,123');
+    expect(Locale.formatNumber(123456.1234)).toEqual('123.456,123');
+    expect(Locale.formatNumber(1234567.1234)).toEqual('1.234.567,123');
+    expect(Locale.formatNumber(12345678.1234)).toEqual('12.345.678,123');
+    expect(Locale.formatNumber(123456789.1234)).toEqual('123.456.789,123');
+    expect(Locale.formatNumber(1234567890.1234)).toEqual('1.234.567.890,123');
+    expect(Locale.formatNumber(123456789.1234, { style: 'currency' })).toEqual('€ 123.456.789,12');
+    expect(Locale.formatNumber(100, { style: 'percent' })).toEqual('10.000 %');
+
+    Locale.set('hi-IN'); // 3, 2
+
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
+    expect(Locale.formatNumber(1.1234)).toEqual('1.123');
+    expect(Locale.formatNumber(12.1234)).toEqual('12.123');
+    expect(Locale.formatNumber(123.1234)).toEqual('123.123');
+    expect(Locale.formatNumber(1234.1234)).toEqual('1,234.123');
+    expect(Locale.formatNumber(12345.1234)).toEqual('12,345.123');
+    expect(Locale.formatNumber(123456.1234)).toEqual('1,23,456.123');
+    expect(Locale.formatNumber(1234567.1234)).toEqual('12,34,567.123');
+    expect(Locale.formatNumber(12345678.1234)).toEqual('1,23,45,678.123');
+    expect(Locale.formatNumber(123456789.1234)).toEqual('12,34,56,789.123');
+    expect(Locale.formatNumber(1234567890.1234)).toEqual('1,23,45,67,890.123');
+    expect(Locale.formatNumber(123456789.1234, { style: 'currency' })).toEqual('₹12,34,56,789.12');
+    expect(Locale.formatNumber(100, { style: 'percent' })).toEqual('10,000 %');
+  });
+
+  it('Should parse group size', () => {
+    Locale.set('en-US'); // 3, 0
+
+    expect(Locale.parseNumber('-253.00 %')).toEqual(-253);
+    expect(Locale.parseNumber('1.123')).toEqual(1.123);
+    expect(Locale.parseNumber('12.123')).toEqual(12.123);
+    expect(Locale.parseNumber('123.123')).toEqual(123.123);
+    expect(Locale.parseNumber('1,234.123')).toEqual(1234.123);
+    expect(Locale.parseNumber('12,345.123')).toEqual(12345.123);
+    expect(Locale.parseNumber('123,456.123')).toEqual(123456.123);
+    expect(Locale.parseNumber('1234,567.123')).toEqual(1234567.123);
+    expect(Locale.parseNumber('12345,678.123')).toEqual((12345678.123));
+    expect(Locale.parseNumber('123456,789.123')).toEqual((123456789.123));
+    expect(Locale.parseNumber('1234567,890.123')).toEqual((1234567890.123));
+    expect(Locale.parseNumber('$123456,789.12')).toEqual((123456789.12));
+    expect(Locale.parseNumber('10,000 %')).toEqual((10000));
+
+    Locale.set('nl-NL'); // 3, 3
+
+    expect(Locale.parseNumber('-253,00 %')).toEqual(-253);
+    expect(Locale.parseNumber('1,123')).toEqual(1.123);
+    expect(Locale.parseNumber('12,123')).toEqual(12.123);
+    expect(Locale.parseNumber('123,123')).toEqual(123.123);
+    expect(Locale.parseNumber('1.234,123')).toEqual(1234.123);
+    expect(Locale.parseNumber('12.345,123')).toEqual(12345.123);
+    expect(Locale.parseNumber('123.456,123')).toEqual(123456.123);
+    expect(Locale.parseNumber('1234.567,123')).toEqual(1234567.123);
+    expect(Locale.parseNumber('12.345.678,123')).toEqual((12345678.123));
+    expect(Locale.parseNumber('123.456.789,123')).toEqual((123456789.123));
+    expect(Locale.parseNumber('1.234.567.890,123')).toEqual((1234567890.123));
+    expect(Locale.parseNumber('$123.456.789,12')).toEqual((123456789.12));
+    expect(Locale.parseNumber('10.000 %')).toEqual((10000));
+
+    Locale.set('hi-IN'); // 3, 2
+
+    expect(Locale.parseNumber('-253.00 %')).toEqual(-253);
+    expect(Locale.parseNumber('1.123')).toEqual(1.123);
+    expect(Locale.parseNumber('12.123')).toEqual(12.123);
+    expect(Locale.parseNumber('123.123')).toEqual(123.123);
+    expect(Locale.parseNumber('1,234.123')).toEqual(1234.123);
+    expect(Locale.parseNumber('12,345.123')).toEqual(12345.123);
+    expect(Locale.parseNumber('1,23,456.123')).toEqual(123456.123);
+    expect(Locale.parseNumber('12,34,567.123')).toEqual(1234567.123);
+    expect(Locale.parseNumber('1,23,45,678.123')).toEqual((12345678.123));
+    expect(Locale.parseNumber('12,34,56,789.123')).toEqual((123456789.123));
+    expect(Locale.parseNumber('1,23,45,67,890.123')).toEqual((1234567890.123));
+    expect(Locale.parseNumber('₹12,34,56,789.12')).toEqual((123456789.12));
+    expect(Locale.parseNumber('10,000 %')).toEqual((10000));
   });
 });

@@ -9,6 +9,7 @@
 
 - `[Datagrid]` Added support to cancel `rowactivated` event. Now it will trigger the new event `beforerowactivated` which will wait/sync to cancel or proceed to do `rowactivated` event. ([#1021](https://github.com/infor-design/enterprise/issues/1021))
 - `[Locale]` Added support for showing timezones in the current language with a fall back for IE 11. ([#592](https://github.com/infor-design/enterprise/issues/592))
+- `[Locale]` Added support for different groupsizes. Because this was not correctly working locales like hi-IN (using 3, 2) and en-US (using 3,0) some numbers where not formatted correctly. We will later make this work on masks. ([#441](https://github.com/infor-design/enterprise/issues/441))
 
 ### v4.17.0 Fixes
 

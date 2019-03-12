@@ -1062,22 +1062,29 @@ const Locale = {  // eslint-disable-line
    * @returns {string} The expanded number.
    */
   expandNumber(numberString, options) {
-    const len = numberString.length;
-    if (len <= 3) {
-      return numberString;
+    let len = numberString.length;
+    let isNegative = false;
+
+    if (numberString.substr(0, 1) === '-') {
+      numberString = numberString.substr(1);
+      len = numberString.length;
+      isNegative = true;
     }
 
+    if (len <= 3) {
+      return (isNegative ? '-' : '') + numberString;
+    }
     const groupSizes = this.currentLocale.data.numbers.groupSizes || [3, 3];
     const sep = options && options.group !== undefined ? options.group : this.numbers().group;
     const firstGroup = numberString.substr(numberString.length - groupSizes[0]);
     const nthGroup = numberString.substr(0, numberString.length - groupSizes[0]);
     if (groupSizes[1] === 0) {
-      return nthGroup + sep + firstGroup;
+      return (isNegative ? '-' : '') + nthGroup + (nthGroup === '' ? '' : sep) + firstGroup;
     }
     const reversed = nthGroup.split('').reverse().join('');
     const regex = new RegExp(`.{1,${groupSizes[1]}}`, 'g');
     const reversedSplit = reversed.match(regex).join(sep);
-    return reversedSplit.split('').reverse().join('') + sep + firstGroup;
+    return (isNegative ? '-' : '') + reversedSplit.split('').reverse().join('') + sep + firstGroup;
   },
 
   /**
@@ -1150,6 +1157,7 @@ const Locale = {  // eslint-disable-line
     numString = numString.replace(decimal, '.');
     numString = numString.replace(percentSign, '');
     numString = numString.replace(currencySign, '');
+    numString = numString.replace('$', '');
     numString = numString.replace(' ', '');
 
     return parseFloat(numString);
