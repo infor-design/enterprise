@@ -3440,7 +3440,7 @@ Datagrid.prototype = {
     const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
 
-    if (rowData && rowData.rowStatus && self.settings.showNewRowIndicator) {
+    if (rowData && rowData.rowStatus && (rowData.rowStatus.icon === 'new' ? self.settings.showNewRowIndicator : true)) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
       rowStatus.icon = (rowData.rowStatus.icon === 'success') ? '#icon-check' : '#icon-exclamation';
