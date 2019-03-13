@@ -18,5 +18,5 @@ if [[ "$RELEASE_TAG" == "latest" ]]; then
 
     echo "Publishing and Deploying documentation"
     echo ""
-    node ./scripts/deploy-documentation.js
+    node ./scripts/deploy-documentation.js --site prod
 fi
