@@ -63,6 +63,7 @@ export { Zoom } from './zoom/zoom';
 export { Calendar } from './calendar/calendar';
 export { CompositeForm } from './compositeform/compositeform';
 export { Datagrid } from './datagrid/datagrid';
+export { FormCompact } from './form-compact/form-compact';
 export { Header } from './header/header';
 export { Lookup } from './lookup/lookup';
 export { MonthView } from './monthview/monthview';

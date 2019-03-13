@@ -1,0 +1,385 @@
+// Depends on:
+// - 12 Column Grid
+// - Summary Form
+// Overrides some things in:
+// - Input Fields
+
+.form-compact-container {
+  .row {
+    max-width: 100%;
+  }
+
+  .banner {
+    display: flex;
+
+    .thumbnail {
+      flex-grow: 0;
+      flex-shrink: 0;
+      padding: 15px;
+    }
+
+    .summary-form {
+      flex-grow: 1;
+      flex-shrink: 1;
+      padding: 10px;
+    }
+  }
+}
+
+.form-compact {
+  background-color: $formcompact-bg-color;
+  margin: 0 auto;
+
+  .row {
+    min-height: 50px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .column,
+  .columns {
+    float: none;
+    padding: 0;
+
+    &.form-section-header {
+      padding: 0 10px;
+    }
+
+    label {
+      @include font-size(14);
+      @include transition(background-color 100ms $cubic-ease, color 100ms $cubic-ease);
+
+      background-color: $formcompact-field-bg-color;
+      margin-bottom: 0;
+      overflow: hidden;
+      padding: 4px 9px 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &.required:not(.inline) {
+        &::after {
+          @include font-size(18);
+
+          color: $formcompact-field-required-color;
+          content: '●';
+          top: 0;
+        }
+      }
+    }
+
+    input {
+      @include font-size(18);
+      @include transition(background-color 100ms $cubic-ease, border-color 100ms $cubic-ease, color 100ms $cubic-ease);
+
+      background-color: $formcompact-field-bg-color;
+      border-bottom: 1px solid $formcompact-field-border-color;
+      border-left: 0;
+      border-radius: 0;
+      border-right: 1px solid $formcompact-field-border-color;
+      border-top: 0;
+      padding: 0 8px 4px;
+      text-overflow: ellipsis;
+      width: 100%;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    &.is-focused {
+      input {
+        background-color: $formcompact-field-bg-focus-color;
+        border-bottom-color: $formcompact-field-border-focus-color;
+        border-right-color: $formcompact-field-border-focus-color;
+      }
+
+      label {
+        background-color: $formcompact-field-bg-focus-color;
+      }
+    }
+
+    &.is-readonly {
+      input {
+        background-color: $formcompact-bg-color;
+        border-bottom-color: $input-color-readonly-border;
+        border-right-color: $input-color-readonly-border;
+        color: $input-color-readonly-font;
+      }
+
+      label {
+        background-color: $body-color-primary-background;
+      }
+    }
+
+    &.is-disabled {
+      input {
+        border-bottom-color: $input-color-disabled-border;
+        border-right-color: $input-color-disabled-border;
+        color: $input-color-disabled-font;
+      }
+    }
+  }
+}
+
+.form-section-header {
+  @include font-size(16);
+
+  align-items: center;
+  border-bottom: 1px solid $input-color-readonly-border;
+  display: flex;
+  font-weight: 700;
+}
+
+// Firefox has different column padding needs
+.is-firefox {
+  .form-compact {
+    .column,
+    .columns {
+      label {
+        padding: 8px 9px 0;
+      }
+
+      input {
+        padding: 0 8px 8px;
+      }
+    }
+  }
+}
+
+// IE has different header padding needs
+.ie {
+  .form-compact {
+    .column,
+    .columns {
+      &.form-section-header {
+        padding: 16px 10px 15px;
+      }
+    }
+  }
+}
+
+// Change the padding when the font is not "Source Sans" (Legacy)
+html:not(.font-source-sans) {
+  .form-compact {
+    .column,
+    .columns {
+      &.form-section-header {
+        padding: 16px 10px 15px;
+      }
+
+      label {
+        padding: 6px 9px 0;
+      }
+
+      input {
+        padding: 0 8px 6px;
+      }
+    }
+  }
+
+  // Non-source-sans Firefox has ever-different column padding needs
+  &.is-firefox {
+    .form-compact {
+      .column,
+      .columns {
+        label {
+          padding: 8px 9px 0;
+        }
+
+        input {
+          padding: 0 8px 8px;
+        }
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .form-compact {
+    .row {
+      padding-left: 0;
+      padding-right: inherit;
+    }
+
+    .one.column,
+    .one.columns,
+    .one-one-half.column,
+    .one-one-half.columns,
+    .two.columns,
+    .three.columns,
+    .four.columns,
+    .five.columns,
+    .six.columns,
+    .seven.columns,
+    .eight.columns,
+    .nine.columns,
+    .ten.columns,
+    .eleven.columns,
+    .twelve.columns,
+    .full.column,
+    .one-third.column,
+    .two-thirds.column,
+    .one-half.column {
+      margin-left: inherit;
+      margin-right: 0;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-phone-to-tablet + 1) {
+  // Responsive View of Summary Area
+  .form-compact-container {
+    .banner {
+      flex-direction: column;
+
+      > * {
+        align-items: center;
+      }
+    }
+
+    .thumbnail {
+      text-align: center;
+    }
+  }
+
+  // Ensures a common min-height on headers
+  .form-compact {
+    .row {
+      .column,
+      .columns {
+        min-height: 50px;
+      }
+    }
+  }
+}
+
+// Overrides for the gutters in `../grid/_grid.scss`, which are not present
+// on grids inside of the Form Compact component.
+// For tabledevices larger than 550px
+@media (min-width: $breakpoint-phone-to-tablet) {
+  .form-compact-container {
+    .summary-form {
+      .column,
+      .columns {
+        margin-left: 0;
+
+        .field:first-child {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
+  .form-compact {
+    .row {
+      display: flex;
+      padding-right: 0;
+    }
+
+    .column,
+    .columns {
+      padding: 0;
+    }
+
+    .one.column,
+    .one.columns {
+      margin-left: 0;
+      width: 8.33333333333%;
+    }
+
+    .one-one-half.column,
+    .one-one-half.columns {
+      margin-left: 0;
+      width: 12.499999999965%;
+    }
+
+    .two.columns {
+      margin-left: 0;
+      width: 16.6666666666%;
+    }
+
+    .three.columns {
+      margin-left: 0;
+      width: 25%;
+    }
+
+    .four.columns {
+      margin-left: 0;
+      width: 33.3333333333%;
+    }
+
+    .five.columns {
+      margin-left: 0;
+      width: 41.6666666666%;
+    }
+
+    .six.columns {
+      margin-left: 0;
+      width: 50%;
+    }
+
+    .seven.columns {
+      margin-left: 0;
+      width: 58.3333333333%;
+    }
+
+    .eight.columns {
+      margin-left: 0;
+      width: 66.6666666666%;
+    }
+
+    .nine.columns {
+      margin-left: 0;
+      width: 75%;
+    }
+
+    .ten.columns {
+      margin-left: 0;
+      width: 83.3333333333%;
+    }
+
+    .eleven.columns {
+      margin-left: 0;
+      width: 91.6666666666%;
+    }
+
+    .twelve.columns,
+    .full.column {
+      margin-left: 0;
+      width: 100%;
+
+      &.center {
+        display: block;
+        min-width: 300px;
+        text-align: center;
+      }
+    }
+
+    .one-fifth.column {
+      margin-left: 0;
+      width: 20%;
+    }
+
+    .one-fourth.column {
+      margin-left: 0;
+      width: 25%;
+    }
+
+    .one-third.column {
+      margin-left: 0;
+      width: 33.3333333%;
+    }
+
+    .two-thirds.column {
+      margin-left: 0;
+      width: 66.6666666666%;
+    }
+
+    .one-half.column {
+      margin-left: 0;
+      width: 50%;
+    }
+  }
+}

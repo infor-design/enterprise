@@ -81,6 +81,11 @@ $gutter-neg-size: -20px;
       width: calc(8.33333333333% - 18.33333333333px);
     }
 
+    .one-one-half.column,
+    .one-one-half.columns {
+      width: calc(12.499999999965% - 12.499999999965px);
+    }
+
     .two.columns {
       width: calc(16.6666666666% - 16.6666666666px);
     }
@@ -176,6 +181,12 @@ $gutter-neg-size: -20px;
     .one.columns {
       margin-left: $gutter-size;
       width: calc(8.33333333333% - 20px);
+    }
+
+    .one-one-half.column,
+    .one-one-half.columns {
+      margin-left: $gutter-size;
+      width: calc(12.499999999965% - 20px);
     }
 
     .two.columns {
@@ -280,6 +291,12 @@ $gutter-neg-size: -20px;
   .one.columns {
     margin-left: $gutter-size;
     width: calc(8.33333333333% - 20px);
+  }
+
+  .one-one-half.column,
+  .one-one-half.columns {
+    margin-left: $gutter-size;
+    width: calc(12.499999999965% - 20px);
   }
 
   .two.columns {
@@ -394,6 +411,8 @@ html[dir='rtl'] {
 
     .one.column,
     .one.columns,
+    .one-one-half.column,
+    .one-one-half.columns,
     .two.columns,
     .three.columns,
     .four.columns,
