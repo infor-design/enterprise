@@ -3589,7 +3589,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (skipColumns > 0) {
+      if (skipColumns > 0 && !col.hidden) {
         skipColumns -= 1;
         cssClass += ' is-hidden';
       }
