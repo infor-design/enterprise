@@ -120,7 +120,7 @@ The following options are supported:
 - `decimal` - You can specify a specific character to use for the decimal point, otherwise it uses the default one for the current locale.
 - `group` - You can specify a specific character to use for the number group (usually 1000s), otherwise it uses the default one for the current locale.
 - `currencyFormat` - You can specify a currencyFormat to use, otherwise it uses the current one for the locale. The ¤ is where the currencySign will go. ### is used for the number replacement.
-- `groupSize` - You can specify a specific where the thousands group separators will be placed. For example `[3, 0]` means that only the first group will have a separator, for example 1234,567. `[3, 2]` means the first group will have 3 digits and the other groups will all have 2, for example 12,34,567. The default for many locales is `[3, 3]`.
+- `groupSize` - You can specify where the thousands group separators will be placed. For example `[3, 0]` means that only the first group will have a separator: 1234,567. `[3, 2]` means the first group will have 3 digits and the other groups will all have 2, for example 12,34,567. The default for many locales is `[3, 3]`.
 
 ## Code Example - Dates
 
