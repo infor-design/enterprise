@@ -2246,6 +2246,16 @@ $datagrid-short-row-height: 23px;
     th {
       background-color: $datagrid-header-active-color;
 
+      &.l-left-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: left;
+        }
+      }
+
       &.l-center-text {
         .datagrid-column-wrapper {
           width: 100%;
@@ -3392,6 +3402,40 @@ html[dir='rtl'] {
       }
     }
 
+    .datagrid-header-groups {
+      th {
+        &.l-left-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: right;
+          }
+        }
+
+        &.l-cener-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: center;
+          }
+        }
+
+        &.l-right-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: left;
+          }
+        }
+      }
+    }
+
     .required::after {
       content: '';
     }
@@ -3404,8 +3448,16 @@ html[dir='rtl'] {
       top: 0;
     }
 
-    &.left th:last-child {
-      border-left: 1px solid $datagrid-header-border-color;
+    &.left { 
+      th:last-child {
+        border-left: 1px solid $datagrid-header-border-color;
+      }
+    }
+
+    &.center {
+      th:last-child {
+        border-right-color: $datagrid-header-border-color;
+      }
     }
   }
 
@@ -3446,32 +3498,6 @@ html[dir='rtl'] {
 
     .datagrid-body:not(.left):not(.right) td:first-child {
       border-right-color: transparent;
-    }
-  }
-}
-
-.datagrid-header {
-  .datagrid-header-groups {
-    th {
-      &.l-center-text {
-        .datagrid-column-wrapper {
-          width: 100%;
-        }
-
-        .datagrid-header-text {
-          text-align: center;
-        }
-      }
-
-      &.l-left-text {
-        .datagrid-column-wrapper {
-          width: 100%;
-        }
-
-        .datagrid-header-text {
-          text-align: left;
-        }
-      }
     }
   }
 }
