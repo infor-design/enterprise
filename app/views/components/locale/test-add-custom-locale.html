@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1 class="fieldset-title">Locale - Adding a custom locale</h1>
+    <div id="output" >
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    var output = $('#output');
+    var append = function (value) {
+      output.append('<span>' + value + '</span><br>');
+    };
+
+    // Shows in the passed in url locale
+    append(Locale.translate('AboutText') + '<br>');
+    append(Locale.translate('SomeTextThatDoesntExist') + '<br>');
+
+    // Add a new locale not in the setup ones
+    Locale.defaultLocales.push({ lang: 'la', default: 'la-IT' });
+    Locale.supportedLocales.push('la-IT');
+
+    Locale.set('la-lT').done(function () {
+      append(Locale.translate('AboutText') + '<br>');
+      append(Locale.translate('SomeTextThatDoesntExist') + '<br>');
+    });
+  });
+</script>

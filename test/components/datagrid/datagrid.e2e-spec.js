@@ -612,7 +612,7 @@ describe('Datagrid paging tests', () => {
     await element(by.css('.pager-count input')).clear();
     await element(by.css('.pager-count input')).sendKeys('101');
     await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
-    await browser.driver.sleep(300);
+    await browser.driver.sleep(500);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
@@ -1421,6 +1421,7 @@ describe('Datagrid paging serverside single select tests', () => {
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
 
     await element(by.css('.pager-next a')).click();
+    await browser.driver.sleep(config.sleep);
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
@@ -1428,6 +1429,7 @@ describe('Datagrid paging serverside single select tests', () => {
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev a')).click();
+    await browser.driver.sleep(config.sleep);
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
@@ -1529,10 +1531,20 @@ describe('Datagrid timezone tests', () => {
 
   it('Should Render Timezones', async () => {
     expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('03-04-2019');
-    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('3/4/2019 00:00 GMT-5');
-    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(3)')).getText()).toEqual('3/4/2019 00:00 Eastern-standaardtijd');
-    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(4)')).getText()).toEqual('03-04-2019 00:00 GMT-5');
-    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(5)')).getText()).toEqual('03-04-2019 00:00 GMT-5');
+    let text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(2)')).getText();
+
+    expect(['3/4/2019 00:00 GMT-5', '3/4/2019 00:00 GMT-4']).toContain(text);
+    text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(3)')).getText();
+
+    expect(['3/4/2019 00:00 Eastern-standaardtijd', '3/4/2019 00:00 Eastern-zomertijd']).toContain(text);
+
+    text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(4)')).getText();
+
+    expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
+
+    text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(5)')).getText();
+
+    expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
   });
 });
 

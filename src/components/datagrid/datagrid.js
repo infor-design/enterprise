@@ -1540,6 +1540,13 @@ Datagrid.prototype = {
         const dropdown = $(this);
         dropdown.dropdown(col.editorOptions).on('selected.datagrid', () => {
           self.applyFilter(null, 'selected');
+        }).on('listopened.datagrid', () => {
+          const api = dropdown.data('dropdown');
+          if (api) {
+            if (!self.isInViewport(api.list[0])) {
+              self.adjustPosLeft(api.list[0]);
+            }
+          }
         });
 
         // Append the Dropdown's sourceArguments with some row/col meta-data
@@ -2099,6 +2106,38 @@ Datagrid.prototype = {
       type: 'filtered'
     });
     this.saveUserSettings();
+  },
+
+  /**
+   * Adjust the left positon for given element to be in viewport
+   * @private
+   * @param {object} el The element
+   * @returns {void}
+   */
+  adjustPosLeft(el) {
+    const padding = 20;
+    const b = el.getBoundingClientRect();
+    const w = (window.innerWidth || document.documentElement.clientWidth);
+    if (b.left < 0 && b.right <= w) {
+      el.style.left = `${padding}px`; // Left side
+    } else if (b.left >= 0 && !(b.right <= w)) {
+      el.style.left = `${(w - b.width) - padding}px`; // Right side
+    }
+  },
+
+  /**
+   * Check if given element is in the viewport
+   * @private
+   * @param {object} el The element to check
+   * @returns {boolean} true if is in the viewport
+   */
+  isInViewport(el) {
+    const b = el.getBoundingClientRect();
+    return (
+      b.top >= 0 && b.left >= 0 &&
+      b.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      b.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
   },
 
   /**
@@ -7348,7 +7387,7 @@ Datagrid.prototype = {
           }
         }
 
-        if (key === 9 && self.editor && self.editor.name === 'input') {
+        if (key === 9 && self.editor && self.editor.name === 'input' && col.inlineEditor === true) {
           // Editor.destroy
           self.editor.destroy();
           self.editor = null;

@@ -460,3 +460,21 @@ describe('Dropdown placeholder tests', () => {
     expect(await element(by.css('[data-placeholder-text]')).isDisplayed()).toBeTruthy();
   });
 });
+
+describe('Dropdown readonly tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/example-readonly');
+  });
+
+  it('Should honor the tabindex', async () => {
+    await element(by.css('#random-input-1')).sendKeys(protractor.Key.TAB);
+
+    expect(await browser.driver.switchTo().activeElement().getAttribute('aria-label')).toEqual('Readonly Dropdown');
+
+    const dd = { id: 'readonly-dropdown', str: 'div[aria-controls="dropdown-list"]' };
+    dd.el = await element(by.id(dd.id)).element(by.xpath('..')).element(by.css(dd.str));
+    await dd.el.sendKeys(protractor.Key.TAB);
+
+    expect(await browser.driver.switchTo().activeElement().getAttribute('id')).toEqual('random-input-2');
+  });
+});
