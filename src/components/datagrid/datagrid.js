@@ -1100,8 +1100,8 @@ Datagrid.prototype = {
         }
         const hiddenStr = colGroups[k].hidden || colspan < 1 ? ' class="hidden"' : '';
         const colspanStr = ` colspan="${colspan > 0 ? colspan : 1}"`;
+        const groupedHeaderAlignmentClass = colGroups[k].align ? `l-${colGroups[k].align}-text` : '';
         uniqueId = self.uniqueId(`-header-group-${k}`);
-        let groupedHeaderAlignmentClass = colGroups[k].align ? `l-${colGroups[k].align}-text` : '';
         if (colspan > 0) {
           total += colspan;
         }
