@@ -2245,6 +2245,26 @@ $datagrid-short-row-height: 23px;
   .datagrid-header-groups {
     th {
       background-color: $datagrid-header-active-color;
+
+      &.l-center-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: center;
+        }
+      }
+
+      &.l-right-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: right;
+        }
+      }
     }
   }
 
