@@ -25,6 +25,7 @@
 - `[Datagrid]` Stretch column not working in Edge browser. ([#1716](https://github.com/infor-design/enterprise/issues/1716))
 - `[Datagrid]` Fixed a bug where filtering Order Date with `is-not-empty` on a null value would not correctly filter out results. ([#1718](https://github.com/infor-design/enterprise/issues/1718))
 - `[Datagrid]` Fixed a bug where when using the `disableClientSideFilter` setting the filtered event would not be called correctly. ([#1689](https://github.com/infor-design/enterprise/issues/1689))
+- `[Datagrid]` Fixed a bug where hidden columns inside a colspan were aligning incorrectly. ([#1764](https://github.com/infor-design/enterprise/issues/1764))
 - `[Radio Button]` Fixed a rendering problem on the selected state of Radio Buttons used inside of Accordion components. ([#1568](https://github.com/infor-design/enterprise/issues/1568))
 - `[Radio Button]` Fixed a z-index issue that was causing radio buttons to sometimes display over top of page sections where they should have instead scrolled beneath. ([#1014](https://github.com/infor-design/enterprise/issues/1014))
 
