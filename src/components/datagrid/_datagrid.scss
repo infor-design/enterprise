@@ -3450,6 +3450,32 @@ html[dir='rtl'] {
   }
 }
 
+.datagrid-header {
+  .datagrid-header-groups {
+    th {
+      &.l-center-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: center;
+        }
+      }
+
+      &.l-left-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
 // Reorder Column styles
 .has-draggable-columns {
   .drag-target-arrows {
