@@ -1100,12 +1100,13 @@ Datagrid.prototype = {
         }
         const hiddenStr = colGroups[k].hidden || colspan < 1 ? ' class="hidden"' : '';
         const colspanStr = ` colspan="${colspan > 0 ? colspan : 1}"`;
+        const groupedHeaderAlignmentClass = colGroups[k].align ? `l-${colGroups[k].align}-text` : '';
         uniqueId = self.uniqueId(`-header-group-${k}`);
         if (colspan > 0) {
           total += colspan;
         }
 
-        headerRows.center += `<th${hiddenStr}${colspanStr} id="${uniqueId}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+        headerRows.center += `<th${hiddenStr}${colspanStr} id="${uniqueId}" class="${groupedHeaderAlignmentClass}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
       });
 
       if (total < visibleColumnsLen) {
