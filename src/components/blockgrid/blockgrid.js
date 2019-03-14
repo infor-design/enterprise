@@ -147,7 +147,6 @@ Blockgrid.prototype = {
 
   /**
    * @deprecated as of v4.15.0, use `select()`
-   * @private
    * Run selection over a block item
    * @param {jQuery[]} activeBlock the jQuery-wrapped DOM element that will be selected.
    * @param {boolean} isCheckbox True if a checkbox, used for mixed mode.
@@ -321,7 +320,6 @@ Blockgrid.prototype = {
 
   /**
    * @deprecated as of v4.15.0, use `render()`
-   * @private
    * Render an individual block element.
    * @returns {void}
    */
