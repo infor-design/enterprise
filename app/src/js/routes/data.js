@@ -95,7 +95,7 @@ router.get('/:fileName', (req, res, next) => {
   }
 
   res.status(500);
-  next(`Can\'t do anything with the data filename : ${filepath}`);
+  next(`Can\'t do anything with file "${filepath}"`);
 });
 
 module.exports = router;
