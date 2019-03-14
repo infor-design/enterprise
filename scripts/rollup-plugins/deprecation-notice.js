@@ -2,9 +2,10 @@
 // and pumps them into the console during the build process.
 const chalk = require('chalk');
 const documentation = require('documentation');
+const path = require('path');
 const logger = require('../logger');
 
-let deprecationCount = 0;
+const projectRoot = process.cwd();
 const EMPTY_MAP = {
   mappings: ''
 };
@@ -27,22 +28,27 @@ const parseChildren = function (obj) {
 
 // Logs the deprecation notice in the terminal
 const logDeprecation = function (componentName, methodName, deprecatedObj) {
-  const formattedMethodName = chalk.white.bold(`${methodName}()`);
-  const msgStr = `: ${parseChildren(deprecatedObj)}` || '';
+  const formattedName = chalk.white.bold(`${componentName}.${methodName}()`);
+  const msgStr = `${parseChildren(deprecatedObj)}` || '';
 
-  // If this is the first one, add a header to separate it
-  if (deprecationCount === 0) {
-    logger(chalk.yellow.bold('IDS Deprecation Warnings:'));
-  }
-  deprecationCount++;
-
-  logger('alert', `${componentName}.${formattedMethodName}${msgStr}`);
+  logger('alert', `${formattedName} is deprecated ${msgStr}`);
 };
 
 // Connect to Rollup.js's `transform` hook to get access to an individual ES Module.
 // This doesn't actually "transform" the code, but will pass its contents into
 // Documentation.js for detection of a `@deprecated` tag.
 const transform = function (code, filePath) {
+  const ret = {
+    code,
+    map: EMPTY_MAP
+  };
+
+  if (!filePath || !filePath.includes(path.join(projectRoot, 'src'))) {
+    // TODO: re-enable logging for a verbose mode?
+    // logger(`Skipping file ${chalk.cyan(filePath)}...`);
+    return ret;
+  }
+
   documentation
     .build([filePath], { extension: 'js', shallow: true })
     .then((docs) => {
@@ -67,16 +73,11 @@ const transform = function (code, filePath) {
       logger('error', `${err}`);
     });
 
-  return {
-    code,
-    map: EMPTY_MAP
-  };
+  return ret;
 };
 
 // The actual Rollup.js plugin wrapper
 const plugin = function () {
-  debugger;
-
   return {
     name: 'deprecation-notice',
     transform
