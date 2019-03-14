@@ -19,13 +19,13 @@ describe('Flex toobar ajax tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Check ajax', async () => {
+    it('Should not visually regress', async () => {
       const flexToolbarEl = await element(by.className('no-frills'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(flexToolbarEl), config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index')).toEqual(0);
-      await element(await by.id('menu-button')).click();
+      await element(await by.css('button#menu-button')).click();
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-menu-button')).toEqual(0);
       browser.driver.actions().mouseMove(element(by.css('#menu-button-popupmenu li.submenu'))).perform();
@@ -56,7 +56,7 @@ describe('Flex toobar ajax tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-more-menu-overflowed-menu-button-submenu')).toEqual(0);
-      await element(await by.id('menu-button')).click();
+      await element(await by.css('button#menu-button')).click();
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-menu-button')).toEqual(0);
       browser.driver.actions().mouseMove(element(by.css('#menu-button-popupmenu li.submenu'))).perform();

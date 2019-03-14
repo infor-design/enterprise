@@ -1972,6 +1972,11 @@ $datagrid-short-row-height: 23px;
         visibility: visible;
       }
 
+      .colorpicker-container .icon {
+        margin-left: 8px;
+        top: 10px;
+      }
+
       //Date Picker
       .datepicker {
         border: 0;
@@ -2261,6 +2266,36 @@ $datagrid-short-row-height: 23px;
   .datagrid-header-groups {
     th {
       background-color: $datagrid-header-active-color;
+
+      &.l-left-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: left;
+        }
+      }
+
+      &.l-center-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: center;
+        }
+      }
+
+      &.l-right-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: right;
+        }
+      }
     }
   }
 
@@ -3388,6 +3423,40 @@ html[dir='rtl'] {
       }
     }
 
+    .datagrid-header-groups {
+      th {
+        &.l-left-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: right;
+          }
+        }
+
+        &.l-cener-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: center;
+          }
+        }
+
+        &.l-right-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: left;
+          }
+        }
+      }
+    }
+
     .required::after {
       content: '';
     }
@@ -3400,8 +3469,16 @@ html[dir='rtl'] {
       top: 0;
     }
 
-    &.left th:last-child {
-      border-left: 1px solid $datagrid-header-border-color;
+    &.left {
+      th:last-child {
+        border-left: 1px solid $datagrid-header-border-color;
+      }
+    }
+
+    &.center {
+      th:last-child {
+        border-right-color: $datagrid-header-border-color;
+      }
     }
   }
 
@@ -3664,6 +3741,7 @@ html[dir='rtl'] {
   .trigger .icon {
     height: 24px;
     left: 4px;
+    top: 0;
     width: 16px;
   }
 

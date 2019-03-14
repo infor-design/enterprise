@@ -1100,12 +1100,13 @@ Datagrid.prototype = {
         }
         const hiddenStr = colGroups[k].hidden || colspan < 1 ? ' class="hidden"' : '';
         const colspanStr = ` colspan="${colspan > 0 ? colspan : 1}"`;
+        const groupedHeaderAlignmentClass = colGroups[k].align ? `l-${colGroups[k].align}-text` : '';
         uniqueId = self.uniqueId(`-header-group-${k}`);
         if (colspan > 0) {
           total += colspan;
         }
 
-        headerRows.center += `<th${hiddenStr}${colspanStr} id="${uniqueId}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+        headerRows.center += `<th${hiddenStr}${colspanStr} id="${uniqueId}" class="${groupedHeaderAlignmentClass}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
       });
 
       if (total < visibleColumnsLen) {
@@ -1539,6 +1540,13 @@ Datagrid.prototype = {
         const dropdown = $(this);
         dropdown.dropdown(col.editorOptions).on('selected.datagrid', () => {
           self.applyFilter(null, 'selected');
+        }).on('listopened.datagrid', () => {
+          const api = dropdown.data('dropdown');
+          if (api) {
+            if (!self.isInViewport(api.list[0])) {
+              self.adjustPosLeft(api.list[0]);
+            }
+          }
         });
 
         // Append the Dropdown's sourceArguments with some row/col meta-data
@@ -2098,6 +2106,38 @@ Datagrid.prototype = {
       type: 'filtered'
     });
     this.saveUserSettings();
+  },
+
+  /**
+   * Adjust the left positon for given element to be in viewport
+   * @private
+   * @param {object} el The element
+   * @returns {void}
+   */
+  adjustPosLeft(el) {
+    const padding = 20;
+    const b = el.getBoundingClientRect();
+    const w = (window.innerWidth || document.documentElement.clientWidth);
+    if (b.left < 0 && b.right <= w) {
+      el.style.left = `${padding}px`; // Left side
+    } else if (b.left >= 0 && !(b.right <= w)) {
+      el.style.left = `${(w - b.width) - padding}px`; // Right side
+    }
+  },
+
+  /**
+   * Check if given element is in the viewport
+   * @private
+   * @param {object} el The element to check
+   * @returns {boolean} true if is in the viewport
+   */
+  isInViewport(el) {
+    const b = el.getBoundingClientRect();
+    return (
+      b.top >= 0 && b.left >= 0 &&
+      b.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      b.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
   },
 
   /**
@@ -3401,7 +3441,7 @@ Datagrid.prototype = {
     const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
 
-    if (rowData && rowData.rowStatus && self.settings.showNewRowIndicator) {
+    if (rowData && rowData.rowStatus && (rowData.rowStatus.icon === 'new' ? self.settings.showNewRowIndicator : true)) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
       rowStatus.icon = (rowData.rowStatus.icon === 'success') ? '#icon-check' : '#icon-exclamation';

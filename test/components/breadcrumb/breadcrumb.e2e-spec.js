@@ -8,6 +8,8 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Breadcrumb example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/breadcrumb/example-index?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.breadcrumb'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {

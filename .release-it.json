@@ -1,17 +1,15 @@
 {
-    "non-interactive": false,
-    "dry-run": false,
-    "verbose": false,
     "pkgFiles": [
         "package.json"
     ],
     "scripts": {
-        "beforeStart": "npm run eslint:error-only && npm run build && npm run zip-dist",
+        "beforeStart": "npm run eslint:error-only",
+        "afterBump": "npm run build && npm run zip-dist",
         "afterRelease": "./scripts/after-release.sh ${npm.tag} ${version}"
     },
     "git": {
-        "commitMessage": "Release v%s",
-        "tagAnnotation": "Release v%s"
+        "commitMessage": "Release v${version}",
+        "tagAnnotation": "Release v${version}"
     },
     "npm": {
         "tag": "latest"

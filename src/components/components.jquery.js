@@ -71,6 +71,7 @@ import './zoom/zoom.jquery';
 
 // Complex ====/
 import './datagrid/datagrid.jquery';
+import './form-compact/form-compact.jquery';
 import './header/header.jquery';
 import './lookup/lookup.jquery';
 import './tabs-multi/multi-tabs.jquery';
