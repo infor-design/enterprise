@@ -412,7 +412,6 @@ const Locale = {  // eslint-disable-line
       return undefined;
     }
 
-    // TODO: Can we handle this if (this.dff.state()==='pending')
     const data = this.currentLocale.data;
     let pattern;
     let ret = '';
@@ -505,7 +504,7 @@ const Locale = {  // eslint-disable-line
 
     // Timezone
     if (ret.indexOf('zz') > -1) {
-      const timezoneDate = new Date(); // TODO Handle attribs.timeZone
+      const timezoneDate = new Date();
       const shortName = this.getTimeZone(timezoneDate, 'short');
       const longName = this.getTimeZone(timezoneDate, 'long');
 
@@ -1027,7 +1026,6 @@ const Locale = {  // eslint-disable-line
     let curFormat;
     let percentFormat;
     const decimal = options && options.decimal ? options.decimal : this.numbers().decimal;
-    const group = options && options.group !== undefined ? options.group : this.numbers().group;
     let minimumFractionDigits = options && options.minimumFractionDigits !== undefined ? options.minimumFractionDigits : (options && options.style && options.style === 'currency' ? 2 : (options && options.style && options.style === 'percent') ? 0 : 2);
     let maximumFractionDigits = options && options.maximumFractionDigits !== undefined ? options.maximumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2 : (options && options.minimumFractionDigits ? options.minimumFractionDigits : 3));
 
@@ -1055,7 +1053,7 @@ const Locale = {  // eslint-disable-line
     if (options && options.style === 'percent') {
       const percentSign = !this.currentLocale.data.numbers ? '%' : this.currentLocale.data.numbers.percentSign;
 
-      percentFormat = !this.currentLocale.data.numbers ? '#,##0 %' : this.currentLocale.data.numbers.percentFormat;
+      percentFormat = !this.currentLocale.data.numbers ? '### %' : this.currentLocale.data.numbers.percentFormat;
       percentFormat = percentFormat.replace('¤', percentSign);
     }
 
@@ -1072,7 +1070,8 @@ const Locale = {  // eslint-disable-line
     }
 
     const parts = this.truncateDecimals(number, minimumFractionDigits, maximumFractionDigits, options && options.round).split('.');
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
+    const expandedNum = this.expandNumber(parts[0], options);
+    parts[0] = expandedNum;
     formattedNum = parts.join(decimal);
 
     // Position the negative at the front - There is no CLDR info for this.
@@ -1097,15 +1096,12 @@ const Locale = {  // eslint-disable-line
       formattedNum = formattedNum.replace(/\.$/, ''); // remove trailing dot
     }
 
-    // Confirm Logic After All Locales are added.
     if (options && options.style === 'currency') {
-      formattedNum = curFormat.replace('#,##0.00', formattedNum);
-      formattedNum = formattedNum.replace('#,##0.00', formattedNum);
+      formattedNum = curFormat.replace('###', formattedNum);
     }
 
     if (options && options.style === 'percent') {
-      formattedNum = percentFormat.replace('#,##0', formattedNum);
-      formattedNum = formattedNum.replace('#.##0', formattedNum);
+      formattedNum = percentFormat.replace('###', formattedNum);
     }
 
     if (isNegative) {
@@ -1129,6 +1125,39 @@ const Locale = {  // eslint-disable-line
       return 0;
     }
     return number.toString().split('.')[1].length || 0;
+  },
+
+  /**
+   * Expand the number to the groupsize.
+   * @private
+   * @param  {string} numberString The number to expand
+   * @param  {object} options The locale options
+   * @returns {string} The expanded number.
+   */
+  expandNumber(numberString, options) {
+    let len = numberString.length;
+    let isNegative = false;
+
+    if (numberString.substr(0, 1) === '-') {
+      numberString = numberString.substr(1);
+      len = numberString.length;
+      isNegative = true;
+    }
+
+    if (len <= 3) {
+      return (isNegative ? '-' : '') + numberString;
+    }
+    const groupSizes = this.currentLocale.data.numbers.groupSizes || [3, 3];
+    const sep = options && options.group !== undefined ? options.group : this.numbers().group;
+    const firstGroup = numberString.substr(numberString.length - groupSizes[0]);
+    const nthGroup = numberString.substr(0, numberString.length - groupSizes[0]);
+    if (groupSizes[1] === 0) {
+      return (isNegative ? '-' : '') + nthGroup + (nthGroup === '' ? '' : sep) + firstGroup;
+    }
+    const reversed = nthGroup.split('').reverse().join('');
+    const regex = new RegExp(`.{1,${groupSizes[1]}}`, 'g');
+    const reversedSplit = reversed.match(regex).join(sep);
+    return (isNegative ? '-' : '') + reversedSplit.split('').reverse().join('') + sep + firstGroup;
   },
 
   /**
@@ -1201,6 +1230,7 @@ const Locale = {  // eslint-disable-line
     numString = numString.replace(decimal, '.');
     numString = numString.replace(percentSign, '');
     numString = numString.replace(currencySign, '');
+    numString = numString.replace('$', '');
     numString = numString.replace(' ', '');
 
     return parseFloat(numString);
@@ -1315,7 +1345,7 @@ const Locale = {  // eslint-disable-line
   numbers() {
     return this.currentLocale.data.numbers ? this.currentLocale.data.numbers : {
       percentSign: '%',
-      percentFormat: '#,##0 %',
+      percentFormat: '### %',
       minusSign: '-',
       decimal: '.',
       group: ','

@@ -122,10 +122,13 @@ describe('Lookup API', () => {
     expect($(lookupEl).siblings('span.trigger').css('visibility')).toEqual('hidden');
   });
 
-  it('Should be able to destroy it', () => {
+  it('Should be able to destroy it', (done) => {
     lookupObj.destroy();
 
-    expect(document.body.querySelector('.trigger')).toBeFalsy();
+    setTimeout(() => {
+      expect(document.body.querySelector('.trigger')).toBeFalsy();
+      done();
+    }, 300);
   });
 
   it('Should be able to open the dialog and select', (done) => {
