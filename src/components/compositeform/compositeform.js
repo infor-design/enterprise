@@ -81,6 +81,8 @@ CompositeForm.prototype = {
     // Check size and append class, if necessary
     this.checkResponsive();
 
+    this.applyIE11Fix();
+
     return this;
   },
 
@@ -103,6 +105,8 @@ CompositeForm.prototype = {
     function changeExpanderText() {
       const isExpanded = self.expandableAreaAPI.isExpanded();
       self.setExpanderText(self.settings[isExpanded ? 'expandedText' : 'collapsedText']);
+
+      self.applyIE11Fix();
     }
 
     if (this.hasSummary) {
@@ -158,6 +162,23 @@ CompositeForm.prototype = {
    */
   isSideOriented() {
     return this.element[0].classList.contains('on-side');
+  },
+
+  /**
+   * Determines if browser is IE11 and applies min-height fix for overflow
+   * @returns {void}
+   */
+  applyIE11Fix() {
+    const isIE11 = $('html').hasClass('ie11');
+    const expandableElementArea = $('.expandable-area');
+    let isElementExpanded = expandableElementArea.hasClass('is-expanded');
+    if (isIE11 && isElementExpanded) {
+      setTimeout(function () {
+        expandableElementArea.css('min-height', $('.expandable-pane').outerHeight(true) + $('.expandable-footer').outerHeight(true));
+      }, 300); // equal to transition time
+    } else if (isIE11 && !isElementExpanded) {
+      expandableElementArea.css('min-height', 'auto');
+    }
   },
 
   /**
