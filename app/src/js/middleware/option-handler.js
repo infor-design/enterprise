@@ -31,7 +31,7 @@ module.exports = function (app, defaults) {
       res.opts.theme = req.query.theme;
       logger('info', `Setting Theme to ${res.opts.theme}`);
 
-      if (res.opts.theme === 'uplift-alpha') {
+      if (res.opts.theme === 'uplift') {
         res.opts.isUpliftTheme = true;
       }
     } else {
