@@ -1009,12 +1009,12 @@ Hierarchy.prototype = {
           }
         }
 
-        parent = $(`#${thisNodeData.id}`).parent();
+        parent = $(`#${xssUtils.stripTags(thisNodeData.id)}`).parent();
         parent.append(`<ul>${childrenNodes}</ul>`);
 
         let childLength = thisNodeData.children.length;
         while (childLength--) {
-          const lf = $(`#${thisNodeData.children[childLength].id}`);
+          const lf = $(`#${xssUtils.stripTags(thisNodeData.children[childLength].id)}`);
           self.updateState(lf, false, thisNodeData.children[childLength], undefined);
         }
       }
