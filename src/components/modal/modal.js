@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { Locale } from '../../../src/components/locale/locale';
 
@@ -785,10 +786,11 @@ Modal.prototype = {
   },
 
   /**
-   * @deprecated as of v4.14.x
+   * @deprecated as of v4.14.0. Please use the `visible` property instead.
    * @returns {boolean} The current state open (true) or closed (false).
    */
   isOpen() {
+    warnAboutDeprecation('visible', 'isOpen');
     return this.visible;
   },
 
