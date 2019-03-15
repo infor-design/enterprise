@@ -158,13 +158,27 @@ Radar.prototype = {
       return;
     }
 
+    // Get the name text from given data
+    const getNameText = (d) => {
+      const size = { min: 328, max: 469 };
+      let text = '';
+      if (dims.w <= size.min) {
+        text = d.shortName || d.abbrName || d.name || '';
+      } else if (dims.w >= (size.min + 1) && dims.w <= size.max) {
+        text = d.abbrName || d.name || '';
+      } else if (dims.w > size.max) {
+        text = d.name || '';
+      }
+      return text;
+    };
+
     let tooltipInterval;
     const colors = d3.scaleOrdinal(self.settings.colors);
 
     // If the supplied maxValue is smaller than the actual one, replace by the max in the data
     const maxValue = Math.max(settings.maxValue, d3.max(data, i => d3.max(i.data.map(o => o.value))));  //eslint-disable-line
 
-    const allAxis = data[0].data.map(i => i.name); // Map the names to the axis
+    const allAxis = data[0].data.map(d => getNameText(d)); // Map the names to the axis
     const total = allAxis.length; // The number of different axes
     const radius = Math.min(dims.w / 2, dims.h / 2); // Radius of the outermost circle
     const angleSlice = Math.PI * 2 / total; // The width in radians of each 'slice'
@@ -268,8 +282,15 @@ Radar.prototype = {
       .attr('dy', '0.35em')
       .attr('x', (d, i) => rScale(maxValue * settings.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2))
       .attr('y', (d, i) => rScale(maxValue * settings.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2))
-      .text(d => d)
-      .call(charts.wrap, settings.wrapWidth, settings.labelFactor);
+      .text(d => d);
+
+    this.element[dims.w < 420 ? 'addClass' : 'removeClass']('is-small');
+
+    if (dims.w > 456) {
+      svg.selectAll('.chart-radar-axis-wrapper .axis .legend').each(function () {
+        charts.wrap(d3.select(this), settings.wrapWidth, settings.labelFactor);
+      });
+    }
 
     // Draw the radar chart blobs
 
