@@ -166,6 +166,7 @@ CompositeForm.prototype = {
 
   /**
    * Determines if browser is IE11 and applies min-height fix for overflow
+   * @private
    * @returns {void}
    */
   applyIE11Fix() {
