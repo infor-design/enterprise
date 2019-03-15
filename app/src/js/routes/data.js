@@ -40,7 +40,7 @@ function handleJSFile(jsFilename, req, res, next) {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
   });
-  
+
   const middleware = require(jsFilename);
   return middleware(req, res, next);
 }
@@ -95,7 +95,7 @@ router.get('/:fileName', (req, res, next) => {
   }
 
   res.status(500);
-  next('Can\'t do anything with the data filename provided...');
+  next(`Can\'t do anything with file "${filepath}"`);
 });
 
 module.exports = router;

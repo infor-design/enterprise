@@ -5,6 +5,8 @@ demo:
   pages:
   - name: Timezones in Timestamp Fields
     slug: test-timezones
+  - name: Unicode Support
+    slug: test-unicode-language
 ---
 
 ## Code Example - Initializing
@@ -72,6 +74,24 @@ Locale.supportedLocales.push('la-IT');
 Locale.set('la-lT').done(function () {
   Locale.translate('Comments');
 });
+```
+
+## Code Example - Unicode Support
+
+We have limited support for Chinese Financial Numbers (Traditional and Simplified), Chinese Simplified and Traditional (normal), Hindi (Devangari), Arabic as these are in the set of supported languages. ou can now type them in certain mask fields and do some conversion to and from. Support is initially limited and could use some native speaker testing in the wild to improve this feature. To convert to a language we use the browser `toLocaleString` which we have wrapped. This may not work in all browsers and means you may need to use special locales to work with this.
+
+```javascript
+Locale.toLocaleString(2019, 'ar-SA'); // ٢٬٠١٩
+Locale.toLocaleString(2019, 'zh-Hans-CN-u-nu-hanidec'); // 二,〇一九
+```
+
+To convert from a Chinese/Arabic/Hindi number we added a function to convert the numbers to english numbers.
+
+```javascript
+Locale.convertNumberToEnglish('١٢٣٤٥٦٧٨٩٠'); // Arabic to 1234567890
+Locale.convertNumberToEnglish('壹貳叄肆伍陸柒捌玖零'); // Chinese Financial to 1234567890
+Locale.convertNumberToEnglish('一二三四五六七八九零'); // Chinese Simplified to 1234567890
+Locale.convertNumberToEnglish('१२३४५६७८९०'); //Devangari to 1234567890
 ```
 
 ## Code Example - Numbers

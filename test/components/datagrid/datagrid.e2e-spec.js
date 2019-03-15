@@ -1740,6 +1740,17 @@ describe('Datagrid tooltip tests', () => {
 
     expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
   });
+
+  it('Should show tooltip on header text cut off with ellipsis', async () => {
+    await browser.actions().mouseMove(element(by.css('.datagrid-header thead th[data-column-id="orderDate"] .datagrid-column-wrapper'))).perform();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
+    const tooltip = await element(by.css('.grid-tooltip'));
+
+    expect(await element(by.css('.datagrid-header thead th[data-column-id="orderDate"]')).getAttribute('class')).toContain('text-ellipsis');
+    expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
+  });
 });
 
 describe('Datagrid Row Activation tests', () => {

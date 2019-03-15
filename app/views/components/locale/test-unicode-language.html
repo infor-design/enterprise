@@ -1,0 +1,45 @@
+<style>
+  .output {
+    background-color: white;
+    display: block;
+    height: 80%;
+    line-height: 15px;
+    width: 100%;
+  }
+</style>
+
+<div class="row">
+  <div class="twelve columns">
+    <h1 class="fieldset-title">Locale - Number Groupsize</h1>
+
+    <div id="output" class="output">
+    </div>
+
+    <script>
+      $('body').on('initialized', function() {
+        var output = $('#output');
+        var number = 1234567890
+        var append = function (value) {
+          output.append('<span>' + value + '</span><br>');
+        };
+
+        append('1234567890 = ' + Locale.toLocaleString(number, 'ar-SA'));
+        append('2019 = ' + Locale.toLocaleString(2019, 'ar-SA'));
+        append('1234567890 = ' + Locale.toLocaleString(number, 'zh-Hans-CN-u-nu-hanidec'));
+        append('2019 = ' + Locale.toLocaleString(2019, 'zh-Hans-CN-u-nu-hanidec'));
+
+        append(Locale.convertNumberToEnglish('١٢٣٤٥٦٧٨٩٠') + ' = ' + '١٢٣٤٥٦٧٨٩٠');
+        append(Locale.convertNumberToEnglish('١٢٣') + '= ١٢٣');
+        append(Locale.convertNumberToEnglish('१२३४५६७८९०') + '= १२३४५६७८९०');
+        append(Locale.convertNumberToEnglish('१२३') + '= १२३');
+        append(Locale.convertNumberToEnglish('壹貳叄肆伍陸柒捌玖零') + '= 壹貳叄肆伍陸柒捌玖零');
+        append(Locale.convertNumberToEnglish('貳零壹玖') + '= 貳零壹玖');
+        append(Locale.convertNumberToEnglish('壹贰叁肆伍陆柒捌玖零') + '= 壹贰叁肆伍陆柒捌玖零');
+        append(Locale.convertNumberToEnglish('贰零壹玖') + '= 贰零壹玖');
+        append(Locale.convertNumberToEnglish('一二三四五六七八九零') + '= 一二三四五六七八九零');
+        append(Locale.convertNumberToEnglish('二〇一九') + '= 二〇一九');
+
+      });
+    </script>
+  </div>
+</div>
