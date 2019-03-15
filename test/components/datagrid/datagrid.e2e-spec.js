@@ -652,7 +652,7 @@ describe('Datagrid paging tests', () => {
     await element(by.css('.pager-count input')).sendKeys(protractor.Key.BACK_SPACE);
     await element(by.css('.pager-count input')).sendKeys('5');
     await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
-    await browser.driver.sleep(350);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('40');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
@@ -665,7 +665,7 @@ describe('Datagrid paging tests', () => {
     await element(by.css('.pager-count input')).clear();
     await element(by.css('.pager-count input')).sendKeys('101');
     await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
-    await browser.driver.sleep(500);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
