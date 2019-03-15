@@ -14,7 +14,7 @@ const themeToIcons = {
   'light'   : 'soho',
   'dark': 'soho',
   'high-contrast' : 'soho',
-  'uplift-alpha': 'uplift'
+  'uplift': 'uplift'
 }
 
 const hbsTemplate = `
