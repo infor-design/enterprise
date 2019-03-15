@@ -1,8 +1,9 @@
 /* eslint-disable */
+const cmdArgs = require('yargs').argv;
 const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
-const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
+const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS, cmdArgs.segment);
 
 exports.config = {
   params: {

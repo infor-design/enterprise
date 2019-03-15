@@ -9,7 +9,9 @@ cache:
   directories:
     - node_modules
 env:
-  - TEST_SUITE=e2e
+  - TEST_SUITE=e2e-initial
+  - TEST_SUITE=e2e-components1
+  - TEST_SUITE=e2e-components2
   - TEST_SUITE=functional
   - TEST_SUITE=lint
 install:
@@ -19,10 +21,10 @@ before_script:
   - export TZ=America/New_York
   - if [ $TEST_SUITE != lint ]; then npm run build; fi
 script:
-  - if [ $TEST_SUITE = e2e ]; then (npm run quickstart &) && sleep 5; fi
+  - if [ $TEST_SUITE = e2e* ]; then (npm run quickstart &) && sleep 5; fi
   - npm run $TEST_SUITE:ci
-  - if [ $TEST_SUITE = e2e ]; then npm run stop; fi
-  - if [ $TRAVIS_EVENT_TYPE = cron ] && [ $TEST_SUITE = e2e ]; then npm run e2e:ci:bs; fi
+  - if [ $TEST_SUITE = e2e* ]; then npm run stop; fi
+  - if [ $TRAVIS_EVENT_TYPE = cron ] && [ $TEST_SUITE = e2e* ]; then npm run $TEST_SUITE:ci:bs; fi
 jobs:
   include:
     - stage: deploy
