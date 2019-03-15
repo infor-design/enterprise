@@ -37,3 +37,8 @@ body::before {
   width: 100px;
   z-index: 1000;
 }
+
+// TODO: Move to tokens
+.icon {
+  fill: transparent;
+}
