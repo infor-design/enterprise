@@ -325,13 +325,13 @@ ExpandableArea.prototype = {
 
   /**
   * Determines if the browser is IE11 and applies a min-height fix for the overflow.
-  * @ private
+  * @private
   * @returns {void}
   */
   applyIE11Fix() {
     const self = this;
     const isIE11 = $('html').hasClass('ie11');
-    setTimeout(function () {
+    setTimeout(() => {
       if (isIE11 && self.element.hasClass('is-expanded')) {
         self.element.css('min-height', self.element.children('.expandable-pane').outerHeight(true) + self.element.children('.expandable-footer').outerHeight(true));
       } else if (isIE11 && !self.element.hasClass('is-expanded')) {
