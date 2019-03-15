@@ -139,6 +139,159 @@ describe('Mask API', () => {
     expect(result.conformedValue).toEqual('100%');
   });
 
+  it('should process arabic numbers', () => {
+    const settings = DEFAULT_SETTINGS;
+    settings.process = 'number';
+    settings.pattern = masks.numberMask;
+    const api = new MaskAPI(settings);
+
+    // Handle big numbers with thousands separators
+    let textValue = '١٢٣٤٥٦٧٨٩٠';
+    const opts = {
+      selection: {
+        start: 0
+      },
+      patternOptions: {
+        allowThousands: false,
+        integerLimit: 10
+      }
+    };
+    let result = api.process(textValue, opts);
+
+    expect(result).toBeDefined();
+    expect(result).toEqual(jasmine.any(Object));
+    expect(result.conformedValue).toEqual(jasmine.any(String));
+    expect(result.conformedValue).toEqual('١٢٣٤٥٦٧٨٩٠');
+
+    // Handle numbers with a decimal
+    opts.patternOptions.allowDecimal = true;
+    textValue = '١٢٣٤٥٦٧٨٩٠.٣٣';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('١٢٣٤٥٦٧٨٩٠.٣٣');
+
+    // Handle Negative numbers
+    opts.patternOptions.allowNegative = true;
+    textValue = '-١٢٣٤٥٦٧٨٩٠.٥٥';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('-١٢٣٤٥٦٧٨٩٠.٥٥');
+
+    // Handle Numbers with a suffix (percent)
+    opts.patternOptions.integerLimit = 3;
+    opts.patternOptions.prefix = '';
+    opts.patternOptions.suffix = '%';
+    textValue = '١٢٣٤';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('١٢٣%');
+  });
+
+  it('should process hebrew (devanagari) numbers', () => {
+    const settings = DEFAULT_SETTINGS;
+    settings.process = 'number';
+    settings.pattern = masks.numberMask;
+    const api = new MaskAPI(settings);
+
+    // Handle big numbers with thousands separators
+    let textValue = '१२३४५६७८९०';
+    const opts = {
+      selection: {
+        start: 0
+      },
+      patternOptions: {
+        allowThousands: false,
+        integerLimit: 10
+      }
+    };
+    let result = api.process(textValue, opts);
+
+    expect(result).toBeDefined();
+    expect(result).toEqual(jasmine.any(Object));
+    expect(result.conformedValue).toEqual(jasmine.any(String));
+    expect(result.conformedValue).toEqual('१२३४५६७८९०');
+
+    // Handle numbers with a decimal
+    opts.patternOptions.allowDecimal = true;
+    textValue = '१२३४५६७८९०.११';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('१२३४५६७८९०.११');
+
+    // Handle Negative numbers
+    opts.patternOptions.allowNegative = true;
+    textValue = '-१२३४५६७८९०.११';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('-१२३४५६७८९०.११');
+
+    // Handle Numbers with a suffix (percent)
+    opts.patternOptions.integerLimit = 3;
+    opts.patternOptions.prefix = '';
+    opts.patternOptions.suffix = '%';
+    textValue = '१२३४';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('१२३%');
+
+    // Block letters on numbers
+    opts.patternOptions.integerLimit = 3;
+    opts.patternOptions.prefix = '';
+    opts.patternOptions.suffix = '%';
+    textValue = 'ोवमा';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('%');
+  });
+
+  it('should process chinese (financial) numbers', () => {
+    const settings = DEFAULT_SETTINGS;
+    settings.process = 'number';
+    settings.pattern = masks.numberMask;
+    const api = new MaskAPI(settings);
+
+    const textValue = '壹贰叁肆伍陆柒';
+    const opts = {
+      selection: {
+        start: 0
+      },
+      patternOptions: {
+        allowThousands: false,
+        integerLimit: 10
+      }
+    };
+    const result = api.process(textValue, opts);
+
+    expect(result).toBeDefined();
+    expect(result).toEqual(jasmine.any(Object));
+    expect(result.conformedValue).toEqual(jasmine.any(String));
+    expect(result.conformedValue).toEqual('壹贰叁肆伍陆柒');
+  });
+
+  it('should process chinese (normal) numbers', () => {
+    const settings = DEFAULT_SETTINGS;
+    settings.process = 'number';
+    settings.pattern = masks.numberMask;
+    const api = new MaskAPI(settings);
+
+    const textValue = '一二三四五六七七九';
+    const opts = {
+      selection: {
+        start: 0
+      },
+      patternOptions: {
+        allowThousands: false,
+        integerLimit: 10
+      }
+    };
+    const result = api.process(textValue, opts);
+
+    expect(result).toBeDefined();
+    expect(result).toEqual(jasmine.any(Object));
+    expect(result.conformedValue).toEqual(jasmine.any(String));
+    expect(result.conformedValue).toEqual('一二三四五六七七九');
+  });
+
   it('Should process short dates', () => {
     const settings = DEFAULT_SETTINGS;
     settings.process = 'date';

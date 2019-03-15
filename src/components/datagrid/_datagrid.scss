@@ -2079,6 +2079,10 @@ $datagrid-short-row-height: 23px;
         text-overflow: ellipsis;
         // transition: height, line-height .5s cubic-bezier(.17, .04, .03, .94);
         white-space: nowrap;
+
+        .hyperlink {
+          display: inline;
+        }
       }
 
       // Expandable Cells
@@ -2176,6 +2180,28 @@ $datagrid-short-row-height: 23px;
     overflow: hidden;
     position: relative;
     text-align: left;
+
+    &.text-ellipsis {
+      .datagrid-column-wrapper {
+        display: flex;
+
+        .datagrid-header-text {
+          cursor: default;
+          display: inline-block;
+          margin: 10px 0 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      &.is-ellipsis-active {
+        .sort-indicator {
+          position: absolute;
+          right: 9px;
+        }
+      }
+    }
 
     &.l-center-text {
       text-align: center;

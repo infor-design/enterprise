@@ -34,7 +34,7 @@
           return 2;
         }
         if (row === 0) {
-          return 5;
+          return 4;
         }
       };
 
@@ -49,7 +49,7 @@
 
       // Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId',  colspan: customGetColSpan });
-      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 240, formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productDesc', name: 'Product Desc', hidden: true, sortable: false, field: 'productName', width: 240, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
       columns.push({ id: 'status', name: 'Exception', field: 'status', formatter: myCustom, tooltip: 'Error Info', width: 100});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
