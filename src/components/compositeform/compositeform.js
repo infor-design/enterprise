@@ -171,7 +171,7 @@ CompositeForm.prototype = {
   applyIE11Fix() {
     const isIE11 = $('html').hasClass('ie11');
     const expandableElementArea = $('.expandable-area');
-    let isElementExpanded = expandableElementArea.hasClass('is-expanded');
+    const isElementExpanded = expandableElementArea.hasClass('is-expanded');
     if (isIE11 && isElementExpanded) {
       setTimeout(function () {
         expandableElementArea.css('min-height', $('.expandable-pane').outerHeight(true) + $('.expandable-footer').outerHeight(true));
