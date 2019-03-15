@@ -34,7 +34,7 @@ const config = {
       plugins: ['external-helpers']
     }),
     license({
-      sourceMap: true,
+      sourcemap: true,
       banner: bundleBanner
     })
   ],

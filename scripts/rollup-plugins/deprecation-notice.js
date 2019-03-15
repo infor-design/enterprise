@@ -6,9 +6,6 @@ const path = require('path');
 const logger = require('../logger');
 
 const projectRoot = process.cwd();
-const EMPTY_MAP = {
-  mappings: ''
-};
 
 // Method for parsing the `children` of a deprecated comment node, which can
 // include paragraphs, spans, and other text-containing nodes.
@@ -38,10 +35,7 @@ const logDeprecation = function (componentName, methodName, deprecatedObj) {
 // This doesn't actually "transform" the code, but will pass its contents into
 // Documentation.js for detection of a `@deprecated` tag.
 const transform = function (code, filePath) {
-  const ret = {
-    code,
-    map: EMPTY_MAP
-  };
+  const ret = null;
 
   if (!filePath || !filePath.includes(path.join(projectRoot, 'src'))) {
     // TODO: re-enable logging for a verbose mode?
