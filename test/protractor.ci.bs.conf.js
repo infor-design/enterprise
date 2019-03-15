@@ -39,7 +39,7 @@ exports.config = {
     build: browserstackBuildID,
     name: `${theme} theme ci:bs e2e tests`,
     project: 'ids-enterprise-e2e-ci',
-    shardTestFiles: false,
+    shardTestFiles: true,
     maxInstances: 2
   },
   multiCapabilities: [

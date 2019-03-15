@@ -14,7 +14,7 @@ exports.config = {
   SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
     browserName: 'chrome',
-    shardTestFiles: false,
+    shardTestFiles: true,
     maxInstances: 2,
     chromeOptions: {
       args: [
