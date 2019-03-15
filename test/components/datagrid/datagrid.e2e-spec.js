@@ -266,7 +266,7 @@ describe('Datagrid frozen column tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-frozen-columns');
 
-    const datagridEl = await element(by.css('#datagrid'));
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tr:first-child'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
