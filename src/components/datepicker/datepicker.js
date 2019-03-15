@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
@@ -433,13 +434,12 @@ DatePicker.prototype = {
   },
 
   /**
-   * Open the Calendar Popup.
-   * @private
-   * @deprecated
+   * Open the calendar popup.
+   * @deprecated as of v4.9.0. Please use `openCalendar() instead`
    * @returns {void}
    */
   open() {
-    this.openCalendar();
+    return deprecateMethod(this.openCalendar, this.open).apply(this);
   },
 
   /**
@@ -772,12 +772,11 @@ DatePicker.prototype = {
 
   /**
    * Close the calendar popup.
-   * @private
-   * @deprecated
+   * @deprecated as of v4.9.0. Please use `closeCalendar()` instead.
    * @returns {void}
    */
   close() {
-    this.closeCalendar();
+    return deprecateMethod(this.closeCalendar, this.close).apply(this);
   },
 
   /**

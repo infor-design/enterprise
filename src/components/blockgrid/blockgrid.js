@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 
@@ -146,14 +147,14 @@ Blockgrid.prototype = {
   },
 
   /**
-   * @deprecated as of v4.15.0, use `select()`
    * Run selection over a block item
+   * @deprecated as of v4.15.0, use `select()`
    * @param {jQuery[]} activeBlock the jQuery-wrapped DOM element that will be selected.
    * @param {boolean} isCheckbox True if a checkbox, used for mixed mode.
    * @returns {void}
    */
   selectBlock(activeBlock, isCheckbox) {
-    return this.select(activeBlock, isCheckbox);
+    return deprecateMethod(this.select, this.selectBlock).apply(this, [activeBlock, isCheckbox]);
   },
 
   /**
@@ -319,12 +320,12 @@ Blockgrid.prototype = {
   },
 
   /**
-   * @deprecated as of v4.15.0, use `render()`
    * Render an individual block element.
+   * @deprecated as of v4.15.0, use `render()`
    * @returns {void}
    */
   renderBlock() {
-    return this.render();
+    return deprecateMethod(this.render, this.renderBlock).apply(this);
   },
 
   /**

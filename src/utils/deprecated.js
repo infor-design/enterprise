@@ -18,6 +18,22 @@ function methodName(method) {
 }
 
 /**
+ * Warns about a deprecated property/method via a console warning
+ * @param {function} newMethod the new method to call
+ * @param {function} oldMethod the name of the old method
+ * @returns {void}
+ */
+function warnAboutDeprecation(newMethod, oldMethod) {
+  const newMethodName = methodName(newMethod);
+  const oldMethodName = methodName(oldMethod);
+
+  if (typeof console !== 'object') {
+    return;
+  }
+  console.warn(`"${oldMethodName}()" is deprecated. Please use "${newMethodName}()" instead.`);
+}
+
+/**
  * Deprecates a method in the codebase
  * @param {function} newMethod the new method to call
  * @param {function} oldMethod the name of the old method
@@ -25,13 +41,8 @@ function methodName(method) {
  * @returns {function} wrapper method
  */
 function deprecateMethod(newMethod, oldMethod) {
-  const newMethodName = methodName(newMethod);
-  const oldMethodName = methodName(oldMethod);
-
   const wrapper = function deprecatedMethodWrapper(...args) {
-    if (typeof console === 'object') {
-      console.warn(`"${oldMethodName}()" is deprecated. Please use "${newMethodName}()" instead.`);
-    }
+    warnAboutDeprecation(newMethod, oldMethod);
     newMethod.apply(this, args);
   };
   wrapper.prototype = newMethod.prototype;
@@ -39,4 +50,4 @@ function deprecateMethod(newMethod, oldMethod) {
   return wrapper;
 }
 
-export { deprecateMethod };
+export { warnAboutDeprecation, deprecateMethod };

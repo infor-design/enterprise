@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { stringUtils as str } from '../../utils/string';
@@ -904,13 +905,13 @@ ListView.prototype = {
   },
 
   /**
-   * Deprivated - use `deselect()`
-   * @deprecated as of v4.3.0
+   * Deselect the given list item.
+   * @deprecated as of v4.3.0. Please use `deselect()` instead.
    * @param {jquery[]|number} li a list item
    * @returns {void}
    */
   unselect(li) {
-    this.deselect(li);
+    return deprecateMethod(this.deselect, this.unselect).apply(this, [li]);
   },
 
   /**
