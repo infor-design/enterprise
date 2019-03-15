@@ -25,9 +25,9 @@ const masks = {
 
   CARET_TRAP: '[]',
 
-  NON_DIGITS_REGEX: /\D+/g,
+  NON_DIGITS_REGEX: /[^\u0660-\u06690-9\u0966-\u096F\u2E80-\u2FD5\u3190-\u319f\u3400-\u4DBF\u4E00-\u9FCC\uF900-\uFAAD]/g,
 
-  DIGITS_REGEX: /\d/,
+  DIGITS_REGEX: /[\u0660-\u06690-9\u0966-\u096F\u2E80-\u2FD5\u3190-\u319f\u3400-\u4DBF\u4E00-\u9FCC\uF900-\uFAAD]/,
 
   ALPHAS_REGEX: /[\u00C0-\u017Fa-zA-Z]/,
 
@@ -44,8 +44,8 @@ const masks = {
 // Legacy Mask pattern definitions.
 // The New Mask works based on an array of RegExps and Strings.
 masks.LEGACY_DEFS = {
-  '#': /[0-9]/,
-  0: /[0-9]/,
+  '#': masks.DIGITS_REGEX,
+  0: masks.DIGITS_REGEX,
   x: masks.ALPHAS_REGEX,
   '*': masks.ANY_REGEX,
   '?': /./,

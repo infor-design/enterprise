@@ -311,7 +311,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('10/10/010', 'M/d/yyyy')).toEqual(undefined);
   });
 
-  it('Should be able to parse UTC toISOString', () => { //eslint-disable-line
+  it('Should be able to parse UTC toISOString', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('2000-01-01T00:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').getTime()).toEqual(new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).getTime());
@@ -816,7 +816,7 @@ describe('Locale API', () => {
   });
 
   it('Should have 12 months per locale', () => {
-    for (let culture in Locale.cultures) {  //eslint-disable-line
+    for (let culture in Locale.cultures) { //eslint-disable-line
       Locale.set(culture);
 
       expect(Locale.calendar().months.wide.length).toEqual(12);
@@ -1150,5 +1150,41 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('1,23,45,67,890.123')).toEqual((1234567890.123));
     expect(Locale.parseNumber('₹12,34,56,789.12')).toEqual((123456789.12));
     expect(Locale.parseNumber('10,000 %')).toEqual((10000));
+  });
+
+  it('Should convert arabic numbers', () => {
+    expect(Locale.convertNumberToEnglish('١٢٣٤٥٦٧٨٩٠')).toEqual(1234567890);
+    expect(Locale.convertNumberToEnglish('١٢٣')).toEqual(123);
+    expect(Locale.convertNumberToEnglish('١٢٣.٤٥')).toEqual(123.45);
+    expect(Locale.convertNumberToEnglish('١٬٢٣٤٬٥٦٧٬٨٩٠')).toEqual(1234567890);
+  });
+
+  it('Should convert hebrew numbers', () => {
+    expect(Locale.convertNumberToEnglish('१२३४५६७८९०')).toEqual(1234567890);
+    expect(Locale.convertNumberToEnglish('१२३')).toEqual(123);
+    expect(Locale.convertNumberToEnglish('१२३.४५')).toEqual(123.45);
+    expect(Locale.convertNumberToEnglish('१,२३४,५६७,८९०')).toEqual(1234567890);
+  });
+
+  it('Should convert chinese financial traditional numbers', () => {
+    expect(Locale.convertNumberToEnglish('壹貳叄肆伍陸柒捌玖零')).toEqual(1234567890);
+    expect(Locale.convertNumberToEnglish('貳零壹玖')).toEqual(2019);
+    expect(Locale.convertNumberToEnglish('壹貳叄.肆伍')).toEqual(123.45);
+    expect(Locale.convertNumberToEnglish('壹,貳叄肆,伍陸柒,捌玖零')).toEqual(1234567890);
+  });
+
+  it('Should convert chinese financial simplified numbers', () => {
+    expect(Locale.convertNumberToEnglish('壹贰叁肆伍陆柒捌玖零')).toEqual(1234567890);
+    expect(Locale.convertNumberToEnglish('贰零壹玖')).toEqual(2019);
+    expect(Locale.convertNumberToEnglish('壹贰叁.肆伍')).toEqual(123.45);
+    expect(Locale.convertNumberToEnglish('壹,贰叁肆,伍陆柒,捌玖零')).toEqual(1234567890);
+  });
+
+  it('Should convert chinese normal numbers', () => {
+    expect(Locale.convertNumberToEnglish('一二三四五六七八九零')).toEqual(1234567890);
+    expect(Locale.convertNumberToEnglish('二零一九')).toEqual(2019);
+    expect(Locale.convertNumberToEnglish('二〇一九')).toEqual(2019);
+    expect(Locale.convertNumberToEnglish('一二三.四五')).toEqual(123.45);
+    expect(Locale.convertNumberToEnglish('一,二三四,五六七,八九零')).toEqual(1234567890);
   });
 });
