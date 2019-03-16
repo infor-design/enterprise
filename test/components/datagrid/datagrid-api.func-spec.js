@@ -240,7 +240,7 @@ describe('Datagrid API', () => {
         expect(document.body.querySelector('.grid-tooltip.is-hidden')).toBeTruthy();
         done();
       }, 500);
-    }, 500);
+    }, 700);
   });
 
   it('Should be able to show tooltip rowStatus', (done) => {
