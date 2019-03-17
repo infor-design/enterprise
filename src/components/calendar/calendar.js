@@ -701,13 +701,21 @@ Calendar.prototype = {
   },
 
   /**
+   * Get the current selected date on the calendar.
+   * @returns {date} the currently selected date on the control.
+   */
+  currentDate() {
+    return this.isRTL ? this.monthView.currentIslamicDate : this.monthView.currentDate;
+  },
+  
+  /**
    * Get the events and date for the currently selected calendar day.
    * @param {date} date The date to find the events for.
-   * @returns {object} dayEvents An object with all teh events and the event date.
+   * @returns {object} dayEvents An object with all the events and the event date.
    */
   getDayEvents(date) {
     if (!date) {
-      date = this.isRTL ? this.monthView.currentIslamicDate : this.monthView.currentDate;
+      date = this.currentDate();
     }
 
     if (typeof date !== 'string' && !this.isRTL) {
@@ -832,26 +840,35 @@ Calendar.prototype = {
    */
   cleanEventData(event, addPlaceholder) {
     const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
-
-    if (event.starts === event.ends && !isAllDay) {
-      event.starts = Locale.formatDate(new Date(event.starts), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
-      const endDate = new Date(event.ends);
-      endDate.setHours(endDate.getHours() + parseInt(event.durationHours, 10));
-      event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
-      event.duration = null;
-      event.isAllDay = false;
+    let startDate = new Date(event.starts);
+    let endDate = new Date(event.ends);
+    
+    if (!Locale.isValidDate(startDate)){
+      startDate = this.currentDate();
     }
-
+    if (!Locale.isValidDate(endDate)){
+      endDate = this.currentDate();
+    }
+    
     if (isAllDay) {
-      const startDate = new Date(event.starts);
       startDate.setHours(0, 0, 0, 0);
       event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
-
-      const endDate = new Date(event.ends);
       endDate.setHours(23, 59, 59, 999);
       event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
       event.duration = event.starts === event.ends ? 1 : null;
       event.isAllDay = true;
+    }
+    else {
+      if (startDate === endDate) {
+        endDate.setHours(endDate.getHours() + parseInt(event.durationHours, 10));
+        event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
+        event.duration = null;
+      }
+      else {
+        event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
+      }
+      event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
+      event.isAllDay = false;
     }
 
     if (event.comments === undefined && addPlaceholder) {
