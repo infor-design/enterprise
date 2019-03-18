@@ -5,6 +5,8 @@ demo:
   pages:
   - name: Timezones in Timestamp Fields
     slug: test-timezones
+  - name: Unicode Support
+    slug: test-unicode-language
 ---
 
 ## Code Example - Initializing
@@ -32,6 +34,66 @@ Soho.Locale.set('es-ES').done(function () {
 
 By default it will fetch the js files on your server from the cultures folder that is assumed to be in the same localtion as where the sohoxi.js script is. However, this can be adjusted by setting `SohoConfig.culturesPath = 'myserver/path/cultures/`
 
+## Code Example - Using a different Language and Locale
+
+It is possible to use the strings in another language, independently of the locale settings for date and numbers ect. to do this just call the `setLanguage` api function. As with the `set` function if the locale with the strings is not loaded there may be a delay while the script is loaded in. So use the callback `done` function before initializing components or using the strings.
+
+```javascript
+Soho.Locale.set('en-US');
+Soho.Locale.setLanguage('da').done(function () => {
+  Locale.translate('Actions'); // Returns 'Handlinger'
+});
+```
+
+## Code Example - Extending a Locale/Language with your own strings
+
+It is possible to add your own strings to an existing locale's language. To do this just set the locale or language to the desired language and then when the locale is loaded call `extendTranslations` with a new set of strings. A string is an object with minimum an id and value of the string.
+
+```javascript
+Locale.set('it-lT').done(() => {
+  const myStrings = {
+    Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
+    YourWelcome: { id: 'YourWelcome', value: 'Prego', comment: '' }
+  };
+
+  Locale.extendTranslations(Locale.currentLanguage.name, myStrings);
+  Locale.translate('Comments'); // Returns Commenti
+  Locale.translate('Thanks'); // Returns Grazie
+  Locale.translate('YourWelcome'); // Returns Prego
+});
+```
+
+## Code Example - Adding an entirely new Locale
+
+It is possible to add a new locale that is not supported by Infor (yet). To do this you need to make a new file like <a href="https://github.com/infor-design/enterprise/tree/master/src/components/locale/cultures" target="_blank">any of these locales</a> and place this file in your cultures folder on the server. You also need to add the new locale to the `defaultLocales` and `supportedLocales` sets. Then you can use it. If you do this consider making a Pull Request to get your new locale added to the core code for others.
+
+```javascript
+Locale.defaultLocales.push({ lang: 'la', default: 'la-IT' });
+Locale.supportedLocales.push('la-IT');
+
+Locale.set('la-lT').done(function () {
+  Locale.translate('Comments');
+});
+```
+
+## Code Example - Unicode Support
+
+We have limited support for Chinese Financial Numbers (Traditional and Simplified), Chinese Simplified and Traditional (normal), Hindi (Devangari), Arabic as these are in the set of supported languages. ou can now type them in certain mask fields and do some conversion to and from. Support is initially limited and could use some native speaker testing in the wild to improve this feature. To convert to a language we use the browser `toLocaleString` which we have wrapped. This may not work in all browsers and means you may need to use special locales to work with this.
+
+```javascript
+Locale.toLocaleString(2019, 'ar-SA'); // ٢٬٠١٩
+Locale.toLocaleString(2019, 'zh-Hans-CN-u-nu-hanidec'); // 二,〇一九
+```
+
+To convert from a Chinese/Arabic/Hindi number we added a function to convert the numbers to english numbers.
+
+```javascript
+Locale.convertNumberToEnglish('١٢٣٤٥٦٧٨٩٠'); // Arabic to 1234567890
+Locale.convertNumberToEnglish('壹貳叄肆伍陸柒捌玖零'); // Chinese Financial to 1234567890
+Locale.convertNumberToEnglish('一二三四五六七八九零'); // Chinese Simplified to 1234567890
+Locale.convertNumberToEnglish('१२३४५६७८९०'); //Devangari to 1234567890
+```
+
 ## Code Example - Numbers
 
 You can use the formatNumber to display a numeric type in a localized format. You can use parseNumber to convert that number back to the numeric type. Note that by default the formatNumber function uses truncation (.129 becomes .12). To use rounding add the `round: true` option.
@@ -45,7 +107,7 @@ Soho.Locale.formatNumber(12345.12, {
       style: 'currency',
       decimal: '.',
       group: ',',
-      currencyFormat: '¤ #,##0.00',
+      currencyFormat: '¤ ###',
       currencySign: '$'
     }));
 // Returns $ 12,345.12
@@ -77,7 +139,8 @@ The following options are supported:
 - `currencySign` - You can specify a specific sign to use for currency, otherwise it uses the default one for the current locale.
 - `decimal` - You can specify a specific character to use for the decimal point, otherwise it uses the default one for the current locale.
 - `group` - You can specify a specific character to use for the number group (usually 1000s), otherwise it uses the default one for the current locale.
-- `currencyFormat` - You can specify a specific currencyFormat to use, otherwise it uses the current one for the local. The ¤ is where the currencySign will go. # is used for the numbers, and the max decimals can be specified with 0's.
+- `currencyFormat` - You can specify a currencyFormat to use, otherwise it uses the current one for the locale. The ¤ is where the currencySign will go. ### is used for the number replacement.
+- `groupSize` - You can specify where the thousands group separators will be placed. For example `[3, 0]` means that only the first group will have a separator: 1234,567. `[3, 2]` means the first group will have 3 digits and the other groups will all have 2, for example 12,34,567. The default for many locales is `[3, 3]`.
 
 ## Code Example - Dates
 

@@ -28,13 +28,12 @@
   }
 
   .title {
-    @include font-size(14);
     @include antialiased();
 
     color: $font-color;
     display: inline-block;
     float: left;
-    font-size: 1.4rem;
+    font-size: $theme-size-font-base;
     line-height: 20px;
     max-width: 50px;
     padding-left: 11px;

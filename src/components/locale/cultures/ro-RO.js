@@ -42,15 +42,16 @@ Soho.Locale.addCulture('ro-RO', {
     dayPeriods: ['a.m.', 'p.m.']
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
-  currencySign: 'lei',
-  currencyFormat: '#,##0.00 ¤',
+  currencySign: 'LEI',
+  currencyFormat: '### ¤',
   // numbers/symbols-numberSystem-latn
   numbers: {
     percentSign: '%',
-    percentFormat: '#,##0 %',
+    percentFormat: '### %',
     minusSign: '-',
     decimal: ',',
-    group: '.'
+    group: '.',
+    groupSizes: [3, 3]
   },
   // Resx - Provided By Translation Team
   messages: {

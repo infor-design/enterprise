@@ -23,12 +23,12 @@ $toolbarsearchfield-category-empty-width: 51px;
 
   .searchfield {
     @include antialiased();
-    @include font-size(12);
 
     background-color: transparent;
     border: 1px solid transparent;
     box-shadow: none;
     color: $searchfield-text-color;
+    font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
     height: 34px;
     outline: 0;
@@ -37,24 +37,11 @@ $toolbarsearchfield-category-empty-width: 51px;
     text-overflow: ellipsis;
     width: 100%;
 
-    &::-webkit-input-placeholder {
-      @include font-size(12);
-
-      color: $searchfield-text-color;
-      font-weight: $theme-number-font-weight-bold;
-    }
-
-    &::-moz-placeholder {
-      @include font-size(12);
-
-      color: $searchfield-text-color;
-      font-weight: $theme-number-font-weight-bold;
-    }
-
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder,
     &:-ms-input-placeholder {
-      @include font-size(12);
-
       color: $searchfield-text-color;
+      font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
     }
   }
@@ -185,33 +172,29 @@ $toolbarsearchfield-category-empty-width: 51px;
     // Searchfield changes text style to match other input fields
     .searchfield {
       color: $searchfield-text-color;
+      font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
       text-transform: none;
 
-      @include font-size(14);
-
       &::-webkit-input-placeholder {
         color: $searchfield-text-color;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
-
-        @include font-size(14);
       }
 
       &::-moz-placeholder {
         color: $searchfield-text-color;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
-
-        @include font-size(14);
       }
 
       &:-ms-input-placeholder {
         color: $searchfield-text-color;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
-
-        @include font-size(14);
       }
     }
 
@@ -608,35 +591,31 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     // reset all the styling for the searchfield to correctly appear open.
     .searchfield {
-      @include font-size(14);
-
       background-color: rgba($searchfield-bg-color, 1);
       border-bottom-color: rgba($searchfield-border-color, 1);
       border-radius: 0;
       color: $searchfield-text-color;
+      font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
       text-transform: none;
 
       &::-webkit-input-placeholder {
-        @include font-size(14);
-
         color: $searchfield-text-color;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }
 
       &::-moz-placeholder {
-        @include font-size(14);
-
         color: $searchfield-text-color;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }
 
       &:-ms-input-placeholder {
-        @include font-size(14);
-
         color: $searchfield-text-color;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }

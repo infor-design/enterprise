@@ -15,6 +15,15 @@ module.exports = function customRouteOptions(req, res) {
   const customOpts = {};
   const url = req.originalUrl;
 
+  // All patterns will use the "empty" layout
+  if (url.match(/patterns\//)) {
+    if (url.includes('tree-detail') || url.includes('master-detail')) {
+      customOpts.layout = 'layout';
+    } else if (!url.endsWith('/list')) {
+      customOpts.layout = 'layout-empty';
+    }
+  }
+
   // Application Menu
   if (url.match(/components\/applicationmenu/)) {
     if (url.indexOf('/list') === -1) {
@@ -46,9 +55,14 @@ module.exports = function customRouteOptions(req, res) {
     customOpts.subtitle = 'AMD Tests';
   }
 
+  // Form Compact's List/Detail Example
+  if (url.match(/components\/form-compact\/example-list-detail/)) {
+    customOpts.layout = 'layout-empty';
+  }
+
   // Icons
   if (url.match(/icons\/example-index/) || url.match(/icons\/example-extended/) || url.match(/icons\/example-empty/)) {
-    customOpts.iconHtml = require('./routes/custom-icons')(url);
+    customOpts.iconHtml = require('./routes/custom-icons')(url, res.opts.theme);
   }
 
   // Placement Logic
@@ -79,6 +93,11 @@ module.exports = function customRouteOptions(req, res) {
   // stringify and pass it to the view options
   if (Object.keys(SohoConfig).length) {
     customOpts.SohoConfig = JSON.stringify(SohoConfig);
+  }
+
+  // Set `forceLayout` to true if there has been a layout defined.
+  if (customOpts.layout) {
+    customOpts.forceLayout = true;
   }
 
   return extend({}, res.opts, customOpts);

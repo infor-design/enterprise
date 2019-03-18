@@ -10,10 +10,11 @@ hbsRegistrar('toUpperCase', str => {
 });
 
 
-const pageMap = {
-  'example-index'   : 'standard',
-  'example-extended': 'extended',
-  'example-empty-widgets' : 'empty'
+const themeToIcons = {
+  'light'   : 'soho',
+  'dark': 'soho',
+  'high-contrast' : 'soho',
+  'uplift': 'uplift'
 }
 
 const hbsTemplate = `
@@ -41,12 +42,14 @@ const hbsTemplate = `
 const template = handlebars.compile(hbsTemplate);
 
 /**
- * @param {String} url - The route request
+ * @param {string} url - The page url
+ * @param {string} theme - The theme
  */
-module.exports = url => {
+module.exports = (url, theme) => {
   const fileName = path.basename(url, '.html');
-  const iconSet  = pageMap[fileName];
-  const meta = JSON.parse(fs.readFileSync(`node_modules/ids-identity/dist/theme-soho/icons/${iconSet}/metadata.json`, 'utf-8').toString());
+  const iconSet = fileName.includes('example-empty-widgets') ? 'empty' : 'standard';
+  const metaPath = `node_modules/ids-identity/dist/theme-${themeToIcons[theme]}/icons/${iconSet}/metadata.json`;
+  const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8').toString());
 
   if (iconSet === 'empty') {
     meta.additionalClass = 'icon-empty-state';

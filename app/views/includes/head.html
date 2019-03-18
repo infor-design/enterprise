@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-  {{#usebasehref}}
-  <base href="/base/"/>
-  {{/usebasehref}}
-
   <title>
     {{#subtitle}}
       {{subtitle}} |
@@ -46,7 +42,6 @@
   <script>
     var colors;
     var theme;
-    var font = '';
     var blockUI = '{{layout}}'.indexOf('embedded') > -1 ? false : true;
 
     {{#colors}}
@@ -65,12 +60,9 @@
     {{#theme}}
     theme = '{{theme}}';
     {{/theme}}
-    {{#font}}
-    font = '{{font}}';
-    {{/font}}
 
     // If Initialize isnt called need to defer this
-    $('html').personalize({colors: colors, theme: theme, font: font, blockUI: blockUI});
+    $('html').personalize({colors: colors, theme: theme, blockUI: blockUI});
   </script>
 
   <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/{{theme}}-theme.css" type="text/css"/>

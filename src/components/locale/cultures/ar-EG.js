@@ -281,14 +281,15 @@ Soho.Locale.addCulture('ar-EG', {
     }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '£',
-  currencyFormat: '¤ #,##0.00',
+  currencyFormat: '¤ ###',
   // numbers/symbols-numberSystem-latn
   numbers: {
     percentSign: '٪',
-    percentFormat: '#,##0 ٪',
+    percentFormat: '### ٪',
     minusSign: '-',
     decimal: '٫',
-    group: '٬'
+    group: '٬',
+    groupSizes: [3, 3]
   },
   // Resx - Provided By Translation Team
   messages: {

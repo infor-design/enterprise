@@ -60,7 +60,7 @@
   }
 
   > .busy-indicator-container {
-    @include font-size(14);
+    font-size: $theme-size-font-base;
   }
 
 }
@@ -212,7 +212,7 @@
   }
 
   > .busy-indicator-container {
-    @include font-size(14);
+    font-size: $theme-size-font-base;
   }
 
 }
@@ -293,9 +293,8 @@
 
   .tab-more,
   .add-tab-button {
-    @include font-size(14);
-
     background-color: transparent;
+    font-size: $theme-size-font-base;
     padding: 16px;
     position: relative;
     vertical-align: top;
@@ -450,9 +449,9 @@
 
       a {
         @include antialiased();
-        @include font-size(14);
 
         color: inherit;
+        font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-decoration: none;
 

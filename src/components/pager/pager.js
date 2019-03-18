@@ -311,12 +311,16 @@ Pager.prototype = {
    * Add the pager dom elements.
    * @private
    */
+
   createPagerBar() {
     if (this.pagerBar) {
       return;
     }
+    this.pagerBar = this.element.prev('.pager-toolbar');
 
-    this.pagerBar = $('<ul class="pager-toolbar"></ul>');
+    if (this.pagerBar.length === 0) {
+      this.pagerBar = $('<ul class="pager-toolbar"></ul>');
+    }
 
     if (this.settings.type === 'standalone') {
       if (this.isListView) {

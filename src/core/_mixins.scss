@@ -230,6 +230,14 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   outline-color: transparent;
 }
 
+@mixin placeholder {
+  color: $input-placeholder-color;
+  font-size: $theme-size-font-base;
+  font-weight: $theme-number-font-weight-base;
+  line-height: 16px;
+  opacity: 1;
+}
+
 // Wrap longer word
 @mixin word-wrap() {
   -webkit-hyphens: auto;

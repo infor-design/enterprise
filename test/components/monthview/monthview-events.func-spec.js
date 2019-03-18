@@ -18,12 +18,12 @@ describe('Monthview API', () => {
     monthviewEl = document.body.querySelector('.monthview');
     svgEl = document.body.querySelector('.svg-icons');
 
-    Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA']); //eslint-disable-line
-    Locale.addCulture('en-US', Soho.Locale.cultures['en-US']); //eslint-disable-line
-    Locale.addCulture('ja-JP', Soho.Locale.cultures['ja-JP']); //eslint-disable-line
-    Locale.addCulture('sv-SE', Soho.Locale.cultures['sv-SE']); //eslint-disable-line
-    Locale.addCulture('en-GB', Soho.Locale.cultures['en-GB']); //eslint-disable-line
-    Locale.addCulture('de-DE', Soho.Locale.cultures['de-DE']); //eslint-disable-line
+    Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA'], Soho.Locale.languages['ar']); //eslint-disable-line
+    Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
+    Locale.addCulture('ja-JP', Soho.Locale.cultures['ja-JP'], Soho.Locale.languages['ja']); //eslint-disable-line
+    Locale.addCulture('sv-SE', Soho.Locale.cultures['sv-SE'], Soho.Locale.languages['sv']); //eslint-disable-line
+    Locale.addCulture('en-GB', Soho.Locale.cultures['en-GB'], Soho.Locale.languages['en']); //eslint-disable-line
+    Locale.addCulture('de-DE', Soho.Locale.cultures['de-DE'], Soho.Locale.languages['de']); //eslint-disable-line
     Locale.set('en-US');
     Soho.Locale.set('en-US'); //eslint-disable-line
 

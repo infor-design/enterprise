@@ -242,10 +242,9 @@
   }
 
   .heading {
-    @include font-size(12);
-
     color: $popupmenu-heading-color;
     cursor: default;
+    font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
     line-height: 25px;
     padding: 0 10px;
@@ -303,11 +302,11 @@
   a {
     @include no-select();
     @include antialiased();
-    @include font-size(14);
 
     border: 1px solid transparent;
     color: $popupmenu-color;
     display: block;
+    font-size: $theme-size-font-base;
     line-height: 32px;
     min-height: 34px;
     padding: 0 30px 0 10px;
@@ -341,9 +340,8 @@
   }
 
   span {
-    @include font-size(14);
-
     color: $font-color-highcontrast;
+    font-size: $theme-size-font-base;
   }
 
   //Text Underline on Terms
@@ -548,13 +546,13 @@
 
   button {
     @include css3(transition, color 0.3s ease 0s);
-    @include font-size(14);
 
     border: 1px solid transparent;
     border-left: 1px solid $popover-separator-color;
     border-radius: 0;
     color: $modal-btn-color;
     float: left;
+    font-size: $theme-size-font-base;
     font-weight: $theme-number-font-weight-bold;
     height: 50px;
     line-height: 50px;

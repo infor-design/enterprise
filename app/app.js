@@ -47,7 +47,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    httpOnly: false,
+    httpOnly: true,
     secure: false
   }
 }));
@@ -94,6 +94,7 @@ app.use(require('./src/js/middleware/info-handler')(app));
 app.use(router);
 app.use(require('./src/js/middleware/error-handler')(app));
 
+const customRoutes = require('./src/js/routes/customRoutes');
 const generalRoute = require('./src/js/routes/general');
 const sendGeneratedDocPage = require('./src/js/routes/docs');
 
@@ -138,6 +139,7 @@ router.get('/performance-tests', (req, res, next) => {
 //  Components Routes
 // ======================================
 app.use('/behaviors', generalRoute);
+app.use('/components', customRoutes);
 app.use('/components', generalRoute);
 app.use('/patterns', generalRoute);
 app.use('/examples', generalRoute);

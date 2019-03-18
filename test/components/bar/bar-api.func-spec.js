@@ -60,7 +60,7 @@ const twoSeriesData = [{
   name: 'Series 2'
 }];
 
-describe('Bar API', () => {
+describe('Bar API', () => { //eslint-disable-line
   beforeEach((done) => {
     barEl = null;
     barObj = null;
@@ -68,8 +68,8 @@ describe('Bar API', () => {
     document.body.insertAdjacentHTML('afterbegin', barHTML);
     barEl = document.body.querySelector('.chart-container');
 
-    Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA']); //eslint-disable-line
-    Locale.addCulture('en-US', Soho.Locale.cultures['en-US']); //eslint-disable-line
+    Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA'], Soho.Locale.languages['ar']); //eslint-disable-line
+    Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
     Locale.set('en-US');
     Soho.Locale.set('en-US'); //eslint-disable-line
 

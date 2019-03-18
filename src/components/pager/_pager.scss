@@ -2,8 +2,7 @@
 //================================================== //
 
 .pager-toolbar {
-  @include font-size(14);
-
+  font-size: $theme-size-font-base;
   height: 38px;
   margin: 5px 10px;
   max-height: 38px;
@@ -126,14 +125,13 @@
 }
 
 .paginated li {
-  @include font-size(14);
+  font-size: $theme-size-font-base;
 }
 
 // Pager for Tables
 .pager-count {
-  @include font-size(14);
-
   display: inline-block;
+  font-size: $theme-size-font-base;
   line-height: normal;
   vertical-align: top;
 
@@ -144,8 +142,7 @@
   }
 
   input {
-    @include font-size(14);
-
+    font-size: $theme-size-font-base;
     height: 30px;
     margin: 0 5px;
     padding: 3px 0 !important;
@@ -180,8 +177,7 @@ li + .pager-count {
     }
 
     span {
-      @include font-size(14);
-
+      font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
       line-height: 27px;
       text-transform: none;

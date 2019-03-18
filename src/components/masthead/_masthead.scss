@@ -183,10 +183,9 @@ $masthead-button-focus-color: $theme-color-palette-white;
 }
 
 .masthead-appname {
-  @include font-size(12);
-
   color: $masthead-text-color;
   display: inline-block;
+  font-size: $theme-size-font-sm;
   font-weight: $theme-number-font-weight-bold;
   line-height: 38px;
   margin: 0;

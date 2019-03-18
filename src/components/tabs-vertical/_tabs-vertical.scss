@@ -10,12 +10,12 @@
 
     a {
       @include antialiased();
-      @include font-size(14);
       @include css3(user-select, none);
       @include css3(touch-callout, none);
 
       color: $vertical-tab-text-color;
       display: block;
+      font-size: $theme-size-font-base;
 
       .icon {
         color: $vertical-tab-text-color;

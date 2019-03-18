@@ -71,6 +71,14 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.has-horizontal-scroll {
+    .datagrid-body.left,
+    .datagrid-body.right {
+      // Make bottom visible to prevent space different at the bottom.
+      overflow-x: scroll;
+    }
+  }
+
   // Empty Area Scrolling
   &.is-empty .datagrid {
     border-bottom: 1px solid transparent;
@@ -166,6 +174,18 @@ $datagrid-short-row-height: 23px;
   &.has-vertical-scroll.is-windows:not(.has-frozen-right-columns) {
     .datagrid-header:not(.left):not(.right) {
       margin-right: 18px;
+    }
+  }
+
+  &.has-group-headers {
+    .datagrid-body {
+      height: calc(100% - 78px);
+    }
+  }
+
+  &.has-group-headers.has-filterable-columns {
+    .datagrid-body {
+      height: calc(100% - 100px);
     }
   }
 
@@ -400,23 +420,15 @@ $datagrid-short-row-height: 23px;
     }
 
     &.has-group-headers .datagrid-body {
-      height: calc(100% - 50px);
+      height: calc(100% - 51px);
     }
 
     &.has-filterable-columns .datagrid-body {
       height: calc(100% - 49px);
     }
 
-    &.has-toolbar {
-      height: calc(100% - 45px);
-
-      &.paginated {
-        height: calc(100% - 103px);
-      }
-    }
-
-    &.paginated {
-      height: calc(100% - 58px);
+    &.has-group-headers.has-filterable-columns .datagrid-body {
+      height: calc(100% - 76px);
     }
 
     //Resize Drag Arrows
@@ -517,6 +529,18 @@ $datagrid-short-row-height: 23px;
     //Set Container Heights for scrolling
     .datagrid-body {
       height: calc(100% - 30px);
+    }
+
+    &.has-group-headers .datagrid-body {
+      height: calc(100% - 61px);
+    }
+
+    &.has-filterable-columns .datagrid-body {
+      height: calc(100% - 55px);
+    }
+
+    &.has-group-headers.has-filterable-columns .datagrid-body {
+      height: calc(100% - 86px);
     }
 
     .drag-target-arrows {
@@ -638,8 +662,7 @@ $datagrid-short-row-height: 23px;
   &.left,
   &.right {
     flex-shrink: 0;
-    // Make bottom visible to prevent space different at the bottom.
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 }
 
@@ -651,11 +674,10 @@ $datagrid-short-row-height: 23px;
 
 // Grid Styling
 .datagrid {
-  @include font-size(14);
-
   background-color: transparent;
   border-collapse: separate;
   border-spacing: 0;
+  font-size: $theme-size-font-base;
   //This lets us resize to lower than content width but it causes layout issues with default col sizes
   table-layout: fixed;
   width: 100%;
@@ -1734,10 +1756,9 @@ $datagrid-short-row-height: 23px;
     }
 
     .hyperlink {
-      @include font-size(14);
-
       color: $hyperlink-color;
       display: inline-block;
+      font-size: $theme-size-font-base;
       margin-top: -1px;
       vertical-align: middle;
 
@@ -1746,7 +1767,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &.micro-text {
-        @include font-size(12);
+        font-size: $theme-size-font-sm;
       }
     }
 
@@ -1951,6 +1972,11 @@ $datagrid-short-row-height: 23px;
         visibility: visible;
       }
 
+      .colorpicker-container .icon {
+        margin-left: 8px;
+        top: 10px;
+      }
+
       //Date Picker
       .datepicker {
         border: 0;
@@ -2053,6 +2079,10 @@ $datagrid-short-row-height: 23px;
         text-overflow: ellipsis;
         // transition: height, line-height .5s cubic-bezier(.17, .04, .03, .94);
         white-space: nowrap;
+
+        .hyperlink {
+          display: inline;
+        }
       }
 
       // Expandable Cells
@@ -2151,6 +2181,28 @@ $datagrid-short-row-height: 23px;
     position: relative;
     text-align: left;
 
+    &.text-ellipsis {
+      .datagrid-column-wrapper {
+        display: flex;
+
+        .datagrid-header-text {
+          cursor: default;
+          display: inline-block;
+          margin: 10px 0 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      &.is-ellipsis-active {
+        .sort-indicator {
+          position: absolute;
+          right: 9px;
+        }
+      }
+    }
+
     &.l-center-text {
       text-align: center;
 
@@ -2169,12 +2221,12 @@ $datagrid-short-row-height: 23px;
     }
 
     .datagrid-header-text {
-      @include font-size(12);
       @include no-select();
 
       color: $datagrid-header-color;
       direction: ltr;
       display: table-cell;
+      font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
       text-align: left;
       vertical-align: middle;
@@ -2240,6 +2292,36 @@ $datagrid-short-row-height: 23px;
   .datagrid-header-groups {
     th {
       background-color: $datagrid-header-active-color;
+
+      &.l-left-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: left;
+        }
+      }
+
+      &.l-center-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: center;
+        }
+      }
+
+      &.l-right-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: right;
+        }
+      }
     }
   }
 
@@ -2604,17 +2686,15 @@ $datagrid-short-row-height: 23px;
 }
 
 .datagrid-row-subheading {
-  @include font-size(14);
-
   color: $datagrid-cell-color;
+  font-size: $theme-size-font-base;
   line-height: 22px;
   margin-top: -4px;
 }
 
 .datagrid-row-micro {
-  @include font-size(12);
-
   color: $datagrid-cell-color;
+  font-size: $theme-size-font-sm;
   line-height: 2rem;
 }
 
@@ -2660,10 +2740,9 @@ td .btn-actions {
 
 // Grid Checkboxes
 .datagrid-checkbox {
-  @include font-size(12);
-
   cursor: pointer;
   display: inline-block;
+  font-size: $theme-size-font-sm;
   left: -7px;
   position: relative;
   top: -14px;
@@ -2810,8 +2889,7 @@ td .btn-actions {
 }
 
 .datagrid-checkbox-wrapper {
-  @include font-size(12);
-
+  font-size: $theme-size-font-sm;
   position: relative;
 
   & + .datagrid-filter-wrapper {
@@ -2899,9 +2977,8 @@ td .btn-actions {
   }
 
   .datagrid-row-micro-text {
-    @include font-size(12);
-
     color: $font-color-lowcontrast;
+    font-size: $theme-size-font-sm;
   }
 
   .datagrid-cell-layout {
@@ -2912,9 +2989,8 @@ td .btn-actions {
 }
 
 .datagrid-result-count {
-  @include font-size(14);
-
   display: inline-block;
+  font-size: $theme-size-font-base;
   position: relative;
   top: 0;
 }
@@ -3024,8 +3100,7 @@ td .btn-actions {
     }
 
     tbody tr.arrange-dragging td {
-      @include font-size(14);
-
+      font-size: $theme-size-font-base;
       height: $datagrid-row-height;
     }
   }
@@ -3374,6 +3449,40 @@ html[dir='rtl'] {
       }
     }
 
+    .datagrid-header-groups {
+      th {
+        &.l-left-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: right;
+          }
+        }
+
+        &.l-cener-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: center;
+          }
+        }
+
+        &.l-right-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: left;
+          }
+        }
+      }
+    }
+
     .required::after {
       content: '';
     }
@@ -3386,8 +3495,16 @@ html[dir='rtl'] {
       top: 0;
     }
 
-    &.left th:last-child {
-      border-left: 1px solid $datagrid-header-border-color;
+    &.left {
+      th:last-child {
+        border-left: 1px solid $datagrid-header-border-color;
+      }
+    }
+
+    &.center {
+      th:last-child {
+        border-right-color: $datagrid-header-border-color;
+      }
     }
   }
 
@@ -3583,6 +3700,13 @@ html[dir='rtl'] {
   }
 }
 
+.is-mac.is-firefox,
+.is-mac.is-safari {
+  .has-visible-scrollbars .datagrid-body.right table {
+    margin-right: 15px;
+  }
+}
+
 //Contextual toolbar
 .datagrid-contextual-toolbar.contextual-toolbar {
   &.toolbar {
@@ -3607,7 +3731,7 @@ html[dir='rtl'] {
 // Columns Personalization
 .datagrid-columns-dialog {
   .label-text {
-    @include font-size(14);
+    font-size: $theme-size-font-base;
   }
 
   label.inline {
@@ -3643,6 +3767,7 @@ html[dir='rtl'] {
   .trigger .icon {
     height: 24px;
     left: 4px;
+    top: 0;
     width: 16px;
   }
 
@@ -3763,9 +3888,8 @@ html[dir='rtl'] {
 
 .content-tooltip {
   &.popover.alternate {
-    @include font-size(12);
-
     background-color: $datagrid-cell-bg-color;
+    font-size: $theme-size-font-sm;
     padding-bottom: inherit;
 
     &.top .arrow::after {

@@ -121,6 +121,7 @@ describe('Timepicker 24 Hour tests', () => {
       await element(by.className('set-time')).click();
       await browser.driver.sleep(config.sleep);
       await element(by.css('.timepicker + .icon')).click();
+      await browser.driver.sleep(config.sleep);
 
       expect(await element(by.id('timepicker-24hrs')).getAttribute('value')).toEqual('20:20');
     });

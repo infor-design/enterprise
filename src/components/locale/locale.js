@@ -22,18 +22,68 @@ if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.culturesPa
 const Locale = {  // eslint-disable-line
 
   currentLocale: { name: '', data: {} }, // default
+  currentLanguage: { name: '' }, // default
   cultures: {},
+  languages: {},
   culturesPath: existingCulturePath,
+  defaultLocales: [
+    { lang: 'af', default: 'af-ZA' },
+    { lang: 'ar', default: 'ar-EG' },
+    { lang: 'bg', default: 'bg-BG' },
+    { lang: 'cs', default: 'cs-CZ' },
+    { lang: 'da', default: 'da-DK' },
+    { lang: 'de', default: 'de-DE' },
+    { lang: 'el', default: 'el-GR' },
+    { lang: 'en', default: 'en-US' },
+    { lang: 'es', default: 'es-ES' },
+    { lang: 'et', default: 'et-ET' },
+    { lang: 'fi', default: 'fi-FI' },
+    { lang: 'fr', default: 'fr-FR' },
+    { lang: 'he', default: 'he-IL' },
+    { lang: 'hi', default: 'hi-IN' },
+    { lang: 'hr', default: 'hr-HR' },
+    { lang: 'hu', default: 'hu-HU' },
+    { lang: 'id', default: 'id-ID' },
+    { lang: 'it', default: 'it-IT' },
+    { lang: 'iw', default: 'he-IL' },
+    { lang: 'ja', default: 'ja-JP' },
+    { lang: 'ko', default: 'ko-KR' },
+    { lang: 'lt', default: 'lt-LT' },
+    { lang: 'lv', default: 'lv-LV' },
+    { lang: 'ms', default: 'ms-bn' },
+    { lang: 'nb', default: 'nb-NO' },
+    { lang: 'nl', default: 'nl-NL' },
+    { lang: 'no', default: 'no-NO' },
+    { lang: 'pl', default: 'pl-PL' },
+    { lang: 'pt', default: 'pt-PT' },
+    { lang: 'ro', default: 'ro-RO' },
+    { lang: 'ru', default: 'ru-RU' },
+    { lang: 'sk', default: 'sk-SK' },
+    { lang: 'sl', default: 'sl-SI' },
+    { lang: 'sv', default: 'sv-SE' },
+    { lang: 'th', default: 'th-TH' },
+    { lang: 'tr', default: 'tr-TR' },
+    { lang: 'uk', default: 'uk-UA' },
+    { lang: 'vi', default: 'vi-VN' },
+    { lang: 'zh', default: 'zh-CN' }
+  ],
+  supportedLocales: ['af-ZA', 'ar-EG', 'ar-SA', 'bg-BG', 'cs-CZ', 'da-DK', 'de-DE', 'el-GR',
+    'en-AU', 'en-GB', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'es-AR', 'es-ES', 'es-MX',
+    'es-US', 'et-EE', 'fi-FI', 'fr-CA', 'fr-FR', 'he-IL', 'hi-IN', 'hr-HR',
+    'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
+    'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
+    'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'],
+  defaultLocale: 'en-US',
 
   /**
    * Sets the current language in the Html Header
    * @private
-   * @returns {void}
+   * @param  {string} lang The two digit language code.
    */
-  updateLang() {
+  updateLanguage(lang) {
     const html = $('html');
 
-    html.attr('lang', this.currentLocale.name);
+    html.attr('lang', lang);
     if (this.isRTL()) {
       html.attr('dir', 'rtl');
     } else {
@@ -109,78 +159,68 @@ const Locale = {  // eslint-disable-line
    * @param {string} locale The locale to check.
    * @returns {string} The actual locale to use.
    */
-  defaultLocale(locale) {
+  correctLocale(locale) {
     const lang = locale.split('-')[0];
-    const defaults = [
-      { lang: 'af', default: 'af-ZA' },
-      { lang: 'ar', default: 'af-EG' },
-      { lang: 'bg', default: 'bg-BG' },
-      { lang: 'cs', default: 'cs-CZ' },
-      { lang: 'da', default: 'da-DK' },
-      { lang: 'de', default: 'de-DE' },
-      { lang: 'el', default: 'el-GR' },
-      { lang: 'en', default: 'en-US' },
-      { lang: 'es', default: 'es-ES' },
-      { lang: 'et', default: 'et-ET' },
-      { lang: 'fi', default: 'fi-FI' },
-      { lang: 'fr', default: 'fr-FR' },
-      { lang: 'he', default: 'he-IL' },
-      { lang: 'hi', default: 'hi-IN' },
-      { lang: 'hr', default: 'hr-HR' },
-      { lang: 'hu', default: 'hu-HU' },
-      { lang: 'id', default: 'id-ID' },
-      { lang: 'it', default: 'it-IT' },
-      { lang: 'iw', default: 'he-IL' },
-      { lang: 'ja', default: 'ja-JP' },
-      { lang: 'ko', default: 'ko-KR' },
-      { lang: 'lt', default: 'lt-LT' },
-      { lang: 'lv', default: 'lv-LV' },
-      { lang: 'ms', default: 'ms-bn' },
-      { lang: 'nb', default: 'nb-NO' },
-      { lang: 'nl', default: 'nl-NL' },
-      { lang: 'no', default: 'no-NO' },
-      { lang: 'pl', default: 'pl-PL' },
-      { lang: 'pt', default: 'pt-PT' },
-      { lang: 'ro', default: 'ro-RO' },
-      { lang: 'ru', default: 'ru-RU' },
-      { lang: 'sk', default: 'sk-SK' },
-      { lang: 'sl', default: 'sl-SI' },
-      { lang: 'sv', default: 'sv-SE' },
-      { lang: 'th', default: 'th-TH' },
-      { lang: 'tr', default: 'tr-TR' },
-      { lang: 'uk', default: 'uk-UA' },
-      { lang: 'vi', default: 'vi-VN' },
-      { lang: 'zh', default: 'zh-CN' }
-    ];
-    const allLocales = ['af-ZA', 'ar-EG', 'ar-SA', 'bg-BG', 'cs-CZ', 'da-DK', 'de-DE', 'el-GR',
-      'en-AU', 'en-GB', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'es-AR', 'es-ES', 'es-MX',
-      'es-US', 'et-EE', 'fi-FI', 'fr-CA', 'fr-FR', 'he-IL', 'hi-IN', 'hr-HR',
-      'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
-      'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
-      'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'];
-    const defaultLocale = 'en-US';
-
-    if (allLocales.indexOf(locale) === -1) {
-      locale = defaults.filter(a => a.lang === lang);
+    if (this.supportedLocales.indexOf(locale) === -1) {
+      locale = this.defaultLocales.filter(a => a.lang === lang);
 
       if (locale && locale[0]) {
         return locale[0].default;
       }
 
-      locale = defaultLocale;
+      locale = this.defaultLocale;
     }
 
     return locale;
   },
 
   /**
+   * Check if the language is supported, if not return 'en'.
+   * @private
+   * @param {string} lang The locale to check.
+   * @returns {string} The actual lang to use.
+   */
+  correctLang(lang) {
+    let correctLang = this.defaultLocales.filter(a => a.lang === lang);
+
+    if (correctLang && correctLang[0]) {
+      return lang;
+    }
+
+    // Map incorrect java locale to correct locale
+    if (lang === 'in') {
+      correctLang = 'id';
+    }
+    if (lang === 'iw') {
+      correctLang = 'he';
+    }
+
+    correctLang = this.defaultLocale.substr(0, 2);
+    return correctLang;
+  },
+
+  /**
    * Internally stores a new culture file for future use.
-   * @param {string} locale the 4-character Locale ID
-   * @param {object} data translation data and locale-specific functions, such as calendars.
+   * @private
+   * @param {string} locale The 4-character Locale ID
+   * @param {object} data Translation data and locale-specific functions, such as calendars.
+   * @param {object} langData Translation data if deperated.
    * @returns {void}
    */
-  addCulture(locale, data) {
+  addCulture(locale, data, langData) {
+    const lang = locale.substr(0, 2);
+
     this.cultures[locale] = data;
+    this.languages[lang] = {
+      name: lang,
+      direction: data.direction || (langData ? langData.direction : ''),
+      nativeName: data.nativeName || (langData ? langData.nativeName : ''),
+      messages: data.messages || (langData ? langData.messages : {})
+    };
+    if (!langData) {
+      delete this.cultures[locale].direction;
+      delete this.cultures[locale].messages;
+    }
   },
 
   /**
@@ -233,7 +273,7 @@ const Locale = {  // eslint-disable-line
       locale = 'he-IL';
     }
 
-    locale = this.defaultLocale(locale);
+    locale = this.correctLocale(locale);
 
     if (locale === '') {
       self.dff.resolve();
@@ -264,6 +304,37 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
+   * Sets the current language, this can be independent and different from the current locale.
+   * @param {string} lang The two digit language code to use.
+   * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
+   */
+  setLanguage(lang) {
+    // If not call set and load it and then set back the locale after.
+    // Make a new object for currentLanguage independent of currentLocale
+    // Change translate to use the right one
+    const currentLocale = this.currentLocale.name;
+
+    // Map incorrect java locale to correct locale
+    lang = this.correctLang(lang);
+
+    // Ensure the language / culture is loaded.
+    if (!this.languages[lang]) {
+      this.set(lang).done(() => {
+        this.set(currentLocale);
+        this.setLanguage(lang);
+      });
+    }
+
+    if (this.languages[lang]) {
+      this.currentLanguage = this.languages[lang];
+      this.updateLanguage(lang);
+    } else {
+      this.currentLanguage.name = lang;
+    }
+    return this.dff;
+  },
+
+  /**
    * Chooses a stored locale dataset and sets it as "current"
    * @private
    * @param {string} name the 4-character Locale ID
@@ -271,12 +342,14 @@ const Locale = {  // eslint-disable-line
    * @returns {void}
    */
   setCurrentLocale(name, data) {
+    const lang = name.substr(0, 2);
     this.currentLocale.name = name;
 
     if (data) {
       this.currentLocale.data = data;
       this.currentLocale.dataName = name;
-      this.updateLang();
+      this.currentLanguage = this.languages[lang];
+      this.updateLanguage(lang);
     }
   },
 
@@ -339,7 +412,6 @@ const Locale = {  // eslint-disable-line
       return undefined;
     }
 
-    // TODO: Can we handle this if (this.dff.state()==='pending')
     const data = this.currentLocale.data;
     let pattern;
     let ret = '';
@@ -432,7 +504,7 @@ const Locale = {  // eslint-disable-line
 
     // Timezone
     if (ret.indexOf('zz') > -1) {
-      const timezoneDate = new Date(); // TODO Handle attribs.timeZone
+      const timezoneDate = new Date();
       const shortName = this.getTimeZone(timezoneDate, 'short');
       const longName = this.getTimeZone(timezoneDate, 'long');
 
@@ -450,7 +522,8 @@ const Locale = {  // eslint-disable-line
    * @returns {string} The time zone as a string.
    */
   getTimeZone(date, timeZoneName) {
-    const time = date.toLocaleTimeString(Locale.currentLocale.name);
+    const currentLocale = Locale.currentLocale.name || 'en-US';
+    const time = date.toLocaleTimeString(currentLocale);
     let name = '';
 
     if (env.browser.name === 'ie' && env.browser.version === '11') {
@@ -459,14 +532,14 @@ const Locale = {  // eslint-disable-line
 
     if (timeZoneName === 'long') {
       name = date.toLocaleTimeString(
-        Locale.currentLocale.name,
+        currentLocale,
         { timeZoneName: 'long' }
       );
       return name.replace(`${time} `, '');
     }
 
     name = date.toLocaleTimeString(
-      Locale.currentLocale.name,
+      currentLocale,
       { timeZoneName: 'short' }
     );
     return name.replace(`${time} `, '');
@@ -501,6 +574,49 @@ const Locale = {  // eslint-disable-line
       date.getMinutes(),
       date.getSeconds()
     ));
+  },
+
+  /**
+  * Formats a number into the current locale using toLocaleString
+  * See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString#Using_locales
+  * @param {number} number The number to convert
+  * @param {string} locale The number to convert
+  * @param {object} options The number to convert
+  * @returns {string} The converted number.
+  */
+  toLocaleString(number, locale, options) {
+    if (typeof number !== 'number') {
+      return '';
+    }
+    return number.toLocaleString(locale || Locale.currentLocale.name, options || undefined);
+  },
+
+  /**
+   * Convert a number in arabic/chinese or hindi numerals to an "english" number.
+   * @param  {[type]} string The string number in arabic/chinese or hindi
+   * @returns {number} The english number.
+   */
+  convertNumberToEnglish(string) {
+    const arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    const devanagari = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९']; // Hindi
+    const chineseFinancialTraditional = ['零', '壹', '貳', '叄', '肆', '伍', '陸', '柒', '捌', '玖'];
+    const chineseFinancialSimplified = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+    const chinese = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+
+    for (let i = 0; i <= 9; i++) {
+      string = string.replace(arabic[i], i);
+      string = string.replace('٬', '');
+      string = string.replace(',', '');
+      string = string.replace(devanagari[i], i);
+      string = string.replace(chineseFinancialTraditional[i], i);
+      string = string.replace(chineseFinancialSimplified[i], i);
+      string = string.replace(chinese[i], i);
+
+      if (i === 0) { // Second option for zero in chinese
+        string = string.replace('零', i);
+      }
+    }
+    return parseFloat(string);
   },
 
   /**
@@ -953,7 +1069,6 @@ const Locale = {  // eslint-disable-line
     let curFormat;
     let percentFormat;
     const decimal = options && options.decimal ? options.decimal : this.numbers().decimal;
-    const group = options && options.group !== undefined ? options.group : this.numbers().group;
     let minimumFractionDigits = options && options.minimumFractionDigits !== undefined ? options.minimumFractionDigits : (options && options.style && options.style === 'currency' ? 2 : (options && options.style && options.style === 'percent') ? 0 : 2);
     let maximumFractionDigits = options && options.maximumFractionDigits !== undefined ? options.maximumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2 : (options && options.minimumFractionDigits ? options.minimumFractionDigits : 3));
 
@@ -981,7 +1096,7 @@ const Locale = {  // eslint-disable-line
     if (options && options.style === 'percent') {
       const percentSign = !this.currentLocale.data.numbers ? '%' : this.currentLocale.data.numbers.percentSign;
 
-      percentFormat = !this.currentLocale.data.numbers ? '#,##0 %' : this.currentLocale.data.numbers.percentFormat;
+      percentFormat = !this.currentLocale.data.numbers ? '### %' : this.currentLocale.data.numbers.percentFormat;
       percentFormat = percentFormat.replace('¤', percentSign);
     }
 
@@ -998,7 +1113,8 @@ const Locale = {  // eslint-disable-line
     }
 
     const parts = this.truncateDecimals(number, minimumFractionDigits, maximumFractionDigits, options && options.round).split('.');
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
+    const expandedNum = this.expandNumber(parts[0], options);
+    parts[0] = expandedNum;
     formattedNum = parts.join(decimal);
 
     // Position the negative at the front - There is no CLDR info for this.
@@ -1023,15 +1139,12 @@ const Locale = {  // eslint-disable-line
       formattedNum = formattedNum.replace(/\.$/, ''); // remove trailing dot
     }
 
-    // Confirm Logic After All Locales are added.
     if (options && options.style === 'currency') {
-      formattedNum = curFormat.replace('#,##0.00', formattedNum);
-      formattedNum = formattedNum.replace('#,##0.00', formattedNum);
+      formattedNum = curFormat.replace('###', formattedNum);
     }
 
     if (options && options.style === 'percent') {
-      formattedNum = percentFormat.replace('#,##0', formattedNum);
-      formattedNum = formattedNum.replace('#.##0', formattedNum);
+      formattedNum = percentFormat.replace('###', formattedNum);
     }
 
     if (isNegative) {
@@ -1055,6 +1168,39 @@ const Locale = {  // eslint-disable-line
       return 0;
     }
     return number.toString().split('.')[1].length || 0;
+  },
+
+  /**
+   * Expand the number to the groupsize.
+   * @private
+   * @param  {string} numberString The number to expand
+   * @param  {object} options The locale options
+   * @returns {string} The expanded number.
+   */
+  expandNumber(numberString, options) {
+    let len = numberString.length;
+    let isNegative = false;
+
+    if (numberString.substr(0, 1) === '-') {
+      numberString = numberString.substr(1);
+      len = numberString.length;
+      isNegative = true;
+    }
+
+    if (len <= 3) {
+      return (isNegative ? '-' : '') + numberString;
+    }
+    const groupSizes = this.currentLocale.data.numbers.groupSizes || [3, 3];
+    const sep = options && options.group !== undefined ? options.group : this.numbers().group;
+    const firstGroup = numberString.substr(numberString.length - groupSizes[0]);
+    const nthGroup = numberString.substr(0, numberString.length - groupSizes[0]);
+    if (groupSizes[1] === 0) {
+      return (isNegative ? '-' : '') + nthGroup + (nthGroup === '' ? '' : sep) + firstGroup;
+    }
+    const reversed = nthGroup.split('').reverse().join('');
+    const regex = new RegExp(`.{1,${groupSizes[1]}}`, 'g');
+    const reversedSplit = reversed.match(regex).join(sep);
+    return (isNegative ? '-' : '') + reversedSplit.split('').reverse().join('') + sep + firstGroup;
   },
 
   /**
@@ -1127,6 +1273,7 @@ const Locale = {  // eslint-disable-line
     numString = numString.replace(decimal, '.');
     numString = numString.replace(percentSign, '');
     numString = numString.replace(currencySign, '');
+    numString = numString.replace('$', '');
     numString = numString.replace(' ', '');
 
     return parseFloat(numString);
@@ -1140,20 +1287,34 @@ const Locale = {  // eslint-disable-line
    * @returns {string|undefined} a translated string, or nothing, depending on configuration
    */
   translate(key, showAsUndefined) {
-    if (this.currentLocale.data === undefined || this.currentLocale.data.messages === undefined) {
+    if (this.currentLanguage.messages === undefined) {
       return showAsUndefined ? undefined : `[${key}]`;
     }
 
-    if (this.currentLocale.data.messages[key] === undefined) {
+    if (this.currentLanguage.messages[key] === undefined) {
+      const enLang = 'en';
       // Substitue English Expression if missing
-      if (!this.cultures || !this.cultures['en-US'] || !this.cultures['en-US'].messages
-          || this.cultures['en-US'].messages[key] === undefined) {
+      if (!this.languages || !this.languages[enLang] || !this.languages[enLang].messages
+          || this.languages[enLang].messages[key] === undefined) {
         return showAsUndefined ? undefined : `[${key}]`;
       }
-      return this.cultures['en-US'].messages[key].value;
+      return this.languages[enLang].messages[key].value;
     }
 
-    return this.currentLocale.data.messages[key].value;
+    return this.currentLanguage.messages[key].value;
+  },
+
+  /**
+   * Add an object full of translations to the given locale.
+   * @param {string} lang The language to add them to.
+   * @param  {object} messages Strings in the form of
+   */
+  extendTranslations(lang, messages) {
+    if (!this.languages[lang]) {
+      return;
+    }
+    const base = this.languages[lang].messages;
+    this.languages[lang].messages = $.extend(false, base, messages);
   },
 
   /**
@@ -1227,7 +1388,7 @@ const Locale = {  // eslint-disable-line
   numbers() {
     return this.currentLocale.data.numbers ? this.currentLocale.data.numbers : {
       percentSign: '%',
-      percentFormat: '#,##0 %',
+      percentFormat: '### %',
       minusSign: '-',
       decimal: '.',
       group: ','
@@ -1253,7 +1414,7 @@ const Locale = {  // eslint-disable-line
    * @returns {boolean} whether or not this locale is "right-to-left".
    */
   isRTL() {
-    return this.currentLocale.data.direction === 'right-to-left';
+    return this.currentLanguage.direction === 'right-to-left';
   },
 
   /**

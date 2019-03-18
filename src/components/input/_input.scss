@@ -6,10 +6,9 @@
 // Field Style
 .field .checkbox-label,
 .field .checkbox > label {
-  @include font-size(14);
-
   color: $checkbox-color-unchecked-initial-font;
   display: inline-block;
+  font-size: $theme-size-font-base;
   margin-bottom: 0;
   margin-top: 0;
 }
@@ -251,10 +250,10 @@ textarea {
 }
 
 .textarea-wordcount {
-  @include font-size(12);
   @include rem(line-height, 2rem);
 
   display: block;
+  font-size: $theme-size-font-sm;
   min-height: auto;
   width: $textarea-size;
 
@@ -318,31 +317,18 @@ label,
 }
 
 // Placeholder - Inline help
+// for browser support, these need to be
+// separate declarations rather than comma-separated
 ::-webkit-input-placeholder {
-  @include font-size(14);
-
-  color: $input-placeholder-color;
-  font-weight: $theme-number-font-weight-base;
-  line-height: 16px;
-  opacity: 1;
+  @include placeholder();
 }
 
 ::-moz-placeholder {
-  @include font-size(14);
-
-  color: $input-placeholder-color;
-  font-weight: $theme-number-font-weight-base;
-  line-height: 16px;
-  opacity: 1;
+  @include placeholder();
 }
 
 :-ms-input-placeholder {
-  @include font-size(14);
-
-  color: $input-placeholder-color;
-  font-weight: $theme-number-font-weight-base;
-  line-height: 16px;
-  opacity: 1;
+  @include placeholder();
 }
 
 ::-ms-clear {
@@ -466,24 +452,17 @@ label,
   }
 
   input {
-    @include font-size(12);
-
+    font-size: $theme-size-font-sm;
     margin-bottom: 0;
     padding: 5px;
     resize: none;
     text-align: left;
     width: $field-sm;
 
-    &::-webkit-input-placeholder {
-      @include font-size(12);
-    }
-
-    &::-moz-placeholder {
-      @include font-size(12);
-    }
-
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder,
     &:-ms-input-placeholder {
-      @include font-size(12);
+      font-size: $theme-size-font-sm;
     }
   }
 
@@ -556,9 +535,8 @@ label,
 .field-info {
   $this-icon-width: 15px;
 
-  @include font-size(12);
-
   display: block;
+  font-size: $theme-size-font-sm;
   line-height: 1.2rem;
   margin-bottom: 12px;
   margin-top: 7px;
@@ -596,10 +574,9 @@ label,
 .error-message {
   $this-icon-width: 14px;
 
-  @include font-size(12);
-
   color: $error-color;
   display: block;
+  font-size: $theme-size-font-sm;
   line-height: 1.2rem;
   margin-top: 7px;
   max-width: 300px;
@@ -627,10 +604,9 @@ label,
 .alert-message {
   $this-icon-width: 14px;
 
-  @include font-size(12);
-
   color: $alert-color;
   display: block;
+  font-size: $theme-size-font-sm;
   line-height: 1.2rem;
   margin-top: 7px;
   max-width: 300px;
@@ -658,10 +634,9 @@ label,
 .success-message {
   $this-icon-width: 14px;
 
-  @include font-size(12);
-
   color: $success-color;
   display: block;
+  font-size: $theme-size-font-sm;
   line-height: 1.2rem;
   margin-top: 7px;
   max-width: 300px;
@@ -690,10 +665,9 @@ label,
 .info-message {
   $this-icon-width: 14px;
 
-  @include font-size(12);
-
   color: $info-color;
   display: block;
+  font-size: $theme-size-font-sm;
   line-height: 1.2rem;
   margin-top: 7px;
   max-width: 300px;

@@ -239,7 +239,6 @@ Datagrid.prototype = {
     const html = $('html');
 
     this.isTouch = env.features.touch;
-    this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
     this.appendTooltip();
@@ -1101,12 +1100,13 @@ Datagrid.prototype = {
         }
         const hiddenStr = colGroups[k].hidden || colspan < 1 ? ' class="hidden"' : '';
         const colspanStr = ` colspan="${colspan > 0 ? colspan : 1}"`;
+        const groupedHeaderAlignmentClass = colGroups[k].align ? `l-${colGroups[k].align}-text` : '';
         uniqueId = self.uniqueId(`-header-group-${k}`);
         if (colspan > 0) {
           total += colspan;
         }
 
-        headerRows.center += `<th${hiddenStr}${colspanStr} id="${uniqueId}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+        headerRows.center += `<th${hiddenStr}${colspanStr} id="${uniqueId}" class="${groupedHeaderAlignmentClass}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
       });
 
       if (total < visibleColumnsLen) {
@@ -1147,12 +1147,19 @@ Datagrid.prototype = {
         headerAlignmentClass = ` l-${column.headerAlign}-text`;
       }
 
-      headerRows[container] += `<th scope="col" role="columnheader" class="${isSortable ? 'is-sortable' : ''}${isResizable ? ' is-resizable' : ''
-      }${column.hidden ? ' is-hidden' : ''}${column.filterType ? ' is-filterable' : ''
-      }${headerAlignmentClass || ''}" id="${id}" data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''
-      }${column.headerTooltip ? `title="${column.headerTooltip}"` : ''
-      }${column.reorderable === false ? ' data-reorder="false"' : ''
-      }${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''}${isExportable ? 'data-exportable="yes"' : 'data-exportable="no"'}>`;
+      // Assign css classes
+      let cssClass = '';
+      cssClass += isSortable ? ' is-sortable' : '';
+      cssClass += isResizable ? ' is-resizable' : '';
+      cssClass += column.hidden ? ' is-hidden' : '';
+      cssClass += column.filterType ? ' is-filterable' : '';
+      cssClass += column.textOverflow === 'ellipsis' ? ' text-ellipsis' : '';
+      cssClass += headerAlignmentClass !== '' ? headerAlignmentClass : '';
+
+      // Apply css classes
+      cssClass = cssClass !== '' ? ` class="${cssClass.substr(1)}"` : '';
+
+      headerRows[container] += `<th scope="col" role="columnheader" id="${id}" data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}${column.reorderable === false ? ' data-reorder="false"' : ''}${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} data-exportable="${isExportable ? 'yes' : 'no'}"${cssClass}>`;
 
       let sortIndicator = '';
       if (isSortable) {
@@ -1271,6 +1278,8 @@ Datagrid.prototype = {
       this.restoreFilter = false;
       this.savedFilter = null;
     }
+
+    this.activeEllipsisHeaderAll();
   },
 
   /**
@@ -1540,6 +1549,13 @@ Datagrid.prototype = {
         const dropdown = $(this);
         dropdown.dropdown(col.editorOptions).on('selected.datagrid', () => {
           self.applyFilter(null, 'selected');
+        }).on('listopened.datagrid', () => {
+          const api = dropdown.data('dropdown');
+          if (api) {
+            if (!self.isInViewport(api.list[0])) {
+              self.adjustPosLeft(api.list[0]);
+            }
+          }
         });
 
         // Append the Dropdown's sourceArguments with some row/col meta-data
@@ -2080,25 +2096,57 @@ Datagrid.prototype = {
 
     if (this.restoreFilterClientSide) {
       this.restoreFilterClientSide = false;
-      return;
+    } else {
+      /**
+      * Fires after a filter action ocurs
+      * @event filtered
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Object with the arguments
+      * @property {number} args.op The filter operation, this can be 'apply', 'clear'
+      * @property {object} args.conditions An object with all the condition data.
+      * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
+      */
+      this.element.trigger('filtered', { op: 'apply', conditions, trigger });
     }
 
-    /**
-    * Fires after a filter action ocurs
-    * @event filtered
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Object with the arguments
-    * @property {number} args.op The filter operation, this can be 'apply', 'clear'
-    * @property {object} args.conditions An object with all the condition data.
-    * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
-    */
-    this.element.trigger('filtered', { op: 'apply', conditions, trigger });
     this.setSearchActivePage({
       trigger,
       type: 'filtered'
     });
     this.saveUserSettings();
+  },
+
+  /**
+   * Adjust the left positon for given element to be in viewport
+   * @private
+   * @param {object} el The element
+   * @returns {void}
+   */
+  adjustPosLeft(el) {
+    const padding = 20;
+    const b = el.getBoundingClientRect();
+    const w = (window.innerWidth || document.documentElement.clientWidth);
+    if (b.left < 0 && b.right <= w) {
+      el.style.left = `${padding}px`; // Left side
+    } else if (b.left >= 0 && !(b.right <= w)) {
+      el.style.left = `${(w - b.width) - padding}px`; // Right side
+    }
+  },
+
+  /**
+   * Check if given element is in the viewport
+   * @private
+   * @param {object} el The element to check
+   * @returns {boolean} true if is in the viewport
+   */
+  isInViewport(el) {
+    const b = el.getBoundingClientRect();
+    return (
+      b.top >= 0 && b.left >= 0 &&
+      b.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      b.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
   },
 
   /**
@@ -3402,7 +3450,7 @@ Datagrid.prototype = {
     const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
 
-    if (rowData && rowData.rowStatus && self.settings.showNewRowIndicator) {
+    if (rowData && rowData.rowStatus && (rowData.rowStatus.icon === 'new' ? self.settings.showNewRowIndicator : true)) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
       rowStatus.icon = (rowData.rowStatus.icon === 'success') ? '#icon-check' : '#icon-exclamation';
@@ -3551,7 +3599,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (skipColumns > 0) {
+      if (skipColumns > 0 && !col.hidden) {
         skipColumns -= 1;
         cssClass += ' is-hidden';
       }
@@ -3792,14 +3840,22 @@ Datagrid.prototype = {
    */
   headerTableWidth(container) {
     const cacheWidths = this.headerWidths[this.settings.columns.length - 1];
+    let hasVisibleScrollbars = false;
 
     if (!cacheWidths) {
       return '';
     }
 
+    if (this.hasRightPane && container === 'right') {
+      hasVisibleScrollbars = env.os.name === 'Mac OS X' && this.bodyWrapperRight.width() - this.tableRight.width() > 0;
+    }
+
     if (cacheWidths.widthPercent) {
       return '100%';
     } else if (!isNaN(this.totalWidths[container])) {
+      if (hasVisibleScrollbars) {
+        return `${parseFloat(this.totalWidths[container]) + 15}px`;
+      }
       return `${parseFloat(this.totalWidths[container])}px`;
     }
 
@@ -3825,19 +3881,28 @@ Datagrid.prototype = {
    */
   setScrollClass() {
     const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
-    const hasScrollBar = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
+    const hasScrollBarV = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
+    const width = parseInt(this.bodyWrapperCenter[0].offsetWidth, 10);
+    const hasScrollBarH = parseInt(this.bodyWrapperCenter[0].scrollWidth, 10) > width;
     this.element.removeClass('has-vertical-scroll has-less-rows');
 
-    if (hasScrollBar) {
+    if (hasScrollBarV) {
       this.element.addClass('has-vertical-scroll');
     }
+    if (hasScrollBarH) {
+      this.element.addClass('has-horizontal-scroll');
+    }
 
-    if (!hasScrollBar && this.tableBody[0].offsetHeight < height) {
+    if (!hasScrollBarV && this.tableBody[0].offsetHeight < height) {
       this.element.addClass('has-less-rows');
     }
 
     if (this.hasRightPane) {
       this.element.addClass('has-frozen-right-columns');
+
+      if (utils.getScrollbarWidth() > 0) {
+        this.element.addClass('has-visible-scrollbars');
+      }
     }
   },
 
@@ -3887,9 +3952,6 @@ Datagrid.prototype = {
       if (this.elemWidth === 0) { // handle on invisible tab container
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
-      if (!this.elemWidth || this.elemWidth === 0) { // handle on invisible modal
-        this.elemWidth = this.element.closest('.modal-contents').outerWidth();
-      }
 
       this.widthSpecified = false;
     }
@@ -3925,9 +3987,6 @@ Datagrid.prototype = {
 
       if (this.elemWidth === 0) { // handle on invisible tab container
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
-      }
-      if (!this.elemWidth || this.elemWidth === 0) { // handle on invisible modal
-        this.elemWidth = this.element.closest('.modal-contents').outerWidth();
       }
 
       this.widthSpecified = false;
@@ -4034,7 +4093,7 @@ Datagrid.prototype = {
       const diff = this.elemWidth - this.totalWidths[container];
 
       if (this.settings.stretchColumn === 'last') {
-        if ((diff > 0) && !this.widthPercent && !col.width) {
+        if (diff > 0 && diff > colWidth && !this.widthPercent && !col.width) {
           colWidth = '';
           this.headerWidths[index] = {
             id: col.id,
@@ -4043,6 +4102,16 @@ Datagrid.prototype = {
           };
           this.totalMinWidths[container] = this.totalWidths[container];
           this.totalWidths[container] = '100%';
+        }
+        if (diff > 0 && diff < colWidth && !this.widthPercent && !col.width) {
+          colWidth += diff;
+          this.headerWidths[index] = {
+            id: col.id,
+            width: colWidth,
+            widthPercent: this.widthPercent
+          };
+          this.totalWidths[container] += colWidth;
+          this.totalMinWidths[container] = this.totalWidths[container];
         }
       }
 
@@ -4915,6 +4984,48 @@ Datagrid.prototype = {
   },
 
   /**
+   * Check if given column header should be able to set active ellipsis
+   * @private
+   * @param {string} column to check ellipsis
+   * @returns {boolean} true if should be able to set ellipsis
+   */
+  isEllipsisActiveHeader(column) {
+    column = column || {};
+    const isSortable = (column.sortable === undefined ? true : column.sortable);
+    return isSortable && (column.textOverflow === 'ellipsis');
+  },
+
+  /**
+   * Set active ellipsis on all columns header
+   * @private
+   * @returns {void}
+   */
+  activeEllipsisHeaderAll() {
+    for (let i = 0, l = this.settings.columns.length; i < l; i++) {
+      const id = this.settings.columns[i].id;
+      const column = this.columnById(id)[0];
+      if (this.isEllipsisActiveHeader(column)) {
+        const columnEl = this.headerContainer[0].querySelector(`th[data-column-id="${id}"]`);
+        this.activeEllipsisHeader(columnEl);
+      }
+    }
+  },
+
+  /**
+   * Set active ellipsis on given column header
+   * @private
+   * @param {string} columnEl to set ellipsis active
+   * @returns {void}
+   */
+  activeEllipsisHeader(columnEl) {
+    if (columnEl) {
+      const textEl = columnEl.querySelector('.datagrid-column-wrapper .datagrid-header-text');
+      const isEllipsisActive = columnEl.scrollWidth < (textEl.scrollWidth + 65);// 65:sort-icons
+      columnEl.classList[isEllipsisActive ? 'add' : 'remove']('is-ellipsis-active');
+    }
+  },
+
+  /**
    * Change the width of the column as the user drags the resizeHandle
    * @private
    * @param {boolean} idOrNode Specifies if the column info is provide by id or as a node reference.
@@ -4976,6 +5087,9 @@ Datagrid.prototype = {
         startingLeft = self.currentHeader.position().left + (self.table.scrollLeft() - 10);
         self.tableWidth = self.table[0].offsetWidth;
         columnStartWidth = self.currentHeader[0].offsetWidth;
+        if (self.isEllipsisActiveHeader(column)) {
+          self.currentHeader[0].classList.add('is-ellipsis-active');
+        }
       })
       .on('drag.datagrid', (e, ui) => {
         if (!self.currentHeader || !column) {
@@ -4999,6 +5113,9 @@ Datagrid.prototype = {
         const width = (draggingLeft - startingLeft - 1);
         self.dragging = false;
         self.setColumnWidth(self.currentHeader.attr('data-column-id'), width);
+        if (self.isEllipsisActiveHeader(column)) {
+          self.activeEllipsisHeader(self.currentHeader[0]);
+        }
       });
   },
 
@@ -5429,7 +5546,7 @@ Datagrid.prototype = {
       // Handle Cell Click Event
       const elem = $(this).closest('td');
       const cell = elem.attr('aria-colindex') - 1;
-      const col = self.columnSettings(cell, true);
+      const col = self.columnSettings(cell);
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a') || target.parent().is('button')) {   //eslint-disable-line
         const rowElem = $(this).closest('tr');
@@ -7327,6 +7444,13 @@ Datagrid.prototype = {
           }
         }
 
+        if (key === 9 && self.editor && self.editor.name === 'input' && col.inlineEditor === true) {
+          // Editor.destroy
+          self.editor.destroy();
+          self.editor = null;
+          return;
+        }
+
         if (key === 9 && !self.settings.actionableMode) {
           return;
         }
@@ -8341,17 +8465,12 @@ Datagrid.prototype = {
 
   /**
    * Get the settings for a column by index.
+   * @private
    * @param  {number} idx The column index.
-   * @param  {boolean} onlyVisible If only the visible columns should be included.
    * @returns {array} The settings array
    */
-  columnSettings(idx, onlyVisible) {
-    let foundColumn = this.settings.columns[idx];
-
-    if (onlyVisible) {
-      foundColumn = this.visibleColumns()[idx];
-    }
-
+  columnSettings(idx) {
+    const foundColumn = this.settings.columns[idx];
     return foundColumn || {};
   },
 
@@ -9694,13 +9813,18 @@ Datagrid.prototype = {
       }
 
       if (tooltip.content !== '') {
-        const isEllipsis = utils.hasClass(elem, 'text-ellipsis');
+        const isEllipsis = utils.hasClass((isHeaderColumn ? elem.parentNode : elem), 'text-ellipsis');
         const icons = [].slice.call(elem.querySelectorAll('.icon'));
         let extraWidth = isEllipsis ? 8 : 0;
         icons.forEach((icon) => {
           extraWidth += icon.getBBox().width + 8;
         });
-        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (select ? 0 : extraWidth);
+        if (isEllipsis && isHeaderColumn) {
+          const textEl = elem.querySelector('.datagrid-header-text');
+          tooltip.textwidth = textEl.scrollWidth + (select ? 0 : extraWidth);
+        } else {
+          tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (select ? 0 : extraWidth);
+        }
 
         if (isTh) {
           tooltip.textwidth = stringUtils.textWidth(tooltip.content);

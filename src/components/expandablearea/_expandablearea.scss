@@ -33,8 +33,7 @@
 
   //Area that hides/shows and Area that stays visible
   .expandable-pane {
-    @include font-size(14);
-
+    font-size: $theme-size-font-base;
     height: 0;
     overflow: hidden;
 

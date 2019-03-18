@@ -40,7 +40,6 @@ input::-webkit-inner-spin-button {
 
 .spinbox-control {
   @include css3(user-select, none);
-  @include font-size(14);
 
   backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
   background-color: $spinbox-button-color;
@@ -49,6 +48,7 @@ input::-webkit-inner-spin-button {
   color: $font-color;
   cursor: pointer;
   display: inline-block;
+  font-size: $theme-size-font-base;
   font-weight: $theme-number-font-weight-bold;
   height: 34px;
   line-height: normal;

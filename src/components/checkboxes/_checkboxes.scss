@@ -87,11 +87,11 @@ input.checkbox + label,
 input.checkbox + input[type='hidden'] + label,
 span.checkbox > label {
   @include no-select();
-  @include font-size(14);
 
   color: $checkbox-color-unchecked-initial-font;
   cursor: pointer;
   display: inline-block;
+  font-size: $theme-size-font-base;
   padding-left: 26px;
   position: relative;
 }
@@ -240,10 +240,10 @@ span.checkbox > input:checked + label::after,
 }
 
 .checkbox-group-label {
-  @include font-size(12);
   @include antialiased();
 
   display: block;
+  font-size: $theme-size-font-sm;
   margin-bottom: 12px;
 
   ~ .field {

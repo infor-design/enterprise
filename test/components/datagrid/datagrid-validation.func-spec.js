@@ -424,6 +424,35 @@ describe('Datagrid Validation API', () => {
     expect(datagridObj.dirtyRows().length).toEqual(1);
   });
 
+  it('Should show currently dirty rows with row-status error', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+
+    const cell1 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+    const cell2 = document.querySelector('tr:nth-child(2) td:nth-child(3)');
+    const cell3 = document.querySelector('tr:nth-child(2) td:nth-child(2)');
+
+    cell1.click();
+    let input = cell1.querySelector('input');
+    input.value = 'Cell test value 1';
+    cell2.click();
+    input = cell2.querySelector('input');
+    input.value = 'Cell test value 2';
+    cell3.click();
+
+    datagridObj.rowStatus(1, 'error', 'Error');
+
+    expect(document.querySelector('tr:nth-child(2)').classList.contains('rowstatus-row-error')).toBeTruthy();
+    expect(document.querySelector('tr:nth-child(2)').querySelectorAll('.icon-rowstatus').length).toEqual(1);
+
+    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(2);
+    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(cell2.classList.contains('is-dirty-cell')).toBeTruthy();
+    expect(datagridObj.dirtyRows().length).toEqual(2);
+  });
+
   it('Should show in title non visible error on another page', () => {
     datagridObj.nonVisibleCellErrors = [{ row: 5, cell: 7, message: 'Some Error', type: 'error' }];
     datagridObj.showNonVisibleCellErrors();

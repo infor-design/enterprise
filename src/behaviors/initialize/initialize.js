@@ -323,6 +323,13 @@ const PLUGIN_MAPPINGS = [
     });
   }],
 
+  // Form Compact Component
+  ['formcompact', '.form-compact-container', function (rootElem, pluginName, selector) {
+    matchedItems(rootElem, selector).each((i, item) => {
+      invoke($(item), 'formcompact');
+    });
+  }],
+
   // List/Detail Pattern
   ['listdetail', '.list-detail', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {

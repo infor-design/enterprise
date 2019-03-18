@@ -30,6 +30,7 @@ require('../../../src/components/locale/cultures/id-ID.js');
 require('../../../src/components/locale/cultures/it-IT.js');
 require('../../../src/components/locale/cultures/ja-JP.js');
 require('../../../src/components/locale/cultures/ko-KR.js');
+require('../../../src/components/locale/cultures/la-IT.js');
 require('../../../src/components/locale/cultures/lt-LT.js');
 require('../../../src/components/locale/cultures/lv-LV.js');
 require('../../../src/components/locale/cultures/ms-bn.js');
@@ -101,7 +102,7 @@ describe('Locale API', () => {
 
     let html = window.document.getElementsByTagName('html')[0];
 
-    expect(html.getAttribute('lang')).toEqual('de-DE');
+    expect(html.getAttribute('lang')).toEqual('de');
 
     Locale.set('ar-SA');
 
@@ -109,7 +110,7 @@ describe('Locale API', () => {
 
     html = window.document.getElementsByTagName('html')[0];
 
-    expect(html.getAttribute('lang')).toEqual('ar-SA');
+    expect(html.getAttribute('lang')).toEqual('ar');
     expect(html.getAttribute('dir')).toEqual('rtl');
     Locale.set('en-US');
   });
@@ -310,7 +311,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('10/10/010', 'M/d/yyyy')).toEqual(undefined);
   });
 
-  it('Should be able to parse UTC toISOString', () => { //eslint-disable-line
+  it('Should be able to parse UTC toISOString', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('2000-01-01T00:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').getTime()).toEqual(new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).getTime());
@@ -466,7 +467,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('Dezember 2015', 'MMMM yyyy').getTime()).toEqual(new Date(2015, 11, 1, 0, 0, 0).getTime());
   });
 
-  it('Should parse Dates with - in them', () => {
+  it('Should parse Dates with dashes in them', () => {
     Locale.set('en-US');
 
     // Test date only
@@ -537,21 +538,18 @@ describe('Locale API', () => {
 
   it('Should be possible to add translations', () => {
     Locale.set('en-US');
-    Locale.currentLocale.data.messages.CustomValue = { id: 'CustomValue', value: 'Added Custom Value' };
+    Locale.currentLanguage.messages.CustomValue = { id: 'CustomValue', value: 'Added Custom Value' };
 
     expect(Locale.translate('CollapseAppTray')).toEqual('Collapse App Tray');
     expect(Locale.translate('CustomValue')).toEqual('Added Custom Value');
   });
 
-  /*
-   *  it('Not error on a non existant locale', () => {
-   *    // TODO Fix this test when we add better error handling
-   *    Locale.set('en-US');
-   *    Locale.set('xx-XX');
-   *
-   *    expect(Locale.translate('Required')).toEqual('Required');
-   *  });
-   */
+  it('Not error on a non existant locale', () => {
+    Locale.set('en-US');
+    Locale.set('xx-XX');
+
+    expect(Locale.translate('Required')).toEqual('Required');
+  });
 
   it('Should format decimals', () => {
     Locale.set('en-US');
@@ -618,15 +616,9 @@ describe('Locale API', () => {
 
     expect(Locale.formatNumber(12345.129, { style: 'currency' })).toEqual('$12,345.12');
 
-    // Added due to SOHO-5487
-    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
-    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
-
     Locale.set('de-DE');
 
     expect(Locale.formatNumber(12345.123, { style: 'currency' })).toEqual('12.345,12 €');
-    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253,00 %');
-    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
   });
 
   it('Should allow currency override', () => {
@@ -639,7 +631,7 @@ describe('Locale API', () => {
       style: 'currency',
       decimal: '.',
       group: ',',
-      currencyFormat: '¤ #,##0.00',
+      currencyFormat: '¤ ###',
       currencySign: '$'
     })).toEqual('$ 12,345.12');
   });
@@ -650,12 +642,15 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(0.0500000, { style: 'percent' })).toEqual('5 %');
     expect(Locale.formatNumber(0.050000, { style: 'percent', maximumFractionDigits: 0 })).toEqual('5 %');
     expect(Locale.formatNumber(0.05234, { style: 'percent', minimumFractionDigits: 4, maximumFractionDigits: 4 })).toEqual('5.2340 %');
-
     expect(Locale.formatNumber(0.57, { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 })).toEqual('57 %');
     expect(Locale.formatNumber(0.57, { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('57.00 %');
     expect(Locale.formatNumber(0.5700, { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('57.00 %');
     expect(Locale.formatNumber(0.57010, { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('57.01 %');
     expect(Locale.formatNumber(0.5755, { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('57.55 %');
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
+    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
+    expect(Locale.formatNumber(0.10, { style: 'percent' })).toEqual('10 %');
+    expect(Locale.formatNumber(1, { style: 'percent' })).toEqual('100 %');
 
     Locale.set('tr-TR');
 
@@ -664,6 +659,13 @@ describe('Locale API', () => {
     Locale.set('it-IT');
 
     expect(Locale.formatNumber(0.0500000, { style: 'percent' })).toEqual('5%');
+
+    Locale.set('de-DE');
+
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253,00 %');
+    expect(Locale.formatNumber(-2.53, { style: 'percent' })).toEqual('-253 %');
+    expect(Locale.formatNumber(0.10, { style: 'percent' })).toEqual('10 %');
+    expect(Locale.formatNumber(1, { style: 'percent' })).toEqual('100 %');
   });
 
   it('Should parse numbers back', () => {
@@ -737,7 +739,7 @@ describe('Locale API', () => {
   it('Should format negative numbers', () => {
     Locale.set('en-US');
 
-    expect(Locale.formatNumber(-1000000, { style: 'currency' })).toEqual('-$1,000,000.00');
+    expect(Locale.formatNumber(-1000000, { style: 'currency' })).toEqual('-$1000,000.00');
 
     Locale.set('de-DE');
 
@@ -814,7 +816,7 @@ describe('Locale API', () => {
   });
 
   it('Should have 12 months per locale', () => {
-    for (let culture in Locale.cultures) {  //eslint-disable-line
+    for (let culture in Locale.cultures) { //eslint-disable-line
       Locale.set(culture);
 
       expect(Locale.calendar().months.wide.length).toEqual(12);
@@ -893,23 +895,23 @@ describe('Locale API', () => {
   it('Should format dates with short timezones', () => {
     Locale.set('en-US');
 
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' })).toEqual('3/22/2018 8:11 PM EST');
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' })).toEqual('22-03-2018 20:11 EST');
+    expect(['3/22/2018 8:11 PM EST', '3/22/2018 8:11 PM EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
+    expect(['22-03-2018 20:11 EST', '22-03-2018 20:11 EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
     Locale.set('nl-NL');
 
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' })).toEqual('22/3/2018 20:11 GMT-5');
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' })).toEqual('22-03-2018 20:11 GMT-5');
+    expect(['22/3/2018 20:11 GMT-5', '22/3/2018 20:11 GMT-4']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
+    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
   });
 
   it('Should format dates with long timezones', () => {
     Locale.set('en-US');
 
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' })).toEqual('3/22/2018 8:11 PM Eastern Standard Time');
-    expect(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' })).toEqual('22-03-2000 20:11 Eastern Standard Time');
+    expect(['3/22/2018 8:11 PM Eastern Standard Time', '3/22/2018 8:11 PM Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
+    expect(['22-03-2000 20:11 Eastern Standard Time', '22-03-2000 20:11 Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' }));
     Locale.set('nl-NL');
 
-    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' })).toEqual('22/3/2018 20:11 Eastern-standaardtijd');
-    expect(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' })).toEqual('22-03-2000 20:11 Eastern-standaardtijd');
+    expect(['22/3/2018 20:11 Eastern-standaardtijd', '22/3/2018 20:11 Eastern-zomertijd']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
+    expect(['22-03-2000 20:11 Eastern-standaardtijd', '22-03-2000 20:11 Eastern-zomertijd']).toContain(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' }));
   });
 
   it('Should parse dates with short timezones in current timezone', () => {
@@ -971,5 +973,218 @@ describe('Locale API', () => {
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'long')).toEqual('26-3-2018 14:00:00 Oost-Australische standaardtijd');
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai', 'long')).toEqual('26-3-2018 12:00:00 Chinese standaardtijd');
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'long')).toEqual('26-3-2018 00:00:00 Eastern-zomertijd');
+  });
+
+  it('Should be possible to set the langauge to something other than the current locale', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.translate('Actions')).toEqual('Actions');
+    expect(Locale.currentLanguage.name).toEqual('en');
+    expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.setLanguage('da').done(() => {
+      expect(Locale.translate('Actions')).toEqual('Handlinger');
+      expect(Locale.currentLanguage.name).toEqual('da');
+      expect(Locale.currentLocale.name).toEqual('en-US');
+
+      Locale.setLanguage('ar').done(() => {
+        expect(Locale.translate('Actions')).toEqual('الإجراءات');
+        expect(Locale.currentLanguage.name).toEqual('ar');
+        expect(Locale.currentLocale.name).toEqual('en-US');
+        done();
+      });
+    });
+  });
+
+  it('Should be possible to extend the langauge strings for a locale', (done) => {
+    Locale.set('it-lT').done(() => {
+      const myStrings = {
+        Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
+        YourWelcome: { id: 'YourWelcome', value: 'Prego', comment: '' }
+      };
+      Locale.extendTranslations(Locale.currentLanguage.name, myStrings);
+
+      expect(Locale.translate('Comments')).toEqual('Commenti');
+      expect(Locale.translate('Thanks')).toEqual('Grazie');
+      expect(Locale.translate('YourWelcome')).toEqual('Prego');
+      done();
+    });
+  });
+
+  it('Should be possible to extend the langauge strings for a language', (done) => {
+    Locale.set('fr-FR').done(() => {
+      Locale.setLanguage('it').done(() => {
+        const myStrings = {
+          Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
+          YourWelcome: { id: 'YourWelcome', value: 'Prego', comment: '' }
+        };
+        Locale.extendTranslations(Locale.currentLanguage.name, myStrings);
+
+        expect(Locale.translate('Comments')).toEqual('Commenti');
+        expect(Locale.translate('Thanks')).toEqual('Grazie');
+        expect(Locale.translate('YourWelcome')).toEqual('Prego');
+        done();
+      });
+    });
+  });
+
+  it('Should still trigger done on a non existent locale', (done) => {
+    Locale.set('xx-XX').done(() => {
+      expect(Locale.currentLocale.name).toEqual('en-US');
+      done();
+    });
+  });
+
+  it('Should be possible to add a locale not in the current set', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.translate('Comments')).toEqual('Comments');
+    expect(Locale.translate('SomeTextThatDoesntExist')).toEqual('[SomeTextThatDoesntExist]');
+
+    // Add a new locale not in the setup ones
+    Locale.defaultLocales.push({ lang: 'la', default: 'la-IT' });
+    Locale.supportedLocales.push('la-IT');
+
+    Locale.set('la-lT').done(() => {
+      expect(Locale.translate('Comments')).toEqual('Commenti');
+      expect(Locale.translate('SomeTextThatDoesntExist')).toEqual('[SomeTextThatDoesntExist]');
+      done();
+    });
+  });
+
+  it('Should handle group size', () => {
+    Locale.set('en-US'); // 3, 0
+
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
+    expect(Locale.formatNumber(1.1234)).toEqual('1.123');
+    expect(Locale.formatNumber(12.1234)).toEqual('12.123');
+    expect(Locale.formatNumber(123.1234)).toEqual('123.123');
+    expect(Locale.formatNumber(1234.1234)).toEqual('1,234.123');
+    expect(Locale.formatNumber(12345.1234)).toEqual('12,345.123');
+    expect(Locale.formatNumber(123456.1234)).toEqual('123,456.123');
+    expect(Locale.formatNumber(1234567.1234)).toEqual('1234,567.123');
+    expect(Locale.formatNumber(12345678.1234)).toEqual('12345,678.123');
+    expect(Locale.formatNumber(123456789.1234)).toEqual('123456,789.123');
+    expect(Locale.formatNumber(1234567890.1234)).toEqual('1234567,890.123');
+    expect(Locale.formatNumber(123456789.1234, { style: 'currency' })).toEqual('$123456,789.12');
+    expect(Locale.formatNumber(100, { style: 'percent' })).toEqual('10,000 %');
+
+    Locale.set('nl-NL'); // 3, 3
+
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253,00 %');
+    expect(Locale.formatNumber(1.1234)).toEqual('1,123');
+    expect(Locale.formatNumber(12.1234)).toEqual('12,123');
+    expect(Locale.formatNumber(123.1234)).toEqual('123,123');
+    expect(Locale.formatNumber(1234.1234)).toEqual('1.234,123');
+    expect(Locale.formatNumber(12345.1234)).toEqual('12.345,123');
+    expect(Locale.formatNumber(123456.1234)).toEqual('123.456,123');
+    expect(Locale.formatNumber(1234567.1234)).toEqual('1.234.567,123');
+    expect(Locale.formatNumber(12345678.1234)).toEqual('12.345.678,123');
+    expect(Locale.formatNumber(123456789.1234)).toEqual('123.456.789,123');
+    expect(Locale.formatNumber(1234567890.1234)).toEqual('1.234.567.890,123');
+    expect(Locale.formatNumber(123456789.1234, { style: 'currency' })).toEqual('€ 123.456.789,12');
+    expect(Locale.formatNumber(100, { style: 'percent' })).toEqual('10.000 %');
+
+    Locale.set('hi-IN'); // 3, 2
+
+    expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
+    expect(Locale.formatNumber(1.1234)).toEqual('1.123');
+    expect(Locale.formatNumber(12.1234)).toEqual('12.123');
+    expect(Locale.formatNumber(123.1234)).toEqual('123.123');
+    expect(Locale.formatNumber(1234.1234)).toEqual('1,234.123');
+    expect(Locale.formatNumber(12345.1234)).toEqual('12,345.123');
+    expect(Locale.formatNumber(123456.1234)).toEqual('1,23,456.123');
+    expect(Locale.formatNumber(1234567.1234)).toEqual('12,34,567.123');
+    expect(Locale.formatNumber(12345678.1234)).toEqual('1,23,45,678.123');
+    expect(Locale.formatNumber(123456789.1234)).toEqual('12,34,56,789.123');
+    expect(Locale.formatNumber(1234567890.1234)).toEqual('1,23,45,67,890.123');
+    expect(Locale.formatNumber(123456789.1234, { style: 'currency' })).toEqual('₹12,34,56,789.12');
+    expect(Locale.formatNumber(100, { style: 'percent' })).toEqual('10,000 %');
+  });
+
+  it('Should parse group size', () => {
+    Locale.set('en-US'); // 3, 0
+
+    expect(Locale.parseNumber('-253.00 %')).toEqual(-253);
+    expect(Locale.parseNumber('1.123')).toEqual(1.123);
+    expect(Locale.parseNumber('12.123')).toEqual(12.123);
+    expect(Locale.parseNumber('123.123')).toEqual(123.123);
+    expect(Locale.parseNumber('1,234.123')).toEqual(1234.123);
+    expect(Locale.parseNumber('12,345.123')).toEqual(12345.123);
+    expect(Locale.parseNumber('123,456.123')).toEqual(123456.123);
+    expect(Locale.parseNumber('1234,567.123')).toEqual(1234567.123);
+    expect(Locale.parseNumber('12345,678.123')).toEqual((12345678.123));
+    expect(Locale.parseNumber('123456,789.123')).toEqual((123456789.123));
+    expect(Locale.parseNumber('1234567,890.123')).toEqual((1234567890.123));
+    expect(Locale.parseNumber('$123456,789.12')).toEqual((123456789.12));
+    expect(Locale.parseNumber('10,000 %')).toEqual((10000));
+
+    Locale.set('nl-NL'); // 3, 3
+
+    expect(Locale.parseNumber('-253,00 %')).toEqual(-253);
+    expect(Locale.parseNumber('1,123')).toEqual(1.123);
+    expect(Locale.parseNumber('12,123')).toEqual(12.123);
+    expect(Locale.parseNumber('123,123')).toEqual(123.123);
+    expect(Locale.parseNumber('1.234,123')).toEqual(1234.123);
+    expect(Locale.parseNumber('12.345,123')).toEqual(12345.123);
+    expect(Locale.parseNumber('123.456,123')).toEqual(123456.123);
+    expect(Locale.parseNumber('1234.567,123')).toEqual(1234567.123);
+    expect(Locale.parseNumber('12.345.678,123')).toEqual((12345678.123));
+    expect(Locale.parseNumber('123.456.789,123')).toEqual((123456789.123));
+    expect(Locale.parseNumber('1.234.567.890,123')).toEqual((1234567890.123));
+    expect(Locale.parseNumber('$123.456.789,12')).toEqual((123456789.12));
+    expect(Locale.parseNumber('10.000 %')).toEqual((10000));
+
+    Locale.set('hi-IN'); // 3, 2
+
+    expect(Locale.parseNumber('-253.00 %')).toEqual(-253);
+    expect(Locale.parseNumber('1.123')).toEqual(1.123);
+    expect(Locale.parseNumber('12.123')).toEqual(12.123);
+    expect(Locale.parseNumber('123.123')).toEqual(123.123);
+    expect(Locale.parseNumber('1,234.123')).toEqual(1234.123);
+    expect(Locale.parseNumber('12,345.123')).toEqual(12345.123);
+    expect(Locale.parseNumber('1,23,456.123')).toEqual(123456.123);
+    expect(Locale.parseNumber('12,34,567.123')).toEqual(1234567.123);
+    expect(Locale.parseNumber('1,23,45,678.123')).toEqual((12345678.123));
+    expect(Locale.parseNumber('12,34,56,789.123')).toEqual((123456789.123));
+    expect(Locale.parseNumber('1,23,45,67,890.123')).toEqual((1234567890.123));
+    expect(Locale.parseNumber('₹12,34,56,789.12')).toEqual((123456789.12));
+    expect(Locale.parseNumber('10,000 %')).toEqual((10000));
+  });
+
+  it('Should convert arabic numbers', () => {
+    expect(Locale.convertNumberToEnglish('١٢٣٤٥٦٧٨٩٠')).toEqual(1234567890);
+    expect(Locale.convertNumberToEnglish('١٢٣')).toEqual(123);
+    expect(Locale.convertNumberToEnglish('١٢٣.٤٥')).toEqual(123.45);
+    expect(Locale.convertNumberToEnglish('١٬٢٣٤٬٥٦٧٬٨٩٠')).toEqual(1234567890);
+  });
+
+  it('Should convert hebrew numbers', () => {
+    expect(Locale.convertNumberToEnglish('१२३४५६७८९०')).toEqual(1234567890);
+    expect(Locale.convertNumberToEnglish('१२३')).toEqual(123);
+    expect(Locale.convertNumberToEnglish('१२३.४५')).toEqual(123.45);
+    expect(Locale.convertNumberToEnglish('१,२३४,५६७,८९०')).toEqual(1234567890);
+  });
+
+  it('Should convert chinese financial traditional numbers', () => {
+    expect(Locale.convertNumberToEnglish('壹貳叄肆伍陸柒捌玖零')).toEqual(1234567890);
+    expect(Locale.convertNumberToEnglish('貳零壹玖')).toEqual(2019);
+    expect(Locale.convertNumberToEnglish('壹貳叄.肆伍')).toEqual(123.45);
+    expect(Locale.convertNumberToEnglish('壹,貳叄肆,伍陸柒,捌玖零')).toEqual(1234567890);
+  });
+
+  it('Should convert chinese financial simplified numbers', () => {
+    expect(Locale.convertNumberToEnglish('壹贰叁肆伍陆柒捌玖零')).toEqual(1234567890);
+    expect(Locale.convertNumberToEnglish('贰零壹玖')).toEqual(2019);
+    expect(Locale.convertNumberToEnglish('壹贰叁.肆伍')).toEqual(123.45);
+    expect(Locale.convertNumberToEnglish('壹,贰叁肆,伍陆柒,捌玖零')).toEqual(1234567890);
+  });
+
+  it('Should convert chinese normal numbers', () => {
+    expect(Locale.convertNumberToEnglish('一二三四五六七八九零')).toEqual(1234567890);
+    expect(Locale.convertNumberToEnglish('二零一九')).toEqual(2019);
+    expect(Locale.convertNumberToEnglish('二〇一九')).toEqual(2019);
+    expect(Locale.convertNumberToEnglish('一二三.四五')).toEqual(123.45);
+    expect(Locale.convertNumberToEnglish('一,二三四,五六七,八九零')).toEqual(1234567890);
   });
 });

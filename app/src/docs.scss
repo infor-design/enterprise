@@ -64,9 +64,8 @@ html {
 
   // Change Letter Color and Size
   .fieldset-title {
-    @include font-size(14);
-
     color: $color-font-lighter;
+    font-size: $theme-size-font-base;
   }
 
   // Align the Letter columns
@@ -108,18 +107,16 @@ h2 {
 }
 
 h3 {
-  @include font-size(14);
-
   color: $theme-color-palette-black;
+  font-size: $theme-size-font-base;
   letter-spacing: 1.17px;
   line-height: 16px;
   text-transform: uppercase;
 }
 
 h4 {
-  @include font-size(14);
-
   color: $theme-color-palette-black;
+  font-size: $theme-size-font-base;
 }
 
 p,
@@ -380,12 +377,11 @@ code.sourceCode span.er {
 // Inline Code
 
 code {
-  @include font-size(14);
-
   background-color: $color-code-bg;
   border: 1px solid #e1e8e8;
   border-radius: 0.25rem 0.25rem 0 0;
   font-family: $font-family-monospace;
+  font-size: $theme-size-font-base;
   line-height: 24px;
   padding: 0 4px;
 

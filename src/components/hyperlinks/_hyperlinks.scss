@@ -17,11 +17,11 @@
 }
 
 .hyperlink {
-  @include font-size(12);
   @include antialiased();
 
   color: $hyperlink-color;
   cursor: pointer;
+  font-size: $theme-size-font-sm;
   line-height: 1.5rem;
   position: relative;
   text-decoration: underline;
@@ -80,9 +80,8 @@
 
   &.back,
   &.directional {
-    @include font-size(12);
-
     color: $hyperlink-color;
+    font-size: $theme-size-font-sm;
 
     &::after {
       display: none;
@@ -145,8 +144,7 @@
 
 //Inline text should be 14px to match content
 p .hyperlink {
-  @include font-size(14);
-
+  font-size: $theme-size-font-base;
   white-space: nowrap;
 }
 
@@ -190,7 +188,7 @@ p .hyperlink {
   .timestamp {
     color: $link-color-disabled-font;
     display: block;
-    font-size: 12px;
+    font-size: $theme-size-font-sm;
     margin: 0;
     padding: 0;
     position: static;

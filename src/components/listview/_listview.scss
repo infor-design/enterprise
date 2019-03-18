@@ -1,5 +1,5 @@
-// Simple List
 //================================================== //
+// Simple List
 
 .listview {
   background-color: inherit;
@@ -23,9 +23,9 @@
   .listview-heading,
   .listview-data {
     @include ellipsis();
-    @include font-size(14);
 
     color: $listview-color;
+    font-size: $theme-size-font-base;
     font-weight: $theme-number-font-weight-base;
     overflow-wrap: break-word;
 
@@ -40,9 +40,8 @@
   }
 
   .listview-heading-lg {
-    @include font-size(18);
-
     display: block;
+    font-size: $theme-size-font-lg;
     margin: 8px 0 5px;
     vertical-align: top;
 
@@ -60,9 +59,8 @@
 
   .listview-subheading,
   .listview-data-label {
-    @include font-size(12);
-
     color: $listview-secondary-color;
+    font-size: $theme-size-font-sm;
     overflow-wrap: break-word;
   }
 
@@ -83,9 +81,8 @@
   }
 
   .listview-micro {
-    @include font-size(12);
-
-    color: $listview-tertiary-color;
+    color: $theme-color-palette-graphite-60;
+    font-size: $theme-size-font-sm;
 
     &::after {
       clear: both;
@@ -199,9 +196,9 @@
 
     > a {
       @include ellipsis();
-      @include font-size(14);
 
       color: $listview-color;
+      font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
       text-decoration: none;
 
@@ -299,9 +296,8 @@
   }
 
   p {
-    @include font-size(14);
-
     color: $listview-color;
+    font-size: $theme-size-font-base;
     line-height: 23px;
   }
 
@@ -469,9 +465,8 @@
 
   tr,
   td {
-    @include font-size(14);
-
     color: $listview-color;
+    font-size: $theme-size-font-base;
     padding: 13px 15px;
   }
 
@@ -493,10 +488,9 @@
     }
 
     th {
-      @include font-size(12);
-
       color: $listview-header-color;
       display: table-cell;
+      font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
       padding: 15px;
 
@@ -521,7 +515,7 @@
   padding: 20px;
 
   .listview-heading {
-    @include font-size(18);
+    font-size: $theme-size-font-lg;
   }
 
   .btn-expand {
@@ -536,9 +530,8 @@
   }
 
   .listview-subheading {
-    @include font-size(14);
-
     color: $font-color-lowcontrast;
+    font-size: $theme-size-font-base;
     font-weight: $theme-number-font-weight-bold;
     padding-top: 3px;
   }

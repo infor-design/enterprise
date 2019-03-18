@@ -36,8 +36,7 @@
     margin-bottom: 0;
 
     .title {
-      @include font-size(18);
-
+      font-size: $theme-size-font-lg;
       height: inherit;
       margin-left: 15px;
     }

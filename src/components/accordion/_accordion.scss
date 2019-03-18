@@ -481,7 +481,7 @@
 }
 
 .accordion-content {
-  @include font-size(14);
+  font-size: $theme-size-font-base;
 }
 
 .accordion-header {
@@ -510,10 +510,9 @@
 
   a {
     color: inherit;
+    font-size: $theme-size-font-base;
     text-decoration: none;
     text-overflow: ellipsis;
-
-    @include font-size(14);
   }
 
   > a {
@@ -682,7 +681,7 @@
     overflow-x: visible;
 
     p {
-      font-size: 1.4rem;
+      font-size: $theme-size-font-base;
       -webkit-text-size-adjust: 100%;
     }
   }
@@ -735,10 +734,9 @@
         color: $accordion-icon-color;
         content: '\25cf';
         display: inline-block;
+        font-size: $theme-size-font-sm;
         padding: 8px 10px 8px 21px;
         vertical-align: middle;
-
-        @include font-size(12);
       }
 
       a {

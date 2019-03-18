@@ -186,6 +186,11 @@ div.multiselect {
     color: $input-readonly-color;
     cursor: text;
     -webkit-text-fill-color: $input-readonly-color;
+
+    &[tabindex='-1']:focus {
+      border-color: $input-color-readonly-border !important;
+      box-shadow: none;
+    }
   }
 
   &:focus {
@@ -202,7 +207,7 @@ div.multiselect {
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
   box-shadow: $dropdown-shadow-initial-boxshadow, $focus-box-shadow;
-  font-size: 1.4rem;
+  font-size: $theme-size-font-base;
   max-height: 340px;
   min-height: 30px;
   overflow: hidden;
@@ -234,10 +239,9 @@ div.multiselect {
   }
 
   ul {
-    @include font-size(14);
-
     background-color: $popupmenu-bg-color;
     color: $popupmenu-color;
+    font-size: $theme-size-font-base;
     height: auto;
     line-height: 32px;
     overflow-x: hidden;
@@ -464,9 +468,9 @@ div.multiselect {
 
   .group-label {
     @include css3(user-select, none);
-    @include font-size(12);
 
     color: $label-color-initial-font;
+    font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
     line-height: 20px;
     min-height: 20px;
@@ -603,8 +607,7 @@ input.dropdown.error:focus {
 //Shorter Field Size
 .field-short {
   div.dropdown {
-    @include font-size(12);
-
+    font-size: $theme-size-font-sm;
     margin-bottom: 0;
     padding: 5px 21px 5px 5px;
 
@@ -630,6 +633,7 @@ input.dropdown.error:focus {
 
     ~ .icon-error {
       margin-left: -38px;
+      position: absolute;
       right: auto;
       top: 0;
     }
@@ -675,8 +679,7 @@ div.dropdown-xs,
 // Shorter Drop Down Lists
 .dropdown-list.dropdown-short {
   .dropdown-search {
-    @include font-size(12);
-
+    font-size: $theme-size-font-sm;
     padding: 5px 32px 5px 5px;
   }
 
@@ -687,8 +690,7 @@ div.dropdown-xs,
   }
 
   ul {
-    @include font-size(12);
-
+    font-size: $theme-size-font-sm;
     text-indent: 5px;
   }
 
@@ -819,8 +821,7 @@ div.dropdown-xs,
 
     &.dropdown-short {
       .dropdown-search {
-        @include font-size(12);
-
+        font-size: $theme-size-font-sm;
         padding: 5px 21px 5px 5px;
       }
     }

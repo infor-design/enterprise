@@ -350,8 +350,7 @@
 .card-empty-info,
 .widget-empty-info,
 .empty-info {
-  @include font-size(14);
-
+  font-size: $theme-size-font-base;
   padding: 0 20px 40px;
 
   &:last-child {

@@ -1,10 +1,10 @@
 import { Lookup } from '../../../src/components/lookup/lookup';
+import { cleanup } from '../../helpers/func-utils';
 
 const lookupHTML = require('../../../app/views/components/lookup/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let lookupEl;
-let svgEl;
 let lookupObj;
 
 const columns = [];
@@ -59,27 +59,18 @@ const settings = {
 
 describe('Lookup API', () => {
   beforeEach(() => {
+    cleanup(['.svg-icons', '.row', '.modal-page-container', '.trigger']);
     lookupEl = null;
-    svgEl = null;
     lookupObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', lookupHTML);
     lookupEl = document.body.querySelector('.lookup');
-    svgEl = document.body.querySelector('.svg-icons');
     lookupObj = new Lookup(lookupEl, settings);
   });
 
   afterEach(() => {
     lookupObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
-
-    const modal = document.body.querySelector('.modal-page-container');
-    if (modal && modal.parentNode) {
-      modal.parentNode.removeChild(modal);
-    }
+    cleanup(['.svg-icons', '.row', '.modal-page-container', '.trigger']);
   });
 
   it('Should be defined', () => {
@@ -122,10 +113,13 @@ describe('Lookup API', () => {
     expect($(lookupEl).siblings('span.trigger').css('visibility')).toEqual('hidden');
   });
 
-  it('Should be able to destroy it', () => {
+  it('Should be able to destroy it', (done) => {
     lookupObj.destroy();
 
-    expect(document.body.querySelector('.trigger')).toBeFalsy();
+    setTimeout(() => {
+      expect(document.body.querySelector('.trigger')).toBeFalsy();
+      done();
+    }, 300);
   });
 
   it('Should be able to open the dialog and select', (done) => {
@@ -210,6 +204,6 @@ describe('Lookup API', () => {
 
       expect(lookupEl.value).toEqual('777777');
       done();
-    }, 300);
+    }, 500);
   });
 });

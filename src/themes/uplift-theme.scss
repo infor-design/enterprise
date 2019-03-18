@@ -6,7 +6,7 @@
 @import '../core/mixins';
 
 // ids-identity token vars
-@import '../../node_modules/ids-identity/dist/tokens/web/theme-uplift';
+@import '../../node_modules/ids-identity/dist/theme-uplift/tokens/web/theme-uplift';
 
 // Enterprise colors
 @import '../components/colors/colorpalette';
@@ -17,12 +17,12 @@
 // Core Controls
 @import '../core/controls';
 
-// Temporary Banner - Remove this when not alpha.
+// Temporary Banner - Remove this when not beta.
 body::before {
-  background: $theme-color-status-warning;
+  background: $theme-color-status-base;
   bottom: 12px;
   color: $theme-color-palette-white;
-  content: 'alpha';
+  content: 'beta';
   font-size: 13px;
   font-weight: 900;
   height: 25px;
@@ -36,4 +36,9 @@ body::before {
   transform: rotate(45deg);
   width: 100px;
   z-index: 1000;
+}
+
+// TODO: Move to tokens
+.icon {
+  fill: transparent;
 }

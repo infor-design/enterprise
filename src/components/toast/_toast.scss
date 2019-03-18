@@ -28,13 +28,12 @@
 }
 
 .toast {
-  @include font-size(14);
-
   background-color: $toast-bg-color;
   border: 1px solid $toast-border-color;
   border-radius: 2px;
   box-shadow: $toast-shadow;
   color: $toast-text-color;
+  font-size: $theme-size-font-base;
   overflow: hidden;
   padding: 0 10px;
   position: relative;

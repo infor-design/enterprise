@@ -1,8 +1,14 @@
 {{#inlineSVG}}
 
   <div class="svg hidden">
+
+    {{#isUpliftTheme}}
+      {{> ../../src/components/icons/theme-uplift-svg}}
+    {{/isUpliftTheme}}
+    {{^isUpliftTheme}}
     {{> ../../src/components/icons/svg}}
-    {{> ../../src/components/icons/svg-extended}}
+    {{/isUpliftTheme}}
+
     {{> ../../src/components/emptymessage/svg-empty}}
   </div>
   <div class="svg patterns hidden">

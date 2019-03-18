@@ -127,10 +127,9 @@
   }
 
   .contextual-toolbar {
-    left: -2px;
     margin: 0 !important;
     top: 5px;
-    width: calc(100% + 4px);
+    width: 100%;
   }
 
   .modal-body-wrapper {
@@ -153,8 +152,9 @@
   }
 
   .title {
-    @include font-size(18);
     @include antialiased();
+
+    font-size: $theme-size-font-lg;
   }
 
   tr.is-clickable {

@@ -16,7 +16,7 @@
   }
 
   .label-text {
-    @include font-size(14);
+    font-size: $theme-size-font-base;
   }
 
   .label-line {
@@ -33,7 +33,7 @@
 
   .labels text {
     color: $chart-font-color;
-    font-size: 12px;
+    font-size: $theme-size-font-sm;
   }
 
   .slices path {

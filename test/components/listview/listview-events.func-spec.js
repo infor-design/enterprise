@@ -74,4 +74,22 @@ describe('Listview Events', () => {
     listviewAPI.deselect($(liEl));
     listviewAPI.deselect($(liEl2));
   });
+
+  it('Should be fire rendered on updated with no params', () => {
+    listviewAPI = new ListView(listviewEl, { dataset: data, template: 'period-end-tmpl', selectable: 'multiple' });
+
+    const spyEvent = spyOnEvent($(listviewEl), 'rendered');
+    listviewAPI.updated();
+
+    expect(spyEvent).toHaveBeenTriggered();
+  });
+
+  it('Should be fire rendered on updated with new settings', () => {
+    listviewAPI = new ListView(listviewEl, { dataset: data, template: 'period-end-tmpl', selectable: 'multiple' });
+
+    const spyEvent = spyOnEvent($(listviewEl), 'rendered');
+    listviewAPI.updated({ dataset: data });
+
+    expect(spyEvent).toHaveBeenTriggered();
+  });
 });

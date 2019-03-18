@@ -208,6 +208,7 @@ Following the process below will safely create baseline images the CI can use du
 1. In your terminal, run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the Travis CI docker image to mimic the environment. And wait....
 1. Open up the image and go in `docker exec -it travis-debug bash -l`
 1. Install [Node Version Manager (nvm)](https://github.com/creationix/nvm) using the latest version available (check their Github for more info)
+1. Set the timezone for some tests `cp /usr/share/zoneinfo/America/New_York /etc/localtime`
 
 ```sh
 wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
@@ -265,13 +266,13 @@ Some tests will most likely fail.  These failures are due to visual differences.
 
 #### Replacing specific baseline images
 
-1. Remove the file from the baseline using a command like `rm test/baseline/searchfield-open-chrome-1200x800-dpr-1.png`
+1. Remove the file from the baseline using a command like `rm test/baseline/<name-of-test-file.png>`
 1. Run the tests and it should say `Image not found, saving current image as new baseline.`
-1. Copy the file locally and check it using `docker cp 9979cb17cbfc:/enterprise/test/.tmp/actual/searchfield-open-chrome-1200x800-dpr-1.png /Users/tmcconechy/dev/actual`
+1. Open a new shell on your local machine and copy the file and check it using: `docker cp <CONTAINER_ID>:/home/travis/enterprise/test/.tmp/actual/<name-of-test-file.png> /Users/<your_user_name>/<target_path>`
 1. If it looks visually as expected then copy it to the baseline
 
 ```sh
-mv test/.tmp/actual/searchfield-open-chrome-1200x800-dpr-1.png test/baseline/searchfield-open-chrome-1200x800-dpr-1.png`
+mv test/.tmp/actual/<name-of-test-file.png> test/baseline/<name-of-test-file.png>`
 ```
 
 1. Run tests again to confirm
@@ -282,14 +283,14 @@ mv test/.tmp/actual/searchfield-open-chrome-1200x800-dpr-1.png test/baseline/sea
 As mentioned, we can copy the last test run folder (actual) `test/.tmp/actual/<name-of-test-file.png>` and compare it to the baseline `test/baseline/<name-of-test-file.png>`. You use the docker cp command from your machine, and it goes into the container to copies the file out locally. Documentation for the command can be  [found here](https://docs.docker.com/engine/reference/commandline/cp/). Sample commands:
 
 ```sh
- docker cp 9979cb17cbfc:/enterprise/test/.tmp/actual/searchfield-open-chrome-1200x800-dpr-1.png /Users/tmcconechy/dev/actual
-cp 9979cb17cbfc:/enterprise/test/baseline/searchfield-open-chrome-1200x800-dpr-1.png /Users/tmcconechy/dev/baseline
+ docker cp <CONTAINER_ID>:/home/travis/enterprise/test/.tmp/actual/<name-of-test-file.png> /Users/<your_user_name>/<target_path>
+cp <CONTAINER_ID>:/home/travis/enterprise/test/baseline/<name-of-test-file.png> /Users/<your_user_name>/<target_path>
 ```
 
 Or copy them all to your local directory for inspection.
 
 ```sh
-docker cp INSERT_CONTAINER_ID:/home/travis/enterprise/test/.tmp .
+docker cp <CONTAINER_ID>:/home/travis/enterprise/test/.tmp .
 ```
 
 See [https://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container](https://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container) for additional help

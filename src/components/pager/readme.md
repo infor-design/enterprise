@@ -12,6 +12,8 @@ demo:
     slug: example-paging
   - name: Paging on the Circle Pager Component
     slug: example-index
+  - name: Standalone Pager (Just uses events and settings)
+    slug: example-standalone
 ---
 
 ## Code Example
