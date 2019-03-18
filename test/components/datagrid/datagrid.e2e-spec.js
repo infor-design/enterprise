@@ -660,7 +660,7 @@ describe('Datagrid paging tests', () => {
   });
 
   if (!utils.isCI()) {
-    it('Should not move on a page thats more than the max', async () => { //eslint-disable-line
+    it('Should not move on a page thats more than the max', async () => {
       expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
       expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
