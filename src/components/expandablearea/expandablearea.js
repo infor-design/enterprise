@@ -270,6 +270,8 @@ ExpandableArea.prototype = {
     this.content.one('animateopencomplete', () => {
       this.element.triggerHandler('afterexpand', [this.element]);
     }).animateOpen();
+
+    this.applyIE11Fix();
   },
 
   /**
@@ -317,6 +319,25 @@ ExpandableArea.prototype = {
       this.element.triggerHandler('aftercollapse', [this.element]);
       this.content[0].style.display = 'none';
     }).animateClosed();
+
+    this.applyIE11Fix();
+  },
+
+  /**
+  * Determines if the browser is IE11 and applies a min-height fix for the overflow.
+  * @private
+  * @returns {void}
+  */
+  applyIE11Fix() {
+    const self = this;
+    const isIE11 = $('html').hasClass('ie11');
+    setTimeout(() => {
+      if (isIE11 && self.element.hasClass('is-expanded')) {
+        self.element.css('min-height', self.element.children('.expandable-pane').outerHeight(true) + self.element.children('.expandable-footer').outerHeight(true));
+      } else if (isIE11 && !self.element.hasClass('is-expanded')) {
+        self.element.css('min-height', 'auto');
+      }
+    }, 300); // equal to transition time
   },
 
   /**

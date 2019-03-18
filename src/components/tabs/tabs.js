@@ -2582,7 +2582,7 @@ Tabs.prototype = {
 
     // If a jQuery-wrapped element is provided, actually append the element.
     // If content is text/string, simply inline it.
-    const markup = $(`<div id="${tabId}" class="tab-panel" role="tabpanel"></div>`);
+    const markup = $(`<div id="${xssUtils.stripTags(tabId)}" class="tab-panel" role="tabpanel"></div>`);
     if (content instanceof $) {
       content = content[0];
     }

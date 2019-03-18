@@ -13,7 +13,7 @@ describe('Applicationmenu index tests', () => {
   it('Should show the app menu', async () => {
     const button = await element(by.css('.application-menu-trigger'));
     await button.click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
   });
@@ -101,7 +101,7 @@ describe('Applicationmenu container tests', () => {
   it('Should show the app menu', async () => {
     const button = await element(by.css('.application-menu-trigger'));
     await button.click();
-    await browser.driver.sleep(1500);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
     expect(await element.all(by.css('.accordion-header')).count()).toEqual(17);

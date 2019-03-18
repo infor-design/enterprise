@@ -62,7 +62,7 @@ module.exports = function customRouteOptions(req, res) {
 
   // Icons
   if (url.match(/icons\/example-index/) || url.match(/icons\/example-extended/) || url.match(/icons\/example-empty/)) {
-    customOpts.iconHtml = require('./routes/custom-icons')(url);
+    customOpts.iconHtml = require('./routes/custom-icons')(url, res.opts.theme);
   }
 
   // Placement Logic
