@@ -36,12 +36,26 @@ By default it will fetch the js files on your server from the cultures folder th
 
 ## Code Example - Using a different Language and Locale
 
-It is possible to use the strings in another language, independently of the locale settings for date and numbers ect. to do this just call the `setLanguage` api function. As with the `set` function if the locale with the strings is not loaded there may be a delay while the script is loaded in. So use the callback `done` function before initializing components or using the strings.
+It is possible to use the translation strings in another language, independently of the locale settings for date and numbers ect. to do this just call the `setLanguage` api function. As with the `set` function if the locale with the strings is not loaded there may be a delay while the script is loaded in. So use the callback `done` function before initializing components or using the strings.
 
 ```javascript
 Soho.Locale.set('en-US');
 Soho.Locale.setLanguage('da').done(function () => {
   Locale.translate('Actions'); // Returns 'Handlinger'
+});
+```
+
+## Code Example - Getting a translation from the non current language
+
+It is possible to use the translation strings in another language, independently of the locale or language setting. To do this just call the `getLocale` api function to ensure the data is loaded. When it is you can call `translate` with a different language tag without changing the current language.
+
+```javascript
+Soho.Locale.set('en-US');
+Soho.Locale.setLanguage('da').done(function () => {
+  Locale.translate('Actions'); // Returns 'Handlinger'
+});
+Soho.Locale.getLocale('de-DE').done(function () => {
+  Locale.translate('Actions', { language: 'de' }); // Returns 'Aktionen'
 });
 ```
 
@@ -132,6 +146,23 @@ Locale.formatNumber(1234567.1234, { groupSizes: [3, 0] }); //1234.567,123
 Locale.formatNumber(1234567.1234, { group: '' }); // No Group size shown resulting in 1234567,123
 ```
 
+## Code Example - Parsing Numbers in a non current locale
+
+It is possible to call `parseNumber` or `formatNumber` to handle numbers without changing the current locale. To do this just call the `getLocale` api function to ensure the data is loaded. When it is you can call `parseNumber` or `formatNumber` with a different locale tag without changing the current locale.
+
+```javascript
+Soho.Locale.set('en-US');
+Locale.getLocale('nl-NL').done(function () {
+  Locale.formatNumber(123456789.1234, { locale: 'en-US' }); // 123456,789.123
+  Locale.formatNumber(123456789.1234, { locale: 'nl-NL' }); // 123456,789.123
+});
+
+Locale.getLocale('nl-NL').done(function () {
+  Locale.parseNumber('1.123', { locale: 'nl-NL' }); // 1123
+  Locale.parseNumber('€123456.789,12', { locale: 'nl-NL' }); // 123456789.12
+});
+```
+
 ## Number Format Patterns
 
 The formatNumber function accepts a numberFormat object with formatting information. For example:
@@ -172,6 +203,21 @@ Soho.Locale.parseDate('2014-12-11', 'yyyy-MM-dd')
 // Returns date object
 Soho.Locale.parseDate('10/28/2015 12:00:00 AM', 'M/d/yyyy h:mm:ss a')
 // Returns date object
+```
+
+## Code Example - Parsing Dates in a non current locale
+
+It is possible to call `parseDate` or `formatDate` to handle dates without changing the current locale. To do this just call the `getLocale` api function to ensure the data is loaded. When it is you can call `parseDate` or `formatDate` with a different locale tag without changing the current locale.
+
+```javascript
+Soho.Locale.set('en-US');
+Soho.Locale.getLocale('nl-NL').done(function () {
+  Locale.formatDate(new Date(2019, 5, 8), { date: 'short', locale: 'nl-NL' })); //08-06-2019
+});
+
+Soho.Locale.getLocale('es-ES').done(function () {
+  Soho.Locale.parseDate('Noviembre de 2019', { date: 'year', locale: 'es-ES' }); // 2019-11-01 as a Date
+});
 ```
 
 ## Date format settings

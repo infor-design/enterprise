@@ -16,6 +16,8 @@
 - `[Datagrid]` Added option to align grouped headers text. ([#1714](https://github.com/infor-design/enterprise/issues/1714))
 - `[Dropdown]` Added support to make dropdown readonly fields optionally not tab-able. ([#1591](https://github.com/infor-design/enterprise/issues/1591))
 - `[Form Compact]` Implemented design for field-heavy forms. This design is experimental, likely not production ready, and subject to change without notice. ([#1699](https://github.com/infor-design/enterprise/issues/1699))
+- `[Locale]` Added support for passing in `locale` or `language` to the `parse` and `format` and `translation` functions so they will work without changing the current locale or language. ([#462](https://github.com/infor-design/enterprise/issues/462))
+- `[Locale]` Added support for setting a specific group size other than the ones in the locale. This includes using no group size. ([#462](https://github.com/infor-design/enterprise/issues/462))
 - `[Locale]` Added support for showing timezones in the current language with a fall back for IE 11. ([#592](https://github.com/infor-design/enterprise/issues/592))
 - `[Locale]` Added support for different group sizes. This was previously not working correctly for locales like hi-IN (using 3, 2 group sizes) and en-US (using 3, 0 group sizes). We will later make this work on masks on a separate issue. ([#441](https://github.com/infor-design/enterprise/issues/441))
 - `[Locale]` Its now possible to add new locales in by adding them to the `defaultLocales` and `supportedLocales` sets. ([#402](https://github.com/infor-design/enterprise/issues/402))
