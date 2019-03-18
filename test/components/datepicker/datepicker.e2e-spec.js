@@ -634,10 +634,9 @@ describe('Datepicker Month Year Picker Tests', () => {
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ENTER);
 
-    const buttonEl = await element(by.css('.select-month.btn-tertiary'));
-    await buttonEl.click();
+    await element(by.css('.select-month.btn-tertiary')).click();
 
-    expect(await element(by.id('month-year')).getAttribute('value')).toEqual('01/2020');
+    expect(['01/2019', '01/2020']).toContain(await element(by.id('month-year')).getAttribute('value'));
   });
 
   it('Should be able to function as month/year picker long', async () => {
