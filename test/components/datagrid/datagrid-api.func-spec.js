@@ -217,7 +217,6 @@ describe('Datagrid API', () => {
       expect(th.getAttribute('class')).toContain('text-ellipsis');
       expect(th.getAttribute('class')).toContain('is-ellipsis-active');
       expect(document.body.querySelector('.grid-tooltip')).toBeTruthy();
-      expect(document.body.querySelector('.grid-tooltip.is-hidden')).toBeFalsy();
 
       newColumns[6].width = 200;
       datagridObj.updateColumns(newColumns);
