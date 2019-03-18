@@ -1081,7 +1081,7 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-mixed-selection-disable-row-dectivation');
 
-    const datagridEl = await element(by.id('datagrid-header'));
+    const datagridEl = await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
