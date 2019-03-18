@@ -331,7 +331,7 @@ describe('Datagrid grouping with paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-grouping-paging');
 
-    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)'));
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1206,7 +1206,7 @@ describe('Datagrid paging multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-multiselect');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
