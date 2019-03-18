@@ -843,10 +843,10 @@ Calendar.prototype = {
     let startDate = new Date(event.starts);
     let endDate = new Date(event.ends);
     
-    if (!Locale.isValidDate(startDate)){
+    if (!Locale.isValidDate(startDate)) {
       startDate = this.currentDate();
     }
-    if (!Locale.isValidDate(endDate)){
+    if (!Locale.isValidDate(endDate)) {
       endDate = this.currentDate();
     }
     
