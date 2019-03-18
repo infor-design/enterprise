@@ -369,33 +369,35 @@ describe('Lookup single select serverside tests', () => {
     expect(await lookupEl.getAttribute('value')).toEqual('214220');
   });
 
-  it('should be able to keep selected value only one', async () => {
-    const lookupEl = await element(by.id('product-lookup2'));
-    await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
-    await browser.driver.sleep(1000);
+  if (!utils.isCI()) {
+    it('should be able to keep selected value only one', async () => {
+      const lookupEl = await element(by.id('product-lookup2'));
+      await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
+      await browser.driver.sleep(1000);
 
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+      await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+      await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
 
-    expect(await lookupEl.getAttribute('value')).toEqual('214220');
+      expect(await lookupEl.getAttribute('value')).toEqual('214220');
 
-    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
-    await browser.driver.sleep(301);
-    await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
-    await browser.driver.sleep(1000);
+      await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+      await browser.driver.sleep(301);
+      await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
+      await browser.driver.sleep(1000);
 
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)'))), config.waitsFor);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+      await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)'))), config.waitsFor);
+      await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
 
-    expect(await lookupEl.getAttribute('value')).toEqual('214221');
+      expect(await lookupEl.getAttribute('value')).toEqual('214221');
 
-    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
-    await browser.driver.sleep(301);
-    await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
-    await browser.driver.sleep(1000);
+      await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+      await browser.driver.sleep(301);
+      await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
+      await browser.driver.sleep(1000);
 
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+      await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
 
-    expect(await element.all(by.css('#lookup-datagrid .datagrid-body tbody tr.datagrid-row.is-selected')).count()).toEqual(1);
-  });
+      expect(await element.all(by.css('#lookup-datagrid .datagrid-body tbody tr.datagrid-row.is-selected')).count()).toEqual(1);
+    });
+  }
 });
