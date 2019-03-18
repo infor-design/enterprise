@@ -236,20 +236,20 @@ const Locale = {  // eslint-disable-line
    * @private
    * @param {string} locale The locale name to append.
    * @param {boolean} isCurrent If we should set this as the current locale
-   * @param {boolean} justResolve If we should resolve the promise.
+   * @param {boolean} useLocale If we should resolve the promise base on locale
    * @returns {void}
    */
-  appendLocaleScript(locale, isCurrent, justResolve) {
+  appendLocaleScript(locale, isCurrent, useLocale) {
     const script = document.createElement('script');
     script.src = `${this.getCulturesPath() + locale}.js`;
 
     script.onload = () => {
       if (isCurrent) {
         this.setCurrentLocale(locale, this.cultures[locale]);
-      }
-
-      if (isCurrent || justResolve) {
         this.dff.resolve(this.currentLocale.name);
+      }
+      if (useLocale) {
+        this.dff[locale].resolve(this.currentLocale.name);
       }
     };
 
@@ -309,16 +309,17 @@ const Locale = {  // eslint-disable-line
    */
   getLocale(locale) {
     const self = this;
-    this.dff = $.Deferred();
+    this.dff[locale] = $.Deferred();
     locale = this.correctLocale(locale);
 
     if (locale === '') {
-      self.dff.resolve();
-      return this.dff.promise();
+      const dff = $.Deferred();
+      dff.resolve();
+      return dff.promise();
     }
 
     if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
-      this.appendLocaleScript('en-US', false);
+      this.appendLocaleScript('en-US', false, true);
     }
 
     if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
@@ -326,13 +327,13 @@ const Locale = {  // eslint-disable-line
     }
 
     if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
-      self.dff.resolve(self.currentLocale.name);
+      this.dff[locale].resolve(self.currentLocale.name);
     }
     if (self.cultures[locale] && this.cultureInHead()) {
-      self.dff.resolve(self.currentLocale.name);
+      this.dff[locale].resolve(self.currentLocale.name);
     }
 
-    return this.dff.promise();
+    return this.dff[locale].promise();
   },
 
   /**
@@ -686,6 +687,11 @@ const Locale = {  // eslint-disable-line
       locale = options.locale || locale;
       dateFormat = options.dateFormat || this.calendar(locale).dateFormat[dateFormat.date];
     }
+
+    if (typeof options === 'object' && options.pattern) {
+      dateFormat = options.dateFormat || options.pattern;
+    }
+
     if (!dateFormat) {
       dateFormat = this.calendar(locale).dateFormat.short;
     }
@@ -1159,9 +1165,14 @@ const Locale = {  // eslint-disable-line
     }
 
     const parts = this.truncateDecimals(number, minimumFractionDigits, maximumFractionDigits, options && options.round).split('.');
-    const groupSizes = options && options.groupSizes !== undefined
-      ? options.groupSizes
-      : localeData.numbers.groupSizes || [3, 3];
+    let groupSizes = [3, 3]; // In case there is no data
+    if (localeData && localeData.numbers && localeData.numbers.groupSizes) {
+      groupSizes = localeData.numbers.groupSizes;
+    }
+    if (options && options.groupSizes) {
+      groupSizes = options.groupSizes;
+    }
+
     const sep = options && options.group !== undefined ? options.group : this.numbers().group;
     const expandedNum = this.expandNumber(parts[0], groupSizes, sep);
     parts[0] = expandedNum;
