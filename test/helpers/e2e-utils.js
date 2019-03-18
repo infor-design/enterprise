@@ -1,3 +1,5 @@
+const ACCEPTABLE_LOG_LEVELS = ['SEVERE'];
+
 module.exports = {
   isIE: () => browser.browserName === 'ie',
   isFF: () => browser.browserName === 'firefox',
@@ -23,10 +25,18 @@ module.exports = {
   },
   checkForErrors: async () => {
     await browser.manage().logs().get('browser').then((browserLog) => {
+      let errors = 0;
       for (let i = 0; i < browserLog.length; i++) {
-        console.log(browserLog[i].level.name, browserLog[i].message); //eslint-disable-line
+        // Don't error out on warnings
+        const type = browserLog[i].level.name;
+        if (ACCEPTABLE_LOG_LEVELS.indexOf(type) === -1) {
+          continue;
+        }
+
+        console.log(type, browserLog[i].message); //eslint-disable-line
+        errors++;
       }
-      expect(browserLog.length).toEqual(0);
+      expect(errors).toEqual(0);
     });
   },
   getSelectedText: async () => {
