@@ -852,7 +852,7 @@ const Locale = {  // eslint-disable-line
           dateObj.month = value - 1;
           break;
         case 'MMM':
-          abrMonth = this.calendar().months.abbreviated;
+          abrMonth = this.calendar(locale).months.abbreviated;
 
           for (let len = 0; len < abrMonth.length; len++) {
             if (orgDatestring.indexOf(abrMonth[len]) > -1) {
@@ -862,7 +862,7 @@ const Locale = {  // eslint-disable-line
 
           break;
         case 'MMMM':
-          textMonths = this.calendar().months.wide;
+          textMonths = this.calendar(locale).months.wide;
 
           for (let k = 0; k < textMonths.length; k++) {
             if (orgDatestring.indexOf(textMonths[k]) > -1) {
