@@ -58,6 +58,8 @@ describe('FieldFilter example-index tests', () => {
 describe('FieldFilter filter type tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/field-filter/example-filtertype');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.output'))), config.waitsFor);
   });
 
   it('Should open fieldfilter on click', async () => {

@@ -198,7 +198,7 @@ describe('Listview example-multiselect tests', () => {
 describe('Listview example-mixed selection tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-mixed-selection');
-    const listviewEl = await element(by.id('task-listview'));
+    const listviewEl = await element(by.css('#task-listview li'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
@@ -250,8 +250,7 @@ describe('Listview example-mixed selection tests', () => {
   });
 
   it('Should activate element on click outside of checkbox', async () => {
-    const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
-    await listviewItemElOne.click();
+    await await element(by.css('li[aria-posinset="1"]')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-activated'))), config.waitsFor);
 
