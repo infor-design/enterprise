@@ -28,7 +28,9 @@ const config = {
   plugins: [
     resolve(),
     json(),
-    deprecationNotice(),
+    deprecationNotice({
+      process: commandLineArgs.verbose
+    }),
     babel({
       exclude: 'node_modules/**',
       plugins: ['external-helpers']

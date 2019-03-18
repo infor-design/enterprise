@@ -861,6 +861,10 @@ function runBuildProcesses(requested) {
   let targetSassConfig = 'dist';
   let rollupArgs = '-c';
 
+  if (commandLineArgs.verbose) {
+    rollupArgs += ' --verbose';
+  }
+
   // if Requested
   if (Array.isArray(requested) && requested.length) {
     isCustom = true;

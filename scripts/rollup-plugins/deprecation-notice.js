@@ -71,11 +71,19 @@ const transform = function (code, filePath) {
 };
 
 // The actual Rollup.js plugin wrapper
-const plugin = function () {
-  return {
-    name: 'deprecation-notice',
-    transform
+const plugin = function (opts = {}) {
+  const pluginContents = {
+    name: 'deprecation-notice'
   };
+
+  // Only do the processing if `process` is set to `true`.
+  // This gets passed in from `rollup.config.js`
+  if (opts && !opts.process) {
+    return pluginContents;
+  }
+
+  pluginContents.transform = transform;
+  return pluginContents;
 };
 
 module.exports = plugin;
