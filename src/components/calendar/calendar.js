@@ -857,14 +857,12 @@ Calendar.prototype = {
       event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
       event.duration = event.starts === event.ends ? 1 : null;
       event.isAllDay = true;
-    }
-    else {
+    } else {
       if (startDate === endDate) {
         endDate.setHours(endDate.getHours() + parseInt(event.durationHours, 10));
         event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
         event.duration = null;
-      }
-      else {
+      } else {
         event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
       }
       event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
