@@ -1,0 +1,28 @@
+{
+  "ancestorPath": null,
+  "centeredNode": {
+  "id": "1",
+  "name": "John Randolph",
+  "position": "CEO",
+  "employmentType": "FT",
+  "picture": "/images/4.jpg"
+},
+"children": [
+    {
+      "id": "2",
+      "name": "Barb Wire",
+      "position": "COO",
+      "employmentType": "FT",
+      "avatarInitials": "BW",
+      "isLeaf": true
+    },
+    {
+      "id": "3",
+      "name": "Greg Ford",
+      "position": "CTO",
+      "employmentType": "FT",
+      "avatarInitials": "GF",
+      "isLeaf": true
+    }
+  ]
+}
