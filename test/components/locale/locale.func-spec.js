@@ -1268,6 +1268,7 @@ describe('Locale API', () => {
       expect(Locale.parseNumber('-253,00 %', { locale: 'nl-NL' })).toEqual(-253);
       expect(Locale.parseNumber('1.123', { locale: 'nl-NL' })).toEqual(1123);
       expect(Locale.parseNumber('$123456.789,12', { locale: 'nl-NL' })).toEqual((123456789.12));
+      expect(Locale.parseNumber('€123456.789,12', { locale: 'nl-NL' })).toEqual((123456789.12));
       expect(Locale.parseNumber('10.000 %', { locale: 'nl-NL' })).toEqual((10000));
     });
     Locale.getLocale('hi-IN').done(() => {
