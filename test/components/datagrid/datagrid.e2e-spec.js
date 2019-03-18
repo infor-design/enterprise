@@ -1172,7 +1172,7 @@ describe('Datagrid paging multiselect across pages', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-multiselect-select-across-page');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
