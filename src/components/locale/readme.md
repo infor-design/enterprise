@@ -122,6 +122,16 @@ Soho.Locale.parseNumber('1,234,567,890.12346')
 // Returns 1234567890.12346
 ```
 
+## Code Example - Number Group Sizes
+
+You can control the use of group sizes on number formatting. By default the groups size should be correct for your current locale but you can set it to something other than the default.
+
+```javascript
+Locale.set('nl-NL'); // Usually groupSizes: [3, 3]
+Locale.formatNumber(1234567.1234, { groupSizes: [3, 0] }); //1234.567,123
+Locale.formatNumber(1234567.1234, { group: '' }); // No Group size shown resulting in 1234567,123
+```
+
 ## Number Format Patterns
 
 The formatNumber function accepts a numberFormat object with formatting information. For example:
