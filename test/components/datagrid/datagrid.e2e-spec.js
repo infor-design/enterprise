@@ -394,7 +394,7 @@ describe('Datagrid index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-index?layout=nofrills');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
     await element(by.css('body')).sendKeys(protractor.Key.TAB);
