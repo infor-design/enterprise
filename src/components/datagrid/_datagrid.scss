@@ -2079,6 +2079,10 @@ $datagrid-short-row-height: 23px;
         text-overflow: ellipsis;
         // transition: height, line-height .5s cubic-bezier(.17, .04, .03, .94);
         white-space: nowrap;
+
+        .hyperlink {
+          display: inline;
+        }
       }
 
       // Expandable Cells
@@ -2177,6 +2181,28 @@ $datagrid-short-row-height: 23px;
     position: relative;
     text-align: left;
 
+    &.text-ellipsis {
+      .datagrid-column-wrapper {
+        display: flex;
+
+        .datagrid-header-text {
+          cursor: default;
+          display: inline-block;
+          margin: 10px 0 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      &.is-ellipsis-active {
+        .sort-indicator {
+          position: absolute;
+          right: 9px;
+        }
+      }
+    }
+
     &.l-center-text {
       text-align: center;
 
@@ -2266,6 +2292,36 @@ $datagrid-short-row-height: 23px;
   .datagrid-header-groups {
     th {
       background-color: $datagrid-header-active-color;
+
+      &.l-left-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: left;
+        }
+      }
+
+      &.l-center-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: center;
+        }
+      }
+
+      &.l-right-text {
+        .datagrid-column-wrapper {
+          width: 100%;
+        }
+
+        .datagrid-header-text {
+          text-align: right;
+        }
+      }
     }
   }
 
@@ -3393,6 +3449,40 @@ html[dir='rtl'] {
       }
     }
 
+    .datagrid-header-groups {
+      th {
+        &.l-left-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: right;
+          }
+        }
+
+        &.l-cener-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: center;
+          }
+        }
+
+        &.l-right-text {
+          .datagrid-column-wrapper {
+            width: 100%;
+          }
+
+          .datagrid-header-text {
+            text-align: left;
+          }
+        }
+      }
+    }
+
     .required::after {
       content: '';
     }
@@ -3405,8 +3495,16 @@ html[dir='rtl'] {
       top: 0;
     }
 
-    &.left th:last-child {
-      border-left: 1px solid $datagrid-header-border-color;
+    &.left {
+      th:last-child {
+        border-left: 1px solid $datagrid-header-border-color;
+      }
+    }
+
+    &.center {
+      th:last-child {
+        border-right-color: $datagrid-header-border-color;
+      }
     }
   }
 

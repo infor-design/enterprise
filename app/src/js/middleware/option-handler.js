@@ -30,6 +30,10 @@ module.exports = function (app, defaults) {
     if (req.query.theme && req.query.theme.length > 0) {
       res.opts.theme = req.query.theme;
       logger('info', `Setting Theme to ${res.opts.theme}`);
+
+      if (res.opts.theme === 'uplift') {
+        res.opts.isUpliftTheme = true;
+      }
     } else {
       res.opts.theme = 'light';
     }
@@ -48,15 +52,6 @@ module.exports = function (app, defaults) {
     if (req.query.minify && req.query.minify.length > 0) {
       res.opts.minify = true;
       logger('info', 'Using the minified version of "sohoxi.js"');
-    }
-
-    if ((req.query.font && req.query.font.length > 0) || res.opts.theme === 'uplift-alpha') {
-      res.opts.font = req.query.font;
-      logger('info', `Using the ${req.query.font} font`);
-    }
-
-    if (res.opts.theme === 'uplift-alpha') {
-      res.opts.font = true;
     }
 
     let useLiveReload = false;

@@ -182,7 +182,7 @@ Dropdown.prototype = {
     }
 
     // Build sub-elements if they don't exist
-    this.label = $(`label[for="${orgId}"]`);
+    this.label = $(`label[for="${xssUtils.stripTags(orgId)}"]`);
 
     if (!this.pseudoElem.length) {
       this.pseudoElem = $(`<div class="${pseudoClassString}">`);

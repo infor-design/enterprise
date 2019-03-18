@@ -49,7 +49,7 @@ Personalize.prototype = {
       'light',
       'dark',
       'high-contrast',
-      'uplift-alpha'
+      'uplift'
     ];
 
     // Set the default theme, or grab the theme from an external CSS stylesheet.

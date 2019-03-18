@@ -29,26 +29,24 @@
     }
   }
 
-}
+  &.is-small {
+    &.has-right-legend {
+      display: block;
 
-// Move legend to bottom
-@include respond-to(phonedown) {
-  .chart-radar.has-right-legend {
-    display: block;
+      .chart-legend {
+        margin: -33px 0 0;
+        text-align: center;
+        width: 100%;
 
-    .chart-legend {
-      margin: -33px 0 0;
-      text-align: center;
-      width: 100%;
+        .is-two-column {
+          display: inline-block;
+          margin: 2px 0;
+          width: auto;
+        }
 
-      .is-two-column {
-        display: inline-block;
-        margin: 2px 0;
-        width: auto;
-      }
-
-      .chart-legend-color {
-        top: 0;
+        .chart-legend-color {
+          top: 0;
+        }
       }
     }
 

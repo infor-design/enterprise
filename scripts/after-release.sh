@@ -15,4 +15,8 @@ echo ""
 # Also add latest build to queue
 if [[ "$RELEASE_TAG" == "latest" ]]; then
     ./scripts/jenkins-deploy.sh -b $RELEASE_VERSION -l -q
+
+    echo "Publishing and Deploying documentation"
+    echo ""
+    node ./scripts/deploy-documentation.js --site prod
 fi

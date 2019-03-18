@@ -1100,12 +1100,13 @@ Datagrid.prototype = {
         }
         const hiddenStr = colGroups[k].hidden || colspan < 1 ? ' class="hidden"' : '';
         const colspanStr = ` colspan="${colspan > 0 ? colspan : 1}"`;
+        const groupedHeaderAlignmentClass = colGroups[k].align ? `l-${colGroups[k].align}-text` : '';
         uniqueId = self.uniqueId(`-header-group-${k}`);
         if (colspan > 0) {
           total += colspan;
         }
 
-        headerRows.center += `<th${hiddenStr}${colspanStr} id="${uniqueId}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+        headerRows.center += `<th${hiddenStr}${colspanStr} id="${uniqueId}" class="${groupedHeaderAlignmentClass}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
       });
 
       if (total < visibleColumnsLen) {
@@ -1146,12 +1147,19 @@ Datagrid.prototype = {
         headerAlignmentClass = ` l-${column.headerAlign}-text`;
       }
 
-      headerRows[container] += `<th scope="col" role="columnheader" class="${isSortable ? 'is-sortable' : ''}${isResizable ? ' is-resizable' : ''
-      }${column.hidden ? ' is-hidden' : ''}${column.filterType ? ' is-filterable' : ''
-      }${headerAlignmentClass || ''}" id="${id}" data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''
-      }${column.headerTooltip ? `title="${column.headerTooltip}"` : ''
-      }${column.reorderable === false ? ' data-reorder="false"' : ''
-      }${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''}${isExportable ? 'data-exportable="yes"' : 'data-exportable="no"'}>`;
+      // Assign css classes
+      let cssClass = '';
+      cssClass += isSortable ? ' is-sortable' : '';
+      cssClass += isResizable ? ' is-resizable' : '';
+      cssClass += column.hidden ? ' is-hidden' : '';
+      cssClass += column.filterType ? ' is-filterable' : '';
+      cssClass += column.textOverflow === 'ellipsis' ? ' text-ellipsis' : '';
+      cssClass += headerAlignmentClass !== '' ? headerAlignmentClass : '';
+
+      // Apply css classes
+      cssClass = cssClass !== '' ? ` class="${cssClass.substr(1)}"` : '';
+
+      headerRows[container] += `<th scope="col" role="columnheader" id="${id}" data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}${column.reorderable === false ? ' data-reorder="false"' : ''}${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} data-exportable="${isExportable ? 'yes' : 'no'}"${cssClass}>`;
 
       let sortIndicator = '';
       if (isSortable) {
@@ -1270,6 +1278,8 @@ Datagrid.prototype = {
       this.restoreFilter = false;
       this.savedFilter = null;
     }
+
+    this.activeEllipsisHeaderAll();
   },
 
   /**
@@ -3589,7 +3599,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (skipColumns > 0) {
+      if (skipColumns > 0 && !col.hidden) {
         skipColumns -= 1;
         cssClass += ' is-hidden';
       }
@@ -4976,6 +4986,48 @@ Datagrid.prototype = {
   },
 
   /**
+   * Check if given column header should be able to set active ellipsis
+   * @private
+   * @param {string} column to check ellipsis
+   * @returns {boolean} true if should be able to set ellipsis
+   */
+  isEllipsisActiveHeader(column) {
+    column = column || {};
+    const isSortable = (column.sortable === undefined ? true : column.sortable);
+    return isSortable && (column.textOverflow === 'ellipsis');
+  },
+
+  /**
+   * Set active ellipsis on all columns header
+   * @private
+   * @returns {void}
+   */
+  activeEllipsisHeaderAll() {
+    for (let i = 0, l = this.settings.columns.length; i < l; i++) {
+      const id = this.settings.columns[i].id;
+      const column = this.columnById(id)[0];
+      if (this.isEllipsisActiveHeader(column)) {
+        const columnEl = this.headerContainer[0].querySelector(`th[data-column-id="${id}"]`);
+        this.activeEllipsisHeader(columnEl);
+      }
+    }
+  },
+
+  /**
+   * Set active ellipsis on given column header
+   * @private
+   * @param {string} columnEl to set ellipsis active
+   * @returns {void}
+   */
+  activeEllipsisHeader(columnEl) {
+    if (columnEl) {
+      const textEl = columnEl.querySelector('.datagrid-column-wrapper .datagrid-header-text');
+      const isEllipsisActive = columnEl.scrollWidth < (textEl.scrollWidth + 65);// 65:sort-icons
+      columnEl.classList[isEllipsisActive ? 'add' : 'remove']('is-ellipsis-active');
+    }
+  },
+
+  /**
    * Change the width of the column as the user drags the resizeHandle
    * @private
    * @param {boolean} idOrNode Specifies if the column info is provide by id or as a node reference.
@@ -5037,6 +5089,9 @@ Datagrid.prototype = {
         startingLeft = self.currentHeader.position().left + (self.table.scrollLeft() - 10);
         self.tableWidth = self.table[0].offsetWidth;
         columnStartWidth = self.currentHeader[0].offsetWidth;
+        if (self.isEllipsisActiveHeader(column)) {
+          self.currentHeader[0].classList.add('is-ellipsis-active');
+        }
       })
       .on('drag.datagrid', (e, ui) => {
         if (!self.currentHeader || !column) {
@@ -5060,6 +5115,9 @@ Datagrid.prototype = {
         const width = (draggingLeft - startingLeft - 1);
         self.dragging = false;
         self.setColumnWidth(self.currentHeader.attr('data-column-id'), width);
+        if (self.isEllipsisActiveHeader(column)) {
+          self.activeEllipsisHeader(self.currentHeader[0]);
+        }
       });
   },
 
@@ -9757,13 +9815,18 @@ Datagrid.prototype = {
       }
 
       if (tooltip.content !== '') {
-        const isEllipsis = utils.hasClass(elem, 'text-ellipsis');
+        const isEllipsis = utils.hasClass((isHeaderColumn ? elem.parentNode : elem), 'text-ellipsis');
         const icons = [].slice.call(elem.querySelectorAll('.icon'));
         let extraWidth = isEllipsis ? 8 : 0;
         icons.forEach((icon) => {
           extraWidth += icon.getBBox().width + 8;
         });
-        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (select ? 0 : extraWidth);
+        if (isEllipsis && isHeaderColumn) {
+          const textEl = elem.querySelector('.datagrid-header-text');
+          tooltip.textwidth = textEl.scrollWidth + (select ? 0 : extraWidth);
+        } else {
+          tooltip.textwidth = stringUtils.textWidth(tooltip.content) + (select ? 0 : extraWidth);
+        }
 
         if (isTh) {
           tooltip.textwidth = stringUtils.textWidth(tooltip.content);
