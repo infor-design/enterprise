@@ -178,8 +178,8 @@ Radar.prototype = {
     // If the supplied maxValue is smaller than the actual one, replace by the max in the data
     const maxValue = Math.max(settings.maxValue, d3.max(data, i => d3.max(i.data.map(o => o.value))));  //eslint-disable-line
 
-    const allAxis = data[0].data.map(d => getNameText(d)); // Map the names to the axis
-    const total = allAxis.length; // The number of different axes
+    const allAxes = data[0].data.map(d => getNameText(d)); // Map the names to the axes
+    const total = allAxes.length; // The number of different axes
     const radius = Math.min(dims.w / 2, dims.h / 2); // Radius of the outermost circle
     const angleSlice = Math.PI * 2 / total; // The width in radians of each 'slice'
 
@@ -258,7 +258,7 @@ Radar.prototype = {
 
     // Create the straight lines radiating outward from the center
     const axis = axisGrid.selectAll('.axis')
-      .data(allAxis)
+      .data(allAxes)
       .enter()
       .append('g')
       .attr('class', 'axis');
