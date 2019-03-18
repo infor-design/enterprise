@@ -8,6 +8,8 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Bullet example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bullet/example-index?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bullet .range'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -21,7 +23,7 @@ describe('Bullet example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('bullet')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('bullet')).toBeLessThan(0.2);
     });
   }
 });
@@ -42,7 +44,7 @@ describe('Bullet data group tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('bullet-data-group')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('bullet-data-group')).toBeLessThan(0.2);
     });
   }
 });
@@ -63,7 +65,7 @@ describe('Bullet negative positive tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('bullet-negative-positive')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('bullet-negative-positive')).toBeLessThan(0.2);
     });
   }
 });
@@ -84,7 +86,7 @@ describe('Bullet negative values tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('bullet-negative-value')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('bullet-negative-value')).toBeLessThan(0.2);
     });
   }
 });
