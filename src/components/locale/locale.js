@@ -679,15 +679,15 @@ const Locale = {  // eslint-disable-line
       return undefined;
     }
 
-    debugger;
-    const localeData = this.useLocale(options);
     let dateFormat = options;
+    let locale = this.currentLocale.name;
     const thisLocaleCalendar = this.calendar();
     if (typeof options === 'object') {
-      dateFormat = options.dateFormat || this.calendar().dateFormat[dateFormat.date];
+      locale = options.locale || locale;
+      dateFormat = options.dateFormat || this.calendar(locale).dateFormat[dateFormat.date];
     }
     if (!dateFormat) {
-      dateFormat = this.calendar().dateFormat.short;
+      dateFormat = this.calendar(locale).dateFormat.short;
     }
 
     const orgDatestring = dateString;
@@ -1390,11 +1390,16 @@ const Locale = {  // eslint-disable-line
   /**
    * Shortcut function to get 'first' calendar
    * @private
+   * @param {string} locale The locale to use
    * @returns {object} containing calendar data.
    */
-  calendar() {
-    if (this.currentLocale.data.calendars) {
+  calendar(locale) {
+    if (this.currentLocale.data.calendars && !locale) {
       return this.currentLocale.data.calendars[0];
+    }
+
+    if (locale && this.cultures[locale]) {
+      return this.cultures[locale].calendars[0];
     }
 
     // Defaults to ISO 8601
