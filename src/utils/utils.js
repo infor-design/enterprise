@@ -1,4 +1,5 @@
 import { defer } from './behaviors';
+import { deprecateMethod } from './deprecated';
 import { Environment as env } from './environment';
 import { DOM } from './dom';
 
@@ -252,14 +253,18 @@ utils.parseSettings = function parseSettings(element, attr) {
 /**
  * Deprecate `utils.parseOptions` in favor of `utils.parseSettings`
  * @private
- * @deprecated
- * TODO: Remove in 4.4.1 ?
+ * @deprecated as of v4.4.0. Please use `utils.parseSettings()` instead.
+ * @param {HTMLElement|jQuery[]} element the element whose options are being parsed
+ * @param {string} [attr] an optional alternate attribute name to use when obtaining settings
+ * @returns {Object|Object[]} an object representation of parsed settings.
  */
-utils.parseOptions = utils.parseSettings;
+utils.parseOptions = function parseOptions(element, attr) {
+  return deprecateMethod(utils.parseSettings, 'parseOptions').apply(utils, [element, attr]);
+};
 
 /**
 * jQuery Behavior Wrapper for `utils.parseOptions`.
-* @deprecated
+* @deprecated as of v4.4.0. This is no longer necessary to call directly and should be avoided.
 * @private
 * @param {HTMLElement|jQuery[]} element the element whose options are being parsed
 * @param {string} [attr] an optional alternate attribute name to use when obtaining settings

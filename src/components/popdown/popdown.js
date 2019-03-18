@@ -9,7 +9,7 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'popdown';
 
 /**
-The Popdown Component can be used to open an animated popdown from a button. This may in the future
+ * The Popdown Component can be used to open an animated popdown from a button. This may in the future
  * be deprecated to one thing. Popup vs Popdown vs Tooltip.
  * @class Popdown
  * @deprecated

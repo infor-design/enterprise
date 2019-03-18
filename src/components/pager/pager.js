@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import * as debug from '../../utils/debug';
 import { DOM } from '../../utils/dom';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
@@ -182,6 +183,7 @@ Pager.prototype = {
    * @returns {object} containing various state properties
    */
   get pagingInfo() {
+    warnAboutDeprecation('state', 'pagingInfo');
     return this.state;
   },
 
@@ -1051,7 +1053,6 @@ Pager.prototype = {
 
   /**
    * Renders the pager bar based on derived or forced settings.
-   * @deprecated as of v4.15.0 (see https://github.com/infor-design/enterprise/issues/922)
    * @private
    * @param {SohoPagingInfo} pagingInfo - an object containing information on how to render the pager.
    * @returns {undefined}

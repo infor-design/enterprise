@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 
@@ -189,17 +190,14 @@ Wizard.prototype = {
   },
 
   /**
-   * Deprecating the "select()" method in favor of "activate()" to match the API
-   * of our other controls. Temporarily adding functionality that reroutes this
-   * method to the new "activate" method.
-   * @private
+   * Activates one of the Wizard's ticks.
    * @deprecated as of v4.4.0
    * @param {jQuery.Event} e the activate event object
    * @param {jQuery[]|HTMLElement} tick the target tick to be activated
    * @returns {this} component instance
    */
   select(e, tick) {
-    return this.activate(e, tick);
+    return deprecateMethod(this.activate, this.select).apply(this, [e, tick]);
   },
 
   /**
