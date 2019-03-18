@@ -22,7 +22,12 @@ exports.config = {
         '--disable-dev-shm-usage',
         '--no-sandbox'
       ]
-   }
+    },
+    loggingPrefs: {
+      driver: 'INFO',
+      server: 'INFO',
+      browser: 'SEVERE'
+    }
   },
   directConnect: true,
   baseUrl: 'http://localhost:4000',
