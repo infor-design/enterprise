@@ -595,9 +595,10 @@ describe('Datagrid paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging');
 
-    const datagridEl = await element(by.css('.pager-toolbar'));
+    const datagridEl = await element(by.css('#datagrid tr:nth-child(10)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
   });
 
   it('Should not have errors', async () => {
@@ -609,7 +610,7 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
     await element(by.css('.pager-last a')).click();
-    await browser.driver.sleep(350);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('990');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('999');
@@ -620,9 +621,9 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
     await element(by.css('.pager-last a')).click();
-    await browser.driver.sleep(350);
+    await browser.driver.sleep(config.sleep);
     await element(by.css('.pager-first a')).click();
-    await browser.driver.sleep(350);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
@@ -633,13 +634,13 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
     await element(await by.css('.pager-next a')).click();
-    await browser.driver.sleep(350);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('10');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('19');
 
     await element(await by.css('.pager-prev a')).click();
-    await browser.driver.sleep(350);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
