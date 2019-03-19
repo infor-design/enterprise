@@ -127,3 +127,5 @@ hasFocus() {
   return this.isFocused;
 }
 ```
+
+It should also be noted that if changes made are only for methods or properties marked `@private`, it's not necessary to announce deprecation to the browser or build system.  However, it's still a good idea to document these changes with an `@deprecated` note.

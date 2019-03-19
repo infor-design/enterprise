@@ -1,5 +1,4 @@
 import { defer } from './behaviors';
-import { warnAboutDeprecation } from './deprecated';
 import { Environment as env } from './environment';
 import { DOM } from './dom';
 
@@ -259,7 +258,6 @@ utils.parseSettings = function parseSettings(element, attr) {
  * @returns {Object|Object[]} an object representation of parsed settings.
  */
 utils.parseOptions = function parseOptions(element, attr) {
-  warnAboutDeprecation('parseSettings', 'parseOptions');
   return utils.parseSettings(element, attr);
 };
 
