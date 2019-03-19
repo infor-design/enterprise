@@ -37,6 +37,11 @@ exports.config = {
     'browserstack.networkLogs': false,
     'browserstack.timezone': 'New_York',
     build: browserstackBuildID,
+    loggingPrefs: {
+      driver: 'INFO',
+      server: 'INFO',
+      browser: 'SEVERE'
+    },
     name: `${theme} theme ci:bs e2e tests`,
     project: 'ids-enterprise-e2e-ci',
     shardTestFiles: true,

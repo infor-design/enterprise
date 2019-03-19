@@ -1,3 +1,5 @@
+import { warnAboutDeprecation } from './deprecated';
+
 /**
  * Provides a global object that detects the existence of a Base Tag,
  * and provides some methods that can be used to get an accurate relative
@@ -32,11 +34,12 @@ Base.prototype = {
   },
 
   /**
-   * @private
-   * @deprecated as of v4.12.x, use `this.url` instead
+   * This method is slated to be removed in a future v4.18.0 or v5.0.0.
+   * @deprecated as of v4.12.0. Please use the `url` property instead.
    * @returns {string} current page URL
    */
   getCurrentURL() {
+    warnAboutDeprecation('url', 'getCurrentURL');
     return this.url;
   },
 
@@ -80,12 +83,5 @@ const base = new Base($('base[href]'));
 $.getBaseURL = function (hash) {
   return base.getBaseURL(hash);
 };
-
-/**
- * Detect the Base tag and install a global object, if necessary.
- * Does nothing right now.
- * @deprecated as of v4.4.0
- */
-$.detectBaseTag = function () {};
 
 export { base };

@@ -87,3 +87,45 @@ Some practical guidelines that MUST be followed to ensure accessibility.
 - Other tools:
     - <http://www.tenon.io/>
     - <http://quailjs.org/>
+
+## Deprecations
+
+In some cases, the IDS team will choose to [deprecate](https://developer.mozilla.org/en-US/docs/MDN/Contribute/Guidelines/Conventions_definitions#Deprecated_and_obsolete) certain component API methods or properties in favor of others, eventually opting to mark these items "obsolete" and completely remove them.
+
+Our team has adopted a policy where we will not completely remove these deprecated items until at least 6 minor releases have passed.  We have also recently begun to ship a deprecation utility that we use internally to warn users of these deprecated items in the browser.  We've also generally adopted the documentation guidelines for these deprecated items as outlined [in this article](https://css-tricks.com/approaches-to-deprecating-code-in-javascript/).
+
+Additionally, when running our build system with a `--verbose` flag, we provide a compile-time utility that picks up any `@deprecated` [JSDoc tags](http://usejsdoc.org/tags-deprecated.html) and will display them in the console.
+
+When contributing changes to IDS Enterprise, if replacing existing code becomes necessary, consider implementing `deprecatedMethod()` if possible to enable these warnings.
+
+As an example, see this deprecation from our Slider component:
+
+```js
+/**
+ * @deprecated in v4.2.0. Please use `setValue()` instead.
+ * @param {number} lowVal the value for the lower slider handle.
+ * @param {number} [highVal] the value for the upper slider handle, if applicable.
+ * @returns {array} the newly set values
+ */
+refresh(lowVal, highVal) {
+  return deprecateMethod(this.setValue, this.refresh).apply(this, [lowVal, highVal]);
+}
+```
+
+In some cases it may not possible to use the wrapper.  For these cases, it's better to use the `warnAboutDeprecation()` method, which is simply for logging the deprecation instead of calling the new code directly. If possible, you should still call your new code immediately after this logging method.
+
+As an example, see this deprecation from our Searchfield component:
+
+```js
+/**
+ * Detects whether or not the Searchfield has focus.
+ * @deprecated in v4.8.0.  Please use the `isFocused` property instead.
+ * @returns {boolean} whether or not the Searchfield has focus.
+ */
+hasFocus() {
+  warnAboutDeprecation('isFocused', 'hasFocus');
+  return this.isFocused;
+}
+```
+
+It should also be noted that if changes made are only for methods or properties marked `@private`, it's not necessary to announce deprecation to the browser or build system.  However, it's still a good idea to document these changes with an `@deprecated` note.
