@@ -35,7 +35,7 @@ function warnAboutDeprecation(newMethod, oldMethod) {
   if (typeof console !== 'object') {
     return;
   }
-  console.warn(`"${oldMethodName}" is deprecated. Please use "${newMethodName}" instead.`);
+  console.warn(`IDS Enterprise: "${oldMethodName}" is deprecated. Please use "${newMethodName}" instead.`);
 }
 
 /**
