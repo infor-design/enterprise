@@ -26,13 +26,16 @@
 - `[Locale / Mask]` Added limited initial support for some unicode languages. This means you can convert to and from numbers typed in Devangari, Arabic, and Chinese (Financial and Simplified). ([#439](https://github.com/infor-design/enterprise/issues/439))
 - `[Locale]` Added support for passing a `locale` other the the current locale to calendar, monthview, datepicker and timepicker. ([#462](https://github.com/infor-design/enterprise/issues/462))
 - `[Mask]` It is now possible to type numbers in unicode such as Devangari, Arabic, and Chinese (Financial and Simplified) into the the masks that involve numbers. ([#439](https://github.com/infor-design/enterprise/issues/439))
+- `[Modal]` Added an option to dictate the maximum width of the modal. ([#1802](https://github.com/infor-design/enterprise/issues/1802))
 - `[Icons]` Add support for creating an svg file for the Uplift theme's (alpha) new icons from ids-identity@2.4.0 assets. ([#1759](https://github.com/infor-design/enterprise/issues/1759))
+- `[Radar]` Added support to three label sizes (name, abbrName, shortName). ([#1553](https://github.com/infor-design/enterprise/issues/1553))
 
 ### v4.17.0 Fixes
 
 - `[Accordion]` Fixed a bug where some truncated text elements were not generating a tooltip. ([#1736](https://github.com/infor-design/enterprise/issues/1736))
 - `[Calendar]` Event model title color is not correct if the modal is opened and another event is selected. ([#1739](https://github.com/infor-design/enterprise/issues/1739))
 - `[Calendar]` Modal is still displayed after changing months. ([#1741](https://github.com/infor-design/enterprise/issues/1741))
+- `[Calendar]` Changing some event spans is causing missing dates on the dialogs. ([#1708](https://github.com/infor-design/enterprise/issues/1708))
 - `[Composite Form]` Fix a bug in IE11 where composite form content overflows to the lower container. ([#1768](https://github.com/infor-design/enterprise/issues/1768))
 - `[Datagrid]` Added a fix where the column is next to the edge of the browser and the filter dropdown popup overflow the page.([#1604](https://github.com/infor-design/enterprise/issues/1604))
 - `[Datagrid]` Added a fix to allow the commit of a cell edit after tabbing into a cell once having clicked into a previous cell.([#1608](https://github.com/infor-design/enterprise/issues/1608))
@@ -40,6 +43,7 @@
 - `[Datagrid]` Fixed a bug where filtering Order Date with `is-not-empty` on a null value would not correctly filter out results. ([#1718](https://github.com/infor-design/enterprise/issues/1718))
 - `[Datagrid]` Fixed a bug where when using the `disableClientSideFilter` setting the filtered event would not be called correctly. ([#1689](https://github.com/infor-design/enterprise/issues/1689))
 - `[Datagrid]` Fixed a bug where hidden columns inside a colspan were aligning incorrectly. ([#1764](https://github.com/infor-design/enterprise/issues/1764))
+- `[Modal]` Fixed a bug where the modal can overflow the page. ([#1802](https://github.com/infor-design/enterprise/issues/1802))
 - `[Radio Button]` Fixed a rendering problem on the selected state of Radio Buttons used inside of Accordion components. ([#1568](https://github.com/infor-design/enterprise/issues/1568))
 - `[Radio Button]` Fixed a z-index issue that was causing radio buttons to sometimes display over top of page sections where they should have instead scrolled beneath. ([#1014](https://github.com/infor-design/enterprise/issues/1014))
 
@@ -97,6 +101,7 @@
 - `[Swaplist]` Fixed a bug where items were not able to drag anymore after make the search. ([#1703](https://github.com/infor-design/enterprise/issues/1703))
 - `[Toolbar Flex]` Added the ability to pass in a `beforeOpen` callback to the More Actions menu (fixes a bug where it wasn't possible to dynamically add content to the More Actions menu in same way that was possible on the original Toolbar component)
 - `[Toolbar Flex]` Fixed a bug where selected events were not bubbling up for a menu button on a flex toolbar. ([#1709](https://github.com/infor-design/enterprise/issues/1709))
+- `[Stepprocess]` Disabled step selected when using the next or previous button. ([#1697](https://github.com/infor-design/enterprise/issues/1697))
 - `[Tree]` Fixed a bug when calling the disable or enable methods of the tree. This was not working with ie11. ([PR#1600](https://github.com/infor-design/enterprise/issues/1600))
 
 ### v4.16.0 Chore & Maintenance
