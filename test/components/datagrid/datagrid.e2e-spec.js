@@ -1304,7 +1304,7 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-multiple');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1335,7 +1335,7 @@ describe('Datagrid paging indeterminate single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });

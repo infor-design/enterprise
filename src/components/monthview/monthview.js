@@ -7,6 +7,7 @@ import { xssUtils } from '../../utils/xss';
 const COMPONENT_NAME = 'monthview';
 
 const COMPONENT_NAME_DEFAULTS = {
+  locale: null,
   month: new Date().getMonth(),
   year: new Date().getFullYear(),
   activeDate: null,
@@ -49,6 +50,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @class MonthView
  * @param {string} element The plugin element for the constuctor
  * @param {object} [settings] The settings element.
+ * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
  * @param {number} [settings.month] The month to show.
  * @param {number} [settings.year] The year to show.
  * @param {number} [settings.activeDate] The date to highlight as selected/today.
@@ -109,9 +111,24 @@ MonthView.prototype = {
    */
   init() {
     // Do initialization. Build or Events ect
-    return this
-      .build()
-      .handleEvents();
+    return this.build();
+  },
+
+  /**
+   * Set current locale to be used
+   * @private
+   * @returns {void}
+   */
+  setLocale() {
+    if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
+      Locale.getLocale(this.settings.locale).done((locale) => {
+        this.locale = Locale.cultures[locale];
+        this.setCurrentCalendar();
+        this.build().handleEvents();
+      });
+    } else if (!this.settings.locale) {
+      this.locale = Locale.currentLocale;
+    }
   },
 
   /**
@@ -120,25 +137,36 @@ MonthView.prototype = {
    * @returns {object} The Calendar prototype, useful for chaining.
    */
   build() {
+    this.setLocale();
+    if (this.rendered ||
+      (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale))) {
+      // Defer loading
+      this.rendered = false;
+      return this;
+    }
+
+    this.rendered = true;
+    this.setCurrentCalendar();
+
     // Calendar Html in Popups
     this.prevButton = '' +
       `<button type="button" class="btn-icon prev">
         ${$.createIcon('caret-left')}
-        <span>${Locale.translate('PreviousMonth')}</span>
+        <span>${Locale.translate('PreviousMonth', { locale: this.locale.name })}</span>
       </button>`;
     this.nextButton = '' +
       `<button type="button" class="btn-icon next">
         ${$.createIcon('caret-right')}
-        <span>${Locale.translate('NextMonth')}</span>
+        <span>${Locale.translate('NextMonth', { locale: this.locale.name })}</span>
       </button>`;
 
     this.header = $('' +
       `<div class="monthview-header">
         <span class="month">november</span>
         <span class="year">2015</span>
-        ${(Locale.isRTL() ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
+        ${(this.isRTL ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
       </div>`);
-    this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar')}" role="application"></table>`);
+    this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name })}" role="application"></table>`);
     this.dayNames = $('' +
       `<thead>
         <tr>
@@ -212,11 +240,11 @@ MonthView.prototype = {
     if (this.settings.headerStyle === 'full') {
       this.header = $('' +
         `<div class="monthview-header full">
-          ${(Locale.isRTL() ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
+          ${(this.isRTL ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
           <span class="monthview-datepicker">
-            <input aria-label="${Locale.translate('Today')}" id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
+            <input aria-label="${Locale.translate('Today', { locale: this.locale.name })}" id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
           </span>
-          <a class="hyperlink today" href="#">${Locale.translate('Today')}</a>
+          <a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>
         </div>`);
       this.monthPicker = this.header.find('#monthview-datepicker-field');
       this.todayLink = this.header.find('.hyperlink.today');
@@ -235,7 +263,8 @@ MonthView.prototype = {
     if (this.settings.headerStyle === 'full') {
       this.monthPicker.datepicker({
         autoSize: true,
-        dateFormat: Locale.calendar().dateFormat.year,
+        dateFormat: Locale.calendar(this.locale.name).dateFormat.year,
+        locale: this.settings.locale,
         showMonthYearPicker: true,
         hideButtons: true,
         onOpenCalendar: () => this.currentDate
@@ -243,6 +272,7 @@ MonthView.prototype = {
       this.header.find('button, a').hideFocus();
     }
 
+    this.handleEvents();
     return this;
   },
 
@@ -252,12 +282,9 @@ MonthView.prototype = {
    * @returns {void}
    */
   setCurrentCalendar() {
-    if (this.settings.calendarName) {
-      this.currentCalendar = Locale.getCalendar(this.settings.calendarName) || Locale.calendar();
-    } else {
-      this.currentCalendar = Locale.calendar();
-    }
+    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
+    this.isRTL = this.locale.direction === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
   },
 
@@ -343,9 +370,9 @@ MonthView.prototype = {
     this.header.find('.month').attr('data-month', month).text(`${xssUtils.stripTags(monthName)} `);
     this.header.find('.year').text(` ${year}`);
 
-    if (this.yearFirst && !this.isIslamic && !Locale.isRTL()) {
+    if (this.yearFirst && !this.isIslamic && !this.isRTL) {
       elementDate.setFullYear(year);
-      const translation = Locale.formatDate(elementDate, { date: 'year' });
+      const translation = Locale.formatDate(elementDate, { date: 'year', locale: this.locale.name });
       const justYear = translation.split(' ')[0];
 
       this.header.find('.year').text(`${justYear} `);
@@ -353,7 +380,7 @@ MonthView.prototype = {
     }
 
     if (this.settings.headerStyle === 'full' && this.monthPicker) {
-      this.monthPicker.val(Locale.formatDate(new Date(year, month, 1), { date: 'year' }));
+      this.monthPicker.val(Locale.formatDate(new Date(year, month, 1), { date: 'year', locale: this.locale.name }));
       if (this.monthPicker.data('datepicker')) {
         this.monthPicker.data('datepicker').setSize();
       }
@@ -422,7 +449,10 @@ MonthView.prototype = {
           th.addClass('is-today');
         }
 
-        th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), { date: 'full' }));
+        th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), {
+          date: 'full',
+          locale: self.locale.name
+        }));
         const startKey = stringUtils.padDate(
           self.currentYear,
           self.currentMonth,
@@ -500,7 +530,7 @@ MonthView.prototype = {
       const range = {};
       range.date = new Date(this.currentYear, this.currentMonth, 1);
       range.date.setDate(range.date.getDate() - (this.days.find('.prev-month:visible').length + 1));
-      range.formatedDate = Locale.formatDate(range.date, { date: 'full' });
+      range.formatedDate = Locale.formatDate(range.date, { date: 'full', locale: this.locale.name });
       range.cell = this.days.find(`[aria-label="${range.formatedDate}"]`);
       this.setRangeOnCell(this.settings.range.second ? false : range.cell);
     }
@@ -524,7 +554,7 @@ MonthView.prototype = {
 
     let monthDropdown = '' +
       `<label for="month-dropdown" class="audible">
-        ${Locale.translate('Month')}
+        ${Locale.translate('Month', { locale: this.locale.name })}
       </label>
       <select id="month-dropdown" class="dropdown">`;
 
@@ -545,7 +575,7 @@ MonthView.prototype = {
 
     let yearDropdown = '' +
       `<label for="year-dropdown" class="audible">
-        ${Locale.translate('Year')}
+        ${Locale.translate('Year', { locale: this.locale.name })}
       </label>
       <select id="year-dropdown" class="dropdown year">`;
 
@@ -809,7 +839,7 @@ MonthView.prototype = {
   handleEvents() {
     const self = this;
 
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
+    this.element.off(`updated.${COMPONENT_NAME}`).on(`updated.${COMPONENT_NAME}`, () => {
       self.updated();
     });
 
@@ -830,7 +860,7 @@ MonthView.prototype = {
       self.showMonth(self.currentMonth + (isNext ? 1 : -1), self.currentYear);
 
       if (self.settings.range.useRange) {
-        range.formatedDate = Locale.formatDate(range.date, { date: 'full' });
+        range.formatedDate = Locale.formatDate(range.date, { date: 'full', locale: this.locale.name });
         range.cell = self.days.find(`[aria-label="${range.formatedDate}"]`);
         self.setRangeOnCell(self.settings.range.second ? false : range.cell);
       }

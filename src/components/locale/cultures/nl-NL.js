@@ -35,7 +35,7 @@ Soho.Locale.addCulture('nl-NL', {
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide
     months: {
       wide: ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'],
-      abbreviated: ['jan', 'feb', 'mrt', 'apr', 'mei', 'jul', 'Jul', 'aug', 'sep', 'okt', 'nov', 'dec']
+      abbreviated: ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',

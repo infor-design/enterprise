@@ -1,22 +1,20 @@
 import { TimePicker } from '../../../src/components/timepicker/timepicker';
+import { cleanup } from '../../helpers/func-utils';
 
 const timepickerHTML = require('../../../app/views/components/timepicker/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let timepickerEl;
-let svgEl;
 let timepickerObj;
 
 describe('TimePicker Methods', () => {
   beforeEach(() => {
     timepickerEl = null;
-    svgEl = null;
     timepickerObj = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', timepickerHTML);
     timepickerEl = document.body.querySelector('.timepicker');
-    svgEl = document.body.querySelector('.svg-icons');
     timepickerEl.classList.add('no-init');
     timepickerObj = new TimePicker(timepickerEl);
     timepickerObj.settings.timeFormat = 'h:mm a';// TODO: this should set by default
@@ -24,8 +22,12 @@ describe('TimePicker Methods', () => {
 
   afterEach(() => {
     timepickerObj.destroy();
-    timepickerEl.parentNode.removeChild(timepickerEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup([
+      '.svg-icons',
+      '#timepicker-popup',
+      '.popover',
+      '.row'
+    ]);
   });
 
   it('Should checks a time format value to see if it is a Military (24-hour) format', () => {

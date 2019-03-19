@@ -1,29 +1,38 @@
 import { TimePicker } from '../../../src/components/timepicker/timepicker';
+import { Locale } from '../../../src/components/locale/locale';
+import { cleanup } from '../../helpers/func-utils';
 
 const timepickerHTML = require('../../../app/views/components/timepicker/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let timepickerEl;
-let svgEl;
 let timepickerObj;
 
 describe('TimePicker API', () => {
   beforeEach(() => {
     timepickerEl = null;
-    svgEl = null;
     timepickerObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', timepickerHTML);
     timepickerEl = document.body.querySelector('.timepicker');
-    svgEl = document.body.querySelector('.svg-icons');
     timepickerEl.classList.add('no-init');
+
+    Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
+    Locale.addCulture('da-DK', Soho.Locale.cultures['da-DK'], Soho.Locale.languages['da']); //eslint-disable-line
+    Locale.set('en-US');
+    Soho.Locale.set('en-US'); //eslint-disable-line
+
     timepickerObj = new TimePicker(timepickerEl);
   });
 
   afterEach(() => {
     timepickerObj.destroy();
-    timepickerEl.parentNode.removeChild(timepickerEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup([
+      '.svg-icons',
+      '#timepicker-popup',
+      '.popover',
+      '.row'
+    ]);
   });
 
   it('Should be defined on jQuery object', () => {
@@ -35,6 +44,20 @@ describe('TimePicker API', () => {
 
     expect(timepickerObj.isOpen()).toBeTruthy();
     expect(document.body.querySelector('.timepicker.is-open')).toBeTruthy();
+  });
+
+  it('Should render based on locale setting', (done) => {
+    timepickerObj.destroy();
+    timepickerObj = new TimePicker(timepickerEl, {
+      locale: 'da-DK'
+    });
+    timepickerObj.openTimePopup();
+
+    setTimeout(() => {
+      expect(document.querySelector('#timepicker-popup:last-child .set-time').innerText).toEqual('Indstil tid');
+      expect(document.body.querySelectorAll('#timepicker-popup:last-child .time-parts select').length).toEqual(2);
+      done();
+    }, 400);
   });
 
   it('Should destroy timepicker', () => {

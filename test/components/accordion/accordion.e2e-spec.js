@@ -68,6 +68,9 @@ describe('Accordion example-ajax tests', () => {
   });
 
   it('Should not have errors', async () => {
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#ajax-accordion .accordion-header'))), config.waitsFor);
+
     await utils.checkForErrors();
   });
 

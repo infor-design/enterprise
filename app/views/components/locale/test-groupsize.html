@@ -35,6 +35,10 @@
         append(Locale.formatNumber(1234567890.1234));
         append(Locale.formatNumber(123456789.1234, { style: 'currency' }));
         append(Locale.formatNumber(100, { style: 'percent' }));
+
+        // No Group
+        append(Locale.formatNumber(1234567890.1234, { group: '' }));
+        append(Locale.formatNumber(1234567890.1234, { groupSizes: [0, 0] }));
       });
     </script>
   </div>
