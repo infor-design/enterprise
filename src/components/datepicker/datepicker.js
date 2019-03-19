@@ -435,7 +435,8 @@ DatePicker.prototype = {
 
   /**
    * Open the calendar popup.
-   * @deprecated as of v4.9.0. Please use `openCalendar() instead`
+   * This method is slated to be removed in a future v4.15.0 or v5.0.0.
+   * @deprecated as of v4.9.0. Please use `openCalendar()` instead.
    * @returns {void}
    */
   open() {
@@ -772,6 +773,7 @@ DatePicker.prototype = {
 
   /**
    * Close the calendar popup.
+   * This method is slated to be removed in a future v4.15.0 or v5.0.0.
    * @deprecated as of v4.9.0. Please use `closeCalendar()` instead.
    * @returns {void}
    */

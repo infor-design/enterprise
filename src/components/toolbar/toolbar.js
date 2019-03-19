@@ -1298,7 +1298,8 @@ Toolbar.prototype = {
 
   /**
    * Detection for this toolbar to have a More Button
-   * @deprecated as of v4.4.0 due to unclear nomenclature.  Use `moreButtonIsDisabled()`.
+   * This method is slated to be removed in a future v4.10.0 or v5.0.0.
+   * @deprecated as of v4.4.0. Please use `moreButtonIsDisabled()` instead.
    * @returns {boolean} whether or not the More Actions button is disabled.
    */
   hasNoMoreButton() {

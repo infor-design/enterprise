@@ -191,7 +191,8 @@ Wizard.prototype = {
 
   /**
    * Activates one of the Wizard's ticks.
-   * @deprecated as of v4.4.0
+   * This method is slated to be removed in a future v4.10.0 or v5.0.0.
+   * @deprecated as of v4.4.0.  Please use `activate()` instead.
    * @param {jQuery.Event} e the activate event object
    * @param {jQuery[]|HTMLElement} tick the target tick to be activated
    * @returns {this} component instance

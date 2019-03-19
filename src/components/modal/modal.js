@@ -786,6 +786,7 @@ Modal.prototype = {
   },
 
   /**
+   * This method is slated to be removed in a future v4.20.0 or v5.0.0.
    * @deprecated as of v4.14.0. Please use the `visible` property instead.
    * @returns {boolean} The current state open (true) or closed (false).
    */

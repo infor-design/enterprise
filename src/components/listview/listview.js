@@ -906,6 +906,7 @@ ListView.prototype = {
 
   /**
    * Deselect the given list item.
+   * This method is slated to be removed in a future v4.9.0 or v5.0.0.
    * @deprecated as of v4.3.0. Please use `deselect()` instead.
    * @param {jquery[]|number} li a list item
    * @returns {void}

@@ -34,7 +34,8 @@ Base.prototype = {
   },
 
   /**
-   * @deprecated as of v4.12.x, use `this.url` instead
+   * This method is slated to be removed in a future v4.18.0 or v5.0.0.
+   * @deprecated as of v4.12.0. Please use the `url` property instead.
    * @returns {string} current page URL
    */
   getCurrentURL() {

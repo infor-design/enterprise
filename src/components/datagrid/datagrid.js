@@ -224,8 +224,9 @@ Datagrid.prototype = {
   },
 
   /**
-   * Reference to the pager API, if applicable
-   * @deprecated as of v4.16.0.  Use `pagerAPI` property.
+   * Reference to the pager API, if applicable.
+   * This method is slated to be removed in a future v4.22.0 or v5.0.0.
+   * @deprecated as of v4.16.0. Please use `pagerAPI` property instead.
    * @returns {Pager} IDS Pager component API.
    */
   get pager() {
@@ -4436,7 +4437,8 @@ Datagrid.prototype = {
 
   /**
    * Save the columns to local storage
-   * @deprecated as of v4.10.0. Use `saveUserSettings()`, will remove this in a few versions
+   * This method is slated to be removed in a future v4.16.0 or v5.0.0.
+   * @deprecated as of v4.10.0. Please use `saveUserSettings()` instead.
    * @returns {void}
    */
   saveColumns() {
@@ -8817,8 +8819,9 @@ Datagrid.prototype = {
   },
 
   /**
-   * For an internal row node, get the dataset row index
-   * @deprecated as of v4.16.0. Use `rowNodes()` for frozen columns.
+   * For an internal row node, get the dataset row index.
+   * This method is slated to be removed in a future v4.22.0 or v5.0.0.
+   * @deprecated as of v4.16.0. Please use `rowNodes()` for frozen columns.
    * @param {number} row The row node.
    * @returns {object} The row index in the dataset.
    */

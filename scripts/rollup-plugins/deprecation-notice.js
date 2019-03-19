@@ -38,8 +38,6 @@ const transform = function (code, filePath) {
   const ret = null;
 
   if (!filePath || !filePath.includes(path.join(projectRoot, 'src'))) {
-    // TODO: re-enable logging for a verbose mode?
-    // logger(`Skipping file ${chalk.cyan(filePath)}...`);
     return ret;
   }
 

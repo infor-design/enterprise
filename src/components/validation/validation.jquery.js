@@ -77,7 +77,8 @@ $.fn.getField = function (field) {
 };
 
 /**
- * Returns the errormessage data object for a Field
+ * Returns the errormessage data object for a Field.
+ * This method is slated to be removed in a future v4.10.0 or v5.0.0.
  * @deprecated as of v4.4.0.  Please use `$.fn.getMessage()` instead.
  * @param {object} [settings] incoming settings
  * @returns {object} error message data
@@ -135,7 +136,8 @@ $.fn.addMessage = function (settings) {
 };
 
 /**
- * Add an error Message to a Field
+ * Add an error Message to a Field.
+ * This method is slated to be removed in a future v4.10.0 or v5.0.0.
  * @deprecated as of v4.4.0.  Please use `$.fn.addMessage()` instead.
  * @param {object} [settings] incoming settings
  * @returns {jQuery[]} elements receiving errors
@@ -186,7 +188,8 @@ $.fn.removeMessage = function (settings) {
 };
 
 /**
- * Remove an error Message from a Field
+ * Remove an error Message from a Field.
+ * This method is slated to be removed in a future v4.10.0 or v5.0.0.
  * @deprecated as of v4.4.0.  Please use `$.fn.removeMessage()` instead.
  * @param {object} [settings] incoming settings
  * @returns {jQuery[]} elements having errors removed

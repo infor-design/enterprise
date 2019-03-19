@@ -178,8 +178,9 @@ Pager.prototype = {
   },
 
   /**
-   * @deprecated as of v4.15.0
+   * This method is slated to be removed in a future v4.21.0 or v5.0.0.
    * (See https://github.com/infor-design/enterprise/issues/922)
+   * @deprecated as of v4.15.0.  Please use the `state` property instead.
    * @returns {object} containing various state properties
    */
   get pagingInfo() {

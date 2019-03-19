@@ -2145,7 +2145,8 @@ Dropdown.prototype = {
 
   /**
    * Toggle the current state of the list between open and closed.
-   * @deprecated as of v4.4.0.  Please use `toggle()` instead
+   * This method is slated to be removed in a future v4.10.0 or v5.0.0.
+   * @deprecated as of v4.4.0.  Please use `toggle()` instead.
    * @private
    * @returns {void}
    */
@@ -2730,9 +2731,9 @@ Dropdown.prototype = {
 
   /**
    * Public API for setting the `<select>`'s value.
-   * It's preferrable to instead set the input value and call `updated()` on the component API.
+   * This method is slated to be removed in a future v4.10.0 or v5.0.0.
    * @private
-   * @deprecated as of v4.4.0.
+   * @deprecated as of v4.4.0. It's preferrable to set the input value and call `updated()` on the component API.
    * @param {string} code - The value to match and set on the value element.
    */
   setCode(code) {

@@ -250,9 +250,10 @@ utils.parseSettings = function parseSettings(element, attr) {
 };
 
 /**
- * Deprecate `utils.parseOptions` in favor of `utils.parseSettings`
+ * Deprecate `utils.parseOptions` in favor of `utils.parseSettings`.
+ * This method is slated to be removed in a future v4.10.0 or v5.0.0.
  * @private
- * @deprecated as of v4.4.0. Please use `utils.parseSettings()` instead.
+ * @deprecated as of v4.4.0. Please use `parseSettings()` instead.
  * @param {HTMLElement|jQuery[]} element the element whose options are being parsed
  * @param {string} [attr] an optional alternate attribute name to use when obtaining settings
  * @returns {Object|Object[]} an object representation of parsed settings.
