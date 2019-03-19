@@ -23,6 +23,7 @@
 - `[Locale]` Added for having a different language that the locale. This is done by calling the new `setLanguage` function. ([#1552](https://github.com/infor-design/enterprise/issues//1552))
 - `[Locale / Mask]` Added limited initial support for some unicode languages. This means you can convert to and from numbers typed in Devangari, Arabic, and Chinese (Financial and Simplified). ([#439](https://github.com/infor-design/enterprise/issues/439))
 - `[Mask]` It is now possible to type numbers in unicode such as Devangari, Arabic, and Chinese (Financial and Simplified) into the the masks that involve numbers. ([#439](https://github.com/infor-design/enterprise/issues/439))
+- `[Modal]` Added an option to dictate the maximum width of the modal. ([#1802](https://github.com/infor-design/enterprise/issues/1802))
 - `[Icons]` Add support for creating an svg file for the Uplift theme's (alpha) new icons from ids-identity@2.4.0 assets. ([#1759](https://github.com/infor-design/enterprise/issues/1759))
 - `[Radar]` Added support to three label sizes (name, abbrName, shortName). ([#1553](https://github.com/infor-design/enterprise/issues/1553))
 
@@ -39,6 +40,7 @@
 - `[Datagrid]` Fixed a bug where filtering Order Date with `is-not-empty` on a null value would not correctly filter out results. ([#1718](https://github.com/infor-design/enterprise/issues/1718))
 - `[Datagrid]` Fixed a bug where when using the `disableClientSideFilter` setting the filtered event would not be called correctly. ([#1689](https://github.com/infor-design/enterprise/issues/1689))
 - `[Datagrid]` Fixed a bug where hidden columns inside a colspan were aligning incorrectly. ([#1764](https://github.com/infor-design/enterprise/issues/1764))
+- `[Modal]` Fixed a bug where the modal can overflow the page. ([#1802](https://github.com/infor-design/enterprise/issues/1802))
 - `[Radio Button]` Fixed a rendering problem on the selected state of Radio Buttons used inside of Accordion components. ([#1568](https://github.com/infor-design/enterprise/issues/1568))
 - `[Radio Button]` Fixed a z-index issue that was causing radio buttons to sometimes display over top of page sections where they should have instead scrolled beneath. ([#1014](https://github.com/infor-design/enterprise/issues/1014))
 
