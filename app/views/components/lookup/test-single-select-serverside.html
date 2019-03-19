@@ -55,7 +55,7 @@
               req.grandTotal = res.grandTotal; // This is the total amount on the server
             }
             // Set a timeout to simulate time for server to respond
-            setTimeout(() => {
+            setTimeout(function() {
               response(res.data, req);
             }, 1000);
           });
