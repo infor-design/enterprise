@@ -5,7 +5,7 @@ import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../../utils/debounced-resize';
-import { deprecateMethod, warnAboutDeprecation } from '../../utils/deprecated';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
@@ -229,7 +229,8 @@ Datagrid.prototype = {
    * @returns {Pager} IDS Pager component API.
    */
   get pager() {
-    return deprecateMethod(this.pagerAPI, this.pager).apply(this);
+    warnAboutDeprecation('pagerAPI', 'pager');
+    return this.pagerAPI;
   },
 
   /**
