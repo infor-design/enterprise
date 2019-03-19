@@ -14,6 +14,7 @@ const COMPONENT_NAME_DEFAULTS = {
     { id: 'example', label: 'Example', color: 'emerald07', checked: true, click: () => {} },
   ],
   events: [],
+  locale: null,
   month: new Date().getMonth(),
   year: new Date().getFullYear(),
   showViewChanger: true,
@@ -38,6 +39,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} [settings] The settings element.
  * @param {array} [settings.eventTypes] An array of objects with data for the event types.
  * @param {array} [settings.events] An array of objects with data for the events.
+ * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
  * @param {array} [settings.month] Initial month to show.
  * @param {array} [settings.year] Initial year to show.
  * @param {array} [settings.upcomingEventDays=14] How many days in advance should we show in the upcoming events pane.
@@ -64,11 +66,8 @@ Calendar.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   init() {
-    this.isRTL = Locale.isRTL();
-
     return this
-      .build()
-      .handleEvents();
+      .build();
   },
 
   /**
@@ -77,11 +76,49 @@ Calendar.prototype = {
    * @private
    */
   build() {
+    this.setLocale();
+    if (this.rendered ||
+      (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale))) {
+      this.rendered = false;
+      return this;
+    }
+
+    this.rendered = true;
     this
+      .setCurrentCalendar()
       .renderEventTypes()
       .renderMonth()
-      .renderViewChanger();
+      .renderViewChanger()
+      .handleEvents();
 
+    return this;
+  },
+
+  /**
+   * Set current locale to be used.
+   * @private
+   * @returns {void}
+   */
+  setLocale() {
+    if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
+      Locale.getLocale(this.settings.locale).done((locale) => {
+        this.locale = Locale.cultures[locale];
+        this.setCurrentCalendar();
+        this.build();
+      });
+    } else if (!this.settings.locale) {
+      this.locale = Locale.currentLocale;
+    }
+    return this;
+  },
+
+  /**
+   * Set current calendar data to to be used.
+   * @private
+   * @returns {void}
+   */
+  setCurrentCalendar() {
+    this.isRTL = this.locale.direction === 'right-to-left';
     return this;
   },
 
@@ -100,7 +137,7 @@ Calendar.prototype = {
     for (let i = 0; i < this.settings.eventTypes.length; i++) {
       const eventType = this.settings.eventTypes[i];
       eventTypeMarkup += `<input type="checkbox" class="checkbox ${eventType.color}07" name="${eventType.id}" id="${eventType.id}" checked="${eventType.checked ? 'true' : 'false'}" ${eventType.disabled ? 'disabled="true"' : ''} />
-        <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey) : eventType.label}</label><br/>`;
+        <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name }) : eventType.label}</label><br/>`;
     }
     this.eventTypeContainer.innerHTML = eventTypeMarkup;
     this.element.initialize();
@@ -119,6 +156,7 @@ Calendar.prototype = {
       onRenderMonth: this.settings.onRenderMonth,
       onSelected: this.settings.onSelected,
       selectable: true,
+      locale: this.settings.locale,
       month: this.settings.month,
       year: this.settings.year
     });
@@ -149,16 +187,16 @@ Calendar.prototype = {
     DOM.addClass(upcomingEvent, 'calendar-upcoming-event');
 
     let upcomingEventsMarkup = '';
-    const startDay = Locale.formatDate(event.starts, { pattern: 'd' });
-    const endDay = Locale.formatDate(event.ends, { pattern: 'd' });
-    let dateRange = `${Locale.formatDate(event.starts, { pattern: 'MMMM' })} ${startDay === endDay ? startDay : `${startDay}-${endDay}`}, ${Locale.formatDate(event.starts, { pattern: 'yyyy' })}`;
+    const startDay = Locale.formatDate(event.starts, { pattern: 'd', locale: this.locale.name });
+    const endDay = Locale.formatDate(event.ends, { pattern: 'd', locale: this.locale.name });
+    let dateRange = `${Locale.formatDate(event.starts, { pattern: 'MMMM', locale: this.locale.name })} ${startDay === endDay ? startDay : `${startDay}-${endDay}`}, ${Locale.formatDate(event.starts, { pattern: 'yyyy', locale: this.locale.name })}`;
 
     if (parseInt(endDay, 10) < parseInt(startDay, 10)) {
       const nextMonth = new Date(event.starts);
       nextMonth.setDate(1);
       nextMonth.setMonth(nextMonth.getMonth() + 1);
       const endYear = nextMonth.getFullYear();
-      dateRange = `${Locale.formatDate(event.starts, { pattern: 'MMMM' })} ${startDay} - ${Locale.formatDate(nextMonth, { pattern: 'MMMM' })} ${endDay}, ${endYear}`;
+      dateRange = `${Locale.formatDate(event.starts, { pattern: 'MMMM', locale: this.locale.name })} ${startDay} - ${Locale.formatDate(nextMonth, { pattern: 'MMMM', locale: this.locale.name })} ${endDay}, ${endYear}`;
     }
 
     upcomingEventsMarkup += `
@@ -180,12 +218,12 @@ Calendar.prototype = {
     if (!this.settings.showViewChanger) {
       return this;
     }
-    const viewChangerHtml = `<label for="calendar-view-changer" class="label audible">${Locale.translate('ChangeView')}</label>
+    const viewChangerHtml = `<label for="calendar-view-changer" class="label audible">${Locale.translate('ChangeView', { locale: this.locale.name })}</label>
       <select id="calendar-view-changer" name="calendar-view-changer" class="dropdown">
-        <option value="month" selected>${Locale.translate('Month')}</option>
-        <option value="week" disabled>${Locale.translate('Week')}</option>
-        <option value="day" disabled>${Locale.translate('Day')}</option>
-        <option value="schedule" disabled>${Locale.translate('Schedule')}</option>
+        <option value="month" selected>${Locale.translate('Month', { locale: this.locale.name })}</option>
+        <option value="week" disabled>${Locale.translate('Week', { locale: this.locale.name })}</option>
+        <option value="day" disabled>${Locale.translate('Day', { locale: this.locale.name })}</option>
+        <option value="schedule" disabled>${Locale.translate('Schedule', { locale: this.locale.name })}</option>
       </select>
     </div>`;
     $(this.monthViewHeader).append(viewChangerHtml);
@@ -424,7 +462,7 @@ Calendar.prototype = {
       false,
       event.isFullDay
     ));
-    event.durationUnits = event.duration > 1 ? Locale.translate('Days') : Locale.translate('Day');
+    event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: this.locale.name }) : Locale.translate('Day', { locale: this.locale.name });
     event.daysUntil = event.starts ? this.dateDiff(new Date(event.starts), new Date()) : 0;
     event.durationHours = this.dateDiff(new Date(event.starts), new Date(event.ends), true);
     event.isDays = true;
@@ -436,26 +474,26 @@ Calendar.prototype = {
       event.isDays = false;
       event.isAllDay = false;
       delete event.duration;
-      event.durationUnits = event.durationHours > 1 ? Locale.translate('Hours') : Locale.translate('Hour');
+      event.durationUnits = event.durationHours > 1 ? Locale.translate('Hours', { locale: this.locale.name }) : Locale.translate('Hour', { locale: this.locale.name });
     }
     if (event.isAllDay.toString() === 'true') {
       event.isDays = true;
       delete event.durationHours;
-      event.durationUnits = event.duration > 1 ? Locale.translate('Days') : Locale.translate('Day');
+      event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: this.locale.name }) : Locale.translate('Day', { locale: this.locale.name });
       event.duration = this.dateDiff(new Date(event.starts), new Date(event.ends));
     }
     if (event.duration === 0 && event.isAllDay.toString() === 'true') {
       event.isDays = true;
       event.duration = 1;
-      event.durationUnits = Locale.translate('Day');
+      event.durationUnits = Locale.translate('Day', { locale: this.locale.name });
     }
     if (event.starts) {
-      const startsLocale = Locale.parseDate(event.starts, 'yyyy-MM-ddTHH:mm:ss.SSS');
-      event.startsLocale = Locale.formatDate(startsLocale);
+      const startsLocale = Locale.parseDate(event.starts, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
+      event.startsLocale = Locale.formatDate(startsLocale, { locale: this.locale.name });
     }
     if (event.ends) {
-      const endsLocale = Locale.parseDate(event.ends, 'yyyy-MM-ddTHH:mm:ss.SSS');
-      event.endsLocale = Locale.formatDate(endsLocale);
+      const endsLocale = Locale.parseDate(event.ends, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
+      event.endsLocale = Locale.formatDate(endsLocale, { locale: this.locale.name });
     }
     event.eventTypes = this.settings.eventTypes;
     event.isAllDay = event.isAllDay.toString();
@@ -487,7 +525,7 @@ Calendar.prototype = {
 
     if (eventCnt >= 2) {
       const moreSpan = container.querySelector('.calendar-event-more');
-      const moreText = Locale.translate('More').replace('...', '');
+      const moreText = Locale.translate('More', { locale: this.locale.name }).replace('...', '');
       if (!moreSpan) {
         node = document.createElement('span');
         DOM.addClass(node, 'calendar-event-more');
@@ -525,7 +563,7 @@ Calendar.prototype = {
           const iconStatus = icon ? icon.querySelector('.icon').getAttribute('data-status') : '';
 
           if (title.offsetWidth > ui[0].scrollWidth - (icon ? icon.offsetWidth : 0)) {
-            response(`${title.innerText}${iconStatus ? ` (${Locale.translate(iconStatus, false)})` : ''}`);
+            response(`${title.innerText}${iconStatus ? ` (${Locale.translate(iconStatus, { locale: this.locale.name }, false)})` : ''}`);
             return;
           }
           response(false);
@@ -582,12 +620,12 @@ Calendar.prototype = {
   handleEvents() {
     const self = this;
 
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
+    this.element.off(`updated.${COMPONENT_NAME}`).on(`updated.${COMPONENT_NAME}`, () => {
       this.updated();
     });
 
     this.isSwitchingMonth = false;
-    this.element.on(`monthrendered.${COMPONENT_NAME}`, () => {
+    this.element.off(`monthrendered.${COMPONENT_NAME}`).on(`monthrendered.${COMPONENT_NAME}`, () => {
       this.isSwitchingMonth = true;
       if (this.modalVisible()) {
         this.removeModal();
@@ -599,21 +637,21 @@ Calendar.prototype = {
       }, 500);
     });
 
-    this.element.on(`change.${COMPONENT_NAME}`, '.checkbox', () => {
+    this.element.off(`change.${COMPONENT_NAME}`).on(`change.${COMPONENT_NAME}`, '.checkbox', () => {
       this.renderAllEvents(true);
     });
 
-    $(this.monthViewContainer).on(`selected.${COMPONENT_NAME}`, () => {
+    $(this.monthViewContainer).off(`selected.${COMPONENT_NAME}`).on(`selected.${COMPONENT_NAME}`, () => {
       this.renderSelectedEventDetails();
     });
 
-    this.element.on(`click.${COMPONENT_NAME}`, '.calendar-upcoming-event', (e) => {
+    this.element.off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.calendar-upcoming-event', (e) => {
       const key = e.currentTarget.getAttribute('data-key');
       this.monthView.selectDay(key);
     });
 
     if (this.settings.menuId) {
-      this.element.on(`contextmenu.${COMPONENT_NAME}`, '.calendar-event', (e) => {
+      this.element.off(`contextmenu.${COMPONENT_NAME}`).on(`contextmenu.${COMPONENT_NAME}`, '.calendar-event', (e) => {
         e.preventDefault();
         const event = $(e.currentTarget);
         event.popupmenu({ attachToBody: true, menuId: this.settings.menuId, trigger: 'immediate', offset: { y: 5 } });
@@ -651,7 +689,7 @@ Calendar.prototype = {
       });
     };
 
-    this.element.on(`click.${COMPONENT_NAME}`, '.calendar-event', (e) => {
+    this.element.off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.calendar-event', (e) => {
       const eventId = e.currentTarget.getAttribute('data-id');
       const eventData = this.settings.events.filter(event => event.id === eventId);
       if (!eventData || eventData.length === 0) {
@@ -660,7 +698,7 @@ Calendar.prototype = {
       showModalWithCallback(eventData[0], false);
     });
 
-    this.element.on(`dblclick.${COMPONENT_NAME}`, 'td', (e) => {
+    this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, 'td', (e) => {
       // throw this case out or you can click the wrong day
       if (this.isSwitchingMonth || this.modalVisible()) {
         return;
@@ -766,8 +804,8 @@ Calendar.prototype = {
     }
 
     event.color = this.getEventTypeColor(event.type);
-    event.startsLong = Locale.formatDate(event.starts, { date: 'long' });
-    event.endsLong = Locale.formatDate(event.ends, { date: 'long' });
+    event.startsLong = Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name });
+    event.endsLong = Locale.formatDate(event.ends, { date: 'long', locale: this.locale.name });
     event.typeLabel = this.getEventTypeLabel(event.type);
 
     const renderedTmpl = Tmpl.compile(template, { event });
@@ -834,10 +872,10 @@ Calendar.prototype = {
     const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
 
     if (event.starts === event.ends && !isAllDay) {
-      event.starts = Locale.formatDate(new Date(event.starts), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
+      event.starts = Locale.formatDate(new Date(event.starts), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
       const endDate = new Date(event.ends);
       endDate.setHours(endDate.getHours() + parseInt(event.durationHours, 10));
-      event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
+      event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
       event.duration = null;
       event.isAllDay = false;
     }
@@ -845,22 +883,22 @@ Calendar.prototype = {
     if (isAllDay) {
       const startDate = new Date(event.starts);
       startDate.setHours(0, 0, 0, 0);
-      event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
+      event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
 
       const endDate = new Date(event.ends);
       endDate.setHours(23, 59, 59, 999);
-      event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' });
+      event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
       event.duration = event.starts === event.ends ? 1 : null;
       event.isAllDay = true;
     }
 
     if (event.comments === undefined && addPlaceholder) {
-      event.comments = Locale.translate('NoCommentsEntered');
+      event.comments = Locale.translate('NoCommentsEntered', { locale: this.locale.name });
       event.noComments = true;
     }
 
     if (!event.subject && addPlaceholder) {
-      event.subject = Locale.translate('NoTitle');
+      event.subject = Locale.translate('NoTitle', { locale: this.locale.name });
     }
 
     if (!event.type) {
@@ -876,7 +914,7 @@ Calendar.prototype = {
     }
 
     if (event.title === 'NewEvent') {
-      event.title = Locale.translate('NewEvent');
+      event.title = Locale.translate('NewEvent', { locale: this.locale.name });
     }
   },
 

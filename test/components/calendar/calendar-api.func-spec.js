@@ -32,6 +32,7 @@ describe('Calendar API', () => {
     Locale.addCulture('sv-SE', Soho.Locale.cultures['sv-SE'], Soho.Locale.languages['sv']); //eslint-disable-line
     Locale.addCulture('en-GB', Soho.Locale.cultures['en-GB'], Soho.Locale.languages['en']); //eslint-disable-line
     Locale.addCulture('de-DE', Soho.Locale.cultures['de-DE'], Soho.Locale.languages['de']); //eslint-disable-line
+    Locale.addCulture('da-DK', Soho.Locale.cultures['da-DK'], Soho.Locale.languages['da']); //eslint-disable-line
     Locale.set('en-US');
     Soho.Locale.set('en-US'); //eslint-disable-line
 
@@ -80,6 +81,36 @@ describe('Calendar API', () => {
     calendarObj.destroy();
 
     expect($(calendarEl).data('calendar')).toBeFalsy();
+  });
+
+  it('Should render based on locale setting', () => {
+    calendarObj.destroy();
+    const start = new Date();
+    start.setDate(start.getDate() + 1);
+
+    const end = new Date();
+    end.setDate(end.getDate() + 2);
+
+    const newSettings = {
+      locale: 'da-DK',
+      month: 2,
+      year: 2019,
+      eventTypes,
+      events: [{
+        id: '15',
+        subject: 'Days Off',
+        starts: start.toISOString(),
+        ends: end.toISOString(),
+        type: 'dto',
+        isAllDay: true
+      }]
+    };
+
+    calendarObj = new Calendar(calendarEl, newSettings);
+
+    expect(document.getElementById('monthview-datepicker-field').value).toEqual('marts 2019');
+    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('søn');
+    expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('lør');
   });
 
   it('Should render upcoming dates', () => {

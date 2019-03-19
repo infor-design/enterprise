@@ -31,7 +31,8 @@ describe('TimePicker settings', () => {
 
   it('Should set settings', () => {
     const settings = {
-      timeFormat: Locale.calendar().timeFormat || 'h:mm a',
+      locale: '',
+      timeFormat: 'HH:mm:ss',
       minuteInterval: 5,
       secondInterval: 5,
       mode: TIMEPICKER_MODES[0],
@@ -45,7 +46,8 @@ describe('TimePicker settings', () => {
 
   it('Should update set settings via data', () => {
     const settings = {
-      timeFormat: Locale.calendar().timeFormat || 'h:mm a',
+      locale: '',
+      timeFormat: 'HH:mm:ss',
       minuteInterval: 10,
       secondInterval: 10,
       mode: TIMEPICKER_MODES[0],
@@ -63,7 +65,8 @@ describe('TimePicker settings', () => {
 
   it('Should update set settings via parameter', () => {
     const settings = {
-      timeFormat: Locale.calendar().timeFormat || 'h:mm a',
+      locale: '',
+      timeFormat: 'HH:mm:ss',
       minuteInterval: 10,
       secondInterval: 10,
       mode: TIMEPICKER_MODES[0],

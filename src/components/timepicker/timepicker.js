@@ -18,7 +18,8 @@ const TIMEPICKER_MODES = ['standard', 'range'];
 // Timepicker defaults
 const TIMEPICKER_DEFAULTS = function () {
   return {
-    timeFormat: Locale.calendar().timeFormat || 'h:mm a', // The time format
+    locale: '',
+    timeFormat: undefined,
     minuteInterval: 5,
     secondInterval: 5,
     mode: TIMEPICKER_MODES[0],
@@ -33,6 +34,7 @@ const TIMEPICKER_DEFAULTS = function () {
  * @class TimePicker
  * @param {HTMLElement|jQuery[]} element the base element
  * @param {object} [settings] incoming settings
+ * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
  * @param {string} [settings.timeFormat = 'h:mm a'] The time format, defaults to the current locales time format.
  * @param {number} [settings.minuteInterval = 5]  Integer from 1 to 60.  Multiples of this value
  *  are displayed as options in the minutes dropdown.
@@ -60,11 +62,40 @@ TimePicker.prototype = {
    * @returns {void}
    */
   init() {
-    this
-      .setup()
-      .build()
-      .handleEvents()
-      .roundMinutes();
+    this.setLocale();
+    if (!this.settings.locale) {
+      this.setCurrentCalendar().build();
+    }
+  },
+
+  /**
+   * Set current locale to be used.
+   * @private
+   * @returns {void}
+   */
+  setLocale() {
+    this.locale = Locale.currentLocale;
+    if (this.settings.locale) {
+      Locale.getLocale(this.settings.locale).done((locale) => {
+        this.locale = Locale.cultures[locale];
+        this.setCurrentCalendar();
+      });
+    }
+  },
+
+  /**
+   * Sets current calendar information.
+   * @private
+   * @returns {object} The api object for chaining.
+   */
+  setCurrentCalendar() {
+    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    if (this.settings.timeFormat === undefined) {
+      this.settings.timeFormat = this.currentCalendar.timeFormat || 'h:mm a';
+    }
+    this.isRTL = this.locale.direction === 'right-to-left';
+    this.build();
+    return this;
   },
 
   /**
@@ -122,7 +153,7 @@ TimePicker.prototype = {
     this.settings.mode = sanitizeMode(this.settings.mode);
     this.settings.roundToInterval = sanitizeRoundToInterval(this.settings.roundToInterval);
 
-    this.dayPeriods = Locale.calendar().dayPeriods;
+    this.dayPeriods = this.currentCalendar.dayPeriods;
 
     return this;
   },
@@ -133,8 +164,12 @@ TimePicker.prototype = {
    * @returns {this} component instance
    */
   build() {
+    this
+      .setup();
+
     // With this option forgoe the input and append the dropdowns/popup to the parent element
     if (this.settings.parentElement) {
+      this.settings.parentElement.empty();
       this.trigger = $();
       this.buildStandardPopup();
       this.setupStandardEvents();
@@ -147,11 +182,10 @@ TimePicker.prototype = {
       this.trigger = $.createIconElement('clock').insertAfter(this.element);
     }
 
-    this.addAria();
-
-    // Add Mask and Validation plugins for time
-    this.addMask();
-
+    this.addAria()
+      .addMask()
+      .handleEvents()
+      .roundMinutes();
     return this;
   },
 
@@ -168,7 +202,9 @@ TimePicker.prototype = {
 
     // TODO: Confirm this with Accessibility Team
     this.label = $(`label[for="${this.element.attr('id')}"]`);
-    this.label.append(`<span class="audible">${Locale.translate('UseArrow')}</span>`);
+    this.label.find('.audible').remove();
+    this.label.append(`<span class="audible">${Locale.translate('UseArrow', { locale: this.locale.name })}</span>`);
+    return this;
   },
 
   /**
@@ -272,7 +308,7 @@ TimePicker.prototype = {
    * @returns {string} containing the time separator
    */
   getTimeSeparator() {
-    return Locale.calendar().dateFormat.timeSeparator;
+    return this.currentCalendar.dateFormat.timeSeparator;
   },
 
   /**
@@ -354,6 +390,7 @@ TimePicker.prototype = {
       this.element
         .mask(maskOptions);
     }
+    return this;
   },
 
   /**
@@ -388,7 +425,7 @@ TimePicker.prototype = {
       self.hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
       hourCounter++;
     }
-    timeParts.append($(`<label for="${this.hoursId}" class="audible">${Locale.translate('Hours')}</label>`));
+    timeParts.append($(`<label for="${this.hoursId}" class="audible">${Locale.translate('Hours', { locale: this.locale.name })}</label>`));
     timeParts.append(this.hourSelect);
     timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
 
@@ -413,7 +450,7 @@ TimePicker.prototype = {
       this.minuteSelect.prepend($(`<option selected>${self.initValues.minutes}</option>`));
     }
 
-    timeParts.append($(`<label for="${this.minutesId}" class="audible">${Locale.translate('Minutes')}</label>`));
+    timeParts.append($(`<label for="${this.minutesId}" class="audible">${Locale.translate('Minutes', { locale: this.locale.name })}</label>`));
     timeParts.append(this.minuteSelect);
 
     // Seconds Picker
@@ -439,14 +476,14 @@ TimePicker.prototype = {
       }
 
       timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
-      timeParts.append($(`<label for="${this.secondsId}" class="audible">${Locale.translate('Seconds')}</label>`));
+      timeParts.append($(`<label for="${this.secondsId}" class="audible">${Locale.translate('Seconds', { locale: this.locale.name })}</label>`));
       timeParts.append(this.secondSelect);
     }
 
     if (!is24HourFormat && hasDayPeriods) {
       this.periodSelect = $(`<select id="${this.periodId}" data-options="{'noSearch': 'true'}" class="period dropdown"></select>`);
       timeParts.append($('<span class="label colons"></span>'));
-      const localeDays = Locale.calendar().dayPeriods;
+      const localeDays = this.currentCalendar.dayPeriods;
       let localeCount = 0;
       const regexDay = new RegExp(self.initValues.period, 'i');
       let realDayValue = 'AM'; // AM
@@ -461,7 +498,7 @@ TimePicker.prototype = {
 
         localeCount++;
       }
-      timeParts.append($(`<label for="${this.periodId}" class="audible">${Locale.translate('TimePeriod')}</label>`));
+      timeParts.append($(`<label for="${this.periodId}" class="audible">${Locale.translate('TimePeriod', { locale: this.locale.name })}</label>`));
       timeParts.append(this.periodSelect);
     }
 
@@ -470,10 +507,10 @@ TimePicker.prototype = {
       // self.afterShow(this.settings.parentElement);
       self.popup = this.settings.parentElement.find('.timepicker-popup-content').addClass('timepicker-popup').attr('id', 'timepicker-popup');
     } else {
-      popupContent.append(`<div class="modal-buttonset"><button type="button" class="btn-modal-primary set-time">${Locale.translate('SetTime')}</button></div>`);
+      popupContent.append(`<div class="modal-buttonset"><button type="button" class="btn-modal-primary set-time">${Locale.translate('SetTime', { locale: this.locale.name })}</button></div>`);
 
       let placementParent = this.element;
-      let placementParentXAlignment = (Locale.isRTL() ? 'right' : 'left');
+      let placementParentXAlignment = (this.isRTL ? 'right' : 'left');
       const parent = this.element.parent();
 
       if (parent.is('.datagrid-cell-wrapper')) {
@@ -738,7 +775,7 @@ TimePicker.prototype = {
         }
 
         if (!self.is24HourFormat()) {
-          thisValue = Locale.translateDayPeriod('AM');
+          thisValue = self.translateDayPeriod('AM');
           timeparts.period = thisValue;
         }
 
@@ -755,7 +792,7 @@ TimePicker.prototype = {
       }
       // No seconds, but has a day period
       if (!isDayPeriod(thisValue)) {
-        thisValue = Locale.translateDayPeriod('AM');
+        thisValue = self.translateDayPeriod('AM');
       }
       timeparts.period = thisValue;
     }
@@ -766,10 +803,24 @@ TimePicker.prototype = {
       parts[3] = removeLeadingWhitespace(parts[3]);
       timeparts.period = parts[3];
     } else if (!this.is24HourFormat() && this.hasSeconds()) {
-      timeparts.period = Locale.translateDayPeriod('AM');
+      timeparts.period = this.translateDayPeriod('AM');
     }
 
     return timeparts;
+  },
+
+  /**
+   * Translate Day Period
+   * @private
+   * @param {string} period should be "am", "pm", "AM", "PM", or "i"
+   * @returns {string} the translated day period.
+   */
+  translateDayPeriod(period) {
+    if (/am|pm|AM|PM/i.test(period)) {
+      const periods = this.currentCalendar.dayPeriods || ['AM', 'PM'];
+      return periods[/AM|am/i.test(period) ? 0 : 1];
+    }
+    return period;
   },
 
   /**
@@ -786,7 +837,7 @@ TimePicker.prototype = {
     let timeString = `${hours}${sep}${minutes}${this.hasSeconds() ? sep + seconds : ''}`;
 
     period = (!this.is24HourFormat() && period === '') ? $(`#${this.periodId}-shdo`).val() : period;
-    timeString += period ? ` ${Locale.translateDayPeriod(period)}` : '';
+    timeString += period ? ` ${this.translateDayPeriod(period)}` : '';
 
     /**
     * Fires when the value is changed by typing or the picker.
@@ -921,7 +972,7 @@ TimePicker.prototype = {
       return val;
     }
 
-    const timeSeparator = Locale.calendar().dateFormat.timeSeparator;
+    const timeSeparator = this.currentCalendar.dateFormat.timeSeparator;
     const sepRegex = new RegExp(timeSeparator, 'g');
 
     // Remove punctuation
@@ -1009,7 +1060,7 @@ TimePicker.prototype = {
     this.element.removeAttr('data-validate').removeData('validate validationEvents');
 
     this.label.find('.audible').remove();
-
+    $('#timepicker-popup').remove();
     return this;
   },
 
@@ -1034,7 +1085,7 @@ TimePicker.prototype = {
    */
   handleEvents() {
     const self = this;
-    this.trigger.on('click.timepicker', () => {
+    this.trigger.off('click.timepicker').on('click.timepicker', () => {
       self.toggleTimePopup();
     });
 

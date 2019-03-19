@@ -757,7 +757,7 @@ describe('Datepicker Umalqura EG Tests', () => {
 
     const todayEl = await element(by.css('button.is-today'));
     await todayEl.click();
-    const result = await browser.executeScript('return Locale.getCalendar("islamic-umalqura").conversions.fromGregorian(new Date())');
+    const result = await browser.executeScript('return Locale.calendar("ar-SA", "islamic-umalqura").conversions.fromGregorian(new Date())');
 
     expect(`${result[0]}/${(result[1] + 1).toString().padStart(2, '0')}/${result[2].toString().padStart(2, '0')}`).toEqual(await datepickerEl.getAttribute('value'));
   });

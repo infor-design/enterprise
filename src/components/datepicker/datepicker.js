@@ -71,9 +71,8 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.range.selectForward=false] Range only in forward direction.
  * @param {boolean} [settings.range.selectBackward=false] Range only in backward direction.
  * @param {boolean} [settings.range.includeDisabled=false] Include disable dates in range of dates.
- * @param {string} [settings.calendarName] The name of the calendar to use in instance of
- * multiple calendars. At this time only ar-SA and ar-EG locales have either
- * 'gregorian' or 'islamic-umalqura' as valid values.
+ * @param {string} [settings.calendarName] The name of the calendar to use in instance of multiple calendars. At this time only ar-SA and ar-EG locales have either 'gregorian' or 'islamic-umalqura' as valid values.
+ * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
  * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
  * implemented https://jira.infor.com/browse/SOHO-3437
  * @param {boolean} [settings.autoSize=false] If true the field will be sized to the width of the date.
@@ -120,6 +119,7 @@ const DATEPICKER_DEFAULTS = {
     includeDisabled: false // if true range will include disable dates in it
   },
   calendarName: null,
+  locale: '',
   useUTC: false,
   autoSize: false,
   hideButtons: false
@@ -160,27 +160,41 @@ DatePicker.prototype = {
       this.trigger.addClass('hidden');
     }
 
-    this.addAria();
-
     // Set the current calendar
+    this.setLocale();
+    this.addAria();
     this.setCurrentCalendar();
-    this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
-    this.conversions = this.currentCalendar.conversions;
-    this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
     this.setSize();
   },
 
   /**
-   * Set current calendar
+   * Set current locale to be used.
+   * @private
+   * @returns {void}
+   */
+  setLocale() {
+    this.locale = Locale.currentLocale;
+    if (this.settings.locale) {
+      Locale.getLocale(this.settings.locale).done((locale) => {
+        this.locale = Locale.cultures[locale];
+        this.setCurrentCalendar();
+      });
+    }
+  },
+
+  /**
+   *  Sets current calendar information.
    * @private
    * @returns {void}
    */
   setCurrentCalendar() {
-    if (this.settings.calendarName) {
-      this.currentCalendar = Locale.getCalendar(this.settings.calendarName) || Locale.calendar();
-    } else {
-      this.currentCalendar = Locale.calendar();
-    }
+    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
+    this.isRTL = this.locale.direction === 'right-to-left';
+    this.conversions = this.currentCalendar.conversions;
+    this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
+    this.setFormat();
+    this.mask();
   },
 
   /**
@@ -205,7 +219,7 @@ DatePicker.prototype = {
    */
   addAria() {
     this.label = $(`label[for="${this.element.attr('id')}"]`);
-    this.label.append(`<span class="audible">${Locale.translate('PressDown')}</span>`);
+    this.label.append(`<span class="audible">${Locale.translate('PressDown', this.locale.name)}</span>`);
   },
 
   /**
@@ -407,7 +421,10 @@ DatePicker.prototype = {
    * @returns {void}
    */
   setPlaceholder() {
-    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
+    const formatDate = d => Locale.formatDate(d, {
+      pattern: this.pattern,
+      locale: this.locale.name
+    });
     const s = this.settings;
     let placeholder = this.pattern;
 
@@ -469,10 +486,10 @@ DatePicker.prototype = {
     this.footer = $('' +
       `<div class="popup-footer">
         <button type="button" class="cancel btn-tertiary">
-          ${Locale.translate('Clear')}
+          ${Locale.translate('Clear', this.locale.name)}
         </button>
         <button type="button" class="is-today btn-tertiary">
-          ${Locale.translate('Today')}
+          ${Locale.translate('Today', this.locale.name)}
         </button>
       </div>`);
 
@@ -480,7 +497,7 @@ DatePicker.prototype = {
       this.footer = $('' +
         `<div class="popup-footer">
           <button type="button" class="select-month btn-tertiary">
-            ${Locale.translate('Select')}
+            ${Locale.translate('Select', this.locale.name)}
           </button>
         </div>`);
     }
@@ -526,6 +543,7 @@ DatePicker.prototype = {
       }
 
       timeOptions.parentElement = this.timepickerContainer;
+      timeOptions.locale = this.settings.locale;
       this.time = this.getTimeString(this.currentDate, this.show24Hours);
       this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
       this.timepickerContainer.find('.dropdown').dropdown();
@@ -602,7 +620,7 @@ DatePicker.prototype = {
     this.calendar.append((s.showTime ? this.timepickerContainer : ''), this.footer);
 
     let placementParent = this.element;
-    let placementParentXAlignment = (Locale.isRTL() ? 'right' : 'left');
+    let placementParentXAlignment = (this.isRTL ? 'right' : 'left');
     const parent = this.element.parent();
 
     if (parent.is('.datagrid-cell-wrapper')) {
@@ -857,7 +875,7 @@ DatePicker.prototype = {
   setRangeFirstPart(date) {
     const s = this.settings;
     const dateObj = d => new Date(d.year, d.month, d.day);
-    const labelDate = d => Locale.formatDate(d, { date: 'full' });
+    const labelDate = d => Locale.formatDate(d, { date: 'full', locale: this.locale.name });
     const minCell = this.calendarAPI.days.find('td:visible:first');
     const maxCell = this.calendarAPI.days.find('td:visible:last');
     const label = labelDate(date);
@@ -953,7 +971,10 @@ DatePicker.prototype = {
         this.setRangeToElem(date, false);
       }
     } else {
-      this.element.val(Locale.formatDate(date, { pattern: this.pattern }));
+      this.element.val(Locale.formatDate(date, {
+        pattern: this.pattern,
+        locale: this.locale.name
+      }));
     }
 
     if (trigger) {
@@ -980,8 +1001,11 @@ DatePicker.prototype = {
    */
   setRangeToElem(date, isSingleDate) {
     const s = this.settings;
-    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
-    const labelDate = d => Locale.formatDate(d, { date: 'full' });
+    const formatDate = d => Locale.formatDate(d, {
+      pattern: this.pattern,
+      locale: this.locale.name
+    });
+    const labelDate = d => Locale.formatDate(d, { date: 'full', locale: this.locale.name });
     let value = formatDate(date);
     let handled = false;
 
@@ -1114,8 +1138,14 @@ DatePicker.prototype = {
    * @returns {void}
    */
   setRangeValueFromField() {
-    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
-    const parseDate = d => Locale.parseDate(d, this.pattern, false);
+    const formatDate = d => Locale.formatDate(d, {
+      pattern: this.pattern,
+      locale: this.locale.name
+    });
+    const parseDate = d => Locale.parseDate(d, {
+      pattern: this.pattern,
+      locale: this.locale.name
+    }, false);
     const getTime = d => ((d && typeof d.getTime === 'function') ? d.getTime() : (new Date()).getTime());
     const alignDates = (dates) => {
       let d1 = parseDate(dates[0]);
@@ -1224,7 +1254,10 @@ DatePicker.prototype = {
     let gregorianValue = fieldValue;
 
     if (this.isIslamic && fieldValue) {
-      const islamicValue = Locale.parseDate(this.element.val(), this.pattern);
+      const islamicValue = Locale.parseDate(this.element.val(), {
+        pattern: this.pattern,
+        locale: this.locale.name
+      });
       gregorianValue = this.conversions.toGregorian(
         islamicValue[0],
         islamicValue[1],
@@ -1234,11 +1267,17 @@ DatePicker.prototype = {
 
     this.currentDate = gregorianValue || new Date();
     if (typeof this.currentDate === 'string') {
-      this.currentDate = Locale.parseDate(this.currentDate, this.pattern, false);
+      this.currentDate = Locale.parseDate(this.currentDate, {
+        pattern: this.pattern,
+        locale: this.locale.name
+      }, false);
     }
 
     if (this.currentDate === undefined) {
-      this.currentDate = Locale.parseDate(gregorianValue, this.pattern, false);
+      this.currentDate = Locale.parseDate(gregorianValue, {
+        pattern: this.pattern,
+        locale: this.locale.name
+      }, false);
     }
 
     if (this.isIslamic) {
@@ -1256,10 +1295,16 @@ DatePicker.prototype = {
     // Check and fix two digit year for main input element
     const dateFormat = self.pattern;
     const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy');
-    const parsedDate = Locale.parseDate(self.element.val().trim(), dateFormat, isStrict);
+    const parsedDate = Locale.parseDate(self.element.val().trim(), {
+      pattern: dateFormat,
+      locale: this.locale.name
+    }, isStrict);
 
     if (parsedDate !== undefined && self.element.val().trim() !== '' && !s.range.useRange) {
-      self.setValue(Locale.parseDate(self.element.val().trim(), self.pattern, false));
+      self.setValue(Locale.parseDate(self.element.val().trim(), {
+        pattern: self.pattern,
+        locale: this.locale.name
+      }, false));
     }
 
     if (s.range.useRange && s.range.first && s.range.first.date
@@ -1340,9 +1385,10 @@ DatePicker.prototype = {
       if (s.range.useRange) {
         this.setRangeToElem(this.currentDate);
       } else {
-        const options = { pattern: this.pattern };
+        const options = { pattern: this.pattern, locale: this.locale.name };
         const islamicDateText =
-          Locale.formatDate(this.isIslamic ? this.currentDateIslamic : this.currentDate, options);
+          Locale.formatDate(this.isIslamic ?
+            this.currentDateIslamic : this.currentDate, options);
         this.element.val(islamicDateText);
       }
       /**
@@ -1432,7 +1478,10 @@ DatePicker.prototype = {
    */
   getRangeValue() {
     const s = this.settings;
-    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
+    const formatDate = d => Locale.formatDate(d, {
+      pattern: this.pattern,
+      locale: this.locale.name
+    });
 
     if (s.range.useRange &&
       s.range.first && s.range.first.date &&
@@ -1513,7 +1562,6 @@ DatePicker.prototype = {
       }
     });
 
-    self.mask();
     this.handleKeys(this.element);
 
     // Fix two digit year for main input element

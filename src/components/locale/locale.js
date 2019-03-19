@@ -219,6 +219,7 @@ const Locale = {  // eslint-disable-line
     const lang = locale.substr(0, 2);
 
     this.cultures[locale] = data;
+    this.cultures[locale].name = locale;
     this.languages[lang] = {
       name: lang,
       direction: data.direction || (langData ? langData.direction : ''),
@@ -226,7 +227,6 @@ const Locale = {  // eslint-disable-line
       messages: data.messages || (langData ? langData.messages : {})
     };
     if (!langData) {
-      delete this.cultures[locale].direction;
       delete this.cultures[locale].messages;
     }
   },
@@ -246,10 +246,10 @@ const Locale = {  // eslint-disable-line
     script.onload = () => {
       if (isCurrent) {
         this.setCurrentLocale(locale, this.cultures[locale]);
-        this.dff.resolve(this.currentLocale.name);
+        this.dff.resolve(locale);
       }
       if (useLocale) {
-        this.dff[locale].resolve(this.currentLocale.name);
+        this.dff[locale].resolve(locale);
       }
     };
 
@@ -327,10 +327,10 @@ const Locale = {  // eslint-disable-line
     }
 
     if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
-      this.dff[locale].resolve(self.currentLocale.name);
+      this.dff[locale].resolve(locale);
     }
     if (self.cultures[locale] && this.cultureInHead()) {
-      this.dff[locale].resolve(self.currentLocale.name);
+      this.dff[locale].resolve(locale);
     }
 
     return this.dff[locale].promise();
@@ -456,6 +456,10 @@ const Locale = {  // eslint-disable-line
 
     if (options.date) {
       pattern = cal.dateFormat[options.date];
+    }
+
+    if (!pattern) {
+      pattern = cal.dateFormat.short;
     }
 
     let year = (value instanceof Array ? value[0] : value.getFullYear());
@@ -1118,6 +1122,10 @@ const Locale = {  // eslint-disable-line
    */
   useLanguage(options) {
     let languageData = this.currentLanguage;
+    if (options && options.locale) {
+      const lang = options.locale.split('-')[0];
+      return this.languages[lang];
+    }
     if (options && options.language && this.languages[options.language]) {
       languageData = this.languages[options.language];
     }
@@ -1408,35 +1416,36 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-   * Translate Day Period
-   * @private
-   * @param {string} period should be "am", "pm", "AM", "PM", or "i"
-   * @returns {string} the translated day period.
-   */
-  translateDayPeriod(period) {
-    if (/am|pm|AM|PM/i.test(period)) {
-      const periods = this.calendar().dayPeriods || ['AM', 'PM'];
-      return periods[/AM|am/i.test(period) ? 0 : 1];
-    }
-    return period;
-  },
-
-  /**
    * Shortcut function to get 'first' calendar
    * @private
    * @param {string} locale The locale to use
+   * @param {string} name the name of the calendar (fx: "gregorian", "islamic-umalqura")
    * @returns {object} containing calendar data.
    */
-  calendar(locale) {
+  calendar(locale, name) {
+    let calendars = [];
     if (this.currentLocale.data.calendars && !locale) {
-      return this.currentLocale.data.calendars[0];
+      calendars = this.currentLocale.data.calendars;
     }
 
     if (locale && this.cultures[locale]) {
-      return this.cultures[locale].calendars[0];
+      calendars = this.cultures[locale].calendars;
     }
 
-    // Defaults to ISO 8601
+    if (name && calendars) {
+      for (let i = 0; i < calendars.length; i++) {
+        const cal = calendars[i];
+        if (cal.name === name) {
+          return cal;
+        }
+      }
+    }
+
+    if (calendars[0]) {
+      return calendars[0];
+    }
+
+    // Defaults to en-US
     return {
       dateFormat: {
         separator: '/',
@@ -1453,26 +1462,6 @@ const Locale = {  // eslint-disable-line
       timeFormat: 'HH:mm:ss',
       dayPeriods: ['AM', 'PM']
     };
-  },
-
-  /**
-   * Access the calendar array
-   * @private
-   * @param {string} name the name of the calendar (fx: "gregorian", "islamic-umalqura")
-   * @returns {object} containing calendar data
-   */
-  getCalendar(name) {
-    if (this.currentLocale.data.calendars) {
-      for (let i = 0; i < this.currentLocale.data.calendars.length; i++) {
-        const calendar = this.currentLocale.data.calendars[i];
-        if (calendar.name === name) {
-          return calendar;
-        }
-      }
-    }
-
-    // Defaults to ISO 8601
-    return [{ dateFormat: 'yyyy-MM-dd', timeFormat: 'HH:mm:ss' }];
   },
 
   /**

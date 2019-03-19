@@ -357,9 +357,13 @@ CirclePager.prototype = {
   showExpandedView() {
     this.isActive = false;
     this.element.removeClass('is-active');
-    this.element[0].style.width = '';
-    this.container[0].style.width = '';
-    this.container[0].style.left = '';
+    if (this.element && this.element[0]) {
+      this.element[0].style.width = '';
+    }
+    if (this.container && this.container[0]) {
+      this.container[0].style.width = '';
+      this.container[0].style.left = '';
+    }
   },
 
   /**
