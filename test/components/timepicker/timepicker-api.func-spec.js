@@ -1,22 +1,20 @@
 import { TimePicker } from '../../../src/components/timepicker/timepicker';
 import { Locale } from '../../../src/components/locale/locale';
+import { cleanup } from '../../helpers/func-utils';
 
 const timepickerHTML = require('../../../app/views/components/timepicker/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let timepickerEl;
-let svgEl;
 let timepickerObj;
 
 describe('TimePicker API', () => {
   beforeEach(() => {
     timepickerEl = null;
-    svgEl = null;
     timepickerObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', timepickerHTML);
     timepickerEl = document.body.querySelector('.timepicker');
-    svgEl = document.body.querySelector('.svg-icons');
     timepickerEl.classList.add('no-init');
 
     Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
@@ -29,8 +27,12 @@ describe('TimePicker API', () => {
 
   afterEach(() => {
     timepickerObj.destroy();
-    timepickerEl.parentNode.removeChild(timepickerEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup([
+      '.svg-icons',
+      '#timepicker-popup',
+      '.popover',
+      '.row'
+    ]);
   });
 
   it('Should be defined on jQuery object', () => {
@@ -53,9 +55,9 @@ describe('TimePicker API', () => {
 
     setTimeout(() => {
       expect(document.querySelector('.set-time').innerText).toEqual('Indstil tid');
-      expect(document.body.querySelectorAll('select').length).toEqual(2);
+      expect(document.body.querySelectorAll('.time-parts select').length).toEqual(2);
       done();
-    }, 300);
+    }, 400);
   });
 
   it('Should destroy timepicker', () => {

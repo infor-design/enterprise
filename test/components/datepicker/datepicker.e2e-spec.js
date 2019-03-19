@@ -743,7 +743,7 @@ describe('Datepicker 12hr Time Tests', () => {
 
 describe('Datepicker Umalqura EG Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/test-ar-eg-umalqura');
+    await utils.setPage('/components/datepicker/test-ar-eg-umalqura?locale=ar-SA');
   });
 
   it('Should render umalqura on ar-EG time', async () => {
