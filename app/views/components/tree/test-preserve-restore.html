@@ -184,11 +184,11 @@
   const preserveBtn = document.getElementById('preserve');
   const restoreBtn = document.getElementById('restore');
 
-  preserveBtn.addEventListener('click', () => {
+  preserveBtn.addEventListener('click', function() {
     tree.preserveEnablementState();
   });
 
-  restoreBtn.addEventListener('click', () => {
+  restoreBtn.addEventListener('click', function() {
     tree.restoreEnablementState();
   });
 
