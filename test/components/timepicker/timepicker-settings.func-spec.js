@@ -1,4 +1,3 @@
-import { Locale } from '../../../src/components/locale/locale';
 import { TimePicker } from '../../../src/components/timepicker/timepicker';
 
 const timepickerHTML = require('../../../app/views/components/timepicker/example-index.html');
