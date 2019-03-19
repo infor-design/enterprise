@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { deprecateMethod, warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
@@ -2135,20 +2136,22 @@ Dropdown.prototype = {
    * @private
    */
   toggle() {
-    this.toggleList();
-  },
-
-  /**
-   * Toggle the current state of the list between open and closed.
-   * @deprecated
-   * @private
-   */
-  toggleList() {
     if (this.isOpen() || this.isLoading()) {
       this.closeList('cancel');
       return;
     }
     this.open();
+  },
+
+  /**
+   * Toggle the current state of the list between open and closed.
+   * This method is slated to be removed in a future v4.10.0 or v5.0.0.
+   * @deprecated as of v4.4.0.  Please use `toggle()` instead.
+   * @private
+   * @returns {void}
+   */
+  toggleList() {
+    return deprecateMethod(this.toggle, this.toggleList).apply(this);
   },
 
   /**
@@ -2727,12 +2730,15 @@ Dropdown.prototype = {
   },
 
   /**
-   * External Facing function to set value by code - Depricated set on select and trigger updated.
+   * Public API for setting the `<select>`'s value.
+   * This method is slated to be removed in a future v4.10.0 or v5.0.0.
    * @private
-   * @deprecated
+   * @deprecated as of v4.4.0. It's preferrable to set the input value and call `updated()` on the component API.
    * @param {string} code - The value to match and set on the value element.
    */
   setCode(code) {
+    warnAboutDeprecation(this.setCode, this.element.val);
+
     const self = this;
     const doSetting = function () {
       self.element.val(code);

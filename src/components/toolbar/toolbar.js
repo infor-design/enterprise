@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { deprecateMethod } from '../../utils/deprecated';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 import { xssUtils } from '../../utils/xss';
@@ -1297,12 +1298,12 @@ Toolbar.prototype = {
 
   /**
    * Detection for this toolbar to have a More Button
-   * @deprecated as of v4.4.0 due to unclear nomenclature.  Use `moreButtonIsDisabled()`
-   * @private
+   * This method is slated to be removed in a future v4.10.0 or v5.0.0.
+   * @deprecated as of v4.4.0. Please use `moreButtonIsDisabled()` instead.
    * @returns {boolean} whether or not the More Actions button is disabled.
    */
   hasNoMoreButton() {
-    return this.moreButtonIsDisabled();
+    return deprecateMethod(this.moreButtonIsDisabled, this.hasNoMoreButton).apply(this);
   },
 
   /**

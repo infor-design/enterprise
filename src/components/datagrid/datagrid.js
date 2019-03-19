@@ -5,6 +5,7 @@ import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../../utils/debounced-resize';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
@@ -223,10 +224,13 @@ Datagrid.prototype = {
   },
 
   /**
-   * @deprecated as of v4.16.x
+   * Reference to the pager API, if applicable.
+   * This method is slated to be removed in a future v4.22.0 or v5.0.0.
+   * @deprecated as of v4.16.0. Please use `pagerAPI` property instead.
    * @returns {Pager} IDS Pager component API.
    */
   get pager() {
+    warnAboutDeprecation('pagerAPI', 'pager');
     return this.pagerAPI;
   },
 
@@ -703,7 +707,6 @@ Datagrid.prototype = {
 
   /**
   * Send in a new data set to display in the datagrid. Use better named updateDataset
-  * @deprecated
   * @private
   * @param {object} dataset The array of objects to show in the grid.
   * Should match the column definitions.
@@ -793,7 +796,6 @@ Datagrid.prototype = {
 
   /**
   * Generate a unique id based on the page and grid count. Add a suffix.
-  * @deprecated
   * @private
   * @param {object} suffix Add this string to make the id more unique
   * @returns {string} The unique id.
@@ -4435,10 +4437,13 @@ Datagrid.prototype = {
 
   /**
    * Save the columns to local storage
-   * @deprecated Use saveUserSettings, will remove this in a few versions (4.10.0)
+   * This method is slated to be removed in a future v4.16.0 or v5.0.0.
+   * @deprecated as of v4.10.0. Please use `saveUserSettings()` instead.
    * @returns {void}
    */
   saveColumns() {
+    warnAboutDeprecation(this.saveUserSettings, this.saveColumns);
+
     if (!this.settings.saveColumns) {
       return;
     }
@@ -8814,13 +8819,14 @@ Datagrid.prototype = {
   },
 
   /**
-   * For an internal row node, get the dataset row index
-   * @private
-   * @deprecated Should use rowNodes for frozen columns.
+   * For an internal row node, get the dataset row index.
+   * This method is slated to be removed in a future v4.22.0 or v5.0.0.
+   * @deprecated as of v4.16.0. Please use `rowNodes()` for frozen columns.
    * @param {number} row The row node.
    * @returns {object} The row index in the dataset.
    */
   actualRowIndex(row) {
+    warnAboutDeprecation(this.rowNodes, this.actualRowIndex);
     return row.attr('aria-rowindex') - 1;
   },
 

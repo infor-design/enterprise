@@ -13,7 +13,12 @@ exports.config = {
   specs: specs,
   SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
-    browserName: 'chrome' || 'firefox'
+    browserName: 'chrome' || 'firefox',
+    loggingPrefs: {
+      driver: 'INFO',
+      server: 'INFO',
+      browser: 'SEVERE'
+    }
   },
   directConnect: true,
   baseUrl: 'http://localhost:4000',

@@ -8,6 +8,7 @@ const license = require('rollup-plugin-license');
 const commandLineArgs = require('yargs').argv;
 
 const bundleBanner = require('./scripts/generate-bundle-banner');
+const deprecationNotice = require('./scripts/rollup-plugins/deprecation-notice');
 
 const config = {
   input: 'src/index.js',
@@ -27,12 +28,15 @@ const config = {
   plugins: [
     resolve(),
     json(),
+    deprecationNotice({
+      process: commandLineArgs.verbose
+    }),
     babel({
       exclude: 'node_modules/**',
       plugins: ['external-helpers']
     }),
     license({
-      sourceMap: true,
+      sourcemap: true,
       banner: bundleBanner
     })
   ],

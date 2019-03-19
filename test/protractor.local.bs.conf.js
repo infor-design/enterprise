@@ -39,7 +39,12 @@ exports.config = {
     'browserstack.local': true,
     'browserstack.networkLogs' : true,
     build: browserstackBuildID,
-    name: `${theme} theme local tunnel e2e tests`
+    loggingPrefs: {
+      driver: 'INFO',
+      server: 'INFO',
+      browser: 'SEVERE'
+    },
+    name: `${theme} theme local tunnel e2e tests`,
   },
   multiCapabilities: [
     {

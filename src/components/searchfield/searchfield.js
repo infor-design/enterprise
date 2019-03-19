@@ -2,6 +2,7 @@ import Promise from 'promise-polyfill';
 
 import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { breakpoints } from '../../utils/breakpoints';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
@@ -979,10 +980,11 @@ SearchField.prototype = {
 
   /**
    * Detects whether or not the Searchfield has focus.
-   * @deprecated in v4.8.x
+   * @deprecated in v4.8.0.  Please use the `isFocused` property instead.
    * @returns {boolean} whether or not the Searchfield has focus.
    */
   hasFocus() {
+    warnAboutDeprecation('isFocused', 'hasFocus');
     return this.isFocused;
   },
 

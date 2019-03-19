@@ -23,10 +23,13 @@ module.exports = {
   },
   checkForErrors: async () => {
     await browser.manage().logs().get('browser').then((browserLog) => {
+      let errors = 0;
       for (let i = 0; i < browserLog.length; i++) {
-        console.log(browserLog[i].level.name, browserLog[i].message); //eslint-disable-line
+        const type = browserLog[i].level.name;
+        console.log(type, browserLog[i].message); //eslint-disable-line
+        errors++;
       }
-      expect(browserLog.length).toEqual(0);
+      expect(errors).toEqual(0);
     });
   },
   getSelectedText: async () => {

@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { Validation } from './validation';
 import { Validator, COMPONENT_NAME as VALIDATOR_COMPONENT_NAME } from './validator';
@@ -76,12 +77,14 @@ $.fn.getField = function (field) {
 };
 
 /**
- * Returns the errormessage data object for a Field
- * @deprecated as of v4.4.0
+ * Returns the errormessage data object for a Field.
+ * This method is slated to be removed in a future v4.10.0 or v5.0.0.
+ * @deprecated as of v4.4.0.  Please use `$.fn.getMessage()` instead.
  * @param {object} [settings] incoming settings
  * @returns {object} error message data
  */
 $.fn.getErrorMessage = function (settings) {
+  warnAboutDeprecation('$.fn.getMessage', '$.fn.getErrorMessage');
   settings = utils.extend({}, settings, ERROR_MESSAGE_DEFAULTS);
   return $(this).getMessage(settings);
 };
@@ -133,12 +136,14 @@ $.fn.addMessage = function (settings) {
 };
 
 /**
- * Add an error Message to a Field
- * @deprecated as of v4.4.0
+ * Add an error Message to a Field.
+ * This method is slated to be removed in a future v4.10.0 or v5.0.0.
+ * @deprecated as of v4.4.0.  Please use `$.fn.addMessage()` instead.
  * @param {object} [settings] incoming settings
  * @returns {jQuery[]} elements receiving errors
  */
 $.fn.addError = function (settings) {
+  warnAboutDeprecation('$.fn.addMessage', '$.fn.addError');
   let inline = true;
   if (typeof settings.inline === 'boolean' && settings.inline === false) {
     inline = false;
@@ -183,12 +188,14 @@ $.fn.removeMessage = function (settings) {
 };
 
 /**
- * Remove an error Message from a Field
- * @deprecated as of v4.4.0
+ * Remove an error Message from a Field.
+ * This method is slated to be removed in a future v4.10.0 or v5.0.0.
+ * @deprecated as of v4.4.0.  Please use `$.fn.removeMessage()` instead.
  * @param {object} [settings] incoming settings
  * @returns {jQuery[]} elements having errors removed
  */
 $.fn.removeError = function (settings) {
+  warnAboutDeprecation('$.fn.removeMessage', '$.fn.removeError');
   settings = utils.extend({}, settings, ERROR_MESSAGE_DEFAULTS);
   return this.each(function () {
     return $(this).removeMessage(settings);

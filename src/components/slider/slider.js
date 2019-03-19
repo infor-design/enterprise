@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import * as debug from '../../utils/debug';
+import { deprecateMethod } from '../../utils/deprecated';
 import { theme } from '../personalize/personalize';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
@@ -1123,15 +1124,13 @@ Slider.prototype = {
   },
 
   /**
-   * replaced with `setValue()`
-   * @private
-   * @deprecated in v4.2.0
+   * @deprecated in v4.2.0. Please use `setValue()` instead.
    * @param {number} lowVal the value for the lower slider handle.
    * @param {number} [highVal] the value for the upper slider handle, if applicable.
    * @returns {array} the newly set values
    */
   refresh(lowVal, highVal) {
-    return this.setValue(lowVal, highVal);
+    return deprecateMethod(this.setValue, this.refresh).apply(this, [lowVal, highVal]);
   },
 
   /**
