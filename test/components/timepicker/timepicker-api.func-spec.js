@@ -54,8 +54,8 @@ describe('TimePicker API', () => {
     timepickerObj.openTimePopup();
 
     setTimeout(() => {
-      expect(document.querySelector('.set-time').innerText).toEqual('Indstil tid');
-      expect(document.body.querySelectorAll('.time-parts select').length).toEqual(2);
+      expect(document.querySelector('#timepicker-popup:last-child .set-time').innerText).toEqual('Indstil tid');
+      expect(document.body.querySelectorAll('#timepicker-popup:last-child .time-parts select').length).toEqual(2);
       done();
     }, 400);
   });

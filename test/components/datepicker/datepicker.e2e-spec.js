@@ -92,9 +92,9 @@ describe('Datepicker example-index tests', () => {
       await element(by.css('#date-field-normal + .icon')).click();
 
       const containerEl = await element(by.className('no-frills'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-index')).toBeLessThan(0.2);
     });
   }
 });
