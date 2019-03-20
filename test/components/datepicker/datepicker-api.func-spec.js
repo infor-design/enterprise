@@ -27,6 +27,7 @@ describe('DatePicker API', () => {
     Locale.addCulture('ja-JP', Soho.Locale.cultures['ja-JP'], Soho.Locale.languages['ja']); //eslint-disable-line
     Locale.addCulture('sv-SE', Soho.Locale.cultures['sv-SE'], Soho.Locale.languages['sv']); //eslint-disable-line
     Locale.addCulture('en-GB', Soho.Locale.cultures['en-GB'], Soho.Locale.languages['en']); //eslint-disable-line
+    Locale.addCulture('da-DK', Soho.Locale.cultures['da-DK'], Soho.Locale.languages['da']); //eslint-disable-line
     Locale.set('en-US');
 
     datepickerAPI = new DatePicker(datepickerEl);
@@ -432,5 +433,21 @@ describe('DatePicker API', () => {
     datepickerAPI = new DatePicker(datepickerEl);
 
     expect($(datepickerEl).siblings('svg.icon').css('visibility')).toEqual('hidden');
+  });
+
+  it('Should be able to render a different locale', (done) => {
+    datepickerAPI.destroy();
+    datepickerAPI = new DatePicker(datepickerEl, { locale: 'da-DK' });
+    datepickerAPI.setValue(new Date(2019, 2, 15));
+    datepickerAPI.openCalendar();
+
+    setTimeout(() => {
+      datepickerAPI.calendarAPI.showMonth('2', '2019');
+
+      expect(document.body.querySelectorAll('.monthview-header span')[0].textContent).toEqual('marts ');
+      expect(document.body.querySelectorAll('.monthview-header span')[1].textContent).toEqual(' 2019');
+      expect(document.body.querySelectorAll('td:not(.alternate)').length).toEqual(30);
+      done();
+    }, 100);
   });
 });

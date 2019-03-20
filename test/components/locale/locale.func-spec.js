@@ -1152,6 +1152,57 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('10,000 %')).toEqual((10000));
   });
 
+  it('Should be able to not show the group size', () => {
+    Locale.set('en-US'); // 3, 0
+
+    expect(Locale.formatNumber(1234567.1234, { group: '' })).toEqual('1234567.123');
+    expect(Locale.formatNumber(12345678.1234, { group: '' })).toEqual('12345678.123');
+
+    Locale.set('nl-NL'); // 3, 3
+
+    expect(Locale.formatNumber(1234567.1234, { group: '' })).toEqual('1234567,123');
+    expect(Locale.formatNumber(12345678.1234, { group: '' })).toEqual('12345678,123');
+
+    Locale.set('hi-IN'); // 3, 2
+
+    expect(Locale.formatNumber(1234567.1234, { group: '' })).toEqual('1234567.123');
+    expect(Locale.formatNumber(12345678.1234, { group: '' })).toEqual('12345678.123');
+  });
+
+  it('Should be able to set the group size', () => {
+    Locale.set('en-US'); // 3, 0
+
+    expect(Locale.formatNumber(1234567.1234, { groupSizes: [3, 0] })).toEqual('1234,567.123');
+    expect(Locale.formatNumber(12345678.1234, { groupSizes: [3, 0] })).toEqual('12345,678.123');
+
+    Locale.set('nl-NL'); // 3, 3
+
+    expect(Locale.formatNumber(1234567.1234, { groupSizes: [3, 0] })).toEqual('1234.567,123');
+    expect(Locale.formatNumber(12345678.1234, { groupSizes: [3, 0] })).toEqual('12345.678,123');
+
+    Locale.set('hi-IN'); // 3, 2
+
+    expect(Locale.formatNumber(1234567.1234, { groupSizes: [3, 0] })).toEqual('1234,567.123');
+    expect(Locale.formatNumber(12345678.1234, { groupSizes: [3, 0] })).toEqual('12345,678.123');
+  });
+
+  it('Should be able to set zero group size', () => {
+    Locale.set('en-US'); // 3, 0
+
+    expect(Locale.formatNumber(1234567.1234, { groupSizes: [0, 0] })).toEqual('1234567.123');
+    expect(Locale.formatNumber(12345678.1234, { groupSizes: [0, 0] })).toEqual('12345678.123');
+
+    Locale.set('nl-NL'); // 3, 3
+
+    expect(Locale.formatNumber(1234567.1234, { groupSizes: [0, 0] })).toEqual('1234567,123');
+    expect(Locale.formatNumber(12345678.1234, { groupSizes: [0, 0] })).toEqual('12345678,123');
+
+    Locale.set('hi-IN'); // 3, 2
+
+    expect(Locale.formatNumber(1234567.1234, { groupSizes: [0, 0] })).toEqual('1234567.123');
+    expect(Locale.formatNumber(12345678.1234, { groupSizes: [0, 0] })).toEqual('12345678.123');
+  });
+
   it('Should convert arabic numbers', () => {
     expect(Locale.convertNumberToEnglish('١٢٣٤٥٦٧٨٩٠')).toEqual(1234567890);
     expect(Locale.convertNumberToEnglish('١٢٣')).toEqual(123);
@@ -1186,5 +1237,97 @@ describe('Locale API', () => {
     expect(Locale.convertNumberToEnglish('二〇一九')).toEqual(2019);
     expect(Locale.convertNumberToEnglish('一二三.四五')).toEqual(123.45);
     expect(Locale.convertNumberToEnglish('一,二三四,五六七,八九零')).toEqual(1234567890);
+  });
+
+  it('Should be able to format a number in a non current locale', (done) => {
+    Locale.set('en-US');
+    Locale.getLocale('nl-NL').done(() => {
+      expect(Locale.currentLocale.name).toEqual('en-US');
+
+      expect(Locale.formatNumber(123456789.1234, { locale: 'en-US' })).toEqual('123456,789.123');
+      expect(Locale.formatNumber(123456789.1234)).toEqual('123456,789.123');
+      expect(Locale.formatNumber(123456789.1234, { locale: 'nl-NL' })).toEqual('123,456,789.123');
+      expect(Locale.currentLocale.name).toEqual('en-US');
+    });
+
+    Locale.getLocale('hi-IN').done(() => {
+      expect(Locale.currentLocale.name).toEqual('en-US');
+
+      expect(Locale.formatNumber(123456789.1234, { locale: 'en-US' })).toEqual('123456,789.123');
+      expect(Locale.formatNumber(123456789.1234)).toEqual('123456,789.123');
+      expect(Locale.formatNumber(123456789.1234, { locale: 'hi-IN' })).toEqual('12,34,56,789.123');
+      expect(Locale.currentLocale.name).toEqual('en-US');
+      done();
+    });
+  });
+
+  it('Should be able to parse a number in a a non current locale', (done) => {
+    Locale.set('en-US');
+
+    Locale.getLocale('nl-NL').done(() => {
+      expect(Locale.parseNumber('-253,00 %', { locale: 'nl-NL' })).toEqual(-253);
+      expect(Locale.parseNumber('1.123', { locale: 'nl-NL' })).toEqual(1123);
+      expect(Locale.parseNumber('$123456.789,12', { locale: 'nl-NL' })).toEqual((123456789.12));
+      expect(Locale.parseNumber('€123456.789,12', { locale: 'nl-NL' })).toEqual((123456789.12));
+      expect(Locale.parseNumber('10.000 %', { locale: 'nl-NL' })).toEqual((10000));
+    });
+    Locale.getLocale('hi-IN').done(() => {
+      expect(Locale.parseNumber('-253.00 %', { locale: 'hi-IN' })).toEqual(-253);
+      expect(Locale.parseNumber('1.123', { locale: 'hi-IN' })).toEqual(1.123);
+      expect(Locale.parseNumber('₹12,34,56,789.12', { locale: 'hi-IN' })).toEqual((123456789.12));
+      expect(Locale.parseNumber('10,000 %', { locale: 'hi-IN' })).toEqual((10000));
+      done();
+    });
+  });
+
+  it('Should be able to format a date in a a non current locale', (done) => {
+    Locale.set('en-US');
+
+    Locale.getLocale('nl-NL').done(() => {
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'short', locale: 'nl-NL' })).toEqual('08-06-2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'medium', locale: 'nl-NL' })).toEqual('8 jun 2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'long', locale: 'nl-NL' })).toEqual('8 juni 2019');
+      expect(Locale.currentLocale.name).toEqual('en-US');
+    });
+    Locale.getLocale('hi-IN').done(() => {
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'short', locale: 'hi-IN' })).toEqual('08-06-2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'medium', locale: 'hi-IN' })).toEqual('08-06-2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'long', locale: 'hi-IN' })).toEqual('8 जून 2019');
+      done();
+    });
+  });
+
+  it('Should be able to parse a date in a non current locale', (done) => {
+    Locale.set('en-US');
+    Locale.getLocale('es-ES').done(() => {
+      expect(Locale.currentLocale.name).toEqual('en-US');
+      expect(Locale.parseDate('2019-01-01', 'yyyy-MM-dd').getTime()).toEqual(new Date(2019, 0, 1, 0, 0, 0).getTime());
+      expect(Locale.parseDate('2019-01-01', { dateFormat: 'yyyy-MM-dd', locale: 'es-ES' }).getTime()).toEqual(new Date(2019, 0, 1, 0, 0, 0).getTime());
+      expect(Locale.parseDate('20/10/2019 20:12', { date: 'datetime', locale: 'es-ES' }).getTime()).toEqual(new Date(2019, 9, 20, 20, 12, 0).getTime());
+      expect(Locale.parseDate('Noviembre de 2019', { date: 'year', locale: 'es-ES' }).getTime()).toEqual(new Date(2019, 10, 1, 0, 0, 0).getTime());
+      done();
+    });
+  });
+
+  it('Should translations as undefined if not found', () => {
+    Locale.set('en-US');
+
+    expect(Locale.translate('XYZ', true)).toEqual(undefined);
+    expect(Locale.translate('XYZ', false)).toEqual('[XYZ]');
+    expect(Locale.translate('XYZ', { showAsUndefined: true })).toEqual(undefined);
+    expect(Locale.translate('XYZ', { showAsUndefined: false })).toEqual('[XYZ]');
+  });
+
+  it('Should be able get translations in a non current locale', (done) => {
+    Locale.set('en-US');
+    Locale.getLocale('de-DE').done(() => {
+      expect(Locale.currentLocale.name).toEqual('en-US');
+      expect(Locale.currentLanguage.name).toEqual('en');
+      expect(Locale.translate('Required')).toEqual('Required');
+      expect(Locale.translate('Loading')).toEqual('Loading');
+      expect(Locale.translate('Required', { language: 'de' })).toEqual('Obligatorisch');
+      expect(Locale.translate('Loading', { language: 'de' })).toEqual('Laden...');
+      done();
+    });
   });
 });

@@ -71,7 +71,7 @@
     popupMenu.popupmenu();
     const popupMenuApi = popupMenu.data('popupmenu');
 
-    $('#popdown-destroy').click(() => {
+    $('#popdown-destroy').click(function() {
       contextMenu.off();
       contextMenuApi.destroy();
       contextMenu.parent().remove();

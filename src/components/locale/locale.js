@@ -160,6 +160,14 @@ const Locale = {  // eslint-disable-line
    * @returns {string} The actual locale to use.
    */
   correctLocale(locale) {
+    // Map incorrect java locale to correct locale
+    if (locale === 'in-ID') {
+      locale = 'id-ID';
+    }
+    if (locale.substr(0, 2) === 'iw') {
+      locale = 'he-IL';
+    }
+
     const lang = locale.split('-')[0];
     if (this.supportedLocales.indexOf(locale) === -1) {
       locale = this.defaultLocales.filter(a => a.lang === lang);
@@ -180,23 +188,23 @@ const Locale = {  // eslint-disable-line
    * @param {string} lang The locale to check.
    * @returns {string} The actual lang to use.
    */
-  correctLang(lang) {
-    let correctLang = this.defaultLocales.filter(a => a.lang === lang);
+  correctLanguage(lang) {
+    let correctLanguage = this.defaultLocales.filter(a => a.lang === lang);
 
-    if (correctLang && correctLang[0]) {
+    if (correctLanguage && correctLanguage[0]) {
       return lang;
     }
 
     // Map incorrect java locale to correct locale
     if (lang === 'in') {
-      correctLang = 'id';
+      correctLanguage = 'id';
     }
     if (lang === 'iw') {
-      correctLang = 'he';
+      correctLanguage = 'he';
     }
 
-    correctLang = this.defaultLocale.substr(0, 2);
-    return correctLang;
+    correctLanguage = this.defaultLocale.substr(0, 2);
+    return correctLanguage;
   },
 
   /**
@@ -211,6 +219,7 @@ const Locale = {  // eslint-disable-line
     const lang = locale.substr(0, 2);
 
     this.cultures[locale] = data;
+    this.cultures[locale].name = locale;
     this.languages[lang] = {
       name: lang,
       direction: data.direction || (langData ? langData.direction : ''),
@@ -218,7 +227,6 @@ const Locale = {  // eslint-disable-line
       messages: data.messages || (langData ? langData.messages : {})
     };
     if (!langData) {
-      delete this.cultures[locale].direction;
       delete this.cultures[locale].messages;
     }
   },
@@ -228,19 +236,20 @@ const Locale = {  // eslint-disable-line
    * @private
    * @param {string} locale The locale name to append.
    * @param {boolean} isCurrent If we should set this as the current locale
+   * @param {boolean} useLocale If we should resolve the promise base on locale
    * @returns {void}
    */
-  appendLocaleScript(locale, isCurrent) {
+  appendLocaleScript(locale, isCurrent, useLocale) {
     const script = document.createElement('script');
     script.src = `${this.getCulturesPath() + locale}.js`;
 
     script.onload = () => {
       if (isCurrent) {
         this.setCurrentLocale(locale, this.cultures[locale]);
+        this.dff.resolve(locale);
       }
-
-      if (isCurrent) {
-        this.dff.resolve(this.currentLocale.name);
+      if (useLocale) {
+        this.dff[locale].resolve(locale);
       }
     };
 
@@ -263,16 +272,6 @@ const Locale = {  // eslint-disable-line
   set(locale) {
     const self = this;
     this.dff = $.Deferred();
-
-    // Map incorrect java locale to correct locale
-    if (locale === 'in-ID') {
-      locale = 'id-ID';
-    }
-
-    if (locale.substr(0, 2) === 'iw') {
-      locale = 'he-IL';
-    }
-
     locale = this.correctLocale(locale);
 
     if (locale === '') {
@@ -304,6 +303,40 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
+   * Loads the locale without setting it.
+   * @param {string} locale The locale to fetch and set.
+   * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
+   */
+  getLocale(locale) {
+    const self = this;
+    this.dff[locale] = $.Deferred();
+    locale = this.correctLocale(locale);
+
+    if (locale === '') {
+      const dff = $.Deferred();
+      dff.resolve();
+      return dff.promise();
+    }
+
+    if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
+      this.appendLocaleScript('en-US', false, true);
+    }
+
+    if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
+      this.appendLocaleScript(locale, false, true);
+    }
+
+    if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
+      this.dff[locale].resolve(locale);
+    }
+    if (self.cultures[locale] && this.cultureInHead()) {
+      this.dff[locale].resolve(locale);
+    }
+
+    return this.dff[locale].promise();
+  },
+
+  /**
    * Sets the current language, this can be independent and different from the current locale.
    * @param {string} lang The two digit language code to use.
    * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
@@ -315,7 +348,7 @@ const Locale = {  // eslint-disable-line
     const currentLocale = this.currentLocale.name;
 
     // Map incorrect java locale to correct locale
-    lang = this.correctLang(lang);
+    lang = this.correctLanguage(lang);
 
     // Ensure the language / culture is loaded.
     if (!this.languages[lang]) {
@@ -355,15 +388,16 @@ const Locale = {  // eslint-disable-line
 
   /**
   * Formats a date object and returns it parsed back using the current locale or settings.
+  * The symbols for date formatting use the CLDR at https://bit.ly/2Jg0a6m
   * @param {date} value The date to show in the current locale.
-  * @param {object} attribs additional formatting settings.
+  * @param {object} options Additional date formatting settings.
   * @returns {string} the formatted date.
   */
-  formatDate(value, attribs) {
-    // We will use http://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
-    if (!attribs) {
-      attribs = { date: 'short' }; // can be date, time, datetime or pattern
+  formatDate(value, options) {
+    if (!options) {
+      options = { date: 'short' }; // can be date, time, datetime or pattern
     }
+    const localeData = this.useLocale(options);
 
     if (!value) {
       return undefined;
@@ -387,8 +421,8 @@ const Locale = {  // eslint-disable-line
 
     // Convert if a string..
     if (!(value instanceof Date) && typeof value === 'string') {
-      let tDate2 = Locale.parseDate(value, attribs);
-      if (isNaN(tDate2) && attribs.date === 'datetime' &&
+      let tDate2 = Locale.parseDate(value, options);
+      if (isNaN(tDate2) && options.date === 'datetime' &&
         value.substr(4, 1) === '-' &&
         value.substr(7, 1) === '-') {
         tDate2 = new Date(
@@ -412,17 +446,20 @@ const Locale = {  // eslint-disable-line
       return undefined;
     }
 
-    const data = this.currentLocale.data;
     let pattern;
     let ret = '';
-    const cal = (data.calendars ? data.calendars[0] : null);
+    const cal = (localeData.calendars ? localeData.calendars[0] : null);
 
-    if (attribs.pattern) {
-      pattern = attribs.pattern;
+    if (options.pattern) {
+      pattern = options.pattern;
     }
 
-    if (attribs.date) {
-      pattern = cal.dateFormat[attribs.date];
+    if (options.date) {
+      pattern = cal.dateFormat[options.date];
+    }
+
+    if (!pattern) {
+      pattern = cal.dateFormat.short;
     }
 
     let year = (value instanceof Array ? value[0] : value.getFullYear());
@@ -435,12 +472,12 @@ const Locale = {  // eslint-disable-line
     const millis = (value instanceof Array ? value[6] : value.getMilliseconds());
 
     if (cal && cal.conversions) {
-      if (attribs.fromGregorian) {
+      if (options.fromGregorian) {
         const islamicParts = cal.conversions.fromGregorian(value);
         day = islamicParts[2];
         month = islamicParts[1];
         year = islamicParts[0];
-      } else if (attribs.toGregorian) {
+      } else if (options.toGregorian) {
         const gregorianDate = cal.conversions.toGregorian(year, month, day);
         day = gregorianDate.getDate();
         month = gregorianDate.getMonth();
@@ -638,33 +675,39 @@ const Locale = {  // eslint-disable-line
   /**
    * Takes a formatted date string and parses back it into a date object
    * @param {string} dateString  The string to parse in the current format
-   * @param {string} dateFormat  The source format fx yyyy-MM-dd
+   * @param {string|object} options  The source format for example 'yyyy-MM-dd' or { dateFormat: 'yyyy-MM-dd', locale: 'nl-NL'}
    * @param {boolean} isStrict  If true missing date parts will be considered invalid. If false the current month/day.
    * @returns {date|array|undefined} A correct date object, if islamic calendar then an array is used or undefined if invalid.
    */
-  parseDate(dateString, dateFormat, isStrict) {
-    const thisLocaleCalendar = this.calendar();
-    const orgDatestring = dateString;
-
+  parseDate(dateString, options, isStrict) {
     if (!dateString) {
       return undefined;
     }
 
+    let dateFormat = options;
+    let locale = this.currentLocale.name;
+    const thisLocaleCalendar = this.calendar();
+    if (typeof options === 'object') {
+      locale = options.locale || locale;
+      dateFormat = options.dateFormat || this.calendar(locale).dateFormat[dateFormat.date];
+    }
+
+    if (typeof options === 'object' && options.pattern) {
+      dateFormat = options.dateFormat || options.pattern;
+    }
+
+    if (!dateFormat) {
+      dateFormat = this.calendar(locale).dateFormat.short;
+    }
+
+    const orgDatestring = dateString;
     if (dateString === '0000' || dateString === '000000' || dateString === '00000000') {
       // Means no date in some applications
       return undefined;
     }
 
-    if (!dateFormat) {
-      dateFormat = this.calendar().dateFormat.short;
-    }
-
     if (dateFormat.pattern) {
       dateFormat = dateFormat.pattern;
-    }
-
-    if (typeof dateFormat === 'object' && dateFormat.date) {
-      dateFormat = this.calendar().dateFormat[dateFormat.date];
     }
 
     let formatParts;
@@ -819,7 +862,7 @@ const Locale = {  // eslint-disable-line
           dateObj.month = value - 1;
           break;
         case 'MMM':
-          abrMonth = this.calendar().months.abbreviated;
+          abrMonth = this.calendar(locale).months.abbreviated;
 
           for (let len = 0; len < abrMonth.length; len++) {
             if (orgDatestring.indexOf(abrMonth[len]) > -1) {
@@ -829,7 +872,7 @@ const Locale = {  // eslint-disable-line
 
           break;
         case 'MMMM':
-          textMonths = this.calendar().months.wide;
+          textMonths = this.calendar(locale).months.wide;
 
           for (let k = 0; k < textMonths.length; k++) {
             if (orgDatestring.indexOf(textMonths[k]) > -1) {
@@ -1058,13 +1101,45 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
+   * Use the current locale data or the one passed in.
+   * @private
+   * @param  {object} options The options to parse.
+   * @returns {object} The locale data.
+   */
+  useLocale(options) {
+    let localeData = this.currentLocale.data;
+    if (options && options.locale && this.cultures[options.locale]) {
+      localeData = this.cultures[options.locale];
+    }
+    return localeData;
+  },
+
+  /**
+   * Use the current language data or the one passed in.
+   * @private
+   * @param  {object} options The options to parse.
+   * @returns {object} The language data.
+   */
+  useLanguage(options) {
+    let languageData = this.currentLanguage;
+    if (options && options.locale) {
+      const lang = options.locale.split('-')[0];
+      return this.languages[lang];
+    }
+    if (options && options.language && this.languages[options.language]) {
+      languageData = this.languages[options.language];
+    }
+    return languageData;
+  },
+
+  /**
   * Formats a decimal with thousands and padding in the current locale or settings.
   * @param {number} number The source number.
   * @param {object} options additional options (see Number Format Patterns)
   * @returns {string} the formatted number.
   */
   formatNumber(number, options) {
-    // Lookup , decimals, decimalSep, thousandsSep
+    const localeData = this.useLocale(options);
     let formattedNum;
     let curFormat;
     let percentFormat;
@@ -1082,10 +1157,9 @@ const Locale = {  // eslint-disable-line
     }
 
     if (options && options.style === 'currency') {
-      const sign = options && options.currencySign ? options.currencySign :
-        this.currentLocale.data.currencySign;
+      const sign = options && options.currencySign ? options.currencySign : localeData.currencySign;
       let format = options && options.currencyFormat ? options.currencyFormat :
-        this.currentLocale.data.currencyFormat;
+        localeData.currencyFormat;
 
       if (!format) {
         format = '¤#,##0.00'; // default to en-us
@@ -1094,9 +1168,9 @@ const Locale = {  // eslint-disable-line
     }
 
     if (options && options.style === 'percent') {
-      const percentSign = !this.currentLocale.data.numbers ? '%' : this.currentLocale.data.numbers.percentSign;
+      const percentSign = !localeData.numbers ? '%' : localeData.numbers.percentSign;
 
-      percentFormat = !this.currentLocale.data.numbers ? '### %' : this.currentLocale.data.numbers.percentFormat;
+      percentFormat = !localeData.numbers ? '### %' : localeData.numbers.percentFormat;
       percentFormat = percentFormat.replace('¤', percentSign);
     }
 
@@ -1113,13 +1187,22 @@ const Locale = {  // eslint-disable-line
     }
 
     const parts = this.truncateDecimals(number, minimumFractionDigits, maximumFractionDigits, options && options.round).split('.');
-    const expandedNum = this.expandNumber(parts[0], options);
+    let groupSizes = [3, 3]; // In case there is no data
+    if (localeData && localeData.numbers && localeData.numbers.groupSizes) {
+      groupSizes = localeData.numbers.groupSizes;
+    }
+    if (options && options.groupSizes) {
+      groupSizes = options.groupSizes;
+    }
+
+    const sep = options && options.group !== undefined ? options.group : this.numbers().group;
+    const expandedNum = this.expandNumber(parts[0], groupSizes, sep);
     parts[0] = expandedNum;
     formattedNum = parts.join(decimal);
 
     // Position the negative at the front - There is no CLDR info for this.
-    const minusSign = (this.currentLocale.data && this.currentLocale.data.numbers &&
-      this.currentLocale.data.numbers.minusSign) ? this.currentLocale.data.numbers.minusSign : '-';
+    const minusSign = (localeData && localeData.numbers &&
+      localeData.numbers.minusSign) ? localeData.numbers.minusSign : '-';
     const isNegative = (formattedNum.indexOf(minusSign) > -1);
     formattedNum = formattedNum.replace(minusSign, '');
 
@@ -1174,10 +1257,11 @@ const Locale = {  // eslint-disable-line
    * Expand the number to the groupsize.
    * @private
    * @param  {string} numberString The number to expand
-   * @param  {object} options The locale options
+   * @param  {array} groupSizes The groupSizes option.
+   * @param  {string} sep The thousands seperator option.
    * @returns {string} The expanded number.
    */
-  expandNumber(numberString, options) {
+  expandNumber(numberString, groupSizes, sep) {
     let len = numberString.length;
     let isNegative = false;
 
@@ -1190,8 +1274,11 @@ const Locale = {  // eslint-disable-line
     if (len <= 3) {
       return (isNegative ? '-' : '') + numberString;
     }
-    const groupSizes = this.currentLocale.data.numbers.groupSizes || [3, 3];
-    const sep = options && options.group !== undefined ? options.group : this.numbers().group;
+
+    if (groupSizes[0] === 0) {
+      return (isNegative ? '-' : '') + numberString;
+    }
+
     const firstGroup = numberString.substr(numberString.length - groupSizes[0]);
     const nthGroup = numberString.substr(0, numberString.length - groupSizes[0]);
     if (groupSizes[1] === 0) {
@@ -1248,10 +1335,12 @@ const Locale = {  // eslint-disable-line
   /**
    * Takes a formatted number string and returns back real number object.
    * @param {string} input  The source number (as a string).
+   * @param {object} options  Any special options to pass in such as the locale.
    * @returns {number} the number as an actual Number type.
    */
-  parseNumber(input) {
-    const numSettings = this.currentLocale.data.numbers;
+  parseNumber(input, options) {
+    const localeData = this.useLocale(options);
+    const numSettings = localeData.numbers;
     let numString;
 
     numString = input;
@@ -1267,7 +1356,7 @@ const Locale = {  // eslint-disable-line
     const group = numSettings ? numSettings.group : ',';
     const decimal = numSettings ? numSettings.decimal : '.';
     const percentSign = numSettings ? numSettings.percentSign : '%';
-    const currencySign = this.currentLocale.data.currencySign || '$';
+    const currencySign = localeData.currencySign || '$';
 
     numString = numString.replace(new RegExp(`\\${group}`, 'g'), '');
     numString = numString.replace(decimal, '.');
@@ -1282,16 +1371,25 @@ const Locale = {  // eslint-disable-line
   /**
    * Takes a translation key and returns the translation in the current locale.
    * @param {string} key  The key to search for on the string.
-   * @param {boolean} [showAsUndefined] Causes a translated phrase to be shown in square brackets
+   * @param {object} [options] A list of options, supported are a non default locale and showAsUndefined which causes a translated phrase to be shown in square brackets
    * instead of defaulting to the default locale's version of the string.
    * @returns {string|undefined} a translated string, or nothing, depending on configuration
    */
-  translate(key, showAsUndefined) {
-    if (this.currentLanguage.messages === undefined) {
+  translate(key, options) {
+    const languageData = this.useLanguage(options);
+    let showAsUndefined = false;
+    if (typeof options === 'boolean') {
+      showAsUndefined = options;
+    }
+    if (typeof options === 'object') {
+      showAsUndefined = options.showAsUndefined;
+    }
+
+    if (languageData.messages === undefined) {
       return showAsUndefined ? undefined : `[${key}]`;
     }
 
-    if (this.currentLanguage.messages[key] === undefined) {
+    if (languageData.messages[key] === undefined) {
       const enLang = 'en';
       // Substitue English Expression if missing
       if (!this.languages || !this.languages[enLang] || !this.languages[enLang].messages
@@ -1301,7 +1399,7 @@ const Locale = {  // eslint-disable-line
       return this.languages[enLang].messages[key].value;
     }
 
-    return this.currentLanguage.messages[key].value;
+    return languageData.messages[key].value;
   },
 
   /**
@@ -1318,30 +1416,36 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-   * Translate Day Period
-   * @private
-   * @param {string} period should be "am", "pm", "AM", "PM", or "i"
-   * @returns {string} the translated day period.
-   */
-  translateDayPeriod(period) {
-    if (/am|pm|AM|PM/i.test(period)) {
-      const periods = this.calendar().dayPeriods || ['AM', 'PM'];
-      return periods[/AM|am/i.test(period) ? 0 : 1];
-    }
-    return period;
-  },
-
-  /**
    * Shortcut function to get 'first' calendar
    * @private
+   * @param {string} locale The locale to use
+   * @param {string} name the name of the calendar (fx: "gregorian", "islamic-umalqura")
    * @returns {object} containing calendar data.
    */
-  calendar() {
-    if (this.currentLocale.data.calendars) {
-      return this.currentLocale.data.calendars[0];
+  calendar(locale, name) {
+    let calendars = [];
+    if (this.currentLocale.data.calendars && !locale) {
+      calendars = this.currentLocale.data.calendars;
     }
 
-    // Defaults to ISO 8601
+    if (locale && this.cultures[locale]) {
+      calendars = this.cultures[locale].calendars;
+    }
+
+    if (name && calendars) {
+      for (let i = 0; i < calendars.length; i++) {
+        const cal = calendars[i];
+        if (cal.name === name) {
+          return cal;
+        }
+      }
+    }
+
+    if (calendars[0]) {
+      return calendars[0];
+    }
+
+    // Defaults to en-US
     return {
       dateFormat: {
         separator: '/',
@@ -1358,26 +1462,6 @@ const Locale = {  // eslint-disable-line
       timeFormat: 'HH:mm:ss',
       dayPeriods: ['AM', 'PM']
     };
-  },
-
-  /**
-   * Access the calendar array
-   * @private
-   * @param {string} name the name of the calendar (fx: "gregorian", "islamic-umalqura")
-   * @returns {object} containing calendar data
-   */
-  getCalendar(name) {
-    if (this.currentLocale.data.calendars) {
-      for (let i = 0; i < this.currentLocale.data.calendars.length; i++) {
-        const calendar = this.currentLocale.data.calendars[i];
-        if (calendar.name === name) {
-          return calendar;
-        }
-      }
-    }
-
-    // Defaults to ISO 8601
-    return [{ dateFormat: 'yyyy-MM-dd', timeFormat: 'HH:mm:ss' }];
   },
 
   /**

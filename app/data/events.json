@@ -273,5 +273,16 @@
     "ends": "2019-02-14T18:00:00.000",
     "type": "dto",
     "isAllDay": "false"
+  },
+  {
+    "id": "28",
+    "subject": "Out of Office",
+    "comments": "Going to Aruba",
+    "status": "Approved",
+    "icon": "icon-pending",
+    "starts": "2019-03-28T00:00:00.000",
+    "ends": "2019-03-30T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
   }
 ]

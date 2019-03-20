@@ -92,9 +92,9 @@ describe('Datepicker example-index tests', () => {
       await element(by.css('#date-field-normal + .icon')).click();
 
       const containerEl = await element(by.className('no-frills'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-index')).toBeLessThan(0.2);
     });
   }
 });
@@ -743,7 +743,7 @@ describe('Datepicker 12hr Time Tests', () => {
 
 describe('Datepicker Umalqura EG Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/test-ar-eg-umalqura');
+    await utils.setPage('/components/datepicker/test-ar-eg-umalqura?locale=ar-SA');
   });
 
   it('Should render umalqura on ar-EG time', async () => {
@@ -757,7 +757,7 @@ describe('Datepicker Umalqura EG Tests', () => {
 
     const todayEl = await element(by.css('button.is-today'));
     await todayEl.click();
-    const result = await browser.executeScript('return Locale.getCalendar("islamic-umalqura").conversions.fromGregorian(new Date())');
+    const result = await browser.executeScript('return Locale.calendar("ar-SA", "islamic-umalqura").conversions.fromGregorian(new Date())');
 
     expect(`${result[0]}/${(result[1] + 1).toString().padStart(2, '0')}/${result[2].toString().padStart(2, '0')}`).toEqual(await datepickerEl.getAttribute('value'));
   });
