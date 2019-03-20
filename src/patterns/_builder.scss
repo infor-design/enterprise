@@ -84,10 +84,12 @@
     position: relative;
     top: 10px;
     vertical-align: top;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .panel-subhead {
-    display: block;
     margin-top: 3px;
   }
 
