@@ -56,7 +56,7 @@
 - `[Css/Sass]` Replaced font-size numerical declarations with their ids-identity token counterpart. ([#1640](https://github.com/infor-design/enterprise/issues/1640))
 - `[Demoapp]` Removed query parameter for changing fonts. ([#1747](https://github.com/infor-design/enterprise/issues/1747))
 - `[Build]` Added a process to notify developers that things are being deprecated or going away. Documented the current deprecations in this system and made [notes for developers](https://github.com/infor-design/enterprise/blob/master/docs/CODING-STANDARDS.md#deprecations). ([#1747](https://github.com/infor-design/enterprise/issues/1747))
-- `[Veracode]` Made additional fixes and mitagted in veracode. ([#1723](https://github.com/infor-design/enterprise/issues/1723))
+- `[Veracode]` Made additional fixes and mitigated in veracode. ([#1723](https://github.com/infor-design/enterprise/issues/1723))
 
 (30 Issues Solved this release, Backlog Enterprise 224, Backlog Ng 59, 785 Functional Tests, 793 e2e Test)
 
