@@ -58,7 +58,7 @@
       </div>
       <div class="expandable-footer">
         <button id="composite-form-expander" class="btn-tertiary expandable-expander">
-          <span>Show Summary</span>
+          <span>Hide Summary</span>
         </button>
       </div>
     </section>
@@ -133,3 +133,12 @@
   </section>
 
 </div>
+
+<script>
+  $('#composite-form-expander').on('click', function (e, args) {
+    var span = $(this).find('span');
+    var text = span.text();
+
+    span.text(text === 'Hide Summary' ? 'Show Summary' : 'Hide Summary');
+  });
+</script>

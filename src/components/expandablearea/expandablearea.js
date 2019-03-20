@@ -141,6 +141,8 @@ ExpandableArea.prototype = {
       this.close();
     }
 
+    this.resize();
+
     return this;
   },
 
@@ -338,6 +340,18 @@ ExpandableArea.prototype = {
         self.element.css('min-height', 'auto');
       }
     }, 300); // equal to transition time
+  },
+
+  /**
+  * Determines if the the body has resized and fires the applyIE11Fix.
+  * @private
+  * @returns {void}
+  */
+  resize() {
+    const self = this;
+    $('body').on('resize.expandablearea', () => {
+      self.applyIE11Fix();
+    });
   },
 
   /**
