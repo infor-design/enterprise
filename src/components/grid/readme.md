@@ -58,7 +58,7 @@ There are 7 breakpoint sizes you can target to tailor your layout to the specifi
 
 See [`sass/_config.scss`](src/core/_config.scss) and search for "breakpoint sizes".
 
-For guidance on how to use the breakpoints to tailor your layout for different device sizes, see the [Grid & Breakpoints guidelines](/guidelines/page-structure/grid)
+For guidance on how to use the breakpoints to tailor your layout for different device sizes, see the [Grid & Breakpoints guidelines](https://design.infor.com/guidelines/layout/grid)
 
 ## Accessibility
 
