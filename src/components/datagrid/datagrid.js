@@ -6221,13 +6221,13 @@ Datagrid.prototype = {
     const findInRows = (rowNodes) => {
       let found = false;
       rowNodes.toArray().forEach((row) => {
-        row.querySelectorAll('td').forEach((cell) => {
+        [].slice.call(row.querySelectorAll('td')).forEach((cell) => {
           const cellText = cell.innerText.toLowerCase();
           const isSearchExpandableRow = self.settings.searchExpandableRow ? true : !DOM.hasClass(this, 'datagrid-expandable-row');
 
           if (cellText.indexOf(term) > -1 && isSearchExpandableRow) {
             found = true;
-            cell.querySelectorAll('*').forEach((node) => {
+            [].slice.call(cell.querySelectorAll('*')).forEach((node) => {
               if (xssUtils.unescapeHTML(node.innerHTML) === node.textContent) {
                 const contents = node.textContent;
                 const exp = new RegExp(`(${stringUtils.escapeRegExp(term)})`, 'gi');
@@ -6854,7 +6854,7 @@ Datagrid.prototype = {
     }
 
     // Deselect activated row
-    const activated = this.bodyContainer[0].querySelectorAll('tr.is-rowactivated');
+    const activated = [].slice.call(this.bodyContainer[0].querySelectorAll('tr.is-rowactivated'));
     if (activated.length > 0) {
       activated.forEach((row) => {
         row.classList.remove('is-rowactivated');

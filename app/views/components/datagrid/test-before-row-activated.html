@@ -80,20 +80,20 @@
       var delay = 3000;
       toast('Begin: Before Row Activated', delay);
 
-      var response = new Promise((resolve, reject) => {
-        setTimeout(function() {
-          var shouldGoAhead = true;
-          if (shouldGoAhead) {
-            resolve();
-          } else {
-            reject();
-            message({ type: 'error', msg: 'Row Not Activated (row: '+ args.row +')' });
-          }
-          console.log('Complete: Before Row Activated');
-        }, delay);
-      });
+      var deferred = $.Deferred();
 
-      return response;
+      setTimeout(function() {
+        var shouldGoAhead = true;
+        if (shouldGoAhead) {
+          deferred.resolve();
+        } else {
+          deferred.reject();
+          message({ type: 'error', msg: 'Row Not Activated (row: '+ args.row +')' });
+        }
+        console.log('Complete: Before Row Activated');
+      }, delay);
+
+      return deferred.promise();
     });
 
   });
