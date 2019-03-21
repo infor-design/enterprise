@@ -242,9 +242,3 @@ html[dir='rtl'] {
     }
   }
 }
-
-@include respond-to(phone) {
-  .pager-pagesize {
-    display: none !important;
-  }
-}
