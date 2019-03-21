@@ -358,16 +358,15 @@ describe('Listview example-paging tests', () => {
 describe('Listview example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-index');
-    const listviewEl = await element(by.id('task-listview'));
+    const listviewEl = await element(by.css('#task-listview li'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
 
   it('Should do nothing on a disabled item', async () => {
-    const listviewDisabledEl = await element(by.css('.is-disabled'));
-    await listviewDisabledEl.click();
+    await await element(by.css('li.is-disabled')).click();
 
-    expect(await element(by.className('is-disabled')).getAttribute('disabled').isPresent()).toBeTruthy();
+    expect(await element(by.css('li.is-disabled')).getAttribute('disabled').isPresent()).toBeTruthy();
   });
 });
 
