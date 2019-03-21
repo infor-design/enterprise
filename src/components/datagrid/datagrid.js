@@ -4094,7 +4094,7 @@ Datagrid.prototype = {
     if (lastColumn && this.isInitialRender && !this.settings.spacerColumn) {
       const diff = this.elemWidth - this.totalWidths[container];
 
-      if (this.settings.stretchColumn === 'last') {
+      if (this.settings.stretchColumn === 'last' && !this.settings.sizeColumnsEqually) {
         if (diff > 0 && diff > colWidth && !this.widthPercent && !col.width) {
           colWidth = '';
           this.headerWidths[index] = {
@@ -4123,8 +4123,8 @@ Datagrid.prototype = {
         const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
           stretchColumn[0].width += diff2 - 2;
-          this.totalWidths[container] = '100%';
         }
+        this.totalWidths[container] = '100%';
       }
 
       if (this.widthPercent) {
@@ -4416,9 +4416,7 @@ Datagrid.prototype = {
       this.settings.columnGroups = columnGroups;
     }
 
-    this.clearHeaderCache();
-    this.renderRows();
-    this.renderHeader();
+    this.rerender();
     this.resetPager('updatecolumns');
 
     /**
@@ -5301,11 +5299,10 @@ Datagrid.prototype = {
   * Resize event handler.
   * @private
   */
-  handleResize() {
-    const self = this;
-    self.clearHeaderCache();
-    self.renderRows();
-    self.renderHeader();
+  rerender() {
+    this.clearHeaderCache();
+    this.renderRows();
+    this.renderHeader();
   },
 
   /**
@@ -5611,6 +5608,12 @@ Datagrid.prototype = {
         }, 0);
       }
     });
+
+    if (this.stretchColumn !== 'last') {
+      $(window).on('orientationchange.datagrid', () => {
+        this.rerender();
+      });
+    }
 
     /**
     * Fires after a row is double clicked.
@@ -8820,13 +8823,11 @@ Datagrid.prototype = {
 
   /**
    * For an internal row node, get the dataset row index.
-   * This method is slated to be removed in a future v4.22.0 or v5.0.0.
-   * @deprecated as of v4.16.0. Please use `rowNodes()` for frozen columns.
+   * @private
    * @param {number} row The row node.
    * @returns {object} The row index in the dataset.
    */
   actualRowIndex(row) {
-    warnAboutDeprecation(this.rowNodes, this.actualRowIndex);
     return row.attr('aria-rowindex') - 1;
   },
 
@@ -10066,6 +10067,7 @@ Datagrid.prototype = {
     $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
     this.bodyContainer.off().remove();
     $('body').off('resize.vtable resize.datagrid');
+    $(window).off('orientationchange.datagrid');
     return this;
   },
 

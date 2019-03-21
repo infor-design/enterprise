@@ -38,7 +38,7 @@ describe('Blockgrid Single Events', () => {
   it('Should trigger "selected" event', () => {
     const spyEvent = spyOnEvent('#blockgrid', 'selected');
     const firstBlock = $('.block').first();
-    blockgridObj.selectBlock(firstBlock);
+    blockgridObj.select(firstBlock);
 
     expect(spyEvent).toHaveBeenTriggered();
   });
@@ -104,7 +104,7 @@ describe('Blockgrid Mixed Selection Events', () => {
     const spyEvent = spyOnEvent('#blockgrid', 'activated');
     const firstBlock = $('.block').first();
 
-    blockgridObj.selectBlock(firstBlock);
+    blockgridObj.select(firstBlock);
     setTimeout(() => {
       expect(spyEvent).toHaveBeenTriggered();
       done();
@@ -114,8 +114,8 @@ describe('Blockgrid Mixed Selection Events', () => {
   it('Should trigger "deactivated" event', (done) => {
     const spyEvent = spyOnEvent('#blockgrid', 'deactivated');
     const firstBlock = $('.block').first();
-    blockgridObj.selectBlock(firstBlock);
-    blockgridObj.selectBlock(firstBlock);
+    blockgridObj.select(firstBlock);
+    blockgridObj.select(firstBlock);
 
     setTimeout(() => {
       expect(spyEvent).toHaveBeenTriggered();
