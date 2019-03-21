@@ -5611,7 +5611,6 @@ Datagrid.prototype = {
 
     if (this.stretchColumn !== 'last') {
       $(window).on('orientationchange.datagrid', () => {
-        console.log('oc');
         this.rerender();
       });
     }
