@@ -90,7 +90,7 @@ describe('Listview example-singleselect tests', () => {
 describe('Listview example-multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-multiselect');
-    const listviewEl = await element(by.id('multiselect-listview'));
+    const listviewEl = await element(by.css('#multiselect-listview li'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
