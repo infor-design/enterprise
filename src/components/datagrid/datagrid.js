@@ -9046,7 +9046,7 @@ Datagrid.prototype = {
     const self = this;
     if (e.type === 'keydown') {
       if (this.settings.actionableMode) {
-        const keyCode = (e.keyCode === 13) ? 40: e.keyCode;
+        const keyCode = (e.keyCode === 13) ? 40 : e.keyCode;
         setTimeout(() => {
           const evt = $.Event('keydown.datagrid');
           evt.keyCode = keyCode;
