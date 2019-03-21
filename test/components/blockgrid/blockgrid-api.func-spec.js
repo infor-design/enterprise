@@ -54,7 +54,7 @@ describe('Blockgrid API', () => {
 
   it('Should select block', (done) => {
     const firstBlock = $('.block').first();
-    blockgridObj.selectBlock(firstBlock);
+    blockgridObj.select(firstBlock);
 
     setTimeout(() => {
       expect(document.body.querySelector('.block').classList.contains('is-selected')).toBeTruthy();
