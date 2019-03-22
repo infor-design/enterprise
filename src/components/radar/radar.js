@@ -180,8 +180,13 @@ Radar.prototype = {
 
     const allAxes = data[0].data.map(d => getNameText(d)); // Map the names to the axes
     const total = allAxes.length; // The number of different axes
-    const radius = Math.min(dims.w / 2, dims.h / 2); // Radius of the outermost circle
+    let radius = Math.min(dims.w / 2, dims.h / 2); // Radius of the outermost circle
     const angleSlice = Math.PI * 2 / total; // The width in radians of each 'slice'
+
+    if (dims.w <= 328) {
+      const extra = 50; // Reduce the size of the radar
+      radius = Math.min((dims.w - extra) / 2, (dims.h - extra) / 2);
+    }
 
     // Create the Scale for the radius
     const rScale = d3.scaleLinear()
