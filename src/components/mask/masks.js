@@ -104,7 +104,7 @@ function convertToMask(strNumber) {
 // @returns {string} the incoming string formatted with a thousands separator.
 // http://stackoverflow.com/a/10899795/604296
 function addThousandsSeparator(n, thousands, locale, options) {
-  if (isNaN(n)) {
+  if (n === '' || isNaN(n)) {
     return n;
   }
   return Locale.toLocaleString(Number(n), locale, options);
@@ -143,6 +143,9 @@ function getRegexForPart(part, type) {
  */
 masks.numberMask = function sohoNumberMask(rawValue, options) {
   options = utils.mergeSettings(undefined, options, DEFAULT_NUMBER_MASK_OPTIONS);
+  if (!options.locale || !options.locale.length) {
+    options.locale = Locale.currentLocale.name;
+  }
 
   const PREFIX = options.prefix;
   const SUFFIX = options.suffix;
