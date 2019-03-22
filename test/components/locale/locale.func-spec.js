@@ -54,7 +54,7 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-fdescribe('Locale API', () => { //eslint-disable-line
+describe('Locale API', () => {
   const Locale = window.Soho.Locale;
 
   it('Should be possible to preset culturesPath', () => {
