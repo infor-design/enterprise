@@ -47,6 +47,8 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   &.has-go-button {
+
+    text-align: right;
     .searchfield {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
@@ -56,6 +58,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     .go-button {
       border-bottom-left-radius: 0;
       border-top-left-radius: 0;
+      position: relative;
     }
 
     > .icon {
