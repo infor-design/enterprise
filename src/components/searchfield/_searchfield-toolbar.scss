@@ -237,12 +237,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
-  &:not(.is-open) {
-    .icon.close {
-      display: none !important;
-    }
-  }
-
   &.has-focus {
     .searchfield {
       border-color: transparent;
@@ -690,6 +684,10 @@ html[dir='rtl'] {
   .toolbar-searchfield-wrapper {
     text-align: right;
 
+    &.has-go-button {
+      text-align: left;
+    }
+
     &.has-text {
       &:not(.is-open) {
         .searchfield {
@@ -768,7 +766,7 @@ html[dir='rtl'] {
 
     &.has-go-button {
       > .icon.close {
-        right: 35px;
+        right: 44px;
       }
     }
   }
