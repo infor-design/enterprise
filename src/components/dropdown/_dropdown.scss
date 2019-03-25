@@ -255,7 +255,7 @@ div.multiselect {
     cursor: pointer;
     position: relative;
 
-    i {
+    .dropdown-highlight {
       color: $dropdown-color-initial-icon;
       font-style: normal;
       text-decoration: none;
@@ -380,7 +380,7 @@ div.multiselect {
   // Added to the dropdown list when doing a search
   &.search-mode {
     li {
-      i {
+      .dropdown-highlight {
         color: $font-color-extrahighcontrast;
         font-weight: $theme-number-font-weight-bold;
         letter-spacing: -0.2;
@@ -393,7 +393,7 @@ div.multiselect {
       }
 
       &.is-focused {
-        i {
+        .dropdown-highlight {
           color: $inverse-color;
         }
       }
@@ -459,7 +459,7 @@ div.multiselect {
 
     &.search-mode {
       a {
-        i {
+        .dropdown-highlight {
           color: $font-color-highcontrast;
         }
       }
@@ -497,16 +497,12 @@ div.multiselect {
     z-index: 1;
 
     .icon {
-      @include css3(transform, rotate(180deg));
-
       background-color: rgba($theme-color-palette-white, 0);
       color: $trigger-icon-fill-color;
-      left: 1px;
-      top: 6px;
+      left: -2px;
+      top: 8px;
 
       &.search {
-        @include css3(transform, rotate(0deg));
-
         height: 18px;
         margin-top: 7px;
         width: 16px;

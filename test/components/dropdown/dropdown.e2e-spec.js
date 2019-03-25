@@ -61,7 +61,8 @@ describe('Dropdown example-index tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on click, and open with no WCAG 2AA violations', async () => {
+    fit('Should be accessible on click, and open with no WCAG 2AA violations', async () => { //eslint-disable-line
+      debugger;
       await clickOnDropdown();
       const res = await axePageObjects(browser.params.theme);
 

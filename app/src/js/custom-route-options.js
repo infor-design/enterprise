@@ -26,7 +26,7 @@ module.exports = function customRouteOptions(req, res) {
 
   // Application Menu
   if (url.match(/components\/applicationmenu/)) {
-    if (url.indexOf('/list') === -1) {
+    if (url.indexOf('/list') === -1 && url !== '/components/applicationmenu') {
       customOpts.headerHamburger = true;
     }
   }

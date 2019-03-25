@@ -73,7 +73,8 @@ describe('Multiselect example-states tests', () => {
   }
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations', async () => {
+    fit('Should be accessible on init with no WCAG 2AA violations', async () => { //eslint-disable-line
+      debugger;
       await clickOnMultiselect();
       const res = await axePageObjects(browser.params.theme);
 

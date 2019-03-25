@@ -183,6 +183,11 @@ Dropdown.prototype = {
 
     // Build sub-elements if they don't exist
     this.label = $(`label[for="${xssUtils.stripTags(orgId)}"]`);
+    this.labelId = this.label.attr('id');
+    if (!this.labelId) {
+      this.labelId = utils.uniqueId(this.element, 'lbl');
+      this.label.attr('id', this.labelId);
+    }
 
     if (!this.pseudoElem.length) {
       this.pseudoElem = $(`<div class="${pseudoClassString}">`);
@@ -200,12 +205,9 @@ Dropdown.prototype = {
     this.pseudoElem
       .attr(attributesToCopy.obj)
       .attr({
-        role: 'combobox',
-        'aria-autocomplete': 'list',
-        'aria-controls': 'dropdown-list',
-        'aria-readonly': 'true',
-        'aria-expanded': 'false',
-        'aria-label': this.label.text()
+        role: 'button',
+        'aria-haspopup': 'listbox',
+        'aria-labelledby': this.labelId
       });
 
     // Pass disabled/readonly from the original element, if applicable
@@ -622,17 +624,11 @@ Dropdown.prototype = {
     }
 
     if (!listExists) {
-      listContents = `<div class="dropdown-list${reverseText
-      }${isMobile ? ' mobile' : ''
-      }${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" role="application" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>` +
-        `<label for="dropdown-search" class="audible">${Locale.translate('Search')}</label>` +
-        `<input type="text" class="dropdown-search${reverseText
-        }" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">` +
-        `<span class="trigger">${
-          isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')
-        }<span class="audible">${isMobile ? Locale.translate('Close') : Locale.translate('Collapse')}</span>` +
-        '</span>' +
-        '<ul role="listbox">';
+      listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" role="application" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
+        <label for="dropdown-search" class="audible">${Locale.translate('Search')}</label>
+        <input type="text" class="dropdown-search${reverseText}" id="dropdown-search">
+        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}<span class="audible">${isMobile ? Locale.translate('Close') : Locale.translate('Collapse')}</span></span>
+        <ul role="listbox" aria-labelledby="${this.labelId}">`;
     }
 
     // Get a current list of <option> elements
@@ -704,7 +700,7 @@ Dropdown.prototype = {
         text = text.replace(exp, '<i>$1</i>').trim();
       }
 
-      liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" data-val="${trueValue}" ${copiedDataAttrs}${tabIndex}${hasTitle} role="presentation">
+      liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" ${isSelected ? 'aria-selected="true"' : ''} data-val="${trueValue}" ${copiedDataAttrs}${tabIndex}${hasTitle} role="option">
         <a id="list-option-${index}" href="#" ${aCssClasses} role="option">${iconHtml}${text}${badgeHtml}</a></li>`;
 
       return liMarkup;
@@ -1024,7 +1020,7 @@ Dropdown.prototype = {
 
       // Highlight Term
       const exp = self.getSearchRegex(term);
-      const text = li.text().replace(exp, '<i>$1</i>').trim();
+      const text = li.text().replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
       const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
 
       if (icon) {
@@ -1299,7 +1295,7 @@ Dropdown.prototype = {
       if (self.searchInput && self.searchInput.length) {
         self.searchInput.val($.actualChar(e));
       }
-      self.toggleList();
+      self.toggle();
     }
 
     this.searchKeyMode = true;
@@ -1945,6 +1941,11 @@ Dropdown.prototype = {
     if (this.settings.multiple && target[0].classList.contains('dropdown-select-all-list-item')) {
       const doSelectAll = !(target[0].classList.contains('is-selected'));
       target[0].classList[doSelectAll ? 'add' : 'remove']('is-selected');
+      if (doSelectAll) {
+        target[0].setAttribute('aria-selected', 'true');
+      } else {
+        target[0].removeAttribute('aria-selected');
+      }
       this.selectAll(doSelectAll);
       return true;  //eslint-disable-line
     }
@@ -1984,9 +1985,9 @@ Dropdown.prototype = {
       const selectedOpts = opts.filter(':selected');
 
       if (opts.length > selectedOpts.length) {
-        this.list.find('.dropdown-select-all-list-item').removeClass('is-selected');
+        this.list.find('.dropdown-select-all-list-item').removeClass('is-selected').removeAttr('aria-selected');
       } else {
-        this.list.find('.dropdown-select-all-list-item').addClass('is-selected');
+        this.list.find('.dropdown-select-all-list-item').addClass('is-selected').attr('aria-selected', 'true');
       }
     }
 
@@ -2052,7 +2053,7 @@ Dropdown.prototype = {
 
     this.pseudoElem
       .removeClass('is-open')
-      .attr('aria-expanded', 'false');
+      .removeAttr('aria-expanded');
 
     this.searchInput
       .removeAttr('aria-activedescendant');
@@ -2359,7 +2360,7 @@ Dropdown.prototype = {
       }
       if ($.inArray(optionVal, val) !== -1) {
         val = $.grep(val, optionValue => optionValue !== optionVal);
-        li.removeClass('is-selected');
+        li.removeClass('is-selected').removeAttr('aria-selected');
         this.previousActiveDescendant = undefined;
         isAdded = false;
       } else {
@@ -2370,7 +2371,7 @@ Dropdown.prototype = {
 
         val = typeof val === 'string' ? [val] : val;
         val.push(optionVal);
-        li.addClass('is-selected');
+        li.addClass('is-selected').attr('aria-selected', 'true');
         this.previousActiveDescendant = option.val();
       }
 
@@ -2381,9 +2382,9 @@ Dropdown.prototype = {
     } else {
       // Working with a single select
       val = optionVal;
-      this.listUl.find('li.is-selected').removeClass('is-selected');
+      this.listUl.find('li.is-selected').removeClass('is-selected').removeAttr('aria-selected');
       if (!clearSelection) {
-        li.addClass('is-selected');
+        li.addClass('is-selected').attr('aria-selected', 'true');
       }
       this.previousActiveDescendant = option.val();
       text = option.text();
@@ -2843,7 +2844,7 @@ Dropdown.prototype = {
     if (this.pseudoElem && this.pseudoElem.hasClass('is-open')) {
       this.pseudoElem
         .removeClass('is-open')
-        .attr('aria-expanded', 'false');
+        .removeAttr('aria-expanded');
     }
 
     // Update the 'multiple' property
@@ -2913,11 +2914,11 @@ Dropdown.prototype = {
         if (e.button === 2) {
           return;
         }
-        self.toggleList();
+        self.toggle();
       })
       .on('touchend.dropdown touchcancel.dropdown', (e) => {
         e.stopPropagation();
-        self.toggleList();
+        self.toggle();
         e.preventDefault();
       });
 
@@ -2927,7 +2928,7 @@ Dropdown.prototype = {
       e.stopPropagation();
       self.updated();
     }).on('openlist.dropdown', () => {
-      self.toggleList();
+      self.toggle();
     });
 
     // for form resets.
