@@ -81,13 +81,15 @@
     color: $theme-color-palette-white;
     display: inline-block;
     margin-bottom: 0;
+    max-width: 100%;
+    overflow: hidden;
     position: relative;
+    text-overflow: ellipsis;
     top: 10px;
     vertical-align: top;
   }
 
   .panel-subhead {
-    display: block;
     margin-top: 3px;
   }
 
