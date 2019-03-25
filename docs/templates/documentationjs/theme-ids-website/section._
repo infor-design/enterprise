@@ -41,44 +41,46 @@
   <% if (section.since) { %><div>Since: <%- section.since %></div><% }%>
 
   <% if (section.params.length) { %>
-    <table class="jsdoc-parameters">
-      <caption class="jsdoc-section--heading">Parameters</caption>
-      <colgroup>
-        <col width='30%' />
-        <col width='20%' />
-        <col width='50%' />
-      </colgroup>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% section.params.forEach(function(param) { %>
+    <div class="table-container">
+      <table class="jsdoc-parameters">
+        <caption class="jsdoc-section--heading">Parameters</caption>
+        <colgroup>
+          <col width='30%' />
+          <col width='20%' />
+          <col width='50%' />
+        </colgroup>
+        <thead>
           <tr>
-            <td class="jsdoc-prop--name">
-              <%- param.name %>
-            </td>
-            <td>
-              <code><%= formatType(param.type) %><% if (param.default) { %>= <%- param.default %><% } %></code>
-            </td>
-            <td class="jsdoc-prop--desc">
-              <%= md(param.description, true) %>
-            </td>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
           </tr>
-          <% if (param.properties && param.properties.length) { %>
-            <% param.properties.forEach(function(property) { %>
-              <%= renderParamProperty({
-                property: property,
-                renderParamProperty: renderParamProperty
-              }) %>
-            <% }) %>
-          <% } %>
-        <% }) %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% section.params.forEach(function(param) { %>
+            <tr>
+              <td class="jsdoc-prop--name">
+                <%- param.name %>
+              </td>
+              <td>
+                <code><%= formatType(param.type) %><% if (param.default) { %>= <%- param.default %><% } %></code>
+              </td>
+              <td class="jsdoc-prop--desc">
+                <%= md(param.description, true) %>
+              </td>
+            </tr>
+            <% if (param.properties && param.properties.length) { %>
+              <% param.properties.forEach(function(property) { %>
+                <%= renderParamProperty({
+                  property: property,
+                  renderParamProperty: renderParamProperty
+                }) %>
+              <% }) %>
+            <% } %>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
   <% } %>
 
   <% if (section.properties.length) { %>
