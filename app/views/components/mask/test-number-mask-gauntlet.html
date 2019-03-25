@@ -186,7 +186,8 @@
       }
     };
 
-    var localeString = Locale.currentLocale.name,
+    var thisLocale = Locale.currentLocale,
+      localeString = thisLocale.name,
       isLocalized = localeString !== 'en-US'; // default for the test suite
 
 
@@ -203,13 +204,18 @@
 
       // localize the label
       if (isLocalized) {
-        var number = Locale.parseNumber(numberSpan.text().toString()),
+        var spanText = numberSpan.text();
+        var hasThousands = spanText.indexOf(thisLocale.data.numbers.group) !== -1;
+        var number = Locale.parseNumber(spanText.toString()),
           localizedLabelOpts = {
             group: thisOpts.patternOptions.symbols.thousands,
             decimal: thisOpts.patternOptions.symbols.decimal,
             minusSign: thisOpts.patternOptions.symbols.negative,
             minimumFractionDigits: 0
           };
+        if (!hasThousands) {
+          localizedLabelOpts.groupSizes = [0, 0];
+        }
         if (thisOpts.patternOptions.decimalLimit) {
           localizedLabelOpts.maximumFractionDigits = thisOpts.patternOptions.decimalLimit;
         }
