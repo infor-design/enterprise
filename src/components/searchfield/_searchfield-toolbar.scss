@@ -766,6 +766,7 @@ html[dir='rtl'] {
 
     &.has-go-button {
       > .icon.close {
+        color: $searchfield-header-icon-color;
         right: 44px;
       }
     }
