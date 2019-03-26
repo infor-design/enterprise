@@ -364,10 +364,9 @@ describe('Listview example-index tests', () => {
   });
 
   it('Should do nothing on a disabled item', async () => {
-    const listviewDisabledEl = await element(by.css('.is-disabled'));
-    await listviewDisabledEl.click();
+    await await element(by.css('li.is-disabled')).click();
 
-    expect(await element(by.className('is-disabled')).getAttribute('disabled').isPresent()).toBeTruthy();
+    expect(await element(by.css('li.is-disabled')).getAttribute('disabled').isPresent()).toBeTruthy();
   });
 });
 
