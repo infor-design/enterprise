@@ -14,6 +14,8 @@
 - `[Datagrid]` Added support for ellipsis to header text. ([#842](https://github.com/infor-design/enterprise/issues/842))
 - `[Datagrid]` Added support to cancel `rowactivated` event. Now it will trigger the new event `beforerowactivated` which will wait/sync to cancel or proceed to do `rowactivated` event. ([#1021](https://github.com/infor-design/enterprise/issues/1021))
 - `[Datagrid]` Added option to align grouped headers text. ([#1714](https://github.com/infor-design/enterprise/issues/1714))
+- `[Datagrid]` Tabbing through a new row moves focus to next line for a lookup column. ([#1822](https://github.com/infor-design/enterprise/issues/1822))
+- `[Datagrid]` Validation tooltip does not wrap words correctly across multiple lines. ([#1829](https://github.com/infor-design/enterprise/issues/1829))
 - `[Dropdown]` Added support to make dropdown readonly fields optionally not tab-able. ([#1591](https://github.com/infor-design/enterprise/issues/1591))
 - `[Form Compact]` Implemented design for field-heavy forms. This design is experimental, likely not production ready, and subject to change without notice. ([#1699](https://github.com/infor-design/enterprise/issues/1699))
 - `[Hierarchy]` Changed the newer stacked layout to support mutiple root elements. ([#1677](https://github.com/infor-design/enterprise/issues/1677))
