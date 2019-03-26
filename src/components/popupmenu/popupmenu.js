@@ -232,9 +232,6 @@ PopupMenu.prototype = {
       }
     });
 
-    // Enforce Correct Modality
-    this.menu.parent('.popupmenu-wrapper').attr('role', 'application').attr('aria-hidden', 'true');
-
     // Use "absolute" positioning on the menu insead of "fixed", only when the
     // menu lives <body> tag and we have a <body> element that is tall enough to
     // scroll and is allowed to scroll.

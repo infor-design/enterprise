@@ -626,7 +626,7 @@ Dropdown.prototype = {
     if (!listExists) {
       listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" role="application" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
         <label for="dropdown-search" class="audible">${Locale.translate('Search')}</label>
-        <input type="text" class="dropdown-search${reverseText}" id="dropdown-search">
+        <input type="text" class="dropdown-search${reverseText}" id="dropdown-search" role="presentation" aria-hidden="true">
         <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}<span class="audible">${isMobile ? Locale.translate('Close') : Locale.translate('Collapse')}</span></span>
         <ul role="listbox" aria-labelledby="${this.labelId}">`;
     }
