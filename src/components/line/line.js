@@ -272,7 +272,13 @@ Line.prototype = {
       maxes = dataset.map(function (d) { return getMaxes(d); });
     }
 
-    const entries = d3.max(dataset.map(function (d) { return d.data.length; })) - 1;
+    let entries;
+    if (d3.max(dataset.map(function (d) { return d.data.length; })) <= 1) {
+      entries = d3.max(dataset.map(function (d) { return d.data.length; }));
+    } else {
+      entries = d3.max(dataset.map(function (d) { return d.data.length; })) - 1;
+    }
+
     const xScale = x.domain(!!self.settings.xAxis && !!self.settings.xAxis.domain ?
       (self.settings.xAxis.domain) :
       ([0, self.settings.isBubble || self.settings.isScatterPlot ? d3.max(maxes.x) : entries]));
