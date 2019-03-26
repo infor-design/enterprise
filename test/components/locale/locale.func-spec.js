@@ -572,7 +572,7 @@ describe('Locale API', () => {
 
     Locale.set('ar-EG');
 
-    expect(Locale.formatNumber(12345.1)).toEqual('12٬345٫10');
+    expect(Locale.formatNumber(12345.1)).toEqual('12٬345.10');
     Locale.set('bg-BG');
 
     expect(Locale.formatNumber(12345.1)).toEqual('12 345,10');
