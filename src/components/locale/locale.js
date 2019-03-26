@@ -1111,6 +1111,9 @@ const Locale = {  // eslint-disable-line
     if (options && options.locale && this.cultures[options.locale]) {
       localeData = this.cultures[options.locale];
     }
+    if (!localeData.numbers) {
+      localeData.numbers = this.numbers();
+    }
     return localeData;
   },
 
@@ -1143,7 +1146,7 @@ const Locale = {  // eslint-disable-line
     let formattedNum;
     let curFormat;
     let percentFormat;
-    const decimal = options && options.decimal ? options.decimal : this.numbers().decimal;
+    const decimal = options && options.decimal ? options.decimal : localeData.numbers.decimal;
     let minimumFractionDigits = options && options.minimumFractionDigits !== undefined ? options.minimumFractionDigits : (options && options.style && options.style === 'currency' ? 2 : (options && options.style && options.style === 'percent') ? 0 : 2);
     let maximumFractionDigits = options && options.maximumFractionDigits !== undefined ? options.maximumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2 : (options && options.minimumFractionDigits ? options.minimumFractionDigits : 3));
 
@@ -1195,7 +1198,7 @@ const Locale = {  // eslint-disable-line
       groupSizes = options.groupSizes;
     }
 
-    const sep = options && options.group !== undefined ? options.group : this.numbers().group;
+    const sep = options && options.group !== undefined ? options.group : localeData.numbers.group;
     const expandedNum = this.expandNumber(parts[0], groupSizes, sep);
     parts[0] = expandedNum;
     formattedNum = parts.join(decimal);
