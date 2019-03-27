@@ -7,7 +7,6 @@
   z-index: 1;
 
   .notification-text {
-    color: $font-color;
     font-size: $theme-size-font-base;
     line-height: 40px;
     margin-left: 25px;
@@ -55,19 +54,23 @@
   }
 
   &.error {
-    background-color: rgba(244, 188, 188, 0.2);
+    background-color: $notification-color-error-initial-background;
+    color: $notification-color-error-initial-font;
   }
 
   &.alert {
-    background-color: rgba(251, 233, 191, 0.4);
+    background-color: $notification-color-alert-initial-background;
+    color: $notification-color-alert-initial-font;
   }
 
   &.success {
-    background-color: rgba(213, 246, 192, 0.4);
+    background-color: $notification-color-success-initial-background;
+    color: $notification-color-success-initial-font;
   }
 
   &.info {
-    background-color: rgba(203, 235, 244, 0.2);
+    background-color: $notification-color-info-initial-background;
+    color: $notification-color-info-initial-font;
   }
 }
 
