@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.18.0
+
+### v4.18.0 Future Deprecation
+
+### v4.18.0 Features
+
+### v4.18.0 Fixes
+
+- `[Tabs-Module]` Fixed an issue where the close icon was outside the searchfield. ([#1704](https://github.com/infor-design/enterprise/issues/1704))
+
+### v4.18.0 Chore & Maintenance
+
 ## v4.17.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
