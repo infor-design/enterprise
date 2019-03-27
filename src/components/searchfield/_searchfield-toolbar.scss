@@ -47,8 +47,6 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   &.has-go-button {
-    text-align: right;
-
     .searchfield {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
@@ -58,7 +56,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     .go-button {
       border-bottom-left-radius: 0;
       border-top-left-radius: 0;
-      position: relative;
     }
 
     > .icon {
@@ -312,6 +309,8 @@ $toolbarsearchfield-category-empty-width: 51px;
       .go-button {
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
+        position: relative;
+        right: 0;
       }
     }
 
@@ -323,10 +322,8 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   &.has-go-button {
-    &.has-text {
-      .searchfield {
-        width: 100%;
-      }
+    .searchfield {
+      width: auto !important;
     }
   }
 
@@ -581,6 +578,14 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 }
 
+.header {
+  .toolbar {
+    .toolbar-searchfield-wrapper {
+      text-align: right;
+    }
+  }
+}
+
 // For non-collapsible searchfields:  Only be non-collapsible on larger breakpoints.
 @media (min-width: $breakpoint-phone-to-tablet) {
   .toolbar-searchfield-wrapper.non-collapsible {
@@ -684,10 +689,6 @@ html[dir='rtl'] {
   .toolbar-searchfield-wrapper {
     text-align: right;
 
-    &.has-go-button {
-      text-align: left;
-    }
-
     &.has-text {
       &:not(.is-open) {
         .searchfield {
@@ -765,17 +766,39 @@ html[dir='rtl'] {
     }
 
     &.has-go-button {
+      .searchfield {
+        // width: auto;
+      }
+
       > .icon.close {
         color: $searchfield-header-icon-color;
-        right: 44px;
+        right: 45px;
       }
     }
   }
 
   html[dir='rtl'] {
     .toolbar-searchfield-wrapper.has-go-button > .icon.close {
-      left: 35px;
+      left: 45px;
       right: auto;
+    }
+  }
+}
+
+@include respond-to(phonedown) {
+  .toolbar-searchfield-wrapper {
+    &.has-categories {
+      &.show-category {
+        .btn {
+          padding-right: 5px;
+        }
+      }
+
+      &.has-go-button {
+        .go-button {
+          right: 17px;
+        }
+      }
     }
   }
 }
