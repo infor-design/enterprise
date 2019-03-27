@@ -1,5 +1,28 @@
 # What's New with Enterprise
 
+## v4.18.0
+
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+
+### v4.18.0 Future Deprecation
+
+- `[Component]` Brief description of the deprecation notice. ([#nnn](https://github.com/infor-design/enterprise/issues/nnn))
+
+### v4.18.0 Features
+
+- `[Component]` Brief description of the cool new feature. ([#nnn](https://github.com/infor-design/enterprise/issues/nnn))
+
+### v4.18.0 Fixes
+
+- `[Component]` Brief description of the Fix. ([#nnn](https://github.com/infor-design/enterprise/issues/nnn))
+
+### v4.18.0 Chore & Maintenance
+
+- `[Component]` Brief description of the Chore & Maintenance. ([#nnn](https://github.com/infor-design/enterprise/issues/nnn))
+
+(nn Issues Solved this release, Backlog Enterprise nn, Backlog Ng nn, nn Functional Tests, nn e2e Test)
+
 ## v4.17.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
