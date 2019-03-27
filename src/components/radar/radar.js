@@ -184,7 +184,7 @@ Radar.prototype = {
     const angleSlice = Math.PI * 2 / total; // The width in radians of each 'slice'
 
     if (dims.w <= 328) {
-      const extra = 50; // Reduce the size of the radar
+      const extra = dims.w < 225 ? 75 : 50; // Reduce the size of the radar
       radius = Math.min((dims.w - extra) / 2, (dims.h - extra) / 2);
     }
 
