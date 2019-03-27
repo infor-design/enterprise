@@ -351,6 +351,7 @@
 
   .toolbar-searchfield-wrapper {
     color: $module-tabs-active-text-color;
+    text-align: right;
 
     .icon:not(.error) {
       color: $module-tabs-inactive-text-color;
@@ -361,6 +362,7 @@
       border-bottom-color: rgba($searchfield-moduletabs-border-color, 0);
       border-top-color: rgba($searchfield-moduletabs-bg-color, 0);
       color: $module-tabs-inactive-text-color;
+      width: auto !important;
 
       &::-webkit-input-placeholder { // Chrome/Opera/Safari */
         color: $module-tabs-inactive-text-color;
@@ -431,7 +433,6 @@
 
       .icon:not(.error) {
         color: $module-tabs-active-text-color;
-        right: 44px;
       }
     }
 

@@ -766,13 +766,13 @@ html[dir='rtl'] {
     }
 
     &.has-go-button {
-      .searchfield {
-        // width: auto;
-      }
+      width: auto !important;
 
-      > .icon.close {
-        color: $searchfield-header-icon-color;
-        right: 45px;
+      > .icon {
+        &.close {
+          color: $searchfield-header-icon-color;
+          right: 45px;
+        }
       }
     }
   }
@@ -795,6 +795,17 @@ html[dir='rtl'] {
       }
 
       &.has-go-button {
+        > .icon {
+          &.close {
+            right: 60px;
+          }
+        }
+
+        .searchfield {
+          padding-right: 40px;
+          width: auto !important;
+        }
+
         .go-button {
           right: 17px;
         }
