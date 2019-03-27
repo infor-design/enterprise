@@ -717,7 +717,8 @@ html[dir='rtl'] {
 
       &.show-category {
         .searchfield {
-          padding-right: 10px;
+          padding-left: 22px;
+          padding-right: 5px;
         }
       }
     }
@@ -808,6 +809,22 @@ html[dir='rtl'] {
 
         .go-button {
           right: 17px;
+        }
+      }
+    }
+  }
+
+  html[dir='rtl'] {
+    .toolbar-searchfield-wrapper {
+      &.has-categories {
+        &.has-go-button {
+          > .icon.close {
+            left: 40px;
+          }
+
+          .go-button {
+            right: 0;
+          }
         }
       }
     }

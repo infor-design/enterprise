@@ -693,6 +693,14 @@ html[dir='rtl'] {
       }
     }
 
+    .toolbar-searchfield-wrapper {
+      text-align: left;
+
+      .searchfield {
+        padding-left: 30px;
+      }
+    }
+
     // Change state when the spillover button is necessary
     &.has-more-button {
       .tab-more {
@@ -770,6 +778,18 @@ html[dir='rtl'] {
         margin-left: 0;
         visibility: hidden;
         width: 0;
+      }
+    }
+  }
+
+  html[dir='rtl'] {
+    .tab-container {
+      &.module-tabs {
+        .toolbar-searchfield-wrapper {
+          .searchfield {
+            padding-left: 60px;
+          }
+        }
       }
     }
   }
