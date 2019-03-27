@@ -17,25 +17,25 @@ const COMPONENT_NAME = 'header';
  * @class Header
  * @param {HTMLElement|jQuery[]} element the base element
  * @param {object} [settings] incoming settings
+ * @param {boolean} [settings.addScrollClass = false] If true a class will be added as the page scrolls up and down
+ * to the header for manipulation. Eg: Docs Page.
  * @param {boolean} [settings.demoOptions = true] Used to enable/disable default IDS Enterprise options for demo purposes
+ * @param {array} [settings.tabs = null] If defined as an array of Tab objects, displays a series of tabs that represent application sections
+ * @param {boolean} [settings.useAlternate = null] If true, use alternate background/text color for sub-navigation areas
  * @param {boolean} [settings.useBackButton = true] If true, displays a back button next to the title in the header toolbar
  * @param {boolean} [settings.useBreadcrumb = false] If true, displays a breadcrumb on drilldown
  * @param {boolean} [settings.usePopupmenu = false] If true, changes the Header Title into a popupmenu that can change the current page
- * @param {array} [settings.tabs = null] If defined as an array of Tab objects, displays a series of tabs that represent application sections
  * @param {array} [settings.wizardTicks = null] If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
- * @param {boolean} [settings.useAlternate = null] If true, use alternate background/text color for sub-navigation areas
- * @param {boolean} [settings.addScrollClass = false] If true a class will be added as the page scrolls up and down
- * to the header for manipulation. Eg: Docs Page.
  */
 const HEADER_DEFAULTS = {
+  addScrollClass: false,
   demoOptions: true,
+  tabs: null,
+  useAlternate: false,
   useBackButton: true,
   useBreadcrumb: false,
   usePopupmenu: false,
-  tabs: null,
-  wizardTicks: null,
-  useAlternate: false,
-  addScrollClass: false
+  wizardTicks: null
 };
 
 function Header(element, settings) {
