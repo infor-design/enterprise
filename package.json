@@ -31,6 +31,7 @@
     "build": "node ./scripts/build",
     "build:custom": "node ./scripts/build",
     "build:icons": "node ./scripts/build-icons.js",
+    "clean": "npx grunt clean",
     "stop": "./scripts/stop.sh",
     "watch": "npx grunt watch",
     "stylelint:demo": "npx stylelint 'app/src/**/*.scss'",
