@@ -351,6 +351,7 @@
 
   .toolbar-searchfield-wrapper {
     color: $module-tabs-active-text-color;
+    text-align: right;
 
     .icon:not(.error) {
       color: $module-tabs-inactive-text-color;
@@ -361,6 +362,7 @@
       border-bottom-color: rgba($searchfield-moduletabs-border-color, 0);
       border-top-color: rgba($searchfield-moduletabs-bg-color, 0);
       color: $module-tabs-inactive-text-color;
+      width: auto !important;
 
       &::-webkit-input-placeholder { // Chrome/Opera/Safari */
         color: $module-tabs-inactive-text-color;
@@ -691,6 +693,14 @@ html[dir='rtl'] {
       }
     }
 
+    .toolbar-searchfield-wrapper {
+      text-align: left;
+
+      .searchfield {
+        padding-left: 30px;
+      }
+    }
+
     // Change state when the spillover button is necessary
     &.has-more-button {
       .tab-more {
@@ -768,6 +778,18 @@ html[dir='rtl'] {
         margin-left: 0;
         visibility: hidden;
         width: 0;
+      }
+    }
+  }
+
+  html[dir='rtl'] {
+    .tab-container {
+      &.module-tabs {
+        .toolbar-searchfield-wrapper {
+          .searchfield {
+            padding-left: 60px;
+          }
+        }
       }
     }
   }

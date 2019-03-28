@@ -1,7 +1,7 @@
 {
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
-  "version": "4.18.0-dev",
+  "version": "4.17.0-rc.0",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "repository": {
     "type": "git",
@@ -48,8 +48,8 @@
     "minify:css": "node ./scripts/minify-css.js",
     "functional:local": "npx karma start test/karma.conf.js",
     "functional:ci": "npx karma start test/karma.conf.js --single-run",
-    "e2e:ci": "npm run webdriver:update && npx protractor test/protractor.ci.conf.js",
-    "e2e:ci:bs": "npx protractor test/protractor.ci.bs.conf.js ",
+    "e2e:ci": "npm run webdriver:update && npx protractor-flake --max-attempts=3 -- test/protractor.ci.conf.js",
+    "e2e:ci:bs": "npx protractor-flake --max-attempts=3 -- test/protractor.ci.bs.conf.js ",
     "e2e:ci:debug": "npm run webdriver:update && npx protractor test/protractor.ci.debug.conf.js",
     "e2e:local:bs": "npm run webdriver:update && npx protractor test/protractor.local.bs.conf.js",
     "e2e:local:debug": "npm run webdriver:update && npx protractor test/protractor.local.debug.conf.js",
@@ -128,6 +128,7 @@
     "moment": "^2.19.2",
     "node-sass": "^4.9.2",
     "protractor": "^5.4.1",
+    "protractor-flake": "^4.0.0",
     "protractor-image-comparison": "^2.0.1",
     "pygmentize-bundled": "^2.3.0",
     "r2": "^2.0.1",

@@ -569,25 +569,15 @@ describe('Datepicker Timeformat Tests', () => {
 
     const todayEl = await element(by.css('button.is-today'));
     const testDate = new Date();
+    testDate.setSeconds(0);
+    testDate.setMilliseconds(0);
     await todayEl.click();
     const value = await element(by.id('dp3')).getAttribute('value');
 
-    let hours = testDate.getHours();
-    const minutes = testDate.getMinutes();
-    let amPm = 'AM';
+    const dateVariances = [-2, -1, 0, 1, 2]
+      .map(amt => testDate.setSeconds(testDate.getSeconds() + amt));
 
-    if (hours > 11) {
-      hours -= hours > 12 ? 12 : 0;
-      amPm = 'PM';
-    }
-
-    expect([
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes - 2).toString().padStart(2, '0')} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes - 1).toString().padStart(2, '0')} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes).toString().padStart(2, '0')} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 1).toString().padStart(2, '0')} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 2).toString().padStart(2, '0')} ${amPm}` // for slow test on ci
-    ]).toContain(value);
+    expect(dateVariances).toContain(new Date(value).getTime());
   });
 });
 

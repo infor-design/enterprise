@@ -726,6 +726,7 @@ Pager.prototype = {
 
     const disableFirstIndeterminate = this.settings.indeterminate && this.firstPage === true;
     const disableLastIndeterminate = this.settings.indeterminate && this.lastPage === true;
+    const hasDataset = (this.settings.dataset && this.settings.dataset.length);
 
     // If this is a filtered dataset, use the `filteredTotal` instead
     if (this.state.filteredPages) {
@@ -782,7 +783,7 @@ Pager.prototype = {
     }
 
     // Disable first/last if we can display all available page numbers
-    if (!this.isTable && this.settings.type !== 'standalone' && maxNumberButtons >= totalPages) {
+    if (!this.isTable && this.settings.type !== 'standalone' && hasDataset && maxNumberButtons >= totalPages) {
       disableFirstButton = true;
       disableLastButton = true;
     }
@@ -861,7 +862,7 @@ Pager.prototype = {
 
     // Draw all relevant page numbers, if applicable
     // Page Number Buttons are only rendered if there is visible space available to fit them.
-    if (!this.isTable && (this.settings.dataset && this.settings.dataset.length)) {
+    if (!this.isTable && hasDataset) {
       let numberButtonHTML = '';
       buttonsToRender.forEach((i) => {
         if (i === (activePage || 1)) {

@@ -92,7 +92,7 @@ describe('Flex Toolbar', () => {
     expect(item.disabled).toBeFalsy();
   });
 
-  it('Can check for which of its items belongs in an overflow menu', () => {
+  it('Can check for which of its items belongs in an overflow menu', (done) => {
     // Test doesn't pass unless we have an actual width on the toolbar
     rowEl.style.width = '20000px';
     let overflow = toolbarAPI.overflowedItems;
@@ -102,12 +102,14 @@ describe('Flex Toolbar', () => {
     expect(overflow.length).toBe(0);
 
     // Change width of the container to change the overflow scenario.
-    rowEl.style.width = '700px';
+    rowEl.style.width = '690px';
     overflow = toolbarAPI.overflowedItems;
-
-    expect(overflow.length).toBe(3);
-    expect(overflow[0]).toEqual(jasmine.any(ToolbarFlexItem));
-    expect(overflow[0].overflowed).toBeTruthy();
+    setTimeout(() => {
+      expect(overflow.length).toBe(3);
+      expect(overflow[0]).toEqual(jasmine.any(ToolbarFlexItem));
+      expect(overflow[0].overflowed).toBeTruthy();
+      done();
+    }, 300);
   });
 
   it('Can programmatically navigate toolbar items', () => {
@@ -324,15 +326,18 @@ describe('Flex Toolbar', () => {
       expect(item.element.className.indexOf('is-selected')).toBeGreaterThan(-1);
     });
 
-    it('Can individually determine that it should be placed into overflow', () => {
-      rowEl.style.width = '700px';
-      const textButton = toolbarAPI.items[0];
+    it('Can individually determine that it should be placed into overflow', (done) => {
+      rowEl.style.width = '690px';
+      setTimeout(() => {
+        const textButton = toolbarAPI.items[0];
 
-      expect(textButton.overflowed).toBeFalsy();
+        expect(textButton.overflowed).toBeFalsy();
 
-      const secondIconButton = toolbarAPI.items[3];
+        const secondIconButton = toolbarAPI.items[3];
 
-      expect(secondIconButton.overflowed).toBeTruthy();
+        expect(secondIconButton.overflowed).toBeTruthy();
+        done();
+      }, 300);
     });
   });
 

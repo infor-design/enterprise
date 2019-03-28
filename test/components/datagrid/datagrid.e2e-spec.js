@@ -9,7 +9,7 @@ describe('Datagrid Alternate Row Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-alternate-row-shading?layout=nofrills');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -28,7 +28,7 @@ describe('Datagrid Colspan Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-colspan?layout=nofrills');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -51,7 +51,7 @@ describe('Datagrid Comments Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-comments?layout=nofrills');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -74,7 +74,7 @@ describe('Datagrid Custom Filter Option Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-custom-filter-conditions?layout=nofrills');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -85,7 +85,7 @@ describe('Datagrid Custom Filter Option Tests', () => {
 
   it('Should have custom filter options', async () => {
     const selector = '#example-custom-filter-conditions-datagrid-1-header-1 button';
-    await element(await by.css(selector)).click();
+    await element(by.css(selector)).click();
 
     expect(await element.all(await by.css('.popupmenu')).count()).toEqual(4);
     await browser.driver
@@ -111,7 +111,7 @@ describe('Datagrid Editable Tests', () => {
   });
 
   it('Should render row statuses', async () => {
-    await element(await by.id('toggle-row-status')).click();
+    await element(by.id('toggle-row-status')).click();
 
     expect(await element.all(by.css('#datagrid .rowstatus-row-error')).count()).toEqual(1);
     expect(await element.all(by.css('#datagrid .rowstatus-row-alert')).count()).toEqual(1);
@@ -121,10 +121,10 @@ describe('Datagrid Editable Tests', () => {
   });
 
   it('Should render row statuses across page', async () => {
-    await element(await by.id('toggle-row-status')).click();
-    await element(await by.css('.pager-next a')).click();
+    await element(by.id('toggle-row-status')).click();
+    await element(by.css('.pager-next a')).click();
     await browser.driver.sleep(350);
-    await element(await by.css('.pager-prev a')).click();
+    await element(by.css('.pager-prev a')).click();
     await browser.driver.sleep(350);
 
     expect(await element.all(by.css('#datagrid .rowstatus-row-error')).count()).toEqual(1);
@@ -135,10 +135,10 @@ describe('Datagrid Editable Tests', () => {
   });
 
   it('Should not show indicator on showNewRowIndicator false', async () => {
-    await element(await by.id('toggle-row-status')).click();
+    await element(by.id('toggle-row-status')).click();
     await element.all(await by.css('.toolbar .btn-actions')).get(0).click();
     await browser.driver.sleep(350);
-    await element(await by.cssContainingText('li a', 'Add')).click();
+    await element(by.cssContainingText('li a', 'Add')).click();
     await browser.driver.sleep(350);
 
     expect(await element.all(by.css('#datagrid .rowstatus-row-new')).count()).toEqual(0);
@@ -154,7 +154,7 @@ describe('Datagrid Empty Message Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-empty-message?layout=nofrills');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid .empty-message'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -164,7 +164,7 @@ describe('Datagrid Empty Message Tests', () => {
   });
 
   it('Should render empty message', async () => {
-    expect(await element(await by.css('.datagrid-header-container + .empty-message'))).toBeTruthy();
+    expect(await element(by.css('.datagrid-header-container + .empty-message'))).toBeTruthy();
   });
 });
 
@@ -172,7 +172,7 @@ describe('Datagrid Expandable Cells Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-expandable-cells?layout=nofrills');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -197,7 +197,7 @@ describe('Datagrid Expandable Row Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-expandable-row?layout=nofrills');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -345,11 +345,11 @@ describe('Datagrid grouping with paging tests', () => {
 
     expect(await element(by.css(cell)).getText()).toEqual('214220');
 
-    await element(await by.css(cell)).click();
+    await element(by.css(cell)).click();
 
     expect(await element(by.css(cell)).getAttribute('tabindex')).toEqual('0');
 
-    await element(await by.css('.pager-next')).click();
+    await element(by.css('.pager-next')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
@@ -375,7 +375,7 @@ describe('Datagrid grouping with paging tests', () => {
 
     expect(await element(by.css(row)).getAttribute('class')).not.toMatch('is-selected');
 
-    await element(await by.css('.pager-next')).click();
+    await element(by.css('.pager-next')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev a'))), config.waitsFor);
@@ -450,7 +450,7 @@ describe('Datagrid keyword search tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-keyword-search?layout=nofrills');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -482,7 +482,7 @@ describe('Datagrid List Styles Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-list?layout=nofrills');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -536,7 +536,7 @@ describe('Datagrid multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-multiselect');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -633,13 +633,13 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
-    await element(await by.css('.pager-next a')).click();
+    await element(by.css('.pager-next a')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('10');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('19');
 
-    await element(await by.css('.pager-prev a')).click();
+    await element(by.css('.pager-prev a')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
@@ -703,7 +703,7 @@ describe('Datagrid single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-singleselect');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -759,7 +759,7 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-disable-client-filter-and-sort');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -797,7 +797,7 @@ describe('Datagrid Lookup Editor', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-lookup-mask');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -822,7 +822,7 @@ describe('Datagrid editor dropdown source tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editor-dropdown-source');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -837,7 +837,7 @@ describe('Datagrid editor dropdown source tests', () => {
     await testEl.click();
 
     expect(await element(by.css('.is-focused'))).toBeTruthy();
-    const focusEl = await element(await by.css('.is-focused'));
+    const focusEl = await element(by.css('.is-focused'));
 
     expect(await focusEl.getText()).toEqual('Place On-Hold');
   });
@@ -847,7 +847,7 @@ describe('Datagrid Empty Message Tests After Load', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-empty-message-after-load');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid .datagrid-body'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -857,7 +857,7 @@ describe('Datagrid Empty Message Tests After Load', () => {
   });
 
   it('Should show empty indicator on load', async () => {
-    await element(await by.id('show-empty-message')).click();
+    await element(by.id('show-empty-message')).click();
 
     expect(await element.all(by.css('.empty-message')).count()).toEqual(1);
   });
@@ -867,7 +867,7 @@ describe('Datagrid contextmenu tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-contextmenu');
 
-    const datagridEl = await element(by.id('readonly-datagrid'));
+    const datagridEl = await element(by.css('#readonly-datagrid .datagrid-body'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -910,7 +910,7 @@ describe('Datagrid filter single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-singleselect');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -944,7 +944,7 @@ describe('Datagrid filter lookup custom click function tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-lookup-click-function');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -967,7 +967,7 @@ describe('Datagrid filter masks', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-mask');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -991,7 +991,7 @@ describe('Datagrid grouping multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-grouping-multiselect');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1048,7 +1048,7 @@ describe('Datagrid loaddata selected rows tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-loaddata-selected-rows');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1106,7 +1106,7 @@ describe('Datagrid multiselect with no selection checkbox', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-multiselect-no-checkboxes');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1128,7 +1128,7 @@ describe('Datagrid disable last page', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-disable-lastpage');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1146,7 +1146,7 @@ describe('Datagrid paging force disabled', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-force-disabled');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1157,12 +1157,12 @@ describe('Datagrid paging force disabled', () => {
 
   it('Should be able force disable and reenable the pager', async () => {
     await browser.driver.sleep(config.sleep);
-    await element(await by.id('force-disabled')).click();
+    await element(by.id('force-disabled')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(4);
 
-    await element(await by.id('force-enabled')).click();
+    await element(by.id('force-enabled')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(0);
@@ -1188,13 +1188,13 @@ describe('Datagrid paging multiselect across pages', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
-    await element(await by.css('.pager-next')).click();
+    await element(by.css('.pager-next')).click();
 
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    await element(await by.css('.pager-prev')).click();
+    await element(by.css('.pager-prev')).click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1).is-selected'))), config.waitsFor);
@@ -1240,7 +1240,7 @@ describe('Datagrid paging clientside multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-multiple');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1273,7 +1273,7 @@ describe('Datagrid paging clientside single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-single');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1288,7 +1288,7 @@ describe('Datagrid paging clientside single select tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
 
-    await element(await by.css('.pager-next a')).click();
+    await element(by.css('.pager-next a')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
@@ -1304,7 +1304,7 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-multiple');
 
-    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1314,17 +1314,17 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
   });
 
   it('Should be able to select and have it clear when paging', async () => {
-    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
 
     expect(await element.all(await by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
-    await element(await by.css('.pager-next a')).click();
+    await element(by.css('.pager-next a')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(await by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    await element(await by.css('.pager-prev a')).click();
+    await element(by.css('.pager-prev a')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
@@ -1335,7 +1335,7 @@ describe('Datagrid paging indeterminate single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single');
 
-    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1350,7 +1350,7 @@ describe('Datagrid paging indeterminate single select tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
 
-    await element(await by.css('.pager-next a')).click();
+    await element(by.css('.pager-next a')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
@@ -1366,7 +1366,7 @@ describe('Datagrid paging serverside multi select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-serverside-multiple');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1381,7 +1381,7 @@ describe('Datagrid paging serverside multi select tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
-    await element(await by.css('.pager-next')).click();
+    await element(by.css('.pager-next')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
@@ -1397,7 +1397,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1407,7 +1407,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
   });
 
   it('Should be able to select and have selections clear when paging on 2nd page', async () => {
-    await element(await by.css('.pager-next a')).click();
+    await element(by.css('.pager-next a')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
@@ -1435,7 +1435,7 @@ describe('Datagrid Paging with Summary Row test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-with-summary-row');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1453,7 +1453,7 @@ describe('Datagrid paging serverside single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-serverside-single');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1490,7 +1490,7 @@ describe('Datagrid select and focus row', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-select-and-focus-row');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1627,7 +1627,7 @@ describe('Datagrid tree do not select children tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-select-children');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1689,19 +1689,19 @@ describe('Datagrid tree single select tests', () => {
   });
 
   it('Should single select', async () => {
-    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
 
     expect(await element.all(await by.css('tr.is-selected')).count()).toEqual(1);
 
-    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
 
-    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(6) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(6) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
 
-    await element(await by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(1);
   });
@@ -1711,7 +1711,7 @@ describe('Datagrid tooltip tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-tooltips');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1752,7 +1752,7 @@ describe('Datagrid Row Activation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-row-activated');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1777,7 +1777,7 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging-indeterminate');
 
-    const datagridEl = await element(by.id('datagrid'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -1788,20 +1788,20 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
 
   it('Should show activation row for indeterminate with mixed selection', async () => {
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
 
-    expect(await element(await by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).not.toContain('is-rowactivated');
-    await element(await by.css('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]')).click();
+    expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).not.toContain('is-rowactivated');
+    await element(by.css('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
 
-    expect(await element(await by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
-    await element(await by.css('li.pager-next a')).click();
+    expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
+    await element(by.css('li.pager-next a')).click();
     await browser.driver.sleep(config.sleep);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(await by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
 
-    expect(await element(await by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
+    expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
   });
 });
 
@@ -1809,7 +1809,7 @@ describe('Datagrid paging with empty dataset', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-empty-dataset?layout=nofrills');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('datagrid'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#datagrid .empty-message'))), config.waitsFor);
   });
 
   it('should increase total page count when the pagesize is exceeded', async () => {

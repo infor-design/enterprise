@@ -9,7 +9,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Listview example-singleselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-singleselect');
-    const listviewEl = await element(by.id('period-end'));
+    const listviewEl = await element(by.css('#period-end li'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
@@ -90,7 +90,7 @@ describe('Listview example-singleselect tests', () => {
 describe('Listview example-multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-multiselect');
-    const listviewEl = await element(by.id('multiselect-listview'));
+    const listviewEl = await element(by.css('#multiselect-listview li'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
@@ -261,7 +261,7 @@ describe('Listview example-mixed selection tests', () => {
 describe('Listview example-search tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-search');
-    const listviewEl = await element(by.id('search-listview'));
+    const listviewEl = await element(by.css('#search-listview li'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
@@ -358,16 +358,15 @@ describe('Listview example-paging tests', () => {
 describe('Listview example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-index');
-    const listviewEl = await element(by.id('task-listview'));
+    const listviewEl = await element(by.css('#task-listview li'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
 
   it('Should do nothing on a disabled item', async () => {
-    const listviewDisabledEl = await element(by.css('.is-disabled'));
-    await listviewDisabledEl.click();
+    await await element(by.css('li.is-disabled')).click();
 
-    expect(await element(by.className('is-disabled')).getAttribute('disabled').isPresent()).toBeTruthy();
+    expect(await element(by.css('li.is-disabled')).getAttribute('disabled').isPresent()).toBeTruthy();
   });
 });
 
@@ -459,7 +458,7 @@ describe('Listview server-side indeterminate paging tests', () => {
 describe('Listview remove-clear tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/remove-clear');
-    const listviewMultiSelectEl = await element(by.id('multiselect-listview'));
+    const listviewMultiSelectEl = await element(by.css('#multiselect-listview li'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewMultiSelectEl), config.waitsFor);
   });

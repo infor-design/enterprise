@@ -1452,7 +1452,6 @@ Dropdown.prototype = {
    * Focus the input element. Since the select is hidden this is needed over normal focus()
    * @private
    * @param  {boolean} [useSearchInput] If true the search is used.
-   * @param {boolean} [noFocus] if true, does not attempt to focus the input
    * @returns {void}
    */
   activate(useSearchInput) {
@@ -1482,13 +1481,7 @@ Dropdown.prototype = {
     selectText();
 
     // Set focus back to the element
-    if (env.browser.isIE10() || env.browser.isIE11()) {
-      setTimeout(() => {
-        input[0].focus();
-      }, 0);
-    } else {
-      input[0].focus();
-    }
+    input[0].focus();
   },
 
   /**
