@@ -1,21 +1,19 @@
 import { Dropdown } from '../../../src/components/dropdown/dropdown';
+import { cleanup } from '../../helpers/func-utils';
 
 const dropdownHTML = require('../../../app/views/components/dropdown/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let dropdownEl;
-let svgEl;
 let dropdownObj;
 
 describe('Dropdown ARIA', () => {
   beforeEach((done) => {
     dropdownEl = null;
-    svgEl = null;
     dropdownObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', dropdownHTML);
     dropdownEl = document.body.querySelector('.dropdown');
-    svgEl = document.body.querySelector('.svg-icons');
     dropdownEl.classList.add('no-init');
     dropdownObj = new Dropdown(dropdownEl);
     done();
@@ -23,18 +21,16 @@ describe('Dropdown ARIA', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    dropdownEl.parentNode.removeChild(dropdownEl);
-    svgEl.parentNode.removeChild(svgEl);
-    if (document.querySelector('.dropdown-list')) {
-      const dropdownElList = document.querySelector('.dropdown-list');
-      dropdownElList.parentNode.removeChild(dropdownElList);
-    }
+    cleanup(['.dropdown', '.svg-icons', '#dropdown-list', '.row']);
   });
 
   it('Should set ARIA labels', (done) => {
-    expect(document.querySelector('[aria-expanded="false"]')).toBeTruthy();
-    expect(document.querySelector('[aria-autocomplete="list"]')).toBeTruthy();
-    expect(document.querySelector('[aria-controls="dropdown-list"]')).toBeTruthy();
+    dropdownObj.open();
+
+    expect(document.querySelector('div.dropdown[aria-haspopup="listbox"]')).toBeTruthy();
+    expect(document.querySelector('div.dropdown .audible').textContent).toEqual('State ');
+    expect(document.querySelector('#dropdown-list ul[role="listbox"]')).toBeTruthy();
+    expect(document.querySelectorAll('#dropdown-list li[role="option"]').length).toEqual(51);
     done();
   });
 });

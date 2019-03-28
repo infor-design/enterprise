@@ -6,7 +6,7 @@ requireHelper('rejection');
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 const ddSelector = function (dropdown) {
-  return `#timepicker-popup select.dropdown.${dropdown} + .dropdown-wrapper div[aria-controls="dropdown-list"]`;
+  return `#timepicker-popup select.dropdown.${dropdown} + .dropdown-wrapper div.dropdown`;
 };
 
 describe('Timepicker example-index tests', () => {
@@ -112,12 +112,12 @@ describe('Timepicker 24 Hour tests', () => {
       await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownEl.sendKeys(protractor.Key.SPACE);
 
-      expect(await dropdownEl.getText()).toEqual('20');
+      expect(await dropdownEl.getText()).toEqual('<span class="audible">Hours </span>20');
       dropdownEl = await element(by.css(ddSelector('minutes')));
       await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownEl.sendKeys(protractor.Key.SPACE);
 
-      expect(await dropdownEl.getText()).toEqual('20');
+      expect(await dropdownEl.getText()).toEqual('<span class="audible">Minutes </span>20');
       await element(by.className('set-time')).click();
       await browser.driver.sleep(config.sleep);
       await element(by.css('.timepicker + .icon')).click();

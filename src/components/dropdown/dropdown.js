@@ -183,11 +183,6 @@ Dropdown.prototype = {
 
     // Build sub-elements if they don't exist
     this.label = $(`label[for="${xssUtils.stripTags(orgId)}"]`);
-    this.labelId = this.label.attr('id');
-    if (!this.labelId) {
-      this.labelId = utils.uniqueId(this.element, 'lbl');
-      this.label.attr('id', this.labelId);
-    }
 
     if (!this.pseudoElem.length) {
       this.pseudoElem = $(`<div class="${pseudoClassString}">`);
@@ -206,8 +201,7 @@ Dropdown.prototype = {
       .attr(attributesToCopy.obj)
       .attr({
         role: 'button',
-        'aria-haspopup': 'listbox',
-        'aria-labelledby': this.labelId
+        'aria-haspopup': 'listbox'
       });
 
     // Pass disabled/readonly from the original element, if applicable
@@ -624,11 +618,11 @@ Dropdown.prototype = {
     }
 
     if (!listExists) {
-      listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" role="application" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
-        <label for="dropdown-search" class="audible">${Locale.translate('Search')}</label>
-        <input type="text" class="dropdown-search${reverseText}" id="dropdown-search" role="presentation" aria-hidden="true">
+      listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
+        <label for="dropdown-search" class="audible">${Locale.translate('TypeToFilter')}</label>
+        <input type="text" class="dropdown-search${reverseText}" id="dropdown-search">
         <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}<span class="audible">${isMobile ? Locale.translate('Close') : Locale.translate('Collapse')}</span></span>
-        <ul role="listbox" aria-labelledby="${this.labelId}">`;
+        <ul role="listbox">`;
     }
 
     // Get a current list of <option> elements
@@ -841,7 +835,7 @@ Dropdown.prototype = {
     }
 
     if (this.settings.empty && opts.length === 0) {
-      this.pseudoElem.find('span').text('');
+      this.pseudoElem.find('span').html(`<span class="audible">${this.label.text()} </span>`);
       return;
     }
 
@@ -851,7 +845,7 @@ Dropdown.prototype = {
       text = text.substr(0, maxlength);
     }
     text = text.trim();
-    this.pseudoElem.find('span').text(text);
+    this.pseudoElem.find('span').html(`<span class="audible">${this.label.text()} </span>${text}`);
 
     // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
@@ -1630,7 +1624,6 @@ Dropdown.prototype = {
       .attr('aria-expanded', 'true')
       .addClass('is-open');
 
-    this.pseudoElem.attr('aria-label', this.label.text());
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
     // In a grid cell
@@ -1665,7 +1658,12 @@ Dropdown.prototype = {
     if (this.filterTerm) {
       this.searchInput.val(this.filterTerm);
     } else {
-      this.searchInput.val(this.pseudoElem.find('span').text().trim());
+      const fieldValue = this.pseudoElem.find('span:not(.audible)')
+        .contents()
+        .eq(1)
+        .text()
+        .trim();
+      this.searchInput.val(fieldValue);
     }
 
     const noScroll = this.settings.multiple;
@@ -2401,10 +2399,10 @@ Dropdown.prototype = {
 
     // Change the values of both inputs and swap out the active descendant
     if (!clearSelection) {
-      this.pseudoElem.find('span').text(text);
+      this.pseudoElem.find('span').text(`<span class="audible">${this.label.text()} </span>${text}`);
       this.searchInput.val(text);
     } else {
-      this.pseudoElem.find('span').text('');
+      this.pseudoElem.find('span').text(`<span class="audible">${this.label.text()} </span>${text}`);
       this.searchInput.val('');
     }
 

@@ -469,14 +469,14 @@ describe('Datepicker Month Year Changer Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver.sleep(config.sleep);
 
-    let dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    let dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     dropdownEl = await element(by.css('.dropdown-search'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
-    let yearEl = await element(by.css('#year-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    let yearEl = await element(by.css('#year-dropdown + .dropdown-wrapper div.dropdown'));
     await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
     yearEl = await element.all(by.css('.dropdown-search')).last();
     await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -627,7 +627,7 @@ describe('Datepicker Month Year Picker Tests', () => {
     await datepickerEl.sendKeys('01/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    let dropdownEl = await element(by.css('#year-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    let dropdownEl = await element(by.css('#year-dropdown + .dropdown-wrapper div.dropdown'));
     await dropdownEl.click();
     dropdownEl = await element(by.css('#dropdown-list .dropdown-search'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -644,7 +644,7 @@ describe('Datepicker Month Year Picker Tests', () => {
     await datepickerEl.sendKeys('Oct 2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    const dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    const dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ENTER);

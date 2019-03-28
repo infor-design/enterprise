@@ -104,7 +104,7 @@ div.multiselect {
     text-overflow: ellipsis;
     vertical-align: top;
 
-    &:empty::before {
+    &[data-placeholder-text]::before {
       color: $input-placeholder-color;
       content: attr(data-placeholder-text);
       -webkit-text-fill-color: $input-placeholder-color;
@@ -504,7 +504,7 @@ div.multiselect {
 
       &.search {
         height: 18px;
-        margin-top: 7px;
+        margin-top: 0;
         width: 16px;
       }
 

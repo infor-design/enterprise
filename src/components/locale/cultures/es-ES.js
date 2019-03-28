@@ -371,6 +371,7 @@ Soho.Locale.addCulture('es-ES', {
     TreeCollapse: { id: 'TreeCollapse', value: 'Contraer árbol', comment: 'Tree Collapse tooltip' },
     TreeExpand: { id: 'TreeExpand', value: 'Expandir árbol', comment: 'Tree Expand tooltip' },
     Turquoise: { id: 'Turquoise', value: 'Turquesa', comment: 'Color in our color pallette' },
+    TypeToFilter: { id: 'TypeToFilter', value: 'Escriba para filtrar', comment: 'Screen reader hit for screen reader users.' },
     Up: { id: 'Up', value: 'Arriba', comment: 'Up tooltip' },
     UpComingEvents: { id: 'UpComingEvent', value: 'Próximos eventos', comment: 'List of upcoming calendar events' },
     UpComingTimeOff: { id: 'UpComingTimeOff', value: 'Próximo tiempo libre', comment: 'As in time off work' },
