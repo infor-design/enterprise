@@ -33,7 +33,7 @@
     "build:icons": "node ./scripts/build-icons.js",
     "clean": "npm run clean:dist && npm run clean:docs && npm run clean:app",
     "clean:app": "rimraf app/dist",
-    "clean:docs": "rimraf app/docs/*.html && rimraf app/docs/components/*.html",
+    "clean:docs": "rimraf app/docs/*.html && rimraf app/docs/components/*.html && rimraf docs/ids-website/dist*",
     "clean:dist": "rimraf temp && rimraf dist",
     "stop": "./scripts/stop.sh",
     "watch": "npx grunt watch",
