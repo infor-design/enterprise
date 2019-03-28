@@ -83,7 +83,6 @@
     "cssmin": "^0.4.3",
     "csurf": "^1.9.0",
     "del": "^3.0.0",
-    "directory-to-s3": "^1.0.0",
     "documentation": "^5.3.5",
     "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
