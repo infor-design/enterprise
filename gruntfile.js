@@ -8,13 +8,21 @@ module.exports = function (grunt) {
   const copy = require('./scripts/configs/copy.js');
   const cssmin = require('./scripts/configs/cssmin.js');
   const compress = require('./scripts/configs/compress.js');
-  const clean = require('./scripts/configs/clean.js');
 
   const config = {
     pkg: grunt.file.readJSON('package.json'),
     exec: {
       build: {
         cmd: 'npm run build',
+      },
+      'clean-dist': {
+        cmd: 'npm run clean:dist'
+      },
+      'clean-docs': {
+        cmd: 'npm run clean:docs',
+      },
+      'clean-app': {
+        cmd: 'npm run clean:app'
       },
       rollup: {
         cmd: 'npx rollup -c'
@@ -51,7 +59,6 @@ module.exports = function (grunt) {
     {},
     config,
     chokidar,
-    clean,
     copy,
     cssmin,
     compress
@@ -65,7 +72,7 @@ module.exports = function (grunt) {
   // - Builds
   // - Minifies
   grunt.registerTask('default', [
-    'clean',
+    'exec:clean-dist',
     'exec:build',
     'exec:minify'
   ]);
@@ -79,7 +86,7 @@ module.exports = function (grunt) {
 
   // Demo build tasks. Generates CSS specific to the Demoapp
   grunt.registerTask('demo', [
-    'clean:app',
+    'exec:clean-app',
     'exec:sass:app'
   ]);
 
