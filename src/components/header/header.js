@@ -21,9 +21,11 @@ const COMPONENT_NAME = 'header';
  * to the header for manipulation. Eg: Docs Page.
  * @param {boolean} [settings.demoOptions = true] Used to enable/disable default IDS Enterprise options for demo purposes
  * @param {array} [settings.tabs = null] If defined as an array of Tab objects, displays a series of tabs that represent application sections
+ * @param {object} [settings.toolbarSettings = undefined] If defined, will be passed into the toolbar/toobarFlex component instance as settings
  * @param {boolean} [settings.useAlternate = null] If true, use alternate background/text color for sub-navigation areas
  * @param {boolean} [settings.useBackButton = true] If true, displays a back button next to the title in the header toolbar
  * @param {boolean} [settings.useBreadcrumb = false] If true, displays a breadcrumb on drilldown
+ * @param {boolean} [settings.useFlexToolbar = false] If true, uses a Flex Toolbar component instead of a standard Toolbar component.
  * @param {boolean} [settings.usePopupmenu = false] If true, changes the Header Title into a popupmenu that can change the current page
  * @param {array} [settings.wizardTicks = null] If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
  */
@@ -31,9 +33,11 @@ const HEADER_DEFAULTS = {
   addScrollClass: false,
   demoOptions: true,
   tabs: null,
+  toolbarSettings: undefined,
   useAlternate: false,
   useBackButton: true,
   useBreadcrumb: false,
+  useFlexToolbar: false,
   usePopupmenu: false,
   wizardTicks: null
 };
@@ -48,6 +52,24 @@ function Header(element, settings) {
 }
 
 Header.prototype = {
+
+  /**
+   * @returns {Toolbar|ToolbarFlex|undefined} component instance, if applicable
+   */
+  get toolbarAPI() {
+    if (!this.toolbarElem) {
+      return undefined;
+    }
+    return this.toolbarElem.data('toolbar-flex') || this.toolbarElem.data('toolbar');
+  },
+
+  /**
+   * @deprecated as of v4.18.0. Please use the `toolbarAPI` property instead.
+   * @returns {Toolbar|ToolbarFlex|undefined} component instance, if applicable.
+   */
+  get toolbar() {
+    return this.toolbarAPI;
+  },
 
   /**
    * @private
@@ -94,13 +116,24 @@ Header.prototype = {
    * @returns {this} component instance
    */
   build() {
-    this.toolbarElem = this.element.find('.toolbar');
-
-    // Build toolbar if it doesn't exist
-    if (!this.toolbarElem.data('toolbar')) {
-      this.toolbarElem.toolbar();
+    let isFlex = false;
+    let elem = this.element.find('.toolbar, .flex-toolbar');
+    if (!elem.length) {
+      // Build a simple toolbar, if applicable
+      let type = 'toolbar';
+      if (this.settings.useFlexToolbar) {
+        type = 'flex-toolbar';
+      }
+      elem = $(`<div class="${type}"></div>`).prependTo(this.element);
     }
-    this.toolbar = this.toolbarElem.data('toolbar');
+    if (elem.is('.toolbar-flex')) {
+      isFlex = true;
+    }
+    this.toolbarElem = elem;
+
+    // Build/update the toolbar instance
+    const toolbarSettings = this.settings.toolbarSettings;
+    this.toolbarElem[isFlex ? 'toolbarflex' : 'toolbar'](toolbarSettings);
 
     // Hamburger Icon is optional, but tracking it is necessary.
     this.titleButton = this.element.find('.title > .application-menu-trigger');
