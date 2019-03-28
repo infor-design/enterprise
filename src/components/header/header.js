@@ -117,14 +117,9 @@ Header.prototype = {
    */
   build() {
     let isFlex = false;
-    let elem = this.element.find('.toolbar, .flex-toolbar');
+    const elem = this.element.find('.toolbar, .flex-toolbar');
     if (!elem.length) {
-      // Build a simple toolbar, if applicable
-      let type = 'toolbar';
-      if (this.settings.useFlexToolbar) {
-        type = 'flex-toolbar';
-      }
-      elem = $(`<div class="${type}"></div>`).prependTo(this.element);
+      return this;
     }
     if (elem.is('.toolbar-flex')) {
       isFlex = true;
