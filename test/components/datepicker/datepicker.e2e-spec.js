@@ -577,7 +577,7 @@ describe('Datepicker Timeformat Tests', () => {
     const dateVariances = [-2, -1, 0, 1, 2]
       .map(amt => testDate.setSeconds(testDate.getSeconds() + amt));
 
-    expect(dateVariances).toEqual(new Date(value).getTime());
+    expect(dateVariances).toContain(new Date(value).getTime());
   });
 });
 
