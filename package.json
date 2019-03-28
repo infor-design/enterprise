@@ -25,7 +25,7 @@
     "dist"
   ],
   "scripts": {
-    "start": "npx grunt clean && npm run build && npm run minify && npm run quickstart",
+    "start": "npm run clean && npm run build && npm run minify && npm run quickstart",
     "quickstart": "npx grunt demo && node app/server.js",
     "quickstart:livereload": "npx grunt demo && node app/server.js --livereload",
     "build": "node ./scripts/build",
