@@ -12,11 +12,15 @@ echo ""
 # Add version build to queue
 ./scripts/jenkins-deploy.sh -b $RELEASE_VERSION -q
 
-# Also add latest build to queue
 if [[ "$RELEASE_TAG" == "latest" ]]; then
+    # Also add latest build to queue
     ./scripts/jenkins-deploy.sh -b $RELEASE_VERSION -l -q
 
-    echo "Publishing and Deploying documentation"
+    echo "Publishing and Deploying $RELEASE_VERSION documentation"
     echo ""
     node ./scripts/deploy-documentation.js --site prod
+
+    echo "Publishing $RELEASE_VERSION files to AWS CDN"
+    echo ""
+    AWS_PROFILE=sohoxi npx directory-to-s3 -d dist infor-devops-core-soho-us-east-1/sohoxi/$RELEASE_VERSION -v
 fi
