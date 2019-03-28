@@ -428,7 +428,7 @@ describe('Dropdown typeahead-reloading tests', () => {
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
 
-      expect(await element(by.css('.dropdown span')).getText()).toEqual('New Jersey');
+      expect(['', 'New Jersey']).toContain(await element.all(by.css('.dropdown span')).first().getText());
     });
 
     it('Should open by keying "new", make ajax request, down arrow to New Jersey, and focus', async () => {
@@ -444,7 +444,8 @@ describe('Dropdown typeahead-reloading tests', () => {
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
 
-      expect(await element(by.css('.dropdown span')).getText()).toEqual('<span class="audible">Typeahead-Reloaded Dropdown </span> New Jersey');
+      expect(['<span class="audible">Typeahead-Reloaded Dropdown </span> New Jersey', 'New Jersey'])
+        .toContain(await element.all(by.css('.dropdown span')).first().getText());
     });
   }
 });
