@@ -51,6 +51,11 @@ git config --global credential.helper wincred
 
 - Check that you have both `JENKINS_JOB_TOKEN` and `JENKINS_API_TOKEN` exported
 
+## Make sure you have set up tools for AWS CDN Publish
+
+- Also install AWS for testing and configuring <http://docs.aws.amazon.com/cli/latest/userguide/installing.html>
+- Once installed run aws configure to enter the keys in the right spot <http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html>
+
 ## Release
 
 1. Make sure you have release-it installed (`npm install release-it -g`)
@@ -70,14 +75,3 @@ For a final release, finish with:
 1. Manually merge the version branch into `master`. Do **NOT** use a pull request. (You will need github push permissions for this)
 1. If needed, use a pull request to set the `master` branch's package.json version to the proper "dev" version
     - i.e. if we just released `4.7.0`, master should be be `4.8.0-dev`
-
-## Setup tools for AWS CDN Publish
-
-- Also install AWS for testing and configuring <http://docs.aws.amazon.com/cli/latest/userguide/installing.html>
-- Once installed run aws configure to enter the keys in the right spot <http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html>
-
-## Deploy to AWS
-
-```bash
-AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.3.3 -v
-```

@@ -4,7 +4,7 @@
     ],
     "scripts": {
         "beforeStart": "npm run eslint:error-only",
-        "afterBump": "npm run build && npm run zip-dist",
+        "afterBump": "npm run clean && npm run build && npm run minify && npm run zip-dist",
         "afterRelease": "./scripts/after-release.sh ${npm.tag} ${version}"
     },
     "git": {
