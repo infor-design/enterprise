@@ -332,6 +332,23 @@
 
 html[dir='rtl'] {
   .step-process-container {
+    .toolbar-custom {
+      .actions {
+        left: 0;
+        right: auto;
+      }
+
+      .btn-toggle-steps {
+        left: auto;
+        right: 10px;
+      }
+
+      .heading {
+        padding-left: initial;
+        padding-right: 20px;
+      }
+    }
+
     .tree {
       ul {
         right: auto;
@@ -369,6 +386,53 @@ html[dir='rtl'] {
           > a .icon-tree {
             left: 15px;
             right: auto;
+          }
+        }
+      }
+    }
+  }
+
+  @include respond-to(tablet) {
+    .step-process-container {
+      &.tablet-hide-steps {
+        .main,
+        .sidebar {
+          @include transform(translateX(250px));
+        }
+      }
+    }
+  }
+
+  @include respond-to(tabletdown) {
+    .step-process-container {
+      .toolbar-custom .heading {
+        padding-left: initial;
+        padding-right: 60px;
+      }
+
+      .toolbar-collapsible {
+        padding-left: 10px;
+        padding-right: initial;
+      }
+    }
+  }
+
+  @include respond-to(phone) {
+    .step-process-container {
+      &.phone-hide-steps {
+        .sidebar {
+          @include css3(transform, translateX(100%));
+        }
+      }
+    }
+  }
+
+  &.ie11 {
+    @include respond-to(tablet) {
+      .step-process-container {
+        &.tablet-hide-steps {
+          .main {
+            @include transform(translateX(0));
           }
         }
       }
