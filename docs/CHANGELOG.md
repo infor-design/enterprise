@@ -8,6 +8,7 @@
 
 ### v4.18.0 Fixes
 
+- `[Stepprocess]` Fixed rtl style issues. ([#413](https://github.com/infor-design/enterprise/issues/413))
 - `[Tabs-Module]` Fixed an issue where the close icon was outside the searchfield. ([#1704](https://github.com/infor-design/enterprise/issues/1704))
 
 ### v4.18.0 Chore & Maintenance
