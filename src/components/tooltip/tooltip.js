@@ -589,11 +589,8 @@ Tooltip.prototype = {
       return;
     }
 
-    console.log(this.settings);
-
     let okToShow = true;
     okToShow = this.setContent(this.content);
-    console.log(this.content);
     if (okToShow === false) {
       return;
     }
@@ -608,6 +605,7 @@ Tooltip.prototype = {
      */
     okToShow = this.element.triggerHandler('beforeshow', [this.tooltip]);
     console.log(okToShow);
+    console.log(this.settings);
     if (okToShow === false) {
       return;
     }
