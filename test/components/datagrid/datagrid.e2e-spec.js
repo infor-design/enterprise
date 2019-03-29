@@ -843,9 +843,9 @@ describe('Datagrid editor dropdown source tests', () => {
   });
 });
 
-fdescribe('Datagrid Header Alignment With Ellipsis', () => { //eslint-disable-line
+describe('Datagrid Header Alignment With Ellipsis', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-ellipsis-header-align');
+    await utils.setPage('/components/datagrid/test-ellipsis-header-align?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
     await browser.driver
