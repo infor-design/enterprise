@@ -1790,6 +1790,7 @@ Datagrid.prototype = {
       this.element.triggerHandler('openfilterrow');
       this.attachFilterRowEvents();
     }
+    this.setupTooltips();
   },
 
   /**
@@ -9753,7 +9754,6 @@ Datagrid.prototype = {
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
 
       if (isTh || isHeaderColumn || isHeaderFilter) {
-        tooltip.titleText = elem.querySelector('.datagrid-header-text');
         tooltip.wrapper = elem;
         tooltip.distance = isHeaderFilter ? 15 : null;
         tooltip.placement = isHeaderColumn ? 'top' : 'bottom';
@@ -9797,6 +9797,9 @@ Datagrid.prototype = {
           // Title attribute on current element
           tooltip.content = title;
           elem.removeAttribute('title');
+        } else if (isTh && !isHeaderFilter) {
+          const targetEl = elem.querySelector('.datagrid-header-text');
+          tooltip.content = targetEl ? xssUtils.stripHTML(targetEl.textContent) : '';
         } else if (isHeaderFilter) {
           // Disabled filterable headers
           const filterDisabled = elem.parentNode.querySelectorAll('.dropdown.is-disabled, input[type="text"][disabled], .btn-filter[disabled]').length > 0;
@@ -9819,7 +9822,7 @@ Datagrid.prototype = {
       }
 
       if (isTh) {
-        tooltip.content = elem.querySelector('.datagrid-header-text').innerText;
+        tooltip.content = tooltip.content.trim();
       }
 
       if (tooltip.content !== '') {
