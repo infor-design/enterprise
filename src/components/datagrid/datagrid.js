@@ -9753,6 +9753,7 @@ Datagrid.prototype = {
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
 
       if (isTh || isHeaderColumn || isHeaderFilter) {
+        tooltip.titleText = elem.querySelector('.datagrid-header-text');
         tooltip.wrapper = elem;
         tooltip.distance = isHeaderFilter ? 15 : null;
         tooltip.placement = isHeaderColumn ? 'top' : 'bottom';
@@ -9811,12 +9812,14 @@ Datagrid.prototype = {
 
       // Clean up text in selects
       const select = tooltip.wrapper.querySelector('select');
-      if (select && select.selectedIndex && select.options[select.selectedIndex].innerHTML) {
+      if (select && select.selectedIndex
+        && select.options[select.selectedIndex]
+        && select.options[select.selectedIndex].innerHTML) {
         tooltip.content = env.features.touch ? '' : select.options[select.selectedIndex].innerHTML.trim();
       }
 
       if (isTh) {
-        tooltip.content = tooltip.content.trim();
+        tooltip.content = elem.querySelector('.datagrid-header-text').innerText;
       }
 
       if (tooltip.content !== '') {

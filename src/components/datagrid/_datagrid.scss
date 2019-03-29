@@ -419,6 +419,11 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 25px);
     }
 
+    .is-filterable th,
+    .is-filterable .datagrid-column-wrapper {
+      height: 28px;
+    }
+
     &.has-group-headers .datagrid-body {
       height: calc(100% - 51px);
     }
@@ -477,8 +482,13 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    .datagrid-header th.text-ellipsis,
+    .datagrid-column-wrapper .datagrid-header-text {
+      margin: 6px 0 0 !important;
+    }
+
     .sort-indicator {
-      margin: 0 0 0 4px;
+      margin: 0 2px 0 0;
 
       .icon {
         height: 16px;
@@ -510,11 +520,17 @@ $datagrid-short-row-height: 23px;
         }
       }
 
-      .is-filterable .datagrid-column-wrapper {
-        top: -1px;
-
-        &.l-right-text {
+      .is-filterable {
+        .datagrid-column-wrapper {
           top: -1px;
+
+          &.l-right-text {
+            top: -1px;
+          }
+        }
+
+        .datagrid-filter-wrapper {
+          top: -3px;
         }
       }
     }
@@ -2197,18 +2213,16 @@ $datagrid-short-row-height: 23px;
 
       &.is-ellipsis-active {
         .sort-indicator {
-          position: absolute;
-          right: 9px;
+          // position: absolute;
+          // right: 9px;
         }
       }
     }
 
     &.l-center-text {
-      text-align: center;
-
       .datagrid-header-text {
         text-align: center;
-        width: auto;
+        width: 100%;
       }
 
       .datagrid-filter-wrapper .btn-filter {
