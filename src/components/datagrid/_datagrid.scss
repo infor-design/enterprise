@@ -217,6 +217,11 @@ $datagrid-short-row-height: 23px;
         top: -3px;
       }
     }
+
+    th:not(.is-filterable) .datagrid-header-text {
+      position: relative;
+      top: -16px;
+    }
   }
 
   &.has-toolbar.has-two-line-header {
@@ -298,6 +303,7 @@ $datagrid-short-row-height: 23px;
 
       &.is-sortable:hover {
         background-color: $datagrid-list-header-hover-color;
+        cursor: pointer;
       }
 
       .sort-indicator .icon {
@@ -533,6 +539,11 @@ $datagrid-short-row-height: 23px;
           top: -3px;
         }
       }
+
+      th:not(.is-filterable) .datagrid-header-text {
+        position: relative;
+        top: -13px;
+      }
     }
 
   }
@@ -595,7 +606,7 @@ $datagrid-short-row-height: 23px;
     }
 
     .sort-indicator {
-      margin: 1px 0 0 4px;
+      margin: 3px 0 0 4px;
     }
 
     .is-filterable {
@@ -644,6 +655,11 @@ $datagrid-short-row-height: 23px;
         &.l-right-text {
           top: -3px;
         }
+      }
+
+      th:not(.is-filterable) .datagrid-header-text {
+        position: relative;
+        top: -15px;
       }
     }
 
@@ -2091,9 +2107,7 @@ $datagrid-short-row-height: 23px;
 
     &.text-ellipsis {
       .datagrid-cell-wrapper {
-        cursor: default;
         text-overflow: ellipsis;
-        // transition: height, line-height .5s cubic-bezier(.17, .04, .03, .94);
         white-space: nowrap;
 
         .hyperlink {
@@ -2202,7 +2216,6 @@ $datagrid-short-row-height: 23px;
         display: flex;
 
         .datagrid-header-text {
-          cursor: default;
           display: inline-block;
           margin: 10px 0 0;
           overflow: hidden;
@@ -2213,8 +2226,8 @@ $datagrid-short-row-height: 23px;
 
       &.is-ellipsis-active {
         .sort-indicator {
-          // position: absolute;
-          // right: 9px;
+          position: absolute;
+          right: 2px;
         }
       }
     }
@@ -2288,12 +2301,15 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    &.is-sortable:hover {
-      background-color: $datagrid-header-hover-color;
+    &.is-sortable {
       cursor: pointer;
 
-      .icon {
-        opacity: 1;
+      &:hover {
+        background-color: $datagrid-header-hover-color;
+
+        .icon {
+          opacity: 1;
+        }
       }
     }
   }
