@@ -102,12 +102,6 @@
     <div class="field">
       <label for="title-name">Header Title Text</label>
       <input id="title-name" type="text" value="Header Toolbar Gauntlet"/>
-      <button class="btn-icon" id="update-title-name">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-refresh"></use>
-        </svg>
-        <span class="audible">Update Title Text</span>
-      </button>
     </div>
 
     <div class="field">
@@ -129,6 +123,10 @@
 
       <input type="checkbox" class="checkbox" name="searchfield-collapse-toggle" id="searchfield-collapse-toggle"/>
       <label for="searchfield-collapse-toggle" class="radio-label">Collapsible</label>
+      <br />
+
+      <input type="checkbox" class="checkbox" name="searchfield-clear-toggle" id="searchfield-clear-toggle"/>
+      <label for="searchfield-clear-toggle" class="radio-label">Clearable</label>
       <br />
     </fieldset>
   </div>
@@ -167,11 +165,11 @@
     toolbarElem = headerElem.children('.toolbar, .flex-toolbar'),
     titleTextElem = $('#title-text-elem'),
     textField = $('#title-name'),
-    textBtn = $('#update-title-name'),
     eyebrowField = $('#eyebrow-text'),
     titleButtonToggle = $('#title-button-toggle'),
     searchfieldToggle = $('#searchfield-toggle'),
     searchfieldCollapseToggle = $('#searchfield-collapse-toggle'),
+    searchfieldClearableToggle = $('#searchfield-clear-toggle'),
     moreButtonToggle = $('#more-button-toggle'),
     eyebrowToggle = $('#eyebrow-toggle'),
     settingsToggle = $('#settings-toggle'),
@@ -271,6 +269,7 @@
 
   function updateSearchfield() {
     var settings = {
+      clearable: searchfieldClearableToggle.prop('checked'),
       collapsible: searchfieldCollapseToggle.prop('checked')
     };
 
@@ -304,7 +303,7 @@
   $('body').on('initialized', function() {
     toolbarAPI = toolbarElem.data(toolbarElem.is('.flex-toolbar') ? 'toolbar-flex' : 'toolbar');
 
-    textBtn.on('click.test', function() {
+    textField.add(eyebrowField).on('input.test', function() {
       updateHeaderText();
     });
 
@@ -322,7 +321,7 @@
       updateTitleButton();
     });
 
-    searchfieldToggle.add(searchfieldCollapseToggle).on('change.test', function() {
+    searchfieldToggle.add(searchfieldCollapseToggle).add(searchfieldClearableToggle).on('change.test', function() {
       updateSearchfield();
     });
 
@@ -330,37 +329,26 @@
       updateMoreButton(e);
     });
 
-    settingsToggle.on('change.test', function() {
-      if (settingsToggle.prop('checked')) {
-        settingsBtn.removeClass('hidden');
+    function updateOnChange(toggleBtn, targetElem) {
+      if (toggleBtn.prop('checked')) {
+        targetElem.removeClass('hidden');
         toolbarElem.trigger('updated');
         return;
       }
-
-      settingsBtn.addClass('hidden');
+      targetElem.addClass('hidden');
       toolbarElem.trigger('updated');
+    }
+
+    settingsToggle.on('change.test', function() {
+      updateOnChange(settingsToggle, settingsBtn);
     });
 
     filterToggle.on('change.test', function() {
-      if (filterToggle.prop('checked')) {
-        filterBtn.removeClass('hidden');
-        toolbarElem.trigger('updated');
-        return;
-      }
-
-      filterBtn.addClass('hidden');
-      toolbarElem.trigger('updated');
+      updateOnChange(filterToggle, filterBtn);
     });
 
     deleteToggle.on('change.test', function() {
-      if (deleteToggle.prop('checked')) {
-        deleteBtn.removeClass('hidden');
-        toolbarElem.trigger('updated');
-        return;
-      }
-
-      deleteBtn.addClass('hidden');
-      toolbarElem.trigger('updated');
+      updateOnChange(deleteToggle, deleteBtn);
     });
   });
 </script>
