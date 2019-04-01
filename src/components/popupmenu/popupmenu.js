@@ -165,7 +165,6 @@ PopupMenu.prototype = {
           duplicateMenu.attr('data-trigger', triggerId);
           this.menu.attr('data-trigger', triggerId);
         }
-        console.log(this.menu);
         break;
       case 'object': // jQuery Object
         if (this.settings.menu === null) {
