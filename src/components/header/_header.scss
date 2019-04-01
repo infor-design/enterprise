@@ -388,9 +388,11 @@ $subheader-height: 60px;
     }
   }
 
-  .icon.app-header {
-    > span {
-      background-color: $header-button-color;
+  [class^='btn'] {
+    .icon.app-header {
+      > span {
+        background-color: $header-button-color;
+      }
     }
   }
 

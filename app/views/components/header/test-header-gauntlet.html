@@ -1,6 +1,7 @@
 <header id="customizable-header" class="header">
-  <div class="toolbar">
-    <div class="title">
+  <div class="{{#useFlexToolbar}}flex-toolbar{{/useFlexToolbar}}{{^useFlexToolbar}}toolbar{{/useFlexToolbar}}">
+    {{#useFlexToolbar}}
+    <div class="toolbar-section">
       <button id="app-menu-trigger" class="btn-icon application-menu-trigger" type="button">
         <span class="audible">Show navigation</span>
         <span class="icon app-header">
@@ -9,16 +10,41 @@
           <span class="three"></span>
         </span>
       </button>
+    </div>
+    {{/useFlexToolbar}}
+
+    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}title">
+      {{^useFlexToolbar}}
+      <button id="app-menu-trigger" class="btn-icon application-menu-trigger" type="button">
+        <span class="audible">Show navigation</span>
+        <span class="icon app-header">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>
+      {{/useFlexToolbar}}
       <h1 id="title-text-elem">
         <span class="page-title">Header Toolbar Gauntlet</span>
       </h1>
     </div>
 
-    <div class="buttonset">
+    {{#useFlexToolbar}}
+    <div class="toolbar-section search">
+      <div id="header-searchfield-wrapper" class="searchfield-wrapper">
+        <label for="header-searchfield" class="audible">Search</label>
+        <input id="header-searchfield" class="searchfield" name="header-searchfield" />
+      </div>
+    </div>
+    {{/useFlexToolbar}}
+
+    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}buttonset">
+      {{^useFlexToolbar}}
       <div id="header-searchfield-wrapper" class="searchfield-wrapper toolbar-searchfield-wrapper">
         <label for="header-searchfield" class="audible">Search</label>
         <input id="header-searchfield" class="searchfield" name="header-searchfield" />
       </div>
+      {{/useFlexToolbar}}
 
       <button id="settings-button" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -42,13 +68,25 @@
       </button>
     </div>
 
-    <div id="more-button" class="more">
+    <div id="more-button" class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}more">
       <button class="btn-actions" type="button">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-more"></use>
         </svg>
         <span class="audible" data-translate="text">More</span>
       </button>
+      <ul class="popupmenu">
+        <li><a href="#">Item One</a></li>
+        <li><a href="#">Item Two</a></li>
+        <li class="submenu">
+          <a href="#">Item Three</a>
+          <ul class="popupmenu">
+            <li><a href="#">Sub-Item One</a></li>
+            <li><a href="#">Sub-Item Two</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Item Four</a></li>
+      </ul>
     </div>
 
   </div>
@@ -61,7 +99,6 @@
 </div>
 <div class="row">
   <div class="six columns">
-
     <div class="field">
       <label for="title-name">Header Title Text</label>
       <input id="title-name" type="text" value="Header Toolbar Gauntlet"/>
@@ -83,52 +120,93 @@
       <input id="eyebrow-text" type="text" value="Extra Info" disabled/>
     </div>
 
-    <input type="checkbox" class="checkbox" name="title-button-toggle" id="title-button-toggle" checked/>
-    <label for="title-button-toggle" class="radio-label">Toggle App Menu (Title) Button</label>
-    <br />
+    <fieldset>
+      <legend>Searchfield Settings</legend>
 
-    <input type="checkbox" class="checkbox" name="searchfield-toggle" id="searchfield-toggle" checked/>
-    <label for="searchfield-toggle" class="radio-label">Toggle Searchfield</label>
-    <br />
+      <input type="checkbox" class="checkbox" name="searchfield-toggle" id="searchfield-toggle" checked/>
+      <label for="searchfield-toggle" class="radio-label">Toggle Searchfield</label>
+      <br />
 
-    <input type="checkbox" class="checkbox" name="more-button-toggle" id="more-button-toggle" checked/>
-    <label for="more-button-toggle" class="radio-label">Toggle "More Actions" Button</label>
-    <br />
+      <input type="checkbox" class="checkbox" name="searchfield-collapse-toggle" id="searchfield-collapse-toggle"/>
+      <label for="searchfield-collapse-toggle" class="radio-label">Collapsible</label>
+      <br />
+    </fieldset>
+  </div>
+  <div class="six columns">
+    <fieldset>
+      <legend>Button Settings</legend>
 
-    <input type="checkbox" class="checkbox" name="settings-toggle" id="settings-toggle" checked/>
-    <label for="settings-toggle" class="radio-label">Toggle "Settings" Toolbar Button</label>
-    <br />
+      <input type="checkbox" class="checkbox" name="title-button-toggle" id="title-button-toggle" checked/>
+      <label for="title-button-toggle" class="radio-label">Toggle App Menu (Title) Button</label>
+      <br />
 
-    <input type="checkbox" class="checkbox" name="delete-toggle" id="delete-toggle" checked/>
-    <label for="delete-toggle" class="radio-label">Toggle "Delete" Toolbar Button</label>
-    <br />
+      <input type="checkbox" class="checkbox" name="settings-toggle" id="settings-toggle" checked/>
+      <label for="settings-toggle" class="radio-label">Toggle "Settings" Toolbar Button</label>
+      <br />
 
-    <input type="checkbox" class="checkbox" name="filter-toggle" id="filter-toggle" checked/>
-    <label for="filter-toggle" class="radio-label">Toggle "Filter" Toolbar Button</label>
+      <input type="checkbox" class="checkbox" name="delete-toggle" id="delete-toggle" checked/>
+      <label for="delete-toggle" class="radio-label">Toggle "Delete" Toolbar Button</label>
+      <br />
 
+      <input type="checkbox" class="checkbox" name="filter-toggle" id="filter-toggle" checked/>
+      <label for="filter-toggle" class="radio-label">Toggle "Filter" Toolbar Button</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Overflow Settings</legend>
+
+      <input type="checkbox" class="checkbox" name="more-button-toggle" id="more-button-toggle" checked/>
+      <label for="more-button-toggle" class="radio-label">Toggle "More Actions" Button</label>
+      <br />
+    </fieldset>
   </div>
 </div>
 
 <script>
   var headerElem = $('#customizable-header'),
-    toolbarElem = headerElem.children('.toolbar'),
+    toolbarElem = headerElem.children('.toolbar, .flex-toolbar'),
     titleTextElem = $('#title-text-elem'),
     textField = $('#title-name'),
     textBtn = $('#update-title-name'),
     eyebrowField = $('#eyebrow-text'),
     titleButtonToggle = $('#title-button-toggle'),
     searchfieldToggle = $('#searchfield-toggle'),
+    searchfieldCollapseToggle = $('#searchfield-collapse-toggle'),
     moreButtonToggle = $('#more-button-toggle'),
     eyebrowToggle = $('#eyebrow-toggle'),
     settingsToggle = $('#settings-toggle'),
     filterToggle = $('#filter-toggle'),
     deleteToggle = $('#delete-toggle'),
+    morePredefinedToggle = $('#more-predefined-toggle'),
     appMenuTrigger = $('#app-menu-trigger'),
-    moreButtonElem = $('#more-button'),
     headerSearchfieldWrapper = $('#header-searchfield-wrapper'),
     settingsBtn = $('#settings-button'),
     filterBtn = $('#filter-button'),
-    deleteBtn = $('#delete-button');
+    deleteBtn = $('#delete-button'),
+    moreButtonElem = $('#more-button'),
+    moreBtn = moreButtonElem.children('.btn-actions'),
+    toolbarAPI;
+
+  function teardown() {
+    if (toolbarElem.is('.flex-toolbar')) {
+      toolbarElem.data('toolbar-flex')
+        .teardown();
+      return;
+    }
+
+    toolbarElem.data('toolbar')
+      .unbind()
+      .teardown();
+  }
+
+  function rebuild() {
+    if (toolbarElem.is('.flex-toolbar')) {
+      toolbarElem.data('toolbar-flex').init();
+      return;
+    }
+
+    toolbarElem.data('toolbar').init();
+  }
 
   function updateHeaderText() {
     var h1Contents = '';
@@ -144,6 +222,8 @@
   }
 
   function createTitleButton() {
+    teardown();
+
     var btn = $('<button id="app-menu-trigger" class="btn-icon application-menu-trigger" type="button">' +
       '<span class="audible">Show navigation</span>' +
       '<span class="icon app-header">' +
@@ -151,9 +231,16 @@
         '<span class="two"></span>' +
         '<span class="three"></span>' +
       '</span>' +
-    '</button>').insertBefore(titleTextElem);
+    '</button>');
 
-    toolbarElem.triggerHandler('updated');
+    // Flex Toolbar has a section before the `.title`
+    if (toolbarElem.is('.flex-toolbar')) {
+      btn.appendTo(toolbarElem.children().first());
+    } else {
+      btn.insertBefore(titleTextElem);
+    }
+
+    rebuild();
     return btn;
   }
 
@@ -162,16 +249,20 @@
       return;
     }
 
+    teardown();
     appMenuTrigger.off().remove();
     toolbarElem.triggerHandler('updated');
     appMenuTrigger = undefined;
+    rebuild();
   }
 
   function updateTitleButton() {
     if (titleButtonToggle.prop('checked')) {
+      teardown();
       if (!appMenuTrigger) {
         appMenuTrigger = createTitleButton();
       }
+      rebuild();
       return;
     }
 
@@ -179,23 +270,40 @@
   }
 
   function updateSearchfield() {
+    var settings = {
+      collapsible: searchfieldCollapseToggle.prop('checked')
+    };
+
     if (searchfieldToggle.prop('checked')) {
       headerSearchfieldWrapper.removeClass('hidden');
-      toolbarElem.trigger('updated');
-      return;
+    } else {
+      headerSearchfieldWrapper.addClass('hidden');
     }
 
-    headerSearchfieldWrapper.addClass('hidden');
-    toolbarElem.trigger('updated');
+    $('#header-searchfield').data('searchfield').updated(settings);
   }
 
-  function updateMoreButton() {
-    var isChecked = moreButtonToggle.prop('checked');
-    toolbarElem[isChecked ? 'removeClass' : 'addClass']('no-actions-button');
-    toolbarElem.trigger('updated');
+  function updateMoreButton(e) {
+    var isToggleChecked = moreButtonToggle.prop('checked');
+    var showPredefinedItems = morePredefinedToggle.prop('checked');
+
+    teardown();
+    // Enable the "predefined menu items" button if the toggler is checked
+    if (e && $(e.currentTarget).is(moreButtonToggle)) {
+      $(morePredefinedToggle)[isToggleChecked ? 'enable' : 'disable']();
+    }
+
+    if (toolbarElem.is('.flex-toolbar')) {
+      moreButtonElem[isToggleChecked ? 'removeClass' : 'addClass']('hidden');
+    } else {
+      toolbarElem[isToggleChecked ? 'removeClass' : 'addClass']('no-actions-button');
+    }
+    rebuild();
   }
 
   $('body').on('initialized', function() {
+    toolbarAPI = toolbarElem.data(toolbarElem.is('.flex-toolbar') ? 'toolbar-flex' : 'toolbar');
+
     textBtn.on('click.test', function() {
       updateHeaderText();
     });
@@ -214,12 +322,12 @@
       updateTitleButton();
     });
 
-    searchfieldToggle.on('change.test', function() {
+    searchfieldToggle.add(searchfieldCollapseToggle).on('change.test', function() {
       updateSearchfield();
     });
 
-    moreButtonToggle.on('change.test', function() {
-      updateMoreButton();
+    moreButtonToggle.on('change.test', function(e) {
+      updateMoreButton(e);
     });
 
     settingsToggle.on('change.test', function() {
@@ -254,6 +362,5 @@
       deleteBtn.addClass('hidden');
       toolbarElem.trigger('updated');
     });
-
   });
 </script>

@@ -450,6 +450,8 @@ SearchField.prototype = {
    * Simpler version of `adjustOnBreakpoint` for non-collapsible Toolbar Flex searchfields
    */
   simpleAdjustOnBreakpoint() {
+    return;
+
     if (this.shouldBeFullWidth()) {
       if (!this.isFocused) {
         this.wrapper[0].classList.remove('is-open');

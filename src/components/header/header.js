@@ -121,7 +121,7 @@ Header.prototype = {
     if (!elem.length) {
       return this;
     }
-    if (elem.is('.toolbar-flex')) {
+    if (elem.is('.flex-toolbar')) {
       isFlex = true;
     }
     this.toolbarElem = elem;
