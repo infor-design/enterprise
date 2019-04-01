@@ -604,8 +604,6 @@ Tooltip.prototype = {
      * @property {object} tooltip - instance
      */
     okToShow = this.element.triggerHandler('beforeshow', [this.tooltip]);
-    console.log(okToShow);
-    console.log(this.settings);
     if (okToShow === false) {
       return;
     }
