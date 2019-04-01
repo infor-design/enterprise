@@ -368,32 +368,34 @@ Header.prototype = {
     const self = this;
 
     this.element
-      .on('updated.header', (e, settings) => {
+      .on(`updated.${COMPONENT_NAME}`, (e, settings) => {
         self.updated(settings);
       })
-      .on('reset.header', () => {
+      .on(`reset.${COMPONENT_NAME}`, () => {
         self.reset();
       })
-      .on('drilldown.header', (e, viewTitle) => {
+      .on(`drilldown.${COMPONENT_NAME}`, (e, viewTitle) => {
         self.drilldown(viewTitle);
       })
-      .on('drillup.header', (e, viewTitle) => {
+      .on(`drillup.${COMPONENT_NAME}`, (e, viewTitle) => {
         self.drillup(viewTitle);
       });
 
     // Events for the title button.  e.preventDefault(); stops Application Menu
     // functionality while drilled
-    this.titleButton.bindFirst('click.header', (e) => {
-      if (self.levelsDeep.length > 1) {
-        e.stopImmediatePropagation();
-        self.drillup();
-        e.returnValue = false;
-      }
-    });
+    if (this.titleButton && this.titleButton.length) {
+      this.titleButton.bindFirst(`click.${COMPONENT_NAME}`, (e) => {
+        if (self.levelsDeep.length > 1) {
+          e.stopImmediatePropagation();
+          self.drillup();
+          e.returnValue = false;
+        }
+      });
+    }
 
     // Popupmenu Events
-    if (this.settings.usePopupmenu) {
-      this.titlePopup.on('selected.header', function (e, anchor) {
+    if (this.titlePopup && this.titlePopup.length) {
+      this.titlePopup.on(`selected.${COMPONENT_NAME}`, function (e, anchor) {
         $(this).children('h1').text(anchor.text());
       });
     }
@@ -716,8 +718,21 @@ Header.prototype = {
    * @returns {this} component instance
    */
   unbind() {
-    this.titleButton.off('click.header');
-    this.element.off('drilldown.header drillup.header');
+    if (this.titleButton && this.titleButton.length) {
+      this.titleButton.off(`click.${COMPONENT_NAME}`);
+    }
+
+    if (this.titlePopup && this.titlePopup.length) {
+      this.titlePopup.off(`updated.${COMPONENT_NAME}`);
+    }
+
+    this.element.off([
+      `updated.${COMPONENT_NAME}`,
+      `reset.${COMPONENT_NAME}`,
+      `drilldown.${COMPONENT_NAME}`,
+      `drillup.${COMPONENT_NAME}`,
+    ].join(' '));
+
     return this;
   },
 
