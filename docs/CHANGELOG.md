@@ -8,6 +8,7 @@
 
 ### v4.18.0 Fixes
 
+- `[Toolbar]` Fixed issues when tooltip shows on hover of toolbar ([#1622](https://github.com/infor-design/enterprise/issues/1622))
 - `[Tabs-Module]` Fixed an issue where the close icon was outside the searchfield. ([#1704](https://github.com/infor-design/enterprise/issues/1704))
 - `[Skiplink]` Fixed an zindex issue on skip links over the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
 - `[App Menu]` Fixed some accessibility issues on the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
