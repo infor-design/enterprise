@@ -23,22 +23,22 @@ After installation, the pre-built files are accessible in `./node_modules/ids-en
 
 #### CDN
 
-We now offer the IDS library via CDN. For example, the paths for the 4.10.0 releases would be:
+We now offer the IDS library via CDN. For example, the paths for the 4.18.0 releases would be:
 
 ```html
-https://cdn.hookandloop.infor.com/sohoxi/4.10.0/js/sohoxi.js
-https://cdn.hookandloop.infor.com/sohoxi/4.10.0/js/sohoxi.min.js
-https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/dark-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/dark-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/dark-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/dark-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/light-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.10.0/css/light-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.10.0/svg/svg.html
-https://cdn.hookandloop.infor.com/sohoxi/4.10.0/svg/svg-extended.html
+https://cdn.hookandloop.infor.com/sohoxi/4.18.0/js/sohoxi.js
+https://cdn.hookandloop.infor.com/sohoxi/4.18.0/js/sohoxi.min.js
+https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/dark-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/dark-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/dark-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/dark-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/light-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/light-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.18.0/svg/svg.html
+https://cdn.hookandloop.infor.com/sohoxi/4.18.0/svg/svg-extended.html
 ```
 
-Versions available on CDN are: 4.3.2, 4.3.3, 4.3.4, 4.3.5, 4.7.0, 4.8.0, 4.9.0, and 4.10.0.
+Versions available on CDN are: 4.3.2 to 4.3.5, 4.7.0 to 4.18.0
 
 **Note:** There may be a cost involved to using this with Infor's Amazon S3 account.  Please keep this in mind when using the library this way.
 
@@ -202,6 +202,10 @@ Documentation from within this project is deployed to [design.infor.com](https:/
 ## QA Documentation
 
 See [the QA Documentation Checklist](./QA.md).
+
+## Accessibility Documentation
+
+See [The Notes on Accessibility](./ACCESSIBILITY.md).
 
 ## Contributing
 
