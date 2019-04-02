@@ -9,6 +9,7 @@
 ### v4.18.0 Fixes
 
 - `[Tabs-Module]` Fixed an issue where the close icon was outside the searchfield. ([#1704](https://github.com/infor-design/enterprise/issues/1704))
+- `[Css/Sass]` Fixed an issue where the High Contrast theme and Uplift theme were not using the right tokens.
 
 ### v4.18.0 Chore & Maintenance
 
