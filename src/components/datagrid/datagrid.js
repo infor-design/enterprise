@@ -5077,7 +5077,7 @@ Datagrid.prototype = {
     let columnStartWidth;
     let column;
 
-    this.resizeHandle.drag({ axis: 'x', containment: 'parent' })
+    this.resizeHandle.drag({ axis: 'x', containment: this.element })
       .on('dragstart.datagrid', () => {
         if (!self.currentHeader) {
           return;
