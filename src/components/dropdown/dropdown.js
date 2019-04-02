@@ -200,12 +200,8 @@ Dropdown.prototype = {
     this.pseudoElem
       .attr(attributesToCopy.obj)
       .attr({
-        role: 'combobox',
-        'aria-autocomplete': 'list',
-        'aria-controls': 'dropdown-list',
-        'aria-readonly': 'true',
-        'aria-expanded': 'false',
-        'aria-label': this.label.text()
+        role: 'button',
+        'aria-haspopup': 'listbox'
       });
 
     // Pass disabled/readonly from the original element, if applicable
@@ -622,17 +618,11 @@ Dropdown.prototype = {
     }
 
     if (!listExists) {
-      listContents = `<div class="dropdown-list${reverseText
-      }${isMobile ? ' mobile' : ''
-      }${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" role="application" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>` +
-        `<label for="dropdown-search" class="audible">${Locale.translate('Search')}</label>` +
-        `<input type="text" class="dropdown-search${reverseText
-        }" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">` +
-        `<span class="trigger">${
-          isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')
-        }<span class="audible">${isMobile ? Locale.translate('Close') : Locale.translate('Collapse')}</span>` +
-        '</span>' +
-        '<ul role="listbox">';
+      listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
+        <label for="dropdown-search" class="audible">${Locale.translate('TypeToFilter')}</label>
+        <input type="text" class="dropdown-search${reverseText}" id="dropdown-search">
+        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}<span class="audible">${isMobile ? Locale.translate('Close') : Locale.translate('Collapse')}</span></span>
+        <ul role="listbox">`;
     }
 
     // Get a current list of <option> elements
@@ -704,7 +694,7 @@ Dropdown.prototype = {
         text = text.replace(exp, '<i>$1</i>').trim();
       }
 
-      liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" data-val="${trueValue}" ${copiedDataAttrs}${tabIndex}${hasTitle} role="presentation">
+      liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" ${isSelected ? 'aria-selected="true"' : ''} data-val="${trueValue}" ${copiedDataAttrs}${tabIndex}${hasTitle} role="option">
         <a id="list-option-${index}" href="#" ${aCssClasses} role="option">${iconHtml}${text}${badgeHtml}</a></li>`;
 
       return liMarkup;
@@ -845,7 +835,7 @@ Dropdown.prototype = {
     }
 
     if (this.settings.empty && opts.length === 0) {
-      this.pseudoElem.find('span').text('');
+      this.pseudoElem.find('span').html(`<span class="audible">${this.label.text()} </span>`);
       return;
     }
 
@@ -855,7 +845,7 @@ Dropdown.prototype = {
       text = text.substr(0, maxlength);
     }
     text = text.trim();
-    this.pseudoElem.find('span').text(text);
+    this.pseudoElem.find('span').html(`<span class="audible">${this.label.text()} </span>${text}`);
 
     // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
@@ -1024,7 +1014,7 @@ Dropdown.prototype = {
 
       // Highlight Term
       const exp = self.getSearchRegex(term);
-      const text = li.text().replace(exp, '<i>$1</i>').trim();
+      const text = li.text().replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
       const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
 
       if (icon) {
@@ -1299,7 +1289,7 @@ Dropdown.prototype = {
       if (self.searchInput && self.searchInput.length) {
         self.searchInput.val($.actualChar(e));
       }
-      self.toggleList();
+      self.toggle();
     }
 
     this.searchKeyMode = true;
@@ -1627,7 +1617,6 @@ Dropdown.prototype = {
       .attr('aria-expanded', 'true')
       .addClass('is-open');
 
-    this.pseudoElem.attr('aria-label', this.label.text());
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
     // In a grid cell
@@ -1662,7 +1651,12 @@ Dropdown.prototype = {
     if (this.filterTerm) {
       this.searchInput.val(this.filterTerm);
     } else {
-      this.searchInput.val(this.pseudoElem.find('span').text().trim());
+      const fieldValue = this.pseudoElem.find('span:not(.audible)')
+        .contents()
+        .eq(1)
+        .text()
+        .trim();
+      this.searchInput.val(fieldValue);
     }
 
     const noScroll = this.settings.multiple;
@@ -1938,6 +1932,11 @@ Dropdown.prototype = {
     if (this.settings.multiple && target[0].classList.contains('dropdown-select-all-list-item')) {
       const doSelectAll = !(target[0].classList.contains('is-selected'));
       target[0].classList[doSelectAll ? 'add' : 'remove']('is-selected');
+      if (doSelectAll) {
+        target[0].setAttribute('aria-selected', 'true');
+      } else {
+        target[0].removeAttribute('aria-selected');
+      }
       this.selectAll(doSelectAll);
       return true;  //eslint-disable-line
     }
@@ -1977,9 +1976,9 @@ Dropdown.prototype = {
       const selectedOpts = opts.filter(':selected');
 
       if (opts.length > selectedOpts.length) {
-        this.list.find('.dropdown-select-all-list-item').removeClass('is-selected');
+        this.list.find('.dropdown-select-all-list-item').removeClass('is-selected').removeAttr('aria-selected');
       } else {
-        this.list.find('.dropdown-select-all-list-item').addClass('is-selected');
+        this.list.find('.dropdown-select-all-list-item').addClass('is-selected').attr('aria-selected', 'true');
       }
     }
 
@@ -2045,7 +2044,7 @@ Dropdown.prototype = {
 
     this.pseudoElem
       .removeClass('is-open')
-      .attr('aria-expanded', 'false');
+      .removeAttr('aria-expanded');
 
     this.searchInput
       .removeAttr('aria-activedescendant');
@@ -2352,7 +2351,7 @@ Dropdown.prototype = {
       }
       if ($.inArray(optionVal, val) !== -1) {
         val = $.grep(val, optionValue => optionValue !== optionVal);
-        li.removeClass('is-selected');
+        li.removeClass('is-selected').removeAttr('aria-selected');
         this.previousActiveDescendant = undefined;
         isAdded = false;
       } else {
@@ -2363,7 +2362,7 @@ Dropdown.prototype = {
 
         val = typeof val === 'string' ? [val] : val;
         val.push(optionVal);
-        li.addClass('is-selected');
+        li.addClass('is-selected').attr('aria-selected', 'true');
         this.previousActiveDescendant = option.val();
       }
 
@@ -2374,9 +2373,9 @@ Dropdown.prototype = {
     } else {
       // Working with a single select
       val = optionVal;
-      this.listUl.find('li.is-selected').removeClass('is-selected');
+      this.listUl.find('li.is-selected').removeClass('is-selected').removeAttr('aria-selected');
       if (!clearSelection) {
-        li.addClass('is-selected');
+        li.addClass('is-selected').attr('aria-selected', 'true');
       }
       this.previousActiveDescendant = option.val();
       text = option.text();
@@ -2393,10 +2392,10 @@ Dropdown.prototype = {
 
     // Change the values of both inputs and swap out the active descendant
     if (!clearSelection) {
-      this.pseudoElem.find('span').text(text);
+      this.pseudoElem.find('span').text(`<span class="audible">${this.label.text()} </span>${text}`);
       this.searchInput.val(text);
     } else {
-      this.pseudoElem.find('span').text('');
+      this.pseudoElem.find('span').text(`<span class="audible">${this.label.text()} </span>${text}`);
       this.searchInput.val('');
     }
 
@@ -2836,7 +2835,7 @@ Dropdown.prototype = {
     if (this.pseudoElem && this.pseudoElem.hasClass('is-open')) {
       this.pseudoElem
         .removeClass('is-open')
-        .attr('aria-expanded', 'false');
+        .removeAttr('aria-expanded');
     }
 
     // Update the 'multiple' property
@@ -2906,11 +2905,11 @@ Dropdown.prototype = {
         if (e.button === 2) {
           return;
         }
-        self.toggleList();
+        self.toggle();
       })
       .on('touchend.dropdown touchcancel.dropdown', (e) => {
         e.stopPropagation();
-        self.toggleList();
+        self.toggle();
         e.preventDefault();
       });
 
@@ -2920,7 +2919,7 @@ Dropdown.prototype = {
       e.stopPropagation();
       self.updated();
     }).on('openlist.dropdown', () => {
-      self.toggleList();
+      self.toggle();
     });
 
     // for form resets.

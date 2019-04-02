@@ -9,8 +9,17 @@
 ### v4.18.0 Fixes
 
 - `[Tabs-Module]` Fixed an issue where the close icon was outside the searchfield. ([#1704](https://github.com/infor-design/enterprise/issues/1704))
+- `[Skiplink]` Fixed an zindex issue on skip links over the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
+- `[App Menu]` Fixed some accessibility issues on the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
+- `[Dropdown]` Changed the way dropdowns work with screen readers to be a collapsible listbox.([#404](https://github.com/infor-design/enterprise/issues/404))
+- `[MenuButton]` Approved the way menu buttons work with screen readers.([#404](https://github.com/infor-design/enterprise/issues/404))
 
 ### v4.18.0 Chore & Maintenance
+
+- `[Docs]` Added the supported screen readers and some notes on accessibility. ([#1722](https://github.com/infor-design/enterprise/issues/1722))
+- `[Docs]` Added a statement on supporting accessibility. ([#1540](https://github.com/infor-design/enterprise/issues/1540))
+
+(nn Issues Solved this release, Backlog Enterprise nn, Backlog Ng nn, nn Functional Tests, nn e2e Test)
 
 ## v4.17.0
 
