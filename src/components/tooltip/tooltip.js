@@ -590,7 +590,6 @@ Tooltip.prototype = {
     }
 
     let okToShow = true;
-
     okToShow = this.setContent(this.content);
     if (okToShow === false) {
       return;
