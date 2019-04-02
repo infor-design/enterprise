@@ -234,12 +234,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
-  &:not(.is-open) {
-    .icon.close {
-      display: none !important;
-    }
-  }
-
   &.has-focus {
     .searchfield {
       border-color: transparent;
@@ -315,6 +309,8 @@ $toolbarsearchfield-category-empty-width: 51px;
       .go-button {
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
+        position: relative;
+        right: 0;
       }
     }
 
@@ -326,10 +322,8 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   &.has-go-button {
-    &.has-text {
-      .searchfield {
-        width: 100%;
-      }
+    .searchfield {
+      width: auto !important;
     }
   }
 
@@ -584,6 +578,14 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 }
 
+.header {
+  .toolbar {
+    .toolbar-searchfield-wrapper {
+      text-align: right;
+    }
+  }
+}
+
 // For non-collapsible searchfields:  Only be non-collapsible on larger breakpoints.
 @media (min-width: $breakpoint-phone-to-tablet) {
   .toolbar-searchfield-wrapper.non-collapsible {
@@ -684,9 +686,15 @@ $toolbarsearchfield-category-empty-width: 51px;
 }
 
 html[dir='rtl'] {
-  .toolbar-searchfield-wrapper {
-    text-align: right;
+  .header {
+    .toolbar {
+      .toolbar-searchfield-wrapper {
+        text-align: left;
+      }
+    }
+  }
 
+  .toolbar-searchfield-wrapper {
     &.has-text {
       &:not(.is-open) {
         .searchfield {
@@ -715,7 +723,8 @@ html[dir='rtl'] {
 
       &.show-category {
         .searchfield {
-          padding-right: 10px;
+          padding-left: 22px;
+          padding-right: 5px;
         }
       }
     }
@@ -764,16 +773,66 @@ html[dir='rtl'] {
     }
 
     &.has-go-button {
-      > .icon.close {
-        right: 35px;
+      width: auto !important;
+
+      > .icon {
+        &.close {
+          color: $searchfield-header-icon-color;
+          right: 45px;
+        }
       }
     }
   }
 
   html[dir='rtl'] {
     .toolbar-searchfield-wrapper.has-go-button > .icon.close {
-      left: 35px;
+      left: 45px;
       right: auto;
+    }
+  }
+}
+
+@include respond-to(phonedown) {
+  .toolbar-searchfield-wrapper {
+    &.has-categories {
+      &.show-category {
+        .btn {
+          padding-right: 5px;
+        }
+      }
+
+      &.has-go-button {
+        > .icon {
+          &.close {
+            right: 60px;
+          }
+        }
+
+        .searchfield {
+          padding-right: 40px;
+          width: auto !important;
+        }
+
+        .go-button {
+          right: 17px;
+        }
+      }
+    }
+  }
+
+  html[dir='rtl'] {
+    .toolbar-searchfield-wrapper {
+      &.has-categories {
+        &.has-go-button {
+          > .icon.close {
+            left: 40px;
+          }
+
+          .go-button {
+            right: 0;
+          }
+        }
+      }
     }
   }
 }
