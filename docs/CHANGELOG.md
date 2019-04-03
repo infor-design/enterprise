@@ -8,6 +8,7 @@
 
 ### v4.18.0 Fixes
 
+- `[Listbuilder]` Fixed an issue where the text was not sanitizing. ([#1692](https://github.com/infor-design/enterprise/issues/1692))
 - `[Colors]` Fixed color demo page to update hex values based on theme.
 - `[Signin]` Fixed accessibility issues. ([#421](https://github.com/infor-design/enterprise/issues/421))
 - `[Toolbar]` Fixed issues when tooltip shows on hover of toolbar ([#1622](https://github.com/infor-design/enterprise/issues/1622))
