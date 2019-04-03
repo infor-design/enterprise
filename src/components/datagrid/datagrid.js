@@ -9051,7 +9051,7 @@ Datagrid.prototype = {
         setTimeout(() => {
           const evt = $.Event('keydown.datagrid');
           evt.keyCode = keyCode;
-          
+
           self.activeCell.node.trigger(evt);
         }, 0);
       } else {
