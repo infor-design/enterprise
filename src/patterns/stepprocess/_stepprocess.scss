@@ -419,7 +419,19 @@ html[dir='rtl'] {
 
   @include respond-to(phone) {
     .step-process-container {
+      .sidebar {
+        @include css3(transform, translateX(0));
+      }
+
+      .main {
+        @include css3(transform, translateX(-100%));
+      }
+
       &.phone-hide-steps {
+        .main {
+          @include css3(transform, translateX(0));
+        }
+
         .sidebar {
           @include css3(transform, translateX(100%));
         }
