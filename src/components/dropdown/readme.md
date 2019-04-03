@@ -65,17 +65,15 @@ The control is initialized through the page initializer with `$('body').initiali
 
 ## Accessibility
 
-The dropdown list is fairly complex to make accessible but generally this can be accomplished in three steps:
+The dropdown list has been coded to act similar to the [aria best practices collapsible dropdown listbox](https://w3c.github.io/aria-practices/examples/listbox/listbox-collapsible.html). With some variations such as not having `aria-selected` as the value is only selected when you press enter. Also when opening the dropdown there is a filter field where you can type to filter.
 
-1. Make sure the correct keyboard shortcuts are used
-2. Make sure that there is a `<label>` which matches both the `<input>` and any shadow element `<inputs>`, identifies the field, and is correctly matched using the `<label>` for the `<input>` `id`
-3. Use the following aria tags:
-    - `role="combobox"` on the `<input>`
-    - `aria-expanded` set to `true` when the list is expanded and set to `false` when closed
-    - `role="listbox"` on the open list
-    - `role="option"` on each list item
-    - `aria-activedescendant` to associate the `<input>` to the active list item. It must be removed if no options are selected
-    - `aria-controls` on the input field, containing the ID of the matching dropdown list
+1. Make sure that there is a `<label>` which matches both the `<input>` and any shadow element `<inputs>`, identifies the field, and is correctly matched using the `<label>` for the `<input>` `id`
+1. Uses the following aria tags:
+    - The label is copied into the visible field so it is read when you tab to the button along with the value.
+    - `aria-haspopup="listbox` Indicates that activating the button displays a listbox.
+    - `aria-expanded="true"` Is added when the dropdown opens.
+    - `aria-activedescendant="ID_REF"` Is added to the filter input so list values are read.
+    - Invisible labels on the filter field instruct the user how to
 
 ## Testability
 

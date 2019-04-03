@@ -129,7 +129,7 @@ describe('Validation form submit button', () => {
 
     expect(await submitButton.isEnabled()).toBe(false);
 
-    const dropdownEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
+    const dropdownEl = await element.all(by.css('div.dropdown')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
     await dropdownEl.click();
@@ -173,6 +173,7 @@ describe('Validation alert on parent', () => {
   it('Should render icon on parent', async () => {
     const expander = await element(by.css('.expandable-expander'));
     await expander.click();
+    await browser.driver.sleep(config.sleep);
 
     const emailEl = await element(by.id('date-field'));
     await browser.driver

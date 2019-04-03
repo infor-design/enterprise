@@ -37,8 +37,12 @@ The IDS components are backed by both functional and end-to-end (e2e) test suite
 
 - Try to use `protractor.ExpectedConditions` rather than sleeps to make things faster, these wait for items in the DOM to change. For more into see [the protractor docs](https://www.protractortest.org/#/api?view=ProtractorExpectedConditions).
 - If you have to use a sleep make sure to use the right config for example `await browser.driver.sleep(config.sleep)`. This is only .5 seconds
-- Try not repeat yourself in tests. For example if you covered some functionality in one page, no need to test the same thing in another page.
 - If you see a sleep in the code, try to refactor it to use `protractor.ExpectedConditions`
+- Keep the test as simple as possible and just test one thing per test
+- Try not repeat yourself in tests. For example if you covered some functionality in one page, no need to test the same thing in another page.
+- We use `async` in the tests rather than promises see [this blog on async tests](https://chariotsolutions.com/blog/post/simplify-protractor-web-tests-with-async-and-await/)
+- Make sure you don't forget the awaits, the await is just on the things that return a promise for example. `await element(by.css('.pager-next')).click();` not `await element(await by.css('.pager-next')).click();`.
+- In functional tests use the `cleanup` function and make sure you remove everything in the page including the scripts and add an id for them.
 
 ## Running Functional Tests
 
@@ -299,6 +303,23 @@ Once the files are copied to the host machine, check the image for quality, comm
 
 Tests should now pass on the branch CI as the baselines should be identical to the screenshots created during the test.
 
+## Making Accessibility e2e Tests with Axe
+
+Each component should have a passing e2e test with Axe. This tool will verify a few things for accessibility. We current ignore the contrast errors. An example of an e2e test with Axe is:
+
+```javascript
+if (!utils.isIE()) {
+  it('Should be accessible on click, and open with no WCAG 2AA violations', async () => {
+    await clickOnDropdown();
+    const res = await axePageObjects(browser.params.theme);
+
+    expect(res.violations.length).toEqual(0);
+  });
+}
+```
+
+You should make a test for any states the component has, like closed vs open, selected, deselected ect. If your having an issue with one of these tests you can either put a debugger into the test and follow the above steps for debugging an e2e test or you can install the [Axe Chome Dev Tools Plugin](https://chrome.google.com/webstore/detail/axe/lhdoppojpmngadmnindnejefpokejbdd?hl=en-US). This tool should give you the same output as the test.
+
 ## Testing Resources
 
 ### List of All "Matchers"
@@ -310,16 +331,5 @@ Tests should now pass on the branch CI as the baselines should be identical to t
 <https://medium.com/powtoon-engineering/a-complete-guide-to-testing-javascript-in-2017-a217b4cd5a2a>
 <https://blog.kentcdodds.com/write-tests-not-too-many-mostly-integration-5e8c7fff591c>
 <http://jasonrudolph.com/blog/2008/10/07/testing-anti-patterns-potpourri-quotes-resources-and-collective-wisdom/>
-<https://marcysutton.github.io/a11y-and-ci/#/>
 <https://codecraft.tv/courses/angular/unit-testing/jasmine-and-karma/>
 <https://hackernoon.com/testing-your-frontend-code-part-ii-unit-testing-1d05f8d50859>
-
-## FAQ
-
-- How come we do so much browser exclusion logic?
-
-    Each browser has a different Selenium driver with different capabilities. We plan highlight this difference for manual testing. As browser capabilities get updated, we should revisit tests that don't work. As for the Chrome exclusions, we are only testing visual regression on Chrome, and Travis CI. Chrome is the default local functional test browser, and will be responsible for aiding the creation of the baseline images for visual regression testing.
-
-- Why are so many Axe Rules disabled?
-
-    This a bit complex as the light theme does not meet WCAG 2.0 Level AA requirements, and per component in various states (open/close) may not be WCAG 2.0 Level AA as well. Additional various rules are at the application level and not suitable for review on this level. Currently, this is a @TODO, we hope to enable rules like "color-contrast" which are critical to various users.

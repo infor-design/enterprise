@@ -137,7 +137,6 @@ Or it can be attached on the fly in the page.
 
 - Make sure to always focus the triggering element when closing the popupmenu
 - Add `aria-hidden` when menu is in closed/invisible state
-- Uses `role="application"` for correct modality
 - Elements with a popup get `aria-haspopup` and `aria-owns="id"`
 - `<li>` elements get `role="presentation"` for groups and separators
 - Checked items get `aria-checked`

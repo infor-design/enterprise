@@ -19,13 +19,14 @@ function generalRoute(req, res, next) {
     res.opts.appMenuOpen = true;
   }
   const viewsRoot = req.app.get('views');
-  const directoryURL = utils.getDirectory(path.join(viewsRoot, req.originalUrl), viewsRoot);
-  const filename = utils.getFileName(req.originalUrl);
+  const originalUrl = utils.getPathWithoutQuery(req.originalUrl);
+  const directoryURL = utils.getDirectory(path.join(viewsRoot, originalUrl), viewsRoot);
+  const filename = utils.getFileName(originalUrl);
   const directoryPath = path.join(viewsRoot, directoryURL);
   const fileOnPath = path.join(directoryPath, filename);
 
   // Return out on '/';
-  if (utils.isRoot(req.originalUrl)) {
+  if (utils.isRoot(originalUrl)) {
     res.render(path.join(viewsRoot, 'kitchen-sink.html'), res.opts);
     next();
     return;
@@ -54,7 +55,7 @@ function generalRoute(req, res, next) {
   }
 
   // Check a friendly URL for a matching `.html` file.
-  const friendlyURLFilepath = path.resolve(`${viewsRoot}${utils.getPathWithoutQuery(req.originalUrl)}.html`);
+  const friendlyURLFilepath = path.resolve(`${viewsRoot}${originalUrl}.html`);
   if (utils.hasFile(friendlyURLFilepath)) {
     res.render(utils.getTemplateUrl(friendlyURLFilepath.replace(viewsRoot, '')), res.opts);
     next();
@@ -71,8 +72,8 @@ function generalRoute(req, res, next) {
 
   // Return the directory listing if we're looking at a directory
   if (utils.isType('directory', directoryPath)) {
-    if (req.originalUrl.substring(req.originalUrl.length - 1) === '/') {
-      res.redirect(req.originalUrl.substring(0, req.originalUrl.length - 1));
+    if (originalUrl.substring(originalUrl.length - 1) === '/') {
+      res.redirect(originalUrl.substring(0, originalUrl.length - 1));
       return;
     }
     directoryListing(directoryPath, viewsRoot, req, res, next);
