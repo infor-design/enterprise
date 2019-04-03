@@ -100,3 +100,36 @@ $(() => {
   addCssClassToParent($('.field > input:checkbox, .field > .inline-checkbox'), 'field-checkbox');
   addCssClassToParent($('.field > input:radio, .field > .inline-radio'), 'field-radio');
 });
+
+$(() => {
+  // Add `*` to required labels
+  const selector = 'label.required .label-text, .label.required .label-text, label:not(.inline).required, .label:not(.inline).required';
+  const labels = [].slice.call(document.body.querySelectorAll(selector));
+  labels.forEach((label) => {
+    const asterisk = label.querySelector('.required-asterisk');
+    if (!asterisk) {
+      label.insertAdjacentHTML('beforeend', '<span class="required-asterisk" aria-hidden="true">*</span>');
+    }
+  });
+
+  // Add `aria-required` to required elements
+  let elements = [].slice.call(document.body.querySelectorAll('[data-validate]'));
+  elements.forEach((el) => {
+    const rules = el.getAttribute('data-validate');
+    if (rules && rules.indexOf('required') > -1) {
+      el.setAttribute('aria-required', true);
+    }
+  });
+
+  // Add `aria-hidden` to hidden elements label
+  elements = [].slice.call(document.body.querySelectorAll('input[type="hidden"]'));
+  elements.forEach((el) => {
+    const id = el.getAttribute('id');
+    if (id) {
+      const label = document.body.querySelector(`label[for="${id}"]`);
+      if (label) {
+        label.setAttribute('aria-hidden', true);
+      }
+    }
+  });
+});
