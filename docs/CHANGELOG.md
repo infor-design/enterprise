@@ -8,7 +8,8 @@
 
 ### v4.18.0 Fixes
 
-- `[Colors]` Fixed color demo page to update hex values based on theme.
+- `[Datagrid]` Fixed an issue where lookup filterConditions were not rendering. ([#1873](https://github.com/infor-design/enterprise/issues/1873))
+- `[Colors]` Fixed color demo page to update hex values based on theme. ([#1801](https://github.com/infor-design/enterprise/issues/1801))
 - `[Signin]` Fixed accessibility issues. ([#421](https://github.com/infor-design/enterprise/issues/421))
 - `[Toolbar]` Fixed issues when tooltip shows on hover of toolbar ([#1622](https://github.com/infor-design/enterprise/issues/1622))
 - `[Tabs-Module]` Fixed an issue where the close icon was outside the searchfield. ([#1704](https://github.com/infor-design/enterprise/issues/1704))
