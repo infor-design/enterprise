@@ -1053,7 +1053,7 @@ describe('Locale API', () => {
   });
 
   it('Should handle group size', () => {
-    Locale.set('en-US'); // 3, 0
+    Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
     expect(Locale.formatNumber(1.1234)).toEqual('1.123');
@@ -1103,7 +1103,7 @@ describe('Locale API', () => {
   });
 
   it('Should parse group size', () => {
-    Locale.set('en-US'); // 3, 0
+    Locale.set('en-US'); // 3, 3
 
     expect(Locale.parseNumber('-253.00 %')).toEqual(-253);
     expect(Locale.parseNumber('1.123')).toEqual(1.123);
@@ -1153,7 +1153,7 @@ describe('Locale API', () => {
   });
 
   it('Should be able to not show the group size', () => {
-    Locale.set('en-US'); // 3, 0
+    Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(1234567.1234, { group: '' })).toEqual('1234567.123');
     expect(Locale.formatNumber(12345678.1234, { group: '' })).toEqual('12345678.123');
@@ -1170,7 +1170,7 @@ describe('Locale API', () => {
   });
 
   it('Should be able to set the group size', () => {
-    Locale.set('en-US'); // 3, 0
+    Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(1234567.1234, { groupSizes: [3, 0] })).toEqual('1234,567.123');
     expect(Locale.formatNumber(12345678.1234, { groupSizes: [3, 0] })).toEqual('12345,678.123');
@@ -1187,7 +1187,7 @@ describe('Locale API', () => {
   });
 
   it('Should be able to set zero group size', () => {
-    Locale.set('en-US'); // 3, 0
+    Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(1234567.1234, { groupSizes: [0, 0] })).toEqual('1234567.123');
     expect(Locale.formatNumber(12345678.1234, { groupSizes: [0, 0] })).toEqual('12345678.123');
