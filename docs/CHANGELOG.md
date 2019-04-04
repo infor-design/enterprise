@@ -1,5 +1,20 @@
 # What's New with Enterprise
 
+## v4.17.1
+
+### v4.17.1 Fixes
+
+- `[Datagrid]` Fixed an issue where the second to last column was having resize issues with frozen column sets.(<https://github.com/infor-design/enterprise/issues/1890>)
+- `[Datagrid]` Re-align icons and items in the datagrid's "short header" configuration.(<https://github.com/infor-design/enterprise/issues/1880>)
+- `[Locale]` Fixed incorrect "groupsize" for `en-US` locale.(<https://github.com/infor-design/enterprise/issues/1907>)
+
+### v4.17.1 Chorse & Maintenance
+
+- `[Demoapp]` Fixed embedded icons example with missing icons.(<https://github.com/infor-design/enterprise/issues/1889>)
+- `[Demoapp]` Fixed notification demo examples.(<https://github.com/infor-design/enterprise/issues/1893>, <https://github.com/infor-design/enterprise/pull/1896>)
+
+(5 Issues Solved this patch release)
+
 ## v4.17.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
