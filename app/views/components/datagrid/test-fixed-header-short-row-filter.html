@@ -1,42 +1,6 @@
-
 <div class="full-height full-width">
-    <div class="toolbar" role="toolbar">
-      <div class="title">
-        Compressors
-        <span class="datagrid-result-count">(10 Results)</span>
-      </div>
-      <div class="buttonset">
-        <button  type="button" class="btn">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-filter"></use>
-          </svg>
-          <span>Filter</span>
-        </button>
-      </div>
-
-      <div class="more">
-        <button  type="button" class="btn-actions">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-more"></use>
-          </svg>
-          <span class="audible">More Actions</span>
-        </button>
-        <ul class="popupmenu">
-          <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
-          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
-          <li class="separator"></li>
-          <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
-          <li class="separator single-selectable-section"></li>
-          <li class="heading">Row Height</li>
-          <li class="is-selectable is-checked"><a data-option="row-short" href="#">Short</a></li>
-          <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
-          <li class="is-selectable"><a data-option="row-normal" href="#">Normal</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="datagrid" class="datagrid">
-    </div>
+  <div id="datagrid" class="datagrid">
+  </div>
 </div>
 
 <script>
@@ -52,7 +16,7 @@
         data = res.data;
 
         //Define Columns for the Grid.
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text, filterType: 'text'});
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text, filterType: 'text', align: 'left'});
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
         columns.push({ id: 'quantity', hidden: true, name: 'Quantity', field: 'quantity', filterType: 'integer'});
@@ -69,7 +33,8 @@
           dataset: data,
           filterable: true,
           rowHeight: 'short',
-          toolbar: {personalize: true, results: true}
+          showTooltips: true,
+          toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
         });
 
       });
