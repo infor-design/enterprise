@@ -170,6 +170,12 @@ $datagrid-short-row-height: 23px;
     height: calc(100% - 90px);
   }
 
+  &.has-vertical-scroll:not(.has-frozen-right-columns) {
+    .datagrid-header:not(.left):not(.right) {
+      margin-right: 15px;
+    }
+  }
+
   // Adjust borders and IE adjustment for vertical scrollbars
   &.has-vertical-scroll.is-windows:not(.has-frozen-right-columns) {
     .datagrid-header:not(.left):not(.right) {
@@ -3532,6 +3538,13 @@ html[dir='rtl'] {
       &.is-windows .datagrid-header {
         margin-left: 18px;
         margin-right: 0;
+      }
+    }
+
+    &.has-vertical-scroll:not(.has-frozen-right-columns) {
+      .datagrid-header:not(.left):not(.right) {
+        margin-right: 0;
+        margin-left: 15px;
       }
     }
 
