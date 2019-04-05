@@ -129,7 +129,9 @@ Drag.prototype = {
     }
 
     if (this.settings.containment) {
-      if (this.settings.containment === 'parent') {
+      if (this.settings.containment instanceof jQuery) {
+        this.container = this.settings.containment;
+      } else if (this.settings.containment === 'parent') {
         this.container = this.element.parent();
       } else if (this.settings.containment === 'window') {
         this.container = $(window);
