@@ -170,16 +170,18 @@ $datagrid-short-row-height: 23px;
     height: calc(100% - 90px);
   }
 
-  &.has-vertical-scroll:not(.has-frozen-right-columns) {
-    .datagrid-header:not(.left):not(.right) {
-      margin-right: 15px;
-    }
-  }
-
   // Adjust borders and IE adjustment for vertical scrollbars
-  &.has-vertical-scroll.is-windows:not(.has-frozen-right-columns) {
-    .datagrid-header:not(.left):not(.right) {
-      margin-right: 18px;
+  &.has-vertical-scroll {
+    &.is-windows:not(.has-frozen-right-columns):not(.has-frozen-left-columns) {
+      .datagrid-header:not(.left):not(.right) {
+        margin-right: 18px;
+      }
+    }
+
+    &:not(.has-frozen-right-columns):not(.has-frozen-left-columns) {
+      .datagrid-header:not(.left):not(.right) {
+        margin-right: 15px;
+      }
     }
   }
 
@@ -3539,12 +3541,12 @@ html[dir='rtl'] {
         margin-left: 18px;
         margin-right: 0;
       }
-    }
 
-    &.has-vertical-scroll:not(.has-frozen-right-columns) {
-      .datagrid-header:not(.left):not(.right) {
-        margin-right: 0;
-        margin-left: 15px;
+      &:not(.has-frozen-right-columns):not(.has-frozen-left-columns) {
+        .datagrid-header:not(.left):not(.right) {
+          margin-left: 15px;
+          margin-right: 0;
+        }
       }
     }
 
