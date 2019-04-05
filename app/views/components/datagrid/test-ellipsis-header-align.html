@@ -1,0 +1,703 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+$('body').one('initialized', function () {
+    var data = [
+        {
+          "resourceId": "Product(1,70)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            16,
+            34,
+            36,
+            35,
+            33,
+            32,
+            8,
+            12,
+            14,
+            15,
+            13,
+            0
+          ],
+          "posToViewKey": {
+            "pk": "Product[ProductNameSet](10,1,70)"
+          },
+          "id": 1,
+          "fields": {
+            "Manufacturer_col_ManufacturerName": {
+              "size": 30,
+              "mutable": false,
+              "value": "Jamis Bikes Rock",
+              "required": true
+            },
+            "UnitCost": {
+              "size": 7,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "10",
+              "required": true
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": 1,
+              "required": true
+            },
+            "Product_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AvailableFlag": {
+              "size": 1,
+              "mutable": true,
+              "value": "Y",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "70",
+              "required": true
+            },
+            "Quantity": {
+              "size": 7,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.000",
+              "required": true
+            }
+          },
+          "representativeText": "Product 10"
+        },
+        {
+          "resourceId": "Product(1,16)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            16,
+            34,
+            36,
+            35,
+            33,
+            32,
+            8,
+            12,
+            14,
+            15,
+            13,
+            0
+          ],
+          "posToViewKey": {
+            "pk": "Product[ProductNameSet](16,1,16)"
+          },
+          "id": 2,
+          "fields": {
+            "Manufacturer_col_ManufacturerName": {
+              "size": 30,
+              "mutable": false,
+              "value": "Jamis Bikes Rock",
+              "required": true
+            },
+            "UnitCost": {
+              "size": 7,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "16",
+              "required": true
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": 1,
+              "required": true
+            },
+            "Product_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AvailableFlag": {
+              "size": 1,
+              "mutable": true,
+              "value": "Y",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "16",
+              "required": true
+            },
+            "Quantity": {
+              "size": 7,
+              "precision": 2,
+              "mutable": true,
+              "value": "50.000",
+              "required": true
+            }
+          },
+          "representativeText": "Product 16"
+        },
+        {
+          "resourceId": "Product(1,19)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            16,
+            34,
+            36,
+            35,
+            33,
+            32,
+            8,
+            12,
+            14,
+            15,
+            13,
+            0
+          ],
+          "posToViewKey": {
+            "pk": "Product[ProductNameSet](19,1,19)"
+          },
+          "id": 3,
+          "fields": {
+            "Manufacturer_col_ManufacturerName": {
+              "size": 30,
+              "mutable": false,
+              "value": "Jamis Bikes Rock",
+              "required": true
+            },
+            "UnitCost": {
+              "size": 7,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "19",
+              "required": true
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": 1,
+              "required": true
+            },
+            "Product_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AvailableFlag": {
+              "size": 1,
+              "mutable": true,
+              "value": "Y",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "19",
+              "required": true
+            },
+            "Quantity": {
+              "size": 7,
+              "precision": 2,
+              "mutable": true,
+              "value": "10.000",
+              "required": true
+            }
+          },
+          "representativeText": "Product 19"
+        },
+        {
+          "resourceId": "Product(1,26)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            16,
+            34,
+            36,
+            35,
+            33,
+            32,
+            8,
+            12,
+            14,
+            15,
+            13,
+            0
+          ],
+          "posToViewKey": {
+            "pk": "Product[ProductNameSet](26,1,26)"
+          },
+          "id": 4,
+          "fields": {
+            "Manufacturer_col_ManufacturerName": {
+              "size": 30,
+              "mutable": false,
+              "value": "Jamis Bikes Rock",
+              "required": true
+            },
+            "UnitCost": {
+              "size": 7,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "26",
+              "required": true
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": 1,
+              "required": true
+            },
+            "Product_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AvailableFlag": {
+              "size": 1,
+              "mutable": true,
+              "value": "Y",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "26",
+              "required": true
+            },
+            "Quantity": {
+              "size": 7,
+              "precision": 2,
+              "mutable": true,
+              "value": "40.000",
+              "required": true
+            }
+          },
+          "representativeText": "Product 26"
+        },
+        {
+          "resourceId": "Product(1,28)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            16,
+            34,
+            36,
+            35,
+            33,
+            32,
+            8,
+            12,
+            14,
+            15,
+            13,
+            0
+          ],
+          "posToViewKey": {
+            "pk": "Product[ProductNameSet](28,1,28)"
+          },
+          "id": 5,
+          "fields": {
+            "Manufacturer_col_ManufacturerName": {
+              "size": 30,
+              "mutable": false,
+              "value": "Jamis Bikes Rock",
+              "required": true
+            },
+            "UnitCost": {
+              "size": 7,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "28",
+              "required": true
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": 1,
+              "required": true
+            },
+            "Product_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AvailableFlag": {
+              "size": 1,
+              "mutable": true,
+              "value": "Y",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "28",
+              "required": true
+            },
+            "Quantity": {
+              "size": 7,
+              "precision": 2,
+              "mutable": true,
+              "value": "50.000",
+              "required": true
+            }
+          },
+          "representativeText": "Product 28"
+        }
+      ];
+
+    var columns = [
+      {
+        "id": "selectionCheckbox",
+        "width": 43,
+        "sortable": false,
+        "resizable": false,
+        "align": "center"
+      },
+      {
+        "id": "Product0",
+        "field": "fields.Product.value",
+        "sortable": true,
+        "fieldId": "Product",
+        "displayField": {
+          "filterable": true,
+          "isSymbolicKey": true,
+          "sortUrl": "http://usspnppatton.infor.com:8080/uitest/PatternTest/list/Product(1).ProductList?pageop=sort&pagesize=5&sortOrderName=Product.ProductNumberSet&isAscending=true&csk.cli=true",
+          "sortOrderName": "Product.ProductNumberSet",
+          "size": 9,
+          "columnId": "Product0",
+          "isKey": true,
+          "label": {
+            "resourceValue": "Product"
+          },
+          "type": "ALPHALOWER",
+          "fieldId": "Product"
+        },
+        "name": "Product",
+        "filterType": "text",
+        "align": "left",
+        "textOverflow": "ellipsis"
+      },
+      {
+        "id": "ProductName1",
+        "field": "fields.ProductName.value",
+        "sortable": true,
+        "fieldId": "ProductName",
+        "displayField": {
+          "filterable": true,
+          "sortUrl": "http://usspnppatton.infor.com:8080/uitest/PatternTest/list/Product(1).ProductList?pageop=sort&pagesize=5&sortOrderName=Product.ProductNameSet&isAscending=true&csk.cli=true",
+          "sortOrderName": "Product.ProductNameSet",
+          "size": 30,
+          "columnId": "ProductName1",
+          "label": {
+            "resourceValue": "Product Name"
+          },
+          "type": "ALPHALOWER",
+          "fieldId": "ProductName"
+        },
+        "name": "Product Name",
+        "filterType": "text",
+        "align": "left",
+        "textOverflow": "ellipsis"
+      },
+      {
+        "id": "UnitCost2",
+        "field": "fields.UnitCost.value",
+        "sortable": false,
+        "fieldId": "UnitCost",
+        "displayField": {
+          "decSize": 2,
+          "filterable": true,
+          "size": 7,
+          "columnId": "UnitCost2",
+          "label": {
+            "resourceValue": "Unit Cost"
+          },
+          "type": "BCD",
+          "fieldId": "UnitCost"
+        },
+        "name": "Unit Cost",
+        "filterType": "decimal",
+        "align": "right",
+        "maskOptions": {
+          "patternOptions": {
+            "allowNegative": true,
+            "allowDecimal": true,
+            "symbols": {
+              "thousands": ",",
+              "decimal": ".",
+              "negative": "-"
+            }
+          },
+          "process": "number"
+        },
+        "textOverflow": "ellipsis"
+      },
+      {
+        "id": "AvailableFlag3",
+        "field": "fields.AvailableFlag.value",
+        "sortable": false,
+        "fieldId": "AvailableFlag",
+        "displayField": {
+          "filterable": true,
+          "size": 1,
+          "columnId": "AvailableFlag3",
+          "label": {
+            "resourceValue": "Is Available"
+          },
+          "type": "ALPHALOWER",
+          "isStaticStateField": true,
+          "allowUpdate": true,
+          "fieldId": "AvailableFlag",
+          "states": [
+            {
+              "label": "Yes",
+              "value": "Y"
+            },
+            {
+              "label": "No",
+              "value": "N"
+            }
+          ]
+        },
+        "name": "Is Available",
+        "filterType": "multiselect",
+        "options": [
+          {
+            "value": "Y",
+            "label": "Yes"
+          },
+          {
+            "value": "N",
+            "label": "No"
+          }
+        ],
+        "editorOptions": {
+          "showSelectAll": true
+        },
+        "align": "center",
+        "textOverflow": "ellipsis"
+      },
+      {
+        "id": "Quantity4",
+        "field": "fields.Quantity.value",
+        "sortable": false,
+        "fieldId": "Quantity",
+        "displayField": {
+          "decSize": 3,
+          "filterable": true,
+          "size": 7,
+          "columnId": "Quantity4",
+          "label": {
+            "resourceValue": "Quantity"
+          },
+          "type": "BCD",
+          "fieldId": "Quantity"
+        },
+        "name": "Quantity",
+        "filterType": "decimal",
+        "align": "right",
+        "maskOptions": {
+          "patternOptions": {
+            "allowNegative": true,
+            "allowDecimal": true,
+            "symbols": {
+              "thousands": ",",
+              "decimal": ".",
+              "negative": "-"
+            }
+          },
+          "process": "number"
+        },
+        "textOverflow": "ellipsis"
+      },
+      {
+        "id": "Quantity5",
+        "field": "fields.Quantity.value",
+        "sortable": false,
+        "fieldId": "Quantity",
+        "displayField": {
+          "decSize": 3,
+          "filterable": true,
+          "size": 7,
+          "columnId": "Quantity5",
+          "label": {
+            "resourceValue": "Quantity"
+          },
+          "type": "BCD",
+          "fieldId": "Quantity"
+        },
+        "name": "Quantity",
+        "filterType": "decimal",
+        "align": "center",
+        "maskOptions": {
+          "patternOptions": {
+            "allowNegative": true,
+            "allowDecimal": true,
+            "symbols": {
+              "thousands": ",",
+              "decimal": ".",
+              "negative": "-"
+            }
+          },
+          "process": "number"
+        },
+        "textOverflow": "ellipsis"
+      },
+      {
+        "id": "Quantity6",
+        "field": "fields.Quantity.value",
+        "sortable": false,
+        "fieldId": "Quantity",
+        "displayField": {
+          "decSize": 3,
+          "filterable": true,
+          "size": 7,
+          "columnId": "Quantity6",
+          "label": {
+            "resourceValue": "Quantity"
+          },
+          "type": "BCD",
+          "fieldId": "Quantity"
+        },
+        "name": "Quantity",
+        "filterType": "decimal",
+        "align": "right",
+        "maskOptions": {
+          "patternOptions": {
+            "allowNegative": true,
+            "allowDecimal": true,
+            "symbols": {
+              "thousands": ",",
+              "decimal": ".",
+              "negative": "-"
+            }
+          },
+          "process": "number"
+        },
+        "textOverflow": "ellipsis"
+      }
+    ];
+
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      actionableMode: true,
+      cellNavigation: true,
+      disableRowDeactivation: true,
+      editable: true,
+      emptyMessage: null,
+      enableTooltips: true,
+      filterWhenTyping: false,
+      redrawOnResize: false,
+      rowHeight: "short",
+      selectable: "mixed",
+      showDirty: true,
+      toolbar: {title: 'Header Alignment Tests', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
+    });
+ });
+</script>
