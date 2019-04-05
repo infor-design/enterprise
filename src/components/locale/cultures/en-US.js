@@ -53,7 +53,7 @@ Soho.Locale.addCulture('en-US', {
     minusSign: '-',
     decimal: '.',
     group: ',',
-    groupSizes: [3, 0]
+    groupSizes: [3, 3]
   },
   // Resx - Provided By Translation Team
   messages: {

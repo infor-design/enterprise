@@ -1,16 +1,22 @@
+<div id="parent">
+  <div id="fake-header"></div>
+</div>
+
 <script>
-  $('#maincontent').notification({
+  $('#fake-header').notification({
     type: 'error',
     message: 'DTO rejcted by your manager for Sept 30, 2018.',
+    parent: '#fake-header',
     link: '#',
     linkText: 'Click to view'
   });
 </script>
 
 <script>
-  $('#maincontent').notification({
+  $('#fake-header').notification({
     type: 'info',
     message: 'DTO rejcted by your manager for Sept 30, 2018.',
+    parent: '#fake-header',
     link: '#',
     linkText: 'Click to view'
   });
@@ -18,9 +24,10 @@
 
 
 <script>
-  $('#maincontent').notification({
+  $('#fake-header').notification({
     type: 'alert',
     message: 'DTO rejcted by your manager for Sept 30, 2018.',
+    parent: '#fake-header',
     link: '#',
     linkText: 'Click to view'
   });
@@ -28,9 +35,10 @@
 
 
 <script>
-  $('#maincontent').notification({
+  $('#fake-header').notification({
     type: 'success',
     message: 'DTO rejcted by your manager for Sept 30, 2018.',
+    parent: '#fake-header',
     link: '#',
     linkText: 'Click to view'
   });
