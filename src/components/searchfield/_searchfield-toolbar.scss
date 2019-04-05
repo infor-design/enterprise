@@ -130,7 +130,8 @@ $toolbarsearchfield-category-empty-width: 51px;
       border-color: transparent;
     }
 
-    .btn {
+    .btn,
+    .collapse-button {
       border-bottom-color: rgba($searchfield-border-color, 0);
       border-color: transparent;
     }
@@ -149,7 +150,8 @@ $toolbarsearchfield-category-empty-width: 51px;
         border-bottom-color: rgba($searchfield-border-color, 1);
       }
 
-      .btn {
+      .btn,
+      .collapse-btn {
         border-bottom-color: rgba($searchfield-border-color, 1);
       }
     }
@@ -220,7 +222,8 @@ $toolbarsearchfield-category-empty-width: 51px;
       border-bottom-color: rgba($searchfield-border-color, 1);
     }
 
-    .btn {
+    .btn,
+    .collapse-button {
       background-color: rgba($searchfield-bg-color, 1);
       border-bottom-color: rgba($searchfield-border-color, 1);
     }
@@ -522,9 +525,16 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.active {
       .searchfield,
+      .collapse-button,
       .btn {
         background-color: rgba($searchfield-header-bg-color, 0.5);
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
+      }
+
+      .collapse-button,
+      .btn {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
       }
 
       &.is-open {
@@ -688,14 +698,6 @@ $toolbarsearchfield-category-empty-width: 51px;
 }
 
 html[dir='rtl'] {
-  .header {
-    .toolbar {
-      .toolbar-searchfield-wrapper {
-        text-align: left;
-      }
-    }
-  }
-
   .toolbar-searchfield-wrapper {
     &.has-text {
       &:not(.is-open) {
@@ -748,18 +750,40 @@ html[dir='rtl'] {
       border-color: transparent;
     }
 
-    .btn {
+    .btn,
+    .collapse-button {
       border-color: transparent;
     }
 
     &.has-focus {
       &.active {
-        .searchfield {
-          border-color: transparent transparent rgba($searchfield-border-color, 1);
+        .searchfield,
+        .btn,
+        .collapse-button {
+          border-bottom-color: rgba($searchfield-border-color, 1);
+        }
+      }
+    }
+  }
+
+  .header {
+    .toolbar-searchfield-wrapper {
+      text-align: left;
+
+      &.active {
+        .searchfield,
+        .collapse-button,
+        .btn {
+          background-color: rgba($searchfield-header-bg-color, 0.5);
+          border-bottom-color: rgba($searchfield-header-border-color, 0.7);
         }
 
+        .collapse-button,
         .btn {
-          border-color: transparent transparent rgba($searchfield-border-color, 1);
+          border-bottom-left-radius: 2px;
+          border-bottom-right-radius: 0;
+          border-top-left-radius: 2px;
+          border-top-right-radius: 0;
         }
       }
     }

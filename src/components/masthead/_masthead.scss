@@ -36,6 +36,10 @@ $masthead-button-focus-color: $theme-color-palette-white;
   [class^='btn'] {
     height: 32px;
     min-width: 32px;
+
+    &.collapse-button {
+      height: inherit;
+    }
   }
 
   .btn {
@@ -103,6 +107,13 @@ $masthead-button-focus-color: $theme-color-palette-white;
     }
   }
 
+  .toolbar {
+    [class^='btn'] {
+      margin: 3px 3px 2px 0;
+      vertical-align: top;
+    }
+  }
+
   .toolbar,
   .flex-toolbar {
     .toolbar-section.logo {
@@ -113,9 +124,10 @@ $masthead-button-focus-color: $theme-color-palette-white;
 
     [class^='btn'] {
       background-color: transparent;
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-top-color: transparent;
       color: $masthead-text-color;
-      margin: 3px 3px 2px 0;
-      vertical-align: top;
 
       .ripple-effect {
         background-color: $theme-color-palette-white;
