@@ -1619,6 +1619,7 @@ const Locale = {  // eslint-disable-line
       'add-grid-row',
       'additional-help',
       'bubble',
+      'bullet-steps',
       'cascade',
       'change-font',
       'clear-screen',
