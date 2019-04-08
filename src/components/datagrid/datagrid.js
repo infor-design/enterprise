@@ -1744,6 +1744,25 @@ Datagrid.prototype = {
       btnMarkup = btnMarkup.replace('{{icon}}', 'end-with');
     }
 
+    if (col.filterType === 'lookup') {
+      btnMarkup = renderButton('contains') +
+        render('contains', 'Contains', true) +
+        render('does-not-contain', 'DoesNotContain') +
+        render('equals', 'Equals') +
+        render('does-not-equal', 'DoesNotEqual') +
+        render('is-empty', 'IsEmpty') +
+        render('is-not-empty', 'IsNotEmpty') +
+        render('end-with', 'EndsWith') +
+        render('does-not-end-with', 'DoesNotEndWith') +
+        render('start-with', 'StartsWith') +
+        render('does-not-start-with', 'DoesNotStartWith') +
+        render('less-than', 'LessThan') +
+        render('less-equals', 'LessOrEquals') +
+        render('greater-than', 'GreaterThan') +
+        render('greater-equals', 'GreaterOrEquals');
+      btnMarkup = btnMarkup.replace('{{icon}}', 'contains');
+    }
+
     btnMarkup += '</ul>';
     return btnMarkup;
   },
@@ -1790,6 +1809,7 @@ Datagrid.prototype = {
       this.element.triggerHandler('openfilterrow');
       this.attachFilterRowEvents();
     }
+    this.setupTooltips();
   },
 
   /**
@@ -5076,7 +5096,7 @@ Datagrid.prototype = {
     let columnStartWidth;
     let column;
 
-    this.resizeHandle.drag({ axis: 'x', containment: 'parent' })
+    this.resizeHandle.drag({ axis: 'x', containment: this.element })
       .on('dragstart.datagrid', () => {
         if (!self.currentHeader) {
           return;
@@ -9798,6 +9818,9 @@ Datagrid.prototype = {
           // Title attribute on current element
           tooltip.content = title;
           elem.removeAttribute('title');
+        } else if (isTh && !isHeaderFilter) {
+          const targetEl = elem.querySelector('.datagrid-header-text');
+          tooltip.content = targetEl ? xssUtils.stripHTML(targetEl.textContent) : '';
         } else if (isHeaderFilter) {
           // Disabled filterable headers
           const filterDisabled = elem.parentNode.querySelectorAll('.dropdown.is-disabled, input[type="text"][disabled], .btn-filter[disabled]').length > 0;
@@ -9813,7 +9836,9 @@ Datagrid.prototype = {
 
       // Clean up text in selects
       const select = tooltip.wrapper.querySelector('select');
-      if (select && select.selectedIndex && select.options[select.selectedIndex].innerHTML) {
+      if (select && select.selectedIndex
+        && select.options[select.selectedIndex]
+        && select.options[select.selectedIndex].innerHTML) {
         tooltip.content = env.features.touch ? '' : select.options[select.selectedIndex].innerHTML.trim();
       }
 

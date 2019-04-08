@@ -554,6 +554,8 @@ describe('Locale API', () => {
   it('Should format decimals', () => {
     Locale.set('en-US');
 
+    expect(Locale.formatNumber(145000)).toEqual('145,000.00');
+    expect(Locale.formatNumber(283423)).toEqual('283,423.00');
     expect(Locale.formatNumber(12345.1234)).toEqual('12,345.123');
     expect(Locale.formatNumber(12345.123, { style: 'decimal', maximumFractionDigits: 2 })).toEqual('12,345.12');
     expect(Locale.formatNumber(12345.123456, { style: 'decimal', maximumFractionDigits: 3 })).toEqual('12,345.123');
@@ -563,12 +565,16 @@ describe('Locale API', () => {
     expect(Locale.formatNumber('12,345.123')).toEqual('12,345.123');
     expect(Locale.formatNumber(12345.1234, { group: '' })).toEqual('12345.123');
     expect(Locale.formatNumber(5.1, { minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('5.10');
+    expect(Locale.formatNumber(145000, { style: 'decimal', minimumFractionDigits: 5, maximumFractionDigits: 7 })).toEqual('145,000.00000');
 
     Locale.set('de-DE');
 
+    expect(Locale.formatNumber(145000)).toEqual('145.000,00');
+    expect(Locale.formatNumber(283423)).toEqual('283.423,00');
     expect(Locale.formatNumber(12345.1)).toEqual('12.345,10');
     expect(Locale.formatNumber(0.0000004, { style: 'decimal', maximumFractionDigits: 7 })).toEqual('0,0000004');
     expect(Locale.formatNumber(0.000004, { style: 'decimal', maximumFractionDigits: 7 })).toEqual('0,000004');
+    expect(Locale.formatNumber(145000, { style: 'decimal', minimumFractionDigits: 5, maximumFractionDigits: 7 })).toEqual('145.000,00000');
 
     Locale.set('ar-EG');
 
@@ -602,6 +608,8 @@ describe('Locale API', () => {
 
     Locale.set('de-DE');
 
+    expect(Locale.formatNumber(145000, { style: 'integer' })).toEqual('145.000');
+    expect(Locale.formatNumber(283423, { style: 'integer' })).toEqual('283.423');
     expect(Locale.formatNumber(12345.123, { style: 'integer' })).toEqual('12.345');
   });
 
@@ -739,7 +747,7 @@ describe('Locale API', () => {
   it('Should format negative numbers', () => {
     Locale.set('en-US');
 
-    expect(Locale.formatNumber(-1000000, { style: 'currency' })).toEqual('-$1000,000.00');
+    expect(Locale.formatNumber(-1000000, { style: 'currency' })).toEqual('-$1,000,000.00');
 
     Locale.set('de-DE');
 
@@ -1053,7 +1061,7 @@ describe('Locale API', () => {
   });
 
   it('Should handle group size', () => {
-    Locale.set('en-US'); // 3, 0
+    Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
     expect(Locale.formatNumber(1.1234)).toEqual('1.123');
@@ -1062,11 +1070,11 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(1234.1234)).toEqual('1,234.123');
     expect(Locale.formatNumber(12345.1234)).toEqual('12,345.123');
     expect(Locale.formatNumber(123456.1234)).toEqual('123,456.123');
-    expect(Locale.formatNumber(1234567.1234)).toEqual('1234,567.123');
-    expect(Locale.formatNumber(12345678.1234)).toEqual('12345,678.123');
-    expect(Locale.formatNumber(123456789.1234)).toEqual('123456,789.123');
-    expect(Locale.formatNumber(1234567890.1234)).toEqual('1234567,890.123');
-    expect(Locale.formatNumber(123456789.1234, { style: 'currency' })).toEqual('$123456,789.12');
+    expect(Locale.formatNumber(1234567.1234)).toEqual('1,234,567.123');
+    expect(Locale.formatNumber(12345678.1234)).toEqual('12,345,678.123');
+    expect(Locale.formatNumber(123456789.1234)).toEqual('123,456,789.123');
+    expect(Locale.formatNumber(1234567890.1234)).toEqual('1,234,567,890.123');
+    expect(Locale.formatNumber(123456789.1234, { style: 'currency' })).toEqual('$123,456,789.12');
     expect(Locale.formatNumber(100, { style: 'percent' })).toEqual('10,000 %');
 
     Locale.set('nl-NL'); // 3, 3
@@ -1103,7 +1111,7 @@ describe('Locale API', () => {
   });
 
   it('Should parse group size', () => {
-    Locale.set('en-US'); // 3, 0
+    Locale.set('en-US'); // 3, 3
 
     expect(Locale.parseNumber('-253.00 %')).toEqual(-253);
     expect(Locale.parseNumber('1.123')).toEqual(1.123);
@@ -1153,7 +1161,7 @@ describe('Locale API', () => {
   });
 
   it('Should be able to not show the group size', () => {
-    Locale.set('en-US'); // 3, 0
+    Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(1234567.1234, { group: '' })).toEqual('1234567.123');
     expect(Locale.formatNumber(12345678.1234, { group: '' })).toEqual('12345678.123');
@@ -1170,7 +1178,7 @@ describe('Locale API', () => {
   });
 
   it('Should be able to set the group size', () => {
-    Locale.set('en-US'); // 3, 0
+    Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(1234567.1234, { groupSizes: [3, 0] })).toEqual('1234,567.123');
     expect(Locale.formatNumber(12345678.1234, { groupSizes: [3, 0] })).toEqual('12345,678.123');
@@ -1187,7 +1195,7 @@ describe('Locale API', () => {
   });
 
   it('Should be able to set zero group size', () => {
-    Locale.set('en-US'); // 3, 0
+    Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(1234567.1234, { groupSizes: [0, 0] })).toEqual('1234567.123');
     expect(Locale.formatNumber(12345678.1234, { groupSizes: [0, 0] })).toEqual('12345678.123');
@@ -1244,8 +1252,8 @@ describe('Locale API', () => {
     Locale.getLocale('nl-NL').done(() => {
       expect(Locale.currentLocale.name).toEqual('en-US');
 
-      expect(Locale.formatNumber(123456789.1234, { locale: 'en-US' })).toEqual('123456,789.123');
-      expect(Locale.formatNumber(123456789.1234)).toEqual('123456,789.123');
+      expect(Locale.formatNumber(123456789.1234, { locale: 'en-US' })).toEqual('123,456,789.123');
+      expect(Locale.formatNumber(123456789.1234)).toEqual('123,456,789.123');
       expect(Locale.formatNumber(123456789.1234, { locale: 'nl-NL' })).toEqual('123.456.789,123');
       expect(Locale.currentLocale.name).toEqual('en-US');
     });
@@ -1253,8 +1261,8 @@ describe('Locale API', () => {
     Locale.getLocale('hi-IN').done(() => {
       expect(Locale.currentLocale.name).toEqual('en-US');
 
-      expect(Locale.formatNumber(123456789.1234, { locale: 'en-US' })).toEqual('123456,789.123');
-      expect(Locale.formatNumber(123456789.1234)).toEqual('123456,789.123');
+      expect(Locale.formatNumber(123456789.1234, { locale: 'en-US' })).toEqual('123,456,789.123');
+      expect(Locale.formatNumber(123456789.1234)).toEqual('123,456,789.123');
       expect(Locale.formatNumber(123456789.1234, { locale: 'hi-IN' })).toEqual('12,34,56,789.123');
       expect(Locale.currentLocale.name).toEqual('en-US');
       done();
