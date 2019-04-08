@@ -181,7 +181,7 @@ describe('Modal example-validation tests', () => {
     it('Should enable submit', async () => {
       expect(await element(by.id('submit')).isEnabled()).toBe(false);
 
-      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await dropdownEl.click();
@@ -214,7 +214,7 @@ describe('Modal example-validation-editor tests', () => {
   it('Should enable submit after add text to all fields', async () => {
     expect(await element(by.id('submit')).isEnabled()).toBe(false);
 
-    const dropdownEl = await element.all(by.css('.modal div[aria-controls="dropdown-list"]')).first();
+    const dropdownEl = await element.all(by.css('.modal div.dropdown')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
     await dropdownEl.click();

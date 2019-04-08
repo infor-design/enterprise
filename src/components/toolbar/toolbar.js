@@ -925,6 +925,10 @@ Toolbar.prototype = {
         this.cutoffTitle = true;
       }
 
+      if (targetTitleWidth > stringUtils.textWidth($(titleElem).find('h1').text().trim())) {
+        this.cutoffTitle = false;
+      }
+
       return;
     }
     //= =========================

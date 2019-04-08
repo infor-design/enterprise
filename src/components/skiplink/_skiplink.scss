@@ -17,7 +17,7 @@
   text-decoration: none;
   top: -40px;
   transition: top 1s ease-out 0s, background 1s linear 0s;
-  z-index: 100;
+  z-index: 10019;
 
   &:hover::after {
     border-bottom: 1px solid $skip-link-color;
@@ -27,7 +27,6 @@
     position: absolute;
     width: calc(100% - 20px);
   }
-
 }
 
 .skip-link:focus {

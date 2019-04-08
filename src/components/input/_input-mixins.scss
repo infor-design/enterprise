@@ -101,9 +101,12 @@
 }
 
 // Required Indicator
-@mixin required-indicator() {
+@mixin required-indicator($is-content: true) {
+  @if $is-content == true {
+    content: '*';
+  }
+
   color: $error-color;
-  content: '*';
   display: inline-block;
   font-size: $theme-size-font-lg;
   left: 3px;

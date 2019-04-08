@@ -1790,6 +1790,7 @@ Datagrid.prototype = {
       this.element.triggerHandler('openfilterrow');
       this.attachFilterRowEvents();
     }
+    this.setupTooltips();
   },
 
   /**
@@ -5076,7 +5077,7 @@ Datagrid.prototype = {
     let columnStartWidth;
     let column;
 
-    this.resizeHandle.drag({ axis: 'x', containment: 'parent' })
+    this.resizeHandle.drag({ axis: 'x', containment: this.element })
       .on('dragstart.datagrid', () => {
         if (!self.currentHeader) {
           return;
@@ -9051,7 +9052,7 @@ Datagrid.prototype = {
         setTimeout(() => {
           const evt = $.Event('keydown.datagrid');
           evt.keyCode = keyCode;
-          
+
           self.activeCell.node.trigger(evt);
         }, 0);
       } else {
@@ -9798,6 +9799,9 @@ Datagrid.prototype = {
           // Title attribute on current element
           tooltip.content = title;
           elem.removeAttribute('title');
+        } else if (isTh && !isHeaderFilter) {
+          const targetEl = elem.querySelector('.datagrid-header-text');
+          tooltip.content = targetEl ? xssUtils.stripHTML(targetEl.textContent) : '';
         } else if (isHeaderFilter) {
           // Disabled filterable headers
           const filterDisabled = elem.parentNode.querySelectorAll('.dropdown.is-disabled, input[type="text"][disabled], .btn-filter[disabled]').length > 0;
@@ -9813,7 +9817,9 @@ Datagrid.prototype = {
 
       // Clean up text in selects
       const select = tooltip.wrapper.querySelector('select');
-      if (select && select.selectedIndex && select.options[select.selectedIndex].innerHTML) {
+      if (select && select.selectedIndex
+        && select.options[select.selectedIndex]
+        && select.options[select.selectedIndex].innerHTML) {
         tooltip.content = env.features.touch ? '' : select.options[select.selectedIndex].innerHTML.trim();
       }
 

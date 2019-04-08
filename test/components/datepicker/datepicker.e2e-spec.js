@@ -469,14 +469,14 @@ describe('Datepicker Month Year Changer Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver.sleep(config.sleep);
 
-    let dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    let dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     dropdownEl = await element(by.css('.dropdown-search'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
-    let yearEl = await element(by.css('#year-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    let yearEl = await element(by.css('#year-dropdown + .dropdown-wrapper div.dropdown'));
     await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
     yearEl = await element.all(by.css('.dropdown-search')).last();
     await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -568,26 +568,15 @@ describe('Datepicker Timeformat Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     const todayEl = await element(by.css('button.is-today'));
-    const testDate = new Date();
     await todayEl.click();
     const value = await element(by.id('dp3')).getAttribute('value');
+    const valueDate = new Date(value);
 
-    let hours = testDate.getHours();
-    const minutes = testDate.getMinutes();
-    let amPm = 'AM';
+    const testDate = new Date();
+    const allowedVariance = 60000; // milliseconds
+    const dateDiff = Math.abs(testDate - valueDate); // guarentee its a positive result
 
-    if (hours > 11) {
-      hours -= hours > 12 ? 12 : 0;
-      amPm = 'PM';
-    }
-
-    expect([
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes - 2).toString().padStart(2, '0')} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes - 1).toString().padStart(2, '0')} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes).toString().padStart(2, '0')} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 1).toString().padStart(2, '0')} ${amPm}`,
-      `${(testDate.getMonth() + 1)}/${testDate.getDate()}/${testDate.getFullYear()} ${hours}:${(minutes + 2).toString().padStart(2, '0')} ${amPm}` // for slow test on ci
-    ]).toContain(value);
+    expect(dateDiff).toBeLessThanOrEqual(allowedVariance);
   });
 });
 
@@ -627,7 +616,7 @@ describe('Datepicker Month Year Picker Tests', () => {
     await datepickerEl.sendKeys('01/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    let dropdownEl = await element(by.css('#year-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    let dropdownEl = await element(by.css('#year-dropdown + .dropdown-wrapper div.dropdown'));
     await dropdownEl.click();
     dropdownEl = await element(by.css('#dropdown-list .dropdown-search'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -644,7 +633,7 @@ describe('Datepicker Month Year Picker Tests', () => {
     await datepickerEl.sendKeys('Oct 2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    const dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div[aria-controls="dropdown-list"]'));
+    const dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ENTER);
