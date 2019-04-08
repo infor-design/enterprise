@@ -209,13 +209,18 @@
           minimumFractionDigits: 0
         };
 
+        // Detect the label's contents from the page
         var numberSpan = $(this).prev('label').find('.number');
         var spanText = numberSpan.text();
-        var thousandsRegex = new RegExp('[' + localizedLabelOpts.group + '|,]', 'g');
-        var hasThousands = thousandsRegex.test(spanText);
-        var preparedLabelText = spanText.toString().replace(thousandsRegex, '');
-        var number = Locale.parseNumber(preparedLabelText, localizedLabelOpts);
 
+        // Check for thousands separators and decimals inside the label span
+        var thousandsRegex = new RegExp(',', 'g');
+        var hasThousands = thousandsRegex.test(spanText);
+        var preparedLabelText = spanText.toString()
+          .replace(thousandsRegex, '')
+          .replace('.', localizedLabelOpts.decimal);
+
+        // Additional settings based on what we get
         if (!hasThousands) {
           localizedLabelOpts.groupSizes = [0, 0];
         }
@@ -224,9 +229,12 @@
           localizedLabelOpts.maximumFractionDigits = thisOpts.patternOptions.decimalLimit;
         }
 
+        // Get all locale-formatted values
+        var number = Locale.parseNumber(preparedLabelText, localizedLabelOpts);
         var formattedSpanText = Locale.formatNumber(number, localizedLabelOpts);
         var placeholderText = formattedSpanText.replace(/\d/g, '#');
 
+        // Put them back in
         numberSpan.text(formattedSpanText);
         $(this).attr('placeholder', placeholderText);
       }
