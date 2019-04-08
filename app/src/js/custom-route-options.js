@@ -100,6 +100,11 @@ module.exports = function customRouteOptions(req, res) {
     customOpts.setOption('layout', 'components/header/layout');
   }
 
+  // Busyindicator on body tag (needs to load busyindicator on the body tag)
+  if (url.match(/busyindicator\/test-busyindicator-on-body/)) {
+    customOpts.setOption('layout', 'layout-empty');
+  }
+
   // Sign-in Dialog
   if (url.match(/tests\/signin/)) {
     customOpts.setOption('layout', 'tests/layout-noheader');

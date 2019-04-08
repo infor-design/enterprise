@@ -392,7 +392,7 @@ BusyIndicator.prototype = {
     const scrollParent = (el) => {
       let found = false;
       let parent = el.parentNode;
-      while (!found && parent && parent.tagName.toLowerCase() !== 'body') {
+      while (!found && parent && parent.tagName && parent.tagName.toLowerCase() !== 'body') {
         if (isScroll(parent)) {
           found = true;
           break;
