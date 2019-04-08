@@ -450,7 +450,7 @@ ListBuilder.prototype = {
        * @property {object} data - Data for this item
        */
       $.when(self.element.triggerHandler('beforeedit', [data])).done(() => {
-        const origValue = container.text().trim();
+        const origValue = xssUtils.escapeHTML((container.text().trim() || '').toString());
         const editInput = $(`<input name="edit-input" class="edit-input" type="text" value="${origValue}" />`);
 
         node.addClass('is-editing');
