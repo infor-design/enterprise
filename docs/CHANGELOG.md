@@ -9,13 +9,17 @@
 ### v4.18.0 Fixes
 
 - `[App Menu]` Fixed some accessibility issues on the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
+- `[Busy Indicator]` Fixed a bug that causes a javascript error when the busy indicator is used on the body tag. ([#1918](https://github.com/infor-design/enterprise/issues/1918))
 - `[Css/Sass]` Fixed an issue where the High Contrast theme and Uplift theme were not using the right tokens.
 - `[Colors]` Fixed the color palette demo page to showcase the correct hex values based on the current theme ([#1801](https://github.com/infor-design/enterprise/issues/1801))
+- `[Datagrid]` Fixed an issue where lookup filterConditions were not rendering. ([#1873](https://github.com/infor-design/enterprise/issues/1873))
 - `[Dropdown]` Changed the way dropdowns work with screen readers to be a collapsible listbox.([#404](https://github.com/infor-design/enterprise/issues/404))
+- `[Locale]` Fixed trailing zeros were getting ignored when displaying thousands values. ([#404](https://github.com/infor-design/enterprise/issues/1840))
 - `[MenuButton]` Approved the way menu buttons work with screen readers.([#404](https://github.com/infor-design/enterprise/issues/404))
 - `[Radios]` Fixed the last item being secected when clicking on the first when displayed horizontal. ([#1878](https://github.com/infor-design/enterprise/issues/1878))
 - `[Signin]` Fixed accessibility issues. ([#421](https://github.com/infor-design/enterprise/issues/421))
-- `[Skiplink]` Fixed an zindex issue on skip links over the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
+- `[Skiplink]` Fixed a z-index issue on skip links over the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
+- `[Stepprocess]` Fixed rtl style issues. ([#413](https://github.com/infor-design/enterprise/issues/413))
 - `[Tabs-Module]` Fixed an issue where the close icon was outside the searchfield. ([#1704](https://github.com/infor-design/enterprise/issues/1704))
 - `[Toolbar]` Fixed issues when tooltip shows on hover of toolbar ([#1622](https://github.com/infor-design/enterprise/issues/1622))
 
