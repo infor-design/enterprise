@@ -217,6 +217,11 @@ $datagrid-short-row-height: 23px;
         top: -3px;
       }
     }
+
+    th:not(.is-filterable) .datagrid-header-text {
+      position: relative;
+      top: -16px;
+    }
   }
 
   &.has-toolbar.has-two-line-header {
@@ -298,6 +303,7 @@ $datagrid-short-row-height: 23px;
 
       &.is-sortable:hover {
         background-color: $datagrid-list-header-hover-color;
+        cursor: pointer;
       }
 
       .sort-indicator .icon {
@@ -419,6 +425,11 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 25px);
     }
 
+    .is-filterable th,
+    .is-filterable .datagrid-column-wrapper {
+      height: 28px;
+    }
+
     &.has-group-headers .datagrid-body {
       height: calc(100% - 51px);
     }
@@ -477,8 +488,13 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    .datagrid-header th.text-ellipsis,
+    .datagrid-column-wrapper .datagrid-header-text {
+      margin: 6px 0 0 !important;
+    }
+
     .sort-indicator {
-      margin: 0 0 0 4px;
+      margin: 0 2px 0 0;
 
       .icon {
         height: 16px;
@@ -510,12 +526,23 @@ $datagrid-short-row-height: 23px;
         }
       }
 
-      .is-filterable .datagrid-column-wrapper {
-        top: -1px;
-
-        &.l-right-text {
+      .is-filterable {
+        .datagrid-column-wrapper {
           top: -1px;
+
+          &.l-right-text {
+            top: -1px;
+          }
         }
+
+        .datagrid-filter-wrapper {
+          top: -3px;
+        }
+      }
+
+      th:not(.is-filterable) .datagrid-header-text {
+        position: relative;
+        top: -13px;
       }
     }
 
@@ -579,7 +606,7 @@ $datagrid-short-row-height: 23px;
     }
 
     .sort-indicator {
-      margin: 1px 0 0 4px;
+      margin: 3px 0 0 4px;
     }
 
     .is-filterable {
@@ -628,6 +655,11 @@ $datagrid-short-row-height: 23px;
         &.l-right-text {
           top: -3px;
         }
+      }
+
+      th:not(.is-filterable) .datagrid-header-text {
+        position: relative;
+        top: -15px;
       }
     }
 
@@ -2075,9 +2107,7 @@ $datagrid-short-row-height: 23px;
 
     &.text-ellipsis {
       .datagrid-cell-wrapper {
-        cursor: default;
         text-overflow: ellipsis;
-        // transition: height, line-height .5s cubic-bezier(.17, .04, .03, .94);
         white-space: nowrap;
 
         .hyperlink {
@@ -2186,7 +2216,6 @@ $datagrid-short-row-height: 23px;
         display: flex;
 
         .datagrid-header-text {
-          cursor: default;
           display: inline-block;
           margin: 10px 0 0;
           overflow: hidden;
@@ -2198,17 +2227,15 @@ $datagrid-short-row-height: 23px;
       &.is-ellipsis-active {
         .sort-indicator {
           position: absolute;
-          right: 9px;
+          right: 2px;
         }
       }
     }
 
     &.l-center-text {
-      text-align: center;
-
       .datagrid-header-text {
         text-align: center;
-        width: auto;
+        width: 100%;
       }
 
       .datagrid-filter-wrapper .btn-filter {
@@ -2274,12 +2301,15 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    &.is-sortable:hover {
-      background-color: $datagrid-header-hover-color;
+    &.is-sortable {
       cursor: pointer;
 
-      .icon {
-        opacity: 1;
+      &:hover {
+        background-color: $datagrid-header-hover-color;
+
+        .icon {
+          opacity: 1;
+        }
       }
     }
   }
