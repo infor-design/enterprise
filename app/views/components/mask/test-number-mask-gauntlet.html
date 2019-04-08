@@ -190,36 +190,45 @@
       localeString = thisLocale.name,
       isLocalized = localeString !== 'en-US'; // default for the test suite
 
-
     $('input.new-mask').each(function() {
-      var numberSpan = $(this).prev('label').find('.number');
-
+      // Invoke the mask component
       var dataOpts = JSON.parse( $(this).attr('data-options') );
       if (dataOpts.patternOptions) {
         dataOpts.patternOptions.symbols = opts.patternOptions.symbols;
       }
-
       var thisOpts = $.extend({}, opts, dataOpts);
       $(this).mask(thisOpts);
 
-      // localize the label
+      // When not using the `en-US` locale, localize the label and placeholder
       if (isLocalized) {
+        var localizedLabelOpts = {
+          locale: thisLocale.name,
+          group: thisOpts.patternOptions.symbols.thousands,
+          decimal: thisOpts.patternOptions.symbols.decimal,
+          minusSign: thisOpts.patternOptions.symbols.negative,
+          minimumFractionDigits: 0
+        };
+
+        var numberSpan = $(this).prev('label').find('.number');
         var spanText = numberSpan.text();
-        var hasThousands = spanText.indexOf(thisLocale.data.numbers.group) !== -1;
-        var number = Locale.parseNumber(spanText.toString()),
-          localizedLabelOpts = {
-            group: thisOpts.patternOptions.symbols.thousands,
-            decimal: thisOpts.patternOptions.symbols.decimal,
-            minusSign: thisOpts.patternOptions.symbols.negative,
-            minimumFractionDigits: 0
-          };
+        var thousandsRegex = new RegExp('[' + localizedLabelOpts.group + '|,]', 'g');
+        var hasThousands = thousandsRegex.test(spanText);
+        var preparedLabelText = spanText.toString().replace(thousandsRegex, '');
+        var number = Locale.parseNumber(preparedLabelText, localizedLabelOpts);
+
         if (!hasThousands) {
           localizedLabelOpts.groupSizes = [0, 0];
         }
         if (thisOpts.patternOptions.decimalLimit) {
+          localizedLabelOpts.minimumFractionDigits = thisOpts.patternOptions.decimalLimit;
           localizedLabelOpts.maximumFractionDigits = thisOpts.patternOptions.decimalLimit;
         }
-        numberSpan.text(Locale.formatNumber(number, localizedLabelOpts));
+
+        var formattedSpanText = Locale.formatNumber(number, localizedLabelOpts);
+        var placeholderText = formattedSpanText.replace(/\d/g, '#');
+
+        numberSpan.text(formattedSpanText);
+        $(this).attr('placeholder', placeholderText);
       }
     });
   });
