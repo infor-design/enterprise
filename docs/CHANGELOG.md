@@ -9,7 +9,8 @@
 ### v4.18.0 Fixes
 
 - `[App Menu]` Fixed some accessibility issues on the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
-- `[Colors]` Fixed color demo page to update hex values based on theme.
+- `[Css/Sass]` Fixed an issue where the High Contrast theme and Uplift theme were not using the right tokens.
+- `[Colors]` Fixed the color palette demo page to showcase the correct hex values based on the current theme ([#1801](https://github.com/infor-design/enterprise/issues/1801))
 - `[Dropdown]` Changed the way dropdowns work with screen readers to be a collapsible listbox.([#404](https://github.com/infor-design/enterprise/issues/404))
 - `[MenuButton]` Approved the way menu buttons work with screen readers.([#404](https://github.com/infor-design/enterprise/issues/404))
 - `[Radios]` Fixed the last item being secected when clicking on the first when displayed horizontal. ([#1878](https://github.com/infor-design/enterprise/issues/1878))
