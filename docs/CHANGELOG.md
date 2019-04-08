@@ -9,7 +9,7 @@
 ### v4.18.0 Fixes
 
 - `[App Menu]` Fixed some accessibility issues on the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
-- `[Busy Indicator]` Fixed when use on body it was generating javascript error. ([#1918](https://github.com/infor-design/enterprise/issues/1918))
+- `[Busy Indicator]` Fixed a bug that causes a javascript error when the busy indicator is used on the body tag. ([#1918](https://github.com/infor-design/enterprise/issues/1918))
 - `[Css/Sass]` Fixed an issue where the High Contrast theme and Uplift theme were not using the right tokens.
 - `[Colors]` Fixed the color palette demo page to showcase the correct hex values based on the current theme ([#1801](https://github.com/infor-design/enterprise/issues/1801))
 - `[Dropdown]` Changed the way dropdowns work with screen readers to be a collapsible listbox.([#404](https://github.com/infor-design/enterprise/issues/404))
