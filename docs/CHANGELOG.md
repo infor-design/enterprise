@@ -13,6 +13,7 @@
 - `[Css/Sass]` Fixed an issue where the High Contrast theme and Uplift theme were not using the right tokens.
 - `[Colors]` Fixed the color palette demo page to showcase the correct hex values based on the current theme ([#1801](https://github.com/infor-design/enterprise/issues/1801))
 - `[Datagrid]` Fixed an issue where lookup filterConditions were not rendering. ([#1873](https://github.com/infor-design/enterprise/issues/1873))
+- `[Datagrid]` Fixed issue where header columns are misaligned with body columns on load ([#1892](https://github.com/infor-design/enterprise/issues/1892))
 - `[Dropdown]` Changed the way dropdowns work with screen readers to be a collapsible listbox.([#404](https://github.com/infor-design/enterprise/issues/404))
 - `[Locale]` Fixed trailing zeros were getting ignored when displaying thousands values. ([#404](https://github.com/infor-design/enterprise/issues/1840))
 - `[MenuButton]` Approved the way menu buttons work with screen readers.([#404](https://github.com/infor-design/enterprise/issues/404))
