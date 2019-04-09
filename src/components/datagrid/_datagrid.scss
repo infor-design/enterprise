@@ -283,6 +283,10 @@ $datagrid-short-row-height: 23px;
       background-color: $panel-bg-color;
     }
 
+    .datagrid-header-container {
+      background-color: transparent;
+    }
+
     .datagrid {
       tbody {
         tr {
