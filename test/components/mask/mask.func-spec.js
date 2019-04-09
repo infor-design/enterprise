@@ -95,6 +95,7 @@ describe('Mask API', () => {
         start: 0
       },
       patternOptions: {
+        locale: 'en-US',
         allowThousands: true,
         integerLimit: 10
       }
@@ -187,7 +188,7 @@ describe('Mask API', () => {
     expect(result.conformedValue).toEqual('١٢٣%');
   });
 
-  it('should process hebrew (devanagari) numbers', () => {
+  it('should process hindi (devanagari) numbers', () => {
     const settings = DEFAULT_SETTINGS;
     settings.process = 'number';
     settings.pattern = masks.numberMask;
@@ -200,6 +201,7 @@ describe('Mask API', () => {
         start: 0
       },
       patternOptions: {
+        locale: 'hi-ID',
         allowThousands: false,
         integerLimit: 10
       }
@@ -224,6 +226,27 @@ describe('Mask API', () => {
     result = api.process(textValue, opts);
 
     expect(result.conformedValue).toEqual('-१२३४५६७८९०.११');
+  });
+
+  it('should process hindi (devanagari) numbers with a percentage', () => {
+    const settings = DEFAULT_SETTINGS;
+    settings.process = 'number';
+    settings.pattern = masks.numberMask;
+    const api = new MaskAPI(settings);
+
+    // Handle big numbers with thousands separators
+    let textValue = '१२३४५६७८९०';
+    const opts = {
+      selection: {
+        start: 0
+      },
+      patternOptions: {
+        locale: 'hi-ID',
+        allowThousands: false,
+        integerLimit: 10
+      }
+    };
+    let result = api.process(textValue, opts);
 
     // Handle Numbers with a suffix (percent)
     opts.patternOptions.integerLimit = 3;
