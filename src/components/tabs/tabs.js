@@ -3042,7 +3042,7 @@ Tabs.prototype = {
   /**
    * Selects a Tab
    * @param {string} href a string representing the HTML `id` attribute of the new tab panel.
-   * @param {boolean} noFocus true if do not want focus.
+   * @param {boolean} noFocus true to prevent focus.
    * @returns {void}
    */
   select(href, noFocus) {
