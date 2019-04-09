@@ -6,11 +6,49 @@
 
 ### v4.18.0 Features
 
+- `[Mask]` Added a setting for passing a locale string, allowing Number masks to be localized.  This enables usage of the `groupSize` property, among others, from locale data in the Mask. ([#440](https://github.com/infor-design/enterprise/issues/440))
+
 ### v4.18.0 Fixes
 
+- `[App Menu]` Fixed some accessibility issues on the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
+- `[Busy Indicator]` Fixed a bug that causes a javascript error when the busy indicator is used on the body tag. ([#1918](https://github.com/infor-design/enterprise/issues/1918))
+- `[Css/Sass]` Fixed an issue where the High Contrast theme and Uplift theme were not using the right tokens.
+- `[Colors]` Fixed the color palette demo page to showcase the correct hex values based on the current theme ([#1801](https://github.com/infor-design/enterprise/issues/1801))
+- `[Datepicker]` Fixed an issue in NG where the custom validation is removed during the teardown of a datepicker.([NG #411](https://github.com/infor-design/enterprise-ng/issues/411))
+- `[Datagrid]` Fixed an issue where lookup filterConditions were not rendering. ([#1873](https://github.com/infor-design/enterprise/issues/1873))
+- `[Datagrid]` Fixed an issue where filtering was missing translation. ([#1900](https://github.com/infor-design/enterprise/issues/1900))
+- `[Dropdown]` Changed the way dropdowns work with screen readers to be a collapsible listbox.([#404](https://github.com/infor-design/enterprise/issues/404))
+- `[Listbuilder]` Fixed an issue where the text was not sanitizing. ([#1692](https://github.com/infor-design/enterprise/issues/1692))
+- `[Locale]` Fixed trailing zeros were getting ignored when displaying thousands values. ([#404](https://github.com/infor-design/enterprise/issues/1840))
+- `[MenuButton]` Approved the way menu buttons work with screen readers.([#404](https://github.com/infor-design/enterprise/issues/404))
+- `[Radios]` Fixed the last radio item was being selected when clicking on the first when displayed horizontal. ([#1878](https://github.com/infor-design/enterprise/issues/1878))
+- `[Signin]` Fixed accessibility issues. ([#421](https://github.com/infor-design/enterprise/issues/421))
+- `[Skiplink]` Fixed a z-index issue on skip links over the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
+- `[Stepprocess]` Fixed rtl style issues. ([#413](https://github.com/infor-design/enterprise/issues/413))
 - `[Tabs-Module]` Fixed an issue where the close icon was outside the searchfield. ([#1704](https://github.com/infor-design/enterprise/issues/1704))
+- `[Toolbar]` Fixed issues when tooltip shows on hover of toolbar ([#1622](https://github.com/infor-design/enterprise/issues/1622))
 
 ### v4.18.0 Chore & Maintenance
+
+- `[Docs]` Added a statement on supporting accessibility. ([#1540](https://github.com/infor-design/enterprise/issues/1540))
+- `[Docs]` Added the supported screen readers and some notes on accessibility. ([#1722](https://github.com/infor-design/enterprise/issues/1722))
+
+(nn Issues Solved this release, Backlog Enterprise nn, Backlog Ng nn, nn Functional Tests, nn e2e Test)
+
+## v4.17.1
+
+### v4.17.1 Fixes
+
+- `[Datagrid]` Fixed an issue where the second to last column was having resize issues with frozen column sets.(<https://github.com/infor-design/enterprise/issues/1890>)
+- `[Datagrid]` Re-align icons and items in the datagrid's "short header" configuration.(<https://github.com/infor-design/enterprise/issues/1880>)
+- `[Locale]` Fixed incorrect "groupsize" for `en-US` locale.(<https://github.com/infor-design/enterprise/issues/1907>)
+
+### v4.17.1 Chorse & Maintenance
+
+- `[Demoapp]` Fixed embedded icons example with missing icons.(<https://github.com/infor-design/enterprise/issues/1889>)
+- `[Demoapp]` Fixed notification demo examples.(<https://github.com/infor-design/enterprise/issues/1893>, <https://github.com/infor-design/enterprise/pull/1896>)
+
+(5 Issues Solved this patch release)
 
 ## v4.17.0
 

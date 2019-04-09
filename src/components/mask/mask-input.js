@@ -25,12 +25,13 @@ const COMPONENT_NAME = 'mask';
  *  Arrays of strings representing individual characters, and regex matching individual characters, is the perferred way of supplying a pattern.
  *  For some `settings.process` types (date/time/number), a function that dynamically generates a mask is automatically used.
  *  It's also possible to define a custom mask function and supply it here. The legacy string style is also supported.
- * @param {object} [settings.patternOptions] If using a function to define `settings.pattern`, any options that must be passed
+ * @param {object} [settings.patternOptions={}] If using a function to define `settings.pattern`, any options that must be passed
  *  to the masking function can be supplied in this object.
  * @param {string} [settings.patternOptions.format] [date/time masks only] contains a basic date format string that will be used to properly display a date mask.
  * @param {string} [settings.patternOptions.prefix] [number masks only] will be automatically prepended to the beginning of the masked value, but will not be counted as part of the masked value.
  * @param {string} [settings.patternOptions.suffix] [number masks only] will be automatically appended to the end of the masked value, but will not be counted as part of the masked value.
  * @param {boolean} [settings.patternOptions.allowThousandsSeparator] [number masks only] If true, displays a localized thousands separator in the masked value
+ * @param {string} [settings.patternOptions.locale] [number/date/time masks] will cause formatting to occur against a particular Locale culture.
  * @param {object} [settings.patternOptions.symbols] [number masks only] contains default, localized special characters used in numbers
  * @param {string} [settings.patternOptions.symbols.currency] [number masks only]
  * @param {string} [settings.patternOptions.symbols.decimal] [number masks only]
@@ -55,10 +56,11 @@ const COMPONENT_NAME = 'mask';
 const DEFAULT_MASK_INPUT_OPTIONS = {
   definitions: undefined,
   guide: false,
-  maskAPI: MaskAPI,
   keepCharacterPositions: false,
+  maskAPI: MaskAPI,
+  locale: '',
   pattern: undefined,
-  patternOptions: undefined,
+  patternOptions: {},
   placeholderChar: '_',
   pipe: undefined,
   process: undefined,
@@ -68,12 +70,9 @@ const DEFAULT_MASK_INPUT_OPTIONS = {
 
 function MaskInput(element, settings) {
   this.element = element;
+  this.settings = utils.mergeSettings(this.element, settings, DEFAULT_MASK_INPUT_OPTIONS);
 
-  if (!settings) {
-    settings = {};
-  }
-
-  return this.init(settings);
+  return this.init();
 }
 
 MaskInput.prototype = {
@@ -81,20 +80,13 @@ MaskInput.prototype = {
   /**
    * Initialization/things that need to be called on `updated()` in addition to initialization
    * @private
-   * @param {object} [settings] incoming settings
-   * @returns {this} component instance
+   * @returns {void}
    */
-  init(settings) {
-    // Define internal settings
-    if (!this.settings) {
-      this.settings = utils.mergeSettings(this.element, settings, DEFAULT_MASK_INPUT_OPTIONS);
-    } else {
-      this.settings = utils.mergeSettings(this.element, settings, this.settings);
-    }
-    if (!this.settings.patternOptions) {
-      this.settings.patternOptions = {};
-    }
+  init() {
+    this.setLocale();
+  },
 
+  build() {
     // TODO: Deprecate legacy settings in v4.4.0, remove in v4.5.0
     this._replaceLegacySettings();
 
@@ -102,6 +94,10 @@ MaskInput.prototype = {
 
     // If the 'process' setting is defined, connect a pre-defined Soho Mask/Pattern
     if (typeof this.settings.process === 'string') {
+      if (!this.settings.patternOptions.locale) {
+        this.settings.patternOptions.locale = this.settings.locale;
+      }
+
       switch (this.settings.process) {
         case 'number': {
           this.settings.pattern = masks.numberMask;
@@ -146,6 +142,23 @@ MaskInput.prototype = {
     }
 
     return this;
+  },
+
+  /**
+   * Set current locale to be used.
+   * @private
+   * @returns {void}
+   */
+  setLocale() {
+    this.locale = Locale.currentLocale;
+    if (this.settings.locale) {
+      Locale.getLocale(this.settings.locale).done((locale) => {
+        this.locale = Locale.cultures[locale];
+        this.build();
+      });
+    } else {
+      this.build();
+    }
   },
 
   /**
@@ -378,6 +391,7 @@ MaskInput.prototype = {
    * Changes a bunch of "legacy" setting definitions into more apt names.  Additionally handles
    * the old data-attribute system that is still occasionally used.
    * @private
+   * @deprecated as of v4.4.0.
    * @returns {void}
    */
   _replaceLegacySettings() {
@@ -554,9 +568,13 @@ MaskInput.prototype = {
    * @returns {this} component instance
    */
   updated(settings) {
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    }
+
     return this
       .teardown()
-      .init(settings);
+      .init();
   },
 
   /**

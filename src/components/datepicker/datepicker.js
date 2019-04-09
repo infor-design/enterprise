@@ -405,8 +405,10 @@ DatePicker.prototype = {
       this.element.mask(maskOptions);
     }
 
+    this.addedValidation = false;
     if (this.element[0] && this.element[0].getAttribute &&
       !this.element[0].getAttribute('data-validate')) {
+      this.addedValidation = true;
       this.element.attr({
         'data-validate': validation,
         'data-validation-events': JSON.stringify(events)
@@ -1529,7 +1531,9 @@ DatePicker.prototype = {
 
     this.element.off('keydown.datepicker blur.validate change.validate keyup.validate focus.validate');
 
-    this.element.removeAttr('data-validate').removeData('validate validationEvents');
+    if (this.addedValidation) {
+      this.element.removeAttr('data-validate').removeData('validate validationEvents');
+    }
 
     return this;
   },

@@ -309,6 +309,7 @@ const Locale = {  // eslint-disable-line
    */
   getLocale(locale) {
     const self = this;
+    this.dff = this.dff || $.Deferred();
     this.dff[locale] = $.Deferred();
     locale = this.correctLocale(locale);
 
@@ -1209,21 +1210,21 @@ const Locale = {  // eslint-disable-line
     const isNegative = (formattedNum.indexOf(minusSign) > -1);
     formattedNum = formattedNum.replace(minusSign, '');
 
-    if (minimumFractionDigits === 0) { // Not default
-      formattedNum = formattedNum.replace(/(\.[0-9]*?)0+$/, '$1'); // remove trailing zeros
-      formattedNum = formattedNum.replace(/\.$/, ''); // remove trailing dot
-    }
+    const escape = str => str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+    let expr = '';
 
-    if (minimumFractionDigits === 0 && decimal !== '.') { // Not default
-      formattedNum = formattedNum.replace(/(\,[0-9]*?)0+$/, '$1'); // remove trailing zeros
-      formattedNum = formattedNum.replace(/\,$/, ''); // remove trailing dot
+    if (minimumFractionDigits === 0) { // Not default
+      expr = new RegExp(`(${escape(decimal)}[0-9]*?)0+$`);
+      formattedNum = formattedNum.replace(expr, '$1'); // remove trailing zeros
     }
 
     if (minimumFractionDigits > 0) {
-      const expr = new RegExp(`(\\..{${minimumFractionDigits}}[0-9]*?)0+$`);
+      expr = new RegExp(`(${escape(decimal)}.{${minimumFractionDigits}}[0-9]*?)0+$`);
       formattedNum = formattedNum.replace(expr, '$1'); // remove trailing zeros
-      formattedNum = formattedNum.replace(/\.$/, ''); // remove trailing dot
     }
+
+    expr = new RegExp(`${escape(decimal)}$`);
+    formattedNum = formattedNum.replace(expr, ''); // remove trailing decimal
 
     if (options && options.style === 'currency') {
       formattedNum = curFormat.replace('###', formattedNum);
@@ -1619,6 +1620,7 @@ const Locale = {  // eslint-disable-line
       'add-grid-row',
       'additional-help',
       'bubble',
+      'bullet-steps',
       'cascade',
       'change-font',
       'clear-screen',

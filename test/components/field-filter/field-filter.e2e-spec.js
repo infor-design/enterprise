@@ -6,7 +6,7 @@ requireHelper('rejection');
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 const clickOnFieldFilter = async (id) => {
-  const ddStr = 'div[aria-controls="dropdown-list"]';
+  const ddStr = 'div.dropdown';
   const triggerEl = element(by.css(id)).element(by.xpath('..')).element(by.css(ddStr));
   await browser.driver.wait(protractor.ExpectedConditions.presenceOf(triggerEl), config.waitsFor);
   await triggerEl.click();
@@ -28,7 +28,7 @@ describe('FieldFilter example-index tests', () => {
   });
 
   it('Should be able to select next element', async () => {
-    const ddStr = 'div[aria-controls="dropdown-list"]';
+    const ddStr = 'div.dropdown';
     const triggerEl = element(by.css('#example-textfield')).element(by.xpath('..')).element(by.css(ddStr));
 
     await triggerEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -70,7 +70,7 @@ describe('FieldFilter filter type tests', () => {
 
   it('Should be able to get current filter type', async () => {
     expect(await element(by.className('output')).getText()).toEqual('Equals');
-    const ddStr = 'div[aria-controls="dropdown-list"]';
+    const ddStr = 'div.dropdown';
     const triggerEl = element(by.css('#filterable')).element(by.xpath('..')).element(by.css(ddStr));
 
     await triggerEl.sendKeys(protractor.Key.ARROW_DOWN);

@@ -118,7 +118,7 @@ Accordion.prototype = {
         containerPane.addClass('has-icons');
       }
 
-      header.attr('role', 'presentation').hideFocus();
+      header.hideFocus();
 
       // For backwards compatibility:  If an icon is found inside an anchor, bring it up to the
       // level of the header.
