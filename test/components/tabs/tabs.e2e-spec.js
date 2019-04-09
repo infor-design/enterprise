@@ -465,3 +465,41 @@ describe('Tabs ajax as source tests', () => {
     });
   }
 });
+
+describe('Tabs enable/disable tabs with keydown', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/example-enable-disable-individual-tabs-with-keydown');
+    const tabsContainerEl = await element(by.id('programmatic-tabs'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should not change focus after enable/disable tab', async () => {
+    let formTab = await element(by.css('a[href="#programmatic-tabs-form-elements"]')).element(by.xpath('..'));
+
+    expect(await formTab.getAttribute('class')).toContain('tab');
+    expect(await formTab.getAttribute('class')).not.toContain('is-disabled');
+
+    let inputEl = await element(by.css('#disable'));
+    await inputEl.click();
+    await inputEl.sendKeys(protractor.Key.ARROW_DOWN);
+    formTab = await element(by.css('a[href="#programmatic-tabs-form-elements"]')).element(by.xpath('..'));
+
+    expect(await formTab.getAttribute('class')).toContain('tab');
+    expect(await formTab.getAttribute('class')).toContain('is-disabled');
+    expect(await browser.driver.switchTo().activeElement().getAttribute('id')).toEqual('disable');
+
+    inputEl = await element(by.css('#enable'));
+    await inputEl.click();
+    await inputEl.sendKeys(protractor.Key.ARROW_DOWN);
+    formTab = await element(by.css('a[href="#programmatic-tabs-form-elements"]')).element(by.xpath('..'));
+
+    expect(await formTab.getAttribute('class')).toContain('tab');
+    expect(await formTab.getAttribute('class')).not.toContain('is-disabled');
+    expect(await browser.driver.switchTo().activeElement().getAttribute('id')).toEqual('enable');
+  });
+});
