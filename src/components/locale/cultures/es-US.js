@@ -290,6 +290,8 @@ Soho.Locale.addCulture('es-US', {
     ResetDefault: { id: 'ResetDefault', value: 'Restablecer valores predeterminados', comment: 'Reset Datagrid Columns, Filter and other Layout' },
     Result: { id: 'Result', value: 'Resultado', comment: 'Showing a single result in a List' },
     Results: { id: 'Results', value: 'Resultados', comment: 'As in showing N Results (plural) in a List' },
+    ResultOf: { id: 'ResultOf', value: '{0} de {1} Resultado', comment: 'Text Showing current and total number of Result' },
+    ResultsOf: { id: 'ResultsOf', value: '{0} de {1} Resultados', comment: 'Text Showing current and total number of Results' },
     RightAlign: { id: 'RightAlign', value: 'Alinear a la derecha', comment: 'Right Align tooltip' },
     RightAlignText: { id: 'RightAlignText', value: 'Alinear a la derecha', comment: 'Right Align Text tooltip' },
     Right: { id: 'Right', value: 'Derecha', comment: 'Right' },

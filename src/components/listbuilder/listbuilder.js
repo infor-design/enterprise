@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
 
 // jQuery Components
@@ -68,7 +69,7 @@ const LISTBUILDER_DEFAULTS = {
 function ListBuilder(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, LISTBUILDER_DEFAULTS);
-  if (settings.dataset) {
+  if (settings && settings.dataset) {
     this.settings.dataset = settings.dataset;
   }
   debug.logTimeStart(COMPONENT_NAME);
@@ -449,12 +450,14 @@ ListBuilder.prototype = {
        * @property {object} data - Data for this item
        */
       $.when(self.element.triggerHandler('beforeedit', [data])).done(() => {
-        const origValue = container.text().trim();
+        const origValue = xssUtils.escapeHTML((container.text().trim() || '').toString());
         const editInput = $(`<input name="edit-input" class="edit-input" type="text" value="${origValue}" />`);
 
         node.addClass('is-editing');
         container.html(editInput);
-        editInput.focus().select();
+        setTimeout(() => {
+          editInput.focus().select();
+        }, 0);
 
         editInput
           .on('click.listbuilder', () => false)
@@ -492,6 +495,8 @@ ListBuilder.prototype = {
     const data = this.getDataByNode(node);
     const container = $('.item-content', node);
     const editInput = $('.edit-input', container);
+
+    editInput.val(xssUtils.escapeHTML((editInput.val() || '').toString()));
 
     if (isNewItem) {
       data.data.value = editInput.val();
