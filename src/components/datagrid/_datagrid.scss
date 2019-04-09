@@ -2197,6 +2197,12 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.center {
+    th:last-child {
+      border-right-color: transparent;
+    }
+  }
+
   table {
     border-collapse: separate;
     border-spacing: 0;
