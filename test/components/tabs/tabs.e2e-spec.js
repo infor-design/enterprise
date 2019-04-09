@@ -466,7 +466,7 @@ describe('Tabs ajax as source tests', () => {
   }
 });
 
-describe('Tabs enable/disable tabs with keydown', () => {
+describe('Tabs focus after enable/disable programmatically', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/example-enable-disable-individual-tabs-with-keydown');
     const tabsContainerEl = await element(by.id('programmatic-tabs'));
