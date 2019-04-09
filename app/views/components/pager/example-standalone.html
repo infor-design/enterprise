@@ -8,7 +8,7 @@
       <label for="toggle-pagesize" class="checkbox-label">Show Page Size Selector</label>
     </div>
     <div class="field">
-      <input type="checkbox" class="checkbox" name="toggle-small-pagesize" id="toggle-small-pagesize" disabled />
+      <input type="checkbox" class="checkbox" name="toggle-small-pagesize" id="toggle-small-pagesize" disabled="true" />
       <label for="toggle-small-pagesize" class="checkbox-label">Use Small Page Size Selector</label>
       </div>
     <div class="field">
@@ -80,32 +80,32 @@
       showLastButton: true,
       enableLastButton: true,
       onFirstPage: function (elem, args) {
-        console.log(elem, args);
+        $('body').toast({title: 'onFirstPage Callback Fired', message: ''});
       },
       onPreviousPage: function (elem, args) {
-        console.log(elem, args);
+        $('body').toast({title: 'onPreviousPage Callback Fired', message: ''});
       },
       onNextPage: function (elem, args) {
-        console.log(elem, args);
+        $('body').toast({title: 'onNextPage Callback Fired', message: ''});
       },
       onLastPage: function (elem, args) {
-        console.log(elem, args);
+        $('body').toast({title: 'onLastPage Callback Fired', message: ''});
       },
       onPageSizeChange: function (elem, args) {
-        console.log(elem, args);
+        $('body').toast({title: 'onPageSizeChange Callback Fired', message: ''});
       },
       firstPageTooltip: 'Custom First Tooltip',
       previousPageTooltip: 'Custom Previous Tooltip',
       nextPageTooltip: 'Custom Next Tooltip',
       lastPageTooltip: 'Custom Last Tooltip'
     }).on('firstpage', function (e, args) {
-      console.log(args);
+      $('body').toast({title: 'firstpage jQuery Event Fired', message: ''});
     }).on('previouspage', function (e, args) {
-      console.log(args);
+      $('body').toast({title: 'previouspage jQuery Event Fired', message: ''});
     }).on('nextpage', function (e, args) {
-      console.log(args);
+      $('body').toast({title: 'nextpage jQuery Event Fired', message: ''});
     }).on('lastpage', function (e, args) {
-      console.log(args);
+      $('body').toast({title: 'lastpage jQuery Event Fired', message: ''});
     }).data('pager');
 
     //TODO: Make func tests for these (api.updated calls)
