@@ -10,6 +10,8 @@
   border-right: 1px solid $application-menu-border-color;
   bottom: 0;
   color: $theme-color-palette-white;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   left: -$application-menu-width;
   overflow-x: hidden;
@@ -94,7 +96,6 @@
 
           > .name {
             @include font-size(20);
-            // line-height: 2em;
           }
         }
 
@@ -214,19 +215,11 @@
     min-height: 85px;
     padding: 10px 0 10px 30px;
 
-    .icon.avatar {
-      border-radius: 20px;
-      height: 40px;
-      top: 10px;
-      vertical-align: top;
-      width: 40px;
-    }
-
     .name {
       display: block;
       font-size: $theme-size-font-lg;
       line-height: 1.5em;
-      padding: 10px;
+      padding: 15px 10px 10px;
       position: relative;
     }
 
@@ -241,6 +234,14 @@
         text-overflow: ellipsis;
       }
     }
+  }
+
+  .icon.avatar {
+    border-radius: 20px;
+    height: 40px;
+    top: 10px;
+    vertical-align: top;
+    width: 40px;
   }
 
   .accordion-content {
@@ -273,6 +274,87 @@
 
     &:hover:not([disabled]) {
       color: $accordion-inverse-text-hover-color;
+    }
+  }
+
+  // Fixed header and foot areas
+  .application-menu-content {
+    flex: 1 1 auto;
+    overflow-y: auto;
+  }
+
+  .application-menu-header,
+  .application-menu-footer {
+    background-color: $theme-color-palette-slate-70;
+    border-bottom-color: $theme-color-palette-slate-90 !important;
+    flex: 0 0 auto;
+    padding: 10px 0 10px 20px;
+  }
+
+  .application-menu-header {
+    .name,
+    .name-xl {
+      display: block;
+      font-size: $theme-size-font-lg;
+      line-height: 1.5em;
+      padding: 15px 10px 10px;
+      position: relative;
+    }
+
+    .name-xl {
+      font-size: $theme-size-font-xl;
+      line-height: normal;
+      padding-left: 0;
+      padding-top: 2.5rem;
+    }
+
+    .content {
+      display: inline-block;
+      max-width: calc(100% - 46px);
+    }
+  }
+
+  .application-menu-footer {
+    border-bottom-color: $theme-color-palette-slate-70 !important;
+    border-top-color: $theme-color-palette-slate-90 !important;
+
+    .hyperlink {
+      margin-left: 5px;
+      position: relative;
+      top: -4px;
+    }
+
+    .application-menu-toolbar {
+      button {
+        &:first-child {
+          margin: 5px -5px;
+        }
+      }
+    }
+  }
+
+  .application-menu-toolbar {
+    margin-left: -10px;
+
+    button {
+      margin: 5px 15px;
+
+      &:first-child {
+        margin: 5px 0;
+      }
+
+      span {
+        color: $accordion-inverse-text-color;
+      }
+
+      .icon {
+        color: $accordion-inverse-text-color;
+      }
+
+      &:not(:disabled):hover .icon,
+      &:not(:disabled):hover span {
+        color: $accordion-inverse-text-hover-color;
+      }
     }
   }
 }

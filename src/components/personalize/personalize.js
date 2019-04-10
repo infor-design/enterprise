@@ -176,6 +176,8 @@ Personalize.prototype = {
     colors.text = this.validateHex(colors.text || defaultColors.text);
     colors.subheader = this.validateHex(colors.subheader ||
       this.getLuminousColorShade(colors.header, 0.2));
+    colors.button = this.validateHex(colors.button ||
+      this.getLuminousColorShade(colors.text, -0.70));
     colors.inactive = this.validateHex(colors.inactive ||
       this.getLuminousColorShade(colors.header, -0.22));
     colors.verticalBorder = this.validateHex(colors.verticalBorder ||
@@ -188,6 +190,7 @@ Personalize.prototype = {
       this.getLuminousColorShade(colors.subheader, -0.025));
     colors.btnColorSubheader = this.validateHex(colors.btnColorSubheader ||
       this.getLuminousColorShade(colors.header, -0.025));
+    colors.focusBorder = this.getLuminousColorShade(colors.header, 0.5);
 
     // note that the sheet is appended in backwards
     const cssRules = `.tab-container.module-tabs.is-personalizable { border-top: 1px solid ${colors.horizontalBorder} !important; border-bottom: 1px solid ${colors.horizontalBorder} !important}` +
@@ -218,13 +221,25 @@ Personalize.prototype = {
     ` .module-tabs.is-personalizable .add-tab-button:hover { background-color: ${colors.inactive} !important}` +
     ` .module-tabs.is-personalizable .toolbar-searchfield-wrapper > .searchfield { color: ${colors.text} !important}` +
     ` .module-tabs.is-personalizable .toolbar-searchfield-wrapper > svg { fill: ${colors.text} !important}` +
+    ` .is-personalizable .tab-container.header-tabs::before { background-image: linear-gradient(to right, ${colors.header}, rgba(37, 120, 169, 0)) }` +
+    ` .is-personalizable .tab-container.header-tabs::after { background-image: linear-gradient(to right, rgba(37, 120, 169, 0), ${colors.header}) }` +
     ` .hero-widget.is-personalizable { background-color: ${colors.subheader} }` +
     ` .hero-widget.is-personalizable .hero-bottom { background-color: ${colors.header} }` +
     ` .hero-widget.is-personalizable .hero-footer .hero-footer-nav li::before { color: ${colors.verticalBorder} }` +
     ` .hero-widget.is-personalizable .chart-container .arc { stroke: ${colors.subheader} }` +
     ` .hero-widget.is-personalizable .chart-container .bar { stroke: ${colors.subheader} }` +
     ` .hero-widget.is-personalizable .chart-container.line-chart .dot { stroke: ${colors.subheader} }` +
-    '';
+    ` .application-menu.is-personalizable { border-right: ${colors.verticalBorder} }` +
+    ` .application-menu.is-personalizable .application-menu-header { background-color: ${colors.subheader}; border-bottom-color: ${colors.verticalBorder} }` +
+    ` .application-menu.is-personalizable .application-menu-footer { background-color: ${colors.subheader}; border-top-color: ${colors.verticalBorder} }` +
+    ` .application-menu.is-personalizable .application-menu-toolbar button .icon, .application-menu.is-personalizable .application-menu-toolbar button span, .application-menu.is-personalizable .application-menu-footer .hyperlink { color: ${colors.text}; opacity: 0.7 }` +
+    ` .application-menu.is-personalizable .application-menu-toolbar button:not(:disabled):hover .icon, .application-menu.is-personalizable .application-menu-toolbar button:not(:disabled):hover span, .application-menu.is-personalizable .application-menu-footer .hyperlink:hover  { color: ${colors.text}; opacity: 1 }` +
+    ` .application-menu.is-personalizable .accordion.panel { background-color: ${colors.header} }` +
+    ` .application-menu.is-personalizable .accordion.panel .accordion-header { border-bottom-color: ${colors.verticalBorder}; color: ${colors.text}; opacity: 0.7 }` +
+    ' .application-menu.is-personalizable .accordion.panel .accordion-header:hover { opacity: 1 }' +
+    ` .application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) { border-color: ${colors.focusBorder}; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2); }` +
+    ` .application-menu.is-personalizable .application-menu-toolbar button::focus:not(.hide-focus) , .application-menu.is-personalizable .application-menu-toolbar .hyperlink::focus:not(.hide-focus) { box-shadow: 0 0 0 2px transparent, 0 0 0 1px ${colors.focusBorder}, 0 0 4px 3px rgba(0, 0, 0, 0.2) }` +
+      '';
 
     return cssRules;
   },
