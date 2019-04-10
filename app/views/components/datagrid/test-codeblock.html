@@ -1,0 +1,625 @@
+<style>
+  .datagrid .code-block {
+    background: inherit;
+    border: none;
+    display: block;
+    font-family: inherit;
+    line-height: inherit;
+    margin: 0 0 -19px;
+    overflow: inherit;
+    position: relative;
+    text-overflow: inherit;
+  }
+
+  .datagrid .is-active .code-block {
+    display: inline-block;
+    line-height: inherit !important;
+    top: -3px;
+    width: calc(100% - 104px);
+  }
+
+  .datagrid .code-block label {
+    display: inline-block;
+    margin-bottom: 0;
+    overflow: hidden;
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .datagrid .code-block label::after {
+    content: ':';
+  }
+
+  .datagrid .code-block .data {
+    display: inline-block;
+    line-height: inherit;
+    margin-bottom: 0;
+    padding-left: 5px;
+    padding-right: 15px;
+    position: relative;
+    top: 0;
+    white-space: nowrap;
+  }
+
+  .datagrid .code-block .data:not(:last-of-type)::after,
+  .datagrid td.is-editing .code-block .data:not(:last-of-type)::after {
+    color: #5c5c5c;
+    content: '•';
+    font-size: 18px;
+    margin-right: 0;
+    padding-left: 15px;
+    position: relative;
+    top: 1px;
+  }
+
+  .datagrid td.is-editing .code-block input[type='text'] {
+    width: 60%;
+  }
+
+  .datagrid td.is-editing .code-block input.lookup {
+    border-color: transparent;
+    padding: 0 2px 0 0;
+    transition: margin 0.5s ease, left 0.5s ease, padding 0.5s ease, width 0.5s ease;
+    vertical-align: baseline;
+    width: auto; /* IE doesnt support initial */
+    width: initial;
+  }
+
+  .datagrid td.is-editing .code-block .lookup-wrapper {
+    padding-left: 0;
+    padding-top: 0;
+    vertical-align: baseline;
+  }
+
+  .datagrid td.is-editing .code-block .field {
+    margin-right: 0;
+  }
+
+  .datagrid td.is-editing .code-block .field::after {
+    content: '';
+  }
+
+  .datagrid td.is-editing .code-block input.lookup ~ .trigger .icon {
+    top: 8px;
+    width: 18px;
+  }
+
+  .datagrid td.is-editing .code-block input.lookup ~ .trigger {
+    margin-top: 0;
+  }
+
+  .datagrid td.is-editing .code-block .datagrid-cell-wrapper:focus {
+    outline: none;
+  }
+
+  .datagrid td.is-editing .code-block .lookup-wrapper .trigger {
+    margin-left: -33px;
+    margin-top: 0;
+  }
+
+  .field-options {
+    margin-right: 15px;
+  }
+
+  .code-block-container > button {
+    display: inline-block;
+  }
+
+  .code-block-actions {
+    left: -17px;
+    transform: rotate(90deg);
+    visibility: visible;
+  }
+
+  .code-block-buttons {
+    display: inline-block;
+    left: 5px;
+    position: relative;
+  }
+
+  /* --- */
+  .code-block.is-active {
+    border: 1px solid #368ac0;
+    box-shadow: 0 0 4px 3px rgba(54, 138, 192, 0.3);
+  }
+
+  .code-block.is-active input {
+    box-shadow: none !important;
+  }
+
+  .field.is-active {
+    border: 1px solid #368ac0;
+  }
+
+  .field.is-active .field-options:not([disabled]) {
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Make Label and Input Inline */
+  .lookup-wrapper,
+  .label {
+    display: inline;
+  }
+
+  .field {
+    border: 1px solid transparent;
+    border-radius: 2px;
+    display: inline-block;
+    height: 34px;
+    line-height: 34px;
+    margin: -3px -12px -3px -3px;
+    padding: 0 0 0 12px;
+    vertical-align: middle;
+  }
+
+  .field:not(:last-of-type):not(.is-active)::after {
+    color: #5c5c5c;
+    content: '•';
+    font-size: 18px;
+    position: absolute;
+    right: 18px;
+    top: -1px;
+    width: 4px;
+  }
+
+  .field.is-active::after {
+    content: '';
+  }
+
+  .field.is-active:focus {
+    box-shadow: none !important;
+  }
+
+  /* Adjust labels and input styles */
+  .label {
+    position: relative;
+    top: -1px;
+  }
+
+  /* Add a : After the label */
+  .label::after {
+    content: ':';
+  }
+
+  input {
+    border-color: transparent;
+    padding-left: 0;
+    transition: margin 0.5s ease, left 0.5s ease, padding 0.5s ease, width 0.5s ease;
+    width: auto; /* IE doesnt support initial */
+    width: initial;
+  }
+
+  .is-number-mask {
+    text-align: left;
+  }
+
+  .lookup,
+  input {
+    padding: 0;
+  }
+
+  .lookup:focus {
+    box-shadow: none !important;
+  }
+
+  /* Other Input Types */
+  input[readonly] {
+    background-color: transparent;
+  }
+
+  /* Make Elements Sit Well Next to Each other */
+  .field .field-options:not([disabled]).lookup,
+  .field.is-active .field-options:not([disabled]).lookup,
+  .field .field-options:not([disabled]),
+  .field .field-options:not([disabled]).datepicker,
+  .field.is-active .field-options:not([disabled]).datepicker,
+  .field .dropdown-wrapper {
+    margin-left: 3px;
+    margin-right: 18px;
+  }
+
+  /* Support for IE, Edge and FF */
+  .ie .field .field-options:not([disabled]).lookup,
+  .is-firefox .field .field-options:not([disabled]).lookup,
+  .ie .field.is-active .field-options:not([disabled]).lookup,
+  .is-firefox .field.is-active .field-options:not([disabled]).lookup,
+  .ie .field .field-options:not([disabled]),
+  .is-firefox .field .field-options:not([disabled]),
+  .ie .field .field-options:not([disabled]).datepicker,
+  .is-firefox .field .field-options:not([disabled]).datepicker,
+  .ie .field.is-active .field-options:not([disabled]).datepicker,
+  .is-firefox .field.is-active .field-options:not([disabled]).datepicker {
+    margin-right: 0;
+  }
+
+  .field.is-active .field-options:not([disabled]) {
+    margin-right: 9px;
+  }
+
+  .field input.field-options:not([disabled]).lookup.is-active,
+  .field.is-active .field-options:not([disabled]).datepicker {
+    padding-right: 10px;
+  }
+
+  .field.is-active::before,
+  .datepicker + .icon {
+    visibility: hidden;
+  }
+
+  .datepicker.is-active + .icon {
+    visibility: visible;
+    z-index: 2;
+  }
+
+  .trigger {
+    margin-left: -33px;
+    visibility: hidden;
+  }
+
+  input.is-active + .trigger {
+    visibility: visible;
+  }
+
+  input.is-active + .trigger .icon {
+    fill: #5c5c5c !important;
+  }
+
+  .lookup-wrapper.is-active + .trigger {
+    visibility: visible;
+  }
+
+  /* Adjust the Field Options */
+  .btn-actions {
+    left: -15px;
+    margin-right: -22px;
+    top: 0;
+    visibility: hidden;
+    z-index: 1;
+  }
+
+  .field.is-fieldoptions .lookup-wrapper .btn-actions {
+    left: -15px;
+  }
+
+  .field-options.checkbox ~ .btn-actions,
+  .field-options.dropdown ~ .btn-actions {
+    top: 0;
+  }
+
+  input.is-active + .trigger + .btn-actions {
+    border: none;
+    box-shadow: none !important;
+    left: -15px;
+    margin-right: -18px;
+    visibility: visible;
+  }
+
+  /* Input Field with field options */
+  .btn-actions.is-active {
+    border: none;
+    box-shadow: none !important;
+    visibility: visible;
+  }
+
+  .field.is-active::before {
+    visibility: hidden;
+  }
+
+  /* Readonly Styles */
+  .data {
+    font-size: 1.4rem;
+    padding-left: 3px;
+    padding-right: 41px;
+  }
+
+  .input-style.is-readonly .field::after {
+    right: 20px;
+    top: -3px;
+  }
+
+  /* Style Datepicker alignment */
+  .field-options.datepicker {
+    width: auto; /* IE doesnt support initial */
+    width: initial;
+  }
+
+  /* Style Checkbox alignment */
+  .field .checkbox-label {
+    margin-right: 18px;
+  }
+
+  div.field + .field-checkbox {
+    margin-bottom: -3px !important;
+  }
+
+  /* Style Dropdown & alignment */
+  .dropdown {
+    border-width: 0;
+    height: 32px !important;
+    padding: 8px 0;
+    vertical-align: top;
+  }
+
+  .field .dropdown-sm {
+    max-width: 100px;
+    min-width: 61px;
+    padding-right: 0;
+    transition: padding 0.5s ease;
+    width: auto;
+  }
+
+  .field .dropdown-sm.is-open {
+    padding-right: 28px;
+    transition: padding 0.5s ease;
+  }
+
+  .dropdown + .icon {
+    right: 24px;
+    visibility: hidden;
+  }
+
+  .field.is-active div.dropdown:not(.is-open) {
+    border-width: 0;
+    box-shadow: none;
+  }
+</style>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+    $('body').on('initialized', function () {
+
+      var customFormatter = function (row, cell, value, col, rowData, api) {
+        // console.log({i: 'format', row, cell, value, col, rowData, api});
+        return '' +
+          '<span class="code-block">' +
+            '<label for="contact" class="label">Contact</label>' +
+            '<span class="data">'+ rowData.contact +'</span>' +
+            '<label for="phone" class="label">Phone</label>' +
+            '<span class="data">'+ rowData.phone +'</span>' +
+            '<label for="location" class="label">Location</label>' +
+            '<span class="data">'+ rowData.location +'</span>' +
+          '</span>';
+      };
+
+      var customEditor = function (row, cell, value, container, column, event, grid, rowData) {
+        // console.log({i: 'edit', row, cell, value, container, column, event, grid, rowData});
+        this.name = 'MyCustom';
+        this.originalValue = value;
+
+        this.init = function () {
+          const btnHtml = function (id) {
+            return '<button type="button" id="popupmenu-'+ id +'" class="btn-actions btn-menu">' +
+              $.createIcon({ icon: 'more' }) +
+              '<span class="audible">More Actions</span></button>' +
+              '<ul class="popupmenu">' +
+                '<li><a href="#">Show Field History</a></li>' +
+                '<li><a href="#">Show Pending Changes</a></li>' +
+                '<li>' +
+                  '<a href="#">Drill Around</a>' +
+                  '<ul class="popupmenu">' +
+                    '<li><a href="#">Sub Menu 1</a></li>' +
+                    '<li><a href="#">Sub Menu 2</a></li>' +
+                  '</ul>' +
+                '</li>' +
+              '</ul>';
+          };
+
+          const html = '' +
+            '<div class="code-block">' +
+              '<div class="field">' +
+                  '<label for="contact" class="label">Contact</label>' +
+                  '<input type="text" name="contact" id="contact" value="'+ rowData.contact +'"/>' +
+                  btnHtml('contact') +
+                '</div>' +
+              '<div class="field">' +
+                  '<label for="phone" class="label">Phone</label>' +
+                  '<input type="text" name="phone" id="phone" value="'+ rowData.phone +'"/>' +
+                  btnHtml('phone') +
+                '</div>' +
+              '<div class="field">' +
+                  '<label for="location" class="label">Location</label>' +
+                  '<input type="text" name="location" id="location" value="'+ rowData.location +'"/>' +
+                  btnHtml('location') +
+                '</div>' +
+            '</div>';
+
+          $(html).appendTo(container);
+          container.find('.btn-menu').button();
+        };
+
+        this.val = function (value) {
+          return '';
+        };
+
+        this.focus = function () {
+          container.find('[type="text"]:first').focus().select();
+        };
+
+        this.destroy = function () {
+        };
+
+        this.init();
+      };
+
+      var data = [
+        {
+          'id': 1,
+          'companyId': '101',
+          'companyName': 'Alexandar Gravel & Stone',
+          'phone': '414-821-0697',
+          'location': 'Terrencefort, TX',
+          'contact': 'Lida Snyder',
+          'customerSince': '04/25/2016',
+          'favorite': true
+        },
+        {
+          'id': 2,
+          'companyId': '102',
+          'companyName': 'Briar Valley Gravel',
+          'phone': '702-389-9973',
+          'location': 'Davontemouth, UT',
+          'contact': 'Bull Cunningham',
+          'customerSince': '05/02/2016'
+        },
+        {
+          'id': 3,
+          'companyId': '103',
+          'companyName': 'Riverhead Building Supply',
+          'phone': '929-769-3984',
+          'location': 'Hermistonhaven, AZ',
+          'contact': 'Johnny Fields',
+          'customerSince': '08/28/2016',
+          'favorite': true
+        },
+        {
+          'id': 4,
+          'companyId': '104',
+          'companyName': 'Gravel Corp',
+          'phone': '299-166-7016',
+          'location': 'North Beau, NV',
+          'contact': 'Nina Mendez',
+          'customerSince': '01/25/2015'
+        },
+        {
+          'id': 5,
+          'companyId': '105',
+          'companyName': 'United Construction',
+          'phone': '299-166-7016',
+          'location': 'New Abdul, TX',
+          'contact': 'Paul Strayer',
+          'customerSince': '04/21/2016'
+        },
+        {
+          'id': 6,
+          'companyId': '106',
+          'companyName': 'Gravel, Gravel, Gravel',
+          'phone': '299-166-7067',
+          'location': 'Smithsville, UT',
+          'contact': 'John Nasmith',
+          'customerSince': '06/25/2016'
+        },
+        {
+          'id': 7,
+          'companyId': '108',
+          'companyName': 'Stone Gravel Supply Company',
+          'phone': '202-504-5299',
+          'location': 'Ryesmith, AK',
+          'contact': 'Spring Adams',
+          'customerSince': '07/25/2015'
+        },
+        {
+          'id': 8,
+          'companyId': '109',
+          'companyName': 'Smith Gravel & Stone',
+          'phone': '411-821-0697',
+          'location': 'Lancaster, TX',
+          'contact': 'Mary Adams',
+          'customerSince': '04/25/2016',
+          'favorite': true
+        },
+        {
+          'id': 9,
+          'companyId': '110',
+          'companyName': 'Hidden Valley Gravel',
+          'phone': '202-389-9973',
+          'location': 'Shark City, UT',
+          'contact': 'Donald Cunningham',
+          'customerSince': '05/01/2016'
+        },
+        {
+          'id': 10,
+          'companyId': '111',
+          'companyName': 'Copperhead Building Supply',
+          'phone': '929-769-3984',
+          'location': 'Hermistonhaven, AZ',
+          'contact': 'Johnny Smith',
+          'customerSince': '08/21/2016',
+          'favorite': true
+        },
+        {
+          'id': 11,
+          'companyId': '112',
+          'companyName': 'Gravel Lovers Inc',
+          'phone': '299-166-7016',
+          'location': 'North Beau, NV',
+          'contact': 'Paulo Mendez',
+          'customerSince': '03/25/2014'
+        },
+        {
+          'id': 12,
+          'companyId': '113',
+          'companyName': 'United Gravel',
+          'phone': '299-126-7016',
+          'location': 'New Manilla, TX',
+          'contact': 'Paul Strayer',
+          'customerSince': '04/21/2016'
+        },
+        {
+          'id': 13,
+          'companyId': '114',
+          'companyName': 'Construction City',
+          'phone': '399-166-7067',
+          'location': 'Joanestown, UT',
+          'contact': 'Andy Nasmith',
+          'customerSince': '06/25/2015'
+        },
+        {
+          'id': 14,
+          'companyId': '115',
+          'companyName': 'Stone City Supply Company',
+          'phone': '202-504-5299',
+          'location': 'River Ridge, PA',
+          'contact': 'Winter Adams',
+          'customerSince': '01/25/2015'
+        }
+      ];
+
+      var columns = [
+        {
+          id: 'companyId',
+          name: 'Company',
+          field: 'companyId',
+          filterType: 'text',
+          width: 100,
+          editor: Editors.Input
+        },
+        {
+          id: 'companyName',
+          name: 'Name',
+          field: 'companyName',
+          filterType: 'text',
+          width: 140,
+          editor: Editors.Input
+        },
+        { id: 'codeBlock',
+          name: 'Code Block',
+          sortable: false,
+          formatter: customFormatter,
+          filterType: 'text',
+          expandOnActivate: true,
+          textOverflow: 'ellipsis',
+          editor: customEditor
+        }
+      ];
+
+      //Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        selectable: 'single',
+        idProperty: 'productId',
+        editable: true,
+        filterable: true
+      });
+    });
+
+</script>
