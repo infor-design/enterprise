@@ -278,6 +278,11 @@
     }
   }
 
+  // Flex Toolbar
+  .toolbar-section.buttonset {
+    padding: 0;
+  }
+
   &.has-more-button {
     .buttonset {
       width: calc(100% - 44px);
