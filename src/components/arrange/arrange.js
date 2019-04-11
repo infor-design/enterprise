@@ -43,6 +43,7 @@ Arrange.prototype = {
   // example from: https://github.com/farhadi/html5arrangeable/blob/master/jquery.arrangeable.js
   init() {
     this.isTouch = env.features.touch;
+    this.isIe = env.browser.name === 'ie';
     this.handleEvents();
   },
 
@@ -208,7 +209,7 @@ Arrange.prototype = {
         if (this.dragDrop) {
           this.dragDrop();// ie9
         }
-        return false;
+        return this.isIe;
       })
       .end()
 

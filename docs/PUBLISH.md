@@ -47,9 +47,20 @@ git config --global credential.helper wincred
 
 - Verify you are logged into NPM in your terminal to avoid `release-it` dying at the end.
 
-### Make sure you have Jenkins variables set
+### Make sure you have Jenkins variables set (only for "final" releases)
 
 - Check that you have both `JENKINS_JOB_TOKEN` and `JENKINS_API_TOKEN` exported
+
+## Make sure you have set up tools for AWS CDN Publish (only for "final" releases)
+
+1. nstall AWS for testing and configuring <http://docs.aws.amazon.com/cli/latest/userguide/installing.html>. If you are on mac and use homebrew, that is an option too.
+1. Once installed run aws configure to enter the keys in the right spot <http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html>
+1. Install [directory-to-s3](https://www.npmjs.com/package/directory-to-s3) globally.
+    - `npm install -g directory-to-s3`
+
+## For documentation (only for "final" releases)
+
+- Make sure you setup your `DOCS_API_KEY` key
 
 ## Release
 
@@ -64,20 +75,5 @@ git config --global credential.helper wincred
 
 For a final release, finish with:
 
-1. Publish/upload the documentation to design.infor.com:
-    - `export DOCS_API_KEY={API KEY}`
-    - `npm run documentation -- --site=prod`
 1. Manually merge the version branch into `master`. Do **NOT** use a pull request. (You will need github push permissions for this)
-1. If needed, use a pull request to set the `master` branch's package.json version to the proper "dev" version
-    - i.e. if we just released `4.7.0`, master should be be `4.8.0-dev`
-
-## Setup tools for AWS CDN Publish
-
-- Also install AWS for testing and configuring <http://docs.aws.amazon.com/cli/latest/userguide/installing.html>
-- Once installed run aws configure to enter the keys in the right spot <http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html>
-
-## Deploy to AWS
-
-```bash
-AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.3.3 -v
-```
+    - Verify the `package.json` version on master is what it should be (usually the next minor version with a `-dev` suffix)

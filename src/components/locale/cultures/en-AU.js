@@ -233,7 +233,7 @@ Soho.Locale.addCulture('en-AU', {
     Minus: { id: 'Minus', value: 'Minus', comment: 'Minus tooltip' },
     Mobile: { id: 'Mobile', value: 'Mobile', comment: 'Indicates a mobile device (phone tablet ect)' },
     Month: { id: 'Month', value: 'Month', comment: 'As in a date month' },
-    More: { id: 'More', value: 'More...', comment: 'Text Indicating More Buttons or form content' },
+    More: { id: 'More', value: 'More', comment: 'Text Indicating More Buttons or form content' },
     MoreActions: { id: 'MoreActions', value: 'More Actions', comment: 'Text on the More Actions button indictating hidden functions' },
     MoveToLeft: { id: 'MoveToLeft', value: 'Move to left', comment: 'Button tooltip used in a list of movable items' },
     MoveToRight: { id: 'MoveToRight', value: 'Move to right', comment: 'Button tooltip used in a list of movable items' },

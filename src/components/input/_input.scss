@@ -305,12 +305,12 @@ textarea {
 label,
 .label {
   &.required {
-    &:not(.inline)::after {
-      @include required-indicator();
+    &:not(.inline) .required-asterisk {
+      @include required-indicator($is-content: false);
     }
 
-    .label-text::after {
-      @include required-indicator();
+    .label-text .required-asterisk {
+      @include required-indicator($is-content: false);
     }
   }
 

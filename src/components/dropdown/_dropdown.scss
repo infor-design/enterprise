@@ -98,13 +98,13 @@ div.multiselect {
   }
 
   > span {
-    display: inline-block;
-    // max-width: 100%;
+    display: block;
+    min-height: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: top;
 
-    &:empty::before {
+    &[data-placeholder-text]::before {
       color: $input-placeholder-color;
       content: attr(data-placeholder-text);
       -webkit-text-fill-color: $input-placeholder-color;
@@ -255,7 +255,7 @@ div.multiselect {
     cursor: pointer;
     position: relative;
 
-    i {
+    .dropdown-highlight {
       color: $dropdown-color-initial-icon;
       font-style: normal;
       text-decoration: none;
@@ -380,7 +380,7 @@ div.multiselect {
   // Added to the dropdown list when doing a search
   &.search-mode {
     li {
-      i {
+      .dropdown-highlight {
         color: $font-color-extrahighcontrast;
         font-weight: $theme-number-font-weight-bold;
         letter-spacing: -0.2;
@@ -393,7 +393,7 @@ div.multiselect {
       }
 
       &.is-focused {
-        i {
+        .dropdown-highlight {
           color: $inverse-color;
         }
       }
@@ -459,7 +459,7 @@ div.multiselect {
 
     &.search-mode {
       a {
-        i {
+        .dropdown-highlight {
           color: $font-color-highcontrast;
         }
       }
@@ -469,7 +469,7 @@ div.multiselect {
   .group-label {
     @include css3(user-select, none);
 
-    color: $label-color-initial-font;
+    color: $label-color;
     font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
     line-height: 20px;
@@ -497,18 +497,14 @@ div.multiselect {
     z-index: 1;
 
     .icon {
-      @include css3(transform, rotate(180deg));
-
       background-color: rgba($theme-color-palette-white, 0);
       color: $trigger-icon-fill-color;
-      left: 1px;
-      top: 6px;
+      left: -2px;
+      top: 8px;
 
       &.search {
-        @include css3(transform, rotate(0deg));
-
         height: 18px;
-        margin-top: 7px;
+        margin-top: 0;
         width: 16px;
       }
 

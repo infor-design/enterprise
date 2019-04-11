@@ -2,7 +2,7 @@
 //================================================== //
 
 // NOTE:
-// See the @mixin "respond-to" in `/sass/_mixins.scss` to see what the actual
+// See the @mixin "respond-to" in `/core/_mixins.scss` to see what the actual
 // media queries are (Sass compiler doesn't like that mixin residing in this file).
 $breakpoints: phone, phonedown, tablet, desktop, extralarge;
 

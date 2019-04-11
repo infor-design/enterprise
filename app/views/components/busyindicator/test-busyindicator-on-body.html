@@ -1,0 +1,29 @@
+<body class="busy" data-options="{ 'displayDelay': 300 }">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/header}}
+
+  <div id="main-content" class="page-container scrollable">
+    <div class="row">
+      <div class="twelve columns">
+        <button class="btn-secondary" type="button" id="busy-start">Start Busy Indicator</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  $(function () {
+    var body = $('body');
+    body.initialize('en-US');
+
+    $('#busy-start').on('click', function () {
+      body.trigger('start.busyindicator');
+
+      setTimeout(function () {
+        body.trigger('complete.busyindicator');
+      }, 3000);
+    });
+
+  });
+  </script>
+</body>
