@@ -1811,8 +1811,9 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    //Readonly
-    &.is-readonly {
+    //Readonly & Disabled
+    &.is-readonly,
+    &.is-disabled {
       background-color: $datagrid-cell-readonly-bg-color;
     }
 

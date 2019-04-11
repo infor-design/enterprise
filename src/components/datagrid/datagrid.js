@@ -138,6 +138,7 @@ const DATAGRID_DEFAULTS = {
   saveUserSettings: {},
   focusAfterSort: false, // If true will focus the active cell after sorting.
   editable: false,
+  disabledRows: false,
   isList: false, // Makes a readonly "list"
   menuId: null, // Id to the right click context menu
   headerMenuId: null, // Id to the right click context menu to use for the header
@@ -3282,6 +3283,10 @@ Datagrid.prototype = {
     return false;
   },
 
+  disable() {
+    this.element.setAttribute('aria-disabled', true);
+  },
+
   /**
    * Set the heights on top or bottom based on scroll position
    * @private
@@ -3579,6 +3584,9 @@ Datagrid.prototype = {
           ariaReadonly = 'aria-readonly="true"';
         }
       }
+
+      const tableBody = self.tableBody.find(' > .datagrid-row td').addClass('sample');
+      console.log('tableBody', tableBody);
 
       const cellValue = self.fieldValue(rowData, self.settings.columns[j].field);
 
