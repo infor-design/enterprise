@@ -1820,6 +1820,11 @@ $datagrid-short-row-height: 23px;
       background-color: $datagrid-cell-readonly-bg-color;
       cursor: not-allowed;
       opacity: 0.5;
+
+      .datagrid-checkbox,
+      a {
+        cursor: not-allowed;
+      }
     }
 
     //Cell Contents but not outer cell is readonly
