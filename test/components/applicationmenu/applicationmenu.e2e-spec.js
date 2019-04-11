@@ -136,9 +136,7 @@ describe('Applicationmenu accordion truncated text tooltip tests', () => {
 describe('Applicationmenu Personalization tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/example-personalized?colors=7025B6');
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.tab-list'))), config.waitsFor);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
   });
 
   it('Should show the app menu', async () => {
@@ -152,7 +150,7 @@ describe('Applicationmenu Personalization tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on personalize', async () => {
       const section = await element(by.css('body.no-scroll'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-personalize')).toEqual(0);
     });
