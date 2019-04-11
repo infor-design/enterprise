@@ -7465,6 +7465,13 @@ Datagrid.prototype = {
       const lastRow = visibleRows.last();
       const lastCell = self.settings.columns.length - 1;
 
+      // Tab, Left, Up, Right and Down arrow keys.
+      if ([9, 37, 38, 39, 40].indexOf(key) !== -1) {
+        if ($(e.target).closest('.code-block').length) {
+          return;
+        }
+      }
+
       // Tab, Left and Right arrow keys.
       if ([9, 37, 39].indexOf(key) !== -1) {
         if (key === 9 && self.settings.onKeyDown) {

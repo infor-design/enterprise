@@ -55,7 +55,17 @@
   }
 
   .datagrid td.is-editing .code-block input[type='text'] {
-    width: 60%;
+    padding: 8px 0;
+    width: 50%;
+  }
+
+  .datagrid td.is-editing .icon {
+    color: inherit;
+    top: auto;
+  }
+
+  .datagrid td.is-editing .code-block input[type='text']:focus {
+    /* border: 1px solid #999; */
   }
 
   .datagrid td.is-editing .code-block input.lookup {
@@ -383,10 +393,10 @@
           '<span class="code-block">' +
             '<label for="contact" class="label">Contact</label>' +
             '<span class="data">'+ rowData.contact +'</span>' +
-            '<label for="phone" class="label">Phone</label>' +
-            '<span class="data">'+ rowData.phone +'</span>' +
             '<label for="location" class="label">Location</label>' +
             '<span class="data">'+ rowData.location +'</span>' +
+            '<label for="customer-since" class="label">Customer Since</label>' +
+            '<span class="data">'+ rowData.customerSince +'</span>' +
           '</span>';
       };
 
@@ -397,9 +407,11 @@
 
         this.init = function () {
           const btnHtml = function (id) {
-            return '<button type="button" id="popupmenu-'+ id +'" class="btn-actions btn-menu">' +
-              $.createIcon({ icon: 'more' }) +
-              '<span class="audible">More Actions</span></button>' +
+            return '' +
+              '<button type="button" id="popupmenu-'+ id +'" class="btn-actions btn-menu">' +
+                '<span class="audible">More Actions</span>' +
+                $.createIcon({ icon: 'more' }) +
+              '</button>' +
               '<ul class="popupmenu">' +
                 '<li><a href="#">Show Field History</a></li>' +
                 '<li><a href="#">Show Pending Changes</a></li>' +
@@ -416,24 +428,25 @@
           const html = '' +
             '<div class="code-block">' +
               '<div class="field">' +
-                  '<label for="contact" class="label">Contact</label>' +
-                  '<input type="text" name="contact" id="contact" value="'+ rowData.contact +'"/>' +
-                  btnHtml('contact') +
-                '</div>' +
+                '<label for="contact" class="label">Contact</label>' +
+                '<input type="text" name="contact" id="contact" value="'+ rowData.contact +'"/>' +
+                btnHtml('contact') +
+              '</div>' +
               '<div class="field">' +
-                  '<label for="phone" class="label">Phone</label>' +
-                  '<input type="text" name="phone" id="phone" value="'+ rowData.phone +'"/>' +
-                  btnHtml('phone') +
-                '</div>' +
+                '<label for="location" class="label">Location</label>' +
+                '<input type="text" name="location" id="location" value="'+ rowData.location +'"/>' +
+                btnHtml('location') +
+              '</div>' +
               '<div class="field">' +
-                  '<label for="location" class="label">Location</label>' +
-                  '<input type="text" name="location" id="location" value="'+ rowData.location +'"/>' +
-                  btnHtml('location') +
-                '</div>' +
+                '<label for="customer-since" class="label">Customer Since</label>' +
+                '<input type="text" name="customer-since" id="customer-since" value="'+ rowData.customerSince +'"/>' +
+                btnHtml('customer-since') +
+              '</div>' +
             '</div>';
 
           $(html).appendTo(container);
-          container.find('.btn-menu').button();
+          container.find('#customer-since').datepicker();
+          container.find('[type="text"]').fieldoptions();
         };
 
         this.val = function (value) {
