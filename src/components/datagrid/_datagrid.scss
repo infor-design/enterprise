@@ -1811,10 +1811,15 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    //Readonly & Disabled
-    &.is-readonly,
+    //Readonly
+    &.is-readonly {
+      background-color: $datagrid-cell-readonly-bg-color;
+    }
+
     &.is-disabled {
       background-color: $datagrid-cell-readonly-bg-color;
+      cursor: not-allowed;
+      opacity: 0.5;
     }
 
     //Cell Contents but not outer cell is readonly

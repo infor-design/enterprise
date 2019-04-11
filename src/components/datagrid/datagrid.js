@@ -274,6 +274,7 @@ Datagrid.prototype = {
     this.firstRender();
     this.handleEvents();
     this.handleKeys();
+    this.disabledRow();
 
     /**
      * Fires after the grid is rendered.
@@ -3283,6 +3284,9 @@ Datagrid.prototype = {
     return false;
   },
 
+  /**
+   * Sets a disabled state.
+   */
   disable() {
     this.element.setAttribute('aria-disabled', true);
   },
@@ -3584,9 +3588,6 @@ Datagrid.prototype = {
           ariaReadonly = 'aria-readonly="true"';
         }
       }
-
-      const tableBody = self.tableBody.find(' > .datagrid-row td').addClass('sample');
-      console.log('tableBody', tableBody);
 
       const cellValue = self.fieldValue(rowData, self.settings.columns[j].field);
 
@@ -5166,7 +5167,7 @@ Datagrid.prototype = {
     }
 
     // Update Selected
-    if (self.contextualToolbar && self.contextualToolbar.length) {
+    if (self.contextualToolbar && self.contextualToolbar.length && !self.settings.disabledRows) {
       self.contextualToolbar.find('.selection-count').text(`${self._selectedRows.length} ${Locale.translate('Selected')}`);
     }
 
@@ -5387,7 +5388,7 @@ Datagrid.prototype = {
     }
 
     // Handle Hover States
-    if (self.settings.showHoverState) {
+    if (self.settings.showHoverState && !self.settings.disabledRows) {
       self.bodyContainer
         .off('mouseenter.datagrid, mouseleave.datagrid')
         .on('mouseenter.datagrid', 'tbody > tr', function () {
@@ -6381,7 +6382,7 @@ Datagrid.prototype = {
     checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
     elem.addClass(selectClasses).attr('aria-selected', 'true');
 
-    if (self.columnIdxById('selectionCheckbox') !== -1) {
+    if (self.columnIdxById('selectionCheckbox') !== -1 && !self.settings.disabledRows) {
       checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
       checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
         .addClass('is-checked').attr('aria-checked', 'true');
@@ -7677,6 +7678,16 @@ Datagrid.prototype = {
         return false; // eslint-disable-line
       }
     });
+  },
+
+  /**
+   * Handles disabling of rows.
+   */
+  disabledRow() {
+    if (this.settings.disabledRows) {
+      const tableRow = this.tableBody.find(' > .datagrid-row td').addClass('is-disabled');
+      tableRow.disable();
+    }
   },
 
   /**
