@@ -141,6 +141,7 @@ describe('Mask Input Field Api', () => {
     input.setAttribute('value', '5333,66');
 
     const inputComponent = new window.Soho.components.MaskInput(input, {
+      locale: 'fr-FR',
       process: 'number',
       pattern: '# ###,00',
       patternOptions: {
@@ -161,7 +162,7 @@ describe('Mask Input Field Api', () => {
     expect(inputComponent.settings.patternOptions.symbols.decimal).toEqual(',');
     expect(inputComponent.settings.patternOptions.symbols.thousands).toEqual(' ');
     expect(inputComponent.settings.patternOptions.symbols.currency).toEqual('€');
-    expect(input.value).toEqual('5 333,66 €');
+    expect(input.value).toEqual('5 333,66 €');
   });
 
   it('Should display reversed prefix/suffix when in RTL mode', () => {
@@ -173,6 +174,7 @@ describe('Mask Input Field Api', () => {
     input.setAttribute('value', '123456789');
 
     const inputComponent = new window.Soho.components.MaskInput(input, {
+      locale: 'ar-EG',
       process: 'number',
       pattern: '#٬###٬###-',
       patternOptions: {

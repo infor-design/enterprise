@@ -157,6 +157,10 @@
           font-weight: $theme-number-font-weight-bold;
         }
       }
+
+      .item-content {
+        min-height: 16px;
+      }
     }
 
     .over {

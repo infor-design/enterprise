@@ -573,7 +573,7 @@ describe('Datepicker Timeformat Tests', () => {
     const valueDate = new Date(value);
 
     const testDate = new Date();
-    const allowedVariance = 60000; // milliseconds
+    const allowedVariance = 120000; // milliseconds
     const dateDiff = Math.abs(testDate - valueDate); // guarentee its a positive result
 
     expect(dateDiff).toBeLessThanOrEqual(allowedVariance);

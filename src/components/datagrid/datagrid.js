@@ -5166,11 +5166,15 @@ Datagrid.prototype = {
       count = this.lastCount;
     }
 
+    const formatInteger = v => Locale.formatNumber(v, { style: 'integer' });
     let countText;
     if (self.settings.showFilterTotal && self.filteredCount > 0) {
-      countText = `(${Locale.formatNumber(count - self.filteredCount, { style: 'integer' })} of ${Locale.formatNumber(count, { style: 'integer' })} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
+      countText = `(${Locale.translate(count === 1 ? 'ResultOf' : 'ResultsOf')})`;
+      countText = countText.replace('{0}', formatInteger(count - self.filteredCount));
+      countText = countText.replace('{1}', formatInteger(count));
     } else {
-      countText = `(${Locale.formatNumber(count, { style: 'integer' })} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
+      countText = `({0} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
+      countText = countText.replace('{0}', formatInteger(count));
     }
 
     if (self.settings.resultsText) {
