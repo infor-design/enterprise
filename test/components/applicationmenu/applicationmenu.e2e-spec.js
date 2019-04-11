@@ -134,3 +134,29 @@ describe('Applicationmenu accordion truncated text tooltip tests', () => {
     expect(await element(by.id('tooltip')).isPresent()).toBeTruthy();
   });
 });
+
+describe('Applicationmenu Personalization tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/example-personalized?colors=7025B6');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.tab-list'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+  });
+
+  it('Should show the app menu', async () => {
+    expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on personalize', async () => {
+      const section = await element(by.css('body.no-scroll'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-personalize')).toEqual(0);
+    });
+  }
+});

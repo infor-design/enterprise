@@ -1038,7 +1038,7 @@ Toolbar.prototype = {
     const self = this;
 
     function getMoreOrLast() {
-      if (self.hasNoMoreButton() || !self.element.hasClass('has-more-button')) {
+      if (self.moreButtonIsDisabled() || !self.element.hasClass('has-more-button')) {
         return self.getLastVisibleButton();
       }
 

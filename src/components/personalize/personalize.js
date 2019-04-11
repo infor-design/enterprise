@@ -190,10 +190,9 @@ Personalize.prototype = {
       this.getLuminousColorShade(colors.subheader, -0.025));
     colors.btnColorSubheader = this.validateHex(colors.btnColorSubheader ||
       this.getLuminousColorShade(colors.header, -0.025));
-    colors.focusBorder = this.getLuminousColorShade(colors.header, 0.5);
 
     // note that the sheet is appended in backwards
-    const cssRules = `.tab-container.module-tabs.is-personalizable { border-top: 1px solid ${colors.horizontalBorder} !important; border-bottom: 1px solid ${colors.horizontalBorder} !important}` +
+    let cssRules = `.tab-container.module-tabs.is-personalizable { border-top: 1px solid ${colors.horizontalBorder} !important; border-bottom: 1px solid ${colors.horizontalBorder} !important}` +
     ` .module-tabs.is-personalizable .tab:not(:first-child) { border-left: 1px solid ${colors.verticalBorder} !important}` +
     ` .module-tabs.is-personalizable { background-color: ${colors.inactive} !important}` +
     ` .module-tabs.is-personalizable .tab.is-selected { background-color: ${colors.header} !important}` +
@@ -237,10 +236,15 @@ Personalize.prototype = {
     ` .application-menu.is-personalizable .accordion.panel { background-color: ${colors.header} }` +
     ` .application-menu.is-personalizable .accordion.panel .accordion-header { border-bottom-color: ${colors.verticalBorder}; color: ${colors.text}; opacity: 0.7 }` +
     ' .application-menu.is-personalizable .accordion.panel .accordion-header:hover { opacity: 1 }' +
-    ` .application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) { border-color: ${colors.focusBorder}; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2); }` +
-    ` .application-menu.is-personalizable .application-menu-toolbar button::focus:not(.hide-focus) , .application-menu.is-personalizable .application-menu-toolbar .hyperlink::focus:not(.hide-focus) { box-shadow: 0 0 0 2px transparent, 0 0 0 1px ${colors.focusBorder}, 0 0 4px 3px rgba(0, 0, 0, 0.2) }` +
+    ` .application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) { border-color: ${colors.text}; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2); }` +
+    ` .application-menu.is-personalizable .application-menu-toolbar button::focus:not(.hide-focus) , .application-menu.is-personalizable .application-menu-toolbar .hyperlink::focus:not(.hide-focus) { box-shadow: 0 0 0 2px transparent, 0 0 0 1px ${colors.text}, 0 0 4px 3px rgba(0, 0, 0, 0.2) }` +
       '';
 
+    // Add reusable classes that can be used on some elements
+    cssRules += `.is-personalizable .personalize-header { background-color: ${colors.header} }` +
+      `.is-personalizable .personalize-subheader { background-color: ${colors.header} }` +
+      `.is-personalizable .personalize-text { color: ${colors.text} }` +
+    '';
     return cssRules;
   },
 

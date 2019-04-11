@@ -405,7 +405,7 @@ PopupMenu.prototype = {
     }
 
     if (settings.icon) {
-      icon = `<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+      icon = `<svg class="icon" focusable="false" aria-hidden="true">
         <use xlink:href="#icon-${settings.icon}"></use>
       </svg>`;
     }
@@ -413,7 +413,7 @@ PopupMenu.prototype = {
     if (Array.isArray(settings.submenu)) {
       submenuClass += ' submenu';
       submenu += this.renderItem(settings.submenu);
-      ddicon += `<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation">
+      ddicon += `<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true">
         <use xlink:href="#icon-dropdown"></use>
       </svg>`;
     }
@@ -570,8 +570,6 @@ PopupMenu.prototype = {
       let submenu = $(li).children('ul')[0];
       const icon = $(li).find('.icon:not(.close):not(.icon-dropdown)');
       const submenuWrapper = $(li).children('.wrapper')[0];
-
-      li.setAttribute('role', 'presentation');
 
       if (a) {
         a.setAttribute('tabindex', '-1');
