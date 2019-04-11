@@ -1800,12 +1800,12 @@ Tabs.prototype = {
 
     if (tab.is('.is-selected')) {
       if (tab.prevAll('li.tab').not('.hidden').not('.is-disabled').length > 0) {
-        this.select($(tab.prevAll('li.tab').not('.hidden').not('.is-disabled')[0]).find('a')[0].hash);
+        this.select($(tab.prevAll('li.tab').not('.hidden').not('.is-disabled')[0]).find('a')[0].hash, true);
       } else if (tab.nextAll('li.tab').not('.hidden').length > 0) {
-        this.select($(tab.nextAll('li.tab').not('.hidden').not('.is-disabled')[0]).find('a')[0].hash);
+        this.select($(tab.nextAll('li.tab').not('.hidden').not('.is-disabled')[0]).find('a')[0].hash, true);
       }
     } else {
-      this.select($(this.element.find('li.tab.is-selected')[0]).find('a')[0].hash);
+      this.select($(this.element.find('li.tab.is-selected')[0]).find('a')[0].hash, true);
     }
   },
 
@@ -3042,9 +3042,10 @@ Tabs.prototype = {
   /**
    * Selects a Tab
    * @param {string} href a string representing the HTML `id` attribute of the new tab panel.
+   * @param {boolean} noFocus true to prevent focus.
    * @returns {void}
    */
-  select(href) {
+  select(href, noFocus) {
     const modHref = href.replace(/#/g, '');
     const anchor = this.getAnchor(modHref);
 
@@ -3056,7 +3057,9 @@ Tabs.prototype = {
     }
     this.changeHash(modHref);
 
-    anchor.focus();
+    if (!noFocus) {
+      anchor.focus();
+    }
   },
 
   /**
