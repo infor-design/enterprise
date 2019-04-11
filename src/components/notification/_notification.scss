@@ -3,53 +3,45 @@
 
 .notification {
   height: 0;
+  padding: 10px 45px;
   position: relative;
   z-index: 1;
 
-  .notification-text {
-    font-size: $theme-size-font-base;
-    line-height: 40px;
-    margin-left: 25px;
-    position: relative;
-    width: auto;
+  .notification-text,
+  .notification-link {
+    color: $theme-color-palette-graphite-60;
   }
 
   .notification-link {
-    color: $font-color;
-    font-size: $theme-size-font-base;
     font-weight: 300;
     padding-left: 5px;
     text-decoration: none;
 
     &:hover {
-      color: $font-color-highcontrast;
+      color: $theme-color-brand-secondary-contrast;
       text-decoration: underline;
     }
   }
 
-  .icon {
+  .notification-icon {
     left: 15px;
+    position: absolute;
+    top: calc(50% - 9px);
   }
 
   .notification-close {
-    cursor: pointer;
-    float: right;
-    left: -30px;
-    position: relative;
-    top: 13px;
+    position: absolute;
+    right: 15px;
+    top: calc(50% - 18px);
 
     .icon {
       color: $icon-color-fill;
       height: 15px;
-      width: 15px;
     }
 
-    &:hover .icon {
-      color: $theme-color-font-base;
-    }
-
+    &:hover .icon,
     &:active .icon {
-      color: $font-color-extrahighcontrast;
+      color: $button-color-tertiary-hover-font;
     }
   }
 
@@ -71,19 +63,5 @@
   &.info {
     background-color: $notification-color-info-initial-background;
     color: $notification-color-info-initial-font;
-  }
-}
-
-@include respond-to(phablet) {
-  .notification-link {
-    display: none;
-  }
-
-  .notification-text {
-    display: inline-block;
-    max-width: 77%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 }

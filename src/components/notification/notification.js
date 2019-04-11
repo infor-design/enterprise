@@ -51,19 +51,34 @@ Notification.prototype = {
   build() {
     this.notificationEl = document.createElement('div');
     this.notificationEl.classList.add('notification', this.settings.type);
-    this.notificationEl.innerHTML = `<svg class="icon icon-${this.settings.type}" focusable="false" aria-hidden="true" role="presentation">
-       <use xlink:href="#icon-${this.settings.type}"></use>
-    </svg>
-    <span class="notification-text">${this.settings.message}</span>
-    ${this.settings.linkText ? `<a class="notification-link" href="${this.settings.link}">${this.settings.linkText}</a>` : ''}
-    <button type="text" class="notification-close"><svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-       <use xlink:href="#icon-close"></use>
-    </svg><span class="audible">${Locale.translate('Close')}</span></button>`;
+
+    const htmlIcon = `
+      <svg class="icon notification-icon icon-${this.settings.type}" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-${this.settings.type}"></use>
+      </svg>`;
+
+    let htmlText = `<p class="notification-text">${this.settings.message}`;
+
+    if (this.settings.linkText) {
+      htmlText += `<a class="notification-link" href="${this.settings.link}">${this.settings.linkText}</a>`;
+    }
+
+    htmlText += '</p>';
+
+    const htmlButton = `
+      <button type="text" class="btn-icon notification-close">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-close"></use>
+        </svg>
+        <span class="audible">${Locale.translate('Close')}</span>
+      </button>`;
+
+    this.notificationEl.innerHTML = htmlIcon.concat(htmlText, htmlButton);
 
     const parentEl = document.querySelector(this.settings.parent);
 
     parentEl.parentNode.insertBefore(this.notificationEl, parentEl.nextSibling);
-    $(this.notificationEl).animateOpen({ distance: 40 });
+    $(this.notificationEl).animateOpen();
     return this;
   },
 
