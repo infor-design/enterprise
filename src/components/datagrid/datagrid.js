@@ -1744,6 +1744,25 @@ Datagrid.prototype = {
       btnMarkup = btnMarkup.replace('{{icon}}', 'end-with');
     }
 
+    if (col.filterType === 'lookup') {
+      btnMarkup = renderButton('contains') +
+        render('contains', 'Contains', true) +
+        render('does-not-contain', 'DoesNotContain') +
+        render('equals', 'Equals') +
+        render('does-not-equal', 'DoesNotEqual') +
+        render('is-empty', 'IsEmpty') +
+        render('is-not-empty', 'IsNotEmpty') +
+        render('end-with', 'EndsWith') +
+        render('does-not-end-with', 'DoesNotEndWith') +
+        render('start-with', 'StartsWith') +
+        render('does-not-start-with', 'DoesNotStartWith') +
+        render('less-than', 'LessThan') +
+        render('less-equals', 'LessOrEquals') +
+        render('greater-than', 'GreaterThan') +
+        render('greater-equals', 'GreaterOrEquals');
+      btnMarkup = btnMarkup.replace('{{icon}}', 'contains');
+    }
+
     btnMarkup += '</ul>';
     return btnMarkup;
   },
@@ -5151,11 +5170,15 @@ Datagrid.prototype = {
       count = this.lastCount;
     }
 
+    const formatInteger = v => Locale.formatNumber(v, { style: 'integer' });
     let countText;
     if (self.settings.showFilterTotal && self.filteredCount > 0) {
-      countText = `(${Locale.formatNumber(count - self.filteredCount, { style: 'integer' })} of ${Locale.formatNumber(count, { style: 'integer' })} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
+      countText = `(${Locale.translate(count === 1 ? 'ResultOf' : 'ResultsOf')})`;
+      countText = countText.replace('{0}', formatInteger(count - self.filteredCount));
+      countText = countText.replace('{1}', formatInteger(count));
     } else {
-      countText = `(${Locale.formatNumber(count, { style: 'integer' })} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
+      countText = `({0} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
+      countText = countText.replace('{0}', formatInteger(count));
     }
 
     if (self.settings.resultsText) {

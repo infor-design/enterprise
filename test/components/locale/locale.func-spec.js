@@ -554,6 +554,8 @@ describe('Locale API', () => {
   it('Should format decimals', () => {
     Locale.set('en-US');
 
+    expect(Locale.formatNumber(145000)).toEqual('145,000.00');
+    expect(Locale.formatNumber(283423)).toEqual('283,423.00');
     expect(Locale.formatNumber(12345.1234)).toEqual('12,345.123');
     expect(Locale.formatNumber(12345.123, { style: 'decimal', maximumFractionDigits: 2 })).toEqual('12,345.12');
     expect(Locale.formatNumber(12345.123456, { style: 'decimal', maximumFractionDigits: 3 })).toEqual('12,345.123');
@@ -563,16 +565,20 @@ describe('Locale API', () => {
     expect(Locale.formatNumber('12,345.123')).toEqual('12,345.123');
     expect(Locale.formatNumber(12345.1234, { group: '' })).toEqual('12345.123');
     expect(Locale.formatNumber(5.1, { minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('5.10');
+    expect(Locale.formatNumber(145000, { style: 'decimal', minimumFractionDigits: 5, maximumFractionDigits: 7 })).toEqual('145,000.00000');
 
     Locale.set('de-DE');
 
+    expect(Locale.formatNumber(145000)).toEqual('145.000,00');
+    expect(Locale.formatNumber(283423)).toEqual('283.423,00');
     expect(Locale.formatNumber(12345.1)).toEqual('12.345,10');
     expect(Locale.formatNumber(0.0000004, { style: 'decimal', maximumFractionDigits: 7 })).toEqual('0,0000004');
     expect(Locale.formatNumber(0.000004, { style: 'decimal', maximumFractionDigits: 7 })).toEqual('0,000004');
+    expect(Locale.formatNumber(145000, { style: 'decimal', minimumFractionDigits: 5, maximumFractionDigits: 7 })).toEqual('145.000,00000');
 
     Locale.set('ar-EG');
 
-    expect(Locale.formatNumber(12345.1)).toEqual('12٬345٫10');
+    expect(Locale.formatNumber(12345.1)).toEqual('12٬345.10');
     Locale.set('bg-BG');
 
     expect(Locale.formatNumber(12345.1)).toEqual('12 345,10');
@@ -602,6 +608,8 @@ describe('Locale API', () => {
 
     Locale.set('de-DE');
 
+    expect(Locale.formatNumber(145000, { style: 'integer' })).toEqual('145.000');
+    expect(Locale.formatNumber(283423, { style: 'integer' })).toEqual('283.423');
     expect(Locale.formatNumber(12345.123, { style: 'integer' })).toEqual('12.345');
   });
 

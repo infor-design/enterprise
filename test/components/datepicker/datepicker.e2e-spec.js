@@ -568,16 +568,15 @@ describe('Datepicker Timeformat Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     const todayEl = await element(by.css('button.is-today'));
-    const testDate = new Date();
-    testDate.setSeconds(0);
-    testDate.setMilliseconds(0);
     await todayEl.click();
     const value = await element(by.id('dp3')).getAttribute('value');
+    const valueDate = new Date(value);
 
-    const dateVariances = [-2, -1, 0, 1, 2]
-      .map(amt => testDate.setSeconds(testDate.getSeconds() + amt));
+    const testDate = new Date();
+    const allowedVariance = 120000; // milliseconds
+    const dateDiff = Math.abs(testDate - valueDate); // guarentee its a positive result
 
-    expect(dateVariances).toContain(new Date(value).getTime());
+    expect(dateDiff).toBeLessThanOrEqual(allowedVariance);
   });
 });
 

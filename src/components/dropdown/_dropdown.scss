@@ -98,8 +98,8 @@ div.multiselect {
   }
 
   > span {
-    display: inline-block;
-    // max-width: 100%;
+    display: block;
+    min-height: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: top;
@@ -469,7 +469,7 @@ div.multiselect {
   .group-label {
     @include css3(user-select, none);
 
-    color: $label-color-initial-font;
+    color: $label-color;
     font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
     line-height: 20px;
