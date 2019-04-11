@@ -333,7 +333,7 @@ describe('Flex Toolbar', () => {
 
         expect(textButton.overflowed).toBeFalsy();
 
-        const secondIconButton = toolbarAPI.items[3];
+        const secondIconButton = toolbarAPI.items[2];
 
         expect(secondIconButton.overflowed).toBeTruthy();
         done();
