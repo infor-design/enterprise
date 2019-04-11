@@ -61,8 +61,6 @@ describe('Applicationmenu menubutton tests', () => {
   });
 
   it('Should have a working menu button', async () => {
-    const button = await element(by.css('.application-menu-trigger'));
-    await button.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.btn-menu')).last()), config.waitsFor);
 

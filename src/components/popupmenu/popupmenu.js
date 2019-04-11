@@ -405,7 +405,7 @@ PopupMenu.prototype = {
     }
 
     if (settings.icon) {
-      icon = `<svg class="icon" focusable="false" aria-hidden="true">
+      icon = `<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use xlink:href="#icon-${settings.icon}"></use>
       </svg>`;
     }
@@ -413,7 +413,7 @@ PopupMenu.prototype = {
     if (Array.isArray(settings.submenu)) {
       submenuClass += ' submenu';
       submenu += this.renderItem(settings.submenu);
-      ddicon += `<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true">
+      ddicon += `<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation">
         <use xlink:href="#icon-dropdown"></use>
       </svg>`;
     }
@@ -571,9 +571,10 @@ PopupMenu.prototype = {
       const icon = $(li).find('.icon:not(.close):not(.icon-dropdown)');
       const submenuWrapper = $(li).children('.wrapper')[0];
 
+      li.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
+
       if (a) {
         a.setAttribute('tabindex', '-1');
-        a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
 
         // disabled menu items, by prop and by className
         const $a = $(a);
