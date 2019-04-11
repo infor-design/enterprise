@@ -83,6 +83,17 @@ function Editor(element, settings) {
 // Editor Methods
 Editor.prototype = {
 
+  /**
+   * @returns {Toolbar|ToolbarFlex} a reference to the Editor's Toolbar API
+   */
+  get toolbarAPI() {
+    let api;
+    if (this.toolbar && this.toolbar.length) {
+      api = this.toolbar.data(this.settings.useFlexToolbar ? 'toolbar-flex' : 'toolbar');
+    }
+    return api;
+  },
+
   init() {
     const s = this.settings;
     this.isIe = env.browser.name === 'ie';
