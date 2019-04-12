@@ -133,10 +133,12 @@ describe('Applicationmenu accordion truncated text tooltip tests', () => {
   });
 });
 
-fdescribe('Applicationmenu Personalization tests', () => {
+describe('Applicationmenu Personalization tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/applicationmenu/example-personalized.html?colors=7025B6');
-    await browser.driver.sleep(config.sleepLonger);
+    await utils.setPage('/components/applicationmenu/example-personalized-roles?colors=7025B6');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('header-dos'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
   });
 
   it('Should show the app menu', async () => {
@@ -148,11 +150,13 @@ fdescribe('Applicationmenu Personalization tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on personalize', async () => {
+    fit('Should not visual regress on personalize', async () => {
       const section = await element(by.css('body.no-scroll'));
-      await browser.driver.sleep(config.sleepLonger);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('header-dos'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-personalize')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-personalize-roles')).toEqual(0);
     });
   }
 });
