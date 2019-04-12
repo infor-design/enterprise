@@ -1,6 +1,8 @@
 addons:
   chrome: stable
-  artifacts: true
+  artifacts:
+    paths:
+      - $(ls test/.tmp/**/*.png | tr "\n" ":")
 language: node_js
 dist: trusty
 # Leave node_js version blank to
