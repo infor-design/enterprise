@@ -1,5 +1,6 @@
 addons:
   chrome: stable
+  artifacts: true
 language: node_js
 dist: trusty
 # Leave node_js version blank to
