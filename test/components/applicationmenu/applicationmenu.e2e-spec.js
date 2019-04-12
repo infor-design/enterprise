@@ -133,9 +133,9 @@ describe('Applicationmenu accordion truncated text tooltip tests', () => {
   });
 });
 
-describe('Applicationmenu Personalization tests', () => {
+fdescribe('Applicationmenu Personalization tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/applicationmenu/example-personalized?colors=7025B6');
+    await utils.setPage('/components/applicationmenu/example-personalized.html?colors=7025B6');
     await browser.driver.sleep(config.sleepLonger);
   });
 
