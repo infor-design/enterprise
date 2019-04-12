@@ -330,8 +330,16 @@ Editor.prototype = {
     ].join(' ');
 
     let sectionCss = '';
+    let moreButtonHTML = '';
     if (this.settings.useFlexToolbar) {
       sectionCss = 'toolbar-section ';
+      moreButtonHTML = `<div class="toolbar-section more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+      </div>`;
     }
 
     const btns = this.setExcludedButtons();
@@ -347,6 +355,7 @@ Editor.prototype = {
       <div class="${sectionCss}buttonset">
         ${buttonsHTML}
       </div>
+      ${moreButtonHTML}
     </div>`;
 
     if (this.element.parent().find('.icon-dirty').length) {

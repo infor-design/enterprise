@@ -256,6 +256,35 @@
   }
 }
 
+.toolbar.formatter-toolbar {
+  overflow-x: visible;
+
+  .buttonset {
+    height: 32px;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  [class^='btn'] {
+    margin-top: 6px;
+  }
+
+  &.has-more-button {
+    .buttonset {
+      width: calc(100% - 44px);
+    }
+  }
+}
+
+.flex-toolbar.formatter-toolbar {
+  height: 32px;
+
+  .buttonset {
+    height: auto;
+    width: auto;
+  }
+}
+
 // Toolbar
 .toolbar.formatter-toolbar,
 .flex-toolbar.formatter-toolbar {
@@ -264,13 +293,10 @@
   border-bottom-color: none;
   border-radius: 2px 2px 0 0;
   margin-bottom: -1px;
-  overflow-x: visible;
   padding: 0;
   text-align: left;
 
   .buttonset {
-    height: 32px;
-
     [class^='btn'] {
       &:first-child {
         margin-left: 16px;
@@ -306,7 +332,6 @@
     color: $editor-btn-color;
     height: 20px;
     line-height: normal;
-    margin-top: 6px;
     min-width: 18px;
     padding: 0 !important; //overrides some media queries
     text-align: left;
