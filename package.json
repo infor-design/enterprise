@@ -125,7 +125,7 @@
     "marked": "^0.3.17",
     "mmm": "^0.2.2",
     "moment": "^2.19.2",
-    "node-sass": "^4.9.2",
+    "node-sass": "4.11.0",
     "protractor": "^5.4.1",
     "protractor-flake": "^4.0.0",
     "protractor-image-comparison": "^2.0.1",
