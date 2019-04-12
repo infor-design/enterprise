@@ -91,7 +91,8 @@ ApplicationMenu.prototype = {
       this.scrollTarget = moduleTabs;
     }
 
-    this.accordion = this.menu.find('.accordion');
+    this.element.find('.application-menu-switcher-panel .accordion').accordion();
+    this.accordion = this.menu.find('.accordion').last();
     this.accordion.addClass('panel').addClass('inverse');
 
     // Check to make sure that the internal Accordion Control is invoked
@@ -103,7 +104,7 @@ ApplicationMenu.prototype = {
     this.accordionAPI = accordion;
 
     // detect the presence of a searchfield
-    this.searchfield = this.element.children('.searchfield, .searchfield-wrapper');
+    this.searchfield = this.element.find('.searchfield, .searchfield-wrapper');
 
     // Setup filtering, if applicable.
     if (this.settings.filterable && typeof $.fn.searchfield === 'function') {

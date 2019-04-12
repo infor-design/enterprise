@@ -73,5 +73,13 @@
   </div>
 
   {{> includes/footer}}
+
+  <script type="text/javascript">
+    // May need to do more here.
+    $('.application-menu-switcher-panel .accordion').on('selected', function (e, args) {
+      $('body').toast({title: 'Role ' + args.innerText + ' Selected',  message: 'In a real application, you could refresh the app menu with new contents for the selected role.'});
+      $('.expandable-area').data('expandablearea').close()
+    });
+  </script>
 </body>
 </html>

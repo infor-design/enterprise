@@ -409,6 +409,13 @@
   }
 }
 
+// Container Class for wrapping internal content in NG
+.application-menu-wrapper {
+  display: inherit;
+  flex-direction: inherit;
+  height: inherit;
+}
+
 // Generic CSS Class that allows block-level elements like "divs" to become "clickable" on iOS 8 and up
 // https://stackoverflow.com/questions/3705937/document-click-not-working-correctly-on-iphone-jquery
 .ios-click-target {

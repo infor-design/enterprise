@@ -1,89 +1,92 @@
-<nav id="application-menu" class="application-menu is-open is-personalizable" data-options="{filterable: false}">
+<nav id="application-menu" class="application-menu is-open is-personalizable" data-options=''{'filterable': 'true'}">
 
-  <div class="application-menu-header">
-    <img src="/images/11.jpg" class="icon avatar" alt="Photo of Richard Fairbanks"/>
-    <span class="name-xl">Richard <br /> Fairbanks</span>
-    <div class="application-menu-toolbar">
-      <div class="flex-toolbar">
-        <div class="toolbar-section buttonset">
-          <button class="btn-icon" title="Download My Profile">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-download"></use>
-            </svg>
-            <span class="audible">Download</span>
-          </button>
-          <button class="btn-icon" title="Print My Profile">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-print"></use>
-            </svg>
-            <span class="audible">Print</span>
-          </button>
-          <button class="btn-icon" title="Show Purchasing Info">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-purchasing"></use>
-            </svg>
-            <span class="audible">Purchasing</span>
-          </button>
-          <button class="btn-icon" title="Show Notification Info">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-notification"></use>
-            </svg>
-            <span class="audible">Notification</span>
-          </button>
-          <button class="btn-icon" title="Show Inventory Info">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-inventory"></use>
-            </svg>
-            <span class="audible">Inventory</span>
-          </button>
+  <!--This wrapper simulates an issue in NG  its only not needed on the ng component-->
+  <div class="application-menu-wrapper">
+    <div class="application-menu-header">
+      <img src="/images/11.jpg" class="icon avatar" alt="Photo of Richard Fairbanks"/>
+      <span class="name-xl">Richard <br /> Fairbanks</span>
+      <div class="application-menu-toolbar">
+        <div class="flex-toolbar">
+          <div class="toolbar-section buttonset">
+            <button class="btn-icon" title="Download My Profile">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-download"></use>
+              </svg>
+              <span class="audible">Download</span>
+            </button>
+            <button class="btn-icon" title="Print My Profile">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-print"></use>
+              </svg>
+              <span class="audible">Print</span>
+            </button>
+            <button class="btn-icon" title="Show Purchasing Info">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-purchasing"></use>
+              </svg>
+              <span class="audible">Purchasing</span>
+            </button>
+            <button class="btn-icon" title="Show Notification Info">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-notification"></use>
+              </svg>
+              <span class="audible">Notification</span>
+            </button>
+            <button class="btn-icon" title="Show Inventory Info">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-inventory"></use>
+              </svg>
+              <span class="audible">Inventory</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="application-menu-content">
-    <div class="accordion panel" data-options="{'allowOnePane': false}" >
-      <div class="accordion-header">
-        <a href="#"><span>My Home</span></a>
-      </div>
-      <div class="accordion-header is-selected">
-        <a href="#"><span>Raves</span></a>
-      </div>
-      <div class="accordion-header">
-        <a href="#"><span>Request Time Off</span></a>
-      </div>
-      <div class="accordion-header">
-        <a href="#"><span>My Growth</span></a>
-      </div>
-      <div class="accordion-header">
-        <a href="#"><span>My Rewards</span></a>
-      </div>
-      <div class="accordion-header">
-        <a href="#"><span>Find a Coworker</span></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="application-menu-footer">
-    <div class="application-menu-toolbar">
-      <div class="flex-toolbar">
-        <div class="toolbar-section buttonset">
-          <button class="btn" type="button" title="Show Settings">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-settings"></use>
-            </svg>
-            <span>About</span>
-          </button>
-          <button class="btn l-pull-right" type="button" title="About this App">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-info"></use>
-            </svg>
-            <span>Settings</span>
-          </button>
+    <div class="application-menu-content">
+      <div class="accordion panel inverse" data-options="{'allowOnePane': false}" >
+        <div class="accordion-header">
+          <a href="#"><span>My Home</span></a>
+        </div>
+        <div class="accordion-header is-selected">
+          <a href="#"><span>Raves</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Request Time Off</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>My Growth</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>My Rewards</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Find a Coworker</span></a>
         </div>
       </div>
     </div>
-    <a href="#" class="hyperlink"><span>Sign Out</span></a>
+
+    <div class="application-menu-footer">
+      <div class="application-menu-toolbar">
+        <div class="flex-toolbar">
+          <div class="toolbar-section buttonset">
+            <button class="btn" type="button" title="Show Settings">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-settings"></use>
+              </svg>
+              <span>About</span>
+            </button>
+            <button class="btn l-pull-right" type="button" title="About this App">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-info"></use>
+              </svg>
+              <span>Settings</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <a href="#" class="hyperlink"><span>Sign Out</span></a>
+    </div>
   </div>
 
 </nav>
