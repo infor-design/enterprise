@@ -7930,6 +7930,8 @@ Datagrid.prototype = {
       return;
     }
 
+    input = input instanceof jQuery ? input : $(input);
+
     let newValue;
     let cellNode;
     const isEditor = this.editor.name === 'editor';
@@ -7937,7 +7939,9 @@ Datagrid.prototype = {
     const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox .colorpicker'));
 
     // Editor.getValue
-    newValue = this.editor.val();
+    if (typeof this.editor.val === 'function') {
+      newValue = this.editor.val();
+    }
 
     if (isEditor) {
       cellNode = this.editor.td;
@@ -7955,14 +7959,6 @@ Datagrid.prototype = {
       newValue = xssUtils.escapeHTML(newValue);
     }
 
-    // Format Cell again
-    const isInline = cellNode.hasClass('is-editing-inline');
-    cellNode.removeClass('is-editing is-editing-inline');
-
-    // Editor.destroy
-    this.editor.destroy();
-    this.editor = null;
-
     let rowIndex;
     let dataRowIndex;
     if (this.settings.source !== null && isUseActiveRow) {
@@ -7979,35 +7975,64 @@ Datagrid.prototype = {
       this.settings.dataset[dataRowIndex];
     const oldValue = this.fieldValue(rowData, col.field);
 
-    // Save the Cell Edit back to the data set
-    this.updateCellNode(rowIndex, cell, newValue, false, isInline);
-    const value = this.fieldValue(rowData, col.field);
+    const doCommit = () => {
+      // Format Cell again
+      const isInline = cellNode.hasClass('is-editing-inline');
+      cellNode.removeClass('is-editing is-editing-inline');
 
-    /**
-    * Fires after a cell goes out of edit mode.
-    * @event exiteditmode
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Additional arguments
-    * @property {number} args.row An array of selected rows.
-    * @property {number} args.cell An array of selected rows.
-    * @property {object} args.item The current sort column.
-    * @property {HTMLElement} args.target The cell html element that was entered.
-    * @property {any} args.value The cell value.
-    * @property {any} args.oldValue The previous cell value.
-    * @property {object} args.column The column object
-    * @property {object} args.editor The editor object.
-    */
-    this.element.triggerHandler('exiteditmode', [{
+      // Editor.destroy
+      this.editor.destroy();
+      this.editor = null;
+
+      // Save the Cell Edit back to the data set
+      this.updateCellNode(rowIndex, cell, newValue, false, isInline);
+      const value = this.fieldValue(rowData, col.field);
+
+      /**
+      * Fires after a cell goes out of edit mode.
+      * @event exiteditmode
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Additional arguments
+      * @property {number} args.row An array of selected rows.
+      * @property {number} args.cell An array of selected rows.
+      * @property {object} args.item The current sort column.
+      * @property {HTMLElement} args.target The cell html element that was entered.
+      * @property {any} args.value The cell value.
+      * @property {any} args.oldValue The previous cell value.
+      * @property {object} args.column The column object
+      * @property {object} args.editor The editor object.
+      */
+      this.element.triggerHandler('exiteditmode', [{
+        row: rowIndex,
+        cell,
+        item: rowData,
+        target: cellNode,
+        value,
+        oldValue,
+        column: col,
+        editor: this.editor
+      }]);
+    };
+
+    const args = [{
       row: rowIndex,
       cell,
       item: rowData,
       target: cellNode,
-      value,
       oldValue,
       column: col,
       editor: this.editor
-    }]);
+    }];
+
+    $.when(this.element.triggerHandler('beforecommitcelledit', args)).done((response) => {
+      const isFalse = v => ((typeof v === 'string' && v.toLowerCase() === 'false') ||
+      (typeof v === 'boolean' && v === false) ||
+      (typeof v === 'number' && v === 0));
+      if (!isFalse(response)) {
+        doCommit();
+      }
+    });
   },
 
   /**
