@@ -29,7 +29,9 @@ const APPLICATIONMENU_DEFAULTS = {
   dismissOnClickMobile: false,
   filterable: false,
   openOnLarge: false,
-  triggers: []
+  triggers: [],
+  onExpandSwitcher: null,
+  onCollapseSwitcher: null,
 };
 
 function ApplicationMenu(element, settings) {
@@ -150,6 +152,26 @@ ApplicationMenu.prototype = {
       this.adjustHeight();
     }
 
+    // Handle Role Switcher with events and classes
+    const switchTrigger = this.element.find('.application-menu-switcher-trigger');
+    if (switchTrigger.length > 0) {
+      this.switcherPanel = switchTrigger.next('.expandable-area');
+      this.switcherPanel.on('beforeexpand.applicationmenu', () => {
+        const height = this.element.height();
+
+        this.element.addClass('has-open-switcher');
+        this.switcherPanel.find('.content').height(height - 71); // The height of the visible header part
+
+        if (this.settings.onExpandSwitcher) {
+          this.settings.onExpandSwitcher(this, this.element, this.settings);
+        }
+      }).on('aftercollapse.applicationmenu', () => {
+        this.element.removeClass('has-open-switcher');
+        if (this.settings.onCollapseSwitcher) {
+          this.settings.onCollapseSwitcher(this, this.element, this.settings);
+        }
+      });
+    }
     return this;
   },
 
@@ -612,6 +634,10 @@ ApplicationMenu.prototype = {
         this.accordionAPI.collapse();
       }
       this.accordionAPI.destroy();
+    }
+
+    if (this.switcherPanel) {
+      this.switcherPanel.off('beforeexpand.applicationmenu aftercollapse.applicationmenu');
     }
 
     if (this.searchfield && this.searchfield.length) {

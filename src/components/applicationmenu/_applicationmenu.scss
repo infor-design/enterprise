@@ -24,6 +24,10 @@
     left: 0;
   }
 
+  &.has-open-switcher {
+    overflow-y: hidden;
+  }
+
   .audible {
     color: $theme-color-palette-white !important;
   }
@@ -244,6 +248,16 @@
     width: 40px;
   }
 
+  .icon.avatar.l-center {
+    top: 0;
+    vertical-align: middle;
+  }
+
+  .expandable-area {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
   .accordion-content {
     h1,
     h2,
@@ -289,9 +303,32 @@
     border-bottom-color: $theme-color-palette-slate-90 !important;
     flex: 0 0 auto;
     padding: 10px 0 10px 20px;
+
+    button {
+      margin: 5px 15px;
+
+      &:first-child {
+        margin: 5px 0;
+      }
+
+      span {
+        color: $accordion-inverse-text-color;
+      }
+
+      .icon {
+        color: $accordion-inverse-text-color;
+      }
+
+      &:not(:disabled):hover .icon,
+      &:not(:disabled):hover span {
+        color: $accordion-inverse-text-hover-color;
+      }
+    }
   }
 
   .application-menu-header {
+    padding-top: 15px;
+
     .name,
     .name-xl {
       display: block;
@@ -335,27 +372,40 @@
 
   .application-menu-toolbar {
     margin-left: -10px;
+  }
 
-    button {
-      margin: 5px 15px;
+  .application-menu-switcher-panel {
+    background-color: $theme-color-palette-slate-80;
+    border-top: 1px solid $application-menu-border-color;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 70px;
+    width: 100%;
+    z-index: 501;
 
-      &:first-child {
-        margin: 5px 0;
-      }
-
-      span {
-        color: $accordion-inverse-text-color;
-      }
-
-      .icon {
-        color: $accordion-inverse-text-color;
-      }
-
-      &:not(:disabled):hover .icon,
-      &:not(:disabled):hover span {
-        color: $accordion-inverse-text-hover-color;
-      }
+    .content {
+      max-width: 100%;
+      overflow-y: auto;
+      padding: 0 !important;
+      width: 100%;
     }
+  }
+
+  .accordion-heading {
+    border-top: 1px solid $application-menu-border-color;
+    color: $theme-color-palette-white;
+    font-size: $theme-size-font-sm;
+    font-weight: 400;
+    opacity: 0.9;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-top: 15px;
+    text-transform: uppercase;
+  }
+
+  .application-menu-switcher-trigger {
+    float: right;
   }
 }
 

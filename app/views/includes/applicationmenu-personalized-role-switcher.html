@@ -1,8 +1,80 @@
 <nav id="application-menu" class="application-menu is-open is-personalizable" data-options="{filterable: false}">
 
-  <div class="application-menu-header">
-    <img src="/images/11.jpg" class="icon avatar" alt="Photo of Richard Fairbanks"/>
-    <span class="name-xl">Richard <br /> Fairbanks</span>
+  <div class="application-menu-header expandable-area-header">
+    <img src="/images/11.jpg" class="icon avatar l-center" alt="Photo of Richard Fairbanks"/>
+    <button type="button" class="btn application-menu-switcher-trigger expandable-area-trigger" id="trigger-btn">
+      <span>Employee</span>
+      <svg class="icon icon-closed" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-caret-down"></use>
+      </svg>
+      <svg class="icon icon-opened" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-caret-up"></use>
+      </svg>
+    </button>
+    <div class="expandable-area">
+      <div class="expandable-pane application-menu-switcher-panel">
+        <div class="content">
+          <div class="accordion panel">
+            <div class="accordion-header is-selected">
+              <a href="#"><span>Manager</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Recruiter</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Admin</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Example Role Thats Really Really Long So Long that it flows into an ellipsis just really long, maybe too long?</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Example Role</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Example Role</span></a>
+            </div>
+            <div class="accordion-heading" role="presentation">Proxy As...</div>
+            <div class="accordion-header is-selected">
+              <a href="#"><span>Glen Keller</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Julia Harrison</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Addie Ortiz</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Jeremy Yates</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Fannie Kennedy</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Kenneth Ramos</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Pauline Townsend</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Rosie Dixon</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Fannie Dawson</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Alice Dawson</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Caroline Weaver</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Cameron Briggs</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="name">Richard <br /> Fairbanks</span>
     <div class="application-menu-toolbar">
       <div class="flex-toolbar">
         <div class="toolbar-section buttonset">
@@ -145,6 +217,7 @@
         </div>
       </div>
     </div>
+  </div>
 
   <div class="application-menu-footer">
     <div class="application-menu-toolbar">
