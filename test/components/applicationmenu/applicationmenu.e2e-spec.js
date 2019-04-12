@@ -135,7 +135,7 @@ describe('Applicationmenu accordion truncated text tooltip tests', () => {
 
 describe('Applicationmenu Personalization tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/applicationmenu/example-personalized-roles.html?colors=7025B6');
+    await utils.setPage('/components/applicationmenu/example-personalized-roles.html?colors=390567');
     await browser.driver.sleep(config.sleep);
   });
 
@@ -150,7 +150,7 @@ describe('Applicationmenu Personalization tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     fit('Should not visual regress on personalize', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
-      await browser.driver.manage().window().setSize(1280, 720);
+      await browser.driver.manage().window().setSize(1280, 780);
       const section = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleepLonger);
 
