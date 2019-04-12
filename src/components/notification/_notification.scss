@@ -9,7 +9,7 @@
 
   .notification-text,
   .notification-link {
-    color: $theme-color-palette-graphite-60;
+    color: inherit;
   }
 
   .notification-link {
@@ -18,7 +18,6 @@
     text-decoration: none;
 
     &:hover {
-      color: $theme-color-brand-secondary-contrast;
       text-decoration: underline;
     }
   }
@@ -30,12 +29,13 @@
   }
 
   .notification-close {
+    color: inherit;
     position: absolute;
     right: 15px;
     top: calc(50% - 18px);
 
     .icon {
-      color: $icon-color-fill;
+      color: inherit;
       height: 15px;
     }
 
