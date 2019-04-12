@@ -244,7 +244,7 @@ const formatters = {
       isChecked = col.isChecked(value);
     } else {
       // treat 1, true or '1' as checked
-      isChecked = (value === undefined ? false : value === true);
+      isChecked = (value === undefined ? false : (value === true || parseInt(value, 10) === 1));
     }
 
     // We add hidden Yes/No text so that the exported excel spreadsheet shows
