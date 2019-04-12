@@ -247,13 +247,18 @@ Personalize.prototype = {
     ` .application-menu.is-personalizable .name-xl, .application-menu.is-personalizable .name, .application-menu.is-personalizable .accordion-heading { color: ${colors.text} }` +
     ` .application-menu.is-personalizable .accordion.panel .accordion-header { background-color: ${colors.header}; border-bottom-color: transparent; color: ${colors.text}; opacity: .8; }` +
     ` .application-menu.is-personalizable .accordion.panel .accordion-header .icon { color: ${colors.text}; }` +
-    ` .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a, .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected:hover > a, .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a, .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected .icon { color: ${colors.text}; }` +
+    ` .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a, .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected:hover > a, .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a, .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected .icon { color: ${colors.text} !important; }` +
     ' .application-menu.is-personalizable .accordion.panel .accordion-header:hover { opacity: 1 }' +
     ` .application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) { border-color: ${colors.text}; opacity: 1; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2); }` +
     ` .accordion.panel.inverse .accordion-pane.is-expanded + .accordion-header:not(.is-focused):not(.is-selected), .accordion.panel.inverse .accordion-pane.is-expanded + .accordion-content { border-color: ${colors.verticalBorder};}` +
     ` .application-menu.is-personalizable button:focus:not(.hide-focus), .application-menu.is-personalizable .hyperlink:focus:not(.hide-focus)::after { border-color: ${colors.text}; opacity: 1; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2) }` +
     ` .application-menu.is-personalizable .application-menu-switcher-panel { border-top-color: ${colors.horizontalBorder} }` +
     ` .application-menu.is-personalizable .application-menu-switcher-panel .accordion-heading { border-top-color: ${colors.horizontalBorder} }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper { background-color: ${colors.header}; border-bottom: 1px solid ${colors.horizontalBorder} }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper .searchfield { color: ${colors.text} }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper .searchfield::placeholder { color: ${colors.text}; opacity: .7 }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper .icon { color: ${colors.text}; opacity: .7 }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper.active .icon { color: ${colors.text}; opacity: 1 }` +
     '';
 
     // Add reusable classes that can be used on some elements

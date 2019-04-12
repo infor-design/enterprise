@@ -48,7 +48,7 @@
 
   .searchfield + .accoridon,
   .searchfield-wrapper + .accordion {
-    min-height: calc(100% - 34px);
+    min-height: calc(100% - 36px);
   }
 
   .accordion {
@@ -112,6 +112,7 @@
 
   .searchfield-wrapper {
     background-color: $accordion-inverse-pane-bg-color;
+    border-bottom-color: $theme-color-palette-slate-90 !important;
     margin-bottom: 0;
     width: 100%;
 
@@ -169,7 +170,7 @@
     }
 
     &.has-focus {
-      box-shadow: none;
+      box-shadow: none !important;
     }
 
   }
