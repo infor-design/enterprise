@@ -176,6 +176,8 @@ Personalize.prototype = {
     colors.text = this.validateHex(colors.text || defaultColors.text);
     colors.subheader = this.validateHex(colors.subheader ||
       this.getLuminousColorShade(colors.header, 0.2));
+    colors.button = this.validateHex(colors.button ||
+      this.getLuminousColorShade(colors.text, -0.80));
     colors.inactive = this.validateHex(colors.inactive ||
       this.getLuminousColorShade(colors.header, -0.22));
     colors.verticalBorder = this.validateHex(colors.verticalBorder ||
@@ -190,7 +192,7 @@ Personalize.prototype = {
       this.getLuminousColorShade(colors.header, -0.025));
 
     // note that the sheet is appended in backwards
-    const cssRules = `.tab-container.module-tabs.is-personalizable { border-top: 1px solid ${colors.horizontalBorder} !important; border-bottom: 1px solid ${colors.horizontalBorder} !important}` +
+    let cssRules = `.tab-container.module-tabs.is-personalizable { border-top: 1px solid ${colors.horizontalBorder} !important; border-bottom: 1px solid ${colors.horizontalBorder} !important}` +
     ` .module-tabs.is-personalizable .tab:not(:first-child) { border-left: 1px solid ${colors.verticalBorder} !important}` +
     ` .module-tabs.is-personalizable { background-color: ${colors.inactive} !important}` +
     ` .module-tabs.is-personalizable .tab.is-selected { background-color: ${colors.header} !important}` +
@@ -218,12 +220,41 @@ Personalize.prototype = {
     ` .module-tabs.is-personalizable .add-tab-button:hover { background-color: ${colors.inactive} !important}` +
     ` .module-tabs.is-personalizable .toolbar-searchfield-wrapper > .searchfield { color: ${colors.text} !important}` +
     ` .module-tabs.is-personalizable .toolbar-searchfield-wrapper > svg { fill: ${colors.text} !important}` +
+    ` .is-personalizable .tab-container.header-tabs::before { background-image: linear-gradient(to right, ${colors.header}, rgba(37, 120, 169, 0)) }` +
+    ` .is-personalizable .tab-container.header-tabs::after { background-image: linear-gradient(to right, rgba(37, 120, 169, 0), ${colors.header}) }` +
     ` .hero-widget.is-personalizable { background-color: ${colors.subheader} }` +
     ` .hero-widget.is-personalizable .hero-bottom { background-color: ${colors.header} }` +
     ` .hero-widget.is-personalizable .hero-footer .hero-footer-nav li::before { color: ${colors.verticalBorder} }` +
     ` .hero-widget.is-personalizable .chart-container .arc { stroke: ${colors.subheader} }` +
     ` .hero-widget.is-personalizable .chart-container .bar { stroke: ${colors.subheader} }` +
     ` .hero-widget.is-personalizable .chart-container.line-chart .dot { stroke: ${colors.subheader} }` +
+    ` .application-menu.is-personalizable { border-right: ${colors.verticalBorder} }` +
+    ` .application-menu.is-personalizable .application-menu-header { background-color: ${colors.subheader}; border-bottom-color: ${colors.verticalBorder} }` +
+    ` .application-menu.is-personalizable .application-menu-footer { background-color: ${colors.subheader}; border-top-color: ${colors.verticalBorder} }` +
+    ` .application-menu.is-personalizable .application-menu-toolbar button .icon, .application-menu.is-personalizable .application-menu-toolbar button span, .application-menu.is-personalizable .hyperlink { color: ${colors.text}; opacity: 0.8 }` +
+    ` .application-menu.is-personalizable .application-menu-toolbar button:not(:disabled):hover .icon, .application-menu.is-personalizable .application-menu-toolbar button:not(:disabled):hover span, .application-menu.is-personalizable .hyperlink:hover  { color: ${colors.text}; opacity: 1 }` +
+    ` .application-menu.is-personalizable .accordion.panel { background-color: ${colors.header} }` +
+    ` .application-menu.is-personalizable .name-xl { color: ${colors.text} }` +
+    ` .application-menu.is-personalizable .accordion.panel .accordion-header { background-color: ${colors.header}; border-bottom-color: transparent; color: ${colors.text}; opacity: .8; }` +
+    ` .application-menu.is-personalizable .accordion.panel .accordion-header .icon { color: ${colors.text}; }` +
+    ' .application-menu.is-personalizable .accordion.panel .accordion-header:hover { opacity: 1 }' +
+    ` .application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) { border-color: ${colors.text}; opacity: 1; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2); }` +
+    ` .accordion.panel.inverse .accordion-pane.is-expanded + .accordion-header:not(.is-focused):not(.is-selected), .accordion.panel.inverse .accordion-pane.is-expanded + .accordion-content { border-color: ${colors.verticalBorder};}` +
+    ` .application-menu.is-personalizable .application-menu-toolbar button:focus:not(.hide-focus), .application-menu.is-personalizable .hyperlink:focus:not(.hide-focus)::after { border-color: ${colors.text}; opacity: 1; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2) }` +
+      '';
+
+    // Add reusable classes that can be used on some elements
+    cssRules += `.is-personalizable .personalize-header { background-color: ${colors.header} }` +
+      `.is-personalizable .personalize-subheader { background-color: ${colors.subheader} }` +
+      `.is-personalizable .personalize-text { color: ${colors.text} }` +
+      `.is-personalizable .personalize-actionable { color: ${colors.text}; opacity: .8 }` +
+      `.is-personalizable .personalize-actionable:hover:not([disabled]) { color: ${colors.text}; opacity: 1 }` +
+      `.is-personalizable .personalize-actionable.is-focused:not(.hide-focus), .is-personalizable .personalize-actionable:focus:not(.hide-focus) { border-color: ${colors.text}; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2); }` +
+      `.is-personalizable .personalize-actionable.hyperlink:focus:not(.hide-focus)::after { border-color: ${colors.text}; opacity: 1; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2); }` +
+      `.is-personalizable .personalize-vertical-border { border-color: ${colors.verticalBorder}; }` +
+      `.is-personalizable .personalize-horizontal-bottom-border { border-bottom: 1px solid ${colors.horizontalBorder}; }` +
+      `.is-personalizable .personalize-horizontal-top-border { border-top: 1px solid: ${colors.horizontalBorder}; }` +
+      '.is-personalizable .personalize-actionable-disabled, .is-personalizable .personalize-actionable-disabled:hover { opacity: .4 !important; cursor: default; }' +
     '';
 
     return cssRules;
