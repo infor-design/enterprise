@@ -125,7 +125,7 @@ $subheader-height: 60px;
   }
 
   .toolbar {
-    height: $header-height; // Needs to not be 100% because it's possible for headers to have other controls beneath the toolbar
+    height: $header-height;
     padding: 0 1rem;
 
     .title {
@@ -165,6 +165,10 @@ $subheader-height: 60px;
       }
     }
 
+    &.has-title-button + .breadcrumb {
+      padding-left: 50px;
+    }
+
     .panel-title {
       @include font-size(20);
 
@@ -174,10 +178,6 @@ $subheader-height: 60px;
     .panel-subhead {
       font-size: $theme-size-font-base;
       line-height: 1;
-    }
-
-    &.has-title-button + .breadcrumb {
-      padding-left: 65px;
     }
 
     &.do-resize {
@@ -195,7 +195,26 @@ $subheader-height: 60px;
   }
 
   .flex-toolbar {
+    max-height: $header-height;
     padding: 0 1rem;
+
+    &.has-title-button + .breadcrumb {
+      padding-left: 56px;
+    }
+  }
+
+  &.has-alternate-breadcrumb {
+    .flex-toolbar {
+      margin-bottom: 5px;
+    }
+  }
+
+  &.has-popupmenu-title {
+    .flex-toolbar {
+      .title {
+        padding: 3px;
+      }
+    }
   }
 
   // Header Tabs
