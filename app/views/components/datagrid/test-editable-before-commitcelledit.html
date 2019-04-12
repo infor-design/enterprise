@@ -1,20 +1,5 @@
 <div class="row">
   <div class="twelve columns">
-    <button id="can-commit" type="button" class="btn-menu btn-secondary">
-      <span>Can Commit (<span id="can-commit-text"></span>)</span>
-      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-        <use xlink:href="#icon-dropdown"></use>
-      </svg>
-    </button>
-    <ul class="popupmenu is-selectable">
-      <li><a href="#" data-value="true">True</a></li>
-      <li><a href="#" data-value="false">False</a></li>
-    </ul>
-  </div>
-</div>
-
-<div class="row">
-  <div class="twelve columns">
     <div role="toolbar" class="toolbar">
 
       <div class="title">
@@ -113,21 +98,8 @@
       columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3 }, editor: Editors.Input, mask: '###.000' });
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date5 });
 
+      // Edit mode
       var canCommit = false;
-      var canCommitBtn = $('#can-commit');
-      var canCommitText = $('#can-commit-text');
-
-      // Set button default values
-      var popupmenuApi = canCommitBtn.data('popupmenu');
-      popupmenuApi.select($('[data-value="'+ canCommit +'"]'));
-      canCommitText.html(popupmenuApi.menu.find('.is-checked').text());
-
-      // Bind button
-      canCommitBtn.on('selected', function (e, args) {
-        canCommitText.html(args.text());
-        canCommit = args.attr('data-value');
-      });
-
 
       // Init the grid
       $('#datagrid').datagrid({
@@ -137,8 +109,42 @@
         toolbar: { keywordFilter: true, results: true }
       })
       .on('beforecommitcelledit', function (e, args) {
-        console.log({ canCommit }, args);
-        return canCommit;
+        // console.log(args);
+        // return false;
+        var targetCell = (args && args.target) ? args.target : null;
+        var deferred = $.Deferred();
+
+        if (!canCommit) {
+          canCommit = true;
+
+          $('body').message({
+            title: 'Commit Edit',
+            message: 'You are about to Commit Cell Edit<br>Would you like to proceed?',
+            buttons: [{
+              text: 'Yes',
+              click: function(e, modal) {
+                canCommit = true;
+                deferred.resolve();
+                modal.close();
+              }
+            }, {
+              text: 'No',
+              click: function(e, modal) {
+                canCommit = false;
+                deferred.reject();
+                modal.close();
+              },
+              isDefault: true
+            }]
+          })
+          .on('afterclose.message', (e) => {
+            if (canCommit) {
+              args.target.focus();
+            }
+          });
+        }
+
+        return deferred.promise();
       });
 
     });
