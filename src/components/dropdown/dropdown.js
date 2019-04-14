@@ -2232,7 +2232,6 @@ Dropdown.prototype = {
       // Select all
       items.forEach(node => node.classList.add('is-selected'));
       options.forEach((node) => {
-        node.selected = true;
         node.setAttribute('selected', true);
       });
 
@@ -2245,8 +2244,10 @@ Dropdown.prototype = {
       // Clear all
       items.forEach(node => node.classList.remove('is-selected'));
       options.forEach((node) => {
-        node.selected = false;
-        node.setAttribute('selected', true);
+        // Fix for ie-edge
+        // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12087679/
+        node.setAttribute('selected', false);
+        node.removeAttribute('selected');
       });
     }
     this.previousActiveDescendant = last.value || '';

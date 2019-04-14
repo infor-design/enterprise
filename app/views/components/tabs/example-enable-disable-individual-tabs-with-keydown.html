@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Tabs Test: Disable/Enable Individual Tabs Focus Steal Test</h2>
+
+    <p>The inputs below this paragraph programmatically enable/disable the "form elements" Tab. When a Tab becomes
+      disabled, its corresponding tab panel is checked for any/all IDS Enterprise controls, which are also
+      programmatically enabled/disabled.</p>
+
+    <p>This functionality is different from the <a class="hyperlink" href="./programmatic-disable-enable">Enabling/Disabling
+      the Entire Control</a>, which is also possible in the Tabs API.</p>
+    <p></p>
+
+    <div class="field" style="margin-top: 20px;">
+      <label for="disable">Disable "Form Elements" tab on keydown</label>
+      <input id="disable"/>
+    </div>
+
+    <div>
+      <label for="enable">Enable "Form Elements" tab on keydown</label>
+      <input id="enable"/>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 40px;">
+  <div class="twelve columns">
+
+    <div id="programmatic-tabs" class="tab-container">
+      <ul class="tab-list">
+        <li class="tab is-selected"><a href="#programmatic-tabs-form-elements">Form Elements</a></li>
+        <li class="tab is-disabled"><a href="#programmatic-tabs-disabled" disabled>Disabled By Default</a></li>
+        <li class="tab"><a href="#programmatic-tabs-another">Another</a></li>
+        <li class="tab"><a href="#programmatic-tabs-last">Last</a></li>
+      </ul>
+
+      <div id="programmatic-tabs-form-elements" class="tab-panel">
+        <fieldset>
+          <div class="field">
+            <label for="regular-input-field">Regular Input Field</label>
+            <input id="regular-input-field"/>
+          </div>
+
+          <div class="field" style="margin-top: 20px;">
+            <button type="button" id="btn-primary" class="btn-primary">Primary Button</button>
+            <button type="button" id="btn-secondary" class="btn-secondary">Primary Button</button>
+            <button type="button" id="btn-tertiary" class="btn-tertiary">Primary Button</button>
+            <button type="button" id="btn-menu" class="btn-menu">Menu Button</button>
+            <ul class="popupmenu">
+              <li><a href="#btn-menu-item1">Menu Item #1</a></li>
+              <li><a href="#btn-menu-item2">Menu Item #2</a></li>
+              <li><a href="#btn-menu-item3">Menu Item #3</a></li>
+              <li><a href="#btn-menu-item4">Menu Item #4</a></li>
+            </ul>
+          </div>
+        </fieldset>
+      </div>
+      <div id="programmatic-tabs-disabled" class="tab-panel">
+        <p>Bricks-and-clicks? Evolve ubiquitous matrix B2B 24/365 vertical 24/365 platforms standards-compliant global
+          leverage dynamic 24/365 intuitive ROI seamless rss-capable. Cutting-edge grow morph web services leverage;
+          ROI, unleash reinvent innovative podcasts citizen-media networking.
+        <p>
+      </div>
+      <div id="programmatic-tabs-another" class="tab-panel">
+        <p>Frictionless webservices, killer open-source innovate, best-of-breed, whiteboard interactive back-end
+          optimize capture dynamic front-end. Initiatives ubiquitous 24/7 enhance channels B2B drive frictionless
+          web-readiness generate recontextualize widgets applications. Sexy sticky matrix, user-centred, rich
+          user-centric: peer-to-peer podcasting networking addelivery optimize streamline integrated proactive: granular
+          morph.
+        <p>
+      </div>
+      <div id="programmatic-tabs-last" class="tab-panel">
+        <p>Exploit niches; enable A-list web-enabled holistic end-to-end. Exploit experiences value-added tagclouds,
+          open-source cross-platform e-tailers, user-contributed, implement! Convergence, solutions front-end,
+          "synergize markets initiatives integrateAJAX-enabled platforms; wireless, supply-chains reinvent, mindshare,
+          synergies implement, drive evolve!" Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer
+          incentivize integrate intuitive utilize!</p>
+        <br>
+        <div class="field">
+          <label class="required" for="text-normal-contacts">Text</label>
+          <input type="text" name="text-normal-contacts" id="text-normal-contacts" data-validate="required">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    var tabs = $('#programmatic-tabs'),
+      api = tabs.data('tabs');
+
+    $('#disable').on('keydown.demo', function() {
+      api.disableTab('programmatic-tabs-form-elements');
+    });
+
+    $('#enable').on('keydown.demo', function() {
+      api.enableTab('programmatic-tabs-form-elements');
+    });
+
+  });
+</script>
