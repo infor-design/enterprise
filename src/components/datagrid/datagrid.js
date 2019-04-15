@@ -4302,7 +4302,6 @@ Datagrid.prototype = {
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         const containerEl = isHeaderColumn ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
-
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
@@ -9804,13 +9803,21 @@ Datagrid.prototype = {
         const width = col.editorOptions &&
           col.editorOptions.width ? this.setUnit(col.editorOptions.width) : false;
 
-        // Width for tooltip can be come from column options
-        contentTooltip.style.width = width || `${elem.offsetWidth}px`;
-        const wrapperHTML = tooltip.wrapper.innerHTML;
+        if (typeof col.tooltip === 'function') {
+          const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
+          const rowIdx = rowNode.getAttribute('data-index');
+          const value = this.fieldValue(this.settings.dataset[rowIdx], col.field);
+          tooltip.wrapper = elem.querySelector('.datagrid-cell-wrapper');
+          tooltip.content = col.tooltip(cell, value);
+        } else {
+          // Width for tooltip can be come from column options
+          contentTooltip.style.width = width || `${elem.offsetWidth}px`;
+          const wrapperHTML = tooltip.wrapper.innerHTML;
 
-        if (xssUtils.stripHTML(wrapperHTML) !== '') {
-          tooltip.content = wrapperHTML;
-          tooltip.extraClassList = ['popover', 'alternate', 'content-tooltip'];
+          if (xssUtils.stripHTML(wrapperHTML) !== '') {
+            tooltip.content = wrapperHTML;
+            tooltip.extraClassList = ['popover', 'alternate', 'content-tooltip'];
+          }
         }
       } else if (aTitle) {
         // Title attribute on links `a`
