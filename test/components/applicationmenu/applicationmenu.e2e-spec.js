@@ -150,7 +150,7 @@ describe('Applicationmenu Personalization tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on personalize', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
-      await browser.driver.manage().window().setSize(1280, 724);
+      await browser.driver.manage().window().setSize(1280, 728);
       const section = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleepLonger);
 
