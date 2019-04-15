@@ -1,8 +1,12 @@
 /* eslint-disable no-underscore-dangle */
+require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/en-US.js');
+require('../../../src/components/locale/cultures/fr-FR.js');
 
 describe('Mask Input Field Api', () => {
   let TEST_INPUT = null;
   let TEST_COMPONENT_API = null;
+  const Locale = window.Soho.Locale;
 
   beforeAll(() => {
     // Setup the input field used for this test suite
@@ -10,6 +14,9 @@ describe('Mask Input Field Api', () => {
     TEST_INPUT.setAttribute('type', 'text');
     TEST_INPUT.setAttribute('id', 'masked');
     document.body.appendChild(TEST_INPUT);
+    Locale.getLocale('ar-EG');
+    Locale.getLocale('fr-FR');
+    Locale.set('en-US');
   });
 
   it('Should pass a basic sanity test', () => {

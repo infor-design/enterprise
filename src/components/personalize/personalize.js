@@ -201,7 +201,17 @@ Personalize.prototype = {
     ` .header.is-personalizable { background-color: ${colors.header}}` +
     ` .header.is-personalizable .title { color: ${colors.text}}` +
     ` .header.is-personalizable h1 { color: ${colors.text}}` +
+    ` .header.is-personalizable button:not(:disabled), .header.is-personalizable button:not(:disabled) .icon, .header.is-personalizable button:not(:disabled) .app-header.icon > span { color: ${colors.text} !important; opacity: .7}` +
+    ` .header.is-personalizable .header.is-personalizable button:not(:disabled) .app-header.icon > span { background-color: ${colors.text} !important; opacity: .7}` +
+    ` .header.is-personalizable button:not(:disabled):hover, .header.is-personalizable button:not(:disabled):hover .icon, .header.is-personalizable button:not(:disabled):hover .app-header.icon > span, .header.is-personalizable .toolbar [class^='btn']:hover:not([disabled]) { color: ${colors.text} !important; opacity: 1}` +
+    ` .header.is-personalizable button:not(:disabled) .app-header.icon > span { background-color: ${colors.text} !important; opacity: 1}` +
     ` .header.is-personalizable .go-button.is-personalizable { background-color: ${colors.btnColorHeader}; border-color:${colors.btnColorHeader};color: ${colors.text}}` +
+    ` .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) { color: ${colors.text} !important }` +
+    ` .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab { color: ${colors.text} !important; opacity: .7 }` +
+    ` .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled) { color: ${colors.text} !important; opacity: 1 }` +
+    ` .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)::before { background-color: ${colors.text}}` +
+    ` .header.is-personalizable.has-tabs .animated-bar { background-color: ${colors.text}}` +
+    ` .header.is-personalizable.has-tabs .tab-list-container .tab.is-selected:not(.is-disabled):hover::before { background-color: ${colors.text} !important }` +
     ` .subheader.is-personalizable .go-button.is-personalizable { background-color: ${colors.btnColorSubheader}; border-color:${colors.btnColorSubheader};color: ${colors.text}}` +
     ` .module-tabs.is-personalizable .tab-more { border-left: ${colors.verticalBorder} !important}` +
     ` .module-tabs.is-personalizable .tab-more:hover { background-color: ${colors.hover} !important}` +
@@ -231,17 +241,25 @@ Personalize.prototype = {
     ` .application-menu.is-personalizable { border-right: ${colors.verticalBorder} }` +
     ` .application-menu.is-personalizable .application-menu-header { background-color: ${colors.subheader}; border-bottom-color: ${colors.verticalBorder} }` +
     ` .application-menu.is-personalizable .application-menu-footer { background-color: ${colors.subheader}; border-top-color: ${colors.verticalBorder} }` +
-    ` .application-menu.is-personalizable .application-menu-toolbar button .icon, .application-menu.is-personalizable .application-menu-toolbar button span, .application-menu.is-personalizable .hyperlink { color: ${colors.text}; opacity: 0.8 }` +
-    ` .application-menu.is-personalizable .application-menu-toolbar button:not(:disabled):hover .icon, .application-menu.is-personalizable .application-menu-toolbar button:not(:disabled):hover span, .application-menu.is-personalizable .hyperlink:hover  { color: ${colors.text}; opacity: 1 }` +
+    ` .application-menu.is-personalizable button .icon, .application-menu.is-personalizable button span, .application-menu.is-personalizable .hyperlink { color: ${colors.text}; opacity: 0.8 }` +
+    ` .application-menu.is-personalizable button:not(:disabled):hover .icon, .application-menu.is-personalizable button:not(:disabled):hover span, .application-menu.is-personalizable .hyperlink:hover  { color: ${colors.text}; opacity: 1 }` +
     ` .application-menu.is-personalizable .accordion.panel { background-color: ${colors.header} }` +
-    ` .application-menu.is-personalizable .name-xl { color: ${colors.text} }` +
+    ` .application-menu.is-personalizable .name-xl, .application-menu.is-personalizable .name, .application-menu.is-personalizable .accordion-heading { color: ${colors.text} }` +
     ` .application-menu.is-personalizable .accordion.panel .accordion-header { background-color: ${colors.header}; border-bottom-color: transparent; color: ${colors.text}; opacity: .8; }` +
     ` .application-menu.is-personalizable .accordion.panel .accordion-header .icon { color: ${colors.text}; }` +
+    ` .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a, .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected:hover > a, .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a, .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected .icon { color: ${colors.text} !important; }` +
     ' .application-menu.is-personalizable .accordion.panel .accordion-header:hover { opacity: 1 }' +
     ` .application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) { border-color: ${colors.text}; opacity: 1; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2); }` +
     ` .accordion.panel.inverse .accordion-pane.is-expanded + .accordion-header:not(.is-focused):not(.is-selected), .accordion.panel.inverse .accordion-pane.is-expanded + .accordion-content { border-color: ${colors.verticalBorder};}` +
-    ` .application-menu.is-personalizable .application-menu-toolbar button:focus:not(.hide-focus), .application-menu.is-personalizable .hyperlink:focus:not(.hide-focus)::after { border-color: ${colors.text}; opacity: 1; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2) }` +
-      '';
+    ` .application-menu.is-personalizable button:focus:not(.hide-focus), .application-menu.is-personalizable .hyperlink:focus:not(.hide-focus)::after { border-color: ${colors.text}; opacity: 1; box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2) }` +
+    ` .application-menu.is-personalizable .application-menu-switcher-panel { border-top-color: ${colors.horizontalBorder} }` +
+    ` .application-menu.is-personalizable .application-menu-switcher-panel .accordion-heading { border-top-color: ${colors.horizontalBorder} }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper { background-color: ${colors.header}; border-bottom: 1px solid ${colors.horizontalBorder} }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper .searchfield { color: ${colors.text} }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper .searchfield::placeholder { color: ${colors.text}; opacity: .7 }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper .icon { color: ${colors.text}; opacity: .7 }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper.active .icon { color: ${colors.text}; opacity: 1 }` +
+    '';
 
     // Add reusable classes that can be used on some elements
     cssRules += `.is-personalizable .personalize-header { background-color: ${colors.header} }` +

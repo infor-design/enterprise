@@ -6,6 +6,10 @@
 
 ### v4.18.0 Features
 
+- `[App Menu]` Added support for personalization by adding the `is-personalizable` class the menu will now change colors along with headers ([#1847](https://github.com/infor-design/enterprise/issues/1847))
+- `[App Menu]` Added a special role switcher dropdown to change the menu role. ([#1935](https://github.com/infor-design/enterprise/issues/1935))
+- `[Personalize]` Added classes for the personalization colors so that you can personalize certain form elements. ([#1847](https://github.com/infor-design/enterprise/issues/1847))
+- `[Expandable Area]` Added example of a standalone button the toggles a form area. ([#1935](https://github.com/infor-design/enterprise/issues/1935))
 - `[Mask]` Added a setting for passing a locale string, allowing Number masks to be localized.  This enables usage of the `groupSize` property, among others, from locale data in the Mask. ([#440](https://github.com/infor-design/enterprise/issues/440))
 
 ### v4.18.0 Fixes

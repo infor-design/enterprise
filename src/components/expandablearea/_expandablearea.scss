@@ -144,7 +144,27 @@
       margin-bottom: 15px;
     }
   }
+}
 
+.expandable-area-trigger {
+  .icon {
+    margin-left: 2px !important;
+    width: 16px;
+  }
+
+  .icon-opened {
+    display: none;
+  }
+
+  &.active {
+    .icon-closed {
+      display: none;
+    }
+
+    .icon-opened {
+      display: inline-block;
+    }
+  }
 }
 
 // Overrides for smaller break point

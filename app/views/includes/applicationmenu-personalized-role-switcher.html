@@ -1,48 +1,127 @@
-<nav id="application-menu" class="application-menu is-open is-personalizable" data-options="{filterable: false}">
+<nav id="application-menu" class="application-menu is-open is-personalizable" data-options='{ "filterable": true }'>
 
-  <div class="application-menu-header">
-    <img src="/images/11.jpg" class="icon avatar" alt="Photo of Richard Fairbanks"/>
-    <span class="name-xl">Richard <br /> Fairbanks</span>
-    <div class="application-menu-toolbar">
-      <div class="flex-toolbar">
-        <div class="toolbar-section buttonset">
-          <button class="btn-icon" title="Download My Profile">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-download"></use>
-            </svg>
-            <span class="audible">Download</span>
-          </button>
-          <button class="btn-icon" title="Print My Profile">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-print"></use>
-            </svg>
-            <span class="audible">Print</span>
-          </button>
-          <button class="btn-icon" title="Show Purchasing Info">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-purchasing"></use>
-            </svg>
-            <span class="audible">Purchasing</span>
-          </button>
-          <button class="btn-icon" title="Show Notification Info">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-notification"></use>
-            </svg>
-            <span class="audible">Notification</span>
-          </button>
-          <button class="btn-icon" title="Show Inventory Info">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-inventory"></use>
-            </svg>
-            <span class="audible">Inventory</span>
-          </button>
+  <div class="flex-wrapper">
+    <div class="application-menu-header expandable-area-header">
+      <img src="/images/11.jpg" class="icon avatar l-center" alt="Photo of Richard Fairbanks"/>
+      <button type="button" class="btn application-menu-switcher-trigger expandable-area-trigger" id="trigger-btn">
+        <span>Employee</span>
+        <svg class="icon icon-closed" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-caret-down"></use>
+        </svg>
+        <svg class="icon icon-opened" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-caret-up"></use>
+        </svg>
+      </button>
+      <div class="expandable-area">
+        <div class="expandable-pane application-menu-switcher-panel">
+          <div class="content">
+            <div class="accordion panel inverse">
+              <div class="accordion-header">
+                <a href="#"><span>Manager</span></a>
+              </div>
+              <div class="accordion-header is-selected">
+                <a href="#"><span>Recruiter</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Admin</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Example Role Thats Really Really Long So Long that it flows into an ellipsis just really long, maybe too long?</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Example Role</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Example Role</span></a>
+              </div>
+              <div class="accordion-heading" role="presentation">Proxy As...</div>
+              <div class="accordion-header">
+                <a href="#"><span>Glen Keller</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Julia Harrison</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Addie Ortiz</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Jeremy Yates</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Fannie Kennedy</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Kenneth Ramos</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Pauline Townsend</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Rosie Dixon</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Fannie Dawson</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Alice Dawson</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Caroline Weaver</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Cameron Briggs</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="name">Richard <br /> Fairbanks</span>
+      <div class="application-menu-toolbar">
+        <div class="flex-toolbar">
+          <div class="toolbar-section buttonset">
+            <button class="btn-icon" title="Download My Profile">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-download"></use>
+              </svg>
+              <span class="audible">Download</span>
+            </button>
+            <button class="btn-icon" title="Print My Profile">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-print"></use>
+              </svg>
+              <span class="audible">Print</span>
+            </button>
+            <button class="btn-icon" title="Show Purchasing Info">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-purchasing"></use>
+              </svg>
+              <span class="audible">Purchasing</span>
+            </button>
+            <button class="btn-icon" title="Show Notification Info">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-notification"></use>
+              </svg>
+              <span class="audible">Notification</span>
+            </button>
+            <button class="btn-icon" title="Show Inventory Info">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-inventory"></use>
+              </svg>
+              <span class="audible">Inventory</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="application-menu-content">
-    <div class="accordion panel" data-options="{'allowOnePane': false}" >
+    <div class="searchfield-wrapper">
+      <label class="audible" for="application-menu-searchfield">Search</label>
+      <input id="application-menu-searchfield" class="searchfield" data-options='{ "clearable": true }' placeholder="Search this menu"/>
+    </div>
+
+    <div class="accordion panel inverse" data-options="{'allowOnePane': false}" >
       <div class="accordion-header">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-user"></use>
@@ -80,7 +159,7 @@
         </svg>
         <a href="#"><span>Manager</span></a>
       </div>
-      <div class="accordion-pane">
+      <div class="accordion-pane is-selected">
         <div class="accordion-header">
           <a href="#"><span>My Team</span></a>
         </div>
@@ -145,6 +224,7 @@
         </div>
       </div>
     </div>
+  </div>
 
   <div class="application-menu-footer">
     <div class="application-menu-toolbar">
