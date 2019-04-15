@@ -78,7 +78,7 @@ Header.prototype = {
    */
   get titleButton() {
     let query = '.title > button';
-    if (this.toolbarElem.is('.flex-toolbar')) {
+    if (this.toolbarElem && this.toolbarElem.is('.flex-toolbar')) {
       query = '.toolbar-section:first-child > button';
     }
     return this.element.find(query);
@@ -643,6 +643,9 @@ Header.prototype = {
    * Manually remove go-back class from button
    */
   removeBackButton() {
+    if (!this.titleButton.length) {
+      return;
+    }
     this.element.find('.go-back').removeClass('go-back');
   },
 

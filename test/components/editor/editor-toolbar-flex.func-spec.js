@@ -32,7 +32,7 @@ describe('Editor API (using Flex Toolbar)', () => {
     const toolbarFlexAPI = editorAPI.toolbarAPI;
 
     expect(toolbarFlexAPI).toBeDefined();
-    expect(toolbarFlexAPI.sections.length).toEqual(1);
+    expect(toolbarFlexAPI.sections.length).toEqual(2);
     expect(toolbarFlexAPI.focusedItem).toBeDefined();
     expect(Array.isArray(toolbarFlexAPI.overflowedItems)).toBeTruthy();
   });
