@@ -164,12 +164,12 @@ describe('Validation API', () => {
   });
 
   it('be able to call addError / removeError', (done) => {
-    $('#email-address-ok').addError({
+    $('#email-address-ok').addMessage({
       inline: false,
       message: '<span>I have an Error.</span>',
       showTooltip: true
     })
-      .addError({
+      .addMessage({
         inline: false,
         message: '<span>I have another Error.</span>',
         showTooltip: true
