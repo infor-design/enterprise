@@ -7,19 +7,10 @@
   position: relative;
   z-index: 1;
 
-  .notification-text,
-  .notification-link {
-    color: inherit;
-  }
-
   .notification-link {
     font-weight: 300;
     padding-left: 5px;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
+    text-decoration: underline;
   }
 
   .notification-icon {
@@ -32,36 +23,59 @@
     color: inherit;
     position: absolute;
     right: 15px;
-    top: calc(50% - 18px);
+    top: calc(50% - 7px);
 
     .icon {
-      color: inherit;
       height: 15px;
     }
+  }
 
-    &:hover .icon,
-    &:active .icon {
-      color: $button-color-tertiary-hover-font;
+  @mixin notification-styles($init-bkgd, $init-font, $hover-font) {
+    background-color: $init-bkgd;
+    color: $init-font;
+
+    .notification-text {
+      color: $init-font;
+    }
+
+    .notification-link,
+    .notification-close .icon {
+      color: $init-font;
+
+      &:hover {
+        color: $hover-font;
+      }
     }
   }
 
   &.error {
-    background-color: $notification-color-error-initial-background;
-    color: $notification-color-error-initial-font;
+    @include notification-styles(
+      $notification-color-error-initial-background,
+      $notification-color-error-initial-font,
+      $notification-color-error-hover-font
+    );
   }
 
   &.alert {
-    background-color: $notification-color-alert-initial-background;
-    color: $notification-color-alert-initial-font;
+    @include notification-styles(
+      $notification-color-alert-initial-background,
+      $notification-color-alert-initial-font,
+      $notification-color-alert-hover-font);
   }
 
   &.success {
-    background-color: $notification-color-success-initial-background;
-    color: $notification-color-success-initial-font;
+    @include notification-styles(
+      $notification-color-success-initial-background,
+      $notification-color-success-initial-font,
+      $notification-color-success-hover-font
+    );
   }
 
   &.info {
-    background-color: $notification-color-info-initial-background;
-    color: $notification-color-info-initial-font;
+    @include notification-styles(
+      $notification-color-info-initial-background,
+      $notification-color-info-initial-font,
+      $notification-color-info-hover-font
+    );
   }
 }

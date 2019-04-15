@@ -66,7 +66,7 @@ Notification.prototype = {
     htmlText += '</p>';
 
     const htmlButton = `
-      <button type="text" class="btn-icon notification-close">
+      <button type="text" class="notification-close">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-close"></use>
         </svg>
