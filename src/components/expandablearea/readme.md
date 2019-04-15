@@ -56,7 +56,6 @@ Its possible to assign a custom button that can toggle a specific area using the
 </div>
 ```
 
-
 ## Testability
 
 - Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
