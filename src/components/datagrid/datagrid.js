@@ -5491,7 +5491,7 @@ Datagrid.prototype = {
           const startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'), 10);
           const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
 
-          if (self.editor && self.editor.input) {
+          if (self.editor && self.editor.input && !this.editor.notCommittable) {
             self.commitCellEdit(self.editor.input);
           }
           self.copyToDataSet(splitData, startRowCount, startColIndex, self.settings.dataset);
@@ -5789,15 +5789,8 @@ Datagrid.prototype = {
 
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
               self.editor) {
-            if (focusElem.is('.spinbox')) {
-              return;
-            }
-
-            if (focusElem.is('.trigger')) {
-              return;
-            }
-
-            if (!$(target).is(':visible')) {
+            if (focusElem.is('.spinbox, .trigger') ||
+              !$(target).is(':visible') || self.editor.notCommittable) {
               return;
             }
 
@@ -5805,7 +5798,6 @@ Datagrid.prototype = {
               focusElem.closest(self.editor.className).length > 0) {
               return;
             }
-
             self.commitCellEdit(self.editor.input);
           }
         }, 150);
@@ -5814,11 +5806,11 @@ Datagrid.prototype = {
       }
 
       // Popups are open
-      if ($('#dropdown-list, .autocomplete.popupmenu.is-open, #timepicker-popup').is(':visible')) {
+      if ($('#dropdown-list, .autocomplete.popupmenu.is-open, #timepicker-popup, .is-editing .code-block').is(':visible')) {
         return;
       }
 
-      if (self.editor && self.editor.input) {
+      if (self.editor && self.editor.input && !this.editor.notCommittable) {
         self.commitCellEdit(self.editor.input);
       }
     });
@@ -7779,7 +7771,8 @@ Datagrid.prototype = {
    * @returns {boolean} returns true if the cell is editable
    */
   makeCellEditable(row, cell, event) {
-    if (this.activeCell.node.closest('tr').hasClass('datagrid-summary-row')) {
+    if (this.activeCell.node.closest('tr').hasClass('datagrid-summary-row') ||
+      (this.editor && this.editor.notCommittable)) {
       return;
     }
 
@@ -7794,7 +7787,7 @@ Datagrid.prototype = {
     }
 
     // Commit Previous Edit
-    if (this.editor && this.editor.input) {
+    if (this.editor && this.editor.input && !this.editor.notCommittable) {
       this.commitCellEdit(this.editor.input);
     }
 

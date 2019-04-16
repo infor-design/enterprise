@@ -1,380 +1,389 @@
 <style>
-  .datagrid .code-block {
-    background: inherit;
-    border: none;
-    display: block;
-    font-family: inherit;
-    line-height: inherit;
-    margin: 0 0 -19px;
-    overflow: inherit;
-    position: relative;
-    text-overflow: inherit;
-  }
+.datagrid .code-block {
+  background: inherit;
+  border: none;
+  display: block;
+  font-family: inherit;
+  line-height: inherit;
+  margin: 0 0 -19px;
+  overflow: inherit;
+  position: relative;
+  text-overflow: inherit;
+}
 
-  .datagrid .is-active .code-block {
-    display: inline-block;
-    line-height: inherit !important;
-    top: -3px;
-    width: calc(100% - 104px);
-  }
+.datagrid .is-active .code-block {
+  display: inline-block;
+  line-height: inherit !important;
+  top: -3px;
+  width: calc(100% - 104px);
+}
 
-  .datagrid .code-block label {
-    display: inline-block;
-    margin-bottom: 0;
-    overflow: hidden;
-    position: relative;
-    top: -1px;
-    vertical-align: middle;
-    white-space: nowrap;
-  }
+.datagrid .code-block label {
+  display: inline-block;
+  margin-bottom: 0;
+  overflow: hidden;
+  position: relative;
+  top: 1px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
 
-  .datagrid .code-block label::after {
-    content: ':';
-  }
+.datagrid .code-block label::after {
+  content: ':';
+}
 
-  .datagrid .code-block .data {
-    display: inline-block;
-    line-height: inherit;
-    margin-bottom: 0;
-    padding-left: 5px;
-    padding-right: 15px;
-    position: relative;
-    top: 0;
-    white-space: nowrap;
-  }
+.datagrid .code-block .data {
+  display: inline-block;
+  line-height: inherit;
+  margin-bottom: 0;
+  padding-left: 5px;
+  padding-right: 15px;
+  position: relative;
+  top: 0;
+  white-space: nowrap;
+}
 
-  .datagrid .code-block .data:not(:last-of-type)::after,
-  .datagrid td.is-editing .code-block .data:not(:last-of-type)::after {
-    color: #5c5c5c;
-    content: '•';
-    font-size: 18px;
-    margin-right: 0;
-    padding-left: 15px;
-    position: relative;
-    top: 1px;
-  }
+.datagrid .code-block .data:not(:last-of-type)::after,
+.datagrid td.is-editing .code-block .data:not(:last-of-type)::after {
+  color: #5c5c5c;
+  content: '•';
+  font-size: 18px;
+  margin-right: 0;
+  padding-left: 15px;
+  position: relative;
+  top: 1px;
+}
 
-  .datagrid td.is-editing .code-block input[type='text'] {
-    padding: 8px 0;
-    width: 50%;
-  }
+.datagrid td.is-editing .code-block input[type='text'] {
+  padding: 8px 0;
+}
 
-  .datagrid td.is-editing .icon {
-    color: inherit;
-    top: auto;
-  }
+.datagrid td.is-editing .code-block #contact {
+  width: 50%;
+}
 
-  .datagrid td.is-editing .code-block input[type='text']:focus {
-    /* border: 1px solid #999; */
-  }
+.datagrid td.is-editing .code-block #location {
+  width: 65%;
+}
 
-  .datagrid td.is-editing .code-block input.lookup {
-    border-color: transparent;
-    padding: 0 2px 0 0;
-    transition: margin 0.5s ease, left 0.5s ease, padding 0.5s ease, width 0.5s ease;
-    vertical-align: baseline;
-    width: auto; /* IE doesnt support initial */
-    width: initial;
-  }
+.datagrid td.is-editing .code-block #customer-since {
+  width: 35%;
+}
 
-  .datagrid td.is-editing .code-block .lookup-wrapper {
-    padding-left: 0;
-    padding-top: 0;
-    vertical-align: baseline;
-  }
+.datagrid td.is-editing input + .icon {
+  color: inherit;
+  top: auto;
+}
 
-  .datagrid td.is-editing .code-block .field {
-    margin-right: 0;
-  }
+.datagrid td.is-editing .code-block input.lookup {
+  border-color: transparent;
+  padding: 0 2px 0 0;
+  transition: margin 0.5s ease, left 0.5s ease, padding 0.5s ease, width 0.5s ease;
+  vertical-align: baseline;
+  width: auto; /* IE doesnt support initial */
+  width: initial;
+}
 
-  .datagrid td.is-editing .code-block .field::after {
-    content: '';
-  }
+.datagrid td.is-editing .code-block .lookup-wrapper {
+  padding-left: 0;
+  padding-top: 0;
+  vertical-align: baseline;
+}
 
-  .datagrid td.is-editing .code-block input.lookup ~ .trigger .icon {
-    top: 8px;
-    width: 18px;
-  }
+.datagrid td.is-editing .code-block .field {
+  margin-right: 0;
+}
 
-  .datagrid td.is-editing .code-block input.lookup ~ .trigger {
-    margin-top: 0;
-  }
+.datagrid td.is-editing .code-block .field::after {
+  content: '';
+}
 
-  .datagrid td.is-editing .code-block .datagrid-cell-wrapper:focus {
-    outline: none;
-  }
+.datagrid td.is-editing .code-block input.lookup ~ .trigger .icon {
+  top: 8px;
+  width: 18px;
+}
 
-  .datagrid td.is-editing .code-block .lookup-wrapper .trigger {
-    margin-left: -33px;
-    margin-top: 0;
-  }
+.datagrid td.is-editing .code-block input.lookup ~ .trigger {
+  margin-top: 0;
+}
 
-  .field-options {
-    margin-right: 15px;
-  }
+.datagrid td.is-editing .code-block .datagrid-cell-wrapper:focus {
+  outline: none;
+}
 
-  .code-block-container > button {
-    display: inline-block;
-  }
+.datagrid td.is-editing .code-block .lookup-wrapper .trigger {
+  margin-left: -33px;
+  margin-top: 4px;
+}
 
-  .code-block-actions {
-    left: -17px;
-    transform: rotate(90deg);
-    visibility: visible;
-  }
+.field-options {
+  margin-right: 15px;
+}
 
-  .code-block-buttons {
-    display: inline-block;
-    left: 5px;
-    position: relative;
-  }
+.code-block-container > button {
+  display: inline-block;
+}
 
-  /* --- */
-  .code-block.is-active {
-    border: 1px solid #368ac0;
-    box-shadow: 0 0 4px 3px rgba(54, 138, 192, 0.3);
-  }
+.code-block-actions {
+  left: -17px;
+  transform: rotate(90deg);
+  visibility: visible;
+}
 
-  .code-block.is-active input {
-    box-shadow: none !important;
-  }
+.code-block-buttons {
+  display: inline-block;
+  left: 5px;
+  position: relative;
+}
 
-  .field.is-active {
-    border: 1px solid #368ac0;
-  }
+/* --- */
+.code-block.is-active {
+  border: 1px solid #368ac0;
+  box-shadow: 0 0 4px 3px rgba(54, 138, 192, 0.3);
+}
 
-  .field.is-active .field-options:not([disabled]) {
-    border-color: transparent !important;
-    box-shadow: none !important;
-  }
+.code-block.is-active input {
+  box-shadow: none !important;
+}
 
-  /* Make Label and Input Inline */
-  .lookup-wrapper,
-  .label {
-    display: inline;
-  }
+.field.is-active {
+  border: 1px solid #368ac0;
+  margin: 1px;
+}
 
-  .field {
-    border: 1px solid transparent;
-    border-radius: 2px;
-    display: inline-block;
-    height: 34px;
-    line-height: 34px;
-    margin: -3px -12px -3px -3px;
-    padding: 0 0 0 12px;
-    vertical-align: middle;
-  }
+.field.is-active .field-options:not([disabled]) {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
 
-  .field:not(:last-of-type):not(.is-active)::after {
-    color: #5c5c5c;
-    content: '•';
-    font-size: 18px;
-    position: absolute;
-    right: 18px;
-    top: -1px;
-    width: 4px;
-  }
+/* Make Label and Input Inline */
+.lookup-wrapper,
+.label {
+  display: inline;
+}
 
-  .field.is-active::after {
-    content: '';
-  }
+.field {
+  border: 1px solid transparent;
+  border-radius: 2px;
+  display: inline-block;
+  height: 34px;
+  line-height: 33px;
+  margin: -3px -12px -3px -3px;
+  padding: 0 0 0 12px;
+  vertical-align: middle;
+}
 
-  .field.is-active:focus {
-    box-shadow: none !important;
-  }
+.field:not(:last-of-type):not(.is-active)::after {
+  color: #5c5c5c;
+  content: '•';
+  font-size: 18px;
+  position: absolute;
+  right: 18px;
+  top: -1px;
+  width: 4px;
+}
 
-  /* Adjust labels and input styles */
-  .label {
-    position: relative;
-    top: -1px;
-  }
+.field.is-active::after {
+  content: '';
+}
 
-  /* Add a : After the label */
-  .label::after {
-    content: ':';
-  }
+.field.is-active:focus {
+  box-shadow: none !important;
+}
 
-  input {
-    border-color: transparent;
-    padding-left: 0;
-    transition: margin 0.5s ease, left 0.5s ease, padding 0.5s ease, width 0.5s ease;
-    width: auto; /* IE doesnt support initial */
-    width: initial;
-  }
+/* Adjust labels and input styles */
+.label {
+  position: relative;
+  top: -1px;
+}
 
-  .is-number-mask {
-    text-align: left;
-  }
+/* Add a : After the label */
+.label::after {
+  content: ':';
+}
 
-  .lookup,
-  input {
-    padding: 0;
-  }
+input {
+  border-color: transparent;
+  padding-left: 0;
+  transition: margin 0.5s ease, left 0.5s ease, padding 0.5s ease, width 0.5s ease;
+  width: auto; /* IE doesnt support initial */
+  width: initial;
+}
 
-  .lookup:focus {
-    box-shadow: none !important;
-  }
+.is-number-mask {
+  text-align: left;
+}
 
-  /* Other Input Types */
-  input[readonly] {
-    background-color: transparent;
-  }
+.lookup,
+input {
+  padding: 0;
+}
 
-  /* Make Elements Sit Well Next to Each other */
-  .field .field-options:not([disabled]).lookup,
-  .field.is-active .field-options:not([disabled]).lookup,
-  .field .field-options:not([disabled]),
-  .field .field-options:not([disabled]).datepicker,
-  .field.is-active .field-options:not([disabled]).datepicker,
-  .field .dropdown-wrapper {
-    margin-left: 3px;
-    margin-right: 18px;
-  }
+.lookup:focus {
+  box-shadow: none !important;
+}
 
-  /* Support for IE, Edge and FF */
-  .ie .field .field-options:not([disabled]).lookup,
-  .is-firefox .field .field-options:not([disabled]).lookup,
-  .ie .field.is-active .field-options:not([disabled]).lookup,
-  .is-firefox .field.is-active .field-options:not([disabled]).lookup,
-  .ie .field .field-options:not([disabled]),
-  .is-firefox .field .field-options:not([disabled]),
-  .ie .field .field-options:not([disabled]).datepicker,
-  .is-firefox .field .field-options:not([disabled]).datepicker,
-  .ie .field.is-active .field-options:not([disabled]).datepicker,
-  .is-firefox .field.is-active .field-options:not([disabled]).datepicker {
-    margin-right: 0;
-  }
+/* Other Input Types */
+input[readonly] {
+  background-color: transparent;
+}
 
-  .field.is-active .field-options:not([disabled]) {
-    margin-right: 9px;
-  }
+/* Make Elements Sit Well Next to Each other */
+.field .field-options:not([disabled]).lookup,
+.field.is-active .field-options:not([disabled]).lookup,
+.field .field-options:not([disabled]),
+.field .field-options:not([disabled]).datepicker,
+.field.is-active .field-options:not([disabled]).datepicker,
+.field .dropdown-wrapper {
+  margin-left: 3px;
+  margin-right: 18px;
+}
 
-  .field input.field-options:not([disabled]).lookup.is-active,
-  .field.is-active .field-options:not([disabled]).datepicker {
-    padding-right: 10px;
-  }
+/* Support for IE, Edge and FF */
+.ie .field .field-options:not([disabled]).lookup,
+.is-firefox .field .field-options:not([disabled]).lookup,
+.ie .field.is-active .field-options:not([disabled]).lookup,
+.is-firefox .field.is-active .field-options:not([disabled]).lookup,
+.ie .field .field-options:not([disabled]),
+.is-firefox .field .field-options:not([disabled]),
+.ie .field .field-options:not([disabled]).datepicker,
+.is-firefox .field .field-options:not([disabled]).datepicker,
+.ie .field.is-active .field-options:not([disabled]).datepicker,
+.is-firefox .field.is-active .field-options:not([disabled]).datepicker {
+  margin-right: 0;
+}
 
-  .field.is-active::before,
-  .datepicker + .icon {
-    visibility: hidden;
-  }
+.field.is-active .field-options:not([disabled]) {
+  margin-right: 9px;
+}
 
-  .datepicker.is-active + .icon {
-    visibility: visible;
-    z-index: 2;
-  }
+.field input.field-options:not([disabled]).lookup.is-active,
+.field.is-active .field-options:not([disabled]).datepicker {
+  padding-right: 10px;
+}
 
-  .trigger {
-    margin-left: -33px;
-    visibility: hidden;
-  }
+.field.is-active::before,
+.datepicker + .icon {
+  visibility: hidden;
+}
 
-  input.is-active + .trigger {
-    visibility: visible;
-  }
+.datepicker.is-active + .icon {
+  visibility: visible;
+  z-index: 2;
+}
 
-  input.is-active + .trigger .icon {
-    fill: #5c5c5c !important;
-  }
+.trigger {
+  margin-left: -33px;
+  visibility: hidden;
+}
 
-  .lookup-wrapper.is-active + .trigger {
-    visibility: visible;
-  }
+input.is-active + .trigger {
+  visibility: visible;
+}
 
-  /* Adjust the Field Options */
-  .btn-actions {
-    left: -15px;
-    margin-right: -22px;
-    top: 0;
-    visibility: hidden;
-    z-index: 1;
-  }
+input.is-active + .trigger .icon {
+  fill: #5c5c5c !important;
+}
 
-  .field.is-fieldoptions .lookup-wrapper .btn-actions {
-    left: -15px;
-  }
+.lookup-wrapper.is-active + .trigger {
+  visibility: visible;
+}
 
-  .field-options.checkbox ~ .btn-actions,
-  .field-options.dropdown ~ .btn-actions {
-    top: 0;
-  }
+/* Adjust the Field Options */
+.btn-actions {
+  left: -15px;
+  margin-right: -22px;
+  top: 0;
+  visibility: hidden;
+  z-index: 1;
+}
 
-  input.is-active + .trigger + .btn-actions {
-    border: none;
-    box-shadow: none !important;
-    left: -15px;
-    margin-right: -18px;
-    visibility: visible;
-  }
+.field.is-fieldoptions .lookup-wrapper .btn-actions {
+  left: -15px;
+}
 
-  /* Input Field with field options */
-  .btn-actions.is-active {
-    border: none;
-    box-shadow: none !important;
-    visibility: visible;
-  }
+.field-options.checkbox ~ .btn-actions,
+.field-options.dropdown ~ .btn-actions {
+  top: 0;
+}
 
-  .field.is-active::before {
-    visibility: hidden;
-  }
+input.is-active + .trigger + .btn-actions {
+  border: none;
+  box-shadow: none !important;
+  left: -15px;
+  margin-right: -18px;
+  visibility: visible;
+}
 
-  /* Readonly Styles */
-  .data {
-    font-size: 1.4rem;
-    padding-left: 3px;
-    padding-right: 41px;
-  }
+/* Input Field with field options */
+.btn-actions.is-active {
+  border: none;
+  box-shadow: none !important;
+  visibility: visible;
+}
 
-  .input-style.is-readonly .field::after {
-    right: 20px;
-    top: -3px;
-  }
+.field.is-active::before {
+  visibility: hidden;
+}
 
-  /* Style Datepicker alignment */
-  .field-options.datepicker {
-    width: auto; /* IE doesnt support initial */
-    width: initial;
-  }
+/* Readonly Styles */
+.data {
+  font-size: 1.4rem;
+  padding-left: 3px;
+  padding-right: 41px;
+}
 
-  /* Style Checkbox alignment */
-  .field .checkbox-label {
-    margin-right: 18px;
-  }
+.input-style.is-readonly .field::after {
+  right: 20px;
+  top: -3px;
+}
 
-  div.field + .field-checkbox {
-    margin-bottom: -3px !important;
-  }
+/* Style Datepicker alignment */
+.field-options.datepicker {
+  width: auto; /* IE doesnt support initial */
+  width: initial;
+}
 
-  /* Style Dropdown & alignment */
-  .dropdown {
-    border-width: 0;
-    height: 32px !important;
-    padding: 8px 0;
-    vertical-align: top;
-  }
+/* Style Checkbox alignment */
+.field .checkbox-label {
+  margin-right: 18px;
+}
 
-  .field .dropdown-sm {
-    max-width: 100px;
-    min-width: 61px;
-    padding-right: 0;
-    transition: padding 0.5s ease;
-    width: auto;
-  }
+div.field + .field-checkbox {
+  margin-bottom: -3px !important;
+}
 
-  .field .dropdown-sm.is-open {
-    padding-right: 28px;
-    transition: padding 0.5s ease;
-  }
+/* Style Dropdown & alignment */
+.dropdown {
+  border-width: 0;
+  height: 32px !important;
+  padding: 8px 0;
+  vertical-align: top;
+}
 
-  .dropdown + .icon {
-    right: 24px;
-    visibility: hidden;
-  }
+.field .dropdown-sm {
+  max-width: 100px;
+  min-width: 61px;
+  padding-right: 0;
+  transition: padding 0.5s ease;
+  width: auto;
+}
 
-  .field.is-active div.dropdown:not(.is-open) {
-    border-width: 0;
-    box-shadow: none;
-  }
+.field .dropdown-sm.is-open {
+  padding-right: 28px;
+  transition: padding 0.5s ease;
+}
+
+.dropdown + .icon {
+  right: 24px;
+  visibility: hidden;
+}
+
+.field.is-active div.dropdown:not(.is-open) {
+  border-width: 0;
+  box-shadow: none;
+}
+
 </style>
 
 <div class="row top-padding">
@@ -392,18 +401,45 @@
         return '' +
           '<span class="code-block">' +
             '<label for="contact" class="label">Contact</label>' +
-            '<span class="data">'+ rowData.contact +'</span>' +
+            '<span class="data">'+ value.contact +'</span>' +
             '<label for="location" class="label">Location</label>' +
-            '<span class="data">'+ rowData.location +'</span>' +
+            '<span class="data">'+ value.location +'</span>' +
             '<label for="customer-since" class="label">Customer Since</label>' +
-            '<span class="data">'+ rowData.customerSince +'</span>' +
+            '<span class="data">'+ value.customerSince +'</span>' +
           '</span>';
+      };
+
+      var getValues = function (str, currentValues) {
+        var labels = [
+          { val: 'contact', text: 'Contact' },
+          { val: 'location', text: 'Location' },
+          { val: 'customerSince', text: 'Customer Since' },
+        ];
+        var values = {};
+        if (str) {
+          str = str.replace(/Press Down arrow to select a date/gi, '');
+          str = str.replace(/. Use enter or down arrow to lookup./gi, '');
+        }
+        str = (str + '').replace('Press Down arrow to select a date', '');
+        for (var i = 0, l = labels.length; i<l; i++) {
+          var label = labels[i];
+
+          if (currentValues) {
+            values[label.val] = currentValues[i];
+          } else {
+            var begin = str.indexOf(label.text) + label.text.length;
+            var end = i !== (l-1) ? str.indexOf(labels[i+1].text) : str.length;
+            values[label.val] = str.slice(begin, end);
+          }
+        }
+        return values;
       };
 
       var customEditor = function (row, cell, value, container, column, event, grid, rowData) {
         // console.log({i: 'edit', row, cell, value, container, column, event, grid, rowData});
+        var values = getValues(value);
         this.name = 'MyCustom';
-        this.originalValue = value;
+        this.originalValue = values;
 
         this.init = function () {
           const btnHtml = function (id) {
@@ -429,28 +465,48 @@
             '<div class="code-block">' +
               '<div class="field">' +
                 '<label for="contact" class="label">Contact</label>' +
-                '<input type="text" name="contact" id="contact" value="'+ rowData.contact +'"/>' +
+                '<input type="text" name="contact" id="contact" value="'+ values.contact +'"/>' +
                 btnHtml('contact') +
               '</div>' +
               '<div class="field">' +
                 '<label for="location" class="label">Location</label>' +
-                '<input type="text" name="location" id="location" value="'+ rowData.location +'"/>' +
+                '<input type="text" name="location" id="location" value="'+ values.location +'"/>' +
                 btnHtml('location') +
               '</div>' +
               '<div class="field">' +
                 '<label for="customer-since" class="label">Customer Since</label>' +
-                '<input type="text" name="customer-since" id="customer-since" value="'+ rowData.customerSince +'"/>' +
+                '<input type="text" name="customer-since" id="customer-since" value="'+ values.customerSince +'"/>' +
                 btnHtml('customer-since') +
               '</div>' +
             '</div>';
 
           $(html).appendTo(container);
-          container.find('#customer-since').datepicker();
+          this.input = container.find('.code-block');
+          container.find('.btn-actions').popupmenu();
           container.find('[type="text"]').fieldoptions();
+          container.find('#customer-since').datepicker();
         };
 
-        this.val = function (value) {
-          return '';
+        this.val = function (v) {
+          var values = {};
+          var inputs = container.find('[type="text"]');
+          var inputsLen = inputs.length;
+          if (v) {
+            values = getValues(v);
+            valuesArr = Object.keys(values);
+            if (inputsLen = valuesArr.length) {
+              valuesArr.forEach(function (key, i) {
+                $(inputs[i]).val(values[key]);
+              });
+            }
+          } else {
+            arrVal = [];
+            inputs.each(function() {
+              arrVal.push($(this).val());
+            });
+            values = getValues(null, arrVal);
+          }
+          return values;
         };
 
         this.focus = function () {
@@ -458,6 +514,10 @@
         };
 
         this.destroy = function () {
+          setTimeout(() => {
+            grid.quickEditMode = false;
+            this.input.remove();
+          }, 0);
         };
 
         this.init();
@@ -468,131 +528,159 @@
           'id': 1,
           'companyId': '101',
           'companyName': 'Alexandar Gravel & Stone',
-          'phone': '414-821-0697',
-          'location': 'Terrencefort, TX',
-          'contact': 'Lida Snyder',
-          'customerSince': '04/25/2016',
-          'favorite': true
+          'info': {
+            'phone': '414-821-0697',
+            'location': 'Terrencefort, TX',
+            'contact': 'Lida Snyder',
+            'customerSince': '04/25/2016',
+            'favorite': true
+          }
         },
         {
           'id': 2,
           'companyId': '102',
           'companyName': 'Briar Valley Gravel',
-          'phone': '702-389-9973',
-          'location': 'Davontemouth, UT',
-          'contact': 'Bull Cunningham',
-          'customerSince': '05/02/2016'
+          'info': {
+            'phone': '702-389-9973',
+            'location': 'Davontemouth, UT',
+            'contact': 'Bull Cunningham',
+            'customerSince': '05/02/2016'
+          }
         },
         {
           'id': 3,
           'companyId': '103',
           'companyName': 'Riverhead Building Supply',
-          'phone': '929-769-3984',
-          'location': 'Hermistonhaven, AZ',
-          'contact': 'Johnny Fields',
-          'customerSince': '08/28/2016',
-          'favorite': true
+          'info': {
+            'phone': '929-769-3984',
+            'location': 'Hermistonhaven, AZ',
+            'contact': 'Johnny Fields',
+            'customerSince': '08/28/2016',
+            'favorite': true
+          }
         },
         {
           'id': 4,
           'companyId': '104',
           'companyName': 'Gravel Corp',
-          'phone': '299-166-7016',
-          'location': 'North Beau, NV',
-          'contact': 'Nina Mendez',
-          'customerSince': '01/25/2015'
+          'info': {
+            'phone': '299-166-7016',
+            'location': 'North Beau, NV',
+            'contact': 'Nina Mendez',
+            'customerSince': '01/25/2015'
+          }
         },
         {
           'id': 5,
           'companyId': '105',
           'companyName': 'United Construction',
-          'phone': '299-166-7016',
-          'location': 'New Abdul, TX',
-          'contact': 'Paul Strayer',
-          'customerSince': '04/21/2016'
+          'info': {
+            'phone': '299-166-7016',
+            'location': 'New Abdul, TX',
+            'contact': 'Paul Strayer',
+            'customerSince': '04/21/2016'
+          }
         },
         {
           'id': 6,
           'companyId': '106',
           'companyName': 'Gravel, Gravel, Gravel',
-          'phone': '299-166-7067',
-          'location': 'Smithsville, UT',
-          'contact': 'John Nasmith',
-          'customerSince': '06/25/2016'
+          'info': {
+            'phone': '299-166-7067',
+            'location': 'Smithsville, UT',
+            'contact': 'John Nasmith',
+            'customerSince': '06/25/2016'
+          }
         },
         {
           'id': 7,
           'companyId': '108',
           'companyName': 'Stone Gravel Supply Company',
-          'phone': '202-504-5299',
-          'location': 'Ryesmith, AK',
-          'contact': 'Spring Adams',
-          'customerSince': '07/25/2015'
+          'info': {
+            'phone': '202-504-5299',
+            'location': 'Ryesmith, AK',
+            'contact': 'Spring Adams',
+            'customerSince': '07/25/2015'
+          }
         },
         {
           'id': 8,
           'companyId': '109',
           'companyName': 'Smith Gravel & Stone',
-          'phone': '411-821-0697',
-          'location': 'Lancaster, TX',
-          'contact': 'Mary Adams',
-          'customerSince': '04/25/2016',
-          'favorite': true
+          'info': {
+            'phone': '411-821-0697',
+            'location': 'Lancaster, TX',
+            'contact': 'Mary Adams',
+            'customerSince': '04/25/2016',
+            'favorite': true
+          }
         },
         {
           'id': 9,
           'companyId': '110',
           'companyName': 'Hidden Valley Gravel',
-          'phone': '202-389-9973',
-          'location': 'Shark City, UT',
-          'contact': 'Donald Cunningham',
-          'customerSince': '05/01/2016'
+          'info': {
+            'phone': '202-389-9973',
+            'location': 'Shark City, UT',
+            'contact': 'Donald Cunningham',
+            'customerSince': '05/01/2016'
+          }
         },
         {
           'id': 10,
           'companyId': '111',
           'companyName': 'Copperhead Building Supply',
-          'phone': '929-769-3984',
-          'location': 'Hermistonhaven, AZ',
-          'contact': 'Johnny Smith',
-          'customerSince': '08/21/2016',
-          'favorite': true
+          'info': {
+            'phone': '929-769-3984',
+            'location': 'Hermistonhaven, AZ',
+            'contact': 'Johnny Smith',
+            'customerSince': '08/21/2016',
+            'favorite': true
+          }
         },
         {
           'id': 11,
           'companyId': '112',
           'companyName': 'Gravel Lovers Inc',
-          'phone': '299-166-7016',
-          'location': 'North Beau, NV',
-          'contact': 'Paulo Mendez',
-          'customerSince': '03/25/2014'
+          'info': {
+            'phone': '299-166-7016',
+            'location': 'North Beau, NV',
+            'contact': 'Paulo Mendez',
+            'customerSince': '03/25/2014'
+          }
         },
         {
           'id': 12,
           'companyId': '113',
-          'companyName': 'United Gravel',
-          'phone': '299-126-7016',
-          'location': 'New Manilla, TX',
-          'contact': 'Paul Strayer',
-          'customerSince': '04/21/2016'
+          'info': {
+            'companyName': 'United Gravel',
+            'phone': '299-126-7016',
+            'location': 'New Manilla, TX',
+            'contact': 'Paul Strayer',
+            'customerSince': '04/21/2016'
+          }
         },
         {
           'id': 13,
           'companyId': '114',
-          'companyName': 'Construction City',
-          'phone': '399-166-7067',
-          'location': 'Joanestown, UT',
-          'contact': 'Andy Nasmith',
-          'customerSince': '06/25/2015'
+          'info': {
+            'companyName': 'Construction City',
+            'phone': '399-166-7067',
+            'location': 'Joanestown, UT',
+            'contact': 'Andy Nasmith',
+            'customerSince': '06/25/2015'
+          }
         },
         {
           'id': 14,
           'companyId': '115',
           'companyName': 'Stone City Supply Company',
-          'phone': '202-504-5299',
-          'location': 'River Ridge, PA',
-          'contact': 'Winter Adams',
-          'customerSince': '01/25/2015'
+          'info': {
+            'phone': '202-504-5299',
+            'location': 'River Ridge, PA',
+            'contact': 'Winter Adams',
+            'customerSince': '01/25/2015'
+          }
         }
       ];
 
@@ -615,6 +703,7 @@
         },
         { id: 'codeBlock',
           name: 'Code Block',
+          field: 'info',
           sortable: false,
           formatter: customFormatter,
           filterType: 'text',

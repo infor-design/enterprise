@@ -98,9 +98,6 @@
       columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3 }, editor: Editors.Input, mask: '###.000' });
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date5 });
 
-      // Edit mode
-      var canCommit = false;
-
       // Init the grid
       $('#datagrid').datagrid({
         columns: columns,
@@ -111,39 +108,34 @@
       .on('beforecommitcelledit', function (e, args) {
         // console.log(args);
         // return false;
-        var targetCell = (args && args.target) ? args.target : null;
+
         var deferred = $.Deferred();
+        args.editor.notCommittable = true;
 
-        if (!canCommit) {
-          canCommit = true;
-
-          $('body').message({
-            title: 'Commit Edit',
-            message: 'You are about to Commit Cell Edit<br>Would you like to proceed?',
-            buttons: [{
-              text: 'Yes',
-              click: function(e, modal) {
-                canCommit = true;
-                deferred.resolve();
-                modal.close();
-              }
-            }, {
-              text: 'No',
-              click: function(e, modal) {
-                canCommit = false;
-                deferred.reject();
-                modal.close();
-              },
-              isDefault: true
-            }]
-          })
-          .on('afterclose.message', (e) => {
-            if (canCommit) {
-              args.target.focus();
+        $('body').message({
+          title: 'Commit Edit',
+          message: 'You are about to Commit Cell Edit<br>Would you like to proceed?',
+          buttons: [{
+            text: 'Yes',
+            click: function(e, modal) {
+              delete args.editor.notCommittable;
+              deferred.resolve();
+              modal.close();
             }
-          });
-        }
-
+          }, {
+            text: 'No',
+            click: function(e, modal) {
+              deferred.reject();
+              modal.close();
+            },
+            isDefault: true
+          }]
+        })
+        .on('afterclose.message', (e) => {
+          if (args.editor && !args.editor.notCommittable) {
+            args.target.focus();
+          }
+        });
         return deferred.promise();
       });
 
