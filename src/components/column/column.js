@@ -864,7 +864,6 @@ Column.prototype = {
     // Add Legend
     self.settings.isGrouped = isGrouped;
     self.settings.isSingle = isSingle;
-    self.settings.isStacked = self.settings.isStacked;
     self.settings.svg = this.svg;
 
     if (self.settings.showLegend) {
