@@ -794,7 +794,6 @@ const editors = {
       self.input.on('change', () => {
         setTimeout(() => {
           container.parent().focus();
-          grid.setNextActiveCell(event);
           grid.quickEditMode = false;
         }, 1);
       });

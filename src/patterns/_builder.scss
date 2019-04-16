@@ -91,6 +91,8 @@
 
   .panel-subhead {
     margin-top: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .panel-title {
