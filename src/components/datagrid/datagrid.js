@@ -5491,7 +5491,7 @@ Datagrid.prototype = {
           const startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'), 10);
           const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
 
-          if (self.editor && self.editor.input && !this.editor.notCommittable) {
+          if (self.editor && self.editor.input && !this.editor.stayInEditMode) {
             self.commitCellEdit(self.editor.input);
           }
           self.copyToDataSet(splitData, startRowCount, startColIndex, self.settings.dataset);
@@ -5790,7 +5790,7 @@ Datagrid.prototype = {
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
               self.editor) {
             if (focusElem.is('.spinbox, .trigger') ||
-              !$(target).is(':visible') || self.editor.notCommittable) {
+              !$(target).is(':visible') || self.editor.stayInEditMode) {
               return;
             }
 
@@ -5810,7 +5810,7 @@ Datagrid.prototype = {
         return;
       }
 
-      if (self.editor && self.editor.input && !this.editor.notCommittable) {
+      if (self.editor && self.editor.input && !this.editor.stayInEditMode) {
         self.commitCellEdit(self.editor.input);
       }
     });
@@ -7626,8 +7626,13 @@ Datagrid.prototype = {
       }
 
       if (self.settings.editable && key === 13) {
+        const target = $(e.target);
         // Allow shift to add a new line
-        if ($(e.target).is('textarea') && e.shiftKey) {
+        if (target.is('textarea') && e.shiftKey) {
+          return;
+        }
+        // Allow the menu buttons
+        if (target.is('.btn-menu') || target.closest('.popupmenu.is-open').length) {
           return;
         }
 
@@ -7772,7 +7777,7 @@ Datagrid.prototype = {
    */
   makeCellEditable(row, cell, event) {
     if (this.activeCell.node.closest('tr').hasClass('datagrid-summary-row') ||
-      (this.editor && this.editor.notCommittable)) {
+      (this.editor && this.editor.stayInEditMode)) {
       return;
     }
 
@@ -7787,7 +7792,7 @@ Datagrid.prototype = {
     }
 
     // Commit Previous Edit
-    if (this.editor && this.editor.input && !this.editor.notCommittable) {
+    if (this.editor && this.editor.input && !this.editor.stayInEditMode) {
       this.commitCellEdit(this.editor.input);
     }
 

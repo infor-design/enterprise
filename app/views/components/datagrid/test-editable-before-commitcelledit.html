@@ -110,7 +110,7 @@
         // return false;
 
         var deferred = $.Deferred();
-        args.editor.notCommittable = true;
+        args.editor.stayInEditMode = true;
 
         $('body').message({
           title: 'Commit Edit',
@@ -118,7 +118,7 @@
           buttons: [{
             text: 'Yes',
             click: function(e, modal) {
-              delete args.editor.notCommittable;
+              delete args.editor.stayInEditMode;
               deferred.resolve();
               modal.close();
             }
@@ -132,7 +132,7 @@
           }]
         })
         .on('afterclose.message', (e) => {
-          if (args.editor && !args.editor.notCommittable) {
+          if (args.editor && !args.editor.stayInEditMode) {
             args.target.focus();
           }
         });
