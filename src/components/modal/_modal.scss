@@ -198,6 +198,10 @@
   .busy.overlay {
     background-color: $modal-bg-color;
   }
+
+  .hyperlink {
+    color: darken($hyperlink-color, 5%);
+  }
 }
 
 .overlay {
@@ -258,24 +262,18 @@
     }
 
     &.is-error {
-      color: $error-color;
-
       .icon {
         color: $error-color;
       }
     }
 
     &.is-alert {
-      color: $alert-color;
-
       .icon {
         color: $alert-color;
       }
     }
 
     &.is-success {
-      color: $success-color;
-
       .icon {
         color: $success-color;
       }
@@ -441,7 +439,7 @@
   }
 
   .btn-modal-primary {
-    color: $modal-btn-primary-color;
+    color: darken($modal-btn-primary-color, 5%);
 
     &:hover {
       color: $modal-btn-primary-hover-color;
