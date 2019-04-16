@@ -9800,8 +9800,6 @@ Datagrid.prototype = {
 
       if (contentTooltip) {
         // Used with rich text editor
-        const cell = elem.getAttribute('aria-colindex') - 1;
-        const col = this.columnSettings(cell);
         const width = col.editorOptions &&
           col.editorOptions.width ? this.setUnit(col.editorOptions.width) : false;
 
@@ -9876,13 +9874,11 @@ Datagrid.prototype = {
       }
 
       if (typeof col.tooltip === 'function') {
-        const isEllipsis = utils.hasClass((isHeaderColumn ? elem.parentNode : elem), 'text-ellipsis');
-        let extraWidth = isEllipsis ? 8 : 0;
         const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
         const rowIdx = rowNode.getAttribute('data-index');
         const value = this.fieldValue(this.settings.dataset[rowIdx], col.field);
         tooltip.content = col.tooltip(cell, value);
-        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + extraWidth;
+        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + 20;
       }
     }
 
