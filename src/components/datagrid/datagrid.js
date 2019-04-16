@@ -9773,6 +9773,8 @@ Datagrid.prototype = {
       const isTh = elem.tagName.toLowerCase() === 'th';
       const isHeaderColumn = utils.hasClass(elem, 'datagrid-column-wrapper');
       const isHeaderFilter = utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
+      const cell = elem.getAttribute('aria-colindex') - 1;
+      const col = this.columnSettings(cell);
       let title;
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
@@ -9803,21 +9805,13 @@ Datagrid.prototype = {
         const width = col.editorOptions &&
           col.editorOptions.width ? this.setUnit(col.editorOptions.width) : false;
 
-        if (typeof col.tooltip === 'function') {
-          const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
-          const rowIdx = rowNode.getAttribute('data-index');
-          const value = this.fieldValue(this.settings.dataset[rowIdx], col.field);
-          tooltip.wrapper = elem.querySelector('.datagrid-cell-wrapper');
-          tooltip.content = col.tooltip(cell, value);
-        } else {
-          // Width for tooltip can be come from column options
-          contentTooltip.style.width = width || `${elem.offsetWidth}px`;
-          const wrapperHTML = tooltip.wrapper.innerHTML;
+        // Width for tooltip can be come from column options
+        contentTooltip.style.width = width || `${elem.offsetWidth}px`;
+        const wrapperHTML = tooltip.wrapper.innerHTML;
 
-          if (xssUtils.stripHTML(wrapperHTML) !== '') {
-            tooltip.content = wrapperHTML;
-            tooltip.extraClassList = ['popover', 'alternate', 'content-tooltip'];
-          }
+        if (xssUtils.stripHTML(wrapperHTML) !== '') {
+          tooltip.content = wrapperHTML;
+          tooltip.extraClassList = ['popover', 'alternate', 'content-tooltip'];
         }
       } else if (aTitle) {
         // Title attribute on links `a`
@@ -9879,6 +9873,16 @@ Datagrid.prototype = {
         if (title || isHeaderFilter) {
           tooltip.forced = true;
         }
+      }
+
+      if (typeof col.tooltip === 'function') {
+        const isEllipsis = utils.hasClass((isHeaderColumn ? elem.parentNode : elem), 'text-ellipsis');
+        let extraWidth = isEllipsis ? 8 : 0;
+        const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
+        const rowIdx = rowNode.getAttribute('data-index');
+        const value = this.fieldValue(this.settings.dataset[rowIdx], col.field);
+        tooltip.content = col.tooltip(cell, value);
+        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + extraWidth;
       }
     }
 

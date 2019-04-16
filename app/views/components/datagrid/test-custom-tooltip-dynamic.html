@@ -23,10 +23,10 @@
     //Define Columns for the Grid.
     columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
     columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 240, formatter: Formatters.Hyperlink });
-    columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160 });
-    columns.push({ id: 'status', name: 'Exception', field: 'status', formatter: Formatters.Editor, contentTooltip: true,
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160, tooltip: 'Testing' });
+    columns.push({ id: 'status', name: 'Exception', field: 'status',
       tooltip: function(cell, value) {
-        return '<p>Test:' + value + '</p>';
+        return 'Test: ' + value;
       },
       width: 100 }
     );
