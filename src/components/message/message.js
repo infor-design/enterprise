@@ -60,6 +60,10 @@ Message.prototype = {
     this.title = $(`<h1 class="modal-title" id="message-title">${allowTags ? xssUtils.stripTags(this.settings.title, tags) : xssUtils.stripHTML(this.settings.title)}</h1>`).appendTo(this.messageContent).wrap('<div class="modal-header"></div>');
     this.content = $(`<div class="modal-body"><p class="message" id="message-text">${allowTags ? xssUtils.stripTags(this.settings.message, tags) : xssUtils.stripHTML(this.settings.message)}</p></div>`).appendTo(this.messageContent);
 
+    if (this.title.text().toLowerCase().indexOf("alert") === -1) {
+      this.title.text('Alert: ' + this.title.text();
+    }
+
     // Append The Content if Passed in
     if (!this.element.is('body')) {
       content = this.element;
