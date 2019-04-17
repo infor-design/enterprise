@@ -2908,6 +2908,15 @@ td .btn-actions {
       width: calc(100% - 32px);
     }
   }
+  &.has-editor {
+    &.is-disabled:not(.is-readonly) {
+      &:hover {
+        .icon {
+          visibility: hidden;
+        }
+      }
+    }
+  }
 
   &.has-editor:not(.is-readonly) {
     .icon-error {
