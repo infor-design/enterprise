@@ -24,6 +24,7 @@ Created these notes while attempting to pass [CSP](https://csp.withgoogle.com/do
 - Replace all `style="display: none;"` with class `hidden` and use CSSDOM or classes for all styles you use
 - Can testing with [CSP mitigator](https://chrome.google.com/webstore/detail/csp-mitigator/gijlobangojajlbodabkpjpheeeokhfa?hl=en)
     Then note that we can test pages like <http://localhost:4000/components/personalize/example-index> using:
+
     ```html
     script-src 'self';
     style-src 'self';
