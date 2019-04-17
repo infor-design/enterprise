@@ -311,8 +311,8 @@ Personalize.prototype = {
   */
   setTheme(incomingTheme) {
     if (theme.currentTheme.id === incomingTheme) {
-      if (!$('html').hasClass(`${theme}-theme`)) {
-        $('html').addClass(`${theme}-theme`);
+      if (!$('html').hasClass(`${incomingTheme}-theme`)) {
+        $('html').addClass(`${incomingTheme}-theme`);
       }
       return;
     }
