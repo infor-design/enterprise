@@ -771,7 +771,7 @@ const editors = {
       if (event.type === 'keydown') {
         self.input.select().focus();
         td.on('keydown.editorlookup', (e) => {
-          if (e.keyCode === 40 && grid.quickEditMode) {
+          if (e.keyCode === 40) {
             e.preventDefault();
             e.stopPropagation();
           }
@@ -794,7 +794,6 @@ const editors = {
       self.input.on('change', () => {
         setTimeout(() => {
           container.parent().focus();
-          grid.setNextActiveCell(event);
           grid.quickEditMode = false;
         }, 1);
       });

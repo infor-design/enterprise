@@ -6,6 +6,7 @@
 
 ### v4.18.0 Features
 
+- `[Datagrid]` Added support so if there are multiple inputs within an editor they work with the keyboard tab key. ([#355](https://github.com/infor-design/enterprise-ng/issues/355))
 - `[Mask]` Added a setting for passing a locale string, allowing Number masks to be localized.  This enables usage of the `groupSize` property, among others, from locale data in the Mask. ([#440](https://github.com/infor-design/enterprise/issues/440))
 - `[Theme/Colors]` Added new component for getting theme and color information. This is used throughout the code. There was a hidden property `Soho.theme`, if you used this in some way you should now use `Soho.theme.currentTheme`. ([#1866](https://github.com/infor-design/enterprise/issues/1866))
 
@@ -34,6 +35,7 @@
 
 ### v4.18.0 Chore & Maintenance
 
+- `[Buttons]` Updated button disabled states with corresponding ids-identity tokens. ([1914](https://github.com/infor-design/enterprise/issues/1914)
 - `[Docs]` Added a statement on supporting accessibility. ([#1540](https://github.com/infor-design/enterprise/issues/1540))
 - `[Docs]` Added the supported screen readers and some notes on accessibility. ([#1722](https://github.com/infor-design/enterprise/issues/1722))
 
