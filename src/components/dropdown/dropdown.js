@@ -447,6 +447,11 @@ Dropdown.prototype = {
       class: `listoption-icon${listIconItem.isClassList ? ` ${listIconItem.classList}` : ''}`
     });
 
+    if (listIconItem.icon === 'swatch') {
+      listIconItem.isSwatch = true;
+      listIconItem.html = `<span class="swatch ${listIconItem.isClassList ? listIconItem.classList : ''}"></span>`;
+    }
+
     self.listIcon.items.push(listIconItem);
   },
 
@@ -668,7 +673,7 @@ Dropdown.prototype = {
       let badgeHtml = '';
       const isSelected = option.selected ? ' is-selected' : '';
       const isDisabled = option.disabled ? ' is-disabled' : '';
-      const liCssClasses = option.className ? ` ${option.className.value}` : '';
+      let liCssClasses = option.className ? ` ${option.className.value}` : '';
       const aCssClasses = liCssClasses.indexOf('clear') > -1 ? ' class="clear-selection"' : '';
       const tabIndex = ` tabIndex="${index && index === 0 ? 0 : -1}"`;
       const toExclude = ['data-badge', 'data-badge-color', 'data-val', 'data-icon'];
@@ -692,6 +697,12 @@ Dropdown.prototype = {
       if (term && term.length > 0) {
         const exp = self.getSearchRegex(term);
         text = text.replace(exp, '<i>$1</i>').trim();
+      }
+
+      if (self.listIcon.hasIcons &&
+        self.listIcon.items[index] &&
+        self.listIcon.items[index].isSwatch) {
+        liCssClasses += ' is-swatch';
       }
 
       liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" ${isSelected ? 'aria-selected="true"' : ''} data-val="${trueValue}" ${copiedDataAttrs}${tabIndex}${hasTitle} role="option">

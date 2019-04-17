@@ -1,9 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
-
-// Current "theme" string
-let theme = 'light'; //eslint-disable-line
+import { theme } from '../theme/theme';
 
 // Component name as referenced by jQuery/event namespace/etc
 const COMPONENT_NAME = 'personalize';
@@ -11,7 +9,7 @@ const COMPONENT_NAME = 'personalize';
 // Component Defaults
 const PERSONALIZE_DEFAULTS = {
   colors: '',
-  theme,
+  theme: '',
   font: '',
   blockUI: true
 };
@@ -45,13 +43,6 @@ Personalize.prototype = {
    * @returns {this} component instance
    */
   init() {
-    this.availableThemes = [
-      'light',
-      'dark',
-      'high-contrast',
-      'uplift'
-    ];
-
     // Set the default theme, or grab the theme from an external CSS stylesheet.
     const cssTheme = this.getThemeFromStylesheet();
     this.currentTheme = this.settings.theme || cssTheme;
@@ -78,13 +69,19 @@ Personalize.prototype = {
   handleEvents() {
     const self = this;
 
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
-      self.updated();
-    }).on(`changecolors.${COMPONENT_NAME}`, (e, newColor, noAnimate) => {
-      self.setColors(newColor, noAnimate);
-    }).on(`changetheme.${COMPONENT_NAME}`, (e, thisTheme) => {
-      self.setTheme(thisTheme);
-    });
+    this.element
+      .off(`updated.${COMPONENT_NAME}`)
+      .on(`updated.${COMPONENT_NAME}`, () => {
+        self.updated();
+      })
+      .off(`changecolors.${COMPONENT_NAME}`)
+      .on(`changecolors.${COMPONENT_NAME}`, (e, newColor, noAnimate) => {
+        self.setColors(newColor, noAnimate);
+      })
+      .off(`changetheme.${COMPONENT_NAME}`)
+      .on(`changetheme.${COMPONENT_NAME}`, (e, thisTheme) => {
+        self.setTheme(thisTheme);
+      });
 
     return this;
   },
@@ -244,6 +241,15 @@ Personalize.prototype = {
     // record state of colors in settings
     this.settings.colors = colors;
 
+    /**
+    * Fires after the colors are changed.
+    * @event colorschanged
+    * @memberof Personalize
+    * @property {object} event - The jquery event object
+    * @property {object} args - The event args
+    * @property {string} args.colors - The color(s) changed to.
+    */
+    this.element.triggerHandler('colorschanged', { colors });
     return this;
   },
 
@@ -304,21 +310,20 @@ Personalize.prototype = {
   * scheme (can be dark, light or high-contrast)
   */
   setTheme(incomingTheme) {
-    if (theme === incomingTheme) {
+    if (theme.currentTheme.id === incomingTheme) {
       if (!$('html').hasClass(`${theme}-theme`)) {
         $('html').addClass(`${theme}-theme`);
       }
       return;
     }
 
-    theme = incomingTheme;
-
-    // validate theme
-    if (this.availableThemes.indexOf(theme) === -1) {
+    // Validate theme is supported
+    const result = theme.themes().filter(themeObj => themeObj.id === incomingTheme);
+    if (result.length === 0) {
       return;
     }
 
-    $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(`${theme}-theme`);
+    $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(`${incomingTheme}-theme`);
 
     this.blockUi();
 
@@ -337,7 +342,7 @@ Personalize.prototype = {
 
     newCss.attr({
       id: originalCss.attr('id'),
-      href: xssUtils.stripTags(`${themePath}/${exports.theme}-theme${isMin ? '.min' : ''}.css`)
+      href: xssUtils.stripTags(`${themePath}/${incomingTheme}-theme${isMin ? '.min' : ''}.css`)
     });
     originalCss.removeAttr('id');
 
@@ -346,7 +351,18 @@ Personalize.prototype = {
     originalCss.before(newCss);
 
     // record state of theme in settings
-    this.settings.theme = theme;
+    this.settings.theme = incomingTheme;
+    theme.setTheme(incomingTheme);
+
+    /**
+    * Fires after the theme is changed
+    * @event themechanged
+    * @memberof Personalize
+    * @property {object} event - The jquery event object
+    * @property {object} args - The event args
+    * @property {string} args.theme - The theme id changed to.
+    */
+    this.element.triggerHandler('themechanged', { theme: incomingTheme });
   },
 
   /**
@@ -433,4 +449,4 @@ Personalize.prototype = {
   }
 };
 
-export { theme, Personalize, COMPONENT_NAME };
+export { Personalize, COMPONENT_NAME };
