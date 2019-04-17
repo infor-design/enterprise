@@ -198,10 +198,6 @@
   .busy.overlay {
     background-color: $modal-bg-color;
   }
-
-  .hyperlink {
-    color: $theme-color-palette-azure-70;
-  }
 }
 
 .overlay {
@@ -439,7 +435,7 @@
   }
 
   .btn-modal-primary {
-    color: $theme-color-palette-azure-70;
+    color: $modal-btn-primary-color;
 
     &:hover {
       color: $modal-btn-primary-hover-color;
