@@ -10,7 +10,8 @@
 - `[App Menu]` Added a special role switcher dropdown to change the menu role. ([#1935](https://github.com/infor-design/enterprise/issues/1935))
 - `[Personalize]` Added classes for the personalization colors so that you can personalize certain form elements. ([#1847](https://github.com/infor-design/enterprise/issues/1847))
 - `[Expandable Area]` Added example of a standalone button the toggles a form area. ([#1935](https://github.com/infor-design/enterprise/issues/1935))
-- `[Mask]` Added a setting for passing a locale string, allowing Number masks to be localized.  This enables usage of the `groupSize` property, among others, from locale data in the Mask. ([#440](https://github.com/infor-design/enterprise/issues/440))
+- `[Datagrid]` Added support so if there are multiple inputs within an editor they work with the keyboard tab key. ([#355](https://github.com/infor-design/enterprise-ng/issues/355))
+>- `[Mask]` Added a setting for passing a locale string, allowing Number masks to be localized.  This enables usage of the `groupSize` property, among others, from locale data in the Mask. ([#440](https://github.com/infor-design/enterprise/issues/440))
 
 ### v4.18.0 Fixes
 
@@ -37,6 +38,7 @@
 
 ### v4.18.0 Chore & Maintenance
 
+- `[Buttons]` Updated button disabled states with corresponding ids-identity tokens. ([1914](https://github.com/infor-design/enterprise/issues/1914)
 - `[Docs]` Added a statement on supporting accessibility. ([#1540](https://github.com/infor-design/enterprise/issues/1540))
 - `[Docs]` Added the supported screen readers and some notes on accessibility. ([#1722](https://github.com/infor-design/enterprise/issues/1722))
 

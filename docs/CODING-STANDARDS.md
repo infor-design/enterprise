@@ -46,9 +46,11 @@ Some practical guidelines that MUST be followed to ensure accessibility.
     ```
 
 - Add Language Attribute
+
     ```html
     <html lang="en">
     ```
+
 - For Document Outline always use semantic headings and structure
 - Links should have a focus state, underline, and appropriate text.
 - Images need an appropriate alt tag
