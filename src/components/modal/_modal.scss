@@ -200,7 +200,7 @@
   }
 
   .hyperlink {
-    color: darken($hyperlink-color, 5%);
+    color: $theme-color-palette-azure-70;
   }
 }
 
@@ -439,7 +439,7 @@
   }
 
   .btn-modal-primary {
-    color: darken($modal-btn-primary-color, 5%);
+    color: $theme-color-palette-azure-70;
 
     &:hover {
       color: $modal-btn-primary-hover-color;
