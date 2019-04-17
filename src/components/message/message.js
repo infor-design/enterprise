@@ -61,7 +61,7 @@ Message.prototype = {
     this.content = $(`<div class="modal-body"><p class="message" id="message-text">${allowTags ? xssUtils.stripTags(this.settings.message, tags) : xssUtils.stripHTML(this.settings.message)}</p></div>`).appendTo(this.messageContent);
 
     if (this.title.text().toLowerCase().indexOf("alert") === -1) {
-      this.title.text('Alert: ' + this.title.text();
+      this.title.text('Alert: ' + this.title.text());
     }
 
     // Append The Content if Passed in
