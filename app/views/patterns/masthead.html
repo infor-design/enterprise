@@ -5,8 +5,9 @@
 <div class="page-container no-scroll">
 
   <section class="header">
-    <div class="toolbar">
-      <div class="title">
+    <div class="{{#useFlexToolbar}}flex-{{/useFlexToolbar}}toolbar">
+      {{#useFlexToolbar}}
+      <div class="toolbar-section">
         <button class="btn-icon application-menu-trigger" type="button">
           <span class="icon app-header" focusable="false" aria-hidden="true">
             <span class="one"></span>
@@ -15,10 +16,24 @@
           </span>
           <span class="audible">Back</span>
         </button>
+      </div>
+      {{^useFlexToolbar}}
+
+      <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}title">
+        {{^useFlexToolbar}}
+        <button class="btn-icon application-menu-trigger" type="button">
+          <span class="icon app-header" focusable="false" aria-hidden="true">
+            <span class="one"></span>
+            <span class="two"></span>
+            <span class="three"></span>
+          </span>
+          <span class="audible">Back</span>
+        </button>
+        {{/useFlexToolbar}}
         <h1>Current Object</h1>
       </div>
 
-      <div class="buttonset">
+      <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}buttonset">
         <button class="btn-tertiary" type="button">
           <svg class="icon" focusable="false" aria-hidden="true">
             <use xlink:href="#icon-add"></use>
@@ -27,7 +42,7 @@
         </button>
       </div>
 
-      <div class="more">
+      <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}more">
         <button class="btn-actions" type="button">
           <svg class="icon" focusable="false" aria-hidden="true">
             <use xlink:href="#icon-more"></use>
