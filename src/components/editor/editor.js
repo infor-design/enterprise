@@ -691,7 +691,10 @@ Editor.prototype = {
       // IE input[type=text] and other browsers
       el.value += this.wrapTextInTags(text, el.value, action);
       $(el).focus();
-      el.value = el.value; // forces cursor to end
+
+      /* eslint-disable no-self-assign */
+      el.value = el.value; // hack to force cursor to end of text
+      /* eslint-enable no-self-assign */
     }
   },
 

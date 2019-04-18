@@ -176,12 +176,11 @@ button {
     background-color: $button-color-primary-disabled-background;
     border-color: $button-color-primary-disabled-border;
     box-shadow: none;
-    color: $button-color-primary-initial-font;
+    color: $button-color-primary-disabled-font;
     cursor: default;
-    opacity: $button-color-secondary-disabled-opacity;
 
     .icon {
-      color: $theme-color-palette-white;
+      color: $button-color-primary-disabled-icon;
     }
   }
 
@@ -308,7 +307,10 @@ a.btn-close {
     box-shadow: none;
     color: $button-color-secondary-disabled-font;
     cursor: default;
-    opacity: $button-color-secondary-disabled-opacity;
+
+    .icon {
+      color: $button-color-secondary-disabled-icon;
+    }
   }
 
   .ripple-effect {
@@ -372,7 +374,6 @@ a.btn-close {
   &[disabled]:hover {
     color: $button-color-tertiary-disabled-font;
     cursor: default;
-    opacity: $button-color-secondary-disabled-opacity;
 
     .icon {
       color: $button-color-tertiary-disabled-font;
