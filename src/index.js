@@ -22,9 +22,9 @@ export { base } from './utils/base';
 export { renderLoop, RenderLoopItem } from './utils/renderloop';
 
 // Theme/Personalization need single instances of themselves
-export { theme } from './components/personalize/personalize';
 export { personalization } from './components/personalize/personalize.bootstrap';
 export * from './components/personalize/personalize.hooks';
+export { theme } from './components/theme/theme';
 
 // jQuery constructor for Personalize is required
 import './components/personalize/personalize.jquery';
