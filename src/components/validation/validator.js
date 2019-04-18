@@ -18,14 +18,14 @@ const COMPONENT_NAME = 'Validator';
  * @property {string} message
  * @property {string} type
  * @property {boolean} showTooltip
- * @property {boolean} isAlert
+ * @property {boolean} isHelpMessage
  */
 const VALIDATION_MESSAGE_DEFAULTS = {
   inline: true,
   message: '',
   type: 'error',
   showTooltip: false,
-  isAlert: false
+  isHelpMessage: false
 };
 
 /**
@@ -639,9 +639,9 @@ Validator.prototype = {
    *  (like a placeholder), or underneath the input field
    * @param {boolean} showTooltip whether or not the legacy validation Tooltip will contain the
    * message instead of placing it underneath
-   * @param {boolean} isAlert whether or not this validation message type is "alert"
+   * @param {boolean} isHelpMessage whether or not this validation message type is "alert"
    */
-  addMessage(field, rule, inline, showTooltip, isAlert) {
+  addMessage(field, rule, inline, showTooltip, isHelpMessage) {
     if (rule.message === '') {
       return;
     }
@@ -650,14 +650,14 @@ Validator.prototype = {
       return;
     }
 
-    isAlert = isAlert || false;
+    isHelpMessage = isHelpMessage || false;
 
     const loc = this.getField(field);
     let dataMsg = loc.data(`${rule.type}message`);
     const validationType = Validation.ValidationTypes[rule.type] ||
       Validation.ValidationTypes.error;
 
-    if (!isAlert) {
+    if (!isHelpMessage) {
       loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
     }
 
@@ -715,7 +715,7 @@ Validator.prototype = {
     }
 
     field.data('isValid', false);
-    this.showInlineMessage(field, rule, isAlert);
+    this.showInlineMessage(field, rule, isHelpMessage);
   },
 
   /**
@@ -885,10 +885,10 @@ Validator.prototype = {
    * @private
    * @param {jQuery[]} field the field being modified
    * @param {string} rule The validation rule data.
-   * @param {boolean} isAlert whether or not the validation type is "alert"
+   * @param {boolean} isHelpMessage whether or not the validation type is "alert"
    */
-  showInlineMessage(field, rule, isAlert) {
-    isAlert = isAlert || false;
+  showInlineMessage(field, rule, isHelpMessage) {
+    isHelpMessage = isHelpMessage || false;
 
     const loc = this.getField(field);
     const validationType = Validation.ValidationTypes[rule.type] ||
@@ -916,7 +916,7 @@ Validator.prototype = {
         </div>`;
     }
 
-    if (!isAlert) {
+    if (!isHelpMessage) {
       loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
     }
 

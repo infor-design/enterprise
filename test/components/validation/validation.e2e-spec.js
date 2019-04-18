@@ -547,12 +547,12 @@ describe('Validation message types', () => {
   const exprAlerts = /(error|alert|success|info|icon)/;
   const color = {
     default: { field: '#1a1a1a', icon: '#5c5c5c' },
-    error: { field: '#e84f4f', icon: '#e84f4f' },
+    error: { field: '#e84f4f', icon: '#5c5c5c' },
     alert: { field: '#ff9426', icon: '#5c5c5c' },
     success: { field: '#80ce4d', icon: '#5c5c5c' },
     info: { field: '#368ac0', icon: '#5c5c5c' },
     customIcon: { field: '#1a1a1a', icon: '#5c5c5c' },
-    isAlert: { field: '#1a1a1a', icon: '#5c5c5c' }
+    isHelpMessage: { field: '#1a1a1a', icon: '#5c5c5c' }
   };
 
   beforeEach(async () => {
@@ -702,7 +702,7 @@ describe('Validation message types', () => {
 
     expect(await dateField.getAttribute('class')).not.toContain('error');
     expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(1);
-    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.isAlert.field);
-    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.isAlert.icon);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.isHelpMessage.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.isHelpMessage.icon);
   });
 });
