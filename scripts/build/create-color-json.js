@@ -4,34 +4,21 @@
  */
 
 // Libs
+const del = require('del');
 const fs = require('fs');
 const glob = require('glob');
 const logger = require('../logger');
-const del = require('del');
+const path = require('path');
 const slash = require('slash');
 
-const ROOT_DIR = slash(process.cwd());
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
-let IS_VERBOSE = false;
+const ROOT_DIR = slash(process.cwd());
+const PATHS = {
+  srcGlob: `${ROOT_DIR}/node_modules/ids-identity/dist/theme-*/tokens/web/theme-*[^.simple].json`,
+  dest: `${ROOT_DIR}/src/components/theme`
+}
 
-const THEME_FILES = [
-  {
-    src: `${ROOT_DIR}/node_modules/ids-identity/dist/theme-uplift/tokens/web/theme-uplift.json`,
-    dest: `${ROOT_DIR}/src/components/theme/theme-uplift-colors.json`
-  },
-  {
-    src: `${ROOT_DIR}/node_modules/ids-identity/dist/theme-soho/tokens/web/theme-soho-contrast.json`,
-    dest: `${ROOT_DIR}/src/components/theme/theme-soho-contrast-colors.json`
-  },
-  {
-    src: `${ROOT_DIR}/node_modules/ids-identity/dist/theme-soho/tokens/web/theme-soho-dark.json`,
-    dest: `${ROOT_DIR}/src/components/theme/theme-soho-dark-colors.json`
-  },
-  {
-    src: `${ROOT_DIR}/node_modules/ids-identity/dist/theme-soho/tokens/web/theme-soho.json`,
-    dest: `${ROOT_DIR}/src/components/theme/theme-soho-colors.json`
-  }
-];
+let IS_VERBOSE = false;
 
 /**
  * Remove any previously "built" directories/files
@@ -41,89 +28,85 @@ async function cleanFiles() {
     logger('info', `Cleaning Color JSON files...${NL}`);
   }
 
-  const filesToDel = THEME_FILES.map(n => n.dest);
-
+  const files = glob.sync(`${PATHS.dest}/*.json`);
   try {
-    await del(filesToDel);
+    await del(files);
   } catch (err) {
     logger('error', err);
   }
 }
 
 /**
- * Remove some unused props on the JSON
- * @param {object} object The JSON object
+ * Only get properties we need
+ * @param {object} obj The original object
  */
-function cleanObj(object) {
-  Object.keys(object).forEach((key) => {
-    delete object[key].original;
-    delete object[key].attributes;
-    delete object[key].path;
-    Object.keys(object[key]).forEach((key2) => {
-      delete object[key][key2].original;
-      delete object[key][key2].path;
-      delete object[key][key2].attributes;
-    });
+function createNewCustomObj(obj) {
+  let newObj = {};
+
+  // Loop for color names: 'amber', 'azure'...
+  Object.keys(obj).forEach(colorName => {
+    newObj[colorName] = {};
+
+    if (obj[colorName].hasOwnProperty('name')) {
+      // For colors w/o variants: black, white...
+      newObj[colorName].name = obj[colorName].name;
+      newObj[colorName].value = obj[colorName].value;
+
+    } else {
+      // Loop for color variants: 10, 20, 30...
+      Object.keys(obj[colorName]).forEach(colorNum => {
+        newObj[colorName][colorNum] = {
+          name: obj[colorName][colorNum].name,
+          value: obj[colorName][colorNum].value
+        }
+      });
+    }
+  });
+
+  return newObj;
+}
+
+/**
+ * Create a json meta data file of token colors
+ * @param  {string} filePath The file path
+ * @returns {Promise} Resolve array of icons
+ */
+const createJSONfile = (filePath) => {
+  return new Promise((resolve, reject) => {
+    const themeObj = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    const themeColorPaletteObj = createNewCustomObj(themeObj.theme.color.palette);
+    const themeColorStatusObj = createNewCustomObj(themeObj.theme.color.status);
+
+    const colorsOnlyObj = {
+      color: {
+        palette: themeColorPaletteObj,
+        status: themeColorStatusObj
+      }
+    }
+    const fileName = path.basename(filePath, '.json') + '-colors.json';
+    fs.writeFileSync(`${PATHS.dest}/${fileName}`, JSON.stringify(colorsOnlyObj), 'utf-8');
+    resolve(fileName);
   });
 }
 
 /**
- * Create an html file containing svgs as symbols
- * @param  {array} files Array of svg file paths
- * @param  {Object} jsonObj The icon data object
- * @returns {Promise} Resolve array of icons
- */
-const createJSONfile = (files, jsonObj) => {
-  const htmlIcons = [];
-  const promises = files.map(f => { // eslint-disable-line
-    return new Promise((resolve, reject) => {
-      fs.readFile(f, (err, data) => {
-        if (err) {
-          reject(err);
-        }
-        htmlIcons.push(data.toString());
-        resolve();
-      });
-    });
-  });
-
-  return Promise.all(promises)
-    .then(() => {
-      const html = htmlIcons;
-      const json = JSON.parse(html);
-      const newObj = { color: {} };
-      newObj.color.palette = json.theme.color.palette;
-      newObj.color.status = json.theme.color.status;
-
-      cleanObj(newObj.color.palette);
-      cleanObj(newObj.color.status);
-
-      fs.writeFileSync(jsonObj.dest, JSON.stringify(newObj), 'utf-8');
-      return htmlIcons;
-    })
-    .catch(err => logger('error', err));
-};
-
-/**
- * Create JSON files with just the properties we want.
- * @returns {Promise} Resolve array of icons
+ * Create JSON file of color palette and status tokens
+ * @returns {Promise} Resolve the created file name
  */
 function createColorJsonFiles() {
   if (IS_VERBOSE) {
     logger('info', `Running build process create JSON Color files...${NL}`);
   }
 
-  return Promise.all(THEME_FILES.map((themeSet) => {
-    const files = glob.sync(themeSet.src);
+  const themeFiles = glob.sync(PATHS.srcGlob);
 
-    return createJSONfile(files, themeSet)
-      .then((data) => {
-        if (IS_VERBOSE) {
-          logger('success', `${data.length} JSON Files generated into "${themeSet.dest.replace(process.cwd(), '')}"`);
-        }
-      })
-      .catch(err => logger('error', err));
-  }));
+  return Promise.all(themeFiles.map(createJSONfile))
+    .then(filesCreated => {
+      if (IS_VERBOSE) {
+        logger('success', `${filesCreated.length} JSON Token Files generated into "${PATHS.dest.replace(process.cwd(), '')}"`);
+      }
+    })
+    .catch(err => logger('error', err));
 }
 
 /**
@@ -133,8 +116,7 @@ function createColorJsonFiles() {
  */
 function createColorJson(verbose) {
   IS_VERBOSE = verbose;
-  cleanFiles();
-  return createColorJsonFiles();
+  return cleanFiles().then(createColorJsonFiles);
 }
 
 module.exports = createColorJson;
