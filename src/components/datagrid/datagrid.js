@@ -4449,7 +4449,6 @@ Datagrid.prototype = {
     * @property {object} args.columns The columns object
     */
     this.element.trigger('columnchange', [{ type: 'updatecolumns', columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
   },
 
@@ -4789,7 +4788,6 @@ Datagrid.prototype = {
     }
 
     this.element.trigger('columnchange', [{ type: 'hidecolumn', index: idx, columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
   },
 
@@ -4844,7 +4842,6 @@ Datagrid.prototype = {
     }
 
     this.element.trigger('columnchange', [{ type: 'showcolumn', index: idx, columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
   },
 
@@ -5001,7 +4998,6 @@ Datagrid.prototype = {
     }
 
     this.element.trigger('columnchange', [{ type: 'resizecolumn', index: idx, columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
     this.headerWidths[idx].width = width;
   },
