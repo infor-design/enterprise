@@ -258,24 +258,18 @@
     }
 
     &.is-error {
-      color: $error-color;
-
       .icon {
         color: $error-color;
       }
     }
 
     &.is-alert {
-      color: $alert-color;
-
       .icon {
         color: $alert-color;
       }
     }
 
     &.is-success {
-      color: $success-color;
-
       .icon {
         color: $success-color;
       }
