@@ -16,7 +16,7 @@ The notification component is a component that inserts a banner at the top of th
 ```javascript
   $('body').notification({
     type: 'info',
-    message: 'DTO rejcted by your manager for Sept 30, 2018.',
+    message: 'DTO rejected by your manager for Sept 30, 2018.',
     link: '#',
     linkText: 'Click to view'
   });

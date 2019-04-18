@@ -4302,7 +4302,6 @@ Datagrid.prototype = {
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         const containerEl = isHeaderColumn ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
-
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
@@ -4449,7 +4448,6 @@ Datagrid.prototype = {
     * @property {object} args.columns The columns object
     */
     this.element.trigger('columnchange', [{ type: 'updatecolumns', columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
   },
 
@@ -4789,7 +4787,6 @@ Datagrid.prototype = {
     }
 
     this.element.trigger('columnchange', [{ type: 'hidecolumn', index: idx, columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
   },
 
@@ -4844,7 +4841,6 @@ Datagrid.prototype = {
     }
 
     this.element.trigger('columnchange', [{ type: 'showcolumn', index: idx, columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
   },
 
@@ -5001,7 +4997,6 @@ Datagrid.prototype = {
     }
 
     this.element.trigger('columnchange', [{ type: 'resizecolumn', index: idx, columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
     this.headerWidths[idx].width = width;
   },
@@ -9804,6 +9799,8 @@ Datagrid.prototype = {
       const isTh = elem.tagName.toLowerCase() === 'th';
       const isHeaderColumn = utils.hasClass(elem, 'datagrid-column-wrapper');
       const isHeaderFilter = utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
+      const cell = elem.getAttribute('aria-colindex') - 1;
+      const col = this.columnSettings(cell);
       let title;
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
@@ -9829,8 +9826,6 @@ Datagrid.prototype = {
 
       if (contentTooltip) {
         // Used with rich text editor
-        const cell = elem.getAttribute('aria-colindex') - 1;
-        const col = this.columnSettings(cell);
         const width = col.editorOptions &&
           col.editorOptions.width ? this.setUnit(col.editorOptions.width) : false;
 
@@ -9902,6 +9897,14 @@ Datagrid.prototype = {
         if (title || isHeaderFilter) {
           tooltip.forced = true;
         }
+      }
+
+      if (typeof col.tooltip === 'function') {
+        const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
+        const rowIdx = rowNode.getAttribute('data-index');
+        const value = this.fieldValue(this.settings.dataset[rowIdx], col.field);
+        tooltip.content = col.tooltip(cell, value);
+        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + 20;
       }
     }
 

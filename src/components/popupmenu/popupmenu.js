@@ -571,11 +571,10 @@ PopupMenu.prototype = {
       const icon = $(li).find('.icon:not(.close):not(.icon-dropdown)');
       const submenuWrapper = $(li).children('.wrapper')[0];
 
-      li.setAttribute('role', 'presentation');
+      li.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
 
       if (a) {
         a.setAttribute('tabindex', '-1');
-        a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
 
         // disabled menu items, by prop and by className
         const $a = $(a);

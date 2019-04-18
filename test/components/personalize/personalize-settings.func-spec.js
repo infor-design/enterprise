@@ -1,6 +1,6 @@
 import { Personalize } from '../../../src/components/personalize/personalize';
 
-const personalizeHTML = require('../../../app/views/components/personalize/example-state.html');
+const personalizeHTML = require('../../../app/views/components/personalize/test-state.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let personalizeEl;

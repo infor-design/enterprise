@@ -44,7 +44,7 @@ describe('Popupmenu Menu Button API', () => {
 
   it('Should call markupItems, and markup list items', () => {
     expect(popupmenuObj.markupItems(popupmenuButtonEl)).toBeUndefined();
-    expect(document.querySelector('li[role="presentation"]')).toBeTruthy();
+    expect(document.querySelector('li')).toBeTruthy();
   });
 
   it('Should return X, and Y from mouse event', () => {

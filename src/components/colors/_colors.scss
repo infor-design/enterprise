@@ -9,6 +9,10 @@
     background: $color;
   }
 
+  .#{$name}-color {
+    color: $color !important;
+  }
+
   //Classes for Tags
   .#{$name}.tag {
     background: nth($color-vars, $i);
