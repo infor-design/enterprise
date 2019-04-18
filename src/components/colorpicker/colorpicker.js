@@ -196,9 +196,16 @@ ColorPicker.prototype = {
       }
     }
 
-    this.icon = $.createIconElement('dropdown')
-      .appendTo(this.isEditor ? this.element : this.container);
-    this.icon.wrap('<span class="trigger"></span>');
+    let trigger = this.element.children('.trigger');
+    if (this.container && this.container.length) {
+      trigger = this.container.children('.trigger');
+    }
+
+    if (!trigger || !trigger.length || !trigger.children('.icon').length) {
+      this.icon = $.createIconElement('dropdown')
+        .appendTo(this.isEditor ? this.element : this.container);
+      this.icon.wrap('<span class="trigger"></span>');
+    }
 
     // Handle initial values
     if (initialValue) {
@@ -635,25 +642,47 @@ ColorPicker.prototype = {
   * @returns {object} The plugin api for chaining.
   */
   updated(settings) {
-    this.settings = utils.mergeSettings(this.element, settings, this.settings);
-    return this
-      .destroy()
-      .init();
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    }
+
+    this.teardown();
+    return this.init();
   },
 
   teardown() {
-    this.element.off('keypress.colorpicker keyup.colorpicker blur.colorpicker openlist.colorpicker change.colorpicker paste.colorpicker');
-    this.swatch.off('click.colorpicker');
-    this.swatch.remove();
-    this.container.find('.trigger').remove();
-    const input = this.container.find('.colorpicker');
+    this.element.off([
+      `keypress.${COMPONENT_NAME}`,
+      `keyup.${COMPONENT_NAME}`,
+      `blur.${COMPONENT_NAME}`,
+      `openlist.${COMPONENT_NAME}`,
+      `change.${COMPONENT_NAME}`,
+      `paste.${COMPONENT_NAME}`
+    ].join(' '));
 
-    if (input.data('mask')) {
-      input.data('mask').destroy();
+    if (this.swatch && this.swatch.length) {
+      this.swatch.off(`click.${COMPONENT_NAME}`);
+      this.swatch.remove();
+      delete this.swatch;
     }
 
-    input.unwrap();
-    input.removeAttr('data-mask role aria-autocomplete');
+    const maskAPI = this.element.data('mask');
+    if (maskAPI) {
+      maskAPI.destroy();
+    }
+
+    if (this.icon && this.icon.length) {
+      const trigger = this.icon.parent('.trigger');
+      this.icon.off().remove();
+      trigger.off().remove();
+      delete this.icon;
+    }
+
+    if (this.container && this.container.length) {
+      this.container.find('.trigger').remove();
+      this.element.unwrap();
+      delete this.container;
+    }
   },
 
   /**

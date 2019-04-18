@@ -36,6 +36,10 @@ $masthead-button-focus-color: $theme-color-palette-white;
   [class^='btn'] {
     height: 32px;
     min-width: 32px;
+
+    &.collapse-button {
+      height: inherit;
+    }
   }
 
   .btn {
@@ -83,14 +87,6 @@ $masthead-button-focus-color: $theme-color-palette-white;
     .title {
       height: 100%;
       padding: 0;
-
-      > *:first-child {
-        margin-left: 10px;
-      }
-
-      > button + h1 {
-        margin-left: 10px;
-      }
     }
 
     .buttonset {
@@ -105,11 +101,33 @@ $masthead-button-focus-color: $theme-color-palette-white;
       }
     }
 
+    .btn-actions {
+      margin-left: -8px;
+      margin-right: 5px;
+    }
+  }
+
+  .toolbar {
     [class^='btn'] {
-      background-color: transparent;
-      color: $masthead-text-color;
       margin: 3px 3px 2px 0;
       vertical-align: top;
+    }
+  }
+
+  .toolbar,
+  .flex-toolbar {
+    .toolbar-section.logo {
+      > *:first-child {
+        margin-left: 10px;
+      }
+    }
+
+    [class^='btn'] {
+      background-color: transparent;
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-top-color: transparent;
+      color: $masthead-text-color;
 
       .ripple-effect {
         background-color: $theme-color-palette-white;
@@ -167,11 +185,6 @@ $masthead-button-focus-color: $theme-color-palette-white;
           }
         }
       }
-    }
-
-    .btn-actions {
-      margin-left: -8px;
-      margin-right: 5px;
     }
   }
 }

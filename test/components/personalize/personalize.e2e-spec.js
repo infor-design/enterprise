@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Personalization tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/personalize/example-state');
+    await utils.setPage('/components/personalize/test-state');
   });
 
   it('Should not have errors', async () => {
