@@ -542,3 +542,167 @@ describe('Validation resetForm tests', () => {
     });
   });
 });
+
+describe('Validation message types', () => {
+  const exprAlerts = /(error|alert|success|info|icon)/;
+  const color = {
+    default: { field: '#1a1a1a', icon: '#5c5c5c' },
+    error: { field: '#e84f4f', icon: '#e84f4f' },
+    alert: { field: '#ff9426', icon: '#5c5c5c' },
+    success: { field: '#80ce4d', icon: '#5c5c5c' },
+    info: { field: '#368ac0', icon: '#5c5c5c' },
+    customIcon: { field: '#1a1a1a', icon: '#5c5c5c' },
+    isAlert: { field: '#1a1a1a', icon: '#5c5c5c' }
+  };
+
+  beforeEach(async () => {
+    await utils.setPage('/components/validation/test-message-types');
+  });
+
+  it('Should be able to set message types error', async () => {
+    await element(by.id('clearAllMessages')).click();
+    let dateField = await element(by.id('date-field'));
+    let dateFieldParent = await dateField.element(by.xpath('..'));
+    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
+    expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(0);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.default.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.default.icon);
+    await element(by.css('[for="option-error"]')).click();
+    await element(by.id('addMessage')).click();
+    dateField = await element(by.id('date-field'));
+    dateFieldParent = await dateField.element(by.xpath('..'));
+    dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).toContain('error');
+    expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(1);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.error.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.error.icon);
+  });
+
+  it('Should be able to set message types alert', async () => {
+    await element(by.id('clearAllMessages')).click();
+    let dateField = await element(by.id('date-field'));
+    let dateFieldParent = await dateField.element(by.xpath('..'));
+    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
+    expect(await dateFieldParent.all(by.css('.alert-message')).count()).toEqual(0);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.default.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.default.icon);
+    await element(by.css('[for="option-alert"]')).click();
+    await element(by.id('addMessage')).click();
+    dateField = await element(by.id('date-field'));
+    dateFieldParent = await dateField.element(by.xpath('..'));
+    dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).toContain('alert');
+    expect(await dateFieldParent.all(by.css('.alert-message')).count()).toEqual(1);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.alert.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.alert.icon);
+  });
+
+  it('Should be able to set message types success', async () => {
+    await element(by.id('clearAllMessages')).click();
+    let dateField = await element(by.id('date-field'));
+    let dateFieldParent = await dateField.element(by.xpath('..'));
+    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
+    expect(await dateFieldParent.all(by.css('.success-message')).count()).toEqual(0);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.default.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.default.icon);
+    await element(by.css('[for="option-success"]')).click();
+    await element(by.id('addMessage')).click();
+    dateField = await element(by.id('date-field'));
+    dateFieldParent = await dateField.element(by.xpath('..'));
+    dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).toContain('success');
+    expect(await dateFieldParent.all(by.css('.success-message')).count()).toEqual(1);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.success.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.success.icon);
+  });
+
+  it('Should be able to set message types info', async () => {
+    await element(by.id('clearAllMessages')).click();
+    let dateField = await element(by.id('date-field'));
+    let dateFieldParent = await dateField.element(by.xpath('..'));
+    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
+    expect(await dateFieldParent.all(by.css('.info-message')).count()).toEqual(0);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.default.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.default.icon);
+    await element(by.css('[for="option-info"]')).click();
+    await element(by.id('addMessage')).click();
+    dateField = await element(by.id('date-field'));
+    dateFieldParent = await dateField.element(by.xpath('..'));
+    dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).toContain('info');
+    expect(await dateFieldParent.all(by.css('.info-message')).count()).toEqual(1);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.info.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.info.icon);
+  });
+
+  it('Should be able to set message types custom icon', async () => {
+    await element(by.id('clearAllMessages')).click();
+    let dateField = await element(by.id('date-field'));
+    let dateFieldParent = await dateField.element(by.xpath('..'));
+    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
+    expect(await dateFieldParent.all(by.css('.custom-icon-message')).count()).toEqual(0);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.default.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.default.icon);
+    await element(by.css('[for="option-icon"]')).click();
+    await element(by.id('addMessage')).click();
+    dateField = await element(by.id('date-field'));
+    dateFieldParent = await dateField.element(by.xpath('..'));
+    dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).toContain('icon');
+    expect(await dateFieldParent.all(by.css('.custom-icon-message')).count()).toEqual(1);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.customIcon.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.customIcon.icon);
+  });
+
+  it('Should be able to do validation is-alert', async () => {
+    await element(by.id('clearAllMessages')).click();
+    let dateField = await element(by.id('date-field'));
+    let dateFieldParent = await dateField.element(by.xpath('..'));
+    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
+    expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(0);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.default.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.default.icon);
+    await element(by.css('[for="option-error"]')).click();
+    await element(by.id('addMessage')).click();
+    dateField = await element(by.id('date-field'));
+    dateFieldParent = await dateField.element(by.xpath('..'));
+    dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).toContain('error');
+    expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(1);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.error.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.error.icon);
+    await element(by.id('clearAllMessages')).click();
+
+    expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
+    expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(0);
+    await element(by.css('[for="option-error"]')).click();
+    await element(by.css('[for="is-alert"]')).click();
+    await element(by.id('addMessage')).click();
+    dateField = await element(by.id('date-field'));
+    dateFieldParent = await dateField.element(by.xpath('..'));
+    dateFieldIcon = await element(by.css('#date-field + .icon'));
+
+    expect(await dateField.getAttribute('class')).not.toContain('error');
+    expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(1);
+    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.isAlert.field);
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.isAlert.icon);
+  });
+});
