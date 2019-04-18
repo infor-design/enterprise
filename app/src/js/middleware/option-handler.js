@@ -54,6 +54,13 @@ module.exports = function (app, defaults) {
       logger('info', 'Using the minified version of "sohoxi.js"');
     }
 
+    // Uses Flex Toolbars in headers
+    if ((req.query.flextoolbar && req.query.flextoolbar.length > 0) ||
+      (req.query.toolbarflex && req.query.toolbarflex.length > 0)) {
+      res.opts.useFlexToolbar = true;
+      logger('info', 'Using Flex Toolbars inside of page headers');
+    }
+
     let useLiveReload = false;
     process.argv.forEach((val) => {
       if (val === '--livereload') {

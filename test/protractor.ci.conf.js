@@ -14,7 +14,7 @@ exports.config = {
   SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
     browserName: 'chrome',
-    shardTestFiles: true,
+    shardTestFiles: false, //Remove this
     loggingPrefs: {
       driver: 'INFO',
       server: 'INFO',

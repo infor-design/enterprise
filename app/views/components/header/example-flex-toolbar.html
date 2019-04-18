@@ -1,0 +1,71 @@
+<header id="test-header" class="header">
+  <div class="flex-toolbar">
+    <div class="toolbar-section">
+      <button id="app-menu-trigger" class="btn-icon application-menu-trigger" type="button">
+        <span class="audible">Show navigation</span>
+        <span class="icon app-header">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>
+    </div>
+
+    <div class="toolbar-section title">
+      <h1 id="title-text-elem">
+        <span class="page-title">Header Toolbar Gauntlet</span>
+      </h1>
+    </div>
+
+    <div class="toolbar-section search">
+      <div id="header-searchfield-wrapper" class="searchfield-wrapper">
+        <label for="header-searchfield" class="audible">Search</label>
+        <input id="header-searchfield" class="searchfield" name="header-searchfield" />
+      </div>
+    </div>
+
+    <div class="toolbar-section buttonset">
+      <button id="settings-button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-settings"></use>
+        </svg>
+        <span>Settings</span>
+      </button>
+
+      <button id="delete-button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-delete"></use>
+        </svg>
+        <span>Delete</span>
+      </button>
+
+      <button id="filter-button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-filter"></use>
+        </svg>
+        <span>Filter</span>
+      </button>
+    </div>
+
+    <div id="more-button" class="toolbar-section more">
+      <button class="btn-actions" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-more"></use>
+        </svg>
+        <span class="audible" data-translate="text">More</span>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Item One</a></li>
+        <li><a href="#">Item Two</a></li>
+        <li class="submenu">
+          <a href="#">Item Three</a>
+          <ul class="popupmenu">
+            <li><a href="#">Sub-Item One</a></li>
+            <li><a href="#">Sub-Item Two</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Item Four</a></li>
+      </ul>
+    </div>
+  </div>
+</header>

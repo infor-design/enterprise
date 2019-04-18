@@ -392,7 +392,7 @@ Radar.prototype = {
       .enter().append('g')
       .attr('class', 'radar-circle-wrapper');
 
-      // Append a set of invisible circles on top for the mouseover pop-up
+    // Append a set of invisible circles on top for the mouseover pop-up
     blobCircleWrapper.selectAll('.radar-invisible-circle')
       .data(d => d)
       .enter().append('circle')

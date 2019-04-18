@@ -63,9 +63,9 @@ If you'd like to submit a pull request you'll need to do the following:
 
 1. **[Clone the Repository](https://help.github.com/articles/cloning-a-repository/)** to your machine.
 1. **Make your changes** to your local fork for the proper branch.
-- Almost all development will be done on branches from `master`.
-- Occasionally there will be a need to contribute to a version branch (i.e. `4.9.x`) in which case you want to branch off of one of those.
-- If you are unsure, just ask someone on the team so you don't have to redo your branch.
+    - Almost all development will be done on branches from `master`.
+    - Occasionally there will be a need to contribute to a version branch (i.e. `4.9.x`) in which case you want to branch off of one of those.
+    - If you are unsure, just ask someone on the team so you don't have to redo your branch.
 1. Remember to make an **e2e or functional test** for your case.
 1. Remember to add a **note to the [Change Log](docs/CHANGELOG.md)**.
 1. **Commit your changes locally.**  Try to follow the standards for your commit message outlined below.
@@ -73,14 +73,17 @@ If you'd like to submit a pull request you'll need to do the following:
         - [Github's commit message standards](https://github.com/erlang/otp/wiki/Writing-good-commit-messagesMore)
         - [Closing issues using keywords with commits and PRs](https://help.github.com/articles/closing-issues-using-keywords/)
     - For Example:
+
         ```bash
         "Closes #00 - Changed modal to implement the new design"
         "Closes #00 - Changed header markup to implement arrow keys treating it as a toolbar"
         ```
+
     - Repeat Steps 3 and 4 as many times as necessary to refine your code. Please try to stick to our coding standards and patterns that already exist in the code.
 1. **[Pull & Rebase](https://help.github.com/articles/about-pull-request-merges/#rebase-and-merge-your-pull-request-commits) to the latest version of the controls before you submit.**
     - If enough time passes between your original clone and the completion of your changes, the main repository may have changed and some files you've edited may be out of sync.
     - To re-sync your remote branch and clone, use the following after committing your changes:
+
         ```bash
         git pull --rebase {remote}/{branch}
         ```

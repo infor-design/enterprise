@@ -25,9 +25,10 @@ function hyperlinkFilter(elem) {
 // Any of these element/class types are valid toolbar items.
 // TODO: Designate between "button" and "menu button"
 const TOOLBAR_ELEMENTS = [
-  { type: 'button', selector: 'button:not(.btn-menu):not(.btn-actions), input[type="button"]:not(.btn-menu):not(.btn-actions)', filter: buttonFilter },
+  { type: 'button', selector: 'button:not(.btn-menu):not(.btn-actions):not(.colorpicker-editor-button), input[type="button"]:not(.btn-menu):not(.btn-actions):not(.colorpicker-editor-button)', filter: buttonFilter },
   { type: 'menubutton', selector: '.btn-menu' },
   { type: 'actionbutton', selector: '.btn-actions' },
+  { type: 'colorpicker', selector: '.colorpicker-editor-button' },
   { type: 'hyperlink', selector: 'a[href]', filter: hyperlinkFilter },
   { type: 'checkbox', selector: 'input[type="checkbox"]' },
   { type: 'radio', selector: 'input[type="radio"]' },
@@ -38,6 +39,7 @@ const TOOLBAR_ELEMENTS = [
 // Mappings from toolbar item type to component API
 const TOOLBAR_COMPONENT_APIS = {
   actionbutton: 'popupmenu',
+  colorpicker: 'colorpicker',
   menubutton: 'popupmenu',
   hyperlink: 'hyperlink',
   searchfield: 'searchfield',
@@ -210,16 +212,18 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   triggerSelectedEvent() {
-    // Searchfields aren't "selectable" in the same way actionable items are,
-    // so they shouldn't fire the "selected" event.
-    if (this.type === 'searchfield' || this.type === 'toolbarsearchfield') {
+    // Searchfields and Colorpickers aren't "selectable" in the same way actionable
+    // items are, so they shouldn't fire the "selected" event.
+    const disallowedTypes = ['colorpicker', 'searchfield', 'toolbarsearchfield'];
+    if (disallowedTypes.indexOf(this.type) > -1) {
       return;
     }
 
     const eventArgs = [this];
 
     // MenuButton types pass the currently-selected anchor
-    if ((this.type === 'menubutton' || this.type === 'actionbutton') && this.selectedAnchor) {
+    const selectedAnchorTypes = ['menubutton', 'actionbutton'];
+    if (selectedAnchorTypes.indexOf(this.type) > -1 && this.selectedAnchor) {
       eventArgs.push(this.selectedAnchor);
     }
 
@@ -399,7 +403,8 @@ ToolbarFlexItem.prototype = {
     const self = this;
     const $element = $(this.element);
 
-    if (this.type === 'menubutton' || this.type === 'actionbutton') {
+    const popupmenuConsumers = ['menubutton', 'actionbutton', 'colorpicker'];
+    if (popupmenuConsumers.indexOf(this.type) > -1) {
       // Listen to the Popupmenu's selected event
       $element.on(`selected.${COMPONENT_NAME}`, (e, anchor) => {
         if (this.selectedAnchor) {

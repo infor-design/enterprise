@@ -34,6 +34,7 @@ const COMPONENT_NAME = 'editor';
 * @param {function} [settings.onLinkClick = null] Call back for clicking on links to control link behavior.
 * @param {function} [settings.showHtmlView = false] If set to true, editor should be displayed in HTML view initialy.
 * @param {function} [settings.preview = false] If set to true, editor should be displayed in preview mode with noneditable content.
+* @param {boolean} [settings.useFlexToolbar = false] if set to true, renders the toolbar as
 */
 const EDITOR_DEFAULTS = {
   buttons: {
@@ -66,7 +67,8 @@ const EDITOR_DEFAULTS = {
   image: { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' },
   onLinkClick: null,
   showHtmlView: false,
-  preview: false
+  preview: false,
+  useFlexToolbar: false
 };
 
 function Editor(element, settings) {
@@ -80,6 +82,17 @@ function Editor(element, settings) {
 
 // Editor Methods
 Editor.prototype = {
+
+  /**
+   * @returns {Toolbar|ToolbarFlex} a reference to the Editor's Toolbar API
+   */
+  get toolbarAPI() {
+    let api;
+    if (this.toolbar && this.toolbar.length) {
+      api = this.toolbar.data(this.settings.useFlexToolbar ? 'toolbar-flex' : 'toolbar');
+    }
+    return api;
+  },
 
   init() {
     const s = this.settings;
@@ -310,20 +323,40 @@ Editor.prototype = {
   },
 
   createToolbar() {
-    const btns = this.setExcludedButtons();
-    let toolbar = `<div class="toolbar editor-toolbar formatter-toolbar"
-                   id="editor-toolbar-${this.id}">`;
-    let buttonset = '<div class="buttonset">';
+    const toolbarCssClasses = [
+      this.settings.useFlexToolbar ? 'flex-toolbar' : 'toolbar',
+      'editor-toolbar',
+      'formatter-toolbar'
+    ].join(' ');
 
+    let sectionCss = '';
+    let moreButtonHTML = '';
+    if (this.settings.useFlexToolbar) {
+      sectionCss = 'toolbar-section ';
+      moreButtonHTML = `<div class="toolbar-section more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+      </div>`;
+    }
+
+    const btns = this.setExcludedButtons();
+    let buttonsHTML = '';
     for (let i = 0, l = btns.length; i < l; i += 1) {
       const btn = this.buttonTemplate(btns[i]);
       if (btn) {
-        buttonset += btn;
+        buttonsHTML += btn;
       }
     }
 
-    buttonset += '</div>';
-    toolbar += `${buttonset}</div>`;
+    const toolbar = `<div class="${toolbarCssClasses}" id="editor-toolbar-${this.id}">
+      <div class="${sectionCss}buttonset">
+        ${buttonsHTML}
+      </div>
+      ${moreButtonHTML}
+    </div>`;
 
     if (this.element.parent().find('.icon-dirty').length) {
       this.toolbar = $(toolbar).insertBefore(this.element.parent().find('.icon-dirty'));
@@ -331,15 +364,17 @@ Editor.prototype = {
       this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ?
         this.element.prev() : this.element);
     }
-    this.toolbar.toolbar();
 
-    // Invoke Tooltips
-    this.toolbar.find('button[title]').tooltip();
-
-    // Invoke colorpicker
+    // Invoke Colorpicker, if applicable
     const cpElements = this.toolbar.find('[data-action="foreColor"], [data-action="backColor"]');
     cpElements.colorpicker({ placeIn: 'editor' });
     $('.trigger', cpElements).off('click.colorpicker');
+
+    // Invoke the (Flex?) Toolbar
+    this.toolbar[this.settings.useFlexToolbar ? 'toolbarflex' : 'toolbar']();
+
+    // Invoke Tooltips
+    this.toolbar.find('button[title]').tooltip();
 
     return this;
   },
@@ -656,7 +691,10 @@ Editor.prototype = {
       // IE input[type=text] and other browsers
       el.value += this.wrapTextInTags(text, el.value, action);
       $(el).focus();
-      el.value = el.value; // forces cursor to end
+
+      /* eslint-disable no-self-assign */
+      el.value = el.value; // hack to force cursor to end of text
+      /* eslint-enable no-self-assign */
     }
   },
 
@@ -2095,9 +2133,20 @@ Editor.prototype = {
     const cpBtn = state.cpBtn;
     const cpApi = state.cpApi;
 
-    cpBtn.on('selected.editor', (e, item) => {
-      let value = (`#${item.data('value')}`).toLowerCase();
+    cpBtn.one('selected.editor', (e, item) => {
+      // Detect Flex Toolbar item
+      let target = item;
+      if (target !== undefined && !(target instanceof $) && target.element) {
+        target = $(item.element);
+      }
+
+      // Use the value to set the color
+      let value = (`${target.data('value')}`).toLowerCase();
       value = value !== '#' ? value : '';
+      if (value.indexOf('#') === -1) {
+        value = `#${value}`;
+      }
+
       cpBtn.attr('data-value', value).find('.icon').css('fill', value);
 
       if (this.isIe || action === 'foreColor') {
