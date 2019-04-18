@@ -380,6 +380,14 @@ a.btn-close {
     }
   }
 
+  &.is-pressed {
+    color: $button-color-primary-initial-background;
+
+    .icon {
+      color: $button-color-primary-initial-background;
+    }
+  }
+
   span {
     color: inherit;
   }
@@ -617,16 +625,6 @@ a.btn-close {
 //Card Expander Chevron
 .btn-expander {
   @include btn-chevron-style;
-}
-
-.btn-toggle {
-  &.is-pressed {
-    color: $button-color-primary-initial-background !important;
-
-    svg {
-      color: $button-color-primary-initial-background !important;
-    }
-  }
 }
 
 @include keyframes(ripple-animation) {

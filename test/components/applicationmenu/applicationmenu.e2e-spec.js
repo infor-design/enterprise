@@ -61,8 +61,6 @@ describe('Applicationmenu menubutton tests', () => {
   });
 
   it('Should have a working menu button', async () => {
-    const button = await element(by.css('.application-menu-trigger'));
-    await button.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.btn-menu')).last()), config.waitsFor);
 
@@ -133,4 +131,31 @@ describe('Applicationmenu accordion truncated text tooltip tests', () => {
 
     expect(await element(by.id('tooltip')).isPresent()).toBeTruthy();
   });
+});
+
+describe('Applicationmenu Personalization tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/example-personalized-roles.html?colors=390567');
+    await browser.driver.sleep(config.sleep);
+  });
+
+  it('Should show the app menu', async () => {
+    expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on personalize', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(1280, 718);
+      const section = await element(by.css('body.no-scroll'));
+      await browser.driver.sleep(config.sleepLonger);
+
+      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-personalize-roles')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    });
+  }
 });

@@ -13,6 +13,9 @@
   "MD013": {
     "line_length": 800
   },
+  "MD025": {
+    "front_matter_title": ""
+  },
   "MD026": {
     "punctuation": ".,;:!"
   },

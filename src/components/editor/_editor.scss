@@ -57,8 +57,11 @@
   }
 
   &:hover {
-    .toolbar.formatter-toolbar:not(.error) {
-      border-color: $editor-hover-border-color $editor-hover-border-color $editor-border-color;
+    .toolbar,
+    .flex-toolbar {
+      .formatter-toolbar:not(.error) {
+        border-color: $editor-hover-border-color $editor-hover-border-color $editor-border-color;
+      }
     }
 
     .editor:not(.error),
@@ -69,16 +72,19 @@
 
   &.is-active,
   &.is-active:hover:not(.error) {
-    .toolbar.formatter-toolbar {
-      border-left-color: $editor-focus-border-color;
-      border-right-color: $editor-focus-border-color;
-      border-top-color: $editor-focus-border-color;
-      box-shadow: $editor-top-focus-box-shadow; //-2px -2px 3px 0px rgba(54, 138, 192, 0.3);
+    .toolbar,
+    .flex-toolbar {
+      .formatter-toolbar {
+        border-left-color: $editor-focus-border-color;
+        border-right-color: $editor-focus-border-color;
+        border-top-color: $editor-focus-border-color;
+        box-shadow: $editor-top-focus-box-shadow; //-2px -2px 3px 0px rgba(54, 138, 192, 0.3);
 
-      &.error {
-        border-left-color: $error-color;
-        border-right-color: $error-color;
-        border-top-color: $error-color;
+        &.error {
+          border-left-color: $error-color;
+          border-right-color: $error-color;
+          border-top-color: $error-color;
+        }
       }
     }
 
@@ -250,25 +256,57 @@
   }
 }
 
-// Toolbar
 .toolbar.formatter-toolbar {
+  overflow-x: visible;
+
+  .buttonset {
+    height: 32px;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  [class^='btn'] {
+    margin-top: 6px;
+  }
+
+  &.has-more-button {
+    .buttonset {
+      width: calc(100% - 44px);
+    }
+  }
+}
+
+.flex-toolbar.formatter-toolbar {
+  height: 32px;
+
+  .buttonset {
+    height: auto;
+    width: auto;
+  }
+}
+
+// Toolbar
+.toolbar.formatter-toolbar,
+.flex-toolbar.formatter-toolbar {
   background-color: $editor-toolbar-bg-color;
   border: 1px solid $editor-border-color;
   border-bottom-color: none;
   border-radius: 2px 2px 0 0;
   margin-bottom: -1px;
-  overflow-x: visible;
   padding: 0;
   text-align: left;
 
   .buttonset {
-    height: 32px;
-
     [class^='btn'] {
       &:first-child {
         margin-left: 16px;
       }
     }
+  }
+
+  // Flex Toolbar
+  .toolbar-section.buttonset {
+    padding: 0;
   }
 
   &.has-more-button {
@@ -294,7 +332,6 @@
     color: $editor-btn-color;
     height: 20px;
     line-height: normal;
-    margin-top: 6px;
     min-width: 18px;
     padding: 0 !important; //overrides some media queries
     text-align: left;
