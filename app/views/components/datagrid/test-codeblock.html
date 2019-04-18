@@ -384,6 +384,28 @@ div.field + .field-checkbox {
   box-shadow: none;
 }
 
+.datagrid.short-rowheight td.is-active.is-codeblock .datagrid-cell-wrapper {
+  padding: 0 0 20px 10px;
+  position: relative;
+  white-space: normal;
+}
+
+.datagrid.short-rowheight td.is-active.is-codeblock.is-editing .code-block {
+  top: 4px;
+}
+
+.datagrid.medium-rowheight td.is-active.is-codeblock .datagrid-cell-wrapper {
+  padding: 0 0 20px 10px;
+  position: relative;
+  white-space: normal;
+}
+
+.datagrid.normal-rowheight td.is-active.is-codeblock .datagrid-cell-wrapper {
+  padding: 0 0 20px 10px;
+  position: relative;
+  white-space: normal;
+}
+
 </style>
 
 <div class="row top-padding">
@@ -709,7 +731,8 @@ div.field + .field-checkbox {
           filterType: 'text',
           expandOnActivate: true,
           textOverflow: 'ellipsis',
-          editor: customEditor
+          editor: customEditor,
+          cssClass: 'is-codeblock'
         }
       ];
 
@@ -720,7 +743,8 @@ div.field + .field-checkbox {
         selectable: 'single',
         idProperty: 'productId',
         editable: true,
-        filterable: true
+        filterable: true,
+        rowHeight: 'short'
       });
     });
 
