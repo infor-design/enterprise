@@ -15,6 +15,7 @@
 - `[Header]` Added a JS setting and CSS styles to support usage of a Flex Toolbar ([#1120](https://github.com/infor-design/enterprise/issues/1120))
 - `[Mask]` Added a setting for passing a locale string, allowing Number masks to be localized.  This enables usage of the `groupSize` property, among others, from locale data in the Mask. ([#440](https://github.com/infor-design/enterprise/issues/440))
 - `[Masthead]` Added CSS styles to support usage of a Flex Toolbar ([#1120](https://github.com/infor-design/enterprise/issues/1120))
+- `[Theme/Colors]` Added new component for getting theme and color information. This is used throughout the code. There was a hidden property `Soho.theme`, if you used this in some way you should now use `Soho.theme.currentTheme`. ([#1866](https://github.com/infor-design/enterprise/issues/1866))
 
 ### v4.18.0 Fixes
 
@@ -26,13 +27,16 @@
 - `[Datagrid]` Fixed an issue where lookup filterConditions were not rendering. ([#1873](https://github.com/infor-design/enterprise/issues/1873))
 - `[Datagrid]` Fixed issue where header columns are misaligned with body columns on load. ([#1892](https://github.com/infor-design/enterprise/issues/1892))
 - `[Datagrid]` Fixed an issue where filtering was missing translation. ([#1900](https://github.com/infor-design/enterprise/issues/1900))
+- `[Datagrid]` Added an example of expandOnActivate on a customer editor. ([#353](https://github.com/infor-design/enterprise-ng/issues/353))
 - `[Datagrid]` Added ability to pass a function to the tooltip option for custom formatting. ([#354](https://github.com/infor-design/enterprise-ng/issues/354))
 - `[Dropdown]` Changed the way dropdowns work with screen readers to be a collapsible listbox.([#404](https://github.com/infor-design/enterprise/issues/404))
 - `[Dropdown]` Fixed an issue where multiselect dropdown unchecking "Select All" was not getting clear after close list with Safari browser.([#1882](https://github.com/infor-design/enterprise/issues/1882))
 - `[Listbuilder]` Fixed an issue where the text was not sanitizing. ([#1692](https://github.com/infor-design/enterprise/issues/1692))
 - `[Lookup]` Fixed an issue where the tooltip was using audible text in the code block component. ([#354](https://github.com/infor-design/enterprise-ng/issues/354))
 - `[Locale]` Fixed trailing zeros were getting ignored when displaying thousands values. ([#404](https://github.com/infor-design/enterprise/issues/1840))
-- `[MenuButton]` Approved the way menu buttons work with screen readers.([#404](https://github.com/infor-design/enterprise/issues/404))
+- `[MenuButton]` Improved the way menu buttons work with screen readers.([#404](https://github.com/infor-design/enterprise/issues/404))
+- `[Message]` Added an audible announce of the message type.([#964](https://github.com/infor-design/enterprise/issues/964))
+- `[Modal]` Changed text and button font colors to pass accessibility checks.([#964](https://github.com/infor-design/enterprise/issues/964))
 - `[Notifications]` Fixed a few issues with notification background colors by using the corresponding ids-identity token for each. ([1857](https://github.com/infor-design/enterprise/issues/1857), [1865](https://github.com/infor-design/enterprise/issues/1865))
 - `[Notifications]` Fixed an issue where you couldn't click the close icon in Firefox. ([1573](https://github.com/infor-design/enterprise/issues/1573))
 - `[Radios]` Fixed the last radio item was being selected when clicking on the first when displayed horizontal. ([#1878](https://github.com/infor-design/enterprise/issues/1878))

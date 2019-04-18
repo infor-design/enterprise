@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import * as debug from '../../utils/debug';
 import { deprecateMethod } from '../../utils/deprecated';
-import { theme } from '../personalize/personalize';
+import { theme } from '../theme/theme';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
@@ -917,7 +917,7 @@ Slider.prototype = {
    * @returns {string} hex value representing a color
    */
   getColorClosestToValue() {
-    const currentTheme = theme;
+    const currentTheme = theme.currentTheme.id;
     const preColors = {
       light: {
         default: '#000000',

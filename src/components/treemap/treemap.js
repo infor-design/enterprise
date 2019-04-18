@@ -3,6 +3,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
+import { theme } from '../theme/theme';
 
 import '../emptymessage/emptymessage.jquery';
 
@@ -14,11 +15,7 @@ const TREEMAP_DEFAULTS = {
   dataset: [],
   redrawOnResize: true,
   margin: { top: 20, right: 20, bottom: 20, left: 20 },
-  colors: [
-    '#133C59', '#134D71', '#1D5F8A', '#2578A9', '#368AC0', '#54A1D3', '#69B5DD', '#8DC9E6', '#ADD8EB',
-    '#4B2A5E', '#5D3E70', '#6E5282', '#806594', '#9279A6', '#A38DB7', '#B59ECA', '#C7B4DB', '#DACCEC',
-    '#0E5B52', '#206B62', '#317C73', '#448D83', '#579E95', '#69ADA3', '#7CC0B5', '#8ED1C6', '#A9E1D6'
-  ],
+  colors: null,
   showLabel: true,
   labelFormatter: '.0%',
   showTitle: true,
@@ -88,6 +85,40 @@ Treemap.prototype = {
    * @private
    */
   build() {
+    if (!this.settings.colors) {
+      const palette = theme.themeColors().palette;
+      this.settings.colors = [
+        palette.azure['100'].value,
+        palette.azure['90'].value,
+        palette.azure['80'].value,
+        palette.azure['70'].value,
+        palette.azure['60'].value,
+        palette.azure['40'].value,
+        palette.azure['30'].value,
+        palette.azure['20'].value,
+        palette.amethyst['100'].value,
+        palette.amethyst['90'].value,
+        palette.amethyst['80'].value,
+        palette.amethyst['70'].value,
+        palette.amethyst['60'].value,
+        palette.amethyst['50'].value,
+        palette.amethyst['40'].value,
+        palette.amethyst['40'].value,
+        palette.amethyst['30'].value,
+        palette.amethyst['20'].value,
+        palette.turquoise['100'].value,
+        palette.turquoise['90'].value,
+        palette.turquoise['80'].value,
+        palette.turquoise['70'].value,
+        palette.turquoise['60'].value,
+        palette.turquoise['50'].value,
+        palette.turquoise['40'].value,
+        palette.turquoise['40'].value,
+        palette.turquoise['30'].value,
+        palette.turquoise['20'].value
+      ];
+    }
+
     this.updateData(this.settings.dataset);
     return this;
   },
