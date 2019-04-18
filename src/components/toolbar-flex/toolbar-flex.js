@@ -127,7 +127,6 @@ ToolbarFlex.prototype = {
     // Toolbar Items get handled separately.
     if ($(target).data('toolbarflexitem')) {
       this.handleItemKeydown(e);
-      // return;
     }
   },
 

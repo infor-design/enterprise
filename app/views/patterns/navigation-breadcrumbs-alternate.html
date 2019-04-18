@@ -4,13 +4,13 @@
 
   <div class="page-container no-scroll">
     <header class="header is-personalizable">
-      <div class="toolbar">
-        <div class="title">
+      <div class="{{#useFlexToolbar}}flex-{{/useFlexToolbar}}toolbar">
+        <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}title">
           <h1>Level Two Detail View</h1>
         </div>
 
-        <div class="buttonset">
-          <input class="searchfield" />
+        <div class="{{#useFlexToolbar}}toolbar-section search{{/useFlexToolbar}}{{^useFlexToolbar}}buttonset{{/useFlexToolbar}}">
+          <input class="searchfield" data-options='{ clearable: true, collapsible: true }'/>
         </div>
 
         {{> includes/header-actionbutton}}
