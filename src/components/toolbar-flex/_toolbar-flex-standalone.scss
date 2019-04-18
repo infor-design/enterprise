@@ -1,0 +1,23 @@
+// =======================================
+// Flexible Toolbar Component (Standalone/Formatter Styles)
+// ==================================== //
+.flex-toolbar.standalone {
+  background-color: $toolbar-standalone-bg-color;
+  border-bottom: 1px solid $toolbar-standalone-border-color;
+  max-height: 41px;
+  padding: 0 1rem;
+
+  .btn,
+  .btn-destructive,
+  .btn-icon,
+  .btn-tertiary,
+  .btn-toggle {
+    margin: 3px 5px 3px 0;
+    min-width: 34px;
+
+    &[disabled],
+    &[disabled]:hover {
+      color: $toolbar-standalone-disabled-color;
+    }
+  }
+}

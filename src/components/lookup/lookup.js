@@ -172,10 +172,6 @@ Lookup.prototype = {
   addAria() {
     const self = this;
     self.label = self.isInlineLabel ? self.inlineLabelText : $(`label[for="${self.element.attr('id')}"]`);
-
-    if (self.label) {
-      self.label.append(`<span class="audible">${Locale.translate('UseEnter')}</span>`);
-    }
   },
 
   /**
@@ -811,10 +807,6 @@ Lookup.prototype = {
 
     this.icon.remove();
     this.element.unwrap();
-
-    if (this.label && this.label != null) {
-      this.label.find('.audible').remove();
-    }
   }
 };
 
