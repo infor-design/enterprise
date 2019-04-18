@@ -30,10 +30,11 @@ describe('Listview example-singleselect tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-singleselect', async () => {
+    fit('Should be accessible on init with no WCAG 2AA violations on example-singleselect', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -107,10 +108,11 @@ describe('Listview example-multiselect tests', () => {
   }
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-multiselect page', async () => {
+    fit('Should be accessible on init with no WCAG 2AA violations on example-multiselect page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -204,10 +206,11 @@ describe('Listview example-mixed selection tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-mixed selection page', async () => {
+    fit('Should be accessible on init with no WCAG 2AA violations on example-mixed selection page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -267,10 +270,11 @@ describe('Listview example-search tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-search page', async () => {
+    fit('Should be accessible on init with no WCAG 2AA violations on example-search page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -311,10 +315,11 @@ describe('Listview example-paging tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-paging page', async () => {
+    fit('Should be accessible on init with no WCAG 2AA violations on example-paging page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -379,10 +384,11 @@ describe('Listview example-paging-clientside tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-paging-clientside page', async () => {
+    fit('Should be accessible on init with no WCAG 2AA violations on example-paging-clientside page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -464,10 +470,11 @@ describe('Listview remove-clear tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on remove-clear page', async () => {
+    fit('Should be accessible on init with no WCAG 2AA violations on remove-clear page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -498,10 +505,11 @@ describe('Listview example-header-totals` tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-header-total', async () => {
+    fit('Should be accessible on init with no WCAG 2AA violations on example-header-total', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 

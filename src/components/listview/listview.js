@@ -361,7 +361,10 @@ ListView.prototype = {
 
         if (self.settings.showCheckboxes) {
           // For mixed selection mode primarily append a checkbox object
-          item.prepend('<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox"><input tabindex="-1" type="checkbox" class="checkbox"><span class="label-text">&nbsp;</span></label>');
+          item.prepend(`<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox">
+            <input tabindex="-1" type="checkbox" class="checkbox">
+            <span class="label-text" role="presentation">&nbsp;</span>
+          </label>`);
         }
       }
 
