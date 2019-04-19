@@ -46,6 +46,7 @@
 - `[Tabs]` Fixed an issue where focus was changed after enable/disable tabs. ([#1934](https://github.com/infor-design/enterprise/issues/1934))
 - `[Tabs-Module]` Fixed an issue where the close icon was outside the searchfield. ([#1704](https://github.com/infor-design/enterprise/issues/1704))
 - `[Toolbar]` Fixed issues when tooltip shows on hover of toolbar ([#1622](https://github.com/infor-design/enterprise/issues/1622))
+- `[Validation]` Fixed an issue where the isAlert settings set to true, the border color, control text color, control icon color was displaying the color for the alert rather than displaying the default color. ([#1922](https://github.com/infor-design/enterprise/issues/1922))
 
 ### v4.18.0 Chore & Maintenance
 
