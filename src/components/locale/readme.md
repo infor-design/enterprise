@@ -26,9 +26,9 @@ Soho.Locale.set('es-ES');
 We have a number of internal strings that are used within the components. These can be extended and used by applications. Keep in mind that the `Soho.Locale.set` function will fetch a locale js file from the server when called.
 
 ```javascript
-Soho.Locale.set('es-ES').done(function () {
-  Soho.Locale.translate('Cancel');
-  // Returns Cancelar
+Soho.Locale.set('es-ES').done(function() {
+    Soho.Locale.translate('Cancel');
+    // Returns Cancelar
 });
 ```
 
@@ -40,8 +40,8 @@ It is possible to use the translation strings in another language, independently
 
 ```javascript
 Soho.Locale.set('en-US');
-Soho.Locale.setLanguage('da').done(function () => {
-  Locale.translate('Actions'); // Returns 'Handlinger'
+Soho.Locale.setLanguage('da').done(function() => {
+    Locale.translate('Actions'); // Returns 'Handlinger'
 });
 ```
 
@@ -51,11 +51,11 @@ It is possible to use the translation strings in another language, independently
 
 ```javascript
 Soho.Locale.set('en-US');
-Soho.Locale.setLanguage('da').done(function () => {
-  Locale.translate('Actions'); // Returns 'Handlinger'
+Soho.Locale.setLanguage('da').done(function() => {
+    Locale.translate('Actions'); // Returns 'Handlinger'
 });
-Soho.Locale.getLocale('de-DE').done(function () => {
-  Locale.translate('Actions', { language: 'de' }); // Returns 'Aktionen'
+Soho.Locale.getLocale('de-DE').done(function() => {
+    Locale.translate('Actions', { language: 'de' }); // Returns 'Aktionen'
 });
 ```
 
@@ -65,15 +65,15 @@ It is possible to add your own strings to an existing locale's language. To do t
 
 ```javascript
 Locale.set('it-lT').done(() => {
-  const myStrings = {
-    Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
-    YourWelcome: { id: 'YourWelcome', value: 'Prego', comment: '' }
-  };
+    const myStrings = {
+        Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
+        YourWelcome: { id: 'YourWelcome', value: 'Prego', comment: '' }
+    };
 
-  Locale.extendTranslations(Locale.currentLanguage.name, myStrings);
-  Locale.translate('Comments'); // Returns Commenti
-  Locale.translate('Thanks'); // Returns Grazie
-  Locale.translate('YourWelcome'); // Returns Prego
+    Locale.extendTranslations(Locale.currentLanguage.name, myStrings);
+    Locale.translate('Comments');    // Returns Commenti
+    Locale.translate('Thanks');      // Returns Grazie
+    Locale.translate('YourWelcome'); // Returns Prego
 });
 ```
 
@@ -85,8 +85,8 @@ It is possible to add a new locale that is not supported by Infor (yet). To do t
 Locale.defaultLocales.push({ lang: 'la', default: 'la-IT' });
 Locale.supportedLocales.push('la-IT');
 
-Locale.set('la-lT').done(function () {
-  Locale.translate('Comments');
+Locale.set('la-lT').done(function() {
+    Locale.translate('Comments');
 });
 ```
 
@@ -102,10 +102,10 @@ Locale.toLocaleString(2019, 'zh-Hans-CN-u-nu-hanidec'); // 二,〇一九
 To convert from a Chinese/Arabic/Hindi number we added a function to convert the numbers to english numbers.
 
 ```javascript
-Locale.convertNumberToEnglish('١٢٣٤٥٦٧٨٩٠'); // Arabic to 1234567890
+Locale.convertNumberToEnglish('١٢٣٤٥٦٧٨٩٠');        // Arabic to 1234567890
 Locale.convertNumberToEnglish('壹貳叄肆伍陸柒捌玖零'); // Chinese Financial to 1234567890
 Locale.convertNumberToEnglish('一二三四五六七八九零'); // Chinese Simplified to 1234567890
-Locale.convertNumberToEnglish('१२३४५६७८९०'); //Devangari to 1234567890
+Locale.convertNumberToEnglish('१२३४५६७८९०');         // Devangari to 1234567890
 ```
 
 ## Code Example - Numbers
@@ -118,12 +118,12 @@ Soho.Locale.formatNumber(20.1, {style: 'decimal', round: true, minimumFractionDi
 Soho.Locale.formatNumber(5.1, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 // Returns 5.10
 Soho.Locale.formatNumber(12345.12, {
-      style: 'currency',
-      decimal: '.',
-      group: ',',
-      currencyFormat: '¤ ###',
-      currencySign: '$'
-    }));
+    style: 'currency',
+    decimal: '.',
+    group: ',',
+    currencyFormat: '¤ ###',
+    currencySign: '$'
+}));
 // Returns $ 12,345.12
 ```
 
@@ -152,14 +152,14 @@ It is possible to call `parseNumber` or `formatNumber` to handle numbers without
 
 ```javascript
 Soho.Locale.set('en-US');
-Locale.getLocale('nl-NL').done(function () {
-  Locale.formatNumber(123456789.1234, { locale: 'en-US' }); // 123456,789.123
-  Locale.formatNumber(123456789.1234, { locale: 'nl-NL' }); // 123456,789.123
+Locale.getLocale('nl-NL').done(function() {
+    Locale.formatNumber(123456789.1234, { locale: 'en-US' }); // 123456,789.123
+    Locale.formatNumber(123456789.1234, { locale: 'nl-NL' }); // 123456,789.123
 });
 
-Locale.getLocale('nl-NL').done(function () {
-  Locale.parseNumber('1.123', { locale: 'nl-NL' }); // 1123
-  Locale.parseNumber('€123456.789,12', { locale: 'nl-NL' }); // 123456789.12
+Locale.getLocale('nl-NL').done(function() {
+    Locale.parseNumber('1.123', { locale: 'nl-NL' });          // 1123
+    Locale.parseNumber('€123456.789,12', { locale: 'nl-NL' }); // 123456789.12
 });
 ```
 
@@ -211,12 +211,12 @@ It is possible to call `parseDate` or `formatDate` to handle dates without chang
 
 ```javascript
 Soho.Locale.set('en-US');
-Soho.Locale.getLocale('nl-NL').done(function () {
-  Locale.formatDate(new Date(2019, 5, 8), { date: 'short', locale: 'nl-NL' })); //08-06-2019
+Soho.Locale.getLocale('nl-NL').done(function() {
+    Locale.formatDate(new Date(2019, 5, 8), { date: 'short', locale: 'nl-NL' })); // 08-06-2019
 });
 
-Soho.Locale.getLocale('es-ES').done(function () {
-  Soho.Locale.parseDate('Noviembre de 2019', { date: 'year', locale: 'es-ES' }); // 2019-11-01 as a Date
+Soho.Locale.getLocale('es-ES').done(function() {
+    Soho.Locale.parseDate('Noviembre de 2019', { date: 'year', locale: 'es-ES' }); // 2019-11-01 as a Date
 });
 ```
 
@@ -238,25 +238,25 @@ The following options are supported:
 
 A date format can be constructed by adding the needed date and time parts. For example `yyyy-MM-DD HH:mm`. The following parts can be used.
 
-- 'dd` - Shows the date portion padded with zeros
-- 'd` - Shows the date portion un-padded
-- 'yyyy` - Shows the year in 4 digit format. This should always be used.
-- 'yy` - Shows the year in 2 digit format. If used this will be converted to 4 digit format
-- 'hh` - Shows the time hours in 12 hour format with padding.
-- 'h` - Shows the time hours in 12 hour format without padding.
-- 'HH` - Shows the time in 24 hour format with padding
-- 'H` - Shows the time in 24 hour format without padding
-- 'a` - Shows the am/pm part of the time.
-- 'mm` - Shows the minute portion of the time
-- 'ss` - Shows the seconds portion of the time
-- 'SSS` - Shows the milliseconds portion of the time
-- `zz` - Shows the short time zone name for example EST  in the current locale's language.
-- 'zzzz` - Shows the long time zone name for example Eastern Standard Time in the current locale's language.
-- 'MMMM` - Shows the month in wide format (For example August)
-- 'MMM` - Shows the month in abbreviated format (For example Aug, Mar, Sept)
-- 'MM` - Shows the month in numeric format padded
-- 'MM` - Shows the month in numeric format unpadded
-- 'EEEE` - Shows the date of the week in wide format (Monday, Tuesday ect)
+- `dd` - Shows the date portion padded with zeros
+- `d` - Shows the date portion un-padded
+- `yyyy` - Shows the year in 4 digit format. This should always be used.
+- `yy` - Shows the year in 2 digit format. If used this will be converted to 4 digit format
+- `hh` - Shows the time hours in 12 hour format with padding.
+- `h` - Shows the time hours in 12 hour format without padding.
+- `HH` - Shows the time in 24 hour format with padding
+- `H` - Shows the time in 24 hour format without padding
+- `a` - Shows the am/pm part of the time.
+- `mm` - Shows the minute portion of the time
+- `ss` - Shows the seconds portion of the time
+- `SSS` - Shows the milliseconds portion of the time
+- `zz` - Shows the short time zone name for example EST  in the current locale`s language.
+- `zzzz` - Shows the long time zone name for example Eastern Standard Time in the current locale`s language.
+- `MMMM` - Shows the month in wide format (For example August)
+- `MMM` - Shows the month in abbreviated format (For example Aug, Mar, Sept)
+- `MM` - Shows the month in numeric format padded
+- `MM` - Shows the month in numeric format unpadded
+- `EEEE` - Shows the date of the week in wide format (Monday, Tuesday ect)
 
 ## Timezones
 
@@ -283,7 +283,7 @@ columns.push({ id: 'orderDate', name: 'Short Timezone (Locale)', field: 'orderDa
 columns.push({ id: 'orderDate', name: 'Long Timezone (Locale)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: { date: 'timezoneLong' }});
 columns.push({ id: 'orderDate', name: 'Short Timezone (Custom)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'dd-MM-yyyy HH:mm zz'});
 columns.push({ id: 'orderDate', name: 'Long Timezone (Custom)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'dd-MM-yyyy HH:mm zz'});
-```javascript
+```
 
 ## Currently Supported Locales
 
