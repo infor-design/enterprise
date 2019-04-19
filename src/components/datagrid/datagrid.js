@@ -1772,8 +1772,6 @@ Datagrid.prototype = {
   */
   toggleFilterRow() {
     if (this.settings.filterable) {
-      this.headerContainer.find('thead').removeClass('is-filterable');
-      this.headerContainer.find('.is-filterable').removeClass('is-filterable');
       this.headerContainer.find('.datagrid-filter-wrapper').hide();
       this.settings.filterable = false;
       this.filterRowRendered = false;
@@ -1796,8 +1794,6 @@ Datagrid.prototype = {
         this.element.addClass('has-two-line-header');
       }
 
-      this.headerContainer.find('thead').addClass('is-filterable');
-      this.headerContainer.find('.is-filterable').addClass('is-filterable');
       this.headerContainer.find('.datagrid-filter-wrapper').show();
 
       /**
