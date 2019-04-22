@@ -58,7 +58,9 @@ describe('Tabs API', () => {
     tabsEl.style.width = '400px';
     $('body').triggerHandler('resize');
 
-    expect(tabsObj.hasMoreButton()).toBeTruthy();
+    setTimeout(() => {
+      expect(tabsObj.hasMoreButton()).toBeTruthy();
+    }, 300);
   });
 
   it('Should not be in responsive mode', () => {
@@ -328,7 +330,9 @@ describe('Tabs API', () => {
     $('body').triggerHandler('resize');
     const tab = tabsObj.getOverflowTabs();
 
-    expect(tab.length).toBeFalsy();
+    setTimeout(() => {
+      expect(tab.length).toBeFalsy();
+    }, 300)
   });
 
   it('Should select tab, and focus', () => {
@@ -342,7 +346,9 @@ describe('Tabs API', () => {
     $('body').triggerHandler('resize');
     const tabItem = document.querySelectorAll('[aria-selected="true"]');
 
-    expect(tabsObj.isTabOverflowed($(tabItem))).toBeFalsy();
+    setTimeout(() => {
+      expect(tabsObj.isTabOverflowed($(tabItem))).toBeFalsy();
+    }, 300)
   });
 
   it('Should return last visible tabs', () => {
