@@ -323,8 +323,8 @@ describe('Tabs API', () => {
     expect(allVisibleTabs.length).toEqual(4);
   });
 
-  it('Should not return overflowed tabs at 300px', () => {
-    tabsEl.style.width = '300px';
+  it('Should not return overflowed tabs at 320px', () => {
+    tabsEl.style.width = '320px';
     $('body').triggerHandler('resize');
     const tab = tabsObj.getOverflowTabs();
 
