@@ -417,11 +417,13 @@ describe('Tabs API', () => {
     expect(document.querySelectorAll('.tab')[4].classList).toContain('is-disabled');
     tabsObj.enable();
 
-    expect(document.querySelectorAll('.tab')[0].classList).not.toContain('is-disabled');
-    expect(document.querySelectorAll('.tab')[1].classList).not.toContain('is-disabled');
-    expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-disabled');
-    expect(document.querySelectorAll('.tab')[3].classList).not.toContain('is-disabled');
-    expect(document.querySelectorAll('.tab')[4].classList).not.toContain('is-disabled');
+    setTimeout(() => {
+      expect(document.querySelectorAll('.tab')[0].classList).not.toContain('is-disabled');
+      expect(document.querySelectorAll('.tab')[1].classList).not.toContain('is-disabled');
+      expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-disabled');
+      expect(document.querySelectorAll('.tab')[3].classList).not.toContain('is-disabled');
+      expect(document.querySelectorAll('.tab')[4].classList).not.toContain('is-disabled');
+    }, 300);
   });
 
   it('Should remove tab dismissible tab from tab list', () => {
