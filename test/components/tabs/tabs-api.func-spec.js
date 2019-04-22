@@ -58,9 +58,7 @@ describe('Tabs API', () => {
     tabsEl.style.width = '400px';
     $('body').triggerHandler('resize');
 
-    setTimeout(() => {
-      expect(tabsObj.hasMoreButton()).toBeTruthy();
-    }, 300);
+    expect(tabsObj.hasMoreButton()).toBeTruthy();
   });
 
   it('Should not be in responsive mode', () => {
