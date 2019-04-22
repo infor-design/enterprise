@@ -54,13 +54,14 @@ describe('Tabs API', () => {
     expect(tabsObj.hasMoreButton()).toBeFalsy();
   });
 
-  it('Should have more button at 400px', () => {
+  it('Should have more button at 400px', (done) => {
     tabsEl.style.width = '400px';
     $('body').triggerHandler('resize');
 
     setTimeout(() => {
       expect(tabsObj.hasMoreButton()).toBeTruthy();
-    }, 100);
+      done();
+    }, 300);
   });
 
   it('Should not be in responsive mode', () => {
@@ -325,14 +326,15 @@ describe('Tabs API', () => {
     expect(allVisibleTabs.length).toEqual(4);
   });
 
-  it('Should not return overflowed tabs at 300px', () => {
+  it('Should not return overflowed tabs at 300px', (done) => {
     tabsEl.style.width = '300px';
     $('body').triggerHandler('resize');
     const tab = tabsObj.getOverflowTabs();
 
     setTimeout(() => {
       expect(tab.length).toBeFalsy();
-    }, 100);
+      done();
+    }, 300);
   });
 
   it('Should select tab, and focus', () => {
@@ -341,14 +343,15 @@ describe('Tabs API', () => {
     expect(document.querySelector('.tab.is-selected').innerText).toEqual('Contracts');
   });
 
-  it('Should return false whether tabs are overflowed at 300px', () => {
+  it('Should return false whether tabs are overflowed at 300px', (done) => {
     tabsEl.style.width = '300px';
     $('body').triggerHandler('resize');
     const tabItem = document.querySelectorAll('[aria-selected="true"]');
 
     setTimeout(() => {
       expect(tabsObj.isTabOverflowed($(tabItem))).toBeFalsy();
-    }, 100);
+      done();
+    }, 300);
   });
 
   it('Should return last visible tabs', () => {
@@ -407,7 +410,7 @@ describe('Tabs API', () => {
     expect(document.querySelectorAll('.tab')[4].classList).toContain('is-disabled');
   });
 
-  it('Should enable all tabs', () => {
+  it('Should enable all tabs', (done) => {
     tabsObj.disable(false);
 
     expect(document.querySelectorAll('.tab')[0].classList).toContain('is-disabled');
@@ -423,7 +426,8 @@ describe('Tabs API', () => {
       expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-disabled');
       expect(document.querySelectorAll('.tab')[3].classList).not.toContain('is-disabled');
       expect(document.querySelectorAll('.tab')[4].classList).not.toContain('is-disabled');
-    }, 100);
+      done();
+    }, 300);
   });
 
   it('Should remove tab dismissible tab from tab list', () => {
