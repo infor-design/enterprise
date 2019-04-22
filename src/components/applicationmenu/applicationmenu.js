@@ -153,6 +153,15 @@ ApplicationMenu.prototype = {
       this.adjustHeight();
     }
 
+    this.expandableArea = this.menu.find('.expandable-area');
+
+    // Check to make sure that the internal expandable area Control is invoked
+    let expandableArea = this.expandableArea.data('expandablearea');
+    if (!expandableArea) {
+      this.expandableArea.expandablearea();
+      expandableArea = this.expandableArea.data('expandablearea');
+    }
+
     // Handle Role Switcher with events and classes
     const switchTrigger = this.element.find('.application-menu-switcher-trigger');
     if (switchTrigger.length > 0) {
@@ -613,6 +622,21 @@ ApplicationMenu.prototype = {
     }
 
     this.closeMenu();
+  },
+
+  closeExpandableArea() {
+    if (!this.expandableArea) {
+      this.expandableArea = this.menu.find('.expandable-area');
+    }
+
+    // Check to make sure that the internal expandable area Control is invoked
+    let expandableArea = this.expandableArea.data('expandablearea');
+    if (!expandableArea) {
+      this.expandableArea.expandablearea();
+      expandableArea = this.expandableArea.data('expandablearea');
+    }
+
+    expandableArea.close();
   },
 
   /**
