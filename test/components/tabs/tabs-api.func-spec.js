@@ -332,7 +332,7 @@ describe('Tabs API', () => {
 
     setTimeout(() => {
       expect(tab.length).toBeFalsy();
-    }, 300)
+    }, 300);
   });
 
   it('Should select tab, and focus', () => {
@@ -348,7 +348,7 @@ describe('Tabs API', () => {
 
     setTimeout(() => {
       expect(tabsObj.isTabOverflowed($(tabItem))).toBeFalsy();
-    }, 300)
+    }, 300);
   });
 
   it('Should return last visible tabs', () => {
