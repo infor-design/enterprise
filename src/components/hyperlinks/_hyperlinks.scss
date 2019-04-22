@@ -36,12 +36,6 @@
     color: $hyperlink-hover-color;
   }
 
-  &.object-count {
-    display: inline-block;
-    text-align: center;
-    text-decoration: none;
-  }
-
   &.show-visited:visited,
   &.force-visited {
     color: $hyperlink-visited-color;

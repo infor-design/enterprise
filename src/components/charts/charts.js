@@ -2,6 +2,7 @@ import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
+import { theme } from '../theme/theme';
 
 const charts = {};
 
@@ -113,9 +114,31 @@ charts.removeTooltip = function removeTooltip() {
  * @private
  * @type {array}
  */
-charts.colorRange = ['#2578A9', '#8ED1C6', '#C7B4DB', '#5C5C5C', '#F2BC41', '#76B051', '#B94E4E',
-  '#8DC9E6', '#DB7726', '#317C73', '#EB9D9D', '#737373', '#89BF65', '#C7B4DB',
-  '#54A1D3', '#6e5282', '#AFDC91', '#69ADA3', '#EE9A36', '#D8D8D8'];
+const palette = theme.themeColors().palette;
+charts.colorRange = [
+  palette.azure['70'].value,
+  palette.turquoise['30'].value,
+  palette.amethyst['30'].value,
+  palette.graphite['60'].value,
+  palette.amber['50'].value,
+  palette.emerald['60'].value,
+  palette.ruby['60'].value,
+  palette.azure['30'].value,
+  palette.amber['90'].value,
+  palette.turquoise['80'].value,
+  palette.ruby['20'].value,
+  palette.graphite['50'].value,
+  palette.emerald['50'].value,
+  palette.azure['50'].value,
+  palette.amethyst['80'].value,
+  palette.emerald['30'].value,
+  palette.turquoise['50'].value,
+  palette.amber['70'].value,
+  palette.graphite['20'].value,
+  palette.azure['20'].value,
+  palette.emerald['100'].value,
+  palette.amethyst['20'].value
+];
 
 charts.colorNameRange = ['azure07', 'turquoise03', 'amethyst03', 'graphite06', 'amber05', 'emerald06', 'ruby06',
   'azure03', 'amber09', 'turquoise08', 'ruby02', 'graphite05', 'emerald05', 'amethyst03',

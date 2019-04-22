@@ -1,0 +1,67 @@
+<div class="page-container no-scroll">
+  <header class="header is-personalizable">
+    <div class="toolbar">
+      <div class="title">
+        <h1>Theme & Color Names API</h1>
+      </div>
+
+      <div class="buttonset">
+      </div>
+    </div>
+  </header>
+
+  <div id="maincontent" class="page-container scrollable" role="main">
+    <div class="row top-padding">
+      <div class="twelve columns">
+        <div class="field">
+          <label for="example-theme">Theme</label>
+          <select id="example-theme" name="example-theme" class="dropdown" data-init="false">
+          </select>
+        </div>
+        <div class="field">
+          <label for="example-colors">Theme Colors</label>
+          <select id="example-colors" name="example-colors" class="dropdown" data-init="false">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    // Set up theme dropdown
+    var themeDropdown = $('#example-theme');
+    var themes = Soho.theme.themes();
+    var themeHtml = '';
+    for (var i = 0; i < themes.length; i++){
+       themeHtml += '<option value="' + themes[i].id + '">'+ themes[i].name +'</option>';
+    }
+
+    themeDropdown.on('selected', function (e, args) {
+      $('html').data('personalize').setTheme(this.selectedOptions[0].getAttribute('value'));
+    }).html(themeHtml).dropdown().val(Soho.theme.currentTheme.id).trigger('updated');
+
+    $('html').on('themechanged', function (e, args) {
+      themeDropdown.val(args.theme).trigger('updated');
+    });
+
+    // Set up colors dropdown
+    var colorsDropdown = $('#example-colors');
+    var colors = Soho.theme.personalizationColors();
+    var colorsHtml = '';
+    for (color in colors) {
+     colorsHtml += '<option data-icon="{icon: \'swatch\', class: \'' + colors[color].backgroundColorClass +' swatch\'}" value="' + colors[color].id + '" data-hex="' + colors[color].value + '">'+ colors[color].name +'</option>';
+    }
+
+    colorsDropdown.on('selected', function (e, args) {
+      $('html').data('personalize').setColors(this.selectedOptions[0].getAttribute('data-hex'));
+      //$('html').data('personalize').setTheme(this.selectedOptions[0].getAttribute('value'));
+    }).html(colorsHtml).dropdown().val('azure').trigger('updated');
+
+    $('html').on('colorschanged', function (e, args) {
+      console.log('colorschanged', args)
+    });
+  });
+</script>

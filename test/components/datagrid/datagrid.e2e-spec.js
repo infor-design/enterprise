@@ -1342,11 +1342,13 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
 
     expect(await element.all(await by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
+    await browser.driver.sleep(config.sleep);
     await element(by.css('.pager-next a')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(await by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
+    await browser.driver.sleep(config.sleep);
     await element(by.css('.pager-prev a')).click();
     await browser.driver.sleep(config.sleep);
 

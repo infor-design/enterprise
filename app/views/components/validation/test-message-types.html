@@ -8,16 +8,16 @@
   <div class="row">
     <div class="full-width">
       <label>Type of Alert</label>
-      <input type="radio" class="radio" name="optionsGroupVWO" id="option1" value="error" checked/>
-      <label for="option1" class="radio-label">Error</label>
-      <input type="radio" class="radio" name="optionsGroupVWO" id="option2" value="alert"/>
-      <label for="option2" class="radio-label">Alert</label>
-      <input type="radio" class="radio" name="optionsGroupVWO" id="option3" value="success"/>
-      <label for="option3" class="radio-label">Success</label>
-      <input type="radio" class="radio" name="optionsGroupVWO" id="option4" value="info"/>
-      <label for="option4" class="radio-label">Info</label>
-      <input type="radio" class="radio" name="optionsGroupVWO" id="option5" value="icon"/>
-      <label for="option5" class="radio-label">Icon</label>
+      <input type="radio" class="radio" name="type-of-alert" id="option-error" value="error" checked/>
+      <label for="option-error" class="radio-label">Error</label>
+      <input type="radio" class="radio" name="type-of-alert" id="option-alert" value="alert"/>
+      <label for="option-alert" class="radio-label">Alert</label>
+      <input type="radio" class="radio" name="type-of-alert" id="option-success" value="success"/>
+      <label for="option-success" class="radio-label">Success</label>
+      <input type="radio" class="radio" name="type-of-alert" id="option-info" value="info"/>
+      <label for="option-info" class="radio-label">Info</label>
+      <input type="radio" class="radio" name="type-of-alert" id="option-icon" value="icon"/>
+      <label for="option-icon" class="radio-label">Icon</label>
 
       <div class="field">
       </div>
@@ -130,7 +130,7 @@
       .removeMessage({ type: 'icon' });
   }
 
-  $('input[type="radio"]').on('change', function (e) {
+  $('[name="type-of-alert"]').on('change', function (e) {
     currentValidationType = e.currentTarget.value;
   });
 

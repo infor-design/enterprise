@@ -38,6 +38,11 @@
     }
   }
 
+  // Allows non-defined toolbar sections to grow and fill space
+  &.fluid {
+    flex-grow: 1;
+  }
+
   &.title {
     h1,
     h2,

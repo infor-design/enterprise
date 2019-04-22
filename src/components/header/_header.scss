@@ -125,7 +125,7 @@ $subheader-height: 60px;
   }
 
   .toolbar {
-    height: $header-height; // Needs to not be 100% because it's possible for headers to have other controls beneath the toolbar
+    height: $header-height;
     padding: 0 1rem;
 
     .title {
@@ -165,33 +165,8 @@ $subheader-height: 60px;
       }
     }
 
-    .buttonset > .separator {
-      background-color: $header-button-color;
-      padding: 0;
-    }
-
-    [class^='btn']:hover:not([disabled]) {
-      color: $theme-color-palette-white !important;
-    }
-
-    .btn-toggle {
-      color: rgba(255, 255, 255, 0.7) !important;
-
-      &.is-pressed {
-        color: $theme-color-palette-white !important;
-
-        svg {
-          color: $theme-color-palette-white !important;
-        }
-      }
-
-      &:hover svg {
-        color: $theme-color-palette-white !important;
-      }
-
-      svg {
-        color: rgba(255, 255, 255, 0.7) !important;
-      }
+    &.has-title-button + .breadcrumb {
+      padding-left: 50px;
     }
 
     .panel-title {
@@ -205,10 +180,6 @@ $subheader-height: 60px;
       line-height: 1;
     }
 
-    &.has-title-button + .breadcrumb {
-      padding-left: 65px;
-    }
-
     &.do-resize {
       .title {
         left: 8px;
@@ -220,6 +191,29 @@ $subheader-height: 60px;
         }
       }
 
+    }
+  }
+
+  .flex-toolbar {
+    max-height: $header-height;
+    padding: 0 1.3rem;
+
+    &.has-title-button + .breadcrumb {
+      padding-left: 56px;
+    }
+  }
+
+  &.has-alternate-breadcrumb {
+    .flex-toolbar {
+      margin-bottom: 5px;
+    }
+  }
+
+  &.has-popupmenu-title {
+    .flex-toolbar {
+      .title {
+        padding: 3px;
+      }
     }
   }
 
@@ -295,7 +289,13 @@ $subheader-height: 60px;
 
 .header,
 .subheader {
-  .toolbar {
+  .toolbar,
+  .flex-toolbar {
+    .buttonset > .separator {
+      background-color: $header-button-color;
+      padding: 0;
+    }
+
     // Buttons in the header will all appear as Tertiary/Destructive-style
     [class^='btn'] {
       background-color: transparent;
@@ -352,6 +352,14 @@ $subheader-height: 60px;
         }
       }
 
+      &.is-pressed {
+        color: $header-button-focus-color;
+
+        .icon {
+          color: $header-button-focus-color;
+        }
+      }
+
       &[disabled] {
         color: $header-button-disabled-color !important;
 
@@ -399,9 +407,11 @@ $subheader-height: 60px;
     }
   }
 
-  .icon.app-header {
-    > span {
-      background-color: $header-button-color;
+  [class^='btn'] {
+    .icon.app-header {
+      > span {
+        background-color: $header-button-color;
+      }
     }
   }
 

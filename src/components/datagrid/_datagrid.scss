@@ -226,9 +226,17 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    th:not(.is-filterable) .datagrid-header-text {
-      position: relative;
-      top: -16px;
+    // Filter columns with no filteirng when mixed in with the others.
+    th:not(.is-filterable) {
+      .datagrid-header-text {
+        position: relative;
+        top: -16px;
+      }
+
+      .sort-indicator {
+        position: relative;
+        top: -16px;
+      }
     }
   }
 

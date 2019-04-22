@@ -130,7 +130,8 @@ $.fn.addMessage = function (settings) {
       $(this),
       rule,
       settings.inline,
-      settings.showTooltip
+      settings.showTooltip,
+      settings.isAlert
     );
   });
 };
