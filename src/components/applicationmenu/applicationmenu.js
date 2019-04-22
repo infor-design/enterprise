@@ -155,11 +155,13 @@ ApplicationMenu.prototype = {
 
     this.expandableArea = this.menu.find('.expandable-area');
 
-    // Check to make sure that the internal expandable area Control is invoked
-    let expandableArea = this.expandableArea.data('expandablearea');
-    if (!expandableArea) {
-      this.expandableArea.expandablearea();
-      expandableArea = this.expandableArea.data('expandablearea');
+    if (this.expandableArea) {
+      // Check to make sure that the internal expandable area Control is invoked
+      let expandableArea = this.expandableArea.data('expandablearea');
+      if (!expandableArea) {
+        this.expandableArea.expandablearea();
+        expandableArea = this.expandableArea.data('expandablearea');
+      }
     }
 
     // Handle Role Switcher with events and classes
@@ -629,14 +631,16 @@ ApplicationMenu.prototype = {
       this.expandableArea = this.menu.find('.expandable-area');
     }
 
-    // Check to make sure that the internal expandable area Control is invoked
-    let expandableArea = this.expandableArea.data('expandablearea');
-    if (!expandableArea) {
-      this.expandableArea.expandablearea();
-      expandableArea = this.expandableArea.data('expandablearea');
-    }
+    if (this.expandableArea) {
+      // Check to make sure that the internal expandable area Control is invoked
+      let expandableArea = this.expandableArea.data('expandablearea');
+      if (!expandableArea) {
+        this.expandableArea.expandablearea();
+        expandableArea = this.expandableArea.data('expandablearea');
+      }
 
-    expandableArea.close();
+      expandableArea.close();
+    }
   },
 
   /**
