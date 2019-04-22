@@ -60,7 +60,7 @@ describe('Tabs API', () => {
 
     setTimeout(() => {
       expect(tabsObj.hasMoreButton()).toBeTruthy();
-    }, 300);
+    }, 100);
   });
 
   it('Should not be in responsive mode', () => {
@@ -332,7 +332,7 @@ describe('Tabs API', () => {
 
     setTimeout(() => {
       expect(tab.length).toBeFalsy();
-    }, 300);
+    }, 100);
   });
 
   it('Should select tab, and focus', () => {
@@ -348,7 +348,7 @@ describe('Tabs API', () => {
 
     setTimeout(() => {
       expect(tabsObj.isTabOverflowed($(tabItem))).toBeFalsy();
-    }, 300);
+    }, 100);
   });
 
   it('Should return last visible tabs', () => {
@@ -423,7 +423,7 @@ describe('Tabs API', () => {
       expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-disabled');
       expect(document.querySelectorAll('.tab')[3].classList).not.toContain('is-disabled');
       expect(document.querySelectorAll('.tab')[4].classList).not.toContain('is-disabled');
-    }, 300);
+    }, 100);
   });
 
   it('Should remove tab dismissible tab from tab list', () => {
