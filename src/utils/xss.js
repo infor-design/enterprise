@@ -58,9 +58,10 @@ xssUtils.sanitizeHTML = function (html) {
   let santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
   santizedHtml = santizedHtml.replace(/<[^>]+/g, match => match.replace(/(\/|\s)on\w+=(\'|")?[^"]*(\'|")?/g, '')); // eslint-disable-line
 
-  // Remove console.logs
-  santizedHtml = santizedHtml.replace(/console.log(\b[^<]*(?:(?!\);)<[^<]*)*);/g, '');
-  santizedHtml = santizedHtml.replace(/console.log(\b[^<]*(?:(?!\))<[^<]*)*)/g, '');
+  // Remove console methods
+  const methods = ['assert', 'clear', 'count', 'debug', 'dirxml', 'dir', 'error', 'exception', 'groupCollapsed', 'groupEnd', 'group', 'info', 'log', 'markTimeline', 'profileEnd', 'profile', 'table', 'timeEnd', 'timeStamp', 'time', 'trace', 'warn'];
+  const expr = new RegExp(`console\\.(${methods.join('|')})((\\s+)?\\(([^)]+)\\);?)?`, 'igm');
+  santizedHtml = santizedHtml.replace(expr, '');
 
   // Remove nested script tags
   santizedHtml = santizedHtml.replace(/<\/script>/g, '');
