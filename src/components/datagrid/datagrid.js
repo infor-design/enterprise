@@ -7681,8 +7681,13 @@ Datagrid.prototype = {
    */
   disabledRow() {
     if (this.settings.disabledRows) {
-      const tableRow = this.tableBody.find(' > .datagrid-row td').addClass('is-disabled');
-      tableRow.disable();
+      const data = this.settings.dataset;
+      data.forEach((row, idx) => {
+        if (row.isDisabled) {
+          const tableRow = this.tableBody.find(` > tr[data-index="${idx}"] td`).addClass('is-disabled');
+          tableRow.disable();
+        }
+      });
     }
   },
 

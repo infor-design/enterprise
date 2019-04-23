@@ -50,7 +50,7 @@
     </div>
 
     <div class="contextual-toolbar toolbar is-hidden">
-      <div class="title selection-count">1 Selected</div>
+      <div class="title selection-count">0 Selected</div>
       <div class="buttonset">
         <button class="btn-icon" type="button" id="remove-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -85,7 +85,8 @@
       orderDate: '00000000',
       portable: false,
       action: 1,
-      description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'
+      description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning',
+      isDisabled: true
     });
     data.push({
       id: 2,
@@ -110,7 +111,8 @@
       price: 120.992,
       status: null,
       orderDate: new Date(2014, 6, 3),
-      action: 2
+      action: 2,
+      isDisabled: true
     });
     data.push({
       id: 4,
@@ -135,7 +137,8 @@
       price: 210.99,
       status: 'OK',
       orderDate: new Date(2015, 5, 5),
-      action: 1
+      action: 1,
+      isDisabled: true
     });
     data.push({
       id: 6,
