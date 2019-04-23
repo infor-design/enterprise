@@ -106,6 +106,8 @@ ContextualActionPanel.prototype = {
         if (this.settings.content.is('.contextual-action-panel')) {
           this.panel = this.settings.content;
         } else {
+          this.capContentClone = this.settings.content.clone(true);
+          this.settings.content.before(`<div class="hidden" id="cap-content-placeholder-${this.settings.id}"></div>`);
           this.settings.content.wrap('<div class="contextual-action-panel"></div>');
           this.panel = this.settings.content.parent();
         }
@@ -328,6 +330,10 @@ ContextualActionPanel.prototype = {
     }).on('beforeclose.contextualactionpanel', () => {
       self.panel.addClass('is-animating');
     }).on('close.contextualactionpanel', (e) => {
+      const capContentPlaceholder = $(`#cap-content-placeholder-${this.settings.id}`);
+      if (capContentPlaceholder.length) {
+        capContentPlaceholder.replaceWith(this.capContentClone);
+      }
       passEvent(e);
     })
       .on('beforeopen.contextualactionpanel', function (e) {

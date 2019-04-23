@@ -23,6 +23,7 @@
 - `[Busy Indicator]` Fixed a bug that causes a javascript error when the busy indicator is used on the body tag. ([#1918](https://github.com/infor-design/enterprise/issues/1918))
 - `[Css/Sass]` Fixed an issue where the High Contrast theme and Uplift theme were not using the right tokens. ([#1897](https://github.com/infor-design/enterprise/pull/1897))
 - `[Colors]` Fixed the color palette demo page to showcase the correct hex values based on the current theme ([#1801](https://github.com/infor-design/enterprise/issues/1801))
+- `[Contextual Action Panel]` Fixed an issue where cap modal was open only one time. ([#1993](https://github.com/infor-design/enterprise/issues/1993))
 - `[Datepicker]` Fixed an issue in NG where the custom validation is removed during the teardown of a datepicker.([NG #411](https://github.com/infor-design/enterprise-ng/issues/411))
 - `[Datagrid]` Fixed an issue where lookup filterConditions were not rendering. ([#1873](https://github.com/infor-design/enterprise/issues/1873))
 - `[Datagrid]` Fixed issue where header columns are misaligned with body columns on load. ([#1892](https://github.com/infor-design/enterprise/issues/1892))
