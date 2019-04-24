@@ -153,21 +153,16 @@ ApplicationMenu.prototype = {
       this.adjustHeight();
     }
 
-    this.expandableArea = this.menu.find('.expandable-area');
-
-    if (this.expandableArea) {
-      // Check to make sure that the internal expandable area Control is invoked
-      let expandableArea = this.expandableArea.data('expandablearea');
-      if (!expandableArea) {
-        this.expandableArea.expandablearea();
-        expandableArea = this.expandableArea.data('expandablearea');
-      }
-    }
-
     // Handle Role Switcher with events and classes
     const switchTrigger = this.element.find('.application-menu-switcher-trigger');
     if (switchTrigger.length > 0) {
       this.switcherPanel = switchTrigger.next('.expandable-area');
+
+      const expandableArea = this.switcherPanel.data('expandablearea');
+      if (!expandableArea) {
+        this.switcherPanel.expandablearea();
+      }
+
       this.switcherPanel.on('beforeexpand.applicationmenu', () => {
         const height = this.element.height();
 
@@ -626,20 +621,15 @@ ApplicationMenu.prototype = {
     this.closeMenu();
   },
 
-  closeExpandableArea() {
-    if (!this.expandableArea) {
-      this.expandableArea = this.menu.find('.expandable-area');
-    }
-
-    if (this.expandableArea) {
-      // Check to make sure that the internal expandable area Control is invoked
-      let expandableArea = this.expandableArea.data('expandablearea');
-      if (!expandableArea) {
-        this.expandableArea.expandablearea();
-        expandableArea = this.expandableArea.data('expandablearea');
+  /**
+   * Closes the expandable area controlled by role switcher
+   */
+  closeSwitcherPanel() {
+    if (this.switcherPanel) {
+      const expandableArea = this.switcherPanel.data('expandablearea');
+      if (expandableArea) {
+        expandableArea.close();
       }
-
-      expandableArea.close();
     }
   },
 
