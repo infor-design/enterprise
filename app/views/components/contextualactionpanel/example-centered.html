@@ -66,7 +66,7 @@
           }
         }
       ]
-    }).on('close', function () {
+    }).off('close.test').on('close.test', function () {
       console.log('Close Fired');
       // If you wanted to remove the dom element on close
       // $('#new-grid').closest('.contextual-action-panel').remove();
