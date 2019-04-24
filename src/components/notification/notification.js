@@ -50,7 +50,10 @@ Notification.prototype = {
    */
   build() {
     this.notificationEl = document.createElement('div');
-    this.notificationEl.classList.add('notification', this.settings.type);
+
+    // IE 10/11 does not support multiple paramets for classList.add()
+    this.notificationEl.classList.add('notification');
+    this.notificationEl.classList.add(this.settings.type);
 
     const htmlIcon = `
       <svg class="icon notification-icon icon-${this.settings.type}" focusable="false" aria-hidden="true" role="presentation">
