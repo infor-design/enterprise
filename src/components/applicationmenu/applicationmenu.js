@@ -622,7 +622,7 @@ ApplicationMenu.prototype = {
   },
 
   /**
-   * Closes the expandable area controlled by role switcher
+   * Closes the panel area controlled by switcher
    */
   closeSwitcherPanel() {
     if (this.switcherPanel) {
