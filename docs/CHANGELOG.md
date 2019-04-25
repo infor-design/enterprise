@@ -54,7 +54,7 @@
 - `[Docs]` Added a statement on supporting accessibility. ([#1540](https://github.com/infor-design/enterprise/issues/1540))
 - `[Docs]` Added the supported screen readers and some notes on accessibility. ([#1722](https://github.com/infor-design/enterprise/issues/1722))
 
-(nn Issues Solved this release, Backlog Enterprise nn, Backlog Ng nn, nn Functional Tests, nn e2e Test)
+(50 Issues Solved this release, Backlog Enterprise 294, Backlog Ng 80, 809 Functional Tests, 803 e2e Test)
 
 ## v4.17.1
 
