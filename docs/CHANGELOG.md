@@ -45,6 +45,7 @@
 - `[Signin]` Fixed accessibility issues. ([#421](https://github.com/infor-design/enterprise/issues/421))
 - `[Skiplink]` Fixed a z-index issue on skip links over the nav menu. ([#1721](https://github.com/infor-design/enterprise/issues/1721))
 - `[Stepprocess]` Fixed rtl style issues. ([#413](https://github.com/infor-design/enterprise/issues/413))
+- `[Swaplist]` Fixed disabled styling on swap header buttons. ([#2019](https://github.com/infor-design/enterprise/issues/2019))
 - `[Tabs]` Fixed an issue where focus was changed after enable/disable tabs. ([#1934](https://github.com/infor-design/enterprise/issues/1934))
 - `[Tabs-Module]` Fixed an issue where the close icon was outside the searchfield. ([#1704](https://github.com/infor-design/enterprise/issues/1704))
 - `[Toolbar]` Fixed issues when tooltip shows on hover of toolbar ([#1622](https://github.com/infor-design/enterprise/issues/1622))
