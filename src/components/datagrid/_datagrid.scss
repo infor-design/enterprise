@@ -426,7 +426,7 @@ $datagrid-short-row-height: 23px;
 
     //Set Container Heights for scrolling
     .datagrid-body {
-      height: calc(100% - 25px);
+      height: calc(100% - 28px);
     }
 
     .is-filterable th,
@@ -435,7 +435,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.has-group-headers .datagrid-body {
-      height: calc(100% - 51px);
+      height: calc(100% - 54px);
     }
 
     &.has-filterable-columns .datagrid-body {
@@ -443,7 +443,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.has-group-headers.has-filterable-columns .datagrid-body {
-      height: calc(100% - 76px);
+      height: calc(100% - 85px);
     }
 
     //Resize Drag Arrows
@@ -571,7 +571,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.has-group-headers.has-filterable-columns .datagrid-body {
-      height: calc(100% - 86px);
+      height: calc(100% - 92px);
     }
 
     .drag-target-arrows {
