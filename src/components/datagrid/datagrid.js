@@ -1458,7 +1458,7 @@ Datagrid.prototype = {
       filterMarkup += '</div>';
     }
 
-    if (!columnDef.filterType) {
+    if (!columnDef.filterType && this.settings.filterable) {
       filterMarkup = `<div class="datagrid-filter-wrapper is-empty ${headerAlignmentClass}"></div>`;
     }
     return filterMarkup;
