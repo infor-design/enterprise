@@ -289,7 +289,7 @@ describe('Datagrid API', () => {
     expect(idx).toEqual(2);
   });
 
-  it('Should be able to check if a cell is editable', () => { //eslint-disable-line
+  it('Should be able to check if a cell is editable', () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, {
       dataset: data,
