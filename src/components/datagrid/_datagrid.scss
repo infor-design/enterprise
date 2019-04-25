@@ -193,13 +193,13 @@ $datagrid-short-row-height: 23px;
 
   &.has-group-headers.has-filterable-columns {
     .datagrid-body {
-      height: calc(100% - 100px);
+      height: calc(100% - 105px);
     }
   }
 
   &.has-filterable-columns {
     .datagrid-body {
-      height: calc(100% - 65px);
+      height: calc(100% - 66px);
     }
 
     .datagrid-filter-wrapper {
