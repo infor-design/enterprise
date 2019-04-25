@@ -38,6 +38,7 @@
 - `[MenuButton]` Improved the way menu buttons work with screen readers.([#404](https://github.com/infor-design/enterprise/issues/404))
 - `[Message]` Added an audible announce of the message type.([#964](https://github.com/infor-design/enterprise/issues/964))
 - `[Modal]` Changed text and button font colors to pass accessibility checks.([#964](https://github.com/infor-design/enterprise/issues/964))
+- `[Multiselect]` Fixed an issue where previous selection was still selected after clear all by "Select All" option. ([#2003](https://github.com/infor-design/enterprise/issues/2003))
 - `[Notifications]` Fixed a few issues with notification background colors by using the corresponding ids-identity token for each. ([1857](https://github.com/infor-design/enterprise/issues/1857), [1865](https://github.com/infor-design/enterprise/issues/1865))
 - `[Notifications]` Fixed an issue where you couldn't click the close icon in Firefox. ([1573](https://github.com/infor-design/enterprise/issues/1573))
 - `[Radios]` Fixed the last radio item was being selected when clicking on the first when displayed horizontal. ([#1878](https://github.com/infor-design/enterprise/issues/1878))
