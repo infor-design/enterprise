@@ -2241,8 +2241,12 @@ Dropdown.prototype = {
 
     if (doSelectAll) {
       // Select all
-      items.forEach(node => node.classList.add('is-selected'));
+      items.forEach((node) => {
+        node.classList.add('is-selected');
+        node.setAttribute('aria-selected', true);
+      });
       options.forEach((node) => {
+        node.selected = true;
         node.setAttribute('selected', true);
       });
 
@@ -2253,10 +2257,14 @@ Dropdown.prototype = {
       }
     } else {
       // Clear all
-      items.forEach(node => node.classList.remove('is-selected'));
+      items.forEach((node) => {
+        node.classList.remove('is-selected');
+        node.removeAttribute('aria-selected');
+      });
       options.forEach((node) => {
         // Fix for ie-edge
         // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12087679/
+        node.selected = false;
         node.setAttribute('selected', false);
         node.removeAttribute('selected');
       });
