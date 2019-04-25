@@ -178,8 +178,7 @@
     columns.push({
       id: 'id',
       name: 'Row Id',
-      field: 'id',
-      formatter: Formatters.Readonly
+      field: 'id'
     });
     columns.push({
       id: 'productName',
@@ -203,11 +202,7 @@
       field: 'quantity',
       align: 'right',
       editor: Editors.Input,
-      mask: '###',
-      isEditable: function (row, cell, value, col, item) {
-        //For this fake logic just disable odd rows
-        return (row % 2 === 0);
-      }
+      mask: '###'
     });
     columns.push({
       id: 'portable',

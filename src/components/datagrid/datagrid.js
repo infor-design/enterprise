@@ -5159,7 +5159,7 @@ Datagrid.prototype = {
     }
 
     // Update Selected
-    if (self.contextualToolbar && self.contextualToolbar.length && !self.settings.disabledRows) {
+    if (self.contextualToolbar && self.contextualToolbar.length) {
       self.contextualToolbar.find('.selection-count').text(`${self._selectedRows.length} ${Locale.translate('Selected')}`);
     }
 
@@ -6366,8 +6366,8 @@ Datagrid.prototype = {
     checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
     elem.addClass(selectClasses).attr('aria-selected', 'true');
 
-    if (self.columnIdxById('selectionCheckbox') !== -1 && !self.settings.disabledRows) {
-      checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
+    if (self.columnIdxById('selectionCheckbox') !== -1) {
+      checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox')).not('.is-disabled');
       checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
         .addClass('is-checked').attr('aria-checked', 'true');
     }
@@ -7686,6 +7686,7 @@ Datagrid.prototype = {
         if (row.isDisabled) {
           const tableRow = this.tableBody.find(` > tr[data-index="${idx}"] td`).addClass('is-disabled');
           tableRow.disable();
+          this.tableBody.find(` > tr[data-index="${idx}"]`).addClass('disabled-datagrid-row');
         }
       });
     }
