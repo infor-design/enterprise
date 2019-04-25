@@ -54,7 +54,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.saveUserSettings.filter=true]
  * @param {boolean}  [settings.focusAfterSort=false] If true will focus the active cell after sorting.
  * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
- * @param {boolean}  [settings.disabledRows] If true, it will disable rows from selection depending on the item property.
+ * @param {Function}  [settings.isRowDisabled=null] Allows you to provide a function so you can set some rows to disabled base on data or row index.
  * @param {boolean}  [settings.isList=false] Makes the grid have readonly "list" styling
  * @param {string}   [settings.menuId=null]  ID of the menu to use for a row level right click context menu
  * @param {string}   [settings.menuSelected=null] Callback for the grid level context menu
@@ -139,7 +139,7 @@ const DATAGRID_DEFAULTS = {
   saveUserSettings: {},
   focusAfterSort: false, // If true will focus the active cell after sorting.
   editable: false,
-  disabledRows: false,
+  isRowDisabled: null,
   isList: false, // Makes a readonly "list"
   menuId: null, // Id to the right click context menu
   headerMenuId: null, // Id to the right click context menu to use for the header
@@ -275,7 +275,6 @@ Datagrid.prototype = {
     this.firstRender();
     this.handleEvents();
     this.handleKeys();
-    this.disabledRow();
 
     /**
      * Fires after the grid is rendered.
@@ -3282,13 +3281,6 @@ Datagrid.prototype = {
   },
 
   /**
-   * Sets a disabled state.
-   */
-  disable() {
-    this.element.setAttribute('aria-disabled', true);
-  },
-
-  /**
    * Set the heights on top or bottom based on scroll position
    * @private
    */
@@ -3400,6 +3392,22 @@ Datagrid.prototype = {
       return '';
     }
 
+    let isRowDisabled = false;
+
+    // Run a function that helps check if disabled
+    if (self.settings.isRowDisabled && typeof self.settings.isRowDisabled === 'function') {
+      const isDisabled = self.settings.isRowDisabled(actualIndex, rowData);
+
+      if (isDisabled) {
+        isRowDisabled = true;
+      }
+    }
+
+    // Or allow the data to determine it
+    if (rowData.isRowDisabled) {
+      isRowDisabled = true;
+    }
+
     // Default
     d = d ? d.depth : 0;
     depth = d;
@@ -3491,11 +3499,13 @@ Datagrid.prototype = {
         actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
       }${
         self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
-      }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
-      }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
+      }${self.settings.treeGrid ? ` aria-level="${depth}"` : ''
+      }${isRowDisabled ? ' aria-disabled="true"' : ''
+      }${isSelected ? ' aria-selected="true"' : ''} class="datagrid-row${rowStatus.class}${
         isHidden ? ' is-hidden' : ''}${
         rowData.isFiltered ? ' is-filtered' : ''
       }${isActivated ? ' is-rowactivated' : ''
+      }${isRowDisabled ? ' is-rowdisabled' : ''
       }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
       }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
       }${isSummaryRow ? ' datagrid-summary-row' : ''
@@ -5380,7 +5390,7 @@ Datagrid.prototype = {
     }
 
     // Handle Hover States
-    if (self.settings.showHoverState && !self.settings.disabledRows) {
+    if (self.settings.showHoverState) {
       self.bodyContainer
         .off('mouseenter.datagrid, mouseleave.datagrid')
         .on('mouseenter.datagrid', 'tbody > tr', function () {
@@ -6391,6 +6401,10 @@ Datagrid.prototype = {
     const s = this.settings;
 
     if (idx === undefined || idx === -1 || !s.selectable) {
+      return;
+    }
+
+    if (this.isRowDisabled(idx)) {
       return;
     }
 
@@ -7677,22 +7691,6 @@ Datagrid.prototype = {
   },
 
   /**
-   * Handles disabling of rows.
-   */
-  disabledRow() {
-    if (this.settings.disabledRows) {
-      const data = this.settings.dataset;
-      data.forEach((row, idx) => {
-        if (row.isDisabled) {
-          const tableRow = this.tableBody.find(` > tr[data-index="${idx}"] td`).addClass('is-disabled');
-          tableRow.disable();
-          this.tableBody.find(` > tr[data-index="${idx}"]`).addClass('disabled-datagrid-row');
-        }
-      });
-    }
-  },
-
-  /**
    * Sync the body area with the header or other containers.
    * @private
    * @param  {element} elem The element to check.
@@ -7746,6 +7744,22 @@ Datagrid.prototype = {
   },
 
   /**
+   * Returns if the row has been disabled.
+   * @param  {number} row The row index.
+   * @returns {boolean} eturns true if the row is disabled
+   */
+  isRowDisabled(row) {
+    if (this.settings.isRowDisabled && typeof this.settings.isRowDisabled === 'function') {
+      const rowNode = this.rowNodes(row);
+
+      if (rowNode.attr('aria-disabled') === 'true') {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  /**
    * Is a specific row/cell editable?
    * @param  {number} row The row index
    * @param  {number} cell The cell index
@@ -7758,6 +7772,10 @@ Datagrid.prototype = {
 
     const col = this.columnSettings(cell);
     if (col.readonly) {
+      return false;
+    }
+
+    if (this.isRowDisabled(row)) {
       return false;
     }
 

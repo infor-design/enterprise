@@ -56,7 +56,7 @@ describe('Datagrid Settings', () => {
       saveUserSettings: {},
       focusAfterSort: false,
       editable: false,
-      disabledRows: false,
+      isRowDisabled: null,
       isList: false,
       menuId: null,
       headerMenuId: null,

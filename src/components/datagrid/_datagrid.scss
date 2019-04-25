@@ -1420,6 +1420,24 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    &.is-rowdisabled {
+      opacity: 0.6;
+
+      td {
+        &:hover {
+          .datagrid-checkbox {
+            cursor: default;
+          }
+        }
+
+        &.has-editor:hover {
+          .icon {
+            visibility: hidden;
+          }
+        }
+      }
+    }
+
     &.is-selected:not(.hide-selected-color) .is-readonly:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color-dark;
 
@@ -1623,22 +1641,6 @@ $datagrid-short-row-height: 23px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-
-    &.is-disabled {
-      &:focus {
-        box-shadow: none;
-
-        .datagrid-cell-wrapper {
-          border: 1px solid transparent;
-        }
-      }
-
-      &:hover {
-        .datagrid-checkbox {
-          cursor: default;
-        }
-      }
-    }
 
     &:focus,
     &.is-focused {
@@ -1850,11 +1852,6 @@ $datagrid-short-row-height: 23px;
     //Readonly
     &.is-readonly {
       background-color: $datagrid-cell-readonly-bg-color;
-    }
-
-    &.is-disabled {
-      cursor: default;
-      opacity: 0.5;
     }
 
     //Cell Contents but not outer cell is readonly
@@ -2920,16 +2917,6 @@ td .btn-actions {
     &.is-clearable {
       margin-right: 22px;
       width: calc(100% - 32px);
-    }
-  }
-
-  &.has-editor {
-    &.is-disabled:not(.is-readonly) {
-      &:hover {
-        .icon {
-          visibility: hidden;
-        }
-      }
     }
   }
 

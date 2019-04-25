@@ -289,12 +289,13 @@ describe('Datagrid API', () => {
     expect(idx).toEqual(2);
   });
 
-  it('Should be able to check if a cell is editable', () => {
+  it('Should be able to check if a cell is editable', () => { //eslint-disable-line
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, {
       dataset: data,
       columns,
-      editable: true
+      editable: true,
+      isRowDisabled: a => a === 5
     });
 
     // Test Column readonly property
@@ -316,6 +317,11 @@ describe('Datagrid API', () => {
     isEditable = datagridObj.isCellEditable(0, datagridObj.columnIdxById('phone'));
 
     expect(isEditable).toEqual(true);
+
+    // Test column with isDisabled function specified
+    isEditable = datagridObj.isCellEditable(0, 5);
+
+    expect(isEditable).toEqual(false);
   });
 
   it('Should be able to validate required on a cell', (done) => {
