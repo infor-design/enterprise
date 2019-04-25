@@ -199,7 +199,7 @@ $datagrid-short-row-height: 23px;
 
   &.has-filterable-columns {
     .datagrid-body {
-      height: calc(100% - 60px);
+      height: calc(100% - 65px);
     }
 
     .datagrid-filter-wrapper {
@@ -421,7 +421,7 @@ $datagrid-short-row-height: 23px;
   //Short and Medium Row height
   &.short-rowheight {
     .datagrid-cell-wrapper {
-      min-height: $datagrid-short-row-height + 6;
+      min-height: $datagrid-short-row-height + 7;
     }
 
     //Set Container Heights for scrolling
@@ -439,7 +439,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.has-filterable-columns .datagrid-body {
-      height: calc(100% - 49px);
+      height: calc(100% - 57px);
     }
 
     &.has-group-headers.has-filterable-columns .datagrid-body {
@@ -471,6 +471,12 @@ $datagrid-short-row-height: 23px;
         top: -1px;
         vertical-align: top;
       }
+
+      &.text-ellipsis {
+        .datagrid-header-text {
+          margin: 7px 0 0 !important;
+        }
+      }
     }
 
     .datagrid-column-wrapper {
@@ -492,12 +498,12 @@ $datagrid-short-row-height: 23px;
       }
 
       &.l-center-text .sort-indicator {
-        margin: -5px -22px 0 0;
+        margin: -4px -22px 0 0;
       }
     }
 
     .sort-indicator {
-      margin: 1px 2px 0 0;
+      margin: 0 2px;
 
       .icon {
         height: 16px;
@@ -561,7 +567,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.has-filterable-columns .datagrid-body {
-      height: calc(100% - 55px);
+      height: calc(100% - 60px);
     }
 
     &.has-group-headers.has-filterable-columns .datagrid-body {
@@ -586,6 +592,12 @@ $datagrid-short-row-height: 23px;
         padding: 0 0 0 5px;
         width: 16px;
       }
+
+      &.text-ellipsis {
+        .datagrid-header-text {
+          margin: 8px 0 0 !important;
+        }
+      }
     }
 
     .datagrid-column-wrapper {
@@ -597,7 +609,7 @@ $datagrid-short-row-height: 23px;
 
       &.l-right-text {
         .sort-indicator {
-          margin: 1px 3px 0;
+          margin: 0 3px;
         }
       }
 
@@ -859,7 +871,7 @@ $datagrid-short-row-height: 23px;
     }
 
     .datagrid-cell-wrapper {
-      min-height: 39px;
+      min-height: 40px;
       padding: 4px 15px 0;
 
       .icon-calendar,
@@ -1022,7 +1034,7 @@ $datagrid-short-row-height: 23px;
         }
 
         .row-btn {
-          height: 21px;
+          height: 25px;
           line-height: 18px;
           min-width: 80px;
           top: -12px;
@@ -1291,7 +1303,7 @@ $datagrid-short-row-height: 23px;
   }
 
   // Table Rows
-  tbody tr {
+  > tbody > tr {
     line-height: $datagrid-row-height;
 
     &.is-active-row {

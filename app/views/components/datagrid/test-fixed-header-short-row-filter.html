@@ -20,7 +20,7 @@
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
         columns.push({ id: 'quantity', hidden: true, name: 'Quantity', field: 'quantity', filterType: 'integer'});
-        columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+        columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', width: 110, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
         columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text, filterType: 'text'});
         columns.push({ id: 'action', name: 'Action Item', field: 'action', filterType: 'text'});
