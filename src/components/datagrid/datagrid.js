@@ -1131,7 +1131,7 @@ Datagrid.prototype = {
       const isResizable = (column.resizable === undefined ? true : column.resizable);
       const isExportable = (column.exportable === undefined ? true : column.exportable);
       const isSelection = column.id === 'selectionCheckbox';
-      let headerAlignmentClass = '';
+      const headerAlignmentClass = this.getHeaderAlignmentClass(column);
 
       // Make frozen columns hideable: false
       if ((self.hasLeftPane || self.hasRightPane)
@@ -1140,13 +1140,6 @@ Datagrid.prototype = {
         self.settings.frozenColumns.right &&
         self.settings.frozenColumns.right.indexOf(column.id) > -1)) {
         column.hideable = false;
-      }
-
-      // note there is a space at the front of the classname
-      if (column.headerAlign === undefined) {
-        headerAlignmentClass = column.align ? ` l-${column.align}-text` : '';
-      } else {
-        headerAlignmentClass = ` l-${column.headerAlign}-text`;
       }
 
       // Assign css classes
@@ -1285,6 +1278,23 @@ Datagrid.prototype = {
   },
 
   /**
+   * Get the alignment class based on settings. Note there is a space at the front of the classname.
+   * @private
+   * @param {object} column The column info.
+   * @returns {string} The class as a string.
+   */
+  getHeaderAlignmentClass(column) {
+    let headerAlignmentClass = '';
+
+    if (column.headerAlign === undefined) {
+      headerAlignmentClass = column.align ? ` l-${column.align}-text` : '';
+    } else {
+      headerAlignmentClass = ` l-${column.headerAlign}-text`;
+    }
+    return headerAlignmentClass;
+  },
+
+  /**
   * Set filter datepicker with range/single date.
   * @private
   * @param {object} input element to target datepicker.
@@ -1327,6 +1337,7 @@ Datagrid.prototype = {
   filterRowHtml(columnDef, idx) {
     const self = this;
     let filterMarkup = '';
+    const headerAlignmentClass = this.getHeaderAlignmentClass(columnDef);
 
     // Generate the markup for the various Types
     // Supported Filter Types: text, integer, date, select, decimal,
@@ -1336,7 +1347,7 @@ Datagrid.prototype = {
       const filterId = self.uniqueId(`-header-filter-${idx}`);
       let integerDefaults;
 
-      filterMarkup = `<div class="datagrid-filter-wrapper" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
+      filterMarkup = `<div class="datagrid-filter-wrapper${headerAlignmentClass}" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
         col.name}</label>`;
 
       switch (col.filterType) {
@@ -1448,7 +1459,7 @@ Datagrid.prototype = {
     }
 
     if (!columnDef.filterType) {
-      filterMarkup = '<div class="datagrid-filter-wrapper"></div>';
+      filterMarkup = `<div class="datagrid-filter-wrapper is-empty ${headerAlignmentClass}"></div>`;
     }
     return filterMarkup;
   },

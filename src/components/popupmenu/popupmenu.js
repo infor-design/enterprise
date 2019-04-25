@@ -1944,7 +1944,9 @@ PopupMenu.prototype = {
     li.addClass('is-focused');
 
     // Prevent chrome from scrolling - toolbar
-    anchor.focus();
+    if (anchor) {
+      anchor.focus();
+    }
     li.closest('.header').scrollTop(0);
   },
 
@@ -2154,7 +2156,9 @@ PopupMenu.prototype = {
     if (document.activeElement && document.activeElement.tagName === 'INPUT') {
       return;
     }
-    this.element.focus();
+    if (this.element) {
+      this.element.focus();
+    }
   },
 
   /**

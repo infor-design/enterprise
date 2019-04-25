@@ -201,6 +201,11 @@ $datagrid-short-row-height: 23px;
     .datagrid-body {
       height: calc(100% - 60px);
     }
+
+    .datagrid-filter-wrapper {
+      height: 24px;
+      margin: 3px 0;
+    }
   }
 
   &.has-filterable-columns {
@@ -215,27 +220,6 @@ $datagrid-short-row-height: 23px;
 
       &.l-right-text {
         top: -15px;
-      }
-    }
-
-    .is-filterable .datagrid-column-wrapper {
-      top: -3px;
-
-      &.l-right-text {
-        top: -3px;
-      }
-    }
-
-    // Filter columns with no filteirng when mixed in with the others.
-    th:not(.is-filterable) {
-      .datagrid-header-text {
-        position: relative;
-        top: -16px;
-      }
-
-      .sort-indicator {
-        position: relative;
-        top: -16px;
       }
     }
   }
@@ -499,22 +483,21 @@ $datagrid-short-row-height: 23px;
         }
 
         .sort-indicator {
-          margin: 0 2px;
+          margin: 0 3px 0 0;
         }
       }
 
       .datagrid-checkbox {
         top: -13px;
       }
-    }
 
-    .datagrid-header th.text-ellipsis,
-    .datagrid-column-wrapper .datagrid-header-text {
-      margin: 6px 0 0 !important;
+      &.l-center-text .sort-indicator {
+        margin: -5px -22px 0 0;
+      }
     }
 
     .sort-indicator {
-      margin: 0 2px 0 0;
+      margin: 1px 2px 0 0;
 
       .icon {
         height: 16px;
@@ -558,11 +541,6 @@ $datagrid-short-row-height: 23px;
         .datagrid-filter-wrapper {
           top: -3px;
         }
-      }
-
-      th:not(.is-filterable) .datagrid-header-text {
-        position: relative;
-        top: -13px;
       }
     }
 
@@ -612,31 +590,29 @@ $datagrid-short-row-height: 23px;
 
     .datagrid-column-wrapper {
       padding: 0 15px;
-      top: 0;
+
+      .sort-indicator {
+        margin: 1px 5px 0;
+      }
 
       &.l-right-text {
-        .datagrid-header-text {
-          margin-top: 9px;
-        }
-
         .sort-indicator {
-          margin: 1px 5px 0;
+          margin: 1px 3px 0;
         }
       }
-    }
 
-    .sort-indicator {
-      margin: 3px 0 0 4px;
+      &.l-center-text {
+        .sort-indicator {
+          margin: -8px -22px 0 0;
+        }
+      }
     }
 
     .is-filterable {
-      .datagrid-column-wrapper {
-        top: -2px;
-      }
-
       .datagrid-filter-wrapper {
+        height: 23px;
         margin-bottom: 3px;
-        top: -6px;
+        top: -5px;
 
         .btn-filter {
           left: 11px;
@@ -670,16 +646,15 @@ $datagrid-short-row-height: 23px;
       }
 
       .is-filterable .datagrid-column-wrapper {
-        top: -3px;
+        top: -1px;
 
         &.l-right-text {
           top: -3px;
         }
       }
 
-      th:not(.is-filterable) .datagrid-header-text {
-        position: relative;
-        top: -15px;
+      .datagrid-column-wrapper {
+        top: -1px;
       }
     }
 
@@ -2260,7 +2235,7 @@ $datagrid-short-row-height: 23px;
       }
 
       .datagrid-filter-wrapper .btn-filter {
-        left: 18px;
+        left: 16px;
       }
     }
 
@@ -2289,7 +2264,7 @@ $datagrid-short-row-height: 23px;
 
     //Checkboxes
     .datagrid-checkbox {
-      top: -12px;
+      top: -15px;
 
       &::before {
         border: 1px solid $datagrid-header-checkbox-border-color;
@@ -2389,7 +2364,7 @@ $datagrid-short-row-height: 23px;
       float: right;
 
       .sort-indicator {
-        margin: 2px 2px 0;
+        margin: 3px 3px 0;
       }
     }
   }
@@ -2403,232 +2378,238 @@ $datagrid-short-row-height: 23px;
         }
       }
     }
+  }
 
-    .datagrid-filter-wrapper {
-      display: block;
-      height: 22px;
-      line-height: 30px;
-      margin-bottom: 3px;
-      max-width: calc(100% - 20px);
-      min-width: 70px;
+  .datagrid-filter-wrapper {
+    display: block;
+    height: 0;
+    line-height: 30px;
+    margin-bottom: 0;
+    max-width: calc(100% - 20px);
+    min-width: 70px;
+    position: relative;
+    top: -5px;
+    width: calc(100% - 20px);
+
+    &.is-empty {
+      &.l-right-text {
+        direction: rtl;
+        float: right;
+      }
+    }
+
+    input {
+      background-color: transparent;
+      border-color: $datagrid-filter-border-color;
+      color: $datagrid-filter-color;
+      height: 24px;
+      left: 12px;
+      padding: 5px;
       position: relative;
-      top: -7px;
-      width: calc(100% - 20px);
+      vertical-align: top;
+      width: calc(100% - 46px);
 
-      input {
-        background-color: transparent;
-        border-color: $datagrid-filter-border-color;
-        color: $datagrid-filter-color;
-        height: 24px;
-        left: 12px;
-        padding: 3px 5px 2px;
-        position: relative;
-        vertical-align: top;
-        width: calc(100% - 46px);
-
-        &.datepicker {
-          padding: 3px 24px 2px 5px;
-        }
-
-        &.error {
-          color: $datagrid-filter-color !important;
-        }
-
-        &:focus {
-          border-color: $datagrid-filter-focus-color;
-        }
-
-        &:hover:not(:disabled):not(:focus) {
-          border-color: $datagrid-filter-hover-border-color;
-        }
-
-        &:disabled {
-          border-color: $datagrid-filter-disabled-color;
-        }
+      &.datepicker {
+        padding: 3px 24px 2px 5px;
       }
 
-      [data-mask-mode='number'] {
-        padding: 3px 7px 2px 3px;
+      &.error {
+        color: $datagrid-filter-color !important;
       }
 
-      .dropdown {
-        background-color: transparent;
-        color: $datagrid-filter-color;
-        height: 24px;
-        line-height: 21px;
-        padding: 3px 0 0 5px;
-        -webkit-text-fill-color: $datagrid-filter-color;
-        vertical-align: top;
-        width: calc(100% - 5px);
+      &:focus {
+        border-color: $datagrid-filter-focus-color;
+      }
 
-        &:hover {
-          border-color: $datagrid-filter-hover-border-color !important;
+      &:hover:not(:disabled):not(:focus) {
+        border-color: $datagrid-filter-hover-border-color;
+      }
 
-          + .icon {
-            color: $datagrid-filter-hover-color !important;
-          }
-        }
+      &:disabled {
+        border-color: $datagrid-filter-disabled-color;
+      }
+    }
 
-        &div:hover:not(:disabled) {
-          border-color: $datagrid-filter-hover-border-color !important;
-        }
+    [data-mask-mode='number'] {
+      padding: 3px 7px 2px 3px;
+    }
+
+    .dropdown {
+      background-color: transparent;
+      color: $datagrid-filter-color;
+      height: 24px;
+      line-height: 21px;
+      padding: 3px 0 0 5px;
+      -webkit-text-fill-color: $datagrid-filter-color;
+      vertical-align: top;
+      width: calc(100% - 5px);
+
+      &:hover {
+        border-color: $datagrid-filter-hover-border-color !important;
 
         + .icon {
-          right: 4px;
-          top: -2px !important;
-        }
-
-        &.is-disabled {
-          border-color: $datagrid-filter-disabled-color;
-
-          + .icon {
-            color: $datagrid-filter-disabled-color;
-          }
-        }
-
-        > span {
-          color: inherit;
-          -webkit-text-fill-color: inherit;
-          width: calc(100% - 16px);
-        }
-
-      }
-
-      .dropdown-wrapper {
-        background-color: transparent;
-        display: inline;
-        left: 13px;
-        vertical-align: top;
-        width: calc(100% - 44px);
-
-        .icon {
-          height: 16px;
-          vertical-align: top;
-          width: 16px;
-        }
-
-        div.dropdown {
-          border: 1px solid $datagrid-filter-border-color;
-
-          &:hover {
-            border: 1px solid $datagrid-filter-hover-border-color;
-          }
-        }
-      }
-
-      .timepicker,
-      .datepicker,
-      .dropdown {
-        + .icon {
-          color: $datagrid-filter-icon-color;
-          height: 13px;
-          margin-left: -9px;
-          top: -3px;
-          width: 13px;
-        }
-
-        &:not(:disabled) + .icon:hover,
-        &:hover:not(:disabled) + .icon {
           color: $datagrid-filter-hover-color !important;
         }
-
-        &:disabled + .icon {
-          color: $datagrid-list-filter-disabled-color !important;
-          opacity: 0.6;
-        }
-
       }
 
-      .lookup-wrapper {
-        background-color: transparent;
-        display: inline;
-        left: 2px;
-        vertical-align: top;
-        width: calc(100% - 44px);
+      &div:hover:not(:disabled) {
+        border-color: $datagrid-filter-hover-border-color !important;
+      }
 
-        input.lookup {
-          left: 10px;
-          width: calc(100% - 41px);
+      + .icon {
+        right: 4px;
+        top: -2px !important;
+      }
 
-          &:not(:disabled) + .trigger > .icon:hover,
-          &:hover:not(:disabled) + .trigger > .icon {
-            color: $datagrid-filter-hover-color;
-          }
+      &.is-disabled {
+        border-color: $datagrid-filter-disabled-color;
 
-          &:disabled + .trigger > .icon {
-            color: $datagrid-list-filter-disabled-color;
-            opacity: 0.6;
-          }
-        }
-
-        .trigger {
-          height: 24px;
-          margin-left: -18px;
-          width: 27px;
-
-          .icon {
-            color: $datagrid-filter-icon-color;
-            height: 30px;
-            right: -6px;
-            top: -3px;
-            width: 16px;
-          }
+        + .icon {
+          color: $datagrid-filter-disabled-color;
         }
       }
 
-      .btn-filter {
-        height: 21px;
-        left: 15px;
-        min-width: 34px;
-        padding-top: 3px;
-        top: 1px;
+      > span {
+        color: inherit;
+        -webkit-text-fill-color: inherit;
+        width: calc(100% - 16px);
+      }
+
+    }
+
+    .dropdown-wrapper {
+      background-color: transparent;
+      display: inline;
+      left: 13px;
+      vertical-align: top;
+      width: calc(100% - 44px);
+
+      .icon {
+        height: 16px;
         vertical-align: top;
-        width: 34px;
+        width: 16px;
+      }
 
-        &:disabled {
+      div.dropdown {
+        border: 1px solid $datagrid-filter-border-color;
+
+        &:hover {
+          border: 1px solid $datagrid-filter-hover-border-color;
+        }
+      }
+    }
+
+    .timepicker,
+    .datepicker,
+    .dropdown {
+      + .icon {
+        color: $datagrid-filter-icon-color;
+        height: 13px;
+        margin-left: -9px;
+        top: -3px;
+        width: 13px;
+      }
+
+      &:not(:disabled) + .icon:hover,
+      &:hover:not(:disabled) + .icon {
+        color: $datagrid-filter-hover-color !important;
+      }
+
+      &:disabled + .icon {
+        color: $datagrid-list-filter-disabled-color !important;
+        opacity: 0.6;
+      }
+
+    }
+
+    .lookup-wrapper {
+      background-color: transparent;
+      display: inline;
+      left: 2px;
+      vertical-align: top;
+      width: calc(100% - 44px);
+
+      input.lookup {
+        left: 10px;
+        width: calc(100% - 41px);
+
+        &:not(:disabled) + .trigger > .icon:hover,
+        &:hover:not(:disabled) + .trigger > .icon {
+          color: $datagrid-filter-hover-color;
+        }
+
+        &:disabled + .trigger > .icon {
+          color: $datagrid-list-filter-disabled-color;
           opacity: 0.6;
-
-          .icon {
-            color: $datagrid-filter-disabled-color;
-          }
         }
+      }
 
-        .icon-dropdown {
-          color: $datagrid-filter-icon-color !important;
-          height: 14px;
-          left: -7px;
-          margin-top: -3px;
-          position: relative;
-          top: 2px;
-          vertical-align: top;
-          width: 14px;
+      .trigger {
+        height: 24px;
+        margin-left: -18px;
+        width: 27px;
 
-          + .icon-dropdown {
-            left: -5px;
-          }
+        .icon {
+          color: $datagrid-filter-icon-color;
+          height: 30px;
+          right: -6px;
+          top: -3px;
+          width: 16px;
         }
+      }
+    }
 
-        &.is-open .icon {
-          color: $datagrid-filter-active-color !important;
+    .btn-filter {
+      height: 21px;
+      left: 15px;
+      min-width: 34px;
+      padding-top: 3px;
+      top: 1px;
+      vertical-align: top;
+      width: 34px;
+
+      &:disabled {
+        opacity: 0.6;
+
+        .icon {
+          color: $datagrid-filter-disabled-color;
         }
+      }
 
-        &:hover:not(.is-open):not(:disabled) {
-          .icon {
-            color: $datagrid-filter-hover-color !important;
-          }
+      .icon-dropdown {
+        color: $datagrid-filter-icon-color !important;
+        height: 14px;
+        left: -7px;
+        margin-top: -3px;
+        position: relative;
+        top: 2px;
+        vertical-align: top;
+        width: 14px;
+
+        + .icon-dropdown {
+          left: -5px;
         }
+      }
 
-        &:focus:not(.hide-focus) {
-          border: 1px solid $datagrid-filter-focus-color;
+      &.is-open .icon {
+        color: $datagrid-filter-active-color !important;
+      }
 
-          .icon {
-            color: $datagrid-filter-focus-color !important;
-          }
+      &:hover:not(.is-open):not(:disabled) {
+        .icon {
+          color: $datagrid-filter-hover-color !important;
+        }
+      }
+
+      &:focus:not(.hide-focus) {
+        border: 1px solid $datagrid-filter-focus-color;
+
+        .icon {
+          color: $datagrid-filter-focus-color !important;
         }
       }
     }
   }
-
 }
 
 .datagrid-rowgroup-header {
@@ -2674,7 +2655,7 @@ $datagrid-short-row-height: 23px;
 // Sorting
 .sort-indicator {
   display: inline-block;
-  margin: 3px 0 0;
+  margin: 3px -1px 0;
   vertical-align: top;
 
   .icon {
@@ -2702,7 +2683,7 @@ $datagrid-short-row-height: 23px;
   width: 100%;
 
   .sort-indicator {
-    margin: -6px -22px 0 0;
+    margin: -7px -22px 0 0;
   }
 }
 
@@ -3651,11 +3632,11 @@ html[dir='rtl'] {
     .handle,
     .is-draggable-target {
       display: none;
-      font-size: 3.1rem;
+      font-size: 3rem;
       height: $datagrid-header-height;
       left: 0;
       margin: 0;
-      padding: 1px 0 0 5px;
+      padding: 0 0 0 5px;
       position: absolute;
       top: 0;
 
