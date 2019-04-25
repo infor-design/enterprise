@@ -616,18 +616,6 @@ ApplicationMenu.prototype = {
   },
 
   /**
-   * Closes the panel area controlled by switcher
-   */
-  closeSwitcherPanel() {
-    if (this.switcherPanel) {
-      const expandableArea = this.switcherPanel.data('expandablearea');
-      if (expandableArea) {
-        expandableArea.close();
-      }
-    }
-  },
-
-  /**
    * Unbinds event listeners and removes extraneous markup from the Application Menu.
    * @returns {this} component instance
    */
