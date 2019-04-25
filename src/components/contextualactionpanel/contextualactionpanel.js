@@ -72,11 +72,16 @@ ContextualActionPanel.prototype = {
     this.panel = this.element.next('.contextual-action-panel');
 
     const dataModal = this.element.data('modal');
-    if (typeof dataModal === 'string') {
-      const panelFromID = $(`#${dataModal}`);
+    const setPanel = (id) => {
+      const panelFromID = $(`#${id}`);
       if (panelFromID.length) {
         this.panel = panelFromID;
       }
+    };
+    if (typeof dataModal === 'string') {
+      setPanel(dataModal);
+    } else if (typeof dataModal === 'object') {
+      setPanel(this.element.attr('data-modal'));
     }
 
     // Handle case with popup triggered from a menu
@@ -322,20 +327,28 @@ ContextualActionPanel.prototype = {
       self.element.triggerHandler(e.type);
     }
 
-    this.panel.addClass('is-animating').on('open.contextualactionpanel', (e) => {
-      passEvent(e);
-      self.panel.removeClass('is-animating');
-    }).on('beforeclose.contextualactionpanel', () => {
-      self.panel.addClass('is-animating');
-    }).on('close.contextualactionpanel', (e) => {
-      passEvent(e);
-    })
+    this.panel.addClass('is-animating')
+      .off('open.contextualactionpanel')
+      .on('open.contextualactionpanel', (e) => {
+        passEvent(e);
+        self.panel.removeClass('is-animating');
+      })
+      .off('beforeclose.contextualactionpanel')
+      .on('beforeclose.contextualactionpanel', () => {
+        self.panel.addClass('is-animating');
+      })
+      .off('close.contextualactionpanel')
+      .on('close.contextualactionpanel', (e) => {
+        passEvent(e);
+      })
+      .off('beforeopen.contextualactionpanel')
       .on('beforeopen.contextualactionpanel', function (e) {
         if (self.settings.initializeContent) {
           $(this).initialize();
         }
         passEvent(e);
       })
+      .off('afteropen.contextualactionpanel')
       .on('afteropen.contextualactionpanel', () => {
         if (self.toolbar) {
           self.toolbar.trigger('recalculate-buttons');
@@ -470,7 +483,9 @@ ContextualActionPanel.prototype = {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
     this.setup();
 
-    this.modalAPI.updated(settings);
+    if (this.modalAPI) {
+      this.modalAPI.updated(settings);
+    }
     return this;
   },
 
