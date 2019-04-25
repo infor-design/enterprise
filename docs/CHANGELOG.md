@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.19.0
+
+### v4.19.0 features
+
+- `[Datagrid]` Added support for disabling rows by data or a dynamic function, rows are disabled from selection and editing. ([#1614](https://github.com/infor-design/enterprise/issues/1614))
+
+(nn Issues Solved this release, Backlog Enterprise nn, Backlog Ng nn, nn Functional Tests, nn e2e Test)
+
 ## v4.18.0
 
 ### v4.18.0 Future Deprecation
