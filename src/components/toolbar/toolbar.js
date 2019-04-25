@@ -572,7 +572,9 @@ Toolbar.prototype = {
         if (document.activeElement && document.activeElement.tagName === 'INPUT') {
           return;
         }
-        el.focus();
+        if (el) {
+          el.focus();
+        }
         self.buttonset.scrollTop(0);
       });
 

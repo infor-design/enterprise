@@ -2,8 +2,6 @@
 
 ## v4.18.0
 
-### v4.18.0 Future Deprecation
-
 ### v4.18.0 Features
 
 - `[App Menu]` Added support for personalization by adding the `is-personalizable` class the menu will now change colors along with headers ([#1847](https://github.com/infor-design/enterprise/issues/1847))
@@ -27,6 +25,7 @@
 - `[Datagrid]` Fixed an issue where lookup filterConditions were not rendering. ([#1873](https://github.com/infor-design/enterprise/issues/1873))
 - `[Datagrid]` Fixed issue where header columns are misaligned with body columns on load. ([#1892](https://github.com/infor-design/enterprise/issues/1892))
 - `[Datagrid]` Fixed an issue where filtering was missing translation. ([#1900](https://github.com/infor-design/enterprise/issues/1900))
+- `[Datagrid]` Fixed an issue with the checkbox formatter where string based 1 or 0 would not work as a dataset source. ([#1948](https://github.com/infor-design/enterprise/issues/1948))
 - `[Datagrid]` Fixed a bug where text would be misaligned when repeatedly toggling the filter row. ([#1969](https://github.com/infor-design/enterprise/issues/1969))
 - `[Datagrid]` Added an example of expandOnActivate on a customer editor. ([#353](https://github.com/infor-design/enterprise-ng/issues/353))
 - `[Datagrid]` Added ability to pass a function to the tooltip option for custom formatting. ([#354](https://github.com/infor-design/enterprise-ng/issues/354))
@@ -258,7 +257,7 @@
 - `[General]` Fixed some incorrect layouts. ([#1357](https://github.com/infor-design/enterprise/issues/1357))
 - `[Targeted Achievement]` Removed some older non working examples. ([#520](https://github.com/infor-design/enterprise/issues/520))
 
-(54 Issues Solved this release, Backlog Enterprise 180, Backlog Ng 66, 705 Functional Tests, 716 e2e Test)
+(50 Issues Solved this release, Backlog Enterprise 294, Backlog Ng 80, 809 Functional Tests, 716 e2e Test)
 
 ## v4.14.0
 
