@@ -4,7 +4,7 @@
     ],
     "scripts": {
         "beforeStart": "npm run eslint:error-only",
-        "afterBump": "npm run clean && npm run build && npm run minify && npm run zip-dist",
+        "beforeStage": "npm run clean && npm run build && npm run minify && npm run zip-dist",
         "afterRelease": "./scripts/after-release.sh ${npm.tag} ${version}"
     },
     "git": {
@@ -16,7 +16,7 @@
     },
     "github": {
         "release": true,
-        "releaseName": "v%s",
+        "releaseName": "v${version}",
         "tokenRef": "GITHUB_ACCESS_TOKEN",
         "assets": "dist.zip"
     }
