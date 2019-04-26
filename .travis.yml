@@ -4,6 +4,7 @@ addons:
     paths:
       - $(ls test/.tmp/diff/*.png | tr "\n" ":")
 
+dist: trusty
 language: node_js
 
 # Leave node_js version blank to
