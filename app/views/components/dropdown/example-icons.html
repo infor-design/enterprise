@@ -14,20 +14,33 @@
     </div>
 
     <div class="field">
-      <label for="example-colors">Dropdown with Colors</label>
-      <select id="example-colors" name="example-icon" class="dropdown">
-        <option value="opt-1" data-icon="{icon: 'back-color', class: 'azure07-color'}">Default</option>
-        <option value="opt-2" data-icon="{icon: 'back-color', class: 'azure07-color'}">Azure</option>
-        <option value="opt-3" data-icon="{icon: 'back-color', class: 'amber07-color'}">Amber</option>
-        <option value="opt-4" data-icon="{icon: 'back-color', class: 'amethyst07-color'}">Amethyst</option>
-        <option value="opt-4" data-icon="{icon: 'back-color', class: 'turquoise07-color'}">Turquoise</option>
-        <option value="opt-4" data-icon="{icon: 'back-color', class: 'emerald07-color'}">Emerald</option>
-        <option value="opt-4" data-icon="{icon: 'back-color', class: 'ruby07-color'}">Ruby</option>
-        <option value="opt-4" data-icon="{icon: 'back-color', class: 'slate07-color'}">Slate</option>
-        <option value="opt-4" data-icon="{icon: 'back-color', class: 'graphite07-color'}">Graphite</option>
-      </select>
+      <div class="field">
+        <label for="example-colors">Dropdown With Colors</label>
+        <select id="example-colors" name="example-colors" class="dropdown" data-init="false">
+        </select>
+      </div>
     </div>
-
 
   </div>
 </div>
+
+<script>
+  $('body').on('initialized', function () {
+    // Set up colors dropdown
+    var colorsDropdown = $('#example-colors');
+    var colors = Soho.theme.personalizationColors();
+    var colorsHtml = '';
+    for (color in colors) {
+     colorsHtml += '<option data-icon="{icon: \'swatch\', class: \'' + colors[color].backgroundColorClass +' swatch\'}" value="' + colors[color].id + '" data-hex="' + colors[color].value + '">'+ colors[color].name +'</option>';
+    }
+
+    colorsDropdown.on('selected', function (e, args) {
+      $('html').data('personalize').setColors(this.selectedOptions[0].getAttribute('data-hex'));
+      //$('html').data('personalize').setTheme(this.selectedOptions[0].getAttribute('value'));
+    }).html(colorsHtml).dropdown().val('azure').trigger('updated');
+
+    $('html').on('colorschanged', function (e, args) {
+      console.log('colorschanged', args)
+    });
+  });
+</script>
