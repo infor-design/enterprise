@@ -38,8 +38,6 @@ script:
 jobs:
   include:
     - stage: deploy to demo server
-      if: branch = master AND type = push
-      env: TEST_SUITE=e2e
       before_install: skip
       install: skip
       script: skip
@@ -49,8 +47,6 @@ jobs:
           skip_cleanup: true
 
     - stage: deploy nightly build
-      if: branch = master AND type = cron
-      env: TEST_SUITE=e2e
       before_install: skip
       install: skip
       script: skip
@@ -65,12 +61,8 @@ stages:
     # Need "push" here too so it reruns when you push to a pull request
     if: type IN (push, pull_request)
 
-  - name: deploy
-    if: branch = master
+  - deploy nightly build
+    if: branch = master AND type = cron
 
-# Safelist
-# only allow master and release branches like 4.10.x
-branches:
-  only:
-  - master
-  - /^(\d{1,}).(\d{1,}).x$/
+  - deploy to demo server
+    if: branch = master AND type = push
