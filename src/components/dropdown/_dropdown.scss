@@ -98,8 +98,7 @@ div.multiselect {
   }
 
   > span {
-    display: block;
-    min-height: 16px;
+    display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: top;
