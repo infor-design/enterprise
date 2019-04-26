@@ -858,6 +858,11 @@ Dropdown.prototype = {
     text = text.trim();
     this.pseudoElem.find('span').html(`<span class="audible">${this.label.text()} </span>${text}`);
 
+    // If there is a placeholder set the selected text
+    if (this.element.attr('placeholder')) {
+      this.pseudoElem.find('span').not('.audible').attr('data-selected-text', text);
+    }
+
     // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
 
@@ -896,8 +901,10 @@ Dropdown.prototype = {
 
     // set placeholder text on pseudoElem span element
     if (this.element.attr('placeholder')) {
-      this.pseudoElem.find('span').attr('data-placeholder-text', this.element.attr('placeholder'));
+      this.pseudoElem.find('span').not('.audible').attr('data-placeholder-text', this.element.attr('placeholder'));
+      this.pseudoElem.find('span').not('.audible').attr('data-selected-text', '');
     }
+
   },
 
   /**
@@ -1668,6 +1675,9 @@ Dropdown.prototype = {
         .text()
         .trim();
       this.searchInput.val(fieldValue);
+      if (this.element.attr('placeholder')) {
+        this.pseudoElem.find('span').not('.audible').attr('data-selected-text', fieldValue);
+      }
     }
 
     const noScroll = this.settings.multiple;
