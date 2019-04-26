@@ -904,7 +904,6 @@ Dropdown.prototype = {
       this.pseudoElem.find('span').not('.audible').attr('data-placeholder-text', this.element.attr('placeholder'));
       this.pseudoElem.find('span').not('.audible').attr('data-selected-text', '');
     }
-
   },
 
   /**
