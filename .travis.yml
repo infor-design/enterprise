@@ -3,73 +3,59 @@ addons:
   artifacts:
     paths:
       - $(ls test/.tmp/diff/*.png | tr "\n" ":")
-
 language: node_js
-
+dist: trusty
 # Leave node_js version blank to
 # use version in `.nvmrc`
 node_js:
-
 cache:
   directories:
     - node_modules
-
 env:
   - TEST_SUITE=e2e
   - TEST_SUITE=functional
   - TEST_SUITE=lint
-
 install:
   - npm install -g grunt-cli
   - npm install
-
 before_script:
   - export TZ=America/New_York
   - if [ $TEST_SUITE != lint ]; then npm run build; fi
-
 script:
   - if [ $TEST_SUITE = e2e ]; then (npm run quickstart &) && sleep 5; fi
   - npm run $TEST_SUITE:ci
   - if [ $TEST_SUITE = e2e ]; then npm run stop; fi
   - if [ $TRAVIS_EVENT_TYPE = cron ] && [ $TEST_SUITE = e2e ]; then npm run e2e:ci:bs; fi
-
-# Include additional stages to the above script "jobs"
 jobs:
   include:
-    - stage: deploy to demo server
-      if: branch = master AND type = push
+    - stage: deploy
       env: TEST_SUITE=e2e
       before_install: skip
       install: skip
       script: skip
       deploy:
+          # DEPLOY BUILD TO DEMO SERVER
+          # this runs conditionally `on`
+          # "push" events to "master" branch
         - provider: script
           script: ./scripts/jenkins-deploy.sh -b master -w
           skip_cleanup: true
-
-    - stage: deploy nightly build
-      if: branch = master AND type = cron
-      env: TEST_SUITE=e2e
-      before_install: skip
-      install: skip
-      script: skip
-      deploy:
+          on:
+            condition: $TRAVIS_EVENT_TYPE = push
+            branch: master
+          # NPM PUBLISH NIGHTLY DEV BUILD
+          # this runs conditionally on "cron" events
+          # and uses default branch "master"
         - provider: script
           script: ./scripts/publish-nightly.sh
           skip_cleanup: true
+          on:
+            condition: $TRAVIS_EVENT_TYPE = cron
 
 # Specify stage(s) order and conditionals per stage
 stages:
-  - name: test
-    if: type = pull_request
-
+  - test
   - name: deploy
-    if: branch = master
-
-
-# Safelist
-# only allow master and release branches like 4.10.x
-branches:
-  only:
-  - master
-  - /(\d).(\d*).x/i
+    # do not run the deploy stage for Pull Request checks
+    # and require the branch name to be master (note for PRs this is the base branch name)
+    if: NOT type IN (pull_request) AND branch = master
