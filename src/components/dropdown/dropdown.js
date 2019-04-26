@@ -323,12 +323,7 @@ Dropdown.prototype = {
     this.setDisplayedValues();
     this.setInitial();
     this.setWidth();
-
-    if (this.overflowed) {
-      this.setTooltip();
-    } else if (this.tooltipApi) {
-      this.removeTooltip();
-    }
+    this.toggleTooltip();
 
     this.element.triggerHandler('rendered');
 
@@ -499,6 +494,19 @@ Dropdown.prototype = {
     }
 
     self.listIcon.hasIcons = hasIcons;
+  },
+
+  /**
+   * Toggle toooltip (add if text over flowed)
+   * @private
+   * @returns {void}
+   */
+  toggleTooltip() {
+    if (this.overflowed) {
+      this.setTooltip();
+    } else if (this.tooltipApi) {
+      this.removeTooltip();
+    }
   },
 
   /**
@@ -2081,6 +2089,7 @@ Dropdown.prototype = {
     */
     this.element.trigger('listclosed', action);
     this.activate();
+    this.toggleTooltip();
     this.list = null;
     this.searchInput = null;
     this.listUl = null;
@@ -2280,6 +2289,7 @@ Dropdown.prototype = {
     }
     this.activate(true);
     this.setBadge(last);
+    this.toggleTooltip();
 
     this.element.trigger('change').triggerHandler('selected');
   },
@@ -2440,11 +2450,7 @@ Dropdown.prototype = {
       // Fire the change event with the new value if the noTrigger flag isn't set
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
 
-      if (this.overflowed) {
-        this.setTooltip();
-      } else if (this.tooltipApi) {
-        this.removeTooltip();
-      }
+      this.toggleTooltip();
     }
 
     /**
