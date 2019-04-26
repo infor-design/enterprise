@@ -1675,7 +1675,7 @@ Dropdown.prototype = {
         .trim();
       this.searchInput.val(fieldValue);
       if (this.element.attr('placeholder')) {
-        this.pseudoElem.find('span').not('.audible').attr('data-selected-text', fieldValue);
+        this.pseudoElem.find('span').not('.audible').attr('data-selected-text', '');
       }
     }
 
