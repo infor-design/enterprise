@@ -98,13 +98,12 @@ div.multiselect {
   }
 
   > span {
-    display: block;
-    min-height: 16px;
+    display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: top;
 
-    &[data-placeholder-text]::before {
+    &[data-selected-text='']::before {
       color: $input-placeholder-color;
       content: attr(data-placeholder-text);
       -webkit-text-fill-color: $input-placeholder-color;
