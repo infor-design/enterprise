@@ -31,7 +31,7 @@ excel.cleanExtra = function (customDs, self) {
       // THEAD
       const attrExportable = el.getAttribute('data-exportable');
       if (attrExportable && attrExportable === 'no') {
-        const index = parseInt(el.id.slice(-1));
+        const index = parseInt(el.id.slice(-1), 10);
         nonExportables.push(index + 1);
         removeNode(el);
         return;
