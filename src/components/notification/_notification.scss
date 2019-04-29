@@ -79,3 +79,14 @@
     );
   }
 }
+
+//Small size widget
+.one-third.column {
+  .card {
+    .notification-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

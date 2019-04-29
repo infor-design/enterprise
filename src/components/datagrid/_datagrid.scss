@@ -3987,18 +3987,6 @@ html[dir='rtl'] {
   }
 }
 
-//Small size widget
-.one-third.column {
-  .card {
-    .notification-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: 270px;
-    }
-  }
-}
-
 .table-errors {
   display: inline-block;
   height: 35px;
