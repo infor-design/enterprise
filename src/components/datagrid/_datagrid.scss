@@ -948,6 +948,8 @@ $datagrid-short-row-height: 23px;
         margin-top: -33px;
       }
     }
+
+
   }
 
   &.short-rowheight {
@@ -1293,10 +1295,16 @@ $datagrid-short-row-height: 23px;
     }
 
     .chart-completion-target {
-      top: -5px;
+      top: -2px;
 
       .chart-targeted-text {
         margin-top: -27px;
+      }
+    }
+
+    .chart-targeted-achievement {
+      .target {
+        margin-top: 0;
       }
     }
 
