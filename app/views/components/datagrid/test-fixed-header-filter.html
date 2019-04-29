@@ -17,19 +17,24 @@
         data = res.data;
 
         //Define Columns for the Grid.
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
         columns.push({id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text, filterType: 'text'});
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
-        columns.push({ hidden: true, name: 'Activity', field: 'activity'});
-        columns.push({ id: 'quantity', hidden: true, name: 'Quantity', field: 'quantity'});
-        columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-        columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
-        columns.push({ id: 'action', name: 'Action Item', field: 'action'});
+        columns.push({ id: 'productNameC', align: 'center', name: 'Product Center Aligned', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
+        columns.push({ id: 'productNameR', align: 'right', name: 'Product Right Aligned', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
+        columns.push({ hidden: true, name: 'Product Activity', field: 'activity'});
+        columns.push({ id: 'quantity', hidden: true, name: 'Product Quantity', field: 'quantity'});
+        columns.push({ id: 'price', align: 'right', name: 'Product Price', field: 'price', formatter: Formatters.Decimal, width: 200, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+        columns.push({ id: 'priceC', align: 'center', name: 'Product Center Price', field: 'price', formatter: Formatters.Decimal, width: 200, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+        columns.push({ id: 'orderDate', name: 'Product Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+        columns.push({ id: 'status', name: 'Product Status', field: 'status', formatter: Formatters.Text});
+        columns.push({ id: 'action', name: 'Product Action Item', field: 'action'});
 
         //Init and get the api for the grid
         $('#datagrid').datagrid({
           columns: columns,
           dataset: data,
+          selectable: 'multiple',
           paging: true,
           pagesize: 50,
           filterable: true,

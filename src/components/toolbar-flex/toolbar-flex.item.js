@@ -364,7 +364,7 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   set hasNoOverflowedItems(isTrue) {
-    if (this.type !== 'actionbutton') {
+    if (this.type !== 'actionbutton' || !this.componentAPI) {
       return;
     }
 

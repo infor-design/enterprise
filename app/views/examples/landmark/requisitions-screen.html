@@ -1,28 +1,81 @@
 <body class="no-scroll">
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
+  <nav id="application-menu" class="application-menu">
 
-  <header class="header is-personalizable">
-    <div class="toolbar">
-      <div class="title">
+    <div class="accordion panel inverse" data-options="{'allowOnePane': true}" >
 
-        <button id="app-menu-trigger" class="btn-icon" type="button list-detail-back-button">
-          <span class="audible">Show navigation</span>
-          <span class="icon app-header">
-            <span class="one"></span>
-            <span class="two"></span>
-            <span class="three"></span>
-          </span>
-        </button>
-
-        <h1>All Requisitions</h1>
+      <div class="accordion-header is-selected">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-home"></use>
+        </svg>
+        <a href="#"><span>Item One</span></a>
       </div>
 
-      {{> includes/header-actionbutton}}
-    </div>
-  </header>
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-tools"></use>
+        </svg>
+        <a href="#"><span>Item Two</span></a>
+      </div>
 
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-columns"></use>
+        </svg>
+        <a href="#"><span>Item Three</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-cascade"></use>
+        </svg>
+        <a href="#"><span>Item Four</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-insert-image"></use>
+        </svg>
+        <a href="#"><span>Item Five</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-ledger"></use>
+        </svg>
+        <a href="#"><span>Item Six</span></a>
+      </div>
+
+    </div>
+
+    <div class="branding">
+      <svg class="icon" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-logo"></use>
+      </svg>
+    </div>
+  </nav>
   <section id="maincontent" class="two-column page-container fixed-mm list-detail" data-options='{ "listElement": "#task-listview", "detailElement": "#main-detail-area", "backElement": "#app-menu-trigger" }'>
+
+    <header class="header is-personalizable">
+      <div class="toolbar">
+        <div class="title">
+
+          <button id="app-menu-trigger" class="btn-icon application-menu-trigger" type="button list-detail-back-button">
+            <span class="audible">Show navigation</span>
+            <span class="icon app-header">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+          </button>
+
+          <h1>All Requisitions</h1>
+        </div>
+
+        {{> includes/header-actionbutton}}
+      </div>
+    </header>
 
     <aside class="sidebar" role="complementary">
       <div class="sidebar-content scrollable-flex">
