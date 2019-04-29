@@ -5762,7 +5762,7 @@ Datagrid.prototype = {
 
           self.selectAllRows();
         } else {
-          checkbox.removeClass('is-checked').attr('aria-checked', 'true');
+          checkbox.removeClass('is-checked').attr('aria-checked', 'false');
           self.unSelectAllRows();
         }
       });
