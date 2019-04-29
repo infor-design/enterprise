@@ -29,7 +29,7 @@ const APPLICATIONMENU_DEFAULTS = {
   dismissOnClickMobile: false,
   filterable: false,
   openOnLarge: false,
-  triggers: [],
+  triggers: ['.application-menu-trigger'],
   onExpandSwitcher: null,
   onCollapseSwitcher: null,
 };
