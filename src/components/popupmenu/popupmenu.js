@@ -80,6 +80,7 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   init() {
+    this.isFirefox = env.browser.name === 'firefox';
     this.setup();
     this.addMarkup();
     this.handleEvents();
@@ -1109,6 +1110,11 @@ PopupMenu.prototype = {
           if (focus.parent().nextAll(excludes).length > 0) {
             self.highlight($(focus.parent().nextAll(excludes)[rowCount - 1]).find('a'));
           }
+        }
+
+        // Fix - not sure why, but firefox have to manualy trigger
+        if (self.isFirefox && isAutocomplete && key === 13) {
+          self.element.triggerHandler(e);
         }
         return undefined;
       });
