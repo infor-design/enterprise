@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![npm version](https://badge.fury.io/js/ids-enterprise.svg)](https://badge.fury.io/js/ids-enterprise)
 [![Build Status](https://travis-ci.com/infor-design/enterprise.svg?branch=master)](https://travis-ci.com/infor-design/enterprise)
-[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=M2l2RFNkS2hHUU1CU0kvcFdsSGdIWFlMNEF0RVZzRzNvSHVTemJIektiOD0tLTUvWm1JUWNXbjhML01oR2hJNllLb2c9PQ==--dff99debefe381a9d6031c2ce209d663d727ecf9)](https://www.browserstack.com/automate/public-build/M2l2RFNkS2hHUU1CU0kvcFdsSGdIWFlMNEF0RVZzRzNvSHVTemJIektiOD0tLTUvWm1JUWNXbjhML01oR2hJNllLb2c9PQ==--dff99debefe381a9d6031c2ce209d663d727ecf9)
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=ZTBSMS9NZFgxN2VCZnpaNmdsa1NhY2J1NHlsNnFuMG5UcGViQUhMYnl1QT0tLVlTTks3UUVQbXd0emlxL1BKK2RjeGc9PQ==--eb3493141181901c21b84c0bf6c9c7d44635df2ausmvtmcconechy:enterprusmusmvtuusuuuuusuusmvusmvtuusmvuusuuuuuuu)](https://www.browserstack.com/automate/public-build/ZTBSMS9NZFgxN2VCZnpaNmdsa1NhY2J1NHlsNnFuMG5UcGViQUhMYnl1QT0tLVlTTks3UUVQbXd0emlxL1BKK2RjeGc9PQ==--eb3493141181901c21b84c0bf6c9c7d44635df2ausmvtmcconechy:enterprusmusmvtuusuuuuusuusmvusmvtuusmvuusuuuuuuu)
 
 Infor Design System's Enterprise component library is a framework-independent UI library consisting of CSS and JS that provides Infor product development teams, partners, and customers the tools to create user experiences that are approachable, focused, relevant, perceptive.
 
