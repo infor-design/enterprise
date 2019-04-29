@@ -44,7 +44,7 @@ describe('Hierarchy Stacked API', () => {
     svgEl.parentNode.removeChild(svgEl);
     hierarchyEl.parentNode.removeChild(hierarchyEl);
 
-    cleanup(['.svg-icons', '#hierarchy', '#hierarchyInit', '.hierarchy']);
+    cleanup(['.svg-icons', '#hierarchy', '#hierarchy-init-script', '.hierarchy']);
 
     if (hierarchyAPI) {
       hierarchyAPI.destroy();
