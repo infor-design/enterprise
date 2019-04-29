@@ -21,12 +21,7 @@ describe('Dropdown updates, events', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    $('.dropdown').destroy();
-
-    cleanup([
-      '.svg-icons',
-      '.row'
-    ]);
+    cleanup(['.dropdown', '.svg-icons', '#dropdown-list', '.row', 'select']);
   });
 
   it('Should set settings', () => {
