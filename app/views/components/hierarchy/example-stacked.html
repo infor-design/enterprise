@@ -23,7 +23,6 @@
 
   $('#hierarchy').on('selected', function(event, eventInfo) {
     const hierarchyControl = $('#hierarchy').data('hierarchy');
-    console.log(event, eventInfo);
 
     if (eventInfo.eventType === 'expand' || eventInfo.eventType === 'back') {
       $.getJSON('{{basepath}}api/'+ eventInfo.data.childrenUrl, function(newData) {
