@@ -363,7 +363,9 @@ ListView.prototype = {
           // For mixed selection mode primarily append a checkbox object
           item.prepend(`<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox">
             <input tabindex="-1" type="checkbox" class="checkbox">
-            <span class="label-text" role="presentation">&nbsp;</span>
+            <span class="label-text" role="presentation">
+              <span class="audible">${Locale.translate('Checkbox')} ${Locale.translate('NotSelected')}.</span>
+            </span>
           </label>`);
         }
       }
@@ -947,7 +949,7 @@ ListView.prototype = {
       return;
     }
 
-    // Select
+    // Deselect all other items, when items
     if (this.settings.selectable !== 'multiple' && this.settings.selectable !== 'mixed') {
       li.parent().children().removeAttr('aria-selected');
       li.parent().find('.is-selected').removeClass('is-selected');
@@ -966,8 +968,14 @@ ListView.prototype = {
       self.selectedItems[i] = $(this);
     });
 
-    li.attr('aria-selected', !isChecked);
+    // Reselect just this item
+    // NOTE: don't use `aria-selected` on list items when checkboxes aren't involved.
     li.find('.listview-selection-checkbox input').prop('checked', !isChecked);
+    if (this.settings.selectable === 'multiple' || this.settings.selectable === 'mixed') {
+      const operationText = !isChecked ? 'Selected' : 'NotSelected';
+      li.attr('aria-selected', !isChecked);
+      li.find('.label-text .audible').text(`${Locale.translate('Checkbox')} ${operationText}.`);
+    }
 
     if (!noTrigger) {
       const triggerStr = isChecked ? 'unselected' : 'selected';
