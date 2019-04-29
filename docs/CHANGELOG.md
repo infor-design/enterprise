@@ -30,7 +30,7 @@
 - `[Datagrid]` Fixed a bug where text would be misaligned when repeatedly toggling the filter row. ([#1969](https://github.com/infor-design/enterprise/issues/1969))
 - `[Datagrid]` Added an example of expandOnActivate on a customer editor. ([#353](https://github.com/infor-design/enterprise-ng/issues/353))
 - `[Datagrid]` Added ability to pass a function to the tooltip option for custom formatting. ([#354](https://github.com/infor-design/enterprise-ng/issues/354))
-- `[Datagrid]` Fixed incorrectly exported CSV/Excel data. ([#2001](https://github.com/infor-design/enterprise-ng/issues/2001))
+- `[Datagrid]` Fixed incorrectly exported CSV/Excel data. ([#2001](https://github.com/infor-design/enterprise/issues/2001))
 - `[Dropdown]` Changed the way dropdowns work with screen readers to be a collapsible listbox.([#404](https://github.com/infor-design/enterprise/issues/404))
 - `[Dropdown]` Fixed an issue where multiselect dropdown unchecking "Select All" was not getting clear after close list with Safari browser.([#1882](https://github.com/infor-design/enterprise/issues/1882))
 - `[Listbuilder]` Fixed an issue where the text was not sanitizing. ([#1692](https://github.com/infor-design/enterprise/issues/1692))
