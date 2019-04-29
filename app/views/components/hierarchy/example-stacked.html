@@ -1,6 +1,6 @@
 <figure class="hierarchy" id="hierarchy"></figure>
 
-<script id="hierarchyInit">
+<script id="hierarchy-init-script">
 
   const options = {
     templateId: 'hierarchyChartTemplate',
@@ -23,10 +23,9 @@
 
   $('#hierarchy').on('selected', function(event, eventInfo) {
     const hierarchyControl = $('#hierarchy').data('hierarchy');
-    console.log(event, eventInfo);
 
     if (eventInfo.eventType === 'expand' || eventInfo.eventType === 'back') {
-      $.getJSON(`{{basepath}}api/${eventInfo.data.childrenUrl}`, function(newData) {
+      $.getJSON('{{basepath}}api/'+ eventInfo.data.childrenUrl, function(newData) {
         reload(eventInfo, hierarchyControl, newData);
       });
     }

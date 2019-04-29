@@ -157,12 +157,6 @@ ApplicationMenu.prototype = {
     const switchTrigger = this.element.find('.application-menu-switcher-trigger');
     if (switchTrigger.length > 0) {
       this.switcherPanel = switchTrigger.next('.expandable-area');
-
-      const expandableArea = this.switcherPanel.data('expandablearea');
-      if (!expandableArea) {
-        this.switcherPanel.expandablearea();
-      }
-
       this.switcherPanel.on('beforeexpand.applicationmenu', () => {
         const height = this.element.height();
 
@@ -619,18 +613,6 @@ ApplicationMenu.prototype = {
     }
 
     this.closeMenu();
-  },
-
-  /**
-   * Closes the panel area controlled by switcher
-   */
-  closeSwitcherPanel() {
-    if (this.switcherPanel) {
-      const expandableArea = this.switcherPanel.data('expandablearea');
-      if (expandableArea) {
-        expandableArea.close();
-      }
-    }
   },
 
   /**
