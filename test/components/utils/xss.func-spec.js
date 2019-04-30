@@ -118,14 +118,6 @@ describe('Xss Utils', () => {
 
     expect(result).toEqual('<img src=x>');
 
-    result = xssUtils.sanitizeHTML('console.log(\'hello world\')');
-
-    expect(result).toEqual('');
-
-    result = xssUtils.sanitizeHTML('console.log(\'hello world\');');
-
-    expect(result).toEqual('');
-
     result = xssUtils.sanitizeHTML('<script>alert(\'hello world\')</script>');
 
     expect(result).toEqual('');
@@ -133,6 +125,22 @@ describe('Xss Utils', () => {
     result = xssUtils.sanitizeHTML('<script><script>alert(\'hello world\')</script></script>');
 
     expect(result).toEqual('');
+  });
+
+  it('Should santize console methods', () => {
+    expect(xssUtils.sanitizeHTML('console.log')).toEqual('');
+    expect(xssUtils.sanitizeHTML('console.log(\'hello world\')')).toEqual('');
+    expect(xssUtils.sanitizeHTML('console.log(\'hello world\');')).toEqual('');
+    expect(xssUtils.sanitizeHTML('console.log("hello world");')).toEqual('');
+    expect(xssUtils.sanitizeHTML('console.log   (object);')).toEqual('');
+    expect(xssUtils.sanitizeHTML('console.log(this);')).toEqual('');
+    expect(xssUtils.sanitizeHTML('console.log(this);another text')).toEqual('another text');
+
+    const methods = ['assert', 'clear', 'count', 'debug', 'dirxml', 'dir', 'error', 'exception', 'groupCollapsed', 'groupEnd', 'group', 'info', 'log', 'markTimeline', 'profileEnd', 'profile', 'table', 'timeEnd', 'timeStamp', 'time', 'trace', 'warn'];
+
+    methods.forEach((method) => {
+      expect(xssUtils.sanitizeHTML(`console.${method}("hello world");`)).toEqual('');
+    });
   });
 
   it('Should force alphanumber values', () => {

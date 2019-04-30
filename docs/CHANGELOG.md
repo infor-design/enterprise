@@ -9,6 +9,7 @@
 ### v4.19.0 Fixes
 
 - `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
+- `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
 
 ### v4.19.0 Chores & Maintenance
 
@@ -25,6 +26,7 @@
 - `[Header]` Added a JS setting and CSS styles to support usage of a Flex Toolbar ([#1120](https://github.com/infor-design/enterprise/issues/1120))
 - `[Mask]` Added a setting for passing a locale string, allowing Number masks to be localized.  This enables usage of the `groupSize` property, among others, from locale data in the Mask. ([#440](https://github.com/infor-design/enterprise/issues/440))
 - `[Masthead]` Added CSS styles to support usage of a Flex Toolbar ([#1120](https://github.com/infor-design/enterprise/issues/1120))
+- `[Notification]` Added example of a Widget/Card with notification and add code to truncate the text (via ellipsis) if it is lengthy. ([#1881](https://github.com/infor-design/enterprise/issues/1881))
 - `[Theme/Colors]` Added new component for getting theme and color information. This is used throughout the code. There was a hidden property `Soho.theme`, if you used this in some way you should now use `Soho.theme.currentTheme`. ([#1866](https://github.com/infor-design/enterprise/issues/1866))
 
 ### v4.18.0 Fixes
