@@ -8,6 +8,8 @@
 
 ### v4.19.0 Fixes
 
+- `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
+
 ### v4.19.0 Chores & Maintenance
 
 ## v4.18.0
