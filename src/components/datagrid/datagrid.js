@@ -7852,6 +7852,8 @@ Datagrid.prototype = {
       cellParent.addClass('is-editing-inline');
     }
 
+    cellValue = xssUtils.sanitizeConsoleMethods(cellValue);
+
     /**
     * Fires before a cell goes into edit mode. Giving you a chance to adjust column settings.
     * @event entereditmode
@@ -7973,7 +7975,11 @@ Datagrid.prototype = {
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.settings.dataset[dataRowIndex];
-    const oldValue = this.fieldValue(rowData, col.field);
+    let oldValue = this.fieldValue(rowData, col.field);
+
+    // Sanitize console methods
+    oldValue = xssUtils.sanitizeConsoleMethods(oldValue);
+    newValue = xssUtils.sanitizeConsoleMethods(newValue);
 
     const doCommit = () => {
       // Format Cell again
@@ -8616,7 +8622,7 @@ Datagrid.prototype = {
       rowNodes = this.visualRowNode(row);
       cellNode = rowNodes.find('td').eq(cell);
     }
-    const oldVal = this.fieldValue(rowData, col.field);
+    let oldVal = this.fieldValue(rowData, col.field);
 
     // Coerce/Serialize value if from cell edit
     if (!fromApiCall) {
@@ -8716,6 +8722,11 @@ Datagrid.prototype = {
         this.setIsDirtyAndIcon(row, cell, cellNode);
       }
     }
+
+    // Sanitize console methods
+    oldVal = xssUtils.sanitizeConsoleMethods(oldVal);
+    coercedVal = xssUtils.sanitizeConsoleMethods(coercedVal);
+    coercedVal = xssUtils.escapeHTML(coercedVal);
 
     if (coercedVal !== oldVal && !fromApiCall) {
       const args = {
