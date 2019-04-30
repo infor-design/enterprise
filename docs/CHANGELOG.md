@@ -8,6 +8,8 @@
 
 ### v4.19.0 Fixes
 
+- `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
+
 ### v4.19.0 Chores & Maintenance
 
 ## v4.18.0

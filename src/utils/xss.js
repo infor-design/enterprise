@@ -49,6 +49,19 @@ xssUtils.stripTags = function (html, allowed) {
 };
 
 /**
+ * Remove console methods
+ * @private
+ * @param {string} html HTML in string form
+ * @returns {string} the modified value
+ */
+xssUtils.sanitizeConsoleMethods = function (html) {
+  const methods = ['assert', 'clear', 'count', 'debug', 'dirxml', 'dir', 'error', 'exception', 'groupCollapsed', 'groupEnd', 'group', 'info', 'log', 'markTimeline', 'profileEnd', 'profile', 'table', 'timeEnd', 'timeStamp', 'time', 'trace', 'warn'];
+  const expr = new RegExp(`console\\.(${methods.join('|')})((\\s+)?\\(([^)]+)\\);?)?`, 'igm');
+
+  return typeof html !== 'string' ? html : html.replace(expr, '');
+};
+
+/**
  * Remove Script tags and all onXXX functions
  * @private
  * @param {string} html HTML in string form
@@ -58,9 +71,8 @@ xssUtils.sanitizeHTML = function (html) {
   let santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
   santizedHtml = santizedHtml.replace(/<[^>]+/g, match => match.replace(/(\/|\s)on\w+=(\'|")?[^"]*(\'|")?/g, '')); // eslint-disable-line
 
-  // Remove console.logs
-  santizedHtml = santizedHtml.replace(/console.log(\b[^<]*(?:(?!\);)<[^<]*)*);/g, '');
-  santizedHtml = santizedHtml.replace(/console.log(\b[^<]*(?:(?!\))<[^<]*)*)/g, '');
+  // Remove console methods
+  santizedHtml = this.sanitizeConsoleMethods(santizedHtml);
 
   // Remove nested script tags
   santizedHtml = santizedHtml.replace(/<\/script>/g, '');
