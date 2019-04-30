@@ -112,10 +112,12 @@ Dropdown.prototype = {
    * @returns {boolean} whether or not the text inside the in-page pseudo element too big to fit
    */
   get overflowed() {
-    const span = this.pseudoElem.find('span').css('max-width', '');
-    if (span.width() > this.pseudoElem.width()) {
-      span.css('max-width', '100%');
-      return true;
+    if (!this.isMobile() || (this.isMobile() && !this.isOpen())) {
+      const span = this.pseudoElem.find('span').css('max-width', '');
+      if (span.width() > this.pseudoElem.width()) {
+        span.css('max-width', '100%');
+        return true;
+      }
     }
     return false;
   },
@@ -519,7 +521,7 @@ Dropdown.prototype = {
     this.tooltipApi = this.pseudoElem.find('span').tooltip({
       content: optText,
       parentElement: this.pseudoElem,
-      trigger: 'hover',
+      trigger: this.isMobile() ? 'immediate' : 'hover',
     });
   },
 
