@@ -34,6 +34,7 @@
 - `[Dropdown]` Changed the way dropdowns work with screen readers to be a collapsible listbox.([#404](https://github.com/infor-design/enterprise/issues/404))
 - `[Dropdown]` Fixed an issue where multiselect dropdown unchecking "Select All" was not getting clear after close list with Safari browser.([#1882](https://github.com/infor-design/enterprise/issues/1882))
 - `[Dropdown]` Added an example of a color dropdown showing palette colors as icons.([#2013](https://github.com/infor-design/enterprise/issues/2013))
+- `[Datagrid]` Fixed a misalignment of the close icon on mobile. ([#2018](https://github.com/infor-design/enterprise/issues/2018))
 - `[Listbuilder]` Fixed an issue where the text was not sanitizing. ([#1692](https://github.com/infor-design/enterprise/issues/1692))
 - `[Lookup]` Fixed an issue where the tooltip was using audible text in the code block component. ([#354](https://github.com/infor-design/enterprise-ng/issues/354))
 - `[Locale]` Fixed trailing zeros were getting ignored when displaying thousands values. ([#404](https://github.com/infor-design/enterprise/issues/1840))
