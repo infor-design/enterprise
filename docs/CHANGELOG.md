@@ -11,6 +11,8 @@
 
 ### v4.19.0 Chore & Maintenance
 
+### v4.19.0 Chores & Maintenance
+
 ## v4.18.0
 
 ### v4.18.0 Features
@@ -82,7 +84,7 @@
 - `[Datagrid]` Re-align icons and items in the datagrid's "short header" configuration.(<https://github.com/infor-design/enterprise/issues/1880>)
 - `[Locale]` Fixed incorrect "groupsize" for `en-US` locale.(<https://github.com/infor-design/enterprise/issues/1907>)
 
-### v4.17.1 Chorse & Maintenance
+### v4.17.1 Chores & Maintenance
 
 - `[Demoapp]` Fixed embedded icons example with missing icons.(<https://github.com/infor-design/enterprise/issues/1889>)
 - `[Demoapp]` Fixed notification demo examples.(<https://github.com/infor-design/enterprise/issues/1893>, <https://github.com/infor-design/enterprise/pull/1896>)
