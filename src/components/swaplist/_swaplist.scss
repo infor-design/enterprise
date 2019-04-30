@@ -106,6 +106,32 @@
         box-shadow: 0 0 0 1px $swaplist-border-color-hover, $focus-box-shadow;
       }
 
+      &[disabled] {
+        &::after,
+        &::before {
+          background: $swaplist-icon-color-disabled;
+        }
+      }
+
+      &[disabled] {
+        &::after {
+          box-shadow:
+            0 6px 0 $swaplist-icon-color-disabled,
+            0 12px 0 $swaplist-icon-color-disabled,
+            16px 0 0 $swaplist-icon-color-disabled,
+            16px 6px 0 $swaplist-icon-color-disabled,
+            16px 12px 0 $swaplist-icon-color-disabled;
+        }
+      }
+
+      &[disabled] {
+        &::before {
+          box-shadow: 13px 0 0 $swaplist-icon-color-disabled,
+            0 16px 0 $swaplist-icon-color-disabled,
+            13px 16px 0 $swaplist-icon-color-disabled;
+        }
+      }
+
       .icon {
         color: $swaplist-icon-svg-color;
         left: 13px;
@@ -113,6 +139,12 @@
         position: absolute;
         top: 8px;
         width: 10px;
+      }
+
+      &[disabled] {
+        .icon {
+          color: $swaplist-icon-svg-color-disabled;
+        }
       }
     }
 
