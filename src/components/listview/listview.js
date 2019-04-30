@@ -329,7 +329,7 @@ ListView.prototype = {
     }
 
     // Add Aria
-    $('ul', this.element).attr({ role: 'presentation' });
+    $('ul', this.element).attr({ role: 'listbox' });
 
     // Add Checkboxes
     const first = this.element.find('li, tbody > tr').first();
