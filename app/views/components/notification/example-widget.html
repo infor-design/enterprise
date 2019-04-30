@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="one-third column">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="widget-title">Message and Events</h2>
+        <button class="btn-actions" type="button" id="btn-1">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#" id="action-1">Action 1</a></li>
+          <li><a href="#" id="action-2">Action 2</a></li>
+          <li><a href="#" id="action-3">Action 3</a></li>
+        </ul>
+      </div>
+      <div class="notification-cointainer"></div>
+      <div class="card-content">
+        <div class="listview" id="task-listview"
+          data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'selectable': 'false'}">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+    {{#disabled}}
+    <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+    <li>
+      {{/disabled}}
+      <p class="listview-heading">Task #{{task}}</p>
+      <p class="listview-subheading">{{desc}} </p>
+      <p class="listview-micro">Due: {{date}}</p>
+    </li>
+    {{/dataset}}
+  </ul>
+
+</script>
+
+<script>
+  $('.notification-cointainer').notification({
+    type: 'error',
+    message: 'ION API Error, please contact admin',
+    parent: '.notification-cointainer',
+    linkText: ''
+  });
+
+</script>
+
+<script>
+    $('.notification-cointainer').notification({
+      type: 'alert',
+      message: 'Session Timeout, Reconnecting in 2 seconds before it resumes',
+      parent: '.notification-cointainer',
+      linkText: ''
+    });
+  
+  </script>
+
+<script>
+    $('.notification-cointainer').notification({
+      type: 'success',
+      message: 'Records successfully updated!',
+      parent: '.notification-cointainer',
+      linkText: ''
+    });
+  
+  </script>
+
+<script>
+  $('.notification-cointainer').notification({
+    type: 'info',
+    message: 'You can drag/drop items ',
+    parent: '.notification-cointainer',
+    linkText: ''
+  });
+
+</script>
+

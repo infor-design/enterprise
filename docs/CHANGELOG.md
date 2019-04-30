@@ -1,5 +1,15 @@
 # What's New with Enterprise
 
+## v4.19.0
+
+### v4.19.0 Future Deprecation
+
+### v4.19.0 Features
+
+### v4.19.0 Fixes
+
+### v4.19.0 Chores & Maintenance
+
 ## v4.18.0
 
 ### v4.18.0 Features
@@ -13,6 +23,7 @@
 - `[Header]` Added a JS setting and CSS styles to support usage of a Flex Toolbar ([#1120](https://github.com/infor-design/enterprise/issues/1120))
 - `[Mask]` Added a setting for passing a locale string, allowing Number masks to be localized.  This enables usage of the `groupSize` property, among others, from locale data in the Mask. ([#440](https://github.com/infor-design/enterprise/issues/440))
 - `[Masthead]` Added CSS styles to support usage of a Flex Toolbar ([#1120](https://github.com/infor-design/enterprise/issues/1120))
+- `[Notification]` Added example of a Widget/Card with notification and add code to truncate the text (via ellipsis) if it is lengthy. ([#1881](https://github.com/infor-design/enterprise/issues/1881))
 - `[Theme/Colors]` Added new component for getting theme and color information. This is used throughout the code. There was a hidden property `Soho.theme`, if you used this in some way you should now use `Soho.theme.currentTheme`. ([#1866](https://github.com/infor-design/enterprise/issues/1866))
 
 ### v4.18.0 Fixes
@@ -71,7 +82,7 @@
 - `[Datagrid]` Re-align icons and items in the datagrid's "short header" configuration.(<https://github.com/infor-design/enterprise/issues/1880>)
 - `[Locale]` Fixed incorrect "groupsize" for `en-US` locale.(<https://github.com/infor-design/enterprise/issues/1907>)
 
-### v4.17.1 Chorse & Maintenance
+### v4.17.1 Chores & Maintenance
 
 - `[Demoapp]` Fixed embedded icons example with missing icons.(<https://github.com/infor-design/enterprise/issues/1889>)
 - `[Demoapp]` Fixed notification demo examples.(<https://github.com/infor-design/enterprise/issues/1893>, <https://github.com/infor-design/enterprise/pull/1896>)
