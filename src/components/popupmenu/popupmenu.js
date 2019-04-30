@@ -80,6 +80,7 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   init() {
+    this.isFirefox = env.browser.name === 'firefox';
     this.setup();
     this.addMarkup();
     this.handleEvents();
@@ -1110,6 +1111,15 @@ PopupMenu.prototype = {
             self.highlight($(focus.parent().nextAll(excludes)[rowCount - 1]).find('a'));
           }
         }
+
+        // Fix - not sure why, but firefox have to manualy trigger
+        if (self.isFirefox && isAutocomplete && !(/37|39|38|40/.test(key))) {
+          self.element.triggerHandler(e);
+          self.element[0].focus();
+          const val = self.element[0].value;
+          self.element[0].value = '';
+          self.element[0].value = val;
+        }
         return undefined;
       });
     }, 1);
@@ -1944,7 +1954,9 @@ PopupMenu.prototype = {
     li.addClass('is-focused');
 
     // Prevent chrome from scrolling - toolbar
-    anchor.focus();
+    if (anchor) {
+      anchor.focus();
+    }
     li.closest('.header').scrollTop(0);
   },
 
@@ -2154,7 +2166,9 @@ PopupMenu.prototype = {
     if (document.activeElement && document.activeElement.tagName === 'INPUT') {
       return;
     }
-    this.element.focus();
+    if (this.element) {
+      this.element.focus();
+    }
   },
 
   /**

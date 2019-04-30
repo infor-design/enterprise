@@ -4,6 +4,7 @@ addons:
     paths:
       - $(ls test/.tmp/diff/*.png | tr "\n" ":")
 language: node_js
+dist: trusty
 # Leave node_js version blank to
 # use version in `.nvmrc`
 node_js:
@@ -58,10 +59,3 @@ stages:
     # do not run the deploy stage for Pull Request checks
     # and require the branch name to be master (note for PRs this is the base branch name)
     if: NOT type IN (pull_request) AND branch = master
-
-# safelist
-#only allow master and release branches like 4.10.x
-branches:
-  only:
-  - master
-  - /(\d).(\d*).x/i

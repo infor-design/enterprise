@@ -198,13 +198,13 @@ Personalize.prototype = {
     ` .header.is-personalizable { background-color: ${colors.header}}` +
     ` .header.is-personalizable .title { color: ${colors.text}}` +
     ` .header.is-personalizable h1 { color: ${colors.text}}` +
-    ` .header.is-personalizable button:not(:disabled), .header.is-personalizable button:not(:disabled) .icon, .header.is-personalizable button:not(:disabled) .app-header.icon > span { color: ${colors.text} !important; opacity: .7}` +
-    ` .header.is-personalizable .header.is-personalizable button:not(:disabled) .app-header.icon > span { background-color: ${colors.text} !important; opacity: .7}` +
+    ` .header.is-personalizable button:not(:disabled), .header.is-personalizable button:not(:disabled) .icon, .header.is-personalizable button:not(:disabled) .app-header.icon > span { color: ${colors.text} !important; opacity: .8}` +
+    ` .header.is-personalizable .header.is-personalizable button:not(:disabled) .app-header.icon > span { background-color: ${colors.text} !important; opacity: .8}` +
     ` .header.is-personalizable button:not(:disabled):hover, .header.is-personalizable button:not(:disabled):hover .icon, .header.is-personalizable button:not(:disabled):hover .app-header.icon > span, .header.is-personalizable .toolbar [class^='btn']:hover:not([disabled]) { color: ${colors.text} !important; opacity: 1}` +
     ` .header.is-personalizable button:not(:disabled) .app-header.icon > span { background-color: ${colors.text} !important; opacity: 1}` +
     ` .header.is-personalizable .go-button.is-personalizable { background-color: ${colors.btnColorHeader}; border-color:${colors.btnColorHeader};color: ${colors.text}}` +
     ` .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) { color: ${colors.text} !important }` +
-    ` .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab { color: ${colors.text} !important; opacity: .7 }` +
+    ` .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab { color: ${colors.text} !important; opacity: .8 }` +
     ` .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled) { color: ${colors.text} !important; opacity: 1 }` +
     ` .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)::before { background-color: ${colors.text}}` +
     ` .header.is-personalizable.has-tabs .animated-bar { background-color: ${colors.text}}` +
@@ -254,8 +254,8 @@ Personalize.prototype = {
     ` .application-menu.is-personalizable .searchfield-wrapper { background-color: ${colors.header}; border-bottom: 1px solid ${colors.horizontalBorder} }` +
     ` .application-menu.is-personalizable .searchfield-wrapper .searchfield { color: ${colors.text} !important }` +
     ` .application-menu.is-personalizable .accordion-header.has-filtered-children > a, .application-menu.is-personalizable .accordion.panel .accordion-header.has-filtered-children.is-focused { color: ${colors.text} !important }` +
-    ` .application-menu.is-personalizable .searchfield-wrapper .searchfield::placeholder { color: ${colors.text}; opacity: .7 }` +
-    ` .application-menu.is-personalizable .searchfield-wrapper .icon { color: ${colors.text}; opacity: .7 }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper .searchfield::placeholder { color: ${colors.text}; opacity: .8 }` +
+    ` .application-menu.is-personalizable .searchfield-wrapper .icon { color: ${colors.text}; opacity: .8 }` +
     ` .application-menu.is-personalizable .searchfield-wrapper.active .icon { color: ${colors.text}; opacity: 1 }` +
     '';
 
