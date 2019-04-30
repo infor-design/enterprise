@@ -9,26 +9,16 @@ import '../../utils/animations';
 // The name of this component.
 const COMPONENT_NAME = 'tree';
 
-// The Component Defaults.
-const TREE_DEFAULTS = {
-  selectable: 'single', // ['single'|'multiple']
-  hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
-  menuId: null, // Context Menu to add to nodes
-  useStepUI: false, // When using the UI as a stepped tree
-  folderIconOpen: 'open-folder',
-  folderIconClosed: 'closed-folder',
-  sortable: false, // Allow nodes to be sortable
-  onBeforeSelect: null,
-  onExpand: null,
-  onCollapse: null,
-  originalEnablementState: null
-};
-
 /**
 * The tree Component displays a hierarchical list.
 * @class Tree
+* @constructor
+*
 * @param {object} element The component element.
 * @param {object} [settings] The component settings.
+* @param {array} [settings.dataset] Array of data objects to feed the template
+* @param {array} [settings.dataset[index].children] Array of data objects as child nodes
+* @param {null|function} [settings.source] Call back for getting the data asyncronously.
 * @param {string} [settings.selectable = 'single'] 'single' or 'multiple'.
 * @param {boolean} [settings.hideCheckboxes = false] Only applies when `selectable` is set to 'multiple'.
 * @param {null|string} [settings.menuId] if defined, will be used to identify a Context Menu by ID attribute in which to add nodes.
@@ -40,6 +30,22 @@ const TREE_DEFAULTS = {
 * @param {null|function} [settings.onExpand] If defined as a function, fires that function as a node is expanded.
 * @param {null|function} [settings.onCollapse] If defined as a function, fires that function as a node is collapsed.
 */
+
+const TREE_DEFAULTS = {
+  dataset: null, // array of data objects
+  source: null, // callback for data asyncronously
+  selectable: 'single', // ['single'|'multiple']
+  hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
+  menuId: null, // Context Menu to add to nodes
+  useStepUI: false, // When using the UI as a stepped tree
+  folderIconOpen: 'open-folder',
+  folderIconClosed: 'closed-folder',
+  sortable: false, // Allow nodes to be sortable
+  onBeforeSelect: null,
+  onExpand: null,
+  onCollapse: null
+};
+
 function Tree(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, TREE_DEFAULTS);
@@ -1218,7 +1224,7 @@ Tree.prototype = {
       a.alertIcon = `<svg class="icon step-alert icon-${data.alertIcon}" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-${data.alertIcon}"></use>`;
     }
 
-    const isChildren = typeof data.children !== 'undefined';
+    const isChildren = data.children && data.children.constructor === Array;
     let liClassList = isChildren ? 'folder' : '';
     liClassList += data.selected ? ' is-selected' : '';
     if (liClassList !== '') {
@@ -2448,12 +2454,14 @@ Tree.prototype = {
    * @returns {void}
    */
   restoreEnablementState() {
+    const s = this.settings;
     const nodes = [].slice.call(this.element[0].querySelectorAll('a'));
 
     // check to prevent error if preserveEnablementState() has not been invoked
-    if (!(this.settings.originalEnablementState === null)) {
+    if (typeof s.originalEnablementState !== 'undefined' &&
+      s.originalEnablementState !== null) {
       nodes.forEach((node) => {
-        this.settings.originalEnablementState.forEach((origNode) => {
+        s.originalEnablementState.forEach((origNode) => {
           if (origNode.nodeId === node.id) {
             if (origNode.state === 'disabled') {
               node.classList.add('is-disabled');
