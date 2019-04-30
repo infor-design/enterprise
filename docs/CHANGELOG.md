@@ -8,6 +8,8 @@
 
 ### v4.19.0 Fixes
 
+- `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
+
 ### v4.19.0 Chores & Maintenance
 
 ## v4.18.0
