@@ -3616,6 +3616,17 @@ html[dir='rtl'] {
       border-right-color: transparent;
     }
   }
+
+  &.ios .datagrid-container,
+  &.android .datagrid-container {
+    &.has-vertical-scroll {
+      &:not(.has-frozen-right-columns):not(.has-frozen-left-columns) {
+        .datagrid-header:not(.left):not(.right) {
+          margin-left: 0;
+        }
+      }
+    }
+  }
 }
 
 // Reorder Column styles
