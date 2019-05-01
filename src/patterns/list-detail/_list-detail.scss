@@ -129,29 +129,6 @@
 
   }
 
-  .toolbar {
-    .searchfield-wrapper {
-      width: 35px;
-
-      input {
-        color: transparent;
-        transition: none !important;
-      }
-
-      &.is-open {
-        width: 220px;
-
-        + .title {
-          opacity: 0;
-        }
-      }
-
-      .close {
-        right: 5px !important;
-      }
-    }
-  }
-
   .panel-header {
     height: auto;
     padding: 0 0 1px 13px;
