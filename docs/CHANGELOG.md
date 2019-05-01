@@ -2,9 +2,9 @@
 
 ## v4.19.0
 
-### v4.19.0 Future Deprecation
-
 ### v4.19.0 Features
+
+- `[Datagrid]` Added support for disabling rows by data or a dynamic function, rows are disabled from selection and editing. ([#1614](https://github.com/infor-design/enterprise/issues/1614))
 
 ### v4.19.0 Fixes
 
@@ -12,6 +12,8 @@
 - `[Tree]` Fixed an issue where children property null was breaking tree to not render. ([#1908](https://github.com/infor-design/enterprise/issues/1908))
 
 ### v4.19.0 Chores & Maintenance
+
+(nn Issues Solved this release, Backlog Enterprise nn, Backlog Ng nn, nn Functional Tests, nn e2e Test)
 
 ## v4.18.0
 

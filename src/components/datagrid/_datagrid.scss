@@ -1375,7 +1375,7 @@ $datagrid-short-row-height: 23px;
     }
 
     // Hover States
-    &.is-hover-row:not(.error):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.error) {
+    &.is-hover-row:not(.error):not(.is-rowdisabled):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
@@ -1403,6 +1403,24 @@ $datagrid-short-row-height: 23px;
 
         &:active {
           background-color: $button-color-primary-active-background;
+        }
+      }
+    }
+
+    &.is-rowdisabled {
+      opacity: 0.6;
+
+      td {
+        &:hover {
+          .datagrid-checkbox {
+            cursor: default;
+          }
+        }
+
+        &.has-editor:hover {
+          .icon {
+            visibility: hidden;
+          }
         }
       }
     }
