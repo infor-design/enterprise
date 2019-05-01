@@ -36,6 +36,9 @@
 
     .notification-text {
       color: $init-font;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .notification-link,
