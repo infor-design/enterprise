@@ -34,7 +34,7 @@ describe('hierarchy API', () => {
   });
 
   afterEach(() => {
-    cleanup(['.svg-icons', '#hierarchyChartTemplate', '#hierarchy', '#hierarchyInit', '.hierarchy']);
+    cleanup(['.svg-icons', '#hierarchyChartTemplate', '#hierarchy', '#hierarchy-init-script', '.hierarchy']);
 
     hierarchyAPI.destroy();
   });
