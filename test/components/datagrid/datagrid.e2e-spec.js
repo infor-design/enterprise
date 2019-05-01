@@ -97,6 +97,37 @@ describe('Datagrid Custom Filter Option Tests', () => {
   });
 });
 
+describe('Datagrid Disable Rows Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-disabled-rows?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should Make Rows Disabled', async () => {
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1)')).getAttribute('aria-disabled')).toBeFalsy();
+    expect(await element(by.css('#datagrid tbody tr:nth-child(2)')).getAttribute('aria-disabled')).toEqual('true');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(3)')).getAttribute('aria-disabled')).toEqual('true');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(4)')).getAttribute('aria-disabled')).toEqual('true');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(5)')).getAttribute('aria-disabled')).toBeFalsy();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-disabled-rows')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Editable Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-editable?layout=nofrills');
