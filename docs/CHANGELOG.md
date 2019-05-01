@@ -24,6 +24,7 @@
 - `[Contextual Action Panel]` Fixed an issue where cap modal would only open the first time. ([#1993](https://github.com/infor-design/enterprise/issues/1993))
 - `[Datepicker]` Fixed an issue in NG where the custom validation is removed during the teardown of a datepicker.([NG #411](https://github.com/infor-design/enterprise-ng/issues/411))
 - `[Datagrid]` Fixed an issue where lookup filterConditions were not rendering. ([#1873](https://github.com/infor-design/enterprise/issues/1873))
+- `[Datagrid]` Fixed an issue where when using filtering and server side paging the filter operations would cause two ajax requests. ([#2069](https://github.com/infor-design/enterprise/issues/2069))
 - `[Datagrid]` Fixed issue where header columns are misaligned with body columns on load. ([#1892](https://github.com/infor-design/enterprise/issues/1892))
 - `[Datagrid]` Fixed an issue where filtering was missing translation. ([#1900](https://github.com/infor-design/enterprise/issues/1900))
 - `[Datagrid]` Fixed an issue with the checkbox formatter where string based 1 or 0 would not work as a dataset source. ([#1948](https://github.com/infor-design/enterprise/issues/1948))
