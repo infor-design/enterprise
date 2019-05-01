@@ -1,4 +1,5 @@
 addons:
+  chrome: stable
   artifacts:
     paths:
       - $(ls test/.tmp/diff/*.png | tr "\n" ":")
