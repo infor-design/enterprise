@@ -2474,7 +2474,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &.is-disabled {
-        border-color: $datagrid-filter-disabled-color;
+        border-color: $datagrid-filter-disabled-color !important;
 
         + .icon {
           color: $datagrid-filter-disabled-color;
