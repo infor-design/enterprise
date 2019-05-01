@@ -5057,6 +5057,7 @@ Datagrid.prototype = {
     if (this.tableWidth && diff) {
       this.headerTable.css('width', parseInt(this.tableWidth, 10) + diff);
       this.table.css('width', parseInt(this.tableWidth, 10) + diff);
+      this.headerWidths[idx].widthPercent = false;
     }
   },
 
