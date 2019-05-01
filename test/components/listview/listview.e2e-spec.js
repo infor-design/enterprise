@@ -42,9 +42,9 @@ describe('Listview example-singleselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li.is-selected'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-selected="true"]')).isPresent()).toBeTruthy();
+    expect(await element(by.css('li.is-selected')).isPresent()).toBeTruthy();
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(element(by.className('selection-count')), '1 Selected'), config.waitsFor);
 
@@ -55,16 +55,16 @@ describe('Listview example-singleselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li.is-selected'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-selected="true"]')).isPresent()).toBeTruthy();
+    expect(await element(by.css('li.is-selected')).isPresent()).toBeTruthy();
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
 
     await listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"]'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-selected="false"]')).isPresent()).toBeTruthy();
+    expect(await element(by.css('li[aria-posinset="1"]')).getAttribute('class')).not.toContain('is-selected');
   });
 
   it('Should tab into, and select, arrow key down over disabled item, and select item on space key', async () => {
@@ -215,32 +215,30 @@ describe('Listview example-mixed selection tests', () => {
   }
 
   it('Should select item on click on checkbox', async () => {
-    const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .label-text'));
+    const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .listview-selection-checkbox'));
     await listviewItemInputEl.click();
 
     expect(await element(by.className('is-selected')).isPresent()).toBeTruthy();
-    expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
   });
 
   it('Should deselect item on click on checkbox', async () => {
-    const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .label-text'));
+    const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .listview-selection-checkbox'));
     await listviewItemInputEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewItemInputEl), config.waitsFor);
 
     expect(await element(by.className('is-selected'))).toBeTruthy();
-    expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
 
     await listviewItemInputEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"]'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-selected="false"]'))).toBeTruthy();
   });
 
   it('Should select two items on click on mixed selection', async () => {
-    const listviewItemElOne = await element(by.css('li[aria-posinset="1"] .label-text'));
-    const listviewItemElThree = await element(by.css('li[aria-posinset="3"] .label-text'));
+    const listviewItemElOne = await element(by.css('li[aria-posinset="1"] .listview-selection-checkbox'));
+    const listviewItemElThree = await element(by.css('li[aria-posinset="3"] .listview-selection-checkbox'));
     await listviewItemElOne.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-selected'))), config.waitsFor);
@@ -248,8 +246,8 @@ describe('Listview example-mixed selection tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="3"].is-selected'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-posinset="1"][aria-selected="true"]'))).toBeTruthy();
-    expect(await element(by.css('li[aria-posinset="3"][aria-selected="true"]')).isPresent()).toBeTruthy();
+    expect(await element(by.css('li[aria-posinset="1"].is-selected'))).toBeTruthy();
+    expect(await element(by.css('li[aria-posinset="3"].is-selected')).isPresent()).toBeTruthy();
   });
 
   it('Should activate element on click outside of checkbox', async () => {
