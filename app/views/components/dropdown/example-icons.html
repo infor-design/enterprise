@@ -9,7 +9,7 @@
         <option value="opt-2" data-icon="{icon: 'mail'}">Icon (as object)</option>
         <option value="opt-3" data-icon="{icon: 'camera', class:'good'}">Icon with color</option>
         <option value="opt-4" data-icon="{icon: 'send', color:'info'}">Icon with over color</option>
-        <option value="opt-4" data-icon="{icon: 'notes', color:'alert'}">Icon with over color</option>
+        <option value="opt-5" data-icon="{icon: 'notes', color:'alert'}">Icon with over color</option>
       </select>
     </div>
 
@@ -35,8 +35,7 @@
     }
 
     colorsDropdown.on('selected', function (e, args) {
-      $('html').data('personalize').setColors(this.selectedOptions[0].getAttribute('data-hex'));
-      //$('html').data('personalize').setTheme(this.selectedOptions[0].getAttribute('value'));
+      $('html').data('personalize').setColors(this.options[this.selectedIndex].getAttribute('data-hex'));
     }).html(colorsHtml).dropdown().val('azure').trigger('updated');
 
     $('html').on('colorschanged', function (e, args) {
