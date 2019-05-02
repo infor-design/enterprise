@@ -42,5 +42,9 @@ module.exports = {
       }
       return text;
     });
+  },
+  rgb2hex: (str) => {
+    str = str.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    return (str && str.length === 4) ? `#${(`0${parseInt(str[1], 10).toString(16)}`).slice(-2)}${(`0${parseInt(str[2], 10).toString(16)}`).slice(-2)}${(`0${parseInt(str[3], 10).toString(16)}`).slice(-2)}` : '';
   }
 };

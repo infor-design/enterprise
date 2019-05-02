@@ -93,6 +93,7 @@
         pagesize: 4,
         pagesizes: [4, 8, 15],
         frozenColumns: {left: ['selectionCheckbox', 'id']},
+        toolbar: {results: true, actions: true, rowHeight: true}
       }).on('rowactivated', function (e, args) {
         console.log('Row ' + args.row + ' Was Activated');
         syncDetail(args.row);

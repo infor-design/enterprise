@@ -3,6 +3,12 @@
 
 $toolbar-buttonset-height: 40px;
 
+.toolbar {
+  .more {
+    display: none;
+  }
+}
+
 // See also Colors.scss
 .toolbar,
 .formatter-toolbar {
@@ -104,7 +110,6 @@ $toolbar-buttonset-height: 40px;
   .more {
     @include no-select();
 
-    display: none;
     text-align: right;
 
     > * {
@@ -251,7 +256,6 @@ $toolbar-buttonset-height: 40px;
   background-color: $contextual-toolbar-bg-color;
   margin: 0;
   overflow: hidden !important;
-  z-index: 20;
 
   // Updated changes from listview button and font sizes
   // Override Toolbar styles

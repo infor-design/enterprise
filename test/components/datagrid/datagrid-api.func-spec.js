@@ -294,7 +294,8 @@ describe('Datagrid API', () => {
     datagridObj = new Datagrid(datagridEl, {
       dataset: data,
       columns,
-      editable: true
+      editable: true,
+      isRowDisabled: a => a === 5
     });
 
     // Test Column readonly property
@@ -316,6 +317,11 @@ describe('Datagrid API', () => {
     isEditable = datagridObj.isCellEditable(0, datagridObj.columnIdxById('phone'));
 
     expect(isEditable).toEqual(true);
+
+    // Test column with isDisabled function specified
+    isEditable = datagridObj.isCellEditable(0, 5);
+
+    expect(isEditable).toEqual(false);
   });
 
   it('Should be able to validate required on a cell', (done) => {

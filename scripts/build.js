@@ -72,11 +72,11 @@ const getFileContents = require('./build/get-file-contents');
 const runBuildProcess = require('./build/run-build-process');
 const writeFile = require('./build/write-file');
 const createSvgHtml = require('./build/create-svg-html');
+const createColorJson = require('./build/create-color-json');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
 const TEST_DIR = path.join(__dirname, '..', 'test');
-const NM_DIR = path.join(__dirname, '..', 'node_modules');
 const RELATIVE_SRC_DIR = path.join('..', 'src');
 
 // CR-LF on Windows, LF on Linux/Mac
@@ -902,6 +902,7 @@ function runBuildProcesses(requested) {
   }
 
   buildPromises.push(createSvgHtml(commandLineArgs.verbose));
+  buildPromises.push(createColorJson(commandLineArgs.verbose));
 
   return Promise.all(buildPromises);
 }

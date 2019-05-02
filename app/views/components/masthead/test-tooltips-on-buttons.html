@@ -1,16 +1,29 @@
 <section class="masthead">
-  <div class="toolbar no-actions-button" data-options="{ maxVisibleButtons: 9 }">
-    <div class="title">
+  <div class="{{#useFlexToolbar}}flex-toolbar{{/useFlexToolbar}}{{^useFlexToolbar}}toolbar{{/useFlexToolbar}} no-actions-button" data-options="{ maxVisibleButtons: 9 }">
+    {{#useFlexToolbar}}
+    <div class="toolbar-section logo">
       <button type="button" class="masthead-icon" class="btn">
         <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-logo"></use>
         </svg>
          <span class="audible">Go To Home</span>
       </button>
+    </div>
+    {{/useFlexToolbar}}
+
+    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}title">
+      {{^useFlexToolbar}}
+      <button type="button" class="masthead-icon" class="btn">
+        <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-logo"></use>
+        </svg>
+         <span class="audible">Go To Home</span>
+      </button>
+      {{/useFlexToolbar}}
       <h1 class="masthead-appname">Infor Application</h1>
     </div>
 
-    <div class="buttonset">
+    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}buttonset">
       <button id="icon-only" type="button" class="btn" title="This is a button!" data-init="false">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-star-outlined"></use>

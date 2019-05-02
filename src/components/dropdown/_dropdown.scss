@@ -98,13 +98,12 @@ div.multiselect {
   }
 
   > span {
-    display: block;
-    min-height: 16px;
+    display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: top;
 
-    &[data-placeholder-text]::before {
+    &[data-selected-text='']::before {
       color: $input-placeholder-color;
       content: attr(data-placeholder-text);
       -webkit-text-fill-color: $input-placeholder-color;
@@ -118,12 +117,18 @@ div.multiselect {
     height: 16px;
     left: 14px;
     position: absolute;
-    top: 9px;
+    top: 10px;
     vertical-align: middle;
     width: 16px;
 
     + span {
       padding-left: 29px;
+    }
+
+    &.swatch {
+      border-radius: 2px;
+      left: 15px;
+      top: 10px;
     }
   }
 
@@ -176,7 +181,7 @@ div.multiselect {
     pointer-events: none;
     position: absolute;
     right: 6px;
-    top: 1px;
+    top: 2px;
     width: 18px;
   }
 
@@ -259,6 +264,20 @@ div.multiselect {
       color: $dropdown-color-initial-icon;
       font-style: normal;
       text-decoration: none;
+    }
+
+    &.is-swatch {
+      padding-left: 30px;
+    }
+
+    span.swatch {
+      border-radius: 2px;
+      display: block;
+      height: 16px;
+      margin-left: -16px;
+      margin-top: 7px;
+      position: absolute;
+      width: 16px;
     }
 
     .clear-selection {
@@ -348,6 +367,13 @@ div.multiselect {
     left: 10px;
     position: absolute;
     top: 8px;
+
+    &.swatch {
+      border-radius: 2px;
+      left: 14px;
+      top: 8px;
+      width: 16px;
+    }
 
     + span {
       padding-left: 39px;
@@ -499,7 +525,7 @@ div.multiselect {
     .icon {
       background-color: rgba($theme-color-palette-white, 0);
       color: $trigger-icon-fill-color;
-      left: -2px;
+      left: 1px;
       top: 8px;
 
       &.search {

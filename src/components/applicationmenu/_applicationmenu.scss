@@ -10,6 +10,8 @@
   border-right: 1px solid $application-menu-border-color;
   bottom: 0;
   color: $theme-color-palette-white;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   left: -$application-menu-width;
   overflow-x: hidden;
@@ -20,6 +22,10 @@
 
   &.is-open {
     left: 0;
+  }
+
+  &.has-open-switcher {
+    overflow-y: hidden;
   }
 
   .audible {
@@ -42,7 +48,7 @@
 
   .searchfield + .accoridon,
   .searchfield-wrapper + .accordion {
-    min-height: calc(100% - 34px);
+    min-height: calc(100% - 36px);
   }
 
   .accordion {
@@ -94,7 +100,6 @@
 
           > .name {
             @include font-size(20);
-            // line-height: 2em;
           }
         }
 
@@ -107,6 +112,7 @@
 
   .searchfield-wrapper {
     background-color: $accordion-inverse-pane-bg-color;
+    border-bottom-color: $theme-color-palette-slate-90 !important;
     margin-bottom: 0;
     width: 100%;
 
@@ -164,7 +170,7 @@
     }
 
     &.has-focus {
-      box-shadow: none;
+      box-shadow: none !important;
     }
 
   }
@@ -214,19 +220,11 @@
     min-height: 85px;
     padding: 10px 0 10px 30px;
 
-    .icon.avatar {
-      border-radius: 20px;
-      height: 40px;
-      top: 10px;
-      vertical-align: top;
-      width: 40px;
-    }
-
     .name {
       display: block;
       font-size: $theme-size-font-lg;
       line-height: 1.5em;
-      padding: 10px;
+      padding: 15px 10px 10px;
       position: relative;
     }
 
@@ -241,6 +239,24 @@
         text-overflow: ellipsis;
       }
     }
+  }
+
+  .icon.avatar {
+    border-radius: 20px;
+    height: 40px;
+    top: 3px;
+    vertical-align: top;
+    width: 40px;
+  }
+
+  .icon.avatar.l-center {
+    top: 5px;
+    vertical-align: middle;
+  }
+
+  .expandable-area {
+    display: inline-block;
+    vertical-align: middle;
   }
 
   .accordion-content {
@@ -275,6 +291,131 @@
       color: $accordion-inverse-text-hover-color;
     }
   }
+
+  // Fixed header and foot areas
+  .application-menu-content {
+    flex: 1 1 auto;
+    overflow-y: auto;
+  }
+
+  .application-menu-header,
+  .application-menu-footer {
+    background-color: $theme-color-palette-slate-70;
+    border-bottom-color: $theme-color-palette-slate-90 !important;
+    flex: 0 0 auto;
+    padding: 10px 0 10px 20px;
+
+    button {
+      margin: 5px 15px;
+
+      &:first-child {
+        margin: 5px 0;
+      }
+
+      span {
+        color: $accordion-inverse-text-color;
+      }
+
+      .icon {
+        color: $accordion-inverse-text-color;
+      }
+
+      &:not(:disabled):hover .icon,
+      &:not(:disabled):hover span {
+        color: $accordion-inverse-text-hover-color;
+      }
+    }
+  }
+
+  .application-menu-header {
+    padding-top: 15px;
+
+    .name,
+    .name-xl {
+      display: block;
+      font-size: $theme-size-font-lg;
+      line-height: 1.5em;
+      padding: 15px 10px 10px;
+      position: relative;
+    }
+
+    .name-xl {
+      font-size: $theme-size-font-xl;
+      line-height: normal;
+      padding-left: 0;
+      padding-top: 2.5rem;
+    }
+
+    .content {
+      display: inline-block;
+      max-width: calc(100% - 46px);
+    }
+  }
+
+  .application-menu-footer {
+    border-bottom-color: $theme-color-palette-slate-70 !important;
+    border-top-color: $theme-color-palette-slate-90 !important;
+
+    .hyperlink {
+      margin-left: 5px;
+      position: relative;
+      top: -4px;
+    }
+
+    .application-menu-toolbar {
+      button {
+        &:first-child {
+          margin: 5px -3px;
+        }
+      }
+    }
+  }
+
+  .application-menu-toolbar {
+    margin-left: -10px;
+    margin-top: -5px;
+  }
+
+  .application-menu-switcher-panel {
+    background-color: $theme-color-palette-slate-80;
+    border-top: 1px solid $application-menu-border-color;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 70px;
+    width: 100%;
+    z-index: 501;
+
+    .content {
+      max-width: 100%;
+      overflow-y: auto;
+      padding: 0 !important;
+      width: 100%;
+    }
+  }
+
+  .accordion-heading {
+    border-top: 1px solid $application-menu-border-color;
+    color: $theme-color-palette-white;
+    font-size: $theme-size-font-sm;
+    font-weight: 400;
+    opacity: 0.9;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-top: 15px;
+    text-transform: uppercase;
+  }
+
+  .application-menu-switcher-trigger {
+    float: right;
+  }
+}
+
+// Container Class for wrapping internal content in NG
+.application-menu-wrapper {
+  display: inherit;
+  flex-direction: inherit;
+  height: inherit;
 }
 
 // Generic CSS Class that allows block-level elements like "divs" to become "clickable" on iOS 8 and up

@@ -572,7 +572,9 @@ Toolbar.prototype = {
         if (document.activeElement && document.activeElement.tagName === 'INPUT') {
           return;
         }
-        el.focus();
+        if (el) {
+          el.focus();
+        }
         self.buttonset.scrollTop(0);
       });
 
@@ -1038,7 +1040,7 @@ Toolbar.prototype = {
     const self = this;
 
     function getMoreOrLast() {
-      if (self.hasNoMoreButton() || !self.element.hasClass('has-more-button')) {
+      if (self.moreButtonIsDisabled() || !self.element.hasClass('has-more-button')) {
         return self.getLastVisibleButton();
       }
 
@@ -1415,7 +1417,6 @@ Toolbar.prototype = {
     }
 
     this
-      .unbind()
       .teardown()
       .init();
   },
@@ -1462,6 +1463,7 @@ Toolbar.prototype = {
    */
   teardown() {
     const self = this;
+    this.unbind();
 
     if (this.title && this.title.length) {
       const dataTooltip = this.title.off('beforeshow.toolbar').data('tooltip');
@@ -1534,9 +1536,7 @@ Toolbar.prototype = {
    * @returns {void}
    */
   destroy() {
-    this
-      .unbind()
-      .teardown();
+    this.teardown();
 
     if (this.buttonset.children('.searchfield-wrapper').length) {
       const searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');

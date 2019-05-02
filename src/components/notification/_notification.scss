@@ -3,84 +3,82 @@
 
 .notification {
   height: 0;
+  padding: 10px 45px;
   position: relative;
   z-index: 1;
 
-  .notification-text {
-    color: $font-color;
-    font-size: $theme-size-font-base;
-    line-height: 40px;
-    margin-left: 25px;
-    position: relative;
-    width: auto;
-  }
-
   .notification-link {
-    color: $font-color;
-    font-size: $theme-size-font-base;
     font-weight: 300;
     padding-left: 5px;
-    text-decoration: none;
-
-    &:hover {
-      color: $font-color-highcontrast;
-      text-decoration: underline;
-    }
+    text-decoration: underline;
   }
 
-  .icon {
+  .notification-icon {
     left: 15px;
+    position: absolute;
+    top: calc(50% - 9px);
   }
 
   .notification-close {
-    cursor: pointer;
-    float: right;
-    left: -30px;
-    position: relative;
-    top: 13px;
+    color: inherit;
+    position: absolute;
+    right: 15px;
+    top: calc(50% - 7px);
 
     .icon {
-      color: $icon-color-fill;
       height: 15px;
-      width: 15px;
+    }
+  }
+
+  @mixin notification-styles($init-bkgd, $init-font, $hover-font) {
+    background-color: $init-bkgd;
+    color: $init-font;
+
+    .notification-text {
+      color: $init-font;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    &:hover .icon {
-      color: $theme-color-font-base;
-    }
+    .notification-link,
+    .notification-close .icon {
+      color: $init-font;
 
-    &:active .icon {
-      color: $font-color-extrahighcontrast;
+      &:hover {
+        color: $hover-font;
+      }
     }
   }
 
   &.error {
-    background-color: rgba(244, 188, 188, 0.2);
+    @include notification-styles(
+      $notification-color-error-initial-background,
+      $notification-color-error-initial-font,
+      $notification-color-error-hover-font
+    );
   }
 
   &.alert {
-    background-color: rgba(251, 233, 191, 0.4);
+    @include notification-styles(
+      $notification-color-alert-initial-background,
+      $notification-color-alert-initial-font,
+      $notification-color-alert-hover-font);
   }
 
   &.success {
-    background-color: rgba(213, 246, 192, 0.4);
+    @include notification-styles(
+      $notification-color-success-initial-background,
+      $notification-color-success-initial-font,
+      $notification-color-success-hover-font
+    );
   }
 
   &.info {
-    background-color: rgba(203, 235, 244, 0.2);
-  }
-}
-
-@include respond-to(phablet) {
-  .notification-link {
-    display: none;
-  }
-
-  .notification-text {
-    display: inline-block;
-    max-width: 77%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include notification-styles(
+      $notification-color-info-initial-background,
+      $notification-color-info-initial-font,
+      $notification-color-info-hover-font
+    );
   }
 }

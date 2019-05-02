@@ -12,10 +12,12 @@ documentation/
 public/js/
 public/stylesheets/
 public/svg/
+src/components/theme/theme*.json
 temp/
 templates/**/doc.html
 test-reports/
 views/docs
+
 # Packages #
 ############
 node_modules/

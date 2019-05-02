@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 
@@ -17,25 +18,29 @@ const COMPONENT_NAME = 'header';
  * @class Header
  * @param {HTMLElement|jQuery[]} element the base element
  * @param {object} [settings] incoming settings
- * @param {boolean} [settings.demoOptions = true] Used to enable/disable default IDS Enterprise options for demo purposes
- * @param {boolean} [settings.useBackButton = true] If true, displays a back button next to the title in the header toolbar
- * @param {boolean} [settings.useBreadcrumb = false] If true, displays a breadcrumb on drilldown
- * @param {boolean} [settings.usePopupmenu = false] If true, changes the Header Title into a popupmenu that can change the current page
- * @param {array} [settings.tabs = null] If defined as an array of Tab objects, displays a series of tabs that represent application sections
- * @param {array} [settings.wizardTicks = null] If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
- * @param {boolean} [settings.useAlternate = null] If true, use alternate background/text color for sub-navigation areas
  * @param {boolean} [settings.addScrollClass = false] If true a class will be added as the page scrolls up and down
  * to the header for manipulation. Eg: Docs Page.
+ * @param {boolean} [settings.demoOptions = true] Used to enable/disable default IDS Enterprise options for demo purposes
+ * @param {array} [settings.tabs = null] If defined as an array of Tab objects, displays a series of tabs that represent application sections
+ * @param {object} [settings.toolbarSettings = undefined] If defined, will be passed into the toolbar/toobarFlex component instance as settings
+ * @param {boolean} [settings.useAlternate = null] If true, use alternate background/text color for sub-navigation areas
+ * @param {boolean} [settings.useBackButton = true] If true, displays a back button next to the title in the header toolbar
+ * @param {boolean} [settings.useBreadcrumb = false] If true, displays a breadcrumb on drilldown
+ * @param {boolean} [settings.useFlexToolbar = false] If true, uses a Flex Toolbar component instead of a standard Toolbar component.
+ * @param {boolean} [settings.usePopupmenu = false] If true, changes the Header Title into a popupmenu that can change the current page
+ * @param {array} [settings.wizardTicks = null] If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
  */
 const HEADER_DEFAULTS = {
+  addScrollClass: false,
   demoOptions: true,
+  tabs: null,
+  toolbarSettings: undefined,
+  useAlternate: false,
   useBackButton: true,
   useBreadcrumb: false,
+  useFlexToolbar: false,
   usePopupmenu: false,
-  tabs: null,
-  wizardTicks: null,
-  useAlternate: false,
-  addScrollClass: false
+  wizardTicks: null
 };
 
 function Header(element, settings) {
@@ -48,6 +53,44 @@ function Header(element, settings) {
 }
 
 Header.prototype = {
+
+  /**
+   * @returns {Toolbar|ToolbarFlex|undefined} component instance, if applicable
+   */
+  get toolbarAPI() {
+    if (!this.toolbarElem) {
+      return undefined;
+    }
+    return this.toolbarElem.data('toolbar-flex') || this.toolbarElem.data('toolbar');
+  },
+
+  /**
+   * @deprecated as of v4.18.0. Please use the `toolbarAPI` property instead.
+   * @returns {Toolbar|ToolbarFlex|undefined} component instance, if applicable.
+   */
+  get toolbar() {
+    warnAboutDeprecation('toolbarAPI', 'toolbar');
+    return this.toolbarAPI;
+  },
+
+  /**
+   * @returns {jQuery[]} reference to the Header's button for controlling drilling/navigation
+   */
+  get titleButton() {
+    let query = '.title > button';
+    if (this.toolbarElem && this.toolbarElem.is('.flex-toolbar')) {
+      query = '.toolbar-section:first-child > button';
+    }
+    return this.element.find(query);
+  },
+
+  /**
+   * @returns {boolean} true if this Header component contains a button that precedes the title
+   */
+  get hasTitleButton() {
+    const btn = this.titleButton;
+    return btn.length > 0;
+  },
 
   /**
    * @private
@@ -94,28 +137,23 @@ Header.prototype = {
    * @returns {this} component instance
    */
   build() {
-    this.toolbarElem = this.element.find('.toolbar');
-
-    // Build toolbar if it doesn't exist
-    if (!this.toolbarElem.data('toolbar')) {
-      this.toolbarElem.toolbar();
+    let isFlex = false;
+    const elem = this.element.find('.toolbar, .flex-toolbar');
+    if (!elem.length) {
+      return this;
     }
-    this.toolbar = this.toolbarElem.data('toolbar');
+    if (elem.is('.flex-toolbar')) {
+      isFlex = true;
+    }
+    this.toolbarElem = elem;
 
-    // Hamburger Icon is optional, but tracking it is necessary.
-    this.titleButton = this.element.find('.title > .application-menu-trigger');
-    this.hasTitleButton = this.titleButton.length > 0;
+    // Build/update the toolbar instance
+    const toolbarSettings = this.settings.toolbarSettings;
+    this.toolbarElem[isFlex ? 'toolbarflex' : 'toolbar'](toolbarSettings);
 
-    if (this.hasTitleButton) {
-      this.toolbarElem.addClass('has-title-button');
-      const appMenu = $('#application-menu').data('applicationmenu');
-      if (appMenu) {
-        appMenu.modifyTriggers([this.titleButton], null, true);
-      } else {
-        $('#application-menu').applicationmenu({
-          triggers: [this.titleButton]
-        });
-      }
+    // Build the title button if one is not present, and we are drilled in at least one level deep.
+    if (!this.hasTitleButton && this.levelsDeep.length > 1) {
+      this.buildTitleButton();
     }
 
     // Application Tabs would be available from the Application Start, so activate
@@ -161,21 +199,49 @@ Header.prototype = {
    */
   buildTitleButton() {
     if (this.levelsDeep.length > 1 && !this.hasTitleButton && !this.titleButton.length) {
-      this.titleButton = $('<button class="btn-icon back-button" type="button"></button>');
-      this.titleButton.html(`<span class="audible">${Locale.translate('Drillup')}</span>` +
-        '<span class="icon app-header go-back">' +
-          '<span class="one"></span>' +
-          '<span class="two"></span>' +
-          '<span class="three"></span>' +
-        '</span>');
-      this.titleButton.prependTo(this.element.find('.title'));
+      // Deconstruct Toolbar
+      this.toolbarAPI.teardown();
 
-      // Need to trigger an update on the toolbar control to make sure tabindexes
-      // and events are all firing on the button
-      this.toolbar.element.triggerHandler('updated');
+      // Build Title Button
+      const titleButton = $(`<button class="btn-icon back-button" type="button">
+        <span class="audible">${Locale.translate('Drillup')}</span>
+        <span class="icon app-header go-back">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>`);
+
+      const titleElem = this.toolbarElem.find('.title');
+      if (this.settings.useFlexToolbar) {
+        let preTitleSection = titleElem.prev('.toolbar-section');
+        if (!preTitleSection.length) {
+          preTitleSection = $('<div class="toolbar-section"></div>').insertBefore(titleElem);
+        }
+        titleButton.prependTo(preTitleSection);
+      } else {
+        titleButton.prependTo(titleElem);
+      }
+
+      // Rebuild Toolbar
+      this.toolbarAPI.init();
     }
 
+    // Add CSS
+    this.toolbarElem.addClass('has-title-button');
     this.titleButton.find('.icon.app-header').addClass('go-back');
+
+    // Link to the App Menu as a trigger
+    const appMenu = $('#application-menu').data('applicationmenu');
+    if (appMenu) {
+      appMenu.modifyTriggers([this.titleButton], null, true);
+    } else {
+      $('#application-menu').applicationmenu({
+        triggers: [this.titleButton]
+      });
+    }
+
+    this.handleTitleButtonEvents();
   },
 
   /**
@@ -293,6 +359,8 @@ Header.prototype = {
    * @returns {void}
    */
   buildPopupmenu() {
+    this.toolbarAPI.teardown();
+
     const title = this.toolbarElem.children('.title');
     this.titlePopup = title.find('.btn-menu');
     if (!this.titlePopup.length) {
@@ -322,7 +390,8 @@ Header.prototype = {
     this.titlePopup.button().popupmenu();
 
     // Update the Header toolbar to account for the new button
-    this.toolbarElem.triggerHandler('updated');
+    this.element.addClass('has-popupmenu-title');
+    this.toolbarAPI.init();
   },
 
   /**
@@ -340,37 +409,57 @@ Header.prototype = {
     const self = this;
 
     this.element
-      .on('updated.header', (e, settings) => {
+      .on(`updated.${COMPONENT_NAME}`, (e, settings) => {
         self.updated(settings);
       })
-      .on('reset.header', () => {
+      .on(`reset.${COMPONENT_NAME}`, () => {
         self.reset();
       })
-      .on('drilldown.header', (e, viewTitle) => {
+      .on(`drilldown.${COMPONENT_NAME}`, (e, viewTitle) => {
         self.drilldown(viewTitle);
       })
-      .on('drillup.header', (e, viewTitle) => {
+      .on(`drillup.${COMPONENT_NAME}`, (e, viewTitle) => {
         self.drillup(viewTitle);
       });
 
     // Events for the title button.  e.preventDefault(); stops Application Menu
     // functionality while drilled
-    this.titleButton.bindFirst('click.header', (e) => {
-      if (self.levelsDeep.length > 1) {
-        e.stopImmediatePropagation();
-        self.drillup();
-        e.returnValue = false;
-      }
-    });
+    this.handleTitleButtonEvents();
 
     // Popupmenu Events
-    if (this.settings.usePopupmenu) {
-      this.titlePopup.on('selected.header', function (e, anchor) {
-        $(this).children('h1').text(anchor.text());
+    if (this.titlePopup && this.titlePopup.length) {
+      this.titlePopup.on(`selected.${COMPONENT_NAME}`, function (e, anchor) {
+        let text;
+        if (!(anchor instanceof $)) {
+          // Toolbar Flex Item
+          text = $(anchor.element).text();
+        } else {
+          // standard Toolbar
+          text = anchor.text();
+        }
+        $(this).children('h1').text(text);
       });
     }
 
     return this;
+  },
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  handleTitleButtonEvents() {
+    if (!this.titleButton || !this.titleButton.length) {
+      return;
+    }
+
+    this.titleButton.bindFirst(`click.${COMPONENT_NAME}`, (e) => {
+      if (this.levelsDeep.length > 1) {
+        e.stopImmediatePropagation();
+        this.drillup();
+        e.returnValue = false;
+      }
+    });
   },
 
   /**
@@ -532,12 +621,20 @@ Header.prototype = {
     }
 
     if (this.titleButton && this.titleButton.length) {
-      this.titleButton.remove();
+      this.toolbarAPI.teardown();
+
+      // Check for an active App Menu, and remove from the internal triggers, if applicable.
+      const appMenu = $('#application-menu').data('applicationmenu');
+      if (appMenu) {
+        appMenu.modifyTriggers([this.titleButton], true, true);
+      }
+
+      this.titleButton.off(`click.${COMPONENT_NAME}`).remove();
       this.titleButton = $();
 
       // Need to trigger an update on the toolbar control to make sure
       // tabindexes and events are all firing on the button
-      this.toolbar.element.triggerHandler('updated');
+      this.toolbarAPI.init();
     }
   },
 
@@ -546,6 +643,9 @@ Header.prototype = {
    * Manually remove go-back class from button
    */
   removeBackButton() {
+    if (!this.titleButton.length) {
+      return;
+    }
     this.element.find('.go-back').removeClass('go-back');
   },
 
@@ -670,6 +770,8 @@ Header.prototype = {
       return;
     }
 
+    this.toolbarAPI.teardown();
+
     this.titlePopup.data('popupmenu').destroy();
     this.titlePopup.data('button').destroy();
     this.titlePopupMenu.remove();
@@ -679,7 +781,9 @@ Header.prototype = {
     this.titlePopup = undefined;
     this.titlePopupMenu = undefined;
 
-    this.toolbarElem.triggerHandler('updated');
+    this.element.removeClass('has-popupmenu-title');
+
+    this.toolbarAPI.init();
   },
 
   /**
@@ -688,8 +792,21 @@ Header.prototype = {
    * @returns {this} component instance
    */
   unbind() {
-    this.titleButton.off('click.header');
-    this.element.off('drilldown.header drillup.header');
+    if (this.titleButton && this.titleButton.length) {
+      this.titleButton.off(`click.${COMPONENT_NAME}`);
+    }
+
+    if (this.titlePopup && this.titlePopup.length) {
+      this.titlePopup.off(`updated.${COMPONENT_NAME}`);
+    }
+
+    this.element.off([
+      `updated.${COMPONENT_NAME}`,
+      `reset.${COMPONENT_NAME}`,
+      `drilldown.${COMPONENT_NAME}`,
+      `drillup.${COMPONENT_NAME}`,
+    ].join(' '));
+
     return this;
   },
 

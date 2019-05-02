@@ -126,7 +126,10 @@ Modal.prototype = {
       this.trigger = this.element;
     }
 
-    this.overlay = $('<div class="overlay"></div>');
+    if (!this.overlay) {
+      this.overlay = $('<div class="overlay"></div>');
+    }
+
     this.oldActive = this.trigger;
 
     if (this.settings.trigger === 'click' && !this.isAttachedToBody) {
@@ -541,7 +544,10 @@ Modal.prototype = {
       this.oldActive = $(':focus'); // Save and restore focus for A11Y
     }
 
-    this.element.after(this.overlay);
+    if (!this.element.next().is('.overlay')) {
+      this.element.after(this.overlay);
+    }
+
     if (this.element && !this.element.parent().hasClass('modal-wrapper')) {
       this.element.wrap('<div class="modal-page-container"><div class="modal-wrapper"></div>');
     }
@@ -581,7 +587,10 @@ Modal.prototype = {
     }
 
     // Look for other nested dialogs and adjust the zindex.
-    $('.modal').each(function (i) {
+    const currentModalApi = this;
+    const modals = $('.modal');
+    const lastModalIndex = modals.length - 1;
+    modals.each(function (i) {
       const modal = $(this);
       this.style.zIndex = (1020 + (i + 1)).toString();
 
@@ -593,6 +602,15 @@ Modal.prototype = {
         const overlay = modal.closest('.modal-page-container').next('.overlay');
         if (overlay && overlay[0]) {
           overlay[0].style.zIndex = (1020 + i).toString();
+        }
+      }
+      if (i === lastModalIndex) {
+        const zIndex = {
+          element: parseInt(currentModalApi.element[0].style.zIndex, 10),
+          overlay: parseInt(currentModalApi.overlay[0].style.zIndex, 10)
+        };
+        if (!zIndex.overlay) {
+          currentModalApi.overlay[0].style.zIndex = zIndex.element - 1;
         }
       }
     });
@@ -922,7 +940,9 @@ Modal.prototype = {
       self.element.trigger('afterclose');
 
       if (self.settings.trigger === 'immediate' || destroy) {
-        self.destroy();
+        if (!self.isCAP || (self.isCAP && !self.capAPI)) {
+          self.destroy();
+        }
       }
     }, 300); // should match the length of time needed for the overlay to fade out
 

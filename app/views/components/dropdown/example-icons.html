@@ -13,5 +13,34 @@
       </select>
     </div>
 
+    <div class="field">
+      <div class="field">
+        <label for="example-colors">Dropdown With Colors</label>
+        <select id="example-colors" name="example-colors" class="dropdown" data-init="false">
+        </select>
+      </div>
+    </div>
+
   </div>
 </div>
+
+<script>
+  $('body').on('initialized', function () {
+    // Set up colors dropdown
+    var colorsDropdown = $('#example-colors');
+    var colors = Soho.theme.personalizationColors();
+    var colorsHtml = '';
+    for (color in colors) {
+     colorsHtml += '<option data-icon="{icon: \'swatch\', class: \'' + colors[color].backgroundColorClass +' swatch\'}" value="' + colors[color].id + '" data-hex="' + colors[color].value + '">'+ colors[color].name +'</option>';
+    }
+
+    colorsDropdown.on('selected', function (e, args) {
+      $('html').data('personalize').setColors(this.selectedOptions[0].getAttribute('data-hex'));
+      //$('html').data('personalize').setTheme(this.selectedOptions[0].getAttribute('value'));
+    }).html(colorsHtml).dropdown().val('azure').trigger('updated');
+
+    $('html').on('colorschanged', function (e, args) {
+      console.log('colorschanged', args)
+    });
+  });
+</script>

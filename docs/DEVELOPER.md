@@ -106,7 +106,7 @@ npm run build
 It's also possible to run a custom build of IDS with your choice of components.  The custom bundler can be run with:
 
 ```sh
-npm run build:custom -- --components=button,input,masks,popupmenu,listview
+npm run build -- --components=button,input,masks,popupmenu,listview
 ```
 
 ## Running the development server

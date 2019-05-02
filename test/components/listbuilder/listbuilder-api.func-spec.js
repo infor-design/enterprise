@@ -33,7 +33,7 @@ describe('ListBuilder API', () => {
     document.body.insertAdjacentHTML('afterbegin', listbuilderHTML);
     listbuilderEl = document.body.querySelector('#example-listbuilder');
     svgEl = document.body.querySelector('.svg-icons');
-    listbuilderObj = new ListBuilder(listbuilderEl, { dataset: ds });
+    listbuilderObj = new ListBuilder(listbuilderEl, { dataset: [...ds] });
   });
 
   afterEach(() => {

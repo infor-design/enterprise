@@ -142,8 +142,7 @@ function createHtmlFiles() {
  */
 function createSvgHtml(verbose) {
   IS_VERBOSE = verbose;
-  cleanFiles();
-  return createHtmlFiles();
+  cleanFiles().then(createHtmlFiles);
 }
 
 module.exports = createSvgHtml;

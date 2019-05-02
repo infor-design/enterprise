@@ -54,6 +54,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.saveUserSettings.filter=true]
  * @param {boolean}  [settings.focusAfterSort=false] If true will focus the active cell after sorting.
  * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
+ * @param {Function}  [settings.isRowDisabled=null] Allows you to provide a function so you can set some rows to disabled base on data or row index.
  * @param {boolean}  [settings.isList=false] Makes the grid have readonly "list" styling
  * @param {string}   [settings.menuId=null]  ID of the menu to use for a row level right click context menu
  * @param {string}   [settings.menuSelected=null] Callback for the grid level context menu
@@ -138,6 +139,7 @@ const DATAGRID_DEFAULTS = {
   saveUserSettings: {},
   focusAfterSort: false, // If true will focus the active cell after sorting.
   editable: false,
+  isRowDisabled: null,
   isList: false, // Makes a readonly "list"
   menuId: null, // Id to the right click context menu
   headerMenuId: null, // Id to the right click context menu to use for the header
@@ -1131,7 +1133,7 @@ Datagrid.prototype = {
       const isResizable = (column.resizable === undefined ? true : column.resizable);
       const isExportable = (column.exportable === undefined ? true : column.exportable);
       const isSelection = column.id === 'selectionCheckbox';
-      let headerAlignmentClass = '';
+      const headerAlignmentClass = this.getHeaderAlignmentClass(column);
 
       // Make frozen columns hideable: false
       if ((self.hasLeftPane || self.hasRightPane)
@@ -1140,13 +1142,6 @@ Datagrid.prototype = {
         self.settings.frozenColumns.right &&
         self.settings.frozenColumns.right.indexOf(column.id) > -1)) {
         column.hideable = false;
-      }
-
-      // note there is a space at the front of the classname
-      if (column.headerAlign === undefined) {
-        headerAlignmentClass = column.align ? ` l-${column.align}-text` : '';
-      } else {
-        headerAlignmentClass = ` l-${column.headerAlign}-text`;
       }
 
       // Assign css classes
@@ -1285,6 +1280,23 @@ Datagrid.prototype = {
   },
 
   /**
+   * Get the alignment class based on settings. Note there is a space at the front of the classname.
+   * @private
+   * @param {object} column The column info.
+   * @returns {string} The class as a string.
+   */
+  getHeaderAlignmentClass(column) {
+    let headerAlignmentClass = '';
+
+    if (column.headerAlign === undefined) {
+      headerAlignmentClass = column.align ? ` l-${column.align}-text` : '';
+    } else {
+      headerAlignmentClass = ` l-${column.headerAlign}-text`;
+    }
+    return headerAlignmentClass;
+  },
+
+  /**
   * Set filter datepicker with range/single date.
   * @private
   * @param {object} input element to target datepicker.
@@ -1327,6 +1339,7 @@ Datagrid.prototype = {
   filterRowHtml(columnDef, idx) {
     const self = this;
     let filterMarkup = '';
+    const headerAlignmentClass = this.getHeaderAlignmentClass(columnDef);
 
     // Generate the markup for the various Types
     // Supported Filter Types: text, integer, date, select, decimal,
@@ -1336,7 +1349,7 @@ Datagrid.prototype = {
       const filterId = self.uniqueId(`-header-filter-${idx}`);
       let integerDefaults;
 
-      filterMarkup = `<div class="datagrid-filter-wrapper" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
+      filterMarkup = `<div class="datagrid-filter-wrapper${headerAlignmentClass}" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
         col.name}</label>`;
 
       switch (col.filterType) {
@@ -1447,8 +1460,8 @@ Datagrid.prototype = {
       filterMarkup += '</div>';
     }
 
-    if (!columnDef.filterType) {
-      filterMarkup = '<div class="datagrid-filter-wrapper"></div>';
+    if (!columnDef.filterType && this.settings.filterable) {
+      filterMarkup = `<div class="datagrid-filter-wrapper is-empty ${headerAlignmentClass}"></div>`;
     }
     return filterMarkup;
   },
@@ -1772,8 +1785,6 @@ Datagrid.prototype = {
   */
   toggleFilterRow() {
     if (this.settings.filterable) {
-      this.headerContainer.find('thead').removeClass('is-filterable');
-      this.headerContainer.find('.is-filterable').removeClass('is-filterable');
       this.headerContainer.find('.datagrid-filter-wrapper').hide();
       this.settings.filterable = false;
       this.filterRowRendered = false;
@@ -1796,8 +1807,6 @@ Datagrid.prototype = {
         this.element.addClass('has-two-line-header');
       }
 
-      this.headerContainer.find('thead').addClass('is-filterable');
-      this.headerContainer.find('.is-filterable').addClass('is-filterable');
       this.headerContainer.find('.datagrid-filter-wrapper').show();
 
       /**
@@ -3394,6 +3403,22 @@ Datagrid.prototype = {
       return '';
     }
 
+    let isRowDisabled = false;
+
+    // Run a function that helps check if disabled
+    if (self.settings.isRowDisabled && typeof self.settings.isRowDisabled === 'function') {
+      const isDisabled = self.settings.isRowDisabled(actualIndex, rowData);
+
+      if (isDisabled) {
+        isRowDisabled = true;
+      }
+    }
+
+    // Or allow the data to determine it
+    if (rowData.isRowDisabled) {
+      isRowDisabled = true;
+    }
+
     // Default
     d = d ? d.depth : 0;
     depth = d;
@@ -3485,11 +3510,13 @@ Datagrid.prototype = {
         actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
       }${
         self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
-      }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
-      }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
+      }${self.settings.treeGrid ? ` aria-level="${depth}"` : ''
+      }${isRowDisabled ? ' aria-disabled="true"' : ''
+      }${isSelected ? ' aria-selected="true"' : ''} class="datagrid-row${rowStatus.class}${
         isHidden ? ' is-hidden' : ''}${
         rowData.isFiltered ? ' is-filtered' : ''
       }${isActivated ? ' is-rowactivated' : ''
+      }${isRowDisabled ? ' is-rowdisabled' : ''
       }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
       }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
       }${isSummaryRow ? ' datagrid-summary-row' : ''
@@ -4302,7 +4329,6 @@ Datagrid.prototype = {
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         const containerEl = isHeaderColumn ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
-
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
@@ -4449,7 +4475,6 @@ Datagrid.prototype = {
     * @property {object} args.columns The columns object
     */
     this.element.trigger('columnchange', [{ type: 'updatecolumns', columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
   },
 
@@ -4789,7 +4814,6 @@ Datagrid.prototype = {
     }
 
     this.element.trigger('columnchange', [{ type: 'hidecolumn', index: idx, columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
   },
 
@@ -4844,7 +4868,6 @@ Datagrid.prototype = {
     }
 
     this.element.trigger('columnchange', [{ type: 'showcolumn', index: idx, columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
   },
 
@@ -5001,7 +5024,6 @@ Datagrid.prototype = {
     }
 
     this.element.trigger('columnchange', [{ type: 'resizecolumn', index: idx, columns: this.settings.columns }]);
-    this.saveColumns();
     this.saveUserSettings();
     this.headerWidths[idx].width = width;
   },
@@ -5491,7 +5513,7 @@ Datagrid.prototype = {
           const startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'), 10);
           const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
 
-          if (self.editor && self.editor.input) {
+          if (self.editor && self.editor.input && !this.editor.stayInEditMode) {
             self.commitCellEdit(self.editor.input);
           }
           self.copyToDataSet(splitData, startRowCount, startColIndex, self.settings.dataset);
@@ -5771,7 +5793,7 @@ Datagrid.prototype = {
 
           self.selectAllRows();
         } else {
-          checkbox.removeClass('is-checked').attr('aria-checked', 'true');
+          checkbox.removeClass('is-checked').attr('aria-checked', 'false');
           self.unSelectAllRows();
         }
       });
@@ -5789,15 +5811,8 @@ Datagrid.prototype = {
 
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
               self.editor) {
-            if (focusElem.is('.spinbox')) {
-              return;
-            }
-
-            if (focusElem.is('.trigger')) {
-              return;
-            }
-
-            if (!$(target).is(':visible')) {
+            if (focusElem.is('.spinbox, .trigger') ||
+              !$(target).is(':visible') || self.editor.stayInEditMode) {
               return;
             }
 
@@ -5805,7 +5820,6 @@ Datagrid.prototype = {
               focusElem.closest(self.editor.className).length > 0) {
               return;
             }
-
             self.commitCellEdit(self.editor.input);
           }
         }, 150);
@@ -5814,11 +5828,11 @@ Datagrid.prototype = {
       }
 
       // Popups are open
-      if ($('#dropdown-list, .autocomplete.popupmenu.is-open, #timepicker-popup').is(':visible')) {
+      if ($('#dropdown-list, .autocomplete.popupmenu.is-open, #timepicker-popup, .is-editing .code-block').is(':visible')) {
         return;
       }
 
-      if (self.editor && self.editor.input) {
+      if (self.editor && self.editor.input && !this.editor.stayInEditMode) {
         self.commitCellEdit(self.editor.input);
       }
     });
@@ -6374,7 +6388,7 @@ Datagrid.prototype = {
     elem.addClass(selectClasses).attr('aria-selected', 'true');
 
     if (self.columnIdxById('selectionCheckbox') !== -1) {
-      checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
+      checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox')).not('.is-disabled');
       checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
         .addClass('is-checked').attr('aria-checked', 'true');
     }
@@ -6398,6 +6412,10 @@ Datagrid.prototype = {
     const s = this.settings;
 
     if (idx === undefined || idx === -1 || !s.selectable) {
+      return;
+    }
+
+    if (this.isRowDisabled(idx)) {
       return;
     }
 
@@ -7465,6 +7483,13 @@ Datagrid.prototype = {
       const lastRow = visibleRows.last();
       const lastCell = self.settings.columns.length - 1;
 
+      // Tab, Left, Up, Right and Down arrow keys.
+      if ([9, 37, 38, 39, 40].indexOf(key) !== -1) {
+        if ($(e.target).closest('.code-block').length) {
+          return;
+        }
+      }
+
       // Tab, Left and Right arrow keys.
       if ([9, 37, 39].indexOf(key) !== -1) {
         if (key === 9 && self.settings.onKeyDown) {
@@ -7627,8 +7652,13 @@ Datagrid.prototype = {
       }
 
       if (self.settings.editable && key === 13) {
+        const target = $(e.target);
         // Allow shift to add a new line
-        if ($(e.target).is('textarea') && e.shiftKey) {
+        if (target.is('textarea') && e.shiftKey) {
+          return;
+        }
+        // Allow the menu buttons
+        if (target.is('.btn-menu') || target.closest('.popupmenu.is-open').length) {
           return;
         }
 
@@ -7725,6 +7755,22 @@ Datagrid.prototype = {
   },
 
   /**
+   * Returns if the row has been disabled.
+   * @param  {number} row The row index.
+   * @returns {boolean} eturns true if the row is disabled
+   */
+  isRowDisabled(row) {
+    if (this.settings.isRowDisabled && typeof this.settings.isRowDisabled === 'function') {
+      const rowNode = this.rowNodes(row);
+
+      if (rowNode.attr('aria-disabled') === 'true') {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  /**
    * Is a specific row/cell editable?
    * @param  {number} row The row index
    * @param  {number} cell The cell index
@@ -7737,6 +7783,10 @@ Datagrid.prototype = {
 
     const col = this.columnSettings(cell);
     if (col.readonly) {
+      return false;
+    }
+
+    if (this.isRowDisabled(row)) {
       return false;
     }
 
@@ -7772,7 +7822,8 @@ Datagrid.prototype = {
    * @returns {boolean} returns true if the cell is editable
    */
   makeCellEditable(row, cell, event) {
-    if (this.activeCell.node.closest('tr').hasClass('datagrid-summary-row')) {
+    if (this.activeCell.node.closest('tr').hasClass('datagrid-summary-row') ||
+      (this.editor && this.editor.stayInEditMode)) {
       return;
     }
 
@@ -7787,7 +7838,7 @@ Datagrid.prototype = {
     }
 
     // Commit Previous Edit
-    if (this.editor && this.editor.input) {
+    if (this.editor && this.editor.input && !this.editor.stayInEditMode) {
       this.commitCellEdit(this.editor.input);
     }
 
@@ -7844,6 +7895,8 @@ Datagrid.prototype = {
     } else {
       cellParent.addClass('is-editing-inline');
     }
+
+    cellValue = xssUtils.sanitizeConsoleMethods(cellValue);
 
     /**
     * Fires before a cell goes into edit mode. Giving you a chance to adjust column settings.
@@ -7923,6 +7976,8 @@ Datagrid.prototype = {
       return;
     }
 
+    input = input instanceof jQuery ? input : $(input);
+
     let newValue;
     let cellNode;
     const isEditor = this.editor.name === 'editor';
@@ -7930,7 +7985,9 @@ Datagrid.prototype = {
     const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox .colorpicker'));
 
     // Editor.getValue
-    newValue = this.editor.val();
+    if (typeof this.editor.val === 'function') {
+      newValue = this.editor.val();
+    }
 
     if (isEditor) {
       cellNode = this.editor.td;
@@ -7948,14 +8005,6 @@ Datagrid.prototype = {
       newValue = xssUtils.escapeHTML(newValue);
     }
 
-    // Format Cell again
-    const isInline = cellNode.hasClass('is-editing-inline');
-    cellNode.removeClass('is-editing is-editing-inline');
-
-    // Editor.destroy
-    this.editor.destroy();
-    this.editor = null;
-
     let rowIndex;
     let dataRowIndex;
     if (this.settings.source !== null && isUseActiveRow) {
@@ -7970,37 +8019,70 @@ Datagrid.prototype = {
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.settings.dataset[dataRowIndex];
-    const oldValue = this.fieldValue(rowData, col.field);
+    let oldValue = this.fieldValue(rowData, col.field);
 
-    // Save the Cell Edit back to the data set
-    this.updateCellNode(rowIndex, cell, newValue, false, isInline);
-    const value = this.fieldValue(rowData, col.field);
+    // Sanitize console methods
+    oldValue = xssUtils.sanitizeConsoleMethods(oldValue);
+    newValue = xssUtils.sanitizeConsoleMethods(newValue);
 
-    /**
-    * Fires after a cell goes out of edit mode.
-    * @event exiteditmode
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Additional arguments
-    * @property {number} args.row An array of selected rows.
-    * @property {number} args.cell An array of selected rows.
-    * @property {object} args.item The current sort column.
-    * @property {HTMLElement} args.target The cell html element that was entered.
-    * @property {any} args.value The cell value.
-    * @property {any} args.oldValue The previous cell value.
-    * @property {object} args.column The column object
-    * @property {object} args.editor The editor object.
-    */
-    this.element.triggerHandler('exiteditmode', [{
+    const doCommit = () => {
+      // Format Cell again
+      const isInline = cellNode.hasClass('is-editing-inline');
+      cellNode.removeClass('is-editing is-editing-inline');
+
+      // Editor.destroy
+      this.editor.destroy();
+      this.editor = null;
+
+      // Save the Cell Edit back to the data set
+      this.updateCellNode(rowIndex, cell, newValue, false, isInline);
+      const value = this.fieldValue(rowData, col.field);
+
+      /**
+      * Fires after a cell goes out of edit mode.
+      * @event exiteditmode
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Additional arguments
+      * @property {number} args.row An array of selected rows.
+      * @property {number} args.cell An array of selected rows.
+      * @property {object} args.item The current sort column.
+      * @property {HTMLElement} args.target The cell html element that was entered.
+      * @property {any} args.value The cell value.
+      * @property {any} args.oldValue The previous cell value.
+      * @property {object} args.column The column object
+      * @property {object} args.editor The editor object.
+      */
+      this.element.triggerHandler('exiteditmode', [{
+        row: rowIndex,
+        cell,
+        item: rowData,
+        target: cellNode,
+        value,
+        oldValue,
+        column: col,
+        editor: this.editor
+      }]);
+    };
+
+    const args = [{
       row: rowIndex,
       cell,
       item: rowData,
       target: cellNode,
-      value,
       oldValue,
       column: col,
       editor: this.editor
-    }]);
+    }];
+
+    $.when(this.element.triggerHandler('beforecommitcelledit', args)).done((response) => {
+      const isFalse = v => ((typeof v === 'string' && v.toLowerCase() === 'false') ||
+      (typeof v === 'boolean' && v === false) ||
+      (typeof v === 'number' && v === 0));
+      if (!isFalse(response)) {
+        doCommit();
+      }
+    });
   },
 
   /**
@@ -8584,7 +8666,7 @@ Datagrid.prototype = {
       rowNodes = this.visualRowNode(row);
       cellNode = rowNodes.find('td').eq(cell);
     }
-    const oldVal = this.fieldValue(rowData, col.field);
+    let oldVal = this.fieldValue(rowData, col.field);
 
     // Coerce/Serialize value if from cell edit
     if (!fromApiCall) {
@@ -8684,6 +8766,11 @@ Datagrid.prototype = {
         this.setIsDirtyAndIcon(row, cell, cellNode);
       }
     }
+
+    // Sanitize console methods
+    oldVal = xssUtils.sanitizeConsoleMethods(oldVal);
+    coercedVal = xssUtils.sanitizeConsoleMethods(coercedVal);
+    coercedVal = xssUtils.escapeHTML(coercedVal);
 
     if (coercedVal !== oldVal && !fromApiCall) {
       const args = {
@@ -9774,6 +9861,8 @@ Datagrid.prototype = {
       const isTh = elem.tagName.toLowerCase() === 'th';
       const isHeaderColumn = utils.hasClass(elem, 'datagrid-column-wrapper');
       const isHeaderFilter = utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
+      const cell = elem.getAttribute('aria-colindex') - 1;
+      const col = this.columnSettings(cell);
       let title;
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
@@ -9799,8 +9888,6 @@ Datagrid.prototype = {
 
       if (contentTooltip) {
         // Used with rich text editor
-        const cell = elem.getAttribute('aria-colindex') - 1;
-        const col = this.columnSettings(cell);
         const width = col.editorOptions &&
           col.editorOptions.width ? this.setUnit(col.editorOptions.width) : false;
 
@@ -9872,6 +9959,14 @@ Datagrid.prototype = {
         if (title || isHeaderFilter) {
           tooltip.forced = true;
         }
+      }
+
+      if (typeof col.tooltip === 'function') {
+        const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
+        const rowIdx = rowNode.getAttribute('data-index');
+        const value = this.fieldValue(this.settings.dataset[rowIdx], col.field);
+        tooltip.content = col.tooltip(cell, value);
+        tooltip.textwidth = stringUtils.textWidth(tooltip.content) + 20;
       }
     }
 

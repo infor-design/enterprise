@@ -1,0 +1,240 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">0 Selected</div>
+      <div class="buttonset">
+        <button class="btn-icon" type="button" id="remove-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Remove</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  var gridApi = null;
+
+  $('body').one('initialized', function () {
+    var grid,
+      columns = [],
+      data = [];
+
+    // Some Sample Data
+    data.push({
+      id: 1,
+      productId: 2142201,
+      productName: 'Compressor',
+      activity: '<svg/onload=alert(1)>',
+      quantity: 1,
+      price: 210.99,
+      status: 'OK',
+      orderDate: '00000000',
+      portable: false,
+      action: 1,
+      description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'
+    });
+    data.push({
+      id: 2,
+      productId: 2241202,
+      productName: 'Different Compressor',
+      activity: 'Inspect and Repair',
+      quantity: 2,
+      price: 210.991,
+      status: '',
+      orderDate: '',
+      portable: false,
+      action: 1,
+      description: 'The kit has an air blow gun that can be used for cleaning',
+      isRowDisabled: true
+    });
+    data.push({
+      id: 3,
+      productId: 2342203,
+      productName: 'Portable Compressor',
+      activity: '',
+      portable: true,
+      quantity: null,
+      price: 120.992,
+      status: null,
+      orderDate: new Date(2014, 6, 3),
+      action: 2
+    });
+    data.push({
+      id: 4,
+      productId: 2445204,
+      productName: 'Another Compressor',
+      activity: 'Assemble Paint',
+      portable: true,
+      quantity: 3,
+      price: null,
+      status: 'OK',
+      orderDate: new Date(2015, 3, 3),
+      action: 3,
+      description: 'Compressor comes with with air tool kit'
+    });
+    data.push({
+      id: 5,
+      productId: 2542205,
+      productName: 'De Wallt Compressor',
+      activity: 'Inspect and Repair',
+      portable: false,
+      quantity: 4,
+      price: 210.99,
+      status: 'OK',
+      orderDate: new Date(2015, 5, 5),
+      action: 1
+    });
+    data.push({
+      id: 6,
+      productId: 2642205,
+      productName: 'Air Compressors',
+      activity: 'Inspect and Repair',
+      portable: false,
+      quantity: 41,
+      price: 120.99,
+      status: 'OK',
+      orderDate: new Date(2014, 6, 9),
+      action: 2
+    });
+    data.push({
+      id: 7,
+      productId: 2642206,
+      productName: 'Some Compressor',
+      activity: 'inspect and Repair',
+      portable: true,
+      quantity: 41,
+      price: 123.99,
+      status: 'OK',
+      orderDate: new Date(2014, 6, 9),
+      action: 2
+    });
+
+    // Define Columns for the Grid.
+    columns.push({
+      id: 'selectionCheckbox',
+      sortable: false,
+      resizable: false,
+      formatter: Formatters.SelectionCheckbox,
+      align: 'center'
+    });
+    columns.push({
+      id: 'id',
+      name: 'Row Id',
+      field: 'id'
+    });
+    columns.push({
+      id: 'productName',
+      name: 'Product Name',
+      sortable: false,
+      field: 'productName',
+      formatter: Formatters.Hyperlink,
+      editor: Editors.Input
+    });
+    columns.push({
+      id: 'activity',
+      name: 'Activity',
+      field: 'activity',
+      required: true,
+      editor: Editors.Input
+    }); //maxLength: 2
+    columns.push({
+      id: 'quantity',
+      name: 'Quantity',
+      field: 'quantity',
+      align: 'right',
+      editor: Editors.Input,
+      mask: '###'
+    });
+    columns.push({
+      id: 'portable',
+      name: 'Portable',
+      field: 'portable',
+      align: 'center',
+      formatter: Formatters.Checkbox,
+      editor: Editors.Checkbox
+    });
+    columns.push({
+      id: 'price',
+      name: 'Price',
+      field: 'price',
+      align: 'right',
+      formatter: Formatters.Decimal,
+      numberFormat: {
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 3
+      },
+      editor: Editors.Input
+    });
+    columns.push({
+      id: 'orderDate',
+      name: 'Order Date',
+      field: 'orderDate',
+      formatter: Formatters.Date,
+      editor: Editors.Date
+    });
+    columns.push({
+      id: 'action',
+      name: 'Action',
+      field: 'action',
+      formatter: Formatters.Dropdown,
+      editor: Editors.Dropdown,
+      options: [{
+        id: '',
+        label: '',
+        value: -1
+      }, {
+        id: 'oh1',
+        label: 'On Hold',
+        value: 1
+      }, {
+        id: 'sh1',
+        label: 'Shipped',
+        value: 2
+      }, {
+        id: 'ac1',
+        label: 'Action',
+        value: 3
+      }, {
+        id: 'pen',
+        label: 'Pending',
+        value: 4
+      }, {
+        id: 'bk1',
+        label: 'Backorder',
+        value: 5
+      }, {
+        id: 'can',
+        label: 'Cancelled',
+        value: 6
+      }, {
+        id: 'pro',
+        label: 'Processing',
+        value: 7
+      }]
+    });
+
+    // Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      disabledRows: true,
+      selectable: 'multiple',
+      editable: true,
+      toolbar: {
+        title: 'Data Grid Header Title',
+        results: true,
+        personalize: true,
+        actions: true,
+        rowHeight: true
+      },
+      isRowDisabled: function (rowIdx, item) {
+        return rowIdx === 2 || item.activity === 'Assemble Paint';
+      }
+    });
+  });
+</script>

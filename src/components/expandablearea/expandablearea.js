@@ -53,6 +53,11 @@ ExpandableArea.prototype = {
       this.id = `expandable-area-${$('body').find('.expandable-area').index(this.element)}`;
     }
 
+    if (this.element.prev('.expandable-area-trigger').length > 0) {
+      this.expander = this.element.prev('.expandable-area-trigger');
+      this.settings.trigger = this.expander.attr('id') || `expandable-area-trigger-${$('body').find('.expandable-area').index(this.element)}`;
+    }
+
     this.header = this.settings.trigger ? this.element : this.element.children('.expandable-header');
     this.footer = this.element.children('.expandable-footer');
     this.content = this.element.children('.expandable-pane');
