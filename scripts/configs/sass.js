@@ -10,7 +10,7 @@ module.exports = {
         'dist/css/light-theme.css': 'temp/light-theme.scss',
         'dist/css/dark-theme.css': 'temp/dark-theme.scss',
         'dist/css/high-contrast-theme.css': 'temp/high-contrast-theme.scss',
-        'dist/css/uplift-theme.css': 'temp/uplift-theme.scss'
+        'dist/css/theme-uplift-light.css': 'temp/theme-uplift-light.scss'
       }
     },
 
@@ -20,7 +20,7 @@ module.exports = {
         'dist/css/light-theme.css': 'temp/light-theme.scss',
         'dist/css/dark-theme.css': 'temp/dark-theme.scss',
         'dist/css/high-contrast-theme.css': 'temp/high-contrast-theme.scss',
-        'dist/css/uplift-theme.css': 'temp/uplift-theme.scss'
+        'dist/css/theme-uplift-light.css': 'temp/theme-uplift-light.scss'
       }
     },
 

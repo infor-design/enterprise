@@ -57,21 +57,19 @@
 
     {{/colors}}
 
-    {{#theme}}
-    theme = '{{theme}}';
-    {{/theme}}
-
     // If Initialize isnt called need to defer this
     $('html').personalize({colors: colors, theme: theme, blockUI: blockUI});
   </script>
 
-  <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/{{theme}}-theme.css" type="text/css"/>
 
-  <!-- Cache Bust Test
-  <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/{{theme}}-theme.css?v=MTIuMC4yMy4xMA" type="text/css"/>
-  -->
+  {{#theme.isSohoUseLegacyNaming}}
+    <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/{{theme.variant}}-theme.css" type="text/css"/>
+  {{/theme.isSohoUseLegacyNaming}}
+  {{^theme.isSohoUseLegacyNaming}}
+    <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/theme-{{theme.name}}-{{theme.variant}}.css" type="text/css"/>
+  {{/theme.isSohoUseLegacyNaming}}
 
-  <!-- Style Sheets -->
+
   <link rel="stylesheet" href="{{basepath}}css/demo.css" type="text/css"/>
 
 </head>
