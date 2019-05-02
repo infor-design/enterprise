@@ -518,11 +518,16 @@ Dropdown.prototype = {
   setTooltip() {
     const opts = this.element.find('option:selected');
     const optText = this.getOptionText(opts);
-    this.tooltipApi = this.pseudoElem.find('span').tooltip({
-      content: optText,
-      parentElement: this.pseudoElem,
-      trigger: this.isMobile() ? 'immediate' : 'hover',
-    });
+    this.tooltipApi = this.pseudoElem.find('span')
+      .tooltip({
+        content: optText,
+        parentElement: this.pseudoElem,
+        trigger: this.isMobile() ? 'immediate' : 'hover',
+      })
+      .on('blur.dropdowntooltip', () => {
+        this.removeTooltip();
+      })
+      .data('tooltip');
   },
 
   /**
@@ -530,8 +535,11 @@ Dropdown.prototype = {
    * @returns {void}
    */
   removeTooltip() {
-    this.tooltipApi.destroy();
-    this.tooltipApi = null;
+    if (this.tooltipApi) {
+      this.tooltipApi.element.off('blur.dropdowntooltip');
+      this.tooltipApi.destroy();
+      this.tooltipApi = null;
+    }
   },
 
   /**
@@ -1569,6 +1577,10 @@ Dropdown.prototype = {
     }
 
     function completeOpen() {
+      if (self.isMobile()) {
+        $('.tooltip:not(.is-hidden)').hide();
+      }
+
       self.updateList();
       self.openList();
 
