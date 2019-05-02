@@ -891,7 +891,7 @@ div.dropdown-xs,
   }
 }
 
-//for firefox on android
+// for firefox on android
 .is-firefox {
   &.android {
     div.dropdown,
@@ -904,13 +904,16 @@ div.dropdown-xs,
         top: 4px;
       }
     }
+  }
+}
 
-    .dropdown-list {
-      > .trigger {
-        .icon {
-          &.close {
-            top: 10px;
-          }
+// for android
+.android {
+  .dropdown-list {
+    > .trigger {
+      .icon {
+        &.close {
+          top: 10px;
         }
       }
     }
