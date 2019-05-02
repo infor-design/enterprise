@@ -1256,12 +1256,11 @@ Datagrid.prototype = {
 
     self.syncHeaderCheckbox(this.settings.dataset);
     self.setScrollClass();
+    self.attachFilterRowEvents();
 
     if (self.settings.columnReorder) {
       self.createDraggableColumns();
     }
-
-    this.attachFilterRowEvents();
 
     if (this.restoreSortOrder) {
       this.setSortIndicator(this.sortColumn.sortId, this.sortColumn.sortAsc);
@@ -2384,16 +2383,16 @@ Datagrid.prototype = {
     const s = this.settings;
     const heights = {
       default: { short: 20, medium: 28, normal: 35 },
-      filterable: { short: 48, medium: 51, normal: 56 },
+      filterable: { short: 53, medium: 54, normal: 60 },
       group: { short: 46, medium: 56, normal: 74 },
-      groupFilterable: { short: 78, medium: 84, normal: 99 }
+      groupFilterable: { short: 83, medium: 87, normal: 103 }
     };
     let height = 0;
     if (s.columnGroups) {
-      height = s.filterable ?
+      height = s.filterable && this.filterRowRendered ?
         heights.groupFilterable[s.rowHeight] : heights.group[s.rowHeight];
     } else {
-      height = s.filterable ?
+      height = s.filterable && this.filterRowRendered ?
         heights.filterable[s.rowHeight] : heights.default[s.rowHeight];
     }
     return height;
@@ -5374,6 +5373,9 @@ Datagrid.prototype = {
       });
 
       this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
+        if (pagingInfo.type === 'filtered' && this.settings.source) {
+          return;
+        }
         self.render(null, pagingInfo);
       }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
         self.render(null, pagingInfo);
