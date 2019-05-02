@@ -608,14 +608,14 @@ function renderImportsToString(key, type, disallowUplift) {
     let statement = '';
     if (type === 'scss') {
       if (libIsAllowed) {
-        statement = writeSassImportStatement(lib, filePath, true);
+        statement = `${writeSassImportStatement(lib, filePath, true)}${NL}`;
       }
     } else if (type === 'jquery') {
-      statement = writeJSImportStatement(lib, filePath, false, true);
+      statement = `${writeJSImportStatement(lib, filePath, false, true)}${NL}`;
     } else {
-      statement = writeJSImportStatement(lib, filePath, true);
+      statement = `${writeJSImportStatement(lib, filePath, true)}${NL}`;
     }
-    fileContents += `${statement}${NL}`;
+    fileContents += statement;
   });
 
   return fileContents;
@@ -712,9 +712,7 @@ function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
 
   if (key === 'components' || key === 'components-uplift') {
     const isUplift = key === 'components-uplift';
-    if (!isUplift) {
-      targetFile = `// Required ====/${NL}@import '../src/core/required';${NL}${NL}`;
-    }
+    targetFile = `// Required ====/${NL}@import '../src/core/required';${NL}${NL}`;
 
     // 'component' source code files are comprised of three buckets that need to
     // be written to the target file in a specific order.
