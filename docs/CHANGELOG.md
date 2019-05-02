@@ -5,6 +5,9 @@
 ### v4.19.0 Features
 
 - `[Datagrid]` Added support for disabling rows by data or a dynamic function, rows are disabled from selection and editing. ([#1614](https://github.com/infor-design/enterprise/issues/1614))
+- `[Datagrid]` Fixes a column alignment issue when resizing and sorting columns that were originally set to percentage width. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
+- `[Datagrid]` Fixes a column alignment issue when there are duplicate column ids. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
+- `[Datagrid]` Fixes a column alignment by clearing a cache to help prevent column misalignment from randomly happening. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
 
 ### v4.19.0 Fixes
 

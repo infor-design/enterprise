@@ -1,0 +1,293 @@
+
+<div class="row">
+  <div class="full-width">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [
+          // The id column should be always first. Otherwise, it will break the functionality of actions column
+          {
+            id: 'id',
+            hidden: true,
+            name: 'id',
+            field: 'id'
+          },
+          {
+            id: 'activityColumn',
+            name: 'Activity',
+            field: 'name',
+            formatter: this.activityNameFormatter,
+            filterType: 'text',
+            width: '36%',
+            headerTooltip: 'test',
+            click: function (e, args) {
+              console.log('click');
+            }
+          },
+          {
+            id: 'inMarketDateColumn',
+            name: 'In Market Date',
+            field: 'inMarketDate',
+            formatter: this.inMarketDateFormatter,
+            width: '15%',
+            headerTooltip: 'test'
+          },
+          {
+            id: 'typeColumn',
+            name: 'Type',
+            field: 'type',
+            formatter: Soho.Formatters.Text,
+            filterType: 'text',
+            width: '15%',
+          },
+          {
+            id: 'statusColumn',
+            name: 'Status',
+            field: 'status',
+            formatter: Soho.Formatters.Text,
+            filterType: 'text',
+            width: '10%'
+          },
+          {
+            id: 'workColumn',
+            name: 'Work',
+            formatter: Soho.Formatters.Button,
+            sortable: false,
+            icon: 'calendar',
+            width: '6%',
+            align: 'center',
+            headerTooltip: 'test',
+            click: function (e, args) {
+              console.log('click');
+            }
+          },
+          {
+            id: 'responsibleColumn',
+            name: 'Responsible',
+            field: 'responsiblePerson',
+            formatter: Soho.Formatters.Text,
+            filterType: 'text',
+            width: '10%'
+          },
+          {
+            id: 'actionColumn',
+            name: 'Actions',
+            formatter: Soho.Formatters.Actions,
+            sortable: false,
+            width: '8%'
+          }
+        ],
+        data = [
+            {
+              "name": "New Activity L1",
+              "inMarketDate": "2019-05-01T00:00:00",
+              "expiryDate": null,
+              "type": "@@ @@ @@ Test 1",
+              "typeId": 5045,
+              "status": "Pending Approval",
+              "responsiblePerson": "First User",
+              "reference": 1,
+              "activityLevel": 1,
+              "id": 39572,
+              "parentId": null,
+              "depth": 1,
+              "expanded": true,
+              "children": [
+                {
+                  "name": "New Activity L2",
+                  "inMarketDate": "2019-05-04T00:00:00",
+                  "expiryDate": null,
+                  "type": "@@ @@ @@ Test 3",
+                  "typeId": 5047,
+                  "status": "Completed",
+                  "responsiblePerson": "First User",
+                  "reference": 2,
+                  "activityLevel": 2,
+                  "id": 39573,
+                  "parentId": 39572,
+                  "depth": 2,
+                  "expanded": true,
+                  "children": [
+                    {
+                      "name": "New Activity L3",
+                      "inMarketDate": "2019-05-04T00:00:00",
+                      "expiryDate": null,
+                      "type": "Sainath 12374-1",
+                      "typeId": 6075,
+                      "status": "Pending Approval",
+                      "responsiblePerson": "First User",
+                      "reference": 3,
+                      "activityLevel": 3,
+                      "id": 39574,
+                      "parentId": 39573,
+                      "depth": 4,
+                      "expanded": false,
+                      "children": null
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "New Activity wkf",
+              "inMarketDate": "2019-03-22T00:00:00",
+              "expiryDate": null,
+              "type": null,
+              "typeId": 0,
+              "status": "Pending Approval",
+              "responsiblePerson": "First User",
+              "reference": 4,
+              "activityLevel": 1,
+              "id": 39580,
+              "parentId": null,
+              "depth": 1,
+              "expanded": true,
+              "children": [
+                {
+                  "name": "Clone of New Activity vv",
+                  "inMarketDate": "2019-05-10T00:00:00",
+                  "expiryDate": null,
+                  "type": "!!!!!new sandhya temp",
+                  "typeId": 5041,
+                  "status": "Pending Approval",
+                  "responsiblePerson": "First User",
+                  "reference": 8,
+                  "activityLevel": 2,
+                  "id": 39584,
+                  "parentId": 39580,
+                  "depth": 3,
+                  "expanded": false,
+                  "children": null
+                },
+                {
+                  "name": "New Activity",
+                  "inMarketDate": "2019-03-22T00:00:00",
+                  "expiryDate": null,
+                  "type": "!!!!!new sandhya temp",
+                  "typeId": 5041,
+                  "status": "Completed",
+                  "responsiblePerson": "First User",
+                  "reference": 5,
+                  "activityLevel": 2,
+                  "id": 39581,
+                  "parentId": 39580,
+                  "depth": 3,
+                  "expanded": false,
+                  "children": null
+                }
+              ]
+            },
+            {
+              "name": "Clone of New Activity wkf",
+              "inMarketDate": "2019-03-22T00:00:00",
+              "expiryDate": null,
+              "type": null,
+              "typeId": 0,
+              "status": "Pending Approval",
+              "responsiblePerson": "First User",
+              "reference": 6,
+              "activityLevel": 1,
+              "id": 39582,
+              "parentId": null,
+              "depth": 1,
+              "expanded": true,
+              "children": [
+                {
+                  "name": "Clone of Clone of New Activity 66",
+                  "inMarketDate": "2019-05-10T00:00:00",
+                  "expiryDate": null,
+                  "type": "!!!!!new sandhya temp",
+                  "typeId": 5041,
+                  "status": "Pending Approval",
+                  "responsiblePerson": "First User",
+                  "reference": 9,
+                  "activityLevel": 2,
+                  "id": 39585,
+                  "parentId": 39582,
+                  "depth": 3,
+                  "expanded": false,
+                  "children": null
+                },
+                {
+                  "name": "Clone of Clone of Clone of New Activity 66",
+                  "inMarketDate": "2019-05-10T00:00:00",
+                  "expiryDate": null,
+                  "type": "!!!!!new sandhya temp",
+                  "typeId": 5041,
+                  "status": "Pending Approval",
+                  "responsiblePerson": "First User",
+                  "reference": 10,
+                  "activityLevel": 2,
+                  "id": 39586,
+                  "parentId": 39582,
+                  "depth": 3,
+                  "expanded": false,
+                  "children": null
+                },
+                {
+                  "name": "Clone of New Activity",
+                  "inMarketDate": "2019-03-22T00:00:00",
+                  "expiryDate": null,
+                  "type": "!!!!!new sandhya temp",
+                  "typeId": 5041,
+                  "status": "Cancelled",
+                  "responsiblePerson": "First User",
+                  "reference": 7,
+                  "activityLevel": 2,
+                  "id": 39583,
+                  "parentId": 39582,
+                  "depth": 3,
+                  "expanded": false,
+                  "children": null
+                }
+              ]
+            },
+            {
+              "name": "New Activity",
+              "inMarketDate": "2019-03-22T00:00:00",
+              "expiryDate": null,
+              "type": "!!!!!new sandhya temp",
+              "typeId": 5041,
+              "status": "Completed",
+              "responsiblePerson": "First User",
+              "reference": 11,
+              "activityLevel": 1,
+              "id": 39587,
+              "parentId": null,
+              "depth": 2,
+              "expanded": false,
+              "children": null
+            },
+            {
+              "name": "New Activity",
+              "inMarketDate": "2019-03-22T00:00:00",
+              "expiryDate": null,
+              "type": "@@ @@ @@ Test 1",
+              "typeId": 5045,
+              "status": "Pending Approval",
+              "responsiblePerson": "First User",
+              "reference": 12,
+              "activityLevel": 1,
+              "id": 39588,
+              "parentId": null,
+              "depth": 2,
+              "expanded": false,
+              "children": null
+            }
+          ];
+
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        treeGrid: true,
+        selectable: 'single'
+      });
+ });
+</script>

@@ -786,6 +786,7 @@ Datagrid.prototype = {
       this.renderRows();
       this.renderHeader();
     } else {
+      this.clearHeaderCache();
       this.renderRows();
     }
 
