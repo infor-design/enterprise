@@ -1375,7 +1375,7 @@ $datagrid-short-row-height: 23px;
     }
 
     // Hover States
-    &.is-hover-row:not(.error):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.error) {
+    &.is-hover-row:not(.error):not(.is-rowdisabled):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
@@ -1403,6 +1403,24 @@ $datagrid-short-row-height: 23px;
 
         &:active {
           background-color: $button-color-primary-active-background;
+        }
+      }
+    }
+
+    &.is-rowdisabled {
+      opacity: 0.6;
+
+      td {
+        &:hover {
+          .datagrid-checkbox {
+            cursor: default;
+          }
+        }
+
+        &.has-editor:hover {
+          .icon {
+            visibility: hidden;
+          }
         }
       }
     }
@@ -3596,6 +3614,17 @@ html[dir='rtl'] {
 
     .datagrid-body:not(.left):not(.right) td:first-child {
       border-right-color: transparent;
+    }
+  }
+
+  &.ios .datagrid-container,
+  &.android .datagrid-container {
+    &.has-vertical-scroll {
+      &:not(.has-frozen-right-columns):not(.has-frozen-left-columns) {
+        .datagrid-header:not(.left):not(.right) {
+          margin-left: 0;
+        }
+      }
     }
   }
 }
