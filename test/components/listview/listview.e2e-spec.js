@@ -30,10 +30,11 @@ describe('Listview example-singleselect tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-singleselect', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-singleselect', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -41,9 +42,9 @@ describe('Listview example-singleselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li.is-selected'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-selected="true"]')).isPresent()).toBeTruthy();
+    expect(await element(by.css('li.is-selected')).isPresent()).toBeTruthy();
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(element(by.className('selection-count')), '1 Selected'), config.waitsFor);
 
@@ -54,16 +55,16 @@ describe('Listview example-singleselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li.is-selected'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-selected="true"]')).isPresent()).toBeTruthy();
+    expect(await element(by.css('li.is-selected')).isPresent()).toBeTruthy();
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
 
     await listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"]'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-selected="false"]')).isPresent()).toBeTruthy();
+    expect(await element(by.css('li[aria-posinset="1"]')).getAttribute('class')).not.toContain('is-selected');
   });
 
   it('Should tab into, and select, arrow key down over disabled item, and select item on space key', async () => {
@@ -72,15 +73,15 @@ describe('Listview example-singleselect tests', () => {
     const listviewItemElTwo = await element(by.css('li[aria-posinset="2"]'));
     await listviewEl.sendKeys(protractor.Key.TAB);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li.is-selected'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-posinset="1"][aria-selected="true"]')).isPresent()).toBeTruthy();
+    expect(await element(by.css('li[aria-posinset="1"].is-selected')).isPresent()).toBeTruthy();
     await listviewItemElOne.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li.is-selected'))), config.waitsFor);
     await listviewItemElTwo.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li.is-selected'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-posinset="3"].is-selected')).isPresent()).toBeTruthy();
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
@@ -107,10 +108,11 @@ describe('Listview example-multiselect tests', () => {
   }
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-multiselect page', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-multiselect page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -204,40 +206,39 @@ describe('Listview example-mixed selection tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-mixed selection page', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-mixed selection page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
   it('Should select item on click on checkbox', async () => {
-    const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .label-text'));
+    const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .listview-selection-checkbox'));
     await listviewItemInputEl.click();
 
     expect(await element(by.className('is-selected')).isPresent()).toBeTruthy();
-    expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
   });
 
   it('Should deselect item on click on checkbox', async () => {
-    const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .label-text'));
+    const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .listview-selection-checkbox'));
     await listviewItemInputEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewItemInputEl), config.waitsFor);
 
     expect(await element(by.className('is-selected'))).toBeTruthy();
-    expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
 
     await listviewItemInputEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="false"]'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"]'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-selected="false"]'))).toBeTruthy();
   });
 
   it('Should select two items on click on mixed selection', async () => {
-    const listviewItemElOne = await element(by.css('li[aria-posinset="1"] .label-text'));
-    const listviewItemElThree = await element(by.css('li[aria-posinset="3"] .label-text'));
+    const listviewItemElOne = await element(by.css('li[aria-posinset="1"] .listview-selection-checkbox'));
+    const listviewItemElThree = await element(by.css('li[aria-posinset="3"] .listview-selection-checkbox'));
     await listviewItemElOne.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-selected'))), config.waitsFor);
@@ -245,8 +246,8 @@ describe('Listview example-mixed selection tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="3"].is-selected'))), config.waitsFor);
 
-    expect(await element(by.css('li[aria-posinset="1"][aria-selected="true"]'))).toBeTruthy();
-    expect(await element(by.css('li[aria-posinset="3"][aria-selected="true"]')).isPresent()).toBeTruthy();
+    expect(await element(by.css('li[aria-posinset="1"].is-selected'))).toBeTruthy();
+    expect(await element(by.css('li[aria-posinset="3"].is-selected')).isPresent()).toBeTruthy();
   });
 
   it('Should activate element on click outside of checkbox', async () => {
@@ -267,10 +268,11 @@ describe('Listview example-search tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-search page', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-search page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -311,10 +313,11 @@ describe('Listview example-paging tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-paging page', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-paging page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -379,10 +382,11 @@ describe('Listview example-paging-clientside tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-paging-clientside page', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-paging-clientside page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -464,10 +468,11 @@ describe('Listview remove-clear tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on remove-clear page', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on remove-clear page', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
@@ -498,10 +503,11 @@ describe('Listview example-header-totals` tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-header-total', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-header-total', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
+      utils.reportAxeViolations(res);
     });
   }
 
