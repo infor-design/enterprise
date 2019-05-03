@@ -54,9 +54,11 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     }
   }
 
-  &:hover input:not([disabled]):not(:focus) {
-    + svg {
-      color: $button-color-tertiary-hover-font;
+  &:not(.toolbar-searchfield-wrapper):hover {
+    input:not([disabled]):not(:focus) {
+      + .icon {
+        color: $button-color-tertiary-hover-font;
+      }
     }
   }
 

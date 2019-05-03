@@ -21,6 +21,7 @@ excel.cleanExtra = function (customDs, self) {
     };
     const nonExportables = [];
     const elements = [].slice.call(table[0].querySelectorAll('tr, th, td, div, span'));
+
     elements.forEach((el) => {
       if (el.classList.contains('is-hidden') || el.classList.contains('datagrid-expandable-row')) {
         removeNode(el);
@@ -30,7 +31,7 @@ excel.cleanExtra = function (customDs, self) {
       // THEAD
       const attrExportable = el.getAttribute('data-exportable');
       if (attrExportable && attrExportable === 'no') {
-        const index = Array.prototype.slice.call(el.parentElement.children).indexOf(el);
+        const index = parseInt(el.id.slice(-1), 10);
         nonExportables.push(index + 1);
         removeNode(el);
         return;
@@ -59,6 +60,7 @@ excel.cleanExtra = function (customDs, self) {
         el.textContent = `'${text}'`;
       }
     });
+
     return table;
   };
 
@@ -80,7 +82,7 @@ excel.cleanExtra = function (customDs, self) {
       const headerNode = allHeaderNodes[i];
       const cell = row.insertCell(i);
       cell.innerHTML = headerNode.querySelector('.datagrid-header-text').textContent.trim();
-      cell.classList = headerNode.classList;
+      cell.setAttribute('class', headerNode.classList);
       cell.setAttribute('id', headerNode.getAttribute('id'));
       if (headerNode.getAttribute('data-exportable')) {
         cell.setAttribute('data-exportable', headerNode.getAttribute('data-exportable'));

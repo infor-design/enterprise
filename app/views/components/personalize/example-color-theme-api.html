@@ -40,7 +40,7 @@
     }
 
     themeDropdown.on('selected', function (e, args) {
-      $('html').data('personalize').setTheme(this.selectedOptions[0].getAttribute('value'));
+      $('html').data('personalize').setTheme(this.options[this.selectedIndex].getAttribute('value'));
     }).html(themeHtml).dropdown().val(Soho.theme.currentTheme.id).trigger('updated');
 
     $('html').on('themechanged', function (e, args) {
@@ -56,8 +56,7 @@
     }
 
     colorsDropdown.on('selected', function (e, args) {
-      $('html').data('personalize').setColors(this.selectedOptions[0].getAttribute('data-hex'));
-      //$('html').data('personalize').setTheme(this.selectedOptions[0].getAttribute('value'));
+      $('html').data('personalize').setColors(this.options[this.selectedIndex].getAttribute('data-hex'));
     }).html(colorsHtml).dropdown().val('azure').trigger('updated');
 
     $('html').on('colorschanged', function (e, args) {

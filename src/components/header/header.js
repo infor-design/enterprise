@@ -152,7 +152,7 @@ Header.prototype = {
     this.toolbarElem[isFlex ? 'toolbarflex' : 'toolbar'](toolbarSettings);
 
     // Build the title button if one is not present, and we are drilled in at least one level deep.
-    if (!this.hasTitleButton && this.levelsDeep > 1) {
+    if (!this.hasTitleButton && this.levelsDeep.length > 1) {
       this.buildTitleButton();
     }
 
