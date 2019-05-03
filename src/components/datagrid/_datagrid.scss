@@ -948,6 +948,7 @@ $datagrid-short-row-height: 23px;
         margin-top: -33px;
       }
     }
+
   }
 
   &.short-rowheight {
@@ -1293,10 +1294,25 @@ $datagrid-short-row-height: 23px;
     }
 
     .chart-completion-target {
-      top: -5px;
+      height: 20px;
+      top: 1px;
 
       .chart-targeted-text {
         margin-top: -27px;
+      }
+    }
+
+    .chart-targeted-achievement {
+      .target {
+        margin-top: 0;
+      }
+
+      .bar {
+        height: 20px !important;
+
+        &.completed {
+          margin-top: -20px;
+        }
       }
     }
 
@@ -2492,7 +2508,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &.is-disabled {
-        border-color: $datagrid-filter-disabled-color;
+        border-color: $datagrid-filter-disabled-color !important;
 
         + .icon {
           color: $datagrid-filter-disabled-color;

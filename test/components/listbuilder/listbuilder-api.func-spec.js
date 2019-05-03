@@ -1,4 +1,5 @@
 import { ListBuilder } from '../../../src/components/listbuilder/listbuilder';
+import { cleanup } from '../../helpers/func-utils';
 
 const listbuilderHTML = require('../../../app/views/components/listbuilder/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -6,7 +7,6 @@ const svg = require('../../../src/components/icons/svg.html');
 require('../../../src/components/locale/cultures/en-US.js');
 
 let listbuilderEl;
-let svgEl;
 let listbuilderObj;
 
 // Define dataset
@@ -27,19 +27,16 @@ ds.push({ id: 12, value: 'opt-12', text: 'Libya' });
 describe('ListBuilder API', () => {
   beforeEach(() => {
     listbuilderEl = null;
-    svgEl = null;
     listbuilderObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', listbuilderHTML);
     listbuilderEl = document.body.querySelector('#example-listbuilder');
-    svgEl = document.body.querySelector('.svg-icons');
     listbuilderObj = new ListBuilder(listbuilderEl, { dataset: [...ds] });
   });
 
   afterEach(() => {
     listbuilderObj.destroy();
-    listbuilderEl.parentNode.removeChild(listbuilderEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup(['#example-listbuilder-container', '.svg-icons', '#listbuilder-script', '#listbuilder-tmpl']);
   });
 
   it('Should be defined as an object', () => {
