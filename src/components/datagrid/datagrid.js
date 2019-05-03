@@ -518,7 +518,6 @@ Datagrid.prototype = {
 
       rowNode = self.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
       args = { row, cell, target: rowNode, value: data, oldValue: {} };
-      
 
       /**
        * Fires after a row is added via the api.
