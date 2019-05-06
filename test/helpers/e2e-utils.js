@@ -1,3 +1,6 @@
+const chalk = require('chalk');
+const logger = require('../../scripts/logger');
+
 module.exports = {
   isIE: () => browser.browserName === 'ie',
   isFF: () => browser.browserName === 'firefox',
@@ -26,7 +29,7 @@ module.exports = {
       let errors = 0;
       for (let i = 0; i < browserLog.length; i++) {
         const type = browserLog[i].level.name;
-        console.log(type, browserLog[i].message); //eslint-disable-line
+        logger(type, browserLog[i].message);
         errors++;
       }
       expect(errors).toEqual(0);
@@ -42,6 +45,35 @@ module.exports = {
       }
       return text;
     });
+  },
+  reportAxeViolations: (res) => {
+    let msg = '';
+    if (!res || !res.violations || !res.violations.length) {
+      return;
+    }
+
+    msg += 'Axe Violations:\n\n';
+    res.violations.forEach((violation) => {
+      msg += `${chalk.bold(violation.help)}\n`;
+
+      const violationNodes = violation.nodes || [];
+      let failureSummary;
+      let targetList = '';
+      violationNodes.forEach((node) => {
+        if (!failureSummary) {
+          failureSummary = node.failureSummary;
+        }
+        node.target.forEach((target) => {
+          targetList += `  \`${target}\`\n`;
+        });
+      });
+
+      msg += `${chalk.yellow('Targets:')}\n`;
+      msg += `${targetList}\n`;
+      msg += `${chalk.yellow('Suggested Fix:')} ${failureSummary}\n`;
+    });
+
+    logger('error', msg);
   },
   rgb2hex: (str) => {
     str = str.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);

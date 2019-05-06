@@ -9,6 +9,7 @@
 ### v4.19.0 Fixes
 
 - `[Colorpicker]` Fixed an issue where the colorpicker label is cut off in extra small input field. ([#2023](https://github.com/infor-design/enterprise/issues/2023))
+- `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
 - `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
 
@@ -25,6 +26,7 @@
 - `[Personalize]` Added classes for the personalization colors so that you can personalize certain form elements. ([#1847](https://github.com/infor-design/enterprise/issues/1847))
 - `[Expandable Area]` Added example of a standalone button the toggles a form area. ([#1935](https://github.com/infor-design/enterprise/issues/1935))
 - `[Datagrid]` Added support so if there are multiple inputs within an editor they work with the keyboard tab key. ([#355](https://github.com/infor-design/enterprise-ng/issues/355))
+- `[Datagrid]` Fixed an error on IE when doing an excel export. ([#2018](https://github.com/infor-design/enterprise/issues/2018))
 - `[Editor]` Added a JS setting and CSS styles to support usage of a Flex Toolbar ([#1120](https://github.com/infor-design/enterprise/issues/1120))
 - `[Header]` Added a JS setting and CSS styles to support usage of a Flex Toolbar ([#1120](https://github.com/infor-design/enterprise/issues/1120))
 - `[Mask]` Added a setting for passing a locale string, allowing Number masks to be localized.  This enables usage of the `groupSize` property, among others, from locale data in the Mask. ([#440](https://github.com/infor-design/enterprise/issues/440))
@@ -41,6 +43,7 @@
 - `[Contextual Action Panel]` Fixed an issue where cap modal would only open the first time. ([#1993](https://github.com/infor-design/enterprise/issues/1993))
 - `[Datepicker]` Fixed an issue in NG where the custom validation is removed during the teardown of a datepicker.([NG #411](https://github.com/infor-design/enterprise-ng/issues/411))
 - `[Datagrid]` Fixed an issue where lookup filterConditions were not rendering. ([#1873](https://github.com/infor-design/enterprise/issues/1873))
+- `[Datagrid]` Fixed an issue where when using filtering and server side paging the filter operations would cause two ajax requests. ([#2069](https://github.com/infor-design/enterprise/issues/2069))
 - `[Datagrid]` Fixed issue where header columns are misaligned with body columns on load. ([#1892](https://github.com/infor-design/enterprise/issues/1892))
 - `[Datagrid]` Fixed an issue where filtering was missing translation. ([#1900](https://github.com/infor-design/enterprise/issues/1900))
 - `[Datagrid]` Fixed an issue with the checkbox formatter where string based 1 or 0 would not work as a dataset source. ([#1948](https://github.com/infor-design/enterprise/issues/1948))
@@ -52,6 +55,8 @@
 - `[Dropdown]` Changed the way dropdowns work with screen readers to be a collapsible listbox.([#404](https://github.com/infor-design/enterprise/issues/404))
 - `[Dropdown]` Fixed an issue where multiselect dropdown unchecking "Select All" was not getting clear after close list with Safari browser.([#1882](https://github.com/infor-design/enterprise/issues/1882))
 - `[Dropdown]` Added an example of a color dropdown showing palette colors as icons.([#2013](https://github.com/infor-design/enterprise/issues/2013))
+- `[Datagrid]` Fixed a misalignment of the close icon on mobile. ([#2018](https://github.com/infor-design/enterprise/issues/2018))
+- `[List/Detail]` Removed some legacy CSS code that was causing text inside of inline Toolbar Searchfields to become transparent. ([#2075](https://github.com/infor-design/enterprise/issues/2075))
 - `[Listbuilder]` Fixed an issue where the text was not sanitizing. ([#1692](https://github.com/infor-design/enterprise/issues/1692))
 - `[Lookup]` Fixed an issue where the tooltip was using audible text in the code block component. ([#354](https://github.com/infor-design/enterprise-ng/issues/354))
 - `[Locale]` Fixed trailing zeros were getting ignored when displaying thousands values. ([#404](https://github.com/infor-design/enterprise/issues/1840))

@@ -82,7 +82,7 @@ excel.cleanExtra = function (customDs, self) {
       const headerNode = allHeaderNodes[i];
       const cell = row.insertCell(i);
       cell.innerHTML = headerNode.querySelector('.datagrid-header-text').textContent.trim();
-      cell.classList = headerNode.classList;
+      cell.setAttribute('class', headerNode.classList);
       cell.setAttribute('id', headerNode.getAttribute('id'));
       if (headerNode.getAttribute('data-exportable')) {
         cell.setAttribute('data-exportable', headerNode.getAttribute('data-exportable'));

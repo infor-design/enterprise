@@ -112,10 +112,12 @@ Dropdown.prototype = {
    * @returns {boolean} whether or not the text inside the in-page pseudo element too big to fit
    */
   get overflowed() {
-    const span = this.pseudoElem.find('span').css('max-width', '');
-    if (span.width() > this.pseudoElem.width()) {
-      span.css('max-width', '100%');
-      return true;
+    if (!this.isMobile() || (this.isMobile() && !this.isOpen())) {
+      const span = this.pseudoElem.find('span').css('max-width', '');
+      if (span.width() > this.pseudoElem.width()) {
+        span.css('max-width', '100%');
+        return true;
+      }
     }
     return false;
   },
@@ -516,11 +518,16 @@ Dropdown.prototype = {
   setTooltip() {
     const opts = this.element.find('option:selected');
     const optText = this.getOptionText(opts);
-    this.tooltipApi = this.pseudoElem.find('span').tooltip({
-      content: optText,
-      parentElement: this.pseudoElem,
-      trigger: 'hover',
-    });
+    this.tooltipApi = this.pseudoElem.find('span')
+      .tooltip({
+        content: optText,
+        parentElement: this.pseudoElem,
+        trigger: this.isMobile() ? 'immediate' : 'hover',
+      })
+      .on('blur.dropdowntooltip', () => {
+        this.removeTooltip();
+      })
+      .data('tooltip');
   },
 
   /**
@@ -528,8 +535,11 @@ Dropdown.prototype = {
    * @returns {void}
    */
   removeTooltip() {
-    this.tooltipApi.destroy();
-    this.tooltipApi = null;
+    if (this.tooltipApi) {
+      this.tooltipApi.element.off('blur.dropdowntooltip');
+      this.tooltipApi.destroy();
+      this.tooltipApi = null;
+    }
   },
 
   /**
@@ -1567,6 +1577,10 @@ Dropdown.prototype = {
     }
 
     function completeOpen() {
+      if (self.isMobile()) {
+        $('.tooltip:not(.is-hidden)').hide();
+      }
+
       self.updateList();
       self.openList();
 
