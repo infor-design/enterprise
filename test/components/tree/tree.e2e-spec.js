@@ -104,11 +104,11 @@ describe('Tree Ajax data tests', () => {
   });
 
   it('Should load Ajax data node on click', async () => {
-    expect(await element.all(by.css('.tree li')).count()).toBe(2);
+    expect(await element.all(by.css('.tree li')).count()).toBe(3);
     await element.all(by.css('.tree li.folder a[role="treeitem"]')).first().click();
     await browser.driver.sleep(2500);
 
-    expect(await element.all(by.css('.tree li')).count()).toBe(4);
+    expect(await element.all(by.css('.tree li')).count()).toBe(5);
   });
 });
 
