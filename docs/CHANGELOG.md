@@ -5,6 +5,7 @@
 ### v4.19.0 Features
 
 - `[Datagrid]` Added support for disabling rows by data or a dynamic function, rows are disabled from selection and editing. ([#1614](https://github.com/infor-design/enterprise/issues/1614))
+- `[Themes]` Added support for multiple themes in the demo app and renamed distribute Uplift (only) theme files. ([#1972](https://github.com/infor-design/enterprise/issues/1972))
 
 ### v4.19.0 Fixes
 
