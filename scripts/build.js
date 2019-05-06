@@ -507,8 +507,6 @@ function sortFilesIntoBuckets(files, srcFilePath) {
   const startOfMid = getFurthestIndexOf(componentsJSFile, searchTerms.mid);
   const startOfComplex = getFurthestIndexOf(componentsJSFile, searchTerms.complex);
 
-  debugger;
-
   files.forEach((file) => {
     let match = file.match(matchRegex);
     // No match === 'component' type.  In this case, further sort the sub-component type
@@ -965,8 +963,6 @@ if (!commandLineArgs.components) {
 } else {
   requestedComponents = commandLineArgs.components.split(',');
 }
-
-debugger;
 
 cleanAll(true).then(() => {
   if (!normalBuild) {
