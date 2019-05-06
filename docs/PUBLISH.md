@@ -5,11 +5,8 @@
 To do a dev release, publish a dated semver to npm.
 
 1. Make sure you are on `master` and its clean
-1. Change the `package.json` version to append the date, i.e. `4.7.0-dev.YYYYMMDD`
-1. Save the `package.json` file (**DO NOT** commit it)
-1. `npm run build && npm run zip-dist` to build
-1. `npm publish --tag=dev` to publish
-1. Undo the version change/reset your branch
+1. Make sure you are authenticated witih npm cli (`npm login`)
+1. `npm run release:dev`
 
 ## Production Release (tagged)
 
@@ -53,10 +50,13 @@ git config --global credential.helper wincred
 
 ## Make sure you have set up tools for AWS CDN Publish (only for "final" releases)
 
-1. nstall AWS for testing and configuring <http://docs.aws.amazon.com/cli/latest/userguide/installing.html>. If you are on mac and use homebrew, that is an option too.
-1. Once installed run aws configure to enter the keys in the right spot <http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html>
-1. Install [directory-to-s3](https://www.npmjs.com/package/directory-to-s3) globally.
-    - `npm install -g directory-to-s3`
+- Install AWS for testing and configuring <http://docs.aws.amazon.com/cli/latest/userguide/installing.html>
+- Once installed, configure AWS CLI
+    1. Run `aws configure --profile sohoxi`
+    2. Fill in the `key` and `secret`
+    3. Leave "region" and "output" blank or `[none]`
+
+> See the [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) for troubleshooting
 
 ## For documentation (only for "final" releases)
 

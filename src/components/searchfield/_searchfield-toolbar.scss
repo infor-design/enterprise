@@ -40,7 +40,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     &::-webkit-input-placeholder,
     &::-moz-placeholder,
     &:-ms-input-placeholder {
-      color: $searchfield-text-color;
+      color: $searchfield-placeholder-text-color;
       font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
     }
@@ -179,21 +179,21 @@ $toolbarsearchfield-category-empty-width: 51px;
       text-transform: none;
 
       &::-webkit-input-placeholder {
-        color: $searchfield-text-color;
+        color: $searchfield-placeholder-text-color;
         font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }
 
       &::-moz-placeholder {
-        color: $searchfield-text-color;
+        color: $searchfield-placeholder-text-color;
         font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }
 
       &:-ms-input-placeholder {
-        color: $searchfield-text-color;
+        color: $searchfield-placeholder-text-color;
         font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
@@ -211,6 +211,20 @@ $toolbarsearchfield-category-empty-width: 51px;
       .btn {
         background-color: rgba($searchfield-alt-bg-color, 1);
         border-bottom-color: rgba($searchfield-alt-border-color, 1);
+      }
+
+      .searchfield {
+        &::-webkit-input-placeholder {
+          color: $searchfield-lighter-placeholder-text-color;
+        }
+
+        &::-moz-placeholder {
+          color: $searchfield-lighter-placeholder-text-color;
+        }
+
+        &:-ms-input-placeholder {
+          color: $searchfield-lighter-placeholder-text-color;
+        }
       }
     }
   }
@@ -330,6 +344,11 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
+  &:not(.is-open) {
+    .icon.close {
+      pointer-events: none;
+    }
+  }
 }
 
 .azure07 .active input {
@@ -611,21 +630,21 @@ $toolbarsearchfield-category-empty-width: 51px;
       text-transform: none;
 
       &::-webkit-input-placeholder {
-        color: $searchfield-text-color;
+        color: $searchfield-placeholder-text-color;
         font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }
 
       &::-moz-placeholder {
-        color: $searchfield-text-color;
+        color: $searchfield-placeholder-text-color;
         font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;
       }
 
       &:-ms-input-placeholder {
-        color: $searchfield-text-color;
+        color: $searchfield-placeholder-text-color;
         font-size: $theme-size-font-base;
         font-weight: $theme-number-font-weight-base;
         text-transform: none;

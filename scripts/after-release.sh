@@ -22,5 +22,5 @@ if [[ "$RELEASE_TAG" == "latest" ]]; then
 
     echo "Publishing $RELEASE_VERSION files to AWS CDN"
     echo ""
-    AWS_PROFILE=sohoxi directory-to-s3 -d dist infor-devops-core-soho-us-east-1/sohoxi/$RELEASE_VERSION
+    aws s3 cp dist s3://infor-devops-core-soho-us-east-1/sohoxi/$RELEASE_VERSION --recursive --profile sohoxi --acl public-read
 fi

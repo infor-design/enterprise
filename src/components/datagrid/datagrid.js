@@ -54,6 +54,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.saveUserSettings.filter=true]
  * @param {boolean}  [settings.focusAfterSort=false] If true will focus the active cell after sorting.
  * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
+ * @param {Function}  [settings.isRowDisabled=null] Allows you to provide a function so you can set some rows to disabled base on data or row index.
  * @param {boolean}  [settings.isList=false] Makes the grid have readonly "list" styling
  * @param {string}   [settings.menuId=null]  ID of the menu to use for a row level right click context menu
  * @param {string}   [settings.menuSelected=null] Callback for the grid level context menu
@@ -138,6 +139,7 @@ const DATAGRID_DEFAULTS = {
   saveUserSettings: {},
   focusAfterSort: false, // If true will focus the active cell after sorting.
   editable: false,
+  isRowDisabled: null,
   isList: false, // Makes a readonly "list"
   menuId: null, // Id to the right click context menu
   headerMenuId: null, // Id to the right click context menu to use for the header
@@ -1131,7 +1133,7 @@ Datagrid.prototype = {
       const isResizable = (column.resizable === undefined ? true : column.resizable);
       const isExportable = (column.exportable === undefined ? true : column.exportable);
       const isSelection = column.id === 'selectionCheckbox';
-      let headerAlignmentClass = '';
+      const headerAlignmentClass = this.getHeaderAlignmentClass(column);
 
       // Make frozen columns hideable: false
       if ((self.hasLeftPane || self.hasRightPane)
@@ -1140,13 +1142,6 @@ Datagrid.prototype = {
         self.settings.frozenColumns.right &&
         self.settings.frozenColumns.right.indexOf(column.id) > -1)) {
         column.hideable = false;
-      }
-
-      // note there is a space at the front of the classname
-      if (column.headerAlign === undefined) {
-        headerAlignmentClass = column.align ? ` l-${column.align}-text` : '';
-      } else {
-        headerAlignmentClass = ` l-${column.headerAlign}-text`;
       }
 
       // Assign css classes
@@ -1263,12 +1258,11 @@ Datagrid.prototype = {
 
     self.syncHeaderCheckbox(this.settings.dataset);
     self.setScrollClass();
+    self.attachFilterRowEvents();
 
     if (self.settings.columnReorder) {
       self.createDraggableColumns();
     }
-
-    this.attachFilterRowEvents();
 
     if (this.restoreSortOrder) {
       this.setSortIndicator(this.sortColumn.sortId, this.sortColumn.sortAsc);
@@ -1282,6 +1276,23 @@ Datagrid.prototype = {
     }
 
     this.activeEllipsisHeaderAll();
+  },
+
+  /**
+   * Get the alignment class based on settings. Note there is a space at the front of the classname.
+   * @private
+   * @param {object} column The column info.
+   * @returns {string} The class as a string.
+   */
+  getHeaderAlignmentClass(column) {
+    let headerAlignmentClass = '';
+
+    if (column.headerAlign === undefined) {
+      headerAlignmentClass = column.align ? ` l-${column.align}-text` : '';
+    } else {
+      headerAlignmentClass = ` l-${column.headerAlign}-text`;
+    }
+    return headerAlignmentClass;
   },
 
   /**
@@ -1327,6 +1338,7 @@ Datagrid.prototype = {
   filterRowHtml(columnDef, idx) {
     const self = this;
     let filterMarkup = '';
+    const headerAlignmentClass = this.getHeaderAlignmentClass(columnDef);
 
     // Generate the markup for the various Types
     // Supported Filter Types: text, integer, date, select, decimal,
@@ -1336,7 +1348,7 @@ Datagrid.prototype = {
       const filterId = self.uniqueId(`-header-filter-${idx}`);
       let integerDefaults;
 
-      filterMarkup = `<div class="datagrid-filter-wrapper" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
+      filterMarkup = `<div class="datagrid-filter-wrapper${headerAlignmentClass}" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
         col.name}</label>`;
 
       switch (col.filterType) {
@@ -1447,8 +1459,8 @@ Datagrid.prototype = {
       filterMarkup += '</div>';
     }
 
-    if (!columnDef.filterType) {
-      filterMarkup = '<div class="datagrid-filter-wrapper"></div>';
+    if (!columnDef.filterType && this.settings.filterable) {
+      filterMarkup = `<div class="datagrid-filter-wrapper is-empty ${headerAlignmentClass}"></div>`;
     }
     return filterMarkup;
   },
@@ -2373,16 +2385,16 @@ Datagrid.prototype = {
     const s = this.settings;
     const heights = {
       default: { short: 20, medium: 28, normal: 35 },
-      filterable: { short: 48, medium: 51, normal: 56 },
+      filterable: { short: 53, medium: 54, normal: 60 },
       group: { short: 46, medium: 56, normal: 74 },
-      groupFilterable: { short: 78, medium: 84, normal: 99 }
+      groupFilterable: { short: 83, medium: 87, normal: 103 }
     };
     let height = 0;
     if (s.columnGroups) {
-      height = s.filterable ?
+      height = s.filterable && this.filterRowRendered ?
         heights.groupFilterable[s.rowHeight] : heights.group[s.rowHeight];
     } else {
-      height = s.filterable ?
+      height = s.filterable && this.filterRowRendered ?
         heights.filterable[s.rowHeight] : heights.default[s.rowHeight];
     }
     return height;
@@ -3390,6 +3402,22 @@ Datagrid.prototype = {
       return '';
     }
 
+    let isRowDisabled = false;
+
+    // Run a function that helps check if disabled
+    if (self.settings.isRowDisabled && typeof self.settings.isRowDisabled === 'function') {
+      const isDisabled = self.settings.isRowDisabled(actualIndex, rowData);
+
+      if (isDisabled) {
+        isRowDisabled = true;
+      }
+    }
+
+    // Or allow the data to determine it
+    if (rowData.isRowDisabled) {
+      isRowDisabled = true;
+    }
+
     // Default
     d = d ? d.depth : 0;
     depth = d;
@@ -3481,11 +3509,13 @@ Datagrid.prototype = {
         actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
       }${
         self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
-      }${self.settings.treeGrid ? ` aria-level= "${depth}"` : ''
-      }${isSelected ? ' aria-selected= "true"' : ''} class="datagrid-row${rowStatus.class}${
+      }${self.settings.treeGrid ? ` aria-level="${depth}"` : ''
+      }${isRowDisabled ? ' aria-disabled="true"' : ''
+      }${isSelected ? ' aria-selected="true"' : ''} class="datagrid-row${rowStatus.class}${
         isHidden ? ' is-hidden' : ''}${
         rowData.isFiltered ? ' is-filtered' : ''
       }${isActivated ? ' is-rowactivated' : ''
+      }${isRowDisabled ? ' is-rowdisabled' : ''
       }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
       }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
       }${isSummaryRow ? ' datagrid-summary-row' : ''
@@ -5363,6 +5393,9 @@ Datagrid.prototype = {
       });
 
       this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
+        if (pagingInfo.type === 'filtered' && this.settings.source) {
+          return;
+        }
         self.render(null, pagingInfo);
       }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
         self.render(null, pagingInfo);
@@ -5762,7 +5795,7 @@ Datagrid.prototype = {
 
           self.selectAllRows();
         } else {
-          checkbox.removeClass('is-checked').attr('aria-checked', 'true');
+          checkbox.removeClass('is-checked').attr('aria-checked', 'false');
           self.unSelectAllRows();
         }
       });
@@ -6357,7 +6390,7 @@ Datagrid.prototype = {
     elem.addClass(selectClasses).attr('aria-selected', 'true');
 
     if (self.columnIdxById('selectionCheckbox') !== -1) {
-      checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
+      checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox')).not('.is-disabled');
       checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
         .addClass('is-checked').attr('aria-checked', 'true');
     }
@@ -6381,6 +6414,10 @@ Datagrid.prototype = {
     const s = this.settings;
 
     if (idx === undefined || idx === -1 || !s.selectable) {
+      return;
+    }
+
+    if (this.isRowDisabled(idx)) {
       return;
     }
 
@@ -7720,6 +7757,22 @@ Datagrid.prototype = {
   },
 
   /**
+   * Returns if the row has been disabled.
+   * @param  {number} row The row index.
+   * @returns {boolean} eturns true if the row is disabled
+   */
+  isRowDisabled(row) {
+    if (this.settings.isRowDisabled && typeof this.settings.isRowDisabled === 'function') {
+      const rowNode = this.rowNodes(row);
+
+      if (rowNode.attr('aria-disabled') === 'true') {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  /**
    * Is a specific row/cell editable?
    * @param  {number} row The row index
    * @param  {number} cell The cell index
@@ -7732,6 +7785,10 @@ Datagrid.prototype = {
 
     const col = this.columnSettings(cell);
     if (col.readonly) {
+      return false;
+    }
+
+    if (this.isRowDisabled(row)) {
       return false;
     }
 
@@ -7840,6 +7897,8 @@ Datagrid.prototype = {
     } else {
       cellParent.addClass('is-editing-inline');
     }
+
+    cellValue = xssUtils.sanitizeConsoleMethods(cellValue);
 
     /**
     * Fires before a cell goes into edit mode. Giving you a chance to adjust column settings.
@@ -7962,7 +8021,11 @@ Datagrid.prototype = {
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.settings.dataset[dataRowIndex];
-    const oldValue = this.fieldValue(rowData, col.field);
+    let oldValue = this.fieldValue(rowData, col.field);
+
+    // Sanitize console methods
+    oldValue = xssUtils.sanitizeConsoleMethods(oldValue);
+    newValue = xssUtils.sanitizeConsoleMethods(newValue);
 
     const doCommit = () => {
       // Format Cell again
@@ -8605,7 +8668,7 @@ Datagrid.prototype = {
       rowNodes = this.visualRowNode(row);
       cellNode = rowNodes.find('td').eq(cell);
     }
-    const oldVal = this.fieldValue(rowData, col.field);
+    let oldVal = this.fieldValue(rowData, col.field);
 
     // Coerce/Serialize value if from cell edit
     if (!fromApiCall) {
@@ -8705,6 +8768,11 @@ Datagrid.prototype = {
         this.setIsDirtyAndIcon(row, cell, cellNode);
       }
     }
+
+    // Sanitize console methods
+    oldVal = xssUtils.sanitizeConsoleMethods(oldVal);
+    coercedVal = xssUtils.sanitizeConsoleMethods(coercedVal);
+    coercedVal = xssUtils.escapeHTML(coercedVal);
 
     if (coercedVal !== oldVal && !fromApiCall) {
       const args = {

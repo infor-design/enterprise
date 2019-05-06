@@ -101,6 +101,7 @@ const filePaths = {
     },
     sass: {
       controls: path.join(SRC_DIR, 'core', '_controls.scss'),
+      controlsUplift: path.join(SRC_DIR, 'core', '_controls-uplift.scss'),
       themes: {
         'dark-theme': path.join(SRC_DIR, 'themes', 'dark-theme.scss'),
         'high-contrast-theme': path.join(SRC_DIR, 'themes', 'high-contrast-theme.scss'),
@@ -126,6 +127,7 @@ const filePaths = {
     },
     sass: {
       controls: path.join(TEMP_DIR, '_controls.scss'),
+      controlsUplift: path.join(TEMP_DIR, '_controls-uplift.scss'),
       banner: path.join(TEMP_DIR, '_banner.scss'),
       themes: {
         'dark-theme': path.join(TEMP_DIR, 'dark-theme.scss'),
@@ -534,7 +536,14 @@ function sortFilesIntoBuckets(files, srcFilePath) {
         targetBucket = buckets.mid;
       }
 
-      targetBucket.push(file);
+      const lastItemIndex = targetBucket.length - 1;
+      const lastItem = targetBucket[lastItemIndex];
+      if (lastItem && lastItem.indexOf('-uplift') > -1) {
+        targetBucket = targetBucket.splice(lastItemIndex, 0, file);
+      } else {
+        targetBucket.push(file);
+      }
+
       return;
     }
 
@@ -558,9 +567,10 @@ function sortFilesIntoBuckets(files, srcFilePath) {
  * Writes the contents of a single file bucket to a string, for being appended to a file
  * @param {string} key the target file bucket
  * @param {string} type determines the type of file to include (see the types array inside)
+ * @param {boolean} disallowUplift determines if we are including imports for the uplift-specific styles for IDS inside this index file
  * @returns {string} formatted, multi-line, containing all relevant ES6-based import/export statements
  */
-function renderImportsToString(key, type) {
+function renderImportsToString(key, type, disallowUplift) {
   let fileContents = '';
   const bucket = buckets[key];
   if (!Array.isArray(bucket)) {
@@ -591,16 +601,19 @@ function renderImportsToString(key, type) {
     }
 
     const lib = getLibFromFileName(fileName);
+    const libIsAllowed = !disallowUplift || (disallowUplift && lib.indexOf('-uplift') === -1);
 
     let statement = '';
     if (type === 'scss') {
-      statement = writeSassImportStatement(lib, filePath, true);
+      if (libIsAllowed) {
+        statement = `${writeSassImportStatement(lib, filePath, true)}${NL}`;
+      }
     } else if (type === 'jquery') {
-      statement = writeJSImportStatement(lib, filePath, false, true);
+      statement = `${writeJSImportStatement(lib, filePath, false, true)}${NL}`;
     } else {
-      statement = writeJSImportStatement(lib, filePath, true);
+      statement = `${writeJSImportStatement(lib, filePath, true)}${NL}`;
     }
-    fileContents += `${statement}${NL}`;
+    fileContents += statement;
   });
 
   return fileContents;
@@ -695,7 +708,8 @@ function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
   let targetFile = '';
   const type = 'scss';
 
-  if (key === 'components') {
+  if (key === 'components' || key === 'components-uplift') {
+    const isUplift = key === 'components-uplift';
     targetFile = `// Required ====/${NL}@import '../src/core/required';${NL}${NL}`;
 
     // 'component' source code files are comprised of three buckets that need to
@@ -703,7 +717,7 @@ function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
     const componentBuckets = ['foundational', 'mid', 'complex', 'patterns', 'layouts'];
     componentBuckets.forEach((thisBucket) => {
       targetFile += `// ${capitalize(thisBucket)} ====/${NL}`;
-      targetFile += renderImportsToString(thisBucket, type);
+      targetFile += renderImportsToString(thisBucket, type, !isUplift);
       targetFile += NL;
     });
     targetFile += `// These controls must come last${NL}@import '../src/components/colors/colors';${NL}`;
@@ -821,6 +835,8 @@ function renderTargetFiles(isNormalBuild) {
       renderPromises.push(promise);
     });
     renderPromises.push(renderTargetSassFile('banner', filePaths.target.sass.banner, isNormalBuild));
+    renderPromises.push(renderTargetSassFile('components', filePaths.target.sass.controls));
+    renderPromises.push(renderTargetSassFile('components-uplift', filePaths.target.sass.controlsUplift));
   }
 
   // On normal builds, still generate the banner and inline it into each theme file.
@@ -839,7 +855,6 @@ function renderTargetFiles(isNormalBuild) {
   });
 
   runSassBuilds();
-  renderPromises.push(renderTargetSassFile('components', filePaths.target.sass.controls));
 
   renderPromises.push(renderComponentList(), renderSourceCodeList());
   renderPromises.push(renderTestManifest('functional'));

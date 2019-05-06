@@ -1,7 +1,6 @@
 ---
 title: Theme Component
-description: Lightweight wrapper for theme information, which contains the colors that are used
-on the theme.
+description: Lightweight wrapper for theme information, which contains the colors that are used on the theme.
 ---
 
 ## Code Example

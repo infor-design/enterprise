@@ -112,10 +112,12 @@ Dropdown.prototype = {
    * @returns {boolean} whether or not the text inside the in-page pseudo element too big to fit
    */
   get overflowed() {
-    const span = this.pseudoElem.find('span').css('max-width', '');
-    if (span.width() > this.pseudoElem.width()) {
-      span.css('max-width', '100%');
-      return true;
+    if (!this.isMobile() || (this.isMobile() && !this.isOpen())) {
+      const span = this.pseudoElem.find('span').css('max-width', '');
+      if (span.width() > this.pseudoElem.width()) {
+        span.css('max-width', '100%');
+        return true;
+      }
     }
     return false;
   },
@@ -323,12 +325,7 @@ Dropdown.prototype = {
     this.setDisplayedValues();
     this.setInitial();
     this.setWidth();
-
-    if (this.overflowed) {
-      this.setTooltip();
-    } else if (this.tooltipApi) {
-      this.removeTooltip();
-    }
+    this.toggleTooltip();
 
     this.element.triggerHandler('rendered');
 
@@ -502,17 +499,35 @@ Dropdown.prototype = {
   },
 
   /**
+   * Toggle toooltip (add if text over flowed)
+   * @private
+   * @returns {void}
+   */
+  toggleTooltip() {
+    if (this.overflowed) {
+      this.setTooltip();
+    } else if (this.tooltipApi) {
+      this.removeTooltip();
+    }
+  },
+
+  /**
    * Triggers tooltip in multiselect
    * @returns {void}
    */
   setTooltip() {
     const opts = this.element.find('option:selected');
     const optText = this.getOptionText(opts);
-    this.tooltipApi = this.pseudoElem.find('span').tooltip({
-      content: optText,
-      parentElement: this.pseudoElem,
-      trigger: 'hover',
-    });
+    this.tooltipApi = this.pseudoElem.find('span')
+      .tooltip({
+        content: optText,
+        parentElement: this.pseudoElem,
+        trigger: this.isMobile() ? 'immediate' : 'hover',
+      })
+      .on('blur.dropdowntooltip', () => {
+        this.removeTooltip();
+      })
+      .data('tooltip');
   },
 
   /**
@@ -520,8 +535,11 @@ Dropdown.prototype = {
    * @returns {void}
    */
   removeTooltip() {
-    this.tooltipApi.destroy();
-    this.tooltipApi = null;
+    if (this.tooltipApi) {
+      this.tooltipApi.element.off('blur.dropdowntooltip');
+      this.tooltipApi.destroy();
+      this.tooltipApi = null;
+    }
   },
 
   /**
@@ -858,6 +876,11 @@ Dropdown.prototype = {
     text = text.trim();
     this.pseudoElem.find('span').html(`<span class="audible">${this.label.text()} </span>${text}`);
 
+    // If there is a placeholder set the selected text
+    if (this.element.attr('placeholder')) {
+      this.pseudoElem.find('span').not('.audible').attr('data-selected-text', text);
+    }
+
     // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
 
@@ -896,7 +919,8 @@ Dropdown.prototype = {
 
     // set placeholder text on pseudoElem span element
     if (this.element.attr('placeholder')) {
-      this.pseudoElem.find('span').attr('data-placeholder-text', this.element.attr('placeholder'));
+      this.pseudoElem.find('span').not('.audible').attr('data-placeholder-text', this.element.attr('placeholder'));
+      this.pseudoElem.find('span').not('.audible').attr('data-selected-text', '');
     }
   },
 
@@ -1553,6 +1577,10 @@ Dropdown.prototype = {
     }
 
     function completeOpen() {
+      if (self.isMobile()) {
+        $('.tooltip:not(.is-hidden)').hide();
+      }
+
       self.updateList();
       self.openList();
 
@@ -1668,6 +1696,9 @@ Dropdown.prototype = {
         .text()
         .trim();
       this.searchInput.val(fieldValue);
+      if (this.element.attr('placeholder')) {
+        this.pseudoElem.find('span').not('.audible').attr('data-selected-text', '');
+      }
     }
 
     const noScroll = this.settings.multiple;
@@ -2081,6 +2112,7 @@ Dropdown.prototype = {
     */
     this.element.trigger('listclosed', action);
     this.activate();
+    this.toggleTooltip();
     this.list = null;
     this.searchInput = null;
     this.listUl = null;
@@ -2241,8 +2273,12 @@ Dropdown.prototype = {
 
     if (doSelectAll) {
       // Select all
-      items.forEach(node => node.classList.add('is-selected'));
+      items.forEach((node) => {
+        node.classList.add('is-selected');
+        node.setAttribute('aria-selected', true);
+      });
       options.forEach((node) => {
+        node.selected = true;
         node.setAttribute('selected', true);
       });
 
@@ -2253,10 +2289,14 @@ Dropdown.prototype = {
       }
     } else {
       // Clear all
-      items.forEach(node => node.classList.remove('is-selected'));
+      items.forEach((node) => {
+        node.classList.remove('is-selected');
+        node.removeAttribute('aria-selected');
+      });
       options.forEach((node) => {
         // Fix for ie-edge
         // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12087679/
+        node.selected = false;
         node.setAttribute('selected', false);
         node.removeAttribute('selected');
       });
@@ -2272,6 +2312,7 @@ Dropdown.prototype = {
     }
     this.activate(true);
     this.setBadge(last);
+    this.toggleTooltip();
 
     this.element.trigger('change').triggerHandler('selected');
   },
@@ -2432,11 +2473,7 @@ Dropdown.prototype = {
       // Fire the change event with the new value if the noTrigger flag isn't set
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
 
-      if (this.overflowed) {
-        this.setTooltip();
-      } else if (this.tooltipApi) {
-        this.removeTooltip();
-      }
+      this.toggleTooltip();
     }
 
     /**
