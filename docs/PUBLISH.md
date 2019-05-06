@@ -5,11 +5,8 @@
 To do a dev release, publish a dated semver to npm.
 
 1. Make sure you are on `master` and its clean
-1. Change the `package.json` version to append the date, i.e. `4.7.0-dev.YYYYMMDD`
-1. Save the `package.json` file (**DO NOT** commit it)
-1. `npm run build && npm run zip-dist` to build
-1. `npm publish --tag=dev` to publish
-1. Undo the version change/reset your branch
+1. Make sure you are authenticated witih npm cli (`npm login`)
+1. `npm run release:dev`
 
 ## Production Release (tagged)
 
