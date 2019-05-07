@@ -608,7 +608,7 @@ html[dir='rtl'] {
 
       &.prev {
         left: 30px;
-        margin: 3px 0 0 5px;
+        margin-left: 5px;
         right: auto;
 
         svg {
@@ -618,7 +618,7 @@ html[dir='rtl'] {
       }
 
       &.next {
-        margin: 3px 5px 0 7px;
+        margin: 0 5px 0 7px;
 
         svg {
           left: auto;
