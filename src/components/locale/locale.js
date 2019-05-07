@@ -1375,22 +1375,26 @@ const Locale = {  // eslint-disable-line
   /**
    * Takes a translation key and returns the translation in the current locale.
    * @param {string} key  The key to search for on the string.
-   * @param {object} [options] A list of options, supported are a non default locale and showAsUndefined which causes a translated phrase to be shown in square brackets
+   * @param {object} [options] A list of options, supported are a non default locale and showAsUndefined and showBrackets which causes a translated phrase to be shown in square brackets
    * instead of defaulting to the default locale's version of the string.
    * @returns {string|undefined} a translated string, or nothing, depending on configuration
    */
   translate(key, options) {
     const languageData = this.useLanguage(options);
     let showAsUndefined = false;
+    let showBrackets = true;
     if (typeof options === 'boolean') {
       showAsUndefined = options;
     }
     if (typeof options === 'object') {
       showAsUndefined = options.showAsUndefined;
     }
+    if (typeof options === 'object') {
+      showBrackets = options.showBrackets;
+    }
 
     if (languageData.messages === undefined) {
-      return showAsUndefined ? undefined : `[${key}]`;
+      return showAsUndefined ? undefined : `${showBrackets ? '[' : ''}${key}${showBrackets ? ']' : ''}`;
     }
 
     if (languageData.messages[key] === undefined) {
@@ -1398,7 +1402,7 @@ const Locale = {  // eslint-disable-line
       // Substitue English Expression if missing
       if (!this.languages || !this.languages[enLang] || !this.languages[enLang].messages
           || this.languages[enLang].messages[key] === undefined) {
-        return showAsUndefined ? undefined : `[${key}]`;
+        return showAsUndefined ? undefined : `${showBrackets ? '[' : ''}${key}${showBrackets ? ']' : ''}`;
       }
       return this.languages[enLang].messages[key].value;
     }

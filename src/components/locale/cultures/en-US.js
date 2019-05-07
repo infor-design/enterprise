@@ -129,6 +129,7 @@ Soho.Locale.addCulture('en-US', {
     Days: { id: 'Days', value: 'Days ', comment: 'Show how many days until an event' },
     DaysOverdue: { id: 'DaysOverdue', value: '{0} Days Overdue', comment: 'For a task /date UI' },
     DaysRemaining: { id: 'DaysRemaining', value: '{0} Days Remaining', comment: 'For a task /date UI' },
+    Default: { id: 'Default', value: 'Default', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Delete', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Delete Event', comment: 'Delete an Event (from a calendar)' },
     DeviceName: { id: 'Device', value: 'Device', comment: 'Name of the Device' },
