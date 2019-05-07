@@ -74,6 +74,9 @@ const writeFile = require('./build/write-file');
 const createSvgHtml = require('./build/create-svg-html');
 const createColorJson = require('./build/create-color-json');
 
+const IdsMetadata = require('./build/ids-metadata');
+
+
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
 const TEST_DIR = path.join(__dirname, '..', 'test');

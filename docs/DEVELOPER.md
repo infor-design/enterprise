@@ -34,8 +34,7 @@ https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/dark-theme.css
 https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/dark-theme.min.css
 https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/light-theme.css
 https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/light-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/svg/svg.html
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/svg/svg-extended.html
+https://cdn.hookandloop.infor.com/sohoxi/4.18.0/svg/theme-soho-svg.html
 ```
 
 Versions available on CDN are: 4.3.2 to 4.3.5, 4.7.0 to 4.18.0

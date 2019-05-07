@@ -26,8 +26,7 @@ module.exports = function (app, defaults) {
       res.opts.theme = {
         name: 'soho',
         variant: 'light',
-        icons: fs.readFileSync(`${iconsPath}/svg.html`).toString(),
-        isSohoUseLegacyNaming: true
+        icons: '',
       };
 
       // Set the theme name (soho, uplift...)
@@ -57,20 +56,12 @@ module.exports = function (app, defaults) {
       if (req.query.themeVariant && req.query.themeVariant.length > 0) {
         res.opts.theme.variant = req.query.themeVariant.toLowerCase();
       }
+      logger('info', `Setting theme to "${res.opts.theme.name}-${res.opts.theme.variant}"`);
 
-      // Adapt soho theme icons for backwards compatibility
-      let svgHtmlPartial = '';
-      if (res.opts.theme.name === 'soho') {
-        svgHtmlPartial = fs.readFileSync(`${iconsPath}/svg.html`).toString();
-        res.opts.theme.isSohoUseLegacyNaming = true;
-      } else {
-        svgHtmlPartial = fs.readFileSync(`${iconsPath}/theme-${res.opts.theme.name}-svg.html`).toString();
-        res.opts.theme.isSohoUseLegacyNaming = false;
-      }
+      const svgHtmlPartial = fs.readFileSync(`${iconsPath}/theme-${res.opts.theme.name}-svg.html`).toString()
       // Set icons to the partials in hopes its cached
       app.locals.partials = { svgIcons: svgHtmlPartial };
-
-      logger('info', `Setting theme to "${res.opts.theme.name}-${res.opts.theme.variant}"`);
+      logger('info', `Setting icons to "theme-${res.opts.theme.name}-svg.html"`);
     }
 
     next();

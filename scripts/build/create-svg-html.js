@@ -1,4 +1,5 @@
-/** @fileoverview This module converts a dir of svg
+/**
+ * @fileoverview This module converts a dir of svg
  * icon files into an html file of svg icons
  */
 
@@ -10,39 +11,62 @@ const path = require('path');
 const del = require('del');
 const slash = require('slash');
 
+const IdsMetadata = require('../helpers/ids-metadata');
+
 const ROOT_DIR = slash(process.cwd());
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
 let IS_VERBOSE = false;
 
-const ICON_SETS = [
-  {
-    src: `${ROOT_DIR}/node_modules/ids-identity/dist/theme-soho/icons/standard/svg/*.svg`,
-    dest: `${ROOT_DIR}/src/components/icons/svg.html`,
-    class: 'svg-icons'
-  },
-  {
-    src: `${ROOT_DIR}/node_modules/ids-identity/dist/theme-uplift/icons/standard/svg/*.svg`,
-    dest: `${ROOT_DIR}/src/components/icons/theme-uplift-svg.html`,
-    class: 'svg-icons'
-  },
-  {
-    src: `${ROOT_DIR}/node_modules/ids-identity/dist/theme-soho/icons/empty/svg/*.svg`,
+const PATHS = {
+  idsIdentity: `${ROOT_DIR}/node_modules/ids-identity`,
+  iconComponent: `${ROOT_DIR}/src/components/icons`
+}
+
+/**
+ * Get the paths to themes' icon sets
+ * @returns {array}
+ */
+function getIconSetPaths() {
+  const idsMetadata = new IdsMetadata();
+  const themes = idsMetadata.getThemes();
+  const iconSets = themes.map(theme => {
+    return {
+      src: `${PATHS.idsIdentity}/dist/theme-${theme.name}/icons/standard/svg/*.svg`,
+      dest: `${PATHS.iconComponent}/theme-${theme.name}-svg.html`,
+      class: 'svg-icons'
+    }
+  });
+
+  // Manual addition for soho "empty" icons
+  iconSets.push({
+    src: `${PATHS.idsIdentity}/dist/theme-soho/icons/empty/svg/*.svg`,
     dest: `${ROOT_DIR}/src/components/emptymessage/svg-empty.html`,
     class: 'svg-icons-empty'
-  }
-];
+  });
+
+  // Legacy Icon File - DEPRECATE this SOON
+  iconSets.push({
+    src: `${PATHS.idsIdentity}/dist/theme-soho/icons/standard/svg/*.svg`,
+    dest: `${PATHS.iconComponent}/svg.html`,
+    class: 'svg-icons',
+    isDeprecated: true
+  });
+
+  return iconSets;
+}
 
 /**
  * Remove any "built" directories/files
  * @async
+ * @param {Object[]} iconSets - An array of objects for the svg icons
  * @returns {Promise} - A promise
  */
-async function cleanFiles() {
+async function cleanFiles(iconSets) {
   if (IS_VERBOSE) {
     logger('info', `Cleaning SVG icon html files...${NL}`);
   }
 
-  const filesToDel = ICON_SETS.map(n => {
+  const filesToDel = iconSets.map(n => {
     return n.dest;
   });
 
@@ -107,15 +131,15 @@ const createHTMLfile = (files, iconObj) => {
 
 /**
  * Create html files of icon sets
- * @param {Object[]} ICON_SETS - An array of objects for the svg icons
+ * @param {Object[]} iconSets - An array of objects for the svg icons
  * @return {Promise}
  */
-function createHtmlFiles() {
+function createHtmlFiles(iconSets) {
   if (IS_VERBOSE) {
     logger('info', `Running build process create SVG html files...${NL}`);
   }
 
-  return Promise.all(ICON_SETS.map(iconSet => {
+  return Promise.all(iconSets.map(iconSet => {
     Object.assign(iconSet, {
       header: `<div class="${iconSet.class}"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-icons">`,
       footer: '</svg></div>'
@@ -126,7 +150,13 @@ function createHtmlFiles() {
     return createHTMLfile(files, iconSet)
       .then(data => {
         if (IS_VERBOSE) {
-          logger('success', `${data.length} SVG icons compiled into "${iconSet.dest.replace(process.cwd(), '')}"`);
+          const path = iconSet.dest.replace(`${process.cwd()}/src/components`, '');
+          let desc = `${data.length} SVG icons compiled into "${path}"`
+          if (path.includes('/svg.html')) {
+            desc += ' [!! DEPRECATED !!]';
+          }
+
+          logger('success', desc);
         }
       })
       .catch(err => {
@@ -142,7 +172,11 @@ function createHtmlFiles() {
  */
 function createSvgHtml(verbose) {
   IS_VERBOSE = verbose;
-  cleanFiles().then(createHtmlFiles);
+  const iconSets = getIconSetPaths();
+
+  cleanFiles(iconSets).then(() => {
+    createHtmlFiles(iconSets);
+  });
 }
 
 module.exports = createSvgHtml;
