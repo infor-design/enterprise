@@ -66,7 +66,7 @@
   },
   "dependencies": {
     "d3": "^4.13.0",
-    "jquery": "^3.4.0",
+    "jquery": "^3.4.1",
     "promise-polyfill": "^8.1.0"
   },
   "devDependencies": {
