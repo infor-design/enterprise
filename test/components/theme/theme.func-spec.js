@@ -53,7 +53,7 @@ describe('Theme API', () => {
   it('Should be able to get personalization colors', () => {
     expect(theme.personalizationColors().azure.value).toEqual('#2578a9');
     // Locale doesnt work in the test but this proves it fires translate
-    expect(theme.personalizationColors().azure.name).toEqual('[Azure]');
+    expect(theme.personalizationColors().azure.name).toEqual('Azure');
     theme.setTheme('uplift');
 
     expect(theme.personalizationColors().azure.value).toEqual('#0563C2');

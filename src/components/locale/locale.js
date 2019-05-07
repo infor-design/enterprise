@@ -1386,10 +1386,10 @@ const Locale = {  // eslint-disable-line
     if (typeof options === 'boolean') {
       showAsUndefined = options;
     }
-    if (typeof options === 'object') {
+    if (typeof options === 'object' && options.showAsUndefined !== undefined) {
       showAsUndefined = options.showAsUndefined;
     }
-    if (typeof options === 'object') {
+    if (typeof options === 'object' && options.showBrackets !== undefined) {
       showBrackets = options.showBrackets;
     }
 
