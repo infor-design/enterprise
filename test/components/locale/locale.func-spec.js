@@ -1324,6 +1324,13 @@ describe('Locale API', () => {
     expect(Locale.translate('XYZ', false)).toEqual('[XYZ]');
     expect(Locale.translate('XYZ', { showAsUndefined: true })).toEqual(undefined);
     expect(Locale.translate('XYZ', { showAsUndefined: false })).toEqual('[XYZ]');
+    // Show brackets setting
+    expect(Locale.translate('XYZ', { showAsUndefined: true, showBrackets: true })).toEqual(undefined);
+    expect(Locale.translate('XYZ', { showAsUndefined: false, showBrackets: true })).toEqual('[XYZ]');
+    expect(Locale.translate('XYZ', { showAsUndefined: true, showBrackets: false })).toEqual(undefined);
+    expect(Locale.translate('XYZ', { showAsUndefined: false, showBrackets: false })).toEqual('XYZ');
+    expect(Locale.translate('XYZ', { showBrackets: true })).toEqual('[XYZ]');
+    expect(Locale.translate('XYZ', { showBrackets: false })).toEqual('XYZ');
   });
 
   it('Should be able get translations in a non current locale', (done) => {

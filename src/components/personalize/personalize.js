@@ -73,14 +73,6 @@ Personalize.prototype = {
       .off(`updated.${COMPONENT_NAME}`)
       .on(`updated.${COMPONENT_NAME}`, () => {
         self.updated();
-      })
-      .off(`changecolors.${COMPONENT_NAME}`)
-      .on(`changecolors.${COMPONENT_NAME}`, (e, newColor, noAnimate) => {
-        self.setColors(newColor, noAnimate);
-      })
-      .off(`changetheme.${COMPONENT_NAME}`)
-      .on(`changetheme.${COMPONENT_NAME}`, (e, thisTheme) => {
-        self.setTheme(thisTheme);
       });
 
     return this;
@@ -282,6 +274,11 @@ Personalize.prototype = {
   * @returns {this} component instance
   */
   setColors(colors) {
+    if (colors === '') {
+      this.setColorsToDefault();
+      return this;
+    }
+
     if (!colors) {
       return this;
     }
@@ -301,6 +298,17 @@ Personalize.prototype = {
     */
     this.element.triggerHandler('colorschanged', { colors });
     return this;
+  },
+
+  /**
+   * Sets the colors back to the default color (by removing the geneated stylesheet).
+   */
+  setColorsToDefault() {
+    this.settings.colors = '';
+    const sheet = document.getElementById('soho-personalization');
+    if (sheet) {
+      sheet.parentNode.removeChild(sheet);
+    }
   },
 
   /**
