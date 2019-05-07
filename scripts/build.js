@@ -74,8 +74,8 @@ const writeFile = require('./build/write-file');
 const createSvgHtml = require('./build/create-svg-html');
 const createColorJson = require('./build/create-color-json');
 
-const IdsMetadata = require('./build/ids-metadata');
-
+const IdsMetadata = require('./helpers/ids-metadata');
+const IDS_THEMES = new IdsMetadata().getThemes();
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
@@ -105,12 +105,7 @@ const filePaths = {
     sass: {
       controls: path.join(SRC_DIR, 'core', '_controls.scss'),
       controlsUplift: path.join(SRC_DIR, 'core', '_controls-uplift.scss'),
-      themes: {
-        'dark-theme': path.join(SRC_DIR, 'themes', 'dark-theme.scss'),
-        'high-contrast-theme': path.join(SRC_DIR, 'themes', 'high-contrast-theme.scss'),
-        'light-theme': path.join(SRC_DIR, 'themes', 'light-theme.scss'),
-        'theme-uplift-light': path.join(SRC_DIR, 'themes', 'theme-uplift-light.scss'),
-      }
+      themes: {}
     }
   },
   target: {
@@ -132,12 +127,7 @@ const filePaths = {
       controls: path.join(TEMP_DIR, '_controls.scss'),
       controlsUplift: path.join(TEMP_DIR, '_controls-uplift.scss'),
       banner: path.join(TEMP_DIR, '_banner.scss'),
-      themes: {
-        'dark-theme': path.join(TEMP_DIR, 'dark-theme.scss'),
-        'high-contrast-theme': path.join(TEMP_DIR, 'high-contrast-theme.scss'),
-        'light-theme': path.join(TEMP_DIR, 'light-theme.scss'),
-        'theme-uplift-light': path.join(TEMP_DIR, 'theme-uplift-light.scss')
-      }
+      themes: {}
     },
     log: {
       components: path.join(TEMP_DIR, 'components.txt'),
@@ -147,6 +137,9 @@ const filePaths = {
     }
   }
 };
+
+addDynamicCssThemePaths(`${SRC_DIR}/themes`, true)
+
 
 // These search terms are used when scanning existing index files to determine
 // a component's placement in a generated file.
@@ -262,6 +255,30 @@ const sassMatches = [];
  */
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
+ * Dynamically create the CSS paths for the supported themes
+ */
+function addDynamicCssThemePaths() {
+  const tryAddPath = (themeName, themeVariant) => {
+    const fileName = `theme-${themeName}-${themeVariant}`;
+    const srcPath = path.join(SRC_DIR, 'themes', `${fileName}.scss`);
+    const targetPath = path.join(TEMP_DIR, `${fileName}.scss`);
+
+    if (fs.existsSync(srcPath)) {
+      filePaths.src.sass.themes[fileName] = srcPath;
+      filePaths.target.sass.themes[fileName] = targetPath;
+    }
+  }
+
+  IDS_THEMES.forEach(theme => {
+    tryAddPath(theme.name, theme.base.name);
+
+    theme.variants.forEach(variant => {
+      tryAddPath(theme.name, variant.name);
+    });
+  });
 }
 
 /**
@@ -729,7 +746,7 @@ function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
   } else {
     // All other keys are "theme" entry points that just need their linked paths corrected.
     const themePath = transformSlashesForFile(path.join(SRC_DIR, 'themes', `${key}.scss`));
-    const themeFile = getFileContents(themePath);
+    themeFile = getFileContents(themePath);
 
     // Inline the copyright banner
     targetFile += `@import './banner';${NL}`;

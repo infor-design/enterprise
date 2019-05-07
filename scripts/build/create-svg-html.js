@@ -27,8 +27,7 @@ const PATHS = {
  * @returns {array}
  */
 function getIconSetPaths() {
-  const idsMetadata = new IdsMetadata();
-  const themes = idsMetadata.getThemes();
+  const themes = new IdsMetadata().getThemes();
   const iconSets = themes.map(theme => {
     return {
       src: `${PATHS.idsIdentity}/dist/theme-${theme.name}/icons/standard/svg/*.svg`,
