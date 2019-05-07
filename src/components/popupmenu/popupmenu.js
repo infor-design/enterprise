@@ -1654,7 +1654,7 @@ PopupMenu.prototype = {
         }
 
         // Click functionality will toggle the menu - otherwise it closes and opens
-        if ($(thisE.target).is(self.element) && !isPicker && !(self.settings.trigger === "rightClick")) {
+        if ($(thisE.target).is(self.element) && !isPicker && !(self.settings.trigger === 'rightClick')) {
           return;
         }
 
