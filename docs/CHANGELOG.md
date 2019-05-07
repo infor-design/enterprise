@@ -19,6 +19,8 @@
 
 ### v4.19.0 Chores & Maintenance
 
+- `[General]` Updated to jquery 3.4.1 to fix a jquery bug seen occasionally. ([#2109](https://github.com/infor-design/enterprise/issues/2109))
+
 (nn Issues Solved this release, Backlog Enterprise nn, Backlog Ng nn, nn Functional Tests, nn e2e Test)
 
 ## v4.18.0
