@@ -35,7 +35,13 @@
     }
 
     colorsDropdown.on('selected', function (e, args) {
-      $('html').data('personalize').setColors(this.options[this.selectedIndex].getAttribute('data-hex'));
+      var val = this.options[this.selectedIndex].value;
+      var api = $('html').data('personalize');
+      if (val === 'default') {
+        api.setColorsToDefault(val);
+        return;
+      }
+      api.setColors(this.options[this.selectedIndex].getAttribute('data-hex'));
     }).html(colorsHtml).dropdown().val('azure').trigger('updated');
 
     $('html').on('colorschanged', function (e, args) {
