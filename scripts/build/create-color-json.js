@@ -16,7 +16,7 @@ const ROOT_DIR = slash(process.cwd());
 const PATHS = {
   srcGlob: `${ROOT_DIR}/node_modules/ids-identity/dist/theme-*/tokens/web/theme-*[^.simple].json`,
   dest: `${ROOT_DIR}/src/components/theme`
-}
+};
 
 let IS_VERBOSE = false;
 
@@ -39,26 +39,31 @@ async function cleanFiles() {
 /**
  * Only get properties we need
  * @param {object} obj The original object
+ * @returns {object} The new color object
  */
 function createNewCustomObj(obj) {
-  let newObj = {};
+  const newObj = {};
+  if (obj.hasOwnProperty('primary')) { //eslint-disable-line
+    newObj.primary = {};
+    newObj.primary.name = obj.primary.base.name;
+    newObj.primary.value = obj.primary.base.value;
+  }
 
   // Loop for color names: 'amber', 'azure'...
-  Object.keys(obj).forEach(colorName => {
+  Object.keys(obj).forEach(colorName => { //eslint-disable-line
     newObj[colorName] = {};
-
-    if (obj[colorName].hasOwnProperty('name')) {
+    if (obj[colorName].hasOwnProperty('name')) { //eslint-disable-line
       // For colors w/o variants: black, white...
       newObj[colorName].name = obj[colorName].name;
       newObj[colorName].value = obj[colorName].value;
-
+      newObj[colorName].paletteName = obj[colorName].original.value;
     } else {
       // Loop for color variants: 10, 20, 30...
-      Object.keys(obj[colorName]).forEach(colorNum => {
+      Object.keys(obj[colorName]).forEach(colorNum => { //eslint-disable-line
         newObj[colorName][colorNum] = {
           name: obj[colorName][colorNum].name,
           value: obj[colorName][colorNum].value
-        }
+        };
       });
     }
   });
@@ -71,23 +76,25 @@ function createNewCustomObj(obj) {
  * @param  {string} filePath The file path
  * @returns {Promise} Resolve array of icons
  */
-const createJSONfile = (filePath) => {
-  return new Promise((resolve, reject) => {
+const createJSONfile = (filePath) => { //eslint-disable-line
+  return new Promise((resolve) => {
     const themeObj = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     const themeColorPaletteObj = createNewCustomObj(themeObj.theme.color.palette);
     const themeColorStatusObj = createNewCustomObj(themeObj.theme.color.status);
+    const themeColorBrandObj = createNewCustomObj(themeObj.theme.color.brand);
 
     const colorsOnlyObj = {
       color: {
         palette: themeColorPaletteObj,
-        status: themeColorStatusObj
+        status: themeColorStatusObj,
+        brand: themeColorBrandObj
       }
-    }
-    const fileName = path.basename(filePath, '.json') + '-colors.json';
+    };
+    const fileName = path.basename(filePath, '.json') + '-colors.json'; //eslint-disable-line
     fs.writeFileSync(`${PATHS.dest}/${fileName}`, JSON.stringify(colorsOnlyObj), 'utf-8');
     resolve(fileName);
   });
-}
+};
 
 /**
  * Create JSON file of color palette and status tokens
@@ -101,7 +108,7 @@ function createColorJsonFiles() {
   const themeFiles = glob.sync(PATHS.srcGlob);
 
   return Promise.all(themeFiles.map(createJSONfile))
-    .then(filesCreated => {
+    .then(filesCreated => { //eslint-disable-line
       if (IS_VERBOSE) {
         logger('success', `${filesCreated.length} JSON Token Files generated into "${PATHS.dest.replace(process.cwd(), '')}"`);
       }
