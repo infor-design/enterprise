@@ -19,6 +19,7 @@
       pagesize: 5,
       rowHeight: 'short',
       indeterminate: true,
+      filterable: true,
       source: datagridPagingFucntion
     })
     .on('selected', function(e, args) {
@@ -121,12 +122,17 @@
       if (!PAGING_COLUMNS) {
         PAGING_COLUMNS = [
           { id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' },
-          { id: 'productId',   name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', width: 140, formatter: Formatters.Readonly                     },
-          { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text',    width: 150, formatter: Formatters.Hyperlink                    },
-          { id: 'activity',    name: 'Activity',     field: 'activity',    sortable: false, filterType: 'text',    width: 125,                                      hidden: true  },
-          { id: 'quantity',    name: 'Quantity',     field: 'quantity',    sortable: false,                        width: 125                                                     },
-          { id: 'price',       name: 'Price',        field: 'price',       sortable: false, filterType: 'decimal', width: 125, formatter: Formatters.Decimal                      },
-          { id: 'orderDate',   name: 'Order Date',   field: 'orderDate',   sortable: false, filterType: 'date',                formatter: Formatters.Date, dateFormat: 'M/d/yyyy' }
+          { id: 'id',   name: 'Actual Id',   field: 'id',   sortable: true, filterType: 'integer', width: 140, formatter: Formatters.Readonly                     },
+          { id: 'productId',   name: 'Product Id',   field: 'productId',   sortable: true, filterType: 'integer', width: 140, formatter: Formatters.Readonly                     },
+          { id: 'productName', name: 'Product Name', field: 'productName', sortable: true, filterType: 'text',    width: 150, formatter: Formatters.Hyperlink                    },
+          { id: 'activity',    name: 'Activity',     field: 'activity',    sortable: true, filterType: 'text',    width: 125},
+          { id: 'quantity',    name: 'Quantity',     field: 'quantity',    sortable: true,                        width: 125                                                     },
+          { id: 'price',       name: 'Price',        field: 'price',       sortable: true, filterType: 'decimal', width: 125, formatter: Formatters.Decimal                      },
+          { id: 'orderDate',   name: 'Order Date',   field: 'orderDate',   sortable: true, filterType: 'date',                formatter: Formatters.Date, dateFormat: 'M/d/yyyy' },
+          { id: 'status',      name: 'Status',       field: 'status',      sortable: true, filterType: 'text',                formatter: Formatters.Text},
+          { id: 'action',      name: 'Action Date',  field: 'action',      sortable: true, filterType: 'text',                formatter: Formatters.Text},
+          { id: 'activity',    name: 'Activity',     field: 'activity',    sortable: true, filterType: 'text',    width: 125},
+          { id: 'rated',       name: 'Rated',        field: 'rated',       sortable: true, filterType: 'decimal',             formatter: Formatters.Decimal }
         ];
       }
 
