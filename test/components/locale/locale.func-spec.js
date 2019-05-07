@@ -141,6 +141,25 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
+  fit('Should format hebrew dates', () => { //eslint-disable-line
+    Locale.set('he-IL');
+
+    expect(Locale.formatDate(new Date(2019, 12, 1), { date: 'short' })).toEqual('1.1.2020');
+    expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'medium' })).toEqual('8 בנוב׳ 2019');
+    expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'long' })).toEqual('8 בנובמבר 2019');
+    Locale.set('en-US');
+  });
+
+  fit('Should format zh-Hans dates', () => { //eslint-disable-line
+    Locale.set('zh-Hans');
+
+    expect(Locale.formatDate(new Date(2019, 12, 1), { date: 'short' })).toEqual('2020/1/1');
+    expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'medium' })).toEqual('2019年11月8日');
+    expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'long' })).toEqual('2019年11月8日');
+    expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'datetime' })).toEqual('2019/11/8 上午12:00');
+    Locale.set('en-US');
+  });
+
   it('Should format year in es-ES', () => {
     Locale.set('es-ES');
 
@@ -1337,5 +1356,73 @@ describe('Locale API', () => {
       expect(Locale.translate('Loading', { language: 'de' })).toEqual('Laden...');
       done();
     });
+  });
+
+  it('Should format times correctly', () => {
+    Locale.set('af-ZA');
+
+    expect(Locale.calendar().timeFormat).toEqual('HH:mm');
+    expect(Locale.calendar().dateFormat.timestamp).toEqual('HH:mm:ss');
+    expect(Locale.calendar().dateFormat.datetime).toEqual('yyyy-MM-dd HH:mm');
+
+    Locale.set('ar-EG');
+
+    expect(Locale.calendar().timeFormat).toEqual('h:mm a');
+    expect(Locale.calendar().dateFormat.timestamp).toEqual('h:mm:ss a');
+    expect(Locale.calendar().dateFormat.datetime).toEqual('yyyy/M/dd h:mm a');
+
+    Locale.set('ar-SA');
+
+    expect(Locale.calendar().timeFormat).toEqual('h:mm a');
+    expect(Locale.calendar().dateFormat.timestamp).toEqual('h:mm:ss a');
+    expect(Locale.calendar().dateFormat.datetime).toEqual('d‏/M‏/yyyy h:mm a');
+
+    Locale.set('bg-BG');
+
+    expect(Locale.calendar().timeFormat).toEqual('H:mm');
+    expect(Locale.calendar().dateFormat.timestamp).toEqual('H:mm:ss');
+    expect(Locale.calendar().dateFormat.datetime).toEqual('d.MM.yyyy H:mm');
+
+    Locale.set('cs-CZ');
+
+    expect(Locale.calendar().timeFormat).toEqual('H:mm');
+    expect(Locale.calendar().dateFormat.timestamp).toEqual('H:mm:ss');
+    expect(Locale.calendar().dateFormat.datetime).toEqual('dd.MM.yyyy H:mm');
+
+    Locale.set('da-DK');
+
+    expect(Locale.calendar().timeFormat).toEqual('HH.mm');
+    expect(Locale.calendar().dateFormat.timestamp).toEqual('HH.mm.ss');
+    expect(Locale.calendar().dateFormat.datetime).toEqual('dd-MM-yyyy HH.mm');
+
+    Locale.set('de-DE');
+
+    expect(Locale.calendar().timeFormat).toEqual('HH:mm');
+    expect(Locale.calendar().dateFormat.timestamp).toEqual('HH:mm:ss');
+    expect(Locale.calendar().dateFormat.datetime).toEqual('dd.MM.yyyy HH:mm');
+
+    Locale.set('el-GR');
+
+    expect(Locale.calendar().timeFormat).toEqual('h:mm a');
+    expect(Locale.calendar().dateFormat.timestamp).toEqual('h:mm:ss a');
+    expect(Locale.calendar().dateFormat.datetime).toEqual('d/M/yyyy h:mm a');
+
+    Locale.set('pl-PL');
+
+    expect(Locale.calendar().timeFormat).toEqual('HH:mm');
+    expect(Locale.calendar().dateFormat.timestamp).toEqual('HH:mm:ss');
+    expect(Locale.calendar().dateFormat.datetime).toEqual('dd.MM.yyyy HH:mm');
+
+    Locale.set('pt-BR');
+
+    expect(Locale.calendar().timeFormat).toEqual('HH:mm');
+    expect(Locale.calendar().dateFormat.timestamp).toEqual('HH:mm:ss');
+    expect(Locale.calendar().dateFormat.datetime).toEqual('dd/MM/yyyy HH:mm');
+
+    Locale.set('sl-SI');
+
+    expect(Locale.calendar().timeFormat).toEqual('HH:mm');
+    expect(Locale.calendar().dateFormat.timestamp).toEqual('HH:mm:ss');
+    expect(Locale.calendar().dateFormat.datetime).toEqual('d. MM. yyyy HH:mm');
   });
 });

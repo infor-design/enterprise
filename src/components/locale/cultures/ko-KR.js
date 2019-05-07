@@ -15,7 +15,7 @@ Soho.Locale.addCulture('ko-KR', {
     dateFormat: {
       separator: '. ', // Infered
       timeSeparator: ':',
-      short: 'yyyy-MM-dd', // use four digit year
+      short: 'yyyy-MM-dd', // Uses custom format
       medium: 'yyyy-MM-dd',
       long: 'yyyy년 M월 d일',
       full: 'yyyy년 M월 d일 EEEE',
