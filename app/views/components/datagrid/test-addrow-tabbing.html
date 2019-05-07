@@ -8,8 +8,11 @@
        </div>
 
       <div class="buttonset">
-        <button type="button" id="addRow" class="btn">
-          <span>Add Row</span>
+        <button type="button" id="addRowTop" class="btn">
+          <span>Add Row (top)</span>
+        </button>
+        <button type="button" id="addRowBottom" class="btn">
+          <span>Add Row (bottom)</span>
         </button>
       </div>
     </div>
@@ -96,6 +99,8 @@
           actionableMode: true,
           cellNavigation: true,
           enableTooltips: true,
+          paging: true,
+          pagesize: 10,
           selectable: 'mixed',
           rowHeight: 'short'
         }).on('cellchange', function (e, args) {
@@ -111,8 +116,12 @@
 
         gridApi = $('#datagrid').data('datagrid');
 
-        $('#addRow').on('click', function () {
+        $('#addRowTop').on('click', function () {
           gridApi.addRow({ productName: '', productId: '0' });
+        });
+        
+        $('#addRowBottom').on('click', function () {
+          gridApi.addRow({ productName: '', productId: '0' }, 'bottom');
         });
     });
   });

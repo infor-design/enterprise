@@ -3,7 +3,7 @@ import { cleanup } from '../../helpers/func-utils';
 
 const hierarchyHTML = require('../../../app/views/components/hierarchy/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
-const data = require('../../../app/data/orgstructure.json');
+const data = require('../../../app/data/orgstructure-original.json');
 
 const legendData = [
   { value: 'FT', label: 'Full Time' },
