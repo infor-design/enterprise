@@ -7,6 +7,7 @@
 - `[Datagrid]` Added support for disabling rows by data or a dynamic function, rows are disabled from selection and editing. ([#1614](https://github.com/infor-design/enterprise/issues/1614))
 
 ### v4.19.0 Fixes
+
 - `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
 - `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
 - `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
