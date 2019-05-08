@@ -18,6 +18,7 @@
 - `[Editor]` Fixed an issue where button state for toolbar buttons were wrong when clicked one after another. ([#391](https://github.com/infor-design/enterprise/issues/391))
 =- `[Personalization]` Changed the default turquoise personalization to a darker one. ([#2063](https://github.com/infor-design/enterprise/issues/2063))
 - `[Personalization]` Added a default option to the personalization color pickers. ([#2063](https://github.com/infor-design/enterprise/issues/2063))
+- `[Popupmenu]` Fixed an issue where disabled submenus were opening on mouseover. ([#1863](https://github.com/infor-design/enterprise/issues/1863))
 - `[Tree]` Fixed an issue where children property null was breaking tree to not render. ([#1908](https://github.com/infor-design/enterprise/issues/1908))
 
 ### v4.19.0 Chores & Maintenance
