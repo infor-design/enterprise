@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.18.1
+
+### v4.18.1 Fixes
+
+- `[Input]` Added backwards-compatibility for previous accessibility changes to labels. ([#2118](https://github.com/infor-design/enterprise/issues/2118)). Additional information can be found in the [Form Component documentation](https://github.com/infor-design/enterprise/blob/4.18.x/src/components/form/readme.md#field-labels).
+
 ## v4.18.0
 
 ### v4.18.0 Features

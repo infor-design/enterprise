@@ -32,6 +32,12 @@ The following classes can be used for form and label alignment.
 - `label-left` - Used to put a label and data label to the left of each other rather than on top. This may be used on some forms but not with editable inputs. [See Example](./demo/form/example-labels?font=source-sans)
 - `compound-field` - Used to put several fields next to each other in a row. This may be used for related fields like phone + extension [See Example](./demo/form/example-forms?font=source-sans)
 
+## Accessibility
+
+### Field labels
+
+In/After IDS version 4.18.1, changes were made to form labels with a required asterisk `(*)` that provide better identification in screen readers. This involves a breaking change to existing required label elements, since adding additional markup is necessary. The Form component will automatically convert labels to the new, accessibility-friendly method of display if the developer simply adds an `.accessible` CSS class to the `<label>` or `.label-text` element. For more information, see Github issues [#421](https://github.com/infor-design/enterprise/issues/421) and [#2118](https://github.com/infor-design/enterprise/issues/2118).
+
 ## Testability
 
 - Please refer to the [Application Testability Checklist](/resources/application-testability-checklist) for further details.
