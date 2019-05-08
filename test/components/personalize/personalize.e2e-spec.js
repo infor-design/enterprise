@@ -57,7 +57,7 @@ describe('Personalization tests', () => {
   });
 });
 
-fdescribe('Personalization example-tabs tests', () => { //eslint-disable-line
+describe('Personalization example-tabs tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/personalize/example-tabs.html?layout=nofrills');
   });
