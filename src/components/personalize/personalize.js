@@ -227,7 +227,7 @@ Personalize.prototype = {
     ` .hero-widget.is-personalizable .chart-container .arc { stroke: ${colors.subheader} }` +
     ` .hero-widget.is-personalizable .chart-container .bar { stroke: ${colors.subheader} }` +
     ` .hero-widget.is-personalizable .chart-container.line-chart .dot { stroke: ${colors.subheader} }` +
-    ` .application-menu.is-personalizable { border-right: ${colors.verticalBorder} }` +
+    ` .application-menu.is-personalizable { background-color: ${colors.subheader}; border-right: ${colors.verticalBorder} }` +
     ` .application-menu.is-personalizable .application-menu-header { background-color: ${colors.subheader}; border-bottom-color: ${colors.verticalBorder} }` +
     ` .application-menu.is-personalizable .application-menu-footer { background-color: ${colors.subheader}; border-top-color: ${colors.verticalBorder} }` +
     ` .application-menu.is-personalizable button .icon, .application-menu.is-personalizable button span, .application-menu.is-personalizable .hyperlink { color: ${colors.text}; opacity: 0.8 }` +
