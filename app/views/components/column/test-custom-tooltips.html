@@ -1,0 +1,91 @@
+
+<div class="row">
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Column Chart Example</h2>
+      </div>
+      <div class="widget-content">
+        <div id="column-bar-example" class="chart-container"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+  var dataset = [{
+    data: [{
+      name: 'Automotive',
+      shortName: 'Auto',
+      abbrName: 'A',
+      value: 7,
+
+      // Any key/value can be used within tooltip
+      someCustomKey: 'Extra Info about {{someOtherCustomKey}}',
+      someOtherCustomKey: 'New {{name}}',
+
+      // Custom Tooltip just for this node as string
+      // including extra key/value
+      tooltip: 'Info: {{someCustomKey}}<br>Name: {{shortName}}<br>Value: {{value}}'
+    }, {
+      name: 'Distribution',
+      shortName: 'Dist',
+      abbrName: 'D',
+      value: 10,
+
+      // Custom Tooltip just for this nodes
+      tooltip: function (req, args) {
+        var data = args.data || {};
+        let content = 'Name: '+ data.name;
+        content += '<br>Short Name: '+ data.shortName;
+        content += '<br>Value: '+ data.value;
+        req(content);
+      }
+    }, {
+      name: 'Equipment',
+      shortName: 'Equip',
+      abbrName: 'E',
+      value: 14,
+
+      // Do not display tooltip just for this node
+      tooltip: false
+    }, {
+      name: 'Fashion',
+      shortName: 'Fash',
+      abbrName: 'F',
+      value: 10
+    }, {
+      name: 'Food',
+      shortName: 'Food',
+      abbrName: 'F',
+      value: 14
+    }, {
+      name: 'Healthcare',
+      shortName: 'Health',
+      abbrName: 'H',
+      value: 8
+    }, {
+      name: 'Other',
+      shortName: 'Other',
+      abbrName: 'O',
+      value: 7
+    }]
+  }];
+
+  $('#column-bar-example').chart({
+    type: 'column',
+    dataset: dataset,
+
+    // Custom Default Tooltip for all nodes
+    tooltip: function (req, args) {
+      var data = args.data || {};
+      const content = 'Name: '+ data.name +'<br>Value: '+ data.value;
+      req(content);
+    }
+  });
+
+});
+</script>
