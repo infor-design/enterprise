@@ -141,7 +141,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  fit('Should format hebrew dates', () => { //eslint-disable-line
+  it('Should format hebrew dates', () => {
     Locale.set('he-IL');
 
     expect(Locale.formatDate(new Date(2019, 12, 1), { date: 'short' })).toEqual('1.1.2020');
@@ -150,7 +150,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  fit('Should format zh-Hans dates', () => { //eslint-disable-line
+  it('Should format zh-Hans dates', () => {
     Locale.set('zh-Hans');
 
     expect(Locale.formatDate(new Date(2019, 12, 1), { date: 'short' })).toEqual('2020/1/1');

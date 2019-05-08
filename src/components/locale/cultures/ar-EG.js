@@ -17,16 +17,16 @@ Soho.Locale.addCulture('ar-EG', {
       dateFormat: {
         separator: '/', // Infered
         timeSeparator: ':',
-        short: 'yyyy/M/d', // use four digit year
+        short: 'yyyy/M/d', // This is flipped from the CLDR
         medium: 'yyyy/MM/dd',
         long: 'yyyy MMMM d',
         full: 'EEEE، yyyy MMMM d',
         month: 'MMMM dd',
         year: 'yyyy MMMM',
         timestamp: 'h:mm:ss a',
-        datetime: 'yyyy/M/dd h:mm a',
-        timezone: 'yyyy/M/dd h:mm a zz',
-        timezoneLong: 'd MMMM y h:mm a zzzz'
+        datetime: 'yyyy/M/d h:mm a',
+        timezone: 'yyyy/M/d h:mm a zz',
+        timezoneLong: 'yyyy/M/d h:mm a zzzz'
       }, // Infered short + short gregorian/dateTimeFormats
       // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
