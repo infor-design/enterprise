@@ -51,7 +51,7 @@ describe('Message XSS Prevention', () => {
     messageTitleEl = document.querySelector('.modal .modal-title');
     messageContentEl = document.querySelector('.modal .modal-body');
 
-    expect(messageTitleEl.innerText).toEqual('Alert: You have disallowed any tags from appearing in this message. All are stripped.');
+    expect(messageTitleEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
     expect(messageContentEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
   });
 });
