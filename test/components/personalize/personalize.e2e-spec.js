@@ -56,3 +56,24 @@ describe('Personalization tests', () => {
     expect(await element(by.id('soho-personalization')).getText()).toEqual(beforeInitSheet);
   });
 });
+
+fdescribe('Personalization example-tabs tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/personalize/example-tabs.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkScreen('personalize-tabs')).toEqual(0);
+    });
+  }
+});
