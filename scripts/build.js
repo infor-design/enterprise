@@ -746,7 +746,7 @@ function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
   } else {
     // All other keys are "theme" entry points that just need their linked paths corrected.
     const themePath = transformSlashesForFile(path.join(SRC_DIR, 'themes', `${key}.scss`));
-    themeFile = getFileContents(themePath);
+    const themeFile = getFileContents(themePath);
 
     // Inline the copyright banner
     targetFile += `@import './banner';${NL}`;
