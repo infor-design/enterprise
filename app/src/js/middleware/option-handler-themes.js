@@ -40,7 +40,7 @@ module.exports = function (app, defaults) {
           // redirect to the properly named ones
           const q = {...req.query, ...{
             theme: 'soho',
-            themeVariant: req.query.theme
+            variant: req.query.theme
           }};
           const theUrl = URL.format({ query: q });
           logger('info', `Redirecting legacy query string params to "${theUrl}"`);
@@ -53,8 +53,8 @@ module.exports = function (app, defaults) {
       }
 
       // Set the theme variant (light, dark...)
-      if (req.query.themeVariant && req.query.themeVariant.length > 0) {
-        res.opts.theme.variant = req.query.themeVariant.toLowerCase();
+      if (req.query.variant && req.query.variant.length > 0) {
+        res.opts.theme.variant = req.query.variant.toLowerCase();
       }
       logger('info', `Setting theme to "${res.opts.theme.name}-${res.opts.theme.variant}"`);
 
