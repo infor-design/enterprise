@@ -15,16 +15,16 @@ Soho.Locale.addCulture('ar-SA', {
       dateFormat: {
         separator: '/', // Infered
         timeSeparator: ':',
-        short: 'yyyy‏/M‏/d', // This is flipped from the CLDR
-        medium: 'yyyy MMM، dd',
-        long: 'yyyy MMMM d',
-        full: 'EEEE، yyyy MMMM d',
-        month: 'MMMM d',
-        year: 'yyyy MMMM',
+        short: 'yyyy/MM/dd', // use four digit year
+        medium: 'y MMM، dd',
+        long: 'yyyy MMMM، dd',
+        full: 'EEEE، yyyy MMMM، dd',
+        month: 'dd MMMM',
+        year: 'MMMM yyyy',
         timestamp: 'h:mm:ss a',
-        datetime: 'yyyy‏/M‏/d h:mm a',
-        timezone: 'yyyy‏/M‏/d h:mm a zz',
-        timezoneLong: 'yyyy‏/M‏/d h:mm a zzzz'
+        datetime: 'yyyy/MM/dd h:mm a',
+        timezone: 'yyyy/MM/dd h:mm a zz',
+        timezoneLong: 'yyyy/MM/dd h:mm a zzzz'
       }, // Infered short + short gregorian/dateTimeFormats
       days: {
         wide: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
