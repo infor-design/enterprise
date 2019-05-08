@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../modal/modal';
