@@ -106,6 +106,10 @@ $(() => {
   const selector = 'label.required .label-text, .label.required .label-text, label:not(.inline).required, .label:not(.inline).required';
   const labels = [].slice.call(document.body.querySelectorAll(selector));
   labels.forEach((label) => {
+    if (label.className.indexOf('accessible') === -1) {
+      return;
+    }
+
     const asterisk = label.querySelector('.required-asterisk');
     if (!asterisk) {
       label.insertAdjacentHTML('beforeend', '<span class="required-asterisk" aria-hidden="true">*</span>');
