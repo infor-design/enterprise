@@ -17,30 +17,28 @@
   }
 }
 
-.colorpicker-min-width {
-  .colorpicker-container {
-    width: auto;
-  }
+.colorpicker-max-width {
+  max-width: calc(#{$field-xs} + #{$colorpicker-swatch-width} + #{$colorpicker-trigger-width}); // default
 }
 
-.colorpicker-input-xs {
-  @extend .input-xs;
+.colorpicker-max-width-xs {
+  max-width: calc(#{$field-xs} + #{$colorpicker-swatch-width} + #{$colorpicker-trigger-width});
 }
 
-.colorpicker-input-sm {
-  @extend .input-sm;
+.colorpicker-max-width-sm {
+  max-width: calc(#{$field-sm} + #{$colorpicker-swatch-width} + #{$colorpicker-trigger-width});
 }
 
-.colorpicker-input-mm {
-  @extend .input-mm;
+.colorpicker-max-width-mm {
+  max-width: calc(#{$field-mm} + #{$colorpicker-swatch-width} + #{$colorpicker-trigger-width});
 }
 
-.colorpicker-input-md {
-  @extend .input-md;
+.colorpicker-max-width-md {
+  max-width: calc(#{$field-md} + #{$colorpicker-swatch-width} + #{$colorpicker-trigger-width});
 }
 
-.colorpicker-input-lg {
-  @extend .input-lg;
+.colorpicker-max-width-lg {
+  max-width: calc(#{$field-lg} + #{$colorpicker-swatch-width} + #{$colorpicker-trigger-width});
 }
 
 .colorpicker-container {
@@ -48,8 +46,9 @@
   border: 1px solid $input-color-initial-border;
   border-radius: 2px;
   display: inline-block;
+  display: flex;
+  min-width: 150px;
   overflow: hidden;
-  width: 150px;
 
   &.is-focused {
     border-color: $input-color-focus-border;
@@ -135,7 +134,7 @@
 
   .trigger {
     cursor: pointer;
-    display: inline-block;
+    flex: 0 0 auto;
     height: 34px;
     margin-left: -5px;
     vertical-align: top;
@@ -163,7 +162,7 @@
   .swatch {
     background-color: $colorpicker-initial-bg-color;
     border-radius: 2px;
-    display: inline-block;
+    flex: 0 0 auto;
     height: 32px;
     left: 1px;
     position: relative;
@@ -196,8 +195,8 @@
 
   .colorpicker {
     border: 0;
+    flex: 1 1 auto;
     max-height: 34px;
-    padding: 9px 0 8px 10px;
     width: 90px; //Small Size
 
     &::-ms-clear {
