@@ -348,8 +348,8 @@ Personalize.prototype = {
       if (queryParamIndex > -1) {
         thisTheme = thisTheme.slice(0, queryParamIndex);
       }
-      // trim the file extensions off the end and drop the -theme portion
-      thisTheme = thisTheme.replace('.min.css', '').replace('.css', '').replace('-theme', '');
+      // trim the file extensions off the end and drop the "theme-"" portion
+      thisTheme = thisTheme.replace('.min.css', '').replace('.css', '').replace('theme-', '');
     }
     return thisTheme;
   },
@@ -361,8 +361,8 @@ Personalize.prototype = {
   */
   setTheme(incomingTheme) {
     if (theme.currentTheme.id === incomingTheme) {
-      if (!$('html').hasClass(`${incomingTheme}-theme`)) {
-        $('html').addClass(`${incomingTheme}-theme`);
+      if (!$('html').hasClass(`theme-${incomingTheme}`)) {
+        $('html').addClass(`theme-${incomingTheme}`);
       }
       return;
     }
@@ -373,7 +373,11 @@ Personalize.prototype = {
       return;
     }
 
-    $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(`${incomingTheme}-theme`);
+    // Remove theme classes
+    $('html').removeClass((idx, className) => {
+      const arrThemeClasses = className.split(' ').filter(val => val.includes('theme'))
+      return arrThemeClasses.join(' ');
+    }).addClass(`theme-${incomingTheme}`);
 
     this.blockUi();
 
@@ -392,7 +396,7 @@ Personalize.prototype = {
 
     newCss.attr({
       id: originalCss.attr('id'),
-      href: xssUtils.stripTags(`${themePath}/${incomingTheme}-theme${isMin ? '.min' : ''}.css`)
+      href: xssUtils.stripTags(`${themePath}/theme-${incomingTheme}${isMin ? '.min' : ''}.css`)
     });
     originalCss.removeAttr('id');
 

@@ -7,9 +7,9 @@ module.exports = {
     },
     dist: {
       files: {
-        'dist/css/high-contrast-theme.min.css': ['dist/css/high-contrast-theme.css'],
-        'dist/css/dark-theme.min.css': ['dist/css/dark-theme.css'],
-        'dist/css/light-theme.min.css': ['dist/css/light-theme.css'],
+        'dist/css/theme-soho-high-contrast.min.css': ['dist/css/theme-soho-high-contrast.css'],
+        'dist/css/theme-soho-dark.min.css': ['dist/css/theme-soho-dark.css'],
+        'dist/css/theme-soho-light.min.css': ['dist/css/theme-soho-light.css'],
         'dist/css/theme-uplift-light.min.css': ['dist/css/theme-uplift-light.css'],
       }
     },

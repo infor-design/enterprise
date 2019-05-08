@@ -61,15 +61,6 @@
     $('html').personalize({colors: colors, theme: theme, blockUI: blockUI});
   </script>
 
-
-  {{#theme.isSohoUseLegacyNaming}}
-    <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/{{theme.variant}}-theme.css" type="text/css"/>
-  {{/theme.isSohoUseLegacyNaming}}
-  {{^theme.isSohoUseLegacyNaming}}
-    <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/theme-{{theme.name}}-{{theme.variant}}.css" type="text/css"/>
-  {{/theme.isSohoUseLegacyNaming}}
-
-
+  <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/theme-{{theme.name}}-{{theme.variant}}.css" type="text/css"/>
   <link rel="stylesheet" href="{{basepath}}css/demo.css" type="text/css"/>
-
 </head>

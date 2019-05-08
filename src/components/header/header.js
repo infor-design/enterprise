@@ -504,7 +504,7 @@ Header.prototype = {
       // Change Theme
       if (link.attr('data-theme')) {
         const theme = link.attr('data-theme');
-        $('body').trigger('changetheme', theme.replace('-theme', ''));
+        $('body').trigger('changetheme', theme.replace('theme-', ''));
         return;
       }
 

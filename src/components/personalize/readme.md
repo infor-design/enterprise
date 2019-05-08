@@ -34,7 +34,7 @@ For reduction of FOUC (flash of unstyled content) run the personalize logic befo
   // Call personalize here
   $('html').personalize({colors: colors});
 </script>
-<link rel="stylesheet" id="sohoxi-stylesheet" href="../../stylesheets/{{theme}}-theme.css" type="text/css">
+<link rel="stylesheet" id="sohoxi-stylesheet" href="../../stylesheets/theme-{{theme}}.css" type="text/css">
 ```
 
 ## Supported Personalization Components
