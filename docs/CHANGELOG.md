@@ -26,6 +26,7 @@
 - `[Personalization]` Changed the default turquoise personalization to a darker one. ([#2063](https://github.com/infor-design/enterprise/issues/2063))
 - `[Personalization]` Added a default option to the personalization color pickers. ([#2063](https://github.com/infor-design/enterprise/issues/2063))
 - `[Personalization]` Added more classes and examples for the personalization colors so that you can personalize certain form elements. ([#2120](https://github.com/infor-design/enterprise/issues/2120))
+- `[Personalization]` Added several form examples with buttons and completion chart that can be personalized. ([#1963](https://github.com/infor-design/enterprise/issues/1963))
 - `[Popupmenu]` Fixed an issue where disabled submenus were opening on mouseover. ([#1863](https://github.com/infor-design/enterprise/issues/1863))
 - `[Tree]` Fixed an issue where children property null was breaking tree to not render. ([#1908](https://github.com/infor-design/enterprise/issues/1908))
 

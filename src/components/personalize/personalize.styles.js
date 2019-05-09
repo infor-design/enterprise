@@ -332,12 +332,14 @@ function personalizeStyles(colors) {
   color: ${colors.text};
 }
 
-.is-personalizable .personalize-actionable {
+.is-personalizable .personalize-actionable,
+.is-personalizable .personalize-actionable svg {
   color: ${colors.text};
   opacity: .8;
 }
 
-.is-personalizable .personalize-actionable:hover:not([disabled]) {
+.is-personalizable .personalize-actionable:hover:not([disabled]),
+.is-personalizable .personalize-actionable:hover:not([disabled]) svg {
   color: ${colors.text};
   opacity: 1;
 }
@@ -364,6 +366,23 @@ function personalizeStyles(colors) {
 
 .is-personalizable .personalize-horizontal-top-border {
   border-top: 1px solid: ${colors.horizontalBorder};
+}
+
+.is-personalizable .personalize-chart-targeted {
+  background-color: rgba(255, 255, 255, .9);
+}
+
+.is-personalizable .personalize-chart-targeted .bar {
+  height: 23px !important;
+}
+
+.is-personalizable .personalize-chart-targeted .chart-percent-text {
+  color: ${colors.text};
+}
+
+.is-personalizable .personalize-chart-targeted .completed {
+  margin-left: 1px;
+  margin-top: -22px;
 }
 
 .is-personalizable .personalize-actionable-disabled,

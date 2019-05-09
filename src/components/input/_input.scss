@@ -70,6 +70,10 @@
   margin-bottom: 20px;
   position: relative;
 
+  &.less-margin {
+    margin-bottom: 5px;
+  }
+
   textarea + .btn-actions {
     margin-left: 4px;
     position: absolute;
