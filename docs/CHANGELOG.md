@@ -14,6 +14,7 @@
 
 - `[App Menu]` Fixed an issue where the menu would not be entirely colored if short. ([#2062](https://github.com/infor-design/enterprise/issues/2062))
 - `[App Menu]` Changed the scroll area to the outside when using a footer. ([#2062](https://github.com/infor-design/enterprise/issues/2062))
+- `[App Menu]` Expandable area updates within application menu. ([#1982](https://github.com/infor-design/enterprise/pull/1982))
 - `[Colorpicker]` Fixed an issue where the colorpicker label is cut off in extra small input field. ([#2023](https://github.com/infor-design/enterprise/issues/2023))
 - `[Context Menu]` Fixes a bug where a left click on the originating field would not close a context menu opened with a right click. ([#1992](https://github.com/infor-design/enterprise/issues/1992))
 - `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
@@ -37,6 +38,7 @@
 - `[Personalize]` Separated personalization styles into standalone file for improved maintainability. ([#2127](https://github.com/infor-design/enterprise/issues/2127))
 
 (nn Issues Solved this release, Backlog Enterprise nn, Backlog Ng nn, nn Functional Tests, nn e2e Test)
+
 ## v4.18.1
 
 ### v4.18.1 Fixes
