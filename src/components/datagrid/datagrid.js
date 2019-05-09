@@ -5633,8 +5633,21 @@ Datagrid.prototype = {
 
       // Handle Context Menu on Some
       if (col.menuId) {
+        self.closePrevPopupmenu();
         const btn = $(this).find('button');
-        btn.popupmenu({ attachToBody: true, autoFocus: false, mouseFocus: true, menuId: col.menuId, trigger: 'immediate', offset: { y: 5 } });
+        btn.popupmenu({
+          attachToBody: true,
+          autoFocus: false,
+          mouseFocus: true,
+          menuId: col.menuId,
+          trigger: 'immediate',
+          offset: { y: 5 }
+        }).off('close').on('close', function () {
+          const el = $(this);
+          if (el.data('popupmenu')) {
+            el.data('popupmenu').destroy();
+          }
+        });
 
         if (col.selected) {
           btn.on('selected.datagrid', col.selected);
@@ -5695,6 +5708,7 @@ Datagrid.prototype = {
       if (!self.isSubscribedTo(e, 'contextmenu')) {
         return;
       }
+      self.closePrevPopupmenu();
 
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
       e.preventDefault();
@@ -5766,6 +5780,7 @@ Datagrid.prototype = {
       }).off('contextmenu.datagrid').on('contextmenu.datagrid', 'th', (e) => {
         // Add Header Context Menu Support
         e.preventDefault();
+        self.closePrevPopupmenu();
 
         if (self.settings.headerMenuId) {
           $(e.currentTarget)
@@ -5779,6 +5794,13 @@ Datagrid.prototype = {
             .off('selected.gridpopup')
             .on('selected.gridpopup', (selectedEvent, args) => {
               self.settings.headerMenuSelected(selectedEvent, args);
+            })
+            .off('close')
+            .on('close', function () {
+              const elem = $(this);
+              if (elem.data('popupmenu')) {
+                elem.data('popupmenu').destroy();
+              }
             });
         }
 
@@ -5838,6 +5860,21 @@ Datagrid.prototype = {
 
       if (self.editor && self.editor.input && !this.editor.stayInEditMode) {
         self.commitCellEdit(self.editor.input);
+      }
+    });
+  },
+
+  /**
+  * Close any previous opened popupmenus.
+  * @private
+  * @returns {void}
+  */
+  closePrevPopupmenu() {
+    const nodes = [].slice.call(this.element[0].querySelectorAll('.is-open:not(.popupmenu)'));
+    nodes.forEach((node) => {
+      const elem = $(node);
+      if (elem.data('popupmenu')) {
+        elem.trigger('close');
       }
     });
   },
