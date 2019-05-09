@@ -1156,7 +1156,7 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
   });
 });
 
-fdescribe('Datagrid on modal with no default size', () => {
+describe('Datagrid on modal with no default size', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
 
@@ -1173,7 +1173,7 @@ fdescribe('Datagrid on modal with no default size', () => {
     it('Should not visual regress', async () => {
       await element(by.id('add-context')).click();
 
-      const containerEl = await element(by.className('container'));
+      const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toEqual(0);
