@@ -12,13 +12,17 @@
 
 ### v4.19.0 Fixes
 
-- `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
-- `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
-- `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
 - `[App Menu]` Fixed an issue where the menu would not be entirely colored if short. ([#2062](https://github.com/infor-design/enterprise/issues/2062))
 - `[App Menu]` Changed the scroll area to the outside when using a footer. ([#2062](https://github.com/infor-design/enterprise/issues/2062))
-- `[Personalization]` Changed the default turquoise personalization to a darker one. ([#2063](https://github.com/infor-design/enterprise/issues/2063))
+- `[Context Menu]` Fixes a bug where a left click on the originating field would not close a context menu opened with a right click. ([#1992](https://github.com/infor-design/enterprise/issues/1992))
+- `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
+- `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
+- `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
+- `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
 - `[Editor]` Fixed an issue where button state for toolbar buttons were wrong when clicked one after another. ([#391](https://github.com/infor-design/enterprise/issues/391))
+- `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
+- `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
+- `[Monthview]` Fixes an issue where the previous and next buttons were not correctly reversed in right-to-left mode. ([1910](https://github.com/infor-design/enterprise/issues/1910))
 - `[Personalization]` Changed the default turquoise personalization to a darker one. ([#2063](https://github.com/infor-design/enterprise/issues/2063))
 - `[Personalization]` Added a default option to the personalization color pickers. ([#2063](https://github.com/infor-design/enterprise/issues/2063))
 - `[Personalization]` Added more classes and examples for the personalization colors so that you can personalize certain form elements. ([#2120](https://github.com/infor-design/enterprise/issues/2120))
@@ -29,6 +33,7 @@
 
 - `[General]` Updated to jquery 3.4.1 to fix a jquery bug seen occasionally. ([#2109](https://github.com/infor-design/enterprise/issues/2109))
 - `[Demo App]` Fixed CSP and handling of image paths for better support of images in examples on IDS demo sites (demo.design.infor.com). ([#1888](https://github.com/infor-design/enterprise/issues/1888))
+- `[Personalize]` Separated personalization styles into standalone file for improved maintainability. ([#2127](https://github.com/infor-design/enterprise/issues/2127))
 
 (nn Issues Solved this release, Backlog Enterprise nn, Backlog Ng nn, nn Functional Tests, nn e2e Test)
 
