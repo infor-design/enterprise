@@ -247,6 +247,7 @@ Datagrid.prototype = {
     this.isTouch = env.features.touch;
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
+    this.isInModal = false;
     this.appendTooltip();
     this.initSettings();
     this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
@@ -504,7 +505,7 @@ Datagrid.prototype = {
     }
 
     self.pagerRefresh(location);
-    
+
     // Add to ui
     self.renderRows();
 
@@ -4038,6 +4039,11 @@ Datagrid.prototype = {
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
+      if (!this.elemWidth && this.element.parent().is('.datagrid-default-modal-width')) { // handle on invisible modal
+        this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
+        this.isInModal = true;
+      }
+
       this.widthSpecified = false;
       this.widthPixel = false;
     }
@@ -4150,7 +4156,7 @@ Datagrid.prototype = {
             widthPercent: this.widthPercent
           };
           this.totalMinWidths[container] = this.totalWidths[container];
-          this.totalWidths[container] = '100%';
+          this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
         }
         if (diff > 0 && diff < colWidth && !this.widthPercent && !col.width) {
           colWidth += diff;
@@ -4171,7 +4177,7 @@ Datagrid.prototype = {
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
           stretchColumn[0].width += diff2 - 2;
         }
-        this.totalWidths[container] = '100%';
+        this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
       }
 
       if (this.widthPercent) {

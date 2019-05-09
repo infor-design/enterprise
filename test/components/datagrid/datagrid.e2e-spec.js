@@ -1156,6 +1156,31 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
   });
 });
 
+fdescribe('Datagrid on modal with no default size', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.id('add-context')).click();
+
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid multiselect with no selection checkbox', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-multiselect-no-checkboxes');

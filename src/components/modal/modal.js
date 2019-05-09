@@ -774,15 +774,7 @@ Modal.prototype = {
     */
     setTimeout(() => {
       this.element.trigger('afteropen');
-      // Rerender rows in any datagrids as the size may need updating
-      const datagrid = this.element.find('.datagrid-container');
-      if (datagrid) {
-        const api = datagrid.data('datagrid');
-        if (api && api.settings.stretchColumn) {
-          api.renderRows();
-        }
-      }
-    }, 210);
+    }, 300);
   },
 
   resize() {
