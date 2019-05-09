@@ -5,6 +5,7 @@
 ### v4.19.0 Features
 
 - `[Column]` Added support to existing custom tooltip content in the callback setting. ([#1909](https://github.com/infor-design/enterprise/issues/1909))
+- `[Contextual Action Panel]` Fixed an issue where the close button was misaligned. ([#1943](https://github.com/infor-design/enterprise/issues/1943))
 - `[Datagrid]` Added support for disabling rows by data or a dynamic function, rows are disabled from selection and editing. ([#1614](https://github.com/infor-design/enterprise/issues/1614))
 - `[Datagrid]` Fixes a column alignment issue when resizing and sorting columns that were originally set to percentage width. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
 - `[Datagrid]` Fixes a column alignment issue when there are duplicate column ids. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
