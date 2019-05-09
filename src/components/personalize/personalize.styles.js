@@ -1,8 +1,5 @@
-export { personalizeStyles }
-
-  function personalizeStyles(colors){
-
-    return `
+function personalizeStyles(colors) {
+  return `
 .tab-container.module-tabs.is-personalizable {
   border-top: 1px solid ${colors.horizontalBorder} !important;
   border-bottom: 1px solid ${colors.horizontalBorder} !important;
@@ -376,3 +373,5 @@ export { personalizeStyles }
 }
     `;
 }
+
+export { personalizeStyles };
