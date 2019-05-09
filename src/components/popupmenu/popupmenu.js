@@ -1716,7 +1716,7 @@ PopupMenu.prototype = {
     let timeout;
 
     self.menu.find('.popupmenu').removeClass('is-open');
-    self.menu.on('mouseenter.popupmenu touchstart.popupmenu', '.submenu', function (thisE) {
+    self.menu.on('mouseenter.popupmenu touchstart.popupmenu', '.submenu:not(.is-disabled)', function (thisE) {
       const menuitem = $(this);
       startY = thisE.pageX;
 

@@ -1881,6 +1881,7 @@ Editor.prototype = {
           break;
       }
     }
+    this.checkSelection();
   },
 
   insertImage(url) {
