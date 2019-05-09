@@ -1052,6 +1052,29 @@ cleanAll(true).then(() => {
     }
 
     runBuildProcesses(requestedComponents, jsMatches, jQueryMatches, sassMatches)
+      .then(() => {
+        // THIS NEEDS REMOVED VERY SOON
+        // Copy renamed soho theme files to their deprecated names for backwards compatibility
+
+        const cssPath = path.join(__dirname, '..', 'dist', 'css');
+        const glob = require('glob');
+        const cssFiles = glob.sync(`${cssPath}/**/theme-soho-*.css*`);
+
+        const proms = cssFiles.map(file => {
+          return new Promise((resolve, reject) => {
+            const getVariantRx = /theme-soho-(\w*).(\S*)/; // get variant (1) and full ext (2)
+            const pieces = getVariantRx.exec(file);
+            const depName = `${pieces[1]}-theme.${pieces[2]}` // i.e. light-theme.css.map
+
+            return fs.copyFile(file, `${cssPath}/${depName}`, err => {
+              if (err) reject(err);
+              logger('alert', `Backwards compatibility ${file} copied to ${depName}`);
+              resolve();
+            });
+          });
+        });
+        return Promise.all(proms);
+      })
       .catch(buildFailure)
       .then(buildSuccess);
   });
