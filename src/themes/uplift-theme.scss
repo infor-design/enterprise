@@ -8,14 +8,14 @@
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/theme-uplift/tokens/web/theme-uplift';
 
-// Enterprise colors
+// Enterprise color variables
 @import '../components/colors/colorpalette';
 
-// Local vars
+// Enterprise vars
 @import '../core/config';
 
-// Core Controls
-@import '../core/controls';
+// Core Uplift Controls
+@import '../core/controls-uplift';
 
 // Temporary Banner - Remove this when not beta.
 body::before {
@@ -36,22 +36,4 @@ body::before {
   transform: rotate(45deg);
   width: 100px;
   z-index: 1000;
-}
-
-// TODO: Move to tokens
-.icon {
-  fill: transparent;
-}
-
-// Font Size Overrides
-.header h1 {
-  font-size: 2.4rem;
-}
-
-.animated-bar {
-  height: 7px;
-}
-
-.application-menu .application-menu-header .name-xl {
-  font-size: 2.8rem;
 }

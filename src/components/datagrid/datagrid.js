@@ -503,6 +503,8 @@ Datagrid.prototype = {
       self.settings.dataset.splice(location, 0, data);
     }
 
+    self.pagerRefresh(location);
+    
     // Add to ui
     self.renderRows();
 
@@ -516,8 +518,6 @@ Datagrid.prototype = {
 
       rowNode = self.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
       args = { row, cell, target: rowNode, value: data, oldValue: {} };
-
-      self.pagerRefresh(location);
 
       /**
        * Fires after a row is added via the api.
@@ -547,7 +547,7 @@ Datagrid.prototype = {
     const pagingInfo = {};
 
     if (typeof location === 'string') {
-      pagingInfo.activePage = location === 'top' ? 1 : this.pagerAPI._pageCount;
+      pagingInfo.activePage = location === 'top' ? 1 : this.pagerAPI.state.pages;
     } else if (typeof location === 'number') {
       pagingInfo.activePage = Math.floor(location / (this.pagerAPI.settings.pagesize + 1));
     }
@@ -786,6 +786,7 @@ Datagrid.prototype = {
       this.renderRows();
       this.renderHeader();
     } else {
+      this.clearHeaderCache();
       this.renderRows();
     }
 
@@ -5087,6 +5088,7 @@ Datagrid.prototype = {
     if (this.tableWidth && diff) {
       this.headerTable.css('width', parseInt(this.tableWidth, 10) + diff);
       this.table.css('width', parseInt(this.tableWidth, 10) + diff);
+      this.headerWidths[idx].widthPercent = false;
     }
   },
 

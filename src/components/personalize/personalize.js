@@ -73,14 +73,6 @@ Personalize.prototype = {
       .off(`updated.${COMPONENT_NAME}`)
       .on(`updated.${COMPONENT_NAME}`, () => {
         self.updated();
-      })
-      .off(`changecolors.${COMPONENT_NAME}`)
-      .on(`changecolors.${COMPONENT_NAME}`, (e, newColor, noAnimate) => {
-        self.setColors(newColor, noAnimate);
-      })
-      .off(`changetheme.${COMPONENT_NAME}`)
-      .on(`changetheme.${COMPONENT_NAME}`, (e, thisTheme) => {
-        self.setTheme(thisTheme);
       });
 
     return this;
@@ -235,7 +227,7 @@ Personalize.prototype = {
     ` .hero-widget.is-personalizable .chart-container .arc { stroke: ${colors.subheader} }` +
     ` .hero-widget.is-personalizable .chart-container .bar { stroke: ${colors.subheader} }` +
     ` .hero-widget.is-personalizable .chart-container.line-chart .dot { stroke: ${colors.subheader} }` +
-    ` .application-menu.is-personalizable { border-right: ${colors.verticalBorder} }` +
+    ` .application-menu.is-personalizable { background-color: ${colors.subheader}; border-right: ${colors.verticalBorder} }` +
     ` .application-menu.is-personalizable .application-menu-header { background-color: ${colors.subheader}; border-bottom-color: ${colors.verticalBorder} }` +
     ` .application-menu.is-personalizable .application-menu-footer { background-color: ${colors.subheader}; border-top-color: ${colors.verticalBorder} }` +
     ` .application-menu.is-personalizable button .icon, .application-menu.is-personalizable button span, .application-menu.is-personalizable .hyperlink { color: ${colors.text}; opacity: 0.8 }` +
@@ -282,6 +274,11 @@ Personalize.prototype = {
   * @returns {this} component instance
   */
   setColors(colors) {
+    if (colors === '') {
+      this.setColorsToDefault();
+      return this;
+    }
+
     if (!colors) {
       return this;
     }
@@ -301,6 +298,17 @@ Personalize.prototype = {
     */
     this.element.triggerHandler('colorschanged', { colors });
     return this;
+  },
+
+  /**
+   * Sets the colors back to the default color (by removing the geneated stylesheet).
+   */
+  setColorsToDefault() {
+    this.settings.colors = '';
+    const sheet = document.getElementById('soho-personalization');
+    if (sheet) {
+      sheet.parentNode.removeChild(sheet);
+    }
   },
 
   /**

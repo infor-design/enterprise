@@ -111,4 +111,68 @@ describe('Datagrid Columns API', () => {
     document.querySelector('.datagrid tr:nth-child(2) td:nth-child(2) a').click();
     document.querySelector('.datagrid tr:nth-child(3) td:nth-child(3) button').click();
   });
+
+  it('Should keep columns in sync on sort and filter', (done) => {
+    // Simulates
+    const newData = [
+      {
+        templateName: 'Neilson Process',
+        insightName: 'Certification Manager Insight for Infor',
+        templateType: 'User / Role Review',
+        owner: 'JRyan',
+        applicationInstance: 'LN_Dev01_Tenant1'
+      },
+      {
+        templateName: 'User  Role Review Template',
+        insightName: 'Certification Manager Insight for Infor',
+        templateType: 'User / Role Review',
+        owner: 'JBieber',
+        applicationInstance: 'Syteline_dev03_Tenant1'
+      },
+      {
+        templateName: 'User Creation Default Template',
+        insightName: 'Certification Manager Insight for Infor',
+        templateType: 'User / Role Review',
+        owner: 'JWoo',
+        applicationInstance: 'All Application Instances '
+      },
+      {
+        templateName: 'Role Assignment Management Default Template',
+        insightName: 'Certification Manager Insight for Infor',
+        templateType: 'User / Role Review',
+        owner: 'JRyan',
+        applicationInstance: 'All Application Instances'
+      },
+      {
+        templateName: 'Certification Process Role User Template',
+        insightName: 'Certification Manager Insight for Infor',
+        templateType: 'User / Role Review',
+        owner: 'JRyan',
+        applicationInstance: 'LN_Dev01_Tenant1'
+      }];
+
+    const newColumns = [
+      { id: 'templateName', name: 'Name', sortable: true, field: 'templateName', filterType: 'text', width: '20%' },
+      { id: 'insightName', name: 'Insights', sortable: true, field: 'insightName', filterType: 'text', width: '20%' },
+      { id: 'templateType', name: 'Certification Type', sortable: true, field: 'templateType', width: '20%', filterType: 'text' },
+      { id: 'owner', name: 'Owner', sortable: false, field: 'owner', width: '10%' },
+      { id: 'applicationInstance', name: 'Application Instance', sortable: true, width: '20%', field: 'applicationInstance' },
+      { id: 'actions', name: 'Actions', sortable: true, field: 'actions', width: 150 },
+    ];
+
+    datagridObj.updateColumns(newColumns);
+    datagridObj.updateDataset(newData);
+    datagridObj.setColumnWidth('insightName', 300);
+    datagridObj.setSortColumn('templateName');
+
+    setTimeout(() => {
+      expect(document.querySelectorAll('colgroup')[0].children[0].getAttribute('style')).toEqual(document.querySelectorAll('colgroup')[0].children[0].getAttribute('style'));
+      expect(document.querySelectorAll('colgroup')[0].children[1].getAttribute('style')).toEqual(document.querySelectorAll('colgroup')[0].children[1].getAttribute('style'));
+      expect(document.querySelectorAll('colgroup')[0].children[2].getAttribute('style')).toEqual(document.querySelectorAll('colgroup')[0].children[2].getAttribute('style'));
+      expect(document.querySelectorAll('colgroup')[0].children[3].getAttribute('style')).toEqual(document.querySelectorAll('colgroup')[0].children[3].getAttribute('style'));
+      expect(document.querySelectorAll('colgroup')[0].children[4].getAttribute('style')).toEqual(document.querySelectorAll('colgroup')[0].children[4].getAttribute('style'));
+      expect(document.querySelectorAll('colgroup')[0].children[5].getAttribute('style')).toEqual(document.querySelectorAll('colgroup')[0].children[5].getAttribute('style'));
+      done();
+    }, 500);
+  });
 });

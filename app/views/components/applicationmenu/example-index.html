@@ -3,7 +3,7 @@
 <body class="no-scroll">
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
-  <nav id="application-menu" class="application-menu">
+  <nav id="application-menu" class="application-menu is-personalizable">
 
     <div class="accordion panel inverse" data-options="{'allowOnePane': true}" >
 
@@ -87,31 +87,7 @@
               </svg>
             </button>
           </div>
-
-          <div class="more">
-            <button class="btn-actions page-changer" type="button" title="More">
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="#icon-more"></use>
-              </svg>
-              <span class="audible" data-translate="text">More</span>
-            </button>
-            <ul class="popupmenu is-selectable">
-              <li class="heading" role="presentation">Theme</li>
-              <li class="is-selectable is-checked"><a href="#" data-theme="light-theme">Light</a></li>
-              <li class="is-selectable"><a href="#" data-theme="dark-theme">Dark</a></li>
-              <li class="is-selectable"><a href="#" data-theme="high-contrast-theme">High Contrast</a></li>
-              <li class="separator"></li>
-              <li class="heading" role="presentation">Personalization</li>
-              <li class="is-selectable is-checked"><a data-rgbcolor="#2578A9" href="#">Azure</a></li>
-              <li class="is-selectable"><a data-rgbcolor="#DB7726" href="#">Amber</a></li>
-              <li class="is-selectable"><a data-rgbcolor="#9279A6" href="#">Amethyst</a></li>
-              <li class="is-selectable"><a data-rgbcolor="#579E95" href="#">Turqoise</a></li>
-              <li class="is-selectable"><a data-rgbcolor="#317C73" href="#">Emerald</a></li>
-              <li class="is-selectable"><a data-rgbcolor="#5C5C5C" href="#">Graphite</a></li>
-            </ul>
-
-          </div>
-
+          {{> includes/header-actionbutton}}
         </div>
 
       </header>

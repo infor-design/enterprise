@@ -19,6 +19,15 @@
   }
 }
 
+// Css variables for Primary Colors
+.primary-bg-color {
+  background: $theme-color-brand-primary-base;
+}
+
+.primary-color {
+  color: $theme-color-brand-primary-base !important;
+}
+
 // Palette Shapes
 .palette-column {
   @include antialiased();

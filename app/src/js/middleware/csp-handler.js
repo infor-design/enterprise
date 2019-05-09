@@ -69,6 +69,8 @@ module.exports = function () {
             'https://fonts.gstatic.com'
           ],
           'img-src': ['self',
+            'http://*.infor.com',
+            'https://*.infor.com',
             'https://randomuser.me',
             'http://placehold.it',
             'http://lorempixel.com',
