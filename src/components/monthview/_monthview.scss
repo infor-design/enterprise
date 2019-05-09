@@ -604,9 +604,12 @@ html[dir='rtl'] {
     button {
       left: 0;
       right: auto;
+      transform: rotate(180deg);
 
       &.prev {
-        margin: 3px 0 0 5px;
+        left: 30px;
+        margin-left: 5px;
+        right: auto;
 
         svg {
           left: auto;
@@ -615,9 +618,7 @@ html[dir='rtl'] {
       }
 
       &.next {
-        left: 30px;
-        margin: 3px 5px 0 7px;
-        right: auto;
+        margin: 0 5px 0 7px;
 
         svg {
           left: auto;
@@ -749,12 +750,12 @@ html[dir='rtl'] {
     .monthview-header.full {
       .prev {
         left: initial;
-        right: 40px;
+        right: 5px;
       }
 
       .next {
         left: initial;
-        right: 5px;
+        right: 40px;
       }
 
       .monthview-datepicker {
