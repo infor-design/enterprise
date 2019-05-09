@@ -1639,7 +1639,7 @@ PopupMenu.prototype = {
       }
     });
 
-    // Close on Document Click ect..
+    // Close on Document Click etc..
     setTimeout(() => {
       $(document).on(`touchend.popupmenu.${self.id} click.popupmenu.${self.id}`, (thisE) => {
         const isPicker = (self.settings.menu === 'colorpicker-menu');
@@ -1654,7 +1654,7 @@ PopupMenu.prototype = {
         }
 
         // Click functionality will toggle the menu - otherwise it closes and opens
-        if ($(thisE.target).is(self.element) && !isPicker) {
+        if ($(thisE.target).is(self.element) && !isPicker && !(self.settings.trigger === 'rightClick')) {
           return;
         }
 
