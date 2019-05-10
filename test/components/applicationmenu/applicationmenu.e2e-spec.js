@@ -159,3 +159,24 @@ describe('Applicationmenu Personalization tests', () => {
     });
   }
 });
+
+describe('Applicationmenu role switcher tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/test-personalized-role-switcher-long-title');
+  });
+
+  it('Should have a working role switcher with long title', async () => {
+    const btnSel = '.application-menu-switcher-trigger';
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css(btnSel)).last()), config.waitsFor); // eslint-disable-line
+
+    const btnEl = await element(by.css(btnSel));
+    await btnEl.click();
+
+    expect(await element(by.css('.application-menu-switcher-panel')).isDisplayed()).toBeTruthy();
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+});
