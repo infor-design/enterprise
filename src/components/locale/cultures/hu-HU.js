@@ -13,7 +13,7 @@ Soho.Locale.addCulture('hu-HU', {
     name: 'gregorian',
     // ca-gregorian/main/dates/calendars/gregorian/dateFormats/
     dateFormat: {
-      separator: '/', // Infered
+      separator: '. ', // Infered
       timeSeparator: ':',
       short: 'yyyy. MM. dd.', // use four digit year
       medium: 'yyyy. MMM d.',

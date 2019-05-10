@@ -15,10 +15,10 @@ Soho.Locale.addCulture('sv-SE', {
       separator: '/', // Infered
       timeSeparator: ':',
       short: 'yyyy-MM-dd', // use four digit year
-      medium: 'yyyy-MM-dd',
+      medium: 'd MMM yyyy',
       long: 'd MMMM yyyy',
       full: 'EEEE d MMMM yyyy',
-      month: 'den d MMMM',
+      month: 'd MMMM',
       year: 'MMMM yyyy',
       timestamp: 'HH:mm:ss',
       datetime: 'yyyy-MM-dd HH:mm',

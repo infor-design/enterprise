@@ -5,6 +5,7 @@
 ### v4.19.0 Features
 
 - `[Column]` Added support to existing custom tooltip content in the callback setting. ([#1909](https://github.com/infor-design/enterprise/issues/1909))
+- `[Contextual Action Panel]` Fixed an issue where the close button was misaligned. ([#1943](https://github.com/infor-design/enterprise/issues/1943))
 - `[Datagrid]` Added support for disabling rows by data or a dynamic function, rows are disabled from selection and editing. ([#1614](https://github.com/infor-design/enterprise/issues/1614))
 - `[Datagrid]` Fixes a column alignment issue when resizing and sorting columns that were originally set to percentage width. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
 - `[Datagrid]` Fixes a column alignment issue when there are duplicate column ids. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
@@ -14,16 +15,20 @@
 
 - `[App Menu]` Fixed an issue where the menu would not be entirely colored if short. ([#2062](https://github.com/infor-design/enterprise/issues/2062))
 - `[App Menu]` Changed the scroll area to the outside when using a footer. ([#2062](https://github.com/infor-design/enterprise/issues/2062))
+- `[App Menu]` Expandable area updates within application menu. ([#1982](https://github.com/infor-design/enterprise/pull/1982))
 - `[Colorpicker]` Fixed an issue where the colorpicker label is cut off in extra small input field. ([#2023](https://github.com/infor-design/enterprise/issues/2023))
 - `[Context Menu]` Fixes a bug where a left click on the originating field would not close a context menu opened with a right click. ([#1992](https://github.com/infor-design/enterprise/issues/1992))
 - `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
 - `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
 - `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
 - `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
+- `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
+- `[Locale]` Synced up date and time patterns with the CLDR several time patterns in particular were corrected. ([#2022](https://github.com/infor-design/enterprise/issues/2022))
 - `[Editor]` Fixed an issue where button state for toolbar buttons were wrong when clicked one after another. ([#391](https://github.com/infor-design/enterprise/issues/391))
 - `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Monthview]` Fixes an issue where the previous and next buttons were not correctly reversed in right-to-left mode. ([1910](https://github.com/infor-design/enterprise/issues/1910))
+- `[Personalization]` Changed the default turquoise personalization to a darker one. ([#2063](https://github.com/infor-design/enterprise/issues/2063))
 - `[Personalization]` Changed the default turquoise personalization to a darker one. ([#2063](https://github.com/infor-design/enterprise/issues/2063))
 - `[Personalization]` Added a default option to the personalization color pickers. ([#2063](https://github.com/infor-design/enterprise/issues/2063))
 - `[Personalization]` Added an example of normal tabs behaving like header tabs in a personalized area. ([#1962](https://github.com/infor-design/enterprise/issues/1962))
@@ -37,6 +42,7 @@
 - `[Personalize]` Separated personalization styles into standalone file for improved maintainability. ([#2127](https://github.com/infor-design/enterprise/issues/2127))
 
 (nn Issues Solved this release, Backlog Enterprise nn, Backlog Ng nn, nn Functional Tests, nn e2e Test)
+
 ## v4.18.1
 
 ### v4.18.1 Fixes

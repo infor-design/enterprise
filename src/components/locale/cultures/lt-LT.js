@@ -16,7 +16,7 @@ Soho.Locale.addCulture('lt-LT', {
       separator: '-', // Infered
       timeSeparator: ':',
       short: 'yyyy-MM-dd', // use four digit year
-      medium: 'yyyy MMM d',
+      medium: 'yyyy-MM-dd',
       long: 'yyyy m. MMMM d d.',
       full: 'yyyy m. MMMM d d., EEEE',
       month: 'MMMM d d.',
