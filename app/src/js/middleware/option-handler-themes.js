@@ -7,9 +7,8 @@ const URL = require('url');
 // Option Handling - Custom Middleware
 // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
 // In some cases, these options can be modified based on query parameters.  Check the default route for these options.
-module.exports = function (app, defaults) {
+module.exports = function (app) {
   return function optionHandler(req, res, next) {
-    res.opts = extend({}, defaults);
 
     if (!req.url.includes('api/')) {
 
