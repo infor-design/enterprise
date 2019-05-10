@@ -9,8 +9,10 @@ module.exports = {
       files: {
         'dist/css/theme-soho-light.css': 'temp/theme-soho-light.scss',
         'dist/css/theme-soho-dark.css': 'temp/theme-soho-dark.scss',
-        'dist/css/theme-soho-high-contrast.css': 'temp/theme-soho-high-contrast.scss',
-        'dist/css/theme-uplift-light.css': 'temp/theme-uplift-light.scss'
+        'dist/css/theme-soho-contrast.css': 'temp/theme-soho-contrast.scss',
+        'dist/css/theme-uplift-light.css': 'temp/theme-uplift-light.scss',
+        'dist/css/theme-uplift-dark.css': 'temp/theme-uplift-dark.scss',
+        'dist/css/theme-uplift-contrast.css': 'temp/theme-uplift-contrast.scss',
       }
     },
 
@@ -19,8 +21,10 @@ module.exports = {
       files: {
         'dist/css/theme-soho-light.css': 'temp/theme-soho-light.scss',
         'dist/css/theme-soho-dark.css': 'temp/theme-soho-dark.scss',
-        'dist/css/theme-soho-high-contrast.css': 'temp/theme-soho-high-contrast.scss',
-        'dist/css/theme-uplift-light.css': 'temp/theme-uplift-light.scss'
+        'dist/css/theme-soho-contrast.css': 'temp/theme-soho-contrast.scss',
+        'dist/css/theme-uplift-light.css': 'temp/theme-uplift-light.scss',
+        'dist/css/theme-uplift-dark.css': 'temp/theme-uplift-dark.scss',
+        'dist/css/theme-uplift-contrast.css': 'temp/theme-uplift-contrast.scss',
       }
     },
 

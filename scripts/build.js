@@ -1064,7 +1064,8 @@ cleanAll(true).then(() => {
           return new Promise((resolve, reject) => {
             const getVariantRx = /theme-soho-(\w*).(\S*)/; // get variant (1) and full ext (2)
             const pieces = getVariantRx.exec(file);
-            const depName = `${pieces[1]}-theme.${pieces[2]}` // i.e. light-theme.css.map
+            const backwardCompatName = (pieces[1] === "contrast" ? "high-contrast" : pieces[1]);
+            const depName = `${backwardCompatName}-theme.${pieces[2]}` // i.e. light-theme.css.map
 
             return fs.copyFile(file, `${cssPath}/${depName}`, err => {
               if (err) reject(err);
