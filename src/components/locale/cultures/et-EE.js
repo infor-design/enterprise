@@ -16,15 +16,15 @@ Soho.Locale.addCulture('et-EE', {
       separator: '.', // Infered
       timeSeparator: ':',
       short: 'dd.MM.yyyy', // use four digit year
-      medium: 'dd.MM.yyyy',
+      medium: 'd. MMM y',
       long: 'd. MMMM yyyy',
       full: 'EEEE, d. MMMM y',
       month: 'd. MMMM',
       year: 'MMMM yyyy',
-      timestamp: 'H:mm:ss',
-      datetime: 'dd.MM.yyyy H:mm',
-      timezone: 'dd.MM.yyyy H:mm zz',
-      timezoneLong: 'dd.MM.yyyy H:mm zzzz'
+      timestamp: 'HH:mm:ss',
+      datetime: 'dd.MM.yyyy HH:mm',
+      timezone: 'dd.MM.yyyy HH:mm zz',
+      timezoneLong: 'dd.MM.yyyy HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
@@ -38,7 +38,7 @@ Soho.Locale.addCulture('et-EE', {
       abbreviated: ['jaan', 'veebr', 'märts', 'apr', 'mai', 'juuni', 'juuli', 'au', 'sept', 'okt', 'nov', 'dets']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'H:mm',
+    timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['e.k.', 'p.k.']
   }],

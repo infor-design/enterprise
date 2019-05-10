@@ -4,8 +4,8 @@
 Soho.Locale.addCulture('sl-SI', {
   // layout/language
   language: 'sl',
-  englishName: 'Slovenian (Slovenia)',
-  nativeName: 'slovenski (Slovenija)',
+  englishName: 'Slovenian (Slovenia)!!!',
+  nativeName: 'slovenski (Slovenija)!!!',
   // layout/orientation/@characters
   direction: 'left-to-right',
   // ca-gregorian
@@ -13,17 +13,17 @@ Soho.Locale.addCulture('sl-SI', {
     // ca-gregorian/main/dates/calendars/gregorian/dateFormats/
     dateFormat: {
       separator: '.', // Infered
-      timeSeparator: '.',
+      timeSeparator: ':',
       short: 'd. MM. yyyy', // use four digit year
       medium: 'd. MMM yyyy',
       long: 'dd. MMMM yyyy',
       full: 'EEEE, dd. MMMM yyyy',
       month: 'd. MMMM',
       year: 'MMMM yyyy',
-      timestamp: 'HH.mm.ss',
-      datetime: 'd. MM. yyyy HH.mm',
-      timezone: 'd. MM. yyyy HH.mm zz',
-      timezoneLong: 'd. MM. yyyy HH.mm zzzz'
+      timestamp: 'HH:mm:ss',
+      datetime: 'd. MM. yyyy HH:mm',
+      timezone: 'd. MM. yyyy HH:mm zz',
+      timezoneLong: 'd. MM. yyyy HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
@@ -37,7 +37,7 @@ Soho.Locale.addCulture('sl-SI', {
       abbreviated: ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'avg', 'sep', 'okt', 'nov', 'dec']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'HH.mm',
+    timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['dop.', 'pop.']
   }],

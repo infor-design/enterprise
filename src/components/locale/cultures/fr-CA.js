@@ -16,11 +16,11 @@ Soho.Locale.addCulture('fr-CA', {
       separator: '-', // Infered
       timeSeparator: ':',
       short: 'yyyy-MM-dd', // use four digit year
-      medium: 'yyyy-MM-dd',
+      medium: 'd MMM yyyy',
       long: 'd MMMM yyyy',
       full: 'EEEE d MMMM yyyy',
       month: 'd MMMM',
-      year: 'MMMM, yyyy',
+      year: 'MMMM yyyy',
       timestamp: 'HH:mm:ss',
       datetime: 'yyyy-MM-dd HH:mm',
       timezone: 'yyyy-MM-dd HH:mm zz',

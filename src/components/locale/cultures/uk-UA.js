@@ -15,11 +15,11 @@ Soho.Locale.addCulture('uk-UA', {
       separator: '.', // Infered
       timeSeparator: ':',
       short: 'dd.MM.yyyy', // use four digit year
-      medium: 'd MMM yyyy',
+      medium: 'd MMM yyyy р.',
       long: 'd MMMM yyyy р.',
       full: 'EEEE, d MMMM yyyy р.',
       month: 'd MMMM',
-      year: 'MMMM yyyy',
+      year: 'MMMM yyyy  р.',
       timestamp: 'HH:mm:ss',
       datetime: 'dd.MM.yyyy HH:mm',
       timezone: 'dd.MM.yyyy HH:mm zz',

@@ -20,10 +20,10 @@ Soho.Locale.addCulture('af-ZA', {
       full: 'EEEE dd MMMM yyyy',
       month: 'dd MMMM',
       year: 'MMMM yyyy',
-      timestamp: 'h:mm:ss a',
-      datetime: 'yyyy-MM-dd h:mm a',
-      timezone: 'yyyy-MM-dd h:mm a zz',
-      timezoneLong: 'yyyy-MM-dd h:mm a zzzz'
+      timestamp: 'HH:mm:ss',
+      datetime: 'yyyy-MM-dd HH:mm',
+      timezone: 'yyyy-MM-dd HH:mm zz',
+      timezoneLong: 'yyyy-MM-dd HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
@@ -37,7 +37,7 @@ Soho.Locale.addCulture('af-ZA', {
       abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'h:mm a',
+    timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['vm.', 'nm.']
   }],
