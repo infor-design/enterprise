@@ -719,7 +719,7 @@ $datagrid-short-row-height: 23px;
   font-size: $theme-size-font-base;
   //This lets us resize to lower than content width but it causes layout issues with default col sizes
   table-layout: fixed;
-  width: 100%;
+  width: 100% !important;
 
   //Row Height Feature
   &.medium-rowheight {
