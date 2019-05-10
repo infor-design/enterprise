@@ -1637,10 +1637,10 @@ describe('Datagrid timezone tests', () => {
     expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('03-04-2019');
     let text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(2)')).getText();
 
-    expect(['3/4/2019 00:00 GMT-5', '3/4/2019 00:00 GMT-4']).toContain(text);
+    expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
     text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(3)')).getText();
 
-    expect(['3/4/2019 00:00 Eastern-standaardtijd', '3/4/2019 00:00 Eastern-zomertijd']).toContain(text);
+    expect(['03-04-2019 00:00 Eastern-standaardtijd', '03-04-2019 00:00 Eastern-zomertijd']).toContain(text);
 
     text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(4)')).getText();
 

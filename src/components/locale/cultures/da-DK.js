@@ -15,16 +15,16 @@ Soho.Locale.addCulture('da-DK', {
     dateFormat: {
       separator: '/', // Infered
       timeSeparator: '.',
-      short: 'dd-MM-yyyy', // use four digit year
-      medium: 'dd-MM-yyyy',
-      long: 'd. MMM yyyy',
+      short: 'dd-MM-yyyy', // use four digit year - this was suggested by Danish user so not using CLDR
+      medium: 'd. MMM yyyy',
+      long: 'd. MMMM yyyy',
       full: 'EEEE den d. MMMM yyyy',
       month: 'd. MMMM',
       year: 'MMMM yyyy',
       timestamp: 'HH.mm.ss',
-      datetime: 'dd/MM/yyyy HH.mm',
-      timezone: 'dd/MM/yyyy HH.mm zz',
-      timezoneLong: 'dd/MM/yyyy HH.mm zzzz'
+      datetime: 'dd-MM-yyyy HH.mm',
+      timezone: 'dd-MM-yyyy HH.mm zz',
+      timezoneLong: 'dd-MM-yyyy HH.mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
     // standalone abbreviated (3 digit mostly)

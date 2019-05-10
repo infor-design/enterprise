@@ -15,11 +15,11 @@ Soho.Locale.addCulture('vi-VN', {
       separator: '/', // Infered
       timeSeparator: ':',
       short: 'dd/MM/yyyy', // use four digit year
-      medium: 'dd-MM-yyyy',
-      long: 'ngày dd tháng MM năm yyyy',
-      full: 'EEEE, ngày dd MMMM năm yyyy',
-      month: 'dd MMMM',
-      year: 'MMMM yyyy',
+      medium: 'd MMM, yyyy',
+      long: 'd MMMM, yyyy',
+      full: 'EEEE, d MMMM, yyyy',
+      month: 'd MMMM',
+      year: 'MMMM, yyyy',
       timestamp: 'HH:mm:ss',
       datetime: 'dd/MM/yyyy HH:mm',
       timezone: 'dd/MM/yyyy HH:mm zz',

@@ -14,16 +14,16 @@ Soho.Locale.addCulture('sk-SK', {
     dateFormat: {
       separator: '.', // Infered
       timeSeparator: ':',
-      short: 'd.M.yyyy', // use four digit year
-      medium: 'd.M.yyyy',
+      short: 'd. M. yyyy', // use four digit year
+      medium: 'd. M. yyyy',
       long: 'd. MMMM yyyy',
-      full: 'EEEE, d. MMMM yyyy',
+      full: 'EEEE d. MMMM yyyy',
       month: 'd. MMMM',
-      year: 'MMMM y',
+      year: 'MMMM yyyy',
       timestamp: 'H:mm:ss',
-      datetime: 'd.M.yyyy H:mm',
-      timezone: 'd.M.yyyy H:mm zz',
-      timezoneLong: 'd.M.yyyy H:mm zzzz'
+      datetime: 'd. M. yyyy H:mm',
+      timezone: 'd. M. yyyy H:mm zz',
+      timezoneLong: 'd. M. yyyy H:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {

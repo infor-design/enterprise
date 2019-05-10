@@ -15,16 +15,16 @@ Soho.Locale.addCulture('he-IL', {
     dateFormat: {
       separator: '/', // Infered
       timeSeparator: ':',
-      short: 'dd/MM/yyyy', // use four digit year
+      short: 'd.M.yyyy', // use four digit year
       medium: 'd בMMM yyyy',
       long: 'd בMMMM yyyy',
       full: 'EEEE, d בMMMM yyyy',
       month: 'd MMMM',
       year: 'MMMM yyyy',
-      timestamp: 'HH:mm:ss',
-      datetime: 'dd/MM/yyyy HH:mm',
-      timezone: 'dd/MM/yyyy HH:mm zz',
-      timezoneLong: 'dd/MM/yyyy HH:mm zzzz'
+      timestamp: 'H:mm:ss',
+      datetime: 'dd/MM/yyyy H:mm',
+      timezone: 'dd/MM/yyyy H:mm zz',
+      timezoneLong: 'dd/MM/yyyy H:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
@@ -38,7 +38,7 @@ Soho.Locale.addCulture('he-IL', {
       abbreviated: ['ינו׳', 'פבר׳', 'מרץ', 'אפר׳', 'מאי', 'יוני', 'יולי', 'אוג׳', 'ספט׳', 'אוק׳', 'נוב׳', 'דצמ׳']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'HH:mm',
+    timeFormat: 'H:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['לפנה״צ', 'אחה״צ']
   }],

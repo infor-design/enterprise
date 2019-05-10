@@ -14,17 +14,17 @@ Soho.Locale.addCulture('fi-FI', {
     // ca-gregorian/main/dates/calendars/gregorian/dateFormats/
     dateFormat: {
       separator: '.', // Infered
-      timeSeparator: ':',
+      timeSeparator: '.',
       short: 'd.M.yyyy', // use four digit year
       medium: 'd.M.yyyy',
       long: 'd. MMMM yyyy',
-      full: 'EEEE d. MMMM yyyy',
+      full: 'cccc d. MMMM yyyy',
       month: 'd. MMMM',
       year: 'MMMM yyyy',
-      timestamp: 'H:mm:ss',
-      datetime: 'd.M.y H:mm',
-      timezone: 'd.M.y H:mm zz',
-      timezoneLong: 'd.M.y H:mm zzzz'
+      timestamp: 'H.mm:ss',
+      datetime: 'd.M.y H.mm',
+      timezone: 'd.M.y H.mm zz',
+      timezoneLong: 'd.M.y H.mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
@@ -38,7 +38,7 @@ Soho.Locale.addCulture('fi-FI', {
       abbreviated: ['tammi', 'helmi', 'maalis', 'huhti', 'touko', 'kesä', 'heinä', 'elo', 'syys', 'loka', 'marras', 'joulu']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'H:mm',
+    timeFormat: 'H.mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['ap.', 'ip.']
   }],

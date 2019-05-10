@@ -19,11 +19,11 @@ Soho.Locale.addCulture('ru-RU', {
       long: 'd MMMM yyyy г.',
       full: 'EEEE, d MMMM yyyy г.',
       month: 'd MMMM',
-      year: 'MMMM yyyy',
-      timestamp: 'H:mm:ss',
-      datetime: 'M/d/yyyy H:mm',
-      timezone: 'M/d/yyyy H:mm zz',
-      timezoneLong: 'M/d/yyyy H:mm zzzz'
+      year: 'MMMM yyyy г.',
+      timestamp: 'HH:mm:ss',
+      datetime: 'dd.MM.yyyy HH:mm',
+      timezone: 'dd.MM.yyyy HH:mm zz',
+      timezoneLong: 'dd.MM.yyyy HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
@@ -37,7 +37,7 @@ Soho.Locale.addCulture('ru-RU', {
       abbreviated: ['Я', 'Ф', 'М', 'А', 'М', 'И', 'И', 'А', 'С', 'О', 'Н', 'Д']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'H:mm',
+    timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['AM', 'PM']
   }],
