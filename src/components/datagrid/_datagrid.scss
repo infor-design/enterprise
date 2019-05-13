@@ -1051,6 +1051,10 @@ $datagrid-short-row-height: 23px;
             min-width: 20px;
           }
 
+          &.btn-primary {
+            top: -1px;
+          }
+
           .icon {
             margin-top: -3px;
           }
