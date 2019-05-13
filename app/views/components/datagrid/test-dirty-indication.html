@@ -1,10 +1,10 @@
 <div class="row">
   <div class="two-thirds column">
-    <p>Make changes to any cells it should add dirty indicator to the cell<p>
+    <p>Make changes to any cells it should add dirty indicator to the cell</p>
     <p>
-      Dirty cells can be clear by clicking the button &quot;Clear Dirty&quot;<br>
-      &ndash; Specific Cell (row: <span class="test-dirty-row"></span>, cell: <span class="test-dirty-cell"></span>)<br>
-      &ndash; All Cells in Row (row: <span class="test-dirty-row"></span>)<br>
+      Dirty cells can be clear by clicking the button &quot;Clear Dirty&quot;</br>
+      &ndash; Specific Cell (row: <span class="test-dirty-row"></span>, cell: <span class="test-dirty-cell"></span>)</br>
+      &ndash; All Cells in Row (row: <span class="test-dirty-row"></span>)</br>
       &ndash; All (all cells in grid)
     </p>
   </div>
@@ -12,7 +12,7 @@
 
 <div class="row">
   <div class="twelve columns">
-    <div role="toolbar" class="toolbar">
+    <div role="toolbar" class="toolbar" data-options='{"maxVisibleButtons": 4}'>
 
       <div class="title">
         Data Grid Header Title
@@ -20,6 +20,12 @@
       </div>
 
       <div class="buttonset">
+        <button type="button" id="show-dirty" class="btn">
+          <span>Show Modified (in console)</span>
+        </button>
+        <button type="button" id="mark-dirty" class="btn">
+          <span>Toggle Dirty Indicator</span>
+        </button>
         <button type="button" id="clear-dirty" class="btn-menu">
           <span>Clear Dirty</span>
         </button>
@@ -38,10 +44,6 @@
           <span class="audible">More Actions</span>
         </button>
         <ul class="popupmenu">
-          <li><a href="#">Option One</a></li>
-          <li><a href="#">Option Two</a></li>
-          <li><a href="#">Option Three</a></li>
-          <li class="separator single-selectable-section"></li>
           <li class="heading">Row Height</li>
           <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
           <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
@@ -51,20 +53,7 @@
       </div>
     </div>
 
-    <div class="contextual-toolbar toolbar is-hidden">
-      <div class="title selection-count">1 Selected</div>
-      <div class="buttonset">
-        <button class="btn" type="button" id="remove-btn">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-delete"></use>
-          </svg>
-          <span>Remove</span>
-        </button>
-      </div>
-    </div>
-
     <div id="datagrid">
-
     </div>
   </div>
 </div>
@@ -132,7 +121,25 @@
       }
       if (action === 'all') {
         gridApi.clearDirty();
+        gridApi.rowStatus(4, 'in-progress', '');
       }
+    });
+
+    // Show dirty cells
+    $('#show-dirty').on('click', function (e, args) {
+      console.log(gridApi.getModifiedRows());
+    });
+
+    // Mark a cell dirty
+    var onOff = false;
+    $('#mark-dirty').on('click', function (e, args) {
+      onOff = !onOff;
+      gridApi.setDirtyIndicator(4, 4, onOff);
+      if (!onOff) {
+        gridApi.resetRowStatus();
+        return;
+      }
+      gridApi.rowStatus(4, 'in-progress', onOff ? 'in Progress' : '');
     });
   });
 </script>
