@@ -66,8 +66,6 @@ describe('Radios validation tests', () => {
 
   it('Validates and clears validation', async () => {
     await element.all(by.css('.radio')).first().sendKeys(protractor.Key.TAB);
-    await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
-    await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.message-text')).count()).toEqual(1);

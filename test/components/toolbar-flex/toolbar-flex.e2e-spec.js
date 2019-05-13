@@ -47,7 +47,7 @@ describe('Flex toobar ajax tests', () => {
       browser.driver.manage().window().setSize(450, 1000);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index')).toBeLessThan(0.35);
       await element(await by.css('button.btn-actions')).click();
       await browser.driver.sleep(config.sleep);
 
