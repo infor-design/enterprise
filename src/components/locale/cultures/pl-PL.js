@@ -23,8 +23,8 @@ Soho.Locale.addCulture('pl-PL', {
       year: 'MMMM yyyy',
       timestamp: 'HH:mm:ss',
       datetime: 'dd.MM.yyyy HH:mm',
-      timezone: 'dd.MM.yyyy HH.mm zz',
-      timezoneLong: 'dd.MM.yyyy HH.mm zzzz'
+      timezone: 'dd.MM.yyyy HH:mm zz',
+      timezoneLong: 'dd.MM.yyyy HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {

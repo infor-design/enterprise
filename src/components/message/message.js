@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../modal/modal';
@@ -20,7 +21,8 @@ const COMPONENT_NAME = 'message';
  * @param {object} [settings.buttons=null]  Array of buttons to add to the message (see modal examples as well)
  * @param {string} [settings.cssClass=null]  Extra Class to add to the dialog for customization.
  * @param {string} [settings.returnFocus=null]  JQuery Element selector to focus on return.
- * @param {string} [allowedTags='<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>']  String of allowed HTML tags.
+ * @param {string} [settings.allowedTags='<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>']  String of allowed HTML tags.
+ * @param {string} [settings.audibleLabel='']  String to include in message title that is strictly audible.
  */
 const MESSAGE_DEFAULTS = {
   title: 'Message Title',
@@ -30,7 +32,8 @@ const MESSAGE_DEFAULTS = {
   buttons: null,
   cssClass: null,
   returnFocus: null,
-  allowedTags: '<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>'
+  allowedTags: '<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>',
+  audibleLabel: ''
 };
 
 function Message(element, settings) {
@@ -60,8 +63,8 @@ Message.prototype = {
     this.title = $(`<h1 class="modal-title" id="message-title">${allowTags ? xssUtils.stripTags(this.settings.title, tags) : xssUtils.stripHTML(this.settings.title)}</h1>`).appendTo(this.messageContent).wrap('<div class="modal-header"></div>');
     this.content = $(`<div class="modal-body"><p class="message" id="message-text">${allowTags ? xssUtils.stripTags(this.settings.message, tags) : xssUtils.stripHTML(this.settings.message)}</p></div>`).appendTo(this.messageContent);
 
-    if (this.title.text().toLowerCase().indexOf('alert') === -1) {
-      this.title.text(`Alert: ${this.title.text()}`);
+    if (this.settings.audibleLabel !== '') {
+      this.title.prepend(`<span class="audible">${Locale.translate(this.settings.audibleLabel)}</span>`);
     }
 
     // Append The Content if Passed in
