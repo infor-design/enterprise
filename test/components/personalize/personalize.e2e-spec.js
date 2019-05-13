@@ -37,14 +37,11 @@ describe('Personalization tests', () => {
   });
 
   it('Should maintain chosen colors after reinitialization', async () => {
-    const pageChangerButtonEl = await element.all(by.css('.page-changer'));
-    const colorChoices = await element.all(by.css('.popupmenu li.is-selectable a[data-rgbcolor]'));
-    const arrayLength = await colorChoices.length;
-    const randomIndex = await Math.floor(Math.random() * arrayLength);
     const reinitButton = await element(by.id('reinitialize'));
 
-    await pageChangerButtonEl[0].click();
-    await colorChoices[randomIndex].click();
+    await element(by.css('.page-changer')).click();
+    await await element.all(by.css('.popupmenu li.is-selectable a[data-rgbcolor]')).get(4).click();
+    await browser.driver.sleep(config.sleep);
 
     const beforeInitSheet = await element(by.id('soho-personalization')).getText();
     await browser.driver

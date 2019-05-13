@@ -94,19 +94,18 @@ describe('Applicationmenu open on large tests', () => {
 describe('Applicationmenu container tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/test-container');
+    await browser.driver.sleep(config.sleep);
   });
 
   it('Should show the app menu', async () => {
     const button = await element(by.css('.application-menu-trigger'));
     await button.click();
-    await browser.driver.sleep(config.sleepLonger);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
     expect(await element.all(by.css('.accordion-header')).count()).toEqual(17);
     expect(await element.all(by.css('.accordion-header')).first().isDisplayed()).toBeTruthy();
-  });
 
-  it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
 });

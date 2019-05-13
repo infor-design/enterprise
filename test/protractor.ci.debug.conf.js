@@ -52,7 +52,7 @@ exports.config = {
     }
 
     jasmine.getEnv().addReporter(new SpecReporter({
-      spec: { displayStacktrace: false }
+      spec: { displayStacktrace: 'specs' }
     }));
 
     return browser.getProcessedConfig().then((cap) => {
