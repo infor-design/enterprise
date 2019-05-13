@@ -19,6 +19,7 @@
 - `[App Menu]` Fixed an issue where role switcher was not clickable with long title. ([#2060](https://github.com/infor-design/enterprise/issues/2060))
 - `[Colorpicker]` Fixed an issue where the colorpicker label is cut off in extra small input field. ([#2023](https://github.com/infor-design/enterprise/issues/2023))
 - `[Context Menu]` Fixes a bug where a left click on the originating field would not close a context menu opened with a right click. ([#1992](https://github.com/infor-design/enterprise/issues/1992))
+- `[Datagrid]` Fixed an issue where using the context menu with datagrid was not properly destroyed which being created multiple times. ([#392](https://github.com/infor-design/enterprise-ng/issues/392))
 - `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
 - `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
 - `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
