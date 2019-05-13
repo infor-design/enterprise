@@ -5642,15 +5642,15 @@ Datagrid.prototype = {
           menuId: col.menuId,
           trigger: 'immediate',
           offset: { y: 5 }
-        }).off('close').on('close', function () {
+        }).off('close.gridpopupbtn').on('close.gridpopupbtn', function () {
           const el = $(this);
-          if (el.data('popupmenu')) {
+          if (el.data('popupmenu') && !el.data('tooltip')) {
             el.data('popupmenu').destroy();
           }
         });
 
         if (col.selected) {
-          btn.on('selected.datagrid', col.selected);
+          btn.off('selected.gridpopupbtn').on('selected.gridpopupbtn', col.selected);
         }
       }
 
@@ -5721,13 +5721,14 @@ Datagrid.prototype = {
           attachToBody: true,
           trigger: 'immediate'
         })
-          .off('selected').on('selected', (selectedEvent, args) => {
+          .off('selected.gridpopuptr')
+          .on('selected.gridpopuptr', (selectedEvent, args) => {
             if (self.settings.menuSelected) {
               self.settings.menuSelected(selectedEvent, args);
             }
           })
-          .off('close')
-          .on('close', function () {
+          .off('close.gridpopuptr')
+          .on('close.gridpopuptr', function () {
             const elem = $(this);
             if (elem.data('popupmenu')) {
               elem.data('popupmenu').destroy();
@@ -5791,12 +5792,12 @@ Datagrid.prototype = {
               beforeOpen: self.settings.headerMenuBeforeOpen,
               trigger: 'immediate'
             })
-            .off('selected.gridpopup')
-            .on('selected.gridpopup', (selectedEvent, args) => {
+            .off('selected.gridpopupth')
+            .on('selected.gridpopupth', (selectedEvent, args) => {
               self.settings.headerMenuSelected(selectedEvent, args);
             })
-            .off('close')
-            .on('close', function () {
+            .off('close.gridpopupth')
+            .on('close.gridpopupth', function () {
               const elem = $(this);
               if (elem.data('popupmenu')) {
                 elem.data('popupmenu').destroy();
@@ -10196,6 +10197,10 @@ Datagrid.prototype = {
   destroy() {
     // Remove grid tooltip
     this.removeTooltip();
+
+    // Unbind context menu events
+    this.element.add(this.element.find('*'))
+      .off('selected.gridpopupth close.gridpopupth selected.gridpopuptr close.gridpopuptr selected.gridpopupbtn close.gridpopupbtn');
 
     // UnBind the pager
     if (this.pagerAPI) {
