@@ -198,7 +198,7 @@ describe('Calendar specific month tests', () => {
   });
 });
 
-fdescribe('Calendar only monthview', () => { //eslint-disable-line
+describe('Calendar only monthview', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -222,7 +222,7 @@ fdescribe('Calendar only monthview', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Calendar only monthview and legend', () => { //eslint-disable-line
+describe('Calendar only monthview and legend', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar-legend');
     const dateField = await element(by.id('monthview-datepicker-field'));
