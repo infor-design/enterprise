@@ -43,7 +43,6 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {array} [settings.month] Initial month to show.
  * @param {array} [settings.year] Initial year to show.
  * @param {array} [settings.upcomingEventDays=14] How many days in advance should we show in the upcoming events pane.
- * @param {boolean} [settings.sizeToParent] If true the calendar part will size to the parent. You would use this if you dont include the event and event detail elements.
  * @param {boolean} [settings.showViewChanger] If false the dropdown to change views will not be shown.
  * @param {function} [settings.onRenderMonth] Fires when a month is rendered, allowing you to pass back events or event types to show.
  * @param {function} [settings.onSelected] Fires when a month day is clicked. Allowing you to do something.
@@ -85,10 +84,6 @@ Calendar.prototype = {
     }
 
     this.rendered = true;
-
-    if (this.settings.sizeToParent) {
-      this.element.addClass('is-parent-size');
-    }
 
     this
       .setCurrentCalendar()
