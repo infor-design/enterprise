@@ -60,21 +60,21 @@
 
     .colorpicker-input-lg,
     .colorpicker-container .colorpicker.colorpicker-input-lg {
-      width: 100%;
+      width: auto;
     }
   }
 
   @media (max-width: $breakpoint-slim + 1) {
     .colorpicker-input-md,
     .colorpicker-container .colorpicker.colorpicker-input-md {
-      width: 100%;
+      width: auto;
     }
   }
 
   @media (max-width: $breakpoint-phone + 1) {
     .colorpicker-input-mm,
     .colorpicker-container .colorpicker.colorpicker-input-mm {
-      width: 100%;
+      width: auto;
     }
   }
 }
