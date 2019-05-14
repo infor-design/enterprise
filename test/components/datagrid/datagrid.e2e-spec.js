@@ -333,7 +333,7 @@ describe('Datagrid frozen column tests', () => {
   });
 });
 
-fdescribe('Datagrid grouping headers and filter tests', () => {
+describe('Datagrid grouping headers and filter tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-grouping-filter');
 
@@ -1107,7 +1107,7 @@ describe('Datagrid hide selection checkbox tests', () => {
   });
 });
 
-fdescribe('Datagrid icon buttons tests', () => {
+describe('Datagrid icon buttons tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-icon-buttons');
 
