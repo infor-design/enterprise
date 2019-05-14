@@ -25,7 +25,6 @@
 - `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
 - `[Datagrid]` Fixed charts in columns not resizing correctly to short row height. ([#1930](https://github.com/infor-design/enterprise/issues/1930))
 - `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
-- `[General]` Fixed relative links in several markdown files.
 - `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Locale]` Synced up date and time patterns with the CLDR several time patterns in particular were corrected. ([#2022](https://github.com/infor-design/enterprise/issues/2022))
 - `[Datagrid]` Adds a function to add a visual dirty indictaor and a new function to get all modified rows. Modified means either dirty, in-progress or in error. Existing API's are not touched. ([#2091](https://github.com/infor-design/enterprise/issues/2091))
@@ -45,6 +44,7 @@
 ### v4.19.0 Chores & Maintenance
 
 - `[General]` Updated to jquery 3.4.1 to fix a jquery bug seen occasionally. ([#2109](https://github.com/infor-design/enterprise/issues/2109))
+- `[General]` Fixed relative links in several markdown files.
 - `[Demo App]` Fixed CSP and handling of image paths for better support of images in examples on IDS demo sites (demo.design.infor.com). ([#1888](https://github.com/infor-design/enterprise/issues/1888))
 - `[Personalize]` Separated personalization styles into standalone file for improved maintainability. ([#2127](https://github.com/infor-design/enterprise/issues/2127))
 
