@@ -179,3 +179,25 @@ describe('Applicationmenu role switcher tests', () => {
     await utils.checkForErrors();
   });
 });
+
+describe('Applicationmenu custom search tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/test-filterable-custom');
+  });
+
+  it('Should show the search even though filterable is false', async () => {
+    expect(await element(by.css('#application-menu-searchfield')).isPresent()).toBeTruthy();
+  });
+
+  it('Should have a search but not filter the menu when filterable is false', async () => {
+    const button = await element(by.css('#application-menu-searchfield'));
+    await button.sendKeys('Role');
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.accordion-header.filtered')).count()).toEqual(0);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+});
