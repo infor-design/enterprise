@@ -7,6 +7,20 @@
     width: 100%;
   }
 
+  .colorpicker-container {
+    position: relative;
+    width: 100% !important;
+
+    .colorpicker {
+      width: auto !important;
+    }
+
+    .trigger {
+      position: absolute;
+      right: 0;
+    }
+  }
+
   .dropdown-wrapper {
     width: 100%;
 
@@ -43,37 +57,6 @@
     .field .checkbox-label,
     .field .checkbox > label {
       margin-top: -10px;
-    }
-  }
-}
-
-@media (max-width: $breakpoint-big-phone + 1) {
-  .form-responsive {
-    .colorpicker-container {
-      width: 100%;
-    }
-
-    .colorpicker-input-lg,
-    .colorpicker-container .colorpicker.colorpicker-input-lg {
-      width: auto;
-    }
-  }
-}
-
-@media (max-width: $breakpoint-slim + 1) {
-  .form-responsive {
-    .colorpicker-input-md,
-    .colorpicker-container .colorpicker.colorpicker-input-md {
-      width: auto;
-    }
-  }
-}
-
-@media (max-width: $breakpoint-phone + 1) {
-  .form-responsive {
-    .colorpicker-input-mm,
-    .colorpicker-container .colorpicker.colorpicker-input-mm {
-      width: auto;
     }
   }
 }
