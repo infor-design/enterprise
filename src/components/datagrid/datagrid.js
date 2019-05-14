@@ -247,6 +247,7 @@ Datagrid.prototype = {
     this.isTouch = env.features.touch;
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
+    this.isInModal = false;
     this.appendTooltip();
     this.initSettings();
     this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
@@ -504,7 +505,7 @@ Datagrid.prototype = {
     }
 
     self.pagerRefresh(location);
-    
+
     // Add to ui
     self.renderRows();
 
@@ -4038,6 +4039,11 @@ Datagrid.prototype = {
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
+      if (!this.elemWidth && this.element.parent().is('.datagrid-default-modal-width')) { // handle on invisible modal
+        this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
+        this.isInModal = true;
+      }
+
       this.widthSpecified = false;
       this.widthPixel = false;
     }
@@ -4150,7 +4156,7 @@ Datagrid.prototype = {
             widthPercent: this.widthPercent
           };
           this.totalMinWidths[container] = this.totalWidths[container];
-          this.totalWidths[container] = '100%';
+          this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
         }
         if (diff > 0 && diff < colWidth && !this.widthPercent && !col.width) {
           colWidth += diff;
@@ -4171,7 +4177,7 @@ Datagrid.prototype = {
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
           stretchColumn[0].width += diff2 - 2;
         }
-        this.totalWidths[container] = '100%';
+        this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
       }
 
       if (this.widthPercent) {
@@ -5633,11 +5639,24 @@ Datagrid.prototype = {
 
       // Handle Context Menu on Some
       if (col.menuId) {
+        self.closePrevPopupmenu();
         const btn = $(this).find('button');
-        btn.popupmenu({ attachToBody: true, autoFocus: false, mouseFocus: true, menuId: col.menuId, trigger: 'immediate', offset: { y: 5 } });
+        btn.popupmenu({
+          attachToBody: true,
+          autoFocus: false,
+          mouseFocus: true,
+          menuId: col.menuId,
+          trigger: 'immediate',
+          offset: { y: 5 }
+        }).off('close.gridpopupbtn').on('close.gridpopupbtn', function () {
+          const el = $(this);
+          if (el.data('popupmenu') && !el.data('tooltip')) {
+            el.data('popupmenu').destroy();
+          }
+        });
 
         if (col.selected) {
-          btn.on('selected.datagrid', col.selected);
+          btn.off('selected.gridpopupbtn').on('selected.gridpopupbtn', col.selected);
         }
       }
 
@@ -5695,6 +5714,7 @@ Datagrid.prototype = {
       if (!self.isSubscribedTo(e, 'contextmenu')) {
         return;
       }
+      self.closePrevPopupmenu();
 
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
       e.preventDefault();
@@ -5707,13 +5727,14 @@ Datagrid.prototype = {
           attachToBody: true,
           trigger: 'immediate'
         })
-          .off('selected').on('selected', (selectedEvent, args) => {
+          .off('selected.gridpopuptr')
+          .on('selected.gridpopuptr', (selectedEvent, args) => {
             if (self.settings.menuSelected) {
               self.settings.menuSelected(selectedEvent, args);
             }
           })
-          .off('close')
-          .on('close', function () {
+          .off('close.gridpopuptr')
+          .on('close.gridpopuptr', function () {
             const elem = $(this);
             if (elem.data('popupmenu')) {
               elem.data('popupmenu').destroy();
@@ -5766,6 +5787,7 @@ Datagrid.prototype = {
       }).off('contextmenu.datagrid').on('contextmenu.datagrid', 'th', (e) => {
         // Add Header Context Menu Support
         e.preventDefault();
+        self.closePrevPopupmenu();
 
         if (self.settings.headerMenuId) {
           $(e.currentTarget)
@@ -5776,9 +5798,16 @@ Datagrid.prototype = {
               beforeOpen: self.settings.headerMenuBeforeOpen,
               trigger: 'immediate'
             })
-            .off('selected.gridpopup')
-            .on('selected.gridpopup', (selectedEvent, args) => {
+            .off('selected.gridpopupth')
+            .on('selected.gridpopupth', (selectedEvent, args) => {
               self.settings.headerMenuSelected(selectedEvent, args);
+            })
+            .off('close.gridpopupth')
+            .on('close.gridpopupth', function () {
+              const elem = $(this);
+              if (elem.data('popupmenu')) {
+                elem.data('popupmenu').destroy();
+              }
             });
         }
 
@@ -5838,6 +5867,21 @@ Datagrid.prototype = {
 
       if (self.editor && self.editor.input && !this.editor.stayInEditMode) {
         self.commitCellEdit(self.editor.input);
+      }
+    });
+  },
+
+  /**
+  * Close any previous opened popupmenus.
+  * @private
+  * @returns {void}
+  */
+  closePrevPopupmenu() {
+    const nodes = [].slice.call(this.element[0].querySelectorAll('.is-open:not(.popupmenu)'));
+    nodes.forEach((node) => {
+      const elem = $(node);
+      if (elem.data('popupmenu')) {
+        elem.trigger('close');
       }
     });
   },
@@ -7938,15 +7982,7 @@ Datagrid.prototype = {
       }
 
       const data = { originalVal, isDirty: false };
-      if (typeof this.dirtyArray === 'undefined') {
-        this.dirtyArray = [];
-      }
-      if (typeof this.dirtyArray[idx] === 'undefined') {
-        this.dirtyArray[idx] = [];
-        this.dirtyArray[idx][cell] = data;
-      } else if (typeof this.dirtyArray[idx][cell] === 'undefined') {
-        this.dirtyArray[idx][cell] = data;
-      }
+      this.addToDirtyArray(idx, cell, data);
     }
 
     this.editor.focus();
@@ -8452,7 +8488,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearDirty() {
-    if (this.settings.showDirty && this.dirtyArray) {
+    if (this.settings.showDirty) {
       this.clearDirtyClass(this.element);
       this.dirtyArray = undefined;
     }
@@ -8464,10 +8500,12 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearDirtyRow(row) {
-    if (this.settings.showDirty && this.dirtyArray && typeof row === 'number') {
+    if (this.settings.showDirty && typeof row === 'number') {
       const rowNode = this.rowNodes(row);
       this.clearDirtyClass(rowNode);
-      this.dirtyArray[row] = undefined;
+      if (this.dirtyArray) {
+        this.dirtyArray[row] = undefined;
+      }
     }
   },
 
@@ -8537,6 +8575,49 @@ Datagrid.prototype = {
       }
     }
     return rows;
+  },
+
+  /**
+  * Return an array containing all of the currently modified rows, the type of modification
+  * and the cells that are dirty and the data.
+  * @returns {array} An array showing the dirty row info.
+  */
+  getModifiedRows() {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    const modified = [];
+
+    // First add the dirty rows
+    if (this.dirtyArray && this.dirtyArray.length) {
+      for (let i = 0; i < this.dirtyArray.length; i++) {
+        if (this.dirtyArray[i] === undefined) {
+          continue;
+        }
+
+        const data = {
+          data: s.treeGrid ? dataset[i].node : dataset[i],
+          row: i,
+          type: 'dirty',
+          cells: []
+        };
+
+        for (let j = 0; j < this.dirtyArray[i].length; j++) {
+          if (this.dirtyArray[i][j] !== undefined) {
+            data.cells.push(this.dirtyArray[i][j]);
+          }
+        }
+        modified.push(data);
+      }
+    }
+
+    // Now add error and in progress rows
+    for (let i = 0; i < dataset.length; i++) {
+      const el = dataset[i];
+      if (el.rowStatus !== undefined && (el.rowStatus.icon === 'error' || el.rowStatus.icon === 'in-progress')) {
+        modified.push({ data: el, row: i, type: el.rowStatus.icon, cells: [] });
+      }
+    }
+    return modified;
   },
 
   /**
@@ -8762,12 +8843,14 @@ Datagrid.prototype = {
       this.validateCell(dataRowIndex, cell);
 
       // Update and set trackdirty
-      if (this.isDirtyCellNotUndefined(row, cell)) {
+      if (!this.isDirtyCellUndefined(row, cell)) {
         this.dirtyArray[row][cell].value = value;
         this.dirtyArray[row][cell].coercedVal = coercedVal;
         this.dirtyArray[row][cell].escapedCoercedVal = xssUtils.escapeHTML(coercedVal);
         this.dirtyArray[row][cell].cellNodeText = cellNode.text();
-        this.setIsDirtyAndIcon(row, cell, cellNode);
+        this.dirtyArray[row][cell].cell = cell;
+        this.dirtyArray[row][cell].column = this.settings.columns[cell];
+        this.setDirtyCell(row, cell);
       }
     }
 
@@ -8815,31 +8898,75 @@ Datagrid.prototype = {
    * @returns {boolean} true if isDirty
    */
   isCellDirty(row, cell) {
-    return this.isDirtyCellNotUndefined(row, cell) ?
-      this.dirtyArray[row][cell].isDirty : false;
+    return this.isDirtyCellUndefined(row, cell) ?
+      false : this.dirtyArray[row][cell].isDirty;
   },
 
   /**
-   * Set isDirty value and Add/Remove dirty icon to given cell
-   * must checked before to be true from `isDirtyCellNotUndefined(row, cell)`
-   * must checked before not undefined `cellNode`
+   * Function to add a dirty entry to the array
+   * @param {number} row  The row index
+   * @param {number} cell The cell index
+   * @param {object} data The cell data to add
+   */
+  addToDirtyArray(row, cell, data) {
+    if (typeof this.dirtyArray === 'undefined') {
+      this.dirtyArray = [];
+    }
+
+    if (typeof this.dirtyArray[row] === 'undefined') {
+      this.dirtyArray[row] = [];
+      this.dirtyArray[row][cell] = data;
+    } else if (typeof this.dirtyArray[row][cell] === 'undefined') {
+      this.dirtyArray[row][cell] = data;
+    }
+  },
+
+  /**
+   * Set a cell to dirty and add the dirty icon internally.
    * @private
    * @param {number} row The row index
    * @param {number} cell The cell index
-   * @param {object} cellNode jQuery cell node
+   * @param {object} dirtyOptions The cell dirty options
    * @returns {void}
    */
-  setIsDirtyAndIcon(row, cell, cellNode) {
+  setDirtyCell(row, cell, dirtyOptions) {
+    const cellNode = this.cellNode(row, cell);
+
+    if (dirtyOptions) {
+      this.addToDirtyArray(row, cell, dirtyOptions);
+    }
+
     const d = this.dirtyArray[row][cell];
     if ((d.originalVal === d.value) ||
       (d.originalVal === d.coercedVal) ||
       (d.originalVal === d.escapedCoercedVal) ||
       (d.originalVal === d.cellNodeText)) {
       this.dirtyArray[row][cell].isDirty = false;
-      cellNode[0].classList.remove('is-dirty-cell');
+      this.setDirtyIndicator(row, cell, false);
     } else {
       this.dirtyArray[row][cell].isDirty = true;
       cellNode[0].classList.add('is-dirty-cell');
+      this.setDirtyIndicator(row, cell, true);
+    }
+  },
+
+  /**
+   *  Set a cell to dirty and add the dirty icon visually.
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @param {boolean} toggle True to set it and false to remove it
+   */
+  setDirtyIndicator(row, cell, toggle) {
+    const cellNode = this.cellNode(row, cell);
+
+    if (row < 0 || cell < 0) {
+      return;
+    }
+
+    if (toggle) {
+      cellNode[0].classList.add('is-dirty-cell');
+    } else {
+      cellNode[0].classList.remove('is-dirty-cell');
     }
   },
 
@@ -8850,8 +8977,8 @@ Datagrid.prototype = {
    * @param {number} cell The cell index
    * @returns {boolean} true if found
    */
-  isDirtyCellNotUndefined(row, cell) {
-    return (this.settings.showDirty &&
+  isDirtyCellUndefined(row, cell) {
+    return !(this.settings.showDirty &&
       typeof row === 'number' &&
       typeof cell === 'number' &&
       row > -1 && cell > -1 &&
@@ -10159,6 +10286,10 @@ Datagrid.prototype = {
   destroy() {
     // Remove grid tooltip
     this.removeTooltip();
+
+    // Unbind context menu events
+    this.element.add(this.element.find('*'))
+      .off('selected.gridpopupth close.gridpopupth selected.gridpopuptr close.gridpopuptr selected.gridpopupbtn close.gridpopupbtn');
 
     // UnBind the pager
     if (this.pagerAPI) {

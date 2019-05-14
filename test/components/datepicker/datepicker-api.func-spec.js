@@ -11,7 +11,7 @@ let svgEl;
 let datepickerAPI;
 let datepickerTimeAPI;
 
-describe('DatePicker API', () => {
+describe('DatePicker API', () => { //eslint-disable-line
   beforeEach(() => {
     datepickerEl = null;
     svgEl = null;

@@ -16,15 +16,15 @@ Soho.Locale.addCulture('bg-BG', {
       separator: '.', // Infered
       timeSeparator: ':',
       short: 'd.MM.yyyy', // use four digit year
-      medium: 'd.MM.y г.',
-      long: 'd MMMM y г.',
-      full: 'EEEEE, d MMMM y г.',
-      month: 'dd MMMM',
+      medium: 'd.MM.yyyy г.',
+      long: 'd MMMM yyyy г.',
+      full: 'EEEEE, d MMMM yyyy г.',
+      month: 'd MMMM',
       year: 'MMMM yyyy г.',
-      timestamp: 'h:mm:ss a',
-      datetime: 'd.MM.yyyy h:mm a',
-      timezone: 'd.MM.yyyy h:mm a zz',
-      timezoneLong: 'd.MM.yyyy h:mm a zzzz'
+      timestamp: 'H:mm:ss',
+      datetime: 'd.MM.yyyy H:mm',
+      timezone: 'd.MM.yyyy H:mm zz',
+      timezoneLong: 'd.MM.yyyy H:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {

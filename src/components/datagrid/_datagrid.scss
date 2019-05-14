@@ -557,6 +557,10 @@ $datagrid-short-row-height: 25px;
       min-height: $datagrid-short-row-height + 6;
     }
 
+    th .datagrid-checkbox {
+      top: -12px;
+    }
+
     //Set Container Heights for scrolling
     .datagrid-body {
       height: calc(100% - 30px);
@@ -2321,7 +2325,7 @@ $datagrid-short-row-height: 25px;
 
     //Checkboxes
     .datagrid-checkbox {
-      top: -15px;
+      top: -11px;
 
       &::before {
         border: 1px solid $datagrid-header-checkbox-border-color;
@@ -3100,10 +3104,6 @@ td .btn-actions {
   }
 
   .short-rowheight {
-    th .datagrid-checkbox {
-      top: -2px;
-    }
-
     .datagrid tbody tr.arrange-dragging td {
       height: $datagrid-short-header-height;
     }

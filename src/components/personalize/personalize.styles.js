@@ -1,3 +1,5 @@
+import { colorUtils } from '../../utils/color';
+
 function personalizeStyles(colors) {
   return `
 .tab-container.module-tabs.is-personalizable {
@@ -73,12 +75,14 @@ function personalizeStyles(colors) {
   color: ${colors.text} !important;
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab {
+.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
+.is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
   color: ${colors.text} !important;
   opacity: .8;
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled) {
+.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
+.is-personalizable.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)  {
   color: ${colors.text} !important;
   opacity: 1;
 }
@@ -174,11 +178,11 @@ function personalizeStyles(colors) {
 }
 
 .is-personalizable .tab-container.header-tabs::before {
-  background-image: linear-gradient(to right, ${colors.header} , rgba(37, 120, 169, 0));
+  background-image: linear-gradient(to right, ${colors.header} , ${colorUtils.hexToRgba(colors.header, 0)});
 }
 
 .is-personalizable .tab-container.header-tabs::after {
-  background-image: linear-gradient(to right, rgba(37, 120, 169, 0), ${colors.header});
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.header, 0)}, ${colors.header});
 }
 
 .hero-widget.is-personalizable {
@@ -332,12 +336,14 @@ function personalizeStyles(colors) {
   color: ${colors.text};
 }
 
-.is-personalizable .personalize-actionable {
+.is-personalizable .personalize-actionable,
+.is-personalizable .personalize-actionable svg {
   color: ${colors.text};
   opacity: .8;
 }
 
-.is-personalizable .personalize-actionable:hover:not([disabled]) {
+.is-personalizable .personalize-actionable:hover:not([disabled]),
+.is-personalizable .personalize-actionable:hover:not([disabled]) svg {
   color: ${colors.text};
   opacity: 1;
 }
@@ -364,6 +370,23 @@ function personalizeStyles(colors) {
 
 .is-personalizable .personalize-horizontal-top-border {
   border-top: 1px solid: ${colors.horizontalBorder};
+}
+
+.is-personalizable .personalize-chart-targeted {
+  background-color: rgba(255, 255, 255, .9);
+}
+
+.is-personalizable .personalize-chart-targeted .bar {
+  height: 23px !important;
+}
+
+.is-personalizable .personalize-chart-targeted .chart-percent-text {
+  color: ${colors.text};
+}
+
+.is-personalizable .personalize-chart-targeted .completed {
+  margin-left: 1px;
+  margin-top: -22px;
 }
 
 .is-personalizable .personalize-actionable-disabled,

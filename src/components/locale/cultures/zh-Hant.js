@@ -16,15 +16,15 @@ Soho.Locale.addCulture('zh-Hant', {
       separator: '/', // Infered
       timeSeparator: ':',
       short: 'yyyy/M/d', // use four digit year
-      medium: 'yyyy/M/d',
+      medium: 'y年M月d日',
       long: 'yyyy年M月d日',
-      full: 'yyyy年M月d日EEEE',
+      full: 'yyyy年M月d日 EEEE',
       month: 'M月d日',
-      year: 'yyyy年M月',
-      timestamp: 'hh:mm:ss a',
-      datetime: 'M/d/yyyy hh:mm',
-      timezone: 'M/d/yyyy hh:mm zz',
-      timezoneLong: 'M/d/yyyy hh:mm zzzz'
+      year: 'yyyy年M',
+      timestamp: 'ah:mm:ss a',
+      datetime: 'M/d/yyyy ah:mm',
+      timezone: 'M/d/yyyy ah:mm zz',
+      timezoneLong: 'M/d/yyyy ah:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
@@ -38,7 +38,7 @@ Soho.Locale.addCulture('zh-Hant', {
       abbreviated: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'hh:mm a',
+    timeFormat: 'ah:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['上午', '下午']
   }],

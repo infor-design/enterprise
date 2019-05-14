@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="twelve columns">
+    <button type="button" class="btn-secondary" id="destroy">Destroy</button>
+    <button type="button" class="btn-secondary" id="invoke">Invoke</button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<ul id="grid-actions-menu" class="popupmenu">
+  <li><a href="#">Action One</a></li>
+  <li><a href="#">Action Two</a>
+    <ul class="popupmenu">
+      <li><a href="#">Action Three</a></li>
+      <li><a href="#">Action Four</a></li>
+    </ul>
+  </li>
+</ul>
+
+<ul id="grid-header-menu" class="popupmenu">
+  <li><a href="#">Sort Column</a></li>
+  <li><a href="#">Hide Column</a></li>
+</ul>
+
+<script>
+    $('body').on('initialized', function () {
+      var elem = $('#datagrid');
+
+      // Some Sample Data
+      var data = [
+        { name: 'Adam', time: '5' },
+        { name: 'Bob', time: '3' }
+      ];
+
+      // Columns for the Grid.
+      var columns = [
+        { id: 'name', name: 'Name', field: 'name' },
+        { id: 'time', name: 'Time', field: 'time' }
+      ];
+
+      // Grid Settings
+      var settings = {
+        columns: columns,
+        dataset: data,
+        menuId: 'grid-actions-menu',
+        headerMenuId: 'grid-header-menu',
+        menuSelected: function (e, item) {
+          console.log('selected:', item.text());
+        },
+        headerMenuSelected: function (e, item) {
+          console.log('selected:', item.text());
+        }
+      };
+
+      // Invoke the Grid
+      function invokeGrid() {
+        $('#datagrid').datagrid(settings);
+      }
+
+      // Initialize Grid
+      invokeGrid();
+
+      // Destroy
+      $('#destroy').on('click', function () {
+        elem.destroy();
+      });
+
+      // Invoke
+      $('#invoke').on('click', function () {
+        if (!elem.data('datagrid')) {
+          invokeGrid();
+        }
+      });
+
+    });
+
+</script>
