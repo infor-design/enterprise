@@ -94,19 +94,18 @@ describe('Applicationmenu open on large tests', () => {
 describe('Applicationmenu container tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/test-container');
+    await browser.driver.sleep(config.sleep);
   });
 
   it('Should show the app menu', async () => {
     const button = await element(by.css('.application-menu-trigger'));
     await button.click();
-    await browser.driver.sleep(config.sleepLonger);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
     expect(await element.all(by.css('.accordion-header')).count()).toEqual(17);
     expect(await element.all(by.css('.accordion-header')).first().isDisplayed()).toBeTruthy();
-  });
 
-  it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
 });
@@ -174,6 +173,28 @@ describe('Applicationmenu role switcher tests', () => {
     await btnEl.click();
 
     expect(await element(by.css('.application-menu-switcher-panel')).isDisplayed()).toBeTruthy();
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+});
+
+describe('Applicationmenu custom search tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/test-filterable-custom');
+  });
+
+  it('Should show the search even though filterable is false', async () => {
+    expect(await element(by.css('#application-menu-searchfield')).isPresent()).toBeTruthy();
+  });
+
+  it('Should have a search but not filter the menu when filterable is false', async () => {
+    const button = await element(by.css('#application-menu-searchfield'));
+    await button.sendKeys('Role');
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.accordion-header.filtered')).count()).toEqual(0);
   });
 
   it('Should not have errors', async () => {

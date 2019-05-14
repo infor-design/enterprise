@@ -5633,11 +5633,24 @@ Datagrid.prototype = {
 
       // Handle Context Menu on Some
       if (col.menuId) {
+        self.closePrevPopupmenu();
         const btn = $(this).find('button');
-        btn.popupmenu({ attachToBody: true, autoFocus: false, mouseFocus: true, menuId: col.menuId, trigger: 'immediate', offset: { y: 5 } });
+        btn.popupmenu({
+          attachToBody: true,
+          autoFocus: false,
+          mouseFocus: true,
+          menuId: col.menuId,
+          trigger: 'immediate',
+          offset: { y: 5 }
+        }).off('close.gridpopupbtn').on('close.gridpopupbtn', function () {
+          const el = $(this);
+          if (el.data('popupmenu') && !el.data('tooltip')) {
+            el.data('popupmenu').destroy();
+          }
+        });
 
         if (col.selected) {
-          btn.on('selected.datagrid', col.selected);
+          btn.off('selected.gridpopupbtn').on('selected.gridpopupbtn', col.selected);
         }
       }
 
@@ -5695,6 +5708,7 @@ Datagrid.prototype = {
       if (!self.isSubscribedTo(e, 'contextmenu')) {
         return;
       }
+      self.closePrevPopupmenu();
 
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
       e.preventDefault();
@@ -5707,13 +5721,14 @@ Datagrid.prototype = {
           attachToBody: true,
           trigger: 'immediate'
         })
-          .off('selected').on('selected', (selectedEvent, args) => {
+          .off('selected.gridpopuptr')
+          .on('selected.gridpopuptr', (selectedEvent, args) => {
             if (self.settings.menuSelected) {
               self.settings.menuSelected(selectedEvent, args);
             }
           })
-          .off('close')
-          .on('close', function () {
+          .off('close.gridpopuptr')
+          .on('close.gridpopuptr', function () {
             const elem = $(this);
             if (elem.data('popupmenu')) {
               elem.data('popupmenu').destroy();
@@ -5766,6 +5781,7 @@ Datagrid.prototype = {
       }).off('contextmenu.datagrid').on('contextmenu.datagrid', 'th', (e) => {
         // Add Header Context Menu Support
         e.preventDefault();
+        self.closePrevPopupmenu();
 
         if (self.settings.headerMenuId) {
           $(e.currentTarget)
@@ -5776,9 +5792,16 @@ Datagrid.prototype = {
               beforeOpen: self.settings.headerMenuBeforeOpen,
               trigger: 'immediate'
             })
-            .off('selected.gridpopup')
-            .on('selected.gridpopup', (selectedEvent, args) => {
+            .off('selected.gridpopupth')
+            .on('selected.gridpopupth', (selectedEvent, args) => {
               self.settings.headerMenuSelected(selectedEvent, args);
+            })
+            .off('close.gridpopupth')
+            .on('close.gridpopupth', function () {
+              const elem = $(this);
+              if (elem.data('popupmenu')) {
+                elem.data('popupmenu').destroy();
+              }
             });
         }
 
@@ -5838,6 +5861,21 @@ Datagrid.prototype = {
 
       if (self.editor && self.editor.input && !this.editor.stayInEditMode) {
         self.commitCellEdit(self.editor.input);
+      }
+    });
+  },
+
+  /**
+  * Close any previous opened popupmenus.
+  * @private
+  * @returns {void}
+  */
+  closePrevPopupmenu() {
+    const nodes = [].slice.call(this.element[0].querySelectorAll('.is-open:not(.popupmenu)'));
+    nodes.forEach((node) => {
+      const elem = $(node);
+      if (elem.data('popupmenu')) {
+        elem.trigger('close');
       }
     });
   },
@@ -10159,6 +10197,10 @@ Datagrid.prototype = {
   destroy() {
     // Remove grid tooltip
     this.removeTooltip();
+
+    // Unbind context menu events
+    this.element.add(this.element.find('*'))
+      .off('selected.gridpopupth close.gridpopupth selected.gridpopuptr close.gridpopuptr selected.gridpopupbtn close.gridpopupbtn');
 
     // UnBind the pager
     if (this.pagerAPI) {

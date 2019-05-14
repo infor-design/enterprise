@@ -2,6 +2,7 @@ import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 import { xssUtils } from '../../utils/xss';
+import { colorUtils } from '../../utils/color';
 
 // Settings and Options
 const COMPONENT_NAME = 'monthview';
@@ -764,7 +765,6 @@ MonthView.prototype = {
     }
 
     const hex = this.getLegendColor(year, month, date);
-    const self = this;
 
     elem[0].style.backgroundColor = '';
     elem.off('mouseenter.legend mouseleave.legend');
@@ -772,10 +772,10 @@ MonthView.prototype = {
     if (hex) {
       // set color on elem at .3 of provided color as per design
       elem.addClass('is-colored');
-      elem[0].style.backgroundColor = this.hexToRgba(hex, 0.3);
+      elem[0].style.backgroundColor = colorUtils.hexToRgba(hex, 0.3);
 
-      const normalColor = self.hexToRgba(hex, 0.3);
-      const hoverColor = self.hexToRgba(hex, 0.7);
+      const normalColor = colorUtils.hexToRgba(hex, 0.3);
+      const hoverColor = colorUtils.hexToRgba(hex, 0.7);
 
       // handle hover states
       elem.on('mouseenter.legend', function () {
@@ -1283,37 +1283,13 @@ MonthView.prototype = {
       const series = s.legend[i];
       const item = '' +
         `<div class="monthview-legend-item">
-          <span class="monthview-legend-swatch" style="background-color: ${this.hexToRgba(series.color, 0.3)}"></span>
+          <span class="monthview-legend-swatch" style="background-color: ${colorUtils.hexToRgba(series.color, 0.3)}"></span>
           <span class="monthview-legend-text">${series.name}</span>
         </div>`;
 
       this.legend.append(item);
     }
     this.table.after(this.legend);
-  },
-
-  /**
-   * Convert the provided hex to an RGBA for states
-   * This may be later moved into a colors file along with getLuminousColorShade
-   * @private
-   * @param {string} hex to set.
-   * @param {string} opacity to check.
-   * @returns {string} converted rgba
-   */
-  hexToRgba(hex, opacity) {
-    let c;
-    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-      c = hex.substring(1).split('');
-
-      if (c.length === 3) {
-        c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-      }
-
-      c = `0x${c.join('')}`;
-      // eslint-disable-next-line
-      return `rgba(${[(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',')},${opacity.toString()})`;
-    }
-    return '';
   },
 
   /**

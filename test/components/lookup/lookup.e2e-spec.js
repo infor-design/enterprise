@@ -230,7 +230,7 @@ describe('Lookup (custom cancel button)', () => {
 
   it('can have custom buttons', async () => {
     await element.all(by.className('trigger')).first().click();
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.className('modal-content'))), config.waitsFor);
 
     expect(await element(by.className('btn-modal-primary')).getText()).toEqual('Apply It Now');
   });

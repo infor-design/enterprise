@@ -139,10 +139,6 @@ ApplicationMenu.prototype = {
           return self.filterResultsCallback(results, done);
         }
       });
-    } else if (this.searchfield.length) {
-      this.searchfield.off();
-      this.searchfield.parent('.searchfield-wrapper').remove();
-      delete this.searchfield;
     }
 
     // Sync with application menus that have an 'is-open' CSS class.
