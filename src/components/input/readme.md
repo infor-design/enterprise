@@ -20,6 +20,8 @@ demo:
     slug: example-clearable
   - name: Input with Right Click Context Menu
     slug: example-contextmenu
+  - name: Input with Accessible Required Labels
+    slug: example-required-fields
 ---
 
 The Text Input Field supports both unstructured and structured entries. Certain types of values (such as phone numbers, credit card numbers, part codes, even decimal values, etc.) may have more complex formatting rules than simple text and decimal entries. You can use smart (forgiving) and structured formats within a text input field to support more of these types of values.

@@ -295,7 +295,6 @@
   // Fixed header and foot areas
   .application-menu-content {
     flex: 1 1 auto;
-    overflow-y: auto;
   }
 
   .application-menu-header,
@@ -408,6 +407,23 @@
 
   .application-menu-switcher-trigger {
     float: right;
+    height: auto;
+    margin-left: 0 !important;
+    max-width: 78%;
+    min-height: 34px;
+    white-space: normal;
+    z-index: 1;
+
+    > * {
+      vertical-align: top;
+    }
+
+    span {
+      display: inline-block;
+      max-width: 85%;
+      padding-top: 1px;
+      text-align: right;
+    }
   }
 }
 
@@ -422,6 +438,37 @@
 // https://stackoverflow.com/questions/3705937/document-click-not-working-correctly-on-iphone-jquery
 .ios-click-target {
   cursor: pointer;
+}
+
+// Firefox
+.is-firefox {
+  &.is-mac {
+    .application-menu {
+      .application-menu-switcher-trigger {
+        padding-top: 8px;
+
+        span {
+          padding-top: 2px;
+        }
+
+        .icon {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+
+  .application-menu {
+    .application-menu-switcher-trigger {
+      span {
+        padding-top: 0;
+      }
+
+      .icon {
+        padding-top: 1px;
+      }
+    }
+  }
 }
 
 // Right-to-Left Styles

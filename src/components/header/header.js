@@ -2,6 +2,8 @@ import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { personalization } from '../personalize/personalize.bootstrap';
+import { theme } from '../theme/theme';
 
 // jQuery Components
 import '../button/button.jquery';
@@ -500,23 +502,36 @@ Header.prototype = {
    * @returns {void}
    */
   initPageChanger() {
-    this.element.find('.page-changer').on('selected.header', (e, link) => {
-      // Change Theme
-      if (link.attr('data-theme')) {
-        const theme = link.attr('data-theme');
-        $('body').trigger('changetheme', theme.replace('theme-', ''));
-        return;
-      }
+    const changer = this.element.find('.page-changer');
+    const colorArea = changer.next().find('li.personalization-colors');
 
-      // TODO: Change Lang
-      if (link.attr('data-lang')) {
-        Locale.set(link.attr('data-lang'));
+    if (colorArea.length > 0) {
+      const colors = theme.personalizationColors();
+      let colorsHtml = '<li class="heading" role="presentation">Personalization</li>';
+
+      Object.keys(colors).forEach((color) => {
+        colorsHtml += `<li class="is-selectable${colors[color].name === 'Default' ? ' is-checked is-default' : ''}"><a href="#" data-rgbcolor="${colors[color].value}">${colors[color].name}</a></li>`;
+        return color;
+      });
+      colorArea.replaceWith(colorsHtml);
+    }
+
+    changer.on('selected.header', (e, link) => {
+      // Change Theme
+      const themeAttr = link.attr('data-theme');
+      if (themeAttr) {
+        personalization.setTheme(themeAttr.replace('theme-', ''));
         return;
       }
 
       // Change Color
+      const isDefault = link.parent().hasClass('is-default');
+      if (isDefault) {
+        personalization.setColorsToDefault();
+        return;
+      }
       const color = link.attr('data-rgbcolor');
-      $('body').trigger('changecolors', [color]);
+      personalization.setColors(color);
     });
   },
 

@@ -13,18 +13,18 @@ Soho.Locale.addCulture('no-NO', {
     name: 'gregorian',
     // ca-gregorian/main/dates/calendars/gregorian/dateFormats/
     dateFormat: {
-      separator: '.', // Infered
+      separator: ':', // Infered
       timeSeparator: '.',
-      short: 'dd.MM.yy', // use four digit year
-      medium: 'd. MMM y',
-      long: 'd. MMMM y',
-      full: 'EEEE d. MMMM y',
+      short: 'dd.MM.yyyy', // use four digit year
+      medium: 'd. MMM yyyy',
+      long: 'd. MMMM yyyy',
+      full: 'EEEE d. MMMM yyyy',
       month: 'd. MMMM',
       year: 'MMMM yyyy',
-      timestamp: 'HH:mm:ss',
-      datetime: 'dd.MM.yy HH.mm',
-      timezone: 'dd.MM.yy HH.mm zz',
-      timezoneLong: 'dd.MM.yy HH.mm zzzz'
+      timestamp: 'HH.mm.ss',
+      datetime: 'dd.MM.yyyy HH:mm',
+      timezone: 'dd.MM.yyyy HH:mm zz',
+      timezoneLong: 'dd.MM.yyyy HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
     days: {
@@ -38,7 +38,7 @@ Soho.Locale.addCulture('no-NO', {
       abbreviated: ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'HH.mm',
+    timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['AM', 'PM']
   }],

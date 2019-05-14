@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="six columns">
+    <h2 class="fieldset-title">Accessibility-Friendly Required Fields</h2>
+    <p>The fields on this page automatically have accessible markup added to their labels to assist screen-reading tools. For more information, please see IDS Github Issues <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/421" target="_blank">#421</a> and <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/2118" target="_blank">#2118</a></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-half column">
+    <div class="field">
+      <label class="required accessible" for="first-name">First Name</label>
+      <input type="text" id="first-name" name="first-name" placeholder="ex: John" data-validate="required"/>
+    </div>
+
+    <div class="field">
+      <label class="required accessible" for="last-name">Last Name</label>
+      <input type="text" id="last-name" aria-required="true" name="last-name" placeholder="ex: Smith" data-validate="required"/>
+    </div>
+
+    <div class="field">
+      <label class="required accessible" for="email-address">Email Address</label>
+      <input type="text" id="email-address" aria-required="true" name="email-address" data-validate="required email" data-validation-events="{'required': 'blur change', 'email': 'blur change'}" placeholder="ex: company@address.com"/>
+    </div>
+  </div>
+</div>

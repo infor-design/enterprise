@@ -291,6 +291,12 @@ As mentioned, we can copy the last test run folder (actual) `test/.tmp/actual/<n
 cp <CONTAINER_ID>:/home/travis/enterprise/test/baseline/<name-of-test-file.png> /Users/<your_user_name>/<target_path>
 ```
 
+For example:
+
+```sh
+docker cp 9979cb17cbfc:/enterprise/test/.tmp/actual/searchfield-open-chrome-1200x800-dpr-1.png /Users/tmcconechy/dev/actual
+```
+
 Or copy them all to your local directory for inspection.
 
 ```sh

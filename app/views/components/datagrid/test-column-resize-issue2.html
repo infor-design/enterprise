@@ -1,0 +1,886 @@
+<div class="row">
+  <div class="full-width">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    $('#datagrid').datagrid({
+          "actionableMode": true,
+          "cellNavigation": true,
+          "rowNavigation": true,
+          "showHoverState": true,
+          "alternateRowShading": false,
+          "columns": [
+            {
+              "id": "selectionCheckbox",
+              "width": 43,
+              "sortable": false,
+              "resizable": false,
+              "align": "center"
+            },
+            {
+              "id": "DevelopmentActivity0",
+              "width": 166,
+              "field": "fields.DevelopmentActivity.value",
+              "sortable": false,
+              "fieldId": "DevelopmentActivity",
+              "displayField": {
+                "filterable": true,
+                "isSymbolicKey": true,
+                "size": 36,
+                "columnId": "DevelopmentActivity0",
+                "isKey": true,
+                "label": {
+                  "resourceValue": "Activity ID"
+                },
+                "type": "ALPHALOWER",
+                "fieldId": "DevelopmentActivity"
+              },
+              "name": "Activity ID",
+              "filterType": "text",
+              "align": "left",
+              "textOverflow": "ellipsis"
+            },
+            {
+              "id": "_op_DisplayName_spc_translation_cp_1",
+              "width": 159,
+              "field": "fields._op_DisplayName_spc_translation_cp_.value",
+              "sortable": true,
+              "fieldId": "_op_DisplayName_spc_translation_cp_",
+              "displayField": {
+                "filterable": true,
+                "sortUrl": "https://hcm-tamfs2at1-ax1.tam.awsdev.infor.com/hcm/LearningAndDevelopment/list/DevelopmentActivity.DevelopmentActivities2?pageop=sort&pagesize=5&sortOrderName=DevelopmentActivity.ByDescription&isAscending=true&csk.showusingxi=true&csk.ng=true&csk.developer=true&csk.lidkey=83bc92acf375ca1e5e2c7d2136e09c0d",
+                "sortOrderName": "DevelopmentActivity.ByDescription",
+                "size": 36,
+                "columnId": "_op_DisplayName_spc_translation_cp_1",
+                "label": {
+                  "resourceValue": "Activity"
+                },
+                "type": "ALPHALOWER",
+                "fieldId": "_op_DisplayName_spc_translation_cp_"
+              },
+              "name": "Activity",
+              "filterType": "text",
+              "align": "left",
+              "textOverflow": "ellipsis"
+            },
+            {
+              "id": "_op_Description_spc_translation_cp_2",
+              "width": 91,
+              "field": "fields._op_Description_spc_translation_cp_.value",
+              "sortable": false,
+              "fieldId": "_op_Description_spc_translation_cp_",
+              "displayField": {
+                "filterable": true,
+                "size": 60,
+                "columnId": "_op_Description_spc_translation_cp_2",
+                "label": {
+                  "resourceValue": "Description"
+                },
+                "type": "ALPHALOWER",
+                "fieldId": "_op_Description_spc_translation_cp_"
+              },
+              "name": "Description",
+              "filterType": "text",
+              "align": "left",
+              "textOverflow": "ellipsis"
+            },
+            {
+              "id": "_op_DevelopmentActivityType_prd_Description_spc_translation_cp_3",
+              "width": 92,
+              "field": "fields._op_DevelopmentActivityType_prd_Description_spc_translation_cp_.value",
+              "sortable": true,
+              "fieldId": "_op_DevelopmentActivityType_prd_Description_spc_translation_cp_",
+              "displayField": {
+                "filterable": true,
+                "sortUrl": "https://hcm-tamfs2at1-ax1.tam.awsdev.infor.com/hcm/LearningAndDevelopment/list/DevelopmentActivity.DevelopmentActivities2?pageop=sort&pagesize=5&sortOrderName=DevelopmentActivity.ByDevelopmentActivityType&isAscending=true&csk.showusingxi=true&csk.ng=true&csk.developer=true&csk.lidkey=83bc92acf375ca1e5e2c7d2136e09c0d",
+                "sortOrderName": "DevelopmentActivity.ByDevelopmentActivityType",
+                "size": 60,
+                "columnId": "_op_DevelopmentActivityType_prd_Description_spc_translation_cp_3",
+                "isNotMutable": true,
+                "label": {
+                  "resourceValue": "Type"
+                },
+                "type": "ALPHALOWER",
+                "fieldId": "_op_DevelopmentActivityType_prd_Description_spc_translation_cp_"
+              },
+              "name": "Type",
+              "filterType": "text",
+              "align": "left",
+              "textOverflow": "ellipsis"
+            },
+            {
+              "id": "UseSessionsForThisActivity4",
+              "width": 192,
+              "field": "fields.UseSessionsForThisActivity.value",
+              "sortable": false,
+              "fieldId": "UseSessionsForThisActivity",
+              "displayField": {
+                "filterable": true,
+                "size": 1,
+                "columnId": "UseSessionsForThisActivity4",
+                "columnVisibility": [
+                  {
+                    "negated": true,
+                    "type": "field",
+                    "fieldId": "HROrganization_col_LMSEnabled"
+                  }
+                ],
+                "label": {
+                  "resourceValue": "Use Sessions For This Activity"
+                },
+                "type": "BOOLEAN",
+                "fieldId": "UseSessionsForThisActivity"
+              },
+              "name": "Use Sessions For This Activity",
+              "filterType": "select",
+              "options": [
+                {
+                  "label": "Yes",
+                  "value": "Yes"
+                },
+                {
+                  "label": "No",
+                  "value": "No"
+                }
+              ],
+              "align": "right",
+              "hidden": false,
+              "textOverflow": "ellipsis"
+            },
+            {
+              "id": "LearningMgrPersonCatalogCost5",
+              "width": 125,
+              "field": "fields.LearningMgrPersonCatalogCost.value",
+              "sortable": false,
+              "fieldId": "LearningMgrPersonCatalogCost",
+              "displayField": {
+                "decSize": 3,
+                "size": 18,
+                "columnId": "LearningMgrPersonCatalogCost5",
+                "columnVisibility": [
+                  {
+                    "negated": true,
+                    "type": "field",
+                    "fieldId": "HROrganization_col_LMSEnabled"
+                  }
+                ],
+                "isNotMutable": true,
+                "label": {
+                  "resourceValue": "Catalog Cost"
+                },
+                "type": "BCD",
+                "fieldId": "LearningMgrPersonCatalogCost"
+              },
+              "name": "Catalog Cost",
+              "align": "right",
+              "hidden": false,
+              "textOverflow": "ellipsis"
+            },
+            {
+              "id": "_op_LearningMgrCatalogCostCurrency_spc_translation_cp_6",
+              "width": 160,
+              "field": "fields._op_LearningMgrCatalogCostCurrency_spc_translation_cp_.value",
+              "sortable": false,
+              "fieldId": "_op_LearningMgrCatalogCostCurrency_spc_translation_cp_",
+              "displayField": {
+                "size": 3,
+                "columnId": "_op_LearningMgrCatalogCostCurrency_spc_translation_cp_6",
+                "columnVisibility": [
+                  {
+                    "negated": true,
+                    "type": "field",
+                    "fieldId": "HROrganization_col_LMSEnabled"
+                  }
+                ],
+                "isNotMutable": true,
+                "label": {
+                  "resourceValue": "Currency"
+                },
+                "type": "ALPHAUPPER",
+                "fieldId": "_op_LearningMgrCatalogCostCurrency_spc_translation_cp_"
+              },
+              "name": "Currency",
+              "align": "left",
+              "hidden": false,
+              "textOverflow": "ellipsis"
+            },
+            {
+              "id": "Active7",
+              "width": 328,
+              "field": "fields.Active.value",
+              "sortable": false,
+              "fieldId": "Active",
+              "displayField": {
+                "filterable": true,
+                "size": 1,
+                "columnId": "Active7",
+                "label": {
+                  "resourceValue": "Active"
+                },
+                "type": "BOOLEAN",
+                "fieldId": "Active"
+              },
+              "name": "Active",
+              "filterType": "select",
+              "options": [
+                {
+                  "label": "Yes",
+                  "value": "Yes"
+                },
+                {
+                  "label": "No",
+                  "value": "No"
+                }
+              ],
+              "align": "right",
+              "textOverflow": "ellipsis"
+            }
+          ],
+          "frozenColumns": {
+            "left": [],
+            "right": []
+          },
+          "dataset": [
+            {
+              "resourceId": "DevelopmentActivity(7004,WORD)",
+              "busClassName": "DevelopmentActivity",
+              "navigations": [],
+              "actionMeta": {},
+              "name": "DevelopmentActivity",
+              "actionIndexes": [
+                8,
+                1,
+                0,
+                5
+              ],
+              "posToViewKey": {
+                "pk": "DevelopmentActivity[ByDescription](7004,Word,WORD)"
+              },
+              "id": 1,
+              "fields": {
+                "Description": {
+                  "size": 60,
+                  "mutable": true,
+                  "value": "Word"
+                },
+                "UseSessions": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": true
+                },
+                "DevelopmentActivity": {
+                  "symbolicKey": true,
+                  "size": 36,
+                  "mutable": false,
+                  "value": "WORD",
+                  "required": true
+                },
+                "LearningMgrPersonCatalogCost": {
+                  "size": 18,
+                  "precision": 2,
+                  "mutable": false,
+                  "value": "0.000"
+                },
+                "UseSessionsForThisActivity": {
+                  "size": 1,
+                  "mutable": true,
+                  "value": true
+                },
+                "NotUseSessionsForThisActivity": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": false
+                },
+                "HROrganization_col_LMSEnabled": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": false
+                },
+                "_op_DisplayName_spc_translation_cp_": {
+                  "size": 36,
+                  "mutable": true,
+                  "value": "WORD"
+                },
+                "_op_DevelopmentActivityType_prd_Description_spc_translation_cp_": {
+                  "size": 60,
+                  "mutable": false,
+                  "value": "Course"
+                },
+                "DevelopmentActivityType": {
+                  "size": 20,
+                  "mutable": true,
+                  "stateValues": [
+                    {
+                      "label": "Course",
+                      "value": "COURSE"
+                    }
+                  ],
+                  "value": "COURSE",
+                  "required": true
+                },
+                "Active": {
+                  "size": 1,
+                  "mutable": true,
+                  "value": true
+                },
+                "HROrganization": {
+                  "size": 4,
+                  "mutable": false,
+                  "stateValues": [
+                    {
+                      "label": "Multi National Org",
+                      "value": "7004"
+                    }
+                  ],
+                  "value": "7004",
+                  "required": true
+                },
+                "DevelopmentActivity_DeleteFlag": {
+                  "size": 36,
+                  "mutable": false,
+                  "value": ""
+                },
+                "_op_Description_spc_translation_cp_": {
+                  "size": 60,
+                  "mutable": true,
+                  "value": "Word"
+                },
+                "_op_LearningMgrCatalogCostCurrency_spc_translation_cp_": {
+                  "size": 3,
+                  "mutable": true,
+                  "value": ""
+                }
+              },
+              "representativeText": "WORD - Word",
+              "_rowactivated": true
+            },
+            {
+              "resourceId": "DevelopmentActivity(7004,VAE)",
+              "busClassName": "DevelopmentActivity",
+              "navigations": [],
+              "actionMeta": {},
+              "name": "DevelopmentActivity",
+              "actionIndexes": [
+                8,
+                1,
+                0,
+                5
+              ],
+              "posToViewKey": {
+                "pk": "DevelopmentActivity[ByDescription](7004,VAE,VAE)"
+              },
+              "id": 2,
+              "fields": {
+                "Description": {
+                  "size": 60,
+                  "mutable": true,
+                  "value": "VAE"
+                },
+                "UseSessions": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": true
+                },
+                "DevelopmentActivity": {
+                  "symbolicKey": true,
+                  "size": 36,
+                  "mutable": false,
+                  "value": "VAE",
+                  "required": true
+                },
+                "LearningMgrPersonCatalogCost": {
+                  "size": 18,
+                  "precision": 3,
+                  "mutable": false,
+                  "value": "0.000"
+                },
+                "UseSessionsForThisActivity": {
+                  "size": 1,
+                  "mutable": true,
+                  "value": true
+                },
+                "NotUseSessionsForThisActivity": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": false
+                },
+                "HROrganization_col_LMSEnabled": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": false
+                },
+                "_op_DisplayName_spc_translation_cp_": {
+                  "size": 36,
+                  "mutable": true,
+                  "value": "VAE"
+                },
+                "_op_DevelopmentActivityType_prd_Description_spc_translation_cp_": {
+                  "size": 60,
+                  "mutable": false,
+                  "value": "Course"
+                },
+                "DevelopmentActivityType": {
+                  "size": 20,
+                  "mutable": true,
+                  "stateValues": [
+                    {
+                      "label": "Course",
+                      "value": "COURSE"
+                    }
+                  ],
+                  "value": "COURSE",
+                  "required": true
+                },
+                "Active": {
+                  "size": 1,
+                  "mutable": true,
+                  "value": true
+                },
+                "HROrganization": {
+                  "size": 4,
+                  "mutable": false,
+                  "stateValues": [
+                    {
+                      "label": "Multi National Org",
+                      "value": "7004"
+                    }
+                  ],
+                  "value": "7004",
+                  "required": true
+                },
+                "DevelopmentActivity_DeleteFlag": {
+                  "size": 36,
+                  "mutable": false,
+                  "value": ""
+                },
+                "_op_Description_spc_translation_cp_": {
+                  "size": 60,
+                  "mutable": true,
+                  "value": "VAE"
+                },
+                "_op_LearningMgrCatalogCostCurrency_spc_translation_cp_": {
+                  "size": 3,
+                  "mutable": true,
+                  "value": ""
+                }
+              },
+              "representativeText": "VAE - VAE",
+              "_selected": true
+            },
+            {
+              "resourceId": "DevelopmentActivity(7004,SPANISH4)",
+              "busClassName": "DevelopmentActivity",
+              "navigations": [],
+              "actionMeta": {},
+              "name": "DevelopmentActivity",
+              "actionIndexes": [
+                8,
+                1,
+                0,
+                5
+              ],
+              "posToViewKey": {
+                "pk": "DevelopmentActivity[ByDescription](7004,Spanish4,SPANISH4)"
+              },
+              "id": 3,
+              "fields": {
+                "Description": {
+                  "size": 60,
+                  "mutable": true,
+                  "value": "Spanish4"
+                },
+                "UseSessions": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": true
+                },
+                "DevelopmentActivity": {
+                  "symbolicKey": true,
+                  "size": 36,
+                  "mutable": false,
+                  "value": "SPANISH4",
+                  "required": true
+                },
+                "LearningMgrPersonCatalogCost": {
+                  "size": 18,
+                  "precision": 2,
+                  "mutable": false,
+                  "value": "0.000"
+                },
+                "UseSessionsForThisActivity": {
+                  "size": 1,
+                  "mutable": true,
+                  "value": true
+                },
+                "NotUseSessionsForThisActivity": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": false
+                },
+                "HROrganization_col_LMSEnabled": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": false
+                },
+                "_op_DisplayName_spc_translation_cp_": {
+                  "size": 36,
+                  "mutable": true,
+                  "value": "SPANISH4"
+                },
+                "_op_DevelopmentActivityType_prd_Description_spc_translation_cp_": {
+                  "size": 60,
+                  "mutable": false,
+                  "value": "Course"
+                },
+                "DevelopmentActivityType": {
+                  "size": 20,
+                  "mutable": true,
+                  "stateValues": [
+                    {
+                      "label": "Course",
+                      "value": "COURSE"
+                    }
+                  ],
+                  "value": "COURSE",
+                  "required": true
+                },
+                "Active": {
+                  "size": 1,
+                  "mutable": true,
+                  "value": true
+                },
+                "HROrganization": {
+                  "size": 4,
+                  "mutable": false,
+                  "stateValues": [
+                    {
+                      "label": "Multi National Org",
+                      "value": "7004"
+                    }
+                  ],
+                  "value": "7004",
+                  "required": true
+                },
+                "DevelopmentActivity_DeleteFlag": {
+                  "size": 36,
+                  "mutable": false,
+                  "value": ""
+                },
+                "_op_Description_spc_translation_cp_": {
+                  "size": 60,
+                  "mutable": true,
+                  "value": "Spanish4"
+                },
+                "_op_LearningMgrCatalogCostCurrency_spc_translation_cp_": {
+                  "size": 3,
+                  "mutable": true,
+                  "value": ""
+                }
+              },
+              "representativeText": "SPANISH4 - Spanish4"
+            },
+            {
+              "resourceId": "DevelopmentActivity(7004,SPANISH3)",
+              "busClassName": "DevelopmentActivity",
+              "navigations": [],
+              "actionMeta": {},
+              "name": "DevelopmentActivity",
+              "actionIndexes": [
+                8,
+                1,
+                0,
+                5
+              ],
+              "posToViewKey": {
+                "pk": "DevelopmentActivity[ByDescription](7004,Spanish3,SPANISH3)"
+              },
+              "id": 4,
+              "fields": {
+                "Description": {
+                  "size": 60,
+                  "mutable": true,
+                  "value": "Spanish3"
+                },
+                "UseSessions": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": true
+                },
+                "DevelopmentActivity": {
+                  "symbolicKey": true,
+                  "size": 36,
+                  "mutable": false,
+                  "value": "SPANISH3",
+                  "required": true
+                },
+                "LearningMgrPersonCatalogCost": {
+                  "size": 18,
+                  "precision": 3,
+                  "mutable": false,
+                  "value": "0.000"
+                },
+                "UseSessionsForThisActivity": {
+                  "size": 1,
+                  "mutable": true,
+                  "value": true
+                },
+                "NotUseSessionsForThisActivity": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": false
+                },
+                "HROrganization_col_LMSEnabled": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": false
+                },
+                "_op_DisplayName_spc_translation_cp_": {
+                  "size": 36,
+                  "mutable": true,
+                  "value": "SPANISH3"
+                },
+                "_op_DevelopmentActivityType_prd_Description_spc_translation_cp_": {
+                  "size": 60,
+                  "mutable": false,
+                  "value": "Course"
+                },
+                "DevelopmentActivityType": {
+                  "size": 20,
+                  "mutable": true,
+                  "stateValues": [
+                    {
+                      "label": "Course",
+                      "value": "COURSE"
+                    }
+                  ],
+                  "value": "COURSE",
+                  "required": true
+                },
+                "Active": {
+                  "size": 1,
+                  "mutable": true,
+                  "value": true
+                },
+                "HROrganization": {
+                  "size": 4,
+                  "mutable": false,
+                  "stateValues": [
+                    {
+                      "label": "Multi National Org",
+                      "value": "7004"
+                    }
+                  ],
+                  "value": "7004",
+                  "required": true
+                },
+                "DevelopmentActivity_DeleteFlag": {
+                  "size": 36,
+                  "mutable": false,
+                  "value": ""
+                },
+                "_op_Description_spc_translation_cp_": {
+                  "size": 60,
+                  "mutable": true,
+                  "value": "Spanish3"
+                },
+                "_op_LearningMgrCatalogCostCurrency_spc_translation_cp_": {
+                  "size": 3,
+                  "mutable": true,
+                  "value": ""
+                }
+              },
+              "representativeText": "SPANISH3 - Spanish3"
+            },
+            {
+              "resourceId": "DevelopmentActivity(7004,SPANISH2)",
+              "busClassName": "DevelopmentActivity",
+              "navigations": [],
+              "actionMeta": {},
+              "name": "DevelopmentActivity",
+              "actionIndexes": [
+                8,
+                1,
+                0,
+                5
+              ],
+              "posToViewKey": {
+                "pk": "DevelopmentActivity[ByDescription](7004,Spanish2,SPANISH2)"
+              },
+              "id": 5,
+              "fields": {
+                "Description": {
+                  "size": 60,
+                  "mutable": true,
+                  "value": "Spanish2"
+                },
+                "UseSessions": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": true
+                },
+                "DevelopmentActivity": {
+                  "symbolicKey": true,
+                  "size": 36,
+                  "mutable": false,
+                  "value": "SPANISH2",
+                  "required": true
+                },
+                "LearningMgrPersonCatalogCost": {
+                  "size": 18,
+                  "precision": 3,
+                  "mutable": false,
+                  "value": "0.000"
+                },
+                "UseSessionsForThisActivity": {
+                  "size": 1,
+                  "mutable": true,
+                  "value": true
+                },
+                "NotUseSessionsForThisActivity": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": false
+                },
+                "HROrganization_col_LMSEnabled": {
+                  "size": -1,
+                  "mutable": false,
+                  "value": false
+                },
+                "_op_DisplayName_spc_translation_cp_": {
+                  "size": 36,
+                  "mutable": true,
+                  "value": "SPANISH2"
+                },
+                "_op_DevelopmentActivityType_prd_Description_spc_translation_cp_": {
+                  "size": 60,
+                  "mutable": false,
+                  "value": "Course"
+                },
+                "DevelopmentActivityType": {
+                  "size": 20,
+                  "mutable": true,
+                  "stateValues": [
+                    {
+                      "label": "Course",
+                      "value": "COURSE"
+                    }
+                  ],
+                  "value": "COURSE",
+                  "required": true
+                },
+                "Active": {
+                  "size": 1,
+                  "mutable": true,
+                  "value": true
+                },
+                "HROrganization": {
+                  "size": 4,
+                  "mutable": false,
+                  "stateValues": [
+                    {
+                      "label": "Multi National Org",
+                      "value": "7004"
+                    }
+                  ],
+                  "value": "7004",
+                  "required": true
+                },
+                "DevelopmentActivity_DeleteFlag": {
+                  "size": 36,
+                  "mutable": false,
+                  "value": ""
+                },
+                "_op_Description_spc_translation_cp_": {
+                  "size": 60,
+                  "mutable": true,
+                  "value": "Spanish2"
+                },
+                "_op_LearningMgrCatalogCostCurrency_spc_translation_cp_": {
+                  "size": 3,
+                  "mutable": true,
+                  "value": ""
+                }
+              },
+              "representativeText": "SPANISH2 - Spanish2"
+            }
+          ],
+          "columnReorder": false,
+          "saveColumns": false,
+          "saveUserSettings": {
+            "columns": false,
+            "rowHeight": false,
+            "sortOrder": false,
+            "pagesize": false,
+            "activePage": false,
+            "filter": false
+          },
+          "focusAfterSort": false,
+          "editable": true,
+          "isList": false,
+          "menuId": "DevelopmentActivities2_ContextMenu",
+          "headerMenuId": null,
+          "menuSelected": null,
+          "menuBeforeOpen": null,
+          "headerMenuSelected": null,
+          "headerMenuBeforeOpen": null,
+          "uniqueId": null,
+          "rowHeight": "short",
+          "selectable": "mixed",
+          "selectChildren": true,
+          "allowSelectAcrossPages": null,
+          "groupable": null,
+          "spacerColumn": false,
+          "showNewRowIndicator": true,
+          "stretchColumn": "last",
+          "twoLineHeader": false,
+          "clickToSelect": true,
+          "toolbar": null,
+          "initializeToolbar": true,
+          "paging": false,
+          "pagesize": 25,
+          "pagesizes": [
+            10,
+            25,
+            50,
+            75
+          ],
+          "showPageSizeSelector": true,
+          "indeterminate": false,
+          "source": null,
+          "hidePagerOnOnePage": false,
+          "filterable": true,
+          "filterWhenTyping": false,
+          "disableClientFilter": true,
+          "disableClientSort": true,
+          "resultsText": null,
+          "showFilterTotal": true,
+          "virtualized": false,
+          "virtualRowBuffer": 10,
+          "rowReorder": false,
+          "showDirty": false,
+          "showSelectAllCheckBox": true,
+          "allowOneExpandedRow": true,
+          "enableTooltips": true,
+          "disableRowDeactivation": true,
+          "sizeColumnsEqually": false,
+          "expandableRow": false,
+          "exportConvertNegative": false,
+          "columnGroups": null,
+          "treeGrid": false,
+          "onExpandRow": null,
+          "emptyMessage": {
+            "title": "No Data Available",
+            "icon": "icon-empty-no-data",
+            "color": "graphite"
+          },
+          "searchExpandableRow": true,
+          "allowChildExpandOnMatch": false,
+          "redrawOnResize": false,
+          toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true}
+      });
+ });
+</script>

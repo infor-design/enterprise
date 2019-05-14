@@ -18,10 +18,11 @@
     // Message.html View Specifics
     $('#show-application-error').on('click', function() {
       $('body').message({
-        title: '<span>Application Error</span>',
+        title: '<span>Lost connection</span>',
         status: 'error',
         returnFocus: $(this),
         message: 'This application has experienced a <b>system error</b> due to the lack of internet access.<br><em>Please</em> restart the application in order to proceed.',
+        audibleAlert: 'Error',
         buttons: [{
             text: 'Restart Now',
             click: function() {
@@ -78,6 +79,7 @@
         title: 'File Upload Complete',
         message: 'Your file "<em>photo.png</em>" was successfully uploaded to your personal folder and is now <strong>public for viewing</strong>.',
         returnFocus: $(this),
+        audibleLabel: 'Alert',
         buttons: [{
           text: 'Done',
           click: function() {

@@ -18,7 +18,7 @@ Soho.Locale.addCulture('en-NZ', {
       short: 'd/MM/yyyy', // use four digit year
       medium: 'd/MM/yyyy',
       long: 'd MMMM yyyy',
-      full: 'EEEE, d MMMM yyyy',
+      full: 'EEEE, d MMMM y',
       month: 'd MMMM',
       year: 'MMMM yyyy',
       timestamp: 'h:mm:ss a',

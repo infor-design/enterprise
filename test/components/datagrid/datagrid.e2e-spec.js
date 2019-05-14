@@ -1156,6 +1156,31 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
   });
 });
 
+describe('Datagrid on modal with no default size', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.id('add-context')).click();
+
+      const containerEl = await element(by.css('body.no-scroll'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid multiselect with no selection checkbox', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-multiselect-no-checkboxes');
@@ -1637,10 +1662,10 @@ describe('Datagrid timezone tests', () => {
     expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('03-04-2019');
     let text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(2)')).getText();
 
-    expect(['3/4/2019 00:00 GMT-5', '3/4/2019 00:00 GMT-4']).toContain(text);
+    expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
     text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(3)')).getText();
 
-    expect(['3/4/2019 00:00 Eastern-standaardtijd', '3/4/2019 00:00 Eastern-zomertijd']).toContain(text);
+    expect(['03-04-2019 00:00 Eastern-standaardtijd', '03-04-2019 00:00 Eastern-zomertijd']).toContain(text);
 
     text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(4)')).getText();
 

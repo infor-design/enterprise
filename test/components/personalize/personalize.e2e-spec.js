@@ -37,14 +37,11 @@ describe('Personalization tests', () => {
   });
 
   it('Should maintain chosen colors after reinitialization', async () => {
-    const pageChangerButtonEl = await element.all(by.css('.page-changer'));
-    const colorChoices = await element.all(by.css('.popupmenu li.is-selectable a[data-rgbcolor]'));
-    const arrayLength = await colorChoices.length;
-    const randomIndex = await Math.floor(Math.random() * arrayLength);
     const reinitButton = await element(by.id('reinitialize'));
 
-    await pageChangerButtonEl[0].click();
-    await colorChoices[randomIndex].click();
+    await element(by.css('.page-changer')).click();
+    await await element.all(by.css('.popupmenu li.is-selectable a[data-rgbcolor]')).get(4).click();
+    await browser.driver.sleep(config.sleep);
 
     const beforeInitSheet = await element(by.id('soho-personalization')).getText();
     await browser.driver
@@ -55,4 +52,25 @@ describe('Personalization tests', () => {
 
     expect(await element(by.id('soho-personalization')).getText()).toEqual(beforeInitSheet);
   });
+});
+
+describe('Personalization example-tabs tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/personalize/example-tabs.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkScreen('personalize-tabs')).toEqual(0);
+    });
+  }
 });

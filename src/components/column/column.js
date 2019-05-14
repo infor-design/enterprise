@@ -703,6 +703,57 @@ Column.prototype = {
           }
         };
 
+        // Replace matched pattern in given string
+        const replaceMatch = (str, callback, expr) => {
+          if (typeof expr === 'undefined' || expr === null) {
+            expr = /{{(\w+)}}/g;
+          } else if (typeof expr === 'string') {
+            expr = new RegExp(expr, 'g');
+          }
+          if (typeof str === 'string' && typeof callback === 'function' && expr instanceof RegExp) {
+            let max = 9999;
+            while (expr.test(str) && max > 0) {
+              str = str.replace(expr, (match, key) => callback(match, key));
+              max--;
+            }
+          }
+          return str;
+        };
+
+        // Replace key/value and set type as string
+        const replaceMatchAndSetType = () => {
+          if (typeof content === 'string') {
+            content = replaceMatch(content, (match, key) => format(d[key]));
+          } else if (typeof content === 'number') {
+            content = content.toString();
+          }
+        };
+
+        // Set custom tooltip callback method
+        const setCustomTooltip = (method) => {
+          content = '';
+          const args = { index: i, data: d };
+          const req = (res) => {
+            if (typeof res === 'string' || typeof res === 'number') {
+              content = res;
+              replaceMatchAndSetType();
+              tooltipDataCache[i] = content;
+            }
+          };
+          let runInterval = true;
+          tooltipInterval = setInterval(() => {
+            if (runInterval) {
+              runInterval = false;
+              method(req, args);
+            }
+
+            if (content !== '') {
+              clearInterval(tooltipInterval);
+              show();
+            }
+          }, 10);
+        };
+
         // Stacked
         if (self.settings.isStacked) {
           if (isSingle) {
@@ -779,30 +830,23 @@ Column.prototype = {
           }
         }
 
-        if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
-          content = '';
-          let runInterval = true;
-          tooltipInterval = setInterval(function () {
-            if (runInterval) {
-              runInterval = false;
-              tooltipData(function (data) {
-                content = data;
-                tooltipDataCache[i] = data;
-              });
-            }
-
-            if (content !== '') {
-              clearInterval(tooltipInterval);
-              show();
-            }
-          }, 10);
+        if (tooltipData && typeof tooltipData === 'function' && typeof d.tooltip === 'undefined' && !tooltipDataCache[i]) {
+          setCustomTooltip(tooltipData);
         } else {
           content = tooltipDataCache[i] || tooltipData || content || '';
-          if (d.tooltip) {
-            const val = d.tooltip.replace('{{value}}', format(d.value));
-            content = `<p>${val}</p>`;
+          if (!tooltipDataCache[i] && d.tooltip !== false &&
+            (typeof d.tooltip !== 'undefined' || d.tooltip !== null)) {
+            if (typeof d.tooltip === 'function') {
+              setCustomTooltip(d.tooltip);
+            } else {
+              content = d.tooltip;
+              replaceMatchAndSetType();
+              tooltipDataCache[i] = content;
+            }
           }
-          show(isTooltipBottom);
+          if (typeof content === 'string' && content !== '') {
+            show(isTooltipBottom);
+          }
         }
       })
 

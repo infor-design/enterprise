@@ -70,6 +70,10 @@
   margin-bottom: 20px;
   position: relative;
 
+  &.less-margin {
+    margin-bottom: 5px;
+  }
+
   textarea + .btn-actions {
     margin-left: 4px;
     position: absolute;
@@ -305,12 +309,24 @@ textarea {
 label,
 .label {
   &.required {
-    &:not(.inline) .required-asterisk {
-      @include required-indicator($is-content: false);
+    &:not(.inline) {
+      &:not(.accessible)::after {
+        @include required-indicator($is-content: true);
+      }
+
+      .required-asterisk {
+        @include required-indicator($is-content: false);
+      }
     }
 
-    .label-text .required-asterisk {
-      @include required-indicator($is-content: false);
+    .label-text {
+      &:not(.accessible)::after {
+        @include required-indicator($is-content: true);
+      }
+
+      .required-asterisk {
+        @include required-indicator($is-content: false);
+      }
     }
   }
 
