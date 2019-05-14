@@ -735,6 +735,11 @@ $datagrid-short-row-height: 25px;
           top: 13px;
         }
 
+        .row-btn {
+          height: 32px;
+          top: -2px;
+        }
+
         .datagrid-alert-icon:not(.icon-dirty) {
           top: 5px;
         }
