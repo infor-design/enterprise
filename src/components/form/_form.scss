@@ -49,6 +49,11 @@
 
 .form-responsive-mobile {
   @media (max-width: $breakpoint-big-phone + 1) {
+    input,
+    textarea {
+      width: 100%;
+    }
+
     .colorpicker-container {
       width: 100%;
     }
@@ -62,7 +67,14 @@
   @media (max-width: $breakpoint-slim + 1) {
     .colorpicker-input-md,
     .colorpicker-container .colorpicker.colorpicker-input-md {
-      width: auto;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: $breakpoint-phone + 1) {
+    .colorpicker-input-mm,
+    .colorpicker-container .colorpicker.colorpicker-input-mm {
+      width: 100%;
     }
   }
 }
