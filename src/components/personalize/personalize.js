@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { colorUtils } from '../../utils/color';
 import { xssUtils } from '../../utils/xss';
 import { theme } from '../theme/theme';
 import { personalizeStyles } from './personalize.styles';
@@ -80,22 +81,6 @@ Personalize.prototype = {
   },
 
   /**
-   * Validates a string containing a hexadecimal number
-   * @private
-   * @param {string} hex A hex color.
-   * @returns {string} a validated hexadecimal string.
-   */
-  validateHex(hex) {
-    hex = String(hex).replace(/[^0-9a-f]/gi, '');
-
-    if (hex.length < 6) {
-      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-    }
-
-    return `#${hex}`;
-  },
-
-  /**
    * Create new CSS rules in head and override any existing
    * @private
    * @param {object} cssRules The rules to append.
@@ -162,24 +147,24 @@ Personalize.prototype = {
 
     // If an event sends a blank string through instead of a hex,
     // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
-    colors.header = this.validateHex(colors.header || defaultColors.header);
-    colors.text = this.validateHex(colors.text || defaultColors.text);
-    colors.subheader = this.validateHex(colors.subheader ||
-      this.getLuminousColorShade(colors.header, 0.2));
-    colors.button = this.validateHex(colors.button ||
-      this.getLuminousColorShade(colors.text, -0.80));
-    colors.inactive = this.validateHex(colors.inactive ||
-      this.getLuminousColorShade(colors.header, -0.22));
-    colors.verticalBorder = this.validateHex(colors.verticalBorder ||
-      this.getLuminousColorShade(colors.header, 0.1));
-    colors.horizontalBorder = this.validateHex(colors.horizontalBorder ||
-      this.getLuminousColorShade(colors.header, -0.4));
-    colors.hover = this.validateHex(colors.hover ||
-      this.getLuminousColorShade(colors.header, -0.5));
-    colors.btnColorHeader = this.validateHex(colors.btnColorHeader ||
-      this.getLuminousColorShade(colors.subheader, -0.025));
-    colors.btnColorSubheader = this.validateHex(colors.btnColorSubheader ||
-      this.getLuminousColorShade(colors.header, -0.025));
+    colors.header = colorUtils.validateHex(colors.header || defaultColors.header);
+    colors.text = colorUtils.validateHex(colors.text || defaultColors.text);
+    colors.subheader = colorUtils.validateHex(colors.subheader ||
+      colorUtils.getLuminousColorShade(colors.header, 0.2));
+    colors.button = colorUtils.validateHex(colors.button ||
+      colorUtils.getLuminousColorShade(colors.text, -0.80));
+    colors.inactive = colorUtils.validateHex(colors.inactive ||
+      colorUtils.getLuminousColorShade(colors.header, -0.22));
+    colors.verticalBorder = colorUtils.validateHex(colors.verticalBorder ||
+      colorUtils.getLuminousColorShade(colors.header, 0.1));
+    colors.horizontalBorder = colorUtils.validateHex(colors.horizontalBorder ||
+      colorUtils.getLuminousColorShade(colors.header, -0.4));
+    colors.hover = colorUtils.validateHex(colors.hover ||
+      colorUtils.getLuminousColorShade(colors.header, -0.5));
+    colors.btnColorHeader = colorUtils.validateHex(colors.btnColorHeader ||
+      colorUtils.getLuminousColorShade(colors.subheader, -0.025));
+    colors.btnColorSubheader = colorUtils.validateHex(colors.btnColorSubheader ||
+      colorUtils.getLuminousColorShade(colors.header, -0.025));
 
     return personalizeStyles(colors);
   },
@@ -225,33 +210,6 @@ Personalize.prototype = {
     if (sheet) {
       sheet.parentNode.removeChild(sheet);
     }
-  },
-
-  /**
-  * Takes a color and performs a change in luminosity of that color programatically.
-  * @private
-  * @param {string} hex  The original Hexadecimal base color.
-  * @param {string} lum  A percentage used to set luminosity
-  * change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
-  * @returns {string} hexadecimal color.
-  */
-  getLuminousColorShade(hex, lum) {
-    // validate hex string
-    hex = this.validateHex(hex).substr(1);
-    lum = lum || 0;
-
-    // convert to decimal and change luminosity
-    let rgb = '#';
-    let c;
-    let i;
-
-    for (i = 0; i < 3; i++) {
-      c = parseInt(hex.substr(i * 2, 2), 16);
-      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-      rgb += (`00${c}`).substr(c.length);
-    }
-
-    return rgb;
   },
 
   /**
