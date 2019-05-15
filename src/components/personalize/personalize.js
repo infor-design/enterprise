@@ -28,6 +28,7 @@ const PERSONALIZE_DEFAULTS = {
  * @param {boolean} [settings.blockUI=true] Cover the UI and animate when changing theme.
 */
 function Personalize(element, settings) {
+
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, PERSONALIZE_DEFAULTS);
 
@@ -45,6 +46,11 @@ Personalize.prototype = {
    * @returns {this} component instance
    */
   init() {
+    // Only init this module once
+    if (Soho && Soho.personalization) {
+      return;
+    }
+
     // Set the default theme, or grab the theme from an external CSS stylesheet.
     const cssTheme = this.getThemeFromStylesheet();
 
