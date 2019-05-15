@@ -102,7 +102,7 @@ describe('Locale API', () => { //eslint-disable-line
 
     let html = window.document.getElementsByTagName('html')[0];
 
-    expect(html.getAttribute('lang')).toEqual('de');
+    expect(html.getAttribute('lang')).toEqual('de-DE');
 
     Locale.set('ar-SA');
 
@@ -110,7 +110,7 @@ describe('Locale API', () => { //eslint-disable-line
 
     html = window.document.getElementsByTagName('html')[0];
 
-    expect(html.getAttribute('lang')).toEqual('ar');
+    expect(html.getAttribute('lang')).toEqual('ar-SA');
     expect(html.getAttribute('dir')).toEqual('rtl');
     Locale.set('en-US');
   });
