@@ -3,6 +3,11 @@
 // - Summary Form
 // Overrides some things in:
 // - Input Fields
+// - Datepicker
+// - Timepicker
+// - File Upload
+// - File Upload (Advanced)
+// - Lookup
 
 .form-compact-container {
   .row {
@@ -120,6 +125,40 @@
         color: $input-color-disabled-font;
       }
     }
+  }
+
+  // =============================================
+  // Form-Compact Date/Time Picker Styles
+  // =============================================
+  .datepicker,
+  .timepicker {
+    + .icon {
+      margin-top: auto;
+    }
+  }
+
+  // =============================================
+  // Form-Compact Lookup Styles
+  // =============================================
+  .lookup-wrapper {
+    cursor: pointer;
+    display: block;
+    margin-bottom: auto;
+  }
+
+  .lookup {
+    + .trigger {
+      .icon {
+        top: 0;
+      }
+    }
+  }
+
+  // =============================================
+  // Form-Compact File Uploader Styles
+  // =============================================
+  .fileuploader {
+    max-height: 28px;
   }
 }
 
