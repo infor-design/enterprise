@@ -27,11 +27,11 @@ describe('Theme API', () => {
   });
 
   it('Should be able to list all colors', () => {
-    expect(theme.allColors.length).toEqual(4);
-    expect(theme.allColors[0].colors.palette.amber['10'].value).toEqual('#fbe9bf');
-    expect(theme.allColors[1].colors.palette.amber['10'].value).toEqual('#fbe9bf');
-    expect(theme.allColors[2].colors.palette.amber['10'].value).toEqual('#fbe9bf');
-    expect(theme.allColors[3].colors.palette.amber['10'].value).toEqual('#FDF0DD');
+    expect(theme.getAllThemeColors.length).toEqual(4);
+    expect(theme.getAllThemeColors[0].colors.palette.amber['10'].value).toEqual('#fbe9bf');
+    expect(theme.getAllThemeColors[1].colors.palette.amber['10'].value).toEqual('#fbe9bf');
+    expect(theme.getAllThemeColors[2].colors.palette.amber['10'].value).toEqual('#fbe9bf');
+    expect(theme.getAllThemeColors[3].colors.palette.amber['10'].value).toEqual('#FDF0DD');
   });
 
   it('Should be able to list themes', () => {

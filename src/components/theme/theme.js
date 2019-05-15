@@ -1,7 +1,9 @@
-import { color as lightColors } from './theme-soho-colors.json';
-import { color as darkColors } from './theme-soho-dark-colors.json';
-import { color as contrastColors } from './theme-soho-contrast-colors.json';
-import { color as upliftColors } from './theme-uplift-colors.json';
+import { color as sohoLightColors } from './theme-soho-colors.json';
+import { color as sohoDarkColors } from './theme-soho-dark-colors.json';
+import { color as sohoContrastColors } from './theme-soho-contrast-colors.json';
+import { color as upliftLightColors } from './theme-uplift-colors.json';
+import { color as upliftDarkColors } from './theme-uplift-dark-colors.json';
+import { color as upliftContrastColors } from './theme-uplift-contrast-colors.json';
 import { Locale } from '../../components/locale/locale';
 
 /**
@@ -12,54 +14,56 @@ import { Locale } from '../../components/locale/locale';
 const theme = {
 
   /**
-   * Return a list of all the available themes.
-   * @returns {object} The id and name of the theme.
+   * @property {object} [currentTheme]
+   * @property {string} [currentTheme.id]
+   * @property {string} [currentTheme.name]
    */
   currentTheme: { id: 'light', name: Locale.translate('Light') },
 
   /**
-   * Return a list of the colors across all themes.
-   * @returns {array} An array with an object for each theme.
+   * Get all of the colors for all themes
+   * @returns {object[]} An array of color objects
    */
-  allColors: [
-    { id: 'light', colors: lightColors },
-    { id: 'dark', colors: darkColors },
-    { id: 'high-contrast', colors: contrastColors },
-    { id: 'uplift', colors: upliftColors }
+  allColors: () => [
+    { id: 'soho-light', colors: sohoLightColors },
+    { id: 'soho-dark', colors: sohoDarkColors },
+    { id: 'soho-contrast', colors: sohoContrastColors },
+    { id: 'uplift-light', colors: upliftLightColors },
+    { id: 'uplift-dark', colors: upliftDarkColors },
+    { id: 'uplift-contrast', colors: upliftContrastColors }
   ],
 
   /**
-   * Return a list of all the available themes.
-   * @returns {array} The list of themes.
+   * Return a list of all the available themes
+   * @returns {object[]} The list of themes
    */
-  themes: function themes() {
-    return [
-      { id: 'light', name: Locale.translate('LightTheme') },
-      { id: 'dark', name: Locale.translate('DarkTheme') },
-      { id: 'high-contrast', name: Locale.translate('HighContrastTheme') },
-      { id: 'uplift', name: Locale.translate('UpliftTheme') }
-    ];
-  },
+  themes: () => [
+    { id: 'soho-light', name: Locale.translate('SohoLightTheme') },
+    { id: 'soho-dark', name: Locale.translate('SohoDarkTheme') },
+    { id: 'soho-contrast', name: Locale.translate('SohoHighContrastTheme') },
+    { id: 'uplift-light', name: Locale.translate('UpliftLightTheme') },
+    { id: 'uplift-dark', name: Locale.translate('UpliftLDarkTheme') },
+    { id: 'uplift-contrast', name: Locale.translate('UpliftContrastTheme') }
+  ],
 
   /**
-   * Return the colors used in the current theme.
+   * Get the colors used in the current theme
    * @param {string} themeId The id of the theme.
    * @returns {object} An object full of the colors 01-10
    */
-  themeColors: function themeColors() {
+  themeColors: () => {
     const result = this.allColors.filter(color => color.id === this.currentTheme.id);
     if (!result[0]) {
       return { palette: { }, colors: { }, brand: { } };
     }
-
     return result[0].colors;
   },
 
   /**
-   * Return the colors used in the current theme that are reccomended for personalization.
+   * Get the colors used in the current theme that are reccomended for personalization.
    * @returns {object} An object full of the colors with id, name abd hex value.
    */
-  personalizationColors: function themeColors() {
+  personalizationColors: () => {
     const palette = this.themeColors().palette;
     const brand = this.themeColors().brand;
     const personalize = {};
@@ -78,11 +82,11 @@ const theme = {
   },
 
   /**
-   * Set the current application theme.
+   * Set the current application theme
    * @param {string} themeId The id of the theme.
    * @returns {[type]} [description]
    */
-  setTheme: function setTheme(themeId) {
+  setTheme: (themeId) => {
     const result = this.themes().filter(themeObj => themeObj.id === themeId);
     if (result.length === 0) {
       return '';

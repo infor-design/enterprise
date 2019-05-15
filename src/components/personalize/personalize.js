@@ -242,20 +242,21 @@ Personalize.prototype = {
   * scheme (can be dark, light or high-contrast)
   */
   setTheme(incomingTheme) {
+    const $html = $('html');
     if (theme.currentTheme.id === incomingTheme) {
-      if (!$('html').hasClass(`${incomingTheme}-theme`)) {
-        $('html').addClass(`${incomingTheme}-theme`);
+      if (!$html.hasClass(incomingTheme)) {
+        $html.addClass(incomingTheme);
       }
       return;
     }
 
-    // Validate theme is supported
-    const result = theme.themes().filter(themeObj => themeObj.id === incomingTheme);
-    if (result.length === 0) {
-      return;
-    }
-
-    $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(`${incomingTheme}-theme`);
+    $html
+      .removeClass((idx, val) => {
+        const classes = val.split(' ');
+        const toRemove = classes.filter(c => c.includes('theme'));
+        return toRemove.join();
+      })
+      .addClass(incomingTheme);
 
     this.blockUi();
 

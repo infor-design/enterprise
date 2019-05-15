@@ -20,21 +20,19 @@ let IS_VERBOSE = false;
 const PATHS = {
   idsIdentity: `${ROOT_DIR}/node_modules/ids-identity`,
   iconComponent: `${ROOT_DIR}/src/components/icons`
-}
+};
 
 /**
  * Get the paths to themes' icon sets
- * @returns {array}
+ * @returns {obj[]} Theme path objects
  */
 function getIconSetPaths() {
   const themes = new IdsMetadata().getThemes();
-  const iconSets = themes.map(theme => {
-    return {
-      src: `${PATHS.idsIdentity}/dist/theme-${theme.name}/icons/standard/svg/*.svg`,
-      dest: `${PATHS.iconComponent}/theme-${theme.name}-svg.html`,
-      class: 'svg-icons'
-    }
-  });
+  const iconSets = themes.map(theme => ({
+    src: `${PATHS.idsIdentity}/dist/theme-${theme.name}/icons/standard/svg/*.svg`,
+    dest: `${PATHS.iconComponent}/theme-${theme.name}-svg.html`,
+    class: 'svg-icons'
+  }));
 
   // Manual addition for soho "empty" icons
   iconSets.push({
@@ -58,16 +56,13 @@ function getIconSetPaths() {
  * Remove any "built" directories/files
  * @async
  * @param {Object[]} iconSets - An array of objects for the svg icons
- * @returns {Promise} - A promise
  */
 async function cleanFiles(iconSets) {
   if (IS_VERBOSE) {
     logger('info', `Cleaning SVG icon html files...${NL}`);
   }
 
-  const filesToDel = iconSets.map(n => {
-    return n.dest;
-  });
+  const filesToDel = iconSets.map(n => n.dest);
 
   try {
     await del(filesToDel);
@@ -78,44 +73,42 @@ async function cleanFiles(iconSets) {
 
 /**
  * Convert a filename to an id string
- * @param {string} fileName
+ * @param {string} fileName The name of the file
+ * @returns {string} An ID string
  */
-const cleanStr = fileName => {
-  return fileName.toLowerCase().replace(' ', '');
-}
+const cleanStr = fileName => fileName.toLowerCase().replace(' ', '');
 
 /**
  * Customize the svg markup
- * @param {string} contents
- * @param {string} id
+ * @param {string} id The ID of the icon
+ * @param {string} contents The svg html for the icon
+ * @returns {string} The changed html
  */
 const convertSvgMarkup = (id, contents) => {
-  let changed = contents.replace(/\<svg/, `<symbol id="icon-${id}"`);
+  let changed = contents.replace(/<svg/, `<symbol id="icon-${id}"`);
   changed = changed.replace('</svg>', '</symbol>');
-  changed = changed.replace(/\sxmlns=\"(.*?)\"/, '');
+  changed = changed.replace(/\sxmlns="(.*?)"/, '');
   return changed;
-}
+};
 
 /**
  * Create an html file containing svgs as symbols
  * @param {array} files - Array of svg file paths
  * @param {Object} iconObj - The icon data object
- * @return {Promise} - Resolve array of icons
+ * @returns {Promise} - Resolve array of icons
  */
 const createHTMLfile = (files, iconObj) => {
-  let htmlIcons = [];
-  const promises = files.map(f => {
-    return new Promise((resolve, reject) => {
-      fs.readFile(f, (err, data) => {
-        if (err) {
-          reject(err);
-        }
-        const id = cleanStr(path.basename(f, '.svg'));
-        htmlIcons.push(convertSvgMarkup(id, data.toString()));
-        resolve();
-      });
-    })
-  });
+  const htmlIcons = [];
+  const promises = files.map(f => new Promise((resolve, reject) => {
+    fs.readFile(f, (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      const id = cleanStr(path.basename(f, '.svg'));
+      htmlIcons.push(convertSvgMarkup(id, data.toString()));
+      resolve();
+    });
+  }));
 
   return Promise.all(promises)
     .then(() => {
@@ -123,7 +116,7 @@ const createHTMLfile = (files, iconObj) => {
       fs.writeFileSync(iconObj.dest, html, 'utf-8');
       return htmlIcons;
     })
-    .catch(err => {
+    .catch((err) => {
       logger('error', err);
     });
 };
@@ -131,14 +124,14 @@ const createHTMLfile = (files, iconObj) => {
 /**
  * Create html files of icon sets
  * @param {Object[]} iconSets - An array of objects for the svg icons
- * @return {Promise}
+ * @returns {Promise} A promise
  */
 function createHtmlFiles(iconSets) {
   if (IS_VERBOSE) {
     logger('info', `Running build process create SVG html files...${NL}`);
   }
 
-  return Promise.all(iconSets.map(iconSet => {
+  return Promise.all(iconSets.map((iconSet) => {
     Object.assign(iconSet, {
       header: `<div class="${iconSet.class}"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-icons">`,
       footer: '</svg></div>'
@@ -147,18 +140,18 @@ function createHtmlFiles(iconSets) {
     const files = glob.sync(iconSet.src);
 
     return createHTMLfile(files, iconSet)
-      .then(data => {
+      .then((data) => {
         if (IS_VERBOSE) {
-          const path = iconSet.dest.replace(`${process.cwd()}/src/components`, '');
-          let desc = `${data.length} SVG icons compiled into "${path}"`
-          if (path.includes('/svg.html')) {
+          const thePath = iconSet.dest.replace(`${process.cwd()}/src/components`, '');
+          let desc = `${data.length} SVG icons compiled into "${thePath}"`;
+          if (thePath.includes('/svg.html')) {
             desc += ' [!! DEPRECATED !!]';
           }
 
           logger('success', desc);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         logger('error', err);
       });
   }));
@@ -167,7 +160,6 @@ function createHtmlFiles(iconSets) {
 /**
  * Build
  * @param {boolean} verbose - Log messages
- * @return {Promise}
  */
 function createSvgHtml(verbose) {
   IS_VERBOSE = verbose;
