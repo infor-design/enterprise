@@ -26,16 +26,28 @@ describe('Theme API', () => {
     theme.setTheme('theme-soho-light');
   });
 
-  it('Should be able to list all colors', () => {
-    expect(theme.getAllThemeColors.length).toEqual(4);
-    expect(theme.getAllThemeColors[0].colors.palette.amber['10'].value).toEqual('#fbe9bf');
-    expect(theme.getAllThemeColors[1].colors.palette.amber['10'].value).toEqual('#fbe9bf');
-    expect(theme.getAllThemeColors[2].colors.palette.amber['10'].value).toEqual('#fbe9bf');
-    expect(theme.getAllThemeColors[3].colors.palette.amber['10'].value).toEqual('#FDF0DD');
+  it('Should list Soho theme variant colors and Amber10 should be the same', () => {
+    const sohoAmber10 = '#fbe9bf';
+    expect(theme.allColors[0].colors.palette.amber['10'].value.toLowerCase()).toBe(sohoAmber10);
+    expect(theme.allColors[1].colors.palette.amber['10'].value.toLowerCase()).toBe(sohoAmber10);
+    expect(theme.allColors[2].colors.palette.amber['10'].value.toLowerCase()).toBe(sohoAmber10);
   });
 
+
+  it('Should list Uplift theme variant colors and Amber10 should be the same', () => {
+    const upliftAmber10 = '#fdf0dd'
+    expect(theme.allColors[3].colors.palette.amber['10'].value.toLowerCase()).toBe(upliftAmber10);
+    expect(theme.allColors[4].colors.palette.amber['10'].value.toLowerCase()).toBe(upliftAmber10);
+    expect(theme.allColors[5].colors.palette.amber['10'].value.toLowerCase()).toBe(upliftAmber10);
+  });
+
+  it('Should manage 6 total themes', () => {
+    expect(theme.allColors.length).toEqual(6);
+  });
+
+
   it('Should be able to list themes', () => {
-    expect(theme.themes().length).toEqual(4);
+    expect(theme.themes().length).toEqual(6);
     expect(theme.themes()[0].id).toEqual('theme-soho-light');
     expect(theme.themes()[1].id).toEqual('theme-soho-dark');
     expect(theme.themes()[2].id).toEqual('theme-soho-contrast');
