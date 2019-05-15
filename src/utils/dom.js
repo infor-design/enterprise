@@ -246,7 +246,7 @@ DOM.parents = function parents(el, selector, closest) {
 
   // Pushes to the element array.
   function checkEl(thisEl) {
-    if (thisEl.matches(selector)) {
+    if (thisEl !== document && thisEl.matches(selector)) {
       parentEls.push(thisEl);
     }
   }
