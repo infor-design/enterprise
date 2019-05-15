@@ -14,7 +14,7 @@ demo:
     slug: example-extra-css-class
 ---
 
-This component shares a common API with the [Tooltip]( ./tooltip) component. When a popover component is invoked, any methods and events used by the tooltip will also be available in the popover. For more details on this component's API, please see the [tooltip documentation]( ./tooltip).
+This component shares a common API with the [Tooltip](./tooltip) component. When a popover component is invoked, any methods and events used by the tooltip will also be available in the popover. For more details on this component's API, please see the [tooltip documentation](./tooltip).
 
 ## Code Example
 

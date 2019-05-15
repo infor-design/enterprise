@@ -284,5 +284,27 @@
     "ends": "2019-03-30T23:59:59.999",
     "type": "dto",
     "isAllDay": "true"
+  },
+  {
+    "id": "29",
+    "subject": "Out of Office",
+    "comments": "Out of office in afternoon",
+    "status": "Approved",
+    "icon": "icon-alert-solid",
+    "starts": "2019-05-14T12:00:00.000",
+    "ends": "2019-05-14T18:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "30",
+    "subject": "Out of Office",
+    "comments": "Out of office in afternoon",
+    "status": "Approved",
+    "icon": "icon-alert-solid",
+    "starts": "2019-05-27T12:00:00.000",
+    "ends": "2019-05-27T18:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
   }
 ]

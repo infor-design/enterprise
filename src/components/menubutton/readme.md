@@ -20,12 +20,12 @@ demo:
 
 ## Code Example
 
-The menu button component is comprised of the [popupmenu]( ./popupmenu) and [button]( ./popupmenu) components.
+The menu button component is comprised of the [popupmenu](./popupmenu) and [button](./popupmenu) components.
 
 Once the proper markup is in place calling `$(elem).button()` will correctly initialize a menu button.
 If the arrow is missing in the markup it will be added.
 
-The popupmenu markup follows as per the [popupmenu]( ./popupmenu):
+The popupmenu markup follows as per the [popupmenu](./popupmenu):
 
 ```html
 <button class="btn-menu">

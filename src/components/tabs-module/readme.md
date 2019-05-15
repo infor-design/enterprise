@@ -18,7 +18,7 @@ demo:
     slug: example-category-searchfield
 ---
 
-All tabs components use the same API.  For details on this component's API, please read the [tabs component API]( ./tabs).
+All tabs components use the same API.  For details on this component's API, please read the [tabs component API](./tabs).
 
 ## Testability
 
