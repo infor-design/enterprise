@@ -220,43 +220,13 @@
   }
 }
 
-@media (max-width: $breakpoint-big-phone + 1) {
+@include respond-to(phonedown) {
   .colorpicker-container {
-    width: 100%;
+    width: 100% !important;
   }
 
-  .colorpicker-input-lg,
-  .colorpicker-container .colorpicker.colorpicker-input-lg {
-    width: auto;
-  }
-}
-
-@media (max-width: $breakpoint-slim + 1) {
-  .colorpicker-input-md,
-  .colorpicker-container .colorpicker.colorpicker-input-md {
-    width: auto;
-  }
-}
-
-@media (max-width: $breakpoint-phone + 1) {
-  .colorpicker-input-lg,
-  .colorpicker-container .colorpicker.colorpicker-input-lg {
-    width: 100%;
-  }
-
-  .colorpicker-input-md,
-  .colorpicker-container .colorpicker.colorpicker-input-md {
-    width: 100%;
-  }
-
-  .colorpicker-input-mm,
-  .colorpicker-container .colorpicker.colorpicker-input-mm {
-    width: 100%;
-  }
-
-  .colorpicker-input-sm,
-  .colorpicker-container .colorpicker.colorpicker-input-sm {
-    width: 100%;
+  .colorpicker-container input {
+    width: calc(100% - 64px) !important;
   }
 }
 
