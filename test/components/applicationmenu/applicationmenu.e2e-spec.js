@@ -210,13 +210,4 @@ describe('Applicationmenu Many Items tests', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
-      const section = await element(by.css('body.no-scroll'));
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-many-items')).toEqual(0);
-    });
-  }
 });
