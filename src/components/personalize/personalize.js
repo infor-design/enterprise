@@ -23,8 +23,8 @@ const PERSONALIZE_DEFAULTS = {
  * @param {HTMLElement|jQuery[]} element The base element
  * @param {object} [settings] Incoming settings
  * @param {string} [settings.colors]  The list of colors
- * @param {string} [settings.theme='light'] The theme name (light, dark or high-contrast)
- * @param {string} [settings.font='Helvetica'] Use the newer source sans font
+ * @param {string} [settings.theme] The theme name (light, dark or high-contrast)
+ * @param {string} [settings.font] Use the newer source sans font
  * @param {boolean} [settings.blockUI=true] Cover the UI and animate when changing theme.
 */
 function Personalize(element, settings) {
@@ -46,21 +46,19 @@ Personalize.prototype = {
    * @returns {this} component instance
    */
   init() {
-    // Only init this module once
-    if (Soho && Soho.personalization) {
-      return;
+    // Do NOT keep repeating these items
+    // if the module already exists
+    if (Soho && !Soho.personalization) {
+      this.handleEvents();
     }
 
-    // Set the default theme, or grab the theme from an external CSS stylesheet.
-    const cssTheme = this.getThemeFromStylesheet();
-
-    const legacyThemeNames = ['light', 'dark', 'high-contrast'];
-    if (legacyThemeNames.includes(this.settings.theme)) {
-      this.settings.theme += '-theme';
+    // On derive theme form stylesheet if
+    // one isn't specified in settings
+    if (this.settings.theme) {
+      this.setTheme(this.settings.theme);
+    } else {
+      this.setTheme(this.getThemeFromStylesheet());
     }
-
-    this.currentTheme = this.settings.theme || cssTheme;
-    this.setTheme(this.currentTheme);
 
     if (this.settings.colors) {
       this.setColors(this.settings.colors);
@@ -69,8 +67,6 @@ Personalize.prototype = {
     if (this.settings.font) {
       $('html').addClass(`font-${this.settings.font}`);
     }
-
-    this.handleEvents();
 
     return this;
   },
@@ -260,6 +256,12 @@ Personalize.prototype = {
         $html.addClass(incomingTheme);
       }
       return;
+    }
+
+    // Adapt them for backwards compatibility
+    const legacyThemeNames = ['light', 'dark', 'high-contrast'];
+    if (legacyThemeNames.includes(incomingTheme)) {
+      incomingTheme += '-theme';
     }
 
     $html
