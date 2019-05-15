@@ -73,23 +73,22 @@ npm run e2e:ci
 
 See [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml) for current implementation
 
-## Running E2E Tests
+## Running E2E Tests Locally
 
 Run a specific E2E component locally (Only Chrome or Firefox)
 
-```sh
-npm start
-#leave the server running, and create a new terminal window in the same directory. Now, run
-env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local:debug
-```
+1. Run `npm start` to start the app
+1. Isolate your tests with "Fit" or "Fdescribe"
+1. In another terminal instance, run `npm run e2e:ci:debug`
 
-Isolate your tests then run with the keys in your path.
+**OR**
 
-```sh
-npm start
-#leave the server running, and create a new terminal window in the same directory. Now, run
-npm run e2e:local:bs
- ```
+1. Run `npm start` to start the app
+1. Then in another terminal instance:
+    ```sh
+    env PROTRACTOR_SPECS='test/components/dropdown/dropdown.e2e-spec.js' npm run e2e:local:debug
+    ```
+
 
 ### Running BrowserStack tests locally
 
