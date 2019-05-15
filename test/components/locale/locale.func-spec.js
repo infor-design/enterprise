@@ -115,6 +115,34 @@ describe('Locale API', () => { //eslint-disable-line
     Locale.set('en-US');
   });
 
+  it('Should change font for some locales', () => {
+    Locale.set('ar-EG');
+    const body = window.getComputedStyle(document.body, null);
+
+    expect(body.getPropertyValue('font-family')).toEqual('DejaVu, Tahoma, helvetica, arial');
+    Locale.set('ar-SA');
+
+    expect(body.getPropertyValue('font-family')).toEqual('DejaVu, Tahoma, helvetica, arial');
+    Locale.set('ja-JP');
+
+    expect(body.getPropertyValue('font-family')).toEqual('"MS PGothic", "ＭＳ Ｐゴシック", helvetica, arial');
+    Locale.set('ko-KR');
+
+    expect(body.getPropertyValue('font-family')).toEqual('"Malgun Gothic", AppleGothic, helvetica, arial');
+    Locale.set('zh-CN');
+
+    expect(body.getPropertyValue('font-family')).toEqual('华文细黑, 宋体, 微软雅黑, "Microsoft YaHei New", helvetica, arial');
+    Locale.set('zh-tw');
+
+    expect(body.getPropertyValue('font-family')).toEqual('华文细黑, 宋体, 微软雅黑, "Microsoft YaHei New", helvetica, arial');
+    Locale.set('zh-Hans');
+
+    expect(body.getPropertyValue('font-family')).toEqual('华文细黑, 宋体, 微软雅黑, "Microsoft YaHei New", helvetica, arial');
+    Locale.set('zh-Hant');
+
+    expect(body.getPropertyValue('font-family')).toEqual('华文细黑, 宋体, 微软雅黑, "Microsoft YaHei New", helvetica, arial');
+  });
+
   it('Should map in-ID to id-ID', () => {
     Locale.set('in-ID');
 
