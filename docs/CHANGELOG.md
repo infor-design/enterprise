@@ -2,6 +2,11 @@
 
 ## v4.19.0
 
+### v4.19.0 Future Deprecation
+- `[CSS]` The Soho light theme CSS file has been renamed from `light-theme.css` to `theme-soho-light.css`
+- `[CSS]` The Soho dark theme CSS file has been renamed from `dark-theme.css` to `theme-soho-dark.css`
+- `[CSS]` The Soho high-contrast theme CSS file has been renamed from `high-contrast-theme.css` to `theme-soho-high-contrast.css`
+
 ### v4.19.0 Features
 
 - `[Column]` Added support to existing custom tooltip content in the callback setting. ([#1909](https://github.com/infor-design/enterprise/issues/1909))
