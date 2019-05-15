@@ -201,3 +201,22 @@ describe('Applicationmenu custom search tests', () => {
     await utils.checkForErrors();
   });
 });
+
+fdescribe('Applicationmenu Many Items tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/test-filterable-many-items');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      const section = await element(by.css('body.no-scroll'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-many-items')).toEqual(0);
+    });
+  }
+});
