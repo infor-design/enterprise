@@ -84,6 +84,7 @@ Calendar.prototype = {
     }
 
     this.rendered = true;
+
     this
       .setCurrentCalendar()
       .renderEventTypes()
@@ -130,7 +131,7 @@ Calendar.prototype = {
   renderEventTypes() {
     this.eventTypeContainer = document.querySelector('.calendar-event-types');
     if (!this.eventTypeContainer) {
-      return false;
+      return this;
     }
 
     let eventTypeMarkup = '';
@@ -250,6 +251,9 @@ Calendar.prototype = {
     }
 
     this.eventDetailsContainer = document.querySelector('.calendar-event-details');
+    if (!this.eventDetailsContainer) {
+      return;
+    }
     this.renderTmpl(eventData[0], this.settings.template, this.eventDetailsContainer, count > 1);
 
     const api = $(this.eventDetailsContainer).data('accordion');
@@ -306,8 +310,11 @@ Calendar.prototype = {
    * @private
    */
   filterEventTypes() {
-    const checkboxes = this.eventTypeContainer.querySelectorAll('.checkbox');
     const types = [];
+    if (!this.eventTypeContainer) {
+      return types;
+    }
+    const checkboxes = this.eventTypeContainer.querySelectorAll('.checkbox');
 
     for (let i = 0; i < checkboxes.length; i++) {
       const input = checkboxes[i];
@@ -645,7 +652,7 @@ Calendar.prototype = {
       this.renderSelectedEventDetails();
     });
 
-    this.element.off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.calendar-upcoming-event', (e) => {
+    this.element.off(`click.${COMPONENT_NAME}-upcoming`).on(`click.${COMPONENT_NAME}-upcoming`, '.calendar-upcoming-event', (e) => {
       const key = e.currentTarget.getAttribute('data-key');
       this.monthView.selectDay(key);
     });
@@ -689,7 +696,7 @@ Calendar.prototype = {
       });
     };
 
-    this.element.off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.calendar-event', (e) => {
+    this.element.off(`click.${COMPONENT_NAME}-event`).on(`click.${COMPONENT_NAME}-event`, '.calendar-event', (e) => {
       const eventId = e.currentTarget.getAttribute('data-id');
       const eventData = this.settings.events.filter(event => event.id === eventId);
       if (!eventData || eventData.length === 0) {
@@ -713,6 +720,16 @@ Calendar.prototype = {
       eventData.ends = day;
 
       this.cleanEventData(eventData, false);
+
+      e.stopPropagation();
+      /**
+       * Fires when the calendar day is double clicked.
+       * @event dblclick
+       * @memberof Calendar
+       * @param {object} eventData - Information about the calendar date double clicked.
+       * @param {object} api - Access to the Calendar API
+       */
+      this.element.triggerHandler('dblclick', { eventData, api: this });
       showModalWithCallback(eventData, true);
     });
     return this;
@@ -1066,10 +1083,7 @@ Calendar.prototype = {
    * @private
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME}`);
-    this.element.off(`monthrendered.${COMPONENT_NAME}`);
-    this.element.off(`change.${COMPONENT_NAME}`);
-    this.element.on(`click.${COMPONENT_NAME}`);
+    this.element.off();
     $(this.monthViewContainer).off();
 
     return this;
