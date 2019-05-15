@@ -202,7 +202,7 @@ describe('Applicationmenu custom search tests', () => {
   });
 });
 
-fdescribe('Applicationmenu Many Items tests', () => {
+describe('Applicationmenu Many Items tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/test-filterable-many-items');
   });
