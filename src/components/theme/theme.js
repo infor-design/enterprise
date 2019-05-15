@@ -39,12 +39,12 @@ const theme = {
    */
   themes: function themes() {
     return [
-      { id: 'theme-soho-light', name: Locale.translate('LightTheme'), legacyId: 'light' },
-      { id: 'theme-soho-dark', name: Locale.translate('LightTheme'), legacyId: 'dark' },
-      { id: 'theme-soho-contrast', name: Locale.translate('LightTheme'), legacyId: 'high-contrast' },
-      { id: 'theme-uplift-light', name: Locale.translate('LightTheme') },
-      { id: 'theme-uplift-dark', name: Locale.translate('LightTheme') },
-      { id: 'theme-uplift-contrast', name: Locale.translate('LightTheme') }
+      { id: 'theme-soho-light', name: Locale.translate('SohoLightTheme'), legacyId: 'light' },
+      { id: 'theme-soho-dark', name: Locale.translate('SohoDarkTheme'), legacyId: 'dark' },
+      { id: 'theme-soho-contrast', name: Locale.translate('SohoHighContrastTheme'), legacyId: 'high-contrast' },
+      { id: 'theme-uplift-light', name: Locale.translate('UpliftLightTheme') },
+      { id: 'theme-uplift-dark', name: Locale.translate('UpliftDarkTheme') },
+      { id: 'theme-uplift-contrast', name: Locale.translate('UpliftHighContrastTheme') }
     ];
   },
 
