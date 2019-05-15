@@ -301,6 +301,9 @@ Personalize.prototype = {
     this.settings.theme = incomingTheme;
     theme.setTheme(incomingTheme);
 
+    // Somehow colorpicker uses this, so keep it
+    this.currentTheme = incomingTheme;
+
     /**
     * Fires after the theme is changed
     * @event themechanged
