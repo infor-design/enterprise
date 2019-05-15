@@ -18,52 +18,55 @@ const theme = {
    * @property {string} [currentTheme.id]
    * @property {string} [currentTheme.name]
    */
-  currentTheme: { id: 'light', name: Locale.translate('Light') },
+  currentTheme: { id: 'theme-soho-light', name: Locale.translate('LightTheme'), legacyId: 'light' },
 
   /**
    * Get all of the colors for all themes
    * @returns {object[]} An array of color objects
    */
-  allColors: () => [
-    { id: 'soho-light', colors: sohoLightColors },
-    { id: 'soho-dark', colors: sohoDarkColors },
-    { id: 'soho-contrast', colors: sohoContrastColors },
-    { id: 'uplift-light', colors: upliftLightColors },
-    { id: 'uplift-dark', colors: upliftDarkColors },
-    { id: 'uplift-contrast', colors: upliftContrastColors }
+  allColors: [
+    { id: 'theme-soho-light', colors: sohoLightColors, legacyId: 'light' },
+    { id: 'theme-soho-dark', colors: sohoDarkColors, legacyId: 'dark' },
+    { id: 'theme-soho-contrast', colors: sohoContrastColors, legacyId: 'high-contrast' },
+    { id: 'theme-uplift-light', colors: upliftLightColors },
+    { id: 'theme-uplift-dark', colors: upliftDarkColors },
+    { id: 'theme-uplift-contrast', colors: upliftContrastColors }
   ],
 
   /**
    * Return a list of all the available themes
    * @returns {object[]} The list of themes
    */
-  themes: () => [
-    { id: 'soho-light', name: Locale.translate('SohoLightTheme') },
-    { id: 'soho-dark', name: Locale.translate('SohoDarkTheme') },
-    { id: 'soho-contrast', name: Locale.translate('SohoHighContrastTheme') },
-    { id: 'uplift-light', name: Locale.translate('UpliftLightTheme') },
-    { id: 'uplift-dark', name: Locale.translate('UpliftLDarkTheme') },
-    { id: 'uplift-contrast', name: Locale.translate('UpliftContrastTheme') }
-  ],
+  themes: function themes() {
+    return [
+      { id: 'theme-soho-light', name: Locale.translate('LightTheme'), legacyId: 'light' },
+      { id: 'theme-soho-dark', name: Locale.translate('LightTheme'), legacyId: 'dark' },
+      { id: 'theme-soho-contrast', name: Locale.translate('LightTheme'), legacyId: 'high-contrast' },
+      { id: 'theme-uplift-light', name: Locale.translate('LightTheme') },
+      { id: 'theme-uplift-dark', name: Locale.translate('LightTheme') },
+      { id: 'theme-uplift-contrast', name: Locale.translate('LightTheme') }
+    ];
+  },
 
   /**
    * Get the colors used in the current theme
    * @param {string} themeId The id of the theme.
    * @returns {object} An object full of the colors 01-10
    */
-  themeColors: () => {
+  themeColors: function themeColors() {
     const result = this.allColors.filter(color => color.id === this.currentTheme.id);
     if (!result[0]) {
       return { palette: { }, colors: { }, brand: { } };
     }
+
     return result[0].colors;
   },
 
   /**
-   * Get the colors used in the current theme that are reccomended for personalization.
-   * @returns {object} An object full of the colors with id, name abd hex value.
+   * Get the colors used in the current theme that are reccomended for personalization
+   * @returns {object} An object full of the colors with id, name abd hex value
    */
-  personalizationColors: () => {
+  personalizationColors: function themeColors() {
     const palette = this.themeColors().palette;
     const brand = this.themeColors().brand;
     const personalize = {};
@@ -83,11 +86,14 @@ const theme = {
 
   /**
    * Set the current application theme
-   * @param {string} themeId The id of the theme.
+   * @param {string} themeId The id of the theme
    * @returns {[type]} [description]
    */
-  setTheme: (themeId) => {
-    const result = this.themes().filter(themeObj => themeObj.id === themeId);
+  setTheme: function setTheme(themeId) {
+    const result = this.themes().filter((themeObj) => {
+      return (themeObj.id === themeId || (themeObj.hasOwnProperty('legacyId') && themeObj.legacyId === themeId))
+    });
+
     if (result.length === 0) {
       return '';
     }

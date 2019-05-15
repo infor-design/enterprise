@@ -520,7 +520,7 @@ Header.prototype = {
       // Change Theme
       const themeAttr = link.attr('data-theme');
       if (themeAttr) {
-        personalization.setTheme(themeAttr.replace('theme-', ''));
+        personalization.setTheme(themeAttr);
         return;
       }
 

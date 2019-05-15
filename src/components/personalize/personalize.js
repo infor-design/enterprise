@@ -47,6 +47,12 @@ Personalize.prototype = {
   init() {
     // Set the default theme, or grab the theme from an external CSS stylesheet.
     const cssTheme = this.getThemeFromStylesheet();
+
+    const legacyThemeNames = ['light', 'dark', 'high-contrast'];
+    if (legacyThemeNames.includes(this.settings.theme)) {
+      this.settings.theme += '-theme';
+    }
+
     this.currentTheme = this.settings.theme || cssTheme;
     this.setTheme(this.currentTheme);
 
@@ -230,8 +236,8 @@ Personalize.prototype = {
       if (queryParamIndex > -1) {
         thisTheme = thisTheme.slice(0, queryParamIndex);
       }
-      // trim the file extensions off the end and drop the -theme portion
-      thisTheme = thisTheme.replace('.min.css', '').replace('.css', '').replace('-theme', '');
+      // trim the file extensions off the end
+      thisTheme = thisTheme.replace('.min', '').replace('.css', '');
     }
     return thisTheme;
   },
@@ -275,7 +281,7 @@ Personalize.prototype = {
 
     newCss.attr({
       id: originalCss.attr('id'),
-      href: xssUtils.stripTags(`${themePath}/${incomingTheme}-theme${isMin ? '.min' : ''}.css`)
+      href: xssUtils.stripTags(`${themePath}/${incomingTheme}${isMin ? '.min' : ''}.css`)
     });
     originalCss.removeAttr('id');
 
