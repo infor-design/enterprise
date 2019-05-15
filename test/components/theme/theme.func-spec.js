@@ -28,14 +28,15 @@ describe('Theme API', () => {
 
   it('Should list Soho theme variant colors and Amber10 should be the same', () => {
     const sohoAmber10 = '#fbe9bf';
+
     expect(theme.allColors[0].colors.palette.amber['10'].value.toLowerCase()).toBe(sohoAmber10);
     expect(theme.allColors[1].colors.palette.amber['10'].value.toLowerCase()).toBe(sohoAmber10);
     expect(theme.allColors[2].colors.palette.amber['10'].value.toLowerCase()).toBe(sohoAmber10);
   });
 
-
   it('Should list Uplift theme variant colors and Amber10 should be the same', () => {
-    const upliftAmber10 = '#fdf0dd'
+    const upliftAmber10 = '#fdf0dd';
+
     expect(theme.allColors[3].colors.palette.amber['10'].value.toLowerCase()).toBe(upliftAmber10);
     expect(theme.allColors[4].colors.palette.amber['10'].value.toLowerCase()).toBe(upliftAmber10);
     expect(theme.allColors[5].colors.palette.amber['10'].value.toLowerCase()).toBe(upliftAmber10);
@@ -44,7 +45,6 @@ describe('Theme API', () => {
   it('Should manage 6 total themes', () => {
     expect(theme.allColors.length).toEqual(6);
   });
-
 
   it('Should be able to list themes', () => {
     expect(theme.themes().length).toEqual(6);

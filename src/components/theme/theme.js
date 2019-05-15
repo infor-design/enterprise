@@ -90,9 +90,8 @@ const theme = {
    * @returns {[type]} [description]
    */
   setTheme: function setTheme(themeId) {
-    const result = this.themes().filter((themeObj) => {
-      return (themeObj.id === themeId || (themeObj.hasOwnProperty('legacyId') && themeObj.legacyId === themeId))
-    });
+    const result = this.themes().filter(themeObj =>
+      themeObj.id === themeId || (themeObj.legacyId && themeObj.legacyId === themeId));
 
     if (result.length === 0) {
       return '';
