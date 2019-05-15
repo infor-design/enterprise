@@ -261,7 +261,7 @@ html[dir='rtl'] {
     .one-third.column,
     .two-thirds.column,
     .one-half.column {
-      margin-left: inherit;
+      margin-left: 0;
       margin-right: 0;
     }
   }
