@@ -521,6 +521,20 @@ Header.prototype = {
       const themeAttr = link.attr('data-theme');
       if (themeAttr) {
         personalization.setTheme(themeAttr);
+
+        // Update the app url using pushState so theme
+        // persists through a refresh
+        var currentTheme = theme.currentTheme;
+        var urlParams = new URLSearchParams(location.search);
+        var match = currentTheme.id.match(/theme-(\w+)-(\w+)/);
+
+        if (urlParams.has("theme")) urlParams.delete("theme");
+        if (urlParams.has("variant")) urlParams.delete("variant");
+        urlParams.append("theme", match[1]);
+        urlParams.append("variant", match[2]);
+        var params = urlParams.toString();
+
+        history.pushState({ id: 'themeChange' }, 'IDS Enterprise', `${location.origin}${location.pathname}?${params}`);
         return;
       }
 
