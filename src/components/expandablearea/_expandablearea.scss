@@ -116,12 +116,7 @@
   //Icon on the header
   .title {
     color: $expandable-area-title-color;
-    font-size: $theme-size-font-lg;
-    font-weight: $theme-number-font-weight-bold;
-
-    span {
-      font-weight: $theme-number-font-weight-bold;
-    }
+    font-size: $theme-size-font-md;
   }
 
   //Push the switch out a bit, qualified to panes only not nested children
