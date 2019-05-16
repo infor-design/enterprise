@@ -52,7 +52,7 @@ Personalize.prototype = {
       this.handleEvents();
     }
 
-    // On derive theme form stylesheet if
+    // Only derive theme form stylesheet if
     // one isn't specified in settings
     if (this.settings.theme) {
       this.setTheme(this.settings.theme);
@@ -357,10 +357,15 @@ Personalize.prototype = {
       return;
     }
 
-    self.pageOverlay.fadeOut(300, () => {
-      self.pageOverlay.remove();
-      self.pageOverlay = undefined;
-    });
+    // Since its become habit to init personalize.js mutliple times
+    // on one page for some reason, the pageOverlay might not be
+    // defined when one personalize instance tries to "fadeOut"
+    if (self.pageOverlay) {
+      self.pageOverlay.fadeOut(300, () => {
+        self.pageOverlay.remove();
+        self.pageOverlay = undefined;
+      });
+    }
   },
 
   /**
