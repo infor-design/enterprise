@@ -61,7 +61,7 @@ module.exports = function (app) {
       if (req.query.variant && req.query.variant.length > 0) {
         res.opts.theme.variant = req.query.variant.toLowerCase();
       }
-      logger('info', `Setting theme to "${res.opts.theme.name}-${res.opts.theme.variant}"`);
+      logger('info', `Setting theme to "theme-${res.opts.theme.name}-${res.opts.theme.variant}"`);
 
       const svgHtmlPartial = fs.readFileSync(`${iconsPath}/theme-${res.opts.theme.name}-svg.html`).toString()
       // Set icons to the partials in hopes its cached
