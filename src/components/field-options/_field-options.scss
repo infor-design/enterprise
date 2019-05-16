@@ -370,17 +370,25 @@
     border-color: $input-color-focus-border;
   }
 
-  .spinbox-wrapper.is-focused {
-    .down {
-      box-shadow: $focus-box-shadow-spinbox-down;
+  .spinbox-wrapper {
+    > .spinbox,
+    > .spinbox-control {
+      border-color: $input-color-focus-border;
     }
 
-    .spinbox {
-      box-shadow: $focus-box-shadow-spinbox;
-    }
+    &.is-focused {
+      .down {
+        box-shadow: $focus-box-shadow-spinbox-down;
+      }
 
-    .up {
-      box-shadow: $focus-box-shadow-spinbox-up;
+      input.spinbox:focus,
+      .spinbox {
+        box-shadow: $focus-box-shadow-spinbox !important;
+      }
+
+      .up {
+        box-shadow: $focus-box-shadow-spinbox-up;
+      }
     }
   }
 
