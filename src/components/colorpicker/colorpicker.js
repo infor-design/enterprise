@@ -41,9 +41,9 @@ const COLORPICKER_DEFAULTS = {
   // will add class "checkmark-one", where current colors number is in range [1 to 3]
   // and will add class "checkmark-two", where current colors number is in range [3 to 10]
   themes: {
-    'light': { border: 'matched-only', checkmark: { one: [1, 2], two: [3, 10] } },
-    'dark': { border: 'matched-only', checkmark: { one: [1, 2], two: [3, 10] } },
-    'contrast': { border: 'all', checkmark: { one: [1, 3], two: [4, 10] } }
+    light: { border: 'matched-only', checkmark: { one: [1, 2], two: [3, 10] } },
+    dark: { border: 'matched-only', checkmark: { one: [1, 2], two: [3, 10] } },
+    contrast: { border: 'all', checkmark: { one: [1, 3], two: [4, 10] } }
   },
   customColors: false,
   colors: [
@@ -485,9 +485,9 @@ ColorPicker.prototype = {
 
   /**
    * Make basic theme variants backwards/forwards compatible
-   * @param {*} activeTheme
-   * @retruns {string} The theme variants's border property value
-   * (i.e. match "theme-uplift-light" with "light" and return "themes.light.border")
+   * @param {string} activeTheme The active theme to get the variant for
+   * @returns {string} The theme variants's border property value
+   * @example (i.e. match "theme-uplift-light" with "light" and return "themes.light.border")
    */
   getThemeVariant(activeTheme) {
     const legacyThemes = Object.keys(COLORPICKER_DEFAULTS.themes);

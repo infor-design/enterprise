@@ -171,11 +171,11 @@ Personalize.prototype = {
   },
 
   /**
-   *
-   * @param {string} font
+   * Set the font
+   * @param {string} font The font name
    */
   setFont(font) {
-    $('html').addClass(`font-${this.settings.font}`);
+    $('html').addClass(`font-${font}`);
   },
 
   /**
@@ -371,7 +371,7 @@ Personalize.prototype = {
    */
   updated(settings) {
     if (!settings) {
-      return;
+      return this;
     }
 
     // Copy the old settings to compare
@@ -395,14 +395,14 @@ Personalize.prototype = {
     return this;
   },
 
-
   /**
    * Compare previous settings to current settings
    * @param {object} prevSettings The previous settings object
    * @param {string} prop The property to compare
+   * @returns {boolean} If the settings changed
    */
   settingsDidChange(prevSettings, prop) {
-    return this.settings[prop] && this.settings[prop] !== prevSettings[prop]
+    return this.settings[prop] && this.settings[prop] !== prevSettings[prop];
   },
 
   /**
