@@ -115,9 +115,8 @@
 
   //Icon on the header
   .title {
-    @include font-size(18);
-
     color: $expandable-area-title-color;
+    font-size: $theme-size-font-lg;
     font-weight: $theme-number-font-weight-bold;
 
     span {
