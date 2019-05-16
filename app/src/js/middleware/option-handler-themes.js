@@ -41,6 +41,12 @@ module.exports = function (app) {
             theme: 'soho',
             variant: req.query.theme
           }};
+
+          // Translate legacy "high-contrast" into "contrast"
+          if (q.variant.indexOf('high-') !== -1) {
+            q.variant = q.variant.replace('high-', '');
+          }
+
           const theUrl = URL.format({ query: q });
           logger('info', `Redirecting legacy query string params to "${theUrl}"`);
           return res.redirect(theUrl);
