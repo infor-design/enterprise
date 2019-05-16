@@ -115,8 +115,9 @@
 
   //Icon on the header
   .title {
+    @include font-size(16);
+
     color: $expandable-area-title-color;
-    font-size: $theme-size-font-md;
   }
 
   //Push the switch out a bit, qualified to panes only not nested children
