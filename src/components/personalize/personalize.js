@@ -28,7 +28,6 @@ const PERSONALIZE_DEFAULTS = {
  * @param {boolean} [settings.blockUI=true] Cover the UI and animate when changing theme.
 */
 function Personalize(element, settings) {
-
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, PERSONALIZE_DEFAULTS);
 
@@ -46,14 +45,8 @@ Personalize.prototype = {
    * @returns {this} component instance
    */
   init() {
-    // Do NOT keep repeating these items
-    // if the module already exists
-    if (Soho && !Soho.personalization) {
-      this.handleEvents();
-    }
+    this.handleEvents();
 
-    // Only derive theme form stylesheet if
-    // one isn't specified in settings
     if (this.settings.theme) {
       this.setTheme(this.settings.theme);
     } else {
@@ -65,7 +58,7 @@ Personalize.prototype = {
     }
 
     if (this.settings.font) {
-      $('html').addClass(`font-${this.settings.font}`);
+      this.setFont(this.settings.font);
     }
 
     return this;
@@ -175,6 +168,14 @@ Personalize.prototype = {
       colorUtils.getLuminousColorShade(colors.header, -0.025));
 
     return personalizeStyles(colors);
+  },
+
+  /**
+   *
+   * @param {string} font
+   */
+  setFont(font) {
+    $('html').addClass(`font-${this.settings.font}`);
   },
 
   /**
@@ -357,30 +358,51 @@ Personalize.prototype = {
       return;
     }
 
-    // Since its become habit to init personalize.js mutliple times
-    // on one page for some reason, the pageOverlay might not be
-    // defined when one personalize instance tries to "fadeOut"
-    if (self.pageOverlay) {
-      self.pageOverlay.fadeOut(300, () => {
-        self.pageOverlay.remove();
-        self.pageOverlay = undefined;
-      });
-    }
+    self.pageOverlay.fadeOut(300, () => {
+      self.pageOverlay.remove();
+      self.pageOverlay = undefined;
+    });
   },
 
   /**
    * Handle Updating Settings
-   * @param {object} [settings] incoming settings
+   * @param {object} settings Incoming settings
    * @returns {this} component instance
    */
   updated(settings) {
-    if (settings) {
-      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    if (!settings) {
+      return;
     }
 
-    return this
-      .teardown()
-      .init();
+    // Copy the old settings to compare
+    const prevSettings = Object.assign({}, this.settings);
+
+    // Merge in the new settings
+    this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+
+    if (this.settingsDidChange(prevSettings, 'theme')) {
+      this.setTheme(this.settings.theme);
+    }
+
+    if (this.settingsDidChange(prevSettings, 'colors')) {
+      this.setColors(this.settings.colors);
+    }
+
+    if (this.settingsDidChange(prevSettings, 'font')) {
+      this.setFont(this.settings.font);
+    }
+
+    return this;
+  },
+
+
+  /**
+   * Compare previous settings to current settings
+   * @param {object} prevSettings The previous settings object
+   * @param {string} prop The property to compare
+   */
+  settingsDidChange(prevSettings, prop) {
+    return this.settings[prop] && this.settings[prop] !== prevSettings[prop]
   },
 
   /**
