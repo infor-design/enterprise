@@ -76,14 +76,17 @@ const Locale = {  // eslint-disable-line
   defaultLocale: 'en-US',
 
   /**
-   * Sets the current language in the Html Header
+   * Sets the current lang tag in the Html element
    * @private
-   * @param  {string} lang The two digit language code.
+   * @param  {string} locale The locale, if just a two digit code is passed we use the default.
    */
-  updateLanguage(lang) {
+  updateLanguageTag(locale) {
     const html = $('html');
+    if (locale.length === 2) {
+      locale = this.defaultLocales.filter(a => a.lang === locale);
+    }
 
-    html.attr('lang', lang);
+    html.attr('lang', locale);
     if (this.isRTL()) {
       html.attr('dir', 'rtl');
     } else {
@@ -361,7 +364,7 @@ const Locale = {  // eslint-disable-line
 
     if (this.languages[lang]) {
       this.currentLanguage = this.languages[lang];
-      this.updateLanguage(lang);
+      this.updateLanguageTag(lang);
     } else {
       this.currentLanguage.name = lang;
     }
@@ -383,7 +386,7 @@ const Locale = {  // eslint-disable-line
       this.currentLocale.data = data;
       this.currentLocale.dataName = name;
       this.currentLanguage = this.languages[lang];
-      this.updateLanguage(lang);
+      this.updateLanguageTag(name);
     }
   },
 

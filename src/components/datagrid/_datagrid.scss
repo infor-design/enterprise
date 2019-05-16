@@ -50,7 +50,7 @@ $datagrid-row-height: 43px;
 $datagrid-medium-header-height: 30px;
 $datagrid-medium-row-height: 33px;
 $datagrid-short-header-height: 25px;
-$datagrid-short-row-height: 23px;
+$datagrid-short-row-height: 25px;
 
 // Main Datagrid Container
 .datagrid-container {
@@ -739,6 +739,11 @@ $datagrid-short-row-height: 23px;
           top: 13px;
         }
 
+        .row-btn {
+          height: 32px;
+          top: -2px;
+        }
+
         .datagrid-alert-icon:not(.icon-dirty) {
           top: 5px;
         }
@@ -964,6 +969,8 @@ $datagrid-short-row-height: 23px;
       }
 
       &.datagrid-rowgroup-header {
+        line-height: $datagrid-short-row-height + 4;
+
         .datagrid-expand-btn {
           left: -10px;
           top: 2px;
@@ -1053,6 +1060,10 @@ $datagrid-short-row-height: 23px;
             height: 20px;
             margin-bottom: -20px;
             min-width: 20px;
+          }
+
+          &.btn-primary {
+            top: -1px;
           }
 
           .icon {
@@ -2982,13 +2993,13 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  height: 30px;
+  height: 28px;
   left: -10px;
-  margin-top: -4px;
-  min-height: 30px;
-  min-width: 30px;
+  margin-top: -3px;
+  min-height: 28px;
+  min-width: 28px;
   vertical-align: middle;
-  width: 30px;
+  width: 28px;
 
   span:not(.icon) {
     color: transparent;
@@ -2997,7 +3008,7 @@ td .btn-actions {
   .plus-minus {
     left: -6px;
     position: relative;
-    top: -5px;
+    top: -6px;
   }
 
   + span {
