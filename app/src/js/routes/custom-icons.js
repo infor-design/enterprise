@@ -38,7 +38,6 @@ const template = handlebars.compile(hbsTemplate);
  * @param {string} theme - The theme
  */
 module.exports = (url, theme) => {
-  console.log(url, theme);
   const fileName = path.basename(url, '.html');
   const iconSet = fileName.includes('example-empty-widgets') ? 'empty' : 'standard';
   const metaPath = `node_modules/ids-identity/dist/theme-${theme}/icons/${iconSet}/metadata.json`;
