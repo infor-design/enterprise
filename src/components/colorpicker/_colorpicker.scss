@@ -220,6 +220,16 @@
   }
 }
 
+@include respond-to(phonedown) {
+  .colorpicker-container {
+    width: 100% !important;
+  }
+
+  .colorpicker-container input {
+    width: calc(100% - 64px) !important;
+  }
+}
+
 .popupmenu.colorpicker {
   background-color: $colorpicker-popup-bg-color;
   border-color: $colorpicker-popup-border-color;

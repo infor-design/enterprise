@@ -11,10 +11,13 @@ const logger = require('../logger');
 const path = require('path');
 const slash = require('slash');
 
+const IdsMetadata = require('../helpers/ids-metadata');
+
+const IDS_THEMES = new IdsMetadata().getThemes();
+
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
 const ROOT_DIR = slash(process.cwd());
 const PATHS = {
-  srcGlob: `${ROOT_DIR}/node_modules/ids-identity/dist/theme-*/tokens/web/theme-*[^.simple].json`,
   dest: `${ROOT_DIR}/src/components/theme`
 };
 
@@ -76,25 +79,23 @@ function createNewCustomObj(obj) {
  * @param  {string} filePath The file path
  * @returns {Promise} Resolve array of icons
  */
-const createJSONfile = (filePath) => { //eslint-disable-line
-  return new Promise((resolve) => {
-    const themeObj = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    const themeColorPaletteObj = createNewCustomObj(themeObj.theme.color.palette);
-    const themeColorStatusObj = createNewCustomObj(themeObj.theme.color.status);
-    const themeColorBrandObj = createNewCustomObj(themeObj.theme.color.brand);
+const createJSONfile = filePath => new Promise((resolve) => {
+  const themeObj = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+  const themeColorPaletteObj = createNewCustomObj(themeObj.theme.color.palette);
+  const themeColorStatusObj = createNewCustomObj(themeObj.theme.color.status);
+  const themeColorBrandObj = createNewCustomObj(themeObj.theme.color.brand);
 
-    const colorsOnlyObj = {
-      color: {
-        palette: themeColorPaletteObj,
-        status: themeColorStatusObj,
-        brand: themeColorBrandObj
-      }
-    };
-    const fileName = path.basename(filePath, '.json') + '-colors.json'; //eslint-disable-line
-    fs.writeFileSync(`${PATHS.dest}/${fileName}`, JSON.stringify(colorsOnlyObj), 'utf-8');
-    resolve(fileName);
-  });
-};
+  const colorsOnlyObj = {
+    color: {
+      palette: themeColorPaletteObj,
+      status: themeColorStatusObj,
+      brand: themeColorBrandObj
+    }
+  };
+  const fileName = `${path.basename(filePath, '.json')}-colors.json`;
+  fs.writeFileSync(`${PATHS.dest}/${fileName}`, JSON.stringify(colorsOnlyObj), 'utf-8');
+  resolve(fileName);
+});
 
 /**
  * Create JSON file of color palette and status tokens
@@ -105,7 +106,22 @@ function createColorJsonFiles() {
     logger('info', `Running build process create JSON Color files...${NL}`);
   }
 
-  const themeFiles = glob.sync(PATHS.srcGlob);
+  const themeFiles = [];
+
+  const createPath = (themeName, FileName) => {
+    const dist = `${ROOT_DIR}/node_modules/ids-identity/dist`;
+    return `${dist}/theme-${themeName}/tokens/web/theme-${FileName}.json`;
+  };
+
+  IDS_THEMES.forEach((theme) => {
+    // A theme's base does not have a variant "modifier"
+    // i.e. "soho-light" is just "soho"
+    themeFiles.push(createPath(theme.name, theme.name));
+
+    theme.variants.forEach((variant) => {
+      themeFiles.push(createPath(theme.name, `${theme.name}-${variant.name}`));
+    });
+  });
 
   return Promise.all(themeFiles.map(createJSONfile))
     .then(filesCreated => { //eslint-disable-line
