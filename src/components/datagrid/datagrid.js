@@ -565,7 +565,7 @@ Datagrid.prototype = {
   * @param {number} row The row index
   * @param {boolean} nosync Dont sync the selected rows.
   * @param {boolean} noTrigger If true, do not trigger the removerow event.
-  * @returns {object|boolean} if noTrigger given as true, will return trigger data args
+  * @returns {object|boolean} If noTrigger is true then return the event args otherwise nothing is returned
   */
   removeRow(row, nosync, noTrigger) {
     const rowNode = this.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
