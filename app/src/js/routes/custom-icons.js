@@ -9,14 +9,6 @@ hbsRegistrar('toUpperCase', str => {
   return str.toUowerCase();
 });
 
-
-const themeToIcons = {
-  'light'   : 'soho',
-  'dark': 'soho',
-  'high-contrast' : 'soho',
-  'uplift': 'uplift'
-}
-
 const hbsTemplate = `
 {{#each categories as |cat catKey|}}
   <div class="row top-padding">
@@ -48,7 +40,7 @@ const template = handlebars.compile(hbsTemplate);
 module.exports = (url, theme) => {
   const fileName = path.basename(url, '.html');
   const iconSet = fileName.includes('example-empty-widgets') ? 'empty' : 'standard';
-  const metaPath = `node_modules/ids-identity/dist/theme-${themeToIcons[theme]}/icons/${iconSet}/metadata.json`;
+  const metaPath = `node_modules/ids-identity/dist/theme-${theme}/icons/${iconSet}/metadata.json`;
   const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8').toString());
 
   if (iconSet === 'empty') {

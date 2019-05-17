@@ -65,6 +65,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.uniqueId=null] Unique DOM ID to use as local storage reference and internal variable names
  * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (short, medium or normal)
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
+ * @param {null|function} [settings.onBeforeSelect=null] If defined as a function will fire as callback before rows are selected. You can return false to veto row selection.
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
  * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last column will get filled with an empty spacer column.
  * @param {boolean}  [settings.showNewRowIndicator=true] If true, the new row indicator will display after adding a row.
@@ -151,6 +152,7 @@ const DATAGRID_DEFAULTS = {
   rowHeight: 'normal', // (short, medium or normal)
   selectable: false, // false, 'single' or 'multiple' or 'siblings'
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
+  onBeforeSelect: null,
   allowSelectAcrossPages: null,
   groupable: null,
   spacerColumn: false,
@@ -2336,10 +2338,7 @@ Datagrid.prototype = {
       };
 
       if (input.data('datepicker')) {
-        format = input.data('datepicker').settings.dateFormat;
-        if (format === 'locale') {
-          format = Locale.calendar().dateFormat.short;
-        }
+        format = input.data('datepicker').pattern;
         condition.format = format;
       }
 
@@ -5711,38 +5710,41 @@ Datagrid.prototype = {
     * @property {object} args.originalEvent The original event object.
     */
     this.element.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tbody tr', (e) => {
-      if (!self.isSubscribedTo(e, 'contextmenu')) {
-        return;
+      const hasMenu = self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
+      self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
+
+      if (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu) {
+        return true;
       }
+      e.preventDefault();
       self.closePrevPopupmenu();
 
-      self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
-      e.preventDefault();
-
-      if (self.settings.menuId && $(`#${self.settings.menuId}`).length > 0) {
-        $(e.currentTarget).popupmenu({
-          menuId: self.settings.menuId,
-          eventObj: e,
-          beforeOpen: self.settings.menuBeforeOpen,
-          attachToBody: true,
-          trigger: 'immediate'
-        })
-          .off('selected.gridpopuptr')
-          .on('selected.gridpopuptr', (selectedEvent, args) => {
-            if (self.settings.menuSelected) {
-              self.settings.menuSelected(selectedEvent, args);
-            }
-          })
-          .off('close.gridpopuptr')
-          .on('close.gridpopuptr', function () {
-            const elem = $(this);
-            if (elem.data('popupmenu')) {
-              elem.data('popupmenu').destroy();
-            }
-          });
+      if (!hasMenu) {
+        return true;
       }
 
-      return false; // eslint-disable-line
+      $(e.currentTarget).popupmenu({
+        menuId: self.settings.menuId,
+        eventObj: e,
+        beforeOpen: self.settings.menuBeforeOpen,
+        attachToBody: true,
+        trigger: 'immediate'
+      })
+        .off('selected.gridpopuptr')
+        .on('selected.gridpopuptr', (selectedEvent, args) => {
+          if (self.settings.menuSelected) {
+            self.settings.menuSelected(selectedEvent, args);
+          }
+        })
+        .off('close.gridpopuptr')
+        .on('close.gridpopuptr', function () {
+          const elem = $(this);
+          if (elem.data('popupmenu')) {
+            elem.data('popupmenu').destroy();
+          }
+        });
+
+      return false;
     });
 
     // Move the drag handle to the end or start of the column
@@ -5890,14 +5892,15 @@ Datagrid.prototype = {
   * Check if the event is subscribed to.
   * @private
   * @param {object} e The update empty message config object.
-  * @param {object} eventName The update empty message config object.
+  * @param {string} eventName The update empty message config object.
   * @returns {boolean} If the event is subscribed to.
   */
   isSubscribedTo(e, eventName) {
     const self = this;
+    const gridEvents = $._data(self.element[0]).events;
 
-    for (const event in $._data(self.element[0]).events) { //eslint-disable-line
-      if (event === eventName) {
+    for (const event in gridEvents) { //eslint-disable-line
+      if (event === eventName && !(gridEvents[event].length === 1 && gridEvents[event][0].namespace === 'datagrid')) {
         return true;
       }
     }
@@ -6476,6 +6479,13 @@ Datagrid.prototype = {
 
     if (!rowNode || (!rowNode.length && s.source)) {
       return;
+    }
+
+    if (typeof s.onBeforeSelect === 'function' && !noTrigger) {
+      const result = s.onBeforeSelect({ node: rowNode, idx: dataRowIndex });
+      if (result === false) { // Boolean false is returned so cancel
+        return;
+      }
     }
 
     if (s.selectable === 'single') {

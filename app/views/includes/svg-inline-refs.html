@@ -1,17 +1,8 @@
-{{#inlineSVG}}
 
-  <div class="svg hidden">
-
-    {{#isUpliftTheme}}
-      {{> ../../src/components/icons/theme-uplift-svg}}
-    {{/isUpliftTheme}}
-    {{^isUpliftTheme}}
-    {{> ../../src/components/icons/svg}}
-    {{/isUpliftTheme}}
-
-    {{> ../../src/components/emptymessage/svg-empty}}
-  </div>
-  <div class="svg patterns hidden">
-    {{> ../../src/components/charts/svg-patterns}}
-  </div>
-{{/inlineSVG}}
+<div class="svg hidden">
+  {{> svgIcons }}
+  {{> ../../src/components/emptymessage/svg-empty}}
+</div>
+<div class="svg patterns hidden">
+  {{> ../../src/components/charts/svg-patterns}}
+</div>
