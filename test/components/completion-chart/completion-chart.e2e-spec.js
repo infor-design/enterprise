@@ -5,9 +5,9 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Targeted Achievement example-index tests', () => {
+fdescribe('Completion Chart variation tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/targeted-achievement/example-index?layout=nofrills');
+    await utils.setPage('/components/completion-chart/example-variations?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -21,7 +21,7 @@ fdescribe('Targeted Achievement example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('targeted-achievement')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('completion-chart')).toEqual(0);
     });
   }
 });

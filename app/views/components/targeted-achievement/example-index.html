@@ -3,7 +3,8 @@
     <div id="example-1" class="chart-container"></div>
     <div id="example-2" class="chart-container"></div>
     <div id="example-3" class="chart-container"></div>
-  </div>
+    <div id="example-4" class="chart-container"></div>
+</div>
 </div>
 
 <script>
@@ -40,6 +41,15 @@ $('body').on('initialized', function () {
   }];
 
   var api3 = $('#example-3').chart({dataset: dataset3, type: 'targeted-achievement'}).data('chart');
+
+  var dataset4 =  [{
+    data: [{
+      name: {text: 'Good'},
+      completed: {value: 93, color: 'good'},
+    }]
+  }];
+
+  var api4 = $('#example-4').chart({dataset: dataset4, type: 'targeted-achievement'}).data('chart');
 
   // Example updating a value
   $('#menu-button').on('selected', function (e, args) {
