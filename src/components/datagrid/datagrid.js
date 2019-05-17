@@ -2336,10 +2336,7 @@ Datagrid.prototype = {
       };
 
       if (input.data('datepicker')) {
-        format = input.data('datepicker').settings.dateFormat;
-        if (format === 'locale') {
-          format = Locale.calendar().dateFormat.short;
-        }
+        format = input.data('datepicker').pattern;
         condition.format = format;
       }
 
