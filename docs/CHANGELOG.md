@@ -17,6 +17,7 @@
 - `[Datagrid]` Fixes a column alignment issue when resizing and sorting columns that were originally set to percentage width. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
 - `[Datagrid]` Fixes a column alignment issue when there are duplicate column ids. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
 - `[Datagrid]` Fixes a column alignment by clearing a cache to help prevent column misalignment from randomly happening. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
+- `[Keyboard]` Added a new API that you can call at anytime to see what key is being pressed at the moment. ([#1906](https://github.com/infor-design/enterprise/issues/1906))
 
 ### v4.19.0 Fixes
 
@@ -37,6 +38,7 @@
 - `[Datagrid]` Fixed an layout issue on short row grouped header buttons. ([#2005](https://github.com/infor-design/enterprise/issues/2005))
 - `[Datagrid]` Fixed an issue where disabled button color for contextual toolbar was not applying. ([#2150](https://github.com/infor-design/enterprise/issues/2150))
 - `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
+- `[Datagrid]` Added an onBeforeSelect call back that you can return false from to disable row selection. ([#1906](https://github.com/infor-design/enterprise/issues/1906))
 - `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Locale]` Synced up date and time patterns with the CLDR several time patterns in particular were corrected. ([#2022](https://github.com/infor-design/enterprise/issues/2022))
 - `[Datagrid]` Adds a function to add a visual dirty indictaor and a new function to get all modified rows. Modified means either dirty, in-progress or in error. Existing API's are not touched. ([#2091](https://github.com/infor-design/enterprise/issues/2091))

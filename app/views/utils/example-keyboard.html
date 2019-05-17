@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Keyboard Manager</h2>
+    <p>Press any key(s) on the keyboard.</p>
+  </div>
+</div>
+
+ <div class="row top-padding">
+  <div class="six columns">
+    <p>
+      <span id="pressed-keys-console"></span>
+    </p>
+  </div>
+</div>
+
+ <script id="test-script">
+  $('body').on('keys.test', function(e, keys) {
+    const keysStr = keys.join(', ');
+    document.querySelector('#pressed-keys-console').innerText = keysStr;
+    console.log(Soho.keyboard.pressedKeys)
+  });
+</script>
