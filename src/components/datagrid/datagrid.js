@@ -564,7 +564,7 @@ Datagrid.prototype = {
   * Remove a row of data to the grid and dataset.
   * @param {number} row The row index
   * @param {boolean} nosync Dont sync the selected rows.
-  * @param {boolean} noTrigger Dont if true.
+  * @param {boolean} noTrigger If true, do not trigger the removerow event.
   * @returns {object|boolean} if noTrigger given as true, will return trigger data args
   */
   removeRow(row, nosync, noTrigger) {
