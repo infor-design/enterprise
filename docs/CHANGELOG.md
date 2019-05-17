@@ -2,11 +2,18 @@
 
 ## v4.19.0
 
+### v4.19.0 Future Deprecation
+
+- `[CSS]` The Soho light theme CSS file has been renamed from `light-theme.css` to `theme-soho-light.css` ([1972](https://github.com/infor-design/enterprise/issues/1972))
+- `[CSS]` The Soho dark theme CSS file has been renamed from `dark-theme.css` to `theme-soho-dark.css` ([1972](https://github.com/infor-design/enterprise/issues/1972))
+- `[CSS]` The Soho high-contrast theme CSS file has been renamed from `high-contrast-theme.css` to `theme-soho-contrast.css` ([1972](https://github.com/infor-design/enterprise/issues/1972))
+
 ### v4.19.0 Features
 
 - `[Column]` Added support to existing custom tooltip content in the callback setting. ([#1909](https://github.com/infor-design/enterprise/issues/1909))
 - `[Contextual Action Panel]` Fixed an issue where the close button was misaligned. ([#1943](https://github.com/infor-design/enterprise/issues/1943))
 - `[Datagrid]` Added support for disabling rows by data or a dynamic function, rows are disabled from selection and editing. ([#1614](https://github.com/infor-design/enterprise/issues/1614))
+- `[Themes]` Added support for multiple themes in the demo app and renamed distribute Uplift (only) theme files. ([#1972](https://github.com/infor-design/enterprise/issues/1972))
 - `[Datagrid]` Fixes a column alignment issue when resizing and sorting columns that were originally set to percentage width. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
 - `[Datagrid]` Fixes a column alignment issue when there are duplicate column ids. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
 - `[Datagrid]` Fixes a column alignment by clearing a cache to help prevent column misalignment from randomly happening. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
