@@ -1,0 +1,19 @@
+// Uplift Dropdown Control
+//================================================== //
+
+// Create a token for this
+$dropdown-size-padding-x-r: 30px;
+
+div.dropdown,
+div.multiselect {
+  + .icon {
+    right: 10px;
+  }
+}
+
+.dropdown-list {
+  > .trigger {
+    margin-left: -$dropdown-size-padding-x-r;
+    width: $dropdown-size-padding-x-r;
+  }
+}
