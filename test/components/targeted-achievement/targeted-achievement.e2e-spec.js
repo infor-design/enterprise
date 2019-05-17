@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Targeted Achievement example-index tests', () => {
+describe('Targeted Achievement example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/targeted-achievement/example-index?layout=nofrills');
   });
