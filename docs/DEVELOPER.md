@@ -23,19 +23,18 @@ After installation, the pre-built files are accessible in `./node_modules/ids-en
 
 #### CDN
 
-We now offer the IDS library via CDN. For example, the paths for the 4.18.0 releases would be:
+We now offer the IDS library via CDN. For example, the paths for the 4.19.0 releases would be:
 
 ```html
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/js/sohoxi.js
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/js/sohoxi.min.js
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/dark-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/dark-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/dark-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/dark-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/light-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/css/light-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/svg/svg.html
-https://cdn.hookandloop.infor.com/sohoxi/4.18.0/svg/svg-extended.html
+https://cdn.hookandloop.infor.com/sohoxi/4.19.0/js/sohoxi.js
+https://cdn.hookandloop.infor.com/sohoxi/4.19.0/js/sohoxi.min.js
+https://cdn.hookandloop.infor.com/sohoxi/4.19.0/css/theme-soho-dark.css
+https://cdn.hookandloop.infor.com/sohoxi/4.19.0/css/theme-soho-dark.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.19.0/css/theme-soho-dark.css
+https://cdn.hookandloop.infor.com/sohoxi/4.19.0/css/theme-soho-dark.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.19.0/css/theme-soho-light.css
+https://cdn.hookandloop.infor.com/sohoxi/4.19.0/css/theme-soho-light.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.19.0/svg/theme-soho-svg.html
 ```
 
 Versions available on CDN are: 4.3.2 to 4.3.5, 4.7.0 to 4.18.0
@@ -48,7 +47,7 @@ Include the IDS dependencies and the library itself in your page's `<head>` tag:
 
 ```html
 <head>
-  <link rel="stylesheeet" href="css/light-theme.min.css" />
+  <link rel="stylesheeet" href="css/theme-soho-light.min.css" />
   <script src="js/jquery.min.js"></script>
   <script src="js/d3.min.js"></script>
   <script src="js/sohoxi.js"></script>
