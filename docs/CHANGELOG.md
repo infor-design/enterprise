@@ -10,6 +10,7 @@
 
 ### v4.19.0 Features
 
+- `[App Menu]` Improved style of personalized app menu. ([#2195](https://github.com/infor-design/enterprise/pull/2195))
 - `[Column]` Added support to existing custom tooltip content in the callback setting. ([#1909](https://github.com/infor-design/enterprise/issues/1909))
 - `[Contextual Action Panel]` Fixed an issue where the close button was misaligned. ([#1943](https://github.com/infor-design/enterprise/issues/1943))
 - `[Datagrid]` Added support for disabling rows by data or a dynamic function, rows are disabled from selection and editing. ([#1614](https://github.com/infor-design/enterprise/issues/1614))
