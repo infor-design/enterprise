@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.20.0
+
+### v4.20.0 Future Deprecation
+
+### v4.20.0 Features
+
+### v4.20.0 Fixes
+
+- `[Radios]` Fixed an issue where in `RTL` the radio seems visually separate from it's label. ([#2096](https://github.com/infor-design/enterprise/issues/2096))
+
+### v4.20.0 Chores & Maintenance
+
 ## v4.19.0
 
 ### v4.19.0 Future Deprecation
