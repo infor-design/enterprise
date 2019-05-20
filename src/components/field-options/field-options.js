@@ -174,7 +174,7 @@ FieldOptions.prototype = {
       return returns;
     };
     const setTriggerCssTop = () => {
-      this.trigger.css({ top: `${getTriggerTopVal()}px` });
+      this.trigger.css({ top: `${getTriggerTopVal() - 1}px` });
     };
 
     // Set field-options visibility.
@@ -249,6 +249,13 @@ FieldOptions.prototype = {
     // Checkbox add parent css class
     if (isCheckbox) {
       this.trigger.addClass('is-checkbox');
+      if (!env.features.touch && this.isSafari) {
+        this.field.on(`click.${COMPONENT_NAME}`, '.checkbox-label', () => {
+          doActive();
+        }).on(`mouseout.${COMPONENT_NAME}`, '.checkbox-label', () => {
+          doUnactive();
+        });
+      }
     }
     // Bind fileupload events
     if (isFileupload) {

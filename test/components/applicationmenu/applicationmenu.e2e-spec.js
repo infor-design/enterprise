@@ -201,3 +201,13 @@ describe('Applicationmenu custom search tests', () => {
     await utils.checkForErrors();
   });
 });
+
+describe('Applicationmenu Many Items tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/test-filterable-many-items');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+});
