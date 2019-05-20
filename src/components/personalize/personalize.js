@@ -144,7 +144,7 @@ Personalize.prototype = {
     colors.header = colorUtils.validateHex(colors.header || defaultColors.header);
     colors.text = colorUtils.validateHex(colors.text || defaultColors.text);
     colors.btnColorHeader = colorUtils.validateHex(colors.btnColorHeader ||
-      colorUtils.getLuminousColorShade(colors.header, 0.3 ));
+      colorUtils.getLuminousColorShade(colors.header, 0.3));
     colors.subheader = colorUtils.validateHex(colors.subheader ||
       colorUtils.getLuminousColorShade(colors.header, 0.2));
     colors.verticalBorder = colorUtils.validateHex(colors.verticalBorder ||
@@ -172,7 +172,6 @@ Personalize.prototype = {
     colors.dark = colors.btnColorSubheader;
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
-
 
     return personalizeStyles(colors);
   },
