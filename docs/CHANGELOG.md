@@ -40,7 +40,7 @@
 - `[Datagrid]` Fixed an layout issue on short row grouped header buttons. ([#2005](https://github.com/infor-design/enterprise/issues/2005))
 - `[Datagrid]` Fixed an issue where disabled button color for contextual toolbar was not applying. ([#2150](https://github.com/infor-design/enterprise/issues/2150))
 - `[Datagrid]` Fixed an issue for xss where console.log was not sanitizing and make grid to not render. ([#1941](https://github.com/infor-design/enterprise/issues/1941))
-- `[Input]` Improved alignment of icons in the uplift theme input controls. ([#2072] (https://github.com/infor-design/enterprise/issues/2072))
+- `[Input]` Improved alignment of icons in the uplift theme input controls. ([#2072](https://github.com/infor-design/enterprise/issues/2072))
 - `[Datagrid]` Added an onBeforeSelect call back that you can return false from to disable row selection. ([#1906](https://github.com/infor-design/enterprise/issues/1906))
 - `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Locale]` Synced up date and time patterns with the CLDR several time patterns in particular were corrected. ([#2022](https://github.com/infor-design/enterprise/issues/2022))
