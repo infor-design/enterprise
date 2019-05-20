@@ -274,11 +274,11 @@ function personalizeStyles(colors) {
   box-shadow: none !important;
 }
 
-.accordion.panel.inverse .accordion-pane {
+.application-menu.is-personalizable .accordion.panel.inverse .accordion-pane {
   background-color: ${colors.lighter} !important;
 }
 
-.accordion.panel.inverse .accordion-pane .accordion-header {
+.application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
   border: 1px solid ${colors.lighter} !important;
 }
 
