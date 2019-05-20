@@ -136,36 +136,43 @@ Personalize.prototype = {
     // (Color)10 for the hover state on module tab - 133C59
     const defaultColors = {
       header: '2578A9',
-      subheader: '1d5f8a',
-      text: 'ffffff',
-      verticalBorder: '133C59',
-      horizontalBorder: '134D71',
-      inactive: '1d5f8a',
-      hover: '133C59',
-      btnColorHeader: '368AC0',
-      btnColorSubheader: '54a1d3'
+      text: 'ffffff'
     };
 
     // If an event sends a blank string through instead of a hex,
     // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
     colors.header = colorUtils.validateHex(colors.header || defaultColors.header);
     colors.text = colorUtils.validateHex(colors.text || defaultColors.text);
+    colors.btnColorHeader = colorUtils.validateHex(colors.btnColorHeader ||
+      colorUtils.getLuminousColorShade(colors.header, 0.3 ));
     colors.subheader = colorUtils.validateHex(colors.subheader ||
       colorUtils.getLuminousColorShade(colors.header, 0.2));
-    colors.button = colorUtils.validateHex(colors.button ||
-      colorUtils.getLuminousColorShade(colors.text, -0.80));
-    colors.inactive = colorUtils.validateHex(colors.inactive ||
-      colorUtils.getLuminousColorShade(colors.header, -0.22));
     colors.verticalBorder = colorUtils.validateHex(colors.verticalBorder ||
       colorUtils.getLuminousColorShade(colors.header, 0.1));
+
+    // Darker
+    colors.btnColorSubheader = colorUtils.validateHex(colors.btnColorSubheader ||
+      colorUtils.getLuminousColorShade(colors.header, -0.1));
+    colors.inactive = colorUtils.validateHex(colors.inactive ||
+      colorUtils.getLuminousColorShade(colors.header, -0.2));
     colors.horizontalBorder = colorUtils.validateHex(colors.horizontalBorder ||
-      colorUtils.getLuminousColorShade(colors.header, -0.4));
+      colorUtils.getLuminousColorShade(colors.header, -0.3));
+
+    // Legacy
     colors.hover = colorUtils.validateHex(colors.hover ||
       colorUtils.getLuminousColorShade(colors.header, -0.5));
-    colors.btnColorHeader = colorUtils.validateHex(colors.btnColorHeader ||
-      colorUtils.getLuminousColorShade(colors.subheader, -0.025));
-    colors.btnColorSubheader = colorUtils.validateHex(colors.btnColorSubheader ||
-      colorUtils.getLuminousColorShade(colors.header, -0.025));
+    colors.button = colorUtils.validateHex(colors.button ||
+      colorUtils.getLuminousColorShade(colors.text, -0.8));
+
+    colors.lightest = colors.btnColorHeader;
+    colors.lighter = colors.subheader;
+    colors.light = colors.verticalBorder;
+    colors.base = colors.header;
+    colors.contrast = colors.text;
+    colors.dark = colors.btnColorSubheader;
+    colors.darker = colors.inactive;
+    colors.darkest = colors.horizontalBorder;
+
 
     return personalizeStyles(colors);
   },

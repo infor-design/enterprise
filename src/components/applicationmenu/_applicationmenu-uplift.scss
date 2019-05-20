@@ -2,7 +2,105 @@
 //================================================== //
 
 .application-menu {
-  .application-menu-header .name-xl {
-    font-size: 2.8rem;
+  background-color: $theme-color-palette-slate-90;
+
+  .searchfield-wrapper {
+    background-color: $theme-color-palette-slate-100;
+    border-radius: 6px;
+    margin: 0 $theme-number-spacing-base;
+    width: calc(100% - calc(#{$theme-number-spacing-base} * 2));
+  }
+
+  .application-menu-header button:hover,
+  .application-menu-footer button:hover {
+    background-color: $theme-color-palette-slate-100;
+  }
+
+  .btn-icon {
+      font-size: unset;
+  }
+
+  .application-menu-header {
+    .name-xl {
+      font-size: $theme-size-font-md;
+      font-weight: $theme-number-font-weight-bold;
+      padding-top: calc(#{$theme-number-spacing-base} * 2);
+    }
+
+    button.application-menu-switcher-trigger {
+        margin: 0 8px 0 0;
+
+      > * {
+        vertical-align: bottom;
+      }
+    }
+  }
+
+  .application-menu-switcher-panel {
+    background-color: $theme-color-palette-slate-100;
+
+    .accordion.panel.inverse {
+      background-color: $theme-color-palette-slate-100;
+
+      .accordion-header {
+        border-color: $theme-color-palette-slate-100;
+      }
+
+      .accordion-header:hover {
+        background-color: $theme-color-palette-black;
+      }
+    }
+  }
+
+  .application-menu-header,
+  .application-menu-footer {
+    background-color: $theme-color-palette-slate-90;
+
+  }
+
+  .accordion {
+    margin: calc(#{$theme-number-spacing-base} * 1);
+    width: unset;
+
+    .accordion-header {
+      border-radius: 6px;
+    }
+
+    > .accordion-header > a > span {
+      font-weight: $theme-number-font-weight-bold;
+    }
+
+    .accordion-header.has-chevron > [class^='btn'] {
+      bottom: 4px;
+    }
+
+    &.has-icons .accordion-pane .accordion-header > a {
+      padding-left: calc(#{$theme-number-spacing-base} * 7);
+      letter-spacing: 0.2px;
+    }
+
+    &.has-icons .accordion-pane .accordion-header.is-selected {
+      background-color: unset;
+
+    }
+
+    &.has-icons .accordion-pane .accordion-header.is-selected > a {
+      padding-left: 38px;
+      letter-spacing: 0px;
+    }
+
+    .accordion-pane .accordion-header > a {
+      padding: 6px 0 8px 20px;
+    }
+
+    .accordion-pane .accordion-header.is-selected > a > span {
+      border-left: 2px solid white;
+      font-weight: $theme-number-font-weight-bold;
+      padding-left: calc(#{$theme-number-spacing-base} * 2);
+    }
+
+    &.panel.inverse .accordion-header:hover {
+      background-color: $theme-color-palette-slate-100;
+    }
   }
 }
