@@ -27,6 +27,7 @@ When you get the file back.
 - zh-TW and  zh-Hant are copies of each other so copy zh-TW to both and change the names
 - zh-CN and  zh-Hans are copies of each other so copy zh-TW to both and change the names
 - all the en- ones and es- ones are copies
+- sv-SE ensure value for `SetTime` it updated from `Klockslag` to `Sätt tid` ([#2153](https://github.com/infor-design/enterprise/issues/2153))
 
 To add a new translation string and use it in the code add it in the en-US.js
 

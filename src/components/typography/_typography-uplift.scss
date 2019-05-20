@@ -1,0 +1,24 @@
+// Typography Uplift
+//================================================== */
+
+// Special Fonts for Certain Languages. First in this list is placeholders for now,
+// until we figure out the best way to load these dynamically
+// https://fonts.google.com/specimen/Tajawal
+$cultures-font-family: (
+  'ar-EG': ('Tajawal', 'helvetica', 'arial'),
+  'ar-SA': ('Tajawal', 'helvetica', 'arial'),
+  'ja-JP': ('Source Han Sans', 'helvetica', 'arial'),
+  'ko-KR': ('Source Han Sans', 'Source Sans Pro', 'helvetica', 'arial'),
+  'zh-CN': ('Source Han Sans', 'Source Sans Pro', 'helvetica', 'arial'),
+  'zh-tw': ('Source Han Sans', 'Source Sans Pro', 'helvetica', 'arial'),
+  'zh-Hans': ('Source Han Sans', 'Source Sans Pro', 'helvetica', 'arial'),
+  'zh-Hant': ('Source Han Sans', 'Source Sans Pro', 'helvetica', 'arial')
+);
+
+html {
+  @each $key, $value in $cultures-font-family {
+    &[lang='#{$key}'] body {
+      font-family: $value;
+    }
+  }
+}

@@ -16,28 +16,13 @@ module.exports = function (app, defaults) {
       logger('info', `Changing Route Parameter "locale" to be "${res.opts.locale}".`);
     }
 
-    // Normally we will use an external file for loading SVG Icons and Patterns.
-    // Setting 'inlineSVG' to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
-    res.opts.inlineSVG = true;
-
     // Global settings to change the layout.
     if (req.query.layout && req.query.layout.length > 0) {
       setLayout(req, res, `layout-${req.query.layout}.html`);
     }
 
-    // Set the theme and colorScheme
-    // Fx: http://localhost:4000/controls/modal?colors=9279a6,ffffff&theme=dark
-    if (req.query.theme && req.query.theme.length > 0) {
-      res.opts.theme = req.query.theme;
-      logger('info', `Setting Theme to ${res.opts.theme}`);
-
-      if (res.opts.theme === 'uplift') {
-        res.opts.isUpliftTheme = true;
-      }
-    } else {
-      res.opts.theme = 'light';
-    }
-
+    // Set the colorScheme
+    // Fx: http://localhost:4000/controls/modal?colors=9279a6,ffffff
     if (req.query.colors && req.query.colors.length > 0) {
       res.opts.colors = req.query.colors;
       logger('info', `Setting Colors to ${res.opts.colors}`);

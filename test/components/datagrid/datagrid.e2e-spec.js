@@ -356,6 +356,15 @@ describe('Datagrid grouping headers and filter tests', () => {
     expect(await element.all(by.css('.datagrid-row')).count()).toEqual(5);
     expect(await element.all(by.css('.datagrid-rowgroup-header')).count()).toEqual(2);
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const datagridEl = await element(by.id('datagrid'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-grouping')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid grouping with paging tests', () => {
@@ -1098,6 +1107,29 @@ describe('Datagrid hide selection checkbox tests', () => {
   });
 });
 
+describe('Datagrid icon buttons tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-icon-buttons');
+
+    const datagridEl = await element(by.css('#readonly-datagrid .datagrid-body tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.id('readonly-datagrid'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-icon-buttons')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid loaddata selected rows tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-loaddata-selected-rows');
@@ -1154,6 +1186,31 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
 
     expect(await element(by.css('#datagrid-header .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-rowactivated');
   });
+});
+
+describe('Datagrid on modal with no default size', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.id('add-context')).click();
+
+      const containerEl = await element(by.css('body.no-scroll'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid multiselect with no selection checkbox', () => {

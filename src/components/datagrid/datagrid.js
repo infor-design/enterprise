@@ -65,6 +65,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.uniqueId=null] Unique DOM ID to use as local storage reference and internal variable names
  * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (short, medium or normal)
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
+ * @param {null|function} [settings.onBeforeSelect=null] If defined as a function will fire as callback before rows are selected. You can return false to veto row selection.
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
  * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last column will get filled with an empty spacer column.
  * @param {boolean}  [settings.showNewRowIndicator=true] If true, the new row indicator will display after adding a row.
@@ -151,6 +152,7 @@ const DATAGRID_DEFAULTS = {
   rowHeight: 'normal', // (short, medium or normal)
   selectable: false, // false, 'single' or 'multiple' or 'siblings'
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
+  onBeforeSelect: null,
   allowSelectAcrossPages: null,
   groupable: null,
   spacerColumn: false,
@@ -247,6 +249,7 @@ Datagrid.prototype = {
     this.isTouch = env.features.touch;
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
+    this.isInModal = false;
     this.appendTooltip();
     this.initSettings();
     this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
@@ -504,7 +507,7 @@ Datagrid.prototype = {
     }
 
     self.pagerRefresh(location);
-    
+
     // Add to ui
     self.renderRows();
 
@@ -563,40 +566,56 @@ Datagrid.prototype = {
   * Remove a row of data to the grid and dataset.
   * @param {number} row The row index
   * @param {boolean} nosync Dont sync the selected rows.
+  * @param {boolean} noTrigger If true, do not trigger the removerow event.
+  * @returns {object|boolean} If noTrigger is true then return the event args otherwise nothing is returned
   */
-  removeRow(row, nosync) {
+  removeRow(row, nosync, noTrigger) {
     const rowNode = this.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
     const rowData = this.settings.dataset[row];
 
     this.unselectRow(row, nosync);
     this.settings.dataset.splice(row, 1);
+    this.preventSelection = true;
     this.renderRows();
+    delete this.preventSelection;
 
-    /**
-    *  Fires after a row is removed via the api
-    * @event rowremove
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Object with the arguments
-    * @property {number} args.row The row index
-    * @property {number} args.cell The cell index
-    * @property {HTMLElement} args.target The row node that is being dragged.
-    * @property {HTMLElement} args.item The dragged rows data.
-    */
-    this.element.trigger('rowremove', { row, cell: null, target: rowNode, item: rowData, oldValue: rowData });
+    const args = { row, cell: null, target: rowNode, item: rowData, oldValue: rowData };
+
+    if (!noTrigger) {
+      /**
+      *  Fires after a row is removed via the api
+      * @event rowremove
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Object with the arguments
+      * @property {number} args.row The row index
+      * @property {number} args.cell The cell index
+      * @property {HTMLElement} args.target The row node that is being dragged.
+      * @property {HTMLElement} args.item The dragged rows data.
+      */
+      this.element.trigger('rowremove', args);
+    } else {
+      return args;
+    }
+
+    return true;
   },
 
   /**
   * Remove all selected rows from the grid and dataset.
+  * @param {boolean} isTrigger if true will trigger `rowremove` one time only with all selection data for more then one selected.
   */
-  removeSelected() {
+  removeSelected(isTrigger) {
     this._selectedRows.sort((a, b) => (a.idx < b.idx ? -1 : (a.idx > b.idx ? 1 : 0)));
+    const args = [];
 
     for (let i = this._selectedRows.length - 1; i >= 0; i--) {
-      this.removeRow(this._selectedRows[i].idx, true);
+      args.push(this.removeRow(this._selectedRows[i].idx, true, isTrigger));
     }
-    this.pagerRefresh();
-    this.syncSelectedUI();
+
+    if (isTrigger) {
+      this.element.trigger('rowremove', [args]);
+    }
   },
 
   /**
@@ -2335,10 +2354,7 @@ Datagrid.prototype = {
       };
 
       if (input.data('datepicker')) {
-        format = input.data('datepicker').settings.dateFormat;
-        if (format === 'locale') {
-          format = Locale.calendar().dateFormat.short;
-        }
+        format = input.data('datepicker').pattern;
         condition.format = format;
       }
 
@@ -3159,7 +3175,9 @@ Datagrid.prototype = {
 
     // Deselect rows when changing pages
     if (self.settings.paging && self.settings.source && !self.settings.allowSelectAcrossPages) {
-      self._selectedRows = [];
+      if (!self.preventSelection) {
+        self._selectedRows = [];
+      }
       self.syncSelectedUI();
     }
 
@@ -4038,6 +4056,11 @@ Datagrid.prototype = {
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
+      if (!this.elemWidth && this.element.parent().is('.datagrid-default-modal-width')) { // handle on invisible modal
+        this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
+        this.isInModal = true;
+      }
+
       this.widthSpecified = false;
       this.widthPixel = false;
     }
@@ -4150,7 +4173,7 @@ Datagrid.prototype = {
             widthPercent: this.widthPercent
           };
           this.totalMinWidths[container] = this.totalWidths[container];
-          this.totalWidths[container] = '100%';
+          this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
         }
         if (diff > 0 && diff < colWidth && !this.widthPercent && !col.width) {
           colWidth += diff;
@@ -4171,7 +4194,7 @@ Datagrid.prototype = {
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
           stretchColumn[0].width += diff2 - 2;
         }
-        this.totalWidths[container] = '100%';
+        this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
       }
 
       if (this.widthPercent) {
@@ -5705,38 +5728,41 @@ Datagrid.prototype = {
     * @property {object} args.originalEvent The original event object.
     */
     this.element.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tbody tr', (e) => {
-      if (!self.isSubscribedTo(e, 'contextmenu')) {
-        return;
+      const hasMenu = self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
+      self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
+
+      if (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu) {
+        return true;
       }
+      e.preventDefault();
       self.closePrevPopupmenu();
 
-      self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
-      e.preventDefault();
-
-      if (self.settings.menuId && $(`#${self.settings.menuId}`).length > 0) {
-        $(e.currentTarget).popupmenu({
-          menuId: self.settings.menuId,
-          eventObj: e,
-          beforeOpen: self.settings.menuBeforeOpen,
-          attachToBody: true,
-          trigger: 'immediate'
-        })
-          .off('selected.gridpopuptr')
-          .on('selected.gridpopuptr', (selectedEvent, args) => {
-            if (self.settings.menuSelected) {
-              self.settings.menuSelected(selectedEvent, args);
-            }
-          })
-          .off('close.gridpopuptr')
-          .on('close.gridpopuptr', function () {
-            const elem = $(this);
-            if (elem.data('popupmenu')) {
-              elem.data('popupmenu').destroy();
-            }
-          });
+      if (!hasMenu) {
+        return true;
       }
 
-      return false; // eslint-disable-line
+      $(e.currentTarget).popupmenu({
+        menuId: self.settings.menuId,
+        eventObj: e,
+        beforeOpen: self.settings.menuBeforeOpen,
+        attachToBody: true,
+        trigger: 'immediate'
+      })
+        .off('selected.gridpopuptr')
+        .on('selected.gridpopuptr', (selectedEvent, args) => {
+          if (self.settings.menuSelected) {
+            self.settings.menuSelected(selectedEvent, args);
+          }
+        })
+        .off('close.gridpopuptr')
+        .on('close.gridpopuptr', function () {
+          const elem = $(this);
+          if (elem.data('popupmenu')) {
+            elem.data('popupmenu').destroy();
+          }
+        });
+
+      return false;
     });
 
     // Move the drag handle to the end or start of the column
@@ -5884,14 +5910,15 @@ Datagrid.prototype = {
   * Check if the event is subscribed to.
   * @private
   * @param {object} e The update empty message config object.
-  * @param {object} eventName The update empty message config object.
+  * @param {string} eventName The update empty message config object.
   * @returns {boolean} If the event is subscribed to.
   */
   isSubscribedTo(e, eventName) {
     const self = this;
+    const gridEvents = $._data(self.element[0]).events;
 
-    for (const event in $._data(self.element[0]).events) { //eslint-disable-line
-      if (event === eventName) {
+    for (const event in gridEvents) { //eslint-disable-line
+      if (event === eventName && !(gridEvents[event].length === 1 && gridEvents[event][0].namespace === 'datagrid')) {
         return true;
       }
     }
@@ -6472,6 +6499,13 @@ Datagrid.prototype = {
       return;
     }
 
+    if (typeof s.onBeforeSelect === 'function' && !noTrigger) {
+      const result = s.onBeforeSelect({ node: rowNode, idx: dataRowIndex });
+      if (result === false) { // Boolean false is returned so cancel
+        return;
+      }
+    }
+
     if (s.selectable === 'single') {
       let selectedIndex = -1;
       if (this._selectedRows.length > 0) {
@@ -7023,7 +7057,6 @@ Datagrid.prototype = {
     const unselectNode = function (elem, index) {
       const removeSelected = function (node, selIdx) {
         delete node._selected;
-        self.selectedRowCount--;
         if (typeof selIdx === 'undefined') {
           selIdx = index;
         }
@@ -7976,15 +8009,7 @@ Datagrid.prototype = {
       }
 
       const data = { originalVal, isDirty: false };
-      if (typeof this.dirtyArray === 'undefined') {
-        this.dirtyArray = [];
-      }
-      if (typeof this.dirtyArray[idx] === 'undefined') {
-        this.dirtyArray[idx] = [];
-        this.dirtyArray[idx][cell] = data;
-      } else if (typeof this.dirtyArray[idx][cell] === 'undefined') {
-        this.dirtyArray[idx][cell] = data;
-      }
+      this.addToDirtyArray(idx, cell, data);
     }
 
     this.editor.focus();
@@ -8490,7 +8515,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearDirty() {
-    if (this.settings.showDirty && this.dirtyArray) {
+    if (this.settings.showDirty) {
       this.clearDirtyClass(this.element);
       this.dirtyArray = undefined;
     }
@@ -8502,10 +8527,12 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearDirtyRow(row) {
-    if (this.settings.showDirty && this.dirtyArray && typeof row === 'number') {
+    if (this.settings.showDirty && typeof row === 'number') {
       const rowNode = this.rowNodes(row);
       this.clearDirtyClass(rowNode);
-      this.dirtyArray[row] = undefined;
+      if (this.dirtyArray) {
+        this.dirtyArray[row] = undefined;
+      }
     }
   },
 
@@ -8575,6 +8602,49 @@ Datagrid.prototype = {
       }
     }
     return rows;
+  },
+
+  /**
+  * Return an array containing all of the currently modified rows, the type of modification
+  * and the cells that are dirty and the data.
+  * @returns {array} An array showing the dirty row info.
+  */
+  getModifiedRows() {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    const modified = [];
+
+    // First add the dirty rows
+    if (this.dirtyArray && this.dirtyArray.length) {
+      for (let i = 0; i < this.dirtyArray.length; i++) {
+        if (this.dirtyArray[i] === undefined) {
+          continue;
+        }
+
+        const data = {
+          data: s.treeGrid ? dataset[i].node : dataset[i],
+          row: i,
+          type: 'dirty',
+          cells: []
+        };
+
+        for (let j = 0; j < this.dirtyArray[i].length; j++) {
+          if (this.dirtyArray[i][j] !== undefined) {
+            data.cells.push(this.dirtyArray[i][j]);
+          }
+        }
+        modified.push(data);
+      }
+    }
+
+    // Now add error and in progress rows
+    for (let i = 0; i < dataset.length; i++) {
+      const el = dataset[i];
+      if (el.rowStatus !== undefined && (el.rowStatus.icon === 'error' || el.rowStatus.icon === 'in-progress')) {
+        modified.push({ data: el, row: i, type: el.rowStatus.icon, cells: [] });
+      }
+    }
+    return modified;
   },
 
   /**
@@ -8800,12 +8870,14 @@ Datagrid.prototype = {
       this.validateCell(dataRowIndex, cell);
 
       // Update and set trackdirty
-      if (this.isDirtyCellNotUndefined(row, cell)) {
+      if (!this.isDirtyCellUndefined(row, cell)) {
         this.dirtyArray[row][cell].value = value;
         this.dirtyArray[row][cell].coercedVal = coercedVal;
         this.dirtyArray[row][cell].escapedCoercedVal = xssUtils.escapeHTML(coercedVal);
         this.dirtyArray[row][cell].cellNodeText = cellNode.text();
-        this.setIsDirtyAndIcon(row, cell, cellNode);
+        this.dirtyArray[row][cell].cell = cell;
+        this.dirtyArray[row][cell].column = this.settings.columns[cell];
+        this.setDirtyCell(row, cell);
       }
     }
 
@@ -8853,31 +8925,75 @@ Datagrid.prototype = {
    * @returns {boolean} true if isDirty
    */
   isCellDirty(row, cell) {
-    return this.isDirtyCellNotUndefined(row, cell) ?
-      this.dirtyArray[row][cell].isDirty : false;
+    return this.isDirtyCellUndefined(row, cell) ?
+      false : this.dirtyArray[row][cell].isDirty;
   },
 
   /**
-   * Set isDirty value and Add/Remove dirty icon to given cell
-   * must checked before to be true from `isDirtyCellNotUndefined(row, cell)`
-   * must checked before not undefined `cellNode`
+   * Function to add a dirty entry to the array
+   * @param {number} row  The row index
+   * @param {number} cell The cell index
+   * @param {object} data The cell data to add
+   */
+  addToDirtyArray(row, cell, data) {
+    if (typeof this.dirtyArray === 'undefined') {
+      this.dirtyArray = [];
+    }
+
+    if (typeof this.dirtyArray[row] === 'undefined') {
+      this.dirtyArray[row] = [];
+      this.dirtyArray[row][cell] = data;
+    } else if (typeof this.dirtyArray[row][cell] === 'undefined') {
+      this.dirtyArray[row][cell] = data;
+    }
+  },
+
+  /**
+   * Set a cell to dirty and add the dirty icon internally.
    * @private
    * @param {number} row The row index
    * @param {number} cell The cell index
-   * @param {object} cellNode jQuery cell node
+   * @param {object} dirtyOptions The cell dirty options
    * @returns {void}
    */
-  setIsDirtyAndIcon(row, cell, cellNode) {
+  setDirtyCell(row, cell, dirtyOptions) {
+    const cellNode = this.cellNode(row, cell);
+
+    if (dirtyOptions) {
+      this.addToDirtyArray(row, cell, dirtyOptions);
+    }
+
     const d = this.dirtyArray[row][cell];
     if ((d.originalVal === d.value) ||
       (d.originalVal === d.coercedVal) ||
       (d.originalVal === d.escapedCoercedVal) ||
       (d.originalVal === d.cellNodeText)) {
       this.dirtyArray[row][cell].isDirty = false;
-      cellNode[0].classList.remove('is-dirty-cell');
+      this.setDirtyIndicator(row, cell, false);
     } else {
       this.dirtyArray[row][cell].isDirty = true;
       cellNode[0].classList.add('is-dirty-cell');
+      this.setDirtyIndicator(row, cell, true);
+    }
+  },
+
+  /**
+   *  Set a cell to dirty and add the dirty icon visually.
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @param {boolean} toggle True to set it and false to remove it
+   */
+  setDirtyIndicator(row, cell, toggle) {
+    const cellNode = this.cellNode(row, cell);
+
+    if (row < 0 || cell < 0) {
+      return;
+    }
+
+    if (toggle) {
+      cellNode[0].classList.add('is-dirty-cell');
+    } else {
+      cellNode[0].classList.remove('is-dirty-cell');
     }
   },
 
@@ -8888,8 +9004,8 @@ Datagrid.prototype = {
    * @param {number} cell The cell index
    * @returns {boolean} true if found
    */
-  isDirtyCellNotUndefined(row, cell) {
-    return (this.settings.showDirty &&
+  isDirtyCellUndefined(row, cell) {
+    return !(this.settings.showDirty &&
       typeof row === 'number' &&
       typeof cell === 'number' &&
       row > -1 && cell > -1 &&

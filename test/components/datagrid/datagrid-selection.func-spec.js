@@ -440,4 +440,40 @@ describe('Datagrid Selection API', () => {
       done();
     }, 1);
   });
+
+  it('Should be able to call onBeforeSelect', (done) => {
+    datagridObj.destroy();
+
+    const options = {
+      dataset: data,
+      columns,
+      selectable: 'multiple',
+      onBeforeSelect: (args) => {
+        expect(args.idx).toEqual(2);
+        done();
+        return false;
+      }
+    };
+    datagridObj = new Datagrid(datagridEl, options);
+    datagridObj.selectRow(2);
+  });
+
+  it('Should be able to veto selection with onBeforeSelect', (done) => {
+    datagridObj.destroy();
+
+    const options = {
+      dataset: data,
+      columns,
+      selectable: 'multiple',
+      onBeforeSelect: (args) => {
+        expect(args).toBeTruthy();
+        return false;
+      }
+    };
+    datagridObj = new Datagrid(datagridEl, options);
+    datagridObj.selectRow(2);
+
+    expect(datagridObj.selectedRows().length).toEqual(0);
+    done();
+  });
 });

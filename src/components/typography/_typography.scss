@@ -6,12 +6,14 @@ $font-source-sans: 'Source Sans Pro', helvetica, arial;
 
 // Special Fonts for Certain Languages
 $cultures-font-family: (
-  'ar-EG': ('helvetica', 'arial', 'Tahoma', 'DejaVu'),
-  'ar-SA': ('helvetica', 'arial', 'Tahoma', 'DejaVu'),
-  'ja-JP': ('helvetica', 'arial', 'MS PGothic'),
-  'ko-KR': ('helvetica', 'arial', 'Batang', 'Gulim'),
-  'zh-CN': ('helvetica', 'arial', 'Microsoft YaHei New', '微软雅黑', '宋体', 'SimSun', 'STXihei', '华文细黑'),
-  'zh-tw': ('helvetica', 'arial', 'MingLiU')
+  'ar-EG': ('DejaVu', 'Tahoma', 'helvetica', 'arial'),
+  'ar-SA': ('DejaVu', 'Tahoma', 'helvetica', 'arial'),
+  'ja-JP': ('MS PGothic', 'ＭＳ Ｐゴシック', 'helvetica', 'arial'),
+  'ko-KR': ('Malgun Gothic', 'AppleGothic', 'helvetica', 'arial'),
+  'zh-CN': ('华文细黑', '宋体', '微软雅黑', 'Microsoft YaHei New', 'helvetica', 'arial'),
+  'zh-tw': ('华文细黑', '宋体', '微软雅黑', 'Microsoft YaHei New', 'helvetica', 'arial'),
+  'zh-Hans': ('华文细黑', '宋体', '微软雅黑', 'Microsoft YaHei New', 'helvetica', 'arial'),
+  'zh-Hant': ('华文细黑', '宋体', '微软雅黑', 'Microsoft YaHei New', 'helvetica', 'arial'),
 );
 
 // Body Sizes and Color

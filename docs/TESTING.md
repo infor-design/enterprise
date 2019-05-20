@@ -73,23 +73,22 @@ npm run e2e:ci
 
 See [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml) for current implementation
 
-## Running E2E Tests
+## Running E2E Tests Locally
 
 Run a specific E2E component locally (Only Chrome or Firefox)
 
-```sh
-npm start
-#leave the server running, and create a new terminal window in the same directory. Now, run
-env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local:debug
-```
+1. Run `npm start` to start the app
+1. Isolate your tests with "Fit" or "Fdescribe"
+1. In another terminal instance, run `npm run e2e:ci:debug`
 
-Isolate your tests then run with the keys in your path.
+OR
 
-```sh
-npm start
-#leave the server running, and create a new terminal window in the same directory. Now, run
-npm run e2e:local:bs
- ```
+1. Run `npm start` to start the app
+1. Then in another terminal instance:
+
+    ```sh
+    env PROTRACTOR_SPECS='test/components/dropdown/dropdown.e2e-spec.js' npm run e2e:local:debug
+    ```
 
 ### Running BrowserStack tests locally
 
@@ -210,55 +209,50 @@ Following the process below will safely create baseline images the CI can use du
 
 1. Push the branch you're working on to GitHub (we'll need it later).
 1. In your terminal, run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the Travis CI docker image to mimic the environment. And wait....
-1. Open up the image and go in `docker exec -it travis-debug bash -l`
-1. Install [Node Version Manager (nvm)](https://github.com/creationix/nvm) using the latest version available (check their Github for more info)
-1. Set the timezone for some tests `cp /usr/share/zoneinfo/America/New_York /etc/localtime`
-
-```sh
-wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-```
-
-1. Switch to the Travis user `su - travis`
+1. Open the image and go in: `docker exec -it travis-debug bash -l`
+1. Set the timezone for some tests: `cp /usr/share/zoneinfo/America/New_York /etc/localtime`
+1. Install [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm#install--update-script) using the latest version available (check their Github for more info)
 1. Update/Install Node.js
 
-```sh
-nvm install 10
-nvm use 10
-```
+    ```sh
+    nvm install 10
+    nvm alias default {insert exact version}
+    nvm use default
+    ```
 
-1. Go to your home directory `(cd ~)`
-1. Clone IDS Enterprise repo, and navigate to it
+1. Go to your home directory `(cd /home/travis)`
+1. Clone IDS Enterprise repo, and navigate into it
 
-```sh
-git clone https://github.com/infor-design/enterprise.git
-```
+    ```sh
+    git clone https://github.com/infor-design/enterprise.git
+    ```
 
-1. Switch to the branch you pushed to Github earlier.
-1. Run the install commands from `npm install -g grunt-cli && npm install`
-1. May need to update the version of Chrome on the container:
+1. Checkout the branch you pushed to Github earlier.
+1. Run the install commands: `npm install -g grunt-cli && npm install`
+1. You may need to update the version of Chrome on the container:
 
-```sh
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome*.deb
-```
+    ```sh
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo dpkg -i google-chrome*.deb
+    ```
 
 #### Generating a new set of Baseline images
 
 1. Build the IDS Components:
 
-```sh
-npx grunt
-```
+    ```sh
+    npx grunt
+    ```
 
 1. Run the `npm run quickstart` command in your current docker session to run the demoapp.
 1. Open a second session in the docker container, and run `npm run e2e:ci` to start the tests.
     - Or you can `pico|vi` into one of the e2e test files, `fdescribe|fit` and `npm run e2e:ci:debug` to run individual tests instead of the whole suite
 
-```sh
-npm run quickstart
-# In a new shell
-npm run e2e:ci
-```
+    ```sh
+    npm run quickstart
+    # In a new shell
+    npm run e2e:ci
+    ```
 
 Some tests will most likely fail.  These failures are due to visual differences.  These are the images that need to be the new "baseline" images.
 
@@ -275,9 +269,9 @@ Some tests will most likely fail.  These failures are due to visual differences.
 1. Open a new shell on your local machine and copy the file and check it using: `docker cp <CONTAINER_ID>:/home/travis/enterprise/test/.tmp/actual/<name-of-test-file.png> /Users/<your_user_name>/<target_path>`
 1. If it looks visually as expected then copy it to the baseline
 
-```sh
-mv test/.tmp/actual/<name-of-test-file.png> test/baseline/<name-of-test-file.png>`
-```
+    ```sh
+    mv test/.tmp/actual/<name-of-test-file.png> test/baseline/<name-of-test-file.png>`
+    ```
 
 1. Run tests again to confirm
 1. Commit and push
@@ -289,6 +283,12 @@ As mentioned, we can copy the last test run folder (actual) `test/.tmp/actual/<n
 ```sh
  docker cp <CONTAINER_ID>:/home/travis/enterprise/test/.tmp/actual/<name-of-test-file.png> /Users/<your_user_name>/<target_path>
 cp <CONTAINER_ID>:/home/travis/enterprise/test/baseline/<name-of-test-file.png> /Users/<your_user_name>/<target_path>
+```
+
+For example:
+
+```sh
+docker cp 9979cb17cbfc:/enterprise/test/.tmp/actual/searchfield-open-chrome-1200x800-dpr-1.png /Users/tmcconechy/dev/actual
 ```
 
 Or copy them all to your local directory for inspection.

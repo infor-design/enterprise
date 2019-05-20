@@ -23,8 +23,8 @@ const PERSONALIZE_DEFAULTS = {
  * @param {HTMLElement|jQuery[]} element The base element
  * @param {object} [settings] Incoming settings
  * @param {string} [settings.colors]  The list of colors
- * @param {string} [settings.theme='light'] The theme name (light, dark or high-contrast)
- * @param {string} [settings.font='Helvetica'] Use the newer source sans font
+ * @param {string} [settings.theme] The theme name (light, dark or high-contrast)
+ * @param {string} [settings.font] Use the newer source sans font
  * @param {boolean} [settings.blockUI=true] Cover the UI and animate when changing theme.
 */
 function Personalize(element, settings) {
@@ -45,20 +45,21 @@ Personalize.prototype = {
    * @returns {this} component instance
    */
   init() {
-    // Set the default theme, or grab the theme from an external CSS stylesheet.
-    const cssTheme = this.getThemeFromStylesheet();
-    this.currentTheme = this.settings.theme || cssTheme;
-    this.setTheme(this.currentTheme);
+    this.handleEvents();
+
+    if (this.settings.theme) {
+      this.setTheme(this.settings.theme);
+    } else {
+      this.setTheme(this.getThemeFromStylesheet());
+    }
 
     if (this.settings.colors) {
       this.setColors(this.settings.colors);
     }
 
     if (this.settings.font) {
-      $('html').addClass(`font-${this.settings.font}`);
+      this.setFont(this.settings.font);
     }
-
-    this.handleEvents();
 
     return this;
   },
@@ -170,6 +171,14 @@ Personalize.prototype = {
   },
 
   /**
+   * Set the font
+   * @param {string} font The font name
+   */
+  setFont(font) {
+    $('html').addClass(`font-${font}`);
+  },
+
+  /**
   * Sets the personalization color(s)
   * @param {array} colors The original hex color as a string or an object with all the Colors
   * @returns {this} component instance
@@ -230,8 +239,8 @@ Personalize.prototype = {
       if (queryParamIndex > -1) {
         thisTheme = thisTheme.slice(0, queryParamIndex);
       }
-      // trim the file extensions off the end and drop the -theme portion
-      thisTheme = thisTheme.replace('.min.css', '').replace('.css', '').replace('-theme', '');
+      // trim the file extensions off the end
+      thisTheme = thisTheme.replace('.min', '').replace('.css', '');
     }
     return thisTheme;
   },
@@ -242,20 +251,27 @@ Personalize.prototype = {
   * scheme (can be dark, light or high-contrast)
   */
   setTheme(incomingTheme) {
+    const $html = $('html');
     if (theme.currentTheme.id === incomingTheme) {
-      if (!$('html').hasClass(`${incomingTheme}-theme`)) {
-        $('html').addClass(`${incomingTheme}-theme`);
+      if (!$html.hasClass(incomingTheme)) {
+        $html.addClass(incomingTheme);
       }
       return;
     }
 
-    // Validate theme is supported
-    const result = theme.themes().filter(themeObj => themeObj.id === incomingTheme);
-    if (result.length === 0) {
-      return;
+    // Adapt them for backwards compatibility
+    const legacyThemeNames = ['light', 'dark', 'high-contrast'];
+    if (legacyThemeNames.indexOf(incomingTheme) > -1) {
+      incomingTheme += '-theme';
     }
 
-    $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(`${incomingTheme}-theme`);
+    $html
+      .removeClass((idx, val) => {
+        const classes = val.split(' ');
+        const toRemove = classes.filter(c => c.indexOf('theme') > -1);
+        return toRemove.join();
+      })
+      .addClass(incomingTheme);
 
     this.blockUi();
 
@@ -274,7 +290,7 @@ Personalize.prototype = {
 
     newCss.attr({
       id: originalCss.attr('id'),
-      href: xssUtils.stripTags(`${themePath}/${incomingTheme}-theme${isMin ? '.min' : ''}.css`)
+      href: xssUtils.stripTags(`${themePath}/${incomingTheme}${isMin ? '.min' : ''}.css`)
     });
     originalCss.removeAttr('id');
 
@@ -285,6 +301,9 @@ Personalize.prototype = {
     // record state of theme in settings
     this.settings.theme = incomingTheme;
     theme.setTheme(incomingTheme);
+
+    // Somehow colorpicker uses this, so keep it
+    this.currentTheme = incomingTheme;
 
     /**
     * Fires after the theme is changed
@@ -347,17 +366,43 @@ Personalize.prototype = {
 
   /**
    * Handle Updating Settings
-   * @param {object} [settings] incoming settings
+   * @param {object} settings Incoming settings
    * @returns {this} component instance
    */
   updated(settings) {
-    if (settings) {
-      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    if (!settings) {
+      return this;
     }
 
-    return this
-      .teardown()
-      .init();
+    // Copy the old settings to compare
+    const prevSettings = utils.extend({ }, this.settings);
+
+    // Merge in the new settings
+    this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+
+    if (this.settingsDidChange(prevSettings, 'theme')) {
+      this.setTheme(this.settings.theme);
+    }
+
+    if (this.settingsDidChange(prevSettings, 'colors')) {
+      this.setColors(this.settings.colors);
+    }
+
+    if (this.settingsDidChange(prevSettings, 'font')) {
+      this.setFont(this.settings.font);
+    }
+
+    return this;
+  },
+
+  /**
+   * Compare previous settings to current settings
+   * @param {object} prevSettings The previous settings object
+   * @param {string} prop The property to compare
+   * @returns {boolean} If the settings changed
+   */
+  settingsDidChange(prevSettings, prop) {
+    return this.settings[prop] && this.settings[prop] !== prevSettings[prop];
   },
 
   /**

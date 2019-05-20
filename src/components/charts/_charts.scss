@@ -68,11 +68,7 @@
   }
 
   &.completion-chart {
-    margin: 30px;
-
-    @media only screen and (min-width: $breakpoint-phone-to-tablet) and (max-width: $breakpoint-tablet-to-desktop) {
-      margin: 30px 5px;
-    }
+    margin: 10px 0;
   }
 
   // Right aligned Legend
@@ -291,8 +287,6 @@
 }
 
 .chart-targeted-achievement {
-  margin-bottom: 17px !important;
-
   .label {
     font-size: $theme-size-font-base;
     margin-top: 2px;

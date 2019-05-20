@@ -26,7 +26,7 @@ demo:
 
 ## Important Notes
 
-The [popover]( ./popover) component shares a common API with the tooltip Component.  When a popover component is invoked, any methods and events used by the tooltip will also be available in the popover.
+The [popover](./popover) component shares a common API with the tooltip Component.  When a popover component is invoked, any methods and events used by the tooltip will also be available in the popover.
 
 ## Behavior Guidelines
 
@@ -36,7 +36,7 @@ For accessibility, the tooltip should be shown when you keyboard onto an element
 
 ### Simple Tooltips
 
-If using the [initializer]( ./initialize), any elements with a `title` attribute will be picked up and turned into a tooltip when the element becomes hovered (or tapped in a mobile scenario). It may be needed to reinitialize a component or page section which has been added.
+If using the [initializer](./initialize), any elements with a `title` attribute will be picked up and turned into a tooltip when the element becomes hovered (or tapped in a mobile scenario). It may be needed to reinitialize a component or page section which has been added.
 
 ```html
 <button id="btn" class="btn" type="button" title="Tooltips Provide Additional Information">

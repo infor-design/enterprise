@@ -67,6 +67,7 @@ describe('Datagrid Settings', () => {
       uniqueId: null,
       rowHeight: 'normal',
       selectable: false,
+      onBeforeSelect: null,
       selectChildren: true,
       allowSelectAcrossPages: null,
       groupable: null,
