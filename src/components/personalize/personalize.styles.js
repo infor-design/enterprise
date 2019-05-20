@@ -228,7 +228,7 @@ function personalizeStyles(colors) {
 .application-menu.is-personalizable button .icon,
 .application-menu.is-personalizable button span,
 .application-menu.is-personalizable .hyperlink {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
 }
 
 .application-menu.is-personalizable button:not(:disabled):hover .icon,
@@ -269,9 +269,7 @@ function personalizeStyles(colors) {
   background-color: ${colors.base} !important;
 }
 
-.application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus),
-.accordion.panel.inverse .accordion-pane.is-expanded + .accordion-header:not(.is-focused):not(.is-selected),
-.accordion.panel.inverse .accordion-pane.is-expanded + .accordion-content {
+.application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) {
   border: 1px solid ${colors.base} !important;
   box-shadow: none !important;
 }
