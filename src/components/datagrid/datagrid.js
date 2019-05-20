@@ -807,6 +807,7 @@ Datagrid.prototype = {
     } else {
       this.clearHeaderCache();
       this.renderRows();
+      this.renderHeader();
     }
 
     // Setup focus on the first cell
@@ -1290,9 +1291,11 @@ Datagrid.prototype = {
     }
 
     if (this.restoreFilter) {
-      this.applyFilter(this.savedFilter, 'render');
       this.restoreFilter = false;
+      this.applyFilter(this.savedFilter, 'render');
       this.savedFilter = null;
+    } else if (this.filterExpr && this.filterExpr.length > 0) {
+      this.setFilterConditions(this.filterExpr); 
     }
 
     this.activeEllipsisHeaderAll();
@@ -1688,7 +1691,7 @@ Datagrid.prototype = {
   */
   filterItemHtml(icon, text, checked) {
     const iconMarkup = $.createIcon({ classes: 'icon icon-filter', icon: `filter-${icon}` });
-    return `<li ${checked ? 'class="is-checked"' : ''}><a href="#">${iconMarkup}<span>${Locale.translate(text)}</span></a></li>`;
+    return `<li class="${icon} ${checked ? ' is-checked' : ''}"><a href="#">${iconMarkup}<span>${Locale.translate(text)}</span></a></li>`;
   },
 
   /**
@@ -2252,6 +2255,20 @@ Datagrid.prototype = {
       return;
     }
 
+    this.clearFilterFields();
+
+    this.applyFilter();
+    this.element.trigger('filtered', { op: 'clear', conditions: [] });
+  },
+  
+  /**
+  * Clear the Filter fields.
+  */
+  clearFilterFields() {
+    if (!this.settings.filterable) {
+      return;
+    }
+
     this.headerContainer.find('input, select').val('').trigger('updated');
     // reset all the filters to first item
     this.headerContainer.find('.btn-filter').each(function () {
@@ -2263,9 +2280,6 @@ Datagrid.prototype = {
       ul.find('.is-checked').removeClass('is-checked');
       first.addClass('is-checked');
     });
-
-    this.applyFilter();
-    this.element.trigger('filtered', { op: 'clear', conditions: [] });
   },
 
   /**
@@ -2273,11 +2287,14 @@ Datagrid.prototype = {
   * @param {object} conditions An array of objects with the filter conditions.
   */
   setFilterConditions(conditions) {
+    this.filterExpr = conditions;
+    this.clearFilterFields();
     for (let i = 0; i < conditions.length; i++) {
       // Find the filter row
       const rowElem = this.headerContainer.find(`th[data-column-id="${conditions[i].columnId}"]`);
       const input = rowElem.find('input, select');
       const btn = rowElem.find('.btn-filter');
+      const ul = btn.next();
 
       if (conditions[i].value === undefined) {
         conditions[i].value = '';
@@ -2297,6 +2314,8 @@ Datagrid.prototype = {
       }
 
       btn.find('svg:first > use').attr('xlink:href', `#icon-filter-${conditions[i].operator}`);
+      ul.find('.is-checked').removeClass('is-checked');
+      ul.find(`.${conditions[i].operator}`).addClass('is-checked');
     }
   },
 
@@ -6227,7 +6246,7 @@ Datagrid.prototype = {
       }
       return obj;
     }
-
+    
     if (this.filterExpr && this.filterExpr.length === 1) {
       if (this.filterExpr[0].value !== '') {
         pagingInfo.activePage = this.pagerAPI.filteredActivePage || 1;
