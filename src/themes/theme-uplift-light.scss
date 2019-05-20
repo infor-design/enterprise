@@ -32,9 +32,9 @@ body::before {
   font-size: 13px;
   font-weight: 900;
   height: 25px;
-  right: -25px;
   line-height: 27px;
   position: fixed;
+  right: -25px;
   text-align: center;
   text-transform: uppercase;
   -ms-transform: rotate(-45deg);
@@ -45,5 +45,5 @@ body::before {
 }
 
 html body {
-  background-color: #FFFFFF;
+  background-color: #fff;
 }
