@@ -367,6 +367,10 @@ CompletionChart.prototype = {
         '</span>';
     }
 
+    if (dataset.completed.text || (dataset.completed.format && !isAchievment)) {
+      this.element.addClass('chart-completion-target-padding');
+    }
+
     if (dataset.completed && !isAchievment) {
       html.completed = `${'' +
       '<div class="completed bar'}${!specColor.completed ? ` ${fixUndefined(dataset.completed.color)}` : ''}"${specColor.completed ? (` style="color:${dataset.completed.color};background-color:${dataset.completed.color};"`) : ''}>` +
