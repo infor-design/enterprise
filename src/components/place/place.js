@@ -317,17 +317,17 @@ Place.prototype = {
 
       // Set X alignments on bottom/top placements
       if (p === 'top' || p === 'bottom') {
-        const cW = containerIsBody ? document.body.offsetWidth : null;
+        const cW = Math.round(containerIsBody ? document.body.offsetWidth : null);
         switch (aX) {
           case 'left':
-            if (containerIsBody && (cW < parentRect.left + elRect.width)) {
+            if (containerIsBody && (cW < Math.round(elRect.left) + Math.round(elRect.width))) {
               cX = (parentRect.right - elRect.width) + incomingPlacementObj.x + scrollX;
             } else {
               cX = parentRect.left - incomingPlacementObj.x + (containerIsBody ? scrollX : 0);
             }
             break;
           case 'right':
-            if (containerIsBody && (parentRect.right - elRect.width) < 0) {
+            if (containerIsBody && (Math.round(elRect.right) - Math.round(elRect.width)) < 0) {
               cX = parentRect.left - incomingPlacementObj.x + scrollX;
             } else {
               cX = (parentRect.right - elRect.width) +
