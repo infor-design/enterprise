@@ -1,8 +1,10 @@
 // Uplift Datepicker Control
 //================================================== //
 
-.datepicker + .icon,
-.datepicker + .tooltip-description + .icon {
-  margin-left: -28px;
-  margin-top: 10px;
+.datepicker {
+  + .icon,
+  + .tooltip-description + .icon {
+    margin-left: -28px;
+    margin-top: 10px;
+  }
 }
