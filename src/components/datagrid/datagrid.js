@@ -8982,9 +8982,14 @@ Datagrid.prototype = {
    * @param {number} row The row index
    * @param {number} cell The cell index
    * @param {boolean} toggle True to set it and false to remove it
+   * @param {object} data Adds dirty data to the internal tracker.
    */
-  setDirtyIndicator(row, cell, toggle) {
+  setDirtyIndicator(row, cell, toggle, data) {
     const cellNode = this.cellNode(row, cell);
+
+    if (data) {
+      this.addToDirtyArray(row, cell, data);
+    }
 
     if (row < 0 || cell < 0) {
       return;
