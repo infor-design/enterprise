@@ -200,6 +200,6 @@ In-page/horizontal tabs can be placed on a white background.In these cases, the 
 We currently supports four major types of Tabs:
 
 - In-Page (Horizontal) Tabs - This is the default type of tabset that will exist inside of pages/forms, and has a minimal style.  These will be used for switching between groups of content or form components that are related, but not necessarily important to show all at once
-- [Header Tabs]( ./tabs-header) - This tabset is inside of [Header Components]( ./header) to define a tab list that will appear to sit adjacently to a page container.  These will generally be used for contextual navigation of a major feature in your application
-- [Vertical Tabs]( ./tabs-vertical) - This tabset serves a similar purpose to header tabs, but instead displays the tab list vertically on the left edge of the tab content
-- [Module Tabs]( ./tabs-module) - Module tabs are another similar construct that are styled in a way that suits them for top-level application navigation.  Module tabs are built to contain a toolbar
+- [Header Tabs](./tabs-header) - This tabset is inside of [Header Components](./header) to define a tab list that will appear to sit adjacently to a page container.  These will generally be used for contextual navigation of a major feature in your application
+- [Vertical Tabs](./tabs-vertical) - This tabset serves a similar purpose to header tabs, but instead displays the tab list vertically on the left edge of the tab content
+- [Module Tabs](./tabs-module) - Module tabs are another similar construct that are styled in a way that suits them for top-level application navigation.  Module tabs are built to contain a toolbar

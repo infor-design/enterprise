@@ -618,7 +618,7 @@ Accordion.prototype = {
 
   /**
    * Gets the currently-selected Accordion Header, if applicable.
-   * @returns {jQuery[]} the currently selected Accoridon Header, or an empty jQuery selector
+   * @returns {jQuery[]} the currently selected Accordion Header, or an empty jQuery selector
    *  if there are currently no headers selected.
    */
   getSelected() {
@@ -702,7 +702,7 @@ Accordion.prototype = {
   * @param {object} header The jquery header element.
   * @param {boolean} dontCollapseHeaders if defined, will not collapse any open accordion headers
   *  (generally used while filtering)
-  * @returns {$.Deferred} resolved on the completion of an accoridon pane's
+  * @returns {$.Deferred} resolved on the completion of an Accordion pane's
   *  collapse animation (or immediately, if animation is disabled).
   */
   expand(header, dontCollapseHeaders) {
@@ -833,7 +833,7 @@ Accordion.prototype = {
   /**
   * Collapse the given Panel on the Accordion.
   * @param {object} header The jquery header element.
-  * @returns {$.Deferred} resolved on the completion of an accoridon pane's
+  * @returns {$.Deferred} resolved on the completion of an Accordion pane's
   *  collapse animation (or immediately, if animation is disabled).
   */
   collapse(header) {

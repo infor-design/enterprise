@@ -5,7 +5,7 @@
 .chart-completion {
   background-color: $chart-progressbar-bg-color;
   height: 10px;
-  margin-bottom: 70px;
+  margin-bottom: 10px;
   width: 100%;
 
   &.chart-completion {
@@ -240,7 +240,7 @@
   }
 
   &.overlap {
-    margin-bottom: 100px;
+    margin-bottom: 100px !important;
     transition: margin 0.5s ease 0s;
   }
 
@@ -313,6 +313,10 @@
     }
   }
 
+}
+
+.chart-completion-target-padding .total.bar.chart-completion-target {
+  margin-bottom: 60px;
 }
 
 .completion-chart {

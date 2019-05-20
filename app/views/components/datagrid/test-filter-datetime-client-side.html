@@ -1,0 +1,49 @@
+﻿<div class="page-container scrollable" id="maincontent" role="main">
+
+   <div class="row">
+      <div class="twelve columns">
+         <div id="datagrid"></div>
+      </div>
+   </div>
+
+   <script>
+      $('body').one('initialized', function () {
+         var grid,
+            columns = [],
+            data = [],
+            Calendars = Soho.Locale.calendar();
+
+         // Define Some Sample Data
+         data = [{"@status":"mod","@id":"BBJDNTY=","tpkcrfibat":56,"batchnum":51,"ibatdatim":"2003-09-08T07:53:15.000Z","numref":50,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNTc=","tpkcrfibat":57,"batchnum":52,"ibatdatim":"2003-09-08T23:14:11.000Z","numref":2,"status":"T","status_n":"Not Yet Validated"},{"@status":"mod","@id":"BBJDNTg=","tpkcrfibat":58,"batchnum":53,"ibatdatim":"2003-09-22T06:08:32.000Z","numref":421,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNTk=","tpkcrfibat":59,"batchnum":54,"ibatdatim":"2003-09-23T00:53:52.000Z","numref":428,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNjA=","tpkcrfibat":60,"batchnum":55,"ibatdatim":"2005-10-05T04:44:59.000Z","numref":4,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNjE=","tpkcrfibat":61,"batchnum":56,"ibatdatim":"2005-10-05T05:19:10.000Z","numref":2,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNjI=","tpkcrfibat":62,"batchnum":57,"ibatdatim":"2005-10-05T05:31:31.000Z","numref":2,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNjM=","tpkcrfibat":63,"batchnum":58,"ibatdatim":"2005-10-05T05:32:17.000Z","numref":2,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNjQ=","tpkcrfibat":64,"batchnum":59,"ibatdatim":"2005-10-05T05:35:55.000Z","numref":2,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNjU=","tpkcrfibat":65,"batchnum":60,"ibatdatim":"2005-10-05T05:41:15.000Z","numref":2,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNjY=","tpkcrfibat":66,"batchnum":61,"ibatdatim":"2005-10-05T05:41:33.000Z","numref":2,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNjc=","tpkcrfibat":67,"batchnum":62,"ibatdatim":"2005-10-05T05:59:55.000Z","numref":2,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNjg=","tpkcrfibat":68,"batchnum":63,"ibatdatim":"2005-10-05T06:13:18.000Z","numref":2,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNjk=","tpkcrfibat":69,"batchnum":64,"ibatdatim":"2005-10-05T06:17:11.000Z","numref":2,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNzA=","tpkcrfibat":70,"batchnum":65,"ibatdatim":"2005-10-05T06:26:10.000Z","numref":2,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNzE=","tpkcrfibat":71,"batchnum":66,"ibatdatim":"2005-10-05T23:46:24.000Z","numref":2,"status":"E","status_n":"Validated, Errors"},{"@status":"mod","@id":"BBJDNzM=","tpkcrfibat":73,"batchnum":68,"ibatdatim":"2005-10-06T02:04:56.000Z","numref":2,"status":"T","status_n":"Not Yet Validated"},{"@status":"mod","@id":"BBJDNzY=","tpkcrfibat":76,"batchnum":70,"ibatdatim":"2006-05-03T02:48:57.000Z","numref":8,"status":"E","status_n":"Validated, Errors"}];
+
+
+         //Define Columns for the Grid.
+         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' });
+         columns.push({ id: 'batchnum', name: 'Batch Number', field: 'batchnum', sortfield: 'batchnum', filterType: 'integer', sortable: false, hidden: false,  align: 'right', numberFormat : {style: 'integer' ,group: ''  }, maskMode: 'number',  mask: '##########', formatter: Soho.Formatters.Integer });
+         columns.push({ id: 'ibatdatim', name: 'Date / Time', field: 'ibatdatim', sortfield: 'ibatdatim', filterType: 'date', sortable: false, hidden: false,  align: 'left', dateFormat: Calendars.dateFormat['short'] + ' ' + Calendars.dateFormat['timestamp'], editorOptions: { showTime: true, dateFormat: Calendars.dateFormat['short'] + ' ' + Calendars.dateFormat['timestamp'], minuteInterval: 1, secondInterval: 1 }, editorOptions: {showLegend: true, legend: [{name: 'Weekend', color: '#579E95', dayOfWeek: [0,6]},{name: 'Public Holiday', color: '#9279A6', dates: ['2018-12-24T13:30:00.000Z','2018-12-25T13:30:00.000Z','2018-12-31T13:30:00.000Z','2019-01-24T13:30:00.000Z','2019-01-30T13:30:00.000Z']},{name: 'Other', color: '#50535A', dates: []}], showTime: true, showMonthYearPicker: true, placeholder: true, dateFormat: Calendars.dateFormat['short'] + ' ' + Calendars.dateFormat['timestamp'], minuteInterval: 1, secondInterval: 1 }, formatter: Soho.Formatters.Date });
+         columns.push({ id: 'numref', name: 'Number of References', field: 'numref', sortfield: 'numref', filterType: 'integer', sortable: false, hidden: false,  align: 'right', numberFormat : {style: 'integer' ,group: ''  }, maskMode: 'number',  mask: '##########', formatter: Soho.Formatters.Integer });
+         columns.push({ id: 'status', name: 'Status', field: 'status', sortfield: 'status', filterType: 'multiselect', sortable: false, hidden: false, maxLength:'1', align: 'left', options: [{ id: 'N', label: 'Validated, No Errors', value: 'N' },{ id: 'E', label: 'Validated, Errors', value: 'E' },{ id: 'T', label: 'Not Yet Validated', value: 'T' },{ id: 'L', label: 'Validated, Existing Reference', value: 'L' },], formatter: Soho.Formatters.Dropdown });
+    
+         //Init and get the api for the grid
+         $('#datagrid').datagrid({
+            columns: columns,
+            dataset: data,
+            filterable: true,
+            selectable: 'multiple',
+            columnReorder: true,
+            saveColumns: false,
+            showFilterTotal: true,
+            paging: true,
+            pagesize: 5,
+            pagesizes: [5, 10, 25],
+            toolbar: {title: 'Filterable Datagrid w/ Paging', filterRow: true, results: true, dateFilter: false, keywordFilter: true, actions: true, views: false, rowHeight: true, collapsibleFilter: true}
+         }).on('filtered', function (e, args) {
+            // console.log(args);
+         }).on('selected', function (e, args) {
+            // console.log(args);
+         });
+
+      });
+
+   </script>
+</div>

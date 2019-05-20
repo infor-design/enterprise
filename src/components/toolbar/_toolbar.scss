@@ -328,6 +328,19 @@ $toolbar-buttonset-height: 40px;
       .ripple {
         background-color: $contextual-toolbar-color;
       }
+
+      &[disabled] {
+        color: $contextual-toolbar-button-disabled-color;
+
+        .icon {
+          color: $contextual-toolbar-button-disabled-color;
+        }
+
+        &:hover {
+          background-color: transparent;
+          border-color: transparent;
+        }
+      }
     }
   }
 
