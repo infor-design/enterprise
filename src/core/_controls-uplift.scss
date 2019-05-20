@@ -1,6 +1,7 @@
 // Required ====/
 @import './required';
 @import '../components/typography/typography-uplift';
+@import '../components/icons/icons-uplift';
 
 // Behaviors ====/
 @import '../components/drag/drag';
@@ -75,6 +76,7 @@
 @import '../components/contextualactionpanel/contextualactionpanel';
 @import '../components/datagrid/datagrid';
 @import '../components/editor/editor';
+@import '../components/editor/editor-uplift';
 @import '../components/form-compact/form-compact';
 @import '../components/monthview/monthview';
 @import '../components/notification/notification';
