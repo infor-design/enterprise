@@ -43,6 +43,7 @@
 - `[Datagrid]` Added an onBeforeSelect call back that you can return false from to disable row selection. ([#1906](https://github.com/infor-design/enterprise/issues/1906))
 - `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Locale]` Synced up date and time patterns with the CLDR several time patterns in particular were corrected. ([#2022](https://github.com/infor-design/enterprise/issues/2022))
+- `[Datagrid]` Fixed an issue where pager was not updating while removing rows. ([#1985](https://github.com/infor-design/enterprise/issues/1985))
 - `[Datagrid]` Adds a function to add a visual dirty indictaor and a new function to get all modified rows. Modified means either dirty, in-progress or in error. Existing API's are not touched. ([#2091](https://github.com/infor-design/enterprise/issues/2091))
 - `[Editor]` Fixed an issue where button state for toolbar buttons were wrong when clicked one after another. ([#391](https://github.com/infor-design/enterprise/issues/391))
 - `[Field Options]` Fixed an issue where field options were misaligning, especially spin box was focusing outside of the field. ([#1862](https://github.com/infor-design/enterprise/issues/1862))

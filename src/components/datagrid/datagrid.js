@@ -566,40 +566,56 @@ Datagrid.prototype = {
   * Remove a row of data to the grid and dataset.
   * @param {number} row The row index
   * @param {boolean} nosync Dont sync the selected rows.
+  * @param {boolean} noTrigger If true, do not trigger the removerow event.
+  * @returns {object|boolean} If noTrigger is true then return the event args otherwise nothing is returned
   */
-  removeRow(row, nosync) {
+  removeRow(row, nosync, noTrigger) {
     const rowNode = this.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
     const rowData = this.settings.dataset[row];
 
     this.unselectRow(row, nosync);
     this.settings.dataset.splice(row, 1);
+    this.preventSelection = true;
     this.renderRows();
+    delete this.preventSelection;
 
-    /**
-    *  Fires after a row is removed via the api
-    * @event rowremove
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Object with the arguments
-    * @property {number} args.row The row index
-    * @property {number} args.cell The cell index
-    * @property {HTMLElement} args.target The row node that is being dragged.
-    * @property {HTMLElement} args.item The dragged rows data.
-    */
-    this.element.trigger('rowremove', { row, cell: null, target: rowNode, item: rowData, oldValue: rowData });
+    const args = { row, cell: null, target: rowNode, item: rowData, oldValue: rowData };
+
+    if (!noTrigger) {
+      /**
+      *  Fires after a row is removed via the api
+      * @event rowremove
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Object with the arguments
+      * @property {number} args.row The row index
+      * @property {number} args.cell The cell index
+      * @property {HTMLElement} args.target The row node that is being dragged.
+      * @property {HTMLElement} args.item The dragged rows data.
+      */
+      this.element.trigger('rowremove', args);
+    } else {
+      return args;
+    }
+
+    return true;
   },
 
   /**
   * Remove all selected rows from the grid and dataset.
+  * @param {boolean} isTrigger if true will trigger `rowremove` one time only with all selection data for more then one selected.
   */
-  removeSelected() {
+  removeSelected(isTrigger) {
     this._selectedRows.sort((a, b) => (a.idx < b.idx ? -1 : (a.idx > b.idx ? 1 : 0)));
+    const args = [];
 
     for (let i = this._selectedRows.length - 1; i >= 0; i--) {
-      this.removeRow(this._selectedRows[i].idx, true);
+      args.push(this.removeRow(this._selectedRows[i].idx, true, isTrigger));
     }
-    this.pagerRefresh();
-    this.syncSelectedUI();
+
+    if (isTrigger) {
+      this.element.trigger('rowremove', [args]);
+    }
   },
 
   /**
@@ -3159,7 +3175,9 @@ Datagrid.prototype = {
 
     // Deselect rows when changing pages
     if (self.settings.paging && self.settings.source && !self.settings.allowSelectAcrossPages) {
-      self._selectedRows = [];
+      if (!self.preventSelection) {
+        self._selectedRows = [];
+      }
       self.syncSelectedUI();
     }
 
@@ -7039,7 +7057,6 @@ Datagrid.prototype = {
     const unselectNode = function (elem, index) {
       const removeSelected = function (node, selIdx) {
         delete node._selected;
-        self.selectedRowCount--;
         if (typeof selIdx === 'undefined') {
           selIdx = index;
         }
