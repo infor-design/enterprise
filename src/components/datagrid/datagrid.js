@@ -1275,12 +1275,11 @@ Datagrid.prototype = {
     }
 
     if (this.restoreFilter) {
-      this.applyFilter(this.savedFilter, 'render');
       this.restoreFilter = false;
+      this.applyFilter(this.savedFilter, 'render');
       this.savedFilter = null;
-    }
-    else if (this.filterExpr && this.filterExpr.length > 0) {
-       this.setFilterConditions(this.filterExpr); 
+    } else if (this.filterExpr && this.filterExpr.length > 0) {
+      this.setFilterConditions(this.filterExpr); 
     }
 
     this.activeEllipsisHeaderAll();
