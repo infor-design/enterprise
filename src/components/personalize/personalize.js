@@ -261,14 +261,14 @@ Personalize.prototype = {
 
     // Adapt them for backwards compatibility
     const legacyThemeNames = ['light', 'dark', 'high-contrast'];
-    if (legacyThemeNames.includes(incomingTheme)) {
+    if (legacyThemeNames.indexOf(incomingTheme) > -1) {
       incomingTheme += '-theme';
     }
 
     $html
       .removeClass((idx, val) => {
         const classes = val.split(' ');
-        const toRemove = classes.filter(c => c.includes('theme'));
+        const toRemove = classes.filter(c => c.indexOf('theme') > -1);
         return toRemove.join();
       })
       .addClass(incomingTheme);
@@ -375,7 +375,7 @@ Personalize.prototype = {
     }
 
     // Copy the old settings to compare
-    const prevSettings = Object.assign({}, this.settings);
+    const prevSettings = utils.extend({ }, this.settings);
 
     // Merge in the new settings
     this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
