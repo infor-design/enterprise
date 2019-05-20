@@ -58,6 +58,7 @@
 - `[Personalization]` Added an example of normal tabs behaving like header tabs in a personalized area. ([#1962](https://github.com/infor-design/enterprise/issues/1962))
 - `[Personalization]` Added completion chart and alerts to the list of header items that will work when personalized. ([#2171](https://github.com/infor-design/enterprise/issues/2171))
 - `[Popupmenu]` Fixed an issue where disabled submenus were opening on mouseover. ([#1863](https://github.com/infor-design/enterprise/issues/1863))
+- `[Timepicker]` Updated the Swedish translation for Set Time. ([#2153](https://github.com/infor-design/enterprise/issues/2153))
 - `[Tree]` Fixed an issue where children property null was breaking tree to not render. ([#1908](https://github.com/infor-design/enterprise/issues/1908))
 
 ### v4.19.0 Chores & Maintenance
