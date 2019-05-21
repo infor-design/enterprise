@@ -2851,6 +2851,7 @@ Datagrid.prototype = {
     let tableHtml = '';
     let tableHtmlLeft = '';
     let tableHtmlRight = '';
+    let j = 0;
     const self = this;
     const s = self.settings;
     const body = self.table.find('tbody');
