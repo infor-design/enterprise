@@ -436,15 +436,13 @@ html[dir='rtl'] {
       padding-right: 8px;
     }
 
-    .trigger,
+    .trigger {
+      margin-right: -30px;
+    }
+
     .trigger-close {
       margin-left: inherit;
-      margin-right: -30px;
-
-      &.trigger-close {
-        margin-left: inherit;
-        margin-right: -50px;
-      }
+      margin-right: -15px;
     }
 
     // Make this flow offscreen
