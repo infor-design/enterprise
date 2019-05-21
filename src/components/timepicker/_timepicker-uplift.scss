@@ -7,3 +7,13 @@
     margin-top: 15px;
   }
 }
+
+.field-short {
+  .timepicker {
+    + .icon,
+    + .tooltip-description + .icon {
+      margin-top: 9px;
+      margin-left: -25px;
+    }
+  }
+}

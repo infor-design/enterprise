@@ -8,3 +8,11 @@
     margin-top: 10px;
   }
 }
+
+.field-short {
+  .datepicker {
+    + .icon {
+      margin-top: 9px;
+    }
+  }
+}
