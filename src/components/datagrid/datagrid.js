@@ -2161,8 +2161,8 @@ Datagrid.prototype = {
         trigger,
         type: 'filtered'
       });
-      this.saveUserSettings();
     }
+    this.saveUserSettings();
   },
 
   /**
@@ -4490,12 +4490,13 @@ Datagrid.prototype = {
    * @returns {void}
    */
   updateColumns(columns, columnGroups) {
+    let columnsChanged = true;
     if (columnGroups === undefined) {
       columnGroups = null;
     }
     if (JSON.stringify(this.settings.columns) == JSON.stringify(columns) &&
           (JSON.stringify(this.settings.columnGroups) === JSON.stringify(columnGroups))) {
-      return;
+      columnsChanged = false;
     }
       
     this.settings.columns = columns;
@@ -4504,9 +4505,11 @@ Datagrid.prototype = {
       this.settings.columnGroups = columnGroups;
     }
 
-    this.rerender();
-    this.resetPager('updatecolumns');
-
+    if (columnsChanged) {
+      this.rerender();
+      this.resetPager('updatecolumns');
+    }
+    
     /**
     * Fires after the entire grid is rendered.
     * @event columnchange
@@ -6169,9 +6172,6 @@ Datagrid.prototype = {
    * @Returns {string} The current row height
    */
   rowHeight(height) {
-    if (this.settings.rowHeight === height) {
-      return;
-    }
     if (height) {
       this.settings.rowHeight = height;
     }
@@ -6186,9 +6186,10 @@ Datagrid.prototype = {
     if (this.virtualRange && this.virtualRange.rowHeight) {
       this.virtualRange.rowHeight = (height === 'normal' ? 40 : (height === 'medium' ? 30 : 25));
     }
-
+    
     this.saveUserSettings();
     this.refreshSelectedRowHeight();
+
     return this.settings.rowHeight;
   },
 
@@ -9662,10 +9663,11 @@ Datagrid.prototype = {
    * @param {boolean} ascending Set the sort in ascending or descending order
    */
   setSortColumn(id, ascending) {
+    let sortColumnChanged = true;
     // Set Direction based on if passed in or toggling existing field
     if (ascending !== undefined) {
       if (this.sortColumn.sortAsc === ascending && this.sortColumn.sortId === id) {
-        return; // Existing sort has been passed 
+        sortColumnChanged = false;
       }
       this.sortColumn.sortAsc = ascending;
     } else {
@@ -9683,25 +9685,29 @@ Datagrid.prototype = {
 
     // Do Sort on Data Set
     this.setSortIndicator(id, ascending);
-    this.sortDataset();
+    if (sortColumnChanged) {
+      this.sortDataset();
+    }
 
     if (!this.settings.focusAfterSort && this.activeCell && this.activeCell.isFocused) {
       this.activeCell.isFocused = false;
     }
 
-    const wasFocused = this.activeCell.isFocused;
-    this.setTreeDepth();
-    this.setRowGrouping();
-    this.setTreeRootNodes();
-    this.renderRows();
-    // Update selected and Sync header checkbox
-    this.syncSelectedUI();
+    if (sortColumnChanged) {
+      const wasFocused = this.activeCell.isFocused;
+      this.setTreeDepth();
+      this.setRowGrouping();
+      this.setTreeRootNodes();
+      this.renderRows();
+      // Update selected and Sync header checkbox
+      this.syncSelectedUI();
 
-    if (wasFocused && this.activeCell.node.length === 1) {
-      this.setActiveCell(this.activeCell.row, this.activeCell.cell);
+      if (wasFocused && this.activeCell.node.length === 1) {
+        this.setActiveCell(this.activeCell.row, this.activeCell.cell);
+      }
+    
+      this.resetPager('sorted');
     }
-
-    this.resetPager('sorted');
     this.tableBody.removeClass('is-loading');
     this.saveUserSettings();
     this.validateAll();
