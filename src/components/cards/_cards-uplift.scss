@@ -5,14 +5,23 @@
 }
 
 .card-header,
-.widget-title {
-  h2 {
+.widget-header {
+  border-bottom: none;
+  height: 34px;
+  line-height: unset;
+
+  .card-title,
+  .widget-title {
     font-size: $theme-size-font-md;
     font-weight: $theme-number-font-weight-base;
+    line-height: 2.8rem;
   }
 }
 
 .card-header,
-.widget-header {
-  border-bottom: none;
+.card-footer,
+.widget-header,
+.widget-footer {
+  margin: 8px 20px;
+  padding: unset;
 }
