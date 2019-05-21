@@ -14,13 +14,24 @@
 // Enterprise vars
 @import '../core/config';
 
-// Core Uplift Components
+// Uplift Light Overrides
+$body-color-primary-background: $theme-color-palette-white;
+
 $application-menu-border-color: $theme-color-palette-slate-90;
 $accordion-inverse-bg-color: $theme-color-palette-slate-90;
 $accordion-inverse-pane-bg-color: $theme-color-palette-slate-90;
 $accordion-inverse-border-color:  $theme-color-palette-slate-90;
 $accordion-inverse-text-color: $theme-color-palette-white;
 
+$datagrid-header-bg-color:  $theme-color-palette-graphite-80;
+$datagrid-list-header-color: $theme-color-font-base;
+$datagrid-list-header-bg-color: $theme-color-palette-white;
+$datagrid-list-header-active-color: $theme-color-palette-graphite-20;
+$datagrid-list-sort-icon-color: $theme-color-palette-slate-40;
+$listview-border-color: $theme-color-palette-slate-20;
+$panel-border-color: $theme-color-palette-slate-20;
+
+// Core Uplift Controls
 @import '../core/controls-uplift';
 
 html.is-chrome:not(.is-mac) {

@@ -157,6 +157,7 @@ $secondary-border-btn-ripple-color: $theme-color-brand-primary-alt;
 
 // Input Fields
 $input-color: $input-color-initial-font;
+$input-color-readonly-background: $theme-color-palette-graphite-60;
 $input-disabled-color: $input-color-disabled-font;
 $input-placeholder-color: $input-color-initial-placeholder;
 $input-readonly-color: $input-color-readonly-font;
@@ -518,7 +519,7 @@ $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(80, 83, 90, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #b3ccdb;
 $datagrid-row-selected-color-dark: #a2bbca;
-$datagrid-row-hover-color: $theme-color-brand-secondary-alt;
+$datagrid-row-hover-color: $theme-color-palette-graphite-30;
 $datagrid-row-icon-color: $theme-color-palette-graphite-90;
 
 $datagrid-alternate-bg-color: $theme-color-palette-graphite-30;
