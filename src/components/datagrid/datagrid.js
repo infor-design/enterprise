@@ -4205,7 +4205,7 @@ Datagrid.prototype = {
         }  
       }
 
-      this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
+      this.totalWidths.center = this.isInModal ? this.elemWidth : '100%';
 
       if (this.widthPercent) {
         this.table.css('width', '100%');
