@@ -48,7 +48,7 @@ describe('Searchfield API (full categories)', () => {
     searchfieldMultiAPI.destroy();
 
     svgEl.parentNode.removeChild(svgEl);
-    Array.from(rowEls).forEach((row) => {
+    Array.from(rowEls).forEach((row) => { // eslint-disable-line compat/compat
       row.parentNode.removeChild(row);
     });
   });
