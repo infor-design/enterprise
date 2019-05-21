@@ -1,0 +1,19 @@
+// Uplift Timepicker
+//================================================== //
+
+.timepicker {
+  + .icon,
+  + .tooltip-description + .icon {
+    margin-top: 15px;
+  }
+}
+
+.field-short {
+  .timepicker {
+    + .icon,
+    + .tooltip-description + .icon {
+      margin-left: -25px;
+      margin-top: 9px;
+    }
+  }
+}

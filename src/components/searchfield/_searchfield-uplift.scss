@@ -1,0 +1,8 @@
+// Uplift Searchfield
+//================================================== //
+
+.inline.searchfield-wrapper:not(.toolbar-searchfield-wrapper) {
+  > .icon:not(.icon-error) {
+    top: 38px;
+  }
+}
