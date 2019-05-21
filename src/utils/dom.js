@@ -3,6 +3,16 @@ import { xssUtils } from './xss';
 const DOM = {};
 
 /**
+ * DOM operations are only allowed on elements that are based on HTML or SVG. This method
+ * determines whether or not the element is valid for performing a DOM operation.
+ * @param {HTMLElement|SVGElement} el the element being examined
+ * @returns {boolean} true if the element is valid
+ */
+DOM.isValidElement = function isValidElement(el) {
+  return (el instanceof HTMLElement || el instanceof SVGElement);
+};
+
+/**
  * Returns an array containing an element's attributes.
  * @param {HTMLElement|SVGElement} element the element whose attributes are being accessed
  * @returns {object} list of attributes in name/value pairs.
@@ -219,6 +229,44 @@ DOM.html = function html(el, contents, stripTags) {
   if (domEl instanceof HTMLElement || domEl instanceof SVGElement) {
     domEl.innerHTML = this.xssClean(contents, stripTags);
   }
+};
+
+/**
+ * Recursively checks parent nodes for a matching CSS selector
+ * @param {HTMLElement/SVGElement} el the lower-level element being checked
+ * @param {string} selector a valid CSS selector
+ * @param {boolean} closest if true, returns the first match found, or undefined if no matches are found.
+ * @returns {Array|HTMLElement|SVGElement|undefined} containing references to parent elements that match the selector
+ */
+DOM.parents = function parents(el, selector, closest) {
+  const parentEls = [];
+  if (!DOM.isValidElement(el)) {
+    return parentEls;
+  }
+
+  // Pushes to the element array.
+  function checkEl(thisEl) {
+    if (thisEl !== document && thisEl.matches(selector)) {
+      parentEls.push(thisEl);
+    }
+  }
+
+  // Loop until we hit the <html> tag.
+  // If we're only looking for the closest element, break out once we find it.
+  while (el.parentNode) {
+    if (closest && parentEls.length) {
+      break;
+    }
+
+    el = el.parentNode;
+    checkEl(el);
+  }
+
+  // Return the first one, or the entire array.
+  if (closest) {
+    return parentEls[0]; // can be `undefined`
+  }
+  return parentEls;
 };
 
 export { DOM };

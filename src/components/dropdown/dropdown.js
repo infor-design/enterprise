@@ -114,7 +114,7 @@ Dropdown.prototype = {
   get overflowed() {
     if (!this.isMobile() || (this.isMobile() && !this.isOpen())) {
       const span = this.pseudoElem.find('span').css('max-width', '');
-      if (span.width() > this.pseudoElem.width()) {
+      if (Math.round(span.width()) > Math.round(this.pseudoElem.width())) {
         span.css('max-width', '100%');
         return true;
       }
