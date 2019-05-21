@@ -788,10 +788,10 @@ Datagrid.prototype = {
       this.restoreUserSettings();
       this.renderRows();
       this.renderHeader();
-    } else {
-      this.clearHeaderCache();
+    } else if (pagerInfo.type === 'filtered') {
       this.renderRows();
-      this.renderHeader();
+    } else {
+      this.rerender();
     }
 
     // Setup focus on the first cell
@@ -1834,11 +1834,20 @@ Datagrid.prototype = {
   */
   applyFilter(conditions, trigger) {
     const self = this;
+    let filterChanged = false;
 
     if (conditions) {
       this.setFilterConditions(conditions);
     } else {
       conditions = this.filterConditions();
+    }
+    if (this.filterExpr === undefined) {
+      this.filterExpr = [];
+    }
+    
+    if (JSON.stringify(conditions) !== JSON.stringify(this.filterExpr)) {
+      this.filterExpr = conditions;
+      filterChanged = true;  
     }
 
     const checkRow = function (rowData) {
@@ -2146,12 +2155,14 @@ Datagrid.prototype = {
       */
       this.element.trigger('filtered', { op: 'apply', conditions, trigger });
     }
-
-    this.setSearchActivePage({
-      trigger,
-      type: 'filtered'
-    });
-    this.saveUserSettings();
+    
+    if (filterChanged) {
+      this.setSearchActivePage({
+        trigger,
+        type: 'filtered'
+      });
+      this.saveUserSettings();
+    }
   },
 
   /**
@@ -2271,7 +2282,6 @@ Datagrid.prototype = {
   * @param {object} conditions An array of objects with the filter conditions.
   */
   setFilterConditions(conditions) {
-    this.filterExpr = conditions;
     this.clearFilterFields();
     for (let i = 0; i < conditions.length; i++) {
       // Find the filter row
@@ -2315,7 +2325,7 @@ Datagrid.prototype = {
     }
 
     const self = this;
-    this.filterExpr = [];
+    let filterExpr = [];
 
     // Create an array of objects with: field, id, filterType, operator, value
     this.headerContainer.find('th').each(function () {
@@ -2366,10 +2376,10 @@ Datagrid.prototype = {
         condition.format = format;
       }
 
-      self.filterExpr.push(condition);
+      filterExpr.push(condition);
     });
 
-    return self.filterExpr;
+    return filterExpr;
   },
 
   /**
@@ -4480,6 +4490,14 @@ Datagrid.prototype = {
    * @returns {void}
    */
   updateColumns(columns, columnGroups) {
+    if (columnGroups === undefined) {
+      columnGroups = null;
+    }
+    if (JSON.stringify(this.settings.columns) == JSON.stringify(columns) &&
+          (JSON.stringify(this.settings.columnGroups) === JSON.stringify(columnGroups))) {
+      return;
+    }
+      
     this.settings.columns = columns;
 
     if (columnGroups) {
@@ -4698,7 +4716,9 @@ Datagrid.prototype = {
       if (settings.pagesize) {
         this.settings.pagesize = parseInt(settings.pagesize, 10);
         this.pagerAPI.settings.pagesize = parseInt(settings.pagesize, 10);
-        this.pagerAPI.setActivePage(1, true);
+        if (!settings.activePage) {
+          this.pagerAPI.setActivePage(1, true);
+        }
       }
 
       if (settings.showPageSizeSelector) {
@@ -6149,6 +6169,9 @@ Datagrid.prototype = {
    * @Returns {string} The current row height
    */
   rowHeight(height) {
+    if (this.settings.rowHeight === height) {
+      return;
+    }
     if (height) {
       this.settings.rowHeight = height;
     }
@@ -9641,6 +9664,9 @@ Datagrid.prototype = {
   setSortColumn(id, ascending) {
     // Set Direction based on if passed in or toggling existing field
     if (ascending !== undefined) {
+      if (this.sortColumn.sortAsc === ascending && this.sortColumn.sortId === id) {
+        return; // Existing sort has been passed 
+      }
       this.sortColumn.sortAsc = ascending;
     } else {
       if (this.sortColumn.sortId === id) {

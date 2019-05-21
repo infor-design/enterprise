@@ -1,8 +1,9 @@
 <div class="row">
   <div class="twelve columns">
-    <button type="button" class="btn-secondary" id="apply-filter">Apply Filter</button>
+    <button type="button" class="btn-secondary" id="apply-filter">Apply Filter (Conditions passed InStock)</button>
+    <button type="button" class="btn-secondary" id="apply-filter2">Apply Filter (No Conditions passed)</button>
     <button type="button" class="btn-secondary" id="clear-filter">Clear Filter</button>
-    <button type="button" class="btn-secondary" id="render-header">ReRender Header</button>
+    <button type="button" class="btn-secondary" id="rerender">rerender</button>
   </div>
 </div>
 <div class="row">
@@ -105,17 +106,24 @@
         }
       });
       
+      $('#apply-filter2').on('click', function() {
+        var grid = $('#datagrid').data('datagrid');
+        if (grid) {
+          grid.applyFilter();
+        }
+      });
+      
       $('#clear-filter').on('click', function() {
         var grid = $('#datagrid').data('datagrid');
         if (grid) {
           grid.clearFilter();
         }
       });
-      $('#render-header').on('click', function() {
+      
+      $('#rerender').on('click', function() {
         var grid = $('#datagrid').data('datagrid');
         if (grid) {
-          grid.renderHeader();
-          grid.renderRows();
+          grid.rerender();
         }
       });
       
