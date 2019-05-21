@@ -4066,7 +4066,7 @@ Datagrid.prototype = {
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
-      if (!this.elemWidth && this.element.parent().is('.datagrid-default-modal-width')) { // handle on invisible modal
+      if (this.element.parent().is('.modal-body')) { // handle on invisible modal
         this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
         this.isInModal = true;
       }
@@ -4210,9 +4210,12 @@ Datagrid.prototype = {
 
       if (this.widthPercent) {
         this.table.css('width', '100%');
-      } else {
+      } else if (!isNaN(this.totalWidths.center)) {
         this.table.css('width', this.totalWidths.center);
+      } else {
+        this.table.css('width', '');
       }
+      
       if (!isNaN(this.totalMinWidths.center) && this.totalMinWidths.center > 0) {
         this.table.css('min-width', `${this.totalMinWidths.center}px`);
       }
