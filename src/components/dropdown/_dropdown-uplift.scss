@@ -8,6 +8,7 @@ div.dropdown,
 div.multiselect {
   + .icon {
     right: 10px;
+    top: 3px;
   }
 }
 
@@ -15,5 +16,9 @@ div.multiselect {
   > .trigger {
     margin-left: -$dropdown-size-padding-x-r;
     width: $dropdown-size-padding-x-r;
+
+    .icon {
+      top: 9px;
+    }
   }
 }
