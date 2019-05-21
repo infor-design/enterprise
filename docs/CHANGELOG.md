@@ -18,6 +18,7 @@
 - `[Datagrid]` Fixes a column alignment issue when there are duplicate column ids. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
 - `[Datagrid]` Fixes a column alignment by clearing a cache to help prevent column misalignment from randomly happening. ([#1797](https://github.com/infor-design/enterprise/issues/1797))
 - `[Datagrid]` Fixes an issue that caused the active page to not restore correctly when saving user settings, . ([#1766](https://github.com/infor-design/enterprise/issues/1766))
+- `[Form Compact]` Adds support for Datepicker, Timepicker, Lookup, and File Uploader fields. ([#1955](https://github.com/infor-design/enterprise/issues/1955))
 - `[Keyboard]` Added a new API that you can call at anytime to see what key is being pressed at the moment. ([#1906](https://github.com/infor-design/enterprise/issues/1906))
 - `[Themes]` Added support for multiple themes in the demo app and renamed distribute Uplift (only) theme files. ([#1972](https://github.com/infor-design/enterprise/issues/1972))
 
@@ -49,6 +50,7 @@
 - `[Datagrid]` Adds a function to add a visual dirty indictaor and a new function to get all modified rows. Modified means either dirty, in-progress or in error. Existing API's are not touched. ([#2091](https://github.com/infor-design/enterprise/issues/2091))
 - `[Editor]` Fixed an issue where button state for toolbar buttons were wrong when clicked one after another. ([#391](https://github.com/infor-design/enterprise/issues/391))
 - `[Field Options]` Fixed an issue where field options were misaligning, especially spin box was focusing outside of the field. ([#1862](https://github.com/infor-design/enterprise/issues/1862))
+- `[Fileuploader]` Fixed an issue where the fileuploader icon and close icon were misplaced and not visible in RTL after uploading a file. ([#2098](https://github.com/infor-design/enterprise/issues/2098))
 - `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Locale]` Restored functionality to dynamic change fonts for some languages. ([#403](https://github.com/infor-design/enterprise/issues/403))
