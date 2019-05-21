@@ -112,8 +112,8 @@
       // Need two things
       // 1. dirtyRows should also include rows that are in error or in-progress ... like it did in 3.5 getDirtyRows
       // 2. method to setDirtyCell to visually show cell has been updated
-      var modifiedRows = gridApi.getModifiedRows();
-      gridApi.setDirtyIndicator(0, gridApi.columnIdxById('quantity'), true);
+      const data = { originalVal: 1, value: 50, isDirty: true };
+      gridApi.setDirtyIndicator(0, gridApi.columnIdxById('quantity'), true, data);
       console.log(modifiedRows);
     });
 
@@ -123,6 +123,7 @@
   // A few other ways
   $('#clear').on('click', function (e, args) {
     gridApi.clearAllErrors();
+    gridApi.clearDirty();
   });
 
 </script>

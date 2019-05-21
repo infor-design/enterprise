@@ -1295,7 +1295,7 @@ Datagrid.prototype = {
       this.applyFilter(this.savedFilter, 'render');
       this.savedFilter = null;
     } else if (this.filterExpr && this.filterExpr.length > 0) {
-      this.setFilterConditions(this.filterExpr); 
+      this.setFilterConditions(this.filterExpr);
     }
 
     this.activeEllipsisHeaderAll();
@@ -1860,10 +1860,10 @@ Datagrid.prototype = {
     if (this.filterExpr === undefined) {
       this.filterExpr = [];
     }
-    
+
     if (JSON.stringify(conditions) !== JSON.stringify(this.filterExpr)) {
       this.filterExpr = conditions;
-      filterChanged = true;  
+      filterChanged = true;
     }
 
     const checkRow = function (rowData) {
@@ -2162,7 +2162,7 @@ Datagrid.prototype = {
         type: 'filtered'
       });
     }
-    
+
     if (this.restoreFilterClientSide) {
       this.restoreFilterClientSide = false;
     } else {
@@ -2271,7 +2271,7 @@ Datagrid.prototype = {
     this.applyFilter();
     this.element.trigger('filtered', { op: 'clear', conditions: [] });
   },
-  
+
   /**
   * Clear the Filter fields.
   */
@@ -4094,7 +4094,7 @@ Datagrid.prototype = {
         }
         this.isInModal = true;
       }
-      
+
       this.widthSpecified = false;
       this.widthPixel = false;
     }
@@ -4228,7 +4228,7 @@ Datagrid.prototype = {
         const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
           stretchColumn[0].width += diff2 - 2;
-        }  
+        }
         this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
       }
 
@@ -4239,7 +4239,7 @@ Datagrid.prototype = {
       } else {
         this.table.css('width', '');
       }
-      
+
       if (!isNaN(this.totalMinWidths.center) && this.totalMinWidths.center > 0) {
         this.table.css('min-width', `${this.totalMinWidths.center}px`);
       }
@@ -4525,7 +4525,7 @@ Datagrid.prototype = {
           (JSON.stringify(this.settings.columnGroups) === JSON.stringify(columnGroups))) {
       columnsChanged = false;
     }
-      
+
     this.settings.columns = columns;
 
     if (columnGroups) {
@@ -4536,7 +4536,7 @@ Datagrid.prototype = {
       this.rerender();
       this.resetPager('updatecolumns');
     }
-    
+
     /**
     * Fires after the entire grid is rendered.
     * @event columnchange
@@ -6213,7 +6213,7 @@ Datagrid.prototype = {
     if (this.virtualRange && this.virtualRange.rowHeight) {
       this.virtualRange.rowHeight = (height === 'normal' ? 40 : (height === 'medium' ? 30 : 25));
     }
-    
+
     this.saveUserSettings();
     this.refreshSelectedRowHeight();
 
@@ -6279,7 +6279,7 @@ Datagrid.prototype = {
       }
       return obj;
     }
-    
+
     if (this.filterExpr && this.filterExpr.length === 1) {
       if (this.filterExpr[0].value !== '') {
         pagingInfo.activePage = this.pagerAPI.filteredActivePage || 1;
@@ -9034,9 +9034,14 @@ Datagrid.prototype = {
    * @param {number} row The row index
    * @param {number} cell The cell index
    * @param {boolean} toggle True to set it and false to remove it
+   * @param {object} data Adds dirty data to the internal tracker
    */
-  setDirtyIndicator(row, cell, toggle) {
+  setDirtyIndicator(row, cell, toggle, data) {
     const cellNode = this.cellNode(row, cell);
+
+    if (data) {
+      this.addToDirtyArray(row, cell, data);
+    }
 
     if (row < 0 || cell < 0) {
       return;
@@ -9731,7 +9736,7 @@ Datagrid.prototype = {
       if (wasFocused && this.activeCell.node.length === 1) {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
       }
-    
+
       this.resetPager('sorted');
     }
     this.tableBody.removeClass('is-loading');
