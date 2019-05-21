@@ -4068,6 +4068,9 @@ Datagrid.prototype = {
 
       if (this.element.parent().is('.modal-body')) { // handle on invisible modal
         this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
+        if (this.element.css('min-width')) {
+          this.elemWidth = parseInt(this.element.css('min-width'));
+        }
         this.isInModal = true;
       }
 
