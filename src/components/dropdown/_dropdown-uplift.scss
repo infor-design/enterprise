@@ -28,7 +28,13 @@ div.multiselect {
   }
 }
 
-.dropdown-list.dropdown-short .trigger .icon {
-  left: -1px;
-  top: 0px;
+.dropdown-list {
+  &.dropdown-short {
+    .trigger {
+      .icon {
+        left: -1px;
+        top: 0;
+      }
+    }
+  }
 }
