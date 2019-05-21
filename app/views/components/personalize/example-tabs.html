@@ -48,8 +48,9 @@
 
 <script>
   $('body').on('initialized', function () {
-    if ($('.personalize-header').css('background-color') === 'rgba(0, 0, 0, 0)') {
-      // None set
+    var bgColor = $('.personalize-header').css('background-color');
+    if (bgColor === 'rgba(0, 0, 0, 0)' || bgColor === 'transparent') {
+    // None set
       $('html').personalize({ colors: { header: '2578A9' } });
     }
 
