@@ -2872,8 +2872,8 @@ Datagrid.prototype = {
 
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
-      const container = this.getContainer(col.id);
-      let colWidth = self.columnWidth(col, j);
+      const container = self.getContainer(col.id);
+      const colWidth = self.columnWidth(col, j);
 
       switch (container) {
         case 'left':
