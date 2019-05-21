@@ -4,3 +4,7 @@
 .icon {
   fill: transparent;
 }
+
+.icon.app-header span:not(.audible) {
+  height: 1px;
+}

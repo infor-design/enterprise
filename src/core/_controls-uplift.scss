@@ -1,6 +1,7 @@
 // Required ====/
 @import './required';
 @import '../components/typography/typography-uplift';
+@import '../components/icons/icons-uplift';
 
 // Behaviors ====/
 @import '../components/drag/drag';
@@ -21,6 +22,7 @@
 // Mid-level ====/
 @import '../components/about/about';
 @import '../components/accordion/accordion';
+@import '../components/accordion/accordion-uplift';
 @import '../components/applicationmenu/applicationmenu';
 @import '../components/applicationmenu/applicationmenu-uplift';
 @import '../components/autocomplete/autocomplete';

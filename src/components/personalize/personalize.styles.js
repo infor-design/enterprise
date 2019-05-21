@@ -2,53 +2,54 @@ import { colorUtils } from '../../utils/color';
 
 function personalizeStyles(colors) {
   return `
+
 .tab-container.module-tabs.is-personalizable {
-  border-top: 1px solid ${colors.horizontalBorder} !important;
-  border-bottom: 1px solid ${colors.horizontalBorder} !important;
+  border-top: 1px solid ${colors.darkest} !important;
+  border-bottom: 1px solid ${colors.darkest} !important;
 }
 
 .module-tabs.is-personalizable .tab:not(:first-child) {
-  border-left: 1px solid ${colors.verticalBorder} !important;
+  border-left: 1px solid ${colors.light} !important;
 }
 
 .module-tabs.is-personalizable {
-  background-color: ${colors.inactive} !important;
+  background-color: ${colors.darker} !important;
 }
 
 .module-tabs.is-personalizable .tab.is-selected {
-  background-color: ${colors.header} !important;
+  background-color: ${colors.base} !important;
 }
 
 .accordion.panel .accordion-header.is-selected {
-  background-color: ${colors.subheader} !important;
-  color: ${colors.text} !important;
+  background-color: ${colors.lighter} !important;
+  color: ${colors.contrast} !important;
 }
 
 .builder-header.is-personalizable{
-  background-color: ${colors.subheader};
+  background-color: ${colors.lighter};
 }
 
 .header.is-personalizable {
-  background-color: ${colors.header};
+  background-color: ${colors.base};
 }
 
 .header.is-personalizable .title {
-  color: ${colors.text};
+  color: ${colors.contrast};
 }
 
 .header.is-personalizable h1 {
-  color: ${colors.text};
+  color: ${colors.contrast};
 }
 
 .header.is-personalizable button:not(:disabled),
 .header.is-personalizable button:not(:disabled) .icon,
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
-  color: ${colors.text} !important;
+  color: ${colors.contrast} !important;
   opacity: .8;
 }
 
 .header.is-personalizable .header.is-personalizable button:not(:disabled) .app-header.icon > span {
-  background-color: ${colors.text} !important;
+  background-color: ${colors.contrast} !important;
   opacity: .8;
 }
 
@@ -56,57 +57,57 @@ function personalizeStyles(colors) {
 .header.is-personalizable button:not(:disabled):hover .icon,
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
 .header.is-personalizable .toolbar [class^='btn']:hover:not([disabled]) {
-  color: ${colors.text} !important;
+  color: ${colors.contrast} !important;
   opacity: 1;
 }
 
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
-  background-color: ${colors.text} !important;
+  background-color: ${colors.contrast} !important;
   opacity: 1;
 }
 
 .header.is-personalizable .go-button.is-personalizable {
-  background-color: ${colors.btnColorHeader};
-  border-color:${colors.btnColorHeader};
-  color: ${colors.text};
+  background-color: ${colors.lightest};
+  border-color:${colors.lightest};
+  color: ${colors.contrast};
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) {
-  color: ${colors.text} !important;
+  color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
-  color: ${colors.text} !important;
+  color: ${colors.contrast} !important;
   opacity: .8;
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)  {
-  color: ${colors.text} !important;
+  color: ${colors.contrast} !important;
   opacity: 1;
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)::before {
-  background-color: ${colors.text};
+  background-color: ${colors.contrast};
 }
 
 .header.is-personalizable.has-tabs .animated-bar {
-  background-color: ${colors.text};
+  background-color: ${colors.contrast};
 }
 
 .header.is-personalizable.has-tabs .tab-list-container .tab.is-selected:not(.is-disabled):hover::before {
-  background-color: ${colors.text} !important;
+  background-color: ${colors.contrast} !important;
 }
 
 .subheader.is-personalizable .go-button.is-personalizable {
-  background-color: ${colors.btnColorSubheader};
-  border-color: ${colors.btnColorSubheader};
-  color: ${colors.text};
+  background-color: ${colors.dark};
+  border-color: ${colors.dark};
+  color: ${colors.contrast};
 }
 
 .module-tabs.is-personalizable .tab-more {
-  border-left: ${colors.verticalBorder} !important;
+  border-left: ${colors.light} !important;
 }
 
 .module-tabs.is-personalizable .tab-more:hover {
@@ -118,7 +119,7 @@ function personalizeStyles(colors) {
 }
 
 .module-tabs.is-personalizable .tab-more.is-selected {
-  background-color: ${colors.header} !important;
+  background-color: ${colors.base} !important;
 }
 
 .header .toolbar > .toolbar-searchfield-wrapper.active .searchfield {
@@ -132,7 +133,7 @@ function personalizeStyles(colors) {
 }
 
 .subheader.is-personalizable {
-  background-color: ${colors.subheader} !important;
+  background-color: ${colors.lighter} !important;
 }
 
 .builder .sidebar .header {
@@ -144,232 +145,248 @@ function personalizeStyles(colors) {
 }
 
 .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar {
-  border-left: ${colors.verticalBorder} !important;
+  border-left: ${colors.light} !important;
 }
 
 .module-tabs.is-personalizable [class^="btn"] {
-  background-color: ${colors.inactive} !important;
-  color: ${colors.text} !important;
+  background-color: ${colors.darker} !important;
+  color: ${colors.contrast} !important;
 }
 
 .module-tabs.is-personalizable .tab.is-disabled {
-  background-color: ${colors.inactive} !important;
-  color: ${colors.text} !important;
+  background-color: ${colors.darker} !important;
+  color: ${colors.contrast} !important;
 }
 
 .module-tabs.is-personalizable .tab.is-disabled > svg {
-  fill: ${colors.text} !important;
+  fill: ${colors.contrast} !important;
 }
 
 .module-tabs.is-personalizable .add-tab-button {
-  border-left: ${colors.verticalBorder} !important;
+  border-left: ${colors.light} !important;
 }
 
 .module-tabs.is-personalizable .add-tab-button:hover {
-  background-color: ${colors.inactive} !important;
+  background-color: ${colors.darker} !important;
 }
 
 .module-tabs.is-personalizable .toolbar-searchfield-wrapper > .searchfield {
-  color: ${colors.text} !important;
+  color: ${colors.contrast} !important;
 }
 
 .module-tabs.is-personalizable .toolbar-searchfield-wrapper > svg {
-  fill: ${colors.text} !important;
+  fill: ${colors.contrast} !important;
 }
 
 .is-personalizable .tab-container.header-tabs::before {
-  background-image: linear-gradient(to right, ${colors.header} , ${colorUtils.hexToRgba(colors.header, 0)});
+  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)});
 }
 
 .is-personalizable .tab-container.header-tabs::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.header, 0)}, ${colors.header});
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
 .hero-widget.is-personalizable {
-  background-color: ${colors.subheader};
+  background-color: ${colors.lighter};
 }
 
 .hero-widget.is-personalizable .hero-bottom {
-  background-color: ${colors.header};
+  background-color: ${colors.base};
 }
 
 .hero-widget.is-personalizable .hero-footer .hero-footer-nav li::before {
-  color: ${colors.verticalBorder};
+  color: ${colors.light};
 }
 
 .hero-widget.is-personalizable .chart-container .arc {
-  stroke: ${colors.subheader};
+  stroke: ${colors.lighter};
 }
 
 .hero-widget.is-personalizable .chart-container .bar {
-  stroke: ${colors.subheader};
+  stroke: ${colors.lighter};
 }
 
 .hero-widget.is-personalizable .chart-container.line-chart .dot {
-  stroke: ${colors.subheader};
+  stroke: ${colors.lighter};
 }
 
 .application-menu.is-personalizable {
-  background-color: ${colors.subheader};
-  border-right: ${colors.verticalBorder};
+  background-color: ${colors.lighter};
+  border-right: ${colors.light};
 }
 
 .application-menu.is-personalizable .application-menu-header {
-  background-color: ${colors.subheader};
-  border-bottom-color: ${colors.verticalBorder};
+  background-color: ${colors.lighter};
+  border-bottom-color: ${colors.light};
 }
 
 .application-menu.is-personalizable .application-menu-footer {
-  background-color: ${colors.subheader};
-  border-top-color: ${colors.verticalBorder};
+  background-color: ${colors.lighter};
+  border-top-color: ${colors.light};
 }
 
 .application-menu.is-personalizable button .icon,
 .application-menu.is-personalizable button span,
 .application-menu.is-personalizable .hyperlink {
-  color: ${colors.text};
-  opacity: 0.8;
+  color: ${colors.contrast} !important;
 }
 
 .application-menu.is-personalizable button:not(:disabled):hover .icon,
 .application-menu.is-personalizable button:not(:disabled):hover span,
 .application-menu.is-personalizable .hyperlink:hover {
-  color: ${colors.text};
+  color: ${colors.contrast};
   opacity: 1;
 }
 
 .application-menu.is-personalizable .accordion.panel {
-  background-color: ${colors.header};
+  background-color: ${colors.lighter};
 }
 
 .application-menu.is-personalizable .name-xl,
 .application-menu.is-personalizable .name,
 .application-menu.is-personalizable .accordion-heading {
-  color: ${colors.text};
+  color: ${colors.contrast};
 }
 
 .application-menu.is-personalizable .accordion.panel .accordion-header {
-  background-color: ${colors.header};
-  border-bottom-color: transparent;
-  color: ${colors.text};
-  opacity: .8;
+  background-color: ${colors.lighter} !important;
+  border: 1px solid transparent !important;
+  color: ${colors.contrast};
 }
 
 .application-menu.is-personalizable .accordion.panel .accordion-header .icon {
-  color: ${colors.text} !important;
+  color: ${colors.contrast} !important;
+}
+
+.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected {
+  background-color: ${colors.base} !important;
 }
 
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a,
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected:hover > a,
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a,
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected .icon {
-  color: ${colors.text} !important;
+  color: ${colors.contrast} !important;
 }
 
 .application-menu.is-personalizable .accordion.panel .accordion-header:hover {
-  opacity: 1;
+  background-color: ${colors.base} !important;
 }
 
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) {
-  border-color: ${colors.text};
-  opacity: 1;
-  box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
+  border: 1px solid ${colors.contrast} !important;
+  box-shadow: none !important;
 }
 
-.accordion.panel.inverse .accordion-pane.is-expanded + .accordion-header:not(.is-focused):not(.is-selected), .accordion.panel.inverse .accordion-pane.is-expanded + .accordion-content {
-  border-color: ${colors.verticalBorder};
+.application-menu.is-personalizable .accordion.panel.inverse .accordion-pane {
+  background-color: ${colors.lighter} !important;
+}
+
+.application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
+  border: 1px solid ${colors.lighter};
 }
 
 .application-menu.is-personalizable button:focus:not(.hide-focus),
 .application-menu.is-personalizable .hyperlink:focus:not(.hide-focus)::after {
-  border-color: ${colors.text};
-  opacity: 1;
-  box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
+  border-color: ${colors.contrast} !important;
+  box-shadow: none !important;
 }
 
-.application-menu.is-personalizable .application-menu-switcher-panel {
-  border-top-color: ${colors.horizontalBorder};
-}
-
-.application-menu.is-personalizable .application-menu-switcher-panel .accordion-heading {
-  border-top-color: ${colors.horizontalBorder};
-}
-
-.application-menu.is-personalizable .searchfield-wrapper {
-  background-color: ${colors.header};
-  border-bottom: 1px solid ${colors.horizontalBorder};
+.application-menu .application-menu-header button:hover,
+.application-menu .application-menu-footer button:hover {
+  background-color: ${colors.base} !important;
 }
 
 .application-menu.is-personalizable .searchfield-wrapper .searchfield {
-  color: ${colors.text} !important;
+  color: ${colors.contrast} !important;
 }
 
 .application-menu.is-personalizable .accordion-header.has-filtered-children > a,
 .application-menu.is-personalizable .accordion.panel .accordion-header.has-filtered-children.is-focused {
-  color: ${colors.text} !important;
+  color: ${colors.contrast} !important;
 }
 
 .application-menu.is-personalizable .searchfield-wrapper .searchfield::placeholder {
-  color: ${colors.text};
+  color: ${colors.contrast};
   opacity: .8;
 }
 
 .application-menu.is-personalizable .searchfield-wrapper .icon {
-  color: ${colors.text};
+  color: ${colors.contrast};
   opacity: .8;
 }
 
 .application-menu.is-personalizable .searchfield-wrapper.active .icon {
-  color: ${colors.text};
+  color: ${colors.contrast};
   opacity: 1;
 }
 
+.application-menu.is-personalizable .application-menu-switcher-panel,
+.application-menu.is-personalizable .application-menu-switcher-panel .accordion.panel,
+.application-menu.is-personalizable .application-menu-switcher-panel .accordion.panel .accordion-header {
+  background-color: ${colors.base} !important;
+  border-top-color: transparent;
+}
+
+.application-menu.is-personalizable .application-menu-switcher-panel .accordion.panel .accordion-header:hover {
+  background-color: ${colors.darkest} !important;
+}
+
+.application-menu.is-personalizable .application-menu-switcher-panel .accordion-heading {
+  border-top-color: ${colors.darkest};
+}
+
+.application-menu.is-personalizable .searchfield-wrapper {
+  background-color: ${colors.base};
+  border-bottom: none !important;
+}
+
 .is-personalizable .personalize-header {
-  background-color: ${colors.header};
+  background-color: ${colors.base};
 }
 
 .is-personalizable .personalize-subheader {
-  background-color: ${colors.subheader};
+  background-color: ${colors.lighter};
 }
 
 .is-personalizable .personalize-text {
-  color: ${colors.text};
+  color: ${colors.contrast};
 }
 
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg {
-  color: ${colors.text};
+  color: ${colors.contrast};
   opacity: .8;
 }
 
 .is-personalizable .personalize-actionable:hover:not([disabled]),
 .is-personalizable .personalize-actionable:hover:not([disabled]) svg {
-  color: ${colors.text};
+  color: ${colors.contrast};
   opacity: 1;
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
 .is-personalizable .personalize-actionable:focus:not(.hide-focus) {
-  border-color: ${colors.text};
+  border-color: ${colors.contrast};
   box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
 }
 
 .is-personalizable .personalize-actionable.hyperlink:focus:not(.hide-focus)::after {
-  border-color: ${colors.text};
+  border-color: ${colors.contrast};
   opacity: 1;
   box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
 }
 
 .is-personalizable .personalize-vertical-border {
-  border-color: ${colors.verticalBorder};
+  border-color: ${colors.light};
 }
 
 .is-personalizable .personalize-horizontal-bottom-border {
-  border-bottom: 1px solid ${colors.horizontalBorder};
+  border-bottom: 1px solid ${colors.darkest};
 }
 
 .is-personalizable .personalize-horizontal-top-border {
-  border-top: 1px solid: ${colors.horizontalBorder};
+  border-top: 1px solid: ${colors.darkest};
 }
 
 .is-personalizable .personalize-chart-targeted .total.bar {
