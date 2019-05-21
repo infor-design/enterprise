@@ -74,6 +74,9 @@ const writeFile = require('./build/write-file');
 const createSvgHtml = require('./build/create-svg-html');
 const createColorJson = require('./build/create-color-json');
 
+const IdsMetadata = require('./helpers/ids-metadata');
+const IDS_THEMES = new IdsMetadata().getThemes();
+
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
 const TEST_DIR = path.join(__dirname, '..', 'test');
@@ -102,12 +105,7 @@ const filePaths = {
     sass: {
       controls: path.join(SRC_DIR, 'core', '_controls.scss'),
       controlsUplift: path.join(SRC_DIR, 'core', '_controls-uplift.scss'),
-      themes: {
-        'dark-theme': path.join(SRC_DIR, 'themes', 'dark-theme.scss'),
-        'high-contrast-theme': path.join(SRC_DIR, 'themes', 'high-contrast-theme.scss'),
-        'light-theme': path.join(SRC_DIR, 'themes', 'light-theme.scss'),
-        'uplift-theme': path.join(SRC_DIR, 'themes', 'uplift-theme.scss'),
-      }
+      themes: {}
     }
   },
   target: {
@@ -129,12 +127,7 @@ const filePaths = {
       controls: path.join(TEMP_DIR, '_controls.scss'),
       controlsUplift: path.join(TEMP_DIR, '_controls-uplift.scss'),
       banner: path.join(TEMP_DIR, '_banner.scss'),
-      themes: {
-        'dark-theme': path.join(TEMP_DIR, 'dark-theme.scss'),
-        'high-contrast-theme': path.join(TEMP_DIR, 'high-contrast-theme.scss'),
-        'light-theme': path.join(TEMP_DIR, 'light-theme.scss'),
-        'uplift-theme': path.join(TEMP_DIR, 'uplift-theme.scss')
-      }
+      themes: {}
     },
     log: {
       components: path.join(TEMP_DIR, 'components.txt'),
@@ -144,6 +137,9 @@ const filePaths = {
     }
   }
 };
+
+addDynamicCssThemePaths(`${SRC_DIR}/themes`, true)
+
 
 // These search terms are used when scanning existing index files to determine
 // a component's placement in a generated file.
@@ -259,6 +255,30 @@ const sassMatches = [];
  */
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
+ * Dynamically create the CSS paths for the supported themes
+ */
+function addDynamicCssThemePaths() {
+  const tryAddPath = (themeName, themeVariant) => {
+    const fileName = `theme-${themeName}-${themeVariant}`;
+    const srcPath = path.join(SRC_DIR, 'themes', `${fileName}.scss`);
+    const targetPath = path.join(TEMP_DIR, `${fileName}.scss`);
+
+    if (fs.existsSync(srcPath)) {
+      filePaths.src.sass.themes[fileName] = srcPath;
+      filePaths.target.sass.themes[fileName] = targetPath;
+    }
+  }
+
+  IDS_THEMES.forEach(theme => {
+    tryAddPath(theme.name, theme.base.name);
+
+    theme.variants.forEach(variant => {
+      tryAddPath(theme.name, variant.name);
+    });
+  });
 }
 
 /**
@@ -1032,6 +1052,30 @@ cleanAll(true).then(() => {
     }
 
     runBuildProcesses(requestedComponents, jsMatches, jQueryMatches, sassMatches)
+      .then(() => {
+        // THIS NEEDS REMOVED VERY SOON
+        // Copy renamed soho theme files to their deprecated names for backwards compatibility
+
+        const cssPath = path.join(__dirname, '..', 'dist', 'css');
+        const glob = require('glob');
+        const cssFiles = glob.sync(`${cssPath}/**/theme-soho-*.css*`);
+
+        const proms = cssFiles.map(file => {
+          return new Promise((resolve, reject) => {
+            const getVariantRx = /theme-soho-(\w*).(\S*)/; // get variant (1) and full ext (2)
+            const pieces = getVariantRx.exec(file);
+            const backwardCompatName = (pieces[1] === "contrast" ? "high-contrast" : pieces[1]);
+            const depName = `${backwardCompatName}-theme.${pieces[2]}` // i.e. light-theme.css.map
+
+            return fs.copyFile(file, `${cssPath}/${depName}`, err => {
+              if (err) reject(err);
+              logger('alert', `Backwards compatibility ${file} copied to ${depName}`);
+              resolve();
+            });
+          });
+        });
+        return Promise.all(proms);
+      })
       .catch(buildFailure)
       .then(buildSuccess);
   });

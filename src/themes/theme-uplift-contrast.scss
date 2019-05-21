@@ -1,21 +1,18 @@
-// IDS Enterprise - High Contrast Theme , WCAGAAA
+// IDS Enterprise - Uplift Theme
 //================================================== //
 
-// Standard CSS reset
+// Standard CSS reset stuff here
 @import '../core/reset';
 @import '../core/mixins';
 
 // ids-identity token vars
-@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho-contrast';
+@import '../../node_modules/ids-identity/dist/theme-uplift/tokens/web/theme-uplift-contrast';
 
-// Enterprise colors
+// Enterprise color variables
 @import '../components/colors/colorpalette';
 
-// Local vars
+// Enterprise vars
 @import '../core/config';
-
-// Override Config
-//================================================== //
 
 // Form Background Color
 $header-bg-color: $theme-color-palette-azure-90;
@@ -745,9 +742,29 @@ $calendar-hover-bg-color: rgba(74, 74, 74, 0.1);
 $calendar-disabled-bg-color: $input-color-readonly-background;
 $calendar-disabled-color: $theme-color-palette-graphite-100;
 
-//================================================== //
-// Special Control Overrides
-@import '../core/controls';
+// Core Uplift Controls
+@import '../core/controls-uplift';
+
+// Temporary Banner - Remove this when not beta.
+body::before {
+  background: $theme-color-status-base;
+  bottom: 12px;
+  color: $theme-color-palette-white;
+  content: 'beta';
+  font-size: 13px;
+  font-weight: 900;
+  height: 25px;
+  left: -25px;
+  line-height: 27px;
+  position: fixed;
+  text-align: center;
+  text-transform: uppercase;
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  width: 100px;
+  z-index: 1000;
+}
 
 //Swaplist
 .swaplist {

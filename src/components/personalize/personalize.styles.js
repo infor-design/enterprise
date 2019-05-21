@@ -372,21 +372,19 @@ function personalizeStyles(colors) {
   border-top: 1px solid: ${colors.horizontalBorder};
 }
 
-.is-personalizable .personalize-chart-targeted {
-  background-color: rgba(255, 255, 255, .9);
+.is-personalizable .personalize-chart-targeted .total.bar {
+  background-color: rgba(255, 255, 255, .8);
 }
 
-.is-personalizable .personalize-chart-targeted .bar {
-  height: 23px !important;
-}
-
-.is-personalizable .personalize-chart-targeted .chart-percent-text {
+.is-personalizable .personalize-chart-targeted .chart-percent-text,
+.is-personalizable .personalize-chart-targeted .label {
   color: ${colors.text};
 }
 
-.is-personalizable .personalize-chart-targeted .completed {
-  margin-left: 1px;
-  margin-top: -22px;
+.is-personalizable .info-message,
+.is-personalizable .info-message .icon,
+.is-personalizable .info-message p {
+  color: ${colors.text} !important;
 }
 
 .is-personalizable .personalize-actionable-disabled,

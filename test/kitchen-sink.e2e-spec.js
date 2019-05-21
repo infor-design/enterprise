@@ -47,7 +47,7 @@ describe('Kitchen-sink tests', () => {
       await highContrastItem.click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await element(by.css('html')).getAttribute('class')).toContain('high-contrast-theme');
+      expect(await element(by.css('html')).getAttribute('class')).toContain('theme-soho-contrast');
     });
   }
 });

@@ -26,16 +26,16 @@ $drop-shadow-depth: rgba(0, 0, 0, 0.2);
 $focus-box-shadow-color: rgba(54, 138, 192, 0.3);
 $focus-box-shadow-transparent: 0 0 4px 3px transparent; //Should be same size as $focus-box-shadow (only color transparent)
 $focus-box-shadow: 0 0 4px 3px $focus-box-shadow-color;  //Old Style:  0 0 5px rgba(8, 150, 233, .2)
-$focus-box-shadow-spinbox: 0 -3px 3px 0 $focus-box-shadow-color,
-  0 3px 3px 0 $focus-box-shadow-color;
+$focus-box-shadow-spinbox: 0 3px 3px 0 $focus-box-shadow-color,
+  0 -3px 3px 0 $focus-box-shadow-color;
 
-$focus-box-shadow-spinbox-down: 0 -3px 3px 0 $focus-box-shadow-color,
+$focus-box-shadow-spinbox-down: -3px 0 3px 0 $focus-box-shadow-color,
   0 3px 3px 0 $focus-box-shadow-color,
-  -3px 0 3px 0 $focus-box-shadow-color;
+  0 -3px 3px 0 $focus-box-shadow-color;
 
-$focus-box-shadow-spinbox-up: 0 -3px 3px 0 $focus-box-shadow-color,
+$focus-box-shadow-spinbox-up: 3px 0 3px 0 $focus-box-shadow-color,
   0 3px 3px 0 $focus-box-shadow-color,
-  3px 0 3px 0 $focus-box-shadow-color;
+  0 -3px 3px 0 $focus-box-shadow-color;
 
 // Base Colors
 $inverse-color: $button-color-primary-initial-font;
@@ -494,7 +494,7 @@ $accordion-header-filtered-children-background-color: $theme-color-palette-graph
 $accordion-filtered-background-color: transparent;
 $accordion-filtered-text-color: $theme-color-palette-graphite-60;
 
-// Application Menu (extends Accoridon)
+// Application Menu (extends Accordion)
 $application-menu-width: 300px;
 $application-menu-border-color: $theme-color-palette-slate-50;
 $application-menu-searchfield-icon-color: $theme-color-palette-slate-50;

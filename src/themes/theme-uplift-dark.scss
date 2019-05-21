@@ -1,21 +1,18 @@
-// IDS Enterprise - Dark Theme
+// IDS Enterprise - Uplift Theme
 //================================================== //
 
-// Standard CSS reset
+// Standard CSS reset stuff here
 @import '../core/reset';
 @import '../core/mixins';
 
 // ids-identity token vars
-@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho-dark';
+@import '../../node_modules/ids-identity/dist/theme-uplift/tokens/web/theme-uplift-dark';
 
-// Enterprise color palette
+// Enterprise color variables
 @import '../components/colors/colorpalette';
 
-// Local vars
+// Enterprise vars
 @import '../core/config';
-
-// Override Config
-//================================================== //
 
 // Form Background Color
 $header-bg-color: $theme-color-palette-slate-90;
@@ -718,11 +715,31 @@ $calendar-hover-bg-color: rgba(49, 50, 54, 0.5);
 $calendar-disabled-bg-color: $theme-color-palette-slate-80;
 $calendar-disabled-color: $theme-color-palette-slate-40;
 
+// Core Uplift Controls
+@import '../core/controls-uplift';
+
+// Temporary Banner - Remove this when not beta.
+body::before {
+  background: $theme-color-status-base;
+  bottom: 12px;
+  color: $theme-color-palette-white;
+  content: 'beta';
+  font-size: 13px;
+  font-weight: 900;
+  height: 25px;
+  left: -25px;
+  line-height: 27px;
+  position: fixed;
+  text-align: center;
+  text-transform: uppercase;
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  width: 100px;
+  z-index: 1000;
+}
+
 // Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $theme-color-palette-slate-40;
 }
-
-//================================================== //
-// Core Controls
-@import '../core/controls';
