@@ -4194,6 +4194,7 @@ Datagrid.prototype = {
           };
           this.totalWidths[container] += colWidth;
           this.totalMinWidths[container] = this.totalWidths[container];
+          this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
         }
       }
 
@@ -4209,7 +4210,7 @@ Datagrid.prototype = {
 
       if (this.widthPercent) {
         this.table.css('width', '100%');
-      } else if (!isNaN(this.totalWidths[container])) {
+      } else {
         this.table.css('width', this.totalWidths.center);
       }
       if (!isNaN(this.totalMinWidths.center) && this.totalMinWidths.center > 0) {
@@ -4220,13 +4221,13 @@ Datagrid.prototype = {
         this.tableLeft.css('width', this.totalWidths.left);
       }
       if (!isNaN(this.totalMinWidths.left) && this.totalMinWidths.left > 0) {
-        this.table.css('min-width', `${this.totalMinWidths.left}px`);
+        this.tableLeft.css('min-width', `${this.totalMinWidths.left}px`);
       }
       if (this.hasRightPane) {
         this.tableRight.css('width', this.totalWidths.right);
       }
       if (!isNaN(this.totalMinWidths.right) && this.totalMinWidths.right > 0) {
-        this.table.css('min-width', `${this.totalMinWidths.right}px`);
+        this.tableRight.css('min-width', `${this.totalMinWidths.right}px`);
       }
       this.isInitialRender = false;
     }
