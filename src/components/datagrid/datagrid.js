@@ -2869,6 +2869,27 @@ Datagrid.prototype = {
     self.bodyColGroupHtmlRight = '<colgroup>';
     self.triggerDestroyCell(); // Trigger Destroy on previous cells
 
+    for (j = 0; j < self.settings.columns.length; j++) {
+      const col = self.settings.columns[j];
+      
+      let colWidth = self.columnWidth(col, j);
+
+      switch (container) {
+        case 'left':
+          self.bodyColGroupHtmlLeft += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
+          break;
+        case 'right':
+          self.bodyColGroupHtmlRight += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
+          break;
+        default:
+          self.bodyColGroupHtml += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
+      }
+
+      if (col.colspan) {
+        self.hasColSpans = true;
+      }
+    }
+
     // Prevent flashing message area on filter / reload
     if (self.emptyMessageContainer) {
       self.emptyMessageContainer.hide();
@@ -3652,28 +3673,6 @@ Datagrid.prototype = {
 
       if (rowspan === '') {
         continue;
-      }
-
-      // Set Width of table col / col group elements
-      let colWidth = '';
-
-      if (this.recordCount === 0) {
-        colWidth = this.columnWidth(col, j);
-
-        switch (container) {
-          case 'left':
-            self.bodyColGroupHtmlLeft += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
-            break;
-          case 'right':
-            self.bodyColGroupHtmlRight += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
-            break;
-          default:
-            self.bodyColGroupHtml += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
-        }
-
-        if (col.colspan) {
-          this.hasColSpans = true;
-        }
       }
 
       if (skipColumns > 0 && !col.hidden) {
