@@ -21,8 +21,14 @@ label.required .label-text:not(.accessible)::after,
   font-size: $theme-size-font-md;
 }
 
-.field-info + .error-message {
-  margin-top: unset;
+.field-info {
+  .icon {
+    margin-top: -3px;
+  }
+
+  + .error-message {
+    margin-top: unset;
+  }
 }
 
 .error-message {
