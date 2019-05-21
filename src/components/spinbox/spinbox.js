@@ -278,7 +278,7 @@ Spinbox.prototype = {
       if ($(e.currentTarget).is(':hover')) {
         self.handleClick(e);
       }
-    }, 300);
+    }, 250);
   },
 
   /**
