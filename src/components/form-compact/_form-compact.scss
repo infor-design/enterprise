@@ -94,9 +94,11 @@
     }
 
     &.is-focused {
+      // NOTE: long-form border properties are used on purpose, don't change to shorthand.
       input {
         background-color: $formcompact-field-bg-focus-color;
         border-bottom-color: $formcompact-field-border-focus-color;
+        border-left-color: $formcompact-field-border-focus-color;
         border-right-color: $formcompact-field-border-focus-color;
       }
 
@@ -263,6 +265,14 @@ html[dir='rtl'] {
     .one-half.column {
       margin-left: 0;
       margin-right: 0;
+    }
+
+    .column,
+    .columns {
+      input {
+        border-left: 1px solid $formcompact-field-border-color;
+        border-right: 0;
+      }
     }
   }
 }
