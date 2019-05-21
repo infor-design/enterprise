@@ -14,13 +14,13 @@
 // Enterprise vars
 @import '../core/config';
 
+// Core Uplift Components
 $application-menu-border-color: $theme-color-palette-slate-90;
 $accordion-inverse-bg-color: $theme-color-palette-slate-90;
 $accordion-inverse-pane-bg-color: $theme-color-palette-slate-90;
 $accordion-inverse-border-color:  $theme-color-palette-slate-90;
 $accordion-inverse-text-color: $theme-color-palette-white;
 
-// Core Uplift Controls
 @import '../core/controls-uplift';
 
 // Temporary Banner - Remove this when not beta.

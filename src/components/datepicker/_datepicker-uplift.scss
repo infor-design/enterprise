@@ -1,0 +1,18 @@
+// Uplift Datepicker
+//================================================== //
+
+.datepicker {
+  + .icon,
+  + .tooltip-description + .icon {
+    margin-left: -28px;
+    margin-top: 10px;
+  }
+}
+
+.field-short {
+  .datepicker {
+    + .icon {
+      margin-top: 9px;
+    }
+  }
+}
