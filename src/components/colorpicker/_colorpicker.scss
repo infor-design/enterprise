@@ -354,6 +354,18 @@
   }
 }
 
+.ie11 {
+  .colorpicker-container{
+    &.is-readonly {
+      &.is-not-editable {
+        input[readonly]:focus {
+          color: $input-color;
+        }
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .colorpicker-container {
