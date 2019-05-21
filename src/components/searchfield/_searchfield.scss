@@ -355,6 +355,11 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 // RTL Styles
 html[dir='rtl'] {
   .searchfield-wrapper {
+    .searchfield {
+      padding-left: 10px;
+      padding-right: 34px;
+    }
+
     > .icon {
       &:not(.close) {
         left: auto;
