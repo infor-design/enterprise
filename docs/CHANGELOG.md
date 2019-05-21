@@ -1,17 +1,5 @@
 # What's New with Enterprise
 
-## v4.20.0
-
-### v4.20.0 Future Deprecation
-
-### v4.20.0 Features
-
-### v4.20.0 Fixes
-
-- `[Radios]` Fixed an issue where in `RTL` the radio seems visually separate from it's label. ([#2096](https://github.com/infor-design/enterprise/issues/2096))
-
-### v4.20.0 Chores & Maintenance
-
 ## v4.19.0
 
 ### v4.19.0 Future Deprecation
@@ -71,6 +59,7 @@
 - `[Personalization]` Added an example of normal tabs behaving like header tabs in a personalized area. ([#1962](https://github.com/infor-design/enterprise/issues/1962))
 - `[Personalization]` Added completion chart and alerts to the list of header items that will work when personalized. ([#2171](https://github.com/infor-design/enterprise/issues/2171))
 - `[Popupmenu]` Fixed an issue where disabled submenus were opening on mouseover. ([#1863](https://github.com/infor-design/enterprise/issues/1863))
+- `[Radios]` Fixed an issue where in `RTL` the radio seems visually separate from it's label. ([#2096](https://github.com/infor-design/enterprise/issues/2096))
 - `[Timepicker]` Updated the Swedish translation for Set Time. ([#2153](https://github.com/infor-design/enterprise/issues/2153))
 - `[Tree]` Fixed an issue where children property null was breaking tree to not render. ([#1908](https://github.com/infor-design/enterprise/issues/1908))
 
