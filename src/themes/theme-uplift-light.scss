@@ -14,6 +14,7 @@
 // Enterprise vars
 @import '../core/config';
 
+// Uplift Light Overrides
 $body-color-primary-background: $theme-color-palette-white;
 
 $application-menu-border-color: $theme-color-palette-slate-90;
@@ -32,6 +33,7 @@ $panel-border-color: $theme-color-palette-slate-20;
 
 
 // Core Uplift Controls
+=======
 @import '../core/controls-uplift';
 
 // Temporary Banner - Remove this when not beta.

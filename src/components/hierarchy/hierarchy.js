@@ -47,7 +47,7 @@ const HIERARCHY_DEFAULTS = {
   paging: false,
   renderSubLevel: false,
   layout: 'horizontal', // stacked, horizontal, paging, mobile-only
-  rootClass: 'hierarchy',
+  rootId: null,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
@@ -64,7 +64,15 @@ function Hierarchy(element, settings) {
 Hierarchy.prototype = {
   init() {
     const s = this.settings;
-    this.settings.rootClass = 'hierarchy';
+
+    // Set chart id
+    if (this.rootId === null && this.element.attr('id') === undefined) {
+      this.rootId = 'hierarchyChart';
+    } else if (this.element.attr('id')) {
+      this.settings.rootId = this.element.attr('id');
+    } else {
+      this.rootId = 'hierarchyChart';
+    }
 
     s.colorClass = [
       'azure08', 'turquoise02', 'amethyst06', 'slate06', 'amber06', 'emerald07', 'ruby06'
@@ -724,12 +732,14 @@ Hierarchy.prototype = {
       sublevel: s.paging ? '' : '<ul class="sub-level"></ul>'
     };
 
-    const chartContainer = this.element.append(structure.chart);
-    const chart = $('.chart', chartContainer);
+    // Append chart structure to hierarchy container
+    $(`#${this.settings.rootId}`).append(structure.chart);
+
+    const chart = $(`#${this.settings.rootId} .chart`);
 
     if (thisLegend.length !== 0) {
-      this.element.prepend(structure.legend);
-      const element = $('legend', chartContainer);
+      $(`#${this.settings.rootId}`).prepend(structure.legend);
+      const element = $(`#${this.settings.rootId} legend`);
       this.createLegend(element);
     }
 
@@ -777,7 +787,7 @@ Hierarchy.prototype = {
       rootNodeHTML.push(ancestorHTML);
       $(rootNodeHTML[0]).addClass('root ancestor').appendTo(chart);
 
-      const roots = $('.leaf.root');
+      const roots = this.element.find('.leaf.root');
 
       roots.each((index, root) => {
         this.updateState(root, false, data.ancestorPath[index], 'add');
@@ -803,9 +813,9 @@ Hierarchy.prototype = {
       }
 
       if (centeredNode && centeredNode !== null) {
-        this.updateState($('.leaf.root'), true, centeredNode, undefined);
+        this.updateState(this.element.find('.leaf.root'), true, centeredNode, undefined);
       } else {
-        this.updateState($('.leaf.root'), true, data, undefined);
+        this.updateState(this.element.find('.leaf.root'), true, data, undefined);
       }
     }
 
@@ -965,10 +975,10 @@ Hierarchy.prototype = {
    */
   createLeaf(nodeData, container) {
     const self = this;
-    const chartClassName = self.settings.rootClass;
-    const chart = $(`.${chartClassName} .chart`, self.container);
+    // Needs to be unique in the chance of multiple charts
+    const chart = $(`#${self.settings.rootId} .chart`, self.container);
     const elClassName = container.attr('class');
-    const el = elClassName !== undefined ? $(`.${elClassName}`) : container;
+    const el = elClassName !== undefined ? $(`#${self.settings.rootId} .${elClassName}`) : container;
 
     if (el.length < 1) {
       if (elClassName === 'top-level') {
@@ -982,6 +992,8 @@ Hierarchy.prototype = {
       self.setColor(thisNodeData);
 
       const leaf = self.getTemplate(thisNodeData);
+      const rootId = self.settings.rootId;
+
       let parent = el.length === 1 ? el : container;
       let branchState = thisNodeData.isExpanded || thisNodeData.isExpanded === undefined ? 'branch-expanded' : 'branch-collapsed';
 
@@ -989,7 +1001,7 @@ Hierarchy.prototype = {
         branchState = '';
       }
 
-      if ($(`#${thisNodeData.id}`).length === 1) {
+      if ($(`#${rootId} #${thisNodeData.id}`).length === 1) {
         return;
       }
 
@@ -1009,12 +1021,12 @@ Hierarchy.prototype = {
           }
         }
 
-        parent = $(`#${xssUtils.stripTags(thisNodeData.id)}`).parent();
+        parent = $(`#${rootId} #${xssUtils.stripTags(thisNodeData.id)}`).parent();
         parent.append(`<ul>${childrenNodes}</ul>`);
 
         let childLength = thisNodeData.children.length;
         while (childLength--) {
-          const lf = $(`#${xssUtils.stripTags(thisNodeData.children[childLength].id)}`);
+          const lf = $(`#${rootId} #${xssUtils.stripTags(thisNodeData.children[childLength].id)}`);
           self.updateState(lf, false, thisNodeData.children[childLength], undefined);
         }
       }
@@ -1024,11 +1036,11 @@ Hierarchy.prototype = {
       for (let i = 0, l = nodeData.length; i < l; i++) {
         const isLast = (i === (nodeData.length - 1));
         processDataForLeaf(nodeData[i], isLast);
-        self.updateState($(`#${xssUtils.stripTags(nodeData[i].id)}`), false, nodeData[i], undefined);
+        self.updateState($(`#${self.settings.rootId} #${xssUtils.stripTags(nodeData[i].id)}`), false, nodeData[i], undefined);
       }
     } else {
       processDataForLeaf(nodeData, true);
-      self.updateState($(`#${xssUtils.stripTags(nodeData.id)}`), false, nodeData, undefined);
+      self.updateState($(`#${self.settings.rootId} #${xssUtils.stripTags(nodeData.id)}`), false, nodeData, undefined);
     }
   },
 

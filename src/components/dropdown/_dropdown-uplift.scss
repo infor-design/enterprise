@@ -1,0 +1,40 @@
+// Uplift Dropdown
+//================================================== //
+
+// Create a token for this
+$dropdown-size-padding-x-r: 30px;
+
+div.dropdown,
+div.multiselect {
+  + .icon {
+    top: 3px;
+  }
+}
+
+.dropdown-list {
+  > .trigger {
+    width: $dropdown-size-padding-x-r;
+
+    .icon {
+      top: 9px;
+    }
+  }
+}
+
+.field-short div.dropdown,
+.field-short div.multiselect {
+  + .icon {
+    top: 1px;
+  }
+}
+
+.dropdown-list {
+  &.dropdown-short {
+    .trigger {
+      .icon {
+        left: -1px;
+        top: 0;
+      }
+    }
+  }
+}
