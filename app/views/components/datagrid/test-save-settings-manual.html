@@ -67,7 +67,7 @@
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
 
     //Get some data via ajax
-    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
+    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=10';
 
     $.getJSON(url, function(res) {
         //Init and get the api for the grid
@@ -79,6 +79,7 @@
           pagesize: 10,
           pagesizes: [5, 10, 15],
           source: function(req, response) {
+            console.log('source req: ' + req);
             var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
             if (req.sortId) {
@@ -88,7 +89,7 @@
             if (req.filterExpr && req.filterExpr[0]) {
               url += '&filter=' + req.filterExpr[0].value;
             }
-
+            console.log('source url: ' + url);
             //Get Page Based on info in Req, return results into response;
             $.getJSON(url, function(res) {
               req.total = res.total;
@@ -98,7 +99,7 @@
           filterable: true,
           toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
         }).on('settingschanged', function (e, args) {
-
+          console.log(args);
           // Save Each Setting in Local storage (or you could use your own DB)
           localStorage[grid.uniqueId('columns')] = JSON.stringify(args.columns);
           localStorage[grid.uniqueId('rowHeight')] = args.rowHeight;
@@ -115,7 +116,7 @@
           savedPagesize = localStorage[grid.uniqueId('pagesize')],
           savedActivePage = localStorage[grid.uniqueId('activePage')],
           savedFilter = localStorage[grid.uniqueId('filter')] ? JSON.parse(localStorage[grid.uniqueId('filter')]) : null;
-
+        console.log('restoreUserSettings');
         grid.restoreUserSettings({activePage: savedActivePage, columns: savedColumns,
               rowHeight: savedRowHeight, sortOrder: savedSortOrder, pagesize: savedPagesize, filter: savedFilter});
 
