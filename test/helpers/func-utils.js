@@ -19,7 +19,7 @@ function cleanup(item) {
   }
 
   // Handle a single CSS selector
-  const els = Array.from(document.querySelectorAll(item));
+  const els = Array.from(document.querySelectorAll(item)); // eslint-disable-line compat/compat
   if (els && els.length) {
     els.forEach((el) => {
       el.parentNode.removeChild(el);

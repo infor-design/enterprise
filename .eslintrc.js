@@ -20,7 +20,8 @@ module.exports = {
   },
   'plugins': [
     'jasmine',
-    'jasmine-jquery'
+    'jasmine-jquery',
+    'compat'
   ],
   'env': {
     'browser': true,
@@ -30,6 +31,9 @@ module.exports = {
     'protractor': true
   },
   'rules': {
+    // Browser compatibility
+    "compat/compat": "error",
+
     // require function expressions to have a name
     // https://eslint.org/docs/rules/func-names
     'func-names': 'off',
