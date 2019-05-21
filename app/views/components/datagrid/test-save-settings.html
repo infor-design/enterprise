@@ -62,30 +62,28 @@
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
 
     //Init and get the api for the grid
-    grid = $('#datagrid').datagrid({
-      columns: columns,
-      columnReorder: true,
-      source: function(req, response) {
-        var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
 
-        //Get Page Based on info in Req, return results into response;
-        $.getJSON(url, function(res) {
-          req.total = res.total;
-          response(res.data, req);
-        });
-      },
-      paging: true,
-      pagesize: 10,
-      pagesizes: [5, 10, 15],
-      filterable: true,
-      saveUserSettings: {columns: true,
-         rowHeight: true,
-         sortOrder: true,
-         pagesize: true,
-         activePage: true,
-         filter: true},
-      toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
+    //Get Page Based on info in Req, return results into response;
+    $.getJSON(url, function(res) {
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: res.data,
+        columnReorder: true,
+        paging: true,
+        pagesize: 10,
+        pagesizes: [5, 10, 15],
+        filterable: true,
+        saveUserSettings: {
+           columns: true,
+           rowHeight: true,
+           sortOrder: true,
+           pagesize: true,
+           activePage: true,
+           filter: true
+        },
+        toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
+      });
     });
-
   });
 </script>
