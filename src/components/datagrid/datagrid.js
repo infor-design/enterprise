@@ -4183,6 +4183,7 @@ Datagrid.prototype = {
             widthPercent: this.widthPercent
           };
           this.totalMinWidths[container] = this.totalWidths[container];
+          this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
         }
         if (diff > 0 && diff < colWidth && !this.widthPercent && !col.width) {
           colWidth += diff;
@@ -4203,9 +4204,9 @@ Datagrid.prototype = {
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
           stretchColumn[0].width += diff2 - 2;
         }  
+        this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
       }
 
-      this.totalWidths.center = this.isInModal ? this.elemWidth : '100%';
 
       if (this.widthPercent) {
         this.table.css('width', '100%');
