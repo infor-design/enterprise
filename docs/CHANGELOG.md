@@ -35,6 +35,7 @@
 - `[Calendar]` Fixed some bugs having a calendar month along or just a legend, fixed the clicking of upcoming days and added a dblclick even emitter. ([#2149](https://github.com/infor-design/enterprise/issues/2149))
 - `[Colorpicker]` Fixed an issue where the colorpicker label is cut off in extra small input field. ([#2023](https://github.com/infor-design/enterprise/issues/2023))
 - `[Colorpicker]` Fixed an issue where the colorpickers are not responsive at mobile screen sizes. ([#1995](https://github.com/infor-design/enterprise/issues/1995))
+- `[Colorpicker]` Fixed an issue where the text is not visible on IE11 after choosing a color. ([#2134](https://github.com/infor-design/enterprise/issues/2134))
 - `[Context Menu]` Fixes a bug where a left click on the originating field would not close a context menu opened with a right click. ([#1992](https://github.com/infor-design/enterprise/issues/1992))
 - `[Completion Chart]` Cleaned up excessive padding in some cases. ([#2171](https://github.com/infor-design/enterprise/issues/2171))
 - `[Datagrid]` Fixed an issue where using the context menu with datagrid was not properly destroyed which being created multiple times. ([#392](https://github.com/infor-design/enterprise-ng/issues/392))
