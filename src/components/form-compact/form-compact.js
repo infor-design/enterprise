@@ -1,10 +1,14 @@
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 
 // Component Name
 const COMPONENT_NAME = 'formcompact';
 
 // Settings
 const FORMCOMPACT_DEFAULTS = {};
+
+// Others
+const FOCUSED_CSS_CLASS = 'is-focused';
 
 /**
  * @class FormCompact
@@ -60,14 +64,9 @@ FormCompact.prototype = {
    * @returns {void}
    */
   handleEvents() {
-    const focusedCssClass = 'is-focused';
     $(this.form)
-      .on(`focusin.${COMPONENT_NAME}`, 'input', (e) => {
-        e.target.parentNode.classList.add(focusedCssClass);
-      })
-      .on(`focusout.${COMPONENT_NAME}`, 'input', (e) => {
-        e.target.parentNode.classList.remove(focusedCssClass);
-      });
+      .on(`focusin.${COMPONENT_NAME}`, 'input', e => this.handleFocusIn(e))
+      .on(`focusout.${COMPONENT_NAME}`, 'input', e => this.handleFocusOut(e));
 
     // Listen to attribute changes (disabled/readonly) on cells
     const attributeNames = ['disabled', 'readonly'];
@@ -91,6 +90,28 @@ FormCompact.prototype = {
     this.inputs.forEach((input) => {
       this.inputsObserver.observe(input, config);
     });
+  },
+
+  /**
+   * Event handler for `focusin` events on fields
+   * @private
+   * @param {jQuery.Event} e the jQuery event wrapper for `focusin`
+   * @returns {void}
+   */
+  handleFocusIn(e) {
+    const target = DOM.parents(e.target, '.column, .columns', true);
+    target.classList.add(FOCUSED_CSS_CLASS);
+  },
+
+  /**
+   * Event handler for `focusout` events on fields
+   * @private
+   * @param {jQuery.Event} e the jQuery event wrapper for `focusout`
+   * @returns {void}
+   */
+  handleFocusOut(e) {
+    const target = DOM.parents(e.target, '.column, .columns', true);
+    target.classList.remove(FOCUSED_CSS_CLASS);
   },
 
   /**
