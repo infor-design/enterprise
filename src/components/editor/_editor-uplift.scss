@@ -1,12 +1,43 @@
-.toolbar.formatter-toolbar [class^='btn'],
-.flex-toolbar.formatter-toolbar [class^='btn'] {
-  font-size: unset;
-  height: 22px;
-  margin-top: 5px;
-}
+.toolbar.formatter-toolbar,
+.flex-toolbar.formatter-toolbar {
+  .separator {
+    height: 17px;
+    margin: 3px 15px 0 3px;
+  }
 
-.toolbar.formatter-toolbar [class^='btn'][data-element='foreColor'] .icon,
-.flex-toolbar.formatter-toolbar [class^='btn'][data-element='foreColor'] .icon {
-  margin-right: 4px;
-  margin-top: unset;
+  [class^='btn'],
+  [class^='btn'] {
+    font-size: unset;
+    top: 1px;
+
+    &:first-child {
+      margin-left: $theme-number-spacing-base;
+    }
+
+    &[data-element='foreColor'] .icon,
+    &[data-element='foreColor'] .icon {
+      margin-right: 4px;
+      margin-top: unset;
+    }
+
+    &[data-element='u'] .icon {
+      height: 18px;
+      margin-top: 1px;
+    }
+
+    &[data-element='h3'],
+    &[data-element='h4'] {
+      margin-right: $theme-number-spacing-base;
+
+      .icon {
+        margin-left: unset;
+        width: 30px;
+      }
+    }
+
+    .html-icon {
+      margin-left: unset;
+      width: 60px;
+    }
+  }
 }
