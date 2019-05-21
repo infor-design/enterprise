@@ -173,9 +173,9 @@
   font-weight: 700;
 }
 
-// Firefox has different column padding needs
 .is-firefox {
   .form-compact {
+    // Firefox has different column padding needs
     .column,
     .columns {
       label {
@@ -185,6 +185,11 @@
       input {
         padding: 0 8px 8px;
       }
+    }
+
+    // `input[type="file"]` is taller in Firefox.
+    .fileuploader {
+      max-height: 27px;
     }
   }
 }
@@ -197,6 +202,15 @@
       &.form-section-header {
         padding: 16px 10px 15px;
       }
+    }
+  }
+}
+
+// `input[type="file"]` is taller in IE11.
+.ie11 {
+  .form-compact {
+    .fileuploader {
+      max-height: 27px;
     }
   }
 }
@@ -277,7 +291,25 @@ html[dir='rtl'] {
 
     // Font family changes on RTL affect the height of the FileUploader.
     .fileuploader {
+      line-height: normal;
       max-height: 29px;
+    }
+  }
+
+  // Fix the FileUploader styles
+  &.ie11 {
+    .form-compact {
+      .fileuploader {
+        max-height: 28px;
+      }
+    }
+  }
+
+  &.is-firefox {
+    .form-compact {
+      .fileuploader {
+        max-height: 27px;
+      }
     }
   }
 }
