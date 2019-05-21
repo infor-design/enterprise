@@ -1017,8 +1017,8 @@ utils.hasClass = function hasClass(elem, classStr) {
  * @returns {number} A number representing the sign of the given argument. If the argument is a positive number, negative number, positive zero or negative zero, the function will return 1, -1, 0 or -0 respectively. Otherwise, NaN is returned.
  */
 math.sign = function (x) {
-  if (Math.sign) {
-    return Math.sign(x);
+  if (Math.sign) { // eslint-disable-line compat/compat
+    return Math.sign(x); // eslint-disable-line compat/compat
   }
 
   x = +x;
