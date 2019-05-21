@@ -22,6 +22,11 @@
 .card-footer,
 .widget-header,
 .widget-footer {
-  margin: 8px 20px;
+  margin: 8px 2px 8px 20px;
   padding: unset;
+}
+
+.card-header:not(.has-toolbar) > .btn-actions,
+.widget-header:not(.has-toolbar) > .btn-actions {
+  top: -1px;
 }
