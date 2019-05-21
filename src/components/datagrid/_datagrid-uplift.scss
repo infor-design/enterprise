@@ -1,3 +1,7 @@
 .datagrid-container.short-rowheight th .datagrid-checkbox-wrapper {
   top: 3px;
 }
+
+.datagrid-header-text {
+  font-size: $theme-size-font-xs !important;
+}
