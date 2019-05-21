@@ -3,6 +3,10 @@
 
 .header {
   h1 {
-    font-size: 2.4rem;
+    font-size: $theme-size-font-md;
+  }
+  .page-title {
+    font-size: $theme-size-font-md;
+    margin-top: unset;
   }
 }

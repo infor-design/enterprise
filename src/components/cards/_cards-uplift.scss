@@ -1,0 +1,19 @@
+.card,
+.widget {
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header,
+.widget-title {
+  h2 {
+    font-size: $theme-size-font-md;
+    font-weight: normal;
+  }
+}
+
+.card-header,
+.widget-header {
+  border-bottom: none;
+}
+
