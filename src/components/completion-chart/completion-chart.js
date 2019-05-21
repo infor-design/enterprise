@@ -300,9 +300,7 @@ CompletionChart.prototype = {
       html.body.addClass(`chart-completion-target${isAchievment ? ' chart-targeted-achievement' : ''}`);
 
       html.label = `<span class="label">
-        <span class="name">
-          ${dataset.completed.color && dataset.completed.color === 'error' ? $.createIcon({ icon: 'error', classes: 'icon-error' }) : ''}
-          ${fixUndefined(dataset.name.text)}</span>
+        <span class="name">${fixUndefined(dataset.name.text)} ${dataset.completed.color && dataset.completed.color === 'error' ? $.createIcon({ icon: 'error', classes: 'icon-error' }) : ''}</span>
         <span class="l-pull-right total value">${totalText}</span>
       </span>`;
     } else {
@@ -396,8 +394,8 @@ CompletionChart.prototype = {
       '</div>';
     }
 
-    DOM.append(html.body, (html.remaining || '') + (html.completed || '') + (html.targetline || ''), '<div><span><br>');
-    DOM.append(this.element, html.label + html.body.prop('outerHTML'), '<div><span><br>');
+    DOM.append(html.body, (html.remaining || '') + (html.completed || '') + (html.targetline || ''), '<a><use><svg><div><span><br>');
+    DOM.append(this.element, html.label + html.body.prop('outerHTML'), '<a><use><svg><div><span><br>');
 
     cacheElements();
     setJsonData();
