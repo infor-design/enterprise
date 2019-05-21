@@ -258,6 +258,10 @@ function personalizeStyles(colors) {
   color: ${colors.contrast} !important;
 }
 
+.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected {
+  background-color: ${colors.base} !important;
+}
+
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a,
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected:hover > a,
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a,
@@ -270,7 +274,7 @@ function personalizeStyles(colors) {
 }
 
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) {
-  border: 1px solid ${colors.base} !important;
+  border: 1px solid ${colors.contrast} !important;
   box-shadow: none !important;
 }
 
@@ -279,7 +283,7 @@ function personalizeStyles(colors) {
 }
 
 .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
-  border: 1px solid ${colors.lighter} !important;
+  border: 1px solid ${colors.lighter};
 }
 
 .application-menu.is-personalizable button:focus:not(.hide-focus),

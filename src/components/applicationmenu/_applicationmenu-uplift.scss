@@ -70,10 +70,6 @@
       font-weight: $theme-number-font-weight-bold;
     }
 
-    .accordion-header.has-chevron > [class^='btn'] {
-      bottom: 4px;
-    }
-
     &.has-icons .accordion-pane .accordion-header > a {
       letter-spacing: 0.2px;
       padding-left: calc(#{$theme-number-spacing-base} * 7);
