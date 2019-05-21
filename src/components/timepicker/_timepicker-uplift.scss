@@ -1,0 +1,9 @@
+// Uplift Timepicker Control
+//================================================== //
+
+.timepicker {
+  + .icon,
+  + .tooltip-description + .icon {
+    margin-top: 15px;
+  }
+}
