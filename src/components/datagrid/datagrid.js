@@ -2140,6 +2140,13 @@ Datagrid.prototype = {
       this.renderRows();
     }
 
+    if (filterChanged) {
+      this.setSearchActivePage({
+        trigger,
+        type: 'filtered'
+      });
+    }
+    
     if (this.restoreFilterClientSide) {
       this.restoreFilterClientSide = false;
     } else {
@@ -2154,13 +2161,6 @@ Datagrid.prototype = {
       * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
       */
       this.element.trigger('filtered', { op: 'apply', conditions, trigger });
-    }
-    
-    if (filterChanged) {
-      this.setSearchActivePage({
-        trigger,
-        type: 'filtered'
-      });
     }
     this.saveUserSettings();
   },
