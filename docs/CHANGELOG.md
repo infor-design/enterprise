@@ -21,6 +21,7 @@
 - `[Datagrid]` Fixes an issue that caused the active page to not restore correctly when saving user settings, . ([#1766](https://github.com/infor-design/enterprise/issues/1766))
 - `[Form Compact]` Adds support for Datepicker, Timepicker, Lookup, and File Uploader fields. ([#1955](https://github.com/infor-design/enterprise/issues/1955))
 - `[Keyboard]` Added a new API that you can call at anytime to see what key is being pressed at the moment. ([#1906](https://github.com/infor-design/enterprise/issues/1906))
+- `[Targeted/Completion Chart]` Added back the ability to inline svg icons and hyperlinks. ([#2152](https://github.com/infor-design/enterprise/issues/2152))
 - `[Themes]` Added support for multiple themes in the demo app and renamed distribute Uplift (only) theme files. ([#1972](https://github.com/infor-design/enterprise/issues/1972))
 
 ### v4.19.0 Fixes

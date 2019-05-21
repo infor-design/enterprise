@@ -317,6 +317,10 @@
 
 .chart-completion-target-padding .total.bar.chart-completion-target {
   margin-bottom: 60px;
+
+  .icon {
+    top: 1px;
+  }
 }
 
 .completion-chart {
@@ -360,18 +364,17 @@
     position: relative;
   }
 
-  .icon-error {
-    margin-top: 8px;
-    position: absolute;
-    right: -20px;
-    top: -8px;
+  .icon {
+    display: inline-block;
+    height: 14px;
+    margin: 0 2px;
+    position: relative;
+    top: 0;
+    width: 14px;
   }
-}
 
-// Position the Icon
-.chart-targeted-achievement {
-  .icon-error {
-    top: -9px;
+  .hyperlink {
+    font-size: $theme-size-font-base;
   }
 }
 
