@@ -4207,7 +4207,6 @@ Datagrid.prototype = {
         this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
       }
 
-
       if (this.widthPercent) {
         this.table.css('width', '100%');
       } else if (!isNaN(this.totalWidths[container])) {
