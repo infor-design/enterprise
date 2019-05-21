@@ -4502,25 +4502,6 @@ Datagrid.prototype = {
   },
 
   /**
-   * Save the columns to local storage
-   * This method is slated to be removed in a future v4.16.0 or v5.0.0.
-   * @deprecated as of v4.10.0. Please use `saveUserSettings()` instead.
-   * @returns {void}
-   */
-  saveColumns() {
-    warnAboutDeprecation(this.saveUserSettings, this.saveColumns);
-
-    if (!this.settings.saveColumns) {
-      return;
-    }
-
-    // Save to local storage
-    if (this.canUseLocalStorage()) {
-      localStorage[this.uniqueId('columns')] = JSON.stringify(this.settings.columns);
-    }
-  },
-
-  /**
    * Omit events and save to local storage for supported settings.
    * @returns {void}
    */
@@ -4705,12 +4686,14 @@ Datagrid.prototype = {
         this.pagerAPI.showPageSizeSelector(settings.showPageSizeSelector);
       }
 
-      if (settings.activePage) {
-        this.pagerAPI.setActivePage(parseInt(settings.activePage, 10), true);
-      }
-
       if (settings.filter) {
         this.applyFilter(settings.filter, 'restore');
+      }
+
+      if (settings.activePage) {
+        const savedActivePage = parseInt(settings.activePage, 10);
+        this.pagerAPI.setActivePage(savedActivePage, true);
+        this.restoreActivePage = true;
       }
       return;
     }
@@ -5213,7 +5196,7 @@ Datagrid.prototype = {
     }
 
     if (!totals && this.settings.source) {
-      count = this.lastCount;
+      count = this.lastCount || 0;
     }
 
     const formatInteger = v => Locale.formatNumber(v, { style: 'integer' });
@@ -5421,6 +5404,7 @@ Datagrid.prototype = {
         if (pagingInfo.type === 'filtered' && this.settings.source) {
           return;
         }
+        self.saveUserSettings();
         self.render(null, pagingInfo);
       }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
         self.render(null, pagingInfo);
@@ -6234,10 +6218,12 @@ Datagrid.prototype = {
       } else if (this.filterExpr[0].value === '' && this.pagerAPI.filteredActivePage) {
         pagingInfo = reset(pagingInfo);
       }
-    } else {
+    } else if (!this.restoreActivePage) {
       pagingInfo = reset(pagingInfo);
+      this.restoreActivePage = false;
     }
 
+    pagingInfo.activePage = this.activePage;
     this.renderPager(pagingInfo);
   },
 
