@@ -1,7 +1,7 @@
-// Wizard Control
+// Wizard
 //================================================== //
 
-// NOTE: See also "_header.scss" for Wizard styles that are specific to the header control.
+// NOTE: See also "_header.scss" for Wizard styles that are specific to the header.
 
 //Internal Variables
 $wizard-height: 164px;
@@ -180,7 +180,7 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
   }
 }
 
-// Styles used by the Header Wizard Control
+// Styles used by the Header Wizard
 .header {
   .wizard {
     margin: 0 20px;

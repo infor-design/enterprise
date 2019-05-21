@@ -1599,6 +1599,46 @@ describe('Datagrid paging serverside single select tests', () => {
   });
 });
 
+describe('Datagrid save user settings', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-save-settings');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(4)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  afterEach(async () => {
+    browser.executeScript('window.sessionStorage.clear();');
+    browser.executeScript('window.localStorage.clear();');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should save active page on reload', async () => {
+    await element(by.css('li.pager-next a')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.pager-count input')).getAttribute('value')).toEqual('2');
+    await browser.refresh();
+
+    expect(await element(by.css('.pager-count input')).getAttribute('value')).toEqual('2');
+  });
+
+  it('Should save sort on reload', async () => {
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('0');
+    await element(by.css('#datagrid .datagrid-header th:nth-child(1)')).click();
+    await element(by.css('#datagrid .datagrid-header th:nth-child(1)')).click();
+
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('99');
+    await browser.refresh();
+
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('99');
+  });
+});
+
 describe('Datagrid select and focus row', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-select-and-focus-row');

@@ -270,6 +270,17 @@
     }
   }
 
+  // Clearable Inputs that are not Searchfields
+  [data-clearable='true'] {
+    ~ .btn-actions {
+      left: -5px;
+    }
+
+    ~ .icon.close.is-empty ~ .btn-actions {
+      left: -10px;
+    }
+  }
+
   &.is-disabled {
     .btn-actions:not(.is-checkbox) {
       display: none;
@@ -684,20 +695,6 @@ html[dir='rtl'] {
         right: -8px;
       }
     }
-
-    &[data-clearable='true'] {
-      ~ .btn-actions {
-        left: auto;
-        right: 27px;
-      }
-
-      ~ .is-empty {
-        ~ .btn-actions {
-          left: auto;
-          right: -11px;
-        }
-      }
-    }
   }
 
   .is-fieldoptions {
@@ -726,6 +723,24 @@ html[dir='rtl'] {
     .lookup {
       ~ .btn-actions {
         right: -8px;
+      }
+    }
+
+    // Clearable Inputs that are not Searchfields
+    [data-clearable='true'] {
+      ~ .btn-actions {
+        left: auto;
+        right: 24px;
+      }
+
+      ~ .icon.close.is-empty ~ .btn-actions {
+        right: -11px;
+      }
+    }
+
+    .searchfield-wrapper {
+      .btn-actions {
+        top: -1px;
       }
     }
   }

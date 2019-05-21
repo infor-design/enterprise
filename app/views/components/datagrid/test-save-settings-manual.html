@@ -67,7 +67,7 @@
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
 
     //Get some data via ajax
-    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=10';
+    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
 
     $.getJSON(url, function(res) {
         //Init and get the api for the grid
@@ -78,24 +78,6 @@
           paging: true,
           pagesize: 10,
           pagesizes: [5, 10, 15],
-          source: function(req, response) {
-            console.log('source req: ' + req);
-            var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
-
-            if (req.sortId) {
-              url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
-            }
-
-            if (req.filterExpr && req.filterExpr[0]) {
-              url += '&filter=' + req.filterExpr[0].value;
-            }
-            console.log('source url: ' + url);
-            //Get Page Based on info in Req, return results into response;
-            $.getJSON(url, function(res) {
-              req.total = res.total;
-              response(res.data, req);
-            });
-          },
           filterable: true,
           toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
         }).on('settingschanged', function (e, args) {
@@ -119,7 +101,6 @@
         console.log('restoreUserSettings');
         grid.restoreUserSettings({activePage: savedActivePage, columns: savedColumns,
               rowHeight: savedRowHeight, sortOrder: savedSortOrder, pagesize: savedPagesize, filter: savedFilter});
-
     });
  });
 </script>
