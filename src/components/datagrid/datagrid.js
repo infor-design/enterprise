@@ -5195,7 +5195,7 @@ Datagrid.prototype = {
       count = totals;
     }
 
-    if (!totals && this.settings.source) {
+    if (totals === undefined && this.settings.source) {
       count = this.lastCount || 0;
     }
 
