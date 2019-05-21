@@ -2324,8 +2324,7 @@ Datagrid.prototype = {
       return this.filterExpr;
     }
 
-    const self = this;
-    let filterExpr = [];
+    const filterExpr = [];
 
     // Create an array of objects with: field, id, filterType, operator, value
     this.headerContainer.find('th').each(function () {
@@ -4494,7 +4493,7 @@ Datagrid.prototype = {
     if (columnGroups === undefined) {
       columnGroups = null;
     }
-    if (JSON.stringify(this.settings.columns) == JSON.stringify(columns) &&
+    if (JSON.stringify(this.settings.columns) === JSON.stringify(columns) &&
           (JSON.stringify(this.settings.columnGroups) === JSON.stringify(columnGroups))) {
       columnsChanged = false;
     }
