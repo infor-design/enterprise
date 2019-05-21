@@ -1,0 +1,33 @@
+// Uplift Compact Form Styles
+//================================================== //
+
+// FileUploader has different field heights depending on browser/font
+.form-compact {
+  .fileuploader {
+    max-height: 30px;
+  }
+}
+
+.ie11 {
+  .form-compact {
+    .fileuploader {
+      max-height: 30px;
+    }
+  }
+}
+
+.is-firefox {
+  .form-compact {
+    .fileuploader {
+      max-height: 28px;
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .form-compact {
+    .fileuploader {
+      max-height: 28px;
+    }
+  }
+}

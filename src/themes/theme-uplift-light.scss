@@ -15,6 +15,12 @@
 @import '../core/config';
 
 // Core Uplift Components
+$application-menu-border-color: $theme-color-palette-slate-90;
+$accordion-inverse-bg-color: $theme-color-palette-slate-90;
+$accordion-inverse-pane-bg-color: $theme-color-palette-slate-90;
+$accordion-inverse-border-color:  $theme-color-palette-slate-90;
+$accordion-inverse-text-color: $theme-color-palette-white;
+
 @import '../core/controls-uplift';
 
 // Temporary Banner - Remove this when not beta.
@@ -26,14 +32,18 @@ body::before {
   font-size: 13px;
   font-weight: 900;
   height: 25px;
-  left: -25px;
   line-height: 27px;
   position: fixed;
+  right: -25px;
   text-align: center;
   text-transform: uppercase;
-  -ms-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
   width: 100px;
   z-index: 1000;
+}
+
+html body {
+  background-color: #fff;
 }

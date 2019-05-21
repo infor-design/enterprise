@@ -278,7 +278,7 @@ Spinbox.prototype = {
       if ($(e.currentTarget).is(':hover')) {
         self.handleClick(e);
       }
-    }, 140);
+    }, 250);
   },
 
   /**
@@ -552,6 +552,7 @@ Spinbox.prototype = {
 
     val = this.checkForNumeric(val);
     this.element[0].setAttribute('aria-valuenow', val || '0');
+    this.element[0].setAttribute('autocomplete', 'off');
 
     // Toggle min/max buttons
     this.setIsDisabled(this.buttons.up, (val !== '' && max && val >= max) ? 'disable' : 'enable');

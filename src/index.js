@@ -1,5 +1,6 @@
 /* eslint-disable import/first */
 import * as debug from './utils/debug';
+import './polyfills/polyfills';
 
 // Core ======================================= /
 // NOTE: Every item in the "Core" section is required for running the Soho library properly.

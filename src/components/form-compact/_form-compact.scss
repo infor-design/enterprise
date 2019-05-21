@@ -3,6 +3,11 @@
 // - Summary Form
 // Overrides some things in:
 // - Input Fields
+// - Datepicker
+// - Timepicker
+// - File Upload
+// - File Upload (Advanced)
+// - Lookup
 
 .form-compact-container {
   .row {
@@ -89,9 +94,11 @@
     }
 
     &.is-focused {
+      // NOTE: long-form border properties are used on purpose, don't change to shorthand.
       input {
         background-color: $formcompact-field-bg-focus-color;
         border-bottom-color: $formcompact-field-border-focus-color;
+        border-left-color: $formcompact-field-border-focus-color;
         border-right-color: $formcompact-field-border-focus-color;
       }
 
@@ -121,6 +128,40 @@
       }
     }
   }
+
+  // =============================================
+  // Form-Compact Date/Time Picker Styles
+  // =============================================
+  .datepicker,
+  .timepicker {
+    + .icon {
+      margin-top: auto;
+    }
+  }
+
+  // =============================================
+  // Form-Compact Lookup Styles
+  // =============================================
+  .lookup-wrapper {
+    cursor: pointer;
+    display: block;
+    margin-bottom: auto;
+  }
+
+  .lookup {
+    + .trigger {
+      .icon {
+        top: 0;
+      }
+    }
+  }
+
+  // =============================================
+  // Form-Compact File Uploader Styles
+  // =============================================
+  .fileuploader {
+    max-height: 28px;
+  }
 }
 
 .form-section-header {
@@ -132,9 +173,9 @@
   font-weight: 700;
 }
 
-// Firefox has different column padding needs
 .is-firefox {
   .form-compact {
+    // Firefox has different column padding needs
     .column,
     .columns {
       label {
@@ -144,6 +185,11 @@
       input {
         padding: 0 8px 8px;
       }
+    }
+
+    // `input[type="file"]` is taller in Firefox.
+    .fileuploader {
+      max-height: 27px;
     }
   }
 }
@@ -156,6 +202,15 @@
       &.form-section-header {
         padding: 16px 10px 15px;
       }
+    }
+  }
+}
+
+// `input[type="file"]` is taller in IE11.
+.ie11 {
+  .form-compact {
+    .fileuploader {
+      max-height: 27px;
     }
   }
 }
@@ -222,8 +277,39 @@ html[dir='rtl'] {
     .one-third.column,
     .two-thirds.column,
     .one-half.column {
-      margin-left: inherit;
+      margin-left: 0;
       margin-right: 0;
+    }
+
+    .column,
+    .columns {
+      input {
+        border-left: 1px solid $formcompact-field-border-color;
+        border-right: 0;
+      }
+    }
+
+    // Font family changes on RTL affect the height of the FileUploader.
+    .fileuploader {
+      line-height: normal;
+      max-height: 29px;
+    }
+  }
+
+  // Fix the FileUploader styles
+  &.ie11 {
+    .form-compact {
+      .fileuploader {
+        max-height: 28px;
+      }
+    }
+  }
+
+  &.is-firefox {
+    .form-compact {
+      .fileuploader {
+        max-height: 27px;
+      }
     }
   }
 }
