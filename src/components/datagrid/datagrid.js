@@ -578,6 +578,7 @@ Datagrid.prototype = {
     this.preventSelection = true;
     this.renderRows();
     delete this.preventSelection;
+    this.syncSelectedUI();
 
     const args = { row, cell: null, target: rowNode, item: rowData, oldValue: rowData };
 
