@@ -4541,9 +4541,9 @@ Datagrid.prototype = {
     if (columnGroups) {
       this.settings.columnGroups = columnGroups;
     }
-
-    if (columnsChanged) {
-      this.rerender();
+    
+    this.rerender();
+    if (columnsChanged) {  
       this.resetPager('updatecolumns');
     }
 
