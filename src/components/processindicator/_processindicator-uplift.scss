@@ -1,0 +1,10 @@
+// Uplift Process Indicator
+//================================================== //
+
+.indicator {
+  &.more-info {
+    &::before {
+      top: 0.11em;
+    }
+  }
+}
