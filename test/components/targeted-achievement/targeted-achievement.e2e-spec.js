@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Targeted Achievement example-index tests', () => {
+describe('Targeted Achievement example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/targeted-achievement/example-index?layout=nofrills');
   });
@@ -26,7 +26,7 @@ fdescribe('Targeted Achievement example-index tests', () => {
   }
 });
 
-fdescribe('Targeted Achievement icons and links tests', () => {
+describe('Targeted Achievement icons and links tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/targeted-achievement/example-links-icons?layout=nofrills');
   });
