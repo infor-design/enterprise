@@ -8,3 +8,25 @@
     }
   }
 }
+
+.is-firefox {
+  .indicator {
+    &.more-info {
+      &::before {
+        top: 0.11em;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  &.is-firefox {
+    .indicator {
+      &.more-info {
+        &::before {
+          top: 0.25em;
+        }
+      }
+    }
+  }
+}
