@@ -18,7 +18,7 @@ const theme = {
    * @property {string} [currentTheme.id]
    * @property {string} [currentTheme.name]
    */
-  currentTheme: { id: 'theme-soho-light', name: Locale.translate('LightTheme'), legacyId: 'light' },
+  currentTheme: { id: 'theme-soho-light', name: Locale.translate('SohoLightTheme'), legacyId: 'light' },
 
   /**
    * Get all of the colors for all themes
