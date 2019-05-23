@@ -1,0 +1,19 @@
+.datagrid-header {
+  &.medium-rowheight {
+    .datagrid-column-wrapper,
+    th {
+      .handle,
+      .is-draggable-target {
+        font-size: 2.3rem;
+      }
+    }
+  }
+}
+
+.datagrid-container.short-rowheight th .datagrid-checkbox-wrapper {
+  top: 3px;
+}
+
+.datagrid-header-text {
+  font-size: $theme-size-font-xs !important;
+}
