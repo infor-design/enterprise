@@ -1,6 +1,33 @@
 // Uplift Button
 //================================================== //
 
+// Reset standard button alignments.
+[class*='btn'] {
+  height: auto;
+  line-height: normal;
+  min-height: 34px;
+  padding-bottom: 6px;
+  padding-top: 6px;
+
+  > * {
+    vertical-align: baseline;
+  }
+
+  > .icon {
+    vertical-align: sub;
+  }
+}
+
+// IE11's `middle`, `sub`, and `text-bottom` alignments don't jive
+// well with our iconography.
+.ie11 {
+  [class*='btn'] {
+    > .icon {
+      vertical-align: -20%;
+    }
+  }
+}
+
 .field-short [class*='btn'] {
   > .icon:not(.icon-dropdown),
   > .icon:not(.icon-dropdown) + span:not(.audible) {
