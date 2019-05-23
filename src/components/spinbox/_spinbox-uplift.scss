@@ -1,0 +1,31 @@
+// Uplift Spinbox
+//================================================== //
+
+// `+` and `-` in Source Sans Pro are not lined up by default.
+// This fixes the alignment.
+.spinbox-control {
+  padding: 6px 10px;
+
+  &.down {
+    padding: 5px 10px 7px;
+  }
+}
+
+html[dir='rtl'] {
+  .spinbox-control {
+    padding: 7px 10px;
+
+    &.down {
+      padding: 6px 10px 8px;
+    }
+  }
+
+  // Rendering difference only in this combination...
+  &.is-mac.is-firefox {
+    .spinbox-control {
+      &.down {
+        padding: 7px 10px;
+      }
+    }
+  }
+}
