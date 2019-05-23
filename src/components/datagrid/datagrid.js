@@ -1288,6 +1288,8 @@ Datagrid.prototype = {
     if (this.restoreSortOrder) {
       this.setSortIndicator(this.sortColumn.sortId, this.sortColumn.sortAsc);
       this.restoreSortOrder = false;
+    } else if ((this.sortColumn && this.sortColumn.sortId)) {
+      this.setSortIndicator(this.sortColumn.sortId, this.sortColumn.sortAsc);
     }
 
     if (this.restoreFilter) {
