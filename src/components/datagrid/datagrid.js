@@ -1908,7 +1908,7 @@ Datagrid.prototype = {
           rowValue = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         }
 
-        if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '')) &&
+        if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '') && !(conditions[i].value instanceof Array)) &&
               columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
           rowValue = parseFloat(rowValue);
           conditionValue = Locale.parseNumber(conditionValue);
@@ -2281,7 +2281,17 @@ Datagrid.prototype = {
       return;
     }
 
-    this.headerContainer.find('input, select').val('').trigger('updated');
+    this.headerContainer.find('input, select').each(function () {
+      const input = $(this);
+      input.val('');
+      if (input.is('select')) {
+        input.find('option').each(function () {
+          $(this).prop('selected', false);
+        });
+      }
+      input.trigger('updated');
+    });
+
     // reset all the filters to first item
     this.headerContainer.find('.btn-filter').each(function () {
       const btn = $(this);
@@ -4533,8 +4543,8 @@ Datagrid.prototype = {
       this.settings.columnGroups = columnGroups;
     }
 
+    this.rerender();
     if (columnsChanged) {
-      this.rerender();
       this.resetPager('updatecolumns');
     }
 
