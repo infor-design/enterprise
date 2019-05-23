@@ -367,9 +367,10 @@
   .icon {
     display: inline-block;
     height: 14px;
-    margin: 0 2px;
+    margin: -3px 3px -1px;
     position: relative;
-    top: 0;
+    top: 50%;
+    vertical-align: middle;
     width: 14px;
   }
 

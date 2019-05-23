@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Completion Chart variations tests', () => {
+fdescribe('Completion Chart variations tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/completion-chart/example-variations?layout=nofrills');
   });
@@ -26,7 +26,7 @@ describe('Completion Chart variations tests', () => {
   }
 });
 
-describe('Completion Chart color tests', () => {
+fdescribe('Completion Chart color tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/completion-chart/example-colors?layout=nofrills');
   });
