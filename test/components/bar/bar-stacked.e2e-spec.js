@@ -34,16 +34,9 @@ describe('Stacked Bar Chart example-index tests', () => {
   });
 
   it('Should highlight when selected', async () => {
-    const fGroupEl = await element.all(by.css('.series-group')).get(0);
-    const fBarEl = await fGroupEl.element(by.css('.bar.series-0'));
-    const sGroupEl = await element.all(by.css('.series-group')).get(1);
-    const sBarEl = await sGroupEl.element(by.css('.bar.series-0'));
+    await element(by.css('.series-group:nth-child(-n+3) .bar:nth-child(1)')).click();
 
-    await fBarEl.click();
-
-    expect(await fBarEl.getAttribute('class')).toContain('is-selected');
-
-    expect(await sBarEl.getAttribute('class')).toContain('is-selected');
+    expect(await element(by.css('.series-group:nth-child(-n+3) .bar:nth-child(1)')).getAttribute('class')).toContain('is-selected');
   });
 
   if (utils.isChrome() && utils.isCI()) {
