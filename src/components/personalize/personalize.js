@@ -13,7 +13,8 @@ const PERSONALIZE_DEFAULTS = {
   colors: '',
   theme: '',
   font: '',
-  blockUI: true
+  blockUI: true,
+  noInit: false
 };
 
 /**
@@ -26,7 +27,8 @@ const PERSONALIZE_DEFAULTS = {
  * @param {string} [settings.theme] The theme name (light, dark or high-contrast)
  * @param {string} [settings.font] Use the newer source sans font
  * @param {boolean} [settings.blockUI=true] Cover the UI and animate when changing theme.
-*/
+ * @param {boolean} [settings.noInit=false] If true, prevents automatic setup of personalized theme/colors/font, allowing for manual triggering at a more convenient time.
+ */
 function Personalize(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, PERSONALIZE_DEFAULTS);
@@ -46,6 +48,11 @@ Personalize.prototype = {
    */
   init() {
     this.handleEvents();
+
+    // Skip automatic setup of theme/colors/font.
+    if (this.settings.noInit) {
+      return this;
+    }
 
     if (this.settings.theme) {
       this.setTheme(this.settings.theme);
