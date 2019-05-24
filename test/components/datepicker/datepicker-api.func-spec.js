@@ -11,7 +11,7 @@ let svgEl;
 let datepickerAPI;
 let datepickerTimeAPI;
 
-describe('DatePicker API', () => { //eslint-disable-line
+describe('DatePicker API', () => {
   beforeEach(() => {
     datepickerEl = null;
     svgEl = null;
@@ -22,6 +22,7 @@ describe('DatePicker API', () => { //eslint-disable-line
     datepickerTimeEl = document.getElementById('start-time');
     svgEl = document.body.querySelector('.svg-icons');
 
+    Locale.addCulture('ar-EG', Soho.Locale.cultures['ar-EG'], Soho.Locale.languages['ar']); //eslint-disable-line
     Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA'], Soho.Locale.languages['ar']); //eslint-disable-line
     Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
     Locale.addCulture('ja-JP', Soho.Locale.cultures['ja-JP'], Soho.Locale.languages['ja']); //eslint-disable-line

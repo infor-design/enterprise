@@ -114,7 +114,7 @@
       // 2. method to setDirtyCell to visually show cell has been updated
       const data = { originalVal: 1, value: 50, isDirty: true };
       gridApi.setDirtyIndicator(0, gridApi.columnIdxById('quantity'), true, data);
-      console.log(modifiedRows);
+      console.log(gridApi.getModifiedRows());
     });
 
     window.data = data;
