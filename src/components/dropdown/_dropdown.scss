@@ -83,6 +83,7 @@ div.multiselect {
   border-color: $input-color-initial-border;
   color: $dropdown-color-initial-font;
   cursor: pointer;
+  line-height: normal;
   overflow: hidden;
   padding: 8px 30px 8px 10px;
   text-overflow: ellipsis;
@@ -701,7 +702,7 @@ div.dropdown-xs,
 .dropdown-list.dropdown-short {
   .dropdown-search {
     font-size: $theme-size-font-sm;
-    padding: 5px 32px 5px 5px;
+    padding: 5px 16px 5px 5px;
   }
 
   &.has-icons {
@@ -743,16 +744,18 @@ div.dropdown-xs,
     top: 5px;
   }
 
-  .trigger .icon {
-    height: 30px;
-    right: 3px;
-    top: -4px;
-    width: 16px;
+  > .trigger {
+    .icon {
+      left: auto;
+      right: 4px;
+      top: 3px;
 
-    &.icon.search {
-      height: 14px;
-      right: -6px;
-      top: -2px;
+      &.search {
+        height: 12px;
+        right: -4px;
+        top: -2px;
+        width: 12px;
+      }
     }
   }
 
@@ -786,6 +789,12 @@ div.dropdown-xs,
         margin-left: -23px;
       }
     }
+
+    &:not(.dropdown-short) {
+      > .trigger {
+        margin-left: -30px;
+      }
+    }
   }
 
   &.ie11 {
@@ -794,6 +803,12 @@ div.dropdown-xs,
 
       .dropdown-search {
         border-top: 1px solid $dropdown-menu-separator-border-color;
+      }
+    }
+
+    &:not(.dropdown-short) {
+      .dropdown-search {
+        padding: 7px 30px 9px 10px;
       }
     }
   }
@@ -835,11 +850,6 @@ div.dropdown-xs,
       }
     }
 
-    .dropdown-search {
-      padding-bottom: 6px;
-      padding-top: 9px;
-    }
-
     &.dropdown-short {
       .dropdown-search {
         font-size: $theme-size-font-sm;
@@ -853,6 +863,10 @@ div.dropdown-xs,
     > span {
       padding-top: 1px;
     }
+  }
+
+  .dropdown-search {
+    line-height: normal;
   }
 }
 
@@ -938,7 +952,7 @@ html[dir='rtl'] {
 
     // Icon States
     + .icon {
-      left: 8px;
+      left: 5px;
       margin-left: inherit;
       margin-right: -33px;
       right: auto !important;
@@ -988,7 +1002,7 @@ html[dir='rtl'] {
 
     > .trigger {
       .icon {
-        margin-right: -22px;
+        margin-right: -23px;
       }
     }
 
@@ -1092,6 +1106,16 @@ html[dir='rtl'] {
           padding-right: 20px;
         }
       }
+    }
+  }
+
+  // Firefox needs different padding in the input fields (differences in font rendering)
+  &.is-firefox {
+    .dropdown,
+    .multiselect,
+    input.dropdown,
+    input.multiselect {
+      padding: 7px 10px 7px 32px;
     }
   }
 }

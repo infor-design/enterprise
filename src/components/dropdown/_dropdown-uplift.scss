@@ -38,3 +38,12 @@ div.multiselect {
     }
   }
 }
+
+// Dropdown Arrow is finicky on IE11
+.ie11 {
+  .dropdown-list {
+    > .trigger {
+      margin-left: -29px;
+    }
+  }
+}
