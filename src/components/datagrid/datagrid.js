@@ -1305,7 +1305,7 @@ Datagrid.prototype = {
   },
   
   /**
-   * Sync the colgroups and min-width between the body and the header.
+   * Sync the colgroups and widths between the body and the header.
    * @private
    */
   syncColGroups() {
