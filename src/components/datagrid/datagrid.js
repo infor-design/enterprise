@@ -804,7 +804,7 @@ Datagrid.prototype = {
       this.restoreUserSettings();
       this.renderRows();
       this.renderHeader();
-    } else  {
+    } else {
       this.clearHeaderCache();
       this.renderRows();
       this.syncColGroups();
@@ -1288,8 +1288,7 @@ Datagrid.prototype = {
     if (this.restoreSortOrder) {
       this.setSortIndicator(this.sortColumn.sortId, this.sortColumn.sortAsc);
       this.restoreSortOrder = false;
-    }
-    else {
+    } else {
       this.setSortIndicator(this.sortColumn.sortId, this.sortColumn.sortAsc);
     }
 
@@ -1309,16 +1308,16 @@ Datagrid.prototype = {
    * @private
    */
   syncColGroups() {
-      if (this.bodyColGroup) {
-        this.headerColGroup.children().remove();
-        this.bodyColGroup.children().clone().appendTo(this.headerColGroup);
-      }
-      if (this.table && this.headerTable && this.table.css('min-width')){
-        this.headerTable.css('min-width', this.table.css('min-width'));
-      }
-      if (this.table && this.headerTable && this.table.css('width')){
-        this.headerTable.css('width', this.table.css('width'));
-      }
+    if (this.bodyColGroup) {
+      this.headerColGroup.children().remove();
+      this.bodyColGroup.children().clone().appendTo(this.headerColGroup);
+    }
+    if (this.table && this.headerTable && this.table.css('min-width')) {
+      this.headerTable.css('min-width', this.table.css('min-width'));
+    }
+    if (this.table && this.headerTable && this.table.css('width')) {
+      this.headerTable.css('width', this.table.css('width'));
+    }
   },
 
   /**
