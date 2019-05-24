@@ -1316,6 +1316,9 @@ Datagrid.prototype = {
       if (this.table && this.headerTable && this.table.css('min-width')){
         this.headerTable.css('min-width', this.table.css('min-width'));
       }
+      if (this.table && this.headerTable && this.table.css('width')){
+        this.headerTable.css('width', this.table.css('width'));
+      }
   },
 
   /**
