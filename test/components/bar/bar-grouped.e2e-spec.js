@@ -28,11 +28,9 @@ describe('Grouped Bar Chart example-index tests', () => {
   });
 
   it('Should highlight when selected', async () => {
-    const fGroupEl = await element.all(by.css('.group .series-group')).get(0);
+    await element(by.css('.series-group:nth-child(-n+3)')).click();
 
-    await fGroupEl.click();
-
-    expect(await fGroupEl.getAttribute('class')).toContain('is-selected');
+    expect(await element(by.css('.series-group:nth-child(-n+3)')).getAttribute('class')).toContain('is-selected');
   });
 
   if (utils.isChrome() && utils.isCI()) {
