@@ -804,10 +804,10 @@ Datagrid.prototype = {
       this.restoreUserSettings();
       this.renderRows();
       this.renderHeader();
-    } else if (pagerInfo.type === 'filtered') {
+    } else  {
+      this.clearHeaderCache();
       this.renderRows();
-    } else {
-      this.rerender();
+      this.syncColGroups();
     }
 
     // Setup focus on the first cell
@@ -1289,6 +1289,9 @@ Datagrid.prototype = {
       this.setSortIndicator(this.sortColumn.sortId, this.sortColumn.sortAsc);
       this.restoreSortOrder = false;
     }
+    else {
+      this.setSortIndicator(this.sortColumn.sortId, this.sortColumn.sortAsc);
+    }
 
     if (this.restoreFilter) {
       this.restoreFilter = false;
@@ -1299,6 +1302,20 @@ Datagrid.prototype = {
     }
 
     this.activeEllipsisHeaderAll();
+  },
+  
+  /**
+   * Sync the colgroups and min-width between the body and the header.
+   * @private
+   */
+  syncColGroups() {
+      if (this.bodyColGroup) {
+        this.headerColGroup.children().remove();
+        this.bodyColGroup.children().clone().appendTo(this.headerColGroup);
+      }
+      if (this.table && this.headerTable && this.table.css('min-width')){
+        this.headerTable.css('min-width', this.table.css('min-width'));
+      }
   },
 
   /**
