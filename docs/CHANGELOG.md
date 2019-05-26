@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.20.0
+
+### v4.20.0 Deprecation
+
+### v4.20.0 Features
+
+### v4.20.0 Fixes
+
+- `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
+
+### v4.20.0 Chores & Maintenance
+
 ## v4.19.0
 
 ### v4.19.0 Deprecations
