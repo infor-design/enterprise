@@ -1732,6 +1732,29 @@ describe('Datagrid select event tests', () => {
   });
 });
 
+describe('Datagrid Targeted Achievement', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-targeted-achievement?layout=nofrills');
+
+    const datagridEl = await element(by.css('.datagrid tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-targetted')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid timezone tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-timezone-formats?layout=nofrills&locale=nl-NL');
