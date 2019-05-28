@@ -4,6 +4,7 @@ import { Personalize, COMPONENT_NAME } from './personalize';
 let instanceSettings = {
   theme: 'theme-soho-light'
 };
+
 if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.personalize === 'object') {
   instanceSettings = window.SohoConfig.personalize;
 }

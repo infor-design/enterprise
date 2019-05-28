@@ -269,6 +269,9 @@ Personalize.prototype = {
       return;
     }
 
+    // Somehow colorpicker uses this, so keep it
+    this.currentTheme = incomingTheme;
+
     if (theme.currentTheme.id === incomingTheme) {
       if (!$html.hasClass(incomingTheme)) {
         $html.addClass(incomingTheme);
@@ -318,9 +321,6 @@ Personalize.prototype = {
     // record state of theme in settings
     this.settings.theme = incomingTheme;
     theme.setTheme(incomingTheme);
-
-    // Somehow colorpicker uses this, so keep it
-    this.currentTheme = incomingTheme;
 
     /**
     * Fires after the theme is changed
