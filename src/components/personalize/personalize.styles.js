@@ -288,7 +288,7 @@ function personalizeStyles(colors) {
 
 .application-menu.is-personalizable .accordion.panel.inverse .accordion-header .icon.plus-minus::before,
 .application-menu.is-personalizable .accordion.panel.inverse .accordion-header .icon.plus-minus::after {
-  background-color: ${color.contrast};
+  background-color: ${colors.contrast};
 }
 
 .application-menu.is-personalizable button:focus:not(.hide-focus),
