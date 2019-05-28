@@ -48,10 +48,19 @@ div.multiselect {
   }
 }
 
-// Padding isn't quite right on Firefox
-.is-firefox {
-  .dropdown-search {
-    padding: 9px 30px 8px 10px;
+// Icon placement isn't quite right on Firefox
+html.is-firefox:not([dir='rtl']) {
+  div.dropdown,
+  div.multiselect {
+    + .icon {
+      top: 5px;
+    }
+  }
+
+  .dropdown-list {
+    > .trigger .icon {
+      top: 11px;
+    }
   }
 }
 
