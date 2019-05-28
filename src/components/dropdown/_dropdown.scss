@@ -860,6 +860,8 @@ div.dropdown-xs,
 
   div.dropdown,
   div.multiselect {
+    padding: 9px 30px 8px 10px;
+
     > span {
       padding-top: 1px;
     }
@@ -867,6 +869,7 @@ div.dropdown-xs,
 
   .dropdown-search {
     line-height: normal;
+    padding: 10px 30px 8px 10px;
   }
 }
 
@@ -1116,6 +1119,10 @@ html[dir='rtl'] {
     input.dropdown,
     input.multiselect {
       padding: 7px 10px 7px 32px;
+    }
+
+    .dropdown-search {
+      padding: 8px 10px 8px 32px;
     }
   }
 }

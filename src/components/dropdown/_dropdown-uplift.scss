@@ -47,3 +47,17 @@ div.multiselect {
     }
   }
 }
+
+// Padding isn't quite right on Firefox
+.is-firefox {
+  .dropdown-search {
+    padding: 9px 30px 8px 10px;
+  }
+}
+
+// Reset the `.dropdown-search` padding on Firefox RTL
+html[dir='rtl'] {
+  .dropdown-search {
+    padding: 8px 10px 7px 32px;
+  }
+}
