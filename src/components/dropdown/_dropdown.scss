@@ -805,9 +805,9 @@ div.dropdown-xs,
       }
     }
 
-    &:not(.dropdown-short) {
-      .dropdown-search {
-        padding: 7px 30px 9px 10px;
+    .dropdown-list.dropdown-short {
+      > .trigger .icon {
+        right: 9px;
       }
     }
   }
