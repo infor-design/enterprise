@@ -265,6 +265,10 @@ Personalize.prototype = {
   */
   setTheme(incomingTheme) {
     const $html = $('html');
+    if (!incomingTheme) {
+      return;
+    }
+
     if (theme.currentTheme.id === incomingTheme) {
       if (!$html.hasClass(incomingTheme)) {
         $html.addClass(incomingTheme);
@@ -367,7 +371,7 @@ Personalize.prototype = {
    */
   unBlockUi() {
     const self = this;
-    if (!self.settings.blockUI) {
+    if (!self.settings.blockUI || !self.pageOverlay) {
       return;
     }
 
