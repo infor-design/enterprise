@@ -355,7 +355,7 @@ function personalizeStyles(colors) {
 }
 
 .is-personalizable .personalize-text {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
 }
 
 .is-personalizable .personalize-actionable,
