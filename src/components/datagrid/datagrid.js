@@ -4469,6 +4469,37 @@ Datagrid.prototype = {
         }
         return !handle;
       });
+      
+    this.toolbar
+      .off('mouseenter.gridtooltip', '.table-errors .icon')
+      .on('mouseenter.gridtooltip', '.table-errors .icon', function () {
+        handleShow(this);
+      })
+      .off('mouseleave.gridtooltip click.gridtooltip', '.table-errors .icon')
+      .on('mouseleave.gridtooltip click.gridtooltip', '.table-errors .icon', function () {
+        handleHide(this);
+      })
+      .off('longpress.gridtooltip', '.table-errors .icon')
+      .on('longpress.gridtooltip', '.table-errors .icon', function () {
+        handleShow(this, 0);
+      })
+      .off('keydown.gridtooltip', '.table-errors .icon')
+      .on('keydown.gridtooltip', '.table-errors .icon', function (e) {
+        const key = e.which || e.keyCode || e.charCode || 0;
+        let handle = false;
+
+        if (e.shiftKey && key === 112) { // Shift + F1
+          handleShow(this, 0);
+        } else if (key === 27) { // Escape
+          handle = self.isGridtooltip();
+          handleHide(this, 0);
+        }
+
+        if (handle) {
+          e.preventDefault();
+        }
+        return !handle;
+      });
   },
 
   /**
@@ -8428,6 +8459,7 @@ Datagrid.prototype = {
       isError: type === 'error' || type === 'dirtyerror',
       wrapper: icon
     });
+    this.setupTooltips(false, true);
   },
 
   /**

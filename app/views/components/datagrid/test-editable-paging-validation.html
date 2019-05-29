@@ -74,7 +74,7 @@
 
             });
 
-            $('#datagrid').on('afterpaging', function() {
+            $('#datagrid').on('afterrender', function() {
               var gridApi = $(this).data('datagrid');
               gridApi.validateAll();
             });
