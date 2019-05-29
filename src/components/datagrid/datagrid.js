@@ -3900,6 +3900,9 @@ Datagrid.prototype = {
       }
     }
 
+    const hasIcon = columnDef.formatter ?
+      columnDef.formatter.toString().indexOf('$.createIcon') > -1 : false;
+      
     const hasTag = columnDef.formatter ?
       columnDef.formatter.toString().indexOf('<span class="tag') > -1 : false;
 
@@ -3935,6 +3938,10 @@ Datagrid.prototype = {
     }
 
     if (hasTag && !chooseHeader) {
+      padding += 10;
+    }
+    
+    if (hasIcon) {
       padding += 10;
     }
 
@@ -4256,7 +4263,7 @@ Datagrid.prototype = {
         const diff2 = this.elemWidth - this.totalWidths[container];
         const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
-          stretchColumn[0].width += diff2 - 2;
+          stretchColumn[0].width = '';
         }
         this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
       }
@@ -8515,6 +8522,22 @@ Datagrid.prototype = {
       return '';
     });
 
+    if (this.toolbar && this.toolbar.parent() && this.toolbar.parent().find('.table-errors').length > 0) {
+      let icon = this.toolbar.parent().find('.table-errors').find(`.icon-${type}`);
+      if (icon.length) { 
+        let nonVisibleCellTypeErrors = $.grep(this.nonVisibleCellErrors, (error) => {
+          if (error.type === type) {
+            return error;
+          }
+          return '';
+        });
+        // No remaining cell errors of this type
+        if (!nonVisibleCellTypeErrors.length) {
+          icon.remove();
+        }
+      }
+    }
+
     if (!this.nonVisibleCellErrors.length) {
       this.showNonVisibleCellErrors();
     }
@@ -8977,6 +9000,16 @@ Datagrid.prototype = {
         this.dirtyArray[row][cell].cell = cell;
         this.dirtyArray[row][cell].column = this.settings.columns[cell];
         this.setDirtyCell(row, cell);
+      }
+    }
+    
+    // resize on change
+    if (col && !col.width) {
+      let newWidth = this.calculateTextWidth(col);
+      let diff = newWidth - this.headerWidths[cell].width;
+      if (diff > 0 && this.headerWidths[cell].width !== '') {
+        this.resizeColumnWidth(cellNode, newWidth, diff);
+        this.headerWidths[cell].width = newWidth;
       }
     }
 
