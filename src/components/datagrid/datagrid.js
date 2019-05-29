@@ -4486,7 +4486,7 @@ Datagrid.prototype = {
         .on('longpress.gridtooltip', '.icon', function () {
           handleShow(this, 0);
         });
-      }
+    }
   },
 
   /**
