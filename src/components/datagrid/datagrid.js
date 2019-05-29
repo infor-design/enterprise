@@ -1320,23 +1320,6 @@ Datagrid.prototype = {
   },
 
   /**
-   * Sync the colgroups and widths between the body and the header.
-   * @private
-   */
-  syncColGroups() {
-    if (this.bodyColGroup) {
-      this.headerColGroup.children().remove();
-      this.bodyColGroup.children().clone().appendTo(this.headerColGroup);
-    }
-    if (this.table && this.headerTable && this.table.css('min-width')) {
-      this.headerTable.css('min-width', this.table.css('min-width'));
-    }
-    if (this.table && this.headerTable && this.table.css('width')) {
-      this.headerTable.css('width', this.table.css('width'));
-    }
-  },
-
-  /**
    * Get the alignment class based on settings. Note there is a space at the front of the classname.
    * @private
    * @param {object} column The column info.
