@@ -8375,11 +8375,18 @@ Datagrid.prototype = {
       this.appendToolbar();
     }
 
-    // process via type
-    for (const props in $.fn.validation.ValidationTypes) {  // eslint-disable-line
-      const validationType = $.fn.validation.ValidationTypes[props].type;
-      const errors = $.grep(this.nonVisibleCellErrors, error => error.type === validationType);
-      this.showNonVisibleCellErrorType(errors, validationType);
+    if (this.nonVisibleCellErrors.length === 0) {
+      // remove table-error when not required
+      if (this.toolbar && this.toolbar.parent().find('.table-errors').length === 1) {
+        this.toolbar.parent().find('.table-errors').remove();
+      }        
+    } else {
+      // process via type
+      for (const props in $.fn.validation.ValidationTypes) {  // eslint-disable-line
+        const validationType = $.fn.validation.ValidationTypes[props].type;
+        const errors = $.grep(this.nonVisibleCellErrors, error => error.type === validationType);
+        this.showNonVisibleCellErrorType(errors, validationType);
+      }
     }
   },
 
