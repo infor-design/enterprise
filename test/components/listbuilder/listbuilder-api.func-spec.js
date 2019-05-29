@@ -24,7 +24,7 @@ ds.push({ id: 10, value: 'opt-10', text: 'Japan' });
 ds.push({ id: 11, value: 'opt-11', text: 'Kuwait' });
 ds.push({ id: 12, value: 'opt-12', text: 'Libya' });
 
-describe('ListBuilder API', () => { //eslint-disable-line
+describe('ListBuilder API', () => {
   beforeEach(() => {
     listbuilderEl = null;
     listbuilderObj = null;

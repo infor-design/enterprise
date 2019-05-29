@@ -623,7 +623,7 @@ const formatters = {
               <div class="target remaining bar" style="width: ${(target || 0)}%;"></div>
               <div class="completed bar ${barClass}" style="width: ${perc}%;"></div>
               ${(col.showPercentText ? `<div class="chart-targeted-text l-center" ${(isWhite ? 'style="color: white"' : '')}>${text}</div>
-            </div>` : '')}`;
+            </div>` : `<div class="audible">${perc}%</div>`)}`;
   }
 
   // TODO Possible future Formatters

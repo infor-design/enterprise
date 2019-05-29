@@ -700,6 +700,23 @@ describe('Datagrid paging tests', () => {
   });
 
   if (!utils.isCI()) {
+    it('Should work with sort', async () => {
+      expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeFalsy();
+
+      await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+      await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+
+      expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeTruthy();
+
+      await element(by.css('.pager-next a')).click();
+      await element(by.css('.pager-prev a')).click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeTruthy();
+    });
+  }
+
+  if (!utils.isCI()) {
     it('Should not move on a page that is more than the max', async () => {
       expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
       expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
@@ -1023,6 +1040,17 @@ describe('Datagrid filter lookup custom click function tests', () => {
 
     expect(browser.driver.switchTo().alert().getText()).toBe('Grid information found');
     await browser.driver.switchTo().alert().accept();
+  });
+
+  it('Should use custom filter conditions for filter button popup', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(9);
+    const filterBtn = await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-1 div.datagrid-filter-wrapper .btn-filter'));
+
+    expect(await filterBtn.getAttribute('data-default')).toEqual('equals');
+    await filterBtn.click();
+
+    expect(await element(by.css('ul.popupmenu.is-open')).isDisplayed()).toBeTruthy();
+    expect(await element(by.css('ul.popupmenu.is-open > li:nth-child(1)')).getText()).toBe('Equals');
   });
 });
 
@@ -1717,6 +1745,29 @@ describe('Datagrid select event tests', () => {
 
     expect(await element.all(by.css('#toast-container .toast-message')).getText()).toEqual(['The row #1 containing the product name Compressor triggered a selected event']);
   });
+});
+
+describe('Datagrid Targeted Achievement', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-targeted-achievement?layout=nofrills');
+
+    const datagridEl = await element(by.css('.datagrid tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-targetted')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid timezone tests', () => {

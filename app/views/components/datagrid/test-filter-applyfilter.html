@@ -50,8 +50,7 @@
       var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
                          {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'},
                          {id: 'Inspect and Repair', value:'', label: 'Default'},
-                         {id: 'Inspect and Repair', value:'1', label: 'Number 1'}
-                         ];
+                         {id: 'Inspect and Repair', value:'1', label: 'Number 1'}];
 
     var lookupOptions = {
       field: function (row, field, grid) {
@@ -101,36 +100,34 @@
       }).on('filtered', function (e, args) {
         console.log('filter ran', args);
       });
-      
+
       $('#apply-filter').on('click', function() {
         var grid = $('#datagrid').data('datagrid');
         if (grid) {
           grid.applyFilter([{columnId: "inStock", operator: "selected", value: ""}], 'apply-filter-btn');
         }
       });
-      
+
       $('#apply-filter2').on('click', function() {
         var grid = $('#datagrid').data('datagrid');
         if (grid) {
           grid.applyFilter();
         }
       });
-      
+
       $('#clear-filter').on('click', function() {
         var grid = $('#datagrid').data('datagrid');
         if (grid) {
           grid.clearFilter();
         }
       });
-      
+
       $('#rerender').on('click', function() {
         var grid = $('#datagrid').data('datagrid');
         if (grid) {
           grid.rerender();
         }
       });
-      
-      
  });
 
 </script>
