@@ -190,21 +190,6 @@ p .hyperlink {
   }
 }
 
-//Firefox
-.is-firefox {
-  .hyperlink {
-    &:not(.directional) {
-      padding-top: 2px;
-    }
-
-    &.directional {
-      span {
-        padding-top: 2px;
-      }
-    }
-  }
-}
-
 //Right To Left Styles
 html[dir='rtl'] {
   .hyperlink {
