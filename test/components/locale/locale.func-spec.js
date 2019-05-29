@@ -17,6 +17,7 @@ require('../../../src/components/locale/cultures/en-ZA.js');
 require('../../../src/components/locale/cultures/es-AR.js');
 require('../../../src/components/locale/cultures/es-ES.js');
 require('../../../src/components/locale/cultures/es-MX.js');
+require('../../../src/components/locale/cultures/es-419.js');
 require('../../../src/components/locale/cultures/es-US.js');
 require('../../../src/components/locale/cultures/et-EE.js');
 require('../../../src/components/locale/cultures/fi-FI.js');
@@ -54,7 +55,7 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-describe('Locale API', () => { //eslint-disable-line
+describe('Locale API', () => {
   const Locale = window.Soho.Locale;
 
   it('Should be possible to preset culturesPath', () => {
@@ -1030,7 +1031,7 @@ describe('Locale API', () => { //eslint-disable-line
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'long')).toEqual('26-3-2018 00:00:00 Eastern-zomertijd');
   });
 
-  it('Should be possible to set the langauge to something other than the current locale', (done) => {
+  it('Should be possible to set the language to something other than the current locale', (done) => {
     Locale.set('en-US');
 
     expect(Locale.translate('Actions')).toEqual('Actions');
@@ -1051,7 +1052,7 @@ describe('Locale API', () => { //eslint-disable-line
     });
   });
 
-  it('Should be possible to extend the langauge strings for a locale', (done) => {
+  it('Should be possible to extend the language strings for a locale', (done) => {
     Locale.set('it-lT').done(() => {
       const myStrings = {
         Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
@@ -1066,7 +1067,7 @@ describe('Locale API', () => { //eslint-disable-line
     });
   });
 
-  it('Should be possible to extend the langauge strings for a language', (done) => {
+  it('Should be possible to extend the language strings for a language', (done) => {
     Locale.set('fr-FR').done(() => {
       Locale.setLanguage('it').done(() => {
         const myStrings = {
@@ -1447,5 +1448,19 @@ describe('Locale API', () => { //eslint-disable-line
     expect(Locale.calendar().timeFormat).toEqual('HH:mm');
     expect(Locale.calendar().dateFormat.timestamp).toEqual('HH:mm:ss');
     expect(Locale.calendar().dateFormat.datetime).toEqual('d. MM. yyyy HH:mm');
+  });
+
+  it('Should Get the Parent Locale', () => {
+    Locale.set('es-MX');
+
+    expect(Locale.currentLocale.name).toEqual('es-MX');
+    expect(Locale.currentLanguage.name).toEqual('es');
+    expect(Locale.translate('Required')).toEqual('Obligatorio');
+
+    Locale.set('es-419');
+
+    expect(Locale.currentLocale.name).toEqual('es-419');
+    expect(Locale.currentLanguage.name).toEqual('es');
+    expect(Locale.translate('Required')).toEqual('Obligatorio');
   });
 });

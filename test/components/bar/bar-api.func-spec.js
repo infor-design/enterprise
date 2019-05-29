@@ -60,7 +60,7 @@ const twoSeriesData = [{
   name: 'Series 2'
 }];
 
-describe('Bar API', () => { //eslint-disable-line
+describe('Bar API', () => {
   beforeEach((done) => {
     barEl = null;
     barObj = null;

@@ -34,7 +34,7 @@ describe('Toast example-index tests', () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('toast-container'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('toast-container'))), config.waitsFor);
 
     await element(by.className('btn-close')).click();
 

@@ -58,6 +58,7 @@
 
   &[disabled] {
     color: $hyperlink-disabled-color;
+    pointer-events: none;
 
     &:hover {
       cursor: default;
