@@ -72,7 +72,6 @@
 
     &.has-icons .accordion-pane .accordion-header > a {
       letter-spacing: 0.2px;
-      padding-left: calc(#{$theme-number-spacing-base} * 7);
     }
 
     &.has-icons .accordion-pane .accordion-header.is-selected {
@@ -82,7 +81,6 @@
 
     &.has-icons .accordion-pane .accordion-header.is-selected > a {
       letter-spacing: 0;
-      padding-left: 38px;
     }
 
     .accordion-pane .accordion-header > a {
@@ -90,9 +88,7 @@
     }
 
     .accordion-pane .accordion-header.is-selected > a > span {
-      border-left: 2px solid #fff;
       font-weight: $theme-number-font-weight-bold;
-      padding-left: calc(#{$theme-number-spacing-base} * 2);
     }
 
     &.panel.inverse .accordion-header:hover {
