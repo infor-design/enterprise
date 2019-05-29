@@ -9,6 +9,10 @@ div.multiselect {
   + .icon {
     top: 3px;
   }
+
+  > .listoption-icon {
+    top: 13px;
+  }
 }
 
 .dropdown-list {
@@ -19,31 +23,54 @@ div.multiselect {
       top: 9px;
     }
   }
-}
 
-.field-short div.dropdown,
-.field-short div.multiselect {
-  + .icon {
-    top: 1px;
+  > .listoption-icon {
+    top: 12px;
   }
 }
 
-.dropdown-list {
-  &.dropdown-short {
-    .trigger {
-      .icon {
-        left: -5px;
-        top: 6px;
-      }
+// Adjust Short Field Dropdowns
+.field-short div.dropdown,
+.field-short div.multiselect {
+  padding: 2px 16px 2px 5px;
+}
+
+.dropdown-list.dropdown-short {
+  .trigger {
+    .icon {
+      left: -5px;
     }
+  }
+
+  .dropdown-search {
+    padding: 2px 16px 2px 5px;
   }
 }
 
 // Dropdown Arrow is finicky on IE11
-.ie11 {
+.ie.ie11 {
+  div.dropdown,
+  div.multiselect {
+    > .listoption-icon {
+      top: 12px;
+    }
+  }
+
   .dropdown-list {
-    > .trigger {
-      margin-left: -29px;
+    &:not(.dropdown-short) {
+      > .trigger {
+        margin-left: -29px;
+      }
+
+      .listoption-icon {
+        top: 11px;
+      }
+    }
+
+    &.dropdown-short {
+      > .trigger .icon {
+        left: -8px;
+      }
     }
   }
 }
@@ -53,41 +80,94 @@ html.is-firefox:not([dir='rtl']) {
   div.dropdown,
   div.multiselect {
     + .icon {
-      top: 3px;
+      top: 5px;
     }
   }
 
   .dropdown-list {
     > .trigger .icon {
-      top: 8px;
+      top: 11px;
+    }
+
+    &.dropdown-short {
+      .dropdown-search {
+        padding: 3px 16px 2px 5px;
+      }
+
+      > .trigger .icon {
+        top: 5px;
+      }
+    }
+  }
+
+  .field-short {
+    div.dropdown,
+    div.multiselect {
+      padding: 2px 16px 2px 5px;
+
+      + .icon {
+        top: 0;
+      }
     }
   }
 }
 
 // Reset the `.dropdown-search` padding on Firefox RTL
 html[dir='rtl'] {
+  div.dropdown,
+  div.multiselect {
+    .listoption-icon {
+      top: 9px;
+    }
+  }
+
+  .dropdown-list {
+    > .listoption-icon {
+      top: 8px;
+    }
+  }
+
   .dropdown-search {
     padding: 8px 10px 7px 32px;
   }
 
   .field-short {
-    .dropdown + .icon {
-      left: 2px;
-    }
-
     div.dropdown,
     div.multiselect {
-      padding: 5px 5px 5px 16px;
+      padding: 2px 5px 2px 16px;
+
+      + .icon {
+        left: 2px;
+        top: -2px;
+      }
     }
   }
 
   .dropdown-list.dropdown-short {
     .dropdown-search {
-      padding-left: 16px;
+      padding: 2px 5px 2px 16px;
     }
 
     > .trigger .icon {
       margin-right: -26px;
+      right: auto;
+    }
+  }
+
+  // Dropdown Arrow is finicky on IE11
+  &.ie.ie11 {
+    .dropdown-list {
+      &:not(.dropdown-short) {
+        > .trigger {
+          margin-left: -29px;
+        }
+      }
+
+      &.dropdown-short {
+        > .trigger .icon {
+          left: -5px;
+        }
+      }
     }
   }
 
@@ -96,17 +176,22 @@ html[dir='rtl'] {
     .field-short {
       div.dropdown,
       div.multiselect {
-        padding: 5px 5px 5px 16px;
+        padding: 2px 5px 2px 16px;
+
+        + .icon {
+          top: -2px;
+        }
       }
     }
 
     .dropdown-list.dropdown-short {
       .dropdown-search {
-        padding: 6px 5px 5px 16px;
+        padding: 3px 5px 2px 16px;
       }
 
       > .trigger .icon {
         right: 5px;
+        top: 3px;
       }
     }
   }

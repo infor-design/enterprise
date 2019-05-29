@@ -42,3 +42,9 @@ label.required .label-text:not(.accessible)::after,
   align-items: center;
   display: flex;
 }
+
+.field-short {
+  input {
+    padding: 2px 5px;
+  }
+}

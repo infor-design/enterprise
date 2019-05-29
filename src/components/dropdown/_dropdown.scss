@@ -118,7 +118,7 @@ div.multiselect {
     height: 16px;
     left: 14px;
     position: absolute;
-    top: 10px;
+    top: 9px;
     vertical-align: middle;
     width: 16px;
 
@@ -129,7 +129,6 @@ div.multiselect {
     &.swatch {
       border-radius: 2px;
       left: 15px;
-      top: 10px;
     }
   }
 
@@ -371,7 +370,6 @@ div.multiselect {
     &.swatch {
       border-radius: 2px;
       left: 14px;
-      top: 8px;
       width: 16px;
     }
 
@@ -626,6 +624,16 @@ input.dropdown.error:focus {
   }
 }
 
+// Zeroes out a standard form-field rule
+.field {
+  div.dropdown,
+  div.multiselect {
+    .icon + span {
+      vertical-align: top;
+    }
+  }
+}
+
 //Shorter Field Size
 .field-short {
   div.dropdown {
@@ -802,12 +810,6 @@ div.dropdown-xs,
 
       .dropdown-search {
         border-top: 1px solid $dropdown-menu-separator-border-color;
-      }
-    }
-
-    .dropdown-list.dropdown-short {
-      > .trigger .icon {
-        right: 9px;
       }
     }
   }
@@ -1027,7 +1029,7 @@ html[dir='rtl'] {
 
     > .listoption-icon {
       left: auto;
-      right: 36px;
+      right: 39px;
 
       + span {
         padding-left: inherit;
@@ -1069,7 +1071,7 @@ html[dir='rtl'] {
 
     > .listoption-icon {
       left: auto;
-      right: 31px;
+      right: 36px;
     }
 
     &.multiple {
@@ -1079,6 +1081,10 @@ html[dir='rtl'] {
           padding-right: 27px;
         }
       }
+    }
+
+    > .trigger .icon {
+      right: 0;
     }
   }
 
@@ -1115,6 +1121,17 @@ html[dir='rtl'] {
           padding-left: inherit;
           padding-right: 20px;
         }
+      }
+    }
+  }
+
+  .dropdown-list:not(.dropdown-short) {
+    > .listoption-icon {
+      left: auto;
+      right: 36px;
+
+      &.swatch {
+        right: 39px;
       }
     }
   }
