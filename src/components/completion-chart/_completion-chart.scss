@@ -1,11 +1,15 @@
 // Completion Chart
 //==================================================//
 
+.completion-chart {
+  color: $label-color;
+  margin: 10px 0;
+}
+
 .chart-completion-target,
 .chart-completion {
   background-color: $chart-progressbar-bg-color;
   height: 10px;
-  margin-bottom: 10px;
   width: 100%;
 
   &.chart-completion {
@@ -109,7 +113,6 @@
 
     span {
       color: $chart-progressbar-completed-fill;
-      font-weight: $theme-number-font-weight-bold;
 
       &.value,
       &.text {
@@ -216,6 +219,7 @@
 
     &.overlap {
       span {
+        color: $label-color;
         top: 70px;
         transition: top 0.5s ease 0s;
       }
@@ -326,10 +330,6 @@
 .completion-chart {
   .remaining,
   .info {
-    .value {
-      font-weight: $theme-number-font-weight-bold;
-    }
-
     .error-color,
     .error {
       color: $error-color;
@@ -367,9 +367,10 @@
   .icon {
     display: inline-block;
     height: 14px;
-    margin: 0 2px;
+    margin: -3px 3px -1px;
     position: relative;
-    top: 0;
+    top: 50%;
+    vertical-align: middle;
     width: 14px;
   }
 

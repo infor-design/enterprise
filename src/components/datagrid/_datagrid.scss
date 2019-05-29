@@ -429,17 +429,19 @@ $datagrid-short-row-height: 25px;
       height: calc(100% - 28px);
     }
 
-    .is-filterable th,
-    .is-filterable .datagrid-column-wrapper {
-      height: 28px;
-    }
-
     &.has-group-headers .datagrid-body {
       height: calc(100% - 54px);
     }
 
-    &.has-filterable-columns .datagrid-body {
-      height: calc(100% - 57px);
+    &.has-filterable-columns {
+      .datagrid-body {
+        height: calc(100% - 57px);
+      }
+
+      .is-filterable th,
+      .is-filterable .datagrid-column-wrapper {
+        height: 28px;
+      }
     }
 
     &.has-group-headers.has-filterable-columns .datagrid-body {
@@ -1310,7 +1312,7 @@ $datagrid-short-row-height: 25px;
 
     .chart-completion-target {
       height: 20px;
-      top: 1px;
+      top: 2px;
 
       .chart-targeted-text {
         margin-top: -27px;
@@ -1715,9 +1717,8 @@ $datagrid-short-row-height: 25px;
 
     .chart-completion-target {
       height: 25px;
-      margin-bottom: 0 !important;
       position: relative;
-      top: 0;
+      vertical-align: middle;
     }
 
     .spinbox-wrapper {

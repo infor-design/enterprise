@@ -67,10 +67,6 @@
     @include opacity(0);
   }
 
-  &.completion-chart {
-    margin: 10px 0;
-  }
-
   // Right aligned Legend
   &.has-right-legend {
     align-content: center;
