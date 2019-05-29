@@ -12,6 +12,8 @@
       columns = [],
       data = [];
 
+    var numericFilterConditions= [ 'equals', 'does-not-equal', 'is-empty', 'is-not-empty', 'less-than', 'less-equals', 'greater-than', 'greater-equals' ];
+
     // Define Some Sample Data
     data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble Paint', quantity: 1, price: 410.99, orderDate: new Date(2014, 12, 8), action: 'Action', status: 'Error'});
     data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, orderDate: new Date(2015, 7, 3), action: 'On Hold', status: 'Error'});
@@ -61,7 +63,7 @@
 
     // Define Columns for the Grid.
     columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
-    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, validate: 'required', editorOptions: lookupOptions, width: 170, filterType: 'lookup' });
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, validate: 'required', editorOptions: lookupOptions, width: 170, filterType: 'lookup', filterConditions: numericFilterConditions });
     columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterType: 'text'});
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true}});
     columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});

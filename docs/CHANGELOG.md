@@ -51,6 +51,7 @@
 - `[Input]` Improved alignment of icons in the uplift theme input components. ([#2072](https://github.com/infor-design/enterprise/issues/2072))
 - `[Datagrid]` Added an onBeforeSelect call back that you can return false from to disable row selection. ([#1906](https://github.com/infor-design/enterprise/issues/1906))
 - `[Datagrid]` Fixed an issue where header checkbox was not sync after removing selected rows. ([#2226](https://github.com/infor-design/enterprise/issues/2226))
+- `[Datagrid]` Fixed an issue where custom filter conditions were not setting up filter button. ([#2234](https://github.com/infor-design/enterprise/issues/2234))
 - `[Dropdown]` Fixed the dropdown appearing misaligned at smaller screen sizes. ([#2248](https://github.com/infor-design/enterprise/issues/2248))
 - `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Locale]` Synced up date and time patterns with the CLDR several time patterns in particular were corrected. ([#2022](https://github.com/infor-design/enterprise/issues/2022))
