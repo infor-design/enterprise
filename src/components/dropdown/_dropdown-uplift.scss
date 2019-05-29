@@ -97,6 +97,12 @@ html.is-firefox:not([dir='rtl']) {
       > .trigger .icon {
         top: 5px;
       }
+
+      &.has-icons {
+        .dropdown-search {
+          padding: 3px 16px 2px 25px;
+        }
+      }
     }
   }
 

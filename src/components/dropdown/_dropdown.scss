@@ -990,7 +990,7 @@ html[dir='rtl'] {
     &.multiple {
       li::before {
         margin-left: inherit;
-        margin-right: 5px;
+        margin-right: -23px;
       }
 
       li.is-selected::after {
