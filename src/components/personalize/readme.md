@@ -60,6 +60,20 @@ We expose a series of classes that you can use to personalize some items on the 
 - `personalize-horizontal-bottom-border` - Adds a 1px border matching the personalization color to the element on the bottom.
 - `personalize-horizontal-bottom-border` - Adds a 1px border matching the personalization color to the element on the top.
 
+## Manual Personalization
+
+It may be necessary to gain control of the timing in which personalized colors/themes/fonts are applied to your application, instead of allowing IDS to automatically set up these items.  If this is necessary, you can configure a property in the `SohoConfig` object to disable automatic initialization:
+
+```js
+const SohoConfig = {
+  personalize: {
+    noInit: true
+  }
+};
+```
+
+Insert this object in a script that runs before IDS is loaded.
+
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. Choose colors that pass contrast guidelines.

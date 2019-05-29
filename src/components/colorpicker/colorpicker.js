@@ -491,7 +491,7 @@ ColorPicker.prototype = {
    */
   getThemeVariant(activeTheme) {
     const legacyThemes = Object.keys(COLORPICKER_DEFAULTS.themes);
-    const res = legacyThemes.filter(legacyTheme => activeTheme.indexOf(legacyTheme));
+    const res = legacyThemes.filter(legacyTheme => activeTheme.indexOf(legacyTheme) > -1);
     let variant = 'light';
     if (res.length > 0) {
       variant = res[0];
