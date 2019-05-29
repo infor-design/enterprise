@@ -3899,9 +3899,6 @@ Datagrid.prototype = {
         maxText = val;
       }
     }
-
-    const hasIcon = columnDef.formatter ?
-      columnDef.formatter.toString().indexOf('$.createIcon') > -1 : false;
       
     const hasTag = columnDef.formatter ?
       columnDef.formatter.toString().indexOf('<span class="tag') > -1 : false;
@@ -3938,10 +3935,6 @@ Datagrid.prototype = {
     }
 
     if (hasTag && !chooseHeader) {
-      padding += 10;
-    }
-    
-    if (hasIcon) {
       padding += 10;
     }
 
@@ -8523,9 +8516,9 @@ Datagrid.prototype = {
     });
 
     if (this.toolbar && this.toolbar.parent() && this.toolbar.parent().find('.table-errors').length > 0) {
-      let icon = this.toolbar.parent().find('.table-errors').find(`.icon-${type}`);
+      const icon = this.toolbar.parent().find('.table-errors').find(`.icon-${type}`);
       if (icon.length) { 
-        let nonVisibleCellTypeErrors = $.grep(this.nonVisibleCellErrors, (error) => {
+        const nonVisibleCellTypeErrors = $.grep(this.nonVisibleCellErrors, (error) => {
           if (error.type === type) {
             return error;
           }
@@ -9005,8 +8998,8 @@ Datagrid.prototype = {
     
     // resize on change
     if (col && !col.width) {
-      let newWidth = this.calculateTextWidth(col);
-      let diff = newWidth - this.headerWidths[cell].width;
+      const newWidth = this.calculateTextWidth(col);
+      const diff = newWidth - this.headerWidths[cell].width;
       if (diff > 0 && this.headerWidths[cell].width !== '') {
         this.resizeColumnWidth(cellNode, newWidth, diff);
         this.headerWidths[cell].width = newWidth;

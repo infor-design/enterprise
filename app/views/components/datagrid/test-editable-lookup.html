@@ -121,14 +121,6 @@
           editable: true,
           toolbar: {keywordFilter: true, results: true}
         }).on('cellchange', function (e, args) {
-          if (args.column && !args.column.width) {
-            let newWidth = gridApi.calculateTextWidth(args.column);
-            let diff = newWidth - gridApi.headerWidths[args.cell].width;
-            if (diff > 0 && gridApi.headerWidths[args.cell].width !== '') {
-              gridApi.resizeColumnWidth(args.target, newWidth, diff);
-              gridApi.headerWidths[args.cell].width = newWidth;
-            }
-          }
           console.log(e, args);
         }).on('rowadd', function (e, args) {
           console.log(e, args);
