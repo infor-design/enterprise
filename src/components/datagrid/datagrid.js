@@ -4471,22 +4471,6 @@ Datagrid.prototype = {
         }
         return !handle;
       });
-
-    if (this.toolbar) {  
-      this.toolbar
-        .off('mouseenter.gridtooltip', '.table-errors .icon')
-        .on('mouseenter.gridtooltip', '.table-errors .icon', function () {
-          handleShow(this);
-        })
-        .off('mouseleave.gridtooltip click.gridtooltip', '.table-errors .icon')
-        .on('mouseleave.gridtooltip click.gridtooltip', '.table-errors .icon', function () {
-          handleHide(this);
-        })
-        .off('longpress.gridtooltip', '.table-errors .icon')
-        .on('longpress.gridtooltip', '.table-errors .icon', function () {
-          handleShow(this, 0);
-        });
-    }
   },
 
   /**
