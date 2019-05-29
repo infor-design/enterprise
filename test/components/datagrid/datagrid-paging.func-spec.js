@@ -197,7 +197,7 @@ describe('Datagrid Paging API', () => {
       // wait for any timeouts to complete to ensure the source function is called.
       setTimeout(() => {
         // ensure it's been called with a request.type of 'initial'
-        expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
+        expect(dataSourceSpy).toHaveBeenCalled();
         expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
         expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('initial');
         done();

@@ -1,11 +1,11 @@
 /* eslint-disable no-bitwise, no-undef */
 
 // Get Latest from http://www.unicode.org/Public/cldr/25/
-Soho.Locale.addCulture('en-GB', {
+Soho.Locale.addCulture('es-419', {
   // layout/language
-  language: 'en',
-  englishName: 'English (United Kingdom)',
-  nativeName: 'English (United Kingdom)',
+  language: 'es',
+  englishName: 'Spanish (Latin America)',
+  nativeName: 'Español (America Latina)',
   // layout/orientation/@characters
   direction: 'left-to-right',
   // ca-gregorian
@@ -15,41 +15,40 @@ Soho.Locale.addCulture('en-GB', {
     dateFormat: {
       separator: '/', // Infered
       timeSeparator: ':',
-      short: 'dd/MM/yyyy', // use four digit year
+      short: 'd/M/yyyy', // use four digit year
       medium: 'd MMM yyyy',
-      long: 'd MMMM yyyy',
-      full: 'EEEE, d MMMM yyyy',
-      month: 'd MMMM',
-      year: 'MMMM yyyy',
-      timestamp: 'HH:mm:ss',
-      datetime: 'dd/MM/yyyy HH:mm',
-      timezone: 'dd/MM/yyyy HH:mm zz',
-      timezoneLong: 'dd/MM/yyyy HH:mm zzzz'
+      long: 'd de MMMM de yyyy',
+      full: 'EEEE, d de MMMM de yyyy',
+      month: 'd de MMMM',
+      year: 'MMMM de yyyy',
+      timestamp: 'HH:mm',
+      datetime: 'd MMM yyyy HH:mm',
+      timezone: 'd MMM yyyy HH:mm zz',
+      timezoneLong: 'd MMM yyyy HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
-      wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      abbreviated: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      narrow: ['S', 'M', 'Τ', 'W', 'T', 'F', 'S']
+      wide: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+      abbreviated: ['dom.', 'lun.', 'mar.', 'mié.', 'jue.', 'vie.', 'sáb.'],
+      narrow: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide
     months: {
-      wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      wide: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+      abbreviated: ['ene.', 'feb.', 'mar.', 'abr.', 'may.', 'jun.', 'jul.', 'ago.', 'sep.', 'oct.', 'nov.', 'dic.']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['am', 'pm'],
-    firstDayofWeek: 1, // Starts on Monday
+    dayPeriods: ['a.m.', 'p.m.']
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
-  currencySign: '£',
+  currencySign: '$',
   currencyFormat: '¤###',
   // numbers/symbols-numberSystem-latn
   numbers: {
     percentSign: '%',
-    percentFormat: '### %',
+    percentFormat: '###%',
     minusSign: '-',
     decimal: '.',
     group: ',',

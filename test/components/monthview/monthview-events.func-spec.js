@@ -8,7 +8,7 @@ let monthviewEl;
 let svgEl;
 let monthviewAPI;
 
-describe('Monthview API', () => { //eslint-disable-line
+describe('Monthview API', () => {
   beforeEach(() => {
     monthviewEl = null;
     svgEl = null;
