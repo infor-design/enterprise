@@ -32,8 +32,8 @@ div.multiselect {
   &.dropdown-short {
     .trigger {
       .icon {
-        left: -1px;
-        top: 0;
+        left: -5px;
+        top: 6px;
       }
     }
   }
@@ -53,13 +53,13 @@ html.is-firefox:not([dir='rtl']) {
   div.dropdown,
   div.multiselect {
     + .icon {
-      top: 5px;
+      top: 3px;
     }
   }
 
   .dropdown-list {
     > .trigger .icon {
-      top: 11px;
+      top: 8px;
     }
   }
 }
@@ -68,5 +68,46 @@ html.is-firefox:not([dir='rtl']) {
 html[dir='rtl'] {
   .dropdown-search {
     padding: 8px 10px 7px 32px;
+  }
+
+  .field-short {
+    .dropdown + .icon {
+      left: 2px;
+    }
+
+    div.dropdown,
+    div.multiselect {
+      padding: 5px 5px 5px 16px;
+    }
+  }
+
+  .dropdown-list.dropdown-short {
+    .dropdown-search {
+      padding-left: 16px;
+    }
+
+    > .trigger .icon {
+      margin-right: -26px;
+    }
+  }
+
+  // Re-apply extended padding for Firefox
+  &.is-firefox {
+    .field-short {
+      div.dropdown,
+      div.multiselect {
+        padding: 5px 5px 5px 16px;
+      }
+    }
+
+    .dropdown-list.dropdown-short {
+      .dropdown-search {
+        padding: 6px 5px 5px 16px;
+      }
+
+      > .trigger .icon {
+        right: 5px;
+      }
+    }
   }
 }

@@ -28,17 +28,26 @@
   }
 }
 
+// Reset specific line height on Mac Firefox from the standard component
+.is-mac.is-firefox {
+  .field-short [class*='btn'] {
+    line-height: normal;
+  }
+}
+
 .field-short [class*='btn'] {
-  > .icon:not(.icon-dropdown),
-  > .icon:not(.icon-dropdown) + span:not(.audible) {
-    position: relative;
-  }
+  min-height: 25px;
 
-  > .icon:not(.icon-dropdown) {
-    top: -2px;
-  }
+  > .icon {
+    vertical-align: sub;
 
-  > .icon:not(.icon-dropdown) + span:not(.audible) {
-    top: -3px;
+    &:not(.icon-dropdown) {
+      height: 18px;
+      vertical-align: sub;
+
+      + span:not(.audible) {
+        position: relative;
+      }
+    }
   }
 }
