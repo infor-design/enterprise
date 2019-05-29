@@ -394,13 +394,16 @@ const Locale = {  // eslint-disable-line
       });
     }
 
+    const correctLocale = this.correctLocale(lang);
     if (this.languages[lang]) {
       this.currentLanguage = this.languages[lang];
       this.updateLanguageTag(lang);
-    } else {
-      this.currentLanguage.name = lang;
+      this.dff[correctLocale] = $.Deferred();
+      return this.dff[correctLocale].resolve();
     }
-    return this.dff[this.correctLocale(lang)];
+
+    this.currentLanguage.name = lang;
+    return this.dff[correctLocale];
   },
 
   /**
