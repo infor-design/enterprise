@@ -1039,6 +1039,17 @@ describe('Datagrid filter lookup custom click function tests', () => {
     expect(browser.driver.switchTo().alert().getText()).toBe('Grid information found');
     await browser.driver.switchTo().alert().accept();
   });
+
+  it('Should use custom filter conditions for filter button popup', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(9);
+    const filterBtn = await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-1 div.datagrid-filter-wrapper .btn-filter'));
+
+    expect(await filterBtn.getAttribute('data-default')).toEqual('equals');
+    await filterBtn.click();
+
+    expect(await element(by.css('ul.popupmenu.is-open')).isDisplayed()).toBeTruthy();
+    expect(await element(by.css('ul.popupmenu.is-open > li:nth-child(1)')).getText()).toBe('Equals');
+  });
 });
 
 describe('Datagrid filter masks', () => {
