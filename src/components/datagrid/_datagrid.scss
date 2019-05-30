@@ -1502,7 +1502,7 @@ $datagrid-short-row-height: 25px;
 
     .tag {
       position: relative;
-      top: -1px;
+      top: -2px;
       vertical-align: middle;
 
       &[class*='azure'] {
@@ -4012,14 +4012,6 @@ html[dir='rtl'] {
 
 // Ios Hacks
 .ios {
-  .datagrid:not(.short-rowheight):not(.medium-rowheight) {
-    .icon-error,
-    .icon-success,
-    .icon-pending {
-      top: 15px !important;
-    }
-  }
-
   .datagrid-header .datagrid-filter-wrapper .dropdown.is-disabled {
     opacity: 0.4;
   }
