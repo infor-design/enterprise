@@ -58,7 +58,9 @@ $('body').on('initialized', function () {
             }]
           }];
 
-    $('#column-bar-example').chart({type: 'column', dataset: dataset});
+    $('#column-bar-example').chart({type: 'column', dataset: dataset}).on('selected', function (e, anchor) {
+       console.log(e, anchor);
+    });
 
 });
 </script>

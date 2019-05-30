@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Lookup', () => {
+fdescribe('Lookup', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-index?layout=nofrills');
   });
@@ -107,7 +107,7 @@ describe('Lookup', () => {
   }
 });
 
-describe('Lookup (editable)', () => {
+fdescribe('Lookup (editable)', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-editable');
   });
@@ -131,7 +131,7 @@ describe('Lookup (editable)', () => {
   });
 });
 
-describe('Lookup (editable strict)', () => {
+fdescribe('Lookup (editable strict)', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-editable-strict');
   });
@@ -141,7 +141,7 @@ describe('Lookup (editable strict)', () => {
   });
 });
 
-describe('Lookup (multiselect)', () => {
+fdescribe('Lookup (multiselect)', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-multiselect');
   });
@@ -165,7 +165,7 @@ describe('Lookup (multiselect)', () => {
   });
 });
 
-describe('Lookup paging tests', () => {
+fdescribe('Lookup paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-paging');
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.trigger'))), config.waitsFor);
@@ -219,7 +219,7 @@ describe('Lookup paging tests', () => {
   });
 });
 
-describe('Lookup (custom cancel button)', () => {
+fdescribe('Lookup (custom cancel button)', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-custom-buttons');
   });
@@ -236,7 +236,7 @@ describe('Lookup (custom cancel button)', () => {
   });
 });
 
-describe('Lookup (custom toolbar)', () => {
+fdescribe('Lookup (custom toolbar)', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-custom-toolbar');
   });
@@ -250,7 +250,7 @@ describe('Lookup (custom toolbar)', () => {
   });
 });
 
-describe('Lookup multiselect serverside paging tests', () => {
+fdescribe('Lookup multiselect serverside paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-multiselect-paging-serverside');
   });
@@ -294,7 +294,7 @@ describe('Lookup multiselect serverside paging tests', () => {
   });
 });
 
-describe('Lookup custom matching tests', () => {
+fdescribe('Lookup custom matching tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/test-custom-matching');
   });
@@ -321,7 +321,7 @@ describe('Lookup custom matching tests', () => {
   });
 });
 
-describe('Lookup modal tests', () => {
+fdescribe('Lookup modal tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/test-modal-lookup');
   });
@@ -351,7 +351,7 @@ describe('Lookup modal tests', () => {
   });
 });
 
-describe('Lookup single select serverside tests', () => {
+fdescribe('Lookup single select serverside tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/test-single-select-serverside');
   });
