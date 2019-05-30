@@ -32,11 +32,3 @@ label,
 .section-title {
   font-size: $theme-size-font-md !important;
 }
-
-// Reset random line-height changes in Firefox from the Soho theme
-.is-firefox {
-  input,
-  textarea {
-    line-height: normal;
-  }
-}

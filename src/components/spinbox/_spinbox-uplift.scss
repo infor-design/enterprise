@@ -43,4 +43,20 @@ html[dir='rtl'] {
       }
     }
   }
+
+  &.is-firefox {
+    .field-short {
+      .spinbox {
+        padding: 4px;
+      }
+    }
+  }
+
+  &:not(.ie11) {
+    .field-short {
+      .spinbox-control {
+        padding: 4px 7px;
+      }
+    }
+  }
 }

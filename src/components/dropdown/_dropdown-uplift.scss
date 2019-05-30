@@ -88,8 +88,10 @@ div.multiselect {
 html.is-firefox:not([dir='rtl']) {
   div.dropdown,
   div.multiselect {
+    padding: 5px 30px 6px 10px;
+
     + .icon {
-      top: 5px;
+      top: 2px;
     }
 
     > .listoption-icon {
@@ -97,9 +99,13 @@ html.is-firefox:not([dir='rtl']) {
     }
   }
 
+  .dropdown-search {
+    padding: 6px 30px 6px 10px;
+  }
+
   .dropdown-list {
     > .trigger .icon {
-      top: 11px;
+      top: 8px;
     }
 
     > .listoption-icon {
@@ -220,6 +226,10 @@ html[dir='rtl'] {
           top: -2px;
         }
       }
+    }
+
+    .dropdown-search {
+      padding: 9px 10px 7px 32px;
     }
 
     .dropdown-list.dropdown-short {
