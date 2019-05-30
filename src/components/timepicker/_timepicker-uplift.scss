@@ -17,3 +17,14 @@
     }
   }
 }
+
+html[dir='rtl'] {
+  .field-short {
+    .timepicker {
+      + .icon,
+      + .tooltip-description + .icon {
+        margin-top: 5px;
+      }
+    }
+  }
+}

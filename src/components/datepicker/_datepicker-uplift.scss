@@ -16,3 +16,13 @@
     }
   }
 }
+
+html[dir='rtl'] {
+  .field-short {
+    .datepicker {
+      + .icon {
+        margin-top: 5px;
+      }
+    }
+  }
+}

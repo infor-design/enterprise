@@ -11,20 +11,35 @@
   }
 }
 
-html[dir='rtl'] {
+.field-short {
   .spinbox-control {
-    padding: 7px 10px;
+    padding: 4px 10px;
 
     &.down {
-      padding: 6px 10px 8px;
+      padding: 3px 10px 5px;
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .spinbox-control {
+    padding: 7px;
+
+    &.down {
+      padding: 6px 7px 8px;
     }
   }
 
-  // Rendering difference only in this combination...
-  &.is-mac.is-firefox {
+  .field-short {
+    .spinbox {
+      padding: 4px;
+    }
+
     .spinbox-control {
+      padding: 4px 7px;
+
       &.down {
-        padding: 7px 10px;
+        padding: 3px 7px 5px;
       }
     }
   }

@@ -11,7 +11,7 @@ div.multiselect {
   }
 
   > .listoption-icon {
-    top: 13px;
+    top: 11px;
   }
 }
 
@@ -25,7 +25,7 @@ div.multiselect {
   }
 
   > .listoption-icon {
-    top: 12px;
+    top: 10px;
   }
 }
 
@@ -73,6 +73,15 @@ div.multiselect {
       }
     }
   }
+
+  .field-short {
+    div.dropdown,
+    div.multiselect {
+      > .listoption-icon {
+        top: 6px;
+      }
+    }
+  }
 }
 
 // Icon placement isn't quite right on Firefox
@@ -82,11 +91,19 @@ html.is-firefox:not([dir='rtl']) {
     + .icon {
       top: 5px;
     }
+
+    > .listoption-icon {
+      top: 13px;
+    }
   }
 
   .dropdown-list {
     > .trigger .icon {
       top: 11px;
+    }
+
+    > .listoption-icon {
+      top: 12px;
     }
 
     &.dropdown-short {
@@ -123,13 +140,13 @@ html[dir='rtl'] {
   div.dropdown,
   div.multiselect {
     .listoption-icon {
-      top: 9px;
+      top: 10px;
     }
   }
 
   .dropdown-list {
     > .listoption-icon {
-      top: 8px;
+      top: 9px;
     }
   }
 
@@ -140,11 +157,11 @@ html[dir='rtl'] {
   .field-short {
     div.dropdown,
     div.multiselect {
-      padding: 2px 5px 2px 16px;
+      padding: 2px 5px 2px 8px;
 
       + .icon {
         left: 2px;
-        top: -2px;
+        top: -3px;
       }
 
       .listoption-icon {
@@ -161,6 +178,7 @@ html[dir='rtl'] {
     > .trigger .icon {
       margin-right: -26px;
       right: auto;
+      top: 2px;
     }
 
     > .listoption-icon {
