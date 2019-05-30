@@ -346,7 +346,8 @@ function personalizeStyles(colors) {
   border-bottom: none !important;
 }
 
-.is-personalizable .personalize-header {
+.is-personalizable .personalize-header,
+.is-personalizable.tab-container {
   background-color: ${colors.base};
 }
 
