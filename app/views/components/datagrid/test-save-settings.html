@@ -83,7 +83,7 @@
 
     //Define Columns for the Grid.
     columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Text, filterType: 'text'});
-    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editorOptions: lookupOptions, width: 120, filterType: 'lookup' });
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editorOptions: lookupOptions, filterType: 'lookup' });
     columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
