@@ -252,7 +252,7 @@ Datagrid.prototype = {
     this.isInModal = false;
     this.appendTooltip();
     this.initSettings();
-    this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
+    this.originalColumns = JSON.stringify(this.settings.columns);
     this.removeToolbarOnDestroy = false;
     this.nonVisibleCellErrors = [];
     this.recordCount = 0;
@@ -4553,8 +4553,8 @@ Datagrid.prototype = {
     if (columnGroups === undefined) {
       columnGroups = null;
     }
-    if (JSON.stringify(this.settings.columns) === JSON.stringify(columns) &&
-          (JSON.stringify(this.settings.columnGroups) === JSON.stringify(columnGroups))) {
+    if (this.copyThenStringify(this.settings.columns) === this.copyThenStringify(columns) &&
+      (JSON.stringify(this.settings.columnGroups) === JSON.stringify(columnGroups))) {
       columnsChanged = false;
     }
 
@@ -4619,7 +4619,7 @@ Datagrid.prototype = {
 
     // Save Columns
     if (savedSettings.columns) {
-      localStorage[this.uniqueId('usersettings-columns')] = JSON.stringify(this.settings.columns);
+      localStorage[this.uniqueId('usersettings-columns')] = this.copyThenStringify(this.settings.columns);
     }
 
     // Save Row Height
@@ -4844,6 +4844,26 @@ Datagrid.prototype = {
   },
 
   /**
+   * Copy the object and remove some uneeded properties from the object
+   * @param  {object} columns The column set to stringify.
+   * @returns {string} The JSON object as a string
+   */
+  copyThenStringify(columns) {
+    if (!columns) {
+      return JSON.stringify(columns);
+    }
+
+    const clone = columns.map((col) => {
+      const newCol = col;
+      if (newCol.editorOptions) {
+        delete newCol.editorOptions;
+      }
+      return newCol;
+    });
+    return JSON.stringify(clone);
+  },
+
+  /**
   * Reset Columns to defaults (used on restore menu item)
   */
   resetColumns() {
@@ -4852,7 +4872,7 @@ Datagrid.prototype = {
     }
 
     if (this.originalColumns) {
-      const originalColumns = this.columnsFromString(JSON.stringify(this.originalColumns));
+      const originalColumns = this.originalColumns;
       const columnGroups = this.settings.columnGroups && this.originalColGroups ?
         this.originalColGroups : null;
       this.updateColumns(originalColumns, columnGroups);
