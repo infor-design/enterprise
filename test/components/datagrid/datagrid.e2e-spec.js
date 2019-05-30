@@ -335,7 +335,7 @@ describe('Datagrid frozen column tests', () => {
 
 describe('Datagrid grouping headers and filter tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-grouping-filter');
+    await utils.setPage('/components/datagrid/example-grouping-filter?layout=nofrills');
 
     const datagridEl = await element(by.css('.datagrid-rowgroup-header'));
     await browser.driver
