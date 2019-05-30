@@ -4855,7 +4855,7 @@ Datagrid.prototype = {
     }
 
     const clone = columns.map((col) => {
-      const newCol = col;
+      const newCol = utils.extend({}, col);
       if (newCol.editorOptions) {
         delete newCol.editorOptions;
       }
