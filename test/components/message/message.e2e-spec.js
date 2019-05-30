@@ -4,7 +4,7 @@ const config = requireHelper('e2e-config');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Message tests', () => {
+fdescribe('Message tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/message/example-index');
   });
