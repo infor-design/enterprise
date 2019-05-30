@@ -1,43 +1,27 @@
 // Uplift Timeline
 //================================================== */
 
-/*
-.timeline-block {
-  .indicator-container {
-    width: 36px;
+.timeline {
+  &::before {
+    left: 1.22em;
+    top: 4px;
+  }
+}
 
+// Brings the dotted line into alignment with the text
+.indicator-container {
+  top: 1px;
+}
+
+// Brings the indicator icon into alignment with the dotted line
+.indicator {
+  top: -2px;
+}
+
+@media (min-width: 767px) {
+  .timeline {
     &::before {
-      left: 28px;
+      left: 12.7em;
     }
   }
 }
-
-html[dir='rtl'] {
-  .timeline-block {
-    .indicator-container {
-      &::before {
-        left: auto;
-        right: 28px;
-      }
-    }
-  }
-}
-
-@media (min-width: $breakpoint-phone-to-tablet) {
-  .timeline-block {
-    .indicator-container {
-      margin-left: 190px;
-
-    }
-  }
-
-  html[dir='rtl'] {
-    .timeline-block {
-      .indicator-container {
-        margin-left: inherit;
-        margin-right: 190px;
-      }
-    }
-  }
-}
-*/
