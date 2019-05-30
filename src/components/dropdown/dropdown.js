@@ -864,7 +864,7 @@ Dropdown.prototype = {
     }
 
     if (this.settings.empty && opts.length === 0) {
-      this.pseudoElem.find('span').html(`<span class="audible">${this.label.text()} </span>`);
+      this.pseudoElem.find('span')[0].innerHTML = `<span class="audible">${this.label.text()} </span>`;
       return;
     }
 
@@ -874,7 +874,7 @@ Dropdown.prototype = {
       text = text.substr(0, maxlength);
     }
     text = text.trim();
-    this.pseudoElem.find('span').html(`<span class="audible">${this.label.text()} </span>${text}`);
+    this.pseudoElem.find('span')[0].innerHTML = `<span class="audible">${this.label.text()} </span>${text}`;
 
     // If there is a placeholder set the selected text
     if (this.element.attr('placeholder')) {
