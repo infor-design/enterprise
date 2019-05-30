@@ -9844,9 +9844,9 @@ Datagrid.prototype = {
 
     for (let i = 0, data; i < dataset.length; i++) {
       if (s.groupable) {
-        for (let k = 0; k < dataset[i].values.length; k++) {
+        for (let k = 0; k < Object.values(dataset[i]).length; k++) {
           idx++;
-          data = dataset[i].values[k];
+          data = Object.values(dataset[i])[k];
           if (this.isRowSelected(data)) {
             this._selectedRows.push({
               idx,
