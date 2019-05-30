@@ -60,3 +60,14 @@
     }
   }
 }
+
+html[dir='rtl'] {
+  .form-responsive {
+    .colorpicker-container {
+      .trigger {
+        left: 0;
+        right: auto;
+      }
+    }
+  }
+}
