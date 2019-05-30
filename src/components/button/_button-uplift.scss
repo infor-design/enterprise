@@ -6,8 +6,6 @@
   height: auto;
   line-height: normal;
   min-height: 34px;
-  padding-bottom: 6px;
-  padding-top: 6px;
 
   > * {
     vertical-align: baseline;
@@ -19,10 +17,10 @@
 }
 
 // Icon/Actions button icons should be better-centered against the focus state.
-.btn-icon,
 .btn-actions {
   > .icon {
-    vertical-align: sub;
+    position: relative;
+    top: -1px;
   }
 }
 
