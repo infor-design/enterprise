@@ -6,7 +6,7 @@
     + .icon,
     + .tooltip-description + .icon {
       margin-left: -25px;
-      margin-top: 9px;
+      margin-top: 8px;
     }
   }
 }
@@ -16,7 +16,18 @@ html[dir='rtl'] {
     .timepicker {
       + .icon,
       + .tooltip-description + .icon {
-        margin-top: 5px;
+        margin-top: 6px;
+      }
+    }
+  }
+
+  &.is-firefox {
+    .field-short {
+      .timepicker {
+        + .icon,
+        + .tooltip-description + .icon {
+          margin-top: 8px;
+        }
       }
     }
   }

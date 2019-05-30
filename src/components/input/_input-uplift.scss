@@ -43,8 +43,18 @@ label.required .label-text:not(.accessible)::after,
   display: flex;
 }
 
+/*
 .field-short {
   input {
     padding: 2px 5px;
+  }
+}
+*/
+
+html:not(.is-firefox) {
+  .field-short {
+    input {
+      padding: 3px 5px;
+    }
   }
 }

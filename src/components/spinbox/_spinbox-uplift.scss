@@ -21,6 +21,22 @@
   }
 }
 
+.is-firefox {
+  .field-short {
+    .spinbox {
+      padding: 4px;
+    }
+  }
+}
+
+html:not(.is-firefox) {
+  .field-short {
+    .spinbox-control {
+      padding: 3px 10px;
+    }
+  }
+}
+
 html[dir='rtl'] {
   .spinbox-control {
     padding: 7px;
