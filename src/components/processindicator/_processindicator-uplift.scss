@@ -19,6 +19,18 @@
   }
 }
 
+// Only adjust the placement of the process indicator lines when not on RTL
+html:not([dir='rtl']) {
+  .process-indicator {
+    .display {
+      .separator {
+        position: relative;
+        top: -2px;
+      }
+    }
+  }
+}
+
 html[dir='rtl'] {
   &.is-firefox {
     .indicator {

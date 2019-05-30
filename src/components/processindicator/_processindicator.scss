@@ -278,8 +278,24 @@ $indicator-current-size: ($indicator-size * 1.6);
   }
 }
 
-// Adjust for the smaller font on `ar-EG`
 html[dir='rtl'] {
+  .process-indicator {
+    .details {
+      > .icon {
+        margin-left: 15px;
+        margin-right: 0;
+      }
+    }
+
+    // Reverse the alignment for the display area (done with transforms)
+    &.compact {
+      .display {
+        @include css3(transform-origin, right center);
+      }
+    }
+  }
+
+  // Adjust for the smaller font on `ar-EG`
   .indicator {
     &.more-info {
       &::before {
