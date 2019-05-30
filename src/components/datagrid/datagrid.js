@@ -9844,9 +9844,10 @@ Datagrid.prototype = {
 
     for (let i = 0, data; i < dataset.length; i++) {
       if (s.groupable) {
-        for (let k = 0; k < Object.values(dataset[i]).length; k++) {
+        // Object.values is not supported in IE11; hence usage of Object.keys and Map
+        for (let k = 0; k < Object.keys(dataset[i]).length; k++) {
           idx++;
-          data = Object.values(dataset[i])[k];
+          data = Object.keys(dataset[i]).map(v => dataset[i][v]);
           if (this.isRowSelected(data)) {
             this._selectedRows.push({
               idx,
