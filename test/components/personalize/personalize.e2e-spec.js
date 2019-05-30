@@ -74,3 +74,24 @@ describe('Personalization example-tabs tests', () => {
     });
   }
 });
+
+describe('Personalization form tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/personalize/example-form2.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkScreen('personalize-form-tabs')).toEqual(0);
+    });
+  }
+});
