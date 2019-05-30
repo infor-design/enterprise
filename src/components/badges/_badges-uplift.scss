@@ -4,6 +4,10 @@
 .tag,
 .badge {
   line-height: 20px;
+
+  &.round {
+    width: 30px;
+  }
 }
 
 html[dir='rtl'] {
