@@ -699,20 +699,22 @@ fdescribe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
   });
 
-  it('Should work with sort', async () => {
-    expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeFalsy();
+  if (!utils.isCI()) {
+    it('Should work with sort', async () => {
+      expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeFalsy();
 
-    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
-    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+      await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+      await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
 
-    expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeTruthy();
+      expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeTruthy();
 
-    await element(by.css('.pager-next a')).click();
-    await element(by.css('.pager-prev a')).click();
-    await browser.driver.sleep(config.sleep);
+      await element(by.css('.pager-next a')).click();
+      await element(by.css('.pager-prev a')).click();
+      await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeTruthy();
-  });
+      expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeTruthy();
+    });
+  }
 
   if (!utils.isCI()) {
     it('Should not move on a page that is more than the max', async () => {
@@ -1038,6 +1040,17 @@ fdescribe('Datagrid filter lookup custom click function tests', () => {
 
     expect(browser.driver.switchTo().alert().getText()).toBe('Grid information found');
     await browser.driver.switchTo().alert().accept();
+  });
+
+  it('Should use custom filter conditions for filter button popup', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(9);
+    const filterBtn = await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-1 div.datagrid-filter-wrapper .btn-filter'));
+
+    expect(await filterBtn.getAttribute('data-default')).toEqual('equals');
+    await filterBtn.click();
+
+    expect(await element(by.css('ul.popupmenu.is-open')).isDisplayed()).toBeTruthy();
+    expect(await element(by.css('ul.popupmenu.is-open > li:nth-child(1)')).getText()).toBe('Equals');
   });
 });
 
