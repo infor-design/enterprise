@@ -252,7 +252,7 @@ Datagrid.prototype = {
     this.isInModal = false;
     this.appendTooltip();
     this.initSettings();
-    this.originalColumns = JSON.stringify(this.settings.columns);
+    this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
     this.removeToolbarOnDestroy = false;
     this.nonVisibleCellErrors = [];
     this.recordCount = 0;
@@ -4845,6 +4845,7 @@ Datagrid.prototype = {
 
   /**
    * Copy the object and remove some uneeded properties from the object
+   * @private
    * @param  {object} columns The column set to stringify.
    * @returns {string} The JSON object as a string
    */
