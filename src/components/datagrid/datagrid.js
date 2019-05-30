@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle, no-continue, no-nested-ternary */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { theme } from '../theme/theme';
 import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
@@ -3909,6 +3910,9 @@ Datagrid.prototype = {
     const hasAlert = columnDef.formatter ?
       columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
 
+    const hasIcon = columnDef.formatter ?
+      columnDef.formatter.toString().indexOf('#icon-dropdown') > -1 : false;
+
     if (hasAlert) {
       max += 10;
     }
@@ -3928,17 +3932,24 @@ Datagrid.prototype = {
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
     const context = this.canvas.getContext('2d');
-    context.font = '14px arial';
-
+    if (!this.fontCached) {
+      this.fontCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+        '16px arial' : '14px arial';
+    }
+    context.font = this.fontCached;
     const metrics = context.measureText(maxText);
-    let padding = chooseHeader ? 40 : 45;
+    let padding = chooseHeader ? 40 : 50;
 
     if (hasAlert && !chooseHeader) {
-      padding += 20;
+      padding += 30;
     }
 
     if (hasTag && !chooseHeader) {
       padding += 10;
+    }
+
+    if (hasIcon && !chooseHeader) {
+      padding += 40;
     }
 
     if (hasButton) {
@@ -5872,11 +5883,11 @@ Datagrid.prototype = {
         self.resizeHandle[0].style.left = `${leftPos}px`;
         self.resizeHandle[0].style.cursor = '';
       }).off('contextmenu.datagrid').on('contextmenu.datagrid', 'th', (e) => {
-        // Add Header Context Menu Support
-        e.preventDefault();
-        self.closePrevPopupmenu();
-
         if (self.settings.headerMenuId) {
+          // Add Header Context Menu Support
+          e.preventDefault();
+          self.closePrevPopupmenu();
+
           $(e.currentTarget)
             .popupmenu({
               menuId: self.settings.headerMenuId,
@@ -5896,9 +5907,9 @@ Datagrid.prototype = {
                 elem.data('popupmenu').destroy();
               }
             });
+          return false;
         }
-
-        return false;
+        return true;
       });
 
     // Handle Clicking Header Checkbox

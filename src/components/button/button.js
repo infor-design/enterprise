@@ -51,8 +51,8 @@ Button.prototype = {
       const use = ddIcon.find('use');
       let hasIcon = false;
 
-      if (ddIcon.length > 0 && use.length === 1) {
-        hasIcon = use.attr('xlink:href').indexOf('#icon-dropdown') > -1;
+      if (ddIcon.length > 0 && use.length >= 1) {
+        hasIcon = use.last().attr('xlink:href').indexOf('#icon-dropdown') > -1;
       }
 
       if (!hasIcon) {

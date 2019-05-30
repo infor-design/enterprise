@@ -335,7 +335,7 @@ describe('Datagrid frozen column tests', () => {
 
 describe('Datagrid grouping headers and filter tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-grouping-filter');
+    await utils.setPage('/components/datagrid/example-grouping-filter?layout=nofrills');
 
     const datagridEl = await element(by.css('.datagrid-rowgroup-header'));
     await browser.driver
@@ -359,10 +359,10 @@ describe('Datagrid grouping headers and filter tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const datagridEl = await element(by.id('datagrid'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-grouping')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-grouping')).toEqual(0);
     });
   }
 });
