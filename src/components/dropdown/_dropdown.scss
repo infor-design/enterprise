@@ -1189,4 +1189,37 @@ html[dir='rtl'] {
       }
     }
   }
+
+  // TODO: Figure out why our rules for multiselect checkboxes no longer
+  // work correctly across all browsers.
+  &:not(.is-firefox):not(.ie11) {
+    .dropdown-list.multiple {
+      li::before {
+        margin-right: 10px;
+      }
+
+      &.dropdown-short {
+        li::before {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  &.is-firefox,
+  &.ie11 {
+    .dropdown-list.dropdown-short.multiple {
+      li::before {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  &.is-safari {
+    .dropdown-list.dropdown-short.multiple {
+      li::after {
+        right: 10px;
+      }
+    }
+  }
 }
