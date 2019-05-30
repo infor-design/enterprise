@@ -25,3 +25,13 @@
     }
   }
 }
+
+html[dir='rtl'] {
+  .indicator-container {
+    right: -2px;
+  }
+
+  .indicator {
+    top: auto;
+  }
+}
