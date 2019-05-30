@@ -321,7 +321,7 @@ Place.prototype = {
         switch (aX) {
           case 'left':
             if (containerIsBody && (cW < Math.round(elRect.left) + Math.round(elRect.width))) {
-              cX = (parentRect.right - elRect.width) + incomingPlacementObj.x + scrollX;
+              cX = parentRect.left + incomingPlacementObj.x + scrollX;
             } else {
               cX = parentRect.left - incomingPlacementObj.x + (containerIsBody ? scrollX : 0);
             }

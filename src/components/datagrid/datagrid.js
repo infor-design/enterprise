@@ -1730,8 +1730,9 @@ Datagrid.prototype = {
       return ($.inArray(s, array) > -1);
     };
     const render = function (icon, text, checked) {
+      const isChecked = filterConditions.length && filterConditions[0] === icon ? true : checked;
       return filterConditions.length && !inArray(icon) ?
-        '' : self.filterItemHtml(icon, text, checked);
+        '' : self.filterItemHtml(icon, text, isChecked);
     };
     const renderButton = function (defaultValue) {
       return `<button type="button" class="btn-menu btn-filter" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} type="button"><span class="audible">Filter</span>` +
@@ -1740,6 +1741,7 @@ Datagrid.prototype = {
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
     };
     let btnMarkup = '';
+    let btnDefault = '';
 
     // Just the dropdown
     if (col.filterType === 'contents' || col.filterType === 'select' || col.filterType === 'multiselect') {
@@ -1747,31 +1749,34 @@ Datagrid.prototype = {
     }
 
     if (col.filterType === 'text') {
-      btnMarkup = renderButton('contains') +
+      btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
+      btnMarkup = renderButton(btnDefault) +
         render('contains', 'Contains', true) +
         render('does-not-contain', 'DoesNotContain') +
         render('equals', 'Equals') +
         render('does-not-equal', 'DoesNotEqual') +
         render('is-empty', 'IsEmpty') +
         render('is-not-empty', 'IsNotEmpty');
-      btnMarkup = btnMarkup.replace('{{icon}}', 'contains');
+      btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
     }
 
     if (col.filterType === 'checkbox') {
-      btnMarkup += renderButton('selected-notselected') +
+      btnDefault = filterConditions.length ? filterConditions[0] : 'selected-notselected';
+      btnMarkup += renderButton(btnDefault) +
         render('selected-notselected', 'All', true) +
         render('selected', 'Selected') +
         render('not-selected', 'NotSelected');
-      btnMarkup = btnMarkup.replace('{{icon}}', 'selected-notselected');
+      btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
     }
 
     if (col.filterType !== 'checkbox' && col.filterType !== 'text') {
-      btnMarkup += renderButton('equals') +
+      btnDefault = filterConditions.length ? filterConditions[0] : 'equals';
+      btnMarkup += renderButton(btnDefault) +
         render('equals', 'Equals', (col.filterType === 'lookup' || col.filterType === 'integer' || col.filterType === 'decimal' || col.filterType === 'date' || col.filterType === 'time')) +
         render('does-not-equal', 'DoesNotEqual') +
         render('is-empty', 'IsEmpty') +
         render('is-not-empty', 'IsNotEmpty');
-      btnMarkup = btnMarkup.replace('{{icon}}', 'equals');
+      btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
     }
 
     if (col.filterType === 'date') {
@@ -1797,7 +1802,8 @@ Datagrid.prototype = {
     }
 
     if (col.filterType === 'lookup') {
-      btnMarkup = renderButton('contains') +
+      btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
+      btnMarkup = renderButton(btnDefault) +
         render('contains', 'Contains', true) +
         render('does-not-contain', 'DoesNotContain') +
         render('equals', 'Equals') +
@@ -1812,7 +1818,7 @@ Datagrid.prototype = {
         render('less-equals', 'LessOrEquals') +
         render('greater-than', 'GreaterThan') +
         render('greater-equals', 'GreaterOrEquals');
-      btnMarkup = btnMarkup.replace('{{icon}}', 'contains');
+      btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
     }
 
     btnMarkup += '</ul>';
