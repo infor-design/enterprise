@@ -95,7 +95,7 @@ html.is-firefox:not([dir='rtl']) {
     }
 
     > .listoption-icon {
-      top: 13px;
+      top: 10px;
     }
   }
 
@@ -109,7 +109,13 @@ html.is-firefox:not([dir='rtl']) {
     }
 
     > .listoption-icon {
-      top: 12px;
+      top: 9px;
+    }
+
+    &.has-icons {
+      .dropdown-search {
+        padding: 6px 30px 6px 39px;
+      }
     }
 
     &.dropdown-short {
@@ -157,7 +163,7 @@ html[dir='rtl'] {
   }
 
   .dropdown-search {
-    padding: 8px 10px 7px 32px;
+    padding: 8px 10px 7px 39px;
   }
 
   .field-short {
@@ -172,6 +178,14 @@ html[dir='rtl'] {
 
       .listoption-icon {
         top: 5px;
+      }
+    }
+  }
+
+  .dropdown-list {
+    &.has-icons {
+      .dropdown-search {
+        padding: 8px 39px 7px 30px;
       }
     }
   }
