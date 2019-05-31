@@ -53,6 +53,9 @@ $.fn.icon = function (settings) {
       options.classes.push('icon');
     }
 
+    if (!options.icon) {
+      options.icon = '';
+    }
     return options;
   }
 
@@ -80,6 +83,9 @@ $.fn.icon = function (settings) {
 
   // Toggle the use or entire svg icon in the case of the polyfill
   $.fn.changeIcon = function (icon) {
+    if (!icon) {
+      return;
+    }
     $(this).find('use').attr('xlink:href', $.createIconPath({ icon }));
   };
 

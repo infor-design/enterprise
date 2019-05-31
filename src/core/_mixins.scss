@@ -213,6 +213,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 }
 
 @mixin antialiased {
+  -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
 
