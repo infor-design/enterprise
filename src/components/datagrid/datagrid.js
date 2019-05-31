@@ -4483,6 +4483,22 @@ Datagrid.prototype = {
         }
         return !handle;
       });
+      
+    if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
+      this.toolbar.parent().find('.table-errors')  
+        .off('mouseenter.gridtooltip', '.icon')
+        .on('mouseenter.gridtooltip', '.icon', function () {
+          handleShow(this);
+        })
+        .off('mouseleave.gridtooltip click.gridtooltip', '.icon')
+        .on('mouseleave.gridtooltip click.gridtooltip', '.icon', function () {
+          handleHide(this);
+        })
+        .off('longpress.gridtooltip', '.icon')
+        .on('longpress.gridtooltip', '.icon', function () {
+          handleShow(this, 0);
+        });
+    }
   },
 
   /**
@@ -8370,12 +8386,19 @@ Datagrid.prototype = {
       this.settings.toolbar = { title: ' ' };
       this.appendToolbar();
     }
-
-    // process via type
-    for (const props in $.fn.validation.ValidationTypes) {  // eslint-disable-line
-      const validationType = $.fn.validation.ValidationTypes[props].type;
-      const errors = $.grep(this.nonVisibleCellErrors, error => error.type === validationType);
-      this.showNonVisibleCellErrorType(errors, validationType);
+    
+    if (this.nonVisibleCellErrors.length === 0) {
+      // remove table-error when not required
+      if (this.toolbar && this.toolbar.parent().find('.table-errors').length === 1) {
+        this.toolbar.parent().find('.table-errors').remove();
+      }    
+    } else {
+      // process via type
+      for (const props in $.fn.validation.ValidationTypes) {  // eslint-disable-line
+        const validationType = $.fn.validation.ValidationTypes[props].type;
+        const errors = $.grep(this.nonVisibleCellErrors, error => error.type === validationType);
+        this.showNonVisibleCellErrorType(errors, validationType);
+      }
     }
   },
 
@@ -8442,6 +8465,7 @@ Datagrid.prototype = {
       isError: type === 'error' || type === 'dirtyerror',
       wrapper: icon
     });
+    this.setupTooltips(false, true);
   },
 
   /**
@@ -8488,6 +8512,22 @@ Datagrid.prototype = {
   clearNonVisibleCellErrors(row, cell, type) {
     if (!this.nonVisibleCellErrors.length) {
       return;
+    }
+
+    if (this.toolbar && this.toolbar.parent() && this.toolbar.parent().find('.table-errors').length > 0) {
+      const icon = this.toolbar.parent().find('.table-errors').find(`.icon-${type}`);
+      if (icon.length) { 
+        const nonVisibleCellTypeErrors = $.grep(this.nonVisibleCellErrors, (error) => {
+          if (error.type === type) {
+            return error;
+          }
+          return '';
+        });
+        // No remaining cell errors of this type
+        if (!nonVisibleCellTypeErrors.length) {
+          icon.remove();
+        }
+      }
     }
 
     this.nonVisibleCellErrors = $.grep(this.nonVisibleCellErrors, (error) => {
