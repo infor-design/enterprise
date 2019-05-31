@@ -7,10 +7,10 @@
 
     &.pager-pageno {
       padding-bottom: 6px;
-    }
 
-    a {
-      line-height: 12px;
+      > a {
+        line-height: 12px;
+      }
     }
   }
 }
@@ -23,6 +23,10 @@
     .card-footer {
       .pager-toolbar {
         height: auto;
+
+        > li > a {
+          padding: 1px 7px;
+        }
       }
     }
   }
