@@ -46,6 +46,13 @@
       width: 34px;
     }
   }
+
+  textarea {
+    ~ .btn-actions:not(.is-checkbox) {
+      left: auto;
+      top: calc(50% - 6px);
+    }
+  }
 }
 
 .is-firefox {
