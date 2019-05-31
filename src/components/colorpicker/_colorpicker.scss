@@ -369,6 +369,10 @@
 // RTL Styles
 html[dir='rtl'] {
   .colorpicker-container {
+    .colorpicker {
+      padding: 9px 10px 8px 0;
+    }
+
     .swatch {
       left: 0;
       right: 1px;
@@ -400,4 +404,7 @@ html[dir='rtl'] {
     }
   }
 
+  .popupmenu.colorpicker li a {
+    padding: 0;
+  }
 }

@@ -438,7 +438,6 @@
   &.popupmenu-short {
     a {
       line-height: 24px;
-      padding: 0 25px 0 10px;
     }
 
     &.has-icons {
@@ -635,13 +634,38 @@ html[dir='rtl'] {
       }
 
       // Selectable
-      &.is-selectable {
+      &.is-selectable,
+      &.is-multiselectable {
         > a {
           padding-left: 10px;
           padding-right: 35px;
         }
       }
     }
+
+    // Full menu is multiselectable:
+    &.is-selectable,
+    &.is-multiselectable {
+      li {
+        > a {
+          padding-left: 10px;
+          padding-right: 35px;
+        }
+      }
+    }
+
+    &.is-multiselectable {
+      li {
+        &::before {
+          right: 8px;
+        }
+
+        &::after {
+          right: 13px;
+        }
+      }
+    }
+
   }
 
   .popup-footer {
