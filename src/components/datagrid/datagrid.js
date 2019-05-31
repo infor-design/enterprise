@@ -3862,90 +3862,127 @@ Datagrid.prototype = {
    * @returns {number} The text width.
    */
   calculateTextWidth(columnDef) {
+    const title = columnDef.name || '';
     let max = 0;
+    let maxWidth = 0;
+    let padding = 0;
     let maxText = '';
-    let chooseHeader = false;
     let hasButton = false;
     const self = this;
-    const title = columnDef.name || '';
 
-    // Get max cell value length for this column
-    for (let i = 0; i < this.settings.dataset.length; i++) {
-      let val = this.fieldValue(this.settings.dataset[i], columnDef.field);
-      let len = 0;
-      const row = this.settings.dataset[i];
-
-      // Get formatted value (without html) so we have accurate string that
-      // will display for this cell
-      val = self.formatValue(columnDef.formatter, i, 0, val, columnDef, row, self);
-      hasButton = val.toString().indexOf('btn-secondary') > -1;
-      val = xssUtils.stripHTML(val);
-
-      len = val.toString().length;
-
-      if (this.settings.groupable && row.values) {
-        for (let k = 0; k < row.values.length; k++) {
-          let groupVal = this.fieldValue(row.values[k], columnDef.field);
-          groupVal = self.formatValue(columnDef.formatter, i, 0, groupVal, columnDef, row, self);
-          groupVal = xssUtils.stripHTML(groupVal);
-
-          len = groupVal.toString().length;
-          if (len > max) {
-            max = len;
-            maxText = groupVal;
+    if (columnDef.hidden) {
+      return 0;
+    }
+    
+    if (columnDef.formatter === Formatters.Colorpicker) {
+      maxText = '';
+    } else if (columnDef.formatter === Formatters.Dropdown) {
+      const row = null;
+      let val = '';
+      // Find Longest option label
+      for (let i = 0; i < columnDef.options.length; i++) {
+          if (columnDef.options[i].label.length > val.length) {
+            val = columnDef.options[i].label;
           }
-        }
       }
+      val = xssUtils.stripHTML(self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self));
+      const len = val.toString().length;
 
       if (len > max) {
         max = len;
         maxText = val;
       }
-    }
+      
+    } else if (this.settings.editable && (columnDef.editor === Editors.Date || columnDef.editor === Editors.Time)) {
+      const row = null;
+      let val = new Date(9999,11,31,23,59,59,999);
+      val = xssUtils.stripHTML(self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self));
+      const len = val.toString().length;
 
+      if (len > max) {
+        max = len;
+        maxText = val;
+      }
+
+    } else {
+      // Get max cell value length for this column
+      for (let i = 0; i < this.settings.dataset.length; i++) {
+        let val = this.fieldValue(this.settings.dataset[i], columnDef.field);
+        let len = 0;
+        const row = this.settings.dataset[i];
+
+        // Get formatted value (without html) so we have accurate string that
+        // will display for this cell
+        val = self.formatValue(columnDef.formatter, i, 0, val, columnDef, row, self);
+        hasButton = val.toString().indexOf('btn-secondary') > -1;
+        val = xssUtils.stripHTML(val);
+
+        len = val.toString().length;
+
+        if (this.settings.groupable && row.values) {
+          for (let k = 0; k < row.values.length; k++) {
+            let groupVal = this.fieldValue(row.values[k], columnDef.field);
+            groupVal = self.formatValue(columnDef.formatter, i, 0, groupVal, columnDef, row, self);
+            groupVal = xssUtils.stripHTML(groupVal);
+
+            len = groupVal.toString().length;
+            if (len > max) {
+              max = len;
+              maxText = groupVal;
+            }
+          }
+        }
+
+        if (len > max) {
+          max = len;
+          maxText = val;
+        }
+      }
+    }
+    
     const hasTag = columnDef.formatter ?
       columnDef.formatter.toString().indexOf('<span class="tag') > -1 : false;
 
     const hasAlert = columnDef.formatter ?
       columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
 
+    padding += 45;
+
     if (hasAlert) {
-      max += 10;
-    }
-
-    // Use header text length as max if bigger than all data cells
-    if (title.length > max) {
-      max = title.length;
-      maxText = title;
-      chooseHeader = true;
-    }
-
-    if (maxText === '' || this.settings.dataset.length === 0) {
-      maxText = columnDef.name || ' Default ';
-      chooseHeader = true;
-    }
-
-    // if given, use cached canvas for better performance, else, create new canvas
-    this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
-    const context = this.canvas.getContext('2d');
-    context.font = '14px arial';
-
-    const metrics = context.measureText(maxText);
-    let padding = chooseHeader ? 40 : 45;
-
-    if (hasAlert && !chooseHeader) {
       padding += 20;
     }
 
-    if (hasTag && !chooseHeader) {
+    if (hasTag) {
       padding += 10;
     }
 
     if (hasButton) {
       padding += 50;
     }
-
-    if (columnDef.filterType) {
+    
+    if (this.settings.editable && columnDef.editor === Editors.Spinbox){
+      padding += 46;
+    }
+    
+    if (columnDef.formatter === Formatters.Dropdown || (this.settings.editable && columnDef.editor === Editors.Time)) {
+      padding += 10;
+    }
+    
+    if (columnDef.formatter === Formatters.Lookup || (this.settings.editable && columnDef.editor === Editors.Date)) {
+      padding += 5;
+    }
+    
+    maxWidth = this.calculateTextRenderWidth(maxText) + padding;
+    if (columnDef.formatter === Formatters.Colorpicker) {
+      maxWidth = 150;  
+    }
+    let minHeaderWidth = this.calculateTextRenderWidth(columnDef.name, true) + 41;
+     
+    if (minHeaderWidth > maxWidth) {
+      maxWidth = minHeaderWidth;
+    }
+    
+    if (columnDef.filterType && this.settings.filterable) {
       let minWidth = columnDef.filterType === 'date' ? 170 : 100;
 
       if (columnDef.filterType === 'checkbox') {
@@ -3953,10 +3990,28 @@ Datagrid.prototype = {
         padding = 40;
       }
 
-      return Math.round(Math.max(metrics.width + padding, minWidth));
+      return Math.ceil(Math.max(maxWidth, minWidth));
     }
 
-    return Math.round(metrics.width + padding); // Add padding and borders
+    return Math.ceil(maxWidth); // Add padding and borders
+  },
+  
+  /**
+   * This Function calculates the width to render a text string 
+   * @private
+   * @param  {string} maxText The text to render.
+   * @returns {object} A TextMetrics object containing the width.
+   */
+  calculateTextRenderWidth(maxText, header) {
+    // if given, use cached canvas for better performance, else, create new canvas
+    this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+    const context = this.canvas.getContext('2d');
+    context.font = '400 14px arial';
+    if (header) {
+      context.font = '700 12px arial';
+    }
+
+    return context.measureText(maxText).width;
   },
 
   /**
