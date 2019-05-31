@@ -8,6 +8,27 @@
   &.round {
     width: 30px;
   }
+
+  &.is-dismissible {
+    .dismissible-btn {
+      .icon {
+        top: -2px;
+      }
+    }
+  }
+}
+
+.ie11 {
+  .tag,
+  .badge {
+    &.is-dismissible {
+      .dismissible-btn {
+        .icon {
+          top: -5px;
+        }
+      }
+    }
+  }
 }
 
 html[dir='rtl'] {
