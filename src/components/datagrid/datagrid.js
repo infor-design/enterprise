@@ -1937,7 +1937,7 @@ Datagrid.prototype = {
         }
 
         if (columnDef.filterType === 'date' || columnDef.filterType === 'time') {
-          if (columnDef.filterType === 'date' && typeof rowValue === 'string') {
+          if (typeof rowValue === 'string') {
             rowValue = columnDef.formatter(false, false, rowValue, columnDef, true);
           }
           const getValues = (rValue, cValue) => {
