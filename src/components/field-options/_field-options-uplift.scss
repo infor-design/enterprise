@@ -14,6 +14,38 @@
       top: 2px;
     }
   }
+
+  .lookup-wrapper {
+    .btn-actions:not(.is-checkbox) {
+      left: -9px;
+    }
+  }
+
+  .spinbox-wrapper {
+    .btn-actions {
+      left: -7px;
+      width: 34px;
+    }
+  }
+
+  .colorpicker-container {
+    + .btn-actions {
+      left: -11px;
+      top: -12px;
+      width: 36px;
+    }
+  }
+
+  [data-clearable='true'] ~ .icon.close.is-empty ~ .btn-actions {
+    left: -12px;
+  }
+
+  .searchfield-wrapper {
+    .btn-actions {
+      left: -7px;
+      width: 34px;
+    }
+  }
 }
 
 .is-firefox {
