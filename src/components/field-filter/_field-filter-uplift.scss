@@ -1,0 +1,44 @@
+// Uplift Field Filter
+//================================================== */
+
+.field.fieldfilter-wrapper {
+  div:first-of-type {
+    margin-right: auto;
+  }
+}
+
+.dropdown-list.ffdropdown {
+  > .trigger .icon {
+    left: 1px;
+  }
+}
+
+// Why is Firefox different?
+html:not(.is-firefox) {
+  .field.fieldfilter-wrapper {
+    div:first-of-type {
+      height: auto;
+    }
+  }
+}
+
+.is-firefox {
+  .dropdown-list.ffdropdown {
+    > .trigger {
+      margin-left: -40px;
+
+      .icon {
+        left: -1px;
+      }
+    }
+  }
+}
+
+// Fix icon placement in `.ffdropdown` for IE
+.ie.ie11 {
+  .dropdown-list.ffdropdown {
+    .listoption-icon {
+      top: inherit;
+    }
+  }
+}

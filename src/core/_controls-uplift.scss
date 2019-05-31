@@ -10,6 +10,7 @@
 
 // Foundational ====/
 @import '../components/badges/badges';
+@import '../components/badges/badges-uplift';
 @import '../components/breadcrumb/breadcrumb';
 @import '../components/button/button';
 @import '../components/button/button-uplift';
@@ -36,13 +37,16 @@
 @import '../components/checkboxes/checkboxes-uplift';
 @import '../components/circlepager/circlepager';
 @import '../components/colorpicker/colorpicker';
+@import '../components/colorpicker/colorpicker-uplift';
 @import '../components/datepicker/datepicker';
 @import '../components/datepicker/datepicker-uplift';
 @import '../components/dropdown/dropdown';
 @import '../components/dropdown/dropdown-uplift';
 @import '../components/expandablearea/expandablearea';
 @import '../components/field-filter/field-filter';
+@import '../components/field-filter/field-filter-uplift';
 @import '../components/field-options/field-options';
+@import '../components/field-options/field-options-uplift';
 @import '../components/fieldset/fieldset';
 @import '../components/fieldset/fieldset-uplift';
 @import '../components/fileupload/fileupload';
@@ -56,10 +60,14 @@
 @import '../components/mask/mask';
 @import '../components/masthead/masthead';
 @import '../components/modal/modal';
+@import '../components/modal/modal-uplift';
 @import '../components/pager/pager';
+@import '../components/pager/pager-uplift';
 @import '../components/popdown/popdown';
 @import '../components/popupmenu/popupmenu';
+@import '../components/popupmenu/popupmenu-uplift';
 @import '../components/processindicator/processindicator';
+@import '../components/processindicator/processindicator-uplift';
 @import '../components/progress/progress';
 @import '../components/rating/rating';
 @import '../components/searchfield/searchfield';
@@ -68,11 +76,13 @@
 @import '../components/searchfield/searchfield-toolbar-uplift';
 @import '../components/slider/slider';
 @import '../components/spinbox/spinbox';
+@import '../components/spinbox/spinbox-uplift';
 @import '../components/splitter/splitter';
 @import '../components/swaplist/swaplist';
 @import '../components/tabs/tabs';
 @import '../components/tabs/tabs-uplift';
 @import '../components/timeline/timeline';
+@import '../components/timeline/timeline-uplift';
 @import '../components/timepicker/timepicker';
 @import '../components/timepicker/timepicker-uplift';
 @import '../components/toast/toast';

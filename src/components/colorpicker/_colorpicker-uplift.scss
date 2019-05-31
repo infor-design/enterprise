@@ -1,0 +1,10 @@
+// Uplift Colorpicker
+//================================================== //
+
+.colorpicker-container {
+  .icon {
+    &:not(.icon-error) {
+      top: 6px;
+    }
+  }
+}

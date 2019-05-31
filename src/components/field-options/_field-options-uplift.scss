@@ -1,0 +1,71 @@
+// Uplift Field Options
+//================================================== */
+
+.field.is-fieldoptions {
+  .btn-actions:not(.is-checkbox) {
+    left: -12px;
+    top: 0;
+    width: 38px;
+  }
+
+  .dropdown,
+  .multiselect {
+    ~ .btn-actions:not(.is-checkbox) {
+      top: 2px;
+    }
+  }
+
+  .lookup-wrapper {
+    .btn-actions:not(.is-checkbox) {
+      left: -9px;
+    }
+  }
+
+  .spinbox-wrapper {
+    .btn-actions {
+      left: -7px;
+      width: 34px;
+    }
+  }
+
+  .colorpicker-container {
+    + .btn-actions {
+      left: -11px;
+      top: -12px;
+      width: 36px;
+    }
+  }
+
+  [data-clearable='true'] ~ .icon.close.is-empty ~ .btn-actions {
+    left: -12px;
+  }
+
+  .searchfield-wrapper {
+    .btn-actions {
+      left: -7px;
+      width: 34px;
+    }
+  }
+
+  textarea {
+    ~ .btn-actions:not(.is-checkbox) {
+      left: auto;
+      top: calc(50% - 6px);
+    }
+  }
+}
+
+.is-firefox {
+  .field.is-fieldoptions {
+    .btn-actions:not(.is-checkbox) {
+      width: 35px;
+    }
+
+    .dropdown,
+    .multiselect {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: 2px;
+      }
+    }
+  }
+}

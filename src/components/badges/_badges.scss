@@ -148,11 +148,11 @@
       border-bottom: 1px solid $theme-color-palette-white;
       border-left: 1px solid $theme-color-palette-white;
       content: '';
-      height: 24%;
-      left: 0.75em;
+      height: 6px;
+      left: 9px;
       position: absolute;
-      top: 0.55em;
-      width: 19.5%;
+      top: 7px;
+      width: 5px;
     }
 
     [class*='ie'] &::before {
@@ -237,6 +237,17 @@ html[dir='rtl'] {
         .icon {
           left: -7px;
         }
+      }
+    }
+  }
+
+  .badge {
+    &.pending {
+      // Clock Hands
+      &::after {
+        border-left: 0;
+        border-right: 1px solid $theme-color-palette-white;
+        left: 8px;
       }
     }
   }
