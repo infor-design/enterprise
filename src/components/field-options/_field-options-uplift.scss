@@ -1,0 +1,32 @@
+// Uplift Field Options
+//================================================== */
+
+.field.is-fieldoptions {
+  .btn-actions:not(.is-checkbox) {
+    left: -12px;
+    top: 0;
+    width: 38px;
+  }
+
+  .dropdown,
+  .multiselect {
+    ~ .btn-actions:not(.is-checkbox) {
+      top: 2px;
+    }
+  }
+}
+
+.is-firefox {
+  .field.is-fieldoptions {
+    .btn-actions:not(.is-checkbox) {
+      width: 35px;
+    }
+
+    .dropdown,
+    .multiselect {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: 2px;
+      }
+    }
+  }
+}
