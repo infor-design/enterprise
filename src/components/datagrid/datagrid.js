@@ -4485,17 +4485,17 @@ Datagrid.prototype = {
       });
       
     if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
-      this.toolbar.parent().find('.table-errors')  
-        .off('mouseenter.gridtooltip', '.icon')
-        .on('mouseenter.gridtooltip', '.icon', function () {
+      this.toolbar.parent().find('.table-errors')
+        .off('mouseenter.tableerrortooltip', '.icon')
+        .on('mouseenter.tableerrortooltip', '.icon', function () {
           handleShow(this);
         })
-        .off('mouseleave.gridtooltip click.gridtooltip', '.icon')
-        .on('mouseleave.gridtooltip click.gridtooltip', '.icon', function () {
+        .off('mouseleave.tableerrortooltip click.tableerrortooltip', '.icon')
+        .on('mouseleave.tableerrortooltip click.tableerrortooltip', '.icon', function () {
           handleHide(this);
         })
-        .off('longpress.gridtooltip', '.icon')
-        .on('longpress.gridtooltip', '.icon', function () {
+        .off('longpress.tableerrortooltip', '.icon')
+        .on('longpress.tableerrortooltip', '.icon', function () {
           handleShow(this, 0);
         });
     }
@@ -10444,7 +10444,14 @@ Datagrid.prototype = {
       $('body, .scrollable').off('scroll.gridtooltip');
       tooltip.off('touchend.gridtooltip');
       this.element.off('mouseenter.gridtooltip mouseleave.gridtooltip click.gridtooltip longpress.gridtooltip keydown.gridtooltip', selector.str);
-
+      
+      if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
+        this.toolbar.parent().find('.table-errors')
+          .off('mouseenter.tableerrortooltip', '.icon')
+          .off('mouseleave.tableerrortooltip click.tableerrortooltip', '.icon')
+          .off('longpress.tableerrortooltip', '.icon');
+      }
+      
       // Remove the place component
       const placeApi = tooltip.data('place');
       if (placeApi) {
