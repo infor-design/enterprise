@@ -469,11 +469,6 @@ $datagrid-short-row-height: 25px;
         padding: 0 0 0 2px;
       }
 
-      .datagrid-checkbox {
-        top: -1px;
-        vertical-align: top;
-      }
-
       &.text-ellipsis {
         .datagrid-header-text {
           margin: 7px 0 0 !important;
@@ -557,10 +552,6 @@ $datagrid-short-row-height: 25px;
   &.medium-rowheight {
     .datagrid-cell-wrapper {
       min-height: $datagrid-short-row-height + 6;
-    }
-
-    th .datagrid-checkbox {
-      top: -12px;
     }
 
     //Set Container Heights for scrolling
@@ -746,12 +737,7 @@ $datagrid-short-row-height: 25px;
           top: -2px;
         }
 
-        .datagrid-alert-icon:not(.icon-dirty) {
-          top: 5px;
-        }
-
         .hyperlink {
-          margin-top: -5px;
           vertical-align: middle;
         }
 
@@ -989,15 +975,6 @@ $datagrid-short-row-height: 25px;
           line-height: $datagrid-short-row-height;
         }
 
-        .badge {
-          line-height: 22px;
-          top: 0;
-
-          &::before {
-            margin-top: 0;
-          }
-        }
-
         .btn {
           top: -3px !important;
         }
@@ -1005,7 +982,7 @@ $datagrid-short-row-height: 25px;
         .datagrid-expand-btn {
           height: 22px;
           line-height: 22px;
-          margin-top: -6px;
+          margin-top: -2px;
           min-height: 22px;
           min-width: 22px;
           vertical-align: middle;
@@ -1026,25 +1003,9 @@ $datagrid-short-row-height: 25px;
           width: 22px;
         }
 
-        .datagrid-alert-icon:not(.icon-dirty) {
-          height: 19px;
-          margin-left: 0 !important;
-          top: 0 !important;
-          width: 18px;
-        }
-
-        .tag {
-          height: 22px;
-          line-height: 24px;
-          margin-top: 0;
-          padding: 0 10px 4px;
-        }
-
         .hyperlink {
           line-height: 1.4rem;
-          margin-top: 3px;
-          padding-top: 0;
-          vertical-align: top;
+          vertical-align: middle;
         }
 
         .row-btn {
@@ -1514,21 +1475,21 @@ $datagrid-short-row-height: 25px;
     .datagrid-alert-icon {
       display: inline-block;
       height: 20px;
-      top: 10px;
+      top: -1px;
+      vertical-align: middle;
 
       &.icon-dirty {
         height: 16px;
         top: 0;
-        vertical-align: middle;
         width: 16px;
       }
     }
 
     .badge {
       color: $font-color-extrahighcontrast;
-      line-height: 24px;
-      margin-top: 0;
-      top: 0;
+      position: relative;
+      top: -2px;
+      vertical-align: middle;
 
       &[class*='azure'] {
         color: $inverse-color;
@@ -1539,19 +1500,11 @@ $datagrid-short-row-height: 25px;
       }
     }
 
-    // Fix: Not sure why, but ie9 need this to overwrite
-    // so the rule is more strict
-    // as ".datagrid tr .azure07.tag" insted of ".azure07.tag"
-    @each $name in $color-names {
-      $i: index($color-names, $name);
-      $color: nth($color-vars, $i);
-
-      .#{$name}.tag {
-        background: $color;
-      }
-    }
-
     .tag {
+      position: relative;
+      top: -2px;
+      vertical-align: middle;
+
       &[class*='azure'] {
         color: $theme-color-palette-white;
       }
@@ -1691,7 +1644,6 @@ $datagrid-short-row-height: 25px;
 
       .hyperlink {
         display: inline;
-        margin-top: 2px;
         white-space: pre-line;
 
         &:hover {
@@ -1848,7 +1800,6 @@ $datagrid-short-row-height: 25px;
       color: $hyperlink-color;
       display: inline-block;
       font-size: $theme-size-font-base;
-      margin-top: -1px;
       vertical-align: middle;
 
       &:focus {
@@ -2324,16 +2275,27 @@ $datagrid-short-row-height: 25px;
       }
     }
 
-    //Checkboxes
+    // Checkboxes
     .datagrid-checkbox {
-      top: -11px;
-
       &::before {
         border: 1px solid $datagrid-header-checkbox-border-color;
       }
 
       &.is-checked::before {
         border: 1px solid $checkbox-color-unchecked-initial-border;
+      }
+    }
+
+    .datagrid-checkbox-wrapper {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      height: inherit;
+      justify-content: center;
+
+      .datagrid-checkbox {
+        height: 16px;
+        top: 0;
       }
     }
 
@@ -2622,13 +2584,13 @@ $datagrid-short-row-height: 25px;
     }
 
     .btn-filter {
-      height: 21px;
-      left: 15px;
+      height: 24px;
+      left: 13px;
       min-width: 34px;
-      padding-top: 3px;
-      top: 1px;
+      padding-top: 5px;
+      top: 0;
       vertical-align: top;
-      width: 34px;
+      width: 36px;
 
       &:disabled {
         opacity: 0.6;
@@ -2799,8 +2761,6 @@ $datagrid-short-row-height: 25px;
 
   .icon {
     color: $font-color;
-    height: 20px;
-    width: 20px;
   }
 }
 
@@ -2879,6 +2839,14 @@ td .btn-actions {
     top: 2px;
   }
 
+  .datagrid-checkbox {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.6rem;
+    left: -7px;
+    position: relative;
+    top: -14px;
+  }
 }
 
 [aria-readonly='true'] {
@@ -2983,9 +2951,6 @@ td .btn-actions {
 }
 
 .datagrid-checkbox-wrapper {
-  font-size: $theme-size-font-sm;
-  position: relative;
-
   & + .datagrid-filter-wrapper {
     display: none;
   }
@@ -2996,7 +2961,7 @@ td .btn-actions {
   background-color: transparent;
   height: 28px;
   left: -10px;
-  margin-top: -3px;
+  margin-top: -5px;
   min-height: 28px;
   min-width: 28px;
   vertical-align: middle;
@@ -4047,14 +4012,6 @@ html[dir='rtl'] {
 
 // Ios Hacks
 .ios {
-  .datagrid:not(.short-rowheight):not(.medium-rowheight) {
-    .icon-error,
-    .icon-success,
-    .icon-pending {
-      top: 15px !important;
-    }
-  }
-
   .datagrid-header .datagrid-filter-wrapper .dropdown.is-disabled {
     opacity: 0.4;
   }

@@ -335,7 +335,7 @@ describe('Datagrid frozen column tests', () => {
 
 describe('Datagrid grouping headers and filter tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-grouping-filter');
+    await utils.setPage('/components/datagrid/example-grouping-filter?layout=nofrills');
 
     const datagridEl = await element(by.css('.datagrid-rowgroup-header'));
     await browser.driver
@@ -359,10 +359,10 @@ describe('Datagrid grouping headers and filter tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const datagridEl = await element(by.id('datagrid'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-grouping')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-grouping')).toEqual(0);
     });
   }
 });
@@ -2042,6 +2042,22 @@ describe('Datagrid paging with empty dataset', () => {
     await element(by.css('.pager-toolbar .pager-next')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('#datagrid tbody tr[aria-rowindex]')).count()).toEqual(1);
+    expect(await element.all(by.css('#datagrid tbody tr:nth-child(1)')).count()).toEqual(1);
+  });
+});
+
+describe('Datagrid multiselect sorting test', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-grouping-multiselect?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid thead th:nth-child(2)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    const thEl = await element(by.css('#datagrid thead th:nth-child(2)'));
+    await thEl.click();
+    await utils.checkForErrors();
   });
 });

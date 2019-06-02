@@ -37,8 +37,10 @@ label.required .label-text:not(.accessible)::after,
   }
 }
 
-.field .checkbox-label,
-.field .checkbox > label {
-  align-items: center;
-  display: flex;
+html:not(.is-firefox) {
+  .field-short {
+    input {
+      padding: 3px 5px;
+    }
+  }
 }

@@ -742,6 +742,19 @@ html[dir='rtl'] {
       padding-right: 10px;
     }
   }
+
+  .btn-icon,
+  .btn-actions {
+    span {
+      + .icon {
+        margin-right: 0;
+      }
+
+      + * + .icon {
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 //Do not allow upper case in french
@@ -785,14 +798,10 @@ html[lang^='fr-'] {
 //Grid Filter button
 .btn-filter {
   min-width: 45px;
-  width: 45px;
+  width: 55px;
 }
 
 .is-mac.is-firefox {
-  [class^='btn'] {
-    line-height: 34px;
-  }
-
   .field-short {
     [class^='btn'] {
       line-height: 25px;

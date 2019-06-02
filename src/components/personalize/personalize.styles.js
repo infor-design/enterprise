@@ -286,6 +286,11 @@ function personalizeStyles(colors) {
   border: 1px solid ${colors.lighter};
 }
 
+.application-menu.is-personalizable .accordion.panel.inverse .accordion-header .icon.plus-minus::before,
+.application-menu.is-personalizable .accordion.panel.inverse .accordion-header .icon.plus-minus::after {
+  background-color: ${colors.contrast};
+}
+
 .application-menu.is-personalizable button:focus:not(.hide-focus),
 .application-menu.is-personalizable .hyperlink:focus:not(.hide-focus)::after {
   border-color: ${colors.contrast} !important;
@@ -341,7 +346,8 @@ function personalizeStyles(colors) {
   border-bottom: none !important;
 }
 
-.is-personalizable .personalize-header {
+.is-personalizable .personalize-header,
+.is-personalizable.tab-container {
   background-color: ${colors.base};
 }
 

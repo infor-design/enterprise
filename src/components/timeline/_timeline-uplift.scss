@@ -1,0 +1,37 @@
+// Uplift Timeline
+//================================================== */
+
+.timeline {
+  &::before {
+    left: 1.22em;
+    top: 4px;
+  }
+}
+
+// Brings the dotted line into alignment with the text
+.indicator-container {
+  top: 1px;
+}
+
+// Brings the indicator icon into alignment with the dotted line
+.indicator {
+  top: -2px;
+}
+
+@media (min-width: 767px) {
+  .timeline {
+    &::before {
+      left: 12.7em;
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .indicator-container {
+    right: -2px;
+  }
+
+  .indicator {
+    top: auto;
+  }
+}
