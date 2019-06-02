@@ -3881,11 +3881,12 @@ Datagrid.prototype = {
       let val = '';
       // Find Longest option label
       for (let i = 0; i < columnDef.options.length; i++) {
-          if (columnDef.options[i].label.length > val.length) {
-            val = columnDef.options[i].label;
-          }
+        if (columnDef.options[i].label.length > val.length) {
+          val = columnDef.options[i].label;
+        }
       }
-      val = xssUtils.stripHTML(self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self));
+      val = self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self);
+      val = xssUtils.stripHTML(val);
       const len = val.toString().length;
 
       if (len > max) {
@@ -3893,10 +3894,12 @@ Datagrid.prototype = {
         maxText = val;
       }
       
-    } else if (this.settings.editable && (columnDef.editor === Editors.Date || columnDef.editor === Editors.Time)) {
+    } else if (this.settings.editable 
+      && (columnDef.editor === Editors.Date || columnDef.editor === Editors.Time)) {
       const row = null;
       let val = new Date(9999,11,31,23,59,59,999);
-      val = xssUtils.stripHTML(self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self));
+      val = self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self);
+      val = xssUtils.stripHTML(val);
       const len = val.toString().length;
 
       if (len > max) {
@@ -3960,15 +3963,17 @@ Datagrid.prototype = {
       padding += 50;
     }
     
-    if (this.settings.editable && columnDef.editor === Editors.Spinbox){
+    if (this.settings.editable && columnDef.editor === Editors.Spinbox) {
       padding += 46;
     }
     
-    if (columnDef.formatter === Formatters.Dropdown || (this.settings.editable && columnDef.editor === Editors.Time)) {
+    if (columnDef.formatter === Formatters.Dropdown || 
+      (this.settings.editable && columnDef.editor === Editors.Time)) {
       padding += 10;
     }
     
-    if (columnDef.formatter === Formatters.Lookup || (this.settings.editable && columnDef.editor === Editors.Date)) {
+    if (columnDef.formatter === Formatters.Lookup || 
+      (this.settings.editable && columnDef.editor === Editors.Date)) {
       padding += 5;
     }
     
@@ -3976,7 +3981,7 @@ Datagrid.prototype = {
     if (columnDef.formatter === Formatters.Colorpicker) {
       maxWidth = 150;  
     }
-    let minHeaderWidth = this.calculateTextRenderWidth(columnDef.name, true) + 41;
+    const minHeaderWidth = this.calculateTextRenderWidth(title, true) + 41;
      
     if (minHeaderWidth > maxWidth) {
       maxWidth = minHeaderWidth;
