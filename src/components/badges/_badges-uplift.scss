@@ -1,0 +1,39 @@
+// Uplift Badges
+//================================================== //
+
+.tag,
+.badge {
+  line-height: 20px;
+
+  &.round {
+    width: 30px;
+  }
+
+  &.is-dismissible {
+    .dismissible-btn {
+      .icon {
+        top: -2px;
+      }
+    }
+  }
+}
+
+.ie11 {
+  .tag,
+  .badge {
+    &.is-dismissible {
+      .dismissible-btn {
+        .icon {
+          top: -5px;
+        }
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .tag,
+  .badge {
+    line-height: 22px;
+  }
+}

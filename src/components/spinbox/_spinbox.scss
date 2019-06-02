@@ -253,6 +253,22 @@ html[dir='rtl'] {
       }
     }
   }
+
+  &:not(.ie11) {
+    .field-short {
+      .spinbox-control {
+        padding: 3px 7px 4px;
+      }
+    }
+  }
+
+  &.is-firefox {
+    .field-short {
+      .spinbox {
+        padding: 5px 4px 4px;
+      }
+    }
+  }
 }
 
 // Ie11

@@ -152,3 +152,12 @@ html[dir='rtl'] {
     }
   }
 }
+
+// Fixes some layout issues on iPhones
+@media (max-width: 767px) {
+  .field.fieldfilter-wrapper .field-filter.input-md,
+  .field.fieldfilter-wrapper .field-filter.colorpicker-input-md,
+  .field.fieldfilter-wrapper select.field-filter.dropdown + .dropdown-wrapper {
+    width: calc(300px - 75px);
+  }
+}

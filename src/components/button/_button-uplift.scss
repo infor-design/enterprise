@@ -1,17 +1,59 @@
 // Uplift Button
 //================================================== //
 
-.field-short [class*='btn'] {
-  > .icon:not(.icon-dropdown),
-  > .icon:not(.icon-dropdown) + span:not(.audible) {
+// Reset standard button alignments.
+[class*='btn'] {
+  height: auto;
+  line-height: normal;
+  min-height: 34px;
+
+  > * {
+    vertical-align: baseline;
+  }
+
+  > .icon {
+    vertical-align: middle;
+  }
+}
+
+// Icon/Actions button icons should be better-centered against the focus state.
+.btn-actions {
+  > .icon {
     position: relative;
+    top: -1px;
   }
+}
 
-  > .icon:not(.icon-dropdown) {
-    top: -2px;
+// IE11's `middle`, `sub`, and `text-bottom` alignments don't jive
+// well with our iconography.
+.ie11 {
+  [class*='btn'] {
+    > .icon {
+      vertical-align: -20%;
+    }
   }
+}
 
-  > .icon:not(.icon-dropdown) + span:not(.audible) {
-    top: -3px;
+// Reset specific line height on Mac Firefox from the standard component
+.is-mac.is-firefox {
+  .field-short [class*='btn'] {
+    line-height: normal;
+  }
+}
+
+.field-short [class*='btn'] {
+  min-height: 25px;
+
+  > .icon {
+    vertical-align: sub;
+
+    &:not(.icon-dropdown) {
+      height: 18px;
+      vertical-align: sub;
+
+      + span:not(.audible) {
+        position: relative;
+      }
+    }
   }
 }

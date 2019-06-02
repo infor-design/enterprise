@@ -54,6 +54,8 @@
 - `[Datagrid]` Fixed an issue where custom filter conditions were not setting up filter button. ([#2234](https://github.com/infor-design/enterprise/issues/2234))
 - `[Datagrid]` Fixed an issue where pager was not updating while removing rows. ([#1985](https://github.com/infor-design/enterprise/issues/1985))
 - `[Datagrid]` Adds a function to add a visual dirty indictaor and a new function to get all modified rows. Modified means either dirty, in-progress or in error. Existing API's are not touched. ([#2091](https://github.com/infor-design/enterprise/issues/2091))
+- `[Datagrid]` Fixes an error when saving columns if you have a lookup column. ([#2279](https://github.com/infor-design/enterprise/issues/2279))
+- `[Datagrid]` Fixed a bug with column reset not working sometimes. ([#1921](https://github.com/infor-design/enterprise/issues/1921))
 - `[Datagrid]` Fixed grouped headers not sorting when selectable is multiselect. ([#2251](https://github.com/infor-design/enterprise/issues/2251))
 - `[Dropdown]` Fixed the dropdown appearing misaligned at smaller screen sizes. ([#2248](https://github.com/infor-design/enterprise/issues/2248))
 - `[Editor]` Fixed an issue where button state for toolbar buttons were wrong when clicked one after another. ([#391](https://github.com/infor-design/enterprise/issues/391))

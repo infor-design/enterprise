@@ -1,3 +1,17 @@
+// Uplift Accordion
+//================================================== //
+
 .accordion-header.has-chevron > [class^='btn'] {
   bottom: 4px;
+}
+
+// Fix Plus/Minus Expander-button alignment
+// TODO: Remove this rule in favor of something better.
+.accordion-pane {
+  .accordion-header {
+    > [class*='btn'] {
+      height: 23px;
+      min-height: 23px;
+    }
+  }
 }

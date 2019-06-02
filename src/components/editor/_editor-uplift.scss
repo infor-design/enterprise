@@ -1,3 +1,6 @@
+// Uplift Editor
+//================================================== //
+
 .toolbar.formatter-toolbar,
 .flex-toolbar.formatter-toolbar {
   .separator {
@@ -8,6 +11,8 @@
   [class^='btn'],
   [class^='btn'] {
     font-size: unset;
+    height: 20px;
+    min-height: 0;
     top: 1px;
 
     &:first-child {
