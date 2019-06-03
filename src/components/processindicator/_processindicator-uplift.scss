@@ -1,0 +1,44 @@
+// Uplift Process Indicator
+//================================================== //
+
+.indicator {
+  &.more-info {
+    &::before {
+      top: 0.11em;
+    }
+  }
+}
+
+.is-firefox {
+  .indicator {
+    &.more-info {
+      &::before {
+        top: 0.11em;
+      }
+    }
+  }
+}
+
+// Only adjust the placement of the process indicator lines when not on RTL
+html:not([dir='rtl']) {
+  .process-indicator {
+    .display {
+      .separator {
+        position: relative;
+        top: -2px;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  &.is-firefox {
+    .indicator {
+      &.more-info {
+        &::before {
+          top: 0.25em;
+        }
+      }
+    }
+  }
+}

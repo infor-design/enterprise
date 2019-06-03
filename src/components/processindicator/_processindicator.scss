@@ -8,7 +8,7 @@ $indicator-darker: $theme-color-brand-primary-alt;
 $indicator-lighter: $theme-color-brand-primary-base;
 $indicator-lightest: $theme-color-palette-azure-50;
 $indicator-warning: $theme-color-status-danger;
-$indicator-blank: $theme-color-palette-graphite-20;
+$indicator-blank: $theme-color-palette-graphite-30;
 
 $indicator-size: 1.3em;
 $indicator-current-size: ($indicator-size * 1.6);
@@ -190,7 +190,7 @@ $indicator-current-size: ($indicator-size * 1.6);
       height: 100%;
       position: relative;
       text-align: center;
-      top: 0.25em;
+      top: 0.17em;
       width: 100%;
 
       @include antialiased();
@@ -266,4 +266,41 @@ $indicator-current-size: ($indicator-size * 1.6);
 @include keyframes(rotate-processing-indicator) {
   0% { @include transform(rotate(0deg)); }
   100% { @include transform(rotate(360deg)); }
+}
+
+.is-firefox {
+  .indicator {
+    &.more-info {
+      &::before {
+        top: 0.25em;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .process-indicator {
+    .details {
+      > .icon {
+        margin-left: 15px;
+        margin-right: 0;
+      }
+    }
+
+    // Reverse the alignment for the display area (done with transforms)
+    &.compact {
+      .display {
+        @include css3(transform-origin, right center);
+      }
+    }
+  }
+
+  // Adjust for the smaller font on `ar-EG`
+  .indicator {
+    &.more-info {
+      &::before {
+        top: 0.11em;
+      }
+    }
+  }
 }
