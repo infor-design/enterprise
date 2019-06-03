@@ -344,6 +344,12 @@ html[dir='rtl'] {
     }
   }
 
+  input.checkbox,
+  span.checkbox > input {
+    left: auto;
+    right: -99999px;
+  }
+
 }
 
 // Short Fields

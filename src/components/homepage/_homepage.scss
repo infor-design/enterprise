@@ -192,10 +192,12 @@
 
       text {
         color: $header-text-color;
+        fill: $header-text-color;
       }
 
       .chart-legend-item-text {
         color: $header-text-color;
+        fill: $header-text-color;
       }
     }
 

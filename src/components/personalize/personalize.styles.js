@@ -415,6 +415,24 @@ function personalizeStyles(colors) {
   opacity: .4 !important;
   cursor: default;
 }
+
+.hero-widget.is-personalizable .hero-header .chart-container .arc,
+.hero-widget.is-personalizable .hero-header .chart-container .bar,
+.hero-widget.is-personalizable .hero-header .chart-container.line-chart .dot,
+.hero-widget.is-personalizable .hero-content .chart-container .arc,
+.hero-widget.is-personalizable .hero-content .chart-container .bar,
+.hero-widget.is-personalizable .hero-content .chart-container.line-chart .dot,
+.hero-widget.is-personalizable .hero-footer .chart-container .arc,
+.hero-widget.is-personalizable .hero-footer .chart-container .bar,
+.hero-widget.is-personalizable .hero-footer .chart-container.line-chart .dot {
+    stroke: ${colors.lighter} !important;
+}
+
+.hero-widget.is-personalizable .hero-header .chart-container text,
+.hero-widget.is-personalizable .hero-content .chart-container text,
+.hero-widget.is-personalizable .hero-footer .chart-container text {
+    fill: ${colors.text} !important;
+}
     `;
 }
 
