@@ -3890,29 +3890,13 @@ Datagrid.prototype = {
       val = xssUtils.stripHTML(val);
       const len = val.toString().length;
 
-      if (len > max) {
-        max = len;
-        maxText = val;
-      }
-      
-    } else if (this.settings.editable 
-      && (columnDef.editor === Editors.Date || columnDef.editor === Editors.Time)) {
-      const row = null;
-      let val = new Date(9999,11,31,23,59,59,999);
-      val = self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self);
-      val = xssUtils.stripHTML(val);
-      const len = val.toString().length;
-
-      if (len > max) {
-        max = len;
-        maxText = val;
-      }
-
+      maxText = val;
     } else {
+      let len = 0;
       // Get max cell value length for this column
       for (let i = 0; i < this.settings.dataset.length; i++) {
         let val = this.fieldValue(this.settings.dataset[i], columnDef.field);
-        let len = 0;
+        
         const row = this.settings.dataset[i];
 
         // Get formatted value (without html) so we have accurate string that
@@ -3942,6 +3926,31 @@ Datagrid.prototype = {
           maxText = val;
         }
       }
+
+      // Get any Filter value 
+      if (this.filterExpr && this.filterExpr.length > 0) {
+        const colFilter = $.grep(this.filterExpr, e => e.columnId === columnDef.id);
+        if (colFilter && colFilter.length === 1) {
+          let val = colFilter[0].value;
+          len = val.toString().length;
+
+          if (len > max) {
+            max = len;
+            maxText = val;
+          }
+        }
+      }
+      
+      if (maxText == '' &&
+        (columnDef.formatter === Formatters.Date || columnDef.formatter === Formatters.Time)) {
+        const row = null;
+        let val = new Date(9999, 11, 31, 23, 59, 59, 999);
+        val = self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self);
+        val = xssUtils.stripHTML(val);
+        const len = val.toString().length;
+
+        maxText = val;
+      }
     }
     
     const hasTag = columnDef.formatter ?
@@ -3958,10 +3967,6 @@ Datagrid.prototype = {
 
     if (hasTag) {
       padding += 10;
-    }
-
-    if (hasIcon && !chooseHeader) {
-      padding += 40;
     }
 
     if (hasButton) {
@@ -3986,24 +3991,32 @@ Datagrid.prototype = {
     if (columnDef.formatter === Formatters.Colorpicker) {
       maxWidth = 150;  
     }
-    const minHeaderWidth = this.calculateTextRenderWidth(title, true) + 41;
-     
-    if (minHeaderWidth > maxWidth) {
-      maxWidth = minHeaderWidth;
-    }
-    
+    // Calculate the Header with the correct font.
+    const isSortable = (columnDef.sortable === undefined ? true : columnDef.sortable);
+    const headerPadding = isSortable ? 50 : 40;
+    let minHeaderWidth = this.calculateTextRenderWidth(title, true) + headerPadding;
+
+    // Calculate the width required for the filter 
+    // Field plus 
     if (columnDef.filterType && this.settings.filterable) {
-      let minWidth = columnDef.filterType === 'date' ? 170 : 100;
-
-      if (columnDef.filterType === 'checkbox') {
-        minWidth = 40;
-        padding = 40;
+      if (minHeaderWidth < 40) {
+        minHeaderWidth = 40;
       }
-
-      return Math.ceil(Math.max(maxWidth, minWidth));
+      
+      if (columnDef.filterType !== 'checkbox') {
+        if (maxText !== '') {
+          if (minHeaderWidth < maxWidth + 40 && maxText !== '') {
+            minHeaderWidth = maxWidth + 55;
+          }
+        } else {
+          if (minHeaderWidth < 120) {
+            minHeaderWidth = 120;
+          }
+        }
+      }
     }
 
-    return Math.ceil(maxWidth); // Add padding and borders
+    return Math.ceil(Math.max(maxWidth, minHeaderWidth));
   },
   
   /**
