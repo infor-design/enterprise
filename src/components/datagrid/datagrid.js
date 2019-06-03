@@ -4019,15 +4019,22 @@ Datagrid.prototype = {
    * This Function calculates the width to render a text string 
    * @private
    * @param  {string} maxText The text to render.
-   * @returns {object} A TextMetrics object containing the width.
+   * @returns {number} the calculated text width in pixels.
    */
   calculateTextRenderWidth(maxText, header) {
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
     const context = this.canvas.getContext('2d');
-    context.font = '400 14px arial';
+    if (!this.fontCached || !this.fontHeaderCached) {
+      this.fontCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+        '400 16px arial' : '400 14px arial';
+      this.fontHeaderCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+        '600 14px arial' : '700 12px arial';
+    }
+    
+    context.font = this.fontCached;
     if (header) {
-      context.font = '700 12px arial';
+      context.font = this.fontHeaderCached;
     }
 
     return context.measureText(maxText).width;
