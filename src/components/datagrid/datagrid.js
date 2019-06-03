@@ -2346,6 +2346,9 @@ Datagrid.prototype = {
       input.val(conditions[i].value);
 
       if (input.is('select')) {
+        if (conditions[i].innerHTML) {
+          input[0].innerHTML = conditions[i].innerHTML;
+        }
         if (conditions[i].value instanceof Array) {
           for (let j = 0; j < conditions[i].value.length; j++) {
             input.find(`option[value="${conditions[i].value[j]}"]`).prop('selected', true);
@@ -2422,6 +2425,10 @@ Datagrid.prototype = {
       if (input.data('timepicker')) {
         format = input.data('timepicker').settings.timeFormat;
         condition.format = format;
+      }
+
+      if (input.is('select')) {
+        condition.innerHTML = input[0].innerHTML;
       }
 
       filterExpr.push(condition);
