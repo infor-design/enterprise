@@ -4796,7 +4796,6 @@ Datagrid.prototype = {
     if (options.columns) {
       const savedColumns = localStorage[this.uniqueId('usersettings-columns')];
       if (savedColumns) {
-        this.originalColumns = this.settings.columns;
         this.settings.columns = this.columnsFromString(savedColumns);
       }
     }
