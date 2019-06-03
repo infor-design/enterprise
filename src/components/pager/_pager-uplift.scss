@@ -1,0 +1,33 @@
+// Uplift Pager
+//================================================== */
+
+.pager-toolbar {
+  li {
+    vertical-align: middle;
+
+    &.pager-pageno {
+      padding-bottom: 6px;
+
+      > a {
+        line-height: 12px;
+      }
+    }
+  }
+}
+
+// Not a good rule, but cancels another one out.
+// Needs to exist in the Pager code due to order of operations
+.card,
+.widget {
+  &.card {
+    .card-footer {
+      .pager-toolbar {
+        height: auto;
+
+        > li > a {
+          padding: 1px 7px;
+        }
+      }
+    }
+  }
+}
