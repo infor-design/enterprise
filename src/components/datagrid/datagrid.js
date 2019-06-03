@@ -3975,13 +3975,13 @@ Datagrid.prototype = {
       padding += 46;
     }
     
-    if (columnDef.formatter === Formatters.Dropdown || 
-      (this.settings.editable && columnDef.editor === Editors.Time)) {
+    if (columnDef.formatter === Formatters.Dropdown ||
+      columnDef.formatter === Formatters.Lookup ||
+      (columnDef.editor === Editors.Time)) {
       padding += 10;
     }
     
-    if (columnDef.formatter === Formatters.Lookup || 
-      (this.settings.editable && columnDef.editor === Editors.Date)) {
+    if (columnDef.editor === Editors.Date) {
       padding += 5;
     }
     
@@ -3991,7 +3991,7 @@ Datagrid.prototype = {
     }
     // Calculate the Header with the correct font.
     const isSortable = (columnDef.sortable === undefined ? true : columnDef.sortable);
-    const headerPadding = isSortable ? 50 : 40;
+    const headerPadding = isSortable ? 48 : 40;
     let minHeaderWidth = this.calculateTextRenderWidth(title, true) + headerPadding;
 
     // Calculate the width required for the filter 
