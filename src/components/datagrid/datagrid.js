@@ -3888,7 +3888,6 @@ Datagrid.prototype = {
       }
       val = self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self);
       val = xssUtils.stripHTML(val);
-      const len = val.toString().length;
 
       maxText = val;
     } else {
@@ -3931,7 +3930,7 @@ Datagrid.prototype = {
       if (this.filterExpr && this.filterExpr.length > 0) {
         const colFilter = $.grep(this.filterExpr, e => e.columnId === columnDef.id);
         if (colFilter && colFilter.length === 1) {
-          let val = colFilter[0].value;
+          const val = colFilter[0].value;
           len = val.toString().length;
 
           if (len > max) {
@@ -3941,13 +3940,12 @@ Datagrid.prototype = {
         }
       }
       
-      if (maxText == '' &&
+      if (maxText === '' &&
         (columnDef.formatter === Formatters.Date || columnDef.formatter === Formatters.Time)) {
         const row = null;
         let val = new Date(9999, 11, 31, 23, 59, 59, 999);
         val = self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self);
         val = xssUtils.stripHTML(val);
-        const len = val.toString().length;
 
         maxText = val;
       }
@@ -4008,10 +4006,8 @@ Datagrid.prototype = {
           if (minHeaderWidth < maxWidth + 40 && maxText !== '') {
             minHeaderWidth = maxWidth + 55;
           }
-        } else {
-          if (minHeaderWidth < 120) {
-            minHeaderWidth = 120;
-          }
+        } else if (minHeaderWidth < 120) {
+          minHeaderWidth = 120;
         }
       }
     }
