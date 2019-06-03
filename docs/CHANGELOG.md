@@ -6,8 +6,11 @@
 
 ### v4.20.0 Features
 
+- `[Datagrid]` Added support to resize column widths after a value change via the stretchColumnOnChange setting. ([#2174](https://github.com/infor-design/enterprise/issues/2174))
+
 ### v4.20.0 Fixes
 
+- `[Datagrid]` Fixes the alignment of the alert and warning icons on a lookup editor. ([#2175](https://github.com/infor-design/enterprise/issues/2175))
 - `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
 
