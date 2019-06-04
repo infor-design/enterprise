@@ -2356,9 +2356,6 @@ Datagrid.prototype = {
         } else {
           input.find(`option[value="${conditions[i].value}"]`).prop('selected', true);
         }
-        if (conditions[i].innerHTML) {
-          //xxx input.val(conditions[i].selectedOptions);
-        }
         input.trigger('updated');
       }
 
@@ -2432,7 +2429,6 @@ Datagrid.prototype = {
 
       if (input.is('select')) {
         condition.innerHTML = input[0].innerHTML;
-        // xxx condition.selectedOptions = input.val();
       }
 
       filterExpr.push(condition);
