@@ -1,0 +1,37 @@
+// Uplift Module Tabs
+//================================================== //
+
+.tab-container.module-tabs {
+  .tab {
+    > a {
+      padding: 5px 6px 7px;
+    }
+
+    &.dismissible {
+      a {
+        padding: 5px 35px 7px 6px;
+      }
+
+      .icon {
+        height: 11px;
+      }
+    }
+
+    &.application-menu-trigger {
+      a {
+        padding: 5px 6px 7px;
+        width: 100%;
+      }
+    }
+  }
+
+  &.has-more-button {
+    .tab-more {
+      padding: 5px 6px 7px;
+    }
+  }
+
+  .icon.app-header {
+    top: -6px;
+  }
+}
