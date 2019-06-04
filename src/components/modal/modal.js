@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { Locale } from '../../../src/components/locale/locale';
 
 // jQuery components
@@ -176,7 +177,7 @@ Modal.prototype = {
 
     this.element = $(`${'<div class="modal">' +
         '<div class="modal-content" style="max-width: '}${this.settings.maxWidth ? this.settings.maxWidth : ''}px${'">' +
-          '<div class="modal-header"><h1 class="modal-title">'}${this.settings.title}</h1></div>` +
+          '<div class="modal-header"><h1 class="modal-title">'}${xssUtils.stripTags(this.settings.title, '<div><span><a><small><img><svg><i><b><use><br><strong><em>')}</h1></div>` +
           '<div class="modal-body-wrapper">' +
             '<div class="modal-body"></div>' +
           '</div>' +
