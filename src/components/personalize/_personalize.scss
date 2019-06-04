@@ -14,16 +14,16 @@
 .is-personalizable .personalize-header,
 .is-personalizable.tab-container {
   background-color: $header-bg-color;
-  transition: background-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-  -webkit-transition: background-image 500ms ease-in-out;
-  transition: background-image 500ms ease-in-out;
+  transition:
+    background-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+    background-image 500ms ease-in-out;
 }
 
 .is-personalizable .personalize-subheader {
   background-color: $subhead-bg-color;
-  transition: background-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-  -webkit-transition: background-image 500ms ease-in-out;
-  transition: background-image 500ms ease-in-out;
+  transition:
+    background-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+    background-image 500ms ease-in-out;
 }
 
 .is-personalizable .personalize-text {
