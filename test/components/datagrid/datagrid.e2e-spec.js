@@ -1801,7 +1801,7 @@ describe('Datagrid timezone tests', () => {
 
       expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
     });
-    }
+  }
 });
 
 describe('Datagrid select tree tests', () => {
