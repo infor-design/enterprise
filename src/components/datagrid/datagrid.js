@@ -4888,7 +4888,10 @@ Datagrid.prototype = {
     }
 
     if (this.originalColumns) {
-      const originalColumns = this.columnsFromString(this.copyThenStringify(this.originalColumns), true);
+      const originalColumns = this.columnsFromString(
+        this.copyThenStringify(this.originalColumns),
+        true
+      );
       const columnGroups = this.settings.columnGroups && this.originalColGroups ?
         this.originalColGroups : null;
       this.updateColumns(originalColumns, columnGroups);
