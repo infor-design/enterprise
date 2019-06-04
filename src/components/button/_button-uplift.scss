@@ -42,10 +42,10 @@
   }
 }
 
-// Safari's and Firefox's `middle` alignemnt doesn't jive
+// Safari's and Firefox's `middle` alignment doesn't jive
 // well with our iconography
-.is-mac.is-safari,
-.is-mac.is-firefox {
+.is-safari,
+.is-firefox {
   [class*='btn'] {
     > .icon {
       margin-top: -2px;
