@@ -955,8 +955,8 @@ describe('Locale API', () => {
     expect(['22-03-2018 20:11 EST', '22-03-2018 20:11 EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
     Locale.set('nl-NL');
 
-    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
-    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
+    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
+    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
   });
 
   it('Should format dates with long timezones', () => {
@@ -1015,7 +1015,7 @@ describe('Locale API', () => {
 
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'short')).toEqual('26-3-2018 14:00:00 GMT+10');
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai', 'short')).toEqual('26-3-2018 12:00:00 GMT+8');
-    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'short')).toEqual('26-3-2018 00:00:00 GMT-4');
+    expect(['26-3-2018 0:00:00 EDT', '26-3-2018 00:00:00 GMT-4']).toContain(Locale.dateToTimeZone(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'short')));
   });
 
   it('Should be able to display dates into another timezone including long timezone name', () => {
@@ -1028,7 +1028,7 @@ describe('Locale API', () => {
 
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'long')).toEqual('26-3-2018 14:00:00 Oost-Australische standaardtijd');
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai', 'long')).toEqual('26-3-2018 12:00:00 Chinese standaardtijd');
-    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'long')).toEqual('26-3-2018 00:00:00 Eastern-zomertijd');
+    expect(['26-3-2018 00:00:00 Eastern-zomertijd', '26-3-2018 0:00:00 Eastern-zomertijd']).toContain(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'long'));
   });
 
   it('Should be possible to set the language to something other than the current locale', (done) => {
