@@ -218,25 +218,16 @@
 
 <script>
   $('body').on('initialized', function () {
-    var bgColor = $('.personalize-header').css('background-color');
-    if (bgColor === 'rgba(0, 0, 0, 0)' || bgColor === 'transparent') {
-      // None set
-      $('html').personalize({ colors: { header: '2578A9' } });
+    var progressChartData = [{
+      data: [{
+        name: {text: 'good'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'good'},
+      }]
+    }];
 
-      // Intercept the Default Item as it cant work here 100%
-      $('li.is-default').removeClass('is-default');
-
-      var progressChartData = [{
-        data: [{
-          name: {text: 'good'},
-          info: {value: '13h'},
-          completed: {value: 13, color: 'good'},
-        }]
-      }];
-
-      var $progressChart = $('#progress-chart');
-      $progressChart.chart({dataset: progressChartData, type: 'targeted-achievement'});
-      $progressChart.addMessage({ message:'You have an Alert!', type:'info', inline:true });
-    }
+    var $progressChart = $('#progress-chart');
+    $progressChart.chart({dataset: progressChartData, type: 'targeted-achievement'});
+    $progressChart.addMessage({ message:'You have an Alert!', type:'info', inline:true });
   });
 </script>

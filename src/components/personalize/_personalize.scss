@@ -10,3 +10,73 @@
   width: 100%;
   z-index: 10000;
 }
+
+.is-personalizable .personalize-header,
+.is-personalizable.tab-container {
+  background-color: $header-bg-color;
+  transition: background-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+
+.is-personalizable .personalize-subheader {
+  background-color: $subhead-bg-color;
+  transition: background-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+
+.is-personalizable .personalize-text {
+  color: $theme-color-palette-white !important;
+}
+
+.is-personalizable .personalize-actionable,
+.is-personalizable .personalize-actionable svg {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.is-personalizable .personalize-actionable:hover:not([disabled]),
+.is-personalizable .personalize-actionable:hover:not([disabled]) svg {
+  color: rgba(255, 255, 255, 1);
+}
+
+.is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
+.is-personalizable .personalize-actionable:focus:not(.hide-focus) {
+  border-color: $theme-color-palette-white;
+  box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
+}
+
+.is-personalizable .personalize-actionable.hyperlink:focus:not(.hide-focus)::after {
+  border-color: $theme-color-palette-white;
+  box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+}
+
+.is-personalizable .personalize-vertical-border {
+  border-color: $theme-color-palette-white;
+}
+
+.is-personalizable .personalize-horizontal-bottom-border {
+  border-bottom: 1px solid $module-tabs-y-border-color;
+}
+
+.is-personalizable .personalize-horizontal-top-border {
+  border-top: 1px solid $module-tabs-y-border-color;
+}
+
+.is-personalizable .personalize-chart-targeted .total.bar {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.is-personalizable .personalize-chart-targeted .chart-percent-text,
+.is-personalizable .personalize-chart-targeted .label {
+  color: $theme-color-palette-white !important;
+}
+
+.is-personalizable .info-message,
+.is-personalizable .info-message .icon,
+.is-personalizable .info-message p {
+  color: $theme-color-palette-white !important;
+}
+
+.is-personalizable .personalize-actionable-disabled,
+.is-personalizable .personalize-actionable-disabled:hover {
+  cursor: default;
+  opacity: 0.4 !important;
+}

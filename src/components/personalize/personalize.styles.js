@@ -178,11 +178,13 @@ function personalizeStyles(colors) {
   fill: ${colors.contrast} !important;
 }
 
-.is-personalizable .tab-container.header-tabs::before {
+.is-personalizable .tab-container.header-tabs::before,
+.is-personalizable.tab-container.header-tabs::before {
   background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)});
 }
 
-.is-personalizable .tab-container.header-tabs::after {
+.is-personalizable .tab-container.header-tabs::after,
+.is-personalizable.tab-container.header-tabs::after {
   background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
