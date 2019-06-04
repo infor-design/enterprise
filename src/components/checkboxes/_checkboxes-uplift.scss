@@ -1,15 +1,6 @@
 // Uplift Checkboxes
 //================================================== //
 
-html:not(.is-firefox):not(.ie) {
-  label.inline .checkbox ~ .label-text::before,
-  input.checkbox + label::before,
-  input.checkbox + input[type='hidden'] + label::before,
-  span.checkbox > label::before {
-    margin-top: -1px;
-  }
-}
-
 html.is-firefox:not([dir='rtl']) {
   label.inline .checkbox ~ .label-text::before,
   input.checkbox + label::before,

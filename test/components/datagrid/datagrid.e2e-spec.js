@@ -896,7 +896,7 @@ describe('Datagrid editor dropdown source tests', () => {
     expect(await element(by.css('.is-focused'))).toBeTruthy();
     const focusEl = await element(by.css('.is-focused'));
 
-    expect(await focusEl.getText()).toEqual('Place On-Hold');
+    expect(await focusEl.getText()).toEqual(' ');
   });
 });
 

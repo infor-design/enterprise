@@ -12,6 +12,7 @@
   }
 
   > .icon {
+    margin-top: -1px;
     vertical-align: middle;
   }
 }
@@ -38,6 +39,17 @@
 .is-mac.is-firefox {
   .field-short [class*='btn'] {
     line-height: normal;
+  }
+}
+
+// Safari's and Firefox's `middle` alignment doesn't jive
+// well with our iconography
+.is-safari,
+.is-firefox {
+  [class*='btn'] {
+    > .icon {
+      margin-top: -2px;
+    }
   }
 }
 
