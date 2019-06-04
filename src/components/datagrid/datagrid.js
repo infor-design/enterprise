@@ -110,7 +110,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
- * icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
+ * icon: 'icon-empty-no-data', button: {text: 'Button Text', click: <function>}} set this to null for no message
  * or will default to 'No Data Found with an icon.'
  * @param {boolean}  [settings.allowChildExpandOnMatch=false] use  with filter
  * if true:
@@ -2346,7 +2346,10 @@ Datagrid.prototype = {
       input.val(conditions[i].value);
 
       if (input.is('select')) {
-        if (conditions[i].value instanceof Array) {
+        if (conditions[i].innerHTML) {
+          input[0].innerHTML = conditions[i].innerHTML;
+        }
+        if (conditions[i].value instanceof Array && !conditions[i].selectedOptions) {
           for (let j = 0; j < conditions[i].value.length; j++) {
             input.find(`option[value="${conditions[i].value[j]}"]`).prop('selected', true);
           }
@@ -2422,6 +2425,10 @@ Datagrid.prototype = {
       if (input.data('timepicker')) {
         format = input.data('timepicker').settings.timeFormat;
         condition.format = format;
+      }
+
+      if (input.is('select')) {
+        condition.innerHTML = input[0].innerHTML;
       }
 
       filterExpr.push(condition);
