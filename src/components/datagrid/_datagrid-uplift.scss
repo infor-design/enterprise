@@ -28,6 +28,11 @@
   font-size: $theme-size-font-xs !important;
 }
 
+// Adjust Filter Text
+.datagrid-header .datagrid-filter-wrapper .dropdown {
+  padding: 1px 0 0 5px;
+}
+
 // Adjust Row Links
 .datagrid td .hyperlink {
   margin-top: -2px;
