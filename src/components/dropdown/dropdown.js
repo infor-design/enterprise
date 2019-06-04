@@ -2485,7 +2485,7 @@ Dropdown.prototype = {
 
     // If multiselect, reset the menu to the unfiltered mode
     if (this.settings.multiple) {
-      if (this.list.hasClass('search-mode')) {
+      if (this.list && this.list.hasClass('search-mode')) {
         this.resetList();
       }
       this.activate(true);

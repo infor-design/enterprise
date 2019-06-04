@@ -78,7 +78,7 @@
     columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text', editor: Editors.Input});
     columns.push({ id: 'status', name: 'Status', field: 'price', formatter: Formatters.Alert, readonly: true, ranges: [{'min': LOW_RANGE_LOW_NUMBER, 'max': LOW_RANGE_HIGH_NUMBER, 'classes': 'success', text: 'Confirmed'}, {'min': HIGH_RANGE_LOW_NUMBER, 'max': HIGH_RANGE_HIGH_NUMBER, 'classes': 'error', text: 'Error'}]});
     columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
-    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: dropDownFormatter, filterType: 'multiselect', options:  [ { label: ' ', value: ' '} ], editor: Editors.Multiselect, editorOptions: {editable: false, source: dropDownSource} });
+    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: dropDownFormatter, filterType: 'multiselect', options:  [ { label: ' ', value: ' '} ], editor: Editors.Dropdown, editorOptions: {editable: false, source: dropDownSource} });
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date});
 
     //Init and get the api for the grid
@@ -103,7 +103,7 @@
     })
     .on('filtered', function (e, args) {
       console.log('filtered', args);
-      gridApi.loadData(data , { type: 'filtered', activePage: gridApi.activePage });
+      gridApi.loadData(data , { type: 'filterrow' });
     });
 
     gridApi = $('#datagrid').data('datagrid');
