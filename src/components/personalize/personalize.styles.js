@@ -180,12 +180,12 @@ function personalizeStyles(colors) {
 
 .is-personalizable .tab-container.header-tabs::before,
 .is-personalizable.tab-container.header-tabs::before {
-  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)});
+  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
 
 .is-personalizable .tab-container.header-tabs::after,
 .is-personalizable.tab-container.header-tabs::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
 .hero-widget.is-personalizable {

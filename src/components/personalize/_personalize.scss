@@ -16,12 +16,40 @@
   background-color: $header-bg-color;
 }
 
+.is-personalizable .tab-container.header-tabs::before,
+.is-personalizable.tab-container.header-tabs::before {
+  background-image: linear-gradient(
+    to right,
+    rgba($header-bg-color, 1),
+    rgba($header-bg-color, 0)
+  ) !important;
+}
+
+.is-personalizable .tab-container.header-tabs::after,
+.is-personalizable.tab-container.header-tabs::after {
+  background-image: linear-gradient(
+    to right,
+    rgba($header-bg-color, 0),
+    rgba($header-bg-color, 1)
+  ) !important;
+}
+
+.is-personalizable > .tab-list-container .tab.is-disabled a,
+.is-personalizable.tab-container > .tab-list-container .tab.is-disabled a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
 .is-personalizable .personalize-subheader {
   background-color: $subhead-bg-color;
 }
 
 .is-personalizable .personalize-text {
   color: $theme-color-palette-white !important;
+}
+
+.is-personalizable .personalize-input {
+  background-color: $theme-color-palette-white !important;
+  border-color: $theme-color-palette-white !important;
 }
 
 .is-personalizable .personalize-actionable,
