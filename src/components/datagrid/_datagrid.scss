@@ -2586,6 +2586,7 @@ $datagrid-short-row-height: 25px;
     .btn-filter {
       height: 24px;
       left: 13px;
+      min-height: 0;
       min-width: 34px;
       padding-top: 5px;
       top: 0;
