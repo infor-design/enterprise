@@ -5,6 +5,11 @@
   div:first-of-type {
     margin-right: auto;
   }
+
+  select.field-filter + .dropdown-wrapper div.dropdown {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
 }
 
 .dropdown-list.ffdropdown {
