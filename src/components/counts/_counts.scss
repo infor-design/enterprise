@@ -47,7 +47,10 @@
   display: inline-block;
   min-width: 150px;
   text-align: center;
-  text-decoration: none;
+
+  &.hyperlink {
+    text-decoration: none;
+  }
 
   span,
   .xl-text {
