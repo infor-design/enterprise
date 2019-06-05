@@ -896,7 +896,7 @@ describe('Datagrid editor dropdown source tests', () => {
     expect(await element(by.css('.is-focused'))).toBeTruthy();
     const focusEl = await element(by.css('.is-focused'));
 
-    expect(await focusEl.getText()).toEqual('Place On-Hold');
+    expect(await focusEl.getText()).toEqual(' ');
   });
 });
 
@@ -1655,7 +1655,11 @@ describe('Datagrid save user settings', () => {
     expect(await element(by.css('.pager-count input')).getAttribute('value')).toEqual('2');
   });
 
+<<<<<<< HEAD
   if (!utils.isCI()) {
+=======
+  if (utils.isChrome() && !utils.isCI()) {
+>>>>>>> origin/4.19.x
     it('Should save sort on reload', async () => {
       expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('0');
       await element(by.css('#datagrid .datagrid-header th:nth-child(1)')).click();
@@ -1783,23 +1787,25 @@ describe('Datagrid timezone tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should Render Timezones', async () => {
-    expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('03-04-2019');
-    let text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(2)')).getText();
+  if (utils.isChrome() && !utils.isCI()) {
+    it('Should Render Timezones', async () => {
+      expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('03-04-2019');
+      let text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(2)')).getText();
 
-    expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
-    text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(3)')).getText();
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
+      text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(3)')).getText();
 
-    expect(['03-04-2019 00:00 Eastern-standaardtijd', '03-04-2019 00:00 Eastern-zomertijd']).toContain(text);
+      expect(['03-04-2019 00:00 Eastern-standaardtijd', '03-04-2019 00:00 Eastern-zomertijd']).toContain(text);
 
-    text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(4)')).getText();
+      text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(4)')).getText();
 
-    expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
 
-    text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(5)')).getText();
+      text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(5)')).getText();
 
-    expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
-  });
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
+    });
+  }
 });
 
 describe('Datagrid select tree tests', () => {

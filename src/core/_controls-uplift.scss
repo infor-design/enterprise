@@ -73,7 +73,6 @@
 @import '../components/searchfield/searchfield';
 @import '../components/searchfield/searchfield-uplift';
 @import '../components/searchfield/searchfield-toolbar';
-@import '../components/searchfield/searchfield-toolbar-uplift';
 @import '../components/slider/slider';
 @import '../components/spinbox/spinbox';
 @import '../components/spinbox/spinbox-uplift';
@@ -109,6 +108,7 @@
 
 // Charts ====/
 @import '../components/charts/charts'; // Base
+@import '../components/charts/charts-uplift';
 @import '../components/bar/bar';
 @import '../components/bullet/bullet';
 @import '../components/column/column';
