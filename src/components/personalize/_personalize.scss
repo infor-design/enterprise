@@ -16,22 +16,22 @@
   background-color: $header-bg-color;
 }
 
-.is-personalizable .tab-container.header-tabs::before,
-.is-personalizable.tab-container.header-tabs::before {
+.is-personalizable .tab-container.header-tabs:not(.alternate)::before,
+.is-personalizable.tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(
     to right,
     rgba($header-bg-color, 1),
     rgba($header-bg-color, 0)
-  ) !important;
+  );
 }
 
-.is-personalizable .tab-container.header-tabs::after,
-.is-personalizable.tab-container.header-tabs::after {
+.is-personalizable .tab-container.header-tabs:not(.alternate)::after,
+.is-personalizable.tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(
     to right,
     rgba($header-bg-color, 0),
     rgba($header-bg-color, 1)
-  ) !important;
+  );
 }
 
 .is-personalizable > .tab-list-container .tab.is-disabled a,
@@ -45,11 +45,6 @@
 
 .is-personalizable .personalize-text {
   color: $theme-color-palette-white !important;
-}
-
-.is-personalizable .personalize-input {
-  background-color: $theme-color-palette-white !important;
-  border-color: $theme-color-palette-white !important;
 }
 
 .is-personalizable .personalize-actionable,
