@@ -1655,11 +1655,7 @@ describe('Datagrid save user settings', () => {
     expect(await element(by.css('.pager-count input')).getAttribute('value')).toEqual('2');
   });
 
-<<<<<<< HEAD
   if (!utils.isCI()) {
-=======
-  if (utils.isChrome() && !utils.isCI()) {
->>>>>>> origin/4.19.x
     it('Should save sort on reload', async () => {
       expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('0');
       await element(by.css('#datagrid .datagrid-header th:nth-child(1)')).click();
