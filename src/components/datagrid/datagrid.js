@@ -4691,10 +4691,11 @@ Datagrid.prototype = {
   /**
    * Parse a JSON array with columns and return the column object.
    * @private
-   * @param  {string} columnStr The json represntation of the column object.
+   * @param  {string} columnStr The json representation of the column object.
+   * @param  {string} excludeWidth If true do not reset the column width.
    * @returns {array} The array of columns.
    */
-  columnsFromString(columnStr) {
+  columnsFromString(columnStr, excludeWidth) {
     if (!columnStr) {
       return [];
     }
@@ -4710,6 +4711,7 @@ Datagrid.prototype = {
     for (let i = 0; i < columns.length; i++) {
       let isHidden;
       const orgColumn = self.columnById(columns[i].id);
+      const width = orgColumn.width;
 
       if (orgColumn) {
         isHidden = columns[i].hidden;
@@ -4718,6 +4720,9 @@ Datagrid.prototype = {
 
         if (isHidden !== undefined) {
           columns[i].hidden = isHidden;
+        }
+        if (excludeWidth) {
+          columns[i].width = width;
         }
       }
     }
@@ -4743,7 +4748,7 @@ Datagrid.prototype = {
     const lsCols = localStorage[this.uniqueId('columns')];
 
     if (!cols && lsCols) {
-      this.originalColumns = this.settings.columns;
+      this.originalColumns = this.columnsFromString(this.copyThenStringify(this.settings.columns));
       this.settings.columns = this.columnsFromString(lsCols);
     }
   },
@@ -4803,7 +4808,6 @@ Datagrid.prototype = {
     if (options.columns) {
       const savedColumns = localStorage[this.uniqueId('usersettings-columns')];
       if (savedColumns) {
-        this.originalColumns = this.settings.columns;
         this.settings.columns = this.columnsFromString(savedColumns);
       }
     }
@@ -4891,7 +4895,10 @@ Datagrid.prototype = {
     }
 
     if (this.originalColumns) {
-      const originalColumns = this.originalColumns;
+      const originalColumns = this.columnsFromString(
+        this.copyThenStringify(this.originalColumns),
+        true
+      );
       const columnGroups = this.settings.columnGroups && this.originalColGroups ?
         this.originalColGroups : null;
       this.updateColumns(originalColumns, columnGroups);
