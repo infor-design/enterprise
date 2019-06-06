@@ -32,7 +32,6 @@
 }
 
 .form-compact {
-  background-color: $formcompact-bg-color;
   margin: 0 auto;
 
   .row {
@@ -49,6 +48,7 @@
     padding: 0;
 
     &.form-section-header {
+      background-color: $formcompact-bg-color;
       padding: 0 10px;
     }
 
@@ -59,9 +59,12 @@
       background-color: $formcompact-field-bg-color;
       margin-bottom: 0;
       overflow: hidden;
-      padding: 4px 9px 0;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      &:not(.radio-label) {
+        padding: 4px 9px 0;
+      }
 
       &.required:not(.inline) {
         &::after {
@@ -91,6 +94,11 @@
       &:focus {
         box-shadow: none;
       }
+
+      // Disable background for radios (handled by `fieldset`)
+      &.radio {
+        background-color: transparent;
+      }
     }
 
     &.is-focused {
@@ -100,23 +108,37 @@
         border-bottom-color: $formcompact-field-border-focus-color;
         border-left-color: $formcompact-field-border-focus-color;
         border-right-color: $formcompact-field-border-focus-color;
+        border-top-color: transparent;
+
+        &.radio {
+          background-color: transparent;
+        }
       }
 
       label {
+        background-color: $formcompact-field-bg-focus-color;
+
+        &.radio-label {
+          background-color: transparent;
+        }
+      }
+
+      .radio-group {
         background-color: $formcompact-field-bg-focus-color;
       }
     }
 
     &.is-readonly {
       input {
-        background-color: $formcompact-bg-color;
+        background-color: $input-color-readonly-background;
         border-bottom-color: $input-color-readonly-border;
         border-right-color: $input-color-readonly-border;
         color: $input-color-readonly-font;
       }
 
       label {
-        background-color: $body-color-primary-background;
+        background-color: $input-color-readonly-background;
+        color: $input-color-readonly-font;
       }
     }
 
@@ -162,6 +184,41 @@
   .fileuploader {
     max-height: 28px;
   }
+
+  // =============================================
+  // Radio Group
+  // =============================================
+  .radio-group {
+    @include transition(background-color 100ms $cubic-ease, border-color 100ms $cubic-ease, color 100ms $cubic-ease);
+
+    background-color: $formcompact-field-bg-color;
+    margin-bottom: 0;
+
+    legend {
+      @include font-size(14);
+
+      background-color: transparent;
+      color: $fieldset-title-color;
+      padding: 4px 9px 0;
+    }
+
+    input[type='radio'] {
+      @include font-size(18);
+
+      background-color: transparent;
+      color: $checkbox-color-unchecked-initial-font;
+      padding: 0 9px 4px;
+    }
+  }
+
+  .radio-label {
+    padding-left: 33px;
+
+    &::after {
+      left: 12px;
+    }
+  }
+
 }
 
 .form-section-header {
@@ -175,15 +232,24 @@
 
 .is-firefox {
   .form-compact {
+    // Reset the standard `16px` line-height rule established for Firefox
+    // that comes from `_typography.scss`.
+    input,
+    textarea {
+      line-height: normal;
+    }
+
     // Firefox has different column padding needs
     .column,
     .columns {
-      label {
-        padding: 8px 9px 0;
+      label:not(.radio-label) {
+        padding-bottom: 0;
+        padding-top: 4px;
       }
 
-      input {
-        padding: 0 8px 8px;
+      input:not(.radio) {
+        padding-bottom: 4px;
+        padding-top: 0;
       }
     }
 
@@ -224,12 +290,14 @@ html:not(.font-source-sans) {
         padding: 16px 10px 15px;
       }
 
-      label {
-        padding: 6px 9px 0;
+      label:not(.radio-label) {
+        padding-bottom: 0;
+        padding-top: 6px;
       }
 
-      input {
-        padding: 0 8px 6px;
+      input:not(.radio) {
+        padding-bottom: 6px;
+        padding-top: 0;
       }
     }
   }
@@ -239,12 +307,14 @@ html:not(.font-source-sans) {
     .form-compact {
       .column,
       .columns {
-        label {
-          padding: 8px 9px 0;
+        label:not(.radio-label) {
+          padding-bottom: 0;
+          padding-top: 8px;
         }
 
-        input {
-          padding: 0 8px 8px;
+        input:not(.radio) {
+          padding-bottom: 8px;
+          padding-top: 0;
         }
       }
     }
@@ -293,6 +363,21 @@ html[dir='rtl'] {
     .fileuploader {
       line-height: normal;
       max-height: 29px;
+    }
+
+    // Reverse padding on radios
+    .radio-label {
+      padding-left: 0;
+      padding-right: 33px;
+
+      &::before {
+        margin-right: -24px;
+      }
+
+      &::after {
+        left: auto;
+        right: 13px;
+      }
     }
   }
 
