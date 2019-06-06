@@ -9951,8 +9951,8 @@ Datagrid.prototype = {
   sortFunction(id, ascending) {
     const column = this.columnById(id);
     // Assume the field and id match if no column found
-    const col  = column.length === 0 ? null : column[0];
-    const field = column.length === 0 ? id : column[0].field;
+    const col = column.length === 0 ? null : column[0];
+    const field = col === null ? id : col.field;
     
     const self = this;
     const primer = function (a) {
