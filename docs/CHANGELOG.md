@@ -6,6 +6,8 @@
 
 ### v4.20.0 Features
 
+- `[Datagrid]` Added a Sort Function to the datagrid column to allow for the value to be formatted for the sort. ([#1766](https://github.com/infor-design/enterprise/issues/2274)))
+
 ### v4.20.0 Fixes
 
 - `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
