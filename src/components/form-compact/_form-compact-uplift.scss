@@ -1,22 +1,33 @@
 // Uplift Compact Form Styles
 //================================================== //
 
-// FileUploader has different field heights depending on browser/font
 .form-compact {
-  .fileuploader {
-    max-height: 30px;
-  }
-}
+  // Adjust column top/bottom padding for Uplift's Source Sans font
+  .column,
+  .columns {
+    &.form-section-header {
+      padding: 0 10px;
+    }
 
-.ie11 {
-  .form-compact {
-    .fileuploader {
-      max-height: 30px;
+    label {
+      &:not(.radio-label) {
+        padding: 4px 9px 0;
+      }
+    }
+
+    input {
+      padding: 0 8px 4px;
     }
   }
+
+  // FileUploader has different field heights depending on browser/font
+  .fileuploader {
+    max-height: 28px;
+  }
 }
 
-.is-firefox {
+// Reset the rule governing IE11 fileuploader max-height
+html.ie11:not([dir='rtl']) {
   .form-compact {
     .fileuploader {
       max-height: 28px;
@@ -26,8 +37,43 @@
 
 html[dir='rtl'] {
   .form-compact {
-    .fileuploader {
-      max-height: 28px;
+    .column,
+    .columns {
+      label {
+        &:not(.radio-label) {
+          padding: 7px 9px 0;
+        }
+      }
+
+      input:not(.radio) {
+        padding: 0 8px 7px;
+      }
+
+      .fileuploader {
+        max-height: 29px;
+      }
+    }
+  }
+
+  // Firefox has different padding on the RTL font
+  &.is-firefox {
+    .form-compact {
+      .column,
+      .columns {
+        label {
+          &:not(.radio-label) {
+            padding: 8px 9px 1px;
+          }
+        }
+
+        input:not(.radio) {
+          padding: 3px 8px 8px;
+        }
+
+        .fileuploader {
+          max-height: 31px;
+        }
+      }
     }
   }
 }

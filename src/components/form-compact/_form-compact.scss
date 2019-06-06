@@ -49,7 +49,7 @@
 
     &.form-section-header {
       background-color: $formcompact-bg-color;
-      padding: 0 10px;
+      padding: 16px 10px 15px;
     }
 
     label {
@@ -63,7 +63,7 @@
       white-space: nowrap;
 
       &:not(.radio-label) {
-        padding: 4px 9px 0;
+        padding: 6px 9px 0;
       }
 
       &.required:not(.inline) {
@@ -87,7 +87,7 @@
       border-radius: 0;
       border-right: 1px solid $formcompact-field-border-color;
       border-top: 0;
-      padding: 0 8px 4px;
+      padding: 2px 8px 6px;
       text-overflow: ellipsis;
       width: 100%;
 
@@ -182,7 +182,7 @@
   // Form-Compact File Uploader Styles
   // =============================================
   .fileuploader {
-    max-height: 28px;
+    max-height: 30px;
   }
 
   // =============================================
@@ -239,23 +239,9 @@
       line-height: normal;
     }
 
-    // Firefox has different column padding needs
-    .column,
-    .columns {
-      label:not(.radio-label) {
-        padding-bottom: 0;
-        padding-top: 4px;
-      }
-
-      input:not(.radio) {
-        padding-bottom: 4px;
-        padding-top: 0;
-      }
-    }
-
     // `input[type="file"]` is taller in Firefox.
     .fileuploader {
-      max-height: 27px;
+      max-height: 28px;
     }
   }
 }
@@ -276,47 +262,7 @@
 .ie11 {
   .form-compact {
     .fileuploader {
-      max-height: 27px;
-    }
-  }
-}
-
-// Change the padding when the font is not "Source Sans" (Legacy)
-html:not(.font-source-sans) {
-  .form-compact {
-    .column,
-    .columns {
-      &.form-section-header {
-        padding: 16px 10px 15px;
-      }
-
-      label:not(.radio-label) {
-        padding-bottom: 0;
-        padding-top: 6px;
-      }
-
-      input:not(.radio) {
-        padding-bottom: 6px;
-        padding-top: 0;
-      }
-    }
-  }
-
-  // Non-source-sans Firefox has ever-different column padding needs
-  &.is-firefox {
-    .form-compact {
-      .column,
-      .columns {
-        label:not(.radio-label) {
-          padding-bottom: 0;
-          padding-top: 8px;
-        }
-
-        input:not(.radio) {
-          padding-bottom: 8px;
-          padding-top: 0;
-        }
-      }
+      max-height: 29px;
     }
   }
 }
@@ -362,7 +308,7 @@ html[dir='rtl'] {
     // Font family changes on RTL affect the height of the FileUploader.
     .fileuploader {
       line-height: normal;
-      max-height: 29px;
+      max-height: 31px;
     }
 
     // Reverse padding on radios
@@ -393,7 +339,7 @@ html[dir='rtl'] {
   &.is-firefox {
     .form-compact {
       .fileuploader {
-        max-height: 27px;
+        max-height: 32px;
       }
     }
   }
