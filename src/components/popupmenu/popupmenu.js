@@ -786,14 +786,11 @@ PopupMenu.prototype = {
     if (!immediate) {
       // Left-Click activation
       if (leftClick) {
-        this.element
-          .on('click.popupmenu', (e) => {
-            if (this.element.hasClass('is-open')) {
-              self.close();
-            } else {
-              contextMenuHandler(e, true);
-            }
-          });
+        this.element.on('click.popupmenu', (e) => {
+          if (!this.element.is('.is-open')) {
+            contextMenuHandler(e, true);
+          }
+        });
       }
 
       // Right-Click activation
