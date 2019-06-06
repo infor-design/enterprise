@@ -10,6 +10,7 @@
 
 - `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
+- `[Popupmenu]` Fixed an issue where js error was showing after removing menu item. ([#414](https://github.com/infor-design/enterprise-ng/issues/414))
 
 ### v4.20.0 Chores & Maintenance
 
