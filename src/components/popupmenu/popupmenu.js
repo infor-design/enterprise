@@ -788,7 +788,12 @@ PopupMenu.prototype = {
       if (leftClick) {
         this.element
           .on('click.popupmenu', (e) => {
-            contextMenuHandler(e, true);
+            // contextMenuHandler(e, true);
+            if (this.element.hasClass('is-open')) {
+              self.close();
+            } else {
+              contextMenuHandler(e, true);
+            }
           });
       }
 
