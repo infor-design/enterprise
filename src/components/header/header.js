@@ -517,6 +517,18 @@ Header.prototype = {
     }
 
     changer.on('selected.header', (e, link) => {
+      // Change Theme with Variant
+      const themeNameAttr = link.attr('data-theme-name');
+      const themeVariantAttr = link.attr('data-theme-variant');
+      if (themeNameAttr || themeVariantAttr) {
+        const name = changer.next().find('.is-checked a[data-theme-name]').attr('data-theme-name');
+        const variant = changer.next().find('.is-checked a[data-theme-variant]').attr('data-theme-variant');
+        if (name && variant) {
+          personalization.setTheme(`${name}-${variant}`);
+        }
+        return;
+      }
+
       // Change Theme
       const themeAttr = link.attr('data-theme');
       if (themeAttr) {
