@@ -65,7 +65,7 @@
 - `[Datepicker]` Fixed an issue loading on IE 11. ([#2183](https://github.com/infor-design/enterprise-ng/issues/2183))
 - `[Dropdown]` Fixed the dropdown appearing misaligned at smaller screen sizes. ([#2248](https://github.com/infor-design/enterprise/issues/2248))
 - `[Editor]` Fixed an issue where button state for toolbar buttons were wrong when clicked one after another. ([#391](https://github.com/infor-design/enterprise/issues/391))
-- `[Hierarchy]` Fixed a bug where the hierarch will only partially load with two instances on a page. ([#2205](https://github.com/infor-design/enterprise/issues/2205))
+- `[Hierarchy]` Fixed a bug where the hierarchy will only partially load with two instances on a page. ([#2205](https://github.com/infor-design/enterprise/issues/2205))
 - `[Field Options]` Fixed an issue where field options were misaligning, especially spin box was focusing outside of the field. ([#1862](https://github.com/infor-design/enterprise/issues/1862))
 - `[Field Options]` Fixed a border alignment issue. ([#2107](https://github.com/infor-design/enterprise/issues/2107))
 - `[Fileuploader]` Fixed an issue where the fileuploader icon and close icon were misplaced and not visible in RTL after uploading a file. ([#2098](https://github.com/infor-design/enterprise/issues/2098))
