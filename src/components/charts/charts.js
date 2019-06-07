@@ -112,33 +112,35 @@ charts.removeTooltip = function removeTooltip() {
 /**
  * The color sequences to use across charts
  * @private
- * @type {array}
+ * @returns {array} The list of colors in the current theme in a range for charts.
  */
-const palette = theme.themeColors().palette;
-charts.colorRange = [
-  palette.azure['70'].value,
-  palette.turquoise['30'].value,
-  palette.amethyst['30'].value,
-  palette.graphite['60'].value,
-  palette.amber['50'].value,
-  palette.emerald['60'].value,
-  palette.ruby['60'].value,
-  palette.azure['30'].value,
-  palette.amber['90'].value,
-  palette.turquoise['80'].value,
-  palette.ruby['20'].value,
-  palette.graphite['50'].value,
-  palette.emerald['50'].value,
-  palette.azure['50'].value,
-  palette.amethyst['80'].value,
-  palette.emerald['30'].value,
-  palette.turquoise['50'].value,
-  palette.amber['70'].value,
-  palette.graphite['20'].value,
-  palette.azure['20'].value,
-  palette.emerald['100'].value,
-  palette.amethyst['20'].value
-];
+charts.colorRange = () => {
+  const palette = theme.themeColors().palette;
+  return [
+    palette.azure['70'].value,
+    palette.turquoise['30'].value,
+    palette.amethyst['30'].value,
+    palette.graphite['60'].value,
+    palette.amber['50'].value,
+    palette.emerald['60'].value,
+    palette.ruby['60'].value,
+    palette.azure['30'].value,
+    palette.amber['90'].value,
+    palette.turquoise['80'].value,
+    palette.ruby['20'].value,
+    palette.graphite['50'].value,
+    palette.emerald['50'].value,
+    palette.azure['50'].value,
+    palette.amethyst['80'].value,
+    palette.emerald['30'].value,
+    palette.turquoise['50'].value,
+    palette.amber['70'].value,
+    palette.graphite['20'].value,
+    palette.azure['20'].value,
+    palette.emerald['100'].value,
+    palette.amethyst['20'].value
+  ];
+};
 
 charts.colorNameRange = ['azure07', 'turquoise03', 'amethyst03', 'graphite06', 'amber05', 'emerald06', 'ruby06',
   'azure03', 'amber09', 'turquoise08', 'ruby02', 'graphite05', 'emerald05', 'amethyst03',
@@ -146,10 +148,11 @@ charts.colorNameRange = ['azure07', 'turquoise03', 'amethyst03', 'graphite06', '
 
 /**
  * The colors as an array for placement
- * @private
- * @type {array}
+ * @returns {function} A d3 range of colors.
  */
-charts.colors = typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorRange) : [];
+charts.colors = () => { //eslint-disable-line
+  return typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorRange) : [];
+};
 charts.colorNames = typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorNameRange) : [];
 
 /**
@@ -191,7 +194,7 @@ charts.chartColor = function chartColor(i, chartType, data) {
     return this.colorRange[i];
   }
   if (/^(bar-single|column-single)$/.test(chartType)) {
-    return '#1D5F8A';
+    return theme.themeColors().palette.azure['80'].value;
   }
   if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|scatterplot|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
     return this.colors(i);
@@ -299,7 +302,7 @@ charts.addLegend = function (series, chartType, settings, container) {
   let currentWidth;
 
   for (i = 0; i < series.length; i++) {
-    currentWidth = series[i].name.length * 6;
+    currentWidth = series[i].name ? series[i].name.length * 6 : 6;
     width = (series[i].name && currentWidth > width) ? currentWidth : width;
   }
 

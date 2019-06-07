@@ -119,7 +119,7 @@ describe('Bar Chart example-patterns tests', () => {
 
 describe('Bar Chart example-colors', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/example-colors');
+    await utils.setPage('/components/bar/example-colors?layout=nofrill');
   });
 
   it('Should not have errors', async () => {
@@ -143,4 +143,63 @@ describe('Bar Chart example-colors', () => {
 
     expect(await blueEl.getCssValue('fill')).toBe('rgb(146, 121, 166)');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-color')).toEqual(0);
+    });
+  }
+});
+
+describe('Bar Chart alignment tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar/test-alignment?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-alignment')).toEqual(0);
+    });
+  }
+});
+
+describe('Bar Chart axis adjust tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar/test-axis-adjust?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-axis-adjust')).toEqual(0);
+    });
+  }
 });
