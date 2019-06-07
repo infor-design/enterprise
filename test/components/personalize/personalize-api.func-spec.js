@@ -78,13 +78,4 @@ describe('Personalize API', () => {
 
     expect(document.documentElement.classList.contains('theme-uplift-dark')).toBeTruthy();
   });
-
-  it('Should get rid of the overlay on a bad theme name', (done) => {
-    personalization.setTheme('theme-foo-blahblah');
-
-    setTimeout(() => {
-      expect(document.querySelector('.personalize-overlay')).toBeFalsy();
-      done();
-    }, 300);
-  });
 });

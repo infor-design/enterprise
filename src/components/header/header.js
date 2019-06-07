@@ -507,7 +507,8 @@ Header.prototype = {
 
     if (colorArea.length > 0) {
       const colors = theme.personalizationColors();
-      let colorsHtml = '<li class="heading" role="presentation">Personalization</li>';
+      let colorsHtml = colorArea.parent().hasClass('popupmenu') ? '' :
+        '<li class="heading" role="presentation">Personalization</li>';
 
       Object.keys(colors).forEach((color) => {
         colorsHtml += `<li class="is-selectable${colors[color].name === 'Default' ? ' is-checked is-default' : ''}"><a href="#" data-rgbcolor="${colors[color].value}">${colors[color].name}</a></li>`;

@@ -13,6 +13,8 @@
 
 ### v4.20.0 Chores & Maintenance
 
+- `[Demo App]` Add the uplift theme to the theme switcher menu. ([#2335](https://github.com/infor-design/enterprise/issues/2335))
+
 ## v4.19.0
 
 ### v4.19.0 Deprecations
