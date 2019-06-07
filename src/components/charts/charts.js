@@ -148,11 +148,9 @@ charts.colorNameRange = ['azure07', 'turquoise03', 'amethyst03', 'graphite06', '
 
 /**
  * The colors as an array for placement
+ * @param {number} idx The color index
  * @returns {function} A d3 range of colors.
  */
-charts.colors = () => { //eslint-disable-line
-  return typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorRange) : [];
-};
 charts.colorNames = typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorNameRange) : [];
 
 /**
@@ -165,6 +163,7 @@ charts.colorNames = typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.c
  * @returns {string} The hex code
  */
 charts.chartColor = function chartColor(i, chartType, data) {
+  const themeColors = charts.colorRange();
   const specifiedColor = (data && data.color ? data.color : null);
 
   // Handle passed in colors.
@@ -191,13 +190,13 @@ charts.chartColor = function chartColor(i, chartType, data) {
 
   // Some configuration by specific chart types
   if (/^(pie|donut)$/.test(chartType)) {
-    return this.colorRange[i];
+    return themeColors[i];
   }
   if (/^(bar-single|column-single)$/.test(chartType)) {
     return theme.themeColors().palette.azure['80'].value;
   }
   if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|scatterplot|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
-    return this.colors(i);
+    return themeColors[i];
   }
 
   return '';

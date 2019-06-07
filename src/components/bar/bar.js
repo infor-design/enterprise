@@ -619,7 +619,7 @@ Bar.prototype = {
         if (self.settings.useLogScale) {
           return 0;
         }
-        return (self.settings.isStacked && !self.settings.isSingle) ? xScale(d.x0) :  //eslint-disable-line
+        return (self.settings.isStacked && !self.settings.isSingle) ? xScale(d.x0) + 1 :  //eslint-disable-line
           (d.x < 0 ? xScale(d.x) + 1 : xScale(0) + 1);
       });
 

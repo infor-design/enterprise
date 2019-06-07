@@ -203,3 +203,26 @@ describe('Bar Chart axis adjust tests', () => {
     });
   }
 });
+
+describe('Bar Chart axis formatter tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar/test-axis-formatter?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-axis-formatter')).toEqual(0);
+    });
+  }
+});
