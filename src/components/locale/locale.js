@@ -1546,7 +1546,8 @@ const Locale = {  // eslint-disable-line
    * @returns {boolean} whether or not this locale is "right-to-left".
    */
   isRTL() {
-    return this.currentLanguage.direction === 'right-to-left';
+    return !this.currentLanguage ? false :
+      this.currentLanguage.direction === 'right-to-left';
   },
 
   /**
