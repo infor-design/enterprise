@@ -30,7 +30,7 @@ describe('Line Chart tests', () => {
 
 describe('Line Chart Zero Millions tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/donut/example-zero-millions?layout=nofrills');
+    await utils.setPage('/components/line/example-zero-millions?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -53,7 +53,7 @@ describe('Line Chart Zero Millions tests', () => {
 
 describe('Line Chart Two Line tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/donut/example-two-lines.html?layout=nofrills');
+    await utils.setPage('/components/line/example-two-lines.html?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -76,7 +76,7 @@ describe('Line Chart Two Line tests', () => {
 
 describe('Line Chart Axis Label tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/donut/example-axis-labels.html?layout=nofrills');
+    await utils.setPage('/components/line/example-axis-labels.html?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -99,7 +99,7 @@ describe('Line Chart Axis Label tests', () => {
 
 describe('Line Chart Axis Rotate tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/donut/example-rotate.html?layout=nofrills');
+    await utils.setPage('/components/line/example-rotate.html?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
