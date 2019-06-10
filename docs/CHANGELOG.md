@@ -103,6 +103,7 @@
 - `[Personalize]` Separated personalization styles into standalone file for improved maintainability. ([#2127](https://github.com/infor-design/enterprise/issues/2127))
 
 (84 Issues Solved this release, Backlog Enterprise 311, Backlog Ng 79, 839 Functional Tests, 876 e2e Test)
+
 ## v4.18.2
 
 ### v4.18.2 Fixes
