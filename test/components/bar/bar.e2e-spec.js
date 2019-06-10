@@ -98,25 +98,6 @@ describe('Bar Chart example-hide-legend tests', () => {
   });
 });
 
-describe('Bar Chart example-patterns tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/bar/test-patterns');
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should have patterns on bar', async () => {
-    const fBarEl = await element(by.css('.bar.series-0'));
-    const sBarEl = await element(by.css('.bar.series-1'));
-
-    expect(await fBarEl.getAttribute('mask')).toContain('hatch');
-
-    expect(await sBarEl.getAttribute('mask')).toContain('crosshatch');
-  });
-});
-
 describe('Bar Chart example-colors', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/example-colors?layout=nofrill');
