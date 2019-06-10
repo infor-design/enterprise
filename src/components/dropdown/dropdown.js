@@ -2923,7 +2923,6 @@ Dropdown.prototype = {
 
     $.removeData(this.element[0], COMPONENT_NAME);
     this.closeList('cancel');
-    this.label.remove();
     this.pseudoElem.off().remove();
     this.icon.remove();
     this.wrapper.remove();
