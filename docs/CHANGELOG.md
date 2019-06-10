@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.18.2
+
+### v4.18.2 Fixes
+
+- `[Autocomplete]` Fixed an XSS injection issue. ([#502](https://github.com/infor-design/enterprise-ng/issues/502)).
+- `[Dropdown]` Fixed an XSS injection issue. ([#503](https://github.com/infor-design/enterprise-ng/issues/503)).
+
 ## v4.18.1
 
 ### v4.18.1 Fixes
