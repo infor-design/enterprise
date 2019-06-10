@@ -95,7 +95,8 @@ const PAGER_DEFAULTS = {
   firstPageTooltip: 'FirstPage',
   previousPageTooltip: 'PreviousPage',
   nextPageTooltip: 'NextPage',
-  lastPageTooltip: 'LastPage'
+  lastPageTooltip: 'LastPage',
+  attachToBody: false
 };
 
 function Pager(element, settings) {
@@ -998,7 +999,7 @@ Pager.prototype = {
       }
 
       // Render the button
-      const pageSizeButton = $(`<button type="button" class="btn-menu">
+      const pageSizeButton = $(`<button type="button" class="btn-menu"  data-options="{attachToBody: ${this.settings.attachToBody}}">
         ${recordHtml}
         ${dropdownIcon}
       </button>`).appendTo(pageSizeLi);
