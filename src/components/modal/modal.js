@@ -172,7 +172,6 @@ Modal.prototype = {
     self.addButtons(this.settings.buttons);
     this.element.appendTo('body');
     this.element[0].style.display = 'none';
-
   },
 
   appendContent() {
