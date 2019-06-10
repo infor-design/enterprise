@@ -169,19 +169,19 @@ charts.chartColor = function chartColor(i, chartType, data) {
   // Handle passed in colors.
   if (specifiedColor) {
     if (specifiedColor === 'error') {
-      return '#e84f4f';
+      return theme.themeColors().status.danger.value;
     }
     if (specifiedColor === 'alert') {
-      return '#ff9426';
+      return theme.themeColors().status.warning.value;
     }
     if (specifiedColor === 'alertYellow') {
-      return '#ffd726';
+      return theme.themeColors().status.caution.value;
     }
     if (specifiedColor === 'good') {
-      return '#80ce4d';
+      return theme.themeColors().status.success.value;
     }
     if (specifiedColor === 'neutral') {
-      return '#bdbdbd';
+      return theme.themeColors().palette.graphite['30'].value;
     }
     if (specifiedColor && specifiedColor.indexOf('#') === 0) {
       return data.color;
