@@ -96,7 +96,7 @@ const PAGER_DEFAULTS = {
   previousPageTooltip: 'PreviousPage',
   nextPageTooltip: 'NextPage',
   lastPageTooltip: 'LastPage',
-  attachToBody: false
+  attachPageSizeMenuToBody: false
 };
 
 function Pager(element, settings) {
@@ -999,7 +999,7 @@ Pager.prototype = {
       }
 
       // Render the button
-      const pageSizeButton = $(`<button type="button" class="btn-menu"  data-options="{attachToBody: ${this.settings.attachToBody}}">
+      const pageSizeButton = $(`<button type="button" class="btn-menu">
         ${recordHtml}
         ${dropdownIcon}
       </button>`).appendTo(pageSizeLi);
@@ -1022,7 +1022,8 @@ Pager.prototype = {
           parent: pageSizeButton,
           parentXAlignment: (Locale.isRTL() ? 'left' : 'right'),
           strategies: ['flip']
-        }
+        },
+        attachToBody: this.settings.attachPageSizeMenuToBody
       };
 
       pageSizeButton.popupmenu(popupOpts);
