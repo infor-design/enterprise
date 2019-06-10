@@ -864,7 +864,7 @@ Dropdown.prototype = {
     }
 
     if (this.settings.empty && opts.length === 0) {
-      this.pseudoElem.find('span')[0].innerHTML = `<span class="audible">${this.label.text()} </span>`;
+      DOM.html(this.pseudoElem.find('span'), `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
       return;
     }
 

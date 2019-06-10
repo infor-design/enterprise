@@ -120,6 +120,8 @@ Modal.prototype = {
 
     // Used for tracking events tied to the Window object
     this.id = this.element.attr('id') || (parseInt($('.modal').length, 10) + 1);
+    // Prevent Css on the title
+    this.settings.title = xssUtils.stripTags(this.settings.title, '<div><span><a><small><img><svg><i><b><use><br><strong><em>');
 
     // Find the button or anchor with same dialog ID
     this.trigger = $(`[data-modal="${this.element.attr('id')}"]`);
@@ -170,6 +172,7 @@ Modal.prototype = {
     self.addButtons(this.settings.buttons);
     this.element.appendTo('body');
     this.element[0].style.display = 'none';
+
   },
 
   appendContent() {
@@ -177,7 +180,7 @@ Modal.prototype = {
 
     this.element = $(`${'<div class="modal">' +
         '<div class="modal-content" style="max-width: '}${this.settings.maxWidth ? this.settings.maxWidth : ''}px${'">' +
-          '<div class="modal-header"><h1 class="modal-title">'}${xssUtils.stripTags(this.settings.title, '<div><span><a><small><img><svg><i><b><use><br><strong><em>')}</h1></div>` +
+          '<div class="modal-header"><h1 class="modal-title">'}${this.settings.title}</h1></div>` +
           '<div class="modal-body-wrapper">' +
             '<div class="modal-body"></div>' +
           '</div>' +
