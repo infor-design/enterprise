@@ -98,9 +98,9 @@ describe('Bar Chart example-hide-legend tests', () => {
   });
 });
 
-describe('Bar Chart example-colors', () => {
+fdescribe('Bar Chart example-colors', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/example-colors?layout=nofrill');
+    await utils.setPage('/components/bar/example-colors?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
