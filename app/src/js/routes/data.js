@@ -52,6 +52,10 @@ router.get('/', (req, res, next) => {
   generalRoute(req, res, next);
 });
 
+router.get('/list', (req, res, next) => {
+  generalRoute(req, res, next);
+});
+
 router.get('/:fileName', (req, res, next) => {
   const filename = req.params.fileName;
   let filepath = getDataFilePath(filename);
@@ -74,7 +78,7 @@ router.get('/:fileName', (req, res, next) => {
       return;
     }
     res.status(404);
-    next(`No .JSON file named "${filename}" found`);
+    next(`No .JS file named "${filename}" found`);
     return;
   }
 

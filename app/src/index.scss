@@ -9,12 +9,13 @@
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/tokens/web/theme-soho';
 
-// Enterprise color palette
-@import '../../src/components/colors/colorpalette';
-
 // Soho Core/Helpers
 @import '../../src/core/config';
 @import '../../src/core/mixins';
+
+// Enterprise color palette
+@import '../../src/components/colors/colorpalette';
+@import '../../src/components/colors/colors';
 
 // Layout styles
 @import 'sass/layouts/nofrills';
@@ -30,3 +31,4 @@
 @import 'sass/wizard';
 @import 'sass/info-popup';
 @import 'sass/icons';
+@import 'sass/error';

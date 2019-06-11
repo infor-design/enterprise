@@ -4,17 +4,13 @@ const path = require('path');
 const commandLineArgs = require('yargs').argv;
 
 const utils = {};
-const FILENAME_REGEX = /[\w-]+\.html/;
 
-//
 utils.getFileName = function getFileName(filePath) {
   filePath = utils.getPathWithoutQuery(filePath);
+  let sepIndex = filePath.lastIndexOf(path.sep);
+  sepIndex = sepIndex === -1 ? 0 : sepIndex + 1;
 
-  const match = FILENAME_REGEX.exec(filePath);
-  if (!match || !match.length) {
-    return '';
-  }
-  return match[0];
+  return filePath.substring(sepIndex, filePath.length);
 };
 
 //
@@ -164,36 +160,54 @@ utils.getClosestLayoutFile = function (directory, viewsRoot) {
       logger('alert', `No layout found at "${filePath}"...`);
     }
 
-    directory = utils.getParentDirectory(directory);
+    directory = utils.getParentDirectory(directory, viewsRoot);
   }
 
   return filePath;
 };
 
-// Gets the directory path from a file path
+// Removes the last part of a file path, including directory, filename, and trailing slash
+utils.removeLastPart = function removeLastPart(filePath) {
+  return filePath.substring(0, filePath.lastIndexOf(path.sep === '\\' ? '\\' : '/') + 1);
+};
+
+// Gets the relative directory path from a file path
 utils.getDirectory = function (filePath, webroot) {
   function removeWebroot(thisFilePath, thisWebroot) {
-    if (thisWebroot && thisWebroot.length) {
+    if (thisWebroot && thisWebroot.length && thisFilePath.includes(thisWebroot)) {
       thisFilePath = thisFilePath.replace(thisWebroot, '');
     }
     return thisFilePath;
   }
 
-  if (utils.isType('directory', filePath)) {
-    filePath = removeWebroot(filePath, webroot);
-    return filePath;
+  let absFilePath = filePath;
+  if (!filePath.includes(webroot)) {
+    absFilePath = path.join(webroot, filePath);
   }
 
-  filePath = filePath.substring(0, filePath.lastIndexOf(path.sep === '\\' ? '\\' : '/') + 1);
-  filePath = removeWebroot(filePath, webroot);
-  return filePath;
+  if (utils.isType('directory', absFilePath)) {
+    return removeWebroot(absFilePath, webroot);
+  }
+
+  return removeWebroot(utils.removeLastPart(filePath), webroot);
 };
 
 // Gets the path of the parent directory of a file
-utils.getParentDirectory = function getParentDirectory(filePath) {
+utils.getParentDirectory = function getParentDirectory(filePath, viewsRoot) {
   let directory = utils.removeTrailingSeparator(filePath);
-  directory = utils.getDirectory(directory.substring(0, directory.lastIndexOf(path.sep === '\\' ? '\\' : '/') + 1));
+  directory = utils.getDirectory(utils.removeLastPart(directory), viewsRoot);
   return directory;
+};
+
+// Takes a path that may or may not contain valid files/directories, and detects
+// the lowest-possible valid directory in the tree.
+utils.getClosestValidDirectory = function getClosestValidDirectory(filePath, viewsRoot) {
+  let directory = utils.getDirectory(filePath, viewsRoot);
+  while (directory.length && !utils.isType('directory', path.join(viewsRoot, directory)) && !utils.isRoot(filePath)) {
+    directory = utils.getParentDirectory(directory, viewsRoot);
+  }
+
+  return directory.length ? utils.removeTrailingSlash(directory) : path.sep;
 };
 
 // Returns a true/false value that determines whether or not the layout is allowed to change

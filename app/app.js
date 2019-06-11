@@ -93,7 +93,6 @@ app.use(require('./src/js/middleware/csp-handler')(app));
 app.use(require('./src/js/middleware/info-handler')(app));
 
 app.use(router);
-app.use(require('./src/js/middleware/error-handler')(app));
 
 const customRoutes = require('./src/js/routes/customRoutes');
 const generalRoute = require('./src/js/routes/general');
@@ -152,5 +151,10 @@ app.use('/utils', generalRoute);
 // Fake 'API' Calls for use with AJAX-ready Controls
 // =========================================
 app.use('/api', require('./src/js/routes/data'));
+
+// =========================================
+// Error Handling
+// =========================================
+app.use(require('./src/js/middleware/error-handler')(app));
 
 module.exports = app;

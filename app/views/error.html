@@ -1,4 +1,20 @@
-{{#error}}
-  <h1>{{error.code}}: {{error.message}}</h1>
-  <p>{{error.stack}}</p>
-{{/error}}
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="error-code-container">
+      {{#error}}
+        <h1 class="error-code-number">{{error.code}}</h1>
+        <p class="error-code-standard">{{error.message}}</p>
+        {{#error.stack}}
+          <code class="error-stack">{{error.stack}}</code>
+        {{/error.stack}}
+      {{/error}}
+      {{^error}}
+        <h1 class="error-code-standard">Oops, we couldn't find that page.</h1>
+      {{/error}}
+    </div>
+
+    <p class="center">
+      <a class="hyperlink" href="{{prevUrl}}">Try getting a fresh start here...</a>
+    </p>
+  </div>
+</div>

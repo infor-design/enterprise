@@ -1,3 +1,9 @@
+<div class="notification-area">
+{{#notifications}}
+  <section id="notification-container" class="notification-container"></section>
+{{/notifications}}
+</div>
+
 <div class="row">
   <div class="six columns">
 
@@ -27,3 +33,16 @@
 
   </div>
 </div>
+
+<script type="text/javascript "id="notification-builder">
+  $('body').on('initialized', function () {
+    {{#notifications}}
+      $('#notification-container').notification({
+        type: '{{type}}',
+        message: '{{message}}',
+        parent: '.notification-container',
+        linkText: ''
+      });
+    {{/notifications}}
+  });
+</script>

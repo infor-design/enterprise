@@ -1,25 +1,42 @@
 const path = require('path');
 const logger = require('../logger');
+const setLayout = require('../set-layout');
+const utils = require('../utils');
 
 // Simple Middleware for handling errors
 module.exports = function () {
   return function errorHandler(err, req, res, next) {
-    if (!err) {
-      next();
-      return;
-    }
+    const viewsRoot = req.app.get('views');
 
-    logger('error', err.stack);
+    // Log to the console
+    logger('error', err);
 
+    // If we already sent HTTP headers, just tack the message on.
     if (res.headersSent) {
       next(err);
       return;
     }
 
-    const viewsRoot = req.app.get('views');
+    // Respond with an HTML page
+    if (req.accepts('html')) {
+      setLayout(req, res, 'layout-empty.html');
+      res.opts.url = req.url;
+      res.opts.prevUrl = utils.getClosestValidDirectory(req.url, viewsRoot);
+      res.opts.error = {
+        code: res.statusCode || 500,
+        message: err
+      };
+      res.render(path.join(viewsRoot, 'error.html'), res.opts);
+      return;
+    }
 
-    res.status(500);
-    res.opts.error = err;
-    res.render(path.join(viewsRoot, 'error.html'));
+    // Respond with JSON
+    if (req.accepts('json')) {
+      res.send({ error: err });
+      return;
+    }
+
+    // If all else fails, respond with plain text.
+    res.type('txt').send(err.message);
   };
 };
