@@ -1433,7 +1433,7 @@ const Locale = {  // eslint-disable-line
       showBrackets = options.showBrackets;
     }
 
-    if (languageData.messages === undefined) {
+    if (languageData === undefined || languageData.messages === undefined) {
       return showAsUndefined ? undefined : `${showBrackets ? '[' : ''}${key}${showBrackets ? ']' : ''}`;
     }
 
