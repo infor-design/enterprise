@@ -959,18 +959,16 @@ describe('Locale API', () => {
     expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
   });
 
-  if (!utils.isCI()) {
-    it('Should format dates with long timezones', () => {
-      Locale.set('en-US');
+  it('Should format dates with long timezones', () => {
+    Locale.set('en-US');
 
-      expect(['3/22/2018 8:11 PM Eastern Standard Time', '3/22/2018 8:11 PM Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
-      expect(['22-03-2000 20:11 Eastern Standard Time', '22-03-2000 20:11 Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' }));
-      Locale.set('nl-NL');
+    expect(['3/22/2018 8:11 PM Eastern Standard Time', '3/22/2018 8:11 PM Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
+    expect(['22-03-2000 20:11 Eastern Standard Time', '22-03-2000 20:11 Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' }));
+    Locale.set('nl-NL');
 
-      expect(['22-03-2018 20:11 Eastern-standaardtijd', '22-03-2018 20:11 Eastern-zomertijd']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
-      expect(['22-03-2000 20:11 Eastern-standaardtijd', '22-03-2000 20:11 Eastern-zomertijd']).toContain(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' }));
-    });
-  }
+    expect(['22-03-2018 20:11 Eastern-standaardtijd', '22-03-2018 20:11 Eastern-zomertijd']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
+    expect(['22-03-2000 20:11 Eastern-standaardtijd', '22-03-2000 20:11 Eastern-zomertijd']).toContain(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' }));
+  });
 
   it('Should parse dates with short timezones in current timezone', () => {
     Locale.set('en-US');
