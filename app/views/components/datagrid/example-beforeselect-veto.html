@@ -41,15 +41,18 @@
           }
 
           // If just Control or Meta (Mac) is done then allow the select.
-          if (Soho.keyboard.pressedKeys.entries().next().value[0] === 'Control' ||
-            Soho.keyboard.pressedKeys.entries().next().value[0] === 'Meta') {
+          if (Soho.keyboard.pressedKeys.get('Control') ||
+            Soho.keyboard.pressedKeys.get('Meta')) {
             var isSelected = gridApi.isRowSelected(args.idx);
             if (isSelected) {
               gridApi.deselectRow(args.idx, false, true);
             } else {
               gridApi.selectRow(args.idx, false, true);
             }
+            return true;
           }
+
+          $('body').toast({title: 'Selection Vetoed', message: 'In this example, selection is vetoed. You must hold CTRL and click a row to select (or Command on Mac)'});
           return false;
         },
         toolbar: {title: 'Data Grid Header Title', personalize: true, results: true, actions: true, rowHeight: true, selectCount: true}

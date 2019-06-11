@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="twelve columns">
+    <label for="states" class="label">State</label>
+    <select id="states" class="dropdown">
+      <option value="Hello">Hello</option>
+      <option value="<script>window.alert('dropdown xss')</script>XSS">&lt;script&gt;window.alert('dropdown xss')&lt;/script&gt;XSS</option>
+      <option value="World">World</option>
+    </select>
+  </div>
+</div>
