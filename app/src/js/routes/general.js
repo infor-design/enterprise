@@ -153,4 +153,10 @@ router.get('/', (req, res, next) => {
   res.redirect(`${res.opts.basepath}${type}/list`);
 });
 
+// Catchall route for error pages.
+router.get('*', (req, res, next) => {
+  res.status(404);
+  next(`File "${req.originalUrl}" was not found`);
+});
+
 module.exports = router;
