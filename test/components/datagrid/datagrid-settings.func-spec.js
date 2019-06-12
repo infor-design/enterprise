@@ -127,7 +127,6 @@ describe('Datagrid Settings', () => {
   });
 
   it('Should set settings', () => {
-    debugger;
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
     datagridObj.settings.emptyMessage.title = 'No Data Available';
