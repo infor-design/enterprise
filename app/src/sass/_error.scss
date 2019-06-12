@@ -19,8 +19,3 @@
 .error-stack {
   @include code-style();
 }
-
-// Fix top rows that come after a notification area.
-.notification-area + .row {
-  padding-top: 20px;
-}

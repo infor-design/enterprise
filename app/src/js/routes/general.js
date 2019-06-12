@@ -59,14 +59,6 @@ function generalRoute(req, res, next) {
         return;
       }
     }
-
-    // If the filename is not valid, don't 404, but redirect to the directory listing with
-    // a notice that the filename wasn't valid.
-    res.opts.notifications = res.opts.notifications || [];
-    res.opts.notifications.push({
-      message: `The URL "${path.join(directoryURL, filename)}" was not a valid example page, so you've been redirected to the directory list page.`,
-      type: 'alert'
-    });
   }
 
   // Render an `index.html` page if one exists (Generated Docs page).
