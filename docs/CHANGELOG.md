@@ -11,7 +11,9 @@
 ### v4.20.0 Fixes
 
 - `[Datagrid]` Fixes the alignment of the alert and warning icons on a lookup editor. ([#2175](https://github.com/infor-design/enterprise/issues/2175))
+- `[Datagrid]` Fixes tooltip on the non displayed table errors. ([#2264](https://github.com/infor-design/enterprise/issues/2264))
 - `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
+- `[Fieldfilter]` Fixed an issue where Dropdown was not switching mode on example page. ([#2288](https://github.com/infor-design/enterprise/issues/2288))
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
 
 ### v4.20.0 Chores & Maintenance
@@ -37,6 +39,7 @@
 - `[Datagrid]` Fixes an issue that caused the active page to not restore correctly when saving user settings, . ([#1766](https://github.com/infor-design/enterprise/issues/1766))
 - `[Datagrid]` Fixes an issue with dropdown filters when the ids are numbers. ([#1879](https://github.com/infor-design/enterprise/issues/1879))
 - `[Datagrid]` Fixed alignment issues in the new uplift theme. ([#2212](https://github.com/infor-design/enterprise/issues/2212))
+- `[Datagrid]` Fixes Datagrid time filtering for string type dates. ([#2281](https://github.com/infor-design/enterprise/issues/2281))
 - `[Form Compact]` Adds support for Datepicker, Timepicker, Lookup, and File Uploader fields. ([#1955](https://github.com/infor-design/enterprise/issues/1955))
 - `[Keyboard]` Added a new API that you can call at anytime to see what key is being pressed at the moment. ([#1906](https://github.com/infor-design/enterprise/issues/1906))
 - `[Targeted/Completion Chart]` Added back the ability to inline svg icons and hyperlinks. ([#2152](https://github.com/infor-design/enterprise/issues/2152))
@@ -73,9 +76,16 @@
 - `[Datagrid]` Fixes an error when saving columns if you have a lookup column. ([#2279](https://github.com/infor-design/enterprise/issues/2279))
 - `[Datagrid]` Fixed a bug with column reset not working sometimes. ([#1921](https://github.com/infor-design/enterprise/issues/1921))
 - `[Datagrid]` Fixed grouped headers not sorting when selectable is multiselect. ([#2251](https://github.com/infor-design/enterprise/issues/2251))
+- `[Datagrid]` Fixed a bug where the sort indicator disappeared when changing pages. ([#2228](https://github.com/infor-design/enterprise/issues/2228))
+- `[Datagrid]` Fixed rendering on modals with single columns. ([#1923](https://github.com/infor-design/enterprise/issues/1923))
+- `[Datagrid]` Fixed double firing of popupmenu events. ([#2140](https://github.com/infor-design/enterprise/issues/2140))
+- `[Datagrid]` Fixed incorrect pattern in filterConditions. ([#2159](https://github.com/infor-design/enterprise/issues/2159))
+- `[Datepicker]` Fixed an issue loading on IE 11. ([#2183](https://github.com/infor-design/enterprise-ng/issues/2183))
 - `[Dropdown]` Fixed the dropdown appearing misaligned at smaller screen sizes. ([#2248](https://github.com/infor-design/enterprise/issues/2248))
 - `[Editor]` Fixed an issue where button state for toolbar buttons were wrong when clicked one after another. ([#391](https://github.com/infor-design/enterprise/issues/391))
+- `[Hierarchy]` Fixed a bug where the hierarchy will only partially load with two instances on a page. ([#2205](https://github.com/infor-design/enterprise/issues/2205))
 - `[Field Options]` Fixed an issue where field options were misaligning, especially spin box was focusing outside of the field. ([#1862](https://github.com/infor-design/enterprise/issues/1862))
+- `[Field Options]` Fixed a border alignment issue. ([#2107](https://github.com/infor-design/enterprise/issues/2107))
 - `[Fileuploader]` Fixed an issue where the fileuploader icon and close icon were misplaced and not visible in RTL after uploading a file. ([#2098](https://github.com/infor-design/enterprise/issues/2098))
 - `[Fileuploader]` Fixed an issue where backspace in IE11 caused the browser to go back instead of removing the uploaded file from the input. ([#2184](https://github.com/infor-design/enterprise/issues/2184))
 - `[Input]` Improved alignment of icons in the uplift theme input components. ([#2072](https://github.com/infor-design/enterprise/issues/2072))
@@ -83,7 +93,7 @@
 - `[Locale]` Synced up date and time patterns with the CLDR several time patterns in particular were corrected. ([#2022](https://github.com/infor-design/enterprise/issues/2022))
 - `[Locale]` Fixed an issue loading duplicate locales such as en-GB where the strings are copies, before you might get undefined strings. ([#2216](https://github.com/infor-design/enterprise/issues/2216))
 - `[Locale]` Added support for es-419 locale. ([#2204](https://github.com/infor-design/enterprise/issues/2204))
-- `[Locale]` Restored functionality to dynamic change fonts for some languages. ([#403](https://github.com/infor-design/enterprise/issues/403))
+- `[Locale]` Restored functionality for dynamically changing fonts for some languages. ([#2144](https://github.com/infor-design/enterprise/issues/2144))
 - `[Modal]` Fixed a demoapp issue where the select all checkbox wasn't selecting all. ([2225](https://github.com/infor-design/enterprise/issues/2225))
 - `[Monthview]` Fixed an issue where the previous and next buttons were not correctly reversed in right-to-left mode. ([1910](https://github.com/infor-design/enterprise/issues/1910))
 - `[Personalization]` Changed the default turquoise personalization to a darker one. ([#2063](https://github.com/infor-design/enterprise/issues/2063))
@@ -93,8 +103,11 @@
 - `[Personalization]` Added several form examples with buttons and completion chart that can be personalized. ([#1963](https://github.com/infor-design/enterprise/issues/1963))
 - `[Personalization]` Added an example of normal tabs behaving like header tabs in a personalized area. ([#1962](https://github.com/infor-design/enterprise/issues/1962))
 - `[Personalization]` Added completion chart and alerts to the list of header items that will work when personalized. ([#2171](https://github.com/infor-design/enterprise/issues/2171))
+- `[Personalization]` Fixed a bug where the overlay would not disappear when manually loading stylesheets. ([#2258](https://github.com/infor-design/enterprise/issues/2258))
 - `[Popupmenu]` Fixed an issue where disabled submenus were opening on mouseover. ([#1863](https://github.com/infor-design/enterprise/issues/1863))
 - `[Radios]` Fixed an issue where in `RTL` the radio seems visually separate from it's label. ([#2096](https://github.com/infor-design/enterprise/issues/2096))
+- `[Summary Form]` Updated to improve readability. ([#1765](https://github.com/infor-design/enterprise/issues/1765))
+-- `[Targeted Achievement]` Updated to work in uplift theme. ([#2220](https://github.com/infor-design/enterprise/issues/2220))
 - `[Timepicker]` Fixed an issue where AM/PM dropdown tooltip was displaying on android devices. ([#1446](https://github.com/infor-design/enterprise/issues/1446))
 - `[Timepicker]` Fixed an issue where dropdown popup was out of position on android devices. ([#2021](https://github.com/infor-design/enterprise/issues/2021))
 - `[Timepicker]` Updated the Swedish translation for Set Time. ([#2153](https://github.com/infor-design/enterprise/issues/2153))
@@ -107,7 +120,14 @@
 - `[Demo App]` Fixed CSP and handling of image paths for better support of images in examples on IDS demo sites (demo.design.infor.com). ([#1888](https://github.com/infor-design/enterprise/issues/1888))
 - `[Personalize]` Separated personalization styles into standalone file for improved maintainability. ([#2127](https://github.com/infor-design/enterprise/issues/2127))
 
-(nn Issues Solved this release, Backlog Enterprise nn, Backlog Ng nn, nn Functional Tests, nn e2e Test)
+(84 Issues Solved this release, Backlog Enterprise 311, Backlog Ng 79, 839 Functional Tests, 876 e2e Test)
+
+## v4.18.2
+
+### v4.18.2 Fixes
+
+- `[Autocomplete]` Fixed an XSS injection issue. ([#502](https://github.com/infor-design/enterprise-ng/issues/502)).
+- `[Dropdown]` Fixed an XSS injection issue. ([#503](https://github.com/infor-design/enterprise-ng/issues/503)).
 
 ## v4.18.1
 

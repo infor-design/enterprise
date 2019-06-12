@@ -115,6 +115,49 @@
       g.elem.removeClass('datepicker timepicker lookup dropdown').val('');
     };
 
+    // Copy dropdown html
+    var dropdownHtml = $('#example-dropdown')[0].outerHTML;
+
+    // Toggle dropdown
+    var toggleDropdown = function (value) {
+      var isRange = (value === 'in-range');
+      var html = !isRange ? dropdownHtml : '<input type="text" class="field-filter input-md" id="example-dropdown"/>';
+      var el = $('#example-dropdown');
+      var parent = el.parent();
+      var fieldfilterApi = el.data('fieldfilter');
+
+      // Set filter
+      var setFilter = function () {
+        g.elem = parent.find('#example-dropdown');
+        if (!isRange) {
+          g.elem.addClass('dropdown').dropdown();
+        }
+        g.elem.fieldfilter({ dataset: fieldfilterData });
+        fieldfilterApi = g.elem.data('fieldfilter');
+        if (fieldfilterApi && fieldfilterApi.ddApi) {
+          fieldfilterApi.ddApi.selectValue(value);
+        }
+        setEvents();
+      };
+
+      if (fieldfilterApi && typeof fieldfilterApi.destroy === 'function') {
+        fieldfilterApi.destroy();
+      }
+
+      // Replace filter element
+      el.remove();
+      parent.append(html);
+
+      // Initialize and set events to switched element
+      if (isRange) {
+        setFilter();
+      } else {
+        setTimeout(function () {
+          setFilter();
+        }, 0);
+      }
+    };
+
     // Toggle isRange
     var toggleIsRange = function (control, isRange) {
       destroy();
@@ -128,9 +171,10 @@
     };
 
     // Init Field Filter and bind `filtered` event
-    $('.field-filter').fieldfilter({ dataset: fieldfilterData })
-      .on('filtered', function (e, args) {
+    $('.field-filter').fieldfilter({ dataset: fieldfilterData });
 
+    var setEvents = function() {
+      $('.field-filter').on('filtered', function (e, args) {
         // Set current element and api
         g.elem = $(this);
         g.api = {
@@ -151,6 +195,7 @@
           } else if (g.elem.is('#example-lookup') && !g.isRange.lookup) {
             initDatepicker('lookup');
           } else if (g.elem.is('#example-dropdown') && !g.isRange.dropdown) {
+            toggleDropdown(args.data.value);
             initDatepicker('dropdown');
           }
         }
@@ -165,8 +210,8 @@
             toggleIsRange('timepicker', false);
             g.elem.addClass('timepicker').timepicker();
           } else if (g.elem.is('#example-dropdown') && g.isRange.dropdown) {
+            toggleDropdown(args.data.value);
             toggleIsRange('dropdown', false);
-            g.elem.addClass('dropdown').dropdown();
           } else if (g.elem.is('#example-lookup') && g.isRange.lookup) {
             toggleIsRange('lookup', false);
             g.elem.addClass('lookup');
@@ -174,6 +219,8 @@
           }
         }
       });
+    };
 
+    setEvents();
   });
 </script>

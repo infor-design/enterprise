@@ -8,7 +8,6 @@ $dd-width: 55px;
 
 .field.fieldfilter-wrapper {
   div:first-of-type {
-    height: 34px;
     margin-right: -1px;
     vertical-align: top;
 
@@ -116,6 +115,24 @@ $dd-width: 55px;
 
   .listoption-icon {
     height: 14px;
+  }
+}
+
+// Firefox
+.is-firefox {
+  .field.fieldfilter-wrapper {
+    div:first-of-type {
+      height: 34px;
+    }
+  }
+}
+
+// IOS
+.ios {
+  .dropdown-list.ffdropdown {
+    .dropdown-search {
+      width: 100%;
+    }
   }
 }
 

@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<script>
+<script type="text/javascript">
   $('body').on('initialized', function () {
     const PERSONALIZE_API = $('html').data('personalize');
     const $html = $('html');
@@ -60,7 +60,7 @@
     // Set up colors dropdown
     const colorsDropdown = $('#example-colors');
 
-    const updateColorDropdown = () => {
+    const updateColorDropdown = function () {
       let colors = Soho.theme.personalizationColors();
       let colorsHtml = '';
       for (color in colors) {

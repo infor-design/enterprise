@@ -44,6 +44,14 @@
 
     fill: $chart-font-color;
     font-size: $theme-size-font-sm;
+
+    &::selection {
+      fill: $inverse-color;
+    }
+
+    &::-moz-selection {
+      fill: $inverse-color;
+    }
   }
 
   .inverse {

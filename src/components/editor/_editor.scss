@@ -176,19 +176,15 @@
   }
 
   h3 {
-    @include rem(line-height, 2.4rem);
-    @include rem(margin-bottom, 1.5rem);
-
     color: $editor-color;
     font-size: $theme-size-font-xl;
+    line-height: normal;
   }
 
   h4 {
-    @include rem(line-height, 1.8rem);
-    @include rem(margin-bottom, 1.5rem);
-
     color: $editor-color;
     font-size: $theme-size-font-lg;
+    line-height: normal;
   }
 
   ul,

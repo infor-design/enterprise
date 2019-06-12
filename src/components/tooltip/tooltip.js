@@ -378,7 +378,7 @@ Tooltip.prototype = {
       }
 
       // Could be a translation definition
-      content = Locale.translate(content, true) || content;
+      content = Locale.translate(content, { showAsUndefined: true }) || content;
 
       // Could be an ID attribute.
       // If it matches an element already on the page, grab that element's content
