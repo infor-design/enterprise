@@ -70,7 +70,8 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
  * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last column will get filled with an empty spacer column.
  * @param {boolean}  [settings.showNewRowIndicator=true] If true, the new row indicator will display after adding a row.
- * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize.
+ * @param {string}   [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize.
+ * @param {boolean}  [settings.stretchColumnOnChange=true] If true, column will recalculate its width and stretch if required.
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
@@ -159,6 +160,7 @@ const DATAGRID_DEFAULTS = {
   spacerColumn: false,
   showNewRowIndicator: true,
   stretchColumn: 'last',
+  stretchColumnOnChange: false,
   twoLineHeader: false,
   clickToSelect: true,
   toolbar: false,
@@ -4277,7 +4279,7 @@ Datagrid.prototype = {
         const diff2 = this.elemWidth - this.totalWidths[container];
         const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
-          stretchColumn[0].width += diff2 - 2;
+          stretchColumn[0].width = '';
         }
         this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
       }
@@ -9034,6 +9036,16 @@ Datagrid.prototype = {
         this.dirtyArray[row][cell].cell = cell;
         this.dirtyArray[row][cell].column = this.settings.columns[cell];
         this.setDirtyCell(row, cell);
+      }
+    }
+    
+    // resize on change
+    if (this.settings.stretchColumnOnChange && col && !col.width) {
+      const newWidth = this.calculateTextWidth(col);
+      const diff = newWidth - this.headerWidths[cell].width;
+      if (diff > 0 && this.headerWidths[cell].width !== '') {
+        this.resizeColumnWidth(cellNode, newWidth, diff);
+        this.headerWidths[cell].width = newWidth;
       }
     }
 

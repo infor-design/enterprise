@@ -2922,7 +2922,9 @@ td .btn-actions {
   }
 
   &.has-editor:not(.is-readonly) {
-    .icon-error {
+    .icon-error,
+    .icon-info,
+    .icon-alert {
       @include css3(transition, margin-left 300ms ease);
     }
 
@@ -2936,7 +2938,9 @@ td .btn-actions {
         margin-left: -22px;
       }
 
-      .icon-error {
+      .icon-error,
+      .icon-info,
+      .icon-alert {
         margin-left: -53px;
       }
     }

@@ -6,10 +6,12 @@
 
 ### v4.20.0 Features
 
+- `[Datagrid]` Added support to resize column widths after a value change via the stretchColumnOnChange setting. ([#2174](https://github.com/infor-design/enterprise/issues/2174))
 - `[Datagrid]` Added a Sort Function to the datagrid column to allow the value to be formatted for the sort. ([#1766](https://github.com/infor-design/enterprise/issues/2274)))
 
 ### v4.20.0 Fixes
 
+- `[Datagrid]` Fixes the alignment of the alert and warning icons on a lookup editor. ([#2175](https://github.com/infor-design/enterprise/issues/2175))
 - `[Datagrid]` Fixes tooltip on the non displayed table errors. ([#2264](https://github.com/infor-design/enterprise/issues/2264))
 - `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Fieldfilter]` Fixed an issue where Dropdown was not switching mode on example page. ([#2288](https://github.com/infor-design/enterprise/issues/2288))
