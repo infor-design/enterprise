@@ -350,11 +350,11 @@ function personalizeStyles(colors) {
 
 .is-personalizable .personalize-header,
 .is-personalizable.tab-container {
-  background-color: ${colors.base};
+  background-color: ${colors.base} !important;;
 }
 
 .is-personalizable .personalize-subheader {
-  background-color: ${colors.lighter};
+  background-color: ${colors.lighter} !important;;
 }
 
 .is-personalizable .personalize-text {

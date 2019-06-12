@@ -70,7 +70,8 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
  * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last column will get filled with an empty spacer column.
  * @param {boolean}  [settings.showNewRowIndicator=true] If true, the new row indicator will display after adding a row.
- * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize.
+ * @param {string}   [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize.
+ * @param {boolean}  [settings.stretchColumnOnChange=true] If true, column will recalculate its width and stretch if required.
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
@@ -159,6 +160,7 @@ const DATAGRID_DEFAULTS = {
   spacerColumn: false,
   showNewRowIndicator: true,
   stretchColumn: 'last',
+  stretchColumnOnChange: false,
   twoLineHeader: false,
   clickToSelect: true,
   toolbar: false,
@@ -4348,7 +4350,7 @@ Datagrid.prototype = {
         const diff2 = this.elemWidth - this.totalWidths[container];
         const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
-          stretchColumn[0].width += diff2 - 2;
+          stretchColumn[0].width = '';
         }
         this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
       }
@@ -4561,6 +4563,22 @@ Datagrid.prototype = {
         }
         return !handle;
       });
+      
+    if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
+      this.toolbar.parent().find('.table-errors')
+        .off('mouseenter.tableerrortooltip', '.icon')
+        .on('mouseenter.tableerrortooltip', '.icon', function () {
+          handleShow(this);
+        })
+        .off('mouseleave.tableerrortooltip click.tableerrortooltip', '.icon')
+        .on('mouseleave.tableerrortooltip click.tableerrortooltip', '.icon', function () {
+          handleHide(this);
+        })
+        .off('longpress.tableerrortooltip', '.icon')
+        .on('longpress.tableerrortooltip', '.icon', function () {
+          handleShow(this, 0);
+        });
+    }
   },
 
   /**
@@ -8476,12 +8494,19 @@ Datagrid.prototype = {
       this.settings.toolbar = { title: ' ' };
       this.appendToolbar();
     }
-
-    // process via type
-    for (const props in $.fn.validation.ValidationTypes) {  // eslint-disable-line
-      const validationType = $.fn.validation.ValidationTypes[props].type;
-      const errors = $.grep(this.nonVisibleCellErrors, error => error.type === validationType);
-      this.showNonVisibleCellErrorType(errors, validationType);
+    
+    if (this.nonVisibleCellErrors.length === 0) {
+      // remove table-error when not required
+      if (this.toolbar && this.toolbar.parent().find('.table-errors').length === 1) {
+        this.toolbar.parent().find('.table-errors').remove();
+      }    
+    } else {
+      // process via type
+      for (const props in $.fn.validation.ValidationTypes) {  // eslint-disable-line
+        const validationType = $.fn.validation.ValidationTypes[props].type;
+        const errors = $.grep(this.nonVisibleCellErrors, error => error.type === validationType);
+        this.showNonVisibleCellErrorType(errors, validationType);
+      }
     }
   },
 
@@ -8548,6 +8573,7 @@ Datagrid.prototype = {
       isError: type === 'error' || type === 'dirtyerror',
       wrapper: icon
     });
+    this.setupTooltips(false, true);
   },
 
   /**
@@ -8594,6 +8620,22 @@ Datagrid.prototype = {
   clearNonVisibleCellErrors(row, cell, type) {
     if (!this.nonVisibleCellErrors.length) {
       return;
+    }
+
+    if (this.toolbar && this.toolbar.parent() && this.toolbar.parent().find('.table-errors').length > 0) {
+      const icon = this.toolbar.parent().find('.table-errors').find(`.icon-${type}`);
+      if (icon.length) { 
+        const nonVisibleCellTypeErrors = $.grep(this.nonVisibleCellErrors, (error) => {
+          if (error.type === type) {
+            return error;
+          }
+          return '';
+        });
+        // No remaining cell errors of this type
+        if (!nonVisibleCellTypeErrors.length) {
+          icon.remove();
+        }
+      }
     }
 
     this.nonVisibleCellErrors = $.grep(this.nonVisibleCellErrors, (error) => {
@@ -9065,6 +9107,16 @@ Datagrid.prototype = {
         this.dirtyArray[row][cell].cell = cell;
         this.dirtyArray[row][cell].column = this.settings.columns[cell];
         this.setDirtyCell(row, cell);
+      }
+    }
+    
+    // resize on change
+    if (this.settings.stretchColumnOnChange && col && !col.width) {
+      const newWidth = this.calculateTextWidth(col);
+      const diff = newWidth - this.headerWidths[cell].width;
+      if (diff > 0 && this.headerWidths[cell].width !== '') {
+        this.resizeColumnWidth(cellNode, newWidth, diff);
+        this.headerWidths[cell].width = newWidth;
       }
     }
 
@@ -10022,8 +10074,9 @@ Datagrid.prototype = {
   sortFunction(id, ascending) {
     const column = this.columnById(id);
     // Assume the field and id match if no column found
-    const field = column.length === 0 ? id : column[0].field;
-
+    const col = column.length === 0 ? null : column[0];
+    const field = col === null ? id : col.field;
+    
     const self = this;
     const primer = function (a) {
       a = (a === undefined || a === null ? '' : a);
@@ -10038,7 +10091,10 @@ Datagrid.prototype = {
       return a;
     };
 
-    const key = function (x) { return primer(self.fieldValue(x, field)); };
+    let key = function (x) { return primer(self.fieldValue(x, field)); };
+    if (col && col.sortFunction) {
+      key = function (x) { return col.sortFunction(self.fieldValue(x, field)); };
+    }
 
     ascending = !ascending ? -1 : 1;
 
@@ -10489,7 +10545,14 @@ Datagrid.prototype = {
       $('body, .scrollable').off('scroll.gridtooltip');
       tooltip.off('touchend.gridtooltip');
       this.element.off('mouseenter.gridtooltip mouseleave.gridtooltip click.gridtooltip longpress.gridtooltip keydown.gridtooltip', selector.str);
-
+      
+      if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
+        this.toolbar.parent().find('.table-errors')
+          .off('mouseenter.tableerrortooltip', '.icon')
+          .off('mouseleave.tableerrortooltip click.tableerrortooltip', '.icon')
+          .off('longpress.tableerrortooltip', '.icon');
+      }
+      
       // Remove the place component
       const placeApi = tooltip.data('place');
       if (placeApi) {

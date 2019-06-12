@@ -36,6 +36,7 @@
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
+        allowSelectAcrossPages: true,
         columns: columns,
         selectable: 'multiple',
         paging: true,
@@ -68,7 +69,7 @@
           $.getJSON(url, function(res) {
             // This is the total going into the grid so the pager works (filtered total or total)
             req.total = res.total;
-
+            req.preserveSelected = true;
             if ((req.filterExpr && req.filterExpr[0])) {
               req.total = res.total;
               req.grandTotal = res.grandTotal; // This is the total amount on the server

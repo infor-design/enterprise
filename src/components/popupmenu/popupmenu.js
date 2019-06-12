@@ -755,7 +755,7 @@ PopupMenu.prototype = {
         return;
       }
 
-      if (self.menu.hasClass('is-open')) {
+      if (self.menu.add(self.element).hasClass('is-open')) {
         self.close();
       } else {
         self.open(e);
@@ -786,10 +786,9 @@ PopupMenu.prototype = {
     if (!immediate) {
       // Left-Click activation
       if (leftClick) {
-        this.element
-          .on('click.popupmenu', (e) => {
-            contextMenuHandler(e, true);
-          });
+        this.element.on('click.popupmenu', (e) => {
+          contextMenuHandler(e, true);
+        });
       }
 
       // Right-Click activation
@@ -2073,7 +2072,7 @@ PopupMenu.prototype = {
       isCancelled = false;
     }
 
-    if (!this.menu.hasClass('is-open')) {
+    if (!this.menu.add(this.element).hasClass('is-open')) {
       return;
     }
 
@@ -2126,6 +2125,11 @@ PopupMenu.prototype = {
     // Get rid of internal flags that check for how the menu was opened
     delete this.keydownThenClick;
     delete this.holdingDownClick;
+
+    // If `this.element` comes as `ul` element
+    if (this.element.is('ul.popupmenu')) {
+      this.element.closest('.popupmenu-wrapper').prev('button').removeClass('is-open');
+    }
 
     /**
      * Fires when close.

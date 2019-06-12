@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { Locale } from '../../../src/components/locale/locale';
 
 // jQuery components
@@ -119,6 +120,8 @@ Modal.prototype = {
 
     // Used for tracking events tied to the Window object
     this.id = this.element.attr('id') || (parseInt($('.modal').length, 10) + 1);
+    // Prevent Css on the title
+    this.settings.title = xssUtils.stripTags(this.settings.title, '<div><span><a><small><img><svg><i><b><use><br><strong><em>');
 
     // Find the button or anchor with same dialog ID
     this.trigger = $(`[data-modal="${this.element.attr('id')}"]`);
