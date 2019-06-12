@@ -9991,8 +9991,9 @@ Datagrid.prototype = {
   sortFunction(id, ascending) {
     const column = this.columnById(id);
     // Assume the field and id match if no column found
-    const field = column.length === 0 ? id : column[0].field;
-
+    const col = column.length === 0 ? null : column[0];
+    const field = col === null ? id : col.field;
+    
     const self = this;
     const primer = function (a) {
       a = (a === undefined || a === null ? '' : a);
@@ -10007,7 +10008,10 @@ Datagrid.prototype = {
       return a;
     };
 
-    const key = function (x) { return primer(self.fieldValue(x, field)); };
+    let key = function (x) { return primer(self.fieldValue(x, field)); };
+    if (col && col.sortFunction) {
+      key = function (x) { return col.sortFunction(self.fieldValue(x, field)); };
+    }
 
     ascending = !ascending ? -1 : 1;
 
