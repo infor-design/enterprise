@@ -313,8 +313,8 @@ const Locale = {  // eslint-disable-line
     let resolveToParent = false;
     const match = this.defaultLocales.filter(a => a.lang === lang);
     const parentLocale = match[0] || [{ default: 'en-US' }];
-    if (parentLocale.default && parentLocale.default !== 'en-US'
-      && parentLocale.default !== locale && !this.cultures[parentLocale.default]) {
+    if (parentLocale.default && parentLocale.default !== locale &&
+      !this.cultures[parentLocale.default]) {
       resolveToParent = true;
       this.appendLocaleScript(parentLocale.default, false, locale);
     }
@@ -1433,7 +1433,7 @@ const Locale = {  // eslint-disable-line
       showBrackets = options.showBrackets;
     }
 
-    if (languageData.messages === undefined) {
+    if (languageData === undefined || languageData.messages === undefined) {
       return showAsUndefined ? undefined : `${showBrackets ? '[' : ''}${key}${showBrackets ? ']' : ''}`;
     }
 
@@ -1546,7 +1546,8 @@ const Locale = {  // eslint-disable-line
    * @returns {boolean} whether or not this locale is "right-to-left".
    */
   isRTL() {
-    return this.currentLanguage.direction === 'right-to-left';
+    return !this.currentLanguage ? false :
+      this.currentLanguage.direction === 'right-to-left';
   },
 
   /**

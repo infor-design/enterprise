@@ -16,15 +16,16 @@ describe('Personalization tests', () => {
 
   it('Should maintain chosen theme after reinitialization', async () => {
     const pageChangerButtonEl = await element.all(by.css('.page-changer'));
-    const themeChoices = await element.all(by.css('.popupmenu li.is-selectable a[data-theme]'));
-    const arrayLength = await themeChoices.length;
-    const randomIndex = await Math.floor(Math.random() * arrayLength);
+    const themeChoices = await element.all(by.css('.popupmenu li.is-selectable a[data-theme-name]'));
     const reinitButton = await element(by.id('reinitialize'));
 
     await pageChangerButtonEl[0].click();
-    await themeChoices[randomIndex].click();
+    await browser.driver.sleep(config.sleep);
+    await element.all(by.css('.popupmenu li.submenu')).get(0).click();
+    await browser.driver.sleep(config.sleep);
+    await themeChoices[1].click();
 
-    const chosenTheme = await element.all(by.css('.popupmenu li.is-checked a[data-theme]')).getAttribute('data-theme');
+    const chosenTheme = await element.all(by.css('.popupmenu li.is-checked a[data-theme-name]')).getAttribute('data-theme-name');
 
     expect(await element.all(by.css('html')).get(0).getAttribute('class')).toContain(chosenTheme[0]);
     await browser.driver
@@ -40,7 +41,9 @@ describe('Personalization tests', () => {
     const reinitButton = await element(by.id('reinitialize'));
 
     await element(by.css('.page-changer')).click();
-    await await element.all(by.css('.popupmenu li.is-selectable a[data-rgbcolor]')).get(4).click();
+    await element.all(by.css('.popupmenu li.submenu')).get(2).click();
+    await browser.driver.sleep(config.sleep);
+    await element.all(by.css('.popupmenu li.is-selectable a[data-rgbcolor]')).get(4).click();
     await browser.driver.sleep(config.sleep);
 
     const beforeInitSheet = await element(by.id('soho-personalization')).getText();
@@ -96,7 +99,7 @@ describe('Personalization form tests', () => {
   }
 });
 
-describe('Personalization alternae form tests', () => {
+describe('Personalization alternate form tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/personalize/example-form3.html?layout=nofrills');
   });

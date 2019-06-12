@@ -17,7 +17,12 @@
 
      <div class="field">
         <label for="autocomplete">Script Injection Tests</label>
-        <input id="autocomplete" type="text" autocomplete="off" class='autocomplete' placeholder="Type a number 1-6">
+        <input id="autocomplete" type="text" autocomplete="off" class="autocomplete" placeholder="Type a number 1-6"/>
+     </div>
+
+     <div class="field">
+        <label for="autocomplete-two">Script Injection on Typing</label>
+        <input id="autocomplete-two" type="text" autocomplete="off" class="autocomplete" placeholder="Type a '<'"/>
      </div>
   </div>
 </div>
@@ -38,5 +43,16 @@
            response(request, data);
         }
      });
+
+    var sourceArr = [
+      'Hello',
+      '',
+      'World'
+    ];
+    sourceArr[1] = '<' + 'script' + '>window.alert()<' + '/script>';
+
+    $('#autocomplete-two').autocomplete({
+      source: sourceArr
+    });
   });
 </script>

@@ -390,10 +390,14 @@ Autocomplete.prototype = {
     // added and will remove soon popup close that includes aria-live="polite"
     // which have the first suggested item automatically announced when it
     // appears without moving focus.
-    self.list.parent('.popupmenu-wrapper').append(`${'' +
-      '<span id="ac-is-arialive" aria-live="polite" class="audible">'}${
-      $.trim(this.list.find('>li:first-child').text())
-    }</span>`);
+    DOM.append(
+      self.list.parent('.popupmenu-wrapper'),
+      `${'' +
+        '<span id="ac-is-arialive" aria-live="polite" class="audible">'}${
+        $.trim(this.list.find('>li:first-child').text())
+      }</span>`,
+      '<div><span><a><small><img><svg><i><b><use><br><strong><em>'
+    );
 
     this.noSelect = true;
     this.element.trigger('listopen', [filterResult]);

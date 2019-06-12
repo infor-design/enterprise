@@ -34,11 +34,12 @@ describe('Toast example-index tests', () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('toast-container'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('toast-container'))), config.waitsFor);
 
     await element(by.className('btn-close')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('toast-container'))), config.waitsFor);
 
-    expect(await element(by.id('toast-container'))).toBeTruthy();
+    expect(await element(by.id('toast-container')).isDisplayed()).toBeFalsy();
   });
 });
 
