@@ -7,6 +7,7 @@
 ### v4.20.0 Features
 
 - `[Datagrid]` Added support to resize column widths after a value change via the stretchColumnOnChange setting. ([#2174](https://github.com/infor-design/enterprise/issues/2174))
+- `[Datagrid]` Added a Sort Function to the datagrid column to allow the value to be formatted for the sort. ([#1766](https://github.com/infor-design/enterprise/issues/2274)))
 
 ### v4.20.0 Fixes
 
@@ -15,8 +16,11 @@
 - `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Fieldfilter]` Fixed an issue where Dropdown was not switching mode on example page. ([#2288](https://github.com/infor-design/enterprise/issues/2288))
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
+- `[Popupmenu]` Fixed an issue where js error was showing after removing menu item. ([#414](https://github.com/infor-design/enterprise-ng/issues/414))
 
 ### v4.20.0 Chores & Maintenance
+
+- `[Demo App]` Add the uplift theme to the theme switcher menu. ([#2335](https://github.com/infor-design/enterprise/issues/2335))
 
 ## v4.19.0
 
