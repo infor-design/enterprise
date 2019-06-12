@@ -507,7 +507,8 @@ Header.prototype = {
 
     if (colorArea.length > 0) {
       const colors = theme.personalizationColors();
-      let colorsHtml = '<li class="heading" role="presentation">Personalization</li>';
+      let colorsHtml = colorArea.parent().hasClass('popupmenu') ? '' :
+        '<li class="heading" role="presentation">Personalization</li>';
 
       Object.keys(colors).forEach((color) => {
         colorsHtml += `<li class="is-selectable${colors[color].name === 'Default' ? ' is-checked is-default' : ''}"><a href="#" data-rgbcolor="${colors[color].value}">${colors[color].name}</a></li>`;
@@ -517,6 +518,18 @@ Header.prototype = {
     }
 
     changer.on('selected.header', (e, link) => {
+      // Change Theme with Variant
+      const themeNameAttr = link.attr('data-theme-name');
+      const themeVariantAttr = link.attr('data-theme-variant');
+      if (themeNameAttr || themeVariantAttr) {
+        const name = changer.next().find('.is-checked a[data-theme-name]').attr('data-theme-name');
+        const variant = changer.next().find('.is-checked a[data-theme-variant]').attr('data-theme-variant');
+        if (name && variant) {
+          personalization.setTheme(`${name}-${variant}`);
+        }
+        return;
+      }
+
       // Change Theme
       const themeAttr = link.attr('data-theme');
       if (themeAttr) {
