@@ -1167,7 +1167,7 @@ Datagrid.prototype = {
         column.hideable = false;
       }
 
-      // Make Not hidable columns false
+      // Ensure hidable columns are marked as such
       if (column.hideable === undefined) {
         column.hideable = true;
       }

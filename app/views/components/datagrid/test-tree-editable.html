@@ -48,16 +48,11 @@
         ]
     }];
 
-    var isCellEditable = function(row, cell, value, columnDef, rowData, dataGrid) {
-      console.log(rowData);
-      return rowData != undefined;
-    };
-
     //Define Columns for the Grid.
     columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, editor: Editors.Input });
     columns.push({ id: 'id', name: 'Id', field: 'id' });
     columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
-    columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink, editor: Editors.Input, width: 60, isEditable: isCellEditable});
+    columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink, editor: Editors.Input, width: 60});
     columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Editors.Input });
 
     //Get some data via ajax
