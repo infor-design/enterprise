@@ -489,3 +489,30 @@ describe('Dropdown readonly tests', () => {
     expect(await browser.driver.switchTo().activeElement().getAttribute('id')).toEqual('random-input-2');
   });
 });
+
+describe('Dropdown xss tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/test-xss');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should not inject scripts', async () => {
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
+
+    expect(await element(by.id('states')).getAttribute('value')).toEqual('<script nonce=');
+    await browser.driver.sleep(config.sleep);
+    await utils.checkForErrors();
+  });
+});
