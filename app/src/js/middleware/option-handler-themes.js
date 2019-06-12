@@ -10,12 +10,6 @@ const URL = require('url');
 module.exports = function (app) {
   return function optionHandler(req, res, next) {
 
-    // NOTE: Ignore theming if the client doesn't accept HTML
-    if (req.url.includes('api/') && !req.accepts('html')) {
-      next();
-      return;
-    }
-
     /**
      * Set the theme, theme variant, icons, and colorScheme
      * Example: http://localhost:4000/controls/modal?theme=soho&variant=dark
@@ -53,11 +47,12 @@ module.exports = function (app) {
 
         const theUrl = URL.format({ query: q });
         logger('info', `Redirecting legacy query string params to "${theUrl}"`);
-        return res.redirect(theUrl);
-      } else {
-        // Set the theme
-        res.opts.theme.name = req.query.theme.toLowerCase();
+        res.redirect(theUrl);
+        return;
       }
+
+      // Set the theme
+      res.opts.theme.name = req.query.theme.toLowerCase();
     }
 
     // Set the theme variant (light, dark...)
