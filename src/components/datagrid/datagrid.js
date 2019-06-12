@@ -1167,6 +1167,11 @@ Datagrid.prototype = {
         column.hideable = false;
       }
 
+      // Make Not hidable columns false
+      if (column.hideable === undefined) {
+        column.hideable = true;
+      }
+
       // Assign css classes
       let cssClass = '';
       cssClass += isSortable ? ' is-sortable' : '';
@@ -5038,28 +5043,8 @@ Datagrid.prototype = {
   */
   personalizeColumns() {
     const self = this;
-    let spanNext = 0;
     let markup = `<div class="listview-search alternate-bg"><label class="audible" for="gridfilter">Search</label><input class="searchfield" placeholder="${Locale.translate('SearchColumnName')}" name="searchfield" id="gridfilter"></div>`;
-    markup += '<div class="listview alternate-bg" id="search-listview"><ul>';
-
-    for (let i = 0; i < this.settings.columns.length; i++) {
-      const col = this.settings.columns[i];
-      let colName = col.name;
-
-      if (colName && spanNext <= 0) {
-        colName = colName.replace('<br>', ' ').replace('<br/>', ' ').replace('<br />', ' ');
-        markup += `<li><a href="#" target="_self" tabindex="-1"> <label class="inline"><input tabindex="-1" ${col.hideable === false ? 'disabled' : ''} type="checkbox" class="checkbox" ${col.hidden ? '' : ' checked'} data-column-id="${col.id || i}"><span class="label-text">${colName}</span></label></a></li>`;
-      }
-
-      if (spanNext > 0) {
-        spanNext--;
-      }
-
-      if (col.colspan) {
-        spanNext = col.colspan - 1;
-      }
-    }
-    markup += '</ul></div>';
+    markup += '<div class="listview alternate-bg" id="search-listview"><ul></ul></div>';
 
     $('body').modal({
       title: Locale.translate('PersonalizeColumns'),
@@ -5076,7 +5061,31 @@ Datagrid.prototype = {
       self.isColumnsChanged = false;
     }).on('open.datagrid', (e, modal) => {
       modal.element.find('.searchfield').searchfield({ clearable: true });
-      modal.element.find('.listview').listview({ searchable: true, selectOnFocus: false })
+      modal.element.find('.listview')
+        .listview({
+          source: this.settings.columns,
+          template: `
+          <ul>
+          {{#dataset}}
+            {{#name}}
+            <li>
+              <a href="#" target="_self" tabindex="-1">
+                <label class="inline">
+                  <input tabindex="-1" type="checkbox" class="checkbox" {{^hideable}}disabled{{/hideable}} {{^hidden}}checked{{/hidden}} data-column-id="{{id}}"/>
+                  <span class="label-text">{{name}}</span>
+                </label>
+              </a>
+            </li>
+            {{/name}}
+          {{/dataset}}
+          </ul>`,
+          searchable: true,
+          selectOnFocus: false,
+          listFilterSettings: {
+            filterMode: 'contains',
+            searchableTextCallback: item => item.name
+          }
+        })
         .on('selected', (selectedEvent, args) => {
           const chk = args.elem.find('.checkbox');
           const id = chk.attr('data-column-id');
