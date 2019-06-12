@@ -77,10 +77,10 @@
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required', filterType: 'text' });
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 1 }, editor: Editors.Input, filterType: 'decimal' });
       columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3 }, editor: Editors.Input, mask: '###.000', filterType: 'decimal' });
-      columns.push({ id: 'color', name: 'Color', field: 'color', formatter: Formatters.Colorpicker, editor: Editors.Colorpicker });
+      columns.push({ id: 'color', name: 'Color', field: 'color', hidden: true, formatter: Formatters.Colorpicker, editor: Editors.Colorpicker });
       columns.push({ id: 'favorite', name: 'Favorite', field: 'favorite', hidden: true, formatter: Formatters.Favorite, editor: Editors.Favorite });
       columns.push({ id: 'file', name: 'File', field: 'file', hidden: true, formatter: Formatters.Fileupload, editor: Editors.Fileupload });
-      columns.push({ id: 'comment', resizable: true, name: 'Comment', field: 'comment', formatter: Formatters.Textarea, editor: Editors.Textarea, filterType: 'text' });
+      columns.push({ id: 'comment', resizable: true, hidden: true, name: 'Comment', field: 'comment', formatter: Formatters.Textarea, editor: Editors.Textarea, filterType: 'text' });
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
@@ -110,7 +110,7 @@
             response(res.data, req);
           });
         },
-        toolbar: {title: 'Data Grid Header Title',filterRow: true, personalize: true, results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+        toolbar: {title: 'Data Grid Header Title', filterRow: true, personalize: true, results: true, actions: true, rowHeight: true}
       });
       $('#update-datagrid').on('click', function() {
         let api = $('#datagrid').data('datagrid');

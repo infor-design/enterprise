@@ -883,7 +883,10 @@ const editors = {
     };
 
     this.val = function (v) {
-      return v ? parseInt(this.input.val(v), 10) : parseInt(this.input.val(), 10);
+      if (v) {
+        this.input.val(v);
+      }
+      return parseInt(this.input.val(), 10);
     };
 
     this.focus = function () {
@@ -898,7 +901,14 @@ const editors = {
 
       setTimeout(() => {
         grid.quickEditMode = false;
-        this.input.remove();
+        const textVal = this.val();
+        if (this.input && this.input.data('spinbox')) {
+          this.input.data('spinbox').destroy();
+        }
+        if (this.input) {
+          this.input.remove();
+        }
+        container.text(textVal);
       }, 0);
     };
 

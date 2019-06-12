@@ -3666,7 +3666,7 @@ Datagrid.prototype = {
         cssClass += ' datagrid-trigger-cell';
       }
 
-      if (col.editor) {
+      if (col.editor && this.settings.editable) {
         cssClass += ' has-editor';
       }
 
@@ -4563,7 +4563,7 @@ Datagrid.prototype = {
         }
         return !handle;
       });
-      
+
     if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
       this.toolbar.parent().find('.table-errors')
         .off('mouseenter.tableerrortooltip', '.icon')
@@ -8254,7 +8254,7 @@ Datagrid.prototype = {
     let cellNode;
     const isEditor = this.editor.name === 'editor';
     const isFileupload = this.editor.name === 'fileupload';
-    const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox .colorpicker'));
+    const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox, .colorpicker'));
 
     // Editor.getValue
     if (typeof this.editor.val === 'function') {
@@ -8494,12 +8494,12 @@ Datagrid.prototype = {
       this.settings.toolbar = { title: ' ' };
       this.appendToolbar();
     }
-    
+
     if (this.nonVisibleCellErrors.length === 0) {
       // remove table-error when not required
       if (this.toolbar && this.toolbar.parent().find('.table-errors').length === 1) {
         this.toolbar.parent().find('.table-errors').remove();
-      }    
+      }
     } else {
       // process via type
       for (const props in $.fn.validation.ValidationTypes) {  // eslint-disable-line
@@ -8624,7 +8624,7 @@ Datagrid.prototype = {
 
     if (this.toolbar && this.toolbar.parent() && this.toolbar.parent().find('.table-errors').length > 0) {
       const icon = this.toolbar.parent().find('.table-errors').find(`.icon-${type}`);
-      if (icon.length) { 
+      if (icon.length) {
         const nonVisibleCellTypeErrors = $.grep(this.nonVisibleCellErrors, (error) => {
           if (error.type === type) {
             return error;
@@ -9109,7 +9109,7 @@ Datagrid.prototype = {
         this.setDirtyCell(row, cell);
       }
     }
-    
+
     // resize on change
     if (this.settings.stretchColumnOnChange && col && !col.width) {
       const newWidth = this.calculateTextWidth(col);
@@ -10076,7 +10076,7 @@ Datagrid.prototype = {
     // Assume the field and id match if no column found
     const col = column.length === 0 ? null : column[0];
     const field = col === null ? id : col.field;
-    
+
     const self = this;
     const primer = function (a) {
       a = (a === undefined || a === null ? '' : a);
@@ -10545,14 +10545,14 @@ Datagrid.prototype = {
       $('body, .scrollable').off('scroll.gridtooltip');
       tooltip.off('touchend.gridtooltip');
       this.element.off('mouseenter.gridtooltip mouseleave.gridtooltip click.gridtooltip longpress.gridtooltip keydown.gridtooltip', selector.str);
-      
+
       if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
         this.toolbar.parent().find('.table-errors')
           .off('mouseenter.tableerrortooltip', '.icon')
           .off('mouseleave.tableerrortooltip click.tableerrortooltip', '.icon')
           .off('longpress.tableerrortooltip', '.icon');
       }
-      
+
       // Remove the place component
       const placeApi = tooltip.data('place');
       if (placeApi) {
