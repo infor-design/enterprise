@@ -25,7 +25,6 @@ function generalRoute(req, res, next) {
   // Return out on '/';
   if (utils.isRoot(originalUrl)) {
     res.render(path.join(viewsRoot, 'kitchen-sink.html'), res.opts);
-    next();
     return;
   }
 
@@ -49,7 +48,6 @@ function generalRoute(req, res, next) {
 
     if (utils.hasFile(fileOnPath)) {
       res.render(utils.getTemplateUrl(fileOnPath.replace(viewsRoot, '')), res.opts);
-      next();
       return;
     }
 
@@ -58,7 +56,6 @@ function generalRoute(req, res, next) {
       const friendlyURLFilepath = path.resolve(`${viewsRoot}${originalUrl}.html`);
       if (utils.hasFile(friendlyURLFilepath)) {
         res.render(utils.getTemplateUrl(friendlyURLFilepath.replace(viewsRoot, '')), res.opts);
-        next();
         return;
       }
     }
@@ -75,7 +72,6 @@ function generalRoute(req, res, next) {
   // Render an `index.html` page if one exists (Generated Docs page).
   if (utils.hasIndexFile(directoryPath)) {
     res.render(utils.getTemplateUrl(path.join(directoryURL, 'index.html')), res.opts);
-    next();
     return;
   }
 
@@ -153,7 +149,7 @@ router.get('/', (req, res, next) => {
   res.redirect(`${res.opts.basepath}${type}/list`);
 });
 
-// Catchall route for error pages.
+// Catch-all route for bad URLs.
 router.get('*', (req, res, next) => {
   res.status(404);
   next(`File "${req.originalUrl}" was not found`);

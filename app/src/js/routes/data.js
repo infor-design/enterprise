@@ -26,7 +26,6 @@ function sendJSONFile(filepath, req, res, next) {
     'Content-Type': 'application/json'
   });
   res.json(data);
-  next();
 }
 
 // Gets an internally-corrected path to a specified file.
@@ -49,10 +48,6 @@ function handleJSFile(jsFilename, req, res, next) {
 // API Routes
 // ========================================
 router.get('/', (req, res, next) => {
-  generalRoute(req, res, next);
-});
-
-router.get('/list', (req, res, next) => {
   generalRoute(req, res, next);
 });
 
@@ -98,8 +93,9 @@ router.get('/:fileName', (req, res, next) => {
     return;
   }
 
+  // Error out if no conditions are met.
   res.status(500);
-  next(`Can\'t do anything with file "${filepath}"`);
+  next(`Invalid/Missing data file "${filename}".`);
 });
 
 module.exports = router;

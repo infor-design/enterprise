@@ -3,6 +3,15 @@ const logger = require('../logger');
 const setLayout = require('../set-layout');
 const utils = require('../utils');
 
+// Gets a URL to use where the "Try getting a fresh start" link appears on the error page.
+// For some "virtual" (read: not file-system-based) routes, this needs manual intervention.
+function getRedirectedURL(url, viewsRoot) {
+  if (url.includes('/api')) {
+    return '/';
+  }
+  return utils.getClosestValidDirectory(url, viewsRoot);
+}
+
 // Simple Middleware for handling errors
 module.exports = function () {
   return function errorHandler(err, req, res, next) {
@@ -21,7 +30,7 @@ module.exports = function () {
     if (req.accepts('html')) {
       setLayout(req, res, 'layout-empty.html');
       res.opts.url = req.url;
-      res.opts.prevUrl = utils.getClosestValidDirectory(req.url, viewsRoot);
+      res.opts.prevUrl = getRedirectedURL(req.url, viewsRoot);
       res.opts.error = {
         code: res.statusCode || 500,
         message: err

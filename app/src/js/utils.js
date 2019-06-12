@@ -43,8 +43,8 @@ utils.isType = function (type, filePath) {
   const types = ['file', 'folder'];
   const defaultType = types[0];
   const mappings = {
-    file: { methodName: 'isFile' },
-    directory: { methodName: 'isDirectory' }
+    file: { methodName: 'isFile', errorCodes: ['ENOENT'] },
+    directory: { methodName: 'isDirectory', errorCodes: ['ENOENT', 'ENOTDIR'] }
     // TODO: Add More (symbolic link, etc)
   };
 
@@ -59,12 +59,13 @@ utils.isType = function (type, filePath) {
   }
 
   const methodName = mappings[type].methodName;
+  const errorCodes = mappings[type].errorCodes;
 
   try {
     const stats = fs.statSync(filePath);
     return stats[methodName]();
   } catch (err) {
-    return !(err && err.code === 'ENOENT');
+    return !(err && errorCodes.includes(err.code));
   }
 };
 
@@ -207,7 +208,7 @@ utils.getClosestValidDirectory = function getClosestValidDirectory(filePath, vie
     directory = utils.getParentDirectory(directory, viewsRoot);
   }
 
-  return directory.length ? utils.removeTrailingSlash(directory) : path.sep;
+  return directory.length > 1 ? utils.removeTrailingSlash(directory) : path.sep;
 };
 
 // Returns a true/false value that determines whether or not the layout is allowed to change

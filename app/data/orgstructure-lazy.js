@@ -1,4 +1,4 @@
-module.exports = (req, res, next) => {
+module.exports = (req, res) => {
   const menPath = '/images/';
   const womenPath = '/images/';
   const orgdata = [{
@@ -50,5 +50,4 @@ module.exports = (req, res, next) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(orgdata));
-  next();
 };
