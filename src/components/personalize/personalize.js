@@ -303,6 +303,8 @@ Personalize.prototype = {
     newCss.on('load', () => {
       originalCss.remove();
       self.unBlockUi();
+    }).on('error', () => {
+      self.unBlockUi();
     });
 
     const themePath = path ? path.substring(0, path.lastIndexOf('/')) : '';
