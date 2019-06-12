@@ -74,6 +74,7 @@ describe('Datagrid Settings', () => {
       spacerColumn: false,
       showNewRowIndicator: true,
       stretchColumn: 'last',
+      stretchColumnOnChange: false,
       twoLineHeader: false,
       clickToSelect: true,
       toolbar: false,

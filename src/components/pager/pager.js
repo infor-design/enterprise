@@ -95,7 +95,8 @@ const PAGER_DEFAULTS = {
   firstPageTooltip: 'FirstPage',
   previousPageTooltip: 'PreviousPage',
   nextPageTooltip: 'NextPage',
-  lastPageTooltip: 'LastPage'
+  lastPageTooltip: 'LastPage',
+  attachPageSizeMenuToBody: false
 };
 
 function Pager(element, settings) {
@@ -1021,7 +1022,8 @@ Pager.prototype = {
           parent: pageSizeButton,
           parentXAlignment: (Locale.isRTL() ? 'left' : 'right'),
           strategies: ['flip']
-        }
+        },
+        attachToBody: this.settings.attachPageSizeMenuToBody
       };
 
       pageSizeButton.popupmenu(popupOpts);

@@ -12,6 +12,10 @@
       <label for="toggle-small-pagesize" class="checkbox-label">Use Small Page Size Selector</label>
       </div>
     <div class="field">
+      <input type="checkbox" class="checkbox" name="toggle-attach-to-body" id="toggle-attach-to-body" disabled="true" />
+      <label for="toggle-attach-to-body" class="checkbox-label">Attach Page Size Menu To Body</label>
+    </div>
+    <div class="field">
       <input type="checkbox" class="checkbox" name="toggle-first-button" id="toggle-first-button"/>
       <label for="toggle-first-button" class="checkbox-label">Hide First Button</label>
     </div>
@@ -79,6 +83,7 @@
       enableNextButton: true,
       showLastButton: true,
       enableLastButton: true,
+      attachPageSizeMenuToBody: false,
       onFirstPage: function (elem, args) {
         $('body').toast({title: 'onFirstPage Callback Fired', message: ''});
       },
@@ -122,7 +127,13 @@
       }
 
       $('#toggle-small-pagesize').prop('disabled', !isChecked);
+      $('#toggle-attach-to-body').prop('disabled', !isChecked);
       api.updated(opts);
+    });
+
+    $('#toggle-attach-to-body').on('change.test', function() {
+      var isChecked = this.checked;
+      api.updated({attachPageSizeMenuToBody: isChecked});
     });
 
     $('#toggle-small-pagesize').on('change.test', function() {

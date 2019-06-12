@@ -537,7 +537,7 @@ $datagrid-short-row-height: 25px;
           top: -1px;
 
           &.l-right-text {
-            top: -1px;
+            top: -2px;
           }
         }
 
@@ -658,7 +658,7 @@ $datagrid-short-row-height: 25px;
         top: -1px;
 
         &.l-right-text {
-          top: -3px;
+          top: -2px;
         }
       }
 
@@ -2386,6 +2386,8 @@ $datagrid-short-row-height: 25px;
     &.l-right-text {
       direction: rtl;
       float: right;
+      position: relative;
+      top: -1px;
 
       .sort-indicator {
         margin: 3px 3px 0;
@@ -2399,6 +2401,11 @@ $datagrid-short-row-height: 25px;
       &.l-right-text {
         + .datagrid-filter-wrapper {
           clear: both;
+
+          input,
+          .btn-filter {
+            top: 2px;
+          }
         }
       }
     }
@@ -2915,7 +2922,9 @@ td .btn-actions {
   }
 
   &.has-editor:not(.is-readonly) {
-    .icon-error {
+    .icon-error,
+    .icon-info,
+    .icon-alert {
       @include css3(transition, margin-left 300ms ease);
     }
 
@@ -2929,7 +2938,9 @@ td .btn-actions {
         margin-left: -22px;
       }
 
-      .icon-error {
+      .icon-error,
+      .icon-info,
+      .icon-alert {
         margin-left: -53px;
       }
     }

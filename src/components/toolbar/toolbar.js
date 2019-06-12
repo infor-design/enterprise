@@ -226,7 +226,7 @@ Toolbar.prototype = {
     }
 
     const menuItems = [];
-    this.items.not(this.more).filter(menuItemFilter).each(function () {
+    this.items.not(this.more).not('.ignore-in-menu').filter(menuItemFilter).each(function () {
       menuItems.push(self.buildMoreActionsMenuItem($(this)));
     });
 
@@ -1216,7 +1216,7 @@ Toolbar.prototype = {
 
     let numIcons = 0;
     this.moreMenu.find('.icon').each(function () {
-      if (!$(this).parent().parent().hasClass('hidden')) {
+      if (!$(this).parent().parent().hasClass('hidden') && !$(this).hasClass('icon-dropdown')) {
         numIcons++;
       }
     });

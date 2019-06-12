@@ -1701,10 +1701,12 @@ describe('Datagrid save user settings', () => {
       expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('0');
       await element(by.css('#datagrid .datagrid-header th:nth-child(1)')).click();
       await element(by.css('#datagrid .datagrid-header th:nth-child(1)')).click();
+      await browser.driver.sleep(config.sleep);
 
       expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('99');
       await browser.refresh();
 
+      await browser.driver.sleep(config.sleep);
       expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('99');
     });
   }
