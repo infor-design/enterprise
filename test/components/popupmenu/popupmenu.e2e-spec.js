@@ -142,7 +142,7 @@ describe('Popupmenu example-selectable tests', () => {
   }
 });
 
-describe('Popupmenu example-selectable-multiple tests', () => {
+fdescribe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable-multiple?layout=nofrills');
   });
