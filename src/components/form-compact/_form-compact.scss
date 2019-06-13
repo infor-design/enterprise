@@ -199,7 +199,14 @@
 
       background-color: transparent;
       color: $fieldset-title-color;
+      float: left;
       padding: 4px 9px 0;
+      width: 100%;
+
+      + .radio-label,
+      + input[type='radio'] {
+        clear: both;
+      }
     }
 
     input[type='radio'] {
