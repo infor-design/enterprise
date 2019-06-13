@@ -660,4 +660,47 @@ describe('Datagrid API', () => {
     // Check if value in dataset is properly rendered
     expect(document.body.querySelectorAll('.datagrid-cell-wrapper')[3].innerHTML).toEqual('Newton');
   });
+
+  it('Should be able to convert a dataset to a html table', () => {
+    const excel = window.Soho.excel;
+    const newData = [];
+    for (let i = 0; i < 2000; i++) {
+      newData.push(data[0]);
+    }
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, {
+      dataset: newData,
+      columns
+    });
+    const start = new Date().getTime();
+    const table = excel.datasetToHtml(datagridObj.settings.dataset);
+    const end = new Date().getTime();
+    const result = (end - start) / 1000; // seconds
+
+    expect(result).toBeLessThan(0.5);
+    expect(table[0].querySelectorAll('tr').length).toEqual(2000);
+    expect(table[0].querySelector('tr').outerHTML).toEqual('<tr><td>1</td><td>T100</td><td><b>sku #9000001-237</b></td><td>Compressor</td><td>Assemble Paint</td><td>1</td><td>true</td><td>210.99</td><td>0.1</td><td>OK</td><td>2018-08-07T06:00:00.000Z</td><td>Action</td></tr>');
+  });
+
+  it('Should be able to do performance check for cleanExtra in excel', () => {
+    const excel = window.Soho.excel;
+    const newData = [];
+    const numOfRows = 2000;
+    for (let i = 0; i < numOfRows; i++) {
+      newData.push(data[0]);
+    }
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, {
+      dataset: newData,
+      columns
+    });
+    const start = new Date().getTime();
+    const table = excel.cleanExtra(datagridObj.settings.dataset, datagridObj);
+    const end = new Date().getTime();
+    const result = (end - start) / 1000; // seconds
+
+    expect(result).toBeLessThan(1.5);
+    expect(table[0].querySelectorAll('tr').length).toEqual(2000);
+    expect(table[0].querySelector('tr').outerHTML).toEqual('<tr><td><div><span> T100</span></div></td><td><div><a href="#" tabindex="-1" role="presentation" class="hyperlink ">Compressor</a></div></td><td><div>Assemble Paint</div></td><td><div>$#,##0.00</div></td><td><div>10 %</div></td><td><div>8/7/2018</div></td><td><div></div></td></tr>');
+  });
 });

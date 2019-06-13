@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="twelve columns">
+    <button id="exportExcel" class="btn-primary">Export to Excel</button>
+    <button id="exportCSV" class="btn-primary">Export to CSV</button>
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var url = '{{basepath}}api/datagrid-sample-data';
+    var grid;
+    var data;
+    var columns;
+
+    $.getJSON(url, function(res) {
+      data = [];
+      for (var i = 0; i < 2000; i++) {
+        data.push(res[2]);
+      }
+
+    	// Define Columns for the Grid.
+      columns = [];
+    	columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: 100});
+    	columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, minWidth: 200});
+    	columns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true});
+    	columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
+    	columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+    	columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+    	columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+    	columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, formatter: Formatters.Text});
+
+      // Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+    		saveUserSettings: { sortOrder: true, filter: true, columns: true },
+        toolbar: { title: "Export", results: true, actions: true, rowHeight: true, personalize: true }
+      }).data('datagrid');
+    });
+
+    // Display message modal
+    var showMessage = function (message) {
+      $('body').message({
+        title: 'Export Complete',
+        message: message,
+        buttons: [{
+          text: 'OK',
+          click: function() {
+            console.log(message.replace(/<\/?b>/g, ''));
+            $(this).data('modal').close();
+          },
+          isDefault: true
+        }]
+      });
+    };
+
+    // Run action to export Excel/CSV
+    var doExport = function (type) {
+      if (grid) {
+        var fileName = 'Test Large ' + type + ' Export';
+        var start = new Date().getTime();
+
+        // Export Excel
+        if (type === 'Excel') {
+          grid.exportToExcel(fileName);
+        }
+
+        // Export CSV
+        else if (type === 'CSV') {
+          grid.exportToCsv(fileName);
+        }
+
+        var end = new Date().getTime();
+        var result = (end - start) / 1000;
+        showMessage('Time to Export '+ type +' took <b>'+ result +'</b> seconds.');
+      }
+    };
+
+    $("#exportExcel").on('click.test', function() {
+      doExport('Excel');
+    });
+
+    $("#exportCSV").on('click.test', function() {
+      doExport('CSV');
+    });
+  });
+</script>
