@@ -3984,13 +3984,13 @@ Datagrid.prototype = {
       padding += 46;
     }
 
-    if (columnDef.formatter === Formatters.Dropdown ||
+    if (this.settings.editable && (columnDef.formatter === Formatters.Dropdown ||
       columnDef.formatter === Formatters.Lookup ||
-      (columnDef.editor === Editors.Time)) {
+      columnDef.editor === Editors.Time)) {
       padding += 10;
     }
 
-    if (columnDef.editor === Editors.Date) {
+    if (this.settings.editable && columnDef.editor === Editors.Date) {
       padding += 5;
     }
 
