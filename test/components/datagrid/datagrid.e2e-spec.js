@@ -850,7 +850,7 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
   });
 });
 
-fdescribe('Datagrid Checkbox Disabled Editor', () => {
+describe('Datagrid Checkbox Disabled Editor', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-checkboxes?layout=nofrills');
 
@@ -1689,6 +1689,7 @@ describe('Datagrid save user settings', () => {
       await browser.refresh();
 
       await browser.driver.sleep(config.sleep);
+
       expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('99');
     });
   }
