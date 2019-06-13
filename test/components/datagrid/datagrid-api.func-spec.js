@@ -699,7 +699,7 @@ describe('Datagrid API', () => {
     const end = new Date().getTime();
     const result = (end - start) / 1000; // seconds
 
-    expect(result).toBeLessThan(1.5);
+    expect(result).toBeLessThan(2);
     expect(table[0].querySelectorAll('tr').length).toEqual(2000);
     expect(table[0].querySelector('tr').outerHTML).toEqual('<tr><td><div><span> T100</span></div></td><td><div><a href="#" tabindex="-1" role="presentation" class="hyperlink ">Compressor</a></div></td><td><div>Assemble Paint</div></td><td><div>$#,##0.00</div></td><td><div>10 %</div></td><td><div>8/7/2018</div></td><td><div></div></td></tr>');
   });
