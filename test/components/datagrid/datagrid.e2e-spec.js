@@ -741,6 +741,10 @@ fdescribe('Datagrid Align Header Text Tests', () => { //eslint-disable-line
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
@@ -770,9 +774,14 @@ fdescribe('Datagrid Align Header Text Toggle Tests', () => { //eslint-disable-li
     expect(await element(by.css('.has-filterable-columns'))).toBeTruthy();
   });
 
-  if (utils.isChrome() && utils.isCI()) {
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  //if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
+      await element.all(by.css('.btn-actions')).first().click();
       await browser.driver
         .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.popupmenu.is-open'))), config.waitsFor);
       await element(by.css('li a[data-option="show-filter-row"')).click();
@@ -782,7 +791,7 @@ fdescribe('Datagrid Align Header Text Toggle Tests', () => { //eslint-disable-li
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text-toggle')).toEqual(0);
     });
-  }
+  //}
 });
 
 describe('Datagrid page size selector tests', () => {
