@@ -732,6 +732,59 @@ describe('Datagrid paging tests', () => {
   }
 });
 
+fdescribe('Datagrid Align Header Text Tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-align-header-text?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text')).toEqual(0);
+    });
+  }
+});
+
+fdescribe('Datagrid Align Header Text Toggle Tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-align-header-text-toggle?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should toggle filter row', async () => {
+    await element.all(by.css('.btn-actions')).first().click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.popupmenu.is-open'))), config.waitsFor);
+    await element(by.css('li a[data-option="show-filter-row"')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.has-filterable-columns'))).toBeTruthy();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.popupmenu.is-open'))), config.waitsFor);
+      await element(by.css('li a[data-option="show-filter-row"')).click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.css('.has-filterable-columns'))).toBeTruthy();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text-toggle')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid page size selector tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-page-size-selector');
@@ -1666,6 +1719,7 @@ describe('Datagrid save user settings', () => {
       await browser.refresh();
 
       await browser.driver.sleep(config.sleep);
+
       expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('99');
     });
   }
