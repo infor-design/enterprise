@@ -52,17 +52,22 @@
       padding: 16px 10px 15px;
     }
 
-    label {
+    fieldset {
+      height: 100%;
+    }
+
+    label,
+    .checkbox-group-label,
+    .radio-group legend {
       @include font-size(14);
       @include transition(background-color 100ms $cubic-ease, color 100ms $cubic-ease);
 
-      background-color: $formcompact-field-bg-color;
       margin-bottom: 0;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      &:not(.radio-label) {
+      &:not(.radio-label):not(.checkbox-label) {
         padding: 6px 9px 0;
       }
 
@@ -74,6 +79,15 @@
           content: '●';
           top: 0;
         }
+      }
+    }
+
+    label {
+      background-color: $formcompact-field-bg-color;
+
+      &.radio-label,
+      &.checkbox-label {
+        background-color: transparent;
       }
     }
 
@@ -95,8 +109,9 @@
         box-shadow: none;
       }
 
-      // Disable background for radios (handled by `fieldset`)
-      &.radio {
+      // Disable background for radios/checks (handled by `fieldset`)
+      &.radio,
+      &.checkbox {
         background-color: transparent;
       }
     }
@@ -123,8 +138,13 @@
         }
       }
 
-      .radio-group {
+      .radio-group,
+      .checkbox-group {
         background-color: $formcompact-field-bg-focus-color;
+
+        label {
+          background-color: transparent;
+        }
       }
     }
 
@@ -186,8 +206,42 @@
   }
 
   // =============================================
-  // Radio Group
+  // Form-Compact Checkbox Styles
   // =============================================
+  .checkbox-group-label {
+    @include font-size(14);
+
+    color: $formcompact-label-text-color;
+  }
+
+  .field.field-checkbox {
+    margin-bottom: 5px;
+
+    &:first-of-type {
+      margin-top: 8px;
+    }
+  }
+
+  .checkbox-label {
+    padding-left: 33px;
+  }
+
+  input.checkbox:checked,
+  input.checkbox:checked + input[type='hidden'],
+  span.checkbox > input:checked {
+    + label::after {
+      left: 10px;
+    }
+  }
+
+  label.inline .checkbox:checked ~ .label-text::after {
+    left: 10px;
+  }
+
+  // =============================================
+  // Form-Compact Radio Group Styles
+  // =============================================
+  .checkbox-group,
   .radio-group {
     @include transition(background-color 100ms $cubic-ease, border-color 100ms $cubic-ease, color 100ms $cubic-ease);
 
@@ -198,7 +252,6 @@
       @include font-size(14);
 
       background-color: transparent;
-      color: $fieldset-title-color;
       float: left;
       padding: 4px 9px 0;
       width: 100%;
@@ -220,12 +273,13 @@
 
   .radio-label {
     padding-left: 33px;
+  }
 
+  .radio-label {
     &::after {
       left: 12px;
     }
   }
-
 }
 
 .form-section-header {
@@ -331,6 +385,25 @@ html[dir='rtl'] {
         left: auto;
         right: 13px;
       }
+    }
+
+    // Checkboxes
+    .checkbox-label {
+      padding-right: 41px;
+    }
+
+    input.checkbox:checked,
+    input.checkbox:checked + input[type='hidden'],
+    span.checkbox > input:checked {
+      + label::after {
+        left: auto;
+        right: 22px;
+      }
+    }
+
+    label.inline .checkbox:checked ~ .label-text::after {
+      left: auto;
+      right: 22px;
     }
   }
 

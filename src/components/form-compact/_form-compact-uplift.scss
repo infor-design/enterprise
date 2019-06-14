@@ -10,7 +10,7 @@
     }
 
     label {
-      &:not(.radio-label) {
+      &:not(.radio-label):not(.checkbox-label) {
         padding: 4px 9px 0;
       }
     }
