@@ -9061,7 +9061,7 @@ Datagrid.prototype = {
         newWidth = col.maxWidth;
       }
       const diff = newWidth - this.headerWidths[cell].width;
-      if (diff != 0 && this.headerWidths[cell].width !== '') {
+      if (diff > 0 && this.headerWidths[cell].width !== '') {
         this.resizeColumnWidth(cellNode, newWidth, diff);
         this.headerWidths[cell].width = newWidth;
       }
