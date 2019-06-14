@@ -49,7 +49,7 @@
 
     &.form-section-header {
       background-color: $formcompact-bg-color;
-      padding: 16px 10px 15px;
+      padding: 16px 8px 15px;
     }
 
     fieldset {
@@ -59,7 +59,6 @@
     label,
     .checkbox-group-label,
     .radio-group legend {
-      @include font-size(14);
       @include transition(background-color 100ms $cubic-ease, color 100ms $cubic-ease);
 
       margin-bottom: 0;
@@ -68,13 +67,11 @@
       white-space: nowrap;
 
       &:not(.radio-label):not(.checkbox-label) {
-        padding: 6px 9px 0;
+        padding: 8px 9px 0;
       }
 
       &.required:not(.inline) {
         &::after {
-          @include font-size(18);
-
           color: $formcompact-field-required-color;
           content: '●';
           top: 0;
@@ -92,7 +89,6 @@
     }
 
     input {
-      @include font-size(18);
       @include transition(background-color 100ms $cubic-ease, border-color 100ms $cubic-ease, color 100ms $cubic-ease);
 
       background-color: $formcompact-field-bg-color;
@@ -101,7 +97,7 @@
       border-radius: 0;
       border-right: 1px solid $formcompact-field-border-color;
       border-top: 0;
-      padding: 2px 8px 6px;
+      padding: 4px 8px 8px;
       text-overflow: ellipsis;
       width: 100%;
 
@@ -202,15 +198,13 @@
   // Form-Compact File Uploader Styles
   // =============================================
   .fileuploader {
-    max-height: 30px;
+    max-height: 29px;
   }
 
   // =============================================
   // Form-Compact Checkbox Styles
   // =============================================
   .checkbox-group-label {
-    @include font-size(14);
-
     color: $formcompact-label-text-color;
   }
 
@@ -249,8 +243,6 @@
     margin-bottom: 0;
 
     legend {
-      @include font-size(14);
-
       background-color: transparent;
       float: left;
       padding: 4px 9px 0;
@@ -313,7 +305,7 @@
     .column,
     .columns {
       &.form-section-header {
-        padding: 16px 10px 15px;
+        padding: 16px 8px 15px;
       }
     }
   }
@@ -369,7 +361,7 @@ html[dir='rtl'] {
     // Font family changes on RTL affect the height of the FileUploader.
     .fileuploader {
       line-height: normal;
-      max-height: 31px;
+      max-height: 30px;
     }
 
     // Reverse padding on radios
