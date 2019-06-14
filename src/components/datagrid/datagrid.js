@@ -4739,6 +4739,10 @@ Datagrid.prototype = {
         if (isHidden !== undefined) {
           columns[i].hidden = isHidden;
         }
+        else {
+          delete columns[i].hidden
+        }
+
         if (excludeWidth) {
           columns[i].width = width;
         }
