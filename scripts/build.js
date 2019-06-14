@@ -1058,7 +1058,7 @@ cleanAll(true).then(() => {
 
         const cssPath = path.join(__dirname, '..', 'dist', 'css');
         const glob = require('glob');
-        const cssFiles = glob.sync(`${cssPath}/**/theme-soho-*.css*`);
+        const cssFiles = glob.sync(`${cssPath}/**/theme-soho-*.{css, min.css, css.map}`);
 
         const proms = cssFiles.map(file => {
           return new Promise((resolve, reject) => {
