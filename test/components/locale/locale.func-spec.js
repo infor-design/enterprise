@@ -959,7 +959,7 @@ describe('Locale API', () => {
     expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
   });
 
-  fit('Should format dates with long timezones', () => { //eslint-disable-line
+  it('Should format dates with long timezones', () => {
     Locale.set('en-US');
 
     expect(['3/22/2018 8:11 PM Eastern Standard Time', '3/22/2018 8:11 PM Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
