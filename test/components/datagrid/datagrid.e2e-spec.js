@@ -778,7 +778,7 @@ describe('Datagrid Align Header Text Toggle Tests', () => {
     await utils.checkForErrors();
   });
 
-  //if (utils.isChrome() && utils.isCI()) {
+  if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await element.all(by.css('.btn-actions')).first().click();
@@ -791,7 +791,7 @@ describe('Datagrid Align Header Text Toggle Tests', () => {
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text-toggle')).toEqual(0);
     });
-  //}
+  }
 });
 
 describe('Datagrid page size selector tests', () => {
