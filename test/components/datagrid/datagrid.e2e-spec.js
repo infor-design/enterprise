@@ -732,7 +732,7 @@ describe('Datagrid paging tests', () => {
   }
 });
 
-fdescribe('Datagrid Align Header Text Tests', () => { //eslint-disable-line
+describe('Datagrid Align Header Text Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-align-header-text?layout=nofrills');
 
@@ -755,7 +755,7 @@ fdescribe('Datagrid Align Header Text Tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datagrid Align Header Text Toggle Tests', () => { //eslint-disable-line
+describe('Datagrid Align Header Text Toggle Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-align-header-text-toggle?layout=nofrills');
 
