@@ -2131,6 +2131,7 @@ PopupMenu.prototype = {
       this.element.closest('.popupmenu-wrapper').prev('button').removeClass('is-open');
     }
 
+    this.menu.find('.popupmenu.is-open').removeClass('is-open');
     /**
      * Fires when close.
      *
