@@ -4492,7 +4492,7 @@ Datagrid.prototype = {
         }
         return !handle;
       });
-      
+
     if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
       this.toolbar.parent().find('.table-errors')
         .off('mouseenter.tableerrortooltip', '.icon')
@@ -8423,12 +8423,12 @@ Datagrid.prototype = {
       this.settings.toolbar = { title: ' ' };
       this.appendToolbar();
     }
-    
+
     if (this.nonVisibleCellErrors.length === 0) {
       // remove table-error when not required
       if (this.toolbar && this.toolbar.parent().find('.table-errors').length === 1) {
         this.toolbar.parent().find('.table-errors').remove();
-      }    
+      }
     } else {
       // process via type
       for (const props in $.fn.validation.ValidationTypes) {  // eslint-disable-line
@@ -8553,7 +8553,7 @@ Datagrid.prototype = {
 
     if (this.toolbar && this.toolbar.parent() && this.toolbar.parent().find('.table-errors').length > 0) {
       const icon = this.toolbar.parent().find('.table-errors').find(`.icon-${type}`);
-      if (icon.length) { 
+      if (icon.length) {
         const nonVisibleCellTypeErrors = $.grep(this.nonVisibleCellErrors, (error) => {
           if (error.type === type) {
             return error;
@@ -9038,7 +9038,7 @@ Datagrid.prototype = {
         this.setDirtyCell(row, cell);
       }
     }
-    
+
     // resize on change
     if (this.settings.stretchColumnOnChange && col && !col.width) {
       const newWidth = this.calculateTextWidth(col);
@@ -9549,9 +9549,8 @@ Datagrid.prototype = {
       this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
-    let children = rowElement.nextUntil(`[aria-level="${level}"]`);
     const isExpanded = expandButton.hasClass('is-expanded');
-    const args = [{ grid: self, row: dataRowIndex, item: rowElement, children }];
+    const args = [{ grid: self, row: dataRowIndex, item: rowElement }];
 
     if (self.settings.treeDepth && self.settings.treeDepth[dataRowIndex]) {
       args[0].rowData = self.settings.treeDepth[dataRowIndex].node;
@@ -9567,7 +9566,9 @@ Datagrid.prototype = {
       rowElement = self.settings.treeGrid ?
         self.actualRowNode(dataRowIndex) : self.visualRowNode(dataRowIndex);
       expandButton = rowElement.find('.datagrid-expand-btn');
-      children = rowElement.nextUntil(`[aria-level="${level}"]`);
+      const children = rowElement.nextUntil(`[aria-level="${level}"]`);
+      const parentRowIdx = self.settings.treeGrid && self.settings.source && self.settings.paging ?
+        self.dataRowIndex(rowElement) : dataRowIndex;
 
       if (isExpanded) {
         rowElement.attr('aria-expanded', false);
@@ -9578,7 +9579,7 @@ Datagrid.prototype = {
         expandButton.addClass('is-expanded')
           .find('.plus-minus').addClass('active');
       }
-      self.setExpandedInDataset(dataRowIndex, !isExpanded);
+      self.setExpandedInDataset(parentRowIdx, !isExpanded);
 
       const setChildren = function (elem, lev, expanded) {
         const nodes = elem.nextUntil(`[aria-level="${level}"]`);
@@ -9614,6 +9615,7 @@ Datagrid.prototype = {
 
       setChildren(rowElement, level, isExpanded);
       self.setAlternateRowShading();
+      args.children = children;
     };
 
     /**
@@ -10005,7 +10007,7 @@ Datagrid.prototype = {
     // Assume the field and id match if no column found
     const col = column.length === 0 ? null : column[0];
     const field = col === null ? id : col.field;
-    
+
     const self = this;
     const primer = function (a) {
       a = (a === undefined || a === null ? '' : a);
@@ -10474,14 +10476,14 @@ Datagrid.prototype = {
       $('body, .scrollable').off('scroll.gridtooltip');
       tooltip.off('touchend.gridtooltip');
       this.element.off('mouseenter.gridtooltip mouseleave.gridtooltip click.gridtooltip longpress.gridtooltip keydown.gridtooltip', selector.str);
-      
+
       if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
         this.toolbar.parent().find('.table-errors')
           .off('mouseenter.tableerrortooltip', '.icon')
           .off('mouseleave.tableerrortooltip click.tableerrortooltip', '.icon')
           .off('longpress.tableerrortooltip', '.icon');
       }
-      
+
       // Remove the place component
       const placeApi = tooltip.data('place');
       if (placeApi) {
