@@ -338,3 +338,9 @@ $box-shadow-off-color: rgba(0, 0, 0, 0);
 @mixin drawer-box-shadow() {
   @include css3(box-shadow, 0 0 20px 1px $box-shadow-on-color);
 }
+
+@mixin focus-state() {
+  &:focus {
+    box-shadow: $focus-box-shadow;
+  }
+}
