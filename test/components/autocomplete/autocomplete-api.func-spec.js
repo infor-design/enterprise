@@ -155,7 +155,7 @@ describe('Autocomplete API', () => {
 
     autocompleteAPI.updated({
       source: newData,
-      filterMode: 'startsWith'
+      filterMode: 'wordStartsWith'
     });
 
     autocompleteAPI.openList('S', newData);
@@ -186,7 +186,7 @@ describe('Autocomplete API', () => {
 
     autocompleteAPI.updated({
       source: newData,
-      filterMode: 'startsWith'
+      filterMode: 'wordStartsWith'
     });
 
     autocompleteAPI.openList('S', newData);
