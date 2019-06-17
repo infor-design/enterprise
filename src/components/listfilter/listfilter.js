@@ -44,7 +44,6 @@ function wordStartsWithFilter(text, term) {
   return false;
 }
 
-
 /**
  * Abstracted search/filter for use in other controls
  * @class ListFilter
