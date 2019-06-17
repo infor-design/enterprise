@@ -1,0 +1,136 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="toolbar" role="toolbar">
+      <div class="title">
+        Export
+        <span class="datagrid-result-count">(10 Results)</span>
+      </div>
+      <div class="buttonset">
+        <button type="button" class="btn" id="export-to-csv">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-export-spreadsheet"></use>
+          </svg>
+          <span>Export To Csv</span>
+        </button>
+        <button type="button" class="btn" id="export-to-excel">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-export-spreadsheet"></use>
+          </svg>
+          <span>Export To Excel</span>
+        </button>
+      </div>
+
+      <div class="more">
+        <button type="button" class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
+          <li class="separator"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var url = '{{basepath}}api/datagrid-sample-data';
+    var grid;
+    var data;
+    var columns;
+
+    // Get random number
+    var getRandomNumber = function (min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+
+    $.getJSON(url, function (res) {
+      data = [];
+      for (var i = 0; i < 2000; i++) {
+        var idx = getRandomNumber(0, 6);
+        var d = JSON.parse(JSON.stringify(res[idx]));
+        d.id = i + 1;
+        data.push(d);
+      }
+
+    	// Define Columns for the Grid.
+      columns = [];
+    	columns.push({ id: 'id', name: 'Id', field: 'id', reorderable: true, formatter: Formatters.Text, width: 100});
+    	columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, minWidth: 200});
+    	columns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true});
+    	columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId'});
+    	columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+    	columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+    	columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+    	columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, formatter: Formatters.Text});
+
+      // Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        paging: true,
+        pagesize: 10,
+        toolbar: { personalize: true, results: true, exportToExcel: false }
+      }).data('datagrid');
+    });
+
+    // Display message modal
+    var showMessage = function (message) {
+      $('body').message({
+        title: 'Export Complete',
+        message: message,
+        buttons: [{
+          text: 'OK',
+          click: function() {
+            console.log(message.replace(/<\/?b>/g, ''));
+            $(this).data('modal').close();
+          },
+          isDefault: true
+        }]
+      });
+    };
+
+    // Run action to export Excel/CSV
+    var doExport = function (type) {
+      if (grid) {
+        var fileName = 'Test Large ' + type + ' Export';
+        var start = new Date().getTime();
+
+        // Export Excel
+        if (type === 'Excel') {
+          grid.exportToExcel(fileName);
+        }
+
+        // Export CSV
+        else if (type === 'CSV') {
+          grid.exportToCsv(fileName);
+        }
+
+        var end = new Date().getTime();
+        var result = (end - start) / 1000;
+        showMessage('Time to Export '+ type +' took <b>'+ result +'</b> seconds.');
+      }
+    };
+
+    $("#export-to-excel").on('click.test', function() {
+      doExport('Excel');
+    });
+
+    $("#export-to-csv").on('click.test', function() {
+      doExport('CSV');
+    });
+  });
+</script>
