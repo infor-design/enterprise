@@ -1541,7 +1541,12 @@ $datagrid-short-row-height: 25px;
       .colorpicker-container {
         border: 0;
         display: block;
+        overflow: visible;
         width: 100%;
+
+        .swatch {
+          top: 4px;
+        }
 
         .colorpicker {
           padding: 9px 10px 8px;
@@ -2799,7 +2804,7 @@ td .btn-actions {
   height: inherit;
   line-height: 22px;
   margin: 0 -20px;
-  min-height: $datagrid-row-height + 6;
+  min-height: $datagrid-row-height - 1;
   overflow: auto;
   padding: 5px 20px;
   white-space: pre-line;
@@ -2808,7 +2813,7 @@ td .btn-actions {
 
 .medium-rowheight {
   .datagrid-multiline-text {
-    min-height: $datagrid-medium-row-height + 6;
+    min-height: $datagrid-medium-row-height + 2;
   }
 }
 
@@ -3264,8 +3269,8 @@ td .btn-actions {
 
   .icon {
     color: $theme-color-font-base;
-    margin-top: 9px;
-    right: 2px;
+    left: 0 !important;
+    margin-top: 8px;
 
     &.search {
       margin-top: 14px;
