@@ -56,6 +56,23 @@ $images-size: (
   }
 }
 
+// Override focus state for firefox
+html.is-firefox,
+html.ie {
+  .image-sm,
+  .image-md,
+  .image-lg {
+    img {
+      @include focus-state();
+    }
+  }
+
+  .image-initials,
+  .image-round {
+    @include focus-state();
+  }
+}
+
 // Initials for when photo is absent
 .image-initials {
   background: $theme-color-palette-amethyst-50;

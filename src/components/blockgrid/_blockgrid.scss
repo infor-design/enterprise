@@ -139,6 +139,17 @@
   }
 }
 
+html.is-firefox,
+html.ie {
+  .blockgrid {
+    .block {
+      img {
+        @include focus-state();
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .blockgrid {
