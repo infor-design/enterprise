@@ -16,6 +16,7 @@
 - `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Fieldfilter]` Fixed an issue where Dropdown was not switching mode on example page. ([#2288](https://github.com/infor-design/enterprise/issues/2288))
 - `[Field Options]` Fixed an issue where input example was not working. ([#2348](https://github.com/infor-design/enterprise/issues/2348))
+- `[Images]` Fixed an issue where images were not tabbable or receiving a visual focus state. ([#2025](https://github.com/infor-design/enterprise/issues/2025))
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
 - `[Popupmenu]` Fixed an issue where js error was showing after removing menu item. ([#414](https://github.com/infor-design/enterprise-ng/issues/414))
 
