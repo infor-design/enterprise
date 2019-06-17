@@ -13,6 +13,8 @@
 
 - `[Datagrid]` Fixes the alignment of the alert and warning icons on a lookup editor. ([#2175](https://github.com/infor-design/enterprise/issues/2175))
 - `[Datagrid]` Fixes tooltip on the non displayed table errors. ([#2264](https://github.com/infor-design/enterprise/issues/2264))
+- `[Datagrid]` Fixes on error on tree grid when using serverside paging. ([#2132](https://github.com/infor-design/enterprise/issues/2132))
+- `[Datagrid]` Fixed an issue where autocompletes were popping up on cell editors. ([#1575](https://github.com/infor-design/enterprise/issues/1575))
 - `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Fieldfilter]` Fixed an issue where Dropdown was not switching mode on example page. ([#2288](https://github.com/infor-design/enterprise/issues/2288))
 - `[Field Options]` Fixed an issue where input example was not working. ([#2348](https://github.com/infor-design/enterprise/issues/2348))
