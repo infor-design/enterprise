@@ -220,7 +220,7 @@
   }
 }
 
-@include respond-to(phonedown) {
+@include respond-to(phablet) {
   .colorpicker-container {
     width: 100% !important;
   }
