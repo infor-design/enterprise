@@ -1,4 +1,4 @@
-toggling# What's New with Enterprise
+# What's New with Enterprise
 
 ## v4.20.0
 
