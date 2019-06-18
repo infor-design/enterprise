@@ -4,6 +4,7 @@ import * as debug from '../../utils/debug';
 import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { charts } from '../charts/charts';
+import { theme } from '../theme/theme';
 import { Locale } from '../locale/locale';
 
 import '../emptymessage/emptymessage.jquery';
@@ -213,7 +214,8 @@ Pie.prototype = {
 
     // Handle zero sum or empty pies
     if (isEmpty || sum === 0 || isNaN(sum)) {
-      this.chartData.push({ data: {}, color: '#BDBDBD', name: 'Empty-Pie', value: 100, percent: 1, percentRound: 100 });
+      const palette = theme.themeColors().palette;
+      this.chartData.push({ data: {}, color: palette.graphite['30'].value, name: 'Empty-Pie', value: 100, percent: 1, percentRound: 100 });
     }
 
     self.updateData(self.chartData);
