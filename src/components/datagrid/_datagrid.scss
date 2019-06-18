@@ -537,7 +537,7 @@ $datagrid-short-row-height: 25px;
           top: -1px;
 
           &.l-right-text {
-            top: -1px;
+            top: -2px;
           }
         }
 
@@ -658,7 +658,7 @@ $datagrid-short-row-height: 25px;
         top: -1px;
 
         &.l-right-text {
-          top: -3px;
+          top: -2px;
         }
       }
 
@@ -1541,7 +1541,12 @@ $datagrid-short-row-height: 25px;
       .colorpicker-container {
         border: 0;
         display: block;
+        overflow: visible;
         width: 100%;
+
+        .swatch {
+          top: 4px;
+        }
 
         .colorpicker {
           padding: 9px 10px 8px;
@@ -2386,6 +2391,8 @@ $datagrid-short-row-height: 25px;
     &.l-right-text {
       direction: rtl;
       float: right;
+      position: relative;
+      top: -1px;
 
       .sort-indicator {
         margin: 3px 3px 0;
@@ -2399,6 +2406,11 @@ $datagrid-short-row-height: 25px;
       &.l-right-text {
         + .datagrid-filter-wrapper {
           clear: both;
+
+          input,
+          .btn-filter {
+            top: 2px;
+          }
         }
       }
     }
@@ -2774,7 +2786,7 @@ td .btn-actions {
   height: inherit;
   line-height: 22px;
   margin: 0 -20px;
-  min-height: $datagrid-row-height + 6;
+  min-height: $datagrid-row-height - 1;
   overflow: auto;
   padding: 5px 20px;
   white-space: pre-line;
@@ -2783,7 +2795,7 @@ td .btn-actions {
 
 .medium-rowheight {
   .datagrid-multiline-text {
-    min-height: $datagrid-medium-row-height + 6;
+    min-height: $datagrid-medium-row-height + 2;
   }
 }
 
@@ -2915,7 +2927,9 @@ td .btn-actions {
   }
 
   &.has-editor:not(.is-readonly) {
-    .icon-error {
+    .icon-error,
+    .icon-info,
+    .icon-alert {
       @include css3(transition, margin-left 300ms ease);
     }
 
@@ -2929,7 +2943,9 @@ td .btn-actions {
         margin-left: -22px;
       }
 
-      .icon-error {
+      .icon-error,
+      .icon-info,
+      .icon-alert {
         margin-left: -53px;
       }
     }
@@ -3235,8 +3251,8 @@ td .btn-actions {
 
   .icon {
     color: $theme-color-font-base;
-    margin-top: 9px;
-    right: 2px;
+    left: 0 !important;
+    margin-top: 8px;
 
     &.search {
       margin-top: 14px;

@@ -327,7 +327,7 @@ Accordion.prototype = {
       e.stopPropagation();
     }
 
-    this.closePopups();
+    this.closePopups(e);
 
     /**
      * If the anchor is a real link, follow the link and die here.
@@ -385,8 +385,10 @@ Accordion.prototype = {
       headers.each(function () {
         const api = $(this).data('popupmenu');
         api.close();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
+        if (e !== undefined) {
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        }
         return false;
       });
     }
@@ -414,7 +416,7 @@ Accordion.prototype = {
       e.stopPropagation();
     }
 
-    this.closePopups(e);
+    this.closePopups();
 
     const pane = header.next('.accordion-pane');
     if (pane.length) {

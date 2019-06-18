@@ -70,7 +70,8 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
  * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last column will get filled with an empty spacer column.
  * @param {boolean}  [settings.showNewRowIndicator=true] If true, the new row indicator will display after adding a row.
- * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize.
+ * @param {string}   [settings.stretchColumn='last'] If 'last' the last column will stretch using 100% css and work on resize.
+ * @param {boolean}  [settings.stretchColumnOnChange=true] If true, column will recalculate its width and stretch if required.
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
@@ -159,6 +160,7 @@ const DATAGRID_DEFAULTS = {
   spacerColumn: false,
   showNewRowIndicator: true,
   stretchColumn: 'last',
+  stretchColumnOnChange: false,
   twoLineHeader: false,
   clickToSelect: true,
   toolbar: false,
@@ -1932,7 +1934,7 @@ Datagrid.prototype = {
 
         if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '') && !(conditions[i].value instanceof Array)) &&
               columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
-          rowValue = parseFloat(rowValue);
+          rowValue = rowValue === null ? rowValue : parseFloat(rowValue);
           conditionValue = Locale.parseNumber(conditionValue);
         }
 
@@ -2069,20 +2071,20 @@ Datagrid.prototype = {
             if (rangeData && rangeData.startDate && rangeData.endDate) {
               const d1 = rangeData.startDate.getTime();
               const d2 = rangeData.endDate.getTime();
-              isMatch = rowValue >= d1 && rowValue <= d2;
+              isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
             }
             break;
           case 'less-than':
-            isMatch = (rowValue < conditionValue && rowValue !== '');
+            isMatch = (rowValue < conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'less-equals':
-            isMatch = (rowValue <= conditionValue && rowValue !== '');
+            isMatch = (rowValue <= conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'greater-than':
-            isMatch = (rowValue > conditionValue && rowValue !== '');
+            isMatch = (rowValue > conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'greater-equals':
-            isMatch = (rowValue >= conditionValue && rowValue !== '');
+            isMatch = (rowValue >= conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'selected':
             if (columnDef && columnDef.isChecked) {
@@ -3664,7 +3666,7 @@ Datagrid.prototype = {
         cssClass += ' datagrid-trigger-cell';
       }
 
-      if (col.editor) {
+      if (col.editor && this.settings.editable) {
         cssClass += ' has-editor';
       }
 
@@ -3870,43 +3872,90 @@ Datagrid.prototype = {
    * @returns {number} The text width.
    */
   calculateTextWidth(columnDef) {
+    const title = columnDef.name || '';
     let max = 0;
+    let maxWidth = 0;
+    let padding = 0;
     let maxText = '';
-    let chooseHeader = false;
     let hasButton = false;
     const self = this;
-    const title = columnDef.name || '';
 
-    // Get max cell value length for this column
-    for (let i = 0; i < this.settings.dataset.length; i++) {
-      let val = this.fieldValue(this.settings.dataset[i], columnDef.field);
-      let len = 0;
-      const row = this.settings.dataset[i];
+    if (columnDef.hidden) {
+      return 0;
+    }
 
-      // Get formatted value (without html) so we have accurate string that
-      // will display for this cell
-      val = self.formatValue(columnDef.formatter, i, 0, val, columnDef, row, self);
-      hasButton = val.toString().indexOf('btn-secondary') > -1;
+    if (columnDef.formatter === Formatters.Colorpicker) {
+      maxText = '';
+    } else if (columnDef.formatter === Formatters.Dropdown) {
+      const row = null;
+      let val = '';
+      // Find Longest option label
+      for (let i = 0; i < columnDef.options.length; i++) {
+        if (columnDef.options[i].label.length > val.length) {
+          val = columnDef.options[i].label;
+        }
+      }
+      val = self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self);
       val = xssUtils.stripHTML(val);
 
-      len = val.toString().length;
+      maxText = val;
+    } else {
+      let len = 0;
+      // Get max cell value length for this column
+      for (let i = 0; i < this.settings.dataset.length; i++) {
+        let val = this.fieldValue(this.settings.dataset[i], columnDef.field);
 
-      if (this.settings.groupable && row.values) {
-        for (let k = 0; k < row.values.length; k++) {
-          let groupVal = this.fieldValue(row.values[k], columnDef.field);
-          groupVal = self.formatValue(columnDef.formatter, i, 0, groupVal, columnDef, row, self);
-          groupVal = xssUtils.stripHTML(groupVal);
+        const row = this.settings.dataset[i];
 
-          len = groupVal.toString().length;
+        // Get formatted value (without html) so we have accurate string that
+        // will display for this cell
+        val = self.formatValue(columnDef.formatter, i, 0, val, columnDef, row, self);
+        hasButton = val.toString().indexOf('btn-secondary') > -1;
+        val = xssUtils.stripHTML(val);
+
+        len = val.toString().length;
+
+        if (this.settings.groupable && row.values) {
+          for (let k = 0; k < row.values.length; k++) {
+            let groupVal = this.fieldValue(row.values[k], columnDef.field);
+            groupVal = self.formatValue(columnDef.formatter, i, 0, groupVal, columnDef, row, self);
+            groupVal = xssUtils.stripHTML(groupVal);
+
+            len = groupVal.toString().length;
+            if (len > max) {
+              max = len;
+              maxText = groupVal;
+            }
+          }
+        }
+
+        if (len > max) {
+          max = len;
+          maxText = val;
+        }
+      }
+
+      // Get any Filter value
+      if (this.filterExpr && this.filterExpr.length > 0) {
+        const colFilter = $.grep(this.filterExpr, e => e.columnId === columnDef.id);
+        if (colFilter && colFilter.length === 1) {
+          const val = colFilter[0].value;
+          len = val.toString().length;
+
           if (len > max) {
             max = len;
-            maxText = groupVal;
+            maxText = val;
           }
         }
       }
 
-      if (len > max) {
-        max = len;
+      if (maxText === '' &&
+        (columnDef.formatter === Formatters.Date || columnDef.formatter === Formatters.Time)) {
+        const row = null;
+        let val = new Date(9999, 11, 31, 23, 59, 59, 999);
+        val = self.formatValue(columnDef.formatter, 0, 0, val, columnDef, row, self);
+        val = xssUtils.stripHTML(val);
+
         maxText = val;
       }
     }
@@ -3917,64 +3966,88 @@ Datagrid.prototype = {
     const hasAlert = columnDef.formatter ?
       columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
 
-    const hasIcon = columnDef.formatter ?
-      columnDef.formatter.toString().indexOf('#icon-dropdown') > -1 : false;
+    padding += 45;
 
     if (hasAlert) {
-      max += 10;
+      padding += 20;
     }
 
-    // Use header text length as max if bigger than all data cells
-    if (title.length > max) {
-      max = title.length;
-      maxText = title;
-      chooseHeader = true;
-    }
-
-    if (maxText === '' || this.settings.dataset.length === 0) {
-      maxText = columnDef.name || ' Default ';
-      chooseHeader = true;
-    }
-
-    // if given, use cached canvas for better performance, else, create new canvas
-    this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
-    const context = this.canvas.getContext('2d');
-    if (!this.fontCached) {
-      this.fontCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
-        '16px arial' : '14px arial';
-    }
-    context.font = this.fontCached;
-    const metrics = context.measureText(maxText);
-    let padding = chooseHeader ? 40 : 50;
-
-    if (hasAlert && !chooseHeader) {
-      padding += 30;
-    }
-
-    if (hasTag && !chooseHeader) {
+    if (hasTag) {
       padding += 10;
-    }
-
-    if (hasIcon && !chooseHeader) {
-      padding += 40;
     }
 
     if (hasButton) {
       padding += 50;
     }
 
-    if (columnDef.filterType) {
-      let minWidth = columnDef.filterType === 'date' ? 170 : 100;
-
-      if (columnDef.filterType === 'checkbox') {
-        minWidth = 40;
-        padding = 40;
-      }
-
-      return Math.round(Math.max(metrics.width + padding, minWidth));
+    if (this.settings.editable && columnDef.editor === Editors.Spinbox) {
+      padding += 46;
     }
 
-    return Math.round(metrics.width + padding); // Add padding and borders
+    if (this.settings.editable && (columnDef.formatter === Formatters.Dropdown ||
+      columnDef.formatter === Formatters.Lookup ||
+      columnDef.editor === Editors.Time)) {
+      padding += 10;
+    }
+
+    if (this.settings.editable && columnDef.editor === Editors.Date) {
+      padding += 5;
+    }
+
+    maxWidth = this.calculateTextRenderWidth(maxText) + padding;
+    if (columnDef.formatter === Formatters.Colorpicker) {
+      maxWidth = 150;
+    }
+    // Calculate the Header with the correct font.
+    const isSortable = (columnDef.sortable === undefined ? true : columnDef.sortable);
+    const headerPadding = isSortable ? 48 : 40;
+    let minHeaderWidth = this.calculateTextRenderWidth(title, true) + headerPadding;
+
+    // Calculate the width required for the filter
+    // Field plus
+    if (columnDef.filterType && this.settings.filterable) {
+      if (minHeaderWidth < 40) {
+        minHeaderWidth = 40;
+      }
+
+      if (columnDef.filterType !== 'checkbox') {
+        if (maxText !== '') {
+          if (minHeaderWidth < maxWidth + 40 && maxText !== '') {
+            minHeaderWidth = maxWidth + 55;
+          }
+        } else if (minHeaderWidth < 120) {
+          minHeaderWidth = 120;
+        }
+      }
+    }
+
+    return Math.ceil(Math.max(maxWidth, minHeaderWidth));
+  },
+
+  /**
+   * This Function calculates the width to render a text string
+   * @private
+   * @param  {string} maxText The text to render.
+   * @param  {boolean} isHeader If its a header being calculated
+   * @returns {number} the calculated text width in pixels.
+   */
+  calculateTextRenderWidth(maxText, isHeader) {
+    // if given, use cached canvas for better performance, else, create new canvas
+    this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+    const context = this.canvas.getContext('2d');
+    if (!this.fontCached || !this.fontHeaderCached) {
+      this.fontCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+        '400 16px arial' : '400 14px arial';
+      this.fontHeaderCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+        '600 14px arial' : '700 12px arial';
+    }
+
+    context.font = this.fontCached;
+    if (isHeader) {
+      context.font = this.fontHeaderCached;
+    }
+
+    return context.measureText(maxText).width;
   },
 
   /**
@@ -4233,6 +4306,16 @@ Datagrid.prototype = {
       col.width = colWidth;
     }
 
+    // make sure that the column is atleast the minimum width
+    if (col.minWidth && colWidth < col.minWidth) {
+      colWidth = col.minWidth;
+    }
+
+    // make sure that the column is no more than the maximum width
+    if (col.minWidth && colWidth > col.maxWidth) {
+      colWidth = col.maxWidth;
+    }
+
     // cache the header widths
     this.headerWidths[index] = {
       id: col.id,
@@ -4277,7 +4360,7 @@ Datagrid.prototype = {
         const diff2 = this.elemWidth - this.totalWidths[container];
         const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
         if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
-          stretchColumn[0].width += diff2 - 2;
+          stretchColumn[0].width = '';
         }
         this.totalWidths[container] = this.isInModal ? this.elemWidth : '100%';
       }
@@ -4490,6 +4573,22 @@ Datagrid.prototype = {
         }
         return !handle;
       });
+
+    if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
+      this.toolbar.parent().find('.table-errors')
+        .off('mouseenter.tableerrortooltip', '.icon')
+        .on('mouseenter.tableerrortooltip', '.icon', function () {
+          handleShow(this);
+        })
+        .off('mouseleave.tableerrortooltip click.tableerrortooltip', '.icon')
+        .on('mouseleave.tableerrortooltip click.tableerrortooltip', '.icon', function () {
+          handleHide(this);
+        })
+        .off('longpress.tableerrortooltip', '.icon')
+        .on('longpress.tableerrortooltip', '.icon', function () {
+          handleShow(this, 0);
+        });
+    }
   },
 
   /**
@@ -8165,7 +8264,7 @@ Datagrid.prototype = {
     let cellNode;
     const isEditor = this.editor.name === 'editor';
     const isFileupload = this.editor.name === 'fileupload';
-    const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox .colorpicker'));
+    const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox, .colorpicker'));
 
     // Editor.getValue
     if (typeof this.editor.val === 'function') {
@@ -8406,11 +8505,18 @@ Datagrid.prototype = {
       this.appendToolbar();
     }
 
-    // process via type
-    for (const props in $.fn.validation.ValidationTypes) {  // eslint-disable-line
-      const validationType = $.fn.validation.ValidationTypes[props].type;
-      const errors = $.grep(this.nonVisibleCellErrors, error => error.type === validationType);
-      this.showNonVisibleCellErrorType(errors, validationType);
+    if (this.nonVisibleCellErrors.length === 0) {
+      // remove table-error when not required
+      if (this.toolbar && this.toolbar.parent().find('.table-errors').length === 1) {
+        this.toolbar.parent().find('.table-errors').remove();
+      }
+    } else {
+      // process via type
+      for (const props in $.fn.validation.ValidationTypes) {  // eslint-disable-line
+        const validationType = $.fn.validation.ValidationTypes[props].type;
+        const errors = $.grep(this.nonVisibleCellErrors, error => error.type === validationType);
+        this.showNonVisibleCellErrorType(errors, validationType);
+      }
     }
   },
 
@@ -8477,6 +8583,7 @@ Datagrid.prototype = {
       isError: type === 'error' || type === 'dirtyerror',
       wrapper: icon
     });
+    this.setupTooltips(false, true);
   },
 
   /**
@@ -8523,6 +8630,22 @@ Datagrid.prototype = {
   clearNonVisibleCellErrors(row, cell, type) {
     if (!this.nonVisibleCellErrors.length) {
       return;
+    }
+
+    if (this.toolbar && this.toolbar.parent() && this.toolbar.parent().find('.table-errors').length > 0) {
+      const icon = this.toolbar.parent().find('.table-errors').find(`.icon-${type}`);
+      if (icon.length) {
+        const nonVisibleCellTypeErrors = $.grep(this.nonVisibleCellErrors, (error) => {
+          if (error.type === type) {
+            return error;
+          }
+          return '';
+        });
+        // No remaining cell errors of this type
+        if (!nonVisibleCellTypeErrors.length) {
+          icon.remove();
+        }
+      }
     }
 
     this.nonVisibleCellErrors = $.grep(this.nonVisibleCellErrors, (error) => {
@@ -8994,6 +9117,24 @@ Datagrid.prototype = {
         this.dirtyArray[row][cell].cell = cell;
         this.dirtyArray[row][cell].column = this.settings.columns[cell];
         this.setDirtyCell(row, cell);
+      }
+    }
+
+    // resize on change
+    if (this.settings.stretchColumnOnChange && col && !col.width) {
+      let newWidth = this.calculateTextWidth(col);
+      // make sure that the column is atleast the minimum width
+      if (col.minWidth && newWidth < col.minWidth) {
+        newWidth = col.minWidth;
+      }
+      // make sure that the column is no more than the maximum width
+      if (col.minWidth && newWidth > col.maxWidth) {
+        newWidth = col.maxWidth;
+      }
+      const diff = newWidth - this.headerWidths[cell].width;
+      if (diff > 0 && this.headerWidths[cell].width !== '') {
+        this.resizeColumnWidth(cellNode, newWidth, diff);
+        this.headerWidths[cell].width = newWidth;
       }
     }
 
@@ -9951,7 +10092,8 @@ Datagrid.prototype = {
   sortFunction(id, ascending) {
     const column = this.columnById(id);
     // Assume the field and id match if no column found
-    const field = column.length === 0 ? id : column[0].field;
+    const col = column.length === 0 ? null : column[0];
+    const field = col === null ? id : col.field;
 
     const self = this;
     const primer = function (a) {
@@ -9967,7 +10109,10 @@ Datagrid.prototype = {
       return a;
     };
 
-    const key = function (x) { return primer(self.fieldValue(x, field)); };
+    let key = function (x) { return primer(self.fieldValue(x, field)); };
+    if (col && col.sortFunction) {
+      key = function (x) { return col.sortFunction(self.fieldValue(x, field)); };
+    }
 
     ascending = !ascending ? -1 : 1;
 
@@ -10419,6 +10564,13 @@ Datagrid.prototype = {
       $('body, .scrollable').off('scroll.gridtooltip');
       tooltip.off('touchend.gridtooltip');
       this.element.off('mouseenter.gridtooltip mouseleave.gridtooltip click.gridtooltip longpress.gridtooltip keydown.gridtooltip', selector.str);
+
+      if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
+        this.toolbar.parent().find('.table-errors')
+          .off('mouseenter.tableerrortooltip', '.icon')
+          .off('mouseleave.tableerrortooltip click.tableerrortooltip', '.icon')
+          .off('longpress.tableerrortooltip', '.icon');
+      }
 
       // Remove the place component
       const placeApi = tooltip.data('place');
