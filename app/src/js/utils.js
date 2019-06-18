@@ -193,7 +193,7 @@ utils.getDirectory = function (filePath, webroot) {
     return removeWebroot(absFilePath, webroot);
   }
 
-  return removeWebroot(utils.removeLastPart(filePath), webroot);
+  return removeWebroot(utils.removeLastPart(absFilePath), webroot);
 };
 
 // Gets the path of the parent directory of a file
