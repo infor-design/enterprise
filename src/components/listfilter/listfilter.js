@@ -1,12 +1,48 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 
 // The Name of this component.
 const COMPONENT_NAME = 'ListFilter';
 
 // Possible Filter Modes
-const filterModes = ['startsWith', 'contains'];
+const filterModes = [
+  'startsWith',
+  'contains',
+  'keyword',
+  'wordStartsWith',
+  'phraseStartsWith'
+];
+
+/**
+ * Matches the provided term against the beginning of all words in a text string.
+ * @param {string} text searchable text.
+ * @param {string} term the term for which to search in the text string.
+ * @returns {boolean} true if the term is present.
+ */
+function wordStartsWithFilter(text, term) {
+  const parts = text.split(' ');
+
+  // Check all words for a match
+  for (let a = 0; a < parts.length; a++) {
+    if (parts[a].indexOf(term) === 0) {
+      return true;
+    }
+  }
+
+  // Direct Match
+  if (text.indexOf(term) === 0) {
+    return true;
+  }
+
+  // Partial dual word match
+  if (term.indexOf(' ') > 0 && text.indexOf(term) > 0) {
+    return true;
+  }
+
+  return false;
+}
 
 /**
  * Abstracted search/filter for use in other controls
@@ -22,7 +58,7 @@ const filterModes = ['startsWith', 'contains'];
 
 const LISTFILTER_DEFAULTS = {
   caseSensitive: false,
-  filterMode: filterModes[0],
+  filterMode: filterModes[3],
   searchableTextCallback: undefined
 };
 
@@ -57,6 +93,11 @@ ListFilter.prototype = {
 
     for (let i = 0; i < checks.length; i++) {
       setReasonableDefaults(checks[i].setting, checks[i].limits, checks[i].preset);
+    }
+
+    // Warn about deprecated `startsWith` filter mode
+    if (this.settings.filterMode === filterModes[0]) {
+      warnAboutDeprecation('wordStartsWith (filter)', 'startsWith (filter)');
     }
 
     return this;
@@ -141,24 +182,18 @@ ListFilter.prototype = {
         text = text.toLowerCase();
       }
 
-      const parts = text.split(' ');
       let match = false;
 
-      if (self.settings.filterMode === 'startsWith') {
-        for (let a = 0; a < parts.length; a++) {
-          if (parts[a].indexOf(term) === 0) {
-            match = true;
-            break;
-          }
-        }
+      // `startsWith` filter is deprecated as of v4.20.x.
+      // For checking if any word in the string begins with the term, use `wordStartsWith`.
+      // For checking if a string begins with the term, use `phraseStartsWith`.
+      const wordStartsWithFilters = ['startsWith', 'wordStartsWith'];
+      if (wordStartsWithFilters.indexOf(self.settings.filterMode) > -1) {
+        match = wordStartsWithFilter(text, term);
+      }
 
-        // Direct Match
+      if (self.settings.filterMode === 'phraseStartsWith') {
         if (text.indexOf(term) === 0) {
-          match = true;
-        }
-
-        // Partial dual word match
-        if (term.indexOf(' ') > 0 && text.indexOf(term) > 0) {
           match = true;
         }
       }
