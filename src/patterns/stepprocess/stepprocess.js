@@ -402,7 +402,19 @@ Stepprocess.prototype = {
       self.selectStep(stepLink, 'next');
     } else if (typeof self.settings.beforeSelectStep === 'function') {
       const args = { isStepping: 'next' };
-      self.settings.beforeSelectStep(args);
+      const result = self.settings.beforeSelectStep(args);
+
+      if (result.done && typeof result.done === 'function') { // A promise is returned
+        result.done((continueSelectNode, stepLinkToSelect) => {
+          if (continueSelectNode) {
+            if (stepLinkToSelect) {
+              self.selectStepFinish(stepLinkToSelect);
+            }
+          }
+        });
+      } else if (result) { // boolean is returned instead of a promise
+        self.selectStepFinish(stepLink);
+      }
     }
   },
 

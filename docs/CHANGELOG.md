@@ -1,7 +1,7 @@
 # What's New with Enterprise
 
 ## v4.20.0
-
+- `[Stepprocess]` Not showing the next step. ([#2391](https://github.com/infor-design/enterprise/issues/2391))
 ### v4.20.0 Deprecation
 
 ### v4.20.0 Features
