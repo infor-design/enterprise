@@ -139,11 +139,14 @@
   }
 }
 
+// Override border and focus state for Firefox and IE
 html.is-firefox,
 html.ie {
   .blockgrid {
     .block {
       img {
+        border: 1px solid transparent;
+
         &:focus {
           @include focus-state();
         }

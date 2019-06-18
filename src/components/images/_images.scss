@@ -56,13 +56,15 @@ $images-size: (
   }
 }
 
-// Override focus state for firefox
+// Override border and focus state for Firefox and IE
 html.is-firefox,
 html.ie {
   .image-sm,
   .image-md,
   .image-lg {
     img {
+      border: 1px solid transparent;
+
       &:focus {
         @include focus-state();
       }
@@ -71,6 +73,8 @@ html.ie {
 
   .image-initials,
   .image-round {
+    border: 1px solid transparent;
+
     &:focus {
       @include focus-state();
     }
