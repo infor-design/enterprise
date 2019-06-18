@@ -20,45 +20,53 @@ excel.cleanExtra = function (customDs, self) {
       }
     };
     const nonExportables = [];
-    const elements = [].slice.call(table[0].querySelectorAll('tr, th, td, div, span'));
+    const rows = [].slice.call(table[0].querySelectorAll('tr'));
 
-    elements.forEach((el) => {
-      if (el.classList.contains('is-hidden') || el.classList.contains('datagrid-expandable-row')) {
-        removeNode(el);
+    rows.forEach((row) => {
+      if (row.classList.contains('is-hidden') || row.classList.contains('datagrid-expandable-row')) {
+        removeNode(row);
         return;
       }
 
-      // THEAD
-      const attrExportable = el.getAttribute('data-exportable');
-      if (attrExportable && attrExportable === 'no') {
-        const index = parseInt(el.id.slice(-1), 10);
-        nonExportables.push(index + 1);
-        removeNode(el);
-        return;
-      }
-
-      // TBODY
-      const attrAriaColindex = el.getAttribute('aria-colindex');
-      if (el.tagName.toLowerCase() === 'td' && attrAriaColindex) {
-        if (nonExportables.indexOf(parseInt(attrAriaColindex, 10)) !== -1) {
+      const elements = [].slice.call(row.querySelectorAll('th, td, div, span'));
+      elements.forEach((el) => {
+        if (el.classList.contains('is-hidden')) {
           removeNode(el);
           return;
         }
-      }
 
-      const innerElements = [].slice.call(table[0].querySelectorAll('.is-hidden, .datagrid-expand-btn, .is-draggable-target, .handle, .sort-indicator, .datagrid-filter-wrapper'));
-      innerElements.forEach(innerEl => removeNode(innerEl));
+        // THEAD
+        const attrExportable = el.getAttribute('data-exportable');
+        if (attrExportable && attrExportable === 'no') {
+          const index = parseInt(el.id.slice(-1), 10);
+          nonExportables.push(index + 1);
+          removeNode(el);
+          return;
+        }
 
-      while (el.attributes.length > 0) {
-        el.removeAttribute(el.attributes[0].name);
-      }
+        // TBODY
+        const attrAriaColindex = el.getAttribute('aria-colindex');
+        if (el.tagName.toLowerCase() === 'td' && attrAriaColindex) {
+          if (nonExportables.indexOf(parseInt(attrAriaColindex, 10)) !== -1) {
+            removeNode(el);
+            return;
+          }
+        }
 
-      // White Hat Security Violation. Remove Excel formulas
-      // Excel Formulas Start with =SOMETHING
-      const text = el.textContent;
-      if (text.substr(0, 1) === '=' && text.substr(1, 1) !== '') {
-        el.textContent = `'${text}'`;
-      }
+        const innerElements = [].slice.call(el.querySelectorAll('.is-hidden, .datagrid-expand-btn, .is-draggable-target, .handle, .sort-indicator, .datagrid-filter-wrapper'));
+        innerElements.forEach(innerEl => removeNode(innerEl));
+
+        while (el.attributes.length > 0) {
+          el.removeAttribute(el.attributes[0].name);
+        }
+
+        // White Hat Security Violation. Remove Excel formulas
+        // Excel Formulas Start with =SOMETHING
+        const text = el.textContent;
+        if (text.substr(0, 1) === '=' && text.substr(1, 1) !== '') {
+          el.textContent = `'${text}'`;
+        }
+      });
     });
 
     return table;
@@ -75,7 +83,7 @@ excel.cleanExtra = function (customDs, self) {
   if (!customDs && !table[0].querySelector('thead')) {
     const tbody = table[0].querySelector('tbody');
     const header = table[0].createTHead();
-    const row = table[0].insertRow(0);
+    const row = header.insertRow(0);
     const allHeaderNodes = self.headerNodes();
 
     for (let i = 0; i < allHeaderNodes.length; i++) {
@@ -151,7 +159,7 @@ excel.save = function (content, fileName) {
 */
 excel.datasetToHtml = function (dataset) {
   let tableHtml = '<tbody>';
-  for (let i = 0; i < dataset.length; i++) {
+  for (let i = 0, l = dataset.length; i < l; i++) {
     tableHtml += '<tr>';
     Object.keys(dataset[i]).forEach((key, index) => { //eslint-disable-line
       if (dataset[i] && Object.prototype.hasOwnProperty.call(dataset[i], key)) {
@@ -229,33 +237,28 @@ excel.base64 = function (s) {
  */
 excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
   const validateFields = function (values, settings, rowData, idx) {
-    for (let j = 0; j < values.length; j++) {
+    for (let j = 0, l = values.length; j < l; j++) {
       const col = settings.columns[idx];
 
       if (col.formatter !== Formatters.Readonly) {
-        switch (col.editor.name) {
-          case Editors.Input.name:
-            if (col.filterType === 'integer' || col.filterType === 'decimal' || col.filterType === 'number') {
-              // Number Values
+        if (col.editor.name === Editors.Input.name) {
+          if (col.filterType === 'integer' || col.filterType === 'decimal' || col.filterType === 'number') {
+            // Number Values
 
-              // Validates if input is number. If true, will overwrite the data in cell otherwise nothing will happen.
-              if (!isNaN(values[j].trim())) {
-                rowData[col.field] = values[j];
-              }
-            } else {
-              // String Values
-              // Just overwrite the data in the cell
+            // Validates if input is number. If true, will overwrite the data in cell otherwise nothing will happen.
+            if (!isNaN(values[j].trim())) {
               rowData[col.field] = values[j];
             }
-            break;
-          case Editors.Date.name:
-            // Validates if input is date. If true, will overwrite the data in cell otherwise nothing will happen.
-            if (!isNaN(Date.parse(values[j]))) {
-              rowData[col.field] = new Date(values[j]);
-            }
-            break;
-          default:
-            break;
+          } else {
+            // String Values
+            // Just overwrite the data in the cell
+            rowData[col.field] = values[j];
+          }
+        } else if (col.editor.name === Editors.Input.name) {
+          // Validates if input is date. If true, will overwrite the data in cell otherwise nothing will happen.
+          if (!isNaN(Date.parse(values[j]))) {
+            rowData[col.field] = new Date(values[j]);
+          }
         }
       }
 
@@ -263,7 +266,10 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
     }
   };
 
-  for (let i = 0; i < pastedData.length; i++) {
+  const pastedDataLen = pastedData.length;
+  const columnsLen = self.settings.columns.length;
+
+  for (let i = 0; i < pastedDataLen; i++) {
     const rawVal = pastedData[i].split('\t');
     const startColIndex = colIndex;
 
@@ -272,7 +278,7 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
       validateFields(rawVal, self.settings, currentRowData, startColIndex);
     } else {
       const newRowData = {};
-      for (let k = 0; k < self.settings.columns.length; k++) {
+      for (let k = 0; k < columnsLen; k++) {
         newRowData[self.settings.columns[k].field] = '';
       }
       validateFields(rawVal, self.settings, newRowData, startColIndex);
