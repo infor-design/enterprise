@@ -55,7 +55,7 @@ describe('hierarchy API', () => {
 
   it('Can render a legend', () => {
     expect(document.body.querySelectorAll('legend li').length).toEqual(3);
-    expect(document.body.querySelector('legend li').innerText).toEqual('Full Time');
+    expect(document.body.querySelector('legend li').innerText.trim()).toEqual('Full Time');
   });
 
   it('Can be destroyed', () => {
