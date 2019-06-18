@@ -27,8 +27,13 @@ $images-size: (
 @each $key, $value in $images-size {
   .image-#{$key} {
     img {
+      border: 1px solid transparent; // to prevent jump on focus
       max-height: nth($value, 2);
       max-width: nth($value, 1);
+
+      &:focus {
+        @include focus-state();
+      }
     }
 
     &.placeholder {
@@ -38,10 +43,15 @@ $images-size: (
 }
 
 .image-round {
+  border: 1px solid transparent; // to prevent jump on focus
   border-radius: 50%;
   display: inline-block;
   height: 50px;
   width: 50px;
+
+  &:focus {
+    @include focus-state();
+  }
 }
 
 // Photo with svg status
@@ -56,34 +66,10 @@ $images-size: (
   }
 }
 
-// Override border and focus state for Firefox and IE
-html.is-firefox,
-html.ie {
-  .image-sm,
-  .image-md,
-  .image-lg {
-    img {
-      border: 1px solid transparent;
-
-      &:focus {
-        @include focus-state();
-      }
-    }
-  }
-
-  .image-initials,
-  .image-round {
-    border: 1px solid transparent;
-
-    &:focus {
-      @include focus-state();
-    }
-  }
-}
-
 // Initials for when photo is absent
 .image-initials {
   background: $theme-color-palette-amethyst-50;
+  border: 1px solid transparent; // to prevent jump on focus
   border-radius: 50%;
   color: $theme-color-palette-white;
   display: inline-block;
@@ -98,6 +84,10 @@ html.ie {
     left: 6px;
     position: relative;
     top: 22px;
+  }
+
+  &:focus {
+    @include focus-state();
   }
 }
 
