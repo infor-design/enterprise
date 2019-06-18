@@ -1934,7 +1934,7 @@ Datagrid.prototype = {
 
         if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '') && !(conditions[i].value instanceof Array)) &&
               columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
-          rowValue = parseFloat(rowValue);
+          rowValue = rowValue === null ? rowValue : parseFloat(rowValue);
           conditionValue = Locale.parseNumber(conditionValue);
         }
 
@@ -2071,20 +2071,20 @@ Datagrid.prototype = {
             if (rangeData && rangeData.startDate && rangeData.endDate) {
               const d1 = rangeData.startDate.getTime();
               const d2 = rangeData.endDate.getTime();
-              isMatch = rowValue >= d1 && rowValue <= d2;
+              isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
             }
             break;
           case 'less-than':
-            isMatch = (rowValue < conditionValue && rowValue !== '');
+            isMatch = (rowValue < conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'less-equals':
-            isMatch = (rowValue <= conditionValue && rowValue !== '');
+            isMatch = (rowValue <= conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'greater-than':
-            isMatch = (rowValue > conditionValue && rowValue !== '');
+            isMatch = (rowValue > conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'greater-equals':
-            isMatch = (rowValue >= conditionValue && rowValue !== '');
+            isMatch = (rowValue >= conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'selected':
             if (columnDef && columnDef.isChecked) {
@@ -9638,9 +9638,8 @@ Datagrid.prototype = {
       this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
-    let children = rowElement.nextUntil(`[aria-level="${level}"]`);
     const isExpanded = expandButton.hasClass('is-expanded');
-    const args = [{ grid: self, row: dataRowIndex, item: rowElement, children }];
+    const args = [{ grid: self, row: dataRowIndex, item: rowElement }];
 
     if (self.settings.treeDepth && self.settings.treeDepth[dataRowIndex]) {
       args[0].rowData = self.settings.treeDepth[dataRowIndex].node;
@@ -9656,7 +9655,9 @@ Datagrid.prototype = {
       rowElement = self.settings.treeGrid ?
         self.actualRowNode(dataRowIndex) : self.visualRowNode(dataRowIndex);
       expandButton = rowElement.find('.datagrid-expand-btn');
-      children = rowElement.nextUntil(`[aria-level="${level}"]`);
+      const children = rowElement.nextUntil(`[aria-level="${level}"]`);
+      const parentRowIdx = self.settings.treeGrid && self.settings.source && self.settings.paging ?
+        self.dataRowIndex(rowElement) : dataRowIndex;
 
       if (isExpanded) {
         rowElement.attr('aria-expanded', false);
@@ -9667,7 +9668,7 @@ Datagrid.prototype = {
         expandButton.addClass('is-expanded')
           .find('.plus-minus').addClass('active');
       }
-      self.setExpandedInDataset(dataRowIndex, !isExpanded);
+      self.setExpandedInDataset(parentRowIdx, !isExpanded);
 
       const setChildren = function (elem, lev, expanded) {
         const nodes = elem.nextUntil(`[aria-level="${level}"]`);
@@ -9703,6 +9704,7 @@ Datagrid.prototype = {
 
       setChildren(rowElement, level, isExpanded);
       self.setAlternateRowShading();
+      args.children = children;
     };
 
     /**
