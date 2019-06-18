@@ -144,7 +144,9 @@ html.ie {
   .blockgrid {
     .block {
       img {
-        @include focus-state();
+        &:focus {
+          @include focus-state();
+        }
       }
     }
   }

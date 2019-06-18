@@ -63,13 +63,17 @@ html.ie {
   .image-md,
   .image-lg {
     img {
-      @include focus-state();
+      &:focus {
+        @include focus-state();
+      }
     }
   }
 
   .image-initials,
   .image-round {
-    @include focus-state();
+    &:focus {
+      @include focus-state();
+    }
   }
 }
 
