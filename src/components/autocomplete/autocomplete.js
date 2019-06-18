@@ -145,7 +145,7 @@ const AUTOCOMPLETE_DEFAULTS = {
   source: [],
   sourceArguments: {},
   template: undefined,
-  filterMode: 'startsWith',
+  filterMode: 'wordStartsWith',
   caseSensitive: false,
   delay: 300,
   width: null,

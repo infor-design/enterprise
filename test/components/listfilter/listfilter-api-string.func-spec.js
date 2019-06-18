@@ -8,6 +8,24 @@ const caseSensitiveData = [
   'CaLiFoRnIa'
 ];
 
+const phraseData = [
+  'I eat chicken',
+  'You eat beef',
+  'He will eat fish',
+  'Some eat tofu',
+  'Eat all the things'
+];
+
+const keywordData = [
+  'grape apple kiwi',
+  'orange strawberry banana',
+  'blueberry apricot',
+  'pear banana raspberry',
+  'apple blackberry starfruit',
+  'kiwi orange apple',
+  'blackberry raspberry blueberry'
+];
+
 let listfilterArrayAPI;
 
 describe('Listfilter API (against arrays of strings)', () => {
@@ -23,7 +41,7 @@ describe('Listfilter API (against arrays of strings)', () => {
   it('can be invoked', () => {
     expect(listfilterArrayAPI).toBeDefined();
     expect(typeof listfilterArrayAPI.filter).toEqual('function');
-    expect(listfilterArrayAPI.settings.filterMode).toEqual('startsWith');
+    expect(listfilterArrayAPI.settings.filterMode).toEqual('wordStartsWith');
   });
 
   it('can be updated with new settings', () => {
@@ -76,5 +94,49 @@ describe('Listfilter API (against arrays of strings)', () => {
 
     expect(items).toBeDefined();
     expect(items.length).toBe(1); // should ONLY get the lowercase result
+  });
+
+  it('can filter a list by matching the start of words in any place in a string', () => {
+    listfilterArrayAPI.updated({
+      filterMode: 'wordStartsWith'
+    });
+    const items = listfilterArrayAPI.filter(phraseData, 'eat');
+
+    expect(items).toBeDefined();
+    expect(items.length).toBe(5); // all results contain the word 'eat'
+  });
+
+  it('can filter a list by matching the start of an entire phrase', () => {
+    listfilterArrayAPI.updated({
+      filterMode: 'phraseStartsWith'
+    });
+    const items = listfilterArrayAPI.filter(phraseData, 'eat');
+
+    expect(items).toBeDefined();
+    expect(items.length).toBe(1);
+    expect(items[0]).toEqual('Eat all the things'); // entire string starts with 'eat'
+  });
+
+  it('can filter a list by checking for multiple keywords in each result', () => {
+    listfilterArrayAPI.updated({
+      filterMode: 'keyword'
+    });
+    const items = listfilterArrayAPI.filter(keywordData, 'apple orange');
+
+    expect(items).toBeDefined();
+    expect(items.length).toBe(4);
+    expect(items[0]).toEqual('grape apple kiwi');
+    expect(items[1]).toEqual('orange strawberry banana');
+  });
+
+  // Added for Github #384
+  it('can be bypassed with a `null` filterMode setting', () => {
+    listfilterArrayAPI.updated({
+      filterMode: null
+    });
+    const items = listfilterArrayAPI.filter(phraseData, 'Definitely won\'t ever match without null');
+
+    expect(items).toBeDefined();
+    expect(items.length).toBe(5); // client-side filtering is bypassed.
   });
 });

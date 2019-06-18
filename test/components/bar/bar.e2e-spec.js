@@ -79,25 +79,6 @@ describe('Bar Chart example-negative-value tests', () => {
   });
 });
 
-describe('Bar Chart example-hide-legend tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/bar/example-hide-legend');
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should not have visible legends', async () => {
-    const chartEl = await element(by.css('.chart-legend'));
-
-    const resultEl = await browser.driver
-      .wait(protractor.ExpectedConditions.invisibilityOf(chartEl), config.waitsFor);
-
-    expect(await resultEl).toBe(true);
-  });
-});
-
 describe('Bar Chart example-colors', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/example-colors?layout=nofrills');

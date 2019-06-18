@@ -512,7 +512,7 @@
         &::before {
           @include checkbox-unchecked-disabled-before-style;
 
-          margin-left: 12px;
+          margin-left: 7px;
           margin-top: 0;
           top: 9px;
         }
@@ -525,8 +525,8 @@
           &::after {
             @include checkbox-checked-disabled-after-style;
 
-            left: 21px;
-            margin-top: 8px;
+            left: 12px;
+            margin-top: 5px;
           }
         }
       }

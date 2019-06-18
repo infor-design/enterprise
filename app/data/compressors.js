@@ -1,7 +1,7 @@
 // Data Grid Paging Example
 // Example Call:
 // http://localhost:4000/api/compressors?pageNum=1&pageSize=10&sortField=productId&sortAsc=false
-module.exports = (req, res, next) => {
+module.exports = (req, res) => {
   const products = [];
   const productsAll = [];
   let term;
@@ -199,5 +199,4 @@ module.exports = (req, res, next) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify({ total: filteredTotal, grandTotal: 1000, data: products }));
-  next();
 };
