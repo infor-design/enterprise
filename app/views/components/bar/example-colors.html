@@ -14,25 +14,24 @@
 
 <script>
 $('body').on('initialized', function () {
-
- var dataset = [{
+   var palette = Soho.theme.themeColors().palette;
+   var dataset = [{
       data: [{
-          name: 'Category A',
-          value: 373,
-          color: '#1D5F8A'
+        name: 'Category A',
+        value: 373,
+        color: palette.azure['80'].value
       }, {
-          name: 'Category B',
-          value: 372,
-          color: '#8ED1C6'
+        name: 'Category B',
+        value: 372,
+        color: palette.turquoise['30'].value
       }, {
-          name: 'Category C',
-          value: 236.35,
-          color: '#9279A6'
+        name: 'Category C',
+        value: 236.35,
+        color: palette.amethyst['60'].value
       }],
       name: ''
     }];
 
   $('#bar-example').chart({type: 'bar', dataset: dataset});
-
 });
 </script>

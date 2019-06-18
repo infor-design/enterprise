@@ -416,7 +416,8 @@ Bar.prototype = {
         if (self.settings.useLogScale) {
           return 0;
         }
-        return (self.settings.isStacked && !self.settings.isSingle) ? xScale(d.x0) : xScale(0);
+        return (self.settings.isStacked && !self.settings.isSingle) ?
+          xScale(d.x0) + 1 : xScale(0) + 1;
       })
       .attr('y', d => (self.settings.isStacked ? yScale(d.y) :
         ((((totalGroupArea - totalHeight) / 2) + (d.gindex * maxBarHeight)) + (d.index * gap))))
@@ -618,8 +619,8 @@ Bar.prototype = {
         if (self.settings.useLogScale) {
           return 0;
         }
-        return (self.settings.isStacked && !self.settings.isSingle) ? xScale(d.x0) :  //eslint-disable-line
-          (d.x < 0 ? xScale(d.x) : xScale(0));
+        return (self.settings.isStacked && !self.settings.isSingle) ? xScale(d.x0) + 1 :  //eslint-disable-line
+          (d.x < 0 ? xScale(d.x) + 1 : xScale(0) + 1);
       });
 
     self.settings.svg = self.svg;
