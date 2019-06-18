@@ -10408,8 +10408,9 @@ Datagrid.prototype = {
       if (typeof col.tooltip === 'function') {
         const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
         const rowIdx = rowNode.getAttribute('data-index');
+        const rowData = this.settings.dataset[rowIdx];
         const value = this.fieldValue(this.settings.dataset[rowIdx], col.field);
-        tooltip.content = col.tooltip(cell, value);
+        tooltip.content = col.tooltip(rowIdx, cell, value, col, rowData, this);
         tooltip.textwidth = stringUtils.textWidth(tooltip.content) + 20;
       }
     }
