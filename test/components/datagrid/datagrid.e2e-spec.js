@@ -904,6 +904,29 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
   });
 });
 
+describe('Datagrid Checkbox Disabled Editor', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-editable-checkboxes?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-checkbox-disabled')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Lookup Editor', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-lookup-mask');
@@ -1038,6 +1061,30 @@ describe('Datagrid contextmenu tests', () => {
       expect(await element(by.css('#grid-actions-menu .submenu ul > li:nth-child(1)')).isDisplayed()).toBeTruthy();
     });
   }
+});
+
+describe('Datagrid Custom Tooltip tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-custom-tooltip-dynamic?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show tooltip on text cut off', async () => {
+    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="1"] td[aria-colindex="4"]'))).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
+    const tooltip = await element(by.css('.grid-tooltip'));
+
+    expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
+    expect(await tooltip.getText()).toEqual('Row: 0 Cell: 3 Value: Error');
+  });
 });
 
 describe('Datagrid filter single select tests', () => {
