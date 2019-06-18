@@ -46,6 +46,18 @@ module.exports = function (app, defaults) {
       logger('info', 'Using Flex Toolbars inside of page headers');
     }
 
+    // Display the Header Hamburger (controls the App Menu).
+    // This is not used by default due to deployment on `design.infor.com`, but may be
+    // useful during development/testing.
+    if (req.query.headerHamburger === 'true') {
+      res.opts.headerHamburger = true;
+    }
+
+    // Opens the requested page with the App Menu drawer expanded.
+    if (req.query.appMenuOpen === 'true') {
+      res.opts.appMenuOpen = true;
+    }
+
     let useLiveReload = false;
     process.argv.forEach((val) => {
       if (val === '--livereload') {

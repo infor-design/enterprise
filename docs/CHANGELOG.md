@@ -4,11 +4,15 @@
 
 ### v4.20.0 Deprecation
 
+- `[ListFilter]` Deprecated `startsWith` in favor of `wordStartsWith`, due to the addition of the `phraseStartsWith` filterMode. ([#1606](https://github.com/infor-design/enterprise/issues/1606))
+
 ### v4.20.0 Features
 
 - `[Datagrid]` Added support to resize column widths after a value change via the stretchColumnOnChange setting. ([#2174](https://github.com/infor-design/enterprise/issues/2174))
+- `[Datagrid]` Added a Sort Function to the datagrid column to allow the value to be formatted for the sort. ([#1766](https://github.com/infor-design/enterprise/issues/2274))
 - `[Datagrid]` Added a Sort Function to the datagrid column to allow the value to be formatted for the sort. ([#1766](https://github.com/infor-design/enterprise/issues/2274)))
 - `[Datagrid]` Added support to restrict the size of a column with minWidth and maxWidth setting on the column. ([#2313](https://github.com/infor-design/enterprise/issues/2313))
+- `[ListFilter]` Added `phraseStartsWith` filterMode for only matching a search term against the beginning of a string. ([#1606](https://github.com/infor-design/enterprise/issues/1606))
 
 ### v4.20.0 Fixes
 
@@ -20,16 +24,26 @@
 - `[Datagrid]` Fixes reset columns to set the correct hidden status. ([#2315](https://github.com/infor-design/enterprise/issues/2315))
 - `[Datagrid]` Fixes the filtering of null values. ([#2336](https://github.com/infor-design/enterprise/issues/2336))
 - `[Datagrid]` Fixed an issue where performance was significantly slower for export methods. ([#2291](https://github.com/infor-design/enterprise/issues/2291))
+- `[Datagrid]` Fixes a bug that stopped the search in datagrid personalization from working. ([#2299](https://github.com/infor-design/enterprise/issues/2299))
+- `[Datagrid]` Fixes an error on tree grid when using server-side paging. ([#2132](https://github.com/infor-design/enterprise/issues/2132))
+- `[Datagrid]` Fixed an issue where autocompletes popped up on cell editors. ([#1575](https://github.com/infor-design/enterprise/issues/1575))
+- `[Datagrid]` Fixes the styling of non editable checkbox cells so they look disabled. ([#2340](https://github.com/infor-design/enterprise/issues/2340))
+- `[Datagrid]` Changed the dynamic column tooltip function to pass the row and more details. This changes the order of parameters but since this feature is new did not consider this a breaking change. If you are using this please take note. ([#2333](https://github.com/infor-design/enterprise/issues/2333))
 - `[Fieldfilter]` Fixed an issue where Dropdown was not switching mode on example page. ([#2288](https://github.com/infor-design/enterprise/issues/2288))
-- `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Field Options]` Fixed an issue where input example was not working. ([#2348](https://github.com/infor-design/enterprise/issues/2348))
+- `[Fieldfilter]` Fixed an issue where Dropdown was not switching mode on example page. ([#2288](https://github.com/infor-design/enterprise/issues/2288))
+- `[Field Options]` Fixed an issue where input example was not working. ([#2348](https://github.com/infor-design/enterprise/issues/2348))
+- `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
+- `[Listview]` Fixed a bug that caused the listview to run initialize too many times. ([#2179](https://github.com/infor-design/enterprise/issues/2179))
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
-- `[Popupmenu]` Fixed an issue where js error was showing after removing menu item. ([#414](https://github.com/infor-design/enterprise-ng/issues/414))
+- `[Popupmenu]` Fixed an issue where js error was showing after removing a menu item. ([#414](https://github.com/infor-design/enterprise-ng/issues/414))
+- `[Popupmenu]` Fixed a layout issue on disabled checkboxes in multiselect popupmenus. ([#2340](https://github.com/infor-design/enterprise/issues/2340))
 - `[Scatter Plot]` Fixed the incorrect color on the tooltips. ([#1066](https://github.com/infor-design/enterprise/issues/1066))
 
 ### v4.20.0 Chores & Maintenance
 
 - `[Demo App]` Add the uplift theme to the theme switcher menu. ([#2335](https://github.com/infor-design/enterprise/issues/2335))
+- `[Demo App]` Fixed routing issues that could cause 500 errors or crash the Demoapp. ([#2343](https://github.com/infor-design/enterprise/issues/2343))
 
 ## v4.19.0
 

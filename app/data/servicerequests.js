@@ -1,4 +1,4 @@
-module.exports = (req, res, next) => {
+module.exports = (req, res) => {
   const cartItems = [
     {
       id: 1, type: 'Data Refresh', favorite: true, datetime: new Date(2014, 12, 8), requestor: 'Grant Lindsey', deployment: 'AutoSuite-PRD', scheduled: null, status: 'Success'
@@ -19,5 +19,4 @@ module.exports = (req, res, next) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(cartItems));
-  next();
 };

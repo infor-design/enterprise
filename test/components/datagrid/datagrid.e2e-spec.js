@@ -5,6 +5,16 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
+const openPersonalizationDialog = async () => {
+  await element.all(by.css('.btn-actions')).first().click();
+  await browser.driver
+    .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.popupmenu.is-open'))), config.waitsFor);
+  await element(by.css('li a[data-option="personalize-columns"')).click();
+  await browser.driver.sleep(config.sleep);
+  await browser.driver
+    .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.modal-content'))), config.waitsFor);
+};
+
 describe('Datagrid Alternate Row Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-alternate-row-shading?layout=nofrills');
@@ -35,6 +45,15 @@ describe('Datagrid Colspan Tests', () => {
 
   it('Should not have errors', async () => {
     await utils.checkForErrors();
+  });
+
+  it('Should hide colspan columns in personalize', async () => {
+    await openPersonalizationDialog();
+
+    expect(await element(by.css('input[data-column-id="productId"]')).isEnabled()).toBe(false);
+    expect(await element(by.css('input[data-column-id="productDesc"]')).isEnabled()).toBe(false);
+    expect(await element(by.css('input[data-column-id="activity"]')).isEnabled()).toBe(false);
+    expect(await element(by.css('input[data-column-id="status"]')).isEnabled()).toBe(true);
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -295,7 +314,7 @@ describe('Datagrid filter tests', () => {
 
 describe('Datagrid frozen column tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-frozen-columns');
+    await utils.setPage('/components/datagrid/example-frozen-columns?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-body tr:first-child'));
     await browser.driver
@@ -330,6 +349,13 @@ describe('Datagrid frozen column tests', () => {
     expect(await element.all(by.css('.datagrid-body tr')).count()).toEqual(150);
     expect(await element.all(by.css('.datagrid-body.left tr')).count()).toEqual(50);
     expect(await element.all(by.css('.datagrid-body.right tr')).count()).toEqual(50);
+  });
+
+  it('Should hide frozen columns in personalize', async () => {
+    await openPersonalizationDialog();
+
+    expect(await element(by.css('input[data-column-id="productId"]')).isEnabled()).toBe(false);
+    expect(await element(by.css('input[data-column-id="productName"]')).isEnabled()).toBe(false);
   });
 });
 
@@ -574,7 +600,7 @@ describe('Datagrid mixed selection tests', () => {
 
 describe('Datagrid multiselect tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-multiselect');
+    await utils.setPage('/components/datagrid/example-multiselect.html?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -629,6 +655,21 @@ describe('Datagrid multiselect tests', () => {
     expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
   });
+
+  it('Should hide checkbox column in personalize', async () => {
+    await openPersonalizationDialog();
+
+    expect(await element.all(by.css('.modal-content input[type="checkbox"]')).count()).toEqual(5);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-multiselect')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid paging tests', () => {
@@ -850,6 +891,29 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
   });
 });
 
+describe('Datagrid Checkbox Disabled Editor', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-editable-checkboxes?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-checkbox-disabled')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Lookup Editor', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-lookup-mask');
@@ -984,6 +1048,30 @@ describe('Datagrid contextmenu tests', () => {
       expect(await element(by.css('#grid-actions-menu .submenu ul > li:nth-child(1)')).isDisplayed()).toBeTruthy();
     });
   }
+});
+
+describe('Datagrid Custom Tooltip tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-custom-tooltip-dynamic?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show tooltip on text cut off', async () => {
+    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="1"] td[aria-colindex="4"]'))).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
+    const tooltip = await element(by.css('.grid-tooltip'));
+
+    expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
+    expect(await tooltip.getText()).toEqual('Row: 0 Cell: 3 Value: Error');
+  });
 });
 
 describe('Datagrid filter single select tests', () => {
@@ -1666,6 +1754,7 @@ describe('Datagrid save user settings', () => {
       await browser.refresh();
 
       await browser.driver.sleep(config.sleep);
+
       expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('99');
     });
   }
@@ -1833,6 +1922,42 @@ describe('Datagrid select tree tests', () => {
   });
 });
 
+describe('Datagrid Tree Paging Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-tree-paging-serverside?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should expand/collapse on first page click', async () => {
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(3);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(20);
+    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(0);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(23);
+  });
+
+  it('Should expand/collapse on second page click', async () => {
+    await element(by.css('li.pager-next a')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('tr[aria-rowindex="26"]')).count()).toEqual(1);
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(3);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(20);
+    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(0);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(23);
+  });
+});
+
 describe('Datagrid tree do not select children tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-select-children');
@@ -1931,14 +2056,14 @@ describe('Datagrid tooltip tests', () => {
   });
 
   it('Should show tooltip on text cut off', async () => {
-    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="4"] td[aria-colindex="9"]'))).perform();
+    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="3"] td[aria-colindex="9"]'))).perform();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
     let tooltip = await element(by.css('.grid-tooltip'));
 
     expect(await tooltip.getAttribute('class')).toContain('is-hidden');
 
-    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="5"] td[aria-colindex="9"]'))).perform();
+    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="1"] td[aria-colindex="9"]'))).perform();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
     tooltip = await element(by.css('.grid-tooltip'));
@@ -2063,5 +2188,54 @@ describe('Datagrid multiselect sorting test', () => {
     const thEl = await element(by.css('#datagrid thead th:nth-child(2)'));
     await thEl.click();
     await utils.checkForErrors();
+  });
+});
+
+describe('Datagrid Personalization tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-index?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid thead th:nth-child(2)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+
+    await openPersonalizationDialog();
+  });
+
+  it('Should render checkboxes for every column', async () => {
+    expect(await element.all(by.css('.modal-content input[type="checkbox"]')).count()).toEqual(8);
+  });
+
+  it('Should uncheck for hidden columns', async () => {
+    expect(await element(by.css('input[data-column-id="hidden"]')).getAttribute('checked')).toBeFalsy();
+  });
+
+  it('Should disable not hideable columns', async () => {
+    expect(await element(by.css('input[data-column-id="productId"]')).isEnabled()).toBe(false);
+  });
+
+  it('Should filter when typing two chars', async () => {
+    await element(by.id('gridfilter')).sendKeys('id');
+
+    expect(await element.all(by.css('.modal-content input[type="checkbox"]')).count()).toEqual(2);
+  });
+
+  it('Should filter when typing three chars', async () => {
+    await element(by.id('gridfilter')).sendKeys('act');
+
+    expect(await element.all(by.css('.modal-content input[type="checkbox"]')).count()).toEqual(3);
+
+    await element(by.css('svg.icon.close')).click();
+
+    expect(await element.all(by.css('.modal-content input[type="checkbox"]')).count()).toEqual(8);
+  });
+
+  it('Should clear filter', async () => {
+    await element(by.id('gridfilter')).sendKeys('name');
+
+    expect(await element.all(by.css('.modal-content input[type="checkbox"]')).count()).toEqual(1);
+    await element(by.css('svg.icon.close')).click();
+
+    expect(await element.all(by.css('.modal-content input[type="checkbox"]')).count()).toEqual(8);
   });
 });
