@@ -25,7 +25,7 @@ const RADAR_DEFAULTS = {
   roundStrokes: true,
   showCrosslines: true,
   showAxisLabels: true,
-  colors: charts.colorRange,
+  colors: null,
   showTooltips: true,
   tooltip: {
     show: 'value', // value, label, label (value) or percent or custom function
@@ -105,6 +105,9 @@ Radar.prototype = {
    */
   init() {
     this.width = 0;
+    if (!this.settings.colors) {
+      this.settings.colors = charts.colorRange();
+    }
 
     this
       .build()

@@ -1934,7 +1934,7 @@ Datagrid.prototype = {
 
         if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '') && !(conditions[i].value instanceof Array)) &&
               columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
-          rowValue = parseFloat(rowValue);
+          rowValue = rowValue === null ? rowValue : parseFloat(rowValue);
           conditionValue = Locale.parseNumber(conditionValue);
         }
 
@@ -2071,20 +2071,20 @@ Datagrid.prototype = {
             if (rangeData && rangeData.startDate && rangeData.endDate) {
               const d1 = rangeData.startDate.getTime();
               const d2 = rangeData.endDate.getTime();
-              isMatch = rowValue >= d1 && rowValue <= d2;
+              isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
             }
             break;
           case 'less-than':
-            isMatch = (rowValue < conditionValue && rowValue !== '');
+            isMatch = (rowValue < conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'less-equals':
-            isMatch = (rowValue <= conditionValue && rowValue !== '');
+            isMatch = (rowValue <= conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'greater-than':
-            isMatch = (rowValue > conditionValue && rowValue !== '');
+            isMatch = (rowValue > conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'greater-equals':
-            isMatch = (rowValue >= conditionValue && rowValue !== '');
+            isMatch = (rowValue >= conditionValue && (rowValue !== '' && rowValue !== null));
             break;
           case 'selected':
             if (columnDef && columnDef.isChecked) {

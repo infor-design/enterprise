@@ -960,8 +960,8 @@ Hierarchy.prototype = {
 
       element.children('ul').eq(index).append('' +
         `<li>
-          <span>${thislabel}</span>
           <span class="key ${color}"></span>
+          <span>${thislabel}</span>
         </li>`);
     }
   },
