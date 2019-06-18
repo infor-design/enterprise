@@ -391,7 +391,7 @@ Stepprocess.prototype = {
 
   /**
    * Go to the next step element
-   * @privatenpm build
+   * @private
    * @returns {void}
    */
   goToNextStep() {
