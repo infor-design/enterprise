@@ -4656,13 +4656,8 @@ Datagrid.prototype = {
    * @returns {void}
    */
   updateColumns(columns, columnGroups) {
-    let columnsChanged = true;
     if (columnGroups === undefined) {
       columnGroups = null;
-    }
-    if (this.copyThenStringify(this.settings.columns) === this.copyThenStringify(columns) &&
-      (JSON.stringify(this.settings.columnGroups) === JSON.stringify(columnGroups))) {
-      columnsChanged = false;
     }
 
     this.settings.columns = columns;
@@ -4672,9 +4667,6 @@ Datagrid.prototype = {
     }
 
     this.rerender();
-    if (columnsChanged) {
-      this.resetPager('updatecolumns');
-    }
 
     /**
     * Fires after the entire grid is rendered.
@@ -9924,7 +9916,9 @@ Datagrid.prototype = {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
       }
 
-      this.resetPager('sorted');
+      if (this.settings.source) {
+        this.triggerSource({ type: 'sorted' });
+      }
     }
     this.tableBody.removeClass('is-loading');
     this.saveUserSettings();
@@ -10189,20 +10183,6 @@ Datagrid.prototype = {
 
     // Update selected and Sync header checkbox
     this.syncSelectedUI();
-  },
-
-  /**
-  * Reset the pager to the first page.
-  * @private
-  * @param {string} type The action type, which gets sent to the source callback.
-  * @param {string} trigger The triggering action
-  */
-  resetPager(type, trigger) {
-    if (!this.pagerAPI) {
-      return;
-    }
-
-    this.pagerAPI.reset(type, trigger);
   },
 
   /**
