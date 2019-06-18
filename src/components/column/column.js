@@ -558,6 +558,10 @@ Column.prototype = {
               bandwidth > ((barMaxWidth * dataArray.length) * 2)) {
               x += (((x0.bandwidth() / 2) / dataArray.length) / 2);
             }
+            if (self.isGrouped && !self.settings.isStacked) {
+              const barDiff = (barMaxWidth / (x0.bandwidth() > 150 ? 2 : 4));
+              x -= barDiff;
+            }
             return `translate(${x},0)`;
           });
 
