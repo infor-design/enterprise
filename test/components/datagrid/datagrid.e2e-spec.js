@@ -1027,6 +1027,30 @@ describe('Datagrid contextmenu tests', () => {
   }
 });
 
+describe('Datagrid Custom Tooltip tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-custom-tooltip-dynamic?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show tooltip on text cut off', async () => {
+    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="1"] td[aria-colindex="4"]'))).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
+    const tooltip = await element(by.css('.grid-tooltip'));
+
+    expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
+    expect(await tooltip.getText()).toEqual('Row: 0 Cell: 3 Value: Error');
+  });
+});
+
 describe('Datagrid filter single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-singleselect');
@@ -1707,6 +1731,7 @@ describe('Datagrid save user settings', () => {
       await browser.refresh();
 
       await browser.driver.sleep(config.sleep);
+
       expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('99');
     });
   }
