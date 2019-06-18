@@ -384,8 +384,8 @@ ListView.prototype = {
       }
     });
 
-    // TODO: Invoke the "element" here after we write an updated method.
-    this.element.children().initialize();
+    // Invoke all elements within the list view
+    this.element.find('ul').initialize();
 
     /**
      * Fires after the listbox is fully rendered.
