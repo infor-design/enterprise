@@ -10,25 +10,21 @@ const express = require('express');
 
 const router = express.Router();
 
-// General Route Def
+// =====================================
+// General Route Middleware
+// =====================================
 function generalRoute(req, res, next) {
-  if (req.query.headerHamburger === 'true') {
-    res.opts.headerHamburger = true;
-  }
-  if (req.query.appMenuOpen === 'true') {
-    res.opts.appMenuOpen = true;
-  }
   const viewsRoot = req.app.get('views');
   const originalUrl = utils.getPathWithoutQuery(req.originalUrl);
   const directoryURL = utils.getDirectory(path.join(viewsRoot, originalUrl), viewsRoot);
   const filename = utils.getFileName(originalUrl);
   const directoryPath = path.join(viewsRoot, directoryURL);
   const fileOnPath = path.join(directoryPath, filename);
+  const isDirectory = utils.isType('directory', fileOnPath);
 
   // Return out on '/';
   if (utils.isRoot(originalUrl)) {
     res.render(path.join(viewsRoot, 'kitchen-sink.html'), res.opts);
-    next();
     return;
   }
 
@@ -45,33 +41,34 @@ function generalRoute(req, res, next) {
   // If a filename was part of the path, attempt to render it.
   // Otherwise, try to render in a directory listing or default file.
   if (filename && filename.length) {
-    if (utils.hasFile(fileOnPath)) {
-      res.render(utils.getTemplateUrl(fileOnPath.replace(viewsRoot, '')), res.opts);
-      next();
+    if (filename === 'list' || directoryPath.endsWith(filename)) {
+      directoryListing(directoryPath, viewsRoot, req, res, next);
       return;
     }
 
-    next('file not found');
+    if (utils.hasFile(fileOnPath)) {
+      res.render(utils.getTemplateUrl(fileOnPath.replace(viewsRoot, '')), res.opts);
+      return;
+    }
+
+    // If given a friendly URL, check for a matching `.html` file.
+    if (filename.indexOf('.') === -1) {
+      const friendlyURLFilepath = path.resolve(`${viewsRoot}${originalUrl}.html`);
+      if (utils.hasFile(friendlyURLFilepath)) {
+        res.render(utils.getTemplateUrl(friendlyURLFilepath.replace(viewsRoot, '')), res.opts);
+        return;
+      }
+    }
   }
 
-  // Check a friendly URL for a matching `.html` file.
-  const friendlyURLFilepath = path.resolve(`${viewsRoot}${originalUrl}.html`);
-  if (utils.hasFile(friendlyURLFilepath)) {
-    res.render(utils.getTemplateUrl(friendlyURLFilepath.replace(viewsRoot, '')), res.opts);
-    next();
-    return;
-  }
-
-  // Render an index.html page if one exists.
-  // Otherwise, render the directory listing.
+  // Render an `index.html` page if one exists (Generated Docs page).
   if (utils.hasIndexFile(directoryPath)) {
-    res.render(utils.getTemplateUrl(path.join(directoryURL, 'example-index.html')), res.opts);
-    next();
+    res.render(utils.getTemplateUrl(path.join(directoryURL, 'index.html')), res.opts);
     return;
   }
 
   // Return the directory listing if we're looking at a directory
-  if (utils.isType('directory', directoryPath)) {
+  if (isDirectory) {
     if (originalUrl.substring(originalUrl.length - 1) === '/') {
       res.redirect(originalUrl.substring(0, originalUrl.length - 1));
       return;
@@ -81,13 +78,8 @@ function generalRoute(req, res, next) {
   }
 
   // Error out now if nothing matches
-  res.opts.error = {
-    code: 404,
-    message: 'File not found'
-  };
-  setLayout(req, res, 'layout-nofrills.html');
-  res.status(404).render(path.join(viewsRoot, 'error.html'), res.opts);
-  next();
+  res.status(404);
+  next(`File "${fileOnPath}" was not found`);
 }
 
 // Removes '/' from the front of the BaseUrl
@@ -95,6 +87,9 @@ function cleanBaseUrl(baseUrl) {
   return baseUrl.substring(1);
 }
 
+// ==============================================
+// General Routes
+// ==============================================
 router.get('/:item/:example', (req, res, next) => {
   if (req.params.example === 'list') {
     next();
@@ -144,6 +139,12 @@ router.get('/', (req, res, next) => {
   }
 
   res.redirect(`${res.opts.basepath}${type}/list`);
+});
+
+// Catch-all route for bad URLs.
+router.get('*', (req, res, next) => {
+  res.status(404);
+  next(`File "${req.originalUrl}" was not found`);
 });
 
 module.exports = router;

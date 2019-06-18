@@ -773,6 +773,68 @@ describe('Datagrid paging tests', () => {
   }
 });
 
+describe('Datagrid Align Header Text Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-align-header-text?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text')).toEqual(0);
+    });
+  }
+});
+
+describe('Datagrid Align Header Text Toggle Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-align-header-text-toggle?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should toggle filter row', async () => {
+    await element.all(by.css('.btn-actions')).first().click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.popupmenu.is-open'))), config.waitsFor);
+    await element(by.css('li a[data-option="show-filter-row"')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.has-filterable-columns'))).toBeTruthy();
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await element.all(by.css('.btn-actions')).first().click();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.popupmenu.is-open'))), config.waitsFor);
+      await element(by.css('li a[data-option="show-filter-row"')).click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.css('.has-filterable-columns'))).toBeTruthy();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text-toggle')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid page size selector tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-page-size-selector');
@@ -889,6 +951,29 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
     expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
     expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
   });
+});
+
+describe('Datagrid Checkbox Disabled Editor', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-editable-checkboxes?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-checkbox-disabled')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid Lookup Editor', () => {
@@ -1025,6 +1110,30 @@ describe('Datagrid contextmenu tests', () => {
       expect(await element(by.css('#grid-actions-menu .submenu ul > li:nth-child(1)')).isDisplayed()).toBeTruthy();
     });
   }
+});
+
+describe('Datagrid Custom Tooltip tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-custom-tooltip-dynamic?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show tooltip on text cut off', async () => {
+    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="1"] td[aria-colindex="4"]'))).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
+    const tooltip = await element(by.css('.grid-tooltip'));
+
+    expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
+    expect(await tooltip.getText()).toEqual('Row: 0 Cell: 3 Value: Error');
+  });
 });
 
 describe('Datagrid filter single select tests', () => {
@@ -1707,6 +1816,7 @@ describe('Datagrid save user settings', () => {
       await browser.refresh();
 
       await browser.driver.sleep(config.sleep);
+
       expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('99');
     });
   }

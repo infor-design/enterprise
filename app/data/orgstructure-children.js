@@ -1,4 +1,4 @@
-module.exports = (req, res, next) => {
+module.exports = (req, res) => {
   const womenPath = '/images/';
   const orgdata = [
     { id: `AA${Math.floor(Math.random() * 1000)}`, Name: 'Kaylee Edwards', Position: 'Records Manager', EmploymentType: 'FT', Picture: `${womenPath}11.jpg` },
@@ -8,5 +8,4 @@ module.exports = (req, res, next) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(orgdata));
-  next();
 };

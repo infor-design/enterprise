@@ -1,4 +1,4 @@
-module.exports = (req, res, next) => {
+module.exports = (req, res) => {
   let amount = 25;
   let paragraphs = 1;
   let text = '';
@@ -21,20 +21,17 @@ module.exports = (req, res, next) => {
   function done(content) {
     if (type === 'html') {
       res.send(content);
-      next();
       return;
     }
 
     if (type === 'json') {
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(content));
-      next();
       return;
     }
 
     res.setHeader('Content-Type', 'text/plain');
     res.end(JSON.stringify(content));
-    next();
   }
 
   if (req && req.query) {
