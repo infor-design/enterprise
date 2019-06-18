@@ -33,6 +33,7 @@
 ### v4.20.0 Chores & Maintenance
 
 - `[Demo App]` Add the uplift theme to the theme switcher menu. ([#2335](https://github.com/infor-design/enterprise/issues/2335))
+- `[Demo App]` Fixed routing issues that could cause 500 errors or crash the Demoapp. ([#2343](https://github.com/infor-design/enterprise/issues/2343))
 
 ## v4.19.0
 
