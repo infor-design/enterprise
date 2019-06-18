@@ -4306,6 +4306,16 @@ Datagrid.prototype = {
       col.width = colWidth;
     }
 
+    // make sure that the column is atleast the minimum width
+    if (col.minWidth && colWidth < col.minWidth) {
+      colWidth = col.minWidth;
+    }
+
+    // make sure that the column is no more than the maximum width
+    if (col.minWidth && colWidth > col.maxWidth) {
+      colWidth = col.maxWidth;
+    }
+
     // cache the header widths
     this.headerWidths[index] = {
       id: col.id,
@@ -9112,7 +9122,15 @@ Datagrid.prototype = {
 
     // resize on change
     if (this.settings.stretchColumnOnChange && col && !col.width) {
-      const newWidth = this.calculateTextWidth(col);
+      let newWidth = this.calculateTextWidth(col);
+      // make sure that the column is atleast the minimum width
+      if (col.minWidth && newWidth < col.minWidth) {
+        newWidth = col.minWidth;
+      }
+      // make sure that the column is no more than the maximum width
+      if (col.minWidth && newWidth > col.maxWidth) {
+        newWidth = col.maxWidth;
+      }
       const diff = newWidth - this.headerWidths[cell].width;
       if (diff > 0 && this.headerWidths[cell].width !== '') {
         this.resizeColumnWidth(cellNode, newWidth, diff);
