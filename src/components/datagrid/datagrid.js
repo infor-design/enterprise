@@ -9638,9 +9638,8 @@ Datagrid.prototype = {
       this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
-    let children = rowElement.nextUntil(`[aria-level="${level}"]`);
     const isExpanded = expandButton.hasClass('is-expanded');
-    const args = [{ grid: self, row: dataRowIndex, item: rowElement, children }];
+    const args = [{ grid: self, row: dataRowIndex, item: rowElement }];
 
     if (self.settings.treeDepth && self.settings.treeDepth[dataRowIndex]) {
       args[0].rowData = self.settings.treeDepth[dataRowIndex].node;
@@ -9656,7 +9655,9 @@ Datagrid.prototype = {
       rowElement = self.settings.treeGrid ?
         self.actualRowNode(dataRowIndex) : self.visualRowNode(dataRowIndex);
       expandButton = rowElement.find('.datagrid-expand-btn');
-      children = rowElement.nextUntil(`[aria-level="${level}"]`);
+      const children = rowElement.nextUntil(`[aria-level="${level}"]`);
+      const parentRowIdx = self.settings.treeGrid && self.settings.source && self.settings.paging ?
+        self.dataRowIndex(rowElement) : dataRowIndex;
 
       if (isExpanded) {
         rowElement.attr('aria-expanded', false);
@@ -9667,7 +9668,7 @@ Datagrid.prototype = {
         expandButton.addClass('is-expanded')
           .find('.plus-minus').addClass('active');
       }
-      self.setExpandedInDataset(dataRowIndex, !isExpanded);
+      self.setExpandedInDataset(parentRowIdx, !isExpanded);
 
       const setChildren = function (elem, lev, expanded) {
         const nodes = elem.nextUntil(`[aria-level="${level}"]`);
@@ -9703,6 +9704,7 @@ Datagrid.prototype = {
 
       setChildren(rowElement, level, isExpanded);
       self.setAlternateRowShading();
+      args.children = children;
     };
 
     /**

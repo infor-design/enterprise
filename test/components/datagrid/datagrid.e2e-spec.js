@@ -1833,6 +1833,42 @@ describe('Datagrid select tree tests', () => {
   });
 });
 
+describe('Datagrid Tree Paging Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-tree-paging-serverside?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should expand/collapse on first page click', async () => {
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(3);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(20);
+    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(0);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(23);
+  });
+
+  it('Should expand/collapse on second page click', async () => {
+    await element(by.css('li.pager-next a')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('tr[aria-rowindex="26"]')).count()).toEqual(1);
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(3);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(20);
+    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(0);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(23);
+  });
+});
+
 describe('Datagrid tree do not select children tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-select-children');
