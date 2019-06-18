@@ -15,6 +15,7 @@
 <script>
 $('body').on('initialized', function () {
 
+  var palette = Soho.theme.themeColors().palette;
   var dataset = [{
       data: [{
           name: '2008',
@@ -27,7 +28,7 @@ $('body').on('initialized', function () {
           value: 345
       }],
       name: 'Series 1',
-      color: '#8ED1C6'
+      color: palette.turquoise['30'].value
   }, {
       data: [{
           name: '2008',
@@ -40,7 +41,7 @@ $('body').on('initialized', function () {
           value: 573
       }],
       name: 'Series 2',
-      color: '#9279A6'
+      color: palette.amethyst['60'].value
   }];
 
   $('#bar-stacked-example').chart({type: 'bar-stacked', dataset: dataset});

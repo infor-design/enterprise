@@ -32,20 +32,25 @@
   &.is-small {
     &.has-right-legend {
       display: block;
+      height: inherit;
 
       .chart-legend {
-        margin: -33px 0 0;
+        margin: -65px 0 0;
         text-align: center;
         width: 100%;
 
         .is-two-column {
           display: inline-block;
+          height: 28px;
           margin: 2px 0;
+          position: relative;
+          top: 27px;
           width: auto;
         }
 
-        .chart-legend-color {
-          top: 0;
+        .chart-legend-color,
+        .chart-legend-item-text {
+          vertical-align: top;
         }
       }
     }
