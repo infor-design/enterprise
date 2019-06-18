@@ -536,7 +536,7 @@ Line.prototype = {
           // Set the colors
           const spans = document.querySelectorAll('#svg-tooltip .swatch-caption span');
           for (let k = 0; k < spans.length; k++) {
-            spans[k].style.backgroundColor = charts.chartColor(k, 'line', mouseEnterData);
+            spans[k].style.backgroundColor = charts.chartColor(self.settings.isBubble || self.settings.isScatterPlot ? mouseEnterData.lineIdx : k, 'line', mouseEnterData);
           }
         }
 
@@ -565,6 +565,7 @@ Line.prototype = {
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
             .style('opacity', (self.settings.isBubble || self.settings.isScatterPlot ? '.7' : '1'))
             .on('mouseenter.chart', function (mouseEnterData) {
+              mouseEnterData.lineIdx = lineIdx;
               handleMouseEnter(this, mouseEnterData);
             })
             .on('mouseleave.chart', function () {
@@ -592,6 +593,7 @@ Line.prototype = {
             .style('opacity', 0)
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
             .on('mouseenter.chart', function (mouseEnterData) {
+              mouseEnterData.lineIdx = lineIdx;
               handleMouseEnter(this, mouseEnterData);
             })
             .on('mouseleave.chart', function () {

@@ -1,10 +1,10 @@
 <div class="row">
   <div class="two-thirds column">
     <p>
-      <span>Uses api setting: animate</span><br/>
-      <strong>true or false</strong> - will do or not do the animation.<br/>
-      <strong>'initial'</strong> - will do only first time the animation and not when resizing the page.
-    </p><br/>
+      <span>This example uses the api setting animate: 'initial', so will only animate when resizing the page.</span>
+      <br/>
+    </p>
+    <br/>
   </div>
 </div>
 
@@ -12,7 +12,7 @@
   <div class="two-thirds column">
       <div class="widget">
         <div class="widget-header">
-          <h2 class="widget-title">Vertical Bar Chart Title</h2>
+          <h2 class="widget-title">Animation (Initial) Bar Chart</h2>
         </div>
         <div class="widget-content">
           <div id="bar-example" class="chart-container">
@@ -28,8 +28,7 @@ $('body').on('initialized', function () {
  var dataset = [{
       data: [{
           name: 'Category A',
-          value: 373,
-          url: 'test'
+          value: 373
       }, {
           name: 'Category B',
           value: 372

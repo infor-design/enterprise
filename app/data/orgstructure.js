@@ -1,7 +1,7 @@
 const path = require('path');
 const getJSONFile = require('../src/js/get-json-file');
 
-module.exports = (req, res, next) => {
+module.exports = (req, res) => {
   const orgData = getJSONFile(path.resolve(__dirname, 'orgstructure-original.json'));
 
   function setBasePath(imgPath) {
@@ -28,5 +28,4 @@ module.exports = (req, res, next) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(orgData));
-  next();
 };
