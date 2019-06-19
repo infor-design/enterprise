@@ -172,7 +172,6 @@ module.exports = (req, res) => {
     };
   };
 
-  console.log(req.query.sortField, req.query.sortId);
   if (req.query.sortField) {
     const sortFunc = sortFunction(req.query.sortField, (req.query.sortAsc === 'true'));
     productsAll.sort(sortFunc);
