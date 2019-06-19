@@ -1742,7 +1742,7 @@ $datagrid-short-row-height: 25px;
     }
 
     &.success {
-      background-color: $alert-bg-positive;
+      background-color: $alert-bg-success;
 
       .datagrid-cell-wrapper {
         position: relative;
