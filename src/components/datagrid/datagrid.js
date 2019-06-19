@@ -5841,16 +5841,16 @@ Datagrid.prototype = {
     * @property {object} args.originalEvent The original event object.
     */
     this.element.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tbody tr', (e) => {
-      const hasMenu = self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
+      const hasMenu = () => self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
 
-      if (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu) {
+      if (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu()) {
         return true;
       }
       e.preventDefault();
       self.closePrevPopupmenu();
 
-      if (!hasMenu) {
+      if (!hasMenu()) {
         return true;
       }
 
