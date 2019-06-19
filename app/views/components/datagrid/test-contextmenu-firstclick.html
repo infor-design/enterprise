@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+<ul id="contextmenu" class="hidden" style="min-width: 250px;">
+</ul>
+
+<script id="datagrid-script">
+  $('body').on('initialized', function () {
+    var columns = [];
+
+    $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
+      // Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: 100});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, minWidth: 200});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true});
+      columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
+      columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, formatter: Formatters.Text});
+
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: res,
+        saveColumns: false,
+        menuId: 'grid-actions-menu',
+        toolbar: { title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true }
+      })
+      .on('contextmenu', function(row, cell, item, originalEvent) {
+        var chtml='<ul id="grid-actions-menu" class="popupmenu"> <li>';
+        chtml+='<a href="#">';
+        chtml+='<svg class="icon" focusable="false" aria-hidden="true" role="presentation">';
+        chtml+='<use xlink:href="#icon-filter"></use>';
+        chtml+='</svg>';
+        chtml+='<span>Hello</span>';
+        chtml+='</a>';
+        chtml+='</li>';
+        chtml+='<li class="separator"></li>';
+        chtml+=' <li>';
+        chtml+='<a href="#"  ">';
+        chtml+='<svg class="icon" focusable="false" aria-hidden="true" role="presentation">';
+        chtml+='<use xlink:href="#icon-line-bar-chart"></use>';
+        chtml+='</svg>';
+        chtml+='<span>World</span>';
+        chtml+='</a>';
+        chtml+='</li>';
+        chtml+='</ul>';
+        $("#grid-actions-menu").destroy();
+        $("#contextmenu").html(chtml);
+        $('#datagrid').popupmenu({ // 12.2.19 was body
+          menu: 'contextmenu',
+          trigger: 'immediate',
+          offset: { x: 0, y: 0 }
+        });
+      })
+      ;
+    });
+
+  });
+
+</script>
