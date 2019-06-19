@@ -1,16 +1,11 @@
 // Color Variables
 //================================================== //
 
-$alert-bg-red: $theme-color-status-danger;
-$alert-bg-orange: $theme-color-status-warning;
-$alert-bg-green: $theme-color-status-success;
-$alert-bg-info: $theme-color-font-info;
+$alert-bg-error: rgba(232, 79, 79, 0.1);
+$alert-bg-warn: rgba(255, 148, 38, 0.1);
+$alert-bg-positive: rgba(128, 206, 77, 0.1);
+$alert-bg-info: rgba(54, 138, 192, 0.1);
 $alert-neutral: $theme-color-palette-graphite-30;
-
-$alert-bg-red-light: rgba(232, 79, 79, 0.1);
-$alert-bg-orange-light: rgba(255, 148, 38, 0.1);
-$alert-bg-green-light: rgba(128, 206, 77, 0.1);
-$alert-bg-info-light: rgba(54, 138, 192, 0.1);
 
 // Generate Color Classes for The Sass Variables
 $color-names: ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09 ruby10
