@@ -17,7 +17,7 @@ module.exports = (req, res) => {
   for (j = 0; j < total; j++) {
     const status = Math.floor(statuses.length / (start + seed));
     let filteredOut = false;
-    
+
     // Just filter first four cols
     if (req.query.filter) {
       term = req.query.filter.replace('\'', '');
@@ -78,8 +78,8 @@ module.exports = (req, res) => {
         rowValue = 1 + (j / 2);
         conditionValue = parseFloat(conditionValue);
       } else if (req.query.filterColumn === 'price') {
-        rowValue = 210.99 - j;
-        conditionValue = parseFloat(conditionValue);
+        rowValue = Math.abs(210.99 - j);
+        conditionValue = Math.abs(parseFloat(conditionValue));
       } else if (req.query.filterColumn === 'status') {
         rowValue = statuses[status] || 'None';
       } else if (req.query.filterColumn === 'orderDate') {
@@ -88,9 +88,9 @@ module.exports = (req, res) => {
       } else if (req.query.filterColumn === 'action') {
         rowValue = 'Action';
       }
-      
+
       rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
-      
+
       switch (req.query.filterOp) {
         case 'equals':
           isMatch = (rowValue === conditionValue && rowValue !== '');
@@ -164,7 +164,7 @@ module.exports = (req, res) => {
     if (!filteredOut) {
       filteredTotal++;
       productsAll.push({
-        id: j, productId: 214220 + j, productSku: 999101 + j, weight: '68 lb.', maxPressure: '125 psi', rpm: 1750, capacity: 10 + j, ratedTemp: '-25', productName: `Compressor ${j}`, activity: 'Induction', pumpLife: '2,000 hr', quantity: 1 + (j / 2), price: 210.99 - j, status: statuses[status] || 'None', orderDate: new Date(2014, 12, seed), action: 'Action'
+        id: j, productId: 214220 + j, productSku: 999101 + j, weight: '68 lb.', maxPressure: '125 psi', rpm: 1750, capacity: 10 + j, ratedTemp: '-25', productName: `Compressor ${j}`, activity: 'Induction', pumpLife: '2,000 hr', quantity: 1 + (j / 2), price: Math.abs(210.99 - j), status: statuses[status] || 'None', orderDate: new Date(2014, 12, seed), action: 'Action'
       });
     }
 

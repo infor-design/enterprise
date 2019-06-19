@@ -26,8 +26,6 @@
          columns.push({ id: 'numref', name: 'Number of References', field: 'numref', sortfield: 'numref', filterType: 'integer', sortable: false, hidden: false,  align: 'right', numberFormat : {style: 'integer' ,group: ''  }, maskMode: 'number',  mask: '##########', formatter: Soho.Formatters.Integer });
          columns.push({ id: 'status', name: 'Status', field: 'status', sortfield: 'status', filterType: 'multiselect', sortable: false, hidden: false, maxLength:'1', align: 'left', options: [{ id: 'N', label: 'Validated, No Errors', value: 'N' },{ id: 'E', label: 'Validated, Errors', value: 'E' },{ id: 'T', label: 'Not Yet Validated', value: 'T' },{ id: 'L', label: 'Validated, Existing Reference', value: 'L' },], formatter: Soho.Formatters.Dropdown });
 
-         alert(Calendars.dateFormat['timestamp']);
-
          //Init and get the api for the grid
          $('#datagrid').datagrid({
             columns: columns,
