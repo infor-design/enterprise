@@ -1686,7 +1686,7 @@ $datagrid-short-row-height: 25px;
 
     // Validation Cell Styles
     &.error {
-      background-color: $alert-bg-red;
+      background-color: $alert-bg-red-light;
 
       .datagrid-cell-wrapper {
         position: relative;
@@ -1714,7 +1714,7 @@ $datagrid-short-row-height: 25px;
     }
 
     &.alert {
-      background-color: $alert-bg-orange;
+      background-color: $alert-bg-orange-light;
 
       .datagrid-cell-wrapper {
         position: relative;
@@ -1742,7 +1742,7 @@ $datagrid-short-row-height: 25px;
     }
 
     &.success {
-      background-color: $alert-bg-green;
+      background-color: $alert-bg-green-light;
 
       .datagrid-cell-wrapper {
         position: relative;
@@ -1770,7 +1770,7 @@ $datagrid-short-row-height: 25px;
     }
 
     &.info {
-      background-color: $alert-bg-info;
+      background-color: $alert-bg-info-light;
 
       .datagrid-cell-wrapper {
         position: relative;

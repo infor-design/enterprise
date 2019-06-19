@@ -7,6 +7,11 @@ $alert-bg-green: $theme-color-status-success;
 $alert-bg-info: $theme-color-font-info;
 $alert-neutral: $theme-color-palette-graphite-30;
 
+$alert-bg-red-light: rgba(232, 79, 79, 0.1);
+$alert-bg-orange-light: rgba(255, 148, 38, 0.1);
+$alert-bg-green-light: rgba(128, 206, 77, 0.1);
+$alert-bg-info-light: rgba(54, 138, 192, 0.1);
+
 // Generate Color Classes for The Sass Variables
 $color-names: ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09 ruby10
   amber01 amber02 amber03 amber04 amber05 amber06 amber07 amber08 amber09 amber10
