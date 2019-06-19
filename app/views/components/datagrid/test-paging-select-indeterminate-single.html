@@ -74,8 +74,8 @@
 
                 var url = getUrl(req.pagesize);
 
-                if (req.sortId) {
-                  url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
+                if (req.sortField) {
+                  url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
                 }
 
                 if (req.filterExpr && req.filterExpr[0]) {

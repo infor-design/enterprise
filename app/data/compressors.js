@@ -165,7 +165,6 @@ module.exports = (req, res) => {
 
   const sortFunction = function (field, reverse, primer) {
     const key = function (x) { return primer ? primer(x[field]) : x[field]; };
-
     return function (a, b) {
       const A = key(a);
       const B = key(b);
@@ -173,6 +172,7 @@ module.exports = (req, res) => {
     };
   };
 
+  console.log(req.query.sortField, req.query.sortId);
   if (req.query.sortField) {
     const sortFunc = sortFunction(req.query.sortField, (req.query.sortAsc === 'true'));
     productsAll.sort(sortFunc);
