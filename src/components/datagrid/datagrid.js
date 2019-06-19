@@ -753,7 +753,7 @@ Datagrid.prototype = {
       pagerInfo.activePage = 1;
       pagerInfo.pagesize = this.settings.pagesize;
       pagerInfo.total = -1;
-      pagerInfo.type = 'initial';
+
       if (this.settings.treeGrid) {
         pagerInfo.preserveSelected = true;
       }
@@ -781,7 +781,7 @@ Datagrid.prototype = {
     if (pagerInfo.preserveSelected === undefined) {
       if (this.settings.source) {
         this._selectedRows = [];
-      } else if (pagerInfo.type === 'initial') {
+      } else if (pagerInfo.type === 'initial' || !pagerInfo.type) {
         this.unSelectAllRows();
       }
     } else if (pagerInfo.preserveSelected === false) {
@@ -807,9 +807,7 @@ Datagrid.prototype = {
       this.renderRows();
       this.renderHeader();
     } else {
-      this.clearHeaderCache();
       this.renderRows();
-      this.syncColGroups();
     }
 
     // Setup focus on the first cell
@@ -1629,6 +1627,7 @@ Datagrid.prototype = {
       elem.find('select.multiselect').each(function () {
         const multiselect = $(this);
         multiselect.multiselect(col.editorOptions).on('selected.datagrid', () => {
+          self.restoreFilterClientSide = false;
           self.applyFilter(null, 'selected');
         });
 

@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.19.3
+
+- `[Datagrid]` Fixes the multiselect filter on header from reloading during serverside filtering. ([#2383](https://github.com/infor-design/enterprise/issues/2383))
+
+## v4.19.2
+
+- `[Build]` Fixes missing minified files in the build and a missing svg-extended.html deprecated file for backwards compatibility. ([Teams](https://bit.ly/2FlzYCT))
+
 ## v4.19.0
 
 ### v4.19.0 Deprecations
