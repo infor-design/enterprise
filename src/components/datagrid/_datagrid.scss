@@ -1827,6 +1827,24 @@ $datagrid-short-row-height: 25px;
     //Readonly
     &.is-readonly {
       background-color: $datagrid-cell-readonly-bg-color;
+
+      .datagrid-checkbox {
+        cursor: default;
+
+        &::before {
+          @include checkbox-unchecked-disabled-before-style;
+        }
+
+        &.is-checked {
+          &::before {
+            @include checkbox-checked-disabled-before-style;
+          }
+
+          &::after {
+            @include checkbox-checked-disabled-after-style;
+          }
+        }
+      }
     }
 
     //Cell Contents but not outer cell is readonly

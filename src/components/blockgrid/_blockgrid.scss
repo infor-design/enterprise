@@ -18,12 +18,17 @@
     width: 200px;
 
     img {
+      border: 1px solid transparent; // to prevent jump on focus
       margin-bottom: 10px;
 
       &.image-round {
         border-radius: 100%;
         height: 75px;
         width: 75px;
+      }
+
+      &:focus {
+        @include focus-state();
       }
     }
 
