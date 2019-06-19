@@ -27,8 +27,13 @@ $images-size: (
 @each $key, $value in $images-size {
   .image-#{$key} {
     img {
+      border: 1px solid transparent; // to prevent jump on focus
       max-height: nth($value, 2);
       max-width: nth($value, 1);
+
+      &:focus {
+        @include focus-state();
+      }
     }
 
     &.placeholder {
@@ -38,10 +43,15 @@ $images-size: (
 }
 
 .image-round {
+  border: 1px solid transparent; // to prevent jump on focus
   border-radius: 50%;
   display: inline-block;
   height: 50px;
   width: 50px;
+
+  &:focus {
+    @include focus-state();
+  }
 }
 
 // Photo with svg status
@@ -59,6 +69,7 @@ $images-size: (
 // Initials for when photo is absent
 .image-initials {
   background: $theme-color-palette-amethyst-50;
+  border: 1px solid transparent; // to prevent jump on focus
   border-radius: 50%;
   color: $theme-color-palette-white;
   display: inline-block;
@@ -73,6 +84,10 @@ $images-size: (
     left: 6px;
     position: relative;
     top: 22px;
+  }
+
+  &:focus {
+    @include focus-state();
   }
 }
 
