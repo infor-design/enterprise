@@ -9937,12 +9937,15 @@ Datagrid.prototype = {
 
     if (sortColumnChanged) {
       const wasFocused = this.activeCell.isFocused;
-      this.setTreeDepth();
-      this.setRowGrouping();
-      this.setTreeRootNodes();
-      this.renderRows();
-      // Update selected and Sync header checkbox
-      this.syncSelectedUI();
+
+      if (!this.settings.source) {
+        this.setTreeDepth();
+        this.setRowGrouping();
+        this.setTreeRootNodes();
+        this.renderRows();
+        // Update selected and Sync header checkbox
+        this.syncSelectedUI();
+      }
 
       if (wasFocused && this.activeCell.node.length === 1) {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
