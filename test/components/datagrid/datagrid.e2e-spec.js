@@ -740,6 +740,19 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('49');
   });
 
+  it('Should sort correctly', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
+
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('999');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('990');
+  });
+
   if (!utils.isCI()) {
     it('Should work with sort', async () => {
       expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeFalsy();

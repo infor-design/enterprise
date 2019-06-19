@@ -17,7 +17,7 @@ module.exports = (req, res) => {
   for (j = 0; j < total; j++) {
     const status = Math.floor(statuses.length / (start + seed));
     let filteredOut = false;
-    
+
     // Just filter first four cols
     if (req.query.filter) {
       term = req.query.filter.replace('\'', '');
@@ -88,9 +88,9 @@ module.exports = (req, res) => {
       } else if (req.query.filterColumn === 'action') {
         rowValue = 'Action';
       }
-      
+
       rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
-      
+
       switch (req.query.filterOp) {
         case 'equals':
           isMatch = (rowValue === conditionValue && rowValue !== '');
@@ -140,17 +140,9 @@ module.exports = (req, res) => {
           isMatch = (rowValue >= conditionValue && rowValue !== '');
           break;
         case 'selected':
-          if (columnDef && columnDef.isChecked) {
-            isMatch = columnDef.isChecked(rowValue);
-            break;
-          }
           isMatch = (rowValueStr === '1' || rowValueStr === 'true' || rowValue === true || rowValue === 1) && rowValueStr !== '';
           break;
         case 'not-selected':
-          if (columnDef && columnDef.isChecked) {
-            isMatch = !columnDef.isChecked(rowValue);
-            break;
-          }
           isMatch = (rowValueStr === '0' || rowValueStr === 'false' || rowValue === false || rowValue === 0 || rowValueStr === '');
           break;
         case 'selected-notselected':
@@ -164,31 +156,28 @@ module.exports = (req, res) => {
     if (!filteredOut) {
       filteredTotal++;
       productsAll.push({
-        id: j, productId: 214220 + j, productSku: 999101 + j, weight: '68 lb.', maxPressure: '125 psi', rpm: 1750, capacity: 10 + j, ratedTemp: '-25', productName: `Compressor ${j}`, activity: 'Induction', pumpLife: '2,000 hr', quantity: 1 + (j / 2), price: 210.99 - j, status: statuses[status] || 'None', orderDate: new Date(2014, 12, seed), action: 'Action'
+        id: j, productId: 214220 + j, productSku: 999101 + j, weight: '68 lb.', maxPressure: '125 psi', rpm: 1750, capacity: 10 + j, ratedTemp: '-25', productName: `Compressor ${j}`, portable: j % 2 === 0, activity: 'Induction', pumpLife: '2,000 hr', quantity: 1 + (j / 2), price: 210.99 - j, status: statuses[status] || 'None', orderDate: new Date(2014, 12, seed), action: 'Action'
       });
     }
 
     seed++;
   }
 
-  const sortBy = function (field, reverse, primer) {
+  const sortFunction = function (field, reverse, primer) {
     const key = function (x) { return primer ? primer(x[field]) : x[field]; };
-
     return function (a, b) {
       const A = key(a);
       const B = key(b);
-      /* eslint-disable no-nested-ternary */
-      return ((A < B) ? -1 : ((A > B) ? 1 : 0)) * [-1, 1][+!!reverse];
-      /* eslint-enable no-nested-ternary */
+      return ((A < B) ? -1 : ((A > B) ? 1 : 0)) * [-1, 1][+!!reverse]; // eslint-disable-line
     };
   };
 
   if (req.query.sortField) {
-    productsAll.sort(sortBy(req.query.sortField, (req.query.sortAsc === 'true'), a => a.toString().toUpperCase()));
-  }
-
-  if (req.query.sortId) {
-    productsAll.sort(sortBy(req.query.sortId, (req.query.sortAsc === 'true'), a => a.toString().toUpperCase()));
+    const sortFunc = sortFunction(req.query.sortField, (req.query.sortAsc === 'true'));
+    productsAll.sort(sortFunc);
+  } else if (req.query.sortId) {
+    const sortFunc = sortFunction(req.query.sortId, (req.query.sortAsc === 'true'));
+    productsAll.sort(sortFunc);
   }
 
   for (i = start; i < end && i < total; i++) {
