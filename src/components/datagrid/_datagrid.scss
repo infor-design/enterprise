@@ -1714,7 +1714,7 @@ $datagrid-short-row-height: 25px;
     }
 
     &.alert {
-      background-color: $alert-bg-warn;
+      background-color: $alert-bg-alert;
 
       .datagrid-cell-wrapper {
         position: relative;
