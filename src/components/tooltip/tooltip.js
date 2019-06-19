@@ -442,6 +442,10 @@ Tooltip.prototype = {
     const tooltip = this.tooltip[0];
     let classes = 'tooltip is-hidden';
 
+    if (!contentArea) {
+      return;
+    }
+
     if (extraClass) {
       classes += ` ${extraClass}`;
     }
