@@ -2654,7 +2654,14 @@ Dropdown.prototype = {
         }
 
         const selectedValues = (self.selectedValues && self.selectedValues.indexOf(val) > -1);
-        if (option.value === val || selectedValues) {
+        if (self.settings.multiple) {
+          val.forEach((value) => {
+            if (value === option.value) {
+              option.selected = true;
+              selected = ' selected';
+            }
+          });
+        } else if (option.value === val || selectedValues) {
           option.selected = true;
           selected = ' selected';
         }
