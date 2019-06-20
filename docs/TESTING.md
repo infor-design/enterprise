@@ -258,22 +258,28 @@ Some tests will most likely fail.  These failures are due to visual differences.
 
 #### Replacing ALL Baseline images at once
 
-1. Copy the file from the actual folder to the baseline
+1. Copy the file from the actual directory to the baseline directory
 1. Run the `npm run e2e:ci` again to tests.  Ensure that all the tests pass.
 1. Commit and push the files to your branch.
 
 #### Replacing specific baseline images
 
 1. Remove the file from the baseline using a command like `rm test/baseline/<name-of-test-file.png>`
-1. Run the tests and it should say `Image not found, saving current image as new baseline.`
+1. Run the tests and it should say `Failed - Image not found, saving current image as new baseline.`
 1. Open a new shell on your local machine and copy the file and check it using: `docker cp <CONTAINER_ID>:/home/travis/enterprise/test/.tmp/actual/<name-of-test-file.png> /Users/<your_user_name>/<target_path>`
-1. If it looks visually as expected then copy it to the baseline
+1. If it looks visually as expected then go back to your docker session and copy it to the baseline directory
 
     ```sh
     mv test/.tmp/actual/<name-of-test-file.png> test/baseline/<name-of-test-file.png>`
     ```
 
 1. Run tests again to confirm
+1. Now you can move the files you copied to your local machine to the baseline directory to override the old ones
+
+    ```sh
+    mv /Users/<your_user_name>/<target_path>/<name_of_test_file.png> test/baseline/<name_of_test_file.png>
+    ```
+
 1. Commit and push
 
 #### Copying files locally for inspection
