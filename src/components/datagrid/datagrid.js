@@ -8265,7 +8265,7 @@ Datagrid.prototype = {
     const rowIdx = this.dataRowIndex(rowNode);
     return this.settings.treeGrid ?
       this.settings.treeDepth[rowIdx].node :
-      this.settings.dataset[dataRowIdx];
+      this.settings.dataset[rowIdx];
   },
 
   /**
