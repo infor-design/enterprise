@@ -7955,7 +7955,6 @@ Datagrid.prototype = {
       }
 
       if (self.settings.editable && key === 13) {
-        // const target = $(e.target);
         // Allow shift to add a new line
         if (target.is('textarea') && e.shiftKey) {
           return;
