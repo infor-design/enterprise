@@ -68,15 +68,18 @@ git config --global credential.helper wincred
 
 ## Release
 
-1. Checkout the release branch and `git pull --tags`
+1. Run the script to set the variables configured above (ignore this if they are already set)
+1. Checkout the release branch
+1. Run `git pull {remote} {branch name} && git pull --tags`
 1. Run a release cmd:
 
     - `npm run release:beta` - beta
     - `npm run release:rc` - release candidate normally the final testing branch before the release
     - `npm run release:final` - the release itself
     - **Always** verify the release version when the script asks. You MAY have to use a different release-it command than what we provide with the NPM script.
+    - You may get warnings about the release you are trying to do, will not line up withe the previous tag. This is usually nothing, but spend a minute or two to think through it.
 
-- Set the master branch to the next minor dev version. For example if we made branch `4.9.x`, then the `master` package.json version should now be changed to `4.10.0-dev`
+1. Set the master branch to the next minor dev version. For example if we made branch `4.9.x`, then the `master` package.json version should now be changed to `4.10.0-dev`
 
 For a final release, finish with:
 
