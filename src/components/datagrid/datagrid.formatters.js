@@ -136,27 +136,65 @@ const formatters = {
 
   Lookup(row, cell, value, col, item) {
     let formatted = ((value === null || value === undefined) ? '' : value);
+    let placeholder = col.placeholder;
+    let isPlaceholder = false;
+    
+    if (placeholder && formatted === '') {
+      isPlaceholder = true;
+      const getType = {};
+      if (getType.toString.call(placeholder) === '[object Function]') {
+        placeholder = placeholder(row, cell, value, col, item);
+      } else if (item && placeholder in item) {
+        placeholder = item[placeholder];
+      }
+    }
+    
     if (!col.editor) {
+      if (isPlaceholder) {
+        return `<span class="is-placeholder">${placeholder}</span>`;;
+      }
       return formatted;
     }
 
     if (col.editorOptions && typeof col.editorOptions.field === 'function') {
       formatted = col.editorOptions.field(item, null, null);
+      isPlaceholder = false;
     }
 
     if (formatted === null || formatted === undefined || formatted === '') {
       formatted = '';
+      if (placeholder) {
+        isPlaceholder = true;
+        formatted = placeholder;
+      }
     }
-    return `<span class="trigger ${col.align === 'right' ? 'align-text-right' : ''}">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
+    return `<span class="trigger ${isPlaceholder ? 'is-placeholder' : '' }${col.align === 'right' ? 'align-text-right' : ''}">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
   },
 
-  Decimal(row, cell, value, col) {
+  Decimal(row, cell, value, col, item) {
     let formatted = value;
+    
     if (typeof Locale !== 'undefined' &&
         formatted !== null && formatted !== undefined && formatted !== '') {
       formatted = Locale.formatNumber(value, col.numberFormat);
     }
-    return ((formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted);
+    
+    formatted = (formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted;
+    
+    if (col.placeholder && formatted === '') {
+      let placeholder = col.placeholder;
+      const getType = {};
+      if (getType.toString.call(placeholder) === '[object Function]') {
+        placeholder = placeholder(row, cell, value, col, item);
+      } else if (item && placeholder in item) {
+        placeholder = item[placeholder];
+      }
+      const html = `<span class="is-placeholder">${placeholder}</span>`;
+
+      return html;
+    }
+    
+    return (formatted);
   },
 
   Integer(row, cell, value, col) {
@@ -496,12 +534,14 @@ const formatters = {
     return markup;
   },
 
-  Dropdown(row, cell, value, col) {
+  Dropdown(row, cell, value, col, item) {
     let formattedValue = value;
     let compareValue;
     let option;
     let optionValue;
-
+    let placeholder = col.placeholder;
+    let isPlaceholder = false;
+    
     if (col.options && value !== undefined) {
       compareValue = col.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
 
@@ -515,8 +555,21 @@ const formatters = {
         }
       }
     }
+    
+    if (placeholder && formattedValue === '') {
+      isPlaceholder = true;
+      const getType = {};
+      if (getType.toString.call(placeholder) === '[object Function]') {
+        placeholder = placeholder(row, cell, value, col, item);
+      } else if (item && placeholder in item) {
+        placeholder = item[placeholder];
+      }
+      
+      formattedValue = placeholder;
+    }
+    
 
-    let html = `<span class="trigger dropdown-trigger">${formattedValue}</span>${$.createIcon({ icon: 'dropdown' })}`;
+    let html = `<span class="trigger dropdown-trigger ${isPlaceholder ? 'is-placeholder' : '' }">${formattedValue}</span>${$.createIcon({ icon: 'dropdown' })}`;
 
     if (col.inlineEditor) {
       html = `<label for="full-dropdown" class="audible">${col.name}</label><select id="datagrid-dropdown${row}" class="dropdown">`;
