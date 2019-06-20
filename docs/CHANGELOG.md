@@ -45,6 +45,8 @@
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
 - `[Popupmenu]` Fixed an issue where js error was showing after removing a menu item. ([#414](https://github.com/infor-design/enterprise-ng/issues/414))
 - `[Popupmenu]` Fixed a layout issue on disabled checkboxes in multiselect popupmenus. ([#2340](https://github.com/infor-design/enterprise/issues/2340))
+- `[Popupmenu]` Fixed a bug on IOS that prevented menu scrolling. ([#645](https://github.com/infor-design/enterprise/issues/645))
+- `[Popupmenu]` Fixed a bug on IOS that prevented some submenus from showing. ([#1928](https://github.com/infor-design/enterprise/issues/1928))
 - `[Scatter Plot]` Fixed the incorrect color on the tooltips. ([#1066](https://github.com/infor-design/enterprise/issues/1066))
 - `[Stepprocess]` Fixed an issue where a newly enabled step is not shown. ([#2391](https://github.com/infor-design/enterprise/issues/2391))
 
