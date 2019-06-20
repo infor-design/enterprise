@@ -442,10 +442,6 @@ Tooltip.prototype = {
     const tooltip = this.tooltip[0];
     let classes = 'tooltip is-hidden';
 
-    if (!contentArea) {
-      return;
-    }
-
     if (extraClass) {
       classes += ` ${extraClass}`;
     }
@@ -455,7 +451,7 @@ Tooltip.prototype = {
       titleArea.style.display = 'none';
     }
 
-    if (!contentArea.previousElementSibling.classList.contains('arrow')) {
+    if (contentArea && !contentArea.previousElementSibling.classList.contains('arrow')) {
       contentArea.insertAdjacentHTML('beforebegin', '<div class="arrow"></div>');
     }
 
