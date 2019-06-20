@@ -13,9 +13,16 @@
       columns.push({ id: 'taskName', hideable: false, name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
       columns.push({ id: 'id', name: 'Id', field: 'id'});
       columns.push({ id: 'page', name: 'Page', field: 'page'});
-      columns.push({ id: 'desc', name: 'Description', field: 'desc'});
+      columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Editors.Input, isEditable: cellIsEditable});
       columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink});
       columns.push({ id: 'time', name: 'Time', field: 'time'});
+
+      var cellIsEditable = function(row, cell, value, columnDef, rowData, dataGrid, action) {
+        if (action === 'is-editable') {
+          $('body').toast({ title: 'Is Editable Called', message: 'You initiated edit on id: ' + rowData.id });
+        }
+        return rowData != undefined;
+      };
 
       //Get some data via ajax
       var url = '{{basepath}}api/tree-tasks';
@@ -24,6 +31,7 @@
         columns: columns,
         paging: true,
         dataset: [],
+        editable: true,
         treeGrid: true,
         toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true, actions: true, rowHeight: true},
         source: function(req, response) {

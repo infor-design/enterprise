@@ -8153,9 +8153,8 @@ Datagrid.prototype = {
 
     const thisRow = this.actualRowNode(row);
     const idx = this.settings.treeGrid ? this.actualRowIndex(thisRow) : this.dataRowIndex(thisRow);
-    const rowData = this.settings.treeGrid ?
-      this.settings.treeDepth[idx].node :
-      this.settings.dataset[idx];
+    const rowData = this.rowData(thisRow);
+
     const cellWidth = cellParent.outerWidth();
     const isEditor = $('.is-editor', cellParent).length > 0;
     const isPlaceholder = $('.is-placeholder', cellNode).length > 0;
@@ -8254,6 +8253,19 @@ Datagrid.prototype = {
     this.element.triggerHandler('entereditmode', [{ row: idx, cell, item: rowData, target: cellNode, value: cellValue, column: col, editor: this.editor }]);
 
     return true;  //eslint-disable-line
+  },
+
+  /**
+   * Get the data for a row node
+   * @private
+   * @param {object} rowNode The jquery row node.
+   * @returns {object} The row of data from the dataset.
+   */
+  rowData(rowNode) {
+    const rowIdx = this.dataRowIndex(rowNode);
+    return this.settings.treeGrid ?
+      this.settings.treeDepth[rowIdx].node :
+      this.settings.dataset[dataRowIdx];
   },
 
   /**
@@ -9016,9 +9028,7 @@ Datagrid.prototype = {
     if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }
-    const rowData = isTreeGrid ?
-      this.settings.treeDepth[row].node :
-      this.settings.dataset[dataRowIndex];
+    const rowData = this.rowData(this.actualRowNode(row));
 
     if (rowNodes.length === 0 && this.settings.paging) {
       // TODO Frozen Editing with Paging
