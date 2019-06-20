@@ -151,7 +151,7 @@ const formatters = {
     
     if (!col.editor) {
       if (isPlaceholder) {
-        return `<span class="is-placeholder">${placeholder}</span>`;;
+        return `<span class="is-placeholder">${placeholder}</span>`;
       }
       return formatted;
     }
@@ -168,7 +168,7 @@ const formatters = {
         formatted = placeholder;
       }
     }
-    return `<span class="trigger ${isPlaceholder ? 'is-placeholder' : '' }${col.align === 'right' ? 'align-text-right' : ''}">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
+    return `<span class="trigger ${isPlaceholder ? 'is-placeholder' : ''}${col.align === 'right' ? 'align-text-right' : ''}">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
   },
 
   Decimal(row, cell, value, col, item) {
@@ -566,10 +566,9 @@ const formatters = {
       }
       
       formattedValue = placeholder;
-    }
-    
+    }    
 
-    let html = `<span class="trigger dropdown-trigger ${isPlaceholder ? 'is-placeholder' : '' }">${formattedValue}</span>${$.createIcon({ icon: 'dropdown' })}`;
+    let html = `<span class="trigger dropdown-trigger ${isPlaceholder ? 'is-placeholder' : ''}">${formattedValue}</span>${$.createIcon({ icon: 'dropdown' })}`;
 
     if (col.inlineEditor) {
       html = `<label for="full-dropdown" class="audible">${col.name}</label><select id="datagrid-dropdown${row}" class="dropdown">`;
