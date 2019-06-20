@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="twelve columns">
     <div id="datagrid">
@@ -48,18 +47,25 @@
         ]
     }];
 
-    //Define Columns for the Grid.
+    var cellIsEditable = function(row, cell, value, columnDef, rowData, dataGrid, action) {
+      if (action === 'is-editable') {
+        $('body').toast({ title: 'Is Editable Called', message: 'You initiated edit on id: ' + rowData.id });
+        console.log(rowData)
+      }
+      return rowData != undefined;
+    };
+
+    // Define Columns for the Grid.
     columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, editor: Editors.Input });
     columns.push({ id: 'id', name: 'Id', field: 'id' });
     columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
     columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink, editor: Editors.Input, width: 60});
-    columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Editors.Input });
+    columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Editors.Input, isEditable: cellIsEditable  });
 
-    //Get some data via ajax
+    // Get some data via ajax
     var url = '{{basepath}}api/tree-tasks';
 
     $.getJSON(url, function(data) {
-
       $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
@@ -67,8 +73,6 @@
         editable: true,
         toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
       });
-
     });
-
   });
 </script>

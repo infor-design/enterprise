@@ -1970,6 +1970,36 @@ describe('Datagrid timezone tests', () => {
   }
 });
 
+describe('Datagrid editable tree tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-tree-editable?layout=nofrills');
+
+    const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should fire is editable going into edit mode', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(8) td:nth-child(5)')).click();
+
+    expect(await element(by.css('#toast-container .toast-message')).getText()).toEqual('You initiated edit on id: 8');
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(8) td:nth-child(5) input')).isPresent()).toBe(true);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-edit-tree')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid select tree tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-multiselect');

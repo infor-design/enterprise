@@ -8090,7 +8090,11 @@ Datagrid.prototype = {
       this.fieldValue(this.settings.dataset[row], col.field));
 
     if (col.isEditable) {
-      const canEdit = col.isEditable(row, cell, cellValue, col, this.settings.dataset[row]);
+      let rowData = this.settings.dataset[row];
+      if (this.settings.treeDepth && this.settings.treeDepth[row]) {
+        rowData = this.settings.treeDepth[row].node;
+      }
+      const canEdit = col.isEditable(row, cell, cellValue, col, rowData, this, 'is-editable');
 
       if (!canEdit) {
         return false;
