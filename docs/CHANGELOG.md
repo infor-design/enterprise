@@ -4,6 +4,7 @@
 
 - `[Datagrid]` Fixes the multiselect filter on header from reloading during serverside filtering. ([#2383](https://github.com/infor-design/enterprise/issues/2383))
 - `[Datagrid]` Fixed an issue where contextmenu was not opening with first click. ([#2398](https://github.com/infor-design/enterprise/issues/2398))
+- `[Datagrid / Tooltip]` Fixed an error on some datagrid cells when tooltips are attached. ([#2403](https://github.com/infor-design/enterprise/issues/2403))
 
 ## v4.19.2
 
