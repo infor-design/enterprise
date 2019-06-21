@@ -24,19 +24,13 @@ const formatters = {
   },
 
   Placeholder(row, cell, value, col, item) {
-    if (col.placeholder && value === '') {
-      let placeholder = col.placeholder;
-      const getType = {};
-      if (getType.toString.call(placeholder) === '[object Function]') {
-        placeholder = placeholder(row, cell, value, col, item);
-      } else if (item && placeholder in item) {
-        placeholder = item[placeholder];
-      }
+    const placeholder = calculatePlaceholder(col.placeholder, value, row, cell, value, col, item);
+    if (placeholder  !== '') {
       const html = `<span class="is-placeholder">${placeholder}</span>`;
 
       return html;
     }
-
+    
     const str = ((value === null || value === undefined || value === '') ? '' : value.toString());
     return str;
   },
@@ -83,6 +77,7 @@ const formatters = {
     if (!col.editor || isReturnValue === true) {
       return formatted;
     }
+    
     return `<span class="trigger">${formatted}</span>${$.createIcon({ icon: 'calendar', classes: ['icon-calendar'] })}`;
   },
 
@@ -136,17 +131,11 @@ const formatters = {
 
   Lookup(row, cell, value, col, item) {
     let formatted = ((value === null || value === undefined) ? '' : value);
-    let placeholder = col.placeholder;
     let isPlaceholder = false;
     
-    if (placeholder && formatted === '') {
+    const placeholder = calculatePlaceholder(col.placeholder, formatted, row, cell, value, col, item);
+    if (placeholder  !== '') {
       isPlaceholder = true;
-      const getType = {};
-      if (getType.toString.call(placeholder) === '[object Function]') {
-        placeholder = placeholder(row, cell, value, col, item);
-      } else if (item && placeholder in item) {
-        placeholder = item[placeholder];
-      }
     }
     
     if (!col.editor) {
@@ -181,14 +170,8 @@ const formatters = {
     
     formatted = (formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted;
     
-    if (col.placeholder && formatted === '') {
-      let placeholder = col.placeholder;
-      const getType = {};
-      if (getType.toString.call(placeholder) === '[object Function]') {
-        placeholder = placeholder(row, cell, value, col, item);
-      } else if (item && placeholder in item) {
-        placeholder = item[placeholder];
-      }
+    const placeholder = calculatePlaceholder(col.placeholder, formatted, row, cell, value, col, item);
+    if (placeholder  !== '') {
       const html = `<span class="is-placeholder">${placeholder}</span>`;
 
       return html;
@@ -539,7 +522,6 @@ const formatters = {
     let compareValue;
     let option;
     let optionValue;
-    let placeholder = col.placeholder;
     let isPlaceholder = false;
     
     if (col.options && value !== undefined) {
@@ -556,17 +538,11 @@ const formatters = {
       }
     }
     
-    if (placeholder && formattedValue === '') {
+    const placeholder = calculatePlaceholder(col.placeholder, formattedValue, row, cell, value, col, item);
+    if (placeholder  !== '') {
       isPlaceholder = true;
-      const getType = {};
-      if (getType.toString.call(placeholder) === '[object Function]') {
-        placeholder = placeholder(row, cell, value, col, item);
-      } else if (item && placeholder in item) {
-        placeholder = item[placeholder];
-      }
-      
       formattedValue = placeholder;
-    }    
+    }
 
     let html = `<span class="trigger dropdown-trigger ${isPlaceholder ? 'is-placeholder' : ''}">${formattedValue}</span>${$.createIcon({ icon: 'dropdown' })}`;
 
@@ -688,5 +664,26 @@ const formatters = {
   // Color Picker (Low)
   // Radio
 };
+
+
+/**
+* Calculate if a Placeholder is required and its value.
+* @private
+*/
+function calculatePlaceholder(placeholder, formattedValue, row, cell, value, col, item) {
+    if (placeholder && formattedValue === '') {
+      const getType = {};
+      if (getType.toString.call(placeholder) === '[object Function]') {
+        placeholder = placeholder(row, cell, value, col, item);
+      } else if (item && placeholder in item) {
+        placeholder = item[placeholder];
+      }
+      
+      return placeholder;
+    } 
+    else {
+      return '';  
+    }
+}
 
 export { formatters as Formatters };
