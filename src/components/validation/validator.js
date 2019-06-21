@@ -326,12 +326,11 @@ Validator.prototype = {
   /**
    * Set disable/enable primary button if a container of fields is valid
    * @private
-   * @param {jQuery[]|HTMLElement} field the target element
-   * @param {jQuery[]|HTMLElement} modalBtn the button that needs to be set to primary.
    * @param {jQuery[]|HTMLElement} container to validate.
+   * @param {jQuery[]|HTMLElement} modalBtn the button that needs to be set to primary.
    * @returns {void}
    */
-  setPrimaryBtn(field, modalBtn, container) {
+  setPrimaryBtn(container, modalBtn) {
     const fields = container.find('[data-validate]:visible, select[data-validate], :checkbox[data-validate]');
     let allValid = true;
 
@@ -344,7 +343,7 @@ Validator.prototype = {
         }
         const isVisible = field[0].offsetParent !== null;
         if (field.is('.required')) {
-          if (isVisible && field.is('.editor') && !modalField.html()) {
+          if (isVisible && field.is('.editor') && !field.html()) {
             allValid = false;
           }
           if ((isVisible || field.is('select, :checkbox')) && !field.val() && !field.is('.editor')) {
@@ -576,13 +575,13 @@ Validator.prototype = {
       // Test Enabling primary button in modal
       const modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
       if (modalBtn.length) {
-        self.setPrimaryBtn(field, modalBtn, field.closest('.modal'));
+        self.setPrimaryBtn(field.closest('.modal'), modalBtn);
       }
       
       // Test Enabling primary button in Calendar Popup
       const calendarPopupBtn = field.closest('#calendar-popup').find('.btn-modal-primary').not('.no-validation');
       if (calendarPopupBtn.length) {
-        self.setPrimaryBtn(field, calendarPopupBtn, field.closest('#calendar-popup'));
+        self.setPrimaryBtn(field.closest('#calendar-popup'), calendarPopupBtn);
       }
 
       if (rule.type === 'error') {
