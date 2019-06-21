@@ -7,19 +7,18 @@ import { xssUtils } from '../../utils/xss';
 * @private
 */
 function calculatePlaceholder(placeholder, formattedValue, row, cell, value, col, item) {
-    if (placeholder && formattedValue === '') {
-      const getType = {};
-      if (getType.toString.call(placeholder) === '[object Function]') {
-        placeholder = placeholder(row, cell, value, col, item);
-      } else if (item && placeholder in item) {
-        placeholder = item[placeholder];
-      }
-      
-      return placeholder;
-    } 
-    else {
-      return '';  
+  if (placeholder && formattedValue === '') {
+    const getType = {};
+    if (getType.toString.call(placeholder) === '[object Function]') {
+      placeholder = placeholder(row, cell, value, col, item);
+    } else if (item && placeholder in item) {
+      placeholder = item[placeholder];
     }
+
+    return placeholder;
+  }
+
+  return '';  
 }
 
 /**
@@ -153,7 +152,8 @@ const formatters = {
     let formatted = ((value === null || value === undefined) ? '' : value);
     let isPlaceholder = false;
     
-    const placeholder = calculatePlaceholder(col.placeholder, formatted, row, cell, value, col, item);
+    const placeholder = calculatePlaceholder(col.placeholder, 
+      formatted, row, cell, value, col, item);
     if (placeholder !== '') {
       isPlaceholder = true;
     }
