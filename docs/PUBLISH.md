@@ -83,5 +83,5 @@ git config --global credential.helper wincred
 
 For a final release, finish with:
 
-1. Manually merge the version branch into `master`. Do **NOT** use a pull request. (You will need github push permissions for this)
-    - Verify the `package.json` version on master is what it should be (usually the next minor version with a `-dev` suffix)
+1. Manually merge the version branch into `master`. Do **NOT** use a pull request. (You will need github push permissions for this). One way to do this is with the command `git checkout master && git merge origin/4.19.x`.
+2. Verify the `package.json` version on master is what it should be (usually the next minor version with a `-dev` suffix)

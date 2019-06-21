@@ -8153,7 +8153,7 @@ Datagrid.prototype = {
 
     const thisRow = this.actualRowNode(row);
     const idx = this.settings.treeGrid ? this.actualRowIndex(thisRow) : this.dataRowIndex(thisRow);
-    const rowData = this.rowData(thisRow);
+    const rowData = this.rowData(this.dataRowIndex(thisRow));
 
     const cellWidth = cellParent.outerWidth();
     const isEditor = $('.is-editor', cellParent).length > 0;
@@ -8261,8 +8261,7 @@ Datagrid.prototype = {
    * @param {object} rowNode The jquery row node.
    * @returns {object} The row of data from the dataset.
    */
-  rowData(rowNode) {
-    const rowIdx = this.dataRowIndex(rowNode);
+  rowData(rowIdx) {
     return this.settings.treeGrid ?
       this.settings.treeDepth[rowIdx].node :
       this.settings.dataset[rowIdx];
@@ -9028,7 +9027,7 @@ Datagrid.prototype = {
     if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }
-    const rowData = this.rowData(this.actualRowNode(row));
+    const rowData = this.rowData(row);
 
     if (rowNodes.length === 0 && this.settings.paging) {
       // TODO Frozen Editing with Paging

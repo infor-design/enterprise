@@ -197,6 +197,7 @@ describe('Datagrid Editable Tests', () => {
     expect(await element.all(by.css('#datagrid .rowstatus-row-info')).count()).toEqual(1);
     expect(await element.all(by.css('#datagrid .rowstatus-row-in-progress')).count()).toEqual(1);
     expect(await element.all(by.css('#datagrid .rowstatus-row-success')).count()).toEqual(0);
+    await utils.checkForErrors();
   });
 });
 
@@ -1954,18 +1955,18 @@ describe('Datagrid timezone tests', () => {
       expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('03-04-2019');
       let text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(2)')).getText();
 
-      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT']).toContain(text);
       text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(3)')).getText();
 
       expect(['03-04-2019 00:00 Eastern-standaardtijd', '03-04-2019 00:00 Eastern-zomertijd']).toContain(text);
 
       text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(4)')).getText();
 
-      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT']).toContain(text);
 
       text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(5)')).getText();
 
-      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT']).toContain(text);
     });
   }
 });
@@ -1985,6 +1986,7 @@ describe('Datagrid editable tree tests', () => {
 
   it('Should fire is editable going into edit mode', async () => {
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(8) td:nth-child(5)')).click();
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('#toast-container .toast-message')).getText()).toEqual('You initiated edit on id: 8');
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(8) td:nth-child(5) input')).isPresent()).toBe(true);
