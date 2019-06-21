@@ -352,7 +352,7 @@
     list-style: none outside none;
   }
 
-  p {
+  p:not(.message-text) {
     margin-left: 0;
     text-align: center;
   }

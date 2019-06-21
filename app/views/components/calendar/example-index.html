@@ -172,22 +172,22 @@
   <div class="form-responsive row">
     <div class="twelve columns">
       <div class="field">
-        <label for="subject" class="label">Subject</label>
-        <input id="subject" type="text" value="{{subject}}">
+        <label for="subject" class="label required">Subject</label>
+        <input id="subject" type="text" value="{{subject}}" data-validate="required">
       </div>
     </div>
   </div>
   <div class="form-responsive row">
     <div class="six columns">
       <div class="field">
-        <label for="starts" class="label">From</label>
-        <input id="starts" class="datepicker" name="starts" type="text" value="{{startsLocale}}"/>
+        <label for="starts" class="label required">From</label>
+        <input id="starts" class="datepicker" name="starts" type="text" value="{{startsLocale}}" data-validate="required"/>
       </div>
     </div>
     <div class="six columns">
       <div class="field">
-        <label for="ends" class="label">To</label>
-        <input id="ends" class="datepicker" name="ends" type="text" value="{{endsLocale}}"/>
+        <label for="ends" class="label required">To</label>
+        <input id="ends" class="datepicker" name="ends" type="text" value="{{endsLocale}}" data-validate="required"/>
       </div>
     </div>
   </div>

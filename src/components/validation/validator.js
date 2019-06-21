@@ -322,36 +322,36 @@ Validator.prototype = {
       callback(false);
     });
   },
-
+  
   /**
-   * Set disable/enable primary button in modal
+   * Set disable/enable primary button if a container of fields is valid
    * @private
    * @param {jQuery[]|HTMLElement} field the target element
    * @param {jQuery[]|HTMLElement} modalBtn the button that needs to be set to primary.
+   * @param {jQuery[]|HTMLElement} container to validate.
    * @returns {void}
    */
-  setModalPrimaryBtn(field, modalBtn) {
-    const modal = field.closest('.modal');
-    const modalFields = modal.find('[data-validate]:visible, select[data-validate], :checkbox[data-validate]');
+  setPrimaryBtn(field, modalBtn, container) {
+    const fields = container.find('[data-validate]:visible, select[data-validate], :checkbox[data-validate]');
     let allValid = true;
 
-    if (modalFields.length > 0) {
-      modalFields.each(function () {
-        const modalField = $(this);
+    if (fields.length > 0) {
+      fields.each(function () {
+        const field = $(this);
 
-        if (modalField.closest('.datagrid-filter-wrapper').length > 0) {
+        if (field.closest('.datagrid-filter-wrapper').length > 0) {
           return;
         }
-        const isVisible = modalField[0].offsetParent !== null;
-        if (modalField.is('.required')) {
-          if (isVisible && modalField.is('.editor') && !modalField.html()) {
+        const isVisible = field[0].offsetParent !== null;
+        if (field.is('.required')) {
+          if (isVisible && field.is('.editor') && !modalField.html()) {
             allValid = false;
           }
-          if ((isVisible || modalField.is('select, :checkbox')) && !modalField.val() && !modalField.is('.editor')) {
+          if ((isVisible || field.is('select, :checkbox')) && !field.val() && !field.is('.editor')) {
             allValid = false;
           }
         }
-        if ((isVisible || modalField.is('select, :checkbox')) && !modalField.isValid()) {
+        if ((isVisible || field.is('select, :checkbox')) && !field.isValid()) {
           allValid = false;
         }
       });
@@ -576,7 +576,13 @@ Validator.prototype = {
       // Test Enabling primary button in modal
       const modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
       if (modalBtn.length) {
-        self.setModalPrimaryBtn(field, modalBtn);
+        self.setPrimaryBtn(field, modalBtn, field.closest('.modal'));
+      }
+      
+      // Test Enabling primary button in Calendar Popup
+      const calendarPopupBtn = field.closest('#calendar-popup').find('.btn-modal-primary').not('.no-validation');
+      if (calendarPopupBtn.length) {
+        self.setPrimaryBtn(field, calendarPopupBtn, field.closest('#calendar-popup'));
       }
 
       if (rule.type === 'error') {
@@ -591,10 +597,6 @@ Validator.prototype = {
 
       if (!rule) {
         continue;
-      }
-
-      if ($('#calendar-popup').is(':visible')) {
-        continue; // dont show validation message while selecting
       }
 
       if (rule.async) {
