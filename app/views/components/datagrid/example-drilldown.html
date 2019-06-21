@@ -26,7 +26,10 @@
 
         //Define Columns for the Grid.
         columns.push({ id: 'drilldown', name: '', field: '', resizable: false, formatter: Formatters.Drilldown, click: function(e, args) {
-          console.log(args);
+          $('body').toast({
+            title: 'Drill Down',
+            message: 'This action would drill down into more info for row: ' + args[0].row + ' cell: ' + args[0].cell
+          });
         }, align: 'center', sortable: false});
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 170, formatter: Formatters.Hyperlink});
