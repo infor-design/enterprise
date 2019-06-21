@@ -3,6 +3,26 @@ import { Tmpl } from '../tmpl/tmpl';
 import { xssUtils } from '../../utils/xss';
 
 /**
+* Calculate if a Placeholder is required and its value.
+* @private
+*/
+function calculatePlaceholder(placeholder, formattedValue, row, cell, value, col, item) {
+    if (placeholder && formattedValue === '') {
+      const getType = {};
+      if (getType.toString.call(placeholder) === '[object Function]') {
+        placeholder = placeholder(row, cell, value, col, item);
+      } else if (item && placeholder in item) {
+        placeholder = item[placeholder];
+      }
+      
+      return placeholder;
+    } 
+    else {
+      return '';  
+    }
+}
+
+/**
 * A object containing all the supported UI formatters.
 * @private
 */
@@ -25,7 +45,7 @@ const formatters = {
 
   Placeholder(row, cell, value, col, item) {
     const placeholder = calculatePlaceholder(col.placeholder, value, row, cell, value, col, item);
-    if (placeholder  !== '') {
+    if (placeholder !== '') {
       const html = `<span class="is-placeholder">${placeholder}</span>`;
 
       return html;
@@ -134,7 +154,7 @@ const formatters = {
     let isPlaceholder = false;
     
     const placeholder = calculatePlaceholder(col.placeholder, formatted, row, cell, value, col, item);
-    if (placeholder  !== '') {
+    if (placeholder !== '') {
       isPlaceholder = true;
     }
     
@@ -171,7 +191,7 @@ const formatters = {
     formatted = (formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted;
     
     const placeholder = calculatePlaceholder(col.placeholder, formatted, row, cell, value, col, item);
-    if (placeholder  !== '') {
+    if (placeholder !== '') {
       const html = `<span class="is-placeholder">${placeholder}</span>`;
 
       return html;
@@ -539,7 +559,7 @@ const formatters = {
     }
     
     const placeholder = calculatePlaceholder(col.placeholder, formattedValue, row, cell, value, col, item);
-    if (placeholder  !== '') {
+    if (placeholder !== '') {
       isPlaceholder = true;
       formattedValue = placeholder;
     }
@@ -664,26 +684,5 @@ const formatters = {
   // Color Picker (Low)
   // Radio
 };
-
-
-/**
-* Calculate if a Placeholder is required and its value.
-* @private
-*/
-function calculatePlaceholder(placeholder, formattedValue, row, cell, value, col, item) {
-    if (placeholder && formattedValue === '') {
-      const getType = {};
-      if (getType.toString.call(placeholder) === '[object Function]') {
-        placeholder = placeholder(row, cell, value, col, item);
-      } else if (item && placeholder in item) {
-        placeholder = item[placeholder];
-      }
-      
-      return placeholder;
-    } 
-    else {
-      return '';  
-    }
-}
 
 export { formatters as Formatters };
