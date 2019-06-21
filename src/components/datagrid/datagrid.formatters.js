@@ -152,8 +152,7 @@ const formatters = {
     let formatted = ((value === null || value === undefined) ? '' : value);
     let isPlaceholder = false;
     
-    const placeholder = calculatePlaceholder(col.placeholder, 
-      formatted, row, cell, value, col, item);
+    const placeholder = calculatePlaceholder(col.placeholder, formatted, row, cell, value, col, item);
     if (placeholder !== '') {
       isPlaceholder = true;
     }
@@ -190,8 +189,7 @@ const formatters = {
     
     formatted = (formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted;
     
-    const placeholder = calculatePlaceholder(col.placeholder, 
-      formatted, row, cell, value, col, item);
+    const placeholder = calculatePlaceholder(col.placeholder, formatted, row, cell, value, col, item);
     if (placeholder !== '') {
       const html = `<span class="is-placeholder">${placeholder}</span>`;
 
@@ -559,8 +557,7 @@ const formatters = {
       }
     }
     
-    const placeholder = calculatePlaceholder(col.placeholder, formattedValue, 
-      row, cell, value, col, item);
+    const placeholder = calculatePlaceholder(col.placeholder, formattedValue, row, cell, value, col, item);
     if (placeholder !== '') {
       isPlaceholder = true;
       formattedValue = placeholder;
