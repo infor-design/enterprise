@@ -352,9 +352,13 @@
     list-style: none outside none;
   }
 
-  p:not(.message-text) {
+  p {
     margin-left: 0;
     text-align: center;
+  }
+
+  .error-message .message-text {
+    text-align: left;
   }
 }
 
