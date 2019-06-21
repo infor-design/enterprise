@@ -12,6 +12,7 @@
 - `[Datagrid]` Added a Sort Function to the datagrid column to allow the value to be formatted for the sort. ([#1766](https://github.com/infor-design/enterprise/issues/2274))
 - `[Datagrid]` Added a Sort Function to the datagrid column to allow the value to be formatted for the sort. ([#1766](https://github.com/infor-design/enterprise/issues/2274)))
 - `[Datagrid]` Added support to restrict the size of a column with minWidth and maxWidth setting on the column. ([#2313](https://github.com/infor-design/enterprise/issues/2313))
+- `[Dropdown]` Fixed an issue where ellipsis was not working when use firefox new tab. ([#2236](https://github.com/infor-design/enterprise/issues/2236))
 - `[ListFilter]` Added `phraseStartsWith` filterMode for only matching a search term against the beginning of a string. ([#1606](https://github.com/infor-design/enterprise/issues/1606))
 
 ### v4.20.0 Fixes
