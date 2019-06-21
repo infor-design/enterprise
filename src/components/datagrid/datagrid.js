@@ -755,7 +755,7 @@ Datagrid.prototype = {
       pagerInfo.activePage = 1;
       pagerInfo.pagesize = this.settings.pagesize;
       pagerInfo.total = -1;
-      pagerInfo.type = 'initial';
+
       if (this.settings.treeGrid) {
         pagerInfo.preserveSelected = true;
       }
@@ -783,7 +783,7 @@ Datagrid.prototype = {
     if (pagerInfo.preserveSelected === undefined) {
       if (this.settings.source) {
         this._selectedRows = [];
-      } else if (pagerInfo.type === 'initial') {
+      } else if (pagerInfo.type === 'initial' || !pagerInfo.type) {
         this.unSelectAllRows();
       }
     } else if (pagerInfo.preserveSelected === false) {
@@ -809,9 +809,7 @@ Datagrid.prototype = {
       this.renderRows();
       this.renderHeader();
     } else {
-      this.clearHeaderCache();
       this.renderRows();
-      this.syncColGroups();
     }
 
     // Setup focus on the first cell
@@ -1636,6 +1634,7 @@ Datagrid.prototype = {
       elem.find('select.multiselect').each(function () {
         const multiselect = $(this);
         multiselect.multiselect(col.editorOptions).on('selected.datagrid', () => {
+          self.restoreFilterClientSide = false;
           self.applyFilter(null, 'selected');
         });
 
@@ -5944,16 +5943,16 @@ Datagrid.prototype = {
     * @property {object} args.originalEvent The original event object.
     */
     this.element.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tbody tr', (e) => {
-      const hasMenu = self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
+      const hasMenu = () => self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
 
-      if (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu) {
+      if (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu()) {
         return true;
       }
       e.preventDefault();
       self.closePrevPopupmenu();
 
-      if (!hasMenu) {
+      if (!hasMenu()) {
         return true;
       }
 

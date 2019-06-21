@@ -54,6 +54,16 @@
 - `[Demo App]` Fixed routing issues that could cause 500 errors or crash the Demoapp. ([#2343](https://github.com/infor-design/enterprise/issues/2343))
 - `[Demo App]` Fixed an issue where the sorting was wrong on compressor data. ([#2390](https://github.com/infor-design/enterprise/issues/2390))
 
+## v4.19.3
+
+- `[Datagrid]` Fixes the multiselect filter on header from reloading during serverside filtering. ([#2383](https://github.com/infor-design/enterprise/issues/2383))
+- `[Datagrid]` Fixed an issue where contextmenu was not opening with first click. ([#2398](https://github.com/infor-design/enterprise/issues/2398))
+- `[Datagrid / Tooltip]` Fixed an error on some datagrid cells when tooltips are attached. ([#2403](https://github.com/infor-design/enterprise/issues/2403))
+
+## v4.19.2
+
+- `[Build]` Fixes missing minified files in the build and a missing svg-extended.html deprecated file for backwards compatibility. ([Teams](https://bit.ly/2FlzYCT))
+
 ## v4.19.0
 
 ### v4.19.0 Deprecations

@@ -451,7 +451,7 @@ Tooltip.prototype = {
       titleArea.style.display = 'none';
     }
 
-    if (!contentArea.previousElementSibling.classList.contains('arrow')) {
+    if (contentArea && !contentArea.previousElementSibling.classList.contains('arrow')) {
       contentArea.insertAdjacentHTML('beforebegin', '<div class="arrow"></div>');
     }
 
