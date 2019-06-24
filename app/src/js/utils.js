@@ -5,9 +5,12 @@ const commandLineArgs = require('yargs').argv;
 
 const utils = {};
 
+// Returns only the filename from the specified request
 utils.getFileName = function getFileName(filePath) {
   filePath = utils.getPathWithoutQuery(filePath);
-  let sepIndex = filePath.lastIndexOf(path.sep);
+
+  // NOTE: `path.sep` is not used on purpose, since this is a URL.
+  let sepIndex = filePath.lastIndexOf('/');
   sepIndex = sepIndex === -1 ? 0 : sepIndex + 1;
 
   return filePath.substring(sepIndex, filePath.length);
@@ -190,7 +193,7 @@ utils.getDirectory = function (filePath, webroot) {
     return removeWebroot(absFilePath, webroot);
   }
 
-  return removeWebroot(utils.removeLastPart(filePath), webroot);
+  return removeWebroot(utils.removeLastPart(absFilePath), webroot);
 };
 
 // Gets the path of the parent directory of a file

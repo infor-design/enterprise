@@ -30,6 +30,9 @@
 - `[Datagrid]` Fixes a bug that stopped the search in datagrid personalization from working. ([#2299](https://github.com/infor-design/enterprise/issues/2299))
 - `[Datagrid]` Fixes an error on tree grid when using server-side paging. ([#2132](https://github.com/infor-design/enterprise/issues/2132))
 - `[Datagrid]` Fixed an issue where autocompletes popped up on cell editors. ([#1575](https://github.com/infor-design/enterprise/issues/1575))
+- `[Datagrid]` Fixes the filtering of null values. ([#2336](https://github.com/infor-design/enterprise/issues/2336))
+- `[Datagrid]` Fixed an issue where performance was significantly slower for export methods. ([#2291](https://github.com/infor-design/enterprise/issues/2291))
+- `[Datagrid]` Fixed an issue where source would not fire on sorting. ([#2390](https://github.com/infor-design/enterprise/issues/2390))
 - `[Datagrid]` Fixes the styling of non editable checkbox cells so they look disabled. ([#2340](https://github.com/infor-design/enterprise/issues/2340))
 - `[Datagrid]` Changed the dynamic column tooltip function to pass the row and more details. This changes the order of parameters but since this feature is new did not consider this a breaking change. If you are using this please take note. ([#2333](https://github.com/infor-design/enterprise/issues/2333))
 - `[Fieldfilter]` Fixed an issue where Dropdown was not switching mode on example page. ([#2288](https://github.com/infor-design/enterprise/issues/2288))
@@ -43,11 +46,23 @@
 - `[Popupmenu]` Fixed an issue where js error was showing after removing a menu item. ([#414](https://github.com/infor-design/enterprise-ng/issues/414))
 - `[Popupmenu]` Fixed a layout issue on disabled checkboxes in multiselect popupmenus. ([#2340](https://github.com/infor-design/enterprise/issues/2340))
 - `[Scatter Plot]` Fixed the incorrect color on the tooltips. ([#1066](https://github.com/infor-design/enterprise/issues/1066))
+- `[Stepprocess]` Fixed an issue where a newly enabled step is not shown. ([#2391](https://github.com/infor-design/enterprise/issues/2391))
 
 ### v4.20.0 Chores & Maintenance
 
 - `[Demo App]` Add the uplift theme to the theme switcher menu. ([#2335](https://github.com/infor-design/enterprise/issues/2335))
 - `[Demo App]` Fixed routing issues that could cause 500 errors or crash the Demoapp. ([#2343](https://github.com/infor-design/enterprise/issues/2343))
+- `[Demo App]` Fixed an issue where the sorting was wrong on compressor data. ([#2390](https://github.com/infor-design/enterprise/issues/2390))
+
+## v4.19.3
+
+- `[Datagrid]` Fixes the multiselect filter on header from reloading during serverside filtering. ([#2383](https://github.com/infor-design/enterprise/issues/2383))
+- `[Datagrid]` Fixed an issue where contextmenu was not opening with first click. ([#2398](https://github.com/infor-design/enterprise/issues/2398))
+- `[Datagrid / Tooltip]` Fixed an error on some datagrid cells when tooltips are attached. ([#2403](https://github.com/infor-design/enterprise/issues/2403))
+
+## v4.19.2
+
+- `[Build]` Fixes missing minified files in the build and a missing svg-extended.html deprecated file for backwards compatibility. ([Teams](https://bit.ly/2FlzYCT))
 
 ## v4.19.0
 

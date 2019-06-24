@@ -755,7 +755,7 @@ Datagrid.prototype = {
       pagerInfo.activePage = 1;
       pagerInfo.pagesize = this.settings.pagesize;
       pagerInfo.total = -1;
-      pagerInfo.type = 'initial';
+
       if (this.settings.treeGrid) {
         pagerInfo.preserveSelected = true;
       }
@@ -783,7 +783,7 @@ Datagrid.prototype = {
     if (pagerInfo.preserveSelected === undefined) {
       if (this.settings.source) {
         this._selectedRows = [];
-      } else if (pagerInfo.type === 'initial') {
+      } else if (pagerInfo.type === 'initial' || !pagerInfo.type) {
         this.unSelectAllRows();
       }
     } else if (pagerInfo.preserveSelected === false) {
@@ -809,9 +809,7 @@ Datagrid.prototype = {
       this.renderRows();
       this.renderHeader();
     } else {
-      this.clearHeaderCache();
       this.renderRows();
-      this.syncColGroups();
     }
 
     // Setup focus on the first cell
@@ -1636,6 +1634,7 @@ Datagrid.prototype = {
       elem.find('select.multiselect').each(function () {
         const multiselect = $(this);
         multiselect.multiselect(col.editorOptions).on('selected.datagrid', () => {
+          self.restoreFilterClientSide = false;
           self.applyFilter(null, 'selected');
         });
 
@@ -4671,13 +4670,8 @@ Datagrid.prototype = {
    * @returns {void}
    */
   updateColumns(columns, columnGroups) {
-    let columnsChanged = true;
     if (columnGroups === undefined) {
       columnGroups = null;
-    }
-    if (this.copyThenStringify(this.settings.columns) === this.copyThenStringify(columns) &&
-      (JSON.stringify(this.settings.columnGroups) === JSON.stringify(columnGroups))) {
-      columnsChanged = false;
     }
 
     this.settings.columns = columns;
@@ -4687,9 +4681,6 @@ Datagrid.prototype = {
     }
 
     this.rerender();
-    if (columnsChanged) {
-      this.resetPager('updatecolumns');
-    }
 
     /**
     * Fires after the entire grid is rendered.
@@ -5952,16 +5943,16 @@ Datagrid.prototype = {
     * @property {object} args.originalEvent The original event object.
     */
     this.element.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tbody tr', (e) => {
-      const hasMenu = self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
+      const hasMenu = () => self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
 
-      if (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu) {
+      if (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu()) {
         return true;
       }
       e.preventDefault();
       self.closePrevPopupmenu();
 
-      if (!hasMenu) {
+      if (!hasMenu()) {
         return true;
       }
 
@@ -9945,18 +9936,23 @@ Datagrid.prototype = {
 
     if (sortColumnChanged) {
       const wasFocused = this.activeCell.isFocused;
-      this.setTreeDepth();
-      this.setRowGrouping();
-      this.setTreeRootNodes();
-      this.renderRows();
-      // Update selected and Sync header checkbox
-      this.syncSelectedUI();
+
+      if (!this.settings.source) {
+        this.setTreeDepth();
+        this.setRowGrouping();
+        this.setTreeRootNodes();
+        this.renderRows();
+        // Update selected and Sync header checkbox
+        this.syncSelectedUI();
+      }
 
       if (wasFocused && this.activeCell.node.length === 1) {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
       }
 
-      this.resetPager('sorted');
+      if (this.settings.source) {
+        this.triggerSource({ type: 'sorted' });
+      }
     }
     this.tableBody.removeClass('is-loading');
     this.saveUserSettings();
@@ -10221,20 +10217,6 @@ Datagrid.prototype = {
 
     // Update selected and Sync header checkbox
     this.syncSelectedUI();
-  },
-
-  /**
-  * Reset the pager to the first page.
-  * @private
-  * @param {string} type The action type, which gets sent to the source callback.
-  * @param {string} trigger The triggering action
-  */
-  resetPager(type, trigger) {
-    if (!this.pagerAPI) {
-      return;
-    }
-
-    this.pagerAPI.reset(type, trigger);
   },
 
   /**
