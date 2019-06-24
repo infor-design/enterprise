@@ -808,14 +808,13 @@ Datagrid.prototype = {
       this.restoreUserSettings();
       this.renderRows();
       this.renderHeader();
+    } else if (this.headerContainer.find('.datagrid-filter-wrapper .is-open').length === 0) {
+      this.clearHeaderCache();
+      this.renderRows();
+      this.syncColGroups();
     } else {
-      if (this.headerContainer.find('.datagrid-filter-wrapper .is-open').length === 0) {
-        this.clearHeaderCache();
-        this.renderRows();
-        this.syncColGroups();
-      } else {
-        this.renderRows();
-      }
+      // Filter field is open so do not resize
+      this.renderRows();
     }
 
     // Setup focus on the first cell
