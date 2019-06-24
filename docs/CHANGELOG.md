@@ -11,6 +11,7 @@
 - `[Datagrid]` Added support to resize column widths after a value change via the stretchColumnOnChange setting. ([#2174](https://github.com/infor-design/enterprise/issues/2174))
 - `[Datagrid]` Added a Sort Function to the datagrid column to allow the value to be formatted for the sort. ([#1766](https://github.com/infor-design/enterprise/issues/2274))
 - `[Datagrid]` Added a Sort Function to the datagrid column to allow the value to be formatted for the sort. ([#1766](https://github.com/infor-design/enterprise/issues/2274)))
+- `[Datagrid]` Added placeholder functionality to Lookup, Dropdown, and Decimal Formatrers. ([#2408](https://github.com/infor-design/enterprise/issues/2408)))
 - `[Datagrid]` Added support to restrict the size of a column with minWidth and maxWidth setting on the column. ([#2313](https://github.com/infor-design/enterprise/issues/2313))
 - `[ListFilter]` Added `phraseStartsWith` filterMode for only matching a search term against the beginning of a string. ([#1606](https://github.com/infor-design/enterprise/issues/1606))
 
