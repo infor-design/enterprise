@@ -6,7 +6,8 @@ import { xssUtils } from '../../utils/xss';
 * Calculate if a Placeholder is required and its value.
 * @private
 */
-function calculatePlaceholder(placeholder, formattedValue, row, cell, value, col, item) {
+function calculatePlaceholder(formattedValue, row, cell, value, col, item) {
+  let placeholder = col.placeholder;
   if (placeholder && formattedValue === '') {
     const getType = {};
     if (getType.toString.call(placeholder) === '[object Function]') {
@@ -43,7 +44,7 @@ const formatters = {
   },
 
   Placeholder(row, cell, value, col, item) {
-    const placeholder = calculatePlaceholder(col.placeholder, value, row, cell, value, col, item);
+    const placeholder = calculatePlaceholder(value, row, cell, value, col, item);
     if (placeholder !== '') {
       const html = `<span class="is-placeholder">${placeholder}</span>`;
 
@@ -152,7 +153,7 @@ const formatters = {
     let formatted = ((value === null || value === undefined) ? '' : value);
     let isPlaceholder = false;
     
-    const placeholder = calculatePlaceholder(col.placeholder, formatted, row, cell, value, col, item);
+    const placeholder = calculatePlaceholder(formatted, row, cell, value, col, item);
     if (placeholder !== '') {
       isPlaceholder = true;
     }
@@ -189,7 +190,7 @@ const formatters = {
     
     formatted = (formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted;
     
-    const placeholder = calculatePlaceholder(col.placeholder, formatted, row, cell, value, col, item);
+    const placeholder = calculatePlaceholder(formatted, row, cell, value, col, item);
     if (placeholder !== '') {
       const html = `<span class="is-placeholder">${placeholder}</span>`;
 
@@ -557,7 +558,7 @@ const formatters = {
       }
     }
     
-    const placeholder = calculatePlaceholder(col.placeholder, formattedValue, row, cell, value, col, item);
+    const placeholder = calculatePlaceholder(formattedValue, row, cell, value, col, item);
     if (placeholder !== '') {
       isPlaceholder = true;
       formattedValue = placeholder;
