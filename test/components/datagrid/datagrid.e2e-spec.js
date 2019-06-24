@@ -1656,7 +1656,7 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
 
 describe('Datagrid paging indeterminate single select tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single');
+    await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
