@@ -1683,6 +1683,19 @@ describe('Datagrid paging indeterminate single select tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-paging-indeterminate-single-first-page')).toEqual(0);
+      await element(by.css('.pager-last')).click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-paging-indeterminate-single-last-page')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid paging serverside multi select tests', () => {
