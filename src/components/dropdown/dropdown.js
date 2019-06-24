@@ -325,7 +325,10 @@ Dropdown.prototype = {
     this.setDisplayedValues();
     this.setInitial();
     this.setWidth();
-    this.toggleTooltip();
+
+    setTimeout(() => {
+      this.toggleTooltip();
+    }, 0);
 
     this.element.triggerHandler('rendered');
 
