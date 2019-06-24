@@ -7823,11 +7823,16 @@ Datagrid.prototype = {
           cell = ((key === 37 && !isRTL) || (key === 39 && isRTL)) ? 0 : lastCell;
           self.setActiveCell(row, cell);
         } else if (!self.quickEditMode || (key === 9)) {
-          if ((!isRTL && (key === 37 || key === 9 && e.shiftKey)) || // eslint-disable-line
-              (isRTL && (key === 39 || key === 9))) { // eslint-disable-line
-            cell = getNextVisibleCell(cell, lastCell, true);
+          // Handle `shift + tab` for code block formatter, it use sometime `.code-block-actions`
+          if (key === 9 && e.shiftKey && target.is('.code-block-actions')) {
+            self.focusNextPrev('prev', node);
           } else {
-            cell = getNextVisibleCell(cell, lastCell);
+            if ((!isRTL && (key === 37 || key === 9 && e.shiftKey)) || // eslint-disable-line
+                (isRTL && (key === 39 || key === 9))) { // eslint-disable-line
+              cell = getNextVisibleCell(cell, lastCell, true);
+            } else {
+              cell = getNextVisibleCell(cell, lastCell);
+            }
           }
 
           if (cell instanceof jQuery) {
@@ -8004,6 +8009,27 @@ Datagrid.prototype = {
         return false; // eslint-disable-line
       }
     });
+  },
+
+  /**
+   * Set focus to next/prev focusable element in given node
+   * @param  {string} opt The element to set focus
+   * @param  {object} node The node to get focusable element
+   * @returns {void}
+   */
+  focusNextPrev(opt, node) {
+    if (node && typeof opt === 'string') {
+      opt = opt.toLowerCase();
+      const focusables = $(':focusable', node);
+      const len = focusables.length;
+      let index = focusables.index($(':focus'));
+      if (/\b(next|prev)\b/g.test(opt)) {
+        index = (opt === 'next') ?
+          ((index + 1) >= len ? 0 : (index + 1)) :
+          ((index - 1) < 0 ? len : (index - 1));
+        focusables.eq(index).focus();
+      }
+    }
   },
 
   /**
