@@ -808,6 +808,10 @@ Datagrid.prototype = {
       this.restoreUserSettings();
       this.renderRows();
       this.renderHeader();
+    } else if (['first', 'next', 'prev', 'last'].indexOf(pagerInfo.type) >= 0) {
+      this.clearHeaderCache();
+      this.renderRows();
+      this.syncColGroups();
     } else {
       this.renderRows();
     }
