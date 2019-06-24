@@ -808,12 +808,14 @@ Datagrid.prototype = {
       this.restoreUserSettings();
       this.renderRows();
       this.renderHeader();
-    } else if (['first', 'next', 'prev', 'last'].indexOf(pagerInfo.type) >= 0) {
-      this.clearHeaderCache();
-      this.renderRows();
-      this.syncColGroups();
     } else {
-      this.renderRows();
+      if (this.headerContainer.find('.datagrid-filter-wrapper .is-open').length === 0) {
+        this.clearHeaderCache();
+        this.renderRows();
+        this.syncColGroups();
+      } else {
+        this.renderRows();
+      }
     }
 
     // Setup focus on the first cell
