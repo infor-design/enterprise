@@ -264,6 +264,7 @@ Editor.prototype = {
         }
         // Tab to indent list structures!
         if (tag === 'li') {
+          e.preventDefault();
           // If Shift is down, outdent, otherwise indent
           document.execCommand((e.shiftKey ? 'outdent' : 'indent'), e);
         }
