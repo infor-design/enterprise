@@ -9026,7 +9026,7 @@ Datagrid.prototype = {
     if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }
-    const rowData = this.rowData(row);
+    const rowData = this.rowData(dataRowIndex);
 
     if (rowNodes.length === 0 && this.settings.paging) {
       // TODO Frozen Editing with Paging
