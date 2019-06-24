@@ -702,7 +702,6 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
     await element(by.css('.pager-last a')).click();
-    await browser.driver.sleep(config.sleep);
     await element(by.css('.pager-first a')).click();
     await browser.driver.sleep(config.sleep);
 
@@ -759,6 +758,7 @@ describe('Datagrid paging tests', () => {
 
       await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
       await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+      await browser.driver.sleep(config.sleep);
 
       expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeTruthy();
 
@@ -1035,7 +1035,26 @@ describe('Datagrid editor dropdown source tests', () => {
     expect(await element(by.css('.is-focused'))).toBeTruthy();
     const focusEl = await element(by.css('.is-focused'));
 
-    expect(await focusEl.getText()).toEqual(' ');
+    expect(await focusEl.getText()).toEqual('Place On-Hold');
+  });
+
+  it('Should select and filter', async () => {
+    expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(7);
+    const multiselectEl = await element(by.css('.datagrid-filter-wrapper div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
+    await multiselectEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+    const multiselectSearchEl = await element(by.id('dropdown-search'));
+    await multiselectSearchEl.click();
+    await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await multiselectSearchEl.sendKeys(protractor.Key.SPACE);
+    await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await multiselectSearchEl.sendKeys(protractor.Key.SPACE);
+
+    expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(4);
   });
 });
 
@@ -1907,7 +1926,7 @@ describe('Datagrid select event tests', () => {
   it('Should fire a toast on select', async () => {
     await element(by.css('#testing-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('toast-container'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('toast-container'))), config.waitsFor);
 
     expect(await element.all(by.css('#toast-container .toast-message')).getText()).toEqual(['The row #1 containing the product name Compressor triggered a selected event']);
   });
