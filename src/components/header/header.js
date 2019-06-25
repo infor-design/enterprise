@@ -546,6 +546,16 @@ Header.prototype = {
       const color = link.attr('data-rgbcolor');
       personalization.setColors(color);
     });
+
+    // Mark theme as checked
+    const currentTheme = theme.currentTheme;
+    if (currentTheme.id !== 'theme-soho-light') {
+      const themeParts = currentTheme.id.split('-');
+      this.element.find('[data-theme-name]').parent().removeClass('is-checked');
+      this.element.find(`[data-theme-name="${themeParts[0]}-${themeParts[1]}"]`).parent().addClass('is-checked');
+      this.element.find('[data-theme-variant]').parent().removeClass('is-checked');
+      this.element.find(`[data-theme-variant="${themeParts[2]}"]`).parent().addClass('is-checked');
+    }
   },
 
   /**
