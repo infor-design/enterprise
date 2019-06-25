@@ -3198,29 +3198,17 @@ Datagrid.prototype = {
         if (col.component) {
           self.tableBody.find('tr').each(function () {
             const row = $(this);
-            const rowIdx = row.attr('data-index');
+            const rowIdx = self.settings.treeGrid ?
+              self.actualPagingRowIndex(self.actualRowIndex(row)) :
+              self.dataRowIndex(row);
             const lineage = row.attr('data-lineage');
-            let value = self.settings.dataset;
-            if (lineage) {
-              const drilldown = lineage.split('.');
-              drilldown.push(rowIdx);
-              let first = true;
-              drilldown.forEach((childIdx) => {
-                if (first && value[childIdx]) {
-                  value = value[childIdx];
-                } else if (value.children && value.children[childIdx]) {
-                  value = value.children[childIdx];
-                }
-                first = false;
-              });
-            } else {
-              value = value[rowIdx];
-            }
+            const rowData = self.rowData(rowIdx);
             const colIdx = self.columnIdxById(col.id);
             const args = {
-              row: rowIdx,
+              row: lineage || rowIdx,
               cell: colIdx,
-              value,
+              value: rowData,
+              rowData,
               col,
               api: self
             };
@@ -8151,7 +8139,8 @@ Datagrid.prototype = {
     }
 
     const thisRow = this.actualRowNode(row);
-    const idx = this.settings.treeGrid ? this.actualRowIndex(thisRow) : this.dataRowIndex(thisRow);
+    const idx = this.settings.treeGrid ? this.actualPagingRowIndex(this.actualRowIndex(thisRow)) :
+      this.dataRowIndex(thisRow);
     const rowData = this.rowData(this.dataRowIndex(thisRow));
 
     const cellWidth = cellParent.outerWidth();
