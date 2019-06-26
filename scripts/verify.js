@@ -95,9 +95,7 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
     return;
   }
 
-  // TODO:
-  // - Count against a predetermined list
-  // - Pass/Fail properly with Process Exit Codes
+  // Sort results into files vs. folders
   files.forEach((file) => {
     const relativePath = slash(file).replace(rootPath, '');
     if (isDirectory(file)) {
