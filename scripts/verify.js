@@ -80,8 +80,8 @@ try {
   expectedFiles = JSON.parse(fs.readFileSync(expectedFilesListPath, 'utf8'));
 } catch (err) {
   if (!commandLineArgs.rebuild) {
-    logger('error', `No files list available at "${expectedFilesListPath}".`);
-    logger('error', 'Please re-run this script with "-r" flag to generate agaist the current distributable.');
+    logger('error', `No files list available at "${chalk.yellow(expectedFilesListPath)}".`);
+    logger('padded', 'Please re-run this script with the "--rebuild" flag to generate agaist the current distributable.');
     process.exit(1);
   }
 
@@ -138,10 +138,10 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
     return;
   }
 
-  // Get the differnce
+  // Get the difference between the expected list and the found list
   const missingFiles = expectedFiles.filter(x => !foundFiles.includes(x));
 
-  // If files are missing, print and exit.
+  // If files are missing, print each of them and exit.
   if (missingFiles.length) {
     logger('error', `${chalk.red.bold(`(${missingFiles.length})`)} expected files are missing from the last build:`);
     missingFiles.forEach((file) => {
