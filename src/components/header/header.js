@@ -556,6 +556,16 @@ Header.prototype = {
       this.element.find('[data-theme-variant]').parent().removeClass('is-checked');
       this.element.find(`[data-theme-variant="${themeParts[2]}"]`).parent().addClass('is-checked');
     }
+
+    if (personalization.settings.colors) {
+      let colors = typeof personalization.settings.colors === 'object' ?
+        personalization.settings.colors.header :
+        personalization.settings.colors;
+      colors = colors.replace('#', '');
+
+      this.element.find('[data-rgbcolor]').parent().removeClass('is-checked');
+      this.element.find(`[data-rgbcolor="#${colors}"]`).parent().addClass('is-checked');
+    }
   },
 
   /**

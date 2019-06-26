@@ -219,7 +219,11 @@ Personalize.prototype = {
     * @property {object} args - The event args
     * @property {string} args.colors - The color(s) changed to.
     */
-    this.element.triggerHandler('colorschanged', { colors });
+    this.element.triggerHandler('colorschanged', {
+      colors: this.settings.colors.header ||
+        this.settings.colors || theme.themeColors().brand.primary.base.value,
+      theme: this.currentTheme || 'theme-soho-light'
+    });
     return this;
   },
 
@@ -332,7 +336,11 @@ Personalize.prototype = {
     * @property {object} args - The event args
     * @property {string} args.theme - The theme id changed to.
     */
-    this.element.triggerHandler('themechanged', { theme: incomingTheme });
+    this.element.triggerHandler('themechanged', {
+      colors: this.settings.colors.header ||
+        this.settings.colors || theme.themeColors().brand.primary.base.value,
+      theme: incomingTheme || 'theme-soho-light'
+    });
   },
 
   /**
