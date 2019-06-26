@@ -75,7 +75,7 @@ function logger(type, msg) {
       prefix = chalk.cyan(CALLOUT) + pad(1);
       break;
     case 'beer':
-      prefix = BEER + pad(2);
+      prefix = BEER + pad(1);
       break;
     default: // normal
       break;
