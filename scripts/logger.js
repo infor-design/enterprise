@@ -15,7 +15,7 @@ const INFO_I = '\u24D8';
 const WARN = '\u26A0';
 const NDASH = '\u2013';
 const CALLOUT = '\u00BB';
-const BEER = '🍺';
+const BEER = '🍻';
 
 // Pad the left of the console string, in the event we
 // have some icons in the logs.
