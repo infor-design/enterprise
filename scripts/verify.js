@@ -66,7 +66,11 @@ function isDirectory(filePath) {
 // Main
 // -------------------------------------
 
-logger('info', 'Verifying the last build...');
+if (commandLineArgs.rebuild) {
+  logger('info', `Creating a new ${chalk.yellow('expected-files.json')} list...`);
+} else {
+  logger('info', 'Verifying the last build...');
+}
 
 // Load expected files list.
 // If the file doesn't exist, this script can't continue.
@@ -112,7 +116,6 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
     foundFiles.forEach((file) => {
       logger('padded', `${file}`);
     });
-    logger('\n');
   }
 
   // Save a new list, if applicable
@@ -121,7 +124,7 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
     const filesListTxt = JSON.stringify(foundFiles, null, '\t');
 
     // Create Dirs
-    const outputPath = path.join(process.cwd(), 'data', 'expected-files.json');
+    const outputPath = path.join(process.cwd(), 'scripts', 'data', 'expected-files.json');
     createDirs([
       path.join(process.cwd(), 'dist'),
       path.join(process.cwd(), 'dist', 'tmp')
@@ -132,6 +135,7 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
       logger('beer', `New file list saved to "${chalk.yellow(outputPath)}"`);
       process.exit(0);
     });
+    return;
   }
 
   // Get the differnce
