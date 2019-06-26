@@ -76,9 +76,10 @@ colorUtils.validateHex = function validateHex(hex) {
  */
 colorUtils.getContrastColor = function getContrastColor(hex, light, dark) {
   hex = hex ? hex.replace('#', '') : '';
-  const r = parseInt(hex.substr(0, 2), 16);
-  const g = parseInt(hex.substr(2, 2), 16);
-  const b = parseInt(hex.substr(4, 2), 16);
+  const parse = x => parseInt(hex.substr(x, 2), 16);
+  const r = parse(0);
+  const g = parse(2);
+  const b = parse(4);
   const diff = ((r * 299) + (g * 587) + (b * 114)) / 1000;
   return (diff >= 128) ? (dark || 'black') : (light || 'white');
 };
