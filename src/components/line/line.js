@@ -114,6 +114,7 @@ Line.prototype = {
    */
   build() {
     const self = this;
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const isFormatter = !!this.settings.formatterString;
     const format = function (value) {
       return isFormatter ? d3.format(self.settings.formatterString)(value) : value;
@@ -479,6 +480,9 @@ Line.prototype = {
             ((rect.left + (rect.width / 2)) - (size.width / 2)) : posX;
 
           if (content !== '') {
+            if (charts.tooltip && charts.tooltip.length) {
+              charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('isPersonalizable');
+            }
             charts.showTooltip(posX, posY, content, 'top');
           }
         };

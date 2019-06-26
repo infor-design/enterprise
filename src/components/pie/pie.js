@@ -324,6 +324,7 @@ Pie.prototype = {
   updateData(data) {
     // Pie Slices
     const self = this;
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     let tooltipInterval;
     const isEmpty = !self.settings.dataset || self.settings.dataset.length === 0;
     const slice = self.svg.select('.slices').selectAll('path.slice')
@@ -419,6 +420,10 @@ Pie.prototype = {
           let x = offset.left;
           let y = offset.top;
           const padding = 5;
+
+          if (charts.tooltip && charts.tooltip.length && (isTop || isRight || isBottom || isLeft)) {
+            charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('isPersonalizable');
+          }
 
           if (isTop) {
             x -= size.width / 2;

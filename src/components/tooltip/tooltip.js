@@ -629,6 +629,10 @@ Tooltip.prototype = {
 
     const mouseUpEventName = this.isTouch ? 'touchend' : 'mouseup';
 
+    // Personalizable the toolbar
+    const isPersonalizable = self.element.closest('.is-personalizable').length > 0;
+    self.tooltip[0].classList[isPersonalizable ? 'add' : 'remove']('isPersonalizable');
+
     setTimeout(() => {
       $(document)
         .on(`${mouseUpEventName}.${COMPONENT_NAME}-${self.uniqueId}`, (e) => {
@@ -812,6 +816,7 @@ Tooltip.prototype = {
       return;
     }
 
+    this.tooltip[0].classList.remove('isPersonalizable');
     this.tooltip[0].classList.add('is-hidden');
     this.tooltip[0].style.left = '';
     this.tooltip[0].style.top = '';

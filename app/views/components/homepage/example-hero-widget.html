@@ -132,11 +132,66 @@
 
 
 <script>
+  var palette = Soho.theme.themeColors().palette;
+  var colors = {
+    // default amber amethyst azure emerald graphite ruby slate turquoise
+    '#some-color': 'default',
+    '#db7726': 'amber',
+    '#9279a6': 'amethyst',
+    '#2578a9': 'azure',
+    '#56932e': 'emerald',
+    '#5c5c5c': 'graphite',
+    '#941e1e': 'ruby',
+    '#50535a': 'slate',
+    '#206b62': 'turquoise'
+  };
+  var donutColors = {
+    amber: {
+      neutral: palette.graphite['10'].value
+    },
+    amethyst: {
+      neutral: palette.graphite['10'].value
+    },
+    emerald: {
+      positive: palette.emerald['90'].value,
+      neutral: palette.graphite['10'].value
+    },
+    ruby: {
+      neutral: palette.graphite['10'].value
+    }
+  };
+  var barColors = {
+    amber: {
+      apr: palette.azure['50'].value,
+      may: palette.amber['100'].value
+    },
+    emerald: {
+      feb: palette.emerald['90'].value,
+      apr: palette.amethyst['70'].value
+    },
+    ruby: {
+      mar: palette.ruby['10'].value
+    }
+  };
+  var areaColors = {
+    amber: {
+      metals: palette.amethyst['90'].value,
+      stone: palette.azure['70'].value,
+    },
+    amethyst: {
+      metals: palette.amethyst['90'].value
+    },
+    ruby: {
+      metals: 'good',
+      wood: palette.amethyst['100'].value
+    }
+  };
+
   var donutData = [{
     data: [
-      {name: 'Positive', value: 20, color: 'good'},
-      {name: 'Negative', value: 25, color: 'error'},
-      { name: 'Neutral', value: 10, color: 'neutral'}
+      { name: 'Positive', value: 20, color: 'good' },
+      { name: 'Negative', value: 25, color: 'error' },
+      { name: 'Neutral', value: 10, color: 'neutral' }
     ],
     centerLabel: 'Reviews'
   }];
@@ -187,11 +242,47 @@
     name: 'Wood', color: 'error'
   }];
 
-  $('#donut-alert1').chart({type: 'donut', dataset: donutData});
-  $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: barData, showLegend: false});
-  $('#area-example').chart({type: 'area',
-        dataset: areaData});
+  var getDonutData = function (color) {
+    var d = JSON.parse(JSON.stringify(donutData));
+    if (color && donutColors[color]) {
+      for (var i = 0, l = d[0].data.length; i < l; i++) {
+        var item = d[0].data[i];
+        var thisColor = donutColors[color][item.name.toLowerCase()];
+        item.color = thisColor || item.color;
+      }
+    }
+    return d;
+  };
 
+  var getBarData = function (color) {
+    var d = JSON.parse(JSON.stringify(barData));
+    if (color && barColors[color]) {
+      for (var i = 0, l = d.length; i < l; i++) {
+        for (var i2 = 0, l2 = d[i].data.length; i2 < l2; i2++) {
+          var item = d[i].data[i2];
+          var thisColor = barColors[color][item.name.toLowerCase()];
+          item.color = thisColor || item.color;
+        }
+      }
+    }
+    return d;
+  };
+
+  var getAreaData = function (color) {
+    var d = JSON.parse(JSON.stringify(areaData));
+    if (color && areaColors[color]) {
+      for (var i = 0, l = d.length; i < l; i++) {
+        var item = d[i];
+        var thisColor = areaColors[color][item.name.toLowerCase()];
+        item.color = thisColor || item.color;
+      }
+    }
+    return d;
+  };
+
+  $('#donut-alert1').chart({type: 'donut', dataset: getDonutData()});
+  $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: getBarData(), showLegend: false});
+  $('#area-example').chart({type: 'area', dataset: getAreaData()});
 
   // Wait for initialize
   $('body').on('initialized', function() {
@@ -215,5 +306,19 @@
 
     // Init
     setView(homepageApi.settings.columns);
+
+    var donutApi = $('#donut-alert1').data('pie');
+    var barApi = $('#bar-grouped-example').data('bar');
+    var areaApi = $('#area-example').data('line');
+
+    $('html')
+      .on('colorschanged themechanged', function (e, a) {
+        if (typeof a.colors !== 'undefined') {
+          var color = colors[a.colors];
+          donutApi.updated({ dataset: getDonutData(color) });
+          barApi.updated({ dataset: getBarData(color) });
+          areaApi.updated({ dataset: getAreaData(color) });
+        }
+      });
   });
 </script>

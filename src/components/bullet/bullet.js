@@ -68,6 +68,8 @@ Bullet.prototype = {
    */
   build() {
     const chartData = this.settings.dataset[0];
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
+
     this.element.addClass('bullet-chart');
 
     let tooltipInterval = 0;
@@ -177,6 +179,9 @@ Bullet.prototype = {
             const y = rect.top - size.height + $(window).scrollTop() - 5;
 
             if (content !== '') {
+              if (charts.tooltip && charts.tooltip.length) {
+                charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('isPersonalizable');
+              }
               charts.showTooltip(x, y, content, 'top');
             }
           };

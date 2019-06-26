@@ -66,4 +66,21 @@ colorUtils.validateHex = function validateHex(hex) {
   return `#${hex}`;
 };
 
+/**
+ * Get calculated contrast color
+ * @private
+ * @param {string} hex A hex color.
+ * @param {string} light Optional a custom hex color to return.
+ * @param {string} dark Optional a custom hex color to return.
+ * @returns {string} a calculated contrast color string.
+ */
+colorUtils.getContrastColor = function getContrastYIQ(hex, light, dark) {
+  hex = hex ? hex.replace('#', '') : '';
+  const r = parseInt(hex.substr(0, 2), 16);
+  const g = parseInt(hex.substr(2, 2), 16);
+  const b = parseInt(hex.substr(4, 2), 16);
+  const diff = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+  return (diff >= 128) ? (dark || 'black') : (light || 'white');
+};
+
 export { colorUtils }; //eslint-disable-line
