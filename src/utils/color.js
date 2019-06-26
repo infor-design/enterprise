@@ -74,7 +74,7 @@ colorUtils.validateHex = function validateHex(hex) {
  * @param {string} dark Optional a custom hex color to return.
  * @returns {string} a calculated contrast color string.
  */
-colorUtils.getContrastColor = function getContrastYIQ(hex, light, dark) {
+colorUtils.getContrastColor = function getContrastColor(hex, light, dark) {
   hex = hex ? hex.replace('#', '') : '';
   const r = parseInt(hex.substr(0, 2), 16);
   const g = parseInt(hex.substr(2, 2), 16);
