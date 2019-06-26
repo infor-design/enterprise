@@ -580,6 +580,10 @@ Datagrid.prototype = {
     this.settings.dataset.splice(row, 1);
     this.preventSelection = true;
     this.renderRows();
+    if (this.nonVisibleCellErrors.length !== 0) {
+      this.nonVisibleCellErrors = $.grep(this.nonVisibleCellErrors, error => error.row !== row);
+      this.showNonVisibleCellErrors();
+    }
     delete this.preventSelection;
     this.syncSelectedUI();
 
