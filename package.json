@@ -31,7 +31,7 @@
     "build": "node ./scripts/build",
     "build:icons": "node ./scripts/build-icons.js",
     "build:colors": "node ./scripts/build-colors.js",
-    "build:release": "npm run clean && npm run build && npm run minify && npm run zip-dist",
+    "build:release": "npm run clean && npm run build && npm run minify && npm run zip-dist && npm run verify",
     "clean": "npm run clean:dist && npm run clean:docs && npm run clean:app",
     "clean:app": "rimraf app/dist",
     "clean:docs": "rimraf app/docs/*.html && rimraf app/docs/components/*.html && rimraf docs/ids-website/dist*",
@@ -63,7 +63,8 @@
     "release:beta": "release-it --preRelease=beta --no-github.release",
     "release:rc": "release-it --preRelease=rc --no-github.release",
     "release:final": "release-it",
-    "test": "npm run mdlint && npm run eslint && npm run stylelint && npm run functional:ci && npm run e2e:ci"
+    "test": "npm run mdlint && npm run eslint && npm run stylelint && npm run functional:ci && npm run e2e:ci",
+    "verify": "node ./scripts/verify.js"
   },
   "dependencies": {
     "d3": "^4.13.0",
