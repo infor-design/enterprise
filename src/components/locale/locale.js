@@ -601,7 +601,6 @@ const Locale = {  // eslint-disable-line
    */
   getTimeZone(date, timeZoneName) {
     const currentLocale = Locale.currentLocale.name || 'en-US';
-    const time = date.toLocaleTimeString(currentLocale);
     let name = '';
 
     if (env.browser.name === 'ie' && env.browser.version === '11') {
@@ -613,14 +612,14 @@ const Locale = {  // eslint-disable-line
         currentLocale,
         { timeZoneName: 'long' }
       );
-      return name.replace(`${time} `, '');
+      return name.split(' ')[1];
     }
 
     name = date.toLocaleTimeString(
       currentLocale,
       { timeZoneName: 'short' }
     );
-    return name.replace(`${time} `, '');
+    return name.split(' ')[1];
   },
 
   /**

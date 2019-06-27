@@ -796,7 +796,6 @@ Datagrid.prototype = {
       this.restoreFilter = true;
       this.restoreSortOrder = true;
       this.savedFilter = this.filterConditions();
-      this.restoreFilterClientSide = true;
     }
 
     // Resize and re-render if have a new dataset
@@ -1627,7 +1626,6 @@ Datagrid.prototype = {
       elem.find('select.multiselect').each(function () {
         const multiselect = $(this);
         multiselect.multiselect(col.editorOptions).on('selected.datagrid', () => {
-          self.restoreFilterClientSide = false;
           self.applyFilter(null, 'selected');
         });
 
@@ -1883,7 +1881,7 @@ Datagrid.prototype = {
       this.filterExpr = [];
     }
 
-    if (JSON.stringify(conditions) !== JSON.stringify(this.filterExpr)) {
+    if (this.pagerAPI && JSON.stringify(conditions) !== JSON.stringify(this.filterExpr)) {
       this.filterExpr = conditions;
       filterChanged = true;
     }
@@ -2184,22 +2182,17 @@ Datagrid.prototype = {
         type: 'filtered'
       });
     }
-
-    if (this.restoreFilterClientSide) {
-      this.restoreFilterClientSide = false;
-    } else {
-      /**
-      * Fires after a filter action ocurs
-      * @event filtered
-      * @memberof Datagrid
-      * @property {object} event The jquery event object
-      * @property {object} args Object with the arguments
-      * @property {number} args.op The filter operation, this can be 'apply', 'clear'
-      * @property {object} args.conditions An object with all the condition data.
-      * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
-      */
-      this.element.trigger('filtered', { op: 'apply', conditions, trigger });
-    }
+    /**
+    * Fires after a filter action ocurs
+    * @event filtered
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Object with the arguments
+    * @property {number} args.op The filter operation, this can be 'apply', 'clear'
+    * @property {object} args.conditions An object with all the condition data.
+    * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
+    */
+    this.element.trigger('filtered', { op: 'apply', conditions, trigger });
     this.saveUserSettings();
   },
 

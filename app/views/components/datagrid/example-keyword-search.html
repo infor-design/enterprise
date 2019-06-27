@@ -42,7 +42,8 @@
         dataset: data,
         frozenColumns: {left: ['productId']},
         toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true, results: true, keywordFilter: true, actions: true, rowHeight: true}
+      }).on('filtered', function () {
+        console.log('Filter Ran');
       });
-
  });
 </script>
