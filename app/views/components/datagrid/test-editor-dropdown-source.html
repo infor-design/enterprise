@@ -137,7 +137,8 @@
         gridApi.loadData(dataAll);
       } else {
         let results = [];
-        for (let value of args.conditions[0].value) {
+        for (var i = 0; i < args.conditions[0].value.length; i++) {
+          var value = args.conditions[0].value[i]
           switch(value) {
             case 'poh':
               results = $.merge(results, dataPOH);
