@@ -620,7 +620,7 @@ const Locale = {  // eslint-disable-line
     }
 
     const timezoneParts = name.replace(/[0-9:AMP]/g, '').split(' ');
-    return timezoneParts.join(' ').trimStart();
+    return timezoneParts.join(' ').trimLeft();
   },
 
   /**
