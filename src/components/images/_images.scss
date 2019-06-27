@@ -42,6 +42,14 @@ $images-size: (
   }
 }
 
+.image-auto {
+  img {
+    &:focus {
+      @include focus-state();
+    }
+  }
+}
+
 .image-round {
   border: 1px solid transparent; // to prevent jump on focus
   border-radius: 50%;
