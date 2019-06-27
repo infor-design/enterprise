@@ -221,7 +221,7 @@ Personalize.prototype = {
     */
     this.element.triggerHandler('colorschanged', {
       colors: this.settings.colors.header ||
-        this.settings.colors || theme.themeColors().brand.primary.base.value,
+        this.settings.colors || theme.themeColors().brand.primary.alt.value,
       theme: this.currentTheme || 'theme-soho-light'
     });
     return this;
@@ -338,7 +338,7 @@ Personalize.prototype = {
     */
     this.element.triggerHandler('themechanged', {
       colors: this.settings.colors.header ||
-        this.settings.colors || theme.themeColors().brand.primary.base.value,
+        this.settings.colors || theme.themeColors().brand.primary.alt.value,
       theme: incomingTheme || 'theme-soho-light'
     });
   },
