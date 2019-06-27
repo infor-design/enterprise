@@ -114,7 +114,7 @@
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text', formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'text'});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
       columns.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Formatters.Decimal});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
       columns.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Formatters.Text});

@@ -13,10 +13,6 @@
 @import '../../src/core/config';
 @import '../../src/core/mixins';
 
-// Enterprise color palette
-@import '../../src/components/colors/colorpalette';
-@import '../../src/components/colors/colors';
-
 // Layout styles
 @import 'sass/layouts/nofrills';
 @import 'sass/layouts/embedded';

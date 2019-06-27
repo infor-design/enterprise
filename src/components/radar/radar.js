@@ -105,11 +105,9 @@ Radar.prototype = {
    */
   init() {
     this.width = 0;
-    if (!this.settings.colors) {
-      this.settings.colors = charts.colorRange();
-    }
 
     this
+      .setupColors()
       .build()
       .handleEvents();
 
@@ -133,6 +131,19 @@ Radar.prototype = {
   build() {
     this.updateData(this.settings.dataset);
     this.setInitialSelected();
+    return this;
+  },
+
+  /**
+   * Sets up the internal colors.
+   * @returns {object} The component prototype for chaining.
+   * @private
+   */
+  setupColors() {
+    if (!this.settings.colors || this.useBuiltInColors) {
+      this.settings.colors = charts.colorRange();
+      this.useBuiltInColors = true;
+    }
     return this;
   },
 
@@ -489,6 +500,9 @@ Radar.prototype = {
       });
     }
 
+    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+      this.updated();
+    });
     return this;
   },
 
@@ -579,6 +593,7 @@ Radar.prototype = {
 
     this.element.empty();
     return this
+      .setupColors()
       .build();
   },
 
@@ -590,6 +605,7 @@ Radar.prototype = {
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     $('body').off(`resize.${COMPONENT_NAME}`);
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
     return this;
   },
 

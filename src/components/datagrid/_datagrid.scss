@@ -883,11 +883,11 @@ $datagrid-short-row-height: 25px;
         }
 
         .colorpicker {
-          padding: 6px 10px;
+          padding: 9px 10px 0;
         }
 
-        .trigger {
-          height: 28px;
+        .trigger .icon {
+          top: 10px;
         }
       }
 
@@ -1081,7 +1081,7 @@ $datagrid-short-row-height: 25px;
 
           .colorpicker-container {
             .icon {
-              top: 1px;
+              top: 3px;
             }
           }
 
@@ -1252,10 +1252,12 @@ $datagrid-short-row-height: 25px;
       .colorpicker-container {
         .swatch {
           height: 20px;
+          top: 2px;
           width: 20px;
         }
 
         .colorpicker {
+          margin-top: 3px;
           padding: 2px 10px;
         }
 
@@ -1552,8 +1554,12 @@ $datagrid-short-row-height: 25px;
           top: 4px;
         }
 
+        .trigger .icon {
+          top: 14px;
+        }
+
         .colorpicker {
-          padding: 9px 10px 8px;
+          padding: 15px 10px 8px;
           position: relative;
           width: 90px;
 
@@ -1952,7 +1958,7 @@ $datagrid-short-row-height: 25px;
           ~ .icon {
             left: auto;
             margin-left: -5px;
-            top: calc(50% - 16px);
+            top: calc(50% - 17px);
           }
         }
 

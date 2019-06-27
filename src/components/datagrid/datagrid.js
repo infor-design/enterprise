@@ -580,6 +580,10 @@ Datagrid.prototype = {
     this.settings.dataset.splice(row, 1);
     this.preventSelection = true;
     this.renderRows();
+    if (this.nonVisibleCellErrors.length !== 0) {
+      this.nonVisibleCellErrors = $.grep(this.nonVisibleCellErrors, error => error.row !== row);
+      this.showNonVisibleCellErrors();
+    }
     delete this.preventSelection;
     this.syncSelectedUI();
 
@@ -808,11 +812,12 @@ Datagrid.prototype = {
       this.restoreUserSettings();
       this.renderRows();
       this.renderHeader();
-    } else if (['first', 'next', 'prev', 'last'].indexOf(pagerInfo.type) >= 0) {
+    } else if (this.headerContainer.find('.datagrid-filter-wrapper .is-open').length === 0) {
       this.clearHeaderCache();
       this.renderRows();
       this.syncColGroups();
     } else {
+      // Filter field is open so do not resize
       this.renderRows();
     }
 
@@ -3202,29 +3207,17 @@ Datagrid.prototype = {
         if (col.component) {
           self.tableBody.find('tr').each(function () {
             const row = $(this);
-            const rowIdx = row.attr('data-index');
+            const rowIdx = self.settings.treeGrid ?
+              self.actualPagingRowIndex(self.actualRowIndex(row)) :
+              self.dataRowIndex(row);
             const lineage = row.attr('data-lineage');
-            let value = self.settings.dataset;
-            if (lineage) {
-              const drilldown = lineage.split('.');
-              drilldown.push(rowIdx);
-              let first = true;
-              drilldown.forEach((childIdx) => {
-                if (first && value[childIdx]) {
-                  value = value[childIdx];
-                } else if (value.children && value.children[childIdx]) {
-                  value = value.children[childIdx];
-                }
-                first = false;
-              });
-            } else {
-              value = value[rowIdx];
-            }
+            const rowData = self.rowData(rowIdx);
             const colIdx = self.columnIdxById(col.id);
             const args = {
-              row: rowIdx,
+              row: lineage || rowIdx,
               cell: colIdx,
-              value,
+              value: rowData,
+              rowData,
               col,
               api: self
             };
@@ -8127,7 +8120,11 @@ Datagrid.prototype = {
       this.fieldValue(this.settings.dataset[row], col.field));
 
     if (col.isEditable) {
-      const canEdit = col.isEditable(row, cell, cellValue, col, this.settings.dataset[row]);
+      let rowData = this.settings.dataset[row];
+      if (this.settings.treeDepth && this.settings.treeDepth[row]) {
+        rowData = this.settings.treeDepth[row].node;
+      }
+      const canEdit = col.isEditable(row, cell, cellValue, col, rowData, this, 'is-editable');
 
       if (!canEdit) {
         return false;
@@ -8185,10 +8182,10 @@ Datagrid.prototype = {
     }
 
     const thisRow = this.actualRowNode(row);
-    const idx = this.settings.treeGrid ? this.actualRowIndex(thisRow) : this.dataRowIndex(thisRow);
-    const rowData = this.settings.treeGrid ?
-      this.settings.treeDepth[idx].node :
-      this.settings.dataset[idx];
+    const idx = this.settings.treeGrid ? this.actualPagingRowIndex(this.actualRowIndex(thisRow)) :
+      this.dataRowIndex(thisRow);
+    const rowData = this.rowData(this.dataRowIndex(thisRow));
+
     const cellWidth = cellParent.outerWidth();
     const isEditor = $('.is-editor', cellParent).length > 0;
     const isPlaceholder = $('.is-placeholder', cellNode).length > 0;
@@ -8287,6 +8284,18 @@ Datagrid.prototype = {
     this.element.triggerHandler('entereditmode', [{ row: idx, cell, item: rowData, target: cellNode, value: cellValue, column: col, editor: this.editor }]);
 
     return true;  //eslint-disable-line
+  },
+
+  /**
+   * Get the data for a row node
+   * @private
+   * @param {object} rowNode The jquery row node.
+   * @returns {object} The row of data from the dataset.
+   */
+  rowData(rowIdx) {
+    return this.settings.treeGrid ?
+      this.settings.treeDepth[rowIdx].node :
+      this.settings.dataset[rowIdx];
   },
 
   /**
@@ -9049,9 +9058,7 @@ Datagrid.prototype = {
     if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }
-    const rowData = isTreeGrid ?
-      this.settings.treeDepth[row].node :
-      this.settings.dataset[dataRowIndex];
+    const rowData = this.rowData(dataRowIndex);
 
     if (rowNodes.length === 0 && this.settings.paging) {
       // TODO Frozen Editing with Paging
