@@ -996,7 +996,7 @@ Calendar.prototype = {
           this.removeModal();
           return;
         }
-
+        
         done(this.modalContents, event);
         this.element.trigger('hidemodal', { elem: this.modalContents, event });
         this.removeModal();

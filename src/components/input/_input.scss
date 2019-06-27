@@ -354,7 +354,8 @@ label,
 // Error States
 .error,
 .error-message,
-.error-message p {
+.error-message p,
+.popover .error-message p {
   color: $error-color;
 }
 
