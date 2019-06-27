@@ -1057,6 +1057,20 @@ describe('Datagrid editor dropdown source tests', () => {
 
     expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(4);
   });
+
+  it('Should filter twice in a row and filter', async () => {
+    expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(7);
+    const inputEl = await element(by.id('test-editor-dropdown-source-datagrid-1-header-filter-1'));
+    await inputEl.click();
+    await inputEl.sendKeys('Com');
+    await inputEl.sendKeys(protractor.Key.ENTER);
+    await inputEl.sendKeys('Com');
+    await inputEl.sendKeys(protractor.Key.ENTER);
+    await inputEl.sendKeys('');
+    await inputEl.sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('.toast-title')).count()).toEqual(3);
+  });
 });
 
 describe('Datagrid Header Alignment With Ellipsis', () => {
