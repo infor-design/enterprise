@@ -612,14 +612,15 @@ const Locale = {  // eslint-disable-line
         currentLocale,
         { timeZoneName: 'long' }
       );
-      return name.split(' ')[1];
+    } else {
+      name = date.toLocaleTimeString(
+        currentLocale,
+        { timeZoneName: 'short' }
+      );
     }
 
-    name = date.toLocaleTimeString(
-      currentLocale,
-      { timeZoneName: 'short' }
-    );
-    return name.split(' ')[1];
+    const timezoneParts = name.replace(/[0-9:AMP]/g, '').split(' ');
+    return timezoneParts.join(' ').trimStart();
   },
 
   /**

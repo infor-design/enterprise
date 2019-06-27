@@ -948,7 +948,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate('00000000')).toEqual('');
   });
 
-  xit('Should format dates with short timezones', () => {
+  it('Should format dates with short timezones', () => {
     Locale.set('en-US');
 
     expect(['3/22/2018 8:11 PM EST', '3/22/2018 8:11 PM EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
