@@ -26,6 +26,12 @@ $images-size: (
 
 @each $key, $value in $images-size {
   .image-#{$key} {
+    border: 1px solid transparent; // to prevent jump on focus
+
+    &:focus {
+      @include focus-state();
+    }
+
     img {
       border: 1px solid transparent; // to prevent jump on focus
       max-height: nth($value, 2);
@@ -43,7 +49,14 @@ $images-size: (
 }
 
 .image-auto {
+  border: 1px solid transparent; // to prevent jump on focus
+
+  &:focus {
+    @include focus-state();
+  }
+
   img {
+    border: 1px solid transparent; // to prevent jump on focus
     &:focus {
       @include focus-state();
     }
