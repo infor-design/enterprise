@@ -54,7 +54,7 @@ const POPUPMENU_DEFAULTS = {
   triggerSelect: true,
   placementOpts: new PlacementObject({
     containerOffsetX: 10,
-    containerOffsetY: 10,
+    containerOffsetY: (env.os.name === 'ios' ? 25 : 15),
     strategies: ['flip', 'shrink']
   }),
   offset: {
@@ -1328,12 +1328,6 @@ PopupMenu.prototype = {
 
     const opts = $.extend({}, this.settings.placementOpts);
     const strategies = ['flip'];
-
-    /*
-    if (!target.is('.autocomplete, .searchfield')) {
-      strategies.push('nudge');
-    }
-    */
     strategies.push('shrink-y');
     opts.strategies = strategies;
 
@@ -1715,7 +1709,7 @@ PopupMenu.prototype = {
     let timeout;
 
     self.menu.find('.popupmenu').removeClass('is-open');
-    self.menu.on('mouseenter.popupmenu touchstart.popupmenu', '.submenu:not(.is-disabled)', function (thisE) {
+    self.menu.on('mouseenter.popupmenu touchend.popupmenu', '.submenu:not(.is-disabled)', function (thisE) {
       const menuitem = $(this);
       startY = thisE.pageX;
 
@@ -1897,20 +1891,23 @@ PopupMenu.prototype = {
 
     // Handle Case where menu is off bottom
     let menuHeight = menu.outerHeight();
-    if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+    const bottomBuffer = this.settings.placementOpts.containerOffsetY;
+
+    if ((wrapper.offset().top + menuHeight) >
+      (window.innerHeight - bottomBuffer + $(document).scrollTop())) {
       // First try bumping up the menu to sit just above the bottom edge of the window.
       const bottomEdgeCoord = wrapper.offset().top + menuHeight;
       const differenceFromBottomY = bottomEdgeCoord -
-        ($(window).height() + $(document).scrollTop());
+        (window.innerHeight + $(document).scrollTop());
 
-      wrapper[0].style.top = `${wrapper.position().top - differenceFromBottomY}px`;
+      wrapper[0].style.top = `${wrapper.position().top - differenceFromBottomY - bottomBuffer}px`;
 
       // Does it fit?
-      if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+      if ((wrapper.offset().top + menuHeight) > (window.innerHeight + $(document).scrollTop())) {
         // No. Bump the menu up higher based on the menu's height and the extra
         // space from the main wrapper.
         const mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
-        wrapper[0].style.top = `${($(window).height() + $(document).scrollTop()) -
+        wrapper[0].style.top = `${(window.innerHeight + $(document).scrollTop()) -
           menuHeight - mainWrapperOffset}px`;
       }
 
@@ -1924,9 +1921,9 @@ PopupMenu.prototype = {
 
       // Do one more check to see if the bottom edge bleeds off the screen.
       // If it does, shrink the menu's Y size and make it scrollable.
-      if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+      if ((wrapper.offset().top + menuHeight) > (window.innerHeight + $(document).scrollTop())) {
         const differenceX = (wrapper.offset().top + menuHeight) -
-          ($(window).height() + $(document).scrollTop());
+          (window.innerHeight + $(document).scrollTop());
         menuHeight = menuHeight - differenceX - 32;
         menu[0].style.height = `${menuHeight}px`;
       }
