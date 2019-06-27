@@ -470,8 +470,12 @@ $datagrid-short-row-height: 25px;
       }
 
       &.text-ellipsis {
+        .datagrid-column-wrapper {
+          padding: 0 10px;
+        }
+
         .datagrid-header-text {
-          margin: 7px 0 0 !important;
+          margin: 5px 0 0 !important;
         }
       }
     }
@@ -481,12 +485,10 @@ $datagrid-short-row-height: 25px;
       top: 0;
 
       &.l-right-text {
-        .datagrid-header-text {
-          margin-top: 6px;
-        }
+        padding: 0 10px 0 8px !important;
 
         .sort-indicator {
-          margin: 0 3px 0 0;
+          margin: 0 -1px 0 0;
         }
       }
 
@@ -495,7 +497,7 @@ $datagrid-short-row-height: 25px;
       }
 
       &.l-center-text .sort-indicator {
-        margin: -4px -22px 0 0;
+        margin: -5px -23px 0 4px;
       }
     }
 
@@ -594,6 +596,18 @@ $datagrid-short-row-height: 25px;
         .datagrid-header-text {
           margin: 8px 0 0 !important;
         }
+
+        .datagrid-column-wrapper {
+          padding: 0 0 0 15px;
+        }
+
+        .l-right-text {
+          padding: 0 15px 0 0 !important;
+        }
+
+        &.l-center-text {
+          padding: 0 15px !important;
+        }
       }
     }
 
@@ -601,18 +615,18 @@ $datagrid-short-row-height: 25px;
       padding: 0 15px;
 
       .sort-indicator {
-        margin: 1px 5px 0;
+        margin: 1px 0 0 2px;
       }
 
       &.l-right-text {
         .sort-indicator {
-          margin: 0 3px;
+          margin: 0 -2px 0 0;
         }
       }
 
       &.l-center-text {
         .sort-indicator {
-          margin: -8px -22px 0 0;
+          margin: -7px -21px 0 4px;
         }
       }
     }
@@ -2246,20 +2260,19 @@ $datagrid-short-row-height: 25px;
     &.text-ellipsis {
       .datagrid-column-wrapper {
         display: flex;
+        float: none;
+        padding: 0 0 0 20px;
 
         .datagrid-header-text {
           display: inline-block;
-          margin: 10px 0 0;
+          margin: 10px 0 0 -1px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
-      }
 
-      &.is-ellipsis-active {
-        .sort-indicator {
-          position: absolute;
-          right: 2px;
+        &.l-center-text {
+          padding: 0;
         }
       }
     }
@@ -2409,11 +2422,12 @@ $datagrid-short-row-height: 25px;
     &.l-right-text {
       direction: rtl;
       float: right;
+      padding: 0 20px 0 18px !important;
       position: relative;
-      top: -1px;
 
       .sort-indicator {
-        margin: 3px 3px 0;
+        margin: 3px 0 0 -20px;
+        padding-right: 3px;
       }
     }
   }
@@ -2710,7 +2724,7 @@ $datagrid-short-row-height: 25px;
 // Sorting
 .sort-indicator {
   display: inline-block;
-  margin: 3px -1px 0;
+  margin: 3px 3px 0;
   vertical-align: top;
 
   .icon {
@@ -2729,7 +2743,6 @@ $datagrid-short-row-height: 25px;
   span {
     display: block;
     height: 10px;
-    margin-left: 5px;
   }
 }
 
@@ -2738,7 +2751,7 @@ $datagrid-short-row-height: 25px;
   width: 100%;
 
   .sort-indicator {
-    margin: -7px -22px 0 0;
+    margin: -7px -23px 0 4px;
   }
 }
 
