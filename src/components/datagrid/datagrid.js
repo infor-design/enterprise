@@ -7769,7 +7769,8 @@ Datagrid.prototype = {
 
       // Tab, Left, Up, Right and Down arrow keys.
       if ([9, 37, 38, 39, 40].indexOf(key) !== -1) {
-        if (target.closest('.code-block').length) {
+        if (target.closest('.code-block').length &&
+          !(key === 9 && e.shiftKey && self.getFocusables(node).index === 0)) {
           return;
         }
         if (key !== 9) {
@@ -7998,6 +7999,19 @@ Datagrid.prototype = {
   },
 
   /**
+   * Get focusable elements in given node
+   * @param  {object} node The node to get focusable elements
+   * @returns {object} array of focusable elements and current index
+   */
+  getFocusables(node) {
+    const focusables = $(':focusable', node);
+    return {
+      elements: focusables,
+      index: focusables.index($(':focus'))
+    };
+  },
+
+  /**
    * Set focus to next/prev focusable element in given node
    * @param  {string} opt The element to set focus
    * @param  {object} node The node to get focusable element
@@ -8006,14 +8020,15 @@ Datagrid.prototype = {
   focusNextPrev(opt, node) {
     if (node && typeof opt === 'string') {
       opt = opt.toLowerCase();
-      const focusables = $(':focusable', node);
-      const len = focusables.length;
-      let index = focusables.index($(':focus'));
+      const focusables = this.getFocusables(node);
+      const elements = focusables.elements;
+      const len = elements.length;
+      let index = focusables.index;
       if (/\b(next|prev)\b/g.test(opt)) {
         index = (opt === 'next') ?
           ((index + 1) >= len ? 0 : (index + 1)) :
           ((index - 1) < 0 ? len : (index - 1));
-        focusables.eq(index).focus();
+        elements.eq(index).focus();
       }
     }
   },
