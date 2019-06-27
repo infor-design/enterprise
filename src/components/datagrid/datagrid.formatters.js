@@ -3,6 +3,26 @@ import { Tmpl } from '../tmpl/tmpl';
 import { xssUtils } from '../../utils/xss';
 
 /**
+* Calculate if a Placeholder is required and its value.
+* @private
+*/
+function calculatePlaceholder(formattedValue, row, cell, value, col, item) {
+  let placeholder = col.placeholder;
+  if (placeholder && formattedValue === '') {
+    const getType = {};
+    if (getType.toString.call(placeholder) === '[object Function]') {
+      placeholder = placeholder(row, cell, value, col, item);
+    } else if (item && placeholder in item) {
+      placeholder = item[placeholder];
+    }
+
+    return placeholder;
+  }
+
+  return '';  
+}
+
+/**
 * A object containing all the supported UI formatters.
 * @private
 */
@@ -24,19 +44,13 @@ const formatters = {
   },
 
   Placeholder(row, cell, value, col, item) {
-    if (col.placeholder && value === '') {
-      let placeholder = col.placeholder;
-      const getType = {};
-      if (getType.toString.call(placeholder) === '[object Function]') {
-        placeholder = placeholder(row, cell, value, col, item);
-      } else if (item && placeholder in item) {
-        placeholder = item[placeholder];
-      }
+    const placeholder = calculatePlaceholder(value, row, cell, value, col, item);
+    if (placeholder !== '') {
       const html = `<span class="is-placeholder">${placeholder}</span>`;
 
       return html;
     }
-
+    
     const str = ((value === null || value === undefined || value === '') ? '' : value.toString());
     return str;
   },
@@ -83,6 +97,7 @@ const formatters = {
     if (!col.editor || isReturnValue === true) {
       return formatted;
     }
+    
     return `<span class="trigger">${formatted}</span>${$.createIcon({ icon: 'calendar', classes: ['icon-calendar'] })}`;
   },
 
@@ -136,27 +151,53 @@ const formatters = {
 
   Lookup(row, cell, value, col, item) {
     let formatted = ((value === null || value === undefined) ? '' : value);
+    let isPlaceholder = false;
+    
+    const placeholder = calculatePlaceholder(formatted, row, cell, value, col, item);
+    if (placeholder !== '') {
+      isPlaceholder = true;
+    }
+    
     if (!col.editor) {
+      if (isPlaceholder) {
+        return `<span class="is-placeholder">${placeholder}</span>`;
+      }
       return formatted;
     }
 
     if (col.editorOptions && typeof col.editorOptions.field === 'function') {
       formatted = col.editorOptions.field(item, null, null);
+      isPlaceholder = false;
     }
 
     if (formatted === null || formatted === undefined || formatted === '') {
       formatted = '';
+      if (placeholder) {
+        isPlaceholder = true;
+        formatted = placeholder;
+      }
     }
-    return `<span class="trigger ${col.align === 'right' ? 'align-text-right' : ''}">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
+    return `<span class="trigger ${isPlaceholder ? 'is-placeholder' : ''}${col.align === 'right' ? 'align-text-right' : ''}">${formatted}</span>${$.createIcon({ icon: 'search-list', classes: ['icon-search-list'] })}`;
   },
 
-  Decimal(row, cell, value, col) {
+  Decimal(row, cell, value, col, item) {
     let formatted = value;
+    
     if (typeof Locale !== 'undefined' &&
         formatted !== null && formatted !== undefined && formatted !== '') {
       formatted = Locale.formatNumber(value, col.numberFormat);
     }
-    return ((formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted);
+    
+    formatted = (formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted;
+    
+    const placeholder = calculatePlaceholder(formatted, row, cell, value, col, item);
+    if (placeholder !== '') {
+      const html = `<span class="is-placeholder">${placeholder}</span>`;
+
+      return html;
+    }
+    
+    return (formatted);
   },
 
   Integer(row, cell, value, col) {
@@ -496,12 +537,13 @@ const formatters = {
     return markup;
   },
 
-  Dropdown(row, cell, value, col) {
+  Dropdown(row, cell, value, col, item) {
     let formattedValue = value;
     let compareValue;
     let option;
     let optionValue;
-
+    let isPlaceholder = false;
+    
     if (col.options && value !== undefined) {
       compareValue = col.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
 
@@ -515,8 +557,14 @@ const formatters = {
         }
       }
     }
+    
+    const placeholder = calculatePlaceholder(formattedValue, row, cell, value, col, item);
+    if (placeholder !== '') {
+      isPlaceholder = true;
+      formattedValue = placeholder;
+    }
 
-    let html = `<span class="trigger dropdown-trigger">${formattedValue}</span>${$.createIcon({ icon: 'dropdown' })}`;
+    let html = `<span class="trigger dropdown-trigger ${isPlaceholder ? 'is-placeholder' : ''}">${formattedValue}</span>${$.createIcon({ icon: 'dropdown' })}`;
 
     if (col.inlineEditor) {
       html = `<label for="full-dropdown" class="audible">${col.name}</label><select id="datagrid-dropdown${row}" class="dropdown">`;

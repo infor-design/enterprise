@@ -85,7 +85,17 @@ Treemap.prototype = {
    * @private
    */
   build() {
-    if (!this.settings.colors) {
+    this.setupColors();
+    this.updateData(this.settings.dataset);
+    return this;
+  },
+
+  /**
+   * Generate internal color variables.
+   * @private
+   */
+  setupColors() {
+    if (!this.settings.colors || this.useBuiltInColors) {
       const palette = theme.themeColors().palette;
       this.settings.colors = [
         palette.azure['100'].value,
@@ -117,10 +127,8 @@ Treemap.prototype = {
         palette.turquoise['30'].value,
         palette.turquoise['20'].value
       ];
+      this.useBuiltInColors = true;
     }
-
-    this.updateData(this.settings.dataset);
-    return this;
   },
 
   /**
@@ -216,6 +224,9 @@ Treemap.prototype = {
       });
     }
 
+    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+      this.updated();
+    });
     return this;
   },
 
@@ -250,6 +261,7 @@ Treemap.prototype = {
       this.settings.dataset = settings.dataset;
     }
 
+    this.setupColors();
     this.element.empty();
     return this
       .build();
@@ -263,6 +275,7 @@ Treemap.prototype = {
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     $('body').off(`resize.${COMPONENT_NAME}`);
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
     return this;
   },
 

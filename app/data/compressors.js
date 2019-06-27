@@ -75,11 +75,11 @@ module.exports = (req, res) => {
       } else if (req.query.filterColumn === 'pumpLife') {
         rowValue = '2,000 hr';
       } else if (req.query.filterColumn === 'quantity') {
-        rowValue = 1 + (j / 2);
+        rowValue = 1 + j;
         conditionValue = parseFloat(conditionValue);
       } else if (req.query.filterColumn === 'price') {
-        rowValue = 210.99 - j;
-        conditionValue = parseFloat(conditionValue);
+        rowValue = Math.abs(210.99 - j);
+        conditionValue = Math.abs(parseFloat(conditionValue));
       } else if (req.query.filterColumn === 'status') {
         rowValue = statuses[status] || 'None';
       } else if (req.query.filterColumn === 'orderDate') {
@@ -156,7 +156,7 @@ module.exports = (req, res) => {
     if (!filteredOut) {
       filteredTotal++;
       productsAll.push({
-        id: j, productId: 214220 + j, productSku: 999101 + j, weight: '68 lb.', maxPressure: '125 psi', rpm: 1750, capacity: 10 + j, ratedTemp: '-25', productName: `Compressor ${j}`, portable: j % 2 === 0, activity: 'Induction', pumpLife: '2,000 hr', quantity: 1 + (j / 2), price: 210.99 - j, status: statuses[status] || 'None', orderDate: new Date(2014, 12, seed), action: 'Action'
+        id: j, productId: 214220 + j, productSku: 999101 + j, weight: '68 lb.', maxPressure: '125 psi', rpm: 1750, capacity: 10 + j, ratedTemp: '-25', productName: `Compressor ${j}`, activity: 'Induction', pumpLife: '2,000 hr', quantity: 1 + j, price: Math.abs(210.99 - j), status: statuses[status] || 'None', orderDate: new Date(2014, 12, seed), action: 'Action'
       });
     }
 

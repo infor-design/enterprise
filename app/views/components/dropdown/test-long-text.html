@@ -4,7 +4,8 @@
 
     <div class="field">
       <label for="states" class="label">States</label>
-      <select id="states" name="states" class="dropdown">
+      <select id="states" name="states" class="dropdown dropdown-mm">
+        <option value=" "> </option>
         <option value="AL">Alaska gffgf gf fgf fg f gfg fgfg ff gfg f gf gff g</option>
         <option value="AZ">Arizona bvbcbcbv c cvbcvb cvbcv bcvbcvbccvb vcbcvbcbvcb</option>
         <option value="CA">California vb rtretetgrthrbrrtb rtbrtrtb rbrt brtbrtb rr b</option>
@@ -19,3 +20,12 @@
 
   </div>
 </div>
+
+<script>
+  $('body').on('initialized', function() {
+ 
+    var api = $('#states').data('dropdown');
+    api.element[0].selectedIndex = 2;
+    api.updated();
+  });
+</script>
