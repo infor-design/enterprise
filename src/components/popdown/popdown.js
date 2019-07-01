@@ -141,18 +141,29 @@ Popdown.prototype = {
   /**
    * Detects whether or not the Popdown has focus.
    * @private
+   * @param {HTMLElement|SVGElement} [target=undefined] an element to be checked for focus.
    * @returns {boolean} whether or not the element is currently focused.
    */
-  hasFocus() {
-    const active = document.activeElement;
+  hasFocus(target) {
+    const active = target || document.activeElement;
     if (this.trigger.is(active)) {
       return true;
     }
-    if ($.contains(this.popdown[0], active)) {
+    if (this.popdown[0].contains(active)) {
       return true;
     }
 
-    return false;
+    // If focus is on an internal open Dropdown/Multiselect, stay open.
+    const dds = this.popdown[0].querySelectorAll('.dropdown, .multiselect');
+    let isOpen = false;
+    dds.forEach((dd) => {
+      const api = $(dd).data('dropdown');
+      if (api && api.list && api.list.length && api.list[0].contains(active)) {
+        isOpen = true;
+      }
+    });
+
+    return isOpen;
   },
 
   /**
@@ -172,12 +183,17 @@ Popdown.prototype = {
     }
 
     const self = this;
-    let setFocusinEvent = false;
 
     this.isAnimating = true;
     this.trigger.attr('aria-expanded', 'true');
     this.position();
     this.popdown.addClass('visible');
+
+    function handleFocusOut(e) {
+      if (!self.hasFocus(e.target)) {
+        self.close();
+      }
+    }
 
     // Setup events that happen on open
     // Needs to be on a timer to prevent automatic closing of popdown.
@@ -189,23 +205,11 @@ Popdown.prototype = {
       });
 
       // Only allow $(document).click() to close the Popdown if `keepOpen` isn't set.
+      // Also run this on `focusin` events that occur outside the Popdown, for keyboard access.
       if (!self.settings.keepOpen) {
-        $(document).on('click.popdown', () => {
-          if (!self.hasFocus()) {
-            self.close();
-          }
-        });
-
-        // When focusing in on other important page elements, this Popdown instance will check to
-        // see if it contains those elements, and will close if it doesn't.
-        if (!setFocusinEvent) {
-          setFocusinEvent = true;
-          $(document).on('focusin.popdown', () => {
-            if (!self.hasFocus()) {
-              self.close();
-            }
-          });
-        }
+        $(document)
+          .on('click.popdown', handleFocusOut)
+          .on('focusin.popdown', handleFocusOut);
       }
 
       self.isAnimating = false;
@@ -226,7 +230,6 @@ Popdown.prototype = {
     this.popdown.removeClass('visible');
 
     // Turn off events
-    this.popdown.off('focusin.popdown');
     $('body').off('resize.popdown');
     $(document).off('click.popdown focusin.popdown');
 

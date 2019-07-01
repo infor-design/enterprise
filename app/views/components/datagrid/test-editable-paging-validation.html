@@ -1,5 +1,18 @@
 <div class="row">
   <div class="twelve columns">
+
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">1 Selected</div>
+      <div class="buttonset">
+        <button class="btn-icon" type="button" id="remove-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Remove</span>
+        </button>
+      </div>
+    </div>
+  
     <div id="datagrid">
 
     </div>
@@ -75,8 +88,10 @@
             });
 
             $('#datagrid').on('page', function(e, pi) {
-              var gridApi = $(this).data('datagrid');	              if (pi && pi.type === 'afterpaging') {
-              gridApi.validateAll();	                return;
+              var gridApi = $(this).data('datagrid');	              
+              if (pi && pi.type === 'afterpaging') {
+                gridApi.validateAll();
+                return;
               }
               var self = $(this).data('datagrid');
               if (pi && pi.type === 'next' || pi.type === 'prev') {
@@ -97,8 +112,14 @@
                 self.validateAll();
               }
             });
-
+            
+            //Add Code for Add and icon-delete
+            $('#remove-btn').on('click', function () {
+              $('#datagrid').data('datagrid').removeSelected();
+            });
         });
+        
+        
 
   });
 

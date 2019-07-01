@@ -197,6 +197,7 @@ describe('Datagrid Editable Tests', () => {
     expect(await element.all(by.css('#datagrid .rowstatus-row-info')).count()).toEqual(1);
     expect(await element.all(by.css('#datagrid .rowstatus-row-in-progress')).count()).toEqual(1);
     expect(await element.all(by.css('#datagrid .rowstatus-row-success')).count()).toEqual(0);
+    await utils.checkForErrors();
   });
 });
 
@@ -1055,6 +1056,20 @@ describe('Datagrid editor dropdown source tests', () => {
     await multiselectSearchEl.sendKeys(protractor.Key.SPACE);
 
     expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(4);
+  });
+
+  it('Should filter twice in a row and filter', async () => {
+    expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(7);
+    const inputEl = await element(by.id('test-editor-dropdown-source-datagrid-1-header-filter-1'));
+    await inputEl.click();
+    await inputEl.sendKeys('Com');
+    await inputEl.sendKeys(protractor.Key.ENTER);
+    await inputEl.sendKeys('Com');
+    await inputEl.sendKeys(protractor.Key.ENTER);
+    await inputEl.sendKeys('');
+    await inputEl.sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('.toast-title')).count()).toEqual(3);
   });
 });
 
@@ -1986,18 +2001,49 @@ describe('Datagrid timezone tests', () => {
       expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('03-04-2019');
       let text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(2)')).getText();
 
-      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT']).toContain(text);
       text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(3)')).getText();
 
       expect(['03-04-2019 00:00 Eastern-standaardtijd', '03-04-2019 00:00 Eastern-zomertijd']).toContain(text);
 
       text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(4)')).getText();
 
-      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT']).toContain(text);
 
       text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(5)')).getText();
 
-      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4']).toContain(text);
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT']).toContain(text);
+    });
+  }
+});
+
+describe('Datagrid editable tree tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-tree-editable?layout=nofrills');
+
+    const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should fire is editable going into edit mode', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(8) td:nth-child(5)')).click();
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('#toast-container .toast-message')).getText()).toEqual('You initiated edit on id: 8');
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(8) td:nth-child(5) input')).isPresent()).toBe(true);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-edit-tree')).toEqual(0);
     });
   }
 });

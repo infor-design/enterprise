@@ -193,7 +193,7 @@
   list-style: none;
   margin: 0;
   overflow: auto;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: auto;
   padding: 5px 0;
   text-align: left;
 
@@ -579,13 +579,6 @@
         border-left: 1px solid $popover-separator-color;
       }
     }
-  }
-}
-
-//IOS
-.ios {
-  .has-submenu {
-    overflow: hidden;
   }
 }
 

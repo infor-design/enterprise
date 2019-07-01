@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="six columns">
+
+    <button id="popdown-example-trigger" class="btn-secondary" type="button" data-popdown="true">
+      <svg class="icon" focusable="false" aria-hidden="true">
+        <use xlink:href="#icon-cart"></use>
+      </svg>
+      <span>Choose an option...</span>
+    </button>
+    <div class="popdown hidden">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Dropdown Container</h2>
+        </div>
+        <div class="widget-content">
+          <label for="option-picker">Option Picker</label>
+          <select id="option-picker" class="dropdown">
+            <option value="" selected>(please select)</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+            <option value="4">Four</option>
+          </select>
+        </div>
+        <div class="widget-footer modal-buttonset">
+          <button id="clear" type="button" class="btn-modal-secondary" style="width: 50%;">Clear</button>
+          <button id="submit" type="button" class="btn-modal-primary" style="width: 50%;">Submit</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style id="test-style">
+  .popdown .widget-content {
+    padding: 10px;
+  }
+</style>
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+    const popdownAPI = $('#popdown-example-trigger').data('popdown');
+
+    $('.modal-buttonset > button').on('click.test', function () {
+      popdownAPI.close();
+    });
+  });
+</script>
