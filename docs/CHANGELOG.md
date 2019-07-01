@@ -20,7 +20,12 @@
 ### v4.20.0 Fixes
 
 - `[Alerts]` Removed dirty tracker from the page due to layout issues. ([#1679](https://github.com/infor-design/enterprise/issues/1679))
+- `[Calendar]` Added more information to the onMonthRendered callback. ([#2419](https://github.com/infor-design/enterprise/issues/2419))
+- `[Calendar]` Changed updated method so it can reinit the calendar with new data. ([#2419](https://github.com/infor-design/enterprise/issues/2419))
+- `[Calendar]` Fixed stack exceeded error in angular using updated and legend. ([#2419](https://github.com/infor-design/enterprise/issues/2419))
+- `[Calendar]` Added an eventclick and eventdoubleclick information to the onMonthRendered callback. ([#2419](https://github.com/infor-design/enterprise/issues/2419))
 - `[Calendar]` Allow Validation of the Calendar Popup. ([#1742](https://github.com/infor-design/enterprise/issues/1742))
+- `[Calendar]` Prevent double click from reopening the event popup. ([#1705](https://github.com/infor-design/enterprise/issues/1705))
 - `[Charts]` Made fixes so all charts change color in uplift theme. ([#2058](https://github.com/infor-design/enterprise/issues/2058))
 - `[Datagrid]` Fixed the text width functions for better auto sized columns when using editors and special formatters. ([#2270](https://github.com/infor-design/enterprise/issues/2270))
 - `[Datagrid]` Fixes the alignment of the alert and warning icons on a lookup editor. ([#2175](https://github.com/infor-design/enterprise/issues/2175))

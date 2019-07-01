@@ -322,7 +322,7 @@ Validator.prototype = {
       callback(false);
     });
   },
-  
+
   /**
    * Set disable/enable primary button if a container of fields is valid
    * @private
@@ -577,7 +577,7 @@ Validator.prototype = {
       if (modalBtn.length) {
         self.setPrimaryBtn(field.closest('.modal'), modalBtn);
       }
-      
+
       // Test Enabling primary button in Calendar Popup
       const calendarPopupBtn = field.closest('#calendar-popup').find('.btn-modal-primary').not('.no-validation');
       if (calendarPopupBtn.length) {

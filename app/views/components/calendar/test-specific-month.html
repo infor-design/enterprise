@@ -48,6 +48,8 @@ $('body').one('initialized', function () {
         template: 'tmpl-readonly',
         modalTemplate: 'tmpl-modal',
         menuId: 'calendar-actions-menu'
+      }).on('eventclick', function (e, args) {
+        $('body').toast({title: 'Calendar Test', message: 'Event "' + args.event.subject + '" Clicked' });
       });
     });
   });

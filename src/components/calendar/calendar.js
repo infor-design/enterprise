@@ -141,7 +141,6 @@ Calendar.prototype = {
         <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name }) : eventType.label}</label><br/>`;
     }
     this.eventTypeContainer.innerHTML = eventTypeMarkup;
-    this.element.initialize();
     return this;
   },
 
@@ -703,6 +702,32 @@ Calendar.prototype = {
         return;
       }
       showModalWithCallback(eventData[0], false);
+      /**
+       * Fires when an event in the calendar is clicked.
+       * @event eventclick
+       * @memberof Calendar
+       * @property {number} args.month - The zero based month number.
+       * @property {number} args.year - The year currently rendered in the calendar.
+       * @property {object} args.event - The data for the event.
+       */
+      this.element.triggerHandler('eventclick', { month: this.settings.month, year: this.settings.year, event: eventData[0] });
+    });
+
+    this.element.off(`dblclick.${COMPONENT_NAME}-event`).on(`dblclick.${COMPONENT_NAME}-event`, '.calendar-event', (e) => {
+      const eventId = e.currentTarget.getAttribute('data-id');
+      const eventData = this.settings.events.filter(event => event.id === eventId);
+      if (!eventData || eventData.length === 0) {
+        return;
+      }
+      /**
+       * Fires when an event in the calendar is double clicked.
+       * @event eventdblclick
+       * @memberof Calendar
+       * @property {number} args.month - The zero based month number.
+       * @property {number} args.year - The year currently rendered in the calendar.
+       * @property {object} args.event - The data for the event.
+       */
+      this.element.trigger('eventdblclick', { month: this.settings.month, year: this.settings.year, event: eventData[0] });
     });
 
     this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, 'td', (e) => {
@@ -720,8 +745,6 @@ Calendar.prototype = {
       eventData.ends = day;
 
       this.cleanEventData(eventData, false);
-
-      e.stopPropagation();
       /**
        * Fires when the calendar day is double clicked.
        * @event dblclick
@@ -730,7 +753,6 @@ Calendar.prototype = {
        * @param {object} api - Access to the Calendar API
        */
       this.element.triggerHandler('dblclick', { eventData, api: this });
-      showModalWithCallback(eventData, true);
     });
     return this;
   },
@@ -752,7 +774,11 @@ Calendar.prototype = {
         self.renderAllEvents(true);
       }
     }
-    this.settings.onRenderMonth(this.element, response);
+    this.settings.onRenderMonth(this.element, response, {
+      api: self,
+      month: this.settings.month,
+      year: this.settings.year
+    });
   },
 
   /**
@@ -956,7 +982,7 @@ Calendar.prototype = {
    * @param {function} done The callback for when the modal closes.
    */
   showEventModal(event, done) {
-    if (!this.settings.modalTemplate) {
+    if (!this.settings.modalTemplate || $('#calendar-popup').is(':visible')) {
       return;
     }
 
@@ -996,7 +1022,7 @@ Calendar.prototype = {
           this.removeModal();
           return;
         }
-        
+
         done(this.modalContents, event);
         this.element.trigger('hidemodal', { elem: this.modalContents, event });
         this.removeModal();
@@ -1039,7 +1065,8 @@ Calendar.prototype = {
   },
 
   /**
-   * @returns {boolean} whether or not this Modal is currently being displayed
+   * Used to check if a Modal is currently visible.
+   * @returns {boolean} whether or not the Modal is currently being displayed
    */
   modalVisible() {
     return (document.querySelector('.calendar-event-modal') !== null);
@@ -1069,18 +1096,29 @@ Calendar.prototype = {
 
   /**
    * Handle updated settings and values.
+   * @param {object} settings The new settings object to use.
    * @returns {object} [description]
    */
-  updated() {
-    return this
-      .teardown()
-      .init();
+  updated(settings = {}) {
+    if (!settings) {
+      settings = {};
+    }
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
+    if (settings.locale || settings.template || settings.upcomingEventDays) {
+      this.destroy().init();
+      return this;
+    }
+    this.monthView.showMonth(this.settings.month, this.settings.year);
+    this.renderAllEvents();
+    return this;
   },
 
   /**
    * Simple Teardown - remove events & rebuildable markup.
-   * @returns {object} The Component prototype, useful for chaining.
    * @private
+   * @returns {object} The Component prototype, useful for chaining.
    */
   teardown() {
     this.element.off();
@@ -1092,6 +1130,7 @@ Calendar.prototype = {
   /**
    * Teardown - Remove added markup and events.
    * @private
+   * @returns {object} The Component prototype, useful for chaining.
    */
   destroy() {
     if (this.eventTypeContainer) {
@@ -1109,6 +1148,7 @@ Calendar.prototype = {
     this.removeModal();
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
+    return this;
   }
 };
 

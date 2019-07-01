@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Calendar index tests', () => {
+describe('Calendar index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?layout=nofrills');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -55,7 +55,7 @@ describe('Calendar index tests', () => {
   });
 });
 
-describe('Calendar ajax loading tests', () => {
+describe('Calendar ajax loading tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-ajax-events');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -99,7 +99,7 @@ describe('Calendar ajax loading tests', () => {
   });
 });
 
-describe('Calendar specific month tests', () => {
+describe('Calendar specific month tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-month');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -165,12 +165,11 @@ describe('Calendar specific month tests', () => {
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(15);
   });
 
-  it('should add new events on double click and cancel', async () => {
+  it('should add new events on click and cancel', async () => {
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
 
-    const event = await element.all(by.cssContainingText('.monthview-table td', '2')).first();
-    await browser.actions().click(event).perform();
-    await browser.actions().doubleClick(event).perform();
+    const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
+    await event.click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.calendar-popup'))), config.waitsFor);
@@ -181,12 +180,11 @@ describe('Calendar specific month tests', () => {
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
   });
 
-  it('should add new events on double click and submit', async () => {
+  it('should add new events on click and submit', async () => {
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
 
-    const event = await element.all(by.cssContainingText('.monthview-table td', '2')).first();
-    await browser.actions().click(event).perform();
-    await browser.actions().doubleClick(event).perform();
+    const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
+    await event.click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.calendar-popup'))), config.waitsFor);
@@ -194,11 +192,19 @@ describe('Calendar specific month tests', () => {
     await element(by.id('subject')).sendKeys('New Event Name');
     await element(by.id('submit')).click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+  });
+
+  it('Should be able to click on events', async () => {
+    await element.all(by.css('.calendar-event-title')).first().click();
+
+    expect(await element.all(by.css('.toast-message')).first().getText()).toEqual('Event "Team Event" Clicked');
+    expect(await element(by.css('#calendar-popup')).isDisplayed()).toBe(true);
+    await utils.checkForErrors();
   });
 });
 
-describe('Calendar only monthview', () => {
+describe('Calendar only monthview', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -222,7 +228,7 @@ describe('Calendar only monthview', () => {
   }
 });
 
-describe('Calendar only monthview and legend', () => {
+describe('Calendar only monthview and legend', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar-legend');
     const dateField = await element(by.id('monthview-datepicker-field'));

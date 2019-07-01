@@ -21,7 +21,7 @@ describe('Toast example-index tests', () => {
     expect(await buttonEl.isEnabled()).toBe(true);
   });
 
-  it('Should toast display', async () => {
+  it('Should display', async () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
 
@@ -30,7 +30,7 @@ describe('Toast example-index tests', () => {
     expect(await element(by.id('toast-container'))).toBeTruthy();
   });
 
-  it('Should toast closed after clicking close button', async () => {
+  it('Should close after clicking close button', async () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
 

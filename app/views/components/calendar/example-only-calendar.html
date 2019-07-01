@@ -22,7 +22,11 @@
           showViewChanger: false,
           events: events
         }).on('dblclick', function (e, args) {
-          $('body').toast({title: 'Application Test', message: 'In a real application you might show a modal for day: ' + args.eventData.ends });
+          $('body').toast({title: 'Calendar Test', message: 'Day ' + args.eventData.ends + ' Clicked' });
+        }).on('eventclick', function (e, args) {
+          $('body').toast({title: 'Calendar Test', message: 'Event "' + args.event.subject + '" Clicked' });
+        }).on('eventdblclick', function (e, args) {
+          $('body').toast({title: 'Calendar Test', message: 'Event "' + args.event.subject + '" Double Clicked' });
         });
       });
     });
