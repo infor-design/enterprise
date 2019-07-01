@@ -695,25 +695,35 @@ Calendar.prototype = {
       });
     };
 
+    let timer = 0;
+    const delay = 100;
+    let prevent = false;
     this.element.off(`click.${COMPONENT_NAME}-event`).on(`click.${COMPONENT_NAME}-event`, '.calendar-event', (e) => {
-      const eventId = e.currentTarget.getAttribute('data-id');
-      const eventData = this.settings.events.filter(event => event.id === eventId);
-      if (!eventData || eventData.length === 0) {
-        return;
-      }
-      showModalWithCallback(eventData[0], false);
-      /**
-       * Fires when an event in the calendar is clicked.
-       * @event eventclick
-       * @memberof Calendar
-       * @property {number} args.month - The zero based month number.
-       * @property {number} args.year - The year currently rendered in the calendar.
-       * @property {object} args.event - The data for the event.
-       */
-      this.element.triggerHandler('eventclick', { month: this.settings.month, year: this.settings.year, event: eventData[0] });
+      timer = setTimeout(() => {
+        if (!prevent) {
+          const eventId = e.currentTarget.getAttribute('data-id');
+          const eventData = this.settings.events.filter(event => event.id === eventId);
+          if (!eventData || eventData.length === 0) {
+            return;
+          }
+          showModalWithCallback(eventData[0], false);
+          /**
+           * Fires when an event in the calendar is clicked.
+           * @event eventclick
+           * @memberof Calendar
+           * @property {number} args.month - The zero based month number.
+           * @property {number} args.year - The year currently rendered in the calendar.
+           * @property {object} args.event - The data for the event.
+           */
+          this.element.triggerHandler('eventclick', { month: this.settings.month, year: this.settings.year, event: eventData[0] });
+        }
+        prevent = false;
+      }, delay);
     });
 
     this.element.off(`dblclick.${COMPONENT_NAME}-event`).on(`dblclick.${COMPONENT_NAME}-event`, '.calendar-event', (e) => {
+      clearTimeout(timer);
+      prevent = true;
       const eventId = e.currentTarget.getAttribute('data-id');
       const eventData = this.settings.events.filter(event => event.id === eventId);
       if (!eventData || eventData.length === 0) {
@@ -982,7 +992,7 @@ Calendar.prototype = {
    * @param {function} done The callback for when the modal closes.
    */
   showEventModal(event, done) {
-    if (!this.settings.modalTemplate || $('#calendar-popup').is(':visible')) {
+    if (!this.settings.modalTemplate) {
       return;
     }
 

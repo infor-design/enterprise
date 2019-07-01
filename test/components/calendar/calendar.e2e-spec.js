@@ -99,7 +99,7 @@ describe('Calendar ajax loading tests', () => { //eslint-disable-line
   });
 });
 
-describe('Calendar specific month tests', () => {  //eslint-disable-line
+describe('Calendar specific month tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-month');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -117,6 +117,13 @@ describe('Calendar specific month tests', () => {  //eslint-disable-line
     await testDate.setFullYear(2018);
 
     expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+  });
+
+  it('Should be able to click on events', async () => {
+    await element.all(by.css('.calendar-event-title')).first().click();
+
+    expect(await element(by.css('#calendar-popup')).isDisplayed()).toBe(true);
+    await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -194,19 +201,43 @@ describe('Calendar specific month tests', () => {  //eslint-disable-line
 
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
   });
+});
+
+describe('Calendar only calendar', () => {  //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar/example-only-calendar');
+    const dateField = await element(by.id('monthview-datepicker-field'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
+  });
+
+  it('Should render without error', async () => {
+    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
+    await utils.checkForErrors();
+  });
 
   it('Should be able to click on events', async () => {
     await element.all(by.css('.calendar-event-title')).first().click();
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('toast-container'))), config.waitsFor);
 
-    expect(await element.all(by.css('.toast-message')).first().getText()).toEqual('Event "Team Event" Clicked');
-    expect(await element(by.css('#calendar-popup')).isDisplayed()).toBe(true);
+    expect(await element.all(by.css('.toast-message')).first().getText()).toEqual('Event "Out of Office" Clicked');
     await utils.checkForErrors();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const calendarEl = await element(by.className('calendar'));
+      await browser.driver.sleep(config.sleep);
+      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
+
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview')).toBeLessThan(1);
+    });
+  }
 });
 
-describe('Calendar only monthview', () => {  //eslint-disable-line
+describe('Calendar specific locale', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/example-only-calendar');
+    await utils.setPage('/components/calendar/test-specific-locale');
     const dateField = await element(by.id('monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
@@ -223,12 +254,12 @@ describe('Calendar only monthview', () => {  //eslint-disable-line
       await browser.driver.sleep(config.sleep);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale')).toBeLessThan(1);
     });
   }
 });
 
-describe('Calendar only monthview and legend', () => {  //eslint-disable-line
+describe('Calendar only monthview and legend', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar-legend');
     const dateField = await element(by.id('monthview-datepicker-field'));
