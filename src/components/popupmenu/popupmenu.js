@@ -4,6 +4,7 @@ import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { DOM } from '../../utils/dom';
 import { PlacementObject, Place } from '../place/place';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../place/place.jquery';
