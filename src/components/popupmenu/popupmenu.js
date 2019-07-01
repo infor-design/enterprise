@@ -857,7 +857,7 @@ PopupMenu.prototype = {
 
   handleKeys() {
     const self = this;
-    const isRTL = document.querySelector('html').dir === "rtl";
+    const isRTL = document.querySelector('html').dir === 'rtl';
     // http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
     // Handle Events in Anchors
