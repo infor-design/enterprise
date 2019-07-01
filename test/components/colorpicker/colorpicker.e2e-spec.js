@@ -410,3 +410,24 @@ describe('Colorpicker sizes tests', () => {
     });
   }
 });
+
+describe('Colorpicker RTL left and right keys test', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/colorpicker/example-index?locale=ar-EG&layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should pick correct color from picker on keyboard enter', async () => {
+    const colorInputEl = await element(by.id('background-color'));
+    await colorInputEl.click();
+    await colorInputEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.id('colorpicker-menu'))), config.waitsFor);
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+    expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#AD4242');
+  });
+});
