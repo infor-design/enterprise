@@ -1088,8 +1088,7 @@ PopupMenu.prototype = {
         // Down
         if ((!isPicker && key === 40)
           || (isPicker && key === (isRTL ? 37 : 39))
-          && (!isAutocomplete))
-        {
+          && (!isAutocomplete)) {
           e.stopPropagation();
           e.preventDefault();
 
