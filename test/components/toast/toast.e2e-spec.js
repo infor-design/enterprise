@@ -34,9 +34,10 @@ describe('Toast example-index tests', () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
 
+    expect(await element.all(by.id('toast-container')).count()).toEqual(1);
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('toast-container'))), config.waitsFor);
 
-    await element(by.className('btn-close')).click();
+    await element(by.css('#toast-container button.btn-close')).click();
     await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('toast-container'))), config.waitsFor);
 
     expect(await element(by.id('toast-container')).isDisplayed()).toBeFalsy();
