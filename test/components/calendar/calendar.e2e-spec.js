@@ -99,7 +99,7 @@ describe('Calendar ajax loading tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Calendar specific month tests', () => { //eslint-disable-line
+describe('Calendar specific month tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-month');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -237,7 +237,7 @@ describe('Calendar only calendar', () => {  //eslint-disable-line
   }
 });
 
-fdescribe('Calendar specific locale', () => { //eslint-disable-line
+describe('Calendar specific locale', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-locale');
     const dateField = await element(by.id('monthview-datepicker-field'));
