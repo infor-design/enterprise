@@ -26,7 +26,7 @@
 - `[Datagrid]` Fixed the text width functions for better auto sized columns when using editors and special formatters. ([#2270](https://github.com/infor-design/enterprise/issues/2270))
 - `[Datagrid]` Fixes the alignment of the alert and warning icons on a lookup editor. ([#2175](https://github.com/infor-design/enterprise/issues/2175))
 - `[Datagrid]` Fixes tooltip on the non displayed table errors. ([#2264](https://github.com/infor-design/enterprise/issues/2264))
-- `[Datagrid]` Fixes an issue with alignment when toggline the filter row. ([#2332](https://github.com/infor-design/enterprise/issues/2332))
+- `[Datagrid]` Fixes an issue with alignment when toggling the filter row. ([#2332](https://github.com/infor-design/enterprise/issues/2332))
 - `[Datagrid]` Fixes an error on tree grid when using server-side paging. ([#2132](https://github.com/infor-design/enterprise/issues/2132))
 - `[Datagrid]` Fixed an issue where autocompletes popped up on cell editors. ([#1575](https://github.com/infor-design/enterprise/issues/1575))
 - `[Datagrid]` Fixes reset columns to set the correct hidden status. ([#2315](https://github.com/infor-design/enterprise/issues/2315))
