@@ -857,7 +857,6 @@ PopupMenu.prototype = {
 
   handleKeys() {
     const self = this;
-    const isRTL = document.querySelector('html').dir === 'rtl';
     // http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
     // Handle Events in Anchors
@@ -1048,7 +1047,7 @@ PopupMenu.prototype = {
         }
 
         // Up on Up
-        if ((!isPicker && key === 38) || (isPicker && key === (isRTL ? 39 : 37))) {
+        if ((!isPicker && key === 38) || (isPicker && key === (Locale.isRTL() ? 39 : 37))) {
           e.stopPropagation();
           e.preventDefault();
 
@@ -1087,7 +1086,7 @@ PopupMenu.prototype = {
 
         // Down
         if ((!isPicker && key === 40)
-          || (isPicker && key === (isRTL ? 37 : 39))
+          || (isPicker && key === (Locale.isRTL() ? 37 : 39))
           && (!isAutocomplete)) {
           e.stopPropagation();
           e.preventDefault();
