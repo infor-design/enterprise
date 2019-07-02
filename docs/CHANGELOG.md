@@ -14,6 +14,8 @@
 - `[Datagrid]` Added support to restrict the size of a column with minWidth and maxWidth setting on the column. ([#2313](https://github.com/infor-design/enterprise/issues/2313))
 - `[Datagrid]` Automatically remove nonVisibleCellError when a row is removed. ([#2436](https://github.com/infor-design/enterprise/issues/2436))
 - `[Datagrid]` Fixed header alignment with textOverflow ellipsis setting. ([#2351](https://github.com/infor-design/enterprise/issues/2351))
+- `[Datagrid]` Fixed an issue where code-block editor focus was not working. ([#526](https://github.com/infor-design/enterprise-ng/issues/526))
+- `[Datagrid]` Automatically remove nonVisibelCellError when a row is removed. ([#2436](https://github.com/infor-design/enterprise/issues/2436))
 - `[Datagrid]` Add a fix to show ellipsis text on lookups in the datagrid filter. ([#2122](https://github.com/infor-design/enterprise/issues/2122))
 - `[Dropdown]` Fixed an issue where ellipsis was not working when use firefox new tab. ([#2236](https://github.com/infor-design/enterprise/issues/2236))
 - `[Images]` Created an additional image class to apply focus state without coercing width and height. ([#2025](https://github.com/infor-design/enterprise/issues/2025))
