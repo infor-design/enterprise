@@ -631,7 +631,7 @@ Tooltip.prototype = {
 
     // Personalizable the toolbar
     const isPersonalizable = self.element.closest('.is-personalizable').length > 0;
-    self.tooltip[0].classList[isPersonalizable ? 'add' : 'remove']('isPersonalizable');
+    self.tooltip[0].classList[isPersonalizable ? 'add' : 'remove']('is-personalizable');
 
     setTimeout(() => {
       $(document)
@@ -816,7 +816,7 @@ Tooltip.prototype = {
       return;
     }
 
-    this.tooltip[0].classList.remove('isPersonalizable');
+    this.tooltip[0].classList.remove('is-personalizable');
     this.tooltip[0].classList.add('is-hidden');
     this.tooltip[0].style.left = '';
     this.tooltip[0].style.top = '';

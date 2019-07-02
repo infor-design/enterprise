@@ -146,7 +146,7 @@ Sparkline.prototype = {
 
             if (content !== '') {
               if (charts.tooltip && charts.tooltip.length) {
-                charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('isPersonalizable');
+                charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
               }
               charts.showTooltip(posX, posY, content, 'top');
             }

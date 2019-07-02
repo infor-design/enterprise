@@ -521,23 +521,23 @@ function personalizeStyles(colors) {
     0 0 2px 1px ${colors.subtext};
 }
 
-.tooltip.isPersonalizable {
+.tooltip.is-personalizable {
   background-color: ${colors.darkest};
   border-color: ${colors.darkest};
 }
-.tooltip.isPersonalizable .chart-swatch .swatch-row div {
+.tooltip.is-personalizable .chart-swatch .swatch-row div {
   border-bottom-color: ${colors.darkest};
 }
-.tooltip.isPersonalizable.top .arrow::after {
+.tooltip.is-personalizable.top .arrow::after {
   border-top-color: ${colors.darkest};
 }
-.tooltip.isPersonalizable.right .arrow::after {
+.tooltip.is-personalizable.right .arrow::after {
   border-right-color: ${colors.darkest};
 }
-.tooltip.isPersonalizable.bottom .arrow::after {
+.tooltip.is-personalizable.bottom .arrow::after {
   border-bottom-color: ${colors.darkest};
 }
-.tooltip.isPersonalizable.left .arrow::after {
+.tooltip.is-personalizable.left .arrow::after {
   border-left-color: ${colors.darkest};
 }
 

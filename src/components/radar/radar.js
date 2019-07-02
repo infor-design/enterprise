@@ -444,7 +444,7 @@ Radar.prototype = {
 
         tooltipInterval = setTimeout(() => {
           if (charts.tooltip && charts.tooltip.length) {
-            charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('isPersonalizable');
+            charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
           }
           charts.showTooltip(x, y, content, 'top');
         }, 300);

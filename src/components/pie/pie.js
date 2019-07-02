@@ -422,7 +422,7 @@ Pie.prototype = {
           const padding = 5;
 
           if (charts.tooltip && charts.tooltip.length && (isTop || isRight || isBottom || isLeft)) {
-            charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('isPersonalizable');
+            charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
           }
 
           if (isTop) {
