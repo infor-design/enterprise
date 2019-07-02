@@ -233,6 +233,20 @@
   }
 
   // =============================================
+  // Form-Compact Fieldset Styles
+  // =============================================
+
+  // Zeroes out a rule from `_fieldset.scss`
+  .row {
+    .column,
+    .columns {
+      fieldset {
+        margin-top: auto;
+      }
+    }
+  }
+
+  // =============================================
   // Form-Compact Radio Group Styles
   // =============================================
   .checkbox-group,
@@ -352,6 +366,8 @@ html[dir='rtl'] {
 
     .column,
     .columns {
+      float: none;
+
       input {
         border-left: 1px solid $formcompact-field-border-color;
         border-right: 0;
@@ -465,11 +481,21 @@ html[dir='rtl'] {
     .row {
       display: flex;
       padding-right: 0;
+
+      .row {
+        padding-right: 20px;
+      }
     }
 
     .column,
     .columns {
       padding: 0;
+
+      &:first-child {
+        .row {
+          padding-left: 20px;
+        }
+      }
     }
 
     .one.column,
@@ -569,6 +595,25 @@ html[dir='rtl'] {
     .one-half.column {
       margin-left: 0;
       width: 50%;
+    }
+  }
+
+  html[dir='rtl'] {
+    .form-compact {
+      .row {
+        .row {
+          padding-left: 20px;
+        }
+      }
+
+      .column,
+      .columns {
+        &:first-child {
+          .row {
+            padding-right: 20px;
+          }
+        }
+      }
     }
   }
 }
