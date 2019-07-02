@@ -873,6 +873,29 @@ describe('Datagrid page size selector tests', () => {
   });
 });
 
+describe('Datagrid test post renderer tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-post-renderer-tree?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-cell-post-renderer')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-singleselect');
