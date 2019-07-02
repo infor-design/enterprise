@@ -975,6 +975,10 @@ $datagrid-short-row-height: 25px;
           line-height: $datagrid-short-row-height;
         }
 
+        .code-block span {
+          line-height: normal;
+        }
+
         .btn {
           top: -3px !important;
         }

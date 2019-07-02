@@ -6069,7 +6069,7 @@ Datagrid.prototype = {
 
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
               self.editor) {
-            if (focusElem.is('.spinbox, .trigger') ||
+            if (focusElem.is('.spinbox, .trigger, .code-block-actions') ||
               !$(target).is(':visible') || self.editor.stayInEditMode) {
               return;
             }
@@ -7715,6 +7715,7 @@ Datagrid.prototype = {
     self.bodyContainer.on('keydown.datagrid', 'td', function (e) {
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
+      const target = $(e.target);
       const isRTL = Locale.isRTL();
       const node = self.activeCell.node;
       const rowNode = $(this).parent();
@@ -7768,8 +7769,17 @@ Datagrid.prototype = {
 
       // Tab, Left, Up, Right and Down arrow keys.
       if ([9, 37, 38, 39, 40].indexOf(key) !== -1) {
-        if ($(e.target).closest('.code-block').length) {
+        if (target.closest('.code-block').length &&
+          !(key === 9 && e.shiftKey && self.getFocusables(node).index === 0)) {
           return;
+        }
+        if (key !== 9) {
+          if (target.is('.code-block-actions')) {
+            return;
+          }
+          if (target.closest('.popupmenu.is-open').closest('.popupmenu-wrapper').prev().is('.code-block-actions')) {
+            return;
+          }
         }
       }
 
@@ -7800,11 +7810,16 @@ Datagrid.prototype = {
           cell = ((key === 37 && !isRTL) || (key === 39 && isRTL)) ? 0 : lastCell;
           self.setActiveCell(row, cell);
         } else if (!self.quickEditMode || (key === 9)) {
-          if ((!isRTL && (key === 37 || key === 9 && e.shiftKey)) || // eslint-disable-line
-              (isRTL && (key === 39 || key === 9))) { // eslint-disable-line
-            cell = getNextVisibleCell(cell, lastCell, true);
+          // Handle `shift + tab` for code block formatter, it use sometime `.code-block-actions`
+          if (key === 9 && e.shiftKey && target.is('.code-block-actions')) {
+            self.focusNextPrev('prev', node);
           } else {
-            cell = getNextVisibleCell(cell, lastCell);
+            if ((!isRTL && (key === 37 || key === 9 && e.shiftKey)) || // eslint-disable-line
+                (isRTL && (key === 39 || key === 9))) { // eslint-disable-line
+              cell = getNextVisibleCell(cell, lastCell, true);
+            } else {
+              cell = getNextVisibleCell(cell, lastCell);
+            }
           }
 
           if (cell instanceof jQuery) {
@@ -7899,13 +7914,13 @@ Datagrid.prototype = {
       if (key === 32 && (!self.settings.editable || isSelectionCheckbox)) {
         row = node.closest('tr');
 
-        if ($(e.target).closest('.datagrid-row-detail').length === 1) {
+        if (target.closest('.datagrid-row-detail').length === 1) {
           return;
         }
         e.preventDefault();
 
         // Toggle datagrid-expand with Space press
-        const btn = $(e.target).find('.datagrid-expand-btn, .datagrid-drilldown');
+        const btn = target.find('.datagrid-expand-btn, .datagrid-drilldown');
         if (btn && btn.length) {
           btn.trigger('click.datagrid');
           e.preventDefault();
@@ -7935,7 +7950,6 @@ Datagrid.prototype = {
       }
 
       if (self.settings.editable && key === 13) {
-        const target = $(e.target);
         // Allow shift to add a new line
         if (target.is('textarea') && e.shiftKey) {
           return;
@@ -7982,6 +7996,41 @@ Datagrid.prototype = {
         return false; // eslint-disable-line
       }
     });
+  },
+
+  /**
+   * Get focusable elements in given node
+   * @param  {object} node The node to get focusable elements
+   * @returns {object} array of focusable elements and current index
+   */
+  getFocusables(node) {
+    const focusables = $(':focusable', node);
+    return {
+      elements: focusables,
+      index: focusables.index($(':focus'))
+    };
+  },
+
+  /**
+   * Set focus to next/prev focusable element in given node
+   * @param  {string} opt The element to set focus
+   * @param  {object} node The node to get focusable element
+   * @returns {void}
+   */
+  focusNextPrev(opt, node) {
+    if (node && typeof opt === 'string') {
+      opt = opt.toLowerCase();
+      const focusables = this.getFocusables(node);
+      const elements = focusables.elements;
+      const len = elements.length;
+      let index = focusables.index;
+      if (/\b(next|prev)\b/g.test(opt)) {
+        index = (opt === 'next') ?
+          ((index + 1) >= len ? 0 : (index + 1)) :
+          ((index - 1) < 0 ? len : (index - 1));
+        elements.eq(index).focus();
+      }
+    }
   },
 
   /**

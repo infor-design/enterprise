@@ -13,6 +13,7 @@
 - `[Datagrid]` Added a Sort Function to the datagrid column to allow the value to be formatted for the sort. ([#1766](https://github.com/infor-design/enterprise/issues/2274)))
 - `[Datagrid]` Added placeholder functionality to Lookup, Dropdown, and Decimal Formatrers. ([#2408](https://github.com/infor-design/enterprise/issues/2408)))
 - `[Datagrid]` Added support to restrict the size of a column with minWidth and maxWidth setting on the column. ([#2313](https://github.com/infor-design/enterprise/issues/2313))
+- `[Datagrid]` Fixed an issue where code-block editor focus was not working. ([#526](https://github.com/infor-design/enterprise-ng/issues/526))
 - `[Datagrid]` Automatically remove nonVisibelCellError when a row is removed. ([#2436](https://github.com/infor-design/enterprise/issues/2436))
 - `[Datagrid]` Add a fix to show ellipsis text on lookups in the datagrid filter. ([#2122](https://github.com/infor-design/enterprise/issues/2122))
 - `[Dropdown]` Fixed an issue where ellipsis was not working when use firefox new tab. ([#2236](https://github.com/infor-design/enterprise/issues/2236))
