@@ -105,38 +105,8 @@
         editable: true,
         toolbar: { keywordFilter: true, results: true }
       })
-      .on('beforecommitcelledit', function (e, args) {
-        // console.log(args);
-        // return false;
-
-        var deferred = $.Deferred();
-        args.editor.stayInEditMode = true;
-
-        $('body').message({
-          title: 'Commit Edit',
-          message: 'You are about to Commit Cell Edit<br>Would you like to proceed?',
-          buttons: [{
-            text: 'Yes',
-            click: function(e, modal) {
-              delete args.editor.stayInEditMode;
-              deferred.resolve();
-              modal.close();
-            }
-          }, {
-            text: 'No',
-            click: function(e, modal) {
-              deferred.reject();
-              modal.close();
-            },
-            isDefault: true
-          }]
-        })
-        .on('afterclose.message', (e) => {
-          if (args.editor && !args.editor.stayInEditMode) {
-            args.target.focus();
-          }
-        });
-        return deferred.promise();
+      .on('exiteditmode', function (e, args) {
+        console.log('exiteditmode was called', args);
       });
 
     });

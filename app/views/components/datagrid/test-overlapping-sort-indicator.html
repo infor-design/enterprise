@@ -24,7 +24,7 @@
       //Define Columns for the Grid.
       columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId' });
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, hyperlinkTooltip: 'Navigate to This Product' });
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink });
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', align: 'right', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'status', name: 'Status', field: 'price', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
