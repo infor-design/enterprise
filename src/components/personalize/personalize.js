@@ -142,14 +142,25 @@ Personalize.prototype = {
     // (Color)09 for the horizontal border - 134D71
     // (Color)10 for the hover state on module tab - 133C59
     const defaultColors = {
-      header: '2578A9',
-      text: 'ffffff'
+      header: '2578A9'
     };
+    const lightest = colorUtils.validateHex(colors.lightest ||
+      colorUtils.getLuminousColorShade((colors.header || defaultColors.header), 0.3));
+    const contrast = colorUtils.getContrastColor(lightest);
+
+    if (contrast === 'white') {
+      defaultColors.text = 'ffffff';
+      defaultColors.subtext = 'd8d8d8';
+    } else {
+      defaultColors.text = '000000';
+      defaultColors.subtext = '292929';
+    }
 
     // If an event sends a blank string through instead of a hex,
     // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
     colors.header = colorUtils.validateHex(colors.header || defaultColors.header);
     colors.text = colorUtils.validateHex(colors.text || defaultColors.text);
+    colors.subtext = colorUtils.validateHex(colors.subtext || defaultColors.subtext);
     colors.btnColorHeader = colorUtils.validateHex(colors.btnColorHeader ||
       colorUtils.getLuminousColorShade(colors.header, 0.3));
     colors.subheader = colorUtils.validateHex(colors.subheader ||
