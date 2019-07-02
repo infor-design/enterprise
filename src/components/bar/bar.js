@@ -112,6 +112,7 @@ Bar.prototype = {
   build() {
     const self = this;
     const isRTL = Locale.isRTL();
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const isFormatter = !!this.settings.formatterString;
     const format = function (value) {
       return isFormatter ? d3.format(self.settings.formatterString)(value) : value;
@@ -444,8 +445,62 @@ Bar.prototype = {
           const y = isTooltipBottom ? yPosS : (yPosS - size.height - 13);
 
           if (content !== '') {
+            if (charts.tooltip && charts.tooltip.length) {
+              charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+            }
             charts.showTooltip(x, y, content, isTooltipBottom ? 'bottom' : 'top');
           }
+        };
+
+        // Replace matched pattern in given string
+        const replaceMatch = (str, callback, expr) => {
+          if (typeof expr === 'undefined' || expr === null) {
+            expr = /{{(\w+)}}/g;
+          } else if (typeof expr === 'string') {
+            expr = new RegExp(expr, 'g');
+          }
+          if (typeof str === 'string' && typeof callback === 'function' && expr instanceof RegExp) {
+            let max = 9999;
+            while (expr.test(str) && max > 0) {
+              str = str.replace(expr, (match, key) => callback(match, key));
+              max--;
+            }
+          }
+          return str;
+        };
+
+        // Replace key/value and set type as string
+        const replaceMatchAndSetType = () => {
+          if (typeof content === 'string') {
+            content = replaceMatch(content, (match, key) => format(d[key]));
+          } else if (typeof content === 'number') {
+            content = content.toString();
+          }
+        };
+
+        // Set custom tooltip callback method
+        const setCustomTooltip = (method) => {
+          content = '';
+          const args = { index: i, data: d };
+          const req = (res) => {
+            if (typeof res === 'string' || typeof res === 'number') {
+              content = res;
+              replaceMatchAndSetType();
+              tooltipDataCache[i] = content;
+            }
+          };
+          let runInterval = true;
+          tooltipInterval = setInterval(() => {
+            if (runInterval) {
+              runInterval = false;
+              method(req, args);
+            }
+
+            if (content !== '') {
+              clearInterval(tooltipInterval);
+              show();
+            }
+          }, 10);
         };
 
         if (dataset.length === 1) {
@@ -509,8 +564,20 @@ Bar.prototype = {
             }
           }, 10);
         } else {
-          content = tooltipDataCache[i] || tooltipData || d.tooltip || content || '';
-          show(xPosS, yPosS, isTooltipBottom);
+          content = tooltipDataCache[i] || tooltipData || content || '';
+          if (!tooltipDataCache[i] && d.tooltip !== false &&
+            (typeof d.tooltip !== 'undefined' || d.tooltip !== null)) {
+            if (typeof d.tooltip === 'function') {
+              setCustomTooltip(d.tooltip);
+            } else {
+              content = d.tooltip;
+              replaceMatchAndSetType();
+              tooltipDataCache[i] = content;
+            }
+          }
+          if (typeof content === 'string' && content !== '') {
+            show(xPosS, yPosS, isTooltipBottom);
+          }
 
           // set inline colors
           if (self.settings.isStacked) {

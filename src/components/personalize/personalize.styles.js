@@ -435,6 +435,112 @@ function personalizeStyles(colors) {
 .hero-widget.is-personalizable .hero-footer .chart-container text {
     fill: ${colors.text} !important;
 }
+
+.hero-widget.is-personalizable .hero-header .chart-container .chart-legend-item-text,
+.hero-widget.is-personalizable .hero-content .chart-container .chart-legend-item-text,
+.hero-widget.is-personalizable .hero-footer .chart-container .chart-legend-item-text {
+  color: ${colors.text};
+  fill: ${colors.text};
+}
+
+.hero-widget.is-personalizable .hero-header .chart-container .axis path, .chart-container .axis line,
+.hero-widget.is-personalizable .hero-header .chart-container .axis .tick0 line {
+  stroke: ${colors.subtext} !important;
+}
+
+.hero-widget.is-personalizable .hero-header .title,
+.hero-widget.is-personalizable .hero-content .title,
+.hero-widget.is-personalizable .hero-footer .title {
+  color: ${colors.subtext};
+}
+
+.hero-widget.is-personalizable .hero-header .btn-tertiary,
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span,
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary),
+.hero-widget.is-personalizable .hero-content .btn-tertiary,
+.hero-widget.is-personalizable .hero-content .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span,
+.hero-widget.is-personalizable .hero-content .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary),
+.hero-widget.is-personalizable .hero-footer .btn-tertiary,
+.hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span,
+.hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary),
+.hero-widget.is-personalizable .hero-header .btn-tertiary .icon,
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span .icon,
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) .icon,
+.hero-widget.is-personalizable .hero-content .btn-tertiary .icon,
+.hero-widget.is-personalizable .hero-content .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span .icon,
+.hero-widget.is-personalizable .hero-content .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) .icon,
+.hero-widget.is-personalizable .hero-footer .btn-tertiary .icon,
+.hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span .icon,
+.hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) .icon
+ {
+  color: ${colors.subtext};
+}
+
+.hero-widget.is-personalizable .hero-header .btn-tertiary:hover,
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:hover,
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):hover,
+.hero-widget.is-personalizable .hero-content .btn-tertiary:hover,
+.hero-widget.is-personalizable .hero-content .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:hover,
+.hero-widget.is-personalizable .hero-content .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):hover,
+.hero-widget.is-personalizable .hero-footer .btn-tertiary:hover,
+.hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:hover,
+.hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):hover,
+.hero-widget.is-personalizable .hero-header .btn-tertiary:hover .icon,
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:hover .icon,
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):hover .icon,
+.hero-widget.is-personalizable .hero-content .btn-tertiary:hover .icon,
+.hero-widget.is-personalizable .hero-content .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:hover .icon,
+.hero-widget.is-personalizable .hero-content .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):hover .icon,
+.hero-widget.is-personalizable .hero-footer .btn-tertiary:hover .icon,
+.hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:hover .icon,
+.hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):hover .icon
+ {
+  color: ${colors.text};
+}
+
+.hero-widget.is-personalizable .hero-header .btn-tertiary:focus:not(.hide-focus),
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:focus:not(.hide-focus),
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):focus:not(.hide-focus),
+.hero-widget.is-personalizable .hero-content .btn-tertiary:focus:not(.hide-focus),
+.hero-widget.is-personalizable .hero-content .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:focus:not(.hide-focus),
+.hero-widget.is-personalizable .hero-content .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):focus:not(.hide-focus),
+.hero-widget.is-personalizable .hero-footer .btn-tertiary:focus:not(.hide-focus),
+.hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:focus:not(.hide-focus),
+.hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):focus:not(.hide-focus) {
+  box-shadow: 0 0 0 2px transparent,
+    0 0 0 1px ${colors.subtext},
+    0 0 2px 1px ${colors.subtext};
+}
+
+.header.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
+.header.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus),
+.subheader.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
+.subheader.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
+  box-shadow: 0 0 0 2px transparent,
+    0 0 0 1px ${colors.subtext},
+    0 0 2px 1px ${colors.subtext};
+}
+
+.tooltip.is-personalizable {
+  background-color: ${colors.darkest};
+  border-color: ${colors.darkest};
+}
+.tooltip.is-personalizable .chart-swatch .swatch-row div {
+  border-bottom-color: ${colors.darkest};
+}
+.tooltip.is-personalizable.top .arrow::after {
+  border-top-color: ${colors.darkest};
+}
+.tooltip.is-personalizable.right .arrow::after {
+  border-right-color: ${colors.darkest};
+}
+.tooltip.is-personalizable.bottom .arrow::after {
+  border-bottom-color: ${colors.darkest};
+}
+.tooltip.is-personalizable.left .arrow::after {
+  border-left-color: ${colors.darkest};
+}
+
     `;
 }
 

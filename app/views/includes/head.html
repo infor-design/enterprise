@@ -60,13 +60,9 @@
     // If Initialize isnt called need to defer this
     $('html')
       .personalize({colors: colors, theme: theme, blockUI: blockUI})
-      .on('colorschanged', function (e, a) {
-        var pageUrl = '?colors=' + a.colors;
-        window.history.pushState('', '', pageUrl);
-      })
-      .on('themechanged', function (e, a) {
+      .on('colorschanged themechanged', function (e, a) {
         const parts = a.theme.split('-');
-        var pageUrl = '?theme=' + parts[1] + '&variant=' + parts[2];
+        var pageUrl = '?theme=' + parts[1] + '&variant=' + parts[2] + '&colors=' + a.colors.replace('#', '');
         window.history.pushState('', '', pageUrl);
       });
   </script>

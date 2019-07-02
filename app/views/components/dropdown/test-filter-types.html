@@ -1,39 +1,41 @@
 <div class="row">
   <div class="six columns">
-
     <h2>Dropdown Test: Filter Types</h2>
-    <p>
-      The dropdown on the left/top shows <em>contains</em>-style filtering.<br />
-      The dropdown on the right/bottom shows <em>startsWith</em>-style filtering.
-    </p>
-
   </div>
 </div>
 
-<div class="row" style="margin-top: 20px;">
+<div class="row top-padding">
   <div class="six columns">
-
     <div class="field">
       <label for="contains-filter">Contains Filter</label>
       <select id="contains-filter" name="contains-filter" class="dropdown" data-init="false"></select>
     </div>
-
-  </div>
-  <div class="six columns">
-
-    <div class="field">
-      <label for="startsWith-filter">StartsWith Filter</label>
-      <select id="startsWith-filter" name="startsWith-filter" class="dropdown" data-init="false"></select>
-    </div>
-
   </div>
 </div>
 
-<script>
-  $('body').on('initialized', function() {
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <label for="phraseStartsWith-filter">PhraseStartsWith Filter</label>
+      <select id="phraseStartsWith-filter" name="phraseStartsWith-filter" class="dropdown" data-init="false"></select>
+    </div>
+  </div>
+</div>
 
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <label for="wordStartsWith-filter">WordStartsWith Filter</label>
+      <select id="wordStartsWith-filter" name="wordStartsWith-filter" class="dropdown" data-init="false"></select>
+    </div>
+  </div>
+</div>
+
+<script id="test-scripts">
+  $('body').on('initialized', function() {
     function statesSource(response, term) {
       $.getJSON('{{basepath}}api/states', function(data, term) {
+        data.unshift({ value: '', label: '' });
         response(data);
       });
     }
@@ -43,10 +45,14 @@
       source: statesSource
     });
 
-    $('#startsWith-filter').dropdown({
-      filterMode: 'startsWith',
+    $('#phraseStartsWith-filter').dropdown({
+      filterMode: 'phraseStartsWith',
       source: statesSource
     });
 
+    $('#wordStartsWith-filter').dropdown({
+      filterMode: 'wordStartsWith',
+      source: statesSource
+    });
   });
 </script>

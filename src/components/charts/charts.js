@@ -90,7 +90,9 @@ charts.appendTooltip = function appendTooltip(extraClass) {
  * @returns {void}
  */
 charts.hideTooltip = function hideTooltip() {
-  d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
+  d3.select('#svg-tooltip')
+    .classed('is-personalizable', false)
+    .classed('is-hidden', true).style('left', '-999px');
 
   // Remove scroll events
   $('body, .scrollable').off('scroll.chart-tooltip', () => {

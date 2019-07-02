@@ -1265,7 +1265,7 @@ describe('Datagrid filter single select tests', () => {
 
 describe('Datagrid filter lookup custom click function tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-filter-lookup-click-function');
+    await utils.setPage('/components/datagrid/test-filter-lookup-click-function?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -1294,6 +1294,19 @@ describe('Datagrid filter lookup custom click function tests', () => {
 
     expect(await element(by.css('ul.popupmenu.is-open')).isDisplayed()).toBeTruthy();
     expect(await element(by.css('ul.popupmenu.is-open > li:nth-child(1)')).getText()).toBe('Equals');
+  });
+
+  it('Should overflow to text ellipsis', async () => {
+    const lookup = await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-2 .trigger'));
+    await lookup.click();
+    await element.all(by.cssContainingText('#lookup-datagrid td', 'I Love Compressors')).first().click();
+
+    expect(await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-2 input')).getAttribute('value')).toEqual('I Love Compressors');
+    if (utils.isChrome() && utils.isCI()) {
+      const containerEl = await element(by.className('container'));
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-paging-lookup-ellipsis')).toEqual(0);
+    }
   });
 });
 

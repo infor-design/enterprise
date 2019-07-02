@@ -2605,6 +2605,7 @@ $datagrid-short-row-height: 25px;
 
       input.lookup {
         left: 10px;
+        padding-right: 24px;
         width: calc(100% - 41px);
 
         &:not(:disabled) + .trigger > .icon:hover,
