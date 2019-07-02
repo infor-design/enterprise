@@ -112,6 +112,7 @@ Bar.prototype = {
   build() {
     const self = this;
     const isRTL = Locale.isRTL();
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const isFormatter = !!this.settings.formatterString;
     const format = function (value) {
       return isFormatter ? d3.format(self.settings.formatterString)(value) : value;
@@ -444,6 +445,9 @@ Bar.prototype = {
           const y = isTooltipBottom ? yPosS : (yPosS - size.height - 13);
 
           if (content !== '') {
+            if (charts.tooltip && charts.tooltip.length) {
+              charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+            }
             charts.showTooltip(x, y, content, isTooltipBottom ? 'bottom' : 'top');
           }
         };

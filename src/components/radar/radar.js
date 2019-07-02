@@ -153,6 +153,7 @@ Radar.prototype = {
    */
   updateData(data) {
     const self = this;
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const settings = self.settings;
     const dims = {
       // Width of the circle
@@ -442,6 +443,9 @@ Radar.prototype = {
         }
 
         tooltipInterval = setTimeout(() => {
+          if (charts.tooltip && charts.tooltip.length) {
+            charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+          }
           charts.showTooltip(x, y, content, 'top');
         }, 300);
       })
