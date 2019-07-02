@@ -891,7 +891,7 @@ describe('Datagrid test post renderer tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-checkbox-disabled')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-cell-post-renderer')).toEqual(0);
     });
   }
 });
