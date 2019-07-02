@@ -58,6 +58,7 @@
 - `[Popupmenu]` Fixed a bug on IOS that prevented some submenus from showing. ([#1928](https://github.com/infor-design/enterprise/issues/1928))
 - `[Scatter Plot]` Fixed the incorrect color on the tooltips. ([#1066](https://github.com/infor-design/enterprise/issues/1066))
 - `[Stepprocess]` Fixed an issue where a newly enabled step is not shown. ([#2391](https://github.com/infor-design/enterprise/issues/2391))
+- `[Tabs]` Fixed the more tabs button to style as disabled when the tabs component is disabled. ([#2347](https://github.com/infor-design/enterprise/issues/2347))
 
 ### v4.20.0 Chores & Maintenance
 
