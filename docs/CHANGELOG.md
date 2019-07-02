@@ -16,6 +16,7 @@
 - `[Datagrid]` Fixed an issue where code-block editor focus was not working. ([#526](https://github.com/infor-design/enterprise-ng/issues/526))
 - `[Datagrid]` Automatically remove nonVisibelCellError when a row is removed. ([#2436](https://github.com/infor-design/enterprise/issues/2436))
 - `[Datagrid]` Add a fix to show ellipsis text on lookups in the datagrid filter. ([#2122](https://github.com/infor-design/enterprise/issues/2122))
+- `[Datagrid]` Changed the beforeCommitCellEdit event into a function on the column that is synchronous. ([#2442](https://github.com/infor-design/enterprise/issues/2442))
 - `[Dropdown]` Fixed an issue where ellipsis was not working when use firefox new tab. ([#2236](https://github.com/infor-design/enterprise/issues/2236))
 - `[Images]` Created an additional image class to apply focus state without coercing width and height. ([#2025](https://github.com/infor-design/enterprise/issues/2025))
 - `[ListFilter]` Added `phraseStartsWith` filterMode for only matching a search term against the beginning of a string. ([#1606](https://github.com/infor-design/enterprise/issues/1606))
