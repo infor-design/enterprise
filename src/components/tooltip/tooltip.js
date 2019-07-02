@@ -762,6 +762,9 @@ Tooltip.prototype = {
     const self = this;
     const distance = this.isPopover ? 20 : 10;
     const tooltipPlacementOpts = this.settings.placementOpts || {};
+    const windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    const rect = this.tooltip[0].getBoundingClientRect();
     const opts = $.extend({}, {
       x: 0,
       y: distance,
@@ -776,6 +779,13 @@ Tooltip.prototype = {
     if (opts.placement === 'left' || opts.placement === 'right') {
       opts.x = distance;
       opts.y = 0;
+    }
+    if (rect.width >= windowW && /left|right/g.test(opts.placement)) {
+      this.tooltip[0].classList.add('no-arrow');
+    } else if (rect.height >= windowH && /top|bottom/g.test(opts.placement)) {
+      this.tooltip[0].classList.add('no-arrow');
+    } else {
+      this.tooltip[0].classList.remove('no-arrow');
     }
 
     this.tooltip.one('afterplace.tooltip', (e, placementObj) => {

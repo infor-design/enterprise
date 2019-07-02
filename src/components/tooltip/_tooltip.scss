@@ -219,6 +219,10 @@
     }
   }
 
+  &.no-arrow .arrow {
+    display: none;
+  }
+
   p {
     color: $popover-color;
     max-width: none;
@@ -282,7 +286,9 @@
 
   border-bottom: 1px solid $popover-separator-color;
   color: $font-color-highcontrast;
+  display: flex;
   font-weight: $theme-number-font-weight-base;
+  justify-content: space-between;
   line-height: 18px;
   margin: 0;
   padding: 10px 20px;
