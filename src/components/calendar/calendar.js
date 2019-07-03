@@ -631,11 +631,13 @@ Calendar.prototype = {
     });
 
     this.isSwitchingMonth = false;
-    this.element.off(`monthrendered.${COMPONENT_NAME}`).on(`monthrendered.${COMPONENT_NAME}`, () => {
+    this.element.off(`monthrendered.${COMPONENT_NAME}`).on(`monthrendered.${COMPONENT_NAME}`, (e, args) => {
       this.isSwitchingMonth = true;
       if (this.modalVisible()) {
         this.removeModal();
       }
+      this.settings.year = args.year;
+      this.settings.month = args.month;
       this.renderAllEvents();
 
       setTimeout(() => {
@@ -753,8 +755,11 @@ Calendar.prototype = {
       eventData.endKey = key;
       eventData.starts = day;
       eventData.ends = day;
+      e.stopPropagation();
 
       this.cleanEventData(eventData, false);
+      showModalWithCallback(eventData, true);
+
       /**
        * Fires when the calendar day is double clicked.
        * @event dblclick
