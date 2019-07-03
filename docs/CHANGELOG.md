@@ -55,7 +55,7 @@
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
 - `[Personalization]` Updated some of the colors to more readable in contrast mode. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Popdown]` Fixed usability issue where the Popdown could close prematurely when attempting to use inner components, such as Dropdowns. ([#2092](https://github.com/infor-design/enterprise/issues/2092))
-- `[Popover]` Fixed an issue where x-button was not aligning. ([#1576](https://github.com/infor-design/enterprise/issues/1576))
+- `[Popover]` Fixed an issue where close button was not aligning. ([#1576](https://github.com/infor-design/enterprise/issues/1576))
 - `[Popover]` Fixed an issue where inside button was overflowing from container on mobile screen size. ([#2271](https://github.com/infor-design/enterprise/issues/2271))
 - `[Popupmenu]` Fixed an issue where js error was showing after removing a menu item. ([#414](https://github.com/infor-design/enterprise-ng/issues/414))
 - `[Popupmenu]` Fixed a layout issue on disabled checkboxes in multiselect popupmenus. ([#2340](https://github.com/infor-design/enterprise/issues/2340))
