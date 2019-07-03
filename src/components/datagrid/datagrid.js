@@ -5745,8 +5745,8 @@ Datagrid.prototype = {
           const startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'), 10);
           const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
 
-          if (self.editor && self.editor.input && !this.editor.stayInEditMode) {
-            self.commitCellEdit(self.editor.input);
+          if (self.editor && self.editor.input) {
+            self.commitCellEdit();
           }
           self.copyToDataSet(splitData, startRowCount, startColIndex, self.settings.dataset);
         }
@@ -6069,8 +6069,7 @@ Datagrid.prototype = {
 
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
               self.editor) {
-            if (focusElem.is('.spinbox, .trigger, .code-block-actions') ||
-              !$(target).is(':visible') || self.editor.stayInEditMode) {
+            if (focusElem.is('.spinbox, .trigger, .code-block-actions') || !$(target).is(':visible')) {
               return;
             }
 
@@ -6078,7 +6077,7 @@ Datagrid.prototype = {
               focusElem.closest(self.editor.className).length > 0) {
               return;
             }
-            self.commitCellEdit(self.editor.input);
+            self.commitCellEdit();
           }
         }, 150);
 
@@ -6090,8 +6089,8 @@ Datagrid.prototype = {
         return;
       }
 
-      if (self.editor && self.editor.input && !this.editor.stayInEditMode) {
-        self.commitCellEdit(self.editor.input);
+      if (self.editor && self.editor.input) {
+        self.commitCellEdit();
       }
     });
   },
@@ -7961,7 +7960,7 @@ Datagrid.prototype = {
 
         if (self.editor) {
           self.quickEditMode = false;
-          self.commitCellEdit(self.editor.input);
+          self.commitCellEdit();
           self.setNextActiveCell(e);
         } else {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
@@ -8158,8 +8157,7 @@ Datagrid.prototype = {
    * @returns {boolean} returns true if the cell is editable
    */
   makeCellEditable(row, cell, event) {
-    if (this.activeCell.node.closest('tr').hasClass('datagrid-summary-row') ||
-      (this.editor && this.editor.stayInEditMode)) {
+    if (this.activeCell.node.closest('tr').hasClass('datagrid-summary-row')) {
       return;
     }
 
@@ -8174,8 +8172,8 @@ Datagrid.prototype = {
     }
 
     // Commit Previous Edit
-    if (this.editor && this.editor.input && !this.editor.stayInEditMode) {
-      this.commitCellEdit(this.editor.input);
+    if (this.editor && this.editor.input) {
+      this.commitCellEdit();
     }
 
     // Locate the Editor
@@ -8251,6 +8249,8 @@ Datagrid.prototype = {
     this.element.triggerHandler('beforeentereditmode', [{ row: idx, cell, item: rowData, target: cellNode, value: cellValue, column: col, editor: this.editor }]);
 
     this.editor =  new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
+    this.editor.row = idx;
+    this.editor.cell = cell;
 
     if (this.settings.onEditCell) {
       this.settings.onEditCell(this.editor);
@@ -8297,7 +8297,7 @@ Datagrid.prototype = {
   /**
    * Get the data for a row node
    * @private
-   * @param {object} rowNode The jquery row node.
+   * @param {object} rowIdx The jquery row node.
    * @returns {object} The row of data from the dataset.
    */
   rowData(rowIdx) {
@@ -8308,16 +8308,14 @@ Datagrid.prototype = {
 
   /**
    * Commit the cell thats currently in edit mode.
-   * @private
-   * @param  {number} input The input dom element.
+   * @param {boolean} isCallback Indicates a call back so beforeCommitCellEdit is not called.
    */
-  commitCellEdit(input) {
+  commitCellEdit(isCallback) {
     if (!this.editor) {
       return;
     }
 
-    input = input instanceof jQuery ? input : $(input);
-
+    const input = this.editor.input;
     let newValue;
     let cellNode;
     const isEditor = this.editor.name === 'editor';
@@ -8361,68 +8359,65 @@ Datagrid.prototype = {
       this.settings.dataset[dataRowIndex];
     let oldValue = this.fieldValue(rowData, col.field);
 
+    if (col.beforeCommitCellEdit && !isCallback) {
+      const vetoCommit = col.beforeCommitCellEdit({
+        cell,
+        row: dataRowIndex,
+        item: rowData,
+        editor: this.editor,
+        api: this
+      });
+
+      if (vetoCommit === false) {
+        return;
+      }
+    }
+
+    if (!this.editor) {
+      return;
+    }
+
     // Sanitize console methods
     oldValue = xssUtils.sanitizeConsoleMethods(oldValue);
     newValue = xssUtils.sanitizeConsoleMethods(newValue);
 
-    const doCommit = () => {
-      // Format Cell again
-      const isInline = cellNode.hasClass('is-editing-inline');
-      cellNode.removeClass('is-editing is-editing-inline');
+    // Format Cell again
+    const isInline = cellNode.hasClass('is-editing-inline');
+    cellNode.removeClass('is-editing is-editing-inline');
 
-      // Editor.destroy
-      this.editor.destroy();
-      this.editor = null;
+    // Editor.destroy
+    this.editor.destroy();
+    this.editor = null;
 
-      // Save the Cell Edit back to the data set
-      this.updateCellNode(rowIndex, cell, newValue, false, isInline);
-      const value = this.fieldValue(rowData, col.field);
+    // Save the Cell Edit back to the data set
+    this.updateCellNode(rowIndex, cell, newValue, false, isInline);
+    const value = this.fieldValue(rowData, col.field);
 
-      /**
-      * Fires after a cell goes out of edit mode.
-      * @event exiteditmode
-      * @memberof Datagrid
-      * @property {object} event The jquery event object
-      * @property {object} args Additional arguments
-      * @property {number} args.row An array of selected rows.
-      * @property {number} args.cell An array of selected rows.
-      * @property {object} args.item The current sort column.
-      * @property {HTMLElement} args.target The cell html element that was entered.
-      * @property {any} args.value The cell value.
-      * @property {any} args.oldValue The previous cell value.
-      * @property {object} args.column The column object
-      * @property {object} args.editor The editor object.
-      */
-      this.element.triggerHandler('exiteditmode', [{
-        row: rowIndex,
-        cell,
-        item: rowData,
-        target: cellNode,
-        value,
-        oldValue,
-        column: col,
-        editor: this.editor
-      }]);
-    };
-
-    const args = [{
+    /**
+    * Fires after a cell goes out of edit mode.
+    * @event exiteditmode
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {number} args.row An array of selected rows.
+    * @property {number} args.cell An array of selected rows.
+    * @property {object} args.item The current sort column.
+    * @property {HTMLElement} args.target The cell html element that was entered.
+    * @property {any} args.value The cell value.
+    * @property {any} args.oldValue The previous cell value.
+    * @property {object} args.column The column object
+    * @property {object} args.editor The editor object.
+    */
+    this.element.triggerHandler('exiteditmode', [{
       row: rowIndex,
       cell,
       item: rowData,
       target: cellNode,
+      value,
       oldValue,
       column: col,
       editor: this.editor
-    }];
-
-    $.when(this.element.triggerHandler('beforecommitcelledit', args)).done((response) => {
-      const isFalse = v => ((typeof v === 'string' && v.toLowerCase() === 'false') ||
-      (typeof v === 'boolean' && v === false) ||
-      (typeof v === 'number' && v === 0));
-      if (!isFalse(response)) {
-        doCommit();
-      }
-    });
+    }]);
   },
 
   /**
