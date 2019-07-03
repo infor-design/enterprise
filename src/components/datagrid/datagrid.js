@@ -5746,7 +5746,7 @@ Datagrid.prototype = {
           const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
 
           if (self.editor && self.editor.input) {
-            self.commitCellEdit(self.editor.input);
+            self.commitCellEdit();
           }
           self.copyToDataSet(splitData, startRowCount, startColIndex, self.settings.dataset);
         }
@@ -6069,8 +6069,7 @@ Datagrid.prototype = {
 
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
               self.editor) {
-            if (focusElem.is('.spinbox, .trigger, .code-block-actions') ||
-              !$(target).is(':visible') || self.editor.stayInEditMode) {
+            if (focusElem.is('.spinbox, .trigger, .code-block-actions') || !$(target).is(':visible')) {
               return;
             }
 
@@ -6078,7 +6077,7 @@ Datagrid.prototype = {
               focusElem.closest(self.editor.className).length > 0) {
               return;
             }
-            self.commitCellEdit(self.editor.input);
+            self.commitCellEdit();
           }
         }, 150);
 
@@ -6091,7 +6090,7 @@ Datagrid.prototype = {
       }
 
       if (self.editor && self.editor.input) {
-        self.commitCellEdit(self.editor.input);
+        self.commitCellEdit();
       }
     });
   },
@@ -7961,7 +7960,7 @@ Datagrid.prototype = {
 
         if (self.editor) {
           self.quickEditMode = false;
-          self.commitCellEdit(self.editor.input);
+          self.commitCellEdit();
           self.setNextActiveCell(e);
         } else {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
@@ -8174,7 +8173,7 @@ Datagrid.prototype = {
 
     // Commit Previous Edit
     if (this.editor && this.editor.input) {
-      this.commitCellEdit(this.editor.input);
+      this.commitCellEdit();
     }
 
     // Locate the Editor
@@ -8250,6 +8249,8 @@ Datagrid.prototype = {
     this.element.triggerHandler('beforeentereditmode', [{ row: idx, cell, item: rowData, target: cellNode, value: cellValue, column: col, editor: this.editor }]);
 
     this.editor =  new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
+    this.editor.row = idx;
+    this.editor.cell = cell;
 
     if (this.settings.onEditCell) {
       this.settings.onEditCell(this.editor);
@@ -8307,16 +8308,14 @@ Datagrid.prototype = {
 
   /**
    * Commit the cell thats currently in edit mode.
-   * @private
-   * @param  {number} input The input dom element.
+   * @param {boolean} isCallback Indicates a call back so beforeCommitCellEdit is not called.
    */
-  commitCellEdit(input) {
+  commitCellEdit(isCallback) {
     if (!this.editor) {
       return;
     }
 
-    input = input instanceof jQuery ? input : $(input);
-
+    const input = this.editor.input;
     let newValue;
     let cellNode;
     const isEditor = this.editor.name === 'editor';
@@ -8359,6 +8358,24 @@ Datagrid.prototype = {
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.settings.dataset[dataRowIndex];
     let oldValue = this.fieldValue(rowData, col.field);
+
+    if (col.beforeCommitCellEdit && !isCallback) {
+      const vetoCommit = col.beforeCommitCellEdit({
+        cell,
+        row: dataRowIndex,
+        item: rowData,
+        editor: this.editor,
+        api: this
+      });
+
+      if (vetoCommit === false) {
+        return;
+      }
+    }
+
+    if (!this.editor) {
+      return;
+    }
 
     // Sanitize console methods
     oldValue = xssUtils.sanitizeConsoleMethods(oldValue);
