@@ -1,3 +1,20 @@
+<style>
+  .demo-popover {
+    margin: 7px auto;
+    width: 315px;
+  }
+
+  .demo-popover .btn-primary {
+    left: 65px;
+  }
+
+  @media (max-width: 350px) {
+    .demo-popover .btn-primary {
+      left: 10px !important;
+    }
+  }
+</style>
+
 <div class="row">
 	<div class="twelve columns">
 
@@ -5,8 +22,8 @@
 
 		<div id="popover-contents-click" class="hidden">
 			<p>Purchase <strong>2</strong> more to save <a href="#" class="hyperlink"><strong>$100</strong></a> total</p>
-			<div style="width: 315px; margin: 7px auto;">
-				<table role="grid" style="width: 210px" class="l-pull-left">
+			<div class="demo-popover">
+				<table role="grid" class="l-pull-left">
 					<thead>
 						<tr>
 							<th scope="col" role="columnheader">Quantity</th>

@@ -551,6 +551,7 @@ Place.prototype = {
     const scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop();
     const windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     const windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const padding = 20;
     let d;
 
     rect.width = BoundingRect.width;
@@ -580,7 +581,7 @@ Place.prototype = {
     // If element width is greater than window width, shrink to fit
     const rightViewportEdge = getBoundary('right');
     if (rect.width >= rightViewportEdge) {
-      d = rect.width - rightViewportEdge;
+      d = (rect.width - rightViewportEdge) + padding;
       const newWidth = rect.width - d;
       placementObj.width = newWidth;
 
@@ -591,7 +592,7 @@ Place.prototype = {
     // If element height is greater than window height, shrink to fit
     const bottomViewportEdge = getBoundary('bottom');
     if (rect.height >= bottomViewportEdge) {
-      d = rect.height - bottomViewportEdge;
+      d = (rect.height - bottomViewportEdge) + padding;
       const newHeight = rect.height - d;
       placementObj.height = newHeight;
 
