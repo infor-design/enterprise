@@ -6619,12 +6619,17 @@ Datagrid.prototype = {
   * Deselect all rows that are currently selected.
   */
   unSelectAllRows() {
+    // Nothing to do
+    if (!this._selectedRows || this._selectedRows.length === 0) {
+      return;
+    }
     this.dontSyncUi = true;
-
+    // Unselect each row backwards so the indexes are correct
     for (let i = this._selectedRows.length - 1; i >= 0; i--) {
       const idx = this.pagingRowIndex(this._selectedRows[i].idx);
       this.unselectRow(idx, true, true);
     }
+    // Sync the Ui and call the events
     this.dontSyncUi = false;
     this.syncSelectedUI();
     this.element.triggerHandler('selected', [this._selectedRows, 'deselectall']);

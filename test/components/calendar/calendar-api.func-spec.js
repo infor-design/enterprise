@@ -18,7 +18,7 @@ const settings = {
   year: 2018
 };
 
-fdescribe('Calendar API', () => { //eslint-disable-line
+describe('Calendar API', () => {
   beforeEach(() => {
     calendarEl = null;
     calendarObj = null;
