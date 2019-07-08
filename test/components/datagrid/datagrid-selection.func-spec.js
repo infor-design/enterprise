@@ -476,4 +476,16 @@ describe('Datagrid Selection API', () => {
     expect(datagridObj.selectedRows().length).toEqual(0);
     done();
   });
+
+  it('Should not fire selected event on load or when no rows are selected', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: [], columns, selectable: 'mixed' });
+
+    const spyEvent = spyOnEvent($(datagridEl), 'selected');
+
+    datagridObj.loadData(data);
+    datagridObj.unSelectAllRows();
+
+    expect(spyEvent).not.toHaveBeenTriggered();
+  });
 });
