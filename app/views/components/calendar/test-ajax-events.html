@@ -28,11 +28,11 @@
     $('.calendar').calendar({
       month: 7,
       year: 2018,
-      onRenderMonth: function (ui, response) {
+      onRenderMonth: function (ui, response, args) {
         // Get both event types and events for the month (eventTypes can be passed initially)
         const events = $.get('{{basepath}}api/events');
         const eventTypes = $.get('{{basepath}}api/event-types');
-
+        console.log('Render for Year: ' + args.year + ' Month: ' + args.month )
         $.when(events, eventTypes).done(function completed(events, eventTypes) {
           setTimeout(function () {
             response(events[0], eventTypes[0]);

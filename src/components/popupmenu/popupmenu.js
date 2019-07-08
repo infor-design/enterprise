@@ -4,6 +4,7 @@ import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { DOM } from '../../utils/dom';
 import { PlacementObject, Place } from '../place/place';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../place/place.jquery';
@@ -1047,7 +1048,7 @@ PopupMenu.prototype = {
         }
 
         // Up on Up
-        if ((!isPicker && key === 38) || (isPicker && key === 37)) {
+        if ((!isPicker && key === 38) || (isPicker && key === (Locale.isRTL() ? 39 : 37))) {
           e.stopPropagation();
           e.preventDefault();
 
@@ -1085,7 +1086,9 @@ PopupMenu.prototype = {
         }
 
         // Down
-        if ((!isPicker && key === 40) || (isPicker && key === 39 && !isAutocomplete)) {
+        if ((!isPicker && key === 40)
+          || (isPicker && key === (Locale.isRTL() ? 37 : 39))
+          && (!isAutocomplete)) {
           e.stopPropagation();
           e.preventDefault();
 
