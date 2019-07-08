@@ -477,7 +477,7 @@ describe('Datagrid Selection API', () => {
     done();
   });
 
-  it('Should be able to veto selection with onBeforeSelect', () => {
+  it('Should not fire selected event on load or when no rows are selected', () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: [], columns, selectable: 'mixed' });
 
