@@ -1119,6 +1119,29 @@ describe('Datagrid Header Alignment With Ellipsis', () => {
   }
 });
 
+describe('Datagrid Header Alignment With Ellipsis and Sorting', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-ellipsis-sort-indicator?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-header-align-ellipsis-sort')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Empty Message Tests After Load', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-empty-message-after-load');
@@ -1137,6 +1160,29 @@ describe('Datagrid Empty Message Tests After Load', () => {
 
     expect(await element.all(by.css('.empty-message')).count()).toEqual(1);
   });
+});
+
+describe('Datagrid Header Overlapping Sorting Indicator', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-overlapping-sort-indicator?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-header-align-overlapping-sort-indicator')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid contextmenu tests', () => {
