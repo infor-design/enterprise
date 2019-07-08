@@ -61,7 +61,7 @@
 - `[Personalization]` Updated some of the colors to more readable in contrast mode. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Popdown]` Fixed usability issue where the Popdown could close prematurely when attempting to use inner components, such as Dropdowns. ([#2092](https://github.com/infor-design/enterprise/issues/2092))
 - `[Popover]` Correctly align the popover close button. ([#1576](https://github.com/infor-design/enterprise/issues/1576))
-- `[Popover]` Fixed an issue where buttons inside the popover would overflow this popover container on smaller screen size. ([#2271](https://github.com/infor-design/enterprise/issues/2271))
+- `[Popover]` Fixed an issue where buttons inside the popover would overflow at smaller screen sizes. ([#2271](https://github.com/infor-design/enterprise/issues/2271))
 - `[Popupmenu]` Fixed an issue where js error was showing after removing a menu item. ([#414](https://github.com/infor-design/enterprise-ng/issues/414))
 - `[Popupmenu]` Fixed a layout issue on disabled checkboxes in multiselect popupmenus. ([#2340](https://github.com/infor-design/enterprise/issues/2340))
 - `[Popupmenu]` Fixed a bug on IOS that prevented menu scrolling. ([#645](https://github.com/infor-design/enterprise/issues/645))
