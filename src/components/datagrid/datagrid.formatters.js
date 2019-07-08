@@ -3,9 +3,17 @@ import { Tmpl } from '../tmpl/tmpl';
 import { xssUtils } from '../../utils/xss';
 
 /**
-* Calculate if a Placeholder is required and its value.
-* @private
-*/
+ * *
+ * Calculate if a Placeholder is required and its value.
+ * @private
+ * @param  {object} formattedValue The formatted cell value
+ * @param  {number} row The row index
+ * @param  {number} cell The cell index
+ * @param  {object} value The value in the dataset
+ * @param  {object} col The column definition
+ * @param  {object} item The row data
+ * @returns {object} Returns the placeholder value.
+ */
 function calculatePlaceholder(formattedValue, row, cell, value, col, item) {
   let placeholder = col.placeholder;
   if (placeholder && formattedValue === '') {
@@ -19,7 +27,7 @@ function calculatePlaceholder(formattedValue, row, cell, value, col, item) {
     return placeholder;
   }
 
-  return '';  
+  return '';
 }
 
 /**
@@ -50,7 +58,7 @@ const formatters = {
 
       return html;
     }
-    
+
     const str = ((value === null || value === undefined || value === '') ? '' : value.toString());
     return str;
   },
@@ -97,7 +105,7 @@ const formatters = {
     if (!col.editor || isReturnValue === true) {
       return formatted;
     }
-    
+
     return `<span class="trigger">${formatted}</span>${$.createIcon({ icon: 'calendar', classes: ['icon-calendar'] })}`;
   },
 
@@ -152,12 +160,12 @@ const formatters = {
   Lookup(row, cell, value, col, item) {
     let formatted = ((value === null || value === undefined) ? '' : value);
     let isPlaceholder = false;
-    
+
     const placeholder = calculatePlaceholder(formatted, row, cell, value, col, item);
     if (placeholder !== '') {
       isPlaceholder = true;
     }
-    
+
     if (!col.editor) {
       if (isPlaceholder) {
         return `<span class="is-placeholder">${placeholder}</span>`;
@@ -182,21 +190,21 @@ const formatters = {
 
   Decimal(row, cell, value, col, item) {
     let formatted = value;
-    
+
     if (typeof Locale !== 'undefined' &&
         formatted !== null && formatted !== undefined && formatted !== '') {
       formatted = Locale.formatNumber(value, col.numberFormat);
     }
-    
+
     formatted = (formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted;
-    
+
     const placeholder = calculatePlaceholder(formatted, row, cell, value, col, item);
     if (placeholder !== '') {
       const html = `<span class="is-placeholder">${placeholder}</span>`;
 
       return html;
     }
-    
+
     return (formatted);
   },
 
@@ -543,7 +551,7 @@ const formatters = {
     let option;
     let optionValue;
     let isPlaceholder = false;
-    
+
     if (col.options && value !== undefined) {
       compareValue = col.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
 
@@ -557,7 +565,7 @@ const formatters = {
         }
       }
     }
-    
+
     const placeholder = calculatePlaceholder(formattedValue, row, cell, value, col, item);
     if (placeholder !== '') {
       isPlaceholder = true;

@@ -15,10 +15,10 @@ const settings = {
   eventTypes,
   events,
   month: 10,
-  year: 2018,
+  year: 2018
 };
 
-describe('Calendar API', () => {
+fdescribe('Calendar API', () => { //eslint-disable-line
   beforeEach(() => {
     calendarEl = null;
     calendarObj = null;
@@ -188,5 +188,78 @@ describe('Calendar API', () => {
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
     expect(calendarObj.settings.events[12].subject).toEqual('Updated Subject');
     expect(calendarObj.settings.events[12].id).toEqual('13');
+  });
+
+  it('Should pass data in onRenderMonth', (done) => {
+    const renderCallback = (node, response, args) => {
+      expect(node.is('div')).toEqual(true);
+      expect(args.month).toEqual(10);
+      expect(args.year).toEqual(2018);
+      response(events, eventTypes);
+
+      expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
+      expect(calendarObj.settings.events[12].subject).toEqual('Long Weekend');
+      expect(calendarObj.settings.events[12].id).toEqual('13');
+      done();
+    };
+
+    const newSettings = {
+      eventTypes,
+      events,
+      month: 10,
+      year: 2018,
+      onRenderMonth: renderCallback
+    };
+
+    calendarObj.destroy();
+    calendarObj = new Calendar(calendarEl, newSettings);
+  });
+
+  it('Should update when calling updated and passing settings in ', () => {
+    const updatedSettings = {
+      month: 5,
+      year: 2019,
+      // locale: 'da-DK',
+      events,
+      eventTypes
+    };
+    calendarObj.updated(updatedSettings);
+
+    expect(document.getElementById('monthview-datepicker-field').value).toEqual('June 2019');
+    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
+    expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('Sat');
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(3);
+  });
+
+  it('Should update locale when passing settings in ', () => {
+    const updatedSettings = {
+      month: 5,
+      year: 2019,
+      locale: 'da-DK',
+      events,
+      eventTypes
+    };
+    calendarObj.updated(updatedSettings);
+
+    expect(document.getElementById('monthview-datepicker-field').value).toEqual('juni 2019');
+    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('søn');
+    expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('lør');
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(3);
+    expect(Locale.currentLocale.name).toEqual('en-US');
+  });
+
+  it('Should update when calling updated and setting setting ', () => {
+    calendarObj.destroy();
+    calendarObj = new Calendar(calendarEl, { month: 1, year: 2019 });
+    calendarObj.settings.month = 5;
+    calendarObj.settings.year = 2019;
+    calendarObj.settings.events = events;
+    calendarObj.settings.eventTypes = eventTypes;
+    calendarObj.updated();
+
+    expect(document.getElementById('monthview-datepicker-field').value).toEqual('June 2019');
+    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
+    expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('Sat');
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(3);
   });
 });
