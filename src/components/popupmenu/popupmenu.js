@@ -592,15 +592,19 @@ PopupMenu.prototype = {
           a.removeAttribute('disabled');
         }
 
-        // menu items that contain submenus
+        // Checks for existing menus, and if present, apply a `.popupmenu` class automatically.
         if (submenu instanceof HTMLElement) {
           submenu.classList.add('popupmenu');
         }
         if (submenuWrapper instanceof HTMLElement) {
           li.className += `${DOM.classNameExists(li) ? ' ' : ''}submenu`;
           submenu = $(submenuWrapper).children('ul')[0];
-          submenu.classList.add('popupmenu');
+          if (submenu instanceof HTMLElement) {
+            submenu.classList.add('popupmenu');
+          }
         }
+
+        // Adds the SVG arrow, etc to submenu items.
         if (DOM.hasClass(li, 'submenu')) {
           // Add a span
           if (!span) {
@@ -612,8 +616,6 @@ PopupMenu.prototype = {
             $a.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
           }
           a.setAttribute('aria-haspopup', 'true');
-
-          // Check for existing menus, and if present, apply a `.popupmenu` class automatically.
         }
 
         // is-checked

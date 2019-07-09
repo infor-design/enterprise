@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="six columns">
+    <p>This test fixes a type-checking problem discovered in <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/2458" target="_blank">Enterprise #2458</a>, where a popupmenu with pre-defined wrapper elements missing submenus could throw errors.</p>
+    <p>This test is considered working if the page opens with no errors, and hovering the third menu item also causes no errors. The submenu is missing on purpose, and will not show.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+
+    <button id="open-me" class="btn-menu">
+      <span>Open Me</span>
+    </button>
+    <div class="popupmenu-wrapper">
+      <ul class="popupmenu">
+        <li><a href="#">Item One</a></li>
+        <li><a href="#">Item Two</a></li>
+        <li class="submenu">
+          <a href="#">Item Three (has empty wrapper)</a>
+          <div class="wrapper"></div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>

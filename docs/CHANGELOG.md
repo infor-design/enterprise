@@ -69,6 +69,7 @@
 - `[Popupmenu]` Fixed a layout issue on disabled checkboxes in multiselect popupmenus. ([#2340](https://github.com/infor-design/enterprise/issues/2340))
 - `[Popupmenu]` Fixed a bug on IOS that prevented menu scrolling. ([#645](https://github.com/infor-design/enterprise/issues/645))
 - `[Popupmenu]` Fixed a bug on IOS that prevented some submenus from showing. ([#1928](https://github.com/infor-design/enterprise/issues/1928))
+- `[Popupmenu]` Added a type-check during building/rebuilding of submenus that prevents an error when a submenu `<ul>` tag is not present. ([#2458](https://github.com/infor-design/enterprise/issues/2458))
 - `[Scatter Plot]` Fixed the incorrect color on the tooltips. ([#1066](https://github.com/infor-design/enterprise/issues/1066))
 - `[Stepprocess]` Fixed an issue where a newly enabled step is not shown. ([#2391](https://github.com/infor-design/enterprise/issues/2391))
 - `[Tabs]` Fixed the more tabs button to style as disabled when the tabs component is disabled. ([#2347](https://github.com/infor-design/enterprise/issues/2347))
