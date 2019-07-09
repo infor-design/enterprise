@@ -57,7 +57,7 @@
     }
 
     label,
-    .checkbox-group-label,
+    .checkbox-group legend,
     .radio-group legend {
       @include transition(background-color 100ms $cubic-ease, color 100ms $cubic-ease);
 
@@ -137,6 +137,12 @@
       .radio-group,
       .checkbox-group {
         background-color: $formcompact-field-bg-focus-color;
+        border-bottom-color: $formcompact-field-border-focus-color;
+
+        &::after {
+          border-left-color: $formcompact-field-border-focus-color;
+          border-right-color: $formcompact-field-border-focus-color;
+        }
 
         label {
           background-color: transparent;
@@ -148,6 +154,7 @@
       input {
         background-color: $input-color-readonly-background;
         border-bottom-color: $input-color-readonly-border;
+        border-left-color: $input-color-readonly-border;
         border-right-color: $input-color-readonly-border;
         color: $input-color-readonly-font;
       }
@@ -156,13 +163,39 @@
         background-color: $input-color-readonly-background;
         color: $input-color-readonly-font;
       }
+
+      .radio-group,
+      .checkbox-group {
+        background-color: $input-color-readonly-background;
+        border-bottom-color: $input-color-readonly-border;
+
+        &::after {
+          border-left-color: $input-color-readonly-border;
+          border-right-color: $input-color-readonly-border;
+        }
+
+        label {
+          background-color: transparent;
+        }
+      }
     }
 
     &.is-disabled {
       input {
         border-bottom-color: $input-color-disabled-border;
+        border-left-color: $input-color-disabled-border;
         border-right-color: $input-color-disabled-border;
         color: $input-color-disabled-font;
+      }
+
+      .radio-group,
+      .checkbox-group {
+        border-bottom-color: $input-color-disabled-border;
+
+        &::after {
+          border-left-color: $input-color-disabled-border;
+          border-right-color: $input-color-disabled-border;
+        }
       }
     }
   }
@@ -204,15 +237,11 @@
   // =============================================
   // Form-Compact Checkbox Styles
   // =============================================
-  .checkbox-group-label {
-    color: $formcompact-label-text-color;
-  }
-
   .field.field-checkbox {
     margin-bottom: 5px;
 
     &:first-of-type {
-      margin-top: 8px;
+      margin-top: 26px;
     }
   }
 
@@ -254,16 +283,39 @@
     @include transition(background-color 100ms $cubic-ease, border-color 100ms $cubic-ease, color 100ms $cubic-ease);
 
     background-color: $formcompact-field-bg-color;
+    border-bottom: 1px solid $formcompact-field-border-color;
     margin-bottom: 0;
+    position: relative;
+
+    // Fake the right border, since we don't want it to
+    // stretch the full height of the fieldset.
+    &::after {
+      border-left-color: $formcompact-field-border-color;
+      border-right-color: $formcompact-field-border-color;
+      border-right-style: solid;
+      border-right-width: 1px;
+      bottom: 0;
+      content: ' ';
+      display: block;
+      height: calc(100% - 26px);
+      position: absolute;
+      right: 0;
+      width: 1px;
+    }
 
     legend {
+      @include font-size(12);
+
       background-color: transparent;
+      color: $formcompact-label-text-color;
       float: left;
+      margin-bottom: 8px;
       padding: 4px 9px 0;
       width: 100%;
 
       + .radio-label,
-      + input[type='radio'] {
+      + input[type='radio'],
+      + .field-checkbox {
         clear: both;
       }
     }
@@ -279,9 +331,12 @@
 
   .radio-label {
     padding-left: 33px;
-  }
 
-  .radio-label {
+    // zeroes out a rule from `_.radios.scss`
+    &:first-of-type {
+      margin-top: 0;
+    }
+
     &::after {
       left: 12px;
     }
@@ -368,9 +423,24 @@ html[dir='rtl'] {
     .columns {
       float: none;
 
+      // =======================
+      // Reversed border states
+      // =======================
       input {
-        border-left: 1px solid $formcompact-field-border-color;
-        border-right: 0;
+        border-left-style: solid;
+        border-left-width: 1px;
+        border-right-width: 0;
+      }
+
+      .checkbox-group,
+      .radio-group {
+        &::after {
+          border-left-style: solid;
+          border-left-width: 1px;
+          border-right: 0;
+          left: 0;
+          right: auto;
+        }
       }
     }
 
