@@ -1559,6 +1559,7 @@ $datagrid-short-row-height: 25px;
       padding: 4px 20px 0;
 
       .colorpicker-container {
+        background-color: transparent;
         border: 0;
         display: block;
         overflow: visible;
@@ -1573,6 +1574,7 @@ $datagrid-short-row-height: 25px;
         }
 
         .colorpicker {
+          background-color: transparent;
           padding: 15px 10px 8px;
           position: relative;
           width: 90px;

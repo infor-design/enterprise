@@ -1322,9 +1322,13 @@ describe('Datagrid filter lookup custom click function tests', () => {
   it('Should overflow to text ellipsis', async () => {
     const lookup = await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-2 .trigger'));
     await lookup.click();
+    await browser.driver.sleep(config.sleep);
     await element.all(by.cssContainingText('#lookup-datagrid td', 'I Love Compressors')).first().click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-2 input')).getAttribute('value')).toEqual('I Love Compressors');
+    await browser.driver.sleep(config.sleep);
+    await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-filter-1')).click();
     if (utils.isChrome() && utils.isCI()) {
       const containerEl = await element(by.className('container'));
 
