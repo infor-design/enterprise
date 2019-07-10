@@ -55,6 +55,8 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * @param {object} [settings.sourceArguments={}] If a source method is defined, this
  * flexible object can be passed into the source method, and augmented with
  * parameters specific to the implementation.
+ * @param {integer} [settings.startIdCounter] An independent number to maintain an incremental
+ * count for adding new tabs and their respective IDs.
  * @param {boolean} [settings.tabCounts=false] If true, Displays a modifiable count above each tab.
  * @param {boolean} [settings.verticalResponsive=false] If Vertical Tabs & true, will automatically
  * switch to Horizontal Tabs on smaller breakpoints.
@@ -73,6 +75,7 @@ const TABS_DEFAULTS = {
   moduleTabsTooltips: false,
   source: null,
   sourceArguments: {},
+  startIdCounter: 0,
   tabCounts: false,
   verticalResponsive: false
 };
@@ -1313,6 +1316,7 @@ Tabs.prototype = {
    * @returns {boolean|undefined} ?
    */
   handleAddButton() {
+    const self = this;
     const cb = this.settings.addTabButtonCallback;
     if (cb && typeof cb === 'function') {
       const newTabId = cb();
@@ -1326,7 +1330,10 @@ Tabs.prototype = {
       if (!existing.length) {
         return `${stringName}-0`;
       }
-      return `${stringName}-${existing.length}`;
+
+      self.settings.startIdCounter++;
+
+      return `${stringName}-${self.settings.startIdCounter}`;
     }
 
     function makeName(id) {
