@@ -14,7 +14,7 @@ const COMPONENT_NAME = 'bar';
  * with heights or lengths proportional to the values that they represent. This is adapated from
  * http://jsfiddle.net/datashaman/rBfy5/2/
  * @class Bar
- * @param {string} element The plugin element for the constuctor
+ * @param {string} element The plugin element for the constuctor.
  * @param {string} [settings] The settings element.
  * @param {array} [settings.dataset=[]] The data to use in the line/area/bubble.
  * @param {boolean} [settings.isStacked=true] Default is a single or stacked chart.
