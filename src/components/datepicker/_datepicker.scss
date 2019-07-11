@@ -42,7 +42,7 @@
     color: $trigger-icon-fill-color;
     cursor: pointer;
     height: 16px;
-    margin-left: -26px;
+    margin-left: -28px;
     margin-top: 8px;
     position: absolute;
     width: 16px;
@@ -118,7 +118,7 @@ html[dir='rtl'] {
     + .icon,
     + .tooltip-description + .icon {
       margin-left: inherit;
-      margin-right: -24px;
+      margin-right: -28px;
     }
 
     + .icon + .icon-error {

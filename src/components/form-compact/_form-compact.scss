@@ -210,6 +210,18 @@
     }
   }
 
+  .datepicker {
+    + .icon {
+      margin-left: -28px;
+    }
+  }
+
+  .timepicker {
+    + .icon {
+      margin-left: -31px;
+    }
+  }
+
   // =============================================
   // Form-Compact Lookup Styles
   // =============================================
