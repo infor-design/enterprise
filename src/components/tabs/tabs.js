@@ -1313,6 +1313,7 @@ Tabs.prototype = {
    * @returns {boolean|undefined} ?
    */
   handleAddButton() {
+    const self = this;
     const cb = this.settings.addTabButtonCallback;
     if (cb && typeof cb === 'function') {
       const newTabId = cb();
@@ -1320,13 +1321,10 @@ Tabs.prototype = {
     }
 
     function makeId() {
-      const stringName = 'new-tab';
-      const existing = $(`[id^="${stringName}"]`);
+      self.idCounter = typeof self.idCounter === 'number' ? self.idCounter : -1;
+      self.idCounter++;
 
-      if (!existing.length) {
-        return `${stringName}-0`;
-      }
-      return `${stringName}-${existing.length}`;
+      return `new-tab-${self.idCounter}`;
     }
 
     function makeName(id) {
