@@ -2193,9 +2193,11 @@ PopupMenu.prototype = {
 
     this.predefinedItems = $();
 
-    this.menu.parent().off('contextmenu.popupmenu');
+    const parentNode = this.menu.parent();
+    parentNode.find('.arrow').remove();
+    parentNode.off('contextmenu.popupmenu');
     if (this.element.hasClass('btn-actions')) {
-      this.menu.parent().removeClass('bottom').find('.arrow').remove();
+      parentNode.removeClass('bottom');
     }
 
     this.menu.off('dragstart.popupmenu');
