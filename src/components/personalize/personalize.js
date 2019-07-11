@@ -191,6 +191,10 @@ Personalize.prototype = {
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
 
+    const tooltipContrast = colorUtils.getContrastColor(colors.darkest);
+    defaultColors.tooltipText = tooltipContrast === 'white' ? 'ffffff' : '000000';
+    colors.tooltipText = colorUtils.validateHex(colors.tooltipText || defaultColors.tooltipText);
+
     return personalizeStyles(colors);
   },
 

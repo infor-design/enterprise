@@ -528,6 +528,12 @@ function personalizeStyles(colors) {
 .tooltip.is-personalizable .chart-swatch .swatch-row div {
   border-bottom-color: ${colors.darkest};
 }
+.tooltip.is-personalizable,
+.tooltip.is-personalizable p,
+.tooltip.is-personalizable .chart-swatch .swatch-row span,
+.tooltip.is-personalizable .chart-swatch .swatch-row b {
+  color: ${colors.tooltipText};
+}
 .tooltip.is-personalizable.top .arrow::after {
   border-top-color: ${colors.darkest};
 }

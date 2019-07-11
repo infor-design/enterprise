@@ -843,11 +843,11 @@ Column.prototype = {
         } else {
           content = tooltipDataCache[i] || tooltipData || content || '';
           if (!tooltipDataCache[i] && d.tooltip !== false &&
-            (typeof d.tooltip !== 'undefined' || d.tooltip !== null)) {
+            typeof d.tooltip !== 'undefined' && d.tooltip !== null) {
             if (typeof d.tooltip === 'function') {
               setCustomTooltip(d.tooltip);
             } else {
-              content = d.tooltip;
+              content = d.tooltip.toString();
               replaceMatchAndSetType();
               tooltipDataCache[i] = content;
             }
