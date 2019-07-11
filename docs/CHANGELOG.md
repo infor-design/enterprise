@@ -74,6 +74,7 @@
 - `[Scatter Plot]` Fixed the incorrect color on the tooltips. ([#1066](https://github.com/infor-design/enterprise/issues/1066))
 - `[Stepprocess]` Fixed an issue where a newly enabled step is not shown. ([#2391](https://github.com/infor-design/enterprise/issues/2391))
 - `[Tabs]` Fixed the more tabs button to style as disabled when the tabs component is disabled. ([#2347](https://github.com/infor-design/enterprise/issues/2347))
+- `[Tabs]` Added an independent count for adding new tabs and their associated IDs to prevent duplication. ([#2345](https://github.com/infor-design/enterprise/issues/2345))
 
 ### v4.20.0 Chores & Maintenance
 
