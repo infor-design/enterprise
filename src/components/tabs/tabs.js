@@ -2707,6 +2707,9 @@ Tabs.prototype = {
     this.activateAdjacentTab(e, tabId);
 
     tab.addClass('hidden');
+
+    this.select($(this.element.find('li.tab.is-selected')[0]).find('a')[0].hash);
+
     this.focusBar();
     this.positionFocusState();
     return this;
