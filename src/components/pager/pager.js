@@ -1473,6 +1473,11 @@ Pager.prototype = {
   teardownPageSizeSelector() {
     const $pageSizeSelectorButton = $(this.pageSizeSelectorButton);
     const api = $pageSizeSelectorButton.data('popupmenu');
+
+    if (!api || !api.menu) {
+      return;
+    }
+
     const pageSizeSelectorMenu = api.menu;
     api.destroy();
     pageSizeSelectorMenu.remove();
