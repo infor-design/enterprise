@@ -85,6 +85,7 @@ describe('Toast API', () => {
   });
 
   it('Should save settings for draggable', () => {
+    const left = 'left: 100px';
     const settings = {
       title: 'Application Offline',
       message: 'This is a Toast message.',
@@ -99,7 +100,7 @@ describe('Toast API', () => {
     container = document.body.querySelector('#toast-container');
 
     expect(container.getAttribute('class')).toContain('is-draggable');
-    expect(container.getAttribute('style')).toContain('left: 593.938px');
+    expect(container.getAttribute('style')).not.toContain(left);
 
     toastObj.savePosition({ left: 100, top: 100 });
     toastObj.remove($('.toast'));
@@ -109,6 +110,6 @@ describe('Toast API', () => {
     container = document.body.querySelector('#toast-container');
 
     expect(container.getAttribute('class')).toContain('is-draggable');
-    expect(container.getAttribute('style')).toContain('left: 100px');
+    expect(container.getAttribute('style')).toContain(left);
   });
 });
