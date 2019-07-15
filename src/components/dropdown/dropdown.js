@@ -2447,6 +2447,7 @@ Dropdown.prototype = {
     }
 
     // Change the values of both inputs and swap out the active descendant
+    /*
     if (!clearSelection) {
       this.pseudoElem.find('span').text(`<span class="audible">${this.label.text()} </span>${text}`);
       this.searchInput.val(text);
@@ -2454,6 +2455,7 @@ Dropdown.prototype = {
       this.pseudoElem.find('span').text(`<span class="audible">${this.label.text()} </span>${text}`);
       this.searchInput.val('');
     }
+    */
 
     if (this.element.attr('maxlength')) {
       trimmed = text.substr(0, this.element.attr('maxlength'));
@@ -2488,9 +2490,11 @@ Dropdown.prototype = {
 
     // If multiselect, reset the menu to the unfiltered mode
     if (this.settings.multiple) {
+      /*
       if (this.list && this.list.hasClass('search-mode')) {
         this.resetList();
       }
+      */
       this.activate(true);
     }
 
