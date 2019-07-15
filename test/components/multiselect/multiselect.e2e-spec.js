@@ -113,7 +113,8 @@ describe('Multiselect example-index tests', () => {
       expect(await element(by.className('is-focused')).getText()).toEqual('Arizona');
     });
 
-    it('Should tab into deselect Alaska then tab out and input should be empty', async () => {
+    // Edited for #920
+    it('Should tab into deselect Alaska, then tab out, and input should be empty', async () => {
       const multiselectEl = await element.all(by.css('div.dropdown')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
@@ -129,15 +130,17 @@ describe('Multiselect example-index tests', () => {
         .toContain(await element.all(by.css('.dropdown span')).first().getText());
     });
 
+    // Edited for #920
     it('Should arrow down to Arizona select, arrow down, and select Arkansas, and update search input', async () => {
       const multiselectEl = await element.all(by.css('div.dropdown')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
       await multiselectEl.click();
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      await element(by.id('dropdown-search')).click();
+
       const multiselectSearchEl = await element(by.id('dropdown-search'));
       await multiselectSearchEl.click();
+
       await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await multiselectSearchEl.sendKeys(protractor.Key.ENTER);
@@ -145,7 +148,9 @@ describe('Multiselect example-index tests', () => {
       await multiselectSearchEl.sendKeys(protractor.Key.ENTER);
 
       expect(await element(by.className('is-focused')).getText()).toEqual('Arkansas');
-      const multiselectSearchElVal = element(by.id('dropdown-search')).getAttribute('value');
+
+      await multiselectSearchEl.sendKeys(protractor.Key.ESCAPE);
+      const multiselectSearchElVal = await element.all(by.css('div.dropdown')).first().getText();
 
       expect(await multiselectSearchElVal).toEqual('Alaska, Arizona, Arkansas');
     });
@@ -270,7 +275,10 @@ describe('Multiselect typeahead-reloading tests', () => {
   });
 
   if (!utils.isSafari()) {
+    // Edited for #920
     it('Should make ajax calls properly on typeahead for multiple items', async () => {
+      await browser.driver.sleep(config.sleep);
+
       // Open the list
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
@@ -280,7 +288,6 @@ describe('Multiselect typeahead-reloading tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
       const dropdownSearchEl = await element(by.id('dropdown-search'));
-      await dropdownSearchEl.click();
 
       // Search for "new" and select "New Jersey"
       // NOTE: Sleep simulates the Multiselect's default typeahead delay (300ms)
@@ -289,15 +296,15 @@ describe('Multiselect typeahead-reloading tests', () => {
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
 
-      // Search for "new" and select "New York"
-      await dropdownSearchEl.sendKeys('New');
-      await browser.driver.sleep(config.sleep);
-      await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+      // Arrow down twice and select "New York"
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
+      await dropdownSearchEl.sendKeys(protractor.Key.ESCAPE);
 
-      expect(await element(by.css('.dropdown span')).getText()).toEqual('<span class="audible">Typeahead-Reloaded Multiselect </span>New Jersey, New York');
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.css('.dropdown span')).getText()).toEqual('New Jersey, New York');
     });
   }
 });
