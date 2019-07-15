@@ -1756,7 +1756,7 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
   });
 });
 
-fdescribe('Datagrid paging indeterminate single select tests', () => {
+describe('Datagrid paging indeterminate single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single?layout=nofrills');
 
