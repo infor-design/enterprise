@@ -83,7 +83,6 @@
       enableNextButton: true,
       showLastButton: true,
       enableLastButton: true,
-      attachPageSizeMenuToBody: false,
       onFirstPage: function (elem, args) {
         $('body').toast({title: 'onFirstPage Callback Fired', message: ''});
       },
@@ -133,7 +132,9 @@
 
     $('#toggle-attach-to-body').on('change.test', function() {
       var isChecked = this.checked;
-      api.updated({attachPageSizeMenuToBody: isChecked});
+      api.updated({pageSizeMenuSettings: {
+        attachToBody: isChecked
+      }});
     });
 
     $('#toggle-small-pagesize').on('change.test', function() {
