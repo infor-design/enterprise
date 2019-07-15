@@ -58,6 +58,25 @@
     opacity: 0;
   }
 
+  .handle {
+    cursor: move;
+    display: none;
+    font-family: initial;
+    font-size: $theme-size-font-xl;
+    left: -3px;
+    margin: 0;
+    padding: 0 0 0 5px;
+    position: absolute;
+    top: 13px;
+  }
+
+  &:hover,
+  &.is-dragging {
+    .handle {
+      display: inline-block;
+    }
+  }
+
   // Close Buttons on Toast Message are positioned and sized differently
   .btn-close {
     cursor: pointer;
@@ -148,21 +167,25 @@ html[dir='rtl'] {
   }
 
   .toast {
-    padding: 10px 10px 10px 30px;
-
-    .toast-message {
-      margin-bottom: 5px;
-      padding-left: 5px;
-      padding-right: 0;
+    .toast-title {
+      margin-left: 20px;
+      margin-right: initial;
     }
 
-    .toast-title {
-      margin-top: 9px;
-      padding-right: 0;
+    .toast-message {
+      margin-bottom: 17px;
+      padding-left: 20px;
+      padding-right: initial;
+    }
+
+    .handle {
+      left: auto;
+      padding: 0 5px 0 0;
+      right: -2px;
     }
 
     .btn-close {
-      left: 0;
+      left: 1px;
       right: auto;
     }
   }

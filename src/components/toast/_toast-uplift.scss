@@ -1,0 +1,29 @@
+// Uplift Toast
+//================================================== //
+.toast {
+  .handle {
+    font-size: $theme-size-font-lg;
+    left: -4px;
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .toast {
+    .handle {
+      left: auto;
+      right: -3px;
+    }
+  }
+
+  // RTL Firefox
+  &.is-firefox {
+    &.is-mac {
+      .toast {
+        .handle {
+          top: 8px;
+        }
+      }
+    }
+  }
+}
