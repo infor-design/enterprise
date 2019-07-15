@@ -114,7 +114,7 @@ describe('Multiselect example-index tests', () => {
     });
 
     // Edited for #920
-    fit('Can deselect all items and display an empty pseudo-element', async () => {
+    it('Can deselect all items and display an empty pseudo-element', async () => {
       const multiselectEl = await element.all(by.css('div.dropdown')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
@@ -126,8 +126,12 @@ describe('Multiselect example-index tests', () => {
       await multiselectSearchEl.sendKeys(protractor.Key.ENTER);
       await multiselectSearchEl.sendKeys(protractor.Key.ESCAPE);
 
-      expect(['<span class="audible">States (Max 10) </span>', ''])
-        .toContain(await element.all(by.css('.dropdown span')).first().getText());
+      const acceptableResults = [
+        '', // on CI
+        '<span class="audible">States (Max 10) </span>' // on Local
+      ];
+
+      expect(acceptableResults).toContain(await element.all(by.css('.dropdown span')).first().getText());
     });
 
     // Edited for #920
@@ -304,7 +308,12 @@ describe('Multiselect typeahead-reloading tests', () => {
 
       await browser.driver.sleep(config.sleep);
 
-      expect(await element(by.css('.dropdown span')).getText()).toEqual('New Jersey, New York');
+      const acceptableResults = [
+        'New Jersey, New York', // on CI
+        '<span class="audible">Typeahead-Reloaded Multiselect </span>New Jersey, New York', // on Local
+      ];
+
+      expect(acceptableResults).toContain(await element(by.css('.dropdown span')).getText());
     });
   }
 });
