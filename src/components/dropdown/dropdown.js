@@ -2644,7 +2644,6 @@ Dropdown.prototype = {
 
         if (option.value !== undefined) {
           option.value = replaceDoubleQuotes(option.value);
-          textContent = option.label;
         }
 
         if (option.id !== undefined) {
@@ -2655,7 +2654,7 @@ Dropdown.prototype = {
           id = ` id="${option.id}"`;
         }
 
-        if (option.label !== undefined) {
+        if (option.label !== undefined && option.label.length) {
           option.label = replaceDoubleQuotes(option.label);
           textContent = option.label;
         }
@@ -2671,6 +2670,12 @@ Dropdown.prototype = {
         } else if (option.value === val || selectedValues) {
           option.selected = true;
           selected = ' selected';
+        }
+
+        // Make sure that text content is populated.
+        // If all else fails, just use the value.
+        if (!textContent.length && textContent !== option.value) {
+          textContent += option.value;
         }
 
         // Render the option element
