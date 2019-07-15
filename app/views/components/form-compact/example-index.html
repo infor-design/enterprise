@@ -38,11 +38,33 @@
           <div class="row">
             <div class="six columns">
               <label for="field-01">Field 01</label>
-              <input id="field-01" value="Equipment Inc."/>
+              <input id="field-01" value="Equipment Company"/>
             </div>
             <div class="six columns">
               <label for="field-02">Field 02</label>
               <input id="field-02"/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="six columns">
+              <label for="field-03">Field 03</label>
+              <input id="field-03" value="Equipment Company"/>
+            </div>
+            <div class="six columns">
+              <label for="field-04">Field 04</label>
+              <input id="field-04" value="Equipment Company" disabled/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="six columns">
+              <label class="required" for="field-05">Field 05</label>
+              <input id="field-05" value="Equipment Company"/>
+            </div>
+            <div class="six columns">
+              <label for="field-06">Field 06</label>
+              <input id="field-06" value="Equipment Company" readonly/>
             </div>
           </div>
 
@@ -57,95 +79,125 @@
 
           <div class="row">
             <div class="six columns">
-              <label for="field-03">Field 03</label>
-              <input id="field-03" value="Equipment Inc."/>
+              <fieldset class="radio-group">
+                <legend>Select delivery method</legend>
+                <input type="radio" class="radio" name="options" id="option1" value="option1" />
+                <label for="option1" class="radio-label">Women</label>
+                <br/>
+                <input type="radio" class="radio" name="options" id="option2" value="option1" checked/>
+                <label for="option2"  class="radio-label">Men</label>
+                <br/>
+                <input type="radio" class="radio" name="options" id="option3" value="option3" />
+                <label for="option3" class="radio-label">Home</label>
+                <br/>
+                <input type="radio" class="radio" name="options" id="option4" value="delivery" disabled/>
+                <label for="option4" class="radio-label">Shoes</label>
+                <br/>
+                <input type="radio" class="radio" name="options" id="option5" value="delivery" />
+                <label for="option5" class="radio-label">Kids</label>
+                <br/>
+                <input type="radio" class="radio" name="options" id="option6" value="delivery" />
+                <label for="option6" class="radio-label">Kitchen</label>
+              </fieldset>
             </div>
             <div class="six columns">
-              <label for="field-04">Field 04</label>
-              <input id="field-04" value="Equipment Inc." disabled/>
+              <fieldset class="checkbox-group">
+                <legend>Checkbox Group</legend>
+                <div class="field">
+                  <input type="checkbox" class="checkbox" id="checkbox1"/>
+                  <label for="checkbox1" class="checkbox-label">NY Resident</label>
+                </div>
+                <div class="field">
+                  <input type="checkbox" class="checkbox" id="checkbox2" checked/>
+                  <label for="checkbox2" class="checkbox-label">Kings County Resident</label>
+                </div>
+                <div class="field">
+                  <input type="checkbox" class="checkbox" id="checkbox3" checked/>
+                  <label for="checkbox3" class="checkbox-label">Park Slope Resident</label>
+                </div>
+                <div class="field">
+                  <input type="checkbox" class="checkbox" id="checkbox4" checked/>
+                  <label for="checkbox4" class="checkbox-label">Prospect Heights Resident</label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="six columns">
+
+          <div class="row">
+            <div class="twelve columns form-section-header">
+              Section Three
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="three columns">
+              <label for="field-07">A Long Label Name</label>
+              <input id="field-07"/>
+            </div>
+            <div class="three columns">
+              <label for="field-08">Field 08</label>
+              <input id="field-08" value="Equipment Company"/>
+            </div>
+            <div class="three columns">
+              <label for="field-09">Field 09</label>
+              <input id="field-09" value="Equipment Company"/>
+            </div>
+            <div class="three columns">
+              <label for="field-10">0000-0000-00</label>
+              <input id="field-10" value="Text"/>
             </div>
           </div>
 
           <div class="row">
             <div class="six columns">
-              <label class="required" for="field-05">Field 05</label>
-              <input id="field-05" value="Equipment Inc."/>
+              <label for="field-11">Field 11</label>
+              <input id="field-11" value="Text"/>
             </div>
             <div class="six columns">
-              <label for="field-06">Field 06</label>
-              <input id="field-06" value="Equipment Inc." readonly/>
+              <label for="field-12">Field 12</label>
+              <input id="field-12" value="Text"/>
             </div>
           </div>
 
-        </div>
-      </div>
+          <div class="row">
+            <div class="six columns">
+              <label for="field-13">Field 13</label>
+              <input id="field-13" value="Text"/>
+            </div>
+            <div class="six columns">
+              <label for="field-14">Field 14</label>
+              <input id="field-14" value="Text"/>
+            </div>
+          </div>
 
-      <div class="row">
-        <div class="six columns form-section-header">
-          Section Three
-        </div>
-      </div>
+          <div class="row">
+            <div class="six columns">
+              <label for="field-15">Field 15</label>
+              <input id="field-15" class="timepicker" />
+            </div>
+            <div class="six columns">
+              <label for="field-16">Field 16</label>
+              <input id="field-16" class="datepicker" />
+            </div>
+          </div>
 
-      <div class="row">
-        <div class="one-one-half columns">
-          <label for="field-07">A Long Label Name</label>
-          <input id="field-07"/>
-        </div>
-        <div class="one-one-half columns">
-          <label for="field-08">Field 08</label>
-          <input id="field-08" value="Equipment Inc."/>
-        </div>
-        <div class="one-one-half columns">
-          <label for="field-09">Field 09</label>
-          <input id="field-09" value="Equipment Inc."/>
-        </div>
-        <div class="one-one-half columns">
-          <label for="field-10">0000-0000-00</label>
-          <input id="field-10" value="Text"/>
-        </div>
-      </div>
+          <div class="row">
+            <div class="six columns">
+              <label for="field-17">Field 17</label>
+              <input id="field-17" class="lookup" />
+            </div>
+            <div class="six columns">
+              <label for="field-18">Field 18</label>
+              <input id="field-18" type="file" class="fileuploader" />
+            </div>
+          </div>
 
-      <div class="row">
-        <div class="three columns">
-          <label for="field-11">Field 11</label>
-          <input id="field-11" value="Text"/>
-        </div>
-        <div class="three columns">
-          <label for="field-12">Field 12</label>
-          <input id="field-12" value="Text"/>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="three columns">
-          <label for="field-13">Field 13</label>
-          <input id="field-13" value="Text"/>
-        </div>
-        <div class="three columns">
-          <label for="field-14">Field 14</label>
-          <input id="field-14" value="Text"/>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="three columns">
-          <label for="field-15">Field 15</label>
-          <input id="field-15" class="timepicker" />
-        </div>
-        <div class="three columns">
-          <label for="field-16">Field 16</label>
-          <input id="field-16" class="datepicker" />
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="three columns">
-          <label for="field-17">Field 17</label>
-          <input id="field-17" class="lookup" />
-        </div>
-        <div class="three columns">
-          <label for="field-18">Field 18</label>
-          <input id="field-18" type="file" class="fileuploader" />
         </div>
       </div>
 

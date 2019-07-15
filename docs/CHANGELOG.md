@@ -21,6 +21,7 @@
 - `[Datagrid]` Fixed a bug that the selected event would fire when no rows are deselected and on initial load. ([#2472](https://github.com/infor-design/enterprise/issues/2472))
 - `[Datagrid]` Removed a white background from the colorpicker editor in high contrast theme. ([#1574](https://github.com/infor-design/enterprise/issues/1574))
 - `[Dropdown]` Fixed an issue where ellipsis was not working when use firefox new tab. ([#2236](https://github.com/infor-design/enterprise/issues/2236))
+- `[Form Compact]` Added checkboxes/radios, and improved visual style. ([#2193](https://github.com/infor-design/enterprise/issues/2193))
 - `[Images]` Created an additional image class to apply focus state without coercing width and height. ([#2025](https://github.com/infor-design/enterprise/issues/2025))
 - `[ListFilter]` Added `phraseStartsWith` filterMode for only matching a search term against the beginning of a string. ([#1606](https://github.com/infor-design/enterprise/issues/1606))
 
