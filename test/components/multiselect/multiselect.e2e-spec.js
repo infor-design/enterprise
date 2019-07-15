@@ -96,7 +96,7 @@ describe('Multiselect example-index tests', () => {
   });
 
   if (!utils.isSafari()) {
-    it('Should arrow down to Arizona, and focus', async () => {
+    it('Can navigate and properly focus dropdown list elements with the keyboard', async () => {
       const multiselectEl = await element.all(by.css('div.dropdown')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
@@ -114,7 +114,7 @@ describe('Multiselect example-index tests', () => {
     });
 
     // Edited for #920
-    it('Should tab into deselect Alaska, then tab out, and input should be empty', async () => {
+    fit('Can deselect all items and display an empty pseudo-element', async () => {
       const multiselectEl = await element.all(by.css('div.dropdown')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
@@ -124,14 +124,14 @@ describe('Multiselect example-index tests', () => {
       await multiselectEl.sendKeys(protractor.Key.ENTER);
       const multiselectSearchEl = await element(by.id('dropdown-search'));
       await multiselectSearchEl.sendKeys(protractor.Key.ENTER);
-      await multiselectSearchEl.sendKeys(protractor.Key.TAB);
+      await multiselectSearchEl.sendKeys(protractor.Key.ESCAPE);
 
       expect(['<span class="audible">States (Max 10) </span>', ''])
         .toContain(await element.all(by.css('.dropdown span')).first().getText());
     });
 
     // Edited for #920
-    it('Should arrow down to Arizona select, arrow down, and select Arkansas, and update search input', async () => {
+    it('Can select multiple items and display them in the pseudo-element', async () => {
       const multiselectEl = await element.all(by.css('div.dropdown')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
@@ -175,7 +175,7 @@ describe('Multiselect example-index tests', () => {
     });
   }
 
-  it('Should search for Colorado', async () => {
+  it('Can show a filtered list of items that match a search term (Colorado)', async () => {
     const multiselectEl = await element.all(by.css('div.dropdown')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
