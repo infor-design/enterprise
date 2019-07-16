@@ -64,6 +64,7 @@
 - `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Images]` Fixed an issue where images were not tabbable or receiving a visual focus state. ([#2025](https://github.com/infor-design/enterprise/issues/2025))
 - `[Listview]` Fixed a bug that caused the listview to run initialize too many times. ([#2179](https://github.com/infor-design/enterprise/issues/2179))
+- `[Lookup]` Added `autocomplete="off"` to lookup input fields to prevent browser interference. ([#2366](https://github.com/infor-design/enterprise/issues/2366))
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
 - `[Personalization]` Updated some of the colors to more readable in contrast mode. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Pager]` Added a complete Popupmenu settings object for configuring the Page Size Selector Button, and deprecated the `attachPageSizeMenuToBody` setting in favor of `pageSizeMenuSettings.attachToBody`. ([#2356](https://github.com/infor-design/enterprise/issues/2356))
