@@ -28,6 +28,7 @@
 ### v4.20.0 Fixes
 
 - `[Alerts]` Removed dirty tracker from the page due to layout issues. ([#1679](https://github.com/infor-design/enterprise/issues/1679))
+- `[App Menu]` Fixed an issue where lower toolbar was working inverse. ([#2240](https://github.com/infor-design/enterprise/issues/2240))
 - `[Bar Chart]` Fixed an issue where the tooltip would not show. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Calendar]` Added more information to the onMonthRendered callback. ([#2419](https://github.com/infor-design/enterprise/issues/2419))
 - `[Calendar]` Changed updated method so it can reinit the calendar with new data. ([#2419](https://github.com/infor-design/enterprise/issues/2419))
