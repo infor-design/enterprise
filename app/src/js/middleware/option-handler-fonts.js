@@ -90,7 +90,7 @@ module.exports = function () {
 
         // Serve Korean
         if (localeString === 'ko-KR') {
-          fontFamily += 'KR';
+          fontFamily += '+KR';
           fontSubset = 'korean';
         }
 
