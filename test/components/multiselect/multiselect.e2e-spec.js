@@ -118,11 +118,13 @@ describe('Multiselect example-index tests', () => {
       const multiselectEl = await element.all(by.css('div.dropdown')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
-      await element(by.css('body')).sendKeys(protractor.Key.TAB);
-      await element(by.css('body')).sendKeys(protractor.Key.TAB);
-      await element(by.css('body')).sendKeys(protractor.Key.TAB);
-      await multiselectEl.sendKeys(protractor.Key.ENTER);
+      await multiselectEl.click();
+
       const multiselectSearchEl = await element(by.id('dropdown-search'));
+      await multiselectSearchEl.click();
+
+      await browser.driver.sleep(config.sleep);
+
       await multiselectSearchEl.sendKeys(protractor.Key.ENTER);
       await multiselectSearchEl.sendKeys(protractor.Key.ESCAPE);
 
