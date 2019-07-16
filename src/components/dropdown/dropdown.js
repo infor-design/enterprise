@@ -2154,7 +2154,7 @@ Dropdown.prototype = {
   },
 
   /**
-   * Function that is used to chekc if the field is loading from an ajax call.
+   * Function that is used to check if the field is loading from an ajax call.
    * @returns {void} Returns true if the field is attempting to load via AJAX.
    */
   isLoading() {
