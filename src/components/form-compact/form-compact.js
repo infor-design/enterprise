@@ -125,6 +125,12 @@ FormCompact.prototype = {
       return;
     }
 
+    // Ignore "grouped" types for column state management
+    const ignoredTypes = ['checkbox', 'radio'];
+    if (ignoredTypes.indexOf(target.type) > -1) {
+      return;
+    }
+
     if (name === 'readonly') {
       name = 'readOnly';
     }
