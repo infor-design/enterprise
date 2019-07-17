@@ -2680,7 +2680,7 @@ $datagrid-short-row-height: 25px;
 
 .datagrid-rowgroup-header {
 
-  //Animating while closing
+  // Animating while closing
   &.is-animating {
     opacity: 0.2;
   }
@@ -2701,6 +2701,7 @@ $datagrid-short-row-height: 25px;
     span {
       color: $datagrid-rowgroup-color;
       font-weight: $theme-number-font-weight-bold;
+      vertical-align: middle;
     }
 
     .icon {
@@ -2710,6 +2711,7 @@ $datagrid-short-row-height: 25px;
 
   .datagrid-expand-btn {
     left: -14px;
+    margin-top: 0;
 
     .icon.plus-minus::before,
     .icon.plus-minus::after {
@@ -3093,7 +3095,8 @@ td .btn-actions {
   }
 }
 
-.datagrid-result-count {
+.datagrid-result-count,
+.datagrid-group-count {
   display: inline-block;
   font-size: $theme-size-font-base;
   position: relative;
@@ -3829,11 +3832,7 @@ html[dir='rtl'] {
 //Contextual toolbar
 .datagrid-contextual-toolbar.contextual-toolbar {
   &.toolbar {
-    padding: 0 5px 0 20px;
-  }
-
-  .buttonset {
-    height: 40px;
+    padding: 0 7px 0 20px;
   }
 
   .title {

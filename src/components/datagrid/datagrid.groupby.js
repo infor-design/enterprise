@@ -40,7 +40,7 @@ const groupBy = (function () {
     const chosen = [];
 
     /* eslint-disable */
-    data.map(function (item) {
+    data.map(function (item, idx) {
       let match = true;
       for (const prop in names) {
         if (names[prop] !== item[prop]) {
@@ -48,6 +48,7 @@ const groupBy = (function () {
           return;
         }
       }
+      item.idx = idx;
       chosen.push(item);
       return;
     });

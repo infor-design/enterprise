@@ -48,6 +48,7 @@ const FOCUSABLE_SELECTOR = [
 * @param {array} [settings.pagesizes = [15, 25, 50, 75]] Array of numbers of the page size selector
 * @param {boolean} [settings.showPageSizeSelector = true] If false will not show page size selector
 * @param {boolean} [settings.smallPageSizeSelector = false] If true, shows a condensed view of the page size selector
+* @param {string} [settings.pageSizeSelectorText = 'RecordsPerPage'] A string to the key of the translation text for the page size selector.
 * @param {boolean} [settings.onPageSizeChange] Call back function for page change
 * @param {boolean} [settings.showFirstButton = true] If false the first button will be hidden (standalone mode)
 * @param {boolean} [settings.enableFirstButton = true] If false the first button will be disabled (standalone mode)
@@ -78,6 +79,7 @@ const PAGER_DEFAULTS = {
   pagesizes: [15, 25, 50, 75],
   showPageSizeSelector: true,
   smallPageSizeSelector: false,
+  pageSizeSelectorText: 'RecordsPerPage',
   onPageSizeChange: null,
   showFirstButton: true,
   enableFirstButton: true,
@@ -986,14 +988,14 @@ Pager.prototype = {
     if (!this.pageSizeSelectorButton) {
       const pageSizeLi = $('<li class="pager-pagesize"></li>');
       const dropdownIcon = $.createIcon({ icon: 'dropdown' });
-      let translatedText = Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize);
+      let translatedText = Locale.translate(this.settings.pageSizeSelectorText).replace('{0}', this.settings.pagesize);
       let isAudible = '';
       let recordHtml = `<span>${translatedText}</span>`;
 
       // Change to the condensed layout, if applicable
       if (this.showSmallPageSizeSelector) {
         isAudible = ' class="audible"';
-        translatedText = Locale.translate('RecordsPerPage').replace('{0}', '');
+        translatedText = Locale.translate(this.settings.pageSizeSelectorText).replace('{0}', '');
         recordHtml = `<span class="record-count">${this.settings.pagesize}</span>
         <span${isAudible}>${translatedText}</span>`;
       }
