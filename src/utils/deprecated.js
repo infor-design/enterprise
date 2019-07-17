@@ -39,6 +39,18 @@ function warnAboutDeprecation(newMethod, oldMethod) {
 }
 
 /**
+ * Warns about upcomming removal of a piece of code with no replacement.
+ * @param {function|string} removedName the name of the removed code
+ * @returns {void}
+ */
+function warnAboutRemoval(removedName) {
+  if (typeof console !== 'object') {
+    return;
+  }
+  console.warn(`IDS Enterprise: "${removedName}" is deprecated and will be later removed. Please adjust your code accordingly.`);
+}
+
+/**
  * Deprecates a method in the codebase
  * @param {function} newMethod the new method to call
  * @param {function} oldMethod the name of the old method
@@ -55,4 +67,4 @@ function deprecateMethod(newMethod, oldMethod) {
   return wrapper;
 }
 
-export { warnAboutDeprecation, deprecateMethod };
+export { warnAboutDeprecation, deprecateMethod, warnAboutRemoval };
