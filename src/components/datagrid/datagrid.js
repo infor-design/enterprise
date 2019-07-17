@@ -6697,7 +6697,7 @@ Datagrid.prototype = {
       return;
     }
 
-    rowNode = this.rowNodes(idx);
+    rowNode = this.settings.groupable ? this.rowNodesByDataIndex(idx) : this.rowNodes(idx);
     dataRowIndex = this.dataRowIndex(rowNode);
 
     if (isNaN(dataRowIndex)) {
@@ -7204,9 +7204,10 @@ Datagrid.prototype = {
   toggleRowSelection(idx) {
     const row = (typeof idx === 'number' ? this.tableBody.find(`tr[aria-rowindex="${idx + 1}"]`) : idx);
     const isSingle = this.settings.selectable === 'single';
-    const rowIndex = (typeof idx === 'number' ? idx :
-      (this.settings.treeGrid || this.settings.groupable) ?
-        this.actualRowIndex(row) : this.actualRowIndex(row));
+    let rowIndex = typeof idx === 'number' ? idx : this.actualRowIndex(row);
+    if (this.settings.groupable) {
+      rowIndex = this.dataRowIndex(row);
+    }
 
     if (this.settings.selectable === false) {
       return;
@@ -9393,7 +9394,7 @@ Datagrid.prototype = {
     if (row instanceof jQuery) {
       row = row.attr('data-index');
     }
-    const leftNodes = this.tableBodyLeft ? this.tableBodyLeft.find(`tr[data-index="${1}"]`) : $();
+    const leftNodes = this.tableBodyLeft ? this.tableBodyLeft.find(`tr[data-index="${row}"]`) : $();
     const centerNodes = this.tableBody.find(`tr[data-index="${row}"]`);
     const rightNodes = this.tableBodyRight ? this.tableBodyRight.find(`tr[data-index="${row}"]`) : $();
 
