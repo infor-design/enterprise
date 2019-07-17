@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { utils, math } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
+import { Environment as env } from '../../utils/environment';
 import { Locale } from '../../../src/components/locale/locale';
 
 // Component Name
@@ -124,7 +125,7 @@ Toast.prototype = {
     // Add draggable
     self.createDraggable(toast, container);
 
-    $(document).on('keydown keyup', (e) => {
+    $(document).on('keydown.toast keyup.toast', (e) => {
       e = e || window.event;
       if (e.ctrlKey && e.altKey && e.keyCode === 80) { // [Control + Alt + P] - Pause/Play toggle
         isPausePlay = e.type === 'keydown';
@@ -155,6 +156,8 @@ Toast.prototype = {
       return;
     }
 
+    const isTouch = env.features.touch;
+
     // Drop container
     const dropContainer = container.parent();
 
@@ -171,15 +174,23 @@ Toast.prototype = {
 
     // Apply compile css rules
     container.css(rules);
-
-    toast.append('<span class="handle">&#8286;</span>');
     container.addClass('is-draggable');
+
+    // Selector for elements need to be exclude
+    const excludeEl = 'a, .btn-close';
 
     // Initialize Drag api
     toast
-      .off('mousedown.toast touchstart.toast', '.handle')
-      .on('mousedown.toast touchstart.toast', '.handle', (e) => {
-        e.preventDefault();
+      .off('mousedown.toast touchstart.toast')
+      .on('mousedown.toast touchstart.toast', (e) => {
+        if (!isTouch) {
+          e.preventDefault();
+        }
+
+        // No need to drag
+        if ($(e.target).is(excludeEl)) {
+          return;
+        }
 
         // Initialize drag
         container
@@ -208,6 +219,52 @@ Toast.prototype = {
               dragApi.destroy();
             }
           });
+      });
+
+    // Check if cursor over the toast
+    const isToastEl = ({ dragApi, x, y }) => {
+      const underEl = dragApi.getElementsFromPoint(x, y)[0];
+      return !($(underEl).closest('.toast').length);
+    };
+
+    // Resume the toast timer
+    const triggerRsume = (elem) => {
+      // [Control + Alt + P] - Pause/Play toggle
+      const keyupSetting = { ctrlKey: true, altKey: true, keyCode: 80 };
+      const keyup = $.Event('keyup');
+      $.extend(keyup, keyupSetting);
+      elem.trigger(keyup);
+    };
+
+    const doc = $(document);
+    doc
+      .off('mouseup.toast').on('mouseup.toast', (e) => {
+        if ($('#toast-container .toast').length === 1) {
+          const dragApi = container.data('drag');
+          if (dragApi && typeof dragApi.getElementsFromPoint === 'function') {
+            const args = { dragApi, x: e.pageX, y: e.pageY };
+            if (isToastEl(args)) {
+              triggerRsume(doc);
+            }
+          }
+        }
+      })
+      .off('touchend.toast').on('touchend.toast', (e) => {
+        if ($('#toast-container .toast').length === 1) {
+          const dragApi = container.data('drag');
+          if (dragApi && typeof dragApi.getElementsFromPoint === 'function') {
+            const orig = e.originalEvent;
+            // do now allow two touch points to drag the same element
+            if (orig.targetTouches.length > 1) {
+              return;
+            }
+            const t = orig.changedTouches[0];
+            const args = { dragApi, x: t.pageX, y: t.pageY };
+            if (isToastEl(args)) {
+              triggerRsume(doc);
+            }
+          }
+        }
       });
   },
 
@@ -341,6 +398,7 @@ Toast.prototype = {
    * @returns {void}
    */
   destroy() {
+    $(document).off('keydown.toast keyup.toast mouseup.toast touchend.toast');
     $('#toast-container').remove();
     $.removeData(this.element[0], COMPONENT_NAME);
   }
