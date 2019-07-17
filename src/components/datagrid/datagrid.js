@@ -3854,7 +3854,7 @@ Datagrid.prototype = {
 
     if (columnDef.formatter === Formatters.Colorpicker) {
       maxText = '';
-    } else if (columnDef.formatter === Formatters.Dropdown) {
+    } else if (columnDef.formatter === Formatters.Dropdown && columnDef.options) {
       const row = null;
       let val = '';
       // Find Longest option label
@@ -6668,12 +6668,8 @@ Datagrid.prototype = {
 
     checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
     elem.addClass(selectClasses).attr('aria-selected', 'true');
-
-    if (self.columnIdxById('selectionCheckbox') !== -1) {
-      checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox')).not('.is-disabled');
-      checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-        .addClass('is-checked').attr('aria-checked', 'true');
-    }
+    checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+      .addClass('is-checked').attr('aria-checked', 'true');
 
     if (data) {
       data._selected = true;
@@ -7246,7 +7242,7 @@ Datagrid.prototype = {
   unselectRow(idx, nosync, noTrigger) {
     const self = this;
     const s = self.settings;
-    const rowNode = self.rowNodes(idx);
+    const rowNode = this.settings.groupable ? this.rowNodesByDataIndex(idx) : this.rowNodes(idx);
     let checkbox = null;
 
     if (!rowNode || idx === undefined) {
@@ -9647,6 +9643,9 @@ Datagrid.prototype = {
     if (e.type === 'keydown') {
       if (this.settings.actionableMode) {
         const keyCode = (e.keyCode === 13) ? 40 : e.keyCode;
+        if (keyCode === 32) {
+          return;
+        }
         setTimeout(() => {
           const evt = $.Event('keydown.datagrid');
           evt.keyCode = keyCode;
