@@ -26,7 +26,6 @@ const NOTO_SANS_LOCALES = [
   'hi-IN',
   'ja-JP',
   'ko-KR',
-  'vi-VN',
   'zh-CN',
   'zh-tw',
   'zh-Hans',
@@ -98,11 +97,11 @@ module.exports = function () {
         if (localeString === 'hi-IN') {
           fontSubset = 'devanagari';
         }
+      }
 
-        // Vietnamese subset
-        if (localeString === 'vi-VN') {
-          fontSubset = 'vietnamese';
-        }
+      // Vietnamese subset
+      if (localeString === 'vi-VN') {
+        fontSubset = 'vietnamese';
       }
     }
 
