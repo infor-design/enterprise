@@ -1621,7 +1621,7 @@ describe('Datagrid loaddata selected rows tests', () => {
 
 describe('Datagrid on modal with no default size', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-long-text');
+    await utils.setPage('/components/datagrid/test-long-text?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
