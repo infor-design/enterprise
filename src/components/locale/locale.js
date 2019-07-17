@@ -269,6 +269,9 @@ const Locale = {  // eslint-disable-line
         this.setCurrentLocale(locale, this.cultures[locale]);
         this.dff[locale].resolve(locale);
       }
+      if (!isCurrent && !parentLocale && this.dff[locale]) {
+        this.dff[locale].resolve(locale);
+      }
       if (parentLocale) {
         this.setCurrentLocale(locale, this.cultures[locale]);
         this.setCurrentLocale(parentLocale, this.cultures[parentLocale]);

@@ -14,7 +14,7 @@ const COMPONENT_NAME = 'bar';
  * with heights or lengths proportional to the values that they represent. This is adapated from
  * http://jsfiddle.net/datashaman/rBfy5/2/
  * @class Bar
- * @param {string} element The plugin element for the constuctor
+ * @param {string} element The plugin element for the constuctor.
  * @param {string} [settings] The settings element.
  * @param {array} [settings.dataset=[]] The data to use in the line/area/bubble.
  * @param {boolean} [settings.isStacked=true] Default is a single or stacked chart.
@@ -566,11 +566,11 @@ Bar.prototype = {
         } else {
           content = tooltipDataCache[i] || tooltipData || content || '';
           if (!tooltipDataCache[i] && d.tooltip !== false &&
-            (typeof d.tooltip !== 'undefined' || d.tooltip !== null)) {
+            typeof d.tooltip !== 'undefined' && d.tooltip !== null) {
             if (typeof d.tooltip === 'function') {
               setCustomTooltip(d.tooltip);
             } else {
-              content = d.tooltip;
+              content = d.tooltip.toString();
               replaceMatchAndSetType();
               tooltipDataCache[i] = content;
             }

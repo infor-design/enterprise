@@ -4,6 +4,7 @@ import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { DOM } from '../../utils/dom';
 import { PlacementObject, Place } from '../place/place';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../place/place.jquery';
@@ -591,15 +592,19 @@ PopupMenu.prototype = {
           a.removeAttribute('disabled');
         }
 
-        // menu items that contain submenus
+        // Checks for existing menus, and if present, apply a `.popupmenu` class automatically.
         if (submenu instanceof HTMLElement) {
           submenu.classList.add('popupmenu');
         }
         if (submenuWrapper instanceof HTMLElement) {
           li.className += `${DOM.classNameExists(li) ? ' ' : ''}submenu`;
           submenu = $(submenuWrapper).children('ul')[0];
-          submenu.classList.add('popupmenu');
+          if (submenu instanceof HTMLElement) {
+            submenu.classList.add('popupmenu');
+          }
         }
+
+        // Adds the SVG arrow, etc to submenu items.
         if (DOM.hasClass(li, 'submenu')) {
           // Add a span
           if (!span) {
@@ -611,8 +616,6 @@ PopupMenu.prototype = {
             $a.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
           }
           a.setAttribute('aria-haspopup', 'true');
-
-          // Check for existing menus, and if present, apply a `.popupmenu` class automatically.
         }
 
         // is-checked
@@ -1047,7 +1050,7 @@ PopupMenu.prototype = {
         }
 
         // Up on Up
-        if ((!isPicker && key === 38) || (isPicker && key === 37)) {
+        if ((!isPicker && key === 38) || (isPicker && key === (Locale.isRTL() ? 39 : 37))) {
           e.stopPropagation();
           e.preventDefault();
 
@@ -1085,7 +1088,9 @@ PopupMenu.prototype = {
         }
 
         // Down
-        if ((!isPicker && key === 40) || (isPicker && key === 39 && !isAutocomplete)) {
+        if ((!isPicker && key === 40)
+          || (isPicker && key === (Locale.isRTL() ? 37 : 39))
+          && (!isAutocomplete)) {
           e.stopPropagation();
           e.preventDefault();
 
@@ -2188,9 +2193,11 @@ PopupMenu.prototype = {
 
     this.predefinedItems = $();
 
-    this.menu.parent().off('contextmenu.popupmenu');
+    const parentNode = this.menu.parent();
+    parentNode.find('.arrow').remove();
+    parentNode.off('contextmenu.popupmenu');
     if (this.element.hasClass('btn-actions')) {
-      this.menu.parent().removeClass('bottom').find('.arrow').remove();
+      parentNode.removeClass('bottom');
     }
 
     this.menu.off('dragstart.popupmenu');

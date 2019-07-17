@@ -80,8 +80,17 @@ git config --global credential.helper wincred
     - You may get warnings about the release you are trying to do, will not line up withe the previous tag. This is usually nothing, but spend a minute or two to think through it.
 
 1. Set the master branch to the next minor dev version. For example if we made branch `4.9.x`, then the `master` package.json version should now be changed to `4.10.0-dev`
+1. Check that the build is running after for the deploy on the [Jenkins Server](http://jenkins.design.infor.com:8080/job/soho4-swarm-deploy/)
 
 For a final release, finish with:
 
-1. Manually merge the version branch into `master`. Do **NOT** use a pull request. (You will need github push permissions for this). One way to do this is with the command `git checkout master && git merge origin/4.19.x`.
-2. Verify the `package.json` version on master is what it should be (usually the next minor version with a `-dev` suffix)
+1. Manually merge the version branch into `master`. Do **NOT** use a pull request. (You will need github push permissions for this). For merging you could use:
+
+```sh
+git checkout master
+git pull origin master
+git merge {branch name}
+git push origin master
+```
+
+1. Verify the `package.json` version on master is what it should be (usually the next minor version with a `-dev` suffix)

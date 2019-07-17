@@ -142,6 +142,31 @@ describe('Popupmenu example-selectable tests', () => {
   }
 });
 
+// NOTE: tests for infor-design/enterprise#2458
+describe('Popupmenu missing submenu tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/popupmenu/test-malformed-popupmenu?layout=nofrills');
+  });
+
+  it('Should have no errors on page load', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should have no errors when hovering an item with a submenu', async () => {
+    await element(by.id('open-me')).click();
+
+    const popupmenuElem = await element(by.css('#open-me + .popupmenu-wrapper > .popupmenu.is-open'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(popupmenuElem), config.waitsFor);
+
+    const thirdItem = await element(by.css('#open-me + .popupmenu-wrapper > .popupmenu.is-open > li.submenu'));
+    await browser.actions().mouseMove(thirdItem).perform();
+    await browser.driver.sleep(config.sleep);
+
+    await utils.checkForErrors();
+  });
+});
+
 describe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable-multiple?layout=nofrills');

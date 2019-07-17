@@ -1,0 +1,48 @@
+<div class="calendar" data-init="false">
+  <div class="calendar-monthview">
+  </div>
+</div>
+
+<script id="test-script">
+  var events = [];
+  $('body').one('initialized', function () {
+    // Get the Event Type and Events to show in the calendar
+    var eventTypes = [];
+    var calendar = {};
+
+    $.getJSON('{{basepath}}api/event-types', function(res) {
+      eventTypes = res;
+
+      $.getJSON('{{basepath}}api/events', function(res) {
+        events = res;
+
+        calendar = $('.calendar').calendar({
+          month: 4,
+          year: 2019,
+          showViewChanger: false
+        }).on('eventclick', function (e, args) {
+          $('body').toast({title: 'Calendar Test', message: 'Event "' + args.event.subject + '" Clicked' });
+        }).data('calendar');
+      });
+    });
+
+    // Set up a test update button
+    var actions = $('#actions');
+    actions.data('popupmenu').destroy();
+    actions.data('tooltip').destroy();
+    actions.attr('title', 'Update').tooltip();
+    actions.next('.popupmenu-wrapper').remove();
+    actions.find('svg use').attr('xlink:href', '#icon-refresh');
+    actions.on('click', function () {
+      console.log('Calling updated to refresh');
+      var settings = {
+        month: 5,
+        year: 2019,
+        // locale: 'da-DK',
+        events: events,
+        eventTypes: eventTypes
+      };
+      calendar.updated(settings);
+    });
+  });
+</script>
