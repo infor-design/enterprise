@@ -8378,7 +8378,13 @@ Datagrid.prototype = {
     this.editor = null;
 
     // Save the Cell Edit back to the data set
-    this.updateCellNode(rowIndex, cell, newValue, false, isInline);
+    this.updateCellNode(
+      this.settings.groupable ? dataRowIndex : rowIndex,
+      cell,
+      newValue,
+      false,
+      isInline
+    );
     const value = this.fieldValue(rowData, col.field);
 
     /**
