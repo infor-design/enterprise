@@ -42,8 +42,8 @@ module.exports = function () {
   return function optionHandlerFonts(req, res, next) {
     const localeString = res.opts.locale;
     let changedLocale = false;
-    let fontFamily = 'Source+Sans+Pro';
-    let fontWeights = STANDARD_WEIGHTS;
+    let fontFamily = '';
+    let fontWeights = '';
     let fontSubset = '';
 
     // Activate if using a locale other than the default.
@@ -55,12 +55,14 @@ module.exports = function () {
       if (MADA_LOCALES.includes(localeString)) {
         fontFamily = 'Mada';
         fontSubset = 'arabic';
+        fontWeights = STANDARD_WEIGHTS;
       }
 
       // Hebrew
       if (localeString === ASSISTANT_LOCALE) {
         fontFamily = 'Assistant';
         fontSubset = 'hebrew';
+        fontWeights = STANDARD_WEIGHTS;
       }
 
       // Chinese, Hindi, Japanese, Korean, Vietnamese
@@ -107,7 +109,8 @@ module.exports = function () {
 
     // Render the fontString option
     const renderedSubset = fontSubset.length ? `&subset=${fontSubset}` : '';
-    res.opts.fontString = `family=${fontFamily}:${fontWeights}&display=swap${renderedSubset}`;
+    const extraFont = fontFamily.length ? `|${fontFamily}:${fontWeights}` : '';
+    res.opts.fontString = `family=Source+Sans+Pro:${STANDARD_WEIGHTS}${extraFont}&display=swap${renderedSubset}`;
 
     // Log the difference
     if (changedLocale) {
