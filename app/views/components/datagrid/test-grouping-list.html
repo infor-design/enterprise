@@ -56,6 +56,10 @@
         var vehicals = rowData.list,
           html = '';
 
+        if (!vehicals) {
+          return '';
+        }
+
         html += '<span class="datagrid-multiline-text">';
         for (var i = 0; i < vehicals.length; i++) {
           var list = vehicals[i];

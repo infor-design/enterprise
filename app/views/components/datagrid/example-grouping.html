@@ -1,6 +1,37 @@
 
-<div class="row">
+<div class="row bottom-padding">
   <div class="twelve columns">
+    <div class="toolbar">
+      <div class="title">
+        Compressors
+        <span class="datagrid-group-count">N</span>
+      </div>
+      <div class="buttonset">
+        <button class="btn-icon" type="button" id="add-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-add"></use>
+          </svg>
+          <span class="audible">Add</span>
+        </button>
+      </div>
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a data-option="personalize-columns" href="#" data-translate="text">PersonalizeColumns</a></li>
+          <li><a data-option="reset-layout" href="#" data-translate="text">ResetDefault</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-short" href="#" data-translate="text">Short</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-normal" href="#" data-translate="text">Normal</a></li>
+        </ul>
+      </div>
+    </div>
     <div id="datagrid">
     </div>
   </div>
@@ -30,7 +61,6 @@
       var url = '{{basepath}}api/accounts';
 
       $.getJSON(url, function(res) {
-
         $('#datagrid').datagrid({
           columns: columns,
           dataset: res,
