@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { utils, math } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
+import { Environment as env } from '../../utils/environment';
 import { Locale } from '../../../src/components/locale/locale';
 
 // Component Name
@@ -15,7 +16,9 @@ const TOAST_DEFAULTS = {
   audibleOnly: false,
   progressBar: true,
   timeout: 6000,
-  allowLink: false
+  allowLink: false,
+  draggable: false,
+  savePosition: false
 };
 
 /**
@@ -33,6 +36,8 @@ const TOAST_DEFAULTS = {
  * disappeared when the toast should be removed.
  * @param {number} [settings.timeout = 6000] the amount of time the toast should be present on-screen.
  * @param {boolean} [settings.allowLink = false] if true, allows user to put links in the toast message.
+ * @param {boolean} [settings.draggable = false] if true, allows user to drag/drop the toast container.
+ * @param {boolean} [settings.savePosition] Save positon to local storage.
  */
 function Toast(element, settings) {
   this.element = $(element);
@@ -60,23 +65,17 @@ Toast.prototype = {
    */
   show() {
     const self = this;
-    const settings = self.settings;
-    const maxHideTime = parseFloat(math.convertDelayToFPS(settings.timeout));
+    const s = self.settings;
+    const maxHideTime = parseFloat(math.convertDelayToFPS(s.timeout));
+    const message = s.allowLink ? xssUtils.stripTags(s.message, '<a>') : xssUtils.stripHTML(s.message);
     let isPausePlay = false;
     let percentage = 100;
     let container = $('#toast-container');
-    let toast = $(`
+    const toast = $(`
       <div class="toast">
-        <span class="toast-title">${xssUtils.stripHTML(settings.title)}</span>
-        <span class="toast-message">${xssUtils.stripHTML(settings.message)}</span>
+        <span class="toast-title">${xssUtils.stripHTML(s.title)}</span>
+        <span class="toast-message">${message}</span>
       </div>`);
-    if (settings.allowLink) {
-      toast = $(`
-        <div class="toast">
-          <span class="toast-title">${xssUtils.stripHTML(settings.title)}</span>
-          <span class="toast-message">${xssUtils.stripTags(settings.message, '<a>')}</span>
-        </div>`);
-    }
     const closeBtn = $(`
       <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
         ${$.createIcon('close')}
@@ -89,18 +88,19 @@ Toast.prototype = {
       container = $('<div id="toast-container" class="toast-container" aria-relevant="additions" aria-live="polite"></div>').appendTo('body');
     }
 
-    container.removeClass('toast-top-left toast-top-right toast-bottom-right toast-bottom-left')
-      .addClass(`toast-${settings.position.replace(' ', '-')}`);
+    container
+      .removeClass('toast-top-left toast-top-right toast-bottom-right toast-bottom-left')
+      .addClass(`toast-${s.position.replace(' ', '-')}`);
 
-    settings.timeout = settings.audibleOnly ? 100 : settings.timeout;
+    s.timeout = s.audibleOnly ? 100 : s.timeout;
 
-    if (settings.progressBar) {
+    if (s.progressBar) {
       toast.append(progress);
     }
 
     // Build the RenderLoop integration
     const timer = new RenderLoopItem({
-      duration: math.convertDelayToFPS(settings.timeout),
+      duration: math.convertDelayToFPS(s.timeout),
       timeoutCallback() {
         self.remove(toast);
       },
@@ -111,7 +111,7 @@ Toast.prototype = {
           percentage = 100 - percentage;
         }
 
-        if (settings.progressBar) {
+        if (s.progressBar) {
           progress[0].style.width = `${percentage}%`;
         }
       }
@@ -119,10 +119,13 @@ Toast.prototype = {
     renderLoop.register(timer);
 
     container.append(toast);
-    toast.addClass((settings.audibleOnly ? 'audible' : 'effect-scale'));
+    toast.addClass((s.audibleOnly ? 'audible' : 'effect-scale'));
     toast.append(closeBtn);
 
-    $(document).on('keydown keyup', (e) => {
+    // Add draggable
+    self.createDraggable(toast, container);
+
+    $(document).on('keydown.toast keyup.toast', (e) => {
       e = e || window.event;
       if (e.ctrlKey && e.altKey && e.keyCode === 80) { // [Control + Alt + P] - Pause/Play toggle
         isPausePlay = e.type === 'keydown';
@@ -142,12 +145,226 @@ Toast.prototype = {
   },
 
   /**
+  * Create draggable
+  * @private
+  * @param {object} toast the toast element
+  * @param {object} container the toast container element
+  * @returns {void}
+  */
+  createDraggable(toast, container) {
+    if (!this.settings.draggable || !toast[0] || !container[0]) {
+      return;
+    }
+
+    const isTouch = env.features.touch;
+
+    // Drop container
+    const dropContainer = container.parent();
+
+    // Create css rules, position from local storage
+    const rect = container[0].getBoundingClientRect();
+    const lsPosition = this.restorePosition();
+    const posEl = lsPosition || rect;
+    const rules = { top: `${posEl.top}px`, left: `${posEl.left}px` };
+
+    // Reset position right rule, if was set in css file
+    if (container.is('.toast-bottom-right, .toast-top-right')) {
+      rules.right = 'auto';
+    }
+
+    // Apply compile css rules
+    container.css(rules);
+    container.addClass('is-draggable');
+
+    // Selector for elements need to be exclude
+    const excludeEl = 'a, .btn-close';
+
+    // Initialize Drag api
+    toast
+      .off('mousedown.toast touchstart.toast')
+      .on('mousedown.toast touchstart.toast', (e) => {
+        if (!isTouch) {
+          e.preventDefault();
+        }
+
+        // No need to drag
+        if ($(e.target).is(excludeEl)) {
+          return;
+        }
+
+        // Initialize drag
+        container
+          .drag({ containment: 'document' })
+
+          // Start drag
+          .off('dragstart.toast')
+          .on('dragstart.toast', () => {
+            e.stopImmediatePropagation();
+            container.attr('aria-grabbed', 'true');
+            dropContainer.attr('aria-dropeffect', 'move');
+          })
+
+          // End drag
+          .off('dragend.toast')
+          .on('dragend.toast', () => {
+            container.removeAttr('aria-grabbed');
+            dropContainer.removeAttr('aria-dropeffect');
+            this.savePosition({
+              left: parseFloat(container.css('left')),
+              top: parseFloat(container.css('top'))
+            });
+            // Unbind drag from header
+            const dragApi = container.data('drag');
+            if (dragApi && typeof dragApi.destroy === 'function') {
+              dragApi.destroy();
+            }
+          });
+      });
+
+    // Check if cursor over the toast
+    const isToastEl = ({ dragApi, x, y }) => {
+      const underEl = dragApi.getElementsFromPoint(x, y)[0];
+      return !($(underEl).closest('.toast').length);
+    };
+
+    // Resume the toast timer
+    const triggerRsume = (elem) => {
+      // [Control + Alt + P] - Pause/Play toggle
+      const keyupSetting = { ctrlKey: true, altKey: true, keyCode: 80 };
+      const keyup = $.Event('keyup');
+      $.extend(keyup, keyupSetting);
+      elem.trigger(keyup);
+    };
+
+    const doc = $(document);
+    doc
+      .off('mouseup.toast').on('mouseup.toast', (e) => {
+        if ($('#toast-container .toast').length === 1) {
+          const dragApi = container.data('drag');
+          if (dragApi && typeof dragApi.getElementsFromPoint === 'function') {
+            const args = { dragApi, x: e.pageX, y: e.pageY };
+            if (isToastEl(args)) {
+              triggerRsume(doc);
+            }
+          }
+        }
+      })
+      .off('touchend.toast').on('touchend.toast', (e) => {
+        if ($('#toast-container .toast').length === 1) {
+          const dragApi = container.data('drag');
+          if (dragApi && typeof dragApi.getElementsFromPoint === 'function') {
+            const orig = e.originalEvent;
+            // do now allow two touch points to drag the same element
+            if (orig.targetTouches.length > 1) {
+              return;
+            }
+            const t = orig.changedTouches[0];
+            const args = { dragApi, x: t.pageX, y: t.pageY };
+            if (isToastEl(args)) {
+              triggerRsume(doc);
+            }
+          }
+        }
+      });
+  },
+
+  /**
+   * Save toast container position.
+   * @private
+   * @param {object} pos the new position to save
+   * @returns {void}
+   */
+  savePosition(pos = {}) {
+    if (!this.settings.savePosition || !this.canUseLocalStorage() || $.isEmptyObject(pos)) {
+      return;
+    }
+
+    // Save position to local storage
+    localStorage[this.uniqueId('usersettings-position')] = JSON.stringify(pos);
+
+    /**
+    * Fires after settings are changed in some way
+    * @event settingschanged
+    * @memberof Toast
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {string} args.left The current left positon
+    * @property {string} args.top The current top positon
+    */
+    this.element.triggerHandler('settingschanged', [pos]);
+  },
+
+  /**
+   * Restore the position from local storage
+   * @private
+   * @returns {object} The left and top position
+   */
+  restorePosition() {
+    if (!this.settings.savePosition || !this.canUseLocalStorage()) {
+      return null;
+    }
+
+    const lsPosition = localStorage[this.uniqueId('usersettings-position')];
+    return lsPosition ? JSON.parse(lsPosition) : null;
+  },
+
+  /**
+   * Returns true if local storage may be used / is available
+   * @private
+   * @returns {boolean} If it can be used.
+   */
+  canUseLocalStorage() {
+    try {
+      if (localStorage.getItem) {
+        return true;
+      }
+    } catch (exception) {
+      return false;
+    }
+
+    return false;
+  },
+
+  /**
+  * Generate a unique id based on the page and add a suffix.
+  * @private
+  * @param {object} suffix Add this string to make the id more unique
+  * @returns {string} The unique id.
+  */
+  uniqueId(suffix) {
+    suffix = (suffix === undefined || suffix === null) ? '' : suffix;
+    const uniqueid = `toast-${window.location.pathname.split('/').pop()
+      .replace(/\.xhtml|\.shtml|\.html|\.htm|\.aspx|\.asp|\.jspx|\.jsp|\.php/g, '')
+      .replace(/[^-\w]+/g, '')
+      .replace(/\./g, '-')
+      .replace(/ /g, '-')
+      .replace(/%20/g, '-')}-${suffix}`;
+
+    return uniqueid.replace(/--/g, '-').replace(/-$/g, '');
+  },
+
+  /**
+   * Removes event bindings from the instance.
+   * @private
+   * @param {jQuery[]|HTMLElement} toast the toast message to be removed bindings
+   * @returns {this} component instance
+   */
+  unbind(toast) {
+    const container = toast.closest('.toast-container');
+    container.off('dragstart.toast dragend.toast');
+    toast.off('mousedown.toast touchstart.toast');
+    return this;
+  },
+
+  /**
    * Remove the Message and Animate
    * @private
    * @param {jQuery[]|HTMLElement} toast the toast message to be removed
    * @returns {void}
    */
   remove(toast) {
+    this.unbind(toast);
+
     if (this.settings.audibleOnly) {
       toast.remove();
       return;
@@ -181,6 +398,7 @@ Toast.prototype = {
    * @returns {void}
    */
   destroy() {
+    $(document).off('keydown.toast keyup.toast mouseup.toast touchend.toast');
     $('#toast-container').remove();
     $.removeData(this.element[0], COMPONENT_NAME);
   }

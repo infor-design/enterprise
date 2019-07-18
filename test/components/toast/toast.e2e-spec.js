@@ -121,3 +121,26 @@ describe('Toast example-positions tests', () => {
     expect(await buttonEl.isEnabled()).toBe(true);
   });
 });
+
+describe('Toast example-draggable tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/toast/example-draggable');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be draggable', async () => {
+    const buttonEl = await element(by.id('show-toast-message'));
+    await buttonEl.click();
+    const containerSel = '#toast-container';
+    await utils.waitsFor('presenceOf', element(by.css(containerSel)));
+
+    expect(await element.all(by.css(containerSel)).count()).toEqual(1);
+    await utils.waitsFor('visibilityOf', element(by.css(containerSel)));
+
+    expect(await element(by.css(containerSel)).getAttribute('class')).toContain('is-draggable');
+    expect(await element(by.css(containerSel)).getAttribute('style')).toContain('left: 993.938px');
+  });
+});
