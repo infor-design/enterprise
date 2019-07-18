@@ -144,13 +144,24 @@ Personalize.prototype = {
     const defaultColors = {
       header: '2578A9'
     };
+
+    // Force to be light text on custom colors
+    const forceToBeLightTextOn = {
+      '#db7726': 'amber',
+      '#9279a6': 'amethyst',
+      '#2578a9': 'azure',
+      '#56932e': 'emerald'
+    };
+    let isDark = `${colors.header || defaultColors.header}`.toLowerCase();
+    isDark = forceToBeLightTextOn[isDark] ? 'white' : null;
+
     const lightest = colorUtils.validateHex(colors.lightest ||
       colorUtils.getLuminousColorShade((colors.header || defaultColors.header), 0.3));
-    const contrast = colorUtils.getContrastColor(lightest);
+    const contrast = colorUtils.getContrastColor(lightest, null, isDark);
 
     if (contrast === 'white') {
       defaultColors.text = 'ffffff';
-      defaultColors.subtext = 'd8d8d8';
+      defaultColors.subtext = 'f0f0f0';
     } else {
       defaultColors.text = '000000';
       defaultColors.subtext = '292929';
