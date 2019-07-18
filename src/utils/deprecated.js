@@ -39,7 +39,7 @@ function warnAboutDeprecation(newMethod, oldMethod) {
 }
 
 /**
- * Warns about upcomming removal of a piece of code with no replacement.
+ * Warns about an upcoming removal of a piece of code with no replacement.
  * @param {function|string} removedName the name of the removed code
  * @returns {void}
  */
