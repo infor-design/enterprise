@@ -5,7 +5,7 @@
 ### v4.20.0 Deprecation
 
 - `[ListFilter]` Deprecated `startsWith` in favor of `wordStartsWith`, due to the addition of the `phraseStartsWith` filterMode. ([#1606](https://github.com/infor-design/enterprise/issues/1606))
-- `[Popdown]` Deprecated `Popdown` in favor of `Popover` both components have similar functionality and we want to trim the code logic down. ([#2468](https://github.com/infor-design/enterprise/issues/2468))
+- `[Popdown]` Deprecated `Popdown` in favor of `Popover`. Both components have similar functionality and we want to trim the code logic down. ([#2468](https://github.com/infor-design/enterprise/issues/2468))
 - `[StepProcess]` Deprecated `StepProcess` as the component is no longer commonly used. We will remove it in 3-6 versions. ([#1476](https://github.com/infor-design/enterprise/issues/1476))
 - `[CompositeForm]` Deprecated `CompositeForm` as the component is no longer commonly used. We will remove it in 3-6 versions. ([#1476](https://github.com/infor-design/enterprise/issues/1476))
 - `[FieldOptions]` Deprecated `FieldOptions` as the component is no longer commonly used. We will remove it in 3-6 versions. ([#1476](https://github.com/infor-design/enterprise/issues/1476))
