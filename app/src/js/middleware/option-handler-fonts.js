@@ -71,7 +71,7 @@ module.exports = function () {
         fontWeights = NOTO_SANS_WEIGHTS;
 
         // Serve Traditional Chinese (Taiwan, others)
-        if (['zh-tw', 'zh-hant'].includes(localeString)) {
+        if (['zh-tw', 'zh-Hant'].includes(localeString)) {
           fontFamily += '+TC';
           fontSubset = 'chinese-traditional';
         }
