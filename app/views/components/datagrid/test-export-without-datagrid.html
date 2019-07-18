@@ -54,6 +54,7 @@
 
       var url = '{{basepath}}api/tasks';
       $.getJSON(url, function(res) {
+        res.splice(0, 0, {id: ' ID', escalated: 'Escalated', taskName: 'Task Name', desc: 'Description', comments: 'Comments'})
         Soho.excel.exportToExcel('MyExport', 'Worksheet1', res);
         // Soho.excel.exportToCsv('MyExport', res);
       });
