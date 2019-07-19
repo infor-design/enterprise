@@ -1,0 +1,10 @@
+// Popdown Uplift Styles
+// ==========================================
+
+// Reverse the Uplift box shadow on Cards/Widgets contained inside a Popdown
+.popdown {
+  .card,
+  .widget {
+    box-shadow: none;
+  }
+}
