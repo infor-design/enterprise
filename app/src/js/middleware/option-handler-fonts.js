@@ -32,6 +32,19 @@ const NOTO_SANS_LOCALES = [
   'zh-Hant'
 ];
 
+const TRADITIONAL_CHINESE_LOCALES = [
+  'zh-tw',
+  'zh-Hant'
+];
+
+const SIMPLIFIED_CHINESE_LOCALES = [
+  'zh-CN',
+  'zh-Hans'
+];
+
+// Thai Locale uses the Sarabun font
+const SARABUN_LOCALE = 'th-TH';
+
 // Hebrew locales use the Assistant font
 const ASSISTANT_LOCALE = 'he-IL';
 
@@ -65,19 +78,26 @@ module.exports = function () {
         fontWeights = STANDARD_WEIGHTS;
       }
 
+      // Thai
+      if (localeString === SARABUN_LOCALE) {
+        fontFamily = 'Sarabun';
+        fontSubset = 'thai';
+        fontWeights = STANDARD_WEIGHTS;
+      }
+
       // Chinese, Hindi, Japanese, Korean, Vietnamese
       if (NOTO_SANS_LOCALES.includes(localeString)) {
         fontFamily = 'Noto+Sans';
         fontWeights = NOTO_SANS_WEIGHTS;
 
         // Serve Traditional Chinese (Taiwan, others)
-        if (['zh-tw', 'zh-Hant'].includes(localeString)) {
+        if (TRADITIONAL_CHINESE_LOCALES.includes(localeString)) {
           fontFamily += '+TC';
           fontSubset = 'chinese-traditional';
         }
 
         // Serve Simplified Chinese (PRC)
-        if (['zh-CN', 'zh-Hans'].includes(localeString)) {
+        if (SIMPLIFIED_CHINESE_LOCALES.includes(localeString)) {
           fontFamily += '+SC';
           fontSubset = 'chinese-simplified';
         }
