@@ -302,6 +302,8 @@ describe('Multiselect typeahead-reloading tests', () => {
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
 
+      await browser.driver.sleep(config.sleep);
+
       // Arrow down twice and select "New York"
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
