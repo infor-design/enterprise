@@ -2931,6 +2931,9 @@ Dropdown.prototype = {
     this.wrapper.remove();
     this.listfilter.destroy();
     this.element.removeAttr('style');
+    this.element.closest('form').off('reset.dropdown');
+    this.element.off();
+    this.label.off();
 
     const list = document.body.querySelector('#dropdown-list');
     if (list && this.isOpen()) {
