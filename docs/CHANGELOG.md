@@ -67,6 +67,7 @@
 - `[Datagrid]` Fixed a bug where deselect all would not deselect some rows when using grouping. ([#1796](https://github.com/infor-design/enterprise/issues/1796))
 - `[Datagrid]` Fixed a bug where summary counts in grouping would show even if the group is collapsed. ([#2221](https://github.com/infor-design/enterprise/issues/2221))
 - `[Demoapp]` When displaying Uplift theme, now shows the correct alternate fonts for some locales when switching via the `locale` query string. ([#2365](https://github.com/infor-design/enterprise/issues/2365))
+- `[Dropdown]` Fixed a memory leak when calling destroy. ([#2493](https://github.com/infor-design/enterprise/issues/2493))
 - `[Editor]` Fixed a bug where tab or shift tab would break out of the editor when doing an indent/outdent. ([#2421](https://github.com/infor-design/enterprise/issues/2421))
 - `[Fieldfilter]` Fixed an issue where fields were getting wrap to second line on iPhone SE. ([#1861](https://github.com/infor-design/enterprise/issues/1861))
 - `[Fieldfilter]` Fixed an issue where Dropdown was not switching mode on example page. ([#2288](https://github.com/infor-design/enterprise/issues/2288))
