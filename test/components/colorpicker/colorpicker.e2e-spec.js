@@ -428,6 +428,7 @@ describe('Colorpicker RTL left and right keys test', () => {
       .wait(protractor.ExpectedConditions.presenceOf(element(by.id('colorpicker-menu'))), config.waitsFor);
     await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
     await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+
     expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#AD4242');
   });
 });

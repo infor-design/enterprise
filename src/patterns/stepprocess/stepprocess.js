@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../../components/locale/locale';
+import { warnAboutRemoval } from '../../utils/deprecated';
 
 // Jquery Imports
 import '../../utils/animations';
@@ -25,8 +26,8 @@ const STEPPROCESS_DEFAULTS = {
 
 /**
  * A Stepprocess/wizard control
- *
  * @class Stepprocess
+ * @deprecated as of v4.20.0. This component is no longer supported by the IDS team.
  * @param {string} element The component element.
  * @param {string} [settings] The component settings.
  * @param {boolean} [settings.linearProgression = false] The Main Application Name to display
@@ -51,6 +52,7 @@ function Stepprocess(element, settings) {
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
+  warnAboutRemoval('Stepprocess');
 }
 
 // Stepprocess Methods
