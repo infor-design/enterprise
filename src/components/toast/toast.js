@@ -161,10 +161,32 @@ Toast.prototype = {
     // Drop container
     const dropContainer = container.parent();
 
+    // Clear inline style
+    container.css({ top: '', left: '', right: '' });
+
     // Create css rules, position from local storage
     const rect = container[0].getBoundingClientRect();
     const lsPosition = this.restorePosition();
-    const posEl = lsPosition || rect;
+    let posEl = rect;
+
+    // Check for stored postion is in viewport
+    if (lsPosition) {
+      posEl = {
+        top: lsPosition.top,
+        left: lsPosition.left,
+        width: toast.outerWidth(),
+        height: toast.outerHeight(),
+      };
+      posEl.right = posEl.left + posEl.width;
+      posEl.bottom = posEl.top + posEl.height;
+
+      // Set to default, if stored postion not in viewport
+      if (!this.isPosInViewport(posEl)) {
+        posEl = rect;
+      }
+    }
+
+    // Compile css rules
     const rules = { top: `${posEl.top}px`, left: `${posEl.left}px` };
 
     // Reset position right rule, if was set in css file
@@ -172,7 +194,7 @@ Toast.prototype = {
       rules.right = 'auto';
     }
 
-    // Apply compile css rules
+    // Apply compiled css rules
     container.css(rules);
     container.addClass('is-draggable');
 
@@ -341,6 +363,21 @@ Toast.prototype = {
       .replace(/%20/g, '-')}-${suffix}`;
 
     return uniqueid.replace(/--/g, '-').replace(/-$/g, '');
+  },
+
+  /**
+   * Check if given postion in the viewport
+   * @private
+   * @param {object} pos The postion to check
+   * @param {object} elem The element to check
+   * @returns {boolean} true if is in the viewport
+   */
+  isPosInViewport(pos) {
+    return (
+      pos.top >= 0 && pos.left >= 0 &&
+      pos.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      pos.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
   },
 
   /**
