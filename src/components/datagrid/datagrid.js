@@ -454,6 +454,7 @@ Datagrid.prototype = {
 
     this.setRowGrouping();
     this.pagerRefresh(location);
+    this.syncSelectedRowsIdx();
 
     // Add to ui
     this.renderRows();
@@ -3346,8 +3347,8 @@ Datagrid.prototype = {
   isRowVisible(rowIndex) {
     if (!this.settings.virtualized) {
       if (this.settings.paging && !this.settings.source && rowIndex && this.pagerAPI) {
-        return (this.pagerAPI.activePage - 1) * this.settings.pagesize >= rowIndex &&
-            (this.pagerAPI.activePage) * this.settings.pagesize <= rowIndex;
+        return (this.pagerAPI.activePage - 1) * this.settings.pagesize <= rowIndex &&
+            (this.pagerAPI.activePage) * this.settings.pagesize >= rowIndex;
       }
 
       return true;
@@ -6887,7 +6888,11 @@ Datagrid.prototype = {
     for (let i = 0; i < this._selectedRows.length; i++) {
       if (this.pagerAPI && this._selectedRows[i].page === this.pagerAPI.activePage) {
         idx = this._selectedRows[i].idx;
-        this.selectNode(this.visualRowNode(idx), idx, this.settings.dataset[idx], true);
+        const elem = this.visualRowNode(idx);
+        if (elem[0]) {
+          this._selectedRows[i].elem = elem;
+          this.selectNode(elem, idx, this.settings.dataset[idx], true);
+        }
       }
       // Check for rows that changed page
       idx = this._selectedRows[i].pagingIdx;
@@ -6908,6 +6913,37 @@ Datagrid.prototype = {
   },
 
   /**
+   * Calculate pager info for given index.
+   * @private
+   * @param  {number} idx The index number
+   * @param  {object} ds custom dataset (optional)
+   * @param  {number} pagesize custom pagesize (optional)
+   * @returns {object} calculated pager info
+   */
+  calculatePagerInfo(idx, ds, pagesize) {
+    const s = this.settings;
+    const dataset = ds || s.treeGrid ? s.treeDepth : s.dataset;
+    pagesize = typeof pagesize === 'number' && pagesize > 0 ? pagesize : s.pagesize;
+    const pagerInfo = {
+      idx,
+      page: 1,
+      pagesize,
+      numOfPages: Math.ceil(dataset.length / pagesize)
+    };
+
+    for (let i = 0; i < pagerInfo.numOfPages; i++) {
+      if (idx >= ((pagerInfo.page - 1) * pagerInfo.pagesize) &&
+        idx < (pagerInfo.page * pagerInfo.pagesize)) {
+        pagerInfo.pagingIdx = idx - (pagerInfo.pagesize * i);
+        break;
+      }
+      pagerInfo.page++;
+    }
+
+    return pagerInfo;
+  },
+
+  /**
    * Run throught the array and remark the idx's after a row reorder.
    * @private
    * @returns {void}
@@ -6920,11 +6956,12 @@ Datagrid.prototype = {
 
     for (let i = 0; i < this.settings.dataset.length; i++) {
       if (this.settings.dataset[i]._selected) {
+        const calculatePagerInfo = this.calculatePagerInfo(i);
         this._selectedRows.push({
           idx: i,
           data: this.settings.dataset[i],
           elem: this.dataRowNode(i),
-          page: this.pagerAPI ? this.pagerAPI.activePage : 1,
+          page: calculatePagerInfo.page,
           pagingIdx: i,
           pagesize: this.settings.pagesize
         });
