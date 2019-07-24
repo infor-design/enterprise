@@ -74,6 +74,7 @@
 - `[Fieldfilter]` Fixed an issue where Dropdown was not switching mode on example page. ([#2288](https://github.com/infor-design/enterprise/issues/2288))
 - `[Field Options]` Fixed an issue where input example was not working. ([#2348](https://github.com/infor-design/enterprise/issues/2348))
 - `[Homepages]` Fixed an issue where personalize and chart text colors were not working with hero. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
+- `[Homepages]` Added `height: inherit;` CSS rule to Homepage container element to improve visibility in scrollable layouts. ([#2446](https://github.com/infor-design/enterprise/issues/2446))
 - `[Images]` Fixed an issue where images were not tabbable or receiving a visual focus state. ([#2025](https://github.com/infor-design/enterprise/issues/2025))
 - `[Listview]` Fixed a bug that caused the listview to run initialize too many times. ([#2179](https://github.com/infor-design/enterprise/issues/2179))
 - `[Lookup]` Added `autocomplete="off"` to lookup input fields to prevent browser interference. ([#2366](https://github.com/infor-design/enterprise/issues/2366))
