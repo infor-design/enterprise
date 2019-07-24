@@ -2319,10 +2319,17 @@ Datagrid.prototype = {
       input.val(conditions[i].value);
 
       if (input.is('select')) {
+        const firstVal = conditions[i].value instanceof Array ?
+          conditions[i].value[0] : conditions[i].value;
         if (conditions[i].innerHTML) {
           input[0].innerHTML = conditions[i].innerHTML;
         }
-        if (conditions[i].value instanceof Array && !conditions[i].selectedOptions) {
+        if (!input.find(`option[value="${firstVal}"]`).length) {
+          const dropdownApi = input.data('dropdown');
+          if (dropdownApi) {
+            dropdownApi.setCode(conditions[i].value);
+          }
+        } else if (conditions[i].value instanceof Array && !conditions[i].selectedOptions) {
           for (let j = 0; j < conditions[i].value.length; j++) {
             input.find(`option[value="${conditions[i].value[j]}"]`).prop('selected', true);
           }
