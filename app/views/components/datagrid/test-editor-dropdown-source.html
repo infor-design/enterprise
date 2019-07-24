@@ -1,15 +1,10 @@
 <div class="row">
   <div class="six columns">
 
-    <h2>Datagrid Test: Dropdown Editor Uses Source EditorOptions</h2>
-
+    <h2>Datagrid Test: Dropdown Editor Uses Source with Multiselect</h2>
     <p>
-      <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/1185" target="_blank">GIT #1185</a>.<br />
+      <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/2383" target="_blank">GIT #2383</a>.<br />
     </p>
-
-    <p>Open the dropdown options for the "Action" column, with the dropdown open click elsewhere in the grid (for example click the Order Date column). The column's value is changed to an empty string.</p>
-    <p>When the dropdown is opened the current value is not selected in the dropdown list.</p>
-
   </div>
 </div>
 
@@ -33,7 +28,11 @@
   $('body').one('initialized', function () {
     var grid,
       columns = [],
-      data = [];
+      dataAll = [],
+      dataPOH = [],
+      dataSS = [],
+      dataCC = [],
+      dataRR = [];
 
     var LOW_RANGE_LOW_NUMBER = 0,
         LOW_RANGE_HIGH_NUMBER = 150,
@@ -42,7 +41,6 @@
 
     // Define all possible "Action" column options for the grid
     var actionOptions = [
-      {label: '&nbsp;', value: 'blank'},
       {label: 'Place On-Hold', value: 'poh'},
       {label: 'Request Review', value: 'rr'},
       {label: 'Send to Shipping', value: 'ss'},
@@ -50,13 +48,24 @@
     ];
 
     // Some Sample Data
-    data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210.99, orderDate:  new Date(2016, 2, 15, 12, 30, 36), portable: false, action: 'poh', description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
-    data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.991, orderDate: new Date(2016, 2, 15, 0, 30, 36), portable: false, action: 'poh', description: 'The kit has an air blow gun that can be used for cleaning'});
-    data.push({ id: 3, productId: 2342203, productName: 'Portable Compressor', activity:  'Inspect and Repair', portable: true, quantity: 1, price: 120.992, orderDate: new Date(2014, 6, 3), action: 'ss'});
-    data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', portable: true, quantity: 3, price: null, orderDate: new Date(2015, 3, 3), action: 'ss', description: 'Compressor comes with with air tool kit'});
-    data.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity:  'Inspect and Repair', portable: false, quantity: 4, price: 210.99, orderDate: new Date(2015, 5, 5), action: 'rr'});
-    data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', portable: false, quantity: 41, price: 120.99, orderDate: new Date(2014, 6, 9), action: 'cc'});
-    data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, orderDate: new Date(2014, 6, 9), action: 'ss'});
+    dataAll.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210.99, orderDate:  new Date(2016, 2, 15, 12, 30, 36), portable: false, action: 'poh', description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
+    dataAll.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.991, orderDate: new Date(2016, 2, 15, 0, 30, 36), portable: false, action: 'poh', description: 'The kit has an air blow gun that can be used for cleaning'});
+    dataAll.push({ id: 3, productId: 2342203, productName: 'Portable Compressor', activity:  'Inspect and Repair', portable: true, quantity: 1, price: 120.992, orderDate: new Date(2014, 6, 3), action: 'ss'});
+    dataAll.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', portable: true, quantity: 3, price: null, orderDate: new Date(2015, 3, 3), action: 'ss', description: 'Compressor comes with with air tool kit'});
+    dataAll.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity:  'Inspect and Repair', portable: false, quantity: 4, price: 210.99, orderDate: new Date(2015, 5, 5), action: 'rr'});
+    dataAll.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', portable: false, quantity: 41, price: 120.99, orderDate: new Date(2014, 6, 9), action: 'cc'});
+    dataAll.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, orderDate: new Date(2014, 6, 9), action: 'ss'});
+
+    dataPOH.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210.99, orderDate:  new Date(2016, 2, 15, 12, 30, 36), portable: false, action: 'poh', description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
+    dataPOH.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.991, orderDate: new Date(2016, 2, 15, 0, 30, 36), portable: false, action: 'poh', description: 'The kit has an air blow gun that can be used for cleaning'});
+
+    dataSS.push({ id: 3, productId: 2342203, productName: 'Portable Compressor', activity:  'Inspect and Repair', portable: true, quantity: 1, price: 120.992, orderDate: new Date(2014, 6, 3), action: 'ss'});
+    dataSS.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', portable: true, quantity: 3, price: null, orderDate: new Date(2015, 3, 3), action: 'ss', description: 'Compressor comes with with air tool kit'});
+    dataSS.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, orderDate: new Date(2014, 6, 9), action: 'ss'});
+
+    dataRR.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity:  'Inspect and Repair', portable: false, quantity: 4, price: 210.99, orderDate: new Date(2015, 5, 5), action: 'rr'});
+
+    dataCC.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', portable: false, quantity: 41, price: 120.99, orderDate: new Date(2014, 6, 9), action: 'cc'});
 
     var dropDownFormatter = function (row, cell, value, col) {
       for (let index = 0, len = actionOptions.length; index < len; index++) {
@@ -75,20 +84,41 @@
     };
 
     columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input, filterType: 'text'});
     columns.push({ id: 'status', name: 'Status', field: 'price', formatter: Formatters.Alert, readonly: true, ranges: [{'min': LOW_RANGE_LOW_NUMBER, 'max': LOW_RANGE_HIGH_NUMBER, 'classes': 'success', text: 'Confirmed'}, {'min': HIGH_RANGE_LOW_NUMBER, 'max': HIGH_RANGE_HIGH_NUMBER, 'classes': 'error', text: 'Error'}]});
     columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
-    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: dropDownFormatter, editor: Editors.Dropdown, editorOptions: {editable: false, source: dropDownSource} });
+    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: dropDownFormatter, filterType: 'multiselect', options:  [ { label: ' ', value: ' '} ], editor: Editors.Dropdown, editorOptions: {editable: false, source: dropDownSource} });
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date});
 
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({
+      cellNavigation: true,
       columns: columns,
-      dataset: data,
+      dataset: dataAll,
+      disableClientSort: true,
+      disableClientFilter: true,
+      filterWhenTyping: false,
       editable: true,
       clickToSelect: false,
+      redrawOnResize: false,
+      isList: true,
+      menuId: 'datagrid',
       selectable: 'multiple',
-      toolbar: { keywordFilter: true, results: true }
+      filterable: true,
+      enableTooltips:       true,
+      toolbar: { keywordFilter: true, results: true },
+      actionableMode: true,
+      showDirty: true,
+      emptyMessage: null,
+      rowHeight: 'short',
+      saveUserSettings:     {
+      columns: false,
+        rowHeight: false,
+        sortOrder: false,
+        pagesize: false,
+        activePage: false,
+        filter: false
+      },
     }).on('activecellchange', function (e, args) {
       console.log('e', e);
       console.log('args', args);
@@ -98,6 +128,36 @@
       console.log(e, args);
     }).on('rowremove', function (e, args) {
       console.log(e, args);
+    })
+    .on('filtered', function (e, args) {
+      $('body').toast({ title: 'Filtered Event', message: 'Filter Event Triggered' });
+      console.log('filtered', args);
+
+      if (args.conditions.length === 0) {
+        gridApi.loadData(dataAll);
+      } else {
+        let results = [];
+        for (var i = 0; i < args.conditions[0].value.length; i++) {
+          var value = args.conditions[0].value[i]
+          switch(value) {
+            case 'poh':
+              results = $.merge(results, dataPOH);
+              break;
+            case 'rr':
+              results = $.merge(results, dataRR);
+              break;
+            case 'ss':
+              results = $.merge(results, dataSS);
+              break;
+            case 'cc':
+              results = $.merge(results, dataCC);
+              break;
+            case 'blank':
+              break;
+          }
+        }
+        gridApi.loadData(results);
+      }
     });
 
     gridApi = $('#datagrid').data('datagrid');

@@ -299,8 +299,15 @@ html[dir='rtl'] {
 
   .inline .radio ~ .label-text,
   .radio + label {
-    padding-left: inherit;
     padding-right: 36px;
+  }
+
+  // Short Fields
+  .field-short {
+    .inline .radio ~ .label-text,
+    .radio + label {
+      padding-right: 36px;
+    }
   }
 
   .inline .radio ~ .label-text::before,

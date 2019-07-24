@@ -1,11 +1,15 @@
 // Completion Chart
 //==================================================//
 
+.completion-chart {
+  color: $label-color;
+  margin: 10px 0;
+}
+
 .chart-completion-target,
 .chart-completion {
   background-color: $chart-progressbar-bg-color;
   height: 10px;
-  margin-bottom: 70px;
   width: 100%;
 
   &.chart-completion {
@@ -96,7 +100,6 @@
 
   .completed {
     background-color: $chart-progressbar-completed-fill;
-    border-right: 1px solid $chart-progressbar-bg-color;
     height: 10px;
     margin-top: -10px;
     position: relative;
@@ -109,7 +112,6 @@
 
     span {
       color: $chart-progressbar-completed-fill;
-      font-weight: $theme-number-font-weight-bold;
 
       &.value,
       &.text {
@@ -193,7 +195,7 @@
     width: 60%;
 
     span {
-      color: $font-color;
+      color: $label-color;
       font-size: $theme-size-font-sm;
       position: absolute;
       text-align: right;
@@ -216,6 +218,7 @@
 
     &.overlap {
       span {
+        color: $label-color;
         top: 70px;
         transition: top 0.5s ease 0s;
       }
@@ -240,7 +243,7 @@
   }
 
   &.overlap {
-    margin-bottom: 100px;
+    margin-bottom: 100px !important;
     transition: margin 0.5s ease 0s;
   }
 
@@ -315,13 +318,17 @@
 
 }
 
+.chart-completion-target-padding .total.bar.chart-completion-target {
+  margin-bottom: 60px;
+
+  .icon {
+    top: 1px;
+  }
+}
+
 .completion-chart {
   .remaining,
   .info {
-    .value {
-      font-weight: $theme-number-font-weight-bold;
-    }
-
     .error-color,
     .error {
       color: $error-color;
@@ -356,18 +363,18 @@
     position: relative;
   }
 
-  .icon-error {
-    margin-top: 8px;
-    position: absolute;
-    right: -20px;
-    top: -8px;
+  .icon {
+    display: inline-block;
+    height: 14px;
+    margin: -3px 3px -1px;
+    position: relative;
+    top: 50%;
+    vertical-align: middle;
+    width: 14px;
   }
-}
 
-// Position the Icon
-.chart-targeted-achievement {
-  .icon-error {
-    top: -9px;
+  .hyperlink {
+    font-size: $theme-size-font-base;
   }
 }
 

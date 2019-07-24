@@ -1,5 +1,7 @@
 // Required ====/
 @import './required';
+@import '../components/typography/typography-uplift';
+@import '../components/icons/icons-uplift';
 
 // Behaviors ====/
 @import '../components/drag/drag';
@@ -8,32 +10,45 @@
 
 // Foundational ====/
 @import '../components/badges/badges';
+@import '../components/badges/badges-uplift';
 @import '../components/breadcrumb/breadcrumb';
 @import '../components/button/button';
+@import '../components/button/button-uplift';
 @import '../components/counts/counts';
 @import '../components/form/form';
 @import '../components/hyperlinks/hyperlinks';
 @import '../components/input/input';
+@import '../components/input/input-uplift';
 @import '../components/skiplink/skiplink';
 @import '../components/switch/switch';
 
 // Mid-level ====/
 @import '../components/about/about';
 @import '../components/accordion/accordion';
+@import '../components/accordion/accordion-uplift';
 @import '../components/applicationmenu/applicationmenu';
 @import '../components/applicationmenu/applicationmenu-uplift';
 @import '../components/autocomplete/autocomplete';
 @import '../components/blockgrid/blockgrid';
 @import '../components/busyindicator/busyindicator';
 @import '../components/cards/cards';
+@import '../components/cards/cards-uplift';
+@import '../components/checkboxes/checkboxes';
+@import '../components/checkboxes/checkboxes-uplift';
 @import '../components/circlepager/circlepager';
 @import '../components/colorpicker/colorpicker';
+@import '../components/colorpicker/colorpicker-uplift';
 @import '../components/datepicker/datepicker';
+@import '../components/datepicker/datepicker-uplift';
 @import '../components/dropdown/dropdown';
+@import '../components/dropdown/dropdown-uplift';
 @import '../components/expandablearea/expandablearea';
 @import '../components/field-filter/field-filter';
+@import '../components/field-filter/field-filter-uplift';
 @import '../components/field-options/field-options';
+@import '../components/field-options/field-options-uplift';
 @import '../components/fieldset/fieldset';
+@import '../components/fieldset/fieldset-uplift';
 @import '../components/fileupload/fileupload';
 @import '../components/header/header';
 @import '../components/header/header-uplift';
@@ -41,30 +56,40 @@
 @import '../components/listbuilder/listbuilder';
 @import '../components/listview/listview';
 @import '../components/lookup/lookup';
+@import '../components/lookup/lookup-uplift';
 @import '../components/mask/mask';
 @import '../components/masthead/masthead';
 @import '../components/modal/modal';
+@import '../components/modal/modal-uplift';
 @import '../components/pager/pager';
+@import '../components/pager/pager-uplift';
 @import '../components/popdown/popdown';
 @import '../components/popupmenu/popupmenu';
+@import '../components/popupmenu/popupmenu-uplift';
 @import '../components/processindicator/processindicator';
+@import '../components/processindicator/processindicator-uplift';
 @import '../components/progress/progress';
 @import '../components/rating/rating';
 @import '../components/searchfield/searchfield';
+@import '../components/searchfield/searchfield-uplift';
 @import '../components/searchfield/searchfield-toolbar';
 @import '../components/slider/slider';
 @import '../components/spinbox/spinbox';
+@import '../components/spinbox/spinbox-uplift';
 @import '../components/splitter/splitter';
 @import '../components/swaplist/swaplist';
 @import '../components/tabs/tabs';
 @import '../components/tabs/tabs-uplift';
 @import '../components/timeline/timeline';
+@import '../components/timeline/timeline-uplift';
 @import '../components/timepicker/timepicker';
+@import '../components/timepicker/timepicker-uplift';
 @import '../components/toast/toast';
 @import '../components/toolbar-flex/toolbar-flex';
 @import '../components/toolbar-flex/toolbar-flex-searchfield';
 @import '../components/toolbar/toolbar';
 @import '../components/tooltip/tooltip';
+@import '../components/tooltip/tooltip-uplift';
 @import '../components/tree/tree';
 @import '../components/wizard/wizard';
 
@@ -73,18 +98,23 @@
 @import '../components/compositeform/compositeform';
 @import '../components/contextualactionpanel/contextualactionpanel';
 @import '../components/datagrid/datagrid';
+@import '../components/datagrid/datagrid-uplift';
 @import '../components/editor/editor';
+@import '../components/editor/editor-uplift';
 @import '../components/form-compact/form-compact';
+@import '../components/form-compact/form-compact-uplift';
 @import '../components/monthview/monthview';
 @import '../components/notification/notification';
 
 // Charts ====/
 @import '../components/charts/charts'; // Base
+@import '../components/charts/charts-uplift';
 @import '../components/bar/bar';
 @import '../components/bullet/bullet';
 @import '../components/column/column';
 @import '../components/completion-chart/completion-chart';
 @import '../components/pie/pie';
+@import '../components/pie/pie-uplift';
 @import '../components/radar/radar';
 @import '../components/stepchart/stepchart';
 @import '../components/treemap/treemap';

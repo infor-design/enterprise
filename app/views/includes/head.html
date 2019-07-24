@@ -37,11 +37,11 @@
   <script src="{{basepath}}js/sohoxi.js?v=MTIuMC4wLjAuMQ"></script>
   <script src="../../js/cultures/{{locale}}.js"></script>-->
 
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet"/>
-
+  <link href="https://fonts.googleapis.com/css?{{fontString}}" rel="stylesheet"/>
+  <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/theme-{{theme.name}}-{{theme.variant}}.css" type="text/css"/>
   <script>
     var colors;
-    var theme;
+    var theme = 'theme-{{theme.name}}-{{theme.variant}}';
     var blockUI = '{{layout}}'.indexOf('embedded') > -1 ? false : true;
 
     {{#colors}}
@@ -57,21 +57,15 @@
 
     {{/colors}}
 
-    {{#theme}}
-    theme = '{{theme}}';
-    {{/theme}}
-
     // If Initialize isnt called need to defer this
-    $('html').personalize({colors: colors, theme: theme, blockUI: blockUI});
+    $('html')
+      .personalize({colors: colors, theme: theme, blockUI: blockUI})
+      .on('colorschanged themechanged', function (e, a) {
+        const parts = a.theme.split('-');
+        var pageUrl = '?theme=' + parts[1] + '&variant=' + parts[2] + '&colors=' + a.colors.replace('#', '');
+        window.history.pushState('', '', pageUrl);
+      });
   </script>
 
-  <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/{{theme}}-theme.css" type="text/css"/>
-
-  <!-- Cache Bust Test
-  <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/{{theme}}-theme.css?v=MTIuMC4yMy4xMA" type="text/css"/>
-  -->
-
-  <!-- Style Sheets -->
   <link rel="stylesheet" href="{{basepath}}css/demo.css" type="text/css"/>
-
 </head>

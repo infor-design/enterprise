@@ -378,7 +378,7 @@ Tooltip.prototype = {
       }
 
       // Could be a translation definition
-      content = Locale.translate(content, true) || content;
+      content = Locale.translate(content, { showAsUndefined: true }) || content;
 
       // Could be an ID attribute.
       // If it matches an element already on the page, grab that element's content
@@ -451,7 +451,7 @@ Tooltip.prototype = {
       titleArea.style.display = 'none';
     }
 
-    if (!contentArea.previousElementSibling.classList.contains('arrow')) {
+    if (contentArea && contentArea.previousElementSibling && !contentArea.previousElementSibling.classList.contains('arrow')) {
       contentArea.insertAdjacentHTML('beforebegin', '<div class="arrow"></div>');
     }
 
@@ -629,6 +629,10 @@ Tooltip.prototype = {
 
     const mouseUpEventName = this.isTouch ? 'touchend' : 'mouseup';
 
+    // Personalizable the toolbar
+    const isPersonalizable = self.element.closest('.is-personalizable').length > 0;
+    self.tooltip[0].classList[isPersonalizable ? 'add' : 'remove']('is-personalizable');
+
     setTimeout(() => {
       $(document)
         .on(`${mouseUpEventName}.${COMPONENT_NAME}-${self.uniqueId}`, (e) => {
@@ -758,6 +762,9 @@ Tooltip.prototype = {
     const self = this;
     const distance = this.isPopover ? 20 : 10;
     const tooltipPlacementOpts = this.settings.placementOpts || {};
+    const windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    const rect = this.tooltip[0].getBoundingClientRect();
     const opts = $.extend({}, {
       x: 0,
       y: distance,
@@ -772,6 +779,13 @@ Tooltip.prototype = {
     if (opts.placement === 'left' || opts.placement === 'right') {
       opts.x = distance;
       opts.y = 0;
+    }
+    if (rect.width >= windowW && /left|right/g.test(opts.placement)) {
+      this.tooltip[0].classList.add('no-arrow');
+    } else if (rect.height >= windowH && /top|bottom/g.test(opts.placement)) {
+      this.tooltip[0].classList.add('no-arrow');
+    } else {
+      this.tooltip[0].classList.remove('no-arrow');
     }
 
     this.tooltip.one('afterplace.tooltip', (e, placementObj) => {
@@ -812,6 +826,7 @@ Tooltip.prototype = {
       return;
     }
 
+    this.tooltip[0].classList.remove('is-personalizable');
     this.tooltip[0].classList.add('is-hidden');
     this.tooltip[0].style.left = '';
     this.tooltip[0].style.top = '';

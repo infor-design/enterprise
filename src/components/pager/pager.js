@@ -48,6 +48,7 @@ const FOCUSABLE_SELECTOR = [
 * @param {array} [settings.pagesizes = [15, 25, 50, 75]] Array of numbers of the page size selector
 * @param {boolean} [settings.showPageSizeSelector = true] If false will not show page size selector
 * @param {boolean} [settings.smallPageSizeSelector = false] If true, shows a condensed view of the page size selector
+* @param {string} [settings.pageSizeSelectorText = 'RecordsPerPage'] A string to the key of the translation text for the page size selector.
 * @param {boolean} [settings.onPageSizeChange] Call back function for page change
 * @param {boolean} [settings.showFirstButton = true] If false the first button will be hidden (standalone mode)
 * @param {boolean} [settings.enableFirstButton = true] If false the first button will be disabled (standalone mode)
@@ -66,6 +67,7 @@ const FOCUSABLE_SELECTOR = [
 * @param {boolean} [settings.previousPageTooltip = 'Previous Page'] Tooltip for the first page, defaults to an internally translated tooltip.
 * @param {boolean} [settings.nextPageTooltip = 'Next Page'] Tooltip for the first page, defaults to an internally translated tooltip.
 * @param {boolean} [settings.lastPageTooltip = 'Last Page'] Tooltip for the first page, defaults to an internally translated tooltip.
+* @param {boolean} [settings.pageSizeMenuSettings = {}] customizable popupmenu settings for the Page Size Selector.
 */
 const PAGER_DEFAULTS = {
   componentAPI: undefined,
@@ -78,6 +80,7 @@ const PAGER_DEFAULTS = {
   pagesizes: [15, 25, 50, 75],
   showPageSizeSelector: true,
   smallPageSizeSelector: false,
+  pageSizeSelectorText: 'RecordsPerPage',
   onPageSizeChange: null,
   showFirstButton: true,
   enableFirstButton: true,
@@ -95,7 +98,10 @@ const PAGER_DEFAULTS = {
   firstPageTooltip: 'FirstPage',
   previousPageTooltip: 'PreviousPage',
   nextPageTooltip: 'NextPage',
-  lastPageTooltip: 'LastPage'
+  lastPageTooltip: 'LastPage',
+  pageSizeMenuSettings: {
+    attachToBody: false
+  }
 };
 
 function Pager(element, settings) {
@@ -277,6 +283,8 @@ Pager.prototype = {
       this.settings.pagesizes = this.settings.pagesizes.sort(sortNumber);
     }
 
+    this.handleDeprecatedSettings();
+
     const widgetContainer = this.element.parents('.card, .widget');
 
     // Adjust for the possibility of the pager being attached to a Table instead
@@ -362,6 +370,21 @@ Pager.prototype = {
 
         self.pagerBar.appendTo(widgetFooter);
       });
+    }
+  },
+
+  /**
+   * Handle Deprecated Settings
+   * @private
+   * @returns {void}
+   */
+  handleDeprecatedSettings() {
+    // `attachPageSizeMenuToBody` becomes `pageSizeMenuSettings.attachToBody`.
+    // The `pageSizeMenuSettings` object represents a Popupmenu settings object.
+    if (this.settings.attachPageSizeMenuToBody !== undefined) {
+      warnAboutDeprecation('pageSizeMenuSettings.attachToBody (setting)', 'attachPageSizeMenuToBody (setting)');
+      this.settings.pageSizeMenuSettings.attachToBody = this.settings.attachPageSizeMenuToBody;
+      delete this.settings.attachPageSizeMenuToBody;
     }
   },
 
@@ -985,14 +1008,14 @@ Pager.prototype = {
     if (!this.pageSizeSelectorButton) {
       const pageSizeLi = $('<li class="pager-pagesize"></li>');
       const dropdownIcon = $.createIcon({ icon: 'dropdown' });
-      let translatedText = Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize);
+      let translatedText = Locale.translate(this.settings.pageSizeSelectorText).replace('{0}', this.settings.pagesize);
       let isAudible = '';
       let recordHtml = `<span>${translatedText}</span>`;
 
       // Change to the condensed layout, if applicable
       if (this.showSmallPageSizeSelector) {
         isAudible = ' class="audible"';
-        translatedText = Locale.translate('RecordsPerPage').replace('{0}', '');
+        translatedText = Locale.translate(this.settings.pageSizeSelectorText).replace('{0}', '');
         recordHtml = `<span class="record-count">${this.settings.pagesize}</span>
         <span${isAudible}>${translatedText}</span>`;
       }
@@ -1015,19 +1038,20 @@ Pager.prototype = {
       }
       const menu = $(`<ul class="popupmenu is-selectable">${menuItems}</ul>`);
       pageSizeButton.after(menu);
-
-      const popupOpts = {
-        placementOpts: {
-          parent: pageSizeButton,
-          parentXAlignment: (Locale.isRTL() ? 'left' : 'right'),
-          strategies: ['flip']
-        }
-      };
-
-      pageSizeButton.popupmenu(popupOpts);
     }
 
-    $(this.pageSizeSelectorButton).on('selected.pager', (e, args) => {
+    const $pageSizeSelectorButton = $(this.pageSizeSelectorButton);
+
+    // Invoke/Update the popupmenu instance with new settings
+    const popupOpts = utils.extend({}, {
+      placementOpts: {
+        parent: $pageSizeSelectorButton,
+        parentXAlignment: (Locale.isRTL() ? 'left' : 'right'),
+        strategies: ['flip']
+      }
+    }, this.settings.pageSizeMenuSettings);
+    $pageSizeSelectorButton.popupmenu(popupOpts);
+    $pageSizeSelectorButton.on('selected.pager', (e, args) => {
       this.changePageSize(args);
     });
   },
@@ -1044,6 +1068,10 @@ Pager.prototype = {
       totalPages = state.filteredPages;
     }
     this.pageCount(totalPages);
+
+    if (this.pageSizeSelectorButton) {
+      this.teardownPageSizeSelector();
+    }
 
     this.renderButtons();
     this.renderPageSelectorInput();
@@ -1247,6 +1275,7 @@ Pager.prototype = {
       pagesize: this.settings.pagesize
     };
 
+    this.handleDeprecatedSettings();
     this.updatePagingInfo(pagingInfo);
     return this;
   },
@@ -1427,13 +1456,33 @@ Pager.prototype = {
 
     if (this.pageSizeSelectorButton) {
       $(this.pageSizeSelectorButton).off(`selected.${COMPONENT_NAME}`);
-      $(this.pageSizeSelectorButton).data('popupmenu').destroy();
+      this.teardownPageSizeSelector();
     }
 
     this.pagerBar[0].innerHTML = '';
 
     delete this.firstPage;
     delete this.lastPage;
+  },
+
+  /**
+   * Tears down the Popupmenu associated with the page size selector.
+   * This happens here because the Popupmenu component does not remove its own
+   * menu markup when being destroyed.
+   * @private
+   * @returns {void}
+   */
+  teardownPageSizeSelector() {
+    const $pageSizeSelectorButton = $(this.pageSizeSelectorButton);
+    const api = $pageSizeSelectorButton.data('popupmenu');
+
+    if (!api || !api.menu) {
+      return;
+    }
+
+    const pageSizeSelectorMenu = api.menu;
+    api.destroy();
+    pageSizeSelectorMenu.remove();
   },
 
   /**

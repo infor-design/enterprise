@@ -1,3 +1,4 @@
+import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
@@ -97,6 +98,7 @@ FileUpload.prototype = {
         elem.parent().find('[type="file"]').trigger('click');
         handle = true;
       } else if (e.which === 8) {
+        if (env.browser.isIE11()) e.preventDefault();
         this.clearUploadFile();
         handle = true;
       }

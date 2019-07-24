@@ -65,6 +65,7 @@ Sparkline.prototype = {
     // chartData, options
     // Sparkline Chart
     const self = this;
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     let tooltipIntervalMedianRange;
     let tooltipIntervalDots;
     const tooltipDataCacheMedianRange = [];
@@ -144,6 +145,9 @@ Sparkline.prototype = {
             const posY = rect.top - size.height - 5; // 5 is extra padding
 
             if (content !== '') {
+              if (charts.tooltip && charts.tooltip.length) {
+                charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+              }
               charts.showTooltip(posX, posY, content, 'top');
             }
           };
@@ -229,6 +233,9 @@ Sparkline.prototype = {
           const posY = rect.top - size.height - 8;
 
           if (content !== '') {
+            if (charts.tooltip && charts.tooltip.length) {
+              charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+            }
             charts.showTooltip(posX, posY, content, 'top');
           }
         };
@@ -281,7 +288,7 @@ Sparkline.prototype = {
    * Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging
    * @private
    * @param  {object} d the data element with the properties
-   * @returns {object} Object with the calulated width and height
+   * @returns {object} Object with the calculated width and height
    */
   calculateAspectRatioFit(d) {
     const ratio = Math.min(d.maxWidth / d.srcWidth, d.maxHeight / d.srcHeight);

@@ -14,7 +14,7 @@ const COMPONENT_NAME = 'bar';
  * with heights or lengths proportional to the values that they represent. This is adapated from
  * http://jsfiddle.net/datashaman/rBfy5/2/
  * @class Bar
- * @param {string} element The plugin element for the constuctor
+ * @param {string} element The plugin element for the constuctor.
  * @param {string} [settings] The settings element.
  * @param {array} [settings.dataset=[]] The data to use in the line/area/bubble.
  * @param {boolean} [settings.isStacked=true] Default is a single or stacked chart.
@@ -112,6 +112,7 @@ Bar.prototype = {
   build() {
     const self = this;
     const isRTL = Locale.isRTL();
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const isFormatter = !!this.settings.formatterString;
     const format = function (value) {
       return isFormatter ? d3.format(self.settings.formatterString)(value) : value;
@@ -416,7 +417,8 @@ Bar.prototype = {
         if (self.settings.useLogScale) {
           return 0;
         }
-        return (self.settings.isStacked && !self.settings.isSingle) ? xScale(d.x0) : xScale(0);
+        return (self.settings.isStacked && !self.settings.isSingle) ?
+          xScale(d.x0) + 1 : xScale(0) + 1;
       })
       .attr('y', d => (self.settings.isStacked ? yScale(d.y) :
         ((((totalGroupArea - totalHeight) / 2) + (d.gindex * maxBarHeight)) + (d.index * gap))))
@@ -443,8 +445,62 @@ Bar.prototype = {
           const y = isTooltipBottom ? yPosS : (yPosS - size.height - 13);
 
           if (content !== '') {
+            if (charts.tooltip && charts.tooltip.length) {
+              charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+            }
             charts.showTooltip(x, y, content, isTooltipBottom ? 'bottom' : 'top');
           }
+        };
+
+        // Replace matched pattern in given string
+        const replaceMatch = (str, callback, expr) => {
+          if (typeof expr === 'undefined' || expr === null) {
+            expr = /{{(\w+)}}/g;
+          } else if (typeof expr === 'string') {
+            expr = new RegExp(expr, 'g');
+          }
+          if (typeof str === 'string' && typeof callback === 'function' && expr instanceof RegExp) {
+            let max = 9999;
+            while (expr.test(str) && max > 0) {
+              str = str.replace(expr, (match, key) => callback(match, key));
+              max--;
+            }
+          }
+          return str;
+        };
+
+        // Replace key/value and set type as string
+        const replaceMatchAndSetType = () => {
+          if (typeof content === 'string') {
+            content = replaceMatch(content, (match, key) => format(d[key]));
+          } else if (typeof content === 'number') {
+            content = content.toString();
+          }
+        };
+
+        // Set custom tooltip callback method
+        const setCustomTooltip = (method) => {
+          content = '';
+          const args = { index: i, data: d };
+          const req = (res) => {
+            if (typeof res === 'string' || typeof res === 'number') {
+              content = res;
+              replaceMatchAndSetType();
+              tooltipDataCache[i] = content;
+            }
+          };
+          let runInterval = true;
+          tooltipInterval = setInterval(() => {
+            if (runInterval) {
+              runInterval = false;
+              method(req, args);
+            }
+
+            if (content !== '') {
+              clearInterval(tooltipInterval);
+              show();
+            }
+          }, 10);
         };
 
         if (dataset.length === 1) {
@@ -508,8 +564,20 @@ Bar.prototype = {
             }
           }, 10);
         } else {
-          content = tooltipDataCache[i] || tooltipData || d.tooltip || content || '';
-          show(xPosS, yPosS, isTooltipBottom);
+          content = tooltipDataCache[i] || tooltipData || content || '';
+          if (!tooltipDataCache[i] && d.tooltip !== false &&
+            typeof d.tooltip !== 'undefined' && d.tooltip !== null) {
+            if (typeof d.tooltip === 'function') {
+              setCustomTooltip(d.tooltip);
+            } else {
+              content = d.tooltip.toString();
+              replaceMatchAndSetType();
+              tooltipDataCache[i] = content;
+            }
+          }
+          if (typeof content === 'string' && content !== '') {
+            show(xPosS, yPosS, isTooltipBottom);
+          }
 
           // set inline colors
           if (self.settings.isStacked) {
@@ -618,8 +686,8 @@ Bar.prototype = {
         if (self.settings.useLogScale) {
           return 0;
         }
-        return (self.settings.isStacked && !self.settings.isSingle) ? xScale(d.x0) :  //eslint-disable-line
-          (d.x < 0 ? xScale(d.x) : xScale(0));
+        return (self.settings.isStacked && !self.settings.isSingle) ? xScale(d.x0) + 1 :  //eslint-disable-line
+          (d.x < 0 ? xScale(d.x) + 1 : xScale(0) + 1);
       });
 
     self.settings.svg = self.svg;
@@ -758,6 +826,9 @@ Bar.prototype = {
       });
     }
 
+    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+      this.updated();
+    });
     return this;
   },
 
@@ -835,6 +906,7 @@ Bar.prototype = {
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     $('body').off(`resize.${COMPONENT_NAME}`);
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
     return this;
   },
 

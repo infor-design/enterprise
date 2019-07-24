@@ -34,16 +34,9 @@ describe('Stacked Bar Chart example-index tests', () => {
   });
 
   it('Should highlight when selected', async () => {
-    const fGroupEl = await element.all(by.css('.series-group')).get(0);
-    const fBarEl = await fGroupEl.element(by.css('.bar.series-0'));
-    const sGroupEl = await element.all(by.css('.series-group')).get(1);
-    const sBarEl = await sGroupEl.element(by.css('.bar.series-0'));
+    await element(by.css('.series-group:nth-child(-n+3) .bar:nth-child(1)')).click();
 
-    await fBarEl.click();
-
-    expect(await fBarEl.getAttribute('class')).toContain('is-selected');
-
-    expect(await sBarEl.getAttribute('class')).toContain('is-selected');
+    expect(await element(by.css('.series-group:nth-child(-n+3) .bar:nth-child(1)')).getAttribute('class')).toContain('is-selected');
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -78,4 +71,23 @@ describe('Stacked Bar Chart example-colors', () => {
 
     expect(await barEl.getCssValue('fill')).toBe('rgb(146, 121, 166)');
   });
+});
+
+describe('Stacked Bar Chart 100% tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar-stacked/example-stacked-100?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-stacked-100')).toEqual(0);
+    });
+  }
 });

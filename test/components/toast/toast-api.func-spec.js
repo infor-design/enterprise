@@ -83,4 +83,33 @@ describe('Toast API', () => {
 
     expect(document.body.querySelector('.toast')).toBeFalsy();
   });
+
+  it('Should save settings for draggable', () => {
+    const left = 'left: 100px';
+    const settings = {
+      title: 'Application Offline',
+      message: 'This is a Toast message.',
+      draggable: true,
+      savePosition: true
+    };
+    let container;
+    window.localStorage.clear();
+
+    toastObj.destroy();
+    toastObj = new Toast(toastEl, settings);
+    container = document.body.querySelector('#toast-container');
+
+    expect(container.getAttribute('class')).toContain('is-draggable');
+    expect(container.getAttribute('style')).not.toContain(left);
+
+    toastObj.savePosition({ left: 100, top: 100 });
+    toastObj.remove($('.toast'));
+
+    toastObj.destroy();
+    toastObj = new Toast(toastEl, settings);
+    container = document.body.querySelector('#toast-container');
+
+    expect(container.getAttribute('class')).toContain('is-draggable');
+    expect(container.getAttribute('style')).toContain(left);
+  });
 });

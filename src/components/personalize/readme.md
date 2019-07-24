@@ -34,7 +34,7 @@ For reduction of FOUC (flash of unstyled content) run the personalize logic befo
   // Call personalize here
   $('html').personalize({colors: colors});
 </script>
-<link rel="stylesheet" id="sohoxi-stylesheet" href="../../stylesheets/{{theme}}-theme.css" type="text/css">
+<link rel="stylesheet" id="sohoxi-stylesheet" href="../../stylesheets/theme-{{theme}}.css" type="text/css">
 ```
 
 ## Supported Personalization Components
@@ -59,6 +59,20 @@ We expose a series of classes that you can use to personalize some items on the 
 - `personalize-actionable-disabled` - Adds a disabled style to actionable elements.
 - `personalize-horizontal-bottom-border` - Adds a 1px border matching the personalization color to the element on the bottom.
 - `personalize-horizontal-bottom-border` - Adds a 1px border matching the personalization color to the element on the top.
+
+## Manual Personalization
+
+It may be necessary to gain control of the timing in which personalized colors/themes/fonts are applied to your application, instead of allowing IDS to automatically set up these items.  If this is necessary, you can configure a property in the `SohoConfig` object to disable automatic initialization:
+
+```js
+const SohoConfig = {
+  personalize: {
+    noInit: true
+  }
+};
+```
+
+Insert this object in a script that runs before IDS is loaded.
 
 ## Accessibility
 

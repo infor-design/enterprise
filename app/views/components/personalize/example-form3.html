@@ -1,0 +1,233 @@
+<div class="page-container scrollable">
+  <header class="header is-personalizable">
+    <div class="toolbar">
+      <div class="title">
+        <h1>Level Two Detail View</h1>
+      </div>
+
+      <div class="buttonset">
+      </div>
+
+      {{> includes/header-actionbutton}}
+    </div>
+  </header>
+
+  <section id="maincontent" class="page-container scrollable" role="main">
+    <div class="is-personalizable">
+      <section class="personalize-header">
+        <div class="content">
+          <div class="row no-bottom-margin small-bottom-padding">
+            <div class="one-third column">
+              <img class="image-round" src="/images/10.jpg" alt="Photo of Evyn"/>
+              <br />
+              <button type="button" class="btn-icon personalize-actionable">
+                <span>Email</span>
+                <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+                  <use xlink:href="#icon-mail"></use>
+                </svg>
+              </button>
+              <button type="button" class="btn-icon personalize-actionable">
+                <span>Phone</span>
+                <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+                  <use xlink:href="#icon-phone"></use>
+                </svg>
+              </button>
+              <button type="button" class="btn-icon personalize-actionable">
+                <span>Website</span>
+                <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+                  <use xlink:href="#icon-url"></use>
+                </svg>
+              </button>
+              <button type="button" class="btn-icon personalize-actionable">
+                <span>Stuff</span>
+                <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+                  <use xlink:href="#icon-user"></use>
+                </svg>
+              </button>
+            </div>
+
+            <div class="one-third column">
+              <div class="field less-margin">
+                <label class="label personalize-text">Item</label>
+                <p class="personalize-text data">2000 LGE Incorporated</p>
+              </div>
+              <div class="field less-margin">
+                <label class="label personalize-text">Vendor</label>
+                <p class="personalize-text data">116</p>
+              </div>
+              <div class="field less-margin">
+                <label class="label personalize-text">Purchase Order Total</label>
+                <a class="hyperlink personalize-actionable" href="#">$1,056</a>
+              </div>
+            </div>
+
+            <div class="three columns">
+              <div class="field less-margin">
+                <label  class="label personalize-text">Purchase Order Date</label>
+                <p class="personalize-text data">7/14/2006</p>
+             </div>
+              <div class="field less-margin">
+                <label class="label personalize-text">Purchase Order</label>
+                <p class="personalize-text data">1096</p>
+              </div>
+
+              <div class="field less-margin">
+                <div id="progress-chart" class="chart-container personalize-chart-targeted"></div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+    <section>
+      <div class="tab-container header-tabs is-personalizable personalize-header">
+        <div class="tab-list-container scrollable-y">
+          <ul class="tab-list">
+            <li class="tab is-selected"><a id="detail" href="#composite-form-detail">Detail</a></li>
+            <li class="tab"><a id="options" href="#composite-form-options">Options</a></li>
+            <li class="tab"><a id="quantity-detail" href="#composite-form-quantity-detail">Quantity Detail</a></li>
+            <li class="tab"><a id="user-fields" href="#composite-form-user-fields">User Fields</a></li>
+            <li class="tab"><a id="messages" href="#composite-form-messages">Messages</a></li>
+            <li class="tab"><a id="add-on-changes" href="#composite-form-addon-changes">Add-On Changes</a></li>
+            <li class="tab"><a id="sources" href="#composite-form-sources">Sources</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="tab-panel-container scrollable-y">
+        <div id="composite-form-detail" class="tab-panel" role="tabpanel">
+          <div class="row form-responsive">
+            <div class="six columns">
+              <div class="field">
+                <label for="composite-form-detail-item">Item</label>
+                <input id="composite-form-detail-item" class="lookup"/>
+              </div>
+            </div>
+            <div class="six columns">
+              <div class="field">
+                <label for="composite-form-detail-quantity">Quantity</label>
+                <input id="composite-form-detail-quantity" class="lookup"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row form-responsive">
+            <div class="six columns">
+              <div class="field">
+                <label for="composite-form-detail-entered-by-uom">Entered Buy UOM</label>
+                <input id="composite-form-detail-entered-by-uom" class="lookup"/>
+              </div>
+            </div>
+            <div class="six columns">
+              <div class="field">
+                <label for="composite-form-detail-item-type">Item Type</label>
+                <input id="composite-form-detail-item-type" class="lookup"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row form-responsive">
+            <div class="six columns">
+              <div class="field">
+                <label for="composite-form-detail-description">Description</label>
+                <input id="composite-form-detail-description" class="lookup"/>
+              </div>
+            </div>
+            <div class="six columns">
+              <div class="field">
+                <label for="composite-form-detail-service-code">Service Code</label>
+                <input id="composite-form-detail-service-code" class="lookup"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row form-responsive">
+            <div class="six columns">
+              <div class="field">
+                <label for="composite-form-detail-unit-cost">Item</label>
+                <input id="composite-form-detail-unit-cost" class="lookup"/>
+              </div>
+            </div>
+            <div class="six columns">
+              <div class="field">
+                <label for="composite-form-detail-late-delivery-date">Late Delivery Date</label>
+                <input id="composite-form-detail-late-delivery-date" class="lookup"/>
+              </div>
+            </div>
+          </div>
+          <div class="row form-responsive">
+            <div class="six columns">
+              <div class="field">
+                <div class="info-message" data-rule-id="Birthday soon!">
+                  <svg class="icon-info icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-info"></use></svg>
+                  <pre class="audible">Info</pre>
+                  <p class="message-text">Birthday soon!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="composite-form-options" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Options</h3>
+            </div>
+          </div>
+        </div>
+        <div id="composite-form-quantity-detail" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Quantity Detail</h3>
+            </div>
+          </div>
+        </div>
+        <div id="composite-form-user-fields" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>User Fields</h3>
+            </div>
+          </div>
+        </div>
+        <div id="composite-form-messages" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Messages</h3>
+            </div>
+          </div>
+        </div>
+        <div id="composite-form-addon-changes" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Add-On Changes</h3>
+            </div>
+          </div>
+        </div>
+        <div id="composite-form-sources" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Sources</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var progressChartData = [{
+      data: [{
+        name: {text: 'good'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'good'},
+      }]
+    }];
+
+    var $progressChart = $('#progress-chart');
+    $progressChart.chart({dataset: progressChartData, type: 'targeted-achievement'});
+    $progressChart.addMessage({ message:'You have an Alert!', type:'info', inline:true });
+  });
+</script>

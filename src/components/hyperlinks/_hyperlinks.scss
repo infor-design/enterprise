@@ -58,6 +58,7 @@
 
   &[disabled] {
     color: $hyperlink-disabled-color;
+    pointer-events: none;
 
     &:hover {
       cursor: default;
@@ -186,21 +187,6 @@ p .hyperlink {
     margin: 0;
     padding: 0;
     position: static;
-  }
-}
-
-//Firefox
-.is-firefox {
-  .hyperlink {
-    &:not(.directional) {
-      padding-top: 2px;
-    }
-
-    &.directional {
-      span {
-        padding-top: 2px;
-      }
-    }
   }
 }
 

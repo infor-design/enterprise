@@ -132,7 +132,33 @@ describe('Applicationmenu accordion truncated text tooltip tests', () => {
   });
 });
 
-describe('Applicationmenu Personalization tests', () => {
+describe('Applicationmenu personalize tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/example-personalized');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show the app menu', async () => {
+    expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visually regress on personalize', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(1280, 718);
+      const section = await element(by.css('body.no-scroll'));
+      await browser.driver.sleep(config.sleepLonger);
+
+      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-personalize')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    });
+  }
+});
+
+describe('Applicationmenu personalize roles tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/example-personalized-roles.html?colors=390567');
     await browser.driver.sleep(config.sleep);
@@ -147,13 +173,39 @@ describe('Applicationmenu Personalization tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on personalize', async () => {
+    it('Should not visually regress on personalize roles', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1280, 718);
       const section = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-personalize-roles')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    });
+  }
+});
+
+describe('Applicationmenu personalize roles switcher tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/example-personalized-role-switcher');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show the app menu', async () => {
+    expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visually regress on personalize roles switcher', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(1280, 718);
+      const section = await element(by.css('body.no-scroll'));
+      await browser.driver.sleep(config.sleepLonger);
+
+      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-personalize-roles-switcher')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }
@@ -195,6 +247,16 @@ describe('Applicationmenu custom search tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.accordion-header.filtered')).count()).toEqual(0);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+});
+
+describe('Applicationmenu Many Items tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/test-filterable-many-items');
   });
 
   it('Should not have errors', async () => {

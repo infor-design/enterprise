@@ -75,7 +75,7 @@ describe('Hierarchy Stacked API', () => {
 
   it('Can render a legend', () => {
     expect(document.body.querySelectorAll('legend li').length).toEqual(4);
-    expect(document.body.querySelector('legend li').innerText).toEqual('Full Time');
+    expect(document.body.querySelector('legend li').innerText.trim()).toEqual('Full Time');
   });
 
   it('Should not trigger collapsed function when using stacked layout', () => {

@@ -507,7 +507,8 @@ Header.prototype = {
 
     if (colorArea.length > 0) {
       const colors = theme.personalizationColors();
-      let colorsHtml = '<li class="heading" role="presentation">Personalization</li>';
+      let colorsHtml = colorArea.parent().hasClass('popupmenu') ? '' :
+        '<li class="heading" role="presentation">Personalization</li>';
 
       Object.keys(colors).forEach((color) => {
         colorsHtml += `<li class="is-selectable${colors[color].name === 'Default' ? ' is-checked is-default' : ''}"><a href="#" data-rgbcolor="${colors[color].value}">${colors[color].name}</a></li>`;
@@ -517,10 +518,22 @@ Header.prototype = {
     }
 
     changer.on('selected.header', (e, link) => {
+      // Change Theme with Variant
+      const themeNameAttr = link.attr('data-theme-name');
+      const themeVariantAttr = link.attr('data-theme-variant');
+      if (themeNameAttr || themeVariantAttr) {
+        const name = changer.next().find('.is-checked a[data-theme-name]').attr('data-theme-name');
+        const variant = changer.next().find('.is-checked a[data-theme-variant]').attr('data-theme-variant');
+        if (name && variant) {
+          personalization.setTheme(`${name}-${variant}`);
+        }
+        return;
+      }
+
       // Change Theme
       const themeAttr = link.attr('data-theme');
       if (themeAttr) {
-        personalization.setTheme(themeAttr.replace('-theme', ''));
+        personalization.setTheme(themeAttr);
         return;
       }
 
@@ -533,6 +546,26 @@ Header.prototype = {
       const color = link.attr('data-rgbcolor');
       personalization.setColors(color);
     });
+
+    // Mark theme as checked
+    const currentTheme = theme.currentTheme;
+    if (currentTheme.id !== 'theme-soho-light') {
+      const themeParts = currentTheme.id.split('-');
+      this.element.find('[data-theme-name]').parent().removeClass('is-checked');
+      this.element.find(`[data-theme-name="${themeParts[0]}-${themeParts[1]}"]`).parent().addClass('is-checked');
+      this.element.find('[data-theme-variant]').parent().removeClass('is-checked');
+      this.element.find(`[data-theme-variant="${themeParts[2]}"]`).parent().addClass('is-checked');
+    }
+
+    if (personalization.settings.colors) {
+      let colors = typeof personalization.settings.colors === 'object' ?
+        personalization.settings.colors.header :
+        personalization.settings.colors;
+      colors = colors.replace('#', '');
+
+      this.element.find('[data-rgbcolor]').parent().removeClass('is-checked');
+      this.element.find(`[data-rgbcolor="#${colors}"]`).parent().addClass('is-checked');
+    }
   },
 
   /**

@@ -4,6 +4,7 @@ import * as debug from '../../utils/debug';
 import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { charts } from '../charts/charts';
+import { theme } from '../theme/theme';
 import { Locale } from '../locale/locale';
 
 import '../emptymessage/emptymessage.jquery';
@@ -213,7 +214,8 @@ Pie.prototype = {
 
     // Handle zero sum or empty pies
     if (isEmpty || sum === 0 || isNaN(sum)) {
-      this.chartData.push({ data: {}, color: '#BDBDBD', name: 'Empty-Pie', value: 100, percent: 1, percentRound: 100 });
+      const palette = theme.themeColors().palette;
+      this.chartData.push({ data: {}, color: palette.graphite['30'].value, name: 'Empty-Pie', value: 100, percent: 1, percentRound: 100 });
     }
 
     self.updateData(self.chartData);
@@ -322,6 +324,7 @@ Pie.prototype = {
   updateData(data) {
     // Pie Slices
     const self = this;
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     let tooltipInterval;
     const isEmpty = !self.settings.dataset || self.settings.dataset.length === 0;
     const slice = self.svg.select('.slices').selectAll('path.slice')
@@ -417,6 +420,10 @@ Pie.prototype = {
           let x = offset.left;
           let y = offset.top;
           const padding = 5;
+
+          if (charts.tooltip && charts.tooltip.length && (isTop || isRight || isBottom || isLeft)) {
+            charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+          }
 
           if (isTop) {
             x -= size.width / 2;
@@ -628,6 +635,9 @@ Pie.prototype = {
       });
     }
 
+    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+      this.updated();
+    });
     return this;
   },
 
@@ -783,6 +793,7 @@ Pie.prototype = {
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     $('body').off(`resize.${COMPONENT_NAME}`);
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
     return this;
   },
 

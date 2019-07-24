@@ -21,7 +21,7 @@ describe('Toast example-index tests', () => {
     expect(await buttonEl.isEnabled()).toBe(true);
   });
 
-  it('Should toast display', async () => {
+  it('Should display', async () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
 
@@ -30,15 +30,17 @@ describe('Toast example-index tests', () => {
     expect(await element(by.id('toast-container'))).toBeTruthy();
   });
 
-  it('Should toast closed after clicking close button', async () => {
+  it('Should close after clicking close button', async () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
 
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('toast-container'))), config.waitsFor);
+    expect(await element.all(by.id('toast-container')).count()).toEqual(1);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('toast-container'))), config.waitsFor);
 
-    await element(by.className('btn-close')).click();
+    await element(by.css('#toast-container button.btn-close')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('toast-container'))), config.waitsFor);
 
-    expect(await element(by.id('toast-container'))).toBeTruthy();
+    expect(await element(by.id('toast-container')).isDisplayed()).toBeFalsy();
   });
 });
 

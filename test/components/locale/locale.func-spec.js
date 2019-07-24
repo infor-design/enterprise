@@ -17,6 +17,7 @@ require('../../../src/components/locale/cultures/en-ZA.js');
 require('../../../src/components/locale/cultures/es-AR.js');
 require('../../../src/components/locale/cultures/es-ES.js');
 require('../../../src/components/locale/cultures/es-MX.js');
+require('../../../src/components/locale/cultures/es-419.js');
 require('../../../src/components/locale/cultures/es-US.js');
 require('../../../src/components/locale/cultures/et-EE.js');
 require('../../../src/components/locale/cultures/fi-FI.js');
@@ -54,7 +55,7 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-describe('Locale API', () => { //eslint-disable-line
+describe('Locale API', () => {
   const Locale = window.Soho.Locale;
 
   it('Should be possible to preset culturesPath', () => {
@@ -102,7 +103,7 @@ describe('Locale API', () => { //eslint-disable-line
 
     let html = window.document.getElementsByTagName('html')[0];
 
-    expect(html.getAttribute('lang')).toEqual('de');
+    expect(html.getAttribute('lang')).toEqual('de-DE');
 
     Locale.set('ar-SA');
 
@@ -110,9 +111,37 @@ describe('Locale API', () => { //eslint-disable-line
 
     html = window.document.getElementsByTagName('html')[0];
 
-    expect(html.getAttribute('lang')).toEqual('ar');
+    expect(html.getAttribute('lang')).toEqual('ar-SA');
     expect(html.getAttribute('dir')).toEqual('rtl');
     Locale.set('en-US');
+  });
+
+  it('Should change font for some locales', () => {
+    Locale.set('ar-EG');
+    const body = window.getComputedStyle(document.body, null);
+
+    expect(body.getPropertyValue('font-family')).toEqual('DejaVu, Tahoma, helvetica, arial');
+    Locale.set('ar-SA');
+
+    expect(body.getPropertyValue('font-family')).toEqual('DejaVu, Tahoma, helvetica, arial');
+    Locale.set('ja-JP');
+
+    expect(body.getPropertyValue('font-family')).toEqual('"MS PGothic", "ＭＳ Ｐゴシック", helvetica, arial');
+    Locale.set('ko-KR');
+
+    expect(body.getPropertyValue('font-family')).toEqual('"Malgun Gothic", AppleGothic, helvetica, arial');
+    Locale.set('zh-CN');
+
+    expect(body.getPropertyValue('font-family')).toEqual('华文细黑, 宋体, 微软雅黑, "Microsoft YaHei New", helvetica, arial');
+    Locale.set('zh-tw');
+
+    expect(body.getPropertyValue('font-family')).toEqual('华文细黑, 宋体, 微软雅黑, "Microsoft YaHei New", helvetica, arial');
+    Locale.set('zh-Hans');
+
+    expect(body.getPropertyValue('font-family')).toEqual('华文细黑, 宋体, 微软雅黑, "Microsoft YaHei New", helvetica, arial');
+    Locale.set('zh-Hant');
+
+    expect(body.getPropertyValue('font-family')).toEqual('华文细黑, 宋体, 微软雅黑, "Microsoft YaHei New", helvetica, arial');
   });
 
   it('Should map in-ID to id-ID', () => {
@@ -923,11 +952,11 @@ describe('Locale API', () => { //eslint-disable-line
     Locale.set('en-US');
 
     expect(['3/22/2018 8:11 PM EST', '3/22/2018 8:11 PM EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
-    expect(['22-03-2018 20:11 EST', '22-03-2018 20:11 EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
+    expect(['22-03-2018 20:11 EST', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
     Locale.set('nl-NL');
 
-    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
-    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
+    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
+    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
   });
 
   it('Should format dates with long timezones', () => {
@@ -937,8 +966,8 @@ describe('Locale API', () => { //eslint-disable-line
     expect(['22-03-2000 20:11 Eastern Standard Time', '22-03-2000 20:11 Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' }));
     Locale.set('nl-NL');
 
-    expect(['22-03-2018 20:11 Eastern-standaardtijd', '22-03-2018 20:11 Eastern-zomertijd']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
-    expect(['22-03-2000 20:11 Eastern-standaardtijd', '22-03-2000 20:11 Eastern-zomertijd']).toContain(Locale.formatDate(new Date(2000, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' }));
+    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' })).toContain('Eastern-');
+    expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' })).toContain('Eastern-');
   });
 
   it('Should parse dates with short timezones in current timezone', () => {
@@ -986,7 +1015,7 @@ describe('Locale API', () => { //eslint-disable-line
 
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'short')).toEqual('26-3-2018 14:00:00 GMT+10');
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai', 'short')).toEqual('26-3-2018 12:00:00 GMT+8');
-    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'short')).toEqual('26-3-2018 00:00:00 GMT-4');
+    expect(['26-3-2018 0:00:00 EDT', '26-3-2018 00:00:00 GMT-4']).toContain(Locale.dateToTimeZone(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'short')));
   });
 
   it('Should be able to display dates into another timezone including long timezone name', () => {
@@ -999,10 +1028,10 @@ describe('Locale API', () => { //eslint-disable-line
 
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'long')).toEqual('26-3-2018 14:00:00 Oost-Australische standaardtijd');
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai', 'long')).toEqual('26-3-2018 12:00:00 Chinese standaardtijd');
-    expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'long')).toEqual('26-3-2018 00:00:00 Eastern-zomertijd');
+    expect(['26-3-2018 00:00:00 Eastern-zomertijd', '26-3-2018 0:00:00 Eastern-zomertijd']).toContain(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'long'));
   });
 
-  it('Should be possible to set the langauge to something other than the current locale', (done) => {
+  it('Should be possible to set the language to something other than the current locale', (done) => {
     Locale.set('en-US');
 
     expect(Locale.translate('Actions')).toEqual('Actions');
@@ -1023,7 +1052,7 @@ describe('Locale API', () => { //eslint-disable-line
     });
   });
 
-  it('Should be possible to extend the langauge strings for a locale', (done) => {
+  it('Should be possible to extend the language strings for a locale', (done) => {
     Locale.set('it-lT').done(() => {
       const myStrings = {
         Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
@@ -1038,7 +1067,7 @@ describe('Locale API', () => { //eslint-disable-line
     });
   });
 
-  it('Should be possible to extend the langauge strings for a language', (done) => {
+  it('Should be possible to extend the language strings for a language', (done) => {
     Locale.set('fr-FR').done(() => {
       Locale.setLanguage('it').done(() => {
         const myStrings = {
@@ -1419,5 +1448,19 @@ describe('Locale API', () => { //eslint-disable-line
     expect(Locale.calendar().timeFormat).toEqual('HH:mm');
     expect(Locale.calendar().dateFormat.timestamp).toEqual('HH:mm:ss');
     expect(Locale.calendar().dateFormat.datetime).toEqual('d. MM. yyyy HH:mm');
+  });
+
+  it('Should Get the Parent Locale', () => {
+    Locale.set('es-MX');
+
+    expect(Locale.currentLocale.name).toEqual('es-MX');
+    expect(Locale.currentLanguage.name).toEqual('es');
+    expect(Locale.translate('Required')).toEqual('Obligatorio');
+
+    Locale.set('es-419');
+
+    expect(Locale.currentLocale.name).toEqual('es-419');
+    expect(Locale.currentLanguage.name).toEqual('es');
+    expect(Locale.translate('Required')).toEqual('Obligatorio');
   });
 });

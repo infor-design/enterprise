@@ -36,6 +36,7 @@
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
+        allowSelectAcrossPages: true,
         columns: columns,
         selectable: 'multiple',
         paging: true,
@@ -43,7 +44,7 @@
         filterable: true,
         pagesize: 10,
         resultsText: function (grid, count, filterCount) {
-          console.log(grid, count, filterCount);
+          console.log('ResultsText:', grid, count, filterCount);
           if (filterCount > 0 ) {
             return '(' + filterCount + ' of '+ count + ')';
           }
@@ -54,8 +55,8 @@
         source: function(req, response) {
           var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
-          if (req.sortId) {
-            url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
+          if (req.sortField) {
+            url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
           }
 
           if (req.filterExpr && req.filterExpr[0]) {
@@ -68,7 +69,7 @@
           $.getJSON(url, function(res) {
             // This is the total going into the grid so the pager works (filtered total or total)
             req.total = res.total;
-
+            req.preserveSelected = true;
             if ((req.filterExpr && req.filterExpr[0])) {
               req.total = res.total;
               req.grandTotal = res.grandTotal; // This is the total amount on the server
@@ -76,13 +77,22 @@
             response(res.data, req);
           });
         },
-        toolbar: {title: 'Data Grid Header Title',filterRow: true, personalize: true, results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
-      }).on('selected', function (e, args) {
-        console.log(args);
+        toolbar: {title: 'Data Grid Header Title',filterRow: true, personalize: true, results: true, keywordFilter: true, actions: true, rowHeight: true, collapsibleFilter: true}
+      })
+      .on('selected', function (e, args) {
+        console.log('Selected: ', args);
+      })
+      .on('rowremove', function (e, args) {
+        console.log('Removed:', args);
       });
 
       $('#datagrid-remove-btn').on('click', function() {
+        // Will trigger `rowremove` with every row removed for more then one selected rows
         $('#datagrid').data('datagrid').removeSelected();
+
+        // Will trigger `rowremove` one time only for more then one selected rows
+        // If passed the `boolean:true` to catch all the removed rows at once
+        // $('#datagrid').data('datagrid').removeSelected(true);
       });
 
   });

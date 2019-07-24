@@ -3,6 +3,11 @@
 // - Summary Form
 // Overrides some things in:
 // - Input Fields
+// - Datepicker
+// - Timepicker
+// - File Upload
+// - File Upload (Advanced)
+// - Lookup
 
 .form-compact-container {
   .row {
@@ -27,7 +32,6 @@
 }
 
 .form-compact {
-  background-color: $formcompact-bg-color;
   margin: 0 auto;
 
   .row {
@@ -44,24 +48,30 @@
     padding: 0;
 
     &.form-section-header {
-      padding: 0 10px;
+      background-color: $formcompact-bg-color;
+      padding: 16px 8px 15px;
     }
 
-    label {
-      @include font-size(14);
+    fieldset {
+      height: 100%;
+    }
+
+    label,
+    .checkbox-group legend,
+    .radio-group legend {
       @include transition(background-color 100ms $cubic-ease, color 100ms $cubic-ease);
 
-      background-color: $formcompact-field-bg-color;
       margin-bottom: 0;
-      overflow: hidden;
-      padding: 4px 9px 0;
       text-overflow: ellipsis;
       white-space: nowrap;
 
+      &:not(.radio-label):not(.checkbox-label) {
+        overflow: hidden;
+        padding: 8px 9px 0;
+      }
+
       &.required:not(.inline) {
         &::after {
-          @include font-size(18);
-
           color: $formcompact-field-required-color;
           content: '●';
           top: 0;
@@ -69,8 +79,16 @@
       }
     }
 
+    label {
+      background-color: $formcompact-field-bg-color;
+
+      &.radio-label,
+      &.checkbox-label {
+        background-color: transparent;
+      }
+    }
+
     input {
-      @include font-size(18);
       @include transition(background-color 100ms $cubic-ease, border-color 100ms $cubic-ease, color 100ms $cubic-ease);
 
       background-color: $formcompact-field-bg-color;
@@ -79,46 +97,260 @@
       border-radius: 0;
       border-right: 1px solid $formcompact-field-border-color;
       border-top: 0;
-      padding: 0 8px 4px;
+      padding: 4px 8px 8px;
       text-overflow: ellipsis;
       width: 100%;
 
       &:focus {
         box-shadow: none;
       }
+
+      // Disable background for radios/checks (handled by `fieldset`)
+      &.radio,
+      &.checkbox {
+        background-color: transparent;
+      }
     }
 
     &.is-focused {
+      // NOTE: long-form border properties are used on purpose, don't change to shorthand.
       input {
         background-color: $formcompact-field-bg-focus-color;
         border-bottom-color: $formcompact-field-border-focus-color;
+        border-left-color: $formcompact-field-border-focus-color;
         border-right-color: $formcompact-field-border-focus-color;
+        border-top-color: transparent;
+
+        &.radio {
+          background-color: transparent;
+        }
       }
 
       label {
         background-color: $formcompact-field-bg-focus-color;
+
+        &.radio-label {
+          background-color: transparent;
+        }
+      }
+
+      .radio-group,
+      .checkbox-group {
+        background-color: $formcompact-field-bg-focus-color;
+        border-bottom-color: $formcompact-field-border-focus-color;
+
+        &::after {
+          border-left-color: $formcompact-field-border-focus-color;
+          border-right-color: $formcompact-field-border-focus-color;
+        }
+
+        label {
+          background-color: transparent;
+        }
       }
     }
 
     &.is-readonly {
       input {
-        background-color: $formcompact-bg-color;
+        background-color: $input-color-readonly-background;
         border-bottom-color: $input-color-readonly-border;
+        border-left-color: $input-color-readonly-border;
         border-right-color: $input-color-readonly-border;
         color: $input-color-readonly-font;
       }
 
       label {
-        background-color: $body-color-primary-background;
+        background-color: $input-color-readonly-background;
+        color: $input-color-readonly-font;
+      }
+
+      .radio-group,
+      .checkbox-group {
+        background-color: $input-color-readonly-background;
+        border-bottom-color: $input-color-readonly-border;
+
+        &::after {
+          border-left-color: $input-color-readonly-border;
+          border-right-color: $input-color-readonly-border;
+        }
+
+        label {
+          background-color: transparent;
+        }
       }
     }
 
     &.is-disabled {
       input {
         border-bottom-color: $input-color-disabled-border;
+        border-left-color: $input-color-disabled-border;
         border-right-color: $input-color-disabled-border;
         color: $input-color-disabled-font;
       }
+
+      .radio-group,
+      .checkbox-group {
+        border-bottom-color: $input-color-disabled-border;
+
+        &::after {
+          border-left-color: $input-color-disabled-border;
+          border-right-color: $input-color-disabled-border;
+        }
+      }
+    }
+  }
+
+  // =============================================
+  // Form-Compact Date/Time Picker Styles
+  // =============================================
+  .datepicker,
+  .timepicker {
+    + .icon {
+      margin-top: auto;
+    }
+  }
+
+  .datepicker {
+    + .icon {
+      margin-left: -28px;
+    }
+  }
+
+  .timepicker {
+    + .icon {
+      margin-left: -31px;
+    }
+  }
+
+  // =============================================
+  // Form-Compact Lookup Styles
+  // =============================================
+  .lookup-wrapper {
+    cursor: pointer;
+    display: block;
+    margin-bottom: auto;
+  }
+
+  .lookup {
+    + .trigger {
+      .icon {
+        top: 0;
+      }
+    }
+  }
+
+  // =============================================
+  // Form-Compact File Uploader Styles
+  // =============================================
+  .fileuploader {
+    max-height: 29px;
+  }
+
+  // =============================================
+  // Form-Compact Checkbox Styles
+  // =============================================
+  .field.field-checkbox {
+    margin-bottom: 5px;
+
+    &:first-of-type {
+      margin-top: 26px;
+    }
+  }
+
+  .checkbox-label {
+    padding-left: 33px;
+  }
+
+  input.checkbox:checked,
+  input.checkbox:checked + input[type='hidden'],
+  span.checkbox > input:checked {
+    + label::after {
+      left: 10px;
+    }
+  }
+
+  label.inline .checkbox:checked ~ .label-text::after {
+    left: 10px;
+  }
+
+  // =============================================
+  // Form-Compact Fieldset Styles
+  // =============================================
+
+  // Zeroes out a rule from `_fieldset.scss`
+  .row {
+    .column,
+    .columns {
+      fieldset {
+        margin-top: auto;
+      }
+    }
+  }
+
+  // =============================================
+  // Form-Compact Radio Group Styles
+  // =============================================
+  .checkbox-group,
+  .radio-group {
+    @include transition(background-color 100ms $cubic-ease, border-color 100ms $cubic-ease, color 100ms $cubic-ease);
+
+    background-color: $formcompact-field-bg-color;
+    border-bottom: 1px solid $formcompact-field-border-color;
+    margin-bottom: 0;
+    position: relative;
+
+    // Fake the right border, since we don't want it to
+    // stretch the full height of the fieldset.
+    &::after {
+      border-left-color: $formcompact-field-border-color;
+      border-right-color: $formcompact-field-border-color;
+      border-right-style: solid;
+      border-right-width: 1px;
+      bottom: 0;
+      content: ' ';
+      display: block;
+      height: calc(100% - 26px);
+      position: absolute;
+      right: 0;
+      width: 1px;
+    }
+
+    legend {
+      @include font-size(12);
+
+      background-color: transparent;
+      color: $formcompact-label-text-color;
+      float: left;
+      margin-bottom: 8px;
+      padding: 4px 9px 0;
+      width: 100%;
+
+      + .radio-label,
+      + input[type='radio'],
+      + .field-checkbox {
+        clear: both;
+      }
+    }
+
+    input[type='radio'] {
+      @include font-size(18);
+
+      background-color: transparent;
+      color: $checkbox-color-unchecked-initial-font;
+      padding: 0 9px 4px;
+    }
+  }
+
+  .radio-label {
+    padding-left: 33px;
+
+    // zeroes out a rule from `_.radios.scss`
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    &::after {
+      left: 12px;
     }
   }
 }
@@ -132,18 +364,18 @@
   font-weight: 700;
 }
 
-// Firefox has different column padding needs
 .is-firefox {
   .form-compact {
-    .column,
-    .columns {
-      label {
-        padding: 8px 9px 0;
-      }
+    // Reset the standard `16px` line-height rule established for Firefox
+    // that comes from `_typography.scss`.
+    input,
+    textarea {
+      line-height: normal;
+    }
 
-      input {
-        padding: 0 8px 8px;
-      }
+    // `input[type="file"]` is taller in Firefox.
+    .fileuploader {
+      max-height: 28px;
     }
   }
 }
@@ -154,44 +386,17 @@
     .column,
     .columns {
       &.form-section-header {
-        padding: 16px 10px 15px;
+        padding: 16px 8px 15px;
       }
     }
   }
 }
 
-// Change the padding when the font is not "Source Sans" (Legacy)
-html:not(.font-source-sans) {
+// `input[type="file"]` is taller in IE11.
+.ie11 {
   .form-compact {
-    .column,
-    .columns {
-      &.form-section-header {
-        padding: 16px 10px 15px;
-      }
-
-      label {
-        padding: 6px 9px 0;
-      }
-
-      input {
-        padding: 0 8px 6px;
-      }
-    }
-  }
-
-  // Non-source-sans Firefox has ever-different column padding needs
-  &.is-firefox {
-    .form-compact {
-      .column,
-      .columns {
-        label {
-          padding: 8px 9px 0;
-        }
-
-        input {
-          padding: 0 8px 8px;
-        }
-      }
+    .fileuploader {
+      max-height: 29px;
     }
   }
 }
@@ -222,8 +427,90 @@ html[dir='rtl'] {
     .one-third.column,
     .two-thirds.column,
     .one-half.column {
-      margin-left: inherit;
+      margin-left: 0;
       margin-right: 0;
+    }
+
+    .column,
+    .columns {
+      float: none;
+
+      // =======================
+      // Reversed border states
+      // =======================
+      input {
+        border-left-style: solid;
+        border-left-width: 1px;
+        border-right-width: 0;
+      }
+
+      .checkbox-group,
+      .radio-group {
+        &::after {
+          border-left-style: solid;
+          border-left-width: 1px;
+          border-right: 0;
+          left: 0;
+          right: auto;
+        }
+      }
+    }
+
+    // Font family changes on RTL affect the height of the FileUploader.
+    .fileuploader {
+      line-height: normal;
+      max-height: 30px;
+    }
+
+    // Reverse padding on radios
+    .radio-label {
+      padding-left: 0;
+      padding-right: 33px;
+
+      &::before {
+        margin-right: -24px;
+      }
+
+      &::after {
+        left: auto;
+        right: 13px;
+      }
+    }
+
+    // Checkboxes
+    .checkbox-label {
+      padding-right: 41px;
+    }
+
+    input.checkbox:checked,
+    input.checkbox:checked + input[type='hidden'],
+    span.checkbox > input:checked {
+      + label::after {
+        left: auto;
+        right: 22px;
+      }
+    }
+
+    label.inline .checkbox:checked ~ .label-text::after {
+      left: auto;
+      right: 22px;
+    }
+  }
+
+  // Fix the FileUploader styles
+  &.ie11 {
+    .form-compact {
+      .fileuploader {
+        max-height: 28px;
+      }
+    }
+  }
+
+  &.is-firefox {
+    .form-compact {
+      .fileuploader {
+        max-height: 32px;
+      }
     }
   }
 }
@@ -273,14 +560,26 @@ html[dir='rtl'] {
   }
 
   .form-compact {
+    padding-bottom: 20px;
+
     .row {
       display: flex;
       padding-right: 0;
+
+      .row {
+        padding-right: 20px;
+      }
     }
 
     .column,
     .columns {
       padding: 0;
+
+      &:first-child {
+        .row {
+          padding-left: 20px;
+        }
+      }
     }
 
     .one.column,
@@ -380,6 +679,25 @@ html[dir='rtl'] {
     .one-half.column {
       margin-left: 0;
       width: 50%;
+    }
+  }
+
+  html[dir='rtl'] {
+    .form-compact {
+      .row {
+        .row {
+          padding-left: 20px;
+        }
+      }
+
+      .column,
+      .columns {
+        &:first-child {
+          .row {
+            padding-right: 20px;
+          }
+        }
+      }
     }
   }
 }

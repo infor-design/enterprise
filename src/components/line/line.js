@@ -114,6 +114,7 @@ Line.prototype = {
    */
   build() {
     const self = this;
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const isFormatter = !!this.settings.formatterString;
     const format = function (value) {
       return isFormatter ? d3.format(self.settings.formatterString)(value) : value;
@@ -479,6 +480,9 @@ Line.prototype = {
             ((rect.left + (rect.width / 2)) - (size.width / 2)) : posX;
 
           if (content !== '') {
+            if (charts.tooltip && charts.tooltip.length) {
+              charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+            }
             charts.showTooltip(posX, posY, content, 'top');
           }
         };
@@ -536,7 +540,7 @@ Line.prototype = {
           // Set the colors
           const spans = document.querySelectorAll('#svg-tooltip .swatch-caption span');
           for (let k = 0; k < spans.length; k++) {
-            spans[k].style.backgroundColor = charts.chartColor(k, 'line', mouseEnterData);
+            spans[k].style.backgroundColor = charts.chartColor(self.settings.isBubble || self.settings.isScatterPlot ? mouseEnterData.lineIdx : k, 'line', mouseEnterData);
           }
         }
 
@@ -565,6 +569,7 @@ Line.prototype = {
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
             .style('opacity', (self.settings.isBubble || self.settings.isScatterPlot ? '.7' : '1'))
             .on('mouseenter.chart', function (mouseEnterData) {
+              mouseEnterData.lineIdx = lineIdx;
               handleMouseEnter(this, mouseEnterData);
             })
             .on('mouseleave.chart', function () {
@@ -592,6 +597,7 @@ Line.prototype = {
             .style('opacity', 0)
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
             .on('mouseenter.chart', function (mouseEnterData) {
+              mouseEnterData.lineIdx = lineIdx;
               handleMouseEnter(this, mouseEnterData);
             })
             .on('mouseleave.chart', function () {
@@ -759,6 +765,9 @@ Line.prototype = {
       });
     }
 
+    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+      this.updated();
+    });
     return this;
   },
 
@@ -836,6 +845,7 @@ Line.prototype = {
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     $('body').off(`resize.${COMPONENT_NAME}`);
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
     return this;
   },
 

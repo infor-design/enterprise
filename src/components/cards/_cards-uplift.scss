@@ -1,0 +1,30 @@
+.card,
+.widget {
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header,
+.widget-header {
+  border-bottom: none;
+  height: 34px;
+  line-height: unset;
+
+  .card-title,
+  .widget-title {
+    font-size: $theme-size-font-md;
+    font-weight: $theme-number-font-weight-base;
+    line-height: 2.8rem;
+  }
+}
+
+.card-header,
+.widget-header {
+  margin: 8px 2px 8px 20px;
+  padding: unset;
+}
+
+.card-header:not(.has-toolbar) > .btn-actions,
+.widget-header:not(.has-toolbar) > .btn-actions {
+  top: -1px;
+}

@@ -1,5 +1,6 @@
 /* eslint-disable import/first */
 import * as debug from './utils/debug';
+import './polyfills/polyfills';
 
 // Core ======================================= /
 // NOTE: Every item in the "Core" section is required for running the Soho library properly.
@@ -20,6 +21,9 @@ export { base } from './utils/base';
 
 // Renderloop needs a single instance of itself
 export { renderLoop, RenderLoopItem } from './utils/renderloop';
+
+// Keyboard needs a single instance of itself
+export { keyboard } from './utils/keyboard';
 
 // Theme/Personalization need single instances of themselves
 export { personalization } from './components/personalize/personalize.bootstrap';

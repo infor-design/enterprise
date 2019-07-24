@@ -13,7 +13,8 @@ const PERSONALIZE_DEFAULTS = {
   colors: '',
   theme: '',
   font: '',
-  blockUI: true
+  blockUI: true,
+  noInit: false
 };
 
 /**
@@ -23,10 +24,11 @@ const PERSONALIZE_DEFAULTS = {
  * @param {HTMLElement|jQuery[]} element The base element
  * @param {object} [settings] Incoming settings
  * @param {string} [settings.colors]  The list of colors
- * @param {string} [settings.theme='light'] The theme name (light, dark or high-contrast)
- * @param {string} [settings.font='Helvetica'] Use the newer source sans font
+ * @param {string} [settings.theme] The theme name (light, dark or high-contrast)
+ * @param {string} [settings.font] Use the newer source sans font
  * @param {boolean} [settings.blockUI=true] Cover the UI and animate when changing theme.
-*/
+ * @param {boolean} [settings.noInit=false] If true, prevents automatic setup of personalized theme/colors/font, allowing for manual triggering at a more convenient time.
+ */
 function Personalize(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, PERSONALIZE_DEFAULTS);
@@ -45,20 +47,26 @@ Personalize.prototype = {
    * @returns {this} component instance
    */
   init() {
-    // Set the default theme, or grab the theme from an external CSS stylesheet.
-    const cssTheme = this.getThemeFromStylesheet();
-    this.currentTheme = this.settings.theme || cssTheme;
-    this.setTheme(this.currentTheme);
+    this.handleEvents();
+
+    // Skip automatic setup of theme/colors/font.
+    if (this.settings.noInit) {
+      return this;
+    }
+
+    if (this.settings.theme) {
+      this.setTheme(this.settings.theme);
+    } else {
+      this.setTheme(this.getThemeFromStylesheet());
+    }
 
     if (this.settings.colors) {
       this.setColors(this.settings.colors);
     }
 
     if (this.settings.font) {
-      $('html').addClass(`font-${this.settings.font}`);
+      this.setFont(this.settings.font);
     }
-
-    this.handleEvents();
 
     return this;
   },
@@ -134,39 +142,79 @@ Personalize.prototype = {
     // (Color)09 for the horizontal border - 134D71
     // (Color)10 for the hover state on module tab - 133C59
     const defaultColors = {
-      header: '2578A9',
-      subheader: '1d5f8a',
-      text: 'ffffff',
-      verticalBorder: '133C59',
-      horizontalBorder: '134D71',
-      inactive: '1d5f8a',
-      hover: '133C59',
-      btnColorHeader: '368AC0',
-      btnColorSubheader: '54a1d3'
+      header: '2578A9'
     };
+
+    // Force to be light text on custom colors
+    const forceToBeLightTextOn = {
+      '#db7726': 'amber',
+      '#9279a6': 'amethyst',
+      '#2578a9': 'azure',
+      '#56932e': 'emerald'
+    };
+    let isDark = `${colors.header || defaultColors.header}`.toLowerCase();
+    isDark = forceToBeLightTextOn[isDark] ? 'white' : null;
+
+    const lightest = colorUtils.validateHex(colors.lightest ||
+      colorUtils.getLuminousColorShade((colors.header || defaultColors.header), 0.3));
+    const contrast = colorUtils.getContrastColor(lightest, null, isDark);
+
+    if (contrast === 'white') {
+      defaultColors.text = 'ffffff';
+      defaultColors.subtext = 'f0f0f0';
+    } else {
+      defaultColors.text = '000000';
+      defaultColors.subtext = '292929';
+    }
 
     // If an event sends a blank string through instead of a hex,
     // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
     colors.header = colorUtils.validateHex(colors.header || defaultColors.header);
     colors.text = colorUtils.validateHex(colors.text || defaultColors.text);
+    colors.subtext = colorUtils.validateHex(colors.subtext || defaultColors.subtext);
+    colors.btnColorHeader = colorUtils.validateHex(colors.btnColorHeader ||
+      colorUtils.getLuminousColorShade(colors.header, 0.3));
     colors.subheader = colorUtils.validateHex(colors.subheader ||
       colorUtils.getLuminousColorShade(colors.header, 0.2));
-    colors.button = colorUtils.validateHex(colors.button ||
-      colorUtils.getLuminousColorShade(colors.text, -0.80));
-    colors.inactive = colorUtils.validateHex(colors.inactive ||
-      colorUtils.getLuminousColorShade(colors.header, -0.22));
     colors.verticalBorder = colorUtils.validateHex(colors.verticalBorder ||
       colorUtils.getLuminousColorShade(colors.header, 0.1));
+
+    // Darker
+    colors.btnColorSubheader = colorUtils.validateHex(colors.btnColorSubheader ||
+      colorUtils.getLuminousColorShade(colors.header, -0.1));
+    colors.inactive = colorUtils.validateHex(colors.inactive ||
+      colorUtils.getLuminousColorShade(colors.header, -0.2));
     colors.horizontalBorder = colorUtils.validateHex(colors.horizontalBorder ||
-      colorUtils.getLuminousColorShade(colors.header, -0.4));
+      colorUtils.getLuminousColorShade(colors.header, -0.3));
+
+    // Legacy
     colors.hover = colorUtils.validateHex(colors.hover ||
       colorUtils.getLuminousColorShade(colors.header, -0.5));
-    colors.btnColorHeader = colorUtils.validateHex(colors.btnColorHeader ||
-      colorUtils.getLuminousColorShade(colors.subheader, -0.025));
-    colors.btnColorSubheader = colorUtils.validateHex(colors.btnColorSubheader ||
-      colorUtils.getLuminousColorShade(colors.header, -0.025));
+    colors.button = colorUtils.validateHex(colors.button ||
+      colorUtils.getLuminousColorShade(colors.text, -0.8));
+
+    colors.lightest = colors.btnColorHeader;
+    colors.lighter = colors.subheader;
+    colors.light = colors.verticalBorder;
+    colors.base = colors.header;
+    colors.contrast = colors.text;
+    colors.dark = colors.btnColorSubheader;
+    colors.darker = colors.inactive;
+    colors.darkest = colors.horizontalBorder;
+
+    const tooltipContrast = colorUtils.getContrastColor(colors.darkest);
+    defaultColors.tooltipText = tooltipContrast === 'white' ? 'ffffff' : '000000';
+    colors.tooltipText = colorUtils.validateHex(colors.tooltipText || defaultColors.tooltipText);
 
     return personalizeStyles(colors);
+  },
+
+  /**
+   * Set the font
+   * @param {string} font The font name
+   */
+  setFont(font) {
+    $('html').addClass(`font-${font}`);
   },
 
   /**
@@ -197,7 +245,11 @@ Personalize.prototype = {
     * @property {object} args - The event args
     * @property {string} args.colors - The color(s) changed to.
     */
-    this.element.triggerHandler('colorschanged', { colors });
+    this.element.triggerHandler('colorschanged', {
+      colors: this.settings.colors.header ||
+        this.settings.colors || theme.themeColors().brand.primary.alt.value,
+      theme: this.currentTheme || 'theme-soho-light'
+    });
     return this;
   },
 
@@ -230,8 +282,8 @@ Personalize.prototype = {
       if (queryParamIndex > -1) {
         thisTheme = thisTheme.slice(0, queryParamIndex);
       }
-      // trim the file extensions off the end and drop the -theme portion
-      thisTheme = thisTheme.replace('.min.css', '').replace('.css', '').replace('-theme', '');
+      // trim the file extensions off the end
+      thisTheme = thisTheme.replace('.min', '').replace('.css', '');
     }
     return thisTheme;
   },
@@ -242,20 +294,34 @@ Personalize.prototype = {
   * scheme (can be dark, light or high-contrast)
   */
   setTheme(incomingTheme) {
+    const $html = $('html');
+    if (!incomingTheme) {
+      return;
+    }
+
+    // Somehow colorpicker uses this, so keep it
+    this.currentTheme = incomingTheme;
+
     if (theme.currentTheme.id === incomingTheme) {
-      if (!$('html').hasClass(`${incomingTheme}-theme`)) {
-        $('html').addClass(`${incomingTheme}-theme`);
+      if (!$html.hasClass(incomingTheme)) {
+        $html.addClass(incomingTheme);
       }
       return;
     }
 
-    // Validate theme is supported
-    const result = theme.themes().filter(themeObj => themeObj.id === incomingTheme);
-    if (result.length === 0) {
-      return;
+    // Adapt them for backwards compatibility
+    const legacyThemeNames = ['light', 'dark', 'high-contrast'];
+    if (legacyThemeNames.indexOf(incomingTheme) > -1) {
+      incomingTheme += '-theme';
     }
 
-    $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(`${incomingTheme}-theme`);
+    $html
+      .removeClass((idx, val) => {
+        const classes = val.split(' ');
+        const toRemove = classes.filter(c => c.indexOf('theme') > -1);
+        return toRemove.join();
+      })
+      .addClass(incomingTheme);
 
     this.blockUi();
 
@@ -267,6 +333,8 @@ Personalize.prototype = {
     newCss.on('load', () => {
       originalCss.remove();
       self.unBlockUi();
+    }).on('error', () => {
+      self.unBlockUi();
     });
 
     const themePath = path ? path.substring(0, path.lastIndexOf('/')) : '';
@@ -274,7 +342,7 @@ Personalize.prototype = {
 
     newCss.attr({
       id: originalCss.attr('id'),
-      href: xssUtils.stripTags(`${themePath}/${incomingTheme}-theme${isMin ? '.min' : ''}.css`)
+      href: xssUtils.stripTags(`${themePath}/${incomingTheme}${isMin ? '.min' : ''}.css`)
     });
     originalCss.removeAttr('id');
 
@@ -294,7 +362,11 @@ Personalize.prototype = {
     * @property {object} args - The event args
     * @property {string} args.theme - The theme id changed to.
     */
-    this.element.triggerHandler('themechanged', { theme: incomingTheme });
+    this.element.triggerHandler('themechanged', {
+      colors: this.settings.colors.header ||
+        this.settings.colors || theme.themeColors().brand.primary.alt.value,
+      theme: incomingTheme || 'theme-soho-light'
+    });
   },
 
   /**
@@ -335,7 +407,7 @@ Personalize.prototype = {
    */
   unBlockUi() {
     const self = this;
-    if (!self.settings.blockUI) {
+    if (!self.settings.blockUI || !self.pageOverlay) {
       return;
     }
 
@@ -347,17 +419,43 @@ Personalize.prototype = {
 
   /**
    * Handle Updating Settings
-   * @param {object} [settings] incoming settings
+   * @param {object} settings Incoming settings
    * @returns {this} component instance
    */
   updated(settings) {
-    if (settings) {
-      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    if (!settings) {
+      return this;
     }
 
-    return this
-      .teardown()
-      .init();
+    // Copy the old settings to compare
+    const prevSettings = utils.extend({ }, this.settings);
+
+    // Merge in the new settings
+    this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+
+    if (this.settingsDidChange(prevSettings, 'theme')) {
+      this.setTheme(this.settings.theme);
+    }
+
+    if (this.settingsDidChange(prevSettings, 'colors')) {
+      this.setColors(this.settings.colors);
+    }
+
+    if (this.settingsDidChange(prevSettings, 'font')) {
+      this.setFont(this.settings.font);
+    }
+
+    return this;
+  },
+
+  /**
+   * Compare previous settings to current settings
+   * @param {object} prevSettings The previous settings object
+   * @param {string} prop The property to compare
+   * @returns {boolean} If the settings changed
+   */
+  settingsDidChange(prevSettings, prop) {
+    return this.settings[prop] && this.settings[prop] !== prevSettings[prop];
   },
 
   /**

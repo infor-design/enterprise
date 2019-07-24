@@ -85,7 +85,7 @@
 
       //Init The Header Grid
       var headerGrid = $('#datagrid-header').datagrid({
-        dataset: res,
+        dataset: [],
         columns: columnsHeader,
         editable: false,
         selectable: 'mixed',
@@ -103,6 +103,9 @@
       }).on('selected', function (e, args) {
         console.log(args);
       }).data('datagrid');
+
+      headerGrid.loadData(res);
+      headerGrid.unSelectAllRows();
 
       $('#activate-selected-row').on('click', function(e) {
         if (!headerGrid.selectedRows()[0]) {

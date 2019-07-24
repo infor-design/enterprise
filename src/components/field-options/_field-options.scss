@@ -13,6 +13,7 @@
   min-width: 0;
   opacity: 0;
   overflow: hidden;
+  top: -1px;
   width: 34px;
 
   &:hover {
@@ -202,8 +203,15 @@
   .colorpicker-container {
     ~ .btn-actions {
       left: -11px;
-      top: -13px;
+      top: -14px;
       width: 36px;
+    }
+  }
+
+  .dropdown,
+  .multiselect {
+    ~ .btn-actions {
+      top: 1px;
     }
   }
 
@@ -224,6 +232,7 @@
     max-width: ($field-md - 40px);
   }
 
+  .searchfield-wrapper.has-focus:not(.toolbar-searchfield-wrapper),
   .searchfield-wrapper {
     box-shadow: none;
 
@@ -235,9 +244,13 @@
   .spinbox-wrapper {
     box-shadow: none;
 
+    .spinbox {
+      width: calc(100% - 110px);
+    }
+
     .btn-actions {
-      left: -8px;
-      width: 36px;
+      left: -7px;
+      top: 0;
     }
   }
 
@@ -246,12 +259,41 @@
 
     ~ .btn-actions {
       left: auto;
+      top: calc(50% - 6px);
+    }
+  }
+
+  .field-options ~ .close,
+  input[type='text'][readonly]:not(.fileupload) {
+    ~ .btn-actions {
+      top: 0;
+    }
+  }
+
+  // Clearable Inputs that are not Searchfields
+  [data-clearable='true'] {
+    ~ .btn-actions {
+      left: -5px;
+    }
+
+    ~ .icon.close.is-empty ~ .btn-actions {
+      left: -10px;
     }
   }
 
   &.is-disabled {
     .btn-actions:not(.is-checkbox) {
       display: none;
+    }
+  }
+}
+
+.compound-field {
+  .field.is-fieldoptions {
+    input[type='text'] {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: 0;
+      }
     }
   }
 }
@@ -339,17 +381,30 @@
     border-color: $input-color-focus-border;
   }
 
-  .spinbox-wrapper.is-focused {
-    .down {
-      box-shadow: $focus-box-shadow-spinbox-down;
+  .spinbox-wrapper {
+    > .spinbox,
+    > .spinbox-control {
+      border-color: $input-color-focus-border;
     }
 
-    .spinbox {
-      box-shadow: $focus-box-shadow-spinbox;
-    }
+    &.is-focused {
+      .down {
+        box-shadow: $focus-box-shadow-spinbox-down;
+      }
 
-    .up {
-      box-shadow: $focus-box-shadow-spinbox-up;
+      .spinbox {
+        box-shadow: $focus-box-shadow-spinbox !important;
+      }
+
+      .up {
+        box-shadow: $focus-box-shadow-spinbox-up;
+      }
+    }
+  }
+
+  .searchfield-wrapper.has-focus:not(.toolbar-searchfield-wrapper) {
+    .field-options.searchfield {
+      box-shadow: $focus-box-shadow;
     }
   }
 
@@ -366,6 +421,40 @@
     ~ .btn-actions {
       color: transparent;
       text-shadow: 0 0 0 $theme-color-palette-black;
+    }
+  }
+
+  .field.is-fieldoptions {
+    .field-options {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: auto;
+      }
+    }
+
+    .colorpicker-container {
+      ~ .btn-actions {
+        top: -13px;
+      }
+    }
+
+    .dropdown,
+    .multiselect {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: 1px;
+      }
+    }
+
+    input[type='text'][readonly]:not(.fileupload),
+    .field-options ~ .close {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: -1px;
+      }
+    }
+
+    .textarea {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: calc(50% - 6px);
+      }
     }
   }
 }
@@ -393,6 +482,13 @@
   }
 
   .field.is-fieldoptions {
+    .field-options ~ .close,
+    input[type='text'][readonly]:not(.fileupload) {
+      ~ .btn-actions {
+        top: auto;
+      }
+    }
+
     .colorpicker-container {
       ~ .btn-actions {
         left: -11px;
@@ -436,8 +532,14 @@
   .field.is-fieldoptions {
     .colorpicker-container {
       ~ .btn-actions {
-        // left: -11px;
-        top: auto;
+        top: -1px;
+      }
+    }
+
+    .field-options ~ .close,
+    input[type='text'][readonly]:not(.fileupload) {
+      ~ .btn-actions {
+        top: -1px;
       }
     }
   }
@@ -455,10 +557,60 @@
       }
     }
   }
+
+  .compound-field {
+    .field.is-fieldoptions {
+      input[type='text'] {
+        ~ .btn-actions:not(.is-checkbox) {
+          top: -1px;
+        }
+      }
+    }
+  }
 }
 
 // IE
 .ie {
+  .field.is-fieldoptions {
+    .field-options {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: auto;
+      }
+    }
+
+    .dropdown,
+    .multiselect {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: 1px;
+      }
+    }
+
+    .datepicker,
+    .timepicker,
+    .lookup,
+    .field-options ~ .close {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: -1px;
+      }
+    }
+
+    .textarea {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: calc(50% - 6px);
+      }
+    }
+  }
+
+  .compound-field {
+    .field.is-fieldoptions {
+      input[type='text'] {
+        ~ .btn-actions:not(.is-checkbox) {
+          top: -1px;
+        }
+      }
+    }
+  }
+
   .field-options {
     &.multiselect {
       ~ .btn-actions {
@@ -476,6 +628,14 @@
 
 // IE 11
 .ie11 {
+  .field.is-fieldoptions {
+    .timepicker {
+      ~ .btn-actions:not(.is-checkbox) {
+        top: auto;
+      }
+    }
+  }
+
   .field-options {
     &.textarea {
       ~ .btn-actions {
@@ -535,26 +695,12 @@ html[dir='rtl'] {
         right: -8px;
       }
     }
-
-    &[data-clearable='true'] {
-      ~ .btn-actions {
-        left: auto;
-        right: 27px;
-      }
-
-      ~ .is-empty {
-        ~ .btn-actions {
-          left: auto;
-          right: -11px;
-        }
-      }
-    }
   }
 
   .is-fieldoptions {
     .btn-actions {
       left: auto;
-      right: -8px;
+      right: -10px;
     }
 
     //heremans
@@ -564,7 +710,37 @@ html[dir='rtl'] {
         //border-radius: top-right | bottom-right | bottom-left | top-left
         border-radius: 0 0 2px 2px;
         left: auto;
-        right: -10px;
+      }
+    }
+
+    .fileupload {
+      ~ .btn-actions {
+        right: -16px;
+      }
+    }
+
+    .checkbox,
+    .lookup {
+      ~ .btn-actions {
+        right: -8px;
+      }
+    }
+
+    // Clearable Inputs that are not Searchfields
+    [data-clearable='true'] {
+      ~ .btn-actions {
+        left: auto;
+        right: 24px;
+      }
+
+      ~ .icon.close.is-empty ~ .btn-actions {
+        right: -11px;
+      }
+    }
+
+    .searchfield-wrapper {
+      .btn-actions {
+        top: -1px;
       }
     }
   }
@@ -674,7 +850,7 @@ html[dir='rtl'] {
       &.fileupload {
         ~ .btn-actions {
           left: auto;
-          right: -12px;
+          right: -16px;
         }
       }
 
@@ -696,7 +872,7 @@ html[dir='rtl'] {
       &.spinbox {
         ~ .btn-actions {
           left: auto;
-          right: -9px;
+          right: -8px;
         }
       }
 

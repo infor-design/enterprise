@@ -5,7 +5,7 @@ function removeButtonFromScript(html) {
   if (html.indexOf('<div id="info-popup"') > -1) {
     return html;
   }
-  return html.replace('id="info-btn" class="btn-icon"', 'id="info-btn" class="btn-icon invisible"');
+  return html.replace('id="info-btn" class="btn-icon ignore-in-menu"', 'id="info-btn" class="btn-icon ignore-in-menu invisible"');
 }
 
 module.exports = function () {

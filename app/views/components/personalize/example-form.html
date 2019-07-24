@@ -163,15 +163,3 @@
   </section>
 
 </div>
-
-<script>
-  $('body').on('initialized', function () {
-    if ($('.personalize-header').css('background-color') === 'rgba(0, 0, 0, 0)') {
-      // None set
-      $('html').personalize({ colors: { header: '2578A9' } });
-
-      // Intercept the Default Item as it cant work here 100%
-      $('li.is-default').removeClass('is-default');
-    }
-  });
-</script>

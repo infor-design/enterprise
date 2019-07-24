@@ -79,47 +79,9 @@ describe('Bar Chart example-negative-value tests', () => {
   });
 });
 
-describe('Bar Chart example-hide-legend tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/bar/example-hide-legend');
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should not have visible legends', async () => {
-    const chartEl = await element(by.css('.chart-legend'));
-
-    const resultEl = await browser.driver
-      .wait(protractor.ExpectedConditions.invisibilityOf(chartEl), config.waitsFor);
-
-    expect(await resultEl).toBe(true);
-  });
-});
-
-describe('Bar Chart example-patterns tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/bar/test-patterns');
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should have patterns on bar', async () => {
-    const fBarEl = await element(by.css('.bar.series-0'));
-    const sBarEl = await element(by.css('.bar.series-1'));
-
-    expect(await fBarEl.getAttribute('mask')).toContain('hatch');
-
-    expect(await sBarEl.getAttribute('mask')).toContain('crosshatch');
-  });
-});
-
 describe('Bar Chart example-colors', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/example-colors');
+    await utils.setPage('/components/bar/example-colors?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -143,4 +105,86 @@ describe('Bar Chart example-colors', () => {
 
     expect(await blueEl.getCssValue('fill')).toBe('rgb(146, 121, 166)');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-color')).toEqual(0);
+    });
+  }
+});
+
+describe('Bar Chart alignment tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar/test-alignment?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-alignment')).toEqual(0);
+    });
+  }
+});
+
+describe('Bar Chart axis adjust tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar/test-axis-adjust?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-axis-adjust')).toEqual(0);
+    });
+  }
+});
+
+describe('Bar Chart axis formatter tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar/test-axis-formatter?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-axis-formatter')).toEqual(0);
+    });
+  }
 });

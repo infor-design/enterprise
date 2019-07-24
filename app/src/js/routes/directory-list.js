@@ -28,8 +28,8 @@ module.exports = function directoryList(directory, viewsRoot, req, res, next) {
   fs.readdir(directory, (err, paths) => {
     if (err) {
       logger('error', `Directory Listing Error: ${err}`);
-      res.opts.error = err;
-      res.status(500).render('error', res.opts);
+      res.status(404);
+      next(err);
       return;
     }
 
@@ -107,6 +107,5 @@ module.exports = function directoryList(directory, viewsRoot, req, res, next) {
     res.opts.paths = realPaths.map(pathMapper);
 
     res.render(path.join(viewsRoot, 'listing.html'), res.opts);
-    next();
   });
 };

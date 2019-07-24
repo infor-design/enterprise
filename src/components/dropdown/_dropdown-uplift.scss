@@ -1,0 +1,266 @@
+// Uplift Dropdown
+//================================================== //
+
+// Create a token for this
+$dropdown-size-padding-x-r: 30px;
+
+div.dropdown,
+div.multiselect {
+  + .icon {
+    top: 3px;
+  }
+
+  > .listoption-icon {
+    top: 11px;
+  }
+}
+
+.dropdown-list {
+  > .trigger {
+    width: $dropdown-size-padding-x-r;
+
+    .icon {
+      top: 9px;
+    }
+  }
+
+  > .listoption-icon {
+    top: 10px;
+  }
+}
+
+// Adjust Short Field Dropdowns
+.field-short div.dropdown,
+.field-short div.multiselect {
+  padding: 2px 16px 2px 5px;
+}
+
+.dropdown-list.dropdown-short {
+  .trigger {
+    .icon {
+      left: -5px;
+    }
+  }
+
+  .dropdown-search {
+    padding: 2px 16px 2px 5px;
+  }
+}
+
+// Dropdown Arrow is finicky on IE11
+.ie.ie11 {
+  div.dropdown,
+  div.multiselect {
+    > .listoption-icon {
+      top: 12px;
+    }
+  }
+
+  .dropdown-list {
+    &:not(.dropdown-short) {
+      > .trigger {
+        margin-left: -29px;
+      }
+
+      .listoption-icon {
+        top: 11px;
+      }
+    }
+
+    &.dropdown-short {
+      > .trigger .icon {
+        left: -8px;
+      }
+    }
+  }
+
+  .field-short {
+    div.dropdown,
+    div.multiselect {
+      > .listoption-icon {
+        top: 6px;
+      }
+    }
+  }
+}
+
+// Icon placement isn't quite right on Firefox
+html.is-firefox:not([dir='rtl']) {
+  div.dropdown,
+  div.multiselect {
+    padding: 5px 30px 6px 10px;
+
+    + .icon {
+      top: 2px;
+    }
+
+    > .listoption-icon {
+      top: 10px;
+    }
+  }
+
+  .dropdown-search {
+    padding: 6px 30px 6px 10px;
+  }
+
+  .dropdown-list {
+    > .trigger .icon {
+      top: 8px;
+    }
+
+    > .listoption-icon {
+      top: 9px;
+    }
+
+    &.has-icons {
+      .dropdown-search {
+        padding: 6px 30px 6px 39px;
+      }
+    }
+
+    &.dropdown-short {
+      .dropdown-search {
+        padding: 3px 16px 2px 5px;
+      }
+
+      > .trigger .icon {
+        top: 5px;
+      }
+
+      &.has-icons {
+        .dropdown-search {
+          padding: 3px 16px 2px 25px;
+        }
+      }
+    }
+  }
+
+  .field-short {
+    div.dropdown,
+    div.multiselect {
+      padding: 2px 16px 2px 5px;
+
+      + .icon {
+        top: 0;
+      }
+    }
+  }
+}
+
+// Reset the `.dropdown-search` padding on Firefox RTL
+html[dir='rtl'] {
+  div.dropdown,
+  div.multiselect {
+    .listoption-icon {
+      top: 10px;
+    }
+  }
+
+  .dropdown-list {
+    > .listoption-icon {
+      top: 9px;
+    }
+  }
+
+  .dropdown-search {
+    padding: 8px 10px 7px 39px;
+  }
+
+  .field-short {
+    div.dropdown,
+    div.multiselect {
+      padding: 2px 5px 2px 8px;
+
+      + .icon {
+        left: 2px;
+        top: -3px;
+      }
+
+      .listoption-icon {
+        top: 5px;
+      }
+    }
+  }
+
+  .dropdown-list {
+    &.has-icons {
+      .dropdown-search {
+        padding: 8px 39px 7px 30px;
+      }
+    }
+  }
+
+  .dropdown-list.dropdown-short {
+    .dropdown-search {
+      padding: 2px 5px 2px 16px;
+    }
+
+    > .trigger .icon {
+      margin-right: -26px;
+      right: auto;
+      top: 2px;
+    }
+
+    > .listoption-icon {
+      top: 4px;
+    }
+
+    &.has-icons {
+      .dropdown-search {
+        padding: 2px 25px 2px 16px;
+      }
+    }
+  }
+
+  // Dropdown Arrow is finicky on IE11
+  &.ie.ie11 {
+    .dropdown-list {
+      &:not(.dropdown-short) {
+        > .trigger {
+          margin-left: -29px;
+        }
+      }
+
+      &.dropdown-short {
+        > .trigger .icon {
+          left: -5px;
+        }
+      }
+    }
+  }
+
+  // Re-apply extended padding for Firefox
+  &.is-firefox {
+    .field-short {
+      div.dropdown,
+      div.multiselect {
+        padding: 2px 5px 2px 16px;
+
+        + .icon {
+          top: -2px;
+        }
+      }
+    }
+
+    .dropdown-search {
+      padding: 9px 10px 7px 32px;
+    }
+
+    .dropdown-list.dropdown-short {
+      .dropdown-search {
+        padding: 3px 5px 2px 16px;
+      }
+
+      > .trigger .icon {
+        right: 5px;
+        top: 3px;
+      }
+
+      &.has-icons {
+        .dropdown-search {
+          padding: 3px 25px 2px 21px;
+        }
+      }
+    }
+  }
+}

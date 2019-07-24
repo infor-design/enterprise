@@ -1,0 +1,46 @@
+// Uplift Input
+//================================================== //
+
+.field {
+  .btn-actions {
+    font-size: unset;
+
+    .icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+}
+
+label.required:not(.inline) .required-asterisk,
+.label.required:not(.inline) .required-asterisk,
+label.required:not(.inline):not(.accessible)::after,
+.label.required:not(.inline):not(.accessible)::after,
+label.required .label-text:not(.accessible)::after,
+.label.required .label-text:not(.accessible)::after {
+  font-size: $theme-size-font-md;
+}
+
+.field-info {
+  .icon {
+    margin-top: -3px;
+  }
+
+  + .error-message {
+    margin-top: unset;
+  }
+}
+
+.error-message {
+  .icon {
+    height: 15px;
+  }
+}
+
+html:not(.is-firefox) {
+  .field-short {
+    input {
+      padding: 3px 5px;
+    }
+  }
+}

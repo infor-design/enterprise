@@ -1,0 +1,44 @@
+.datagrid-header {
+  // Fix the size of the drag icon
+  &.medium-rowheight {
+    .datagrid-column-wrapper,
+    th {
+      .handle,
+      .is-draggable-target {
+        font-size: 2.3rem;
+      }
+    }
+  }
+
+  // Adjust some icons
+  .datagrid-filter-wrapper {
+    .dropdown + .icon {
+      top: 1px !important;
+    }
+
+    .datepicker + .icon {
+      margin-left: -8px;
+      top: -5px;
+    }
+  }
+}
+
+// Adjust header text
+.datagrid-header-text {
+  font-size: $theme-size-font-xs !important;
+}
+
+// Adjust Filter Text
+.datagrid-header .datagrid-filter-wrapper .dropdown {
+  padding: 1px 0 0 5px;
+}
+
+// Adjust Row Links
+.datagrid td .hyperlink {
+  margin-top: -2px;
+}
+
+// Adjust Tags
+.datagrid.short-rowheight tbody tr td span {
+  line-height: 22px;
+}

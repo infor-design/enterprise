@@ -2,7 +2,7 @@
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
 
-  <div class="page-container no-scroll two-column builder">
+  <div class="list-detail page-container no-scroll two-column builder" data-options='{ "listElement": "#task-listview", "detailElement": "#maincontent", "backElement": "#header-hamburger" }'>
 
     <div class="sidebar no-scroll" role="complementary">
       <header class="header is-personalizable">
@@ -26,7 +26,7 @@
         <div class="toolbar">
           <div class="title">
 
-            <button class="btn-icon list-detail-back-button go-back" type="button">
+            <button id="header-hamburger" class="btn-icon list-detail-back-button go-back visible-sm hidden-md hidden-lg hidden-xl" type="button">
               <span class="audible">Show navigation</span>
               <span class="icon app-header">
                 <span class="one"></span>
@@ -54,7 +54,7 @@
             <div class="buttonset">
               <button type="button" id="sidebar-responsive-menu" class="btn-tertiary hidden-lg hidden-xl" data-popdown="builder-popdown-content">
                 <svg class="icon" focusable="false" aria-hidden="true">
-                  <use xlink:href="#icon-settings"></use>
+                  <use xlink:href="#icon-cart"></use>
                 </svg>
                 <span>Sidebar Popup</span>
               </button>

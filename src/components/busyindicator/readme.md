@@ -42,7 +42,7 @@ You can provide the options inline in the `data-options`. This example below use
     <input type="text" id="busy-field-cats" name="busy-field-cats" value="" />
   </div>
   <div class="field">
-    <button type="submit" id="submit" class="btn-primary" style="margin-left: 3px">Submit</button>
+    <button type="submit" id="submit" class="btn-primary">Submit</button>
   </div>
 </form>
 

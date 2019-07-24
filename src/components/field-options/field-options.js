@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Environment as env } from '../../utils/environment';
+import { warnAboutRemoval } from '../../utils/deprecated';
 
 // Component Name
 const COMPONENT_NAME = 'fieldoptions';
@@ -8,6 +9,7 @@ const COMPONENT_NAME = 'fieldoptions';
 /**
 * A control bind next to another component to add some extra functionality.
 * @class FieldOptions
+* @deprecated as of v4.20.0. This component is no longer supported by the IDS team.
 * @constructor
 *
 * @param {jQuery[]|HTMLElement} element The component element.
@@ -22,6 +24,7 @@ function FieldOptions(element, settings) {
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
+  warnAboutRemoval('FieldOptions');
 }
 
 // FieldOptions Methods
@@ -174,7 +177,7 @@ FieldOptions.prototype = {
       return returns;
     };
     const setTriggerCssTop = () => {
-      this.trigger.css({ top: `${getTriggerTopVal()}px` });
+      this.trigger.css({ top: `${getTriggerTopVal() - 1}px` });
     };
 
     // Set field-options visibility.
@@ -249,6 +252,13 @@ FieldOptions.prototype = {
     // Checkbox add parent css class
     if (isCheckbox) {
       this.trigger.addClass('is-checkbox');
+      if (!env.features.touch && this.isSafari) {
+        this.field.on(`click.${COMPONENT_NAME}`, '.checkbox-label', () => {
+          doActive();
+        }).on(`mouseout.${COMPONENT_NAME}`, '.checkbox-label', () => {
+          doUnactive();
+        });
+      }
     }
     // Bind fileupload events
     if (isFileupload) {

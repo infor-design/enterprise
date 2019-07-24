@@ -94,6 +94,7 @@ Column.prototype = {
    */
   build() {
     const self = this;
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const isFormatter = !!this.settings.formatterString;
     const format = function (value) {
       return isFormatter ? d3.format(self.settings.formatterString)(value) : value;
@@ -558,6 +559,10 @@ Column.prototype = {
               bandwidth > ((barMaxWidth * dataArray.length) * 2)) {
               x += (((x0.bandwidth() / 2) / dataArray.length) / 2);
             }
+            if (self.isGrouped && !self.settings.isStacked) {
+              const barDiff = (barMaxWidth / (x0.bandwidth() > 150 ? 2 : 4));
+              x -= barDiff;
+            }
             return `translate(${x},0)`;
           });
 
@@ -699,6 +704,9 @@ Column.prototype = {
           }
 
           if (content !== '') {
+            if (charts.tooltip && charts.tooltip.length) {
+              charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+            }
             charts.showTooltip(x, y, content, isTooltipBottom ? 'bottom' : 'top');
           }
         };
@@ -835,11 +843,11 @@ Column.prototype = {
         } else {
           content = tooltipDataCache[i] || tooltipData || content || '';
           if (!tooltipDataCache[i] && d.tooltip !== false &&
-            (typeof d.tooltip !== 'undefined' || d.tooltip !== null)) {
+            typeof d.tooltip !== 'undefined' && d.tooltip !== null) {
             if (typeof d.tooltip === 'function') {
               setCustomTooltip(d.tooltip);
             } else {
-              content = d.tooltip;
+              content = d.tooltip.toString();
               replaceMatchAndSetType();
               tooltipDataCache[i] = content;
             }
@@ -1151,6 +1159,9 @@ Column.prototype = {
       });
     }
 
+    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+      this.updated();
+    });
     return this;
   },
 
@@ -1226,6 +1237,7 @@ Column.prototype = {
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     $('body').off(`resize.${COMPONENT_NAME}`);
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
     return this;
   },
 

@@ -114,7 +114,7 @@ Dropdown.prototype = {
   get overflowed() {
     if (!this.isMobile() || (this.isMobile() && !this.isOpen())) {
       const span = this.pseudoElem.find('span').css('max-width', '');
-      if (span.width() > this.pseudoElem.width()) {
+      if (Math.round(span.width()) > Math.round(this.pseudoElem.width())) {
         span.css('max-width', '100%');
         return true;
       }
@@ -325,7 +325,10 @@ Dropdown.prototype = {
     this.setDisplayedValues();
     this.setInitial();
     this.setWidth();
-    this.toggleTooltip();
+
+    setTimeout(() => {
+      this.toggleTooltip();
+    }, 0);
 
     this.element.triggerHandler('rendered');
 
@@ -643,7 +646,7 @@ Dropdown.prototype = {
     if (!listExists) {
       listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
         <label for="dropdown-search" class="audible">${Locale.translate('TypeToFilter')}</label>
-        <input type="text" class="dropdown-search${reverseText}" id="dropdown-search">
+        <input type="text" class="dropdown-search${reverseText}" id="dropdown-search" autocomplete="off" />
         <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}<span class="audible">${isMobile ? Locale.translate('Close') : Locale.translate('Collapse')}</span></span>
         <ul role="listbox">`;
     }
@@ -864,7 +867,7 @@ Dropdown.prototype = {
     }
 
     if (this.settings.empty && opts.length === 0) {
-      this.pseudoElem.find('span').html(`<span class="audible">${this.label.text()} </span>`);
+      DOM.html(this.pseudoElem.find('span'), `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
       return;
     }
 
@@ -874,7 +877,7 @@ Dropdown.prototype = {
       text = text.substr(0, maxlength);
     }
     text = text.trim();
-    this.pseudoElem.find('span').html(`<span class="audible">${this.label.text()} </span>${text}`);
+    this.pseudoElem.find('span')[0].innerHTML = `<span class="audible">${this.label.text()} </span>${text}`;
 
     // If there is a placeholder set the selected text
     if (this.element.attr('placeholder')) {
@@ -2150,10 +2153,10 @@ Dropdown.prototype = {
     return true;
   },
 
-  /*
-  * Function that is used to chekc if the field is loading from an ajax call.
-  * @returns {void} Returns true if the field is attempting to load via AJAX.
-  */
+  /**
+   * Function that is used to check if the field is loading from an ajax call.
+   * @returns {void} Returns true if the field is attempting to load via AJAX.
+   */
   isLoading() {
     return this.element.is('.is-loading') && this.element.is('.is-blocked');
   },
@@ -2443,15 +2446,6 @@ Dropdown.prototype = {
       });
     }
 
-    // Change the values of both inputs and swap out the active descendant
-    if (!clearSelection) {
-      this.pseudoElem.find('span').text(`<span class="audible">${this.label.text()} </span>${text}`);
-      this.searchInput.val(text);
-    } else {
-      this.pseudoElem.find('span').text(`<span class="audible">${this.label.text()} </span>${text}`);
-      this.searchInput.val('');
-    }
-
     if (this.element.attr('maxlength')) {
       trimmed = text.substr(0, this.element.attr('maxlength'));
       this.pseudoElem.find('span').text(trimmed);
@@ -2485,9 +2479,6 @@ Dropdown.prototype = {
 
     // If multiselect, reset the menu to the unfiltered mode
     if (this.settings.multiple) {
-      if (this.list.hasClass('search-mode')) {
-        this.resetList();
-      }
       this.activate(true);
     }
 
@@ -2637,7 +2628,6 @@ Dropdown.prototype = {
 
         if (option.value !== undefined) {
           option.value = replaceDoubleQuotes(option.value);
-          textContent = option.label;
         }
 
         if (option.id !== undefined) {
@@ -2648,15 +2638,28 @@ Dropdown.prototype = {
           id = ` id="${option.id}"`;
         }
 
-        if (option.label !== undefined) {
+        if (option.label !== undefined && option.label.length) {
           option.label = replaceDoubleQuotes(option.label);
           textContent = option.label;
         }
 
         const selectedValues = (self.selectedValues && self.selectedValues.indexOf(val) > -1);
-        if (option.value === val || selectedValues) {
+        if (self.settings.multiple) {
+          val.forEach((value) => {
+            if (value === option.value) {
+              option.selected = true;
+              selected = ' selected';
+            }
+          });
+        } else if (option.value === val || selectedValues) {
           option.selected = true;
           selected = ' selected';
+        }
+
+        // Make sure that text content is populated.
+        // If all else fails, just use the value.
+        if (!textContent.length && textContent !== option.value) {
+          textContent += option.value;
         }
 
         // Render the option element
@@ -2923,12 +2926,14 @@ Dropdown.prototype = {
 
     $.removeData(this.element[0], COMPONENT_NAME);
     this.closeList('cancel');
-    this.label.remove();
     this.pseudoElem.off().remove();
     this.icon.remove();
     this.wrapper.remove();
     this.listfilter.destroy();
     this.element.removeAttr('style');
+    this.element.closest('form').off('reset.dropdown');
+    this.element.off();
+    this.label.off();
 
     const list = document.body.querySelector('#dropdown-list');
     if (list && this.isOpen()) {

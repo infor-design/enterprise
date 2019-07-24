@@ -317,17 +317,17 @@ Place.prototype = {
 
       // Set X alignments on bottom/top placements
       if (p === 'top' || p === 'bottom') {
-        const cW = containerIsBody ? document.body.offsetWidth : null;
+        const cW = Math.round(containerIsBody ? document.body.offsetWidth : null);
         switch (aX) {
           case 'left':
-            if (containerIsBody && (cW < parentRect.left + elRect.width)) {
-              cX = (parentRect.right - elRect.width) + incomingPlacementObj.x + scrollX;
+            if (containerIsBody && (cW < Math.round(elRect.left) + Math.round(elRect.width))) {
+              cX = parentRect.left + incomingPlacementObj.x + scrollX;
             } else {
               cX = parentRect.left - incomingPlacementObj.x + (containerIsBody ? scrollX : 0);
             }
             break;
           case 'right':
-            if (containerIsBody && (parentRect.right - elRect.width) < 0) {
+            if (containerIsBody && (Math.round(elRect.right) - Math.round(elRect.width)) < 0) {
               cX = parentRect.left - incomingPlacementObj.x + scrollX;
             } else {
               cX = (parentRect.right - elRect.width) +
@@ -551,6 +551,7 @@ Place.prototype = {
     const scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop();
     const windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     const windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const padding = 20;
     let d;
 
     rect.width = BoundingRect.width;
@@ -580,7 +581,7 @@ Place.prototype = {
     // If element width is greater than window width, shrink to fit
     const rightViewportEdge = getBoundary('right');
     if (rect.width >= rightViewportEdge) {
-      d = rect.width - rightViewportEdge;
+      d = (rect.width - rightViewportEdge) + padding;
       const newWidth = rect.width - d;
       placementObj.width = newWidth;
 
@@ -591,7 +592,7 @@ Place.prototype = {
     // If element height is greater than window height, shrink to fit
     const bottomViewportEdge = getBoundary('bottom');
     if (rect.height >= bottomViewportEdge) {
-      d = rect.height - bottomViewportEdge;
+      d = (rect.height - bottomViewportEdge) + padding;
       const newHeight = rect.height - d;
       placementObj.height = newHeight;
 

@@ -1,5 +1,5 @@
 
-module.exports = (req, res, next) => {
+module.exports = (req, res) => {
   let resData;
   const fruits = {
     main: '' +
@@ -60,5 +60,4 @@ module.exports = (req, res, next) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(resData));
-  next();
 };

@@ -1,0 +1,24 @@
+// Uplift Lookup
+//================================================== //
+
+.field-short {
+  .lookup-wrapper {
+    .trigger {
+      .icon {
+        top: 8px;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .field-short {
+    .lookup-wrapper {
+      .trigger {
+        .icon {
+          top: 7px;
+        }
+      }
+    }
+  }
+}

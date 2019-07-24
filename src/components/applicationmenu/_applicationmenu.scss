@@ -1,4 +1,4 @@
-// Application Menu Control
+// Application Menu
 //================================================== //
 
 .application-menu {
@@ -46,7 +46,6 @@
     right: 0;
   }
 
-  .searchfield + .accoridon,
   .searchfield-wrapper + .accordion {
     min-height: calc(100% - 36px);
   }
@@ -55,6 +54,7 @@
     border-left: none !important;
     border-right: none !important;
     border-top: none !important;
+    flex: 0 0 auto;
     margin-bottom: calc(-2rem - 38px);
     margin-left: 1px;
     min-height: 100%;

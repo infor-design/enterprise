@@ -193,7 +193,7 @@
   list-style: none;
   margin: 0;
   overflow: auto;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: auto;
   padding: 5px 0;
   text-align: left;
 
@@ -438,7 +438,6 @@
   &.popupmenu-short {
     a {
       line-height: 24px;
-      padding: 0 25px 0 10px;
     }
 
     &.has-icons {
@@ -513,7 +512,7 @@
         &::before {
           @include checkbox-unchecked-disabled-before-style;
 
-          margin-left: 12px;
+          margin-left: 7px;
           margin-top: 0;
           top: 9px;
         }
@@ -526,8 +525,8 @@
           &::after {
             @include checkbox-checked-disabled-after-style;
 
-            left: 21px;
-            margin-top: 8px;
+            left: 12px;
+            margin-top: 5px;
           }
         }
       }
@@ -583,13 +582,6 @@
   }
 }
 
-//IOS
-.ios {
-  .has-submenu {
-    overflow: hidden;
-  }
-}
-
 // RTL Styles
 html[dir='rtl'] {
   .popupmenu {
@@ -635,13 +627,38 @@ html[dir='rtl'] {
       }
 
       // Selectable
-      &.is-selectable {
+      &.is-selectable,
+      &.is-multiselectable {
         > a {
           padding-left: 10px;
           padding-right: 35px;
         }
       }
     }
+
+    // Full menu is multiselectable:
+    &.is-selectable,
+    &.is-multiselectable {
+      li {
+        > a {
+          padding-left: 10px;
+          padding-right: 35px;
+        }
+      }
+    }
+
+    &.is-multiselectable {
+      li {
+        &::before {
+          right: 8px;
+        }
+
+        &::after {
+          right: 13px;
+        }
+      }
+    }
+
   }
 
   .popup-footer {

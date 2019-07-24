@@ -7,8 +7,9 @@ $dd-width: 55px;
 }
 
 .field.fieldfilter-wrapper {
+  white-space: nowrap;
+
   div:first-of-type {
-    height: 34px;
     margin-right: -1px;
     vertical-align: top;
 
@@ -119,6 +120,24 @@ $dd-width: 55px;
   }
 }
 
+// Firefox
+.is-firefox {
+  .field.fieldfilter-wrapper {
+    div:first-of-type {
+      height: 34px;
+    }
+  }
+}
+
+// IOS
+.ios {
+  .dropdown-list.ffdropdown {
+    .dropdown-search {
+      width: 100%;
+    }
+  }
+}
+
 // RTL Styles ******************************************************************
 html[dir='rtl'] {
   .field.fieldfilter-wrapper {
@@ -150,5 +169,14 @@ html[dir='rtl'] {
       margin-left: inherit;
       margin-right: 26px;
     }
+  }
+}
+
+// Fixes some layout issues on iPhones
+@media (max-width: 767px) {
+  .field.fieldfilter-wrapper .field-filter.input-md,
+  .field.fieldfilter-wrapper .field-filter.colorpicker-input-md,
+  .field.fieldfilter-wrapper select.field-filter.dropdown + .dropdown-wrapper {
+    width: calc(300px - 75px);
   }
 }

@@ -84,7 +84,7 @@ const editors = {
       if (column.inlineEditor) {
         this.input = container.find('input');
       } else {
-        this.input = $(`<input type="${(column.inputType || 'text')}"/>`)
+        this.input = $(`<input type="${(column.inputType || 'text')}" autocomplete="off"/>`)
           .appendTo(container);
       }
 
@@ -298,7 +298,7 @@ const editors = {
     value = xssUtils.stripTags(value);
 
     this.init = function () {
-      this.input = $(`<input id="colorpicker-${cell}" name="colorpicker-${cell}" class="colorpicker" value="${value}" type="text" />`).appendTo(container);
+      this.input = $(`<input id="colorpicker-${cell}" name="colorpicker-${cell}" class="colorpicker" value="${value}" type="text" autocomplete="off"/>`).appendTo(container);
       this.input.colorpicker(column.editorOptions);
     };
 
@@ -485,7 +485,7 @@ const editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input class="datepicker"/>').appendTo(container);
+      this.input = $('<input class="datepicker" autocomplete="off"/>').appendTo(container);
       this.input.datepicker(column.editorOptions || { dateFormat: column.dateFormat });
     };
 
@@ -567,7 +567,7 @@ const editors = {
       multiple = xssUtils.ensureAlphaNumeric(multiple);
       disabled = xssUtils.ensureAlphaNumeric(disabled);
 
-      this.input = $(`<input id="${id}" name="${id}" class="fileupload" type="file" ${types}${multiple}${disabled} />`);
+      this.input = $(`<input id="${id}" name="${id}" class="fileupload" type="file" ${types}${multiple}${disabled} autocomplete="off"/>`);
       container.append(`<label>${this.input[0].outerHTML}</label>`);
       this.api = this.input.fileupload(column.editorOptions).data('fileupload');
       this.input.closest('td').addClass('is-fileupload').find('label:eq(1)').addClass('audible');
@@ -676,7 +676,7 @@ const editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input class="timepicker"/>').appendTo(container);
+      this.input = $('<input class="timepicker" autocomplete="off" />').appendTo(container);
       this.api = this.input.timepicker(column.editorOptions || '').data('timepicker');
     };
 
@@ -731,7 +731,7 @@ const editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $(`<input class="lookup ${column.align === 'right' ? 'align-text-right' : ''}" data-init="false" />`).appendTo(container);
+      this.input = $(`<input class="lookup ${column.align === 'right' ? 'align-text-right' : ''}" data-init="false" autocomplete="off" />`).appendTo(container);
 
       addStandardInputFeatures(
         this.input,
@@ -818,7 +818,7 @@ const editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input class="autocomplete datagrid-autocomplete" />').appendTo(container);
+      this.input = $('<input class="autocomplete datagrid-autocomplete" autocomplete="off" />').appendTo(container);
 
       if (!column.editorOptions) {
         column.editorOptions = {};
@@ -869,7 +869,7 @@ const editors = {
 
       const markup = `<label for="spinbox-${cell}" class="audible">Quantity</label>
         <span class="spinbox-wrapper"><span class="spinbox-control down">-</span>
-        <input id="spinbox-${cell}" name="spinbox-${cell}" type="text" class="spinbox" value="'+ ${value} +'">
+        <input id="spinbox-${cell}" name="spinbox-${cell}" type="text" class="spinbox" value="'+ ${value} +'" autocomplete="off" />
         <span class="spinbox-control up">+</span></span>`;
 
       DOM.append(container, markup, '<label><span><input>');
@@ -883,7 +883,10 @@ const editors = {
     };
 
     this.val = function (v) {
-      return v ? parseInt(this.input.val(v), 10) : parseInt(this.input.val(), 10);
+      if (v) {
+        this.input.val(v);
+      }
+      return parseInt(this.input.val(), 10);
     };
 
     this.focus = function () {
@@ -898,7 +901,14 @@ const editors = {
 
       setTimeout(() => {
         grid.quickEditMode = false;
-        this.input.remove();
+        const textVal = this.val();
+        if (this.input && this.input.data('spinbox')) {
+          this.input.data('spinbox').destroy();
+        }
+        if (this.input) {
+          this.input.remove();
+        }
+        container.text(textVal);
       }, 0);
     };
 

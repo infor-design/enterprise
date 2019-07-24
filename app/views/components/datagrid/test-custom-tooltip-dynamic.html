@@ -1,6 +1,6 @@
 <div class="row">
   <div class="twelve columns">
-    <div id="readonly-datagrid">
+    <div id="datagrid">
     </div>
   </div>
 </div>
@@ -25,20 +25,18 @@
     columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 240, formatter: Formatters.Hyperlink });
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160, tooltip: 'Testing' });
     columns.push({ id: 'status', name: 'Exception', field: 'status',
-      tooltip: function(cell, value) {
-        return 'Test: ' + value;
+      tooltip: function(row, cell, value) {
+        return 'Row: ' + row + ' Cell: ' + cell + ' Value: ' + value;
       },
       width: 100 }
     );
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity' });
 
     //Init and get the api for the grid
-    $('#readonly-datagrid').datagrid({
+    $('#datagrid').datagrid({
       columns: columns,
       dataset: data,
       enableTooltips: true
-    }).on('afterrender', function () {
-      $('.list-exceptions').tooltip();
     });
   });
 

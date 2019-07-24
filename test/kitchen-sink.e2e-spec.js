@@ -41,13 +41,19 @@ describe('Kitchen-sink tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonChangerEl), config.waitsFor);
       await buttonChangerEl.click();
-      const highContrastItem = await element(by.cssContainingText('.popupmenu.is-open li', 'High Contrast'));
+      const highContrastItem = await element(by.cssContainingText('.popupmenu.is-open li', 'Theme'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(highContrastItem), config.waitsFor);
       await highContrastItem.click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await element(by.css('html')).getAttribute('class')).toContain('high-contrast-theme');
+      const upliftItem = await element.all(by.cssContainingText('.popupmenu.is-open li', 'Uplift')).get(1);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(upliftItem), config.waitsFor);
+      await upliftItem.click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.css('html')).getAttribute('class')).toContain('theme-uplift-light');
     });
   }
 });

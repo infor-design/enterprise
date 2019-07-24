@@ -183,15 +183,16 @@ Editor.prototype = {
     // Bind functionality for Pre elements. We dont use this yet but could if we
     // want to edit code blocks.
     this.element.attr('data-editor', true);
-    this.bindParagraphCreation().bindTab();
 
+    // Build the textarea that will be used as source view and for content serialization
+    this.initTextarea();
+
+    this.bindParagraphCreation().bindTab();
     this.initToolbar()
       .bindButtons()
       .bindModals()
       .bindAnchorPreview();
 
-    // Build the textarea that will be used as source view and for content serialization
-    this.initTextarea();
     return this;
   },
 
@@ -264,6 +265,7 @@ Editor.prototype = {
         }
         // Tab to indent list structures!
         if (tag === 'li') {
+          e.preventDefault();
           // If Shift is down, outdent, otherwise indent
           document.execCommand((e.shiftKey ? 'outdent' : 'indent'), e);
         }

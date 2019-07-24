@@ -83,6 +83,7 @@ div.multiselect {
   border-color: $input-color-initial-border;
   color: $dropdown-color-initial-font;
   cursor: pointer;
+  line-height: normal;
   overflow: hidden;
   padding: 8px 30px 8px 10px;
   text-overflow: ellipsis;
@@ -117,7 +118,7 @@ div.multiselect {
     height: 16px;
     left: 14px;
     position: absolute;
-    top: 10px;
+    top: 9px;
     vertical-align: middle;
     width: 16px;
 
@@ -128,7 +129,6 @@ div.multiselect {
     &.swatch {
       border-radius: 2px;
       left: 15px;
-      top: 10px;
     }
   }
 
@@ -177,7 +177,6 @@ div.multiselect {
     cursor: pointer;
     display: inline-block;
     height: 32px;
-    margin-left: -33px;
     pointer-events: none;
     position: absolute;
     right: 6px;
@@ -371,7 +370,6 @@ div.multiselect {
     &.swatch {
       border-radius: 2px;
       left: 14px;
-      top: 8px;
       width: 16px;
     }
 
@@ -626,6 +624,16 @@ input.dropdown.error:focus {
   }
 }
 
+// Zeroes out a standard form-field rule
+.field {
+  div.dropdown,
+  div.multiselect {
+    .icon + span {
+      vertical-align: top;
+    }
+  }
+}
+
 //Shorter Field Size
 .field-short {
   div.dropdown {
@@ -650,7 +658,6 @@ input.dropdown.error:focus {
       height: 30px;
       right: 4px;
       top: -2px;
-      width: 16px;
     }
 
     ~ .icon-error {
@@ -702,7 +709,7 @@ div.dropdown-xs,
 .dropdown-list.dropdown-short {
   .dropdown-search {
     font-size: $theme-size-font-sm;
-    padding: 5px 32px 5px 5px;
+    padding: 5px 16px 5px 5px;
   }
 
   &.has-icons {
@@ -744,16 +751,18 @@ div.dropdown-xs,
     top: 5px;
   }
 
-  .trigger .icon {
-    height: 30px;
-    right: 3px;
-    top: -4px;
-    width: 16px;
+  > .trigger {
+    .icon {
+      left: auto;
+      right: 5px;
+      top: 3px;
 
-    &.icon.search {
-      height: 14px;
-      right: -6px;
-      top: -2px;
+      &.search {
+        height: 12px;
+        right: -4px;
+        top: -2px;
+        width: 12px;
+      }
     }
   }
 
@@ -785,6 +794,12 @@ div.dropdown-xs,
     &.multiple li {
       &::before {
         margin-left: -23px;
+      }
+    }
+
+    &:not(.dropdown-short) {
+      > .trigger {
+        margin-left: -30px;
       }
     }
   }
@@ -824,6 +839,28 @@ div.dropdown-xs,
     }
   }
 
+  div.dropdown,
+  div.multiselect {
+    padding: 9px 30px 8px 10px;
+
+    > span {
+      padding-top: 1px;
+    }
+  }
+
+  // Reset the padding in the rule above for Short Fields
+  .field-short {
+    div.dropdown,
+    div.multiselect {
+      padding: 5px 21px 5px 5px;
+    }
+  }
+
+  .dropdown-search {
+    line-height: normal;
+    padding: 10px 30px 8px 10px;
+  }
+
   .dropdown-list {
     &.multiple li {
       &::before {
@@ -836,23 +873,17 @@ div.dropdown-xs,
       }
     }
 
-    .dropdown-search {
-      padding-bottom: 6px;
-      padding-top: 9px;
-    }
-
     &.dropdown-short {
       .dropdown-search {
         font-size: $theme-size-font-sm;
-        padding: 5px 21px 5px 5px;
+        padding: 6px 21px 5px 5px;
       }
-    }
-  }
 
-  div.dropdown,
-  div.multiselect {
-    > span {
-      padding-top: 1px;
+      &.has-icons {
+        .dropdown-search {
+          padding: 6px 21px 5px 25px;
+        }
+      }
     }
   }
 }
@@ -939,7 +970,7 @@ html[dir='rtl'] {
 
     // Icon States
     + .icon {
-      left: 8px;
+      left: 5px;
       margin-left: inherit;
       margin-right: -33px;
       right: auto !important;
@@ -963,7 +994,7 @@ html[dir='rtl'] {
     &.multiple {
       li::before {
         margin-left: inherit;
-        margin-right: 5px;
+        margin-right: -23px;
       }
 
       li.is-selected::after {
@@ -989,7 +1020,7 @@ html[dir='rtl'] {
 
     > .trigger {
       .icon {
-        margin-right: -22px;
+        margin-right: -23px;
       }
     }
 
@@ -1000,11 +1031,20 @@ html[dir='rtl'] {
         margin-right: inherit;
         right: 0;
       }
+
+      &.is-swatch {
+        padding-right: 30px;
+
+        span.swatch {
+          margin-left: auto;
+          margin-right: -17px;
+        }
+      }
     }
 
     > .listoption-icon {
       left: auto;
-      right: 36px;
+      right: 39px;
 
       + span {
         padding-left: inherit;
@@ -1057,6 +1097,10 @@ html[dir='rtl'] {
         }
       }
     }
+
+    > .trigger .icon {
+      right: 0;
+    }
   }
 
   .dropdown-wrapper {
@@ -1092,6 +1136,93 @@ html[dir='rtl'] {
           padding-left: inherit;
           padding-right: 20px;
         }
+      }
+    }
+  }
+
+  .dropdown-list:not(.dropdown-short) {
+    > .listoption-icon {
+      left: auto;
+      right: 36px;
+
+      &.swatch {
+        right: 39px;
+      }
+    }
+  }
+
+  // Firefox needs different padding in the input fields (differences in font rendering)
+  &.is-firefox {
+    .dropdown,
+    .multiselect,
+    input.dropdown,
+    input.multiselect {
+      padding: 7px 10px 7px 32px;
+    }
+
+    .dropdown-search {
+      padding: 8px 10px 8px 32px;
+    }
+
+    // Reset the padding in the rule above for Short Fields
+    .field-short {
+      div.dropdown,
+      div.multiselect {
+        padding: 5px 5px 5px 21px;
+
+        + .icon {
+          top: 0;
+        }
+      }
+    }
+
+    .dropdown-list.dropdown-short {
+      .dropdown-search {
+        padding: 6px 5px 5px 21px;
+      }
+
+      > .trigger .icon {
+        right: -1px;
+        top: 5px;
+      }
+
+      &.has-icons {
+        .dropdown-search {
+          padding: 6px 25px 5px 21px;
+        }
+      }
+    }
+  }
+
+  // TODO: Figure out why our rules for multiselect checkboxes no longer
+  // work correctly across all browsers.
+  &:not(.is-firefox):not(.ie11) {
+    .dropdown-list.multiple {
+      li::before {
+        margin-right: 10px;
+      }
+
+      &.dropdown-short {
+        li::before {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  &.is-firefox,
+  &.ie11 {
+    .dropdown-list.dropdown-short.multiple {
+      li::before {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  &.is-safari {
+    .dropdown-list.dropdown-short.multiple {
+      li::after {
+        right: 10px;
       }
     }
   }

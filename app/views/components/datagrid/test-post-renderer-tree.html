@@ -18,8 +18,7 @@
         field: 'taskName',
         expanded: 'expanded',
         formatter: Formatters.Tree,
-        filterType: 'text',
-        width: 250
+        filterType: 'text'
       });
       columns.push({
         id: 'id',
@@ -59,11 +58,11 @@
         treeGrid: true,
         filterable: true,
         onPostRenderCell: function(container, args) {
-          console.log('Post Render Row', args.row, args);
-          if (args.row !== 1) {
-            container.innerHTML = `<span style="font-weight: bold">${
-              args && args.value && args.value.id ? args.value.id : ''
-            }</span>`;
+          console.log('Post Render Row', args.row, args.value.id, args.value.taskName);
+          if (args.row !== 0) {
+            container.innerHTML = '<span style="font-weight: bold">' + (args && args.value && args.value.id ? args.value.id : '').toString() + '</span>';
+          } else {
+            container.innerHTML = (args && args.value && args.value.id ? args.value.id : '').toString();
           }
         },
         onDestroyCell: function(container, args) {

@@ -1,5 +1,18 @@
 <div class="row">
   <div class="twelve columns">
+
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">1 Selected</div>
+      <div class="buttonset">
+        <button class="btn-icon" type="button" id="remove-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Remove</span>
+        </button>
+      </div>
+    </div>
+  
     <div id="datagrid">
 
     </div>
@@ -74,12 +87,39 @@
 
             });
 
-            $('#datagrid').on('afterpaging', function() {
-              var gridApi = $(this).data('datagrid');
-              gridApi.validateAll();
+            $('#datagrid').on('page', function(e, pi) {
+              var gridApi = $(this).data('datagrid');	              
+              if (pi && pi.type === 'afterpaging') {
+                gridApi.validateAll();
+                return;
+              }
+              var self = $(this).data('datagrid');
+              if (pi && pi.type === 'next' || pi.type === 'prev') {
+                var offet = pi.pagesize;
+                if (pi.type === 'prev') {
+                  offet = -offet;
+                }
+                self.tableBody.find('tr').toArray().forEach(function (visibleRow) {
+                  var row = self.dataRowIndex($(visibleRow));
+                  for (let i = 0; i < self.settings.columns.length; i++) {
+                    self.validateCell(row, i);
+                    if ((row - offet) >= 0 && (row - offet) < self.settings.dataset.length) {
+                      self.validateCell(row - offet, i);
+                    }
+                  }
+                });
+              } else {
+                self.validateAll();
+              }
             });
-
+            
+            //Add Code for Add and icon-delete
+            $('#remove-btn').on('click', function () {
+              $('#datagrid').data('datagrid').removeSelected();
+            });
         });
+        
+        
 
   });
 

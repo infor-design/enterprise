@@ -7,6 +7,20 @@
     width: 100%;
   }
 
+  .colorpicker-container {
+    position: relative;
+    width: 100% !important;
+
+    .colorpicker {
+      width: auto !important;
+    }
+
+    .trigger {
+      position: absolute;
+      right: 0;
+    }
+  }
+
   .dropdown-wrapper {
     width: 100%;
 
@@ -43,6 +57,17 @@
     .field .checkbox-label,
     .field .checkbox > label {
       margin-top: -10px;
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .form-responsive {
+    .colorpicker-container {
+      .trigger {
+        left: 0;
+        right: auto;
+      }
     }
   }
 }

@@ -60,7 +60,7 @@ const twoSeriesData = [{
   name: 'Series 2'
 }];
 
-describe('Bar API', () => { //eslint-disable-line
+describe('Bar API', () => {
   beforeEach((done) => {
     barEl = null;
     barObj = null;
@@ -142,7 +142,7 @@ describe('Bar API', () => { //eslint-disable-line
 
   it('Should be able to hide legend', (done) => {
     barObj.destroy();
-    const newSettings = Object.assign({ showLegend: true, dataset: twoSeriesData }, settings);
+    const newSettings = Object.assign({ showLegend: true, dataset: twoSeriesData }, settings); // eslint-disable-line
     newSettings.dataset = twoSeriesData;
     barObj = new Bar(barEl, newSettings);
 

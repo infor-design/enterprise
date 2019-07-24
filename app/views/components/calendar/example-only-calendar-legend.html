@@ -1,0 +1,95 @@
+<div class="parent">
+  <div class="calendar" data-init="false">
+    <div class="calendar-events">
+      <div class="accordion" data-options="{'allowOnePane': false}">
+        <div class="accordion-header is-expanded">
+          <a href="#"><span data-translate="text">Legend</span></a>
+        </div>
+        <div class="accordion-pane">
+          <div class="calendar-event-types accordion-content">
+          </div>
+        </div>
+        <div class="accordion-header is-expanded">
+          <a href="#"><span data-translate="text">UpComing</span></a>
+        </div>
+        <div class="accordion-pane">
+          <div class="calendar-upcoming-events accordion-content">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="calendar-monthview">
+    </div>
+  </div>
+</div>
+
+<style>
+  .parent {
+    height: 100%;
+    width: 100
+  }
+</style>
+
+<script id="test-script">
+  var events = [];
+  $('body').one('initialized', function () {
+    // Get the Event Type and Events to show in the calendar
+    var eventTypes = [];
+
+    $.getJSON('{{basepath}}api/event-types', function(res) {
+      eventTypes = res;
+
+      $.getJSON('{{basepath}}api/events', function(res) {
+        events = res;
+
+        $('.calendar').calendar({
+          month: 4,
+          year: 2019,
+          eventTypes: eventTypes,
+          showViewChanger: false,
+          events: events
+        }).on('dblclick', function (e, args) {
+          $('body').toast({title: 'Application Test', message: 'In a real application you might show a modal for day' + args.eventData.ends });
+        });
+      });
+    });
+  });
+
+  $('#actions').on('selected', function(e, args) {
+    var action = args[0].getAttribute('data-action');
+    var api = $('.calendar').data('calendar');
+    var selectedDate = api.getDayEvents();
+    var events = api.settings.events;
+    var defaultHours = 8;
+    var startDate = new Date(selectedDate.date);
+    var endDate = new Date(selectedDate.date);
+    var isAllDay = true;
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(startDate.getHours() + defaultHours);
+    // To default all day use
+    if (isAllDay) {
+      endDate.setHours(23, 59, 59, 999);
+    }
+
+    if (action === 'add-api') {
+      var newEvent = {
+        id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+        subject: 'New Random Event',
+        comments: 'New Random Event Details',
+        starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        ends: Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        type: 'team',
+        isAllDay: isAllDay
+      };
+      api.addEvent(newEvent);
+    }
+
+    if (action === 'add-modal') {
+      $('body').toast({title: 'Application Test', message: 'In a real application you might show a modal or popup now.'});
+    }
+
+    if (action === 'clear') {
+      api.clearEvents(selectedDate.date);
+    }
+  });
+</script>

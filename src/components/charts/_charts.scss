@@ -44,6 +44,14 @@
 
     fill: $chart-font-color;
     font-size: $theme-size-font-sm;
+
+    &::selection {
+      fill: $inverse-color;
+    }
+
+    &::-moz-selection {
+      fill: $inverse-color;
+    }
   }
 
   .inverse {
@@ -65,14 +73,6 @@
   // Svg Hidden
   .is-hidden {
     @include opacity(0);
-  }
-
-  &.completion-chart {
-    margin: 30px;
-
-    @media only screen and (min-width: $breakpoint-phone-to-tablet) and (max-width: $breakpoint-tablet-to-desktop) {
-      margin: 30px 5px;
-    }
   }
 
   // Right aligned Legend
@@ -107,9 +107,9 @@
       }
 
       .chart-legend-item-text {
+        line-height: 18px;
         padding-left: 7px;
         position: relative;
-        top: 2px;
         white-space: pre-line;
       }
     }
@@ -291,8 +291,6 @@
 }
 
 .chart-targeted-achievement {
-  margin-bottom: 17px !important;
-
   .label {
     font-size: $theme-size-font-base;
     margin-top: 2px;

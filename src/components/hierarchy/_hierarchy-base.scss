@@ -22,10 +22,13 @@
     .key {
       border-radius: 50%;
       display: inline-block;
-      float: left;
       height: 15px;
       margin: 0 10px;
       width: 15px;
+    }
+
+    span {
+      vertical-align: middle;
     }
   }
 

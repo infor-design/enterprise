@@ -30,9 +30,9 @@ const COLORPICKER_DEFAULTS = {
   // BORDERS
   // Use (,) commas to separate themes or single entry for border as:
   // colors[{label: 'Slate', number: '01', value: 'F0F0F0',
-  // border: 'light-theme, high-contrast-theme'}]
+  // border: 'light-theme, contrast-theme'}]
   // and assign which swatch theborder should apply ['all' or 'matched-only']
-  // themes: { 'high-contrast-theme': {'border': 'all'} }
+  // themes: { 'contrast-theme': {'border': 'all'} }
 
   // CHECKMARKS
   // checkmark: {'one': [1, 2], 'two': [3, 10]}
@@ -43,7 +43,7 @@ const COLORPICKER_DEFAULTS = {
   themes: {
     light: { border: 'matched-only', checkmark: { one: [1, 2], two: [3, 10] } },
     dark: { border: 'matched-only', checkmark: { one: [1, 2], two: [3, 10] } },
-    'high-contrast': { border: 'all', checkmark: { one: [1, 3], two: [4, 10] } }
+    contrast: { border: 'all', checkmark: { one: [1, 3], two: [4, 10] } }
   },
   customColors: false,
   colors: [
@@ -56,7 +56,7 @@ const COLORPICKER_DEFAULTS = {
     { label: 'Slate', number: '04', value: '999999' },
     { label: 'Slate', number: '03', value: 'BDBDBD' },
     { label: 'Slate', number: '02', value: 'D8D8D8' },
-    { label: 'Slate', number: '01', value: 'F0F0F0', border: 'light, high-contrast' },
+    { label: 'Slate', number: '01', value: 'F0F0F0', border: 'light, contrast' },
     { label: 'Amber', number: '10', value: 'D66221' },
     { label: 'Amber', number: '09', value: 'DE7223' },
     { label: 'Amber', number: '08', value: 'E68425' },
@@ -484,6 +484,22 @@ ColorPicker.prototype = {
   },
 
   /**
+   * Make basic theme variants backwards/forwards compatible
+   * @param {string} activeTheme The active theme to get the variant for
+   * @returns {string} The theme variants's border property value
+   * @example (i.e. match "theme-uplift-light" with "light" and return "themes.light.border")
+   */
+  getThemeVariant(activeTheme) {
+    const legacyThemes = Object.keys(COLORPICKER_DEFAULTS.themes);
+    const res = legacyThemes.filter(legacyTheme => activeTheme.indexOf(legacyTheme) > -1);
+    let variant = 'light';
+    if (res.length > 0) {
+      variant = res[0];
+    }
+    return variant;
+  },
+
+  /**
    * Refresh and Append the Color Menu
    * @private
    * @returns {jQuery} the menu to be appended
@@ -493,8 +509,9 @@ ColorPicker.prototype = {
     const isMenu = !!($('#colorpicker-menu').length);
     const menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>');
     const activeTheme = personalization.currentTheme;
-    const isBorderAll = (s.themes[activeTheme].border === 'all');
-    const checkThemes = s.themes[activeTheme].checkmark;
+    const themeVariant = this.getThemeVariant(activeTheme);
+    const isBorderAll = (s.themes[themeVariant].border === 'all');
+    const checkThemes = s.themes[themeVariant].checkmark;
     let checkmarkClass = '';
 
     for (let i = 0, l = s.colors.length; i < l; i++) {

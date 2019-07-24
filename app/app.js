@@ -84,6 +84,8 @@ csp.extend(app);
 // Import various custom middleware (order matters!)
 app.use(require('./src/js/middleware/request-logger')(app));
 app.use(require('./src/js/middleware/option-handler')(app, DEFAULT_RESPONSE_OPTS));
+app.use(require('./src/js/middleware/option-handler-themes')(app));
+app.use(require('./src/js/middleware/option-handler-fonts')());
 app.use(require('./src/js/middleware/basepath-handler')(app));
 app.use(require('./src/js/middleware/global-data-handler')(app));
 app.use(require('./src/js/middleware/response-throttler')(app));
@@ -92,7 +94,6 @@ app.use(require('./src/js/middleware/csp-handler')(app));
 app.use(require('./src/js/middleware/info-handler')(app));
 
 app.use(router);
-app.use(require('./src/js/middleware/error-handler')(app));
 
 const customRoutes = require('./src/js/routes/customRoutes');
 const generalRoute = require('./src/js/routes/general');
@@ -101,9 +102,8 @@ const sendGeneratedDocPage = require('./src/js/routes/docs');
 // ======================================
 //  Main Routing and Param Handling
 // ======================================
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   res.render('kitchen-sink', res.opts);
-  next();
 });
 
 router.get('/index', (req, res, next) => {
@@ -118,21 +118,19 @@ router.get('/index', (req, res, next) => {
   res.render('kitchen-sink', res.opts);
 });
 
-router.get('/kitchen-sink', (req, res, next) => {
+router.get('/kitchen-sink', (req, res) => {
   res.render('kitchen-sink', res.opts);
-  next();
 });
 
 // =========================================
 // Collection of Performance Tests Pages
 // =========================================
-router.get('/performance-tests', (req, res, next) => {
+router.get('/performance-tests', (req, res) => {
   const opts = extend({}, res.opts, {
     subtitle: 'Performance Tests'
   });
 
   res.render('performance-tests/index.html', opts);
-  next();
 });
 
 // ======================================
@@ -151,5 +149,18 @@ app.use('/utils', generalRoute);
 // Fake 'API' Calls for use with AJAX-ready Controls
 // =========================================
 app.use('/api', require('./src/js/routes/data'));
+
+// =========================================
+// Catch-all 404 at the base router level
+// =========================================
+app.use((req, res, next) => {
+  res.status(404);
+  next(`File "${req.originalUrl}" was not found`);
+});
+
+// =========================================
+// Error Handling
+// =========================================
+app.use(require('./src/js/middleware/error-handler')(app));
 
 module.exports = app;

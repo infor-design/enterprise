@@ -28,11 +28,9 @@ describe('Grouped Bar Chart example-index tests', () => {
   });
 
   it('Should highlight when selected', async () => {
-    const fGroupEl = await element.all(by.css('.group .series-group')).get(0);
+    await element(by.css('.series-group:nth-child(-n+3)')).click();
 
-    await fGroupEl.click();
-
-    expect(await fGroupEl.getAttribute('class')).toContain('is-selected');
+    expect(await element(by.css('.series-group:nth-child(-n+3)')).getAttribute('class')).toContain('is-selected');
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -41,6 +39,44 @@ describe('Grouped Bar Chart example-index tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-index')).toBeLessThan(1);
+    });
+  }
+});
+
+describe('Grouped Bar formatter tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar-grouped/example-formatter?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-formatter')).toBeLessThan(1);
+    });
+  }
+});
+
+describe('Grouped Bar many groups tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar-grouped/test-many-groups?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-many-groups')).toBeLessThan(1);
     });
   }
 });

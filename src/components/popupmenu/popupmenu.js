@@ -4,6 +4,7 @@ import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { DOM } from '../../utils/dom';
 import { PlacementObject, Place } from '../place/place';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../place/place.jquery';
@@ -54,7 +55,7 @@ const POPUPMENU_DEFAULTS = {
   triggerSelect: true,
   placementOpts: new PlacementObject({
     containerOffsetX: 10,
-    containerOffsetY: 10,
+    containerOffsetY: (env.os.name === 'ios' ? 25 : 15),
     strategies: ['flip', 'shrink']
   }),
   offset: {
@@ -591,15 +592,19 @@ PopupMenu.prototype = {
           a.removeAttribute('disabled');
         }
 
-        // menu items that contain submenus
+        // Checks for existing menus, and if present, apply a `.popupmenu` class automatically.
         if (submenu instanceof HTMLElement) {
           submenu.classList.add('popupmenu');
         }
         if (submenuWrapper instanceof HTMLElement) {
           li.className += `${DOM.classNameExists(li) ? ' ' : ''}submenu`;
           submenu = $(submenuWrapper).children('ul')[0];
-          submenu.classList.add('popupmenu');
+          if (submenu instanceof HTMLElement) {
+            submenu.classList.add('popupmenu');
+          }
         }
+
+        // Adds the SVG arrow, etc to submenu items.
         if (DOM.hasClass(li, 'submenu')) {
           // Add a span
           if (!span) {
@@ -611,8 +616,6 @@ PopupMenu.prototype = {
             $a.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
           }
           a.setAttribute('aria-haspopup', 'true');
-
-          // Check for existing menus, and if present, apply a `.popupmenu` class automatically.
         }
 
         // is-checked
@@ -755,7 +758,7 @@ PopupMenu.prototype = {
         return;
       }
 
-      if (self.menu.hasClass('is-open')) {
+      if (self.menu.add(self.element).hasClass('is-open')) {
         self.close();
       } else {
         self.open(e);
@@ -786,10 +789,9 @@ PopupMenu.prototype = {
     if (!immediate) {
       // Left-Click activation
       if (leftClick) {
-        this.element
-          .on('click.popupmenu', (e) => {
-            contextMenuHandler(e, true);
-          });
+        this.element.on('click.popupmenu', (e) => {
+          contextMenuHandler(e, true);
+        });
       }
 
       // Right-Click activation
@@ -1048,7 +1050,7 @@ PopupMenu.prototype = {
         }
 
         // Up on Up
-        if ((!isPicker && key === 38) || (isPicker && key === 37)) {
+        if ((!isPicker && key === 38) || (isPicker && key === (Locale.isRTL() ? 39 : 37))) {
           e.stopPropagation();
           e.preventDefault();
 
@@ -1086,7 +1088,9 @@ PopupMenu.prototype = {
         }
 
         // Down
-        if ((!isPicker && key === 40) || (isPicker && key === 39 && !isAutocomplete)) {
+        if ((!isPicker && key === 40)
+          || (isPicker && key === (Locale.isRTL() ? 37 : 39))
+          && (!isAutocomplete)) {
           e.stopPropagation();
           e.preventDefault();
 
@@ -1329,12 +1333,6 @@ PopupMenu.prototype = {
 
     const opts = $.extend({}, this.settings.placementOpts);
     const strategies = ['flip'];
-
-    /*
-    if (!target.is('.autocomplete, .searchfield')) {
-      strategies.push('nudge');
-    }
-    */
     strategies.push('shrink-y');
     opts.strategies = strategies;
 
@@ -1716,7 +1714,7 @@ PopupMenu.prototype = {
     let timeout;
 
     self.menu.find('.popupmenu').removeClass('is-open');
-    self.menu.on('mouseenter.popupmenu touchstart.popupmenu', '.submenu:not(.is-disabled)', function (thisE) {
+    self.menu.on('mouseenter.popupmenu touchend.popupmenu', '.submenu:not(.is-disabled)', function (thisE) {
       const menuitem = $(this);
       startY = thisE.pageX;
 
@@ -1898,20 +1896,23 @@ PopupMenu.prototype = {
 
     // Handle Case where menu is off bottom
     let menuHeight = menu.outerHeight();
-    if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+    const bottomBuffer = this.settings.placementOpts.containerOffsetY;
+
+    if ((wrapper.offset().top + menuHeight) >
+      (window.innerHeight - bottomBuffer + $(document).scrollTop())) {
       // First try bumping up the menu to sit just above the bottom edge of the window.
       const bottomEdgeCoord = wrapper.offset().top + menuHeight;
       const differenceFromBottomY = bottomEdgeCoord -
-        ($(window).height() + $(document).scrollTop());
+        (window.innerHeight + $(document).scrollTop());
 
-      wrapper[0].style.top = `${wrapper.position().top - differenceFromBottomY}px`;
+      wrapper[0].style.top = `${wrapper.position().top - differenceFromBottomY - bottomBuffer}px`;
 
       // Does it fit?
-      if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+      if ((wrapper.offset().top + menuHeight) > (window.innerHeight + $(document).scrollTop())) {
         // No. Bump the menu up higher based on the menu's height and the extra
         // space from the main wrapper.
         const mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
-        wrapper[0].style.top = `${($(window).height() + $(document).scrollTop()) -
+        wrapper[0].style.top = `${(window.innerHeight + $(document).scrollTop()) -
           menuHeight - mainWrapperOffset}px`;
       }
 
@@ -1925,9 +1926,9 @@ PopupMenu.prototype = {
 
       // Do one more check to see if the bottom edge bleeds off the screen.
       // If it does, shrink the menu's Y size and make it scrollable.
-      if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+      if ((wrapper.offset().top + menuHeight) > (window.innerHeight + $(document).scrollTop())) {
         const differenceX = (wrapper.offset().top + menuHeight) -
-          ($(window).height() + $(document).scrollTop());
+          (window.innerHeight + $(document).scrollTop());
         menuHeight = menuHeight - differenceX - 32;
         menu[0].style.height = `${menuHeight}px`;
       }
@@ -2073,7 +2074,7 @@ PopupMenu.prototype = {
       isCancelled = false;
     }
 
-    if (!this.menu.hasClass('is-open')) {
+    if (!this.menu.add(this.element).hasClass('is-open')) {
       return;
     }
 
@@ -2127,6 +2128,12 @@ PopupMenu.prototype = {
     delete this.keydownThenClick;
     delete this.holdingDownClick;
 
+    // If `this.element` comes as `ul` element
+    if (this.element.is('ul.popupmenu')) {
+      this.element.closest('.popupmenu-wrapper').prev('button').removeClass('is-open');
+    }
+
+    this.menu.find('.popupmenu.is-open').removeClass('is-open');
     /**
      * Fires when close.
      *
@@ -2186,9 +2193,11 @@ PopupMenu.prototype = {
 
     this.predefinedItems = $();
 
-    this.menu.parent().off('contextmenu.popupmenu');
+    const parentNode = this.menu.parent();
+    parentNode.find('.arrow').remove();
+    parentNode.off('contextmenu.popupmenu');
     if (this.element.hasClass('btn-actions')) {
-      this.menu.parent().removeClass('bottom').find('.arrow').remove();
+      parentNode.removeClass('bottom');
     }
 
     this.menu.off('dragstart.popupmenu');

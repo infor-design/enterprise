@@ -25,7 +25,7 @@ const RADAR_DEFAULTS = {
   roundStrokes: true,
   showCrosslines: true,
   showAxisLabels: true,
-  colors: charts.colorRange,
+  colors: null,
   showTooltips: true,
   tooltip: {
     show: 'value', // value, label, label (value) or percent or custom function
@@ -107,6 +107,7 @@ Radar.prototype = {
     this.width = 0;
 
     this
+      .setupColors()
       .build()
       .handleEvents();
 
@@ -134,11 +135,25 @@ Radar.prototype = {
   },
 
   /**
+   * Sets up the internal colors.
+   * @returns {object} The component prototype for chaining.
+   * @private
+   */
+  setupColors() {
+    if (!this.settings.colors || this.useBuiltInColors) {
+      this.settings.colors = charts.colorRange();
+      this.useBuiltInColors = true;
+    }
+    return this;
+  },
+
+  /**
    * Update the chart with a new dataset
    * @param  {object} data The data to use.
    */
   updateData(data) {
     const self = this;
+    const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const settings = self.settings;
     const dims = {
       // Width of the circle
@@ -428,6 +443,9 @@ Radar.prototype = {
         }
 
         tooltipInterval = setTimeout(() => {
+          if (charts.tooltip && charts.tooltip.length) {
+            charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+          }
           charts.showTooltip(x, y, content, 'top');
         }, 300);
       })
@@ -486,6 +504,9 @@ Radar.prototype = {
       });
     }
 
+    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+      this.updated();
+    });
     return this;
   },
 
@@ -576,6 +597,7 @@ Radar.prototype = {
 
     this.element.empty();
     return this
+      .setupColors()
       .build();
   },
 
@@ -587,6 +609,7 @@ Radar.prototype = {
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     $('body').off(`resize.${COMPONENT_NAME}`);
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
     return this;
   },
 

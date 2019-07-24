@@ -57,6 +57,10 @@
     .tab {
       cursor: default !important;
     }
+
+    .icon {
+      color: $disabled-color !important;
+    }
   }
 
   > .busy-indicator-container {
