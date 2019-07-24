@@ -423,66 +423,6 @@ Datagrid.prototype = {
   },
 
   /**
-  * If the datagrid is a html table, convert that table to an internal dataset to use.
-  * @private
-  * @returns {void}
-  */
-  htmlToDataset() {
-    const rows = $(this.element).find('tbody tr');
-    const self = this;
-    const specifiedCols = (self.settings.columns.length > 0);
-    const dataset = [];
-
-    // Geneate the columns if not supplier
-    if (!specifiedCols) {
-      const headers = $(this.element).find('thead th');
-      const firstRow = self.element.find('tbody tr:first()');
-
-      headers.each((i, col) => {
-        const colSpecs = {};
-        const column = $(col);
-        const colName = `column${i}`;
-
-        colSpecs.id = column.text().toLowerCase();
-        colSpecs.name = column.text();
-        colSpecs.field = colName;
-
-        const link = firstRow.find('td').eq(i).find('a');
-        if (link.length > 0) {
-          colSpecs.formatter = Formatters.Hyperlink;
-          colSpecs.href = link.attr('href');
-        }
-
-        self.settings.columns.push(colSpecs);
-      });
-    }
-
-    rows.each(function () {
-      const cols = $(this).find('td');
-      const newRow = {};
-
-      cols.each((i, col) => {
-        const column = $(col);
-        const colName = `column${i}`;
-
-        if (self.settings.columns[i].formatter) {
-          newRow[colName] = column.text();
-        } else {
-          newRow[colName] = column.html();
-        }
-
-        if (specifiedCols) {
-          self.settings.columns[i].field = colName;
-        }
-      });
-
-      dataset.push(newRow);
-    });
-
-    return dataset;
-  },
-
-  /**
   * Add a row of data to the grid and dataset.
   * @param {object} data An data row object
   * @param {string} location Where to add the row. This can be 'bottom' or 'top', default is top.
@@ -503,19 +443,24 @@ Datagrid.prototype = {
     data.rowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
 
     // Add to array
+    const appendArray = this.settings.groupable &&
+      this.originalDataset ? this.originalDataset : this.settings.dataset;
+
     if (typeof location === 'string') {
-      self.settings.dataset[isTop ? 'unshift' : 'push'](data);
+      appendArray[isTop ? 'unshift' : 'push'](data);
     } else {
-      self.settings.dataset.splice(location, 0, data);
+      appendArray.splice(location, 0, data);
     }
 
-    self.pagerRefresh(location);
+    this.setRowGrouping();
+    this.pagerRefresh(location);
+    this.syncSelectedRowsIdx();
 
     // Add to ui
-    self.renderRows();
+    this.renderRows();
 
     // Sync with others
-    self.syncSelectedUI();
+    this.syncSelectedUI();
 
     // Set active and fire handler
     setTimeout(() => {
@@ -568,18 +513,26 @@ Datagrid.prototype = {
   /**
   * Remove a row of data to the grid and dataset.
   * @param {number} row The row index
-  * @param {boolean} nosync Dont sync the selected rows.
+  * @param {boolean} noSync Dont sync the selected rows.
   * @param {boolean} noTrigger If true, do not trigger the removerow event.
   * @returns {object|boolean} If noTrigger is true then return the event args otherwise nothing is returned
   */
-  removeRow(row, nosync, noTrigger) {
+  removeRow(row, noSync, noTrigger) {
     const rowNode = this.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
-    const rowData = this.settings.dataset[row];
+    const arrayToUse = this.settings.groupable &&
+        this.originalDataset ? this.originalDataset : this.settings.dataset;
+    const rowData = arrayToUse[row];
 
-    this.unselectRow(row, nosync);
-    this.settings.dataset.splice(row, 1);
+    this.unselectRow(row, noSync);
+
+    arrayToUse.splice(row, 1);
     this.preventSelection = true;
-    this.renderRows();
+    if (!noSync) {
+      this.setRowGrouping();
+      this.pagerRefresh();
+      this.renderRows();
+    }
+
     if (this.nonVisibleCellErrors.length !== 0) {
       this.nonVisibleCellErrors = $.grep(this.nonVisibleCellErrors, error => error.row !== row);
       this.showNonVisibleCellErrors();
@@ -618,11 +571,17 @@ Datagrid.prototype = {
     const args = [];
 
     for (let i = this._selectedRows.length - 1; i >= 0; i--) {
-      args.push(this.removeRow(this._selectedRows[i].idx, true, isTrigger));
+      args.push({
+        row: this._selectedRows[i].idx,
+        item: this._selectedRows[i],
+        cell: null,
+        target: null
+      });
+      this.removeRow(this._selectedRows[i].idx, i > 0, isTrigger);
     }
 
     if (isTrigger) {
-      this.element.trigger('rowremove', [args]);
+      this.element.trigger('rowremove', args);
     }
   },
 
@@ -780,7 +739,10 @@ Datagrid.prototype = {
 
     // Update Paging and Clear Rows
     this.setTreeDepth();
-    this.setRowGrouping();
+    if (this.settings.source) {
+      this.originalDataset = null;
+      this.setRowGrouping();
+    }
     this.setTreeRootNodes();
 
     // Figure out whether or not to preserve previously selected rows
@@ -813,6 +775,9 @@ Datagrid.prototype = {
       this.renderHeader();
     } else if (this.headerContainer.find('.datagrid-filter-wrapper .is-open').length === 0) {
       this.clearHeaderCache();
+      this.setTreeDepth();
+      this.setRowGrouping();
+      this.setTreeRootNodes();
       this.renderRows();
       this.syncColGroups();
     } else {
@@ -2870,7 +2835,11 @@ Datagrid.prototype = {
       return;
     }
 
-    this.originalDataset = this.settings.dataset.slice();
+    if (!this.originalDataset) {
+      this.originalDataset = this.settings.dataset.slice();
+    } else {
+      this.settings.dataset = this.originalDataset;
+    }
 
     if (!groupSettings.aggregator || groupSettings.aggregator === 'none') {
       this.settings.dataset = GroupBy.none(this.settings.dataset, groupSettings.fields);
@@ -3070,7 +3039,11 @@ Datagrid.prototype = {
         // Now Push Groups
         for (let k = 0; k < s.dataset[i].values.length; k++) {
           if (!s.dataset[i].values[k].isFiltered) {
-            const rowHtml = self.rowHtml(s.dataset[i].values[k], this.recordCount, i);
+            const rowHtml = self.rowHtml(
+              s.dataset[i].values[k],
+              this.recordCount,
+              s.dataset[i].values[k].idx
+            );
             if (self.hasLeftPane && rowHtml.left) {
               tableHtmlLeft += rowHtml.left;
             }
@@ -3374,8 +3347,8 @@ Datagrid.prototype = {
   isRowVisible(rowIndex) {
     if (!this.settings.virtualized) {
       if (this.settings.paging && !this.settings.source && rowIndex && this.pagerAPI) {
-        return (this.pagerAPI.activePage - 1) * this.settings.pagesize >= rowIndex &&
-            (this.pagerAPI.activePage) * this.settings.pagesize <= rowIndex;
+        return (this.pagerAPI.activePage - 1) * this.settings.pagesize <= rowIndex &&
+            (this.pagerAPI.activePage) * this.settings.pagesize >= rowIndex;
       }
 
       return true;
@@ -3561,12 +3534,13 @@ Datagrid.prototype = {
       }
     }
 
-    if (this.settings.groupable) {
+    if (this.settings.groupable && !isFooter) {
       const groupSettings = this.settings.groupable;
       isHidden = (groupSettings.expanded === undefined ? false : !groupSettings.expanded);
 
       if (groupSettings.expanded && typeof groupSettings.expanded === 'function') {
         isHidden = !groupSettings.expanded(dataRowIdx, 0, null, null, rowData, this);
+        this.isFooterHidden = isHidden;
       }
     }
 
@@ -3586,9 +3560,10 @@ Datagrid.prototype = {
 
     if (this.settings.groupable && isGroup && isFooter) {
       const groupFooterHtml = Formatters.GroupFooterRow(dataRowIdx, 0, null, null, rowData, this);
-      containerHtml.left = `<tr class="datagrid-row datagrid-rowgroup-footer${isHidden ? '' : ' is-expanded'}" role="rowgroup">${groupFooterHtml.left || '<span>&nbsp;</span>'}</tr>`;
-      containerHtml.center = `<tr class="datagrid-row datagrid-rowgroup-footer${isHidden ? '' : ' is-expanded'}" role="rowgroup">${groupFooterHtml.center || '<span>&nbsp;</span>'}</tr>`;
-      containerHtml.right = `<tr class="datagrid-row datagrid-rowgroup-footer${isHidden ? '' : ' is-expanded'}" role="rowgroup">${groupFooterHtml.right || '<span>&nbsp;</span>'}</tr>`;
+      containerHtml.left = `<tr class="datagrid-row datagrid-rowgroup-footer${this.isFooterHidden ? ' is-hidden' : ''}" role="rowgroup">${groupFooterHtml.left || '<span>&nbsp;</span>'}</tr>`;
+      containerHtml.center = `<tr class="datagrid-row datagrid-rowgroup-footer${this.isFooterHidden ? ' is-hidden' : ''}" role="rowgroup">${groupFooterHtml.center || '<span>&nbsp;</span>'}</tr>`;
+      containerHtml.right = `<tr class="datagrid-row datagrid-rowgroup-footer${this.isFooterHidden ? ' is-hidden' : ''}" role="rowgroup">${groupFooterHtml.right || '<span>&nbsp;</span>'}</tr>`;
+      this.isFooterHidden = false;
       return containerHtml;
     }
 
@@ -3764,7 +3739,7 @@ Datagrid.prototype = {
         cssClass += ' rowstatus-cell';
       }
 
-      if (self.isCellDirty(dataRowIdx, j)) {
+      if (self.isCellDirty(self.settings.groupable ? actualIndex : dataRowIdx, j)) {
         cssClass += ' is-dirty-cell';
       }
 
@@ -3880,7 +3855,7 @@ Datagrid.prototype = {
 
     if (columnDef.formatter === Formatters.Colorpicker) {
       maxText = '';
-    } else if (columnDef.formatter === Formatters.Dropdown) {
+    } else if (columnDef.formatter === Formatters.Dropdown && columnDef.options) {
       const row = null;
       let val = '';
       // Find Longest option label
@@ -3895,11 +3870,15 @@ Datagrid.prototype = {
       maxText = val;
     } else {
       let len = 0;
+      let arrayToTest = this.settings.dataset;
+      if (this.settings.groupable) {
+        arrayToTest = this.originalDataset;
+      }
       // Get max cell value length for this column
-      for (let i = 0; i < this.settings.dataset.length; i++) {
-        let val = this.fieldValue(this.settings.dataset[i], columnDef.field);
+      for (let i = 0; i < arrayToTest.length; i++) {
+        let val = this.fieldValue(arrayToTest[i], columnDef.field);
 
-        const row = this.settings.dataset[i];
+        const row = arrayToTest[i];
 
         // Get formatted value (without html) so we have accurate string that
         // will display for this cell
@@ -3909,9 +3888,9 @@ Datagrid.prototype = {
 
         len = val.toString().length;
 
-        if (this.settings.groupable && row.values) {
-          for (let k = 0; k < row.values.length; k++) {
-            let groupVal = this.fieldValue(row.values[k], columnDef.field);
+        if (this.settings.groupable && row) {
+          for (let k = 0; k < row.length; k++) {
+            let groupVal = this.fieldValue(row[k], columnDef.field);
             groupVal = self.formatValue(columnDef.formatter, i, 0, groupVal, columnDef, row, self);
             groupVal = xssUtils.stripHTML(groupVal);
 
@@ -4639,7 +4618,7 @@ Datagrid.prototype = {
     let rowData = data;
 
     if (!rowData) {
-      rowData = s.treeGrid ? s.treeDepth[idx].node : s.dataset[idx];
+      rowData = s.treeGrid ? s.treeDepth[idx].node : this.getDataset()[idx];
     }
 
     for (let j = 0; j < this.settings.columns.length; j++) {
@@ -5400,11 +5379,21 @@ Datagrid.prototype = {
   displayCounts(totals) {
     const self = this;
     let count = self.tableBody.find('tr:visible').length;
+    let groupCount = 0;
+    let groupCountText = '';
     const isClientSide = self.settings.paging && !(self.settings.source);
+    const formatInteger = v => Locale.formatNumber(v, { style: 'integer' });
 
     if (isClientSide || (!totals)) {
       this.recordCount = self.settings.dataset.length;
       count = self.settings.dataset.length;
+    }
+
+    if (self.settings.groupable) {
+      groupCount = count;
+      count = self.originalDataset.length;
+      groupCountText = `({0} ${Locale.translate(groupCount === 1 ? 'Group' : 'Groups')})`;
+      groupCountText = groupCountText.replace('{0}', formatInteger(groupCount));
     }
 
     // Update Selected
@@ -5420,7 +5409,6 @@ Datagrid.prototype = {
       count = this.lastCount || 0;
     }
 
-    const formatInteger = v => Locale.formatNumber(v, { style: 'integer' });
     let countText;
     if (self.settings.showFilterTotal && self.filteredCount > 0) {
       countText = `(${Locale.translate(count === 1 ? 'ResultOf' : 'ResultsOf')})`;
@@ -5446,6 +5434,7 @@ Datagrid.prototype = {
 
     if (self.toolbar) {
       DOM.html(self.toolbar.find('.datagrid-result-count'), countText, '<span>');
+      DOM.html(self.toolbar.find('.datagrid-group-count'), groupCountText, '<span>');
       self.toolbar[0].setAttribute('aria-label', self.toolbar.find('.title').text());
       self.toolbar.find('.datagrid-row-count').text(count);
     }
@@ -6576,13 +6565,26 @@ Datagrid.prototype = {
   },
 
   /**
+   * Get the right dataset object to use depending on settings.
+   * @private
+   * @returns {array} The dataset to use.
+   */
+  getDataset() {
+    const s = this.settings;
+    let dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    if (s.groupable) {
+      dataset = this.originalDataset;
+    }
+    return dataset;
+  },
+
+  /**
   * Select all rows. If serverside paging, this will be only the current page.
   * For client side paging, all rows across all pages are selected.
   */
   selectAllRows() {
     const rows = [];
-    const s = this.settings;
-    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    const dataset = this.getDataset();
 
     for (let i = 0, l = dataset.length; i < l; i++) {
       const idx = this.pagingRowIndex(i);
@@ -6667,12 +6669,8 @@ Datagrid.prototype = {
 
     checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
     elem.addClass(selectClasses).attr('aria-selected', 'true');
-
-    if (self.columnIdxById('selectionCheckbox') !== -1) {
-      checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox')).not('.is-disabled');
-      checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-        .addClass('is-checked').attr('aria-checked', 'true');
-    }
+    checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+      .addClass('is-checked').attr('aria-checked', 'true');
 
     if (data) {
       data._selected = true;
@@ -6700,7 +6698,7 @@ Datagrid.prototype = {
       return;
     }
 
-    rowNode = this.rowNodes(idx);
+    rowNode = this.settings.groupable ? this.rowNodesByDataIndex(idx) : this.rowNodes(idx);
     dataRowIndex = this.dataRowIndex(rowNode);
 
     if (isNaN(dataRowIndex)) {
@@ -6785,9 +6783,8 @@ Datagrid.prototype = {
           }
           const gData = self.groupArray[row];
           rowData = self.settings.dataset[gData.group].values[gData.node];
-          dataRowIndex = self.actualPagingRowIndex(idx);
           this._selectedRows.push({
-            idx: dataRowIndex,
+            idx: rowData.idx,
             data: rowData,
             elem: rowNode,
             group: s.dataset[self.groupArray[row].group]
@@ -6891,7 +6888,11 @@ Datagrid.prototype = {
     for (let i = 0; i < this._selectedRows.length; i++) {
       if (this.pagerAPI && this._selectedRows[i].page === this.pagerAPI.activePage) {
         idx = this._selectedRows[i].idx;
-        this.selectNode(this.visualRowNode(idx), idx, this.settings.dataset[idx], true);
+        const elem = this.visualRowNode(idx);
+        if (elem[0]) {
+          this._selectedRows[i].elem = elem;
+          this.selectNode(elem, idx, this.settings.dataset[idx], true);
+        }
       }
       // Check for rows that changed page
       idx = this._selectedRows[i].pagingIdx;
@@ -6912,6 +6913,37 @@ Datagrid.prototype = {
   },
 
   /**
+   * Calculate pager info for given index.
+   * @private
+   * @param  {number} idx The index number
+   * @param  {object} ds custom dataset (optional)
+   * @param  {number} pagesize custom pagesize (optional)
+   * @returns {object} calculated pager info
+   */
+  calculatePagerInfo(idx, ds, pagesize) {
+    const s = this.settings;
+    const dataset = ds || s.treeGrid ? s.treeDepth : s.dataset;
+    pagesize = typeof pagesize === 'number' && pagesize > 0 ? pagesize : s.pagesize;
+    const pagerInfo = {
+      idx,
+      page: 1,
+      pagesize,
+      numOfPages: Math.ceil(dataset.length / pagesize)
+    };
+
+    for (let i = 0; i < pagerInfo.numOfPages; i++) {
+      if (idx >= ((pagerInfo.page - 1) * pagerInfo.pagesize) &&
+        idx < (pagerInfo.page * pagerInfo.pagesize)) {
+        pagerInfo.pagingIdx = idx - (pagerInfo.pagesize * i);
+        break;
+      }
+      pagerInfo.page++;
+    }
+
+    return pagerInfo;
+  },
+
+  /**
    * Run throught the array and remark the idx's after a row reorder.
    * @private
    * @returns {void}
@@ -6924,11 +6956,12 @@ Datagrid.prototype = {
 
     for (let i = 0; i < this.settings.dataset.length; i++) {
       if (this.settings.dataset[i]._selected) {
+        const calculatePagerInfo = this.calculatePagerInfo(i);
         this._selectedRows.push({
           idx: i,
           data: this.settings.dataset[i],
           elem: this.dataRowNode(i),
-          page: this.pagerAPI ? this.pagerAPI.activePage : 1,
+          page: calculatePagerInfo.page,
           pagingIdx: i,
           pagesize: this.settings.pagesize
         });
@@ -6942,20 +6975,8 @@ Datagrid.prototype = {
    * @returns {void}
    */
   syncSelectedUI() {
-    const s = this.settings;
-    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    const dataset = this.getDataset();
     let rows = dataset;
-
-    if (this.settings.groupable) {
-      rows = [];
-      for (let i = 0, l = dataset.length; i < l; i++) {
-        if (dataset[i].values) {
-          for (let i2 = 0, l2 = dataset[i].values.length; i2 < l2; i2++) {
-            rows.push(i2);
-          }
-        }
-      }
-    }
 
     if (this.filterRowRendered) {
       rows = [];
@@ -7220,9 +7241,10 @@ Datagrid.prototype = {
   toggleRowSelection(idx) {
     const row = (typeof idx === 'number' ? this.tableBody.find(`tr[aria-rowindex="${idx + 1}"]`) : idx);
     const isSingle = this.settings.selectable === 'single';
-    const rowIndex = (typeof idx === 'number' ? idx :
-      (this.settings.treeGrid || this.settings.groupable) ?
-        this.actualRowIndex(row) : this.actualRowIndex(row));
+    let rowIndex = typeof idx === 'number' ? idx : this.actualRowIndex(row);
+    if (this.settings.groupable) {
+      rowIndex = this.dataRowIndex(row);
+    }
 
     if (this.settings.selectable === false) {
       return;
@@ -7258,7 +7280,7 @@ Datagrid.prototype = {
   unselectRow(idx, nosync, noTrigger) {
     const self = this;
     const s = self.settings;
-    const rowNode = self.rowNodes(idx);
+    const rowNode = this.settings.groupable ? this.rowNodesByDataIndex(idx) : this.rowNodes(idx);
     let checkbox = null;
 
     if (!rowNode || idx === undefined) {
@@ -7310,9 +7332,7 @@ Datagrid.prototype = {
           rowData = s.dataset[selIdx];
         }
         if (s.groupable) {
-          const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
-          const gData = self.groupArray[row];
-          rowData = s.dataset[gData.group].values[gData.node];
+          rowData = self.originalDataset[selIdx];
         }
         if (rowData !== undefined) {
           if (s.paging && s.source) {
@@ -7472,8 +7492,7 @@ Datagrid.prototype = {
     const isSingle = s.selectable === 'single';
     const isMultiple = s.selectable === 'multiple' || s.selectable === 'mixed';
     const isSiblings = s.selectable === 'siblings';
-    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
-    let gIdx = idx;
+    const dataset = this.getDataset();
 
     if (typeof row === 'number') {
       row = [row];
@@ -7497,14 +7516,7 @@ Datagrid.prototype = {
     if (isMultiple || isSiblings) {
       if (Object.prototype.toString.call(row) === '[object Array]') {
         for (let i = 0; i < row.length; i++) {
-          if (s.groupable) {
-            for (let k = 0; k < dataset[i].values.length; k++) {
-              gIdx++;
-              this.selectRow(gIdx, true, true);
-            }
-          } else {
-            this.selectRow(row[i], true, true);
-          }
+          this.selectRow(row[i], true, true);
         }
 
         if (row.length === 0) {
@@ -7537,7 +7549,7 @@ Datagrid.prototype = {
    */
   findRowsByValue(fieldName, value) {
     const s = this.settings;
-    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    const dataset = this.getDataset();
     let idx = -1;
     const matchedRows = [];
     for (let i = 0, data; i < dataset.length; i++) {
@@ -7566,8 +7578,10 @@ Datagrid.prototype = {
   * @param {object} tooltip The information for the message/tooltip
   */
   rowStatus(idx, status, tooltip) {
+    const arrayToUse = this.getDataset();
+
     if (!status) {
-      delete this.settings.dataset[idx].rowStatus;
+      delete arrayToUse[idx].rowStatus;
       this.updateRow(idx);
       return;
     }
@@ -7576,12 +7590,12 @@ Datagrid.prototype = {
       return;
     }
 
-    if (!this.settings.dataset[idx]) {
+    if (!arrayToUse[idx]) {
       return;
     }
 
-    this.settings.dataset[idx].rowStatus = {};
-    const rowStatus = this.settings.dataset[idx].rowStatus;
+    arrayToUse[idx].rowStatus = {};
+    const rowStatus = arrayToUse[idx].rowStatus;
 
     rowStatus.icon = status;
     status = status.charAt(0).toUpperCase() + status.slice(1);
@@ -8306,6 +8320,9 @@ Datagrid.prototype = {
    * @returns {object} The row of data from the dataset.
    */
   rowData(rowIdx) {
+    if (this.settings.groupable) {
+      return this.originalDataset[rowIdx];
+    }
     return this.settings.treeGrid ?
       this.settings.treeDepth[rowIdx].node :
       this.settings.dataset[rowIdx];
@@ -8361,7 +8378,7 @@ Datagrid.prototype = {
     const cell = cellNode.attr('aria-colindex') - 1;
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
-      this.settings.dataset[dataRowIndex];
+      this.getDataset()[dataRowIndex];
     let oldValue = this.fieldValue(rowData, col.field);
 
     if (col.beforeCommitCellEdit && !isCallback) {
@@ -8395,7 +8412,13 @@ Datagrid.prototype = {
     this.editor = null;
 
     // Save the Cell Edit back to the data set
-    this.updateCellNode(rowIndex, cell, newValue, false, isInline);
+    this.updateCellNode(
+      this.settings.groupable ? dataRowIndex : rowIndex,
+      cell,
+      newValue,
+      false,
+      isInline
+    );
     const value = this.fieldValue(rowData, col.field);
 
     /**
@@ -9055,7 +9078,7 @@ Datagrid.prototype = {
    */
   updateCellNode(row, cell, value, fromApiCall, isInline) {
     let coercedVal;
-    let rowNodes = this.rowNodes(row);
+    let rowNodes = this.settings.groupable ? this.rowNodesByDataIndex(row) : this.rowNodes(row);
     let cellNode = rowNodes.find('td').eq(cell);
     const col = this.settings.columns[cell] || {};
     let formatted = '';
@@ -9397,6 +9420,26 @@ Datagrid.prototype = {
       .add(leftNodes)
       .add(rightNodes);
   },
+
+  /**
+   * Returns the row dom jQuery node.
+   * @private
+   * @param  {number} row The row index.
+   * @returns {object} The dom jQuery node
+   */
+  rowNodesByDataIndex(row) {
+    if (row instanceof jQuery) {
+      row = row.attr('data-index');
+    }
+    const leftNodes = this.tableBodyLeft ? this.tableBodyLeft.find(`tr[data-index="${row}"]`) : $();
+    const centerNodes = this.tableBody.find(`tr[data-index="${row}"]`);
+    const rightNodes = this.tableBodyRight ? this.tableBodyRight.find(`tr[data-index="${row}"]`) : $();
+
+    return $(centerNodes)
+      .add(leftNodes)
+      .add(rightNodes);
+  },
+
   /**
    * Returns the cell dom node.
    * @param  {number} row The row index.
@@ -9404,7 +9447,10 @@ Datagrid.prototype = {
    * @returns {object} The dom node
    */
   cellNode(row, cell) {
-    const cells = this.rowNodes(row).find('td');
+    const cells = this.settings.groupable ?
+      this.rowNodesByDataIndex(row).find('td') :
+      this.rowNodes(row).find('td');
+
     return cells.eq(cell >= cells.length ? cells.length - 1 : cell);
   },
 
@@ -9635,6 +9681,9 @@ Datagrid.prototype = {
     if (e.type === 'keydown') {
       if (this.settings.actionableMode) {
         const keyCode = (e.keyCode === 13) ? 40 : e.keyCode;
+        if (keyCode === 32) {
+          return;
+        }
         setTimeout(() => {
           const evt = $.Event('keydown.datagrid');
           evt.keyCode = keyCode;
@@ -10023,7 +10072,7 @@ Datagrid.prototype = {
       return;
     }
 
-    if (this.originalDataset) {
+    if (this.settings.groupable && this.originalDataset) {
       this.settings.dataset = this.originalDataset;
     }
     const sort = this.sortFunction(this.sortColumn.sortId, this.sortColumn.sortAsc);
@@ -10236,6 +10285,7 @@ Datagrid.prototype = {
       indeterminate: this.settings.indeterminate,
       rowTemplate: this.settings.rowTemplate,
       pagesizes: this.settings.pagesizes,
+      pageSizeSelectorText: this.settings.groupable ? 'GroupsPerPage' : 'RecordsPerPage',
       showPageSizeSelector: this.settings.showPageSizeSelector,
       activePage: this.restoreActivePage ? parseInt(this.savedActivePage, 10) : 1
     });

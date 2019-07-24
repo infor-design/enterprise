@@ -5,6 +5,10 @@
 ### v4.20.0 Deprecation
 
 - `[ListFilter]` Deprecated `startsWith` in favor of `wordStartsWith`, due to the addition of the `phraseStartsWith` filterMode. ([#1606](https://github.com/infor-design/enterprise/issues/1606))
+- `[Popdown]` Deprecated `Popdown` in favor of `Popover`. Both components have similar functionality and we want to trim the code logic down. ([#2468](https://github.com/infor-design/enterprise/issues/2468))
+- `[StepProcess]` Deprecated `StepProcess` as the component is no longer commonly used. We will remove it within 3-6 versions. ([#1476](https://github.com/infor-design/enterprise/issues/1476))
+- `[CompositeForm]` Deprecated `CompositeForm` as the component is no longer commonly used. We will remove it within 3-6 versions. ([#1476](https://github.com/infor-design/enterprise/issues/1476))
+- `[FieldOptions]` Deprecated `FieldOptions` as the component is no longer commonly used. We will remove it within 3-6 versions. ([#1476](https://github.com/infor-design/enterprise/issues/1476))
 
 ### v4.20.0 Features
 
@@ -17,6 +21,7 @@
 - `[Datagrid]` Fixed an issue where code-block editor focus was not working. ([#526](https://github.com/infor-design/enterprise-ng/issues/526))
 - `[Datagrid]` Automatically remove nonVisibelCellError when a row is removed. ([#2436](https://github.com/infor-design/enterprise/issues/2436))
 - `[Datagrid]` Add a fix to show ellipsis text on lookups in the datagrid filter. ([#2122](https://github.com/infor-design/enterprise/issues/2122))
+- `[Datagrid]` Made grouping work better with editable, including fixes to addRow, removeRow, messages, and dirty indication. ([#1851](https://github.com/infor-design/enterprise/issues/1851))
 - `[Datagrid]` Changed the beforeCommitCellEdit event into a function on the column that is synchronous. ([#2442](https://github.com/infor-design/enterprise/issues/2442))
 - `[Datagrid]` Fixed a bug that the selected event would fire when no rows are deselected and on initial load. ([#2472](https://github.com/infor-design/enterprise/issues/2472))
 - `[Datagrid]` Removed a white background from the colorpicker editor in high contrast theme. ([#1574](https://github.com/infor-design/enterprise/issues/1574))
@@ -25,11 +30,13 @@
 - `[Form Compact]` Added checkboxes/radios, and improved visual style. ([#2193](https://github.com/infor-design/enterprise/issues/2193))
 - `[Images]` Created an additional image class to apply focus state without coercing width and height. ([#2025](https://github.com/infor-design/enterprise/issues/2025))
 - `[ListFilter]` Added `phraseStartsWith` filterMode for only matching a search term against the beginning of a string. ([#1606](https://github.com/infor-design/enterprise/issues/1606))
+- `[Multiselect]` Changed interactions in filtered lists to no longer reset text inside the search input and the contents of the list. ([#920](https://github.com/infor-design/enterprise/issues/920))
 - `[Toast]` Added api settings for drag drop and save position. ([#1876](https://github.com/infor-design/enterprise/issues/1876))
 
 ### v4.20.0 Fixes
 
 - `[Alerts]` Removed dirty tracker from the page due to layout issues. ([#1679](https://github.com/infor-design/enterprise/issues/1679))
+- `[App Menu]` Fixed an issue where the lower toolbar inverts left and right keyboard actions. ([#2240](https://github.com/infor-design/enterprise/issues/2240))
 - `[Bar Chart]` Fixed an issue where the tooltip would not show. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
 - `[Calendar]` Added more information to the onMonthRendered callback. ([#2419](https://github.com/infor-design/enterprise/issues/2419))
 - `[Calendar]` Changed updated method so it can reinit the calendar with new data. ([#2419](https://github.com/infor-design/enterprise/issues/2419))
@@ -41,6 +48,7 @@
 - `[Charts]` Fixes dynamic tooltips on a bar chart. ([#2447](https://github.com/infor-design/enterprise/issues/2447))
 - `[Colorpicker]` Fixed colorpicker left and right keys advanced oppositely in right-to-left mode. ([#2352](https://github.com/infor-design/enterprise/issues/2352))
 - `[Column Chart]` Fixed an issue where the tooltip would not show. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
+- `[Datagrid]` Fixes an issue where method selectedRows() was returning incorrect information when new row added via addRow(). ([#1794](https://github.com/infor-design/enterprise/issues/1794))
 - `[Datagrid]` Fixed the text width functions for better auto sized columns when using editors and special formatters. ([#2270](https://github.com/infor-design/enterprise/issues/2270))
 - `[Datagrid]` Fixes the alignment of the alert and warning icons on a lookup editor. ([#2175](https://github.com/infor-design/enterprise/issues/2175))
 - `[Datagrid]` Fixes tooltip on the non displayed table errors. ([#2264](https://github.com/infor-design/enterprise/issues/2264))
@@ -60,6 +68,10 @@
 - `[Datagrid]` Changed the dynamic column tooltip function to pass the row and more details. This changes the order of parameters but since this feature is new did not consider this a breaking change. If you are using this please take note. ([#2333](https://github.com/infor-design/enterprise/issues/2333))
 - `[Datagrid]` Fixed a bug is the isEditable column callback in editable tree grid where some data was missing in the callback. ([#2357](https://github.com/infor-design/enterprise/issues/2357))
 - `[Datepicker]` Removed the advanceMonths option as the dropdowns no longer are in place. ([#970](https://github.com/infor-design/enterprise/issues/970))
+- `[Datagrid]` Fixed a bug where deselect all would not deselect some rows when using grouping. ([#1796](https://github.com/infor-design/enterprise/issues/1796))
+- `[Datagrid]` Fixed a bug where summary counts in grouping would show even if the group is collapsed. ([#2221](https://github.com/infor-design/enterprise/issues/2221))
+- `[Demoapp]` When displaying Uplift theme, now shows the correct alternate fonts for some locales when switching via the `locale` query string. ([#2365](https://github.com/infor-design/enterprise/issues/2365))
+- `[Dropdown]` Fixed a memory leak when calling destroy. ([#2493](https://github.com/infor-design/enterprise/issues/2493))
 - `[Editor]` Fixed a bug where tab or shift tab would break out of the editor when doing an indent/outdent. ([#2421](https://github.com/infor-design/enterprise/issues/2421))
 - `[Fieldfilter]` Fixed an issue where fields were getting wrap to second line on iPhone SE. ([#1861](https://github.com/infor-design/enterprise/issues/1861))
 - `[Fieldfilter]` Fixed an issue where Dropdown was not switching mode on example page. ([#2288](https://github.com/infor-design/enterprise/issues/2288))
@@ -70,6 +82,7 @@
 - `[Lookup]` Added `autocomplete="off"` to lookup input fields to prevent browser interference. ([#2366](https://github.com/infor-design/enterprise/issues/2366))
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
 - `[Personalization]` Updated some of the colors to more readable in contrast mode. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
+- `[Personalization]` Fixes an issue where text color was too dark. ([#2476](https://github.com/infor-design/enterprise/issues/2476))
 - `[Pager]` Added a complete Popupmenu settings object for configuring the Page Size Selector Button, and deprecated the `attachPageSizeMenuToBody` setting in favor of `pageSizeMenuSettings.attachToBody`. ([#2356](https://github.com/infor-design/enterprise/issues/2356))
 - `[Pager]` Fixed memory leak when using the `attachToBody` setting to change the menu's render location. ([#2482](https://github.com/infor-design/enterprise/issues/2482))
 - `[Popdown]` Fixed usability issue where the Popdown could close prematurely when attempting to use inner components, such as Dropdowns. ([#2092](https://github.com/infor-design/enterprise/issues/2092))
@@ -85,6 +98,7 @@
 - `[Tabs]` Fixed the more tabs button to style as disabled when the tabs component is disabled. ([#2347](https://github.com/infor-design/enterprise/issues/2347))
 - `[Tabs]` Added the select method inside the hide method to ensure proper focusing of the selected tab. ([#2346](https://github.com/infor-design/enterprise/issues/2346))
 - `[Tabs]` Added an independent count for adding new tabs and their associated IDs to prevent duplication. ([#2345](https://github.com/infor-design/enterprise/issues/2345))
+- `[Toolbar Flex]` Removed a 100% height on the toolbar which caused issues when nested in some situations. ([#474](https://github.com/infor-design/enterprise-ng/issues/474))
 
 ### v4.20.0 Chores & Maintenance
 

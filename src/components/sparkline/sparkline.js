@@ -288,7 +288,7 @@ Sparkline.prototype = {
    * Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging
    * @private
    * @param  {object} d the data element with the properties
-   * @returns {object} Object with the calulated width and height
+   * @returns {object} Object with the calculated width and height
    */
   calculateAspectRatioFit(d) {
     const ratio = Math.min(d.maxWidth / d.srcWidth, d.maxHeight / d.srcHeight);

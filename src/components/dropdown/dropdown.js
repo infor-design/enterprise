@@ -2153,10 +2153,10 @@ Dropdown.prototype = {
     return true;
   },
 
-  /*
-  * Function that is used to chekc if the field is loading from an ajax call.
-  * @returns {void} Returns true if the field is attempting to load via AJAX.
-  */
+  /**
+   * Function that is used to check if the field is loading from an ajax call.
+   * @returns {void} Returns true if the field is attempting to load via AJAX.
+   */
   isLoading() {
     return this.element.is('.is-loading') && this.element.is('.is-blocked');
   },
@@ -2446,15 +2446,6 @@ Dropdown.prototype = {
       });
     }
 
-    // Change the values of both inputs and swap out the active descendant
-    if (!clearSelection) {
-      this.pseudoElem.find('span').text(`<span class="audible">${this.label.text()} </span>${text}`);
-      this.searchInput.val(text);
-    } else {
-      this.pseudoElem.find('span').text(`<span class="audible">${this.label.text()} </span>${text}`);
-      this.searchInput.val('');
-    }
-
     if (this.element.attr('maxlength')) {
       trimmed = text.substr(0, this.element.attr('maxlength'));
       this.pseudoElem.find('span').text(trimmed);
@@ -2488,9 +2479,6 @@ Dropdown.prototype = {
 
     // If multiselect, reset the menu to the unfiltered mode
     if (this.settings.multiple) {
-      if (this.list && this.list.hasClass('search-mode')) {
-        this.resetList();
-      }
       this.activate(true);
     }
 
@@ -2640,7 +2628,6 @@ Dropdown.prototype = {
 
         if (option.value !== undefined) {
           option.value = replaceDoubleQuotes(option.value);
-          textContent = option.label;
         }
 
         if (option.id !== undefined) {
@@ -2651,7 +2638,7 @@ Dropdown.prototype = {
           id = ` id="${option.id}"`;
         }
 
-        if (option.label !== undefined) {
+        if (option.label !== undefined && option.label.length) {
           option.label = replaceDoubleQuotes(option.label);
           textContent = option.label;
         }
@@ -2667,6 +2654,12 @@ Dropdown.prototype = {
         } else if (option.value === val || selectedValues) {
           option.selected = true;
           selected = ' selected';
+        }
+
+        // Make sure that text content is populated.
+        // If all else fails, just use the value.
+        if (!textContent.length && textContent !== option.value) {
+          textContent += option.value;
         }
 
         // Render the option element
@@ -2938,6 +2931,9 @@ Dropdown.prototype = {
     this.wrapper.remove();
     this.listfilter.destroy();
     this.element.removeAttr('style');
+    this.element.closest('form').off('reset.dropdown');
+    this.element.off();
+    this.label.off();
 
     const list = document.body.querySelector('#dropdown-list');
     if (list && this.isOpen()) {

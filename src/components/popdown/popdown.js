@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { Locale } from '../locale/locale';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 
 // jQuery Components
 
@@ -12,7 +13,7 @@ const COMPONENT_NAME = 'popdown';
  * The Popdown Component can be used to open an animated popdown from a button. This may in the future
  * be deprecated to one thing. Popup vs Popdown vs Tooltip.
  * @class Popdown
- * @deprecated
+ * @deprecated as of v4.20.0. Please use the `Popover` component instead.
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
  * @property {boolean} [settings.keepOpen = false] If true, will keep the Popdown open after clicking out until the Trigger
@@ -30,6 +31,7 @@ function Popdown(element, settings) {
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
+  warnAboutDeprecation('Popover', 'Popdown');
 }
 
 Popdown.prototype = {
