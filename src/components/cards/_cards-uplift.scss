@@ -18,6 +18,14 @@
   }
 }
 
+.card-content,
+.widget-content {
+  .card-group-action,
+  .widget-group-action {
+    border-top: 1px solid $listview-border-color;
+  }
+}
+
 .card-header,
 .widget-header {
   margin: 8px 2px 8px 20px;
