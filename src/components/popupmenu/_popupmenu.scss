@@ -557,9 +557,9 @@
     line-height: 50px;
     margin: 0;
     overflow: hidden;
-    position: relative;
     text-align: center;
     text-decoration: none;
+    text-overflow: ellipsis;
     width: 50%;
 
     &:hover {

@@ -12,27 +12,173 @@
 
   // Hide Days Option
   &.is-monthyear {
-    min-height: 0;
+    height: 370px;
+
+    &.is-monthonly {
+      min-width: 225px;
+
+      .picklist-section {
+        &.is-month::after,
+        &.is-year {
+          display: none;
+        }
+      }
+    }
+
+    &.is-yearonly {
+      min-width: 225px;
+
+      .picklist-section.is-month {
+        display: none;
+      }
+    }
 
     .monthview-header {
-      border-bottom: 0;
-      margin-top: 7px;
+      display: none;
+    }
 
-      button.prev {
-        right: 35px;
+    .monthview-monthyear-pane {
+      padding: 10px 0;
+      position: initial;
+
+      .content {
+        height: 302px;
       }
 
-      button.next {
-        right: 4px;
+      .picklist-section.is-month::after {
+        height: 300px;
       }
-
     }
 
     .popup-footer {
-      margin-top: 6px;
+      margin-top: 0;
 
       button {
-        width: 100%;
+        width: 50%;
+      }
+    }
+  }
+
+  // Trigger Button for Month/Year Pane
+  .btn-monthyear-pane {
+    border-radius: 2px;
+    color: $datepicker-month-year-color;
+    font-size: $theme-size-font-lg;
+    font-weight: $theme-number-font-weight-base;
+    margin-left: -5px;
+    padding: 4px 7px 5px;
+
+    .year,
+    .month {
+      top: 0;
+    }
+
+    &.active {
+      span,
+      .icon {
+        color: $theme-color-brand-primary-base;
+      }
+
+      .icon {
+        transform: rotateX(180deg);
+      }
+    }
+  }
+
+  // Collapsible Month/Year Pane
+  .monthview-monthyear-pane {
+    background-color: $theme-color-palette-white;
+    margin: 0 -1px;
+    max-height: calc(100% - 50px);
+    overflow: hidden;
+    position: absolute;
+    top: 50px;
+    width: 100%;
+
+    .content {
+      height: 312px;
+      padding: 0 !important;
+    }
+
+    &.is-yearfirst {
+      .picklist-section {
+        float: right;
+      }
+    }
+
+    .picklist-section {
+      display: inline-block;
+      height: 100%;
+      vertical-align: top;
+      width: 50%;
+
+      &.is-month::after {
+        border-left: 1px solid #bdbdbd;
+        content: ' ';
+        height: 291px;
+        left: 150px;
+        position: absolute;
+        top: 10px;
+      }
+    }
+
+    .picklist {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      height: inherit;
+      justify-content: space-evenly;
+      padding: 5px 0;
+
+      &.is-year {
+        padding: 0;
+      }
+
+      .picklist-item {
+        a {
+          border: 1px solid transparent;
+          border-radius: 14px;
+          color: $datepicker-month-year-color;
+          font-size: $theme-size-font-base;
+          padding: 3px 10px;
+          text-decoration: none;
+          user-select: none;
+
+          &:focus {
+            border-color: $datepicker-focus-border-color;
+            box-shadow: $focus-box-shadow;
+            outline: none;
+            -moz-outline-style: none;
+          }
+        }
+
+        .icon {
+          color: $trigger-icon-fill-color;
+          position: relative;
+          top: 3px;
+
+          &:hover {
+            color: $trigger-hover-color;
+          }
+
+          &:active {
+            color: $trigger-active-color;
+          }
+        }
+
+        &.is-selected a {
+          background-color: $datepicker-selected-bg-color;
+          color: $theme-color-palette-white;
+          font-weight: $theme-number-font-weight-bold;
+
+          .icon {
+            color: $theme-color-palette-white;
+          }
+        }
+
+        &.down .icon {
+          top: 5px;
+        }
       }
     }
   }
@@ -58,7 +204,7 @@
     border: 1px solid transparent;
     border-radius: 50%;
     height: 40px;
-    width: 39px;
+    width: 40px;
 
     .day-text {
       @include rem(font-size, 1.4rem);
@@ -307,6 +453,7 @@
       .day-text {
         background-color: $datepicker-selected-bg-color;
         color: $datepicker-selected-color;
+        font-weight: $theme-number-font-weight-bold;
       }
     }
 
@@ -343,7 +490,7 @@
   }
 
   .monthview-table {
-    margin: 17px auto 0;
+    margin: 20px auto 0;
     padding: 0 10px;
     width: 100%;
 
@@ -544,16 +691,8 @@
   .year {
     color: $datepicker-month-year-color;
     font-size: $theme-size-font-lg;
-  }
-
-  .dropdown-wrapper {
-    text-indent: 0;
-    width: 120px;
-  }
-
-  #year-dropdown + .dropdown-wrapper {
-    left: 10px;
-    width: 80px;
+    position: relative;
+    top: 2px;
   }
 }
 
@@ -594,11 +733,6 @@ html[dir='rtl'] {
     .month {
       padding-left: 5px;
       padding-right: 15px;
-    }
-
-    #year-dropdown + .dropdown-wrapper {
-      left: 0;
-      right: 5px;
     }
 
     button {

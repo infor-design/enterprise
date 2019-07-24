@@ -13,11 +13,13 @@ const COMPONENT_NAME = 'expandablearea';
 * @param {string} element The component element.
 * @param {string} [settings] The component settings.
 * @param {string} [settings.trigger = null]  Id of some other button to use as a trigger
-* @param {string} [settings.bottomBorder = false]  Change the border to bottom vs top (for some cases)
+* @param {string} [settings.bottomBorder = false] Change the border to bottom vs top (for some cases)
+* @param {number} [settings.animationSpeed = 300] Change the animation speed in ms
 */
 const EXPANDABLEAREA_DEFAULTS = {
   trigger: null,
-  bottomBorder: false
+  bottomBorder: false,
+  animationSpeed: 300
 };
 
 function ExpandableArea(element, settings) {
@@ -160,54 +162,6 @@ ExpandableArea.prototype = {
   },
 
   /**
-  * Add Keyboard Support.
-  * @private
-  * @param  {object} e The event we are handling.
-  * @returns {void}
-  */
-  handleKeys(e) {
-    if (this.isDisabled()) {
-      return null;
-    }
-
-    const key = e.which;
-
-    if (key === 13 || key === 32) { // Enter/Spacebar
-      e.preventDefault();
-      this.toggleExpanded();
-      return false;
-    }
-
-    return null;
-  },
-
-  /**
-  * Toggle focus classes on focus.
-  * @private
-  * @returns {void}
-  */
-  handleFocus() {
-    if (this.isDisabled()) {
-      return;
-    }
-
-    this.header.addClass('is-focused');
-  },
-
-  /**
-  * Toggle blur classes on blur.
-  * @private
-  * @returns {void}
-  */
-  handleBlur() {
-    if (this.isDisabled()) {
-      return;
-    }
-
-    this.header.removeClass('is-focused');
-  },
-
-  /**
   * Returns expanded status about the current expandable area
   * @returns {boolean} True of alse depending on current expanded status.
   */
@@ -276,7 +230,7 @@ ExpandableArea.prototype = {
     */
     this.content.one('animateopencomplete', () => {
       this.element.triggerHandler('afterexpand', [this.element]);
-    }).animateOpen();
+    }).animateOpen({ timing: this.settings.animationSpeed });
 
     this.applyIE11Fix();
   },
@@ -325,7 +279,7 @@ ExpandableArea.prototype = {
       this.header.attr('aria-expanded', 'false');
       this.element.triggerHandler('aftercollapse', [this.element]);
       this.content[0].style.display = 'none';
-    }).animateClosed();
+    }).animateClosed({ timing: this.settings.animationSpeed });
 
     this.applyIE11Fix();
   },
@@ -412,14 +366,6 @@ ExpandableArea.prototype = {
         e.preventDefault();
         self.toggleExpanded();
       }
-    });
-
-    this.header.on('keydown.expandablearea', (e) => {
-      self.handleKeys(e);
-    }).on('focus.expandablearea', (e) => {
-      self.handleFocus(e);
-    }).on('blur.expandablearea', (e) => {
-      self.handleBlur(e);
     });
 
     return this;

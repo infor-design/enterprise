@@ -113,7 +113,13 @@ function ValidationRules() {
           dateFormat = field.data('datepicker').pattern;
         }
 
-        const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy');
+        const isStrict = !(
+          dateFormat === 'MMMM' ||
+          dateFormat === 'MMM' ||
+          dateFormat === 'MM' ||
+          dateFormat === 'MMMM d' ||
+          dateFormat === 'yyyy'
+        );
         const parsedDate = Locale.parseDate(value, dateFormat, isStrict);
         return !(((parsedDate === undefined) && value !== ''));
       },
