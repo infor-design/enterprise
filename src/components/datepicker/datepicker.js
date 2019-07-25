@@ -343,14 +343,6 @@ DatePicker.prototype = {
 
     const elem = focusables.eq(index);
     elem.focus();
-
-    if (elem.is('td')) {
-      elem.addClass(`is-selected${(this.settings.range.useRange ? ' range' : '')}`);
-      this.currentDate.setDate(elem.text());
-      this.currentDate.setMonth(this.calendar.find('.month').attr('data-month'));
-      this.insertDate(this.currentDate);
-      elem.focus();
-    }
   },
 
   /**
@@ -724,8 +716,11 @@ DatePicker.prototype = {
       if (td.hasClass('is-disabled')) {
         self.calendarAPI.activeTabindex(td, true);
       } else {
-        if (!(s.range.useRange && s.range.first)) {
+        if (s.range.useRange && (!s.range.first || s.range.second)) {
           self.calendarAPI.days.find('.is-selected').removeClass('is-selected range').removeAttr('aria-selected');
+        }
+        if (!s.range.useRange) {
+          self.calendarAPI.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
         }
 
         const cell = $(this);
@@ -809,7 +804,7 @@ DatePicker.prototype = {
    */
   insertSelectedDate() {
     const self = this;
-    const cellDate = self.calendarAPI.getCellDate(self.calendar.find('td.is-selected'));
+    const cellDate = self.calendarAPI.getCellDate(self.calendar.find('td.is-selected').last());
     const day = cellDate.day;
     const month = cellDate.month;
     const year = cellDate.year;

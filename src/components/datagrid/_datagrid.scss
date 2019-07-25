@@ -2610,6 +2610,15 @@ $datagrid-short-row-height: 25px;
 
     }
 
+    .dropdown {
+      + .icon {
+        height: 16px;
+        margin-left: -12px;
+        top: 4px !important;
+        width: 16px;
+      }
+    }
+
     .lookup-wrapper {
       background-color: transparent;
       display: inline;
@@ -3906,9 +3915,9 @@ html[dir='rtl'] {
   }
 
   .trigger .icon {
-    height: 24px;
-    left: 4px;
-    top: 0;
+    height: 16px;
+    left: 6px;
+    top: 5px;
     width: 16px;
   }
 

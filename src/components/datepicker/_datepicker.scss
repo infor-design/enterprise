@@ -102,8 +102,13 @@
     button {
       width: 33.33%;
 
+      // Fixes cut off focus state on the middle button
+      &:nth-child(1) {
+        margin-right: -1px;
+      }
+
       &:nth-child(2) {
-        z-index: 1;
+        position: relative;
       }
     }
   }
@@ -157,8 +162,6 @@ html[dir='rtl'] {
 }
 
 // IE Hack
-.ie9,
-.ie10,
 .ie11 {
   .datepicker + .icon {
     background-color: rgba($theme-color-palette-white, 0);

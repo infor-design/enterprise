@@ -54,7 +54,18 @@
       margin-top: 0;
 
       button {
+        margin-right: 0;
         width: 50%;
+
+        &:nth-child(1) {
+          margin-right: 0;
+          position: relative;
+        }
+
+        &:nth-child(2) {
+          margin-right: 0;
+          position: initial;
+        }
       }
     }
   }
@@ -94,6 +105,7 @@
     position: absolute;
     top: 50px;
     width: 100%;
+    z-index: 3011;
 
     .content {
       height: 312px;
@@ -457,7 +469,7 @@
       }
     }
 
-    &:focus {
+    &:not(.is-disabled):focus {
       border-color: $datepicker-focus-border-color;
       box-shadow: $focus-box-shadow;
       outline: none;
@@ -647,7 +659,7 @@
     }
   }
 
-  //Hide the buttons on the top
+  // Hide the buttons on the top
   &.hide-buttons {
     .prev,
     .next {
@@ -729,20 +741,21 @@ html[dir='rtl'] {
   .monthview-header {
     padding-right: 0;
     text-align: right;
+    text-indent: 22px;
 
     .month {
       padding-left: 5px;
-      padding-right: 15px;
+      padding-right: 5px;
     }
 
-    button {
+    button.prev,
+    button.next {
       left: 0;
       right: auto;
       transform: rotate(180deg);
 
       &.prev {
-        left: 30px;
-        margin-left: 5px;
+        left: 40px;
         right: auto;
 
         svg {
@@ -752,7 +765,7 @@ html[dir='rtl'] {
       }
 
       &.next {
-        margin: 0 5px 0 7px;
+        margin: 0 5px 0 10px;
 
         svg {
           left: auto;
@@ -861,6 +874,14 @@ html[dir='rtl'] {
         left: initial;
         right: calc(100% - 25px);
       }
+    }
+
+    .expandable-area-trigger .icon {
+      margin-right: 0 !important;
+    }
+
+    .monthview-monthyear-pane.is-yearfirst .picklist-section {
+      float: left;
     }
   }
 
