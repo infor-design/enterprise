@@ -6594,7 +6594,7 @@ Datagrid.prototype = {
     const dataset = this.getDataset();
 
     for (let i = 0, l = dataset.length; i < l; i++) {
-      const idx = this.pagingRowIndex(i);
+      const idx = this.settings.groupable ? i : this.pagingRowIndex(i);
       if (this.filterRowRendered ||
         (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].keywordSearch)) {
         if (!dataset[i].isFiltered) {
@@ -6635,7 +6635,8 @@ Datagrid.prototype = {
     this.dontSyncUi = true;
     // Unselect each row backwards so the indexes are correct
     for (let i = this._selectedRows.length - 1; i >= 0; i--) {
-      const idx = this.pagingRowIndex(this._selectedRows[i].idx);
+      const idx = this.settings.groupable ?
+        this._selectedRows[i].idx : this.pagingRowIndex(this._selectedRows[i].idx);
       this.unselectRow(idx, true, true);
     }
     // Sync the Ui and call the events
@@ -7742,7 +7743,7 @@ Datagrid.prototype = {
       let handled = false;
       const target = $(e.target);
       const isRTL = Locale.isRTL();
-      const node = self.activeCell.node;
+      let node = self.activeCell.node;
       const rowNode = $(this).parent();
       const prevRow = rowNode.prevAll(':not(.is-hidden, .datagrid-expandable-row)').first();
       const nextRow = rowNode.nextAll(':not(.is-hidden, .datagrid-expandable-row)').first();
@@ -7759,6 +7760,11 @@ Datagrid.prototype = {
         }
         return self.dataRowIndex(visibleRow);
       };
+
+      if (!node.length) {
+        self.activeCell.node = self.cellNode(row, cell);
+        node = self.activeCell.node;
+      }
 
       const getGroupCell = function (currentCell, lastCell, prev) {
         const n = self.activeCell.groupNode || node;
