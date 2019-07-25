@@ -151,6 +151,7 @@
 - `[App Menu]` Expandable area updates within application menu. ([#1982](https://github.com/infor-design/enterprise/pull/1982))
 - `[App Menu]` Fixed an issue where role switcher was not clickable with long title. ([#2060](https://github.com/infor-design/enterprise/issues/2060))
 - `[App Menu]` Fixed an issue where it was not possible to manually add a filter field that you can control on your own. Caveat to this is if you set filterable: false it will no longer remove the filter field from the DOM, if you do that you must now do it manually. ([#2066](https://github.com/infor-design/enterprise/issues/2066))
+- `[App Menu]` Added support for mobile when dismissOnClickMobile setting is true to dismiss application menu when a role is selected. ([#2520](https://github.com/infor-design/enterprise/issues/2520))
 - `[App Menu]` Fixed an issue with the logo which was positioned badly when scrolling. ([#2116](https://github.com/infor-design/enterprise/issues/2116))
 - `[Calendar]` Fixed some bugs having a calendar month along or just a legend, fixed the clicking of upcoming days and added a dblclick even emitter. ([#2149](https://github.com/infor-design/enterprise/issues/2149))
 - `[Colorpicker]` Fixed an issue where the colorpicker label is cut off in extra small input field. ([#2023](https://github.com/infor-design/enterprise/issues/2023))
