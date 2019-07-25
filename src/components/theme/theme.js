@@ -98,7 +98,15 @@ const theme = {
     }
     this.currentTheme = result[0];
     return result;
+  },
+
+  /**
+   * @returns {boolean} whether or not the current theme is an Uplift variant
+   */
+  get uplift() {
+    return this.currentTheme.id.indexOf('-uplift-') > -1;
   }
+
 };
 
 export { theme };

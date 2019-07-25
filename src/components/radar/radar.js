@@ -3,6 +3,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
+import { theme } from '../theme/theme';
 
 import '../emptymessage/emptymessage.jquery';
 
@@ -258,7 +259,7 @@ Radar.prototype = {
         .attr('x', 4)
         .attr('y', d => -d * radius / settings.levels)
         .attr('dy', '0.4em')
-        .style('font-size', '10px')
+        .style('font-size', theme.uplift ? '12px' : '10px')
         .attr('fill', '#737373')
         .text((d) => {
           let text = '';
@@ -297,7 +298,7 @@ Radar.prototype = {
     // Append the labels at each axis
     axis.append('text')
       .attr('class', 'legend')
-      .style('font-size', '12px')
+      .style('font-size', theme.uplift ? '14px' : '12px')
       .attr('text-anchor', 'middle')
       .attr('dy', '0.35em')
       .attr('x', (d, i) => rScale(maxValue * settings.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2))

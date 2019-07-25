@@ -17,6 +17,13 @@ $header-text-color: $theme-color-palette-white;
 $header-disabled-color: $theme-color-palette-slate-50;
 $header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
 
+$masthead-bg-color: $theme-color-palette-slate-70;
+$masthead-border-color: $theme-color-palette-slate-80;
+$masthead-text-color: $theme-color-palette-slate-30;
+$masthead-button-color: $theme-color-palette-slate-40;
+$masthead-button-hover-color: $theme-color-palette-white;
+$masthead-button-focus-color: $theme-color-palette-white;
+
 $dropdown-search-bg-color: $theme-color-palette-graphite-10;
 $panel-bg-color: $theme-color-palette-white;
 $panel-border-color: $theme-color-palette-graphite-30;
@@ -38,7 +45,7 @@ $focus-box-shadow-spinbox-up: 3px 0 3px 0 $focus-box-shadow-color,
   0 -3px 3px 0 $focus-box-shadow-color;
 
 // Base Colors
-$inverse-color: $button-color-primary-initial-font;
+$inverse-color: $theme-color-palette-white;
 
 // Text Color
 // These are Deprecated. Use "Default, Descriptive, Link, Muted, Alert" ect going forward
@@ -133,7 +140,7 @@ $badge-neutral-hover-icon-color: $theme-color-palette-graphite-100;
 $popupmenu-color: $font-color-extrahighcontrast;
 $popupmenu-icon-color: $theme-color-palette-graphite-60;
 $popupmenu-heading-color: $theme-color-brand-secondary-alt;
-$popupmenu-bg-color: $button-color-primary-initial-font;
+$popupmenu-bg-color: $theme-color-palette-white;
 $popupmenu-border-color: $theme-color-palette-graphite-30;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-checked-color: $theme-color-brand-primary-base;
@@ -206,7 +213,7 @@ $dropdown-menu-separator-border-color: $theme-color-palette-graphite-30;
 $dropdown-box-shadow-top: 0 -5px 5px $drop-shadow-depth;
 
 //List View
-$listview-bg-color: $button-color-primary-initial-font;
+$listview-bg-color: $theme-color-palette-white;
 $listview-bg-color-alternate: $theme-color-palette-graphite-10;
 $listview-hover-bg-color: $list-color-item-hover-background;
 $listview-border-color: $theme-color-palette-graphite-30;
@@ -313,8 +320,6 @@ $colorpicker-initial-bg-color: $theme-color-brand-secondary-base;
 $colorpicker-swatch-border-color: $theme-color-palette-graphite-20;
 $colorpicker-checkmark-one-color: $theme-color-palette-graphite-50;
 $colorpicker-checkmark-two-color: $theme-color-palette-white;
-$colorpicker-popup-bg-color: $theme-color-palette-white;
-$colorpicker-popup-border-color: $theme-color-brand-secondary-alt;
 
 // Fileupload
 $fileupload-primary-color: $theme-color-font-base;
@@ -368,7 +373,7 @@ $expandable-area-border-color: $theme-color-palette-graphite-30;
 $expandable-area-title-color: $theme-color-font-base;
 
 // Cardlist
-$cardlist-bg-color: $button-color-primary-initial-font;
+$cardlist-bg-color: $theme-color-palette-white;
 $cardlist-border-color: $theme-color-palette-graphite-30;
 $cardlist-header-color: $theme-color-font-base;
 $cardlist-actions-color: $theme-color-font-base;
@@ -420,7 +425,7 @@ $pager-hover-color: $font-color-extrahighcontrast;
 $pager-disabled-color: $theme-color-palette-graphite-20;
 
 //Slider
-$slider-bg-color: $theme-color-brand-secondary-alt;
+$slider-bg-color: $theme-color-brand-secondary-lighter;
 $slider-active-bg-color: $theme-color-brand-primary-base;
 $slider-labels-color: $theme-color-palette-graphite-60;
 $slider-disabled-color: $theme-color-palette-graphite-20;

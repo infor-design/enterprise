@@ -3,6 +3,7 @@
 
 .icon {
   fill: transparent;
+  width: 18px; // Normalize against `height: 18px`;
 }
 
 .icon.app-header span:not(.audible) {
