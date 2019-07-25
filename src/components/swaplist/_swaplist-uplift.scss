@@ -1,0 +1,16 @@
+// Swaplist Uplift Styles
+// =============================================
+
+.swaplist {
+  .handle {
+    font-size: 25px;
+    top: 4px;
+  }
+
+  .card,
+  .widget {
+    .buttons {
+      top: auto;
+    }
+  }
+}

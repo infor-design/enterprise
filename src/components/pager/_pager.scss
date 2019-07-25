@@ -12,52 +12,16 @@
   > li {
     cursor: pointer;
     display: inline-block;
-    overflow: hidden;
-    vertical-align: middle;
-    width: auto;
-
-    &.pager-no:hover {
-      > a {
-        border-bottom: 1px solid $pager-text-color;
-
-        &[disabled] {
-          border-bottom: 1px solid transparent;
-        }
-      }
-    }
-
-    > a:focus {
-      border: 1px solid $pager-text-color;
-      box-shadow: $focus-box-shadow;
-    }
-
-    &.selected:hover {
-      > a {
-        border-bottom: 1px solid $pager-text-color;
-
-        &:focus {
-          border-bottom: 1px solid transparent;
-        }
-      }
-    }
-
-    &.selected > a {
-      color: $pager-selected-color;
-      font-weight: $theme-number-font-weight-bold;
-    }
 
     > a {
       border: 1px solid transparent;
       border-radius: 2px;
       color: $pager-text-color;
       cursor: pointer;
-      display: inline-block;
-      height: 28px;
       margin: 0 2px;
       outline: none;
       padding: 5px;
-      position: relative;
-      text-align: center;
+      position: static;
       text-decoration: none;
       transition: all 0.2s ease;
 
@@ -71,23 +35,59 @@
         }
       }
 
+      &:focus {
+        border: 1px solid $pager-text-color;
+        box-shadow: $focus-box-shadow;
+      }
+
       .audible {
         color: $theme-color-font-base;
+      }
+    }
+
+    &.pager-no {
+      &:hover {
+        > a {
+          border-bottom: 1px solid $pager-text-color;
+
+          &[disabled] {
+            border-bottom: 1px solid transparent;
+          }
+        }
+      }
+    }
+
+    &.selected {
+      > a {
+        color: $pager-selected-color;
+        font-weight: $theme-number-font-weight-bold;
+      }
+
+      &:hover {
+        > a {
+          border-bottom: 1px solid $pager-text-color;
+
+          &:focus {
+            border-bottom: 1px solid transparent;
+          }
+        }
+      }
+    }
+
+    &:not(.selected) {
+      a:not([disabled]) {
+        &:active,
+        &:hover {
+          svg {
+            color: $pager-hover-color;
+          }
+        }
       }
     }
 
     svg {
       pointer-events: none;
     }
-
-  }
-
-  li:not(.selected) a:hover:not([disabled]) svg {
-    color: $pager-hover-color;
-  }
-
-  li:not(.selected) a:active:not([disabled]) svg {
-    color: $pager-hover-color;
   }
 }
 
@@ -101,26 +101,20 @@
 
   .icon {
     color: $font-color;
+    top: 4px;
   }
 
   a {
     backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
     border-radius: 20px;
-    margin: 0;
     overflow: hidden;  // Makes the round ripple-effect pressed state work
     -moz-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
     -webkit-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
+    transform: translate3d(0, 0, 0); // Makes the round ripple-effect pressed state work
   }
 
   .ripple-effect {
     background-color: $tertiary-btn-ripple-color;
-  }
-}
-
-.pager-next,
-.pager-last {
-  .icon {
-    left: 1px;
   }
 }
 
@@ -133,7 +127,6 @@
   display: inline-block;
   font-size: $theme-size-font-base;
   line-height: normal;
-  vertical-align: top;
 
   > label {
     font-size: inherit !important;
@@ -168,18 +161,12 @@ li + .pager-count {
 .pager-pagesize {
   float: right;
 
-  .btn-menu {
-    height: 30px;
-
-    &:focus {
-      border-color: $theme-color-brand-primary-base;
-      box-shadow: $focus-box-shadow;
-    }
+  button {
+    height: 28px;
 
     span {
       font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
-      line-height: 27px;
       text-transform: none;
     }
 
@@ -240,5 +227,21 @@ html[dir='rtl'] {
     input {
       text-align: center;
     }
+  }
+
+  // Flip the icons around
+  .pager-prev,
+  .pager-first,
+  .pager-last,
+  .pager-next {
+    .icon {
+      -moz-transform: rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
+      transform: rotateY(180deg);
+    }
+  }
+
+  .pager-pagesize {
+    float: left;
   }
 }

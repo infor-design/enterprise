@@ -6,3 +6,22 @@
     top: 38px;
   }
 }
+
+.searchfield-wrapper {
+  > .icon {
+    &.close {
+      right: 8px;
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .searchfield-wrapper {
+    > .icon {
+      &.close {
+        left: 8px;
+        right: auto;
+      }
+    }
+  }
+}

@@ -31,6 +31,7 @@
 - `[ListFilter]` Added `phraseStartsWith` filterMode for only matching a search term against the beginning of a string. ([#1606](https://github.com/infor-design/enterprise/issues/1606))
 - `[Multiselect]` Changed interactions in filtered lists to no longer reset text inside the search input and the contents of the list. ([#920](https://github.com/infor-design/enterprise/issues/920))
 - `[Toast]` Added api settings for drag drop and save position. ([#1876](https://github.com/infor-design/enterprise/issues/1876))
+- `[Uplift Theme]` Various minor improvements. ([#2318](https://github.com/infor-design/enterprise/issues/2318))
 
 ### v4.20.0 Fixes
 

@@ -1,13 +1,6 @@
 // Masthead
 //================================================== //
 
-$masthead-bg-color: $theme-color-palette-slate-70;
-$masthead-border-color: $theme-color-palette-slate-80;
-$masthead-text-color: $theme-color-palette-slate-30;
-$masthead-button-color: $theme-color-palette-slate-40;
-$masthead-button-hover-color: $theme-color-palette-white;
-$masthead-button-focus-color: $theme-color-palette-white;
-
 .masthead {
   background-color: $masthead-bg-color;
   border-bottom: 1px solid $masthead-border-color;
@@ -18,7 +11,6 @@ $masthead-button-focus-color: $theme-color-palette-white;
   .masthead-icon {
     border-radius: 0;
     height: 32px;
-    margin-right: 0;
     margin-top: 4px;
     padding: 0;
     width: 32px;

@@ -195,7 +195,7 @@
       margin: 0;
       padding: 0;
       position: absolute;
-      right: 12px;
+      right: 15px;
     }
 
     > .btn-actions {
@@ -235,21 +235,22 @@
   .widget-chart-action {
     padding: 0 10px 0 20px;
 
-    &.card-chart-action,
-    &.widget-chart-action {
-      padding-top: 3px;
-    }
-
-    &.card-group-action,
-    &.widget-group-action {
-      background-color: $body-color-primary-background;
-      border: 1px solid transparent;
-      border-bottom-color: $listview-border-color;
-    }
-
     .toolbar {
       margin-bottom: 0;
     }
+  }
+
+  .card-group-action,
+  .widget-group-action {
+    background-color: $body-color-primary-background;
+    border: 1px solid transparent;
+    border-bottom-color: $listview-border-color;
+    font-size: 16px;
+  }
+
+  .card-chart-action,
+  .widget-chart-action {
+    padding-top: 3px;
   }
 }
 
@@ -373,6 +374,36 @@ html[dir='rtl'] {
     > button {
       float: right;
     }
+
+    &:not(.has-toolbar) > .btn-actions {
+      left: 15px;
+      right: auto;
+    }
+
+    &.has-toolbar {
+      padding: 0 20px 0 13px;
+
+      .searchfield-wrapper {
+        margin: 8px 0 5px 5px;
+      }
+    }
+
+    > button {
+      float: right;
+    }
+
+    > h2,
+    > h1 {
+      float: right;
+      width: 100%;
+    }
   }
 
+  .card-content,
+  .widget-content {
+    .card-group-action,
+    .widget-group-action {
+      padding: 0 20px 0 10px;
+    }
+  }
 }

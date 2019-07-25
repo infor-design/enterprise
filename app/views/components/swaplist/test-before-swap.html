@@ -91,8 +91,7 @@
 
 
 <script>
-  $(function () {
-
+  $('body').on('initialized', function() {
     // Custom validation results
     var getResults = function(el) {
       return (el.attr('data-result') === 'true');
@@ -143,8 +142,5 @@
     elem.on('swapupdate', function (e, args) {
       console.log('Swap done');
     });
-
-
-
   });
 </script>
