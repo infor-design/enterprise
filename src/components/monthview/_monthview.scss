@@ -98,7 +98,7 @@
 
   // Collapsible Month/Year Pane
   .monthview-monthyear-pane {
-    background-color: $theme-color-palette-white;
+    background-color: $popover-bg-color;
     margin: 0 -1px;
     max-height: calc(100% - 50px);
     overflow: hidden;
@@ -125,7 +125,7 @@
       width: 50%;
 
       &.is-month::after {
-        border-left: 1px solid #bdbdbd;
+        border-left: 1px solid $popover-separator-color;
         content: ' ';
         height: 291px;
         left: 150px;
@@ -150,7 +150,7 @@
         a {
           border: 1px solid transparent;
           border-radius: 14px;
-          color: $datepicker-month-year-color;
+          color: $datepicker-day-color;
           font-size: $theme-size-font-base;
           padding: 3px 10px;
           text-decoration: none;
