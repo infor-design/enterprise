@@ -52,7 +52,7 @@
 - `[Datagrid]` Fixes the alignment of the alert and warning icons on a lookup editor. ([#2175](https://github.com/infor-design/enterprise/issues/2175))
 - `[Datagrid]` Fixes tooltip on the non displayed table errors. ([#2264](https://github.com/infor-design/enterprise/issues/2264))
 - `[Datagrid]` Fixes an issue with alignment when toggling the filter row. ([#2332](https://github.com/infor-design/enterprise/issues/2332))
-- `[Datagrid]` Fixes an issue where method setFilterConditions() was not working for multiselect filter. ([#2414](https://github.com/infor-design/enterprise/issues/2414))
+- `[Datagrid]` Fixes an issue where method setFilterConditions() were not working for multiselect filter. ([#2414](https://github.com/infor-design/enterprise/issues/2414))
 - `[Datagrid]` Fixes an error on tree grid when using server-side paging. ([#2132](https://github.com/infor-design/enterprise/issues/2132))
 - `[Datagrid]` Fixed an issue where autocompletes popped up on cell editors. ([#1575](https://github.com/infor-design/enterprise/issues/1575))
 - `[Datagrid]` Fixes reset columns to set the correct hidden status. ([#2315](https://github.com/infor-design/enterprise/issues/2315))
