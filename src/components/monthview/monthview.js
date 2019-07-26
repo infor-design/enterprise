@@ -1008,10 +1008,10 @@ MonthView.prototype = {
     };
 
     // Handle selecting a year, or month
-    const triggerBtn = this.element[0].querySelector('#btn-monthyear-pane');
     this.monthYearPane
       .off('click.picklist-month')
       .on('click.picklist-month', '.picklist.is-month li', (e) => {
+        const triggerBtn = this.element[0].querySelector('#btn-monthyear-pane');
         this.currentMonth = parseInt(e.target.getAttribute('data-month'), 10);
         this.currentDate.setMonth(this.currentMonth);
         this.currentYear = parseInt(this.monthYearPane[0].querySelector('.is-year .is-selected a').getAttribute('data-year'), 10);
@@ -1035,6 +1035,7 @@ MonthView.prototype = {
     this.monthYearPane
       .off('click.picklist-year')
       .on('click.picklist-year', '.picklist.is-year li', (e) => {
+        const triggerBtn = this.element[0].querySelector('#btn-monthyear-pane');
         if (e.currentTarget.classList.contains('up')) {
           appendYear('up');
           return;
