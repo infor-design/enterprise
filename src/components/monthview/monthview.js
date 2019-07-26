@@ -972,8 +972,8 @@ MonthView.prototype = {
     // Handle Long Press
     let intervalId = null;
     this.monthYearPane
-      .off('mousedown.monthviewpane')
-      .on('mousedown.monthviewpane', '.picklist.is-year li', (e) => {
+      .off('touchstart.monthviewpane mousedown.monthviewpane')
+      .on('touchstart.monthviewpane mousedown.monthviewpane', '.picklist.is-year li', (e) => {
         intervalId = setInterval(() => {
           if (e.currentTarget.classList.contains('up')) {
             appendYear('up');
@@ -987,8 +987,8 @@ MonthView.prototype = {
         }, 150);
         return true;
       })
-      .off('mouseup.monthviewpane, mouseout.monthviewpane')
-      .on('mouseup.monthviewpane, mouseout.monthviewpane', '.picklist.is-year li', () => {
+      .off('touchend.monthviewpane mouseup.monthviewpane mouseout.monthviewpane')
+      .on('touchend.monthviewpane mouseup.monthviewpane mouseout.monthviewpane', '.picklist.is-year li', () => {
         clearInterval(intervalId);
         return true;
       });
