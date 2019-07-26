@@ -789,7 +789,7 @@ describe('Datepicker Month Year Picker Tests', () => {
   }
 });
 
-fdescribe('Datepicker Year Picker Tests', () => { //eslint-disable-line
+describe('Datepicker Year Picker Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -823,7 +823,7 @@ fdescribe('Datepicker Year Picker Tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datepicker Month Only Picker Tests', () => { //eslint-disable-line
+describe('Datepicker Month Only Picker Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
