@@ -597,14 +597,14 @@ MonthView.prototype = {
 
     const wideMonths = this.currentCalendar.months.wide;
     wideMonths.map(function (monthMap, i) { // eslint-disable-line
-      monthList += `<li class="picklist-item${(i === month ? ' is-selected ' : '')}"><a href="#" ${(i === month ? 'tabindex="0" ' : 'tabindex="-1" ')}data-month="${i}">${monthMap}</a></li>`;
+      monthList += `<li class="picklist-item${(i === month ? ' is-selected ' : '')}"><a ${(i === month ? 'tabindex="0" ' : 'tabindex="-1" ')}data-month="${i}">${monthMap}</a></li>`;
     });
     monthList += '</ul>';
 
     this.monthYearPane.find('.picklist-section.is-month').empty().append(monthList);
     const years = [];
     let yearList = '<ul class="picklist is-year">';
-    yearList += '<li class="picklist-item up"><a href="#" tabindex="0"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-up"></use></svg></a></li>';
+    yearList += '<li class="picklist-item up"><a tabindex="0"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-up"></use></svg></a></li>';
 
     for (let i = this.settings.yearsBack; i >= 1; i--) {
       years.push(parseInt(year, 10) - i);
@@ -616,9 +616,9 @@ MonthView.prototype = {
 
     // eslint-disable-next-line
     years.map(function (yearMap) {
-      yearList += `<li class="picklist-item${(year === yearMap ? ' is-selected ' : '')}"><a href="#" ${(year === yearMap ? 'tabindex="0" ' : 'tabindex="-1" ')}data-year="${yearMap}">${yearMap}</a></li>`;
+      yearList += `<li class="picklist-item${(year === yearMap ? ' is-selected ' : '')}"><a ${(year === yearMap ? 'tabindex="0" ' : 'tabindex="-1" ')}data-year="${yearMap}">${yearMap}</a></li>`;
     });
-    yearList += '<li class="picklist-item down"><a href="#" tabindex="0"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-down"></use></svg></a></li>';
+    yearList += '<li class="picklist-item down"><a tabindex="0"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-down"></use></svg></a></li>';
     yearList += '</ul>';
 
     this.monthYearPane.find('.picklist-section.is-year').empty().append(yearList);
@@ -984,11 +984,11 @@ MonthView.prototype = {
           e.stopImmediatePropagation();
           e.stopPropagation();
           return false;
-        }, 150);
+        }, 200);
         return true;
       })
-      .off('touchend.monthviewpane mouseup.monthviewpane mouseout.monthviewpane')
-      .on('touchend.monthviewpane mouseup.monthviewpane mouseout.monthviewpane', '.picklist.is-year li', () => {
+      .off('touchend.monthviewpane touchcancel.monthviewpane mouseup.monthviewpane mouseout.monthviewpane')
+      .on('touchend.monthviewpane touchcancel.monthviewpane mouseup.monthviewpane mouseout.monthviewpane', '.picklist.is-year li', () => {
         clearInterval(intervalId);
         return true;
       });

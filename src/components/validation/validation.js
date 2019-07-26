@@ -90,6 +90,11 @@ function ValidationRules() {
         this.message = Locale.translate('Required');
         let valid = true;
 
+        // Dont show message when opening dialog
+        if ($(field).is('.datepicker') && $('#monthview-popup').is(':visible')) {
+          return true;
+        }
+
         valid = field.is(':radio') ? this.isRadioChecked(field) : this.isNotEmpty(value, field);
         return valid;
       },
