@@ -592,6 +592,7 @@ DatePicker.prototype = {
     if (this.settings.onOpenCalendar) {
       // In some cases, month picker wants to set a specifc time.
       this.settings.activeDate = this.settings.onOpenCalendar();
+
       if (this.isIslamic) {
         this.settings.activeDateIslamic = this.conversions.fromGregorian(this.settings.activeDate);
       }
@@ -728,7 +729,7 @@ DatePicker.prototype = {
 
         const cell = $(this);
         cell.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true');
-        self.insertSelectedDate();
+        self.insertSelectedDate(cell);
 
         if (s.range.useRange) {
           self.isFocusAfterClose = true;
@@ -801,13 +802,14 @@ DatePicker.prototype = {
   },
 
   /**
-   * Inserts the currently highlight date
+   * Inserts the currently selected (higlighted in azure) date.
    * @private
+   * @param {object} cell The cell to check otherwise the selected cell is used.
    * @returns {void}
    */
-  insertSelectedDate() {
+  insertSelectedDate(cell) {
     const self = this;
-    const cellDate = self.calendarAPI.getCellDate(self.calendar.find('td.is-selected').last());
+    const cellDate = self.calendarAPI.getCellDate(cell || self.calendar.find('td.is-selected').last());
     const day = cellDate.day;
     const month = cellDate.month;
     const year = cellDate.year;

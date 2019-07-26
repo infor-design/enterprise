@@ -36,7 +36,7 @@ describe('ListBuilder API', () => {
 
   afterEach(() => {
     listbuilderObj.destroy();
-    cleanup(['#example-listbuilder-container', '.svg-icons', '#listbuilder-script', '#listbuilder-tmpl']);
+    cleanup(['#example-listbuilder-container', '.row', '.svg-icons', '#listbuilder-script', '#listbuilder-tmpl']);
   });
 
   it('Should be defined as an object', () => {

@@ -545,7 +545,14 @@ MonthView.prototype = {
       this.element
         .find('td:not(.alternate) .day-text')
         .filter(function () {
-          return parseInt($(this).text(), 10) === parseInt(self.currentDay, 10);
+          let currentDay = self.currentDay;
+          if (self.settings.activeDate) {
+            currentDay = self.settings.activeDate.getDate();
+            self.currentDay = currentDay;
+            self.currentMonth = self.settings.activeDate.getMonth();
+            self.currentDay = self.settings.activeDate.getFullYear();
+          }
+          return parseInt($(this).text(), 10) === parseInt(currentDay, 10);
         })
         .closest('td')
         .addClass('is-selected')
@@ -882,7 +889,7 @@ MonthView.prototype = {
       self.showMonth(self.currentMonth, self.currentYear);
 
       if (self.settings.range.useRange) {
-        range.formatedDate = Locale.formatDate(range.date, { date: 'full', locale: this.locale.name });
+        range.formatedDate = Locale.formatDate(range.date, { date: 'full', locale: self.locale.name });
         range.cell = self.days.find(`[aria-label="${range.formatedDate}"]`);
         self.setRangeOnCell(self.settings.range.second ? false : range.cell);
       }
