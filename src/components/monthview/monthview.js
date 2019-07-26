@@ -1012,13 +1012,18 @@ MonthView.prototype = {
         this.currentYear = parseInt(this.monthYearPane[0].querySelector('.is-year .is-selected a').getAttribute('data-year'), 10);
         this.currentDate.setFullYear(this.currentYear);
 
-        if (this.settings.hideDays) {
+        if (this.settings.hideDays && this.element.hasClass('is-monthonly')) {
+          selectPicklistItem(e.target, 'is-month');
+          this.monthYearPane.parent().find('button.is-select-month').click();
+        } else if (this.settings.hideDays) {
           selectPicklistItem(e.target, 'is-month');
         } else {
           this.showMonth(this.currentMonth, this.currentYear);
           this.monthYearPane.data('expandablearea').close();
-          DOM.removeClass(triggerBtn, 'hide-focus');
-          triggerBtn.focus();
+          if (triggerBtn) {
+            DOM.removeClass(triggerBtn, 'hide-focus');
+            triggerBtn.focus();
+          }
         }
       });
 
@@ -1039,7 +1044,10 @@ MonthView.prototype = {
         this.currentMonth = parseInt(this.monthYearPane[0].querySelector('.is-month .is-selected a').getAttribute('data-month'), 10);
         this.currentDate.setMonth(this.currentMonth);
 
-        if (this.settings.hideDays) {
+        if (this.settings.hideDays && this.element.hasClass('is-yearonly')) {
+          selectPicklistItem(e.target, 'is-year');
+          this.monthYearPane.parent().find('button.is-select-month').click();
+        } else if (this.settings.hideDays) {
           selectPicklistItem(e.target, 'is-year');
         } else {
           this.showMonth(this.currentMonth, this.currentYear);
@@ -1059,7 +1067,11 @@ MonthView.prototype = {
       }
       // Set the height and focus the month
       setTimeout(() => {
-        this.monthYearPane.find('.is-month .is-selected a').focus();
+        const selectedMonth = this.monthYearPane.find('.is-month .is-selected a');
+        selectedMonth.focus();
+        if (this.monthYearPane.parent().hasClass('is-yearonly')) {
+          this.monthYearPane.find('.is-year .is-selected a').focus();
+        }
       });
     }).on('collapse.monthviewpane', () => {
       // Enable it all again

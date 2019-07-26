@@ -154,6 +154,8 @@ DatePicker.prototype = {
       this.element.closest('.field').addClass('is-disabled');
     }
 
+    this.element.attr('autocomplete', 'off');
+
     // Append a trigger button
     this.trigger = $.createIconElement('calendar').insertAfter(this.element);
 
@@ -329,9 +331,10 @@ DatePicker.prototype = {
 
     // Set focus on (opt: next|prev) focusable element
     let focusables = this.popup.find(':focusable');
-    const isMonthViewPane = $(e.currentTarget).is('.monthview-monthyear-pane, #btn-monthyear-pane');
+    const isMonthViewPane = $(e.currentTarget).is('.monthview-monthyear-pane, #btn-monthyear-pane') ||
+      $(e.currentTarget).closest('.is-monthyear.is-monthonly').length > 0;
     if (isMonthViewPane) {
-      focusables = this.popup.find(':focusable').not('td').not('.picklist-item a').add('.picklist-item.is-selected a, .picklist-item.up a, .picklist-item.down a');
+      focusables = this.popup.find(':focusable').not('td').not('.picklist-item a').add('.picklist-item.is-selected a:visible, .picklist-item.up a:visible, .picklist-item.down a:visible');
     }
     let index = focusables.index($(':focus'));
 
