@@ -66,6 +66,9 @@ DOM.hasClass = function hasClass(el, className) {
  * @param {...string} className a string representing a class name.
  */
 DOM.addClass = function addClass(el, ...className) {
+  if (!el) {
+    return;
+  }
   for (let i = 0; i < className.length; i++) {
     if (el.classList) {
       el.classList.add(className[i]);
@@ -82,6 +85,10 @@ DOM.addClass = function addClass(el, ...className) {
  * @param {...string} className a string representing a class name.
  */
 DOM.removeClass = function removeClass(el, ...className) {
+  if (!el) {
+    return;
+  }
+
   for (let i = 0; i < className.length; i++) {
     if (el.classList) {
       el.classList.remove(className[i]);

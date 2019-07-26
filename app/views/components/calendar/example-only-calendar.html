@@ -22,7 +22,7 @@
           showViewChanger: false,
           events: events
         }).on('dblclick', function (e, args) {
-          $('body').toast({title: 'Calendar Test', message: 'Day ' + args.eventData.ends + ' Clicked' });
+          $('body').toast({title: 'Calendar Test', message: 'Day ' + args.eventData.ends + ' Double Clicked' });
         }).on('eventclick', function (e, args) {
           $('body').toast({title: 'Calendar Test', message: 'Event "' + args.event.subject + '" Clicked' });
         }).on('eventdblclick', function (e, args) {

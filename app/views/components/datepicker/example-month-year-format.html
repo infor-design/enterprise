@@ -3,46 +3,43 @@
   <div class="four columns">
 
     <div class="field">
-      <label for="month-year" class="label">Month / Year Together (more clicks)</label>
-      <input id="month-year" class="datepicker" name="month-year" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MM/yyyy'}" type="text">
+      <label for="month-year" class="label">Month / Year Picker</label>
+      <input id="month-year" class="datepicker" name="month-year" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MM/yyyy'}" type="text"/>
     </div>
 
     <div class="field">
-      <label for="month-year-long" class="label">Month / Year Together - Long Version (more clicks)</label>
-      <input id="month-year-long" class="datepicker" name="month-year" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MMM yyyy'}" type="text">
+      <label for="month-only" class="label">Month Picker (Long)</label>
+      <input id="month-only" class="datepicker" name="month-only" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MMMM'}" type="text"/>
     </div>
 
     <div class="field">
-      <label for="month-only" class="label">Just Month</label>
-      <select id="month-only" name="month-only" class="dropdown input-sm">
+      <label for="month-only-med" class="label">Month Picker (Medium)</label>
+      <input id="month-only-med" class="datepicker" name="month-only-med" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MMM'}" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="month-only-short" class="label">Month Picker (Short)</label>
+      <input id="month-only-short" class="datepicker" name="month-only-short" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MM'}" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="year-only" class="label">Year Picker</label>
+      <input id="year-only" class="datepicker" name="year-only" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'yyyy'}" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="together-year" class="label ">Year Dropdown</label>
+      <select id="together-year" name="together-year" class="dropdown input-sm">
       </select>
     </div>
 
     <div class="field">
-      <label for="year-only" class="label ">Just Year</label>
-      <select id="year-only" name="year-only" class="dropdown input-sm">
+      <label for="together-month" class="label ">Month Dropdown</label>
+      <select id="together-month" name="together-month" class="dropdown input-sm">
       </select>
     </div>
-
-		<div class="compound-field">
-
-      <div class="field">
-        <label for="together-year" class="label ">Year Separate</label>
-        <select id="together-year" name="together-year" class="dropdown input-sm">
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="together-month" class="label ">Month Separate</label>
-        <select id="together-month" name="together-month" class="dropdown input-sm">
-        </select>
-      </div>
-
-    </div>
-
 
   </div>
-
 </div>
 
 <script>
@@ -60,13 +57,13 @@
     $('#together-month').append(months).trigger('updated');
 
     //Dynamically populate the month with an advance month range
-    var advanceMonths = 5, years= [], yearDropdown='', year = new Date().getFullYear();
+    var advanceYears = 5, years= [], yearDropdown='', year = new Date().getFullYear();
 
-    for (var i = advanceMonths; i >= 1; i--) {
+    for (var i = advanceYears; i >= 1; i--) {
       years.push(parseInt(year) - i);
     }
     years.push(year);
-    for (var j = 1; j <= advanceMonths; j++) {
+    for (var j = 1; j <= advanceYears; j++) {
       years.push(parseInt(year) + j);
     }
 

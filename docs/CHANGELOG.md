@@ -25,6 +25,7 @@
 - `[Datagrid]` Changed the beforeCommitCellEdit event into a function on the column that is synchronous. ([#2442](https://github.com/infor-design/enterprise/issues/2442))
 - `[Datagrid]` Fixed a bug that the selected event would fire when no rows are deselected and on initial load. ([#2472](https://github.com/infor-design/enterprise/issues/2472))
 - `[Datagrid]` Removed a white background from the colorpicker editor in high contrast theme. ([#1574](https://github.com/infor-design/enterprise/issues/1574))
+- `[Datepicker]` Made the showMonthYearPicker option true by default and added a newly designed panel to select the year and day. ([#1958](https://github.com/infor-design/enterprise/issues/1958))
 - `[Dropdown]` Fixed an issue where ellipsis was not working when use firefox new tab. ([#2236](https://github.com/infor-design/enterprise/issues/2236))
 - `[Form Compact]` Added checkboxes/radios, and improved visual style. ([#2193](https://github.com/infor-design/enterprise/issues/2193))
 - `[Images]` Created an additional image class to apply focus state without coercing width and height. ([#2025](https://github.com/infor-design/enterprise/issues/2025))
@@ -68,6 +69,7 @@
 - `[Datagrid]` Fixes the styling of non editable checkbox cells so they look disabled. ([#2340](https://github.com/infor-design/enterprise/issues/2340))
 - `[Datagrid]` Changed the dynamic column tooltip function to pass the row and more details. This changes the order of parameters but since this feature is new did not consider this a breaking change. If you are using this please take note. ([#2333](https://github.com/infor-design/enterprise/issues/2333))
 - `[Datagrid]` Fixed a bug is the isEditable column callback in editable tree grid where some data was missing in the callback. ([#2357](https://github.com/infor-design/enterprise/issues/2357))
+- `[Datepicker]` Removed the advanceMonths option as the dropdowns for this are no longer there in the new design. ([#970](https://github.com/infor-design/enterprise/issues/970))
 - `[Datagrid]` Fixed a bug where deselect all would not deselect some rows when using grouping. ([#1796](https://github.com/infor-design/enterprise/issues/1796))
 - `[Datagrid]` Fixed a bug where summary counts in grouping would show even if the group is collapsed. ([#2221](https://github.com/infor-design/enterprise/issues/2221))
 - `[Demoapp]` When displaying Uplift theme, now shows the correct alternate fonts for some locales when switching via the `locale` query string. ([#2365](https://github.com/infor-design/enterprise/issues/2365))
@@ -106,6 +108,8 @@
 - `[Demo App]` Add the uplift theme to the theme switcher menu. ([#2335](https://github.com/infor-design/enterprise/issues/2335))
 - `[Demo App]` Fixed routing issues that could cause 500 errors or crash the Demoapp. ([#2343](https://github.com/infor-design/enterprise/issues/2343))
 - `[Demo App]` Fixed an issue where the sorting was wrong on compressor data. ([#2390](https://github.com/infor-design/enterprise/issues/2390))
+
+(95 Issues Solved this release, Backlog Enterprise 296, Backlog Ng 79, 852 Functional Tests, 865 e2e Test)
 
 ## v4.19.3
 

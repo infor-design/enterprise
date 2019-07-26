@@ -949,7 +949,7 @@ describe('Datagrid Align Header Text Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text')).toBeLessThan(0.2);
     });
   }
 });
@@ -1619,7 +1619,7 @@ describe('Datagrid loaddata selected rows tests', () => {
   });
 });
 
-describe('Datagrid on modal with no default size', () => {
+describe('Datagrid with long cell text', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-long-text?layout=nofrills');
 

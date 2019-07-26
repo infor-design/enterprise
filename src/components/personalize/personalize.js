@@ -153,6 +153,7 @@ Personalize.prototype = {
       '#56932e': 'emerald'
     };
     let isDark = `${colors.header || defaultColors.header}`.toLowerCase();
+    isDark = colorUtils.validateHex(isDark);
     isDark = forceToBeLightTextOn[isDark] ? 'white' : null;
 
     const lightest = colorUtils.validateHex(colors.lightest ||
