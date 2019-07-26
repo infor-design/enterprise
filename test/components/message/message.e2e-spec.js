@@ -33,6 +33,6 @@ describe('Message tests', () => {
 
     await modalButtonEl.sendKeys(protractor.Key.TAB);
 
-    expect(await modalButtonEl.getAttribute('class')).toContain('hide-focus');
+    expect(['hide-focus', 'btn-modal', 'btn-modal hide-focus']).toContain(await modalButtonEl.getAttribute('class'));
   });
 });

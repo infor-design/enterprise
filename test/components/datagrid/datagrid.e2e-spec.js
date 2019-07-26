@@ -1619,7 +1619,7 @@ describe('Datagrid loaddata selected rows tests', () => {
   });
 });
 
-describe('Datagrid on modal with no default size', () => {
+describe('Datagrid with long cell text', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-long-text?layout=nofrills');
 

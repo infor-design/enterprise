@@ -549,8 +549,6 @@ MonthView.prototype = {
           if (self.settings.activeDate) {
             currentDay = self.settings.activeDate.getDate();
             self.currentDay = currentDay;
-            self.currentMonth = self.settings.activeDate.getMonth();
-            self.currentDay = self.settings.activeDate.getFullYear();
           }
           return parseInt($(this).text(), 10) === parseInt(currentDay, 10);
         })
