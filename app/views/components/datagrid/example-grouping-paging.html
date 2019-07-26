@@ -70,7 +70,9 @@
         },
         toolbar: {title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
       }).on('click', function (e, args) {
-          console.log('Row Click ',args)
+        if (args) {
+          console.log('Row Click ', args);
+        }
       });
  });
 
