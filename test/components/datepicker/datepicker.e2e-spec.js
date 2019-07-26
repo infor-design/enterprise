@@ -224,6 +224,7 @@ describe('Datepicker keyboard tests', () => {
     testDate.setMonth(testDate.getMonth() - 1);
 
     await element(by.css('#monthview-popup td.is-selected')).click();
+
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
 
@@ -788,7 +789,7 @@ describe('Datepicker Month Year Picker Tests', () => {
   }
 });
 
-describe('Datepicker Year Picker Tests', () => {
+fdescribe('Datepicker Year Picker Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -806,8 +807,6 @@ describe('Datepicker Year Picker Tests', () => {
     await element(by.css('.picklist-item.down a')).click();
     await element(by.cssContainingText('.picklist-item', '2030')).click();
 
-    await element(by.css('.is-select-month')).click();
-
     expect(await element(by.id('year-only')).getAttribute('value')).toEqual('2030');
   });
 
@@ -824,7 +823,7 @@ describe('Datepicker Year Picker Tests', () => {
   }
 });
 
-describe('Datepicker Month Only Picker Tests', () => {
+fdescribe('Datepicker Month Only Picker Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -838,7 +837,6 @@ describe('Datepicker Month Only Picker Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     await element(by.cssContainingText('.picklist-item', 'April')).click();
-    await element(by.css('.is-select-month')).click();
 
     expect(await element(by.id('month-only')).getAttribute('value')).toEqual('April');
   });

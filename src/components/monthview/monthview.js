@@ -949,7 +949,7 @@ MonthView.prototype = {
       const yearList = yearContainer.children;
       const year = yearList[(upDown === 'up' ? 1 : yearList.length - 2)].querySelector('a').getAttribute('data-year');
       const nextYear = parseInt(year, 10) + (upDown === 'up' ? -1 : 1);
-      yearList[(upDown === 'up' ? yearList.length - 2 : 1)].remove();
+      DOM.remove(yearList[(upDown === 'up' ? yearList.length - 2 : 1)]);
 
       const a = document.createElement('a');
       a.setAttribute('href', '#');

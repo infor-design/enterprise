@@ -39,7 +39,7 @@
 
     .monthview-monthyear-pane {
       padding: 10px 0;
-      position: initial;
+      position: static;
 
       .content {
         height: 302px;
@@ -64,7 +64,7 @@
 
         &:nth-child(2) {
           margin-right: 0;
-          position: initial;
+          position: static;
         }
       }
     }
@@ -139,17 +139,18 @@
       display: flex;
       flex-direction: column;
       height: inherit;
-      justify-content: space-evenly;
-      padding: 5px 0;
+      justify-content: space-around;
+      padding: 6px 0;
 
       &.is-year {
-        padding: 0;
+        padding: 2px 0;
       }
 
       .picklist-item {
         a {
           border: 1px solid transparent;
           border-radius: 14px;
+          box-shadow: none;
           color: $datepicker-day-color;
           font-size: $theme-size-font-base;
           padding: 3px 10px;
@@ -188,8 +189,8 @@
           }
         }
 
-        &.down .icon {
-          top: 5px;
+        &.up .icon {
+          top: 3px;
         }
       }
     }
@@ -944,8 +945,15 @@ html[dir='rtl'] {
       top: 15px;
     }
 
+    .btn-monthyear-pane {
+      .month,
+      .year {
+        top: 0;
+      }
+    }
+
     .btn-icon {
-      top: 11px;
+      top: 7px;
     }
   }
 }
