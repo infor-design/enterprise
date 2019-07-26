@@ -931,7 +931,7 @@ describe('Datagrid paging tests', () => {
   }
 });
 
-fdescribe('Datagrid Align Header Text Tests', () => {
+describe('Datagrid Align Header Text Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-align-header-text?layout=nofrills');
 
@@ -1430,7 +1430,7 @@ describe('Datagrid filter single select tests', () => {
   });
 });
 
-fdescribe('Datagrid filter lookup custom click function tests', () => {
+describe('Datagrid filter lookup custom click function tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-lookup-click-function?layout=nofrills');
 
