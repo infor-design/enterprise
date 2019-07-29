@@ -145,20 +145,24 @@ Personalize.prototype = {
       header: '2578A9'
     };
 
-    // Force to be light text on custom colors
+    // Force to be light text on custom colors { color: ['soho', 'uplift'] }
     const forceToBeLightTextOn = {
-      '#db7726': 'amber',
-      '#9279a6': 'amethyst',
-      '#2578a9': 'azure',
-      '#56932e': 'emerald',
-      '#5c5c5c': 'graphite',
-      '#941e1e': 'ruby',
-      '#50535a': 'slate',
-      '#206b62': 'turquoise'
+      amber: ['#db7726', '#9b3300'],
+      amethyst: ['#9279a6', '#7834dd'],
+      azure: ['#2578a9', '#0563c2'],
+      emerald: ['#56932e', '#0a834b'],
+      graphite: ['#5c5c5c', '#808080'],
+      ruby: ['#941e1e', '#7b0f11'],
+      slate: ['#50535a', '#98949e'],
+      turquoise: ['#206b62', '#248b8f']
     };
+    let foundColor = false;
     let isDark = `${colors.header || defaultColors.header}`.toLowerCase();
     isDark = colorUtils.validateHex(isDark);
-    isDark = forceToBeLightTextOn[isDark] ? 'white' : null;
+    Object.keys(forceToBeLightTextOn).forEach((color) => {
+      foundColor = foundColor || forceToBeLightTextOn[color].indexOf(isDark) > -1;
+    });
+    isDark = foundColor ? 'white' : null;
 
     const lightest = colorUtils.validateHex(colors.lightest ||
       colorUtils.getLuminousColorShade((colors.header || defaultColors.header), 0.3));
