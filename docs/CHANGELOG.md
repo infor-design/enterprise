@@ -82,6 +82,7 @@
 - `[Images]` Fixed an issue where images were not tabbable or receiving a visual focus state. ([#2025](https://github.com/infor-design/enterprise/issues/2025))
 - `[Listview]` Fixed a bug that caused the listview to run initialize too many times. ([#2179](https://github.com/infor-design/enterprise/issues/2179))
 - `[Lookup]` Added `autocomplete="off"` to lookup input fields to prevent browser interference. ([#2366](https://github.com/infor-design/enterprise/issues/2366))
+- `[Locale]` Fixed race condition when using initialize and loading locales with a parent locale. ([#2540](https://github.com/infor-design/enterprise/issues/2540))
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
 - `[Personalization]` Fixed an issue where the text color was too dark. Changed the text color to be more readable in high contrast mode. ([#2539](https://github.com/infor-design/enterprise/issues/2539))
 - `[Personalization]` Updated some of the colors to more readable in contrast mode. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
