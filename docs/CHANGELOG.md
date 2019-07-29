@@ -45,6 +45,7 @@
 - `[Calendar]` Added an eventclick and eventdoubleclick information to the onMonthRendered callback. ([#2419](https://github.com/infor-design/enterprise/issues/2419))
 - `[Calendar]` Allow Validation of the Calendar Popup. ([#1742](https://github.com/infor-design/enterprise/issues/1742))
 - `[Calendar]` Prevent double click from reopening the event popup. ([#1705](https://github.com/infor-design/enterprise/issues/1705))
+- `[Calendar]` Enable vertical scrolling at short window sizes in monthview. ([#2489](https://github.com/infor-design/enterprise/issues/2489))
 - `[Charts]` Made fixes so all charts change color in uplift theme. ([#2058](https://github.com/infor-design/enterprise/issues/2058))
 - `[Charts]` Fixes dynamic tooltips on a bar chart. ([#2447](https://github.com/infor-design/enterprise/issues/2447))
 - `[Colorpicker]` Fixed colorpicker left and right keys advanced oppositely in right-to-left mode. ([#2352](https://github.com/infor-design/enterprise/issues/2352))
