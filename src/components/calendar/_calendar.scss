@@ -313,10 +313,6 @@
   width: 221px;
 
   &.has-only-one {
-    .accordion-pane {
-      height: calc(100% - 49px) !important;
-    }
-
     .accordion-header {
       &.has-chevron > a {
         width: calc(100% - 3px);
