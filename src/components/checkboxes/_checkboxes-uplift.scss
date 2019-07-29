@@ -22,6 +22,10 @@ span.checkbox.partial > input:checked + label::after {
   top: -1px;
 }
 
+label.inline:not(.checkbox-label) .checkbox ~ .label-text {
+  margin: 0 auto 7px -5px;
+}
+
 // RTL Font changes on Uplift need the top/margin-top values
 // for pseudo-elements adjusted.
 html[dir='rtl']:not(.is-firefox):not(.ie) {
