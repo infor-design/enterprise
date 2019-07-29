@@ -322,7 +322,7 @@ const Locale = {  // eslint-disable-line
       this.appendLocaleScript(parentLocale.default, false, locale);
     }
 
-    if (!resolveToParent && locale && !this.cultures[locale]
+    if (locale && !this.cultures[locale]
       && this.currentLocale.name !== locale) {
       this.setCurrentLocale(locale);
       // Fetch the local and cache it
