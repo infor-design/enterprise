@@ -269,15 +269,13 @@ const Locale = {  // eslint-disable-line
         this.setCurrentLocale(locale, this.cultures[locale]);
         this.dff[locale].resolve(locale);
       }
-      if (!isCurrent && !parentLocale && this.dff[locale]) {
-        this.dff[locale].resolve(locale);
-      }
-      if (parentLocale) {
+      if (parentLocale && this.dff[parentLocale]) {
         this.setCurrentLocale(locale, this.cultures[locale]);
         this.setCurrentLocale(parentLocale, this.cultures[parentLocale]);
-        setTimeout(() => {
-          this.dff[parentLocale].resolve(parentLocale);
-        }, locale !== parentLocale ? 250 : 0);
+        this.dff[parentLocale].resolve(parentLocale);
+      }
+      if (!isCurrent && !parentLocale && this.dff[locale]) {
+        this.dff[locale].resolve(locale);
       }
     };
 
@@ -313,21 +311,26 @@ const Locale = {  // eslint-disable-line
       this.appendLocaleScript('en-US', false);
     }
 
-    // Also load the default locale for that locale
     const lang = locale.split('-')[0];
-    let resolveToParent = false;
+    let hasParentLocale = false;
     const match = this.defaultLocales.filter(a => a.lang === lang);
     const parentLocale = match[0] || [{ default: 'en-US' }];
     if (parentLocale.default && parentLocale.default !== locale &&
       !this.cultures[parentLocale.default]) {
-      resolveToParent = true;
-      this.appendLocaleScript(parentLocale.default, false, locale);
+      hasParentLocale = true;
     }
 
-    if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
+    if (!hasParentLocale && locale && !this.cultures[locale] &&
+      this.currentLocale.name !== locale) {
       this.setCurrentLocale(locale);
       // Fetch the local and cache it
-      this.appendLocaleScript(locale, !resolveToParent, locale);
+      this.appendLocaleScript(locale, true);
+    }
+
+    // Also load the default locale for that locale
+    if (hasParentLocale) {
+      this.appendLocaleScript(parentLocale.default, false, locale);
+      this.appendLocaleScript(locale, false, parentLocale.default);
     }
 
     if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
