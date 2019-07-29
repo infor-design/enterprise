@@ -275,7 +275,9 @@ const Locale = {  // eslint-disable-line
       if (parentLocale) {
         this.setCurrentLocale(locale, this.cultures[locale]);
         this.setCurrentLocale(parentLocale, this.cultures[parentLocale]);
-        this.dff[parentLocale].resolve(parentLocale);
+        setTimeout(() => {
+          this.dff[parentLocale].resolve(parentLocale);
+        }, locale !== parentLocale ? 250 : 0);
       }
     };
 
@@ -325,7 +327,7 @@ const Locale = {  // eslint-disable-line
     if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
       this.setCurrentLocale(locale);
       // Fetch the local and cache it
-      this.appendLocaleScript(locale, !resolveToParent);
+      this.appendLocaleScript(locale, !resolveToParent, locale);
     }
 
     if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
