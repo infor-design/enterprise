@@ -150,7 +150,11 @@ Personalize.prototype = {
       '#db7726': 'amber',
       '#9279a6': 'amethyst',
       '#2578a9': 'azure',
-      '#56932e': 'emerald'
+      '#56932e': 'emerald',
+      '#5c5c5c': 'graphite',
+      '#941e1e': 'ruby',
+      '#50535a': 'slate',
+      '#206b62': 'turquoise'
     };
     let isDark = `${colors.header || defaultColors.header}`.toLowerCase();
     isDark = colorUtils.validateHex(isDark);
