@@ -315,6 +315,10 @@
   width: 221px;
 
   &.has-only-one {
+    .accordion-pane {
+      border-bottom: 1px solid $calendar-line-color;
+    }
+
     .accordion-header {
       &.has-chevron > a {
         width: calc(100% - 3px);
