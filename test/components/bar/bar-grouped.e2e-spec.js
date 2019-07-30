@@ -29,6 +29,7 @@ describe('Grouped Bar Chart example-index tests', () => {
 
   it('Should highlight when selected', async () => {
     await element(by.css('.series-group:nth-child(-n+3)')).click();
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('.series-group:nth-child(-n+3)')).getAttribute('class')).toContain('is-selected');
   });

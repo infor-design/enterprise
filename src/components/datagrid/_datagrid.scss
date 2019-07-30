@@ -50,7 +50,7 @@ $datagrid-row-height: 43px;
 $datagrid-medium-header-height: 30px;
 $datagrid-medium-row-height: 33px;
 $datagrid-short-header-height: 25px;
-$datagrid-short-row-height: 25px;
+$datagrid-short-row-height: 26px;
 
 // Main Datagrid Container
 .datagrid-container {
@@ -1163,7 +1163,8 @@ $datagrid-short-row-height: 25px;
             padding-left: 10px;
 
             .trigger {
-              top: -7px;
+              margin-left: -34px;
+              top: -6px;
             }
           }
 
