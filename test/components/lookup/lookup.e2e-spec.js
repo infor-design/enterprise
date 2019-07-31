@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Lookup', () => {
+describe('Lookup example tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-index?layout=nofrills');
   });
@@ -107,7 +107,7 @@ describe('Lookup', () => {
   }
 });
 
-describe('Lookup (editable)', () => {
+describe('Lookup editable tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-editable');
   });
@@ -131,7 +131,7 @@ describe('Lookup (editable)', () => {
   });
 });
 
-describe('Lookup (editable strict)', () => {
+describe('Lookup editable strict tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-editable-strict');
   });
@@ -141,9 +141,9 @@ describe('Lookup (editable strict)', () => {
   });
 });
 
-describe('Lookup (multiselect)', () => {
+describe('Lookup multiselect tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/lookup/example-multiselect');
+    await utils.setPage('/components/lookup/example-multiselect?layout=nofrills');
   });
 
   it('should have a checkbox', async () => {
@@ -162,6 +162,58 @@ describe('Lookup (multiselect)', () => {
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 
     expect(await element(by.className('btn-modal-primary')).isEnabled()).toBe(true);
+  });
+
+  it('should selections reset on close', async () => {
+    await element(by.className('trigger')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+
+    expect(await element.all(by.css('#lookup-datagrid .datagrid-body tr.is-selected')).count()).toEqual(0);
+    const checkboxTd = await element(by.css('#lookup-datagrid .datagrid-body tr:nth-child(1) .datagrid-checkbox'));
+    await browser.actions().mouseMove(checkboxTd).perform();
+    await browser.actions().click(checkboxTd).perform();
+
+    expect(await element.all(by.css('#lookup-datagrid .datagrid-body tr.is-selected')).count()).toEqual(1);
+    await element(by.id('modal-button-1')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.className('modal-content'))), config.waitsFor);
+
+    await element(by.className('trigger')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+
+    expect(await element.all(by.css('#lookup-datagrid .datagrid-body tr.is-selected')).count()).toEqual(0);
+  });
+});
+
+describe('Lookup filtering tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/lookup/example-filter-row?layout=nofrills');
+  });
+
+  it('should apply a filter', async () => {
+    await element(by.css('#product-lookup + .trigger')).click();
+
+    expect(await element.all(by.css('.datagrid-body .datagrid-row')).count()).toEqual(7);
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+    await element(by.id('example-filter-row-lookup-datagrid-1-header-filter-1')).sendKeys('I L');
+    await element(by.id('example-filter-row-lookup-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('.datagrid-body .datagrid-row')).count()).toEqual(1);
+  });
+
+  it('should reset filter on close', async () => {
+    await element(by.css('#product-lookup + .trigger')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+    await element(by.id('example-filter-row-lookup-datagrid-1-header-filter-1')).sendKeys('I L');
+    await element(by.id('example-filter-row-lookup-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('.datagrid-body .datagrid-row')).count()).toEqual(1);
+    await element(by.css('#modal-button-2')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.className('modal-content'))), config.waitsFor);
+    await element(by.css('#product-lookup + .trigger')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+
+    expect(await element.all(by.css('.datagrid-body .datagrid-row')).count()).toEqual(7);
   });
 });
 
@@ -219,7 +271,7 @@ describe('Lookup paging tests', () => {
   });
 });
 
-describe('Lookup (custom cancel button)', () => {
+describe('Lookup custom cancel button tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-custom-buttons');
   });
@@ -236,7 +288,7 @@ describe('Lookup (custom cancel button)', () => {
   });
 });
 
-describe('Lookup (custom toolbar)', () => {
+describe('Lookup custom toolbar tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-custom-toolbar');
   });
