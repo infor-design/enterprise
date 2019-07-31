@@ -100,6 +100,24 @@ describe('Datagrid Filter API', () => {
     expect(document.body.querySelectorAll('tbody tr').length).toEqual(4);
   });
 
+  it('Should call filtered event on applyFilter', (done) => {
+    const spyEvent = spyOnEvent($('#datagrid'), 'filtered');
+    let filter = [];
+    filter = [{ columnId: 'productId', operator: 'equals', value: '2642206' }];
+
+    $(datagridEl).on('filtered', (e, args) => {
+      expect(args.op).toEqual('apply');
+      expect(args.conditions[0].value).toEqual('2642206');
+      expect(args.conditions[0].columnId).toEqual('productId');
+      expect(args.conditions[0].operator).toEqual('equals');
+      done();
+    });
+
+    datagridObj.applyFilter(filter);
+
+    expect(spyEvent).toHaveBeenTriggered();
+  });
+
   it('Should be able to clearFilter with the API', () => {
     let filter = [];
     filter = [{ columnId: 'productId', operator: 'equals', value: '2642206' }];
