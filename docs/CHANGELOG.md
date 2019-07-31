@@ -4,7 +4,7 @@
 
 ### v4.21.0 Fixes
 
- - `[Datagrid]` Fixed a bug where calling update rows in the filter callback will cause a infinite loop. ([#2526](https://github.com/infor-design/enterprise/issues/2526))
+- `[Datagrid]` Fixed a bug where calling update rows in the filter callback will cause a infinite loop. ([#2526](https://github.com/infor-design/enterprise/issues/2526))
 
 ## v4.20.0
 
