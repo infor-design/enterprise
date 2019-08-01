@@ -111,6 +111,8 @@ HideFocus.prototype = {
     ];
     $(this.element).off(elemEvents.join(' '));
 
+    this.element.classList.remove('hide-focus');
+
     return this;
   }
 };
