@@ -648,7 +648,7 @@ Dropdown.prototype = {
         <label for="dropdown-search" class="audible">${Locale.translate('TypeToFilter')}</label>
         <input type="text" class="dropdown-search${reverseText}" id="dropdown-search" autocomplete="off" />
         <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}<span class="audible">${isMobile ? Locale.translate('Close') : Locale.translate('Collapse')}</span></span>
-        <ul role="listbox">`;
+        <ul role="listbox" aria-label="${Locale.translate('Dropdown')}">`;
     }
 
     // Get a current list of <option> elements
