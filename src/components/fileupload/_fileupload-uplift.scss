@@ -6,6 +6,8 @@
     .file-row,
     .progress-row {
       .status-icon {
+        margin-top: 9px;
+
         > .icon {
           top: -3px;
         }
@@ -14,6 +16,24 @@
           .icon {
             left: 0;
             top: -4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Firefox needs some hand-holding
+.is-firefox {
+  .fileupload-wrapper {
+    .container {
+      .file-row,
+      .progress-row {
+        .status-icon {
+          button {
+            .icon {
+              top: -3px;
+            }
           }
         }
       }
