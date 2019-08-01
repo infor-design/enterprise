@@ -461,7 +461,7 @@ describe('Listview server-side indeterminate paging tests', () => {
 
 describe('Listview remove-clear tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/listview/remove-clear');
+    await utils.setPage('/components/listview/test-remove-clear');
     const listviewMultiSelectEl = await element(by.css('#multiselect-listview li'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewMultiSelectEl), config.waitsFor);
@@ -494,7 +494,7 @@ describe('Listview remove-clear tests', () => {
   });
 });
 
-describe('Listview example-header-totals` tests', () => {
+describe('Listview example-header-totals tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-header-totals');
     const listviewButtonToggleEl = await element(by.css('.listview-header button'));

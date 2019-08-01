@@ -27,7 +27,7 @@ describe('Message tests', () => {
 
     await modalButtonPrimaryEl.sendKeys(protractor.Key.TAB);
 
-    expect(await modalButtonPrimaryEl.getAttribute('class')).toContain('hide-focus');
+    expect(['hide-focus', 'btn-modal-primary', 'btn-modal-primary hide-focus']).toContain(await modalButtonPrimaryEl.getAttribute('class'));
 
     const modalButtonEl = await element(by.css('.btn-modal'));
 
