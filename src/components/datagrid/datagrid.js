@@ -6627,6 +6627,13 @@ Datagrid.prototype = {
   /**
   * Deselect all rows that are currently selected.
   */
+  deSelectAllRows() {
+    this.unSelectAllRows();
+  },
+
+  /**
+  * Deselect all rows that are currently selected.
+  */
   unSelectAllRows() {
     // Nothing to do
     if (!this._selectedRows || this._selectedRows.length === 0) {
