@@ -6,23 +6,6 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Accordion example-accordion-click-event tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/accordion/test-accordion-click-event');
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should toast diplay when accordion is clicked', async () => {
-    await browser.actions().mouseMove(await element.all(by.className('accordion-header')).first()).perform();
-    await browser.actions().click(await element.all(by.className('accordion-header')).first()).perform();
-
-    expect(await element(by.className('toast'))).toBeTruthy();
-  });
-});
-
 describe('Accordion allow one pane tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/accordion/example-allow-one-pane');
