@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Tabs Module Toolbar tests', () => { //eslint-disable-line
+describe('Tabs Module Toolbar tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs-module/example-toolbar-with-spillover?layout=nofrills');
     const tabsEl = await element(by.id('module-tabs-controls'));
