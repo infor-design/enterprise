@@ -197,12 +197,6 @@ ListView.prototype = {
       cardWidgetContent[0].style.overflow = 'hidden';
     }
 
-    // Add Aria Roles
-    this.element.attr({
-      role: 'listbox',
-      'aria-label': this.settings.description || card.find('.card-title, .widget-title').text()
-    });
-
     // Associate with an existing searchfield, if applicable
     if (this.settings.searchable) {
       this.searchfield = this.element.parent().find('.searchfield, .autocomplete');
@@ -329,7 +323,11 @@ ListView.prototype = {
     }
 
     // Add Aria
-    $('ul', this.element).attr({ role: 'listbox' });
+    const card = this.element.closest('.card, .widget');
+    $('ul', this.element).attr({
+      role: 'listbox',
+      'aria-label': this.settings.description || card.find('.card-title, .widget-title').text() || 'List'
+    });
 
     // Add Checkboxes
     const first = this.element.find('li, tbody > tr').first();

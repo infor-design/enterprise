@@ -76,14 +76,14 @@ describe('ListBuilder API', () => {
   });
 
   it('Should extract node data', () => {
-    const node = $(document.body.querySelector('li[role="option"]:nth-child(2)'));
+    const node = $(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)'));
     const data = { node, text: 'Belize', value: 'opt-2' };
 
     expect(listbuilderObj.extractNodeData(node)).toEqual(data);
   });
 
   it('Should get data from dataset by node', () => {
-    const node = $(document.body.querySelector('li[role="option"]:nth-child(2)'));
+    const node = $(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)'));
     const data = { index: 1, data: { node, id: 2, value: 'opt-2', text: 'Belize' } };
 
     expect(listbuilderObj.getDataByNode(node)).toEqual(data);
@@ -97,7 +97,7 @@ describe('ListBuilder API', () => {
   });
 
   it('Should update attributes', () => {
-    const item = document.body.querySelector('li[role="option"]:nth-child(2)');
+    const item = document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)');
 
     expect(item.getAttribute('aria-posinset')).toEqual('2');
     expect(item.getAttribute('aria-setsize')).toEqual('12');
@@ -115,7 +115,7 @@ describe('ListBuilder API', () => {
   it('Should update dataset', () => {
     expect(listbuilderObj.settings.dataset).toEqual(ds);
     expect(listbuilderObj.settings.dataset.length).toEqual(12);
-    expect(document.body.querySelectorAll('li[role="option"]').length).toEqual(12);
+    expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(12);
     const newDs = [
       { value: 'opt-updated-1', text: 'Updated item 1' },
       { value: 'opt-updated-2', text: 'Updated item 2' },
@@ -125,60 +125,60 @@ describe('ListBuilder API', () => {
 
     expect(listbuilderObj.settings.dataset).toEqual(newDs);
     expect(listbuilderObj.settings.dataset.length).toEqual(3);
-    expect(document.body.querySelectorAll('li[role="option"]').length).toEqual(3);
+    expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(3);
   });
 
   it('Should get an item from list', () => {
-    let item = $(document.body.querySelector('li[role="option"]:nth-child(3)'));
+    let item = $(document.body.querySelector('.listbuilder li[role="option"]:nth-child(3)'));
 
     expect(listbuilderObj.getListItem(2)).toEqual(item);
-    item = $(document.body.querySelector('li[role="option"]:nth-child(1)'));
+    item = $(document.body.querySelector('.listbuilder li[role="option"]:nth-child(1)'));
 
     expect(listbuilderObj.getListItem('first')).toEqual(item);
-    item = $(document.body.querySelector('li[role="option"]:nth-child(12)'));
+    item = $(document.body.querySelector('.listbuilder li[role="option"]:nth-child(12)'));
 
     expect(listbuilderObj.getListItem('last')).toEqual(item);
   });
 
   it('Should add item', () => {
-    expect(document.body.querySelectorAll('li[role="option"]').length).toEqual(12);
+    expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(12);
     const spyEvent = spyOnEvent(listbuilderObj.element, 'afteradd');
     listbuilderObj.addItem();
 
     expect(spyEvent).toHaveBeenTriggered();
-    expect(document.body.querySelectorAll('li[role="option"]').length).toEqual(13);
+    expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(13);
   });
 
   it('Should move up item', () => {
     const spyEvent = spyOnEvent(listbuilderObj.element, 'aftergoup');
 
-    expect(document.body.querySelector('li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Belize');
-    document.body.querySelector('li[role="option"]:nth-child(2)').click();
+    expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Belize');
+    document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)').click();
     listbuilderObj.moveItemUp();
 
     expect(spyEvent).toHaveBeenTriggered();
-    expect(document.body.querySelector('li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Argentina');
+    expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Argentina');
   });
 
   it('Should move down item', () => {
     const spyEvent = spyOnEvent(listbuilderObj.element, 'aftergodown');
 
-    expect(document.body.querySelector('li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Belize');
-    document.body.querySelector('li[role="option"]:nth-child(2)').click();
+    expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Belize');
+    document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)').click();
     listbuilderObj.moveItemDown();
 
     expect(spyEvent).toHaveBeenTriggered();
-    expect(document.body.querySelector('li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Colombia');
+    expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Colombia');
   });
 
   it('Should delete item', () => {
     const spyEvent = spyOnEvent(listbuilderObj.element, 'afterdelete');
 
-    expect(document.body.querySelectorAll('li[role="option"]').length).toEqual(12);
-    document.body.querySelector('li[role="option"]:nth-child(2)').click();
+    expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(12);
+    document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)').click();
     listbuilderObj.deleteItem();
 
     expect(spyEvent).toHaveBeenTriggered();
-    expect(document.body.querySelectorAll('li[role="option"]').length).toEqual(11);
+    expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(11);
   });
 });

@@ -67,6 +67,14 @@ describe('Accordion API', () => {
     expect(isExpanded).toBeFalsy();
   });
 
+  it('Should fire selected event on click', () => {
+    const linkSelector = '.accordion a';
+    const spyEvent = spyOnEvent($(linkSelector), 'click');
+    document.body.querySelector(linkSelector).click();
+
+    expect(spyEvent).toHaveBeenTriggered();
+  });
+
   it('Should be able to expandAll and collapseAll', (done) => {
     expect(accordionObj.isExpanded(accordionObj.headers[0])).toBeFalsy();
     expect(accordionObj.isExpanded(accordionObj.headers[1])).toBeFalsy();
