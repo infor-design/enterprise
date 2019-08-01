@@ -109,7 +109,7 @@ describe('Editor dirty tracking tests', () => {
     if (utils.isChrome() && utils.isCI()) {
       const containerEl = await element(by.className('container'));
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'editor-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'editor-dirty-tracker')).toEqual(0);
     }
   });
 });
