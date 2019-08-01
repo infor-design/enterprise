@@ -87,3 +87,29 @@ describe('Editor preview mode tests', () => {
     expect(await element(by.css('.editor-toolbar')).isPresent()).toBeFalsy();
   });
 });
+
+describe('Editor dirty tracking tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/editor/example-dirty-tracking?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render dirty tracker', async () => {
+    await element(by.css('button[data-action="bold"]')).click();
+    await element(by.id('editor1')).sendKeys('Test');
+
+    await browser.driver.wait(protractor.ExpectedConditions
+      .presenceOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
+
+    if (utils.isChrome() && utils.isCI()) {
+      const containerEl = await element(by.className('container'));
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'editor-dirty-tracker')).toEqual(0);
+    }
+  });
+});
