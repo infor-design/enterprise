@@ -443,6 +443,15 @@
   }
 }
 
+// Fix scrollbar in IE on single-line Message Modals
+.ie {
+  .modal-content {
+    .modal-body-wrapper {
+      padding: 2px 20px;
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .modal-buttonset {
