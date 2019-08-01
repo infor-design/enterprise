@@ -344,9 +344,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
-  &:not(.is-open) {
+  &:not(.active) {
     .icon.close {
-      pointer-events: none;
+      display: none;
     }
   }
 }
