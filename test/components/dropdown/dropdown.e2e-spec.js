@@ -64,7 +64,6 @@ describe('Dropdown example-index tests', () => {
     it('Should be accessible on click, and open with no WCAG 2AA violations', async () => { //eslint-disable-line
       await clickOnDropdown();
       const res = await axePageObjects(browser.params.theme);
-      debugger;
 
       // Not sure why CI has one error we cannot inspect.
       if (utils.isCI()) {
