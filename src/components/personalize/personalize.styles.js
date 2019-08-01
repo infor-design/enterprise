@@ -9,7 +9,7 @@ function personalizeStyles(colors) {
 }
 
 .module-tabs.is-personalizable .tab:not(:first-child) {
-  border-left: 1px solid ${colors.light} !important;
+  border-left: 1px solid ${colors.darkest} !important;
 }
 
 .module-tabs.is-personalizable {
@@ -107,7 +107,7 @@ function personalizeStyles(colors) {
 }
 
 .module-tabs.is-personalizable .tab-more {
-  border-left: ${colors.light} !important;
+  border-left-color: ${colors.darkest} !important;
 }
 
 .module-tabs.is-personalizable .tab-more:hover {
@@ -145,11 +145,11 @@ function personalizeStyles(colors) {
 }
 
 .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar {
-  border-left: ${colors.light} !important;
+  border-left-color: ${colors.darkest} !important;
 }
 
 .module-tabs.is-personalizable [class^="btn"] {
-  background-color: ${colors.darker} !important;
+  background-color: transparent !important;
   color: ${colors.contrast} !important;
 }
 
@@ -163,7 +163,7 @@ function personalizeStyles(colors) {
 }
 
 .module-tabs.is-personalizable .add-tab-button {
-  border-left: ${colors.light} !important;
+  border-left-color: ${colors.darkest} !important;
 }
 
 .module-tabs.is-personalizable .add-tab-button:hover {
