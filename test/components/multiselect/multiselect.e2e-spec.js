@@ -76,7 +76,6 @@ describe('Multiselect example-states tests', () => {
     it('Should be accessible on init with no WCAG 2AA violations', async () => {
       await clickOnMultiselect();
       const res = await axePageObjects(browser.params.theme);
-      debugger;
 
       // Not sure why CI has one error we cannot inspect.
       if (utils.isCI()) {
