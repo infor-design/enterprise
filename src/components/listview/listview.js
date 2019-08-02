@@ -358,14 +358,24 @@ ListView.prototype = {
         }
 
         if (self.settings.showCheckboxes) {
-          // For mixed selection mode primarily append a checkbox object
-          item.prepend(`<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox">
-            <input tabindex="-1" type="checkbox" class="checkbox">
-            <span class="label-text" role="presentation">
-              <span class="audible">${Locale.translate('Checkbox')} ${Locale.translate('NotSelected')}.</span>
-            </span>
-          </label>`);
+          // Only need one checkbox 
+          if(item.children('.listview-selection-checkbox').length === 0) {
+            // For mixed selection mode primarily append a checkbox object
+            item.prepend(`<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox">
+              <input tabindex="-1" type="checkbox" class="checkbox">
+              <span class="label-text" role="presentation">
+                <span class="audible">${Locale.translate('Checkbox')} ${Locale.translate('NotSelected')}.</span>
+              </span>
+            </label>`);
+          } 
         }
+      }
+
+      // Hide filtered items
+      const n = firstRecordIdx + i;
+      if (n < self.settings.dataset.length) {
+      	const data = self.settings.dataset[n];
+      	item.css('display', (data.isFiltered === undefined || data.isFiltered) ? '' : 'none');
       }
 
       // Add Aria
@@ -659,12 +669,26 @@ ListView.prototype = {
 
     // Make sure there is a search term...and its not the
     // same as the previous term
-    if (searchFieldVal.length < 2 || this.searchTerm === searchFieldVal) {
+    if (searchFieldVal.length < 2) {
+      this.searchTerm = '';  
+      this.element.unhighlight();
+      return;
+    }
+
+    if (this.searchTerm === searchFieldVal) {
       return;
     }
 
     // Set a global "searchTerm" and get the list of elements
     this.searchTerm = searchFieldVal;
+
+    // Clean highlight marks before new filter action
+    this.element.unhighlight();
+
+    // Reset filter status
+    this.settings.dataset.forEach(function(item) {
+      item.isFiltered = false;
+    });
 
     // Filter the results and highlight things
     let results = this.listfilter.filter(this.settings.dataset, this.searchTerm);
