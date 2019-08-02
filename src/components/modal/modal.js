@@ -797,7 +797,7 @@ Modal.prototype = {
       const hasPager = this.element.find('.pager-toolbar');
       const container = table.closest('.datagrid-container');
 
-      calcHeight = calcHeight - (container.prev().is('.toolbar') ? 130 : 60) - (container.next().is('.pager-toolbar') ? 35 : 0);
+      calcHeight = calcHeight - (container.prev().is('.toolbar') ? 130 : 67) - (container.next().is('.pager-toolbar') ? 35 : 0);
       table[0].style.maxHeight = `${calcHeight + (hasPager.length ? -15 : 0)}px`;
       table[0].style.maxWidth = `${calcWidth}px`;
     }

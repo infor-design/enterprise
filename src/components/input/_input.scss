@@ -213,6 +213,7 @@ textarea {
 
   &.is-placeholder {
     color: $input-placeholder-color;
+    -webkit-text-fill-color: $input-placeholder-color;
   }
 
   &.is-focused {

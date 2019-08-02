@@ -87,6 +87,7 @@
 - `[Lookup]` Fixed a bug that caused a filter to reapply when reopening the modal. ([#2566](https://github.com/infor-design/enterprise/issues/2566))
 - `[Lookup]` Fixed a bug that caused a selections to reapply when reopening the modal. ([#2568](https://github.com/infor-design/enterprise/issues/2568))
 - `[Locale]` Fixed race condition when using initialize and loading locales with a parent locale. ([#2540](https://github.com/infor-design/enterprise/issues/2540))
+- `[Lookup]` Fixed a double scrollbar when the modal needs to be scrolled. ([#2586](https://github.com/infor-design/enterprise/issues/2586))
 - `[Modal]` Fixed an issue where the modal component would disappear if its content had a checkbox in it in RTL. ([#332](https://github.com/infor-design/enterprise-ng/issues/332))
 - `[Personalization]` Fixed an issue where the text color was too dark. Changed the text color to be more readable in high contrast mode. ([#2539](https://github.com/infor-design/enterprise/issues/2539))
 - `[Personalization]` Updated some of the colors to more readable in contrast mode. ([#2097](https://github.com/infor-design/enterprise/issues/2097))
