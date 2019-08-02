@@ -319,7 +319,7 @@ ListView.prototype = {
         DOM.append(this.element, this.emptyMessageContainer[0].outerHTML, '<div><svg><use><span><b>');
       } else if (displayedDataset.length === 0) {
         this.element.html(renderedTmpl || '<ul></ul>');
-      }
+      }      
     }
 
     // Add Aria
@@ -341,6 +341,10 @@ ListView.prototype = {
     if (!this.settings.selectable && first.find('a').length === 1) {
       first.removeAttr('tabindex');
     }
+
+    // When DOM items are not rendered with "mustache" template, filtered items 
+    // have to be hiden specifically.  
+    const hideFlag = items.length > displayedDataset.length;
 
     items.each(function (i) {
       const item = $(this);
@@ -372,10 +376,12 @@ ListView.prototype = {
       }
 
       // Hide filtered items
-      const n = firstRecordIdx + i;
-      if (n < self.settings.dataset.length) {
-      	const data = self.settings.dataset[n];
-      	item.css('display', (data.isFiltered === undefined || data.isFiltered) ? '' : 'none');
+      if (hideFlag) {
+        const n = firstRecordIdx + i;
+        if (n < self.settings.dataset.length) {
+            const data = self.settings.dataset[n];
+           item.css('display', (data.isFiltered === undefined || data.isFiltered) ? '' : 'none');
+        }
       }
 
       // Add Aria
@@ -670,8 +676,7 @@ ListView.prototype = {
     // Make sure there is a search term...and its not the
     // same as the previous term
     if (searchFieldVal.length < 2) {
-      this.searchTerm = '';  
-      this.element.unhighlight();
+      this.resetSearch();
       return;
     }
 
@@ -689,12 +694,14 @@ ListView.prototype = {
     this.settings.dataset.forEach(function(item) {
       item.isFiltered = false;
     });
+    
 
     // Filter the results and highlight things
     let results = this.listfilter.filter(this.settings.dataset, this.searchTerm);
     if (!results.length) {
       results = [];
     }
+    
     pagingInfo.filteredTotal = results.length;
     pagingInfo.searchActivePage = 1;
     results.forEach((result) => {
