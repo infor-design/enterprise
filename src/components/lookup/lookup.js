@@ -683,6 +683,7 @@ Lookup.prototype = {
       * @property {object} selected rows
       */
     this.element.val(value).trigger('change', [this.selectedRows]);
+    this.element.trigger('input', [this.selectedRows]);
     this.applyAutoWidth();
     this.element.focus();
   },

@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.21.0
+
+### v4.21.0 Fixes
+
+- `[Datagrid]` Fixed a bug where the value would clear when using a lookup editor with a mask on new rows. ([#2305](https://github.com/infor-design/enterprise/issues/2305))
+
 ## v4.20.0
 
 ### v4.20.0 Deprecation
