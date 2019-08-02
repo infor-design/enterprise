@@ -82,6 +82,11 @@
 }
 
 .lookup-modal {
+  .modal-content .modal-body-wrapper {
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
   &.lookup-no-search {
     .toolbar {
       margin-bottom: 0;
