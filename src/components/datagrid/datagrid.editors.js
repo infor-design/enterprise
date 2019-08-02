@@ -791,11 +791,8 @@ const editors = {
       }
 
       // Update on change from lookup
-      self.input.on('change', () => {
-        setTimeout(() => {
-          container.parent().focus();
-          grid.quickEditMode = false;
-        }, 1);
+      self.input.on('change.editorlookup', () => {
+        grid.quickEditMode = false;
       });
     };
 
