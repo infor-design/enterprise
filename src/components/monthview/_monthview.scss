@@ -4,7 +4,7 @@
 .monthview {
   background-color: $popover-bg-color;
   display: inline-block;
-  min-height: 300px;
+  min-height: 235px;
   min-width: 297px;
   text-align: center;
   vertical-align: middle;
@@ -263,6 +263,7 @@
         z-index: 2;
       }
 
+      &:not(.is-disabled):focus,
       &:focus {
         border-color: transparent;
         box-shadow: none;
@@ -573,7 +574,9 @@
 
     &.monthview {
       border: 1px solid  $calendar-line-color;
-      overflow: hidden;
+      margin-right: -1px;
+      overflow-x: hidden;
+      overflow-y: auto;
 
       td {
         border: 1px solid  $calendar-line-color;

@@ -180,6 +180,29 @@ li + .pager-count {
 }
 
 .ie {
+  &.ie11 {
+    .pager-toolbar > li {
+      vertical-align: middle;
+
+      > a {
+        display: inline-block;
+
+        svg {
+          pointer-events: auto;
+        }
+      }
+
+      &.pager-prev a,
+      &.pager-first a,
+      &.pager-last a,
+      &.pager-next a {
+        svg {
+          top: 2px;
+        }
+      }
+    }
+  }
+
   .pager-count {
     input {
       margin-top: 2px;

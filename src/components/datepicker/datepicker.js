@@ -789,8 +789,15 @@ DatePicker.prototype = {
       }
 
       if (btn.hasClass('is-select')) {
-        self.insertSelectedDate();
-        self.closeCalendar();
+        if (s.range.useRange) {
+          if (s.range.first && s.range.first.date &&
+            s.range.second && s.range.second.date) {
+            self.closeCalendar();
+          }
+        } else {
+          self.insertSelectedDate();
+          self.closeCalendar();
+        }
       }
       self.element.focus();
       e.preventDefault();
