@@ -488,9 +488,10 @@ Datagrid.prototype = {
   /**
   * Refresh the pager based on the current page and dataset.
   * @private
-  * @param {object} location Deprecated - Can be set to 'top' or left off for bottom pager.
+  * @param {object} location Can be set to 'top' or left off for bottom pager.
+  * @param {boolean} savePage if true the activate page will be restored.
   */
-  pagerRefresh(location) {
+  pagerRefresh(location, savePage) {
     if (!this.pagerAPI) {
       return;
     }
@@ -506,6 +507,10 @@ Datagrid.prototype = {
     if (!this.settings.source) {
       pagingInfo.total = this.settings.dataset.length;
       pagingInfo.pagesize = this.settings.pagesize;
+    }
+    if (savePage) {
+      pagingInfo.activePage = this.settings.pagesize * this.pager.activePage >
+        this.settings.dataset.length ? 1 : this.pager.activePage;
     }
     this.renderPager(pagingInfo, true);
   },
@@ -529,7 +534,7 @@ Datagrid.prototype = {
     this.preventSelection = true;
     if (!noSync) {
       this.setRowGrouping();
-      this.pagerRefresh();
+      this.pagerRefresh('top', true);
       this.renderRows();
     }
 
