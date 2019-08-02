@@ -363,7 +363,7 @@ ListView.prototype = {
 
         if (self.settings.showCheckboxes) {
           // Only need one checkbox 
-          if(item.children('.listview-selection-checkbox').length === 0) {
+          if (item.children('.listview-selection-checkbox').length === 0) {
             // For mixed selection mode primarily append a checkbox object
             item.prepend(`<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox">
               <input tabindex="-1" type="checkbox" class="checkbox">
@@ -379,8 +379,8 @@ ListView.prototype = {
       if (hideFlag) {
         const n = firstRecordIdx + i;
         if (n < self.settings.dataset.length) {
-            const data = self.settings.dataset[n];
-           item.css('display', (data.isFiltered === undefined || data.isFiltered) ? '' : 'none');
+          const data = self.settings.dataset[n];
+          item.css('display', (data.isFiltered === undefined || data.isFiltered) ? '' : 'none');
         }
       }
 
@@ -691,10 +691,9 @@ ListView.prototype = {
     this.element.unhighlight();
 
     // Reset filter status
-    this.settings.dataset.forEach(function(item) {
+    this.settings.dataset.forEach(function (item) {
       item.isFiltered = false;
     });
-    
 
     // Filter the results and highlight things
     let results = this.listfilter.filter(this.settings.dataset, this.searchTerm);
