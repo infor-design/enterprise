@@ -75,14 +75,5 @@
         console.log('Removed:', args);
       });
 
-      $('#datagrid-remove-btn').on('click', function() {
-        // Will trigger `rowremove` with every row removed for more then one selected rows
-        $('#datagrid').data('datagrid').removeSelected();
-
-        // Will trigger `rowremove` one time only for more then one selected rows
-        // If passed the `boolean:true` to catch all the removed rows at once
-        // $('#datagrid').data('datagrid').removeSelected(true);
-      });
-
   });
 </script>
