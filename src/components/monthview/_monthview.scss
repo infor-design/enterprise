@@ -263,6 +263,7 @@
         z-index: 2;
       }
 
+      &:not(.is-disabled):focus,
       &:focus {
         border-color: transparent;
         box-shadow: none;
