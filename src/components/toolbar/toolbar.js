@@ -550,14 +550,14 @@ Toolbar.prototype = {
     const self = this;
 
     this.items
-      .off('keydown.toolbar').on('keydown.toolbar', (e) => {
+      .on('keydown.toolbar', (e) => {
         self.handleKeys(e);
-      }).off('click.toolbar').on('click.toolbar', (e) => {
+      }).on('click.toolbar', (e) => {
         self.handleClick(e);
       });
 
     this.items.filter('.btn-menu, .btn-actions')
-      .off('close.toolbar').on('close.toolbar', function onClosePopup() {
+      .on('close.toolbar', function onClosePopup() {
         const el = $(this);
         let last;
 
@@ -578,7 +578,7 @@ Toolbar.prototype = {
         self.buttonset.scrollTop(0);
       });
 
-    this.items.not(this.more).off('selected.toolbar').on('selected.toolbar', (e, anchor) => {
+    this.items.not(this.more).on('selected.toolbar', (e, anchor) => {
       e.stopPropagation();
       self.handleSelected(e, anchor);
     });
@@ -596,26 +596,23 @@ Toolbar.prototype = {
     // TODO: Need to handle mouseenter/touchstart/keydown events that will cause this to trigger,
     // instead of directly handling this itself.
     this.more
-      .off('show-submenu.toolbar')
       .on('show-submenu.toolbar', (e, li) => {
         self.handleTransferToMenuButtonItem(e, li);
       });
 
-    this.element.off('updated.toolbar').on('updated.toolbar', (e, settings) => {
+    this.element.on('updated.toolbar', (e, settings) => {
       e.stopPropagation();
       self.updated(settings);
-    }).off('recalculate-buttons.toolbar').on('recalculate-buttons.toolbar', (e, containerDims) => {
+    }).on('recalculate-buttons.toolbar', (e, containerDims) => {
       self.handleResize(containerDims);
-    })
-      .off('scrollup.toolbar')
-      .on('scrollup.toolbar', () => {
-        const moduleTabsParent = self.element.parents('.tab-container.module-tabs');
-        if (moduleTabsParent.length) {
-          moduleTabsParent.scrollTop(0);
-        }
-      });
+    }).on('scrollup.toolbar', () => {
+      const moduleTabsParent = self.element.parents('.tab-container.module-tabs');
+      if (moduleTabsParent.length) {
+        moduleTabsParent.scrollTop(0);
+      }
+    });
 
-    $('body').off(`resize.toolbar-${this.id}`).on(`resize.toolbar-${this.id}`, () => {
+    $('body').on(`resize.toolbar-${this.id}`, () => {
       self.handleResize();
     });
 
@@ -1442,35 +1439,14 @@ Toolbar.prototype = {
   },
 
   /**
-   * Removes currently associated event listeners from the Toolbar.
-   * @private
-   * @chainable
-   * @returns {this} component instance
-   */
-  unbind() {
-    this.items
-      .off('keydown.toolbar click.toolbar focus.toolbar blur.toolbar');
-
-    this.more.off('keydown.toolbar beforeopen.toolbar selected.toolbar');
-    $('body').off(`resize.toolbar-${this.id}`);
-    return this;
-  },
-
-  /**
    * Returns the Toolbar's internal markup to its original state.
    * @chainable
    * @returns {this} component instance
    */
   teardown() {
     const self = this;
-    this.unbind();
 
-    if (this.title && this.title.length) {
-      const dataTooltip = this.title.off('beforeshow.toolbar').data('tooltip');
-      if (dataTooltip) {
-        dataTooltip.destroy();
-      }
-    }
+    $('body').off(`resize.toolbar-${this.id}`);
 
     const moreMenuChildren = this.moreMenu.children('li');
     moreMenuChildren.each(function () {
@@ -1479,6 +1455,88 @@ Toolbar.prototype = {
 
     // Remove AJAX-ified menu items.
     moreMenuChildren.not(this.defaultMenuItems).remove();
+    delete this.defaultMenuItems;
+    delete this.hasDefaultMenuItems;
+
+    this.items.each((i, item) => {
+      const tooltipAPI = $(item).data('tooltip');
+      if (tooltipAPI) {
+        tooltipAPI.destroy();
+      }
+
+      const buttonAPI = $(item).data('button');
+      if (buttonAPI) {
+        buttonAPI.destroy();
+      }
+
+      item.classList.remove('is-overflowed');
+      item.removeAttribute('tabindex');
+    });
+    this.items.off([
+      `keydown.${COMPONENT_NAME}`,
+      `click.${COMPONENT_NAME}`,
+      `focus.${COMPONENT_NAME}`,
+      `blur.${COMPONENT_NAME}`,
+      `close.${COMPONENT_NAME}`,
+      `selected.${COMPONENT_NAME}`
+    ].join(' '));
+
+    delete this.items;
+
+    if (this.title && this.title.length) {
+      const dataTooltip = this.title.off('beforeshow.toolbar').data('tooltip');
+      if (dataTooltip) {
+        dataTooltip.destroy();
+      }
+
+      this.title[0].style.width = '';
+      delete this.cutoffTitle;
+      delete this.title;
+    }
+
+    if (this.buttonsetItems) {
+      delete this.buttonsetItems;
+    }
+    if (this.buttonset.children('.searchfield-wrapper').length) {
+      const searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');
+      if (searchFields.data('searchfield')) {
+        searchFields.data('searchfield').destroy();
+      }
+
+      this.buttonset[0].style.width = '';
+      delete this.buttonset;
+    }
+
+    if (this.moreMenu) {
+      delete this.moreMenu;
+    }
+    if (this.more.length && this.more.data('popupmenu') !== undefined) {
+      this.more.off([
+        `keydown.${COMPONENT_NAME}`,
+        `beforeopen.${COMPONENT_NAME}`,
+        `selected.${COMPONENT_NAME}`,
+        `show-submenu.${COMPONENT_NAME}`
+      ].join(' '));
+
+      this.more.data('popupmenu').destroy();
+      delete this.more;
+    }
+
+    // Only delete the references, not the markup
+    if (this.activeButton) {
+      delete this.activeButton;
+    }
+
+    this.element.off([
+      `updated.${COMPONENT_NAME}`,
+      `recalculate-buttons.${COMPONENT_NAME}`,
+      `scrollup.${COMPONENT_NAME}`
+    ].join(' '));
+
+    this.element[0].classList.remove('do-resize');
+    this.element
+      .removeAttr('role')
+      .removeAttr('aria-label');
 
     return this;
   },
@@ -1496,7 +1554,7 @@ Toolbar.prototype = {
     const a = li.children('a');
     const itemLink = a.data('original-button');
 
-    a.off('updated.toolbar mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar recalculate-buttons.toolbar');
+    a.off('mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar');
 
     const icons = li.find('.icon');
     if (icons.length) {
@@ -1537,25 +1595,6 @@ Toolbar.prototype = {
    */
   destroy() {
     this.teardown();
-
-    if (this.buttonset.children('.searchfield-wrapper').length) {
-      const searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');
-      if (searchFields.data('searchfield')) {
-        searchFields.data('searchfield').destroy();
-      }
-    }
-
-    if (this.more.length && this.more.data('popupmenu') !== undefined) {
-      this.more.data('popupmenu').destroy();
-    }
-
-    this.element[0].classList.remove('do-resize');
-    this.buttonset[0].style.width = '';
-    if (this.title && this.title.length) {
-      this.title[0].style.width = '';
-    }
-
-    this.element.removeAttr('role').removeAttr('aria-label');
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
