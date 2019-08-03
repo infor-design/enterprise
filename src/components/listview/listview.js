@@ -65,7 +65,8 @@ const LISTVIEW_DEFAULTS = {
   pagerSettings: {
     showFirstButton: false,
     showLastButton: false
-  }
+  },
+  searchTermMinSize: 0
 };
 
 function ListView(element, settings) {
@@ -319,7 +320,7 @@ ListView.prototype = {
         DOM.append(this.element, this.emptyMessageContainer[0].outerHTML, '<div><svg><use><span><b>');
       } else if (displayedDataset.length === 0) {
         this.element.html(renderedTmpl || '<ul></ul>');
-      }      
+      }
     }
 
     // Add Aria
@@ -371,7 +372,7 @@ ListView.prototype = {
                 <span class="audible">${Locale.translate('Checkbox')} ${Locale.translate('NotSelected')}.</span>
               </span>
             </label>`);
-          } 
+          }
         }
       }
 
@@ -382,6 +383,8 @@ ListView.prototype = {
           const data = self.settings.dataset[n];
           item.css('display', (data.isFiltered === undefined || data.isFiltered) ? '' : 'none');
         }
+      } else {
+        item.css('display', '');
       }
 
       // Add Aria
@@ -675,7 +678,7 @@ ListView.prototype = {
 
     // Make sure there is a search term...and its not the
     // same as the previous term
-    if (searchFieldVal.length < 2) {
+    if (searchFieldVal.length <= this.settings.searchTermMinSize) {
       this.resetSearch();
       return;
     }
@@ -700,7 +703,7 @@ ListView.prototype = {
     if (!results.length) {
       results = [];
     }
-    
+
     pagingInfo.filteredTotal = results.length;
     pagingInfo.searchActivePage = 1;
     results.forEach((result) => {
@@ -728,6 +731,13 @@ ListView.prototype = {
    * @returns {void}
    */
   resetSearch() {
+    this.element.unhighlight();
+
+    //reset filter status
+    this.settings.dataset.forEach(function (item) {
+      delete item.isFiltered;
+    });
+
     if (this.filteredDataset) {
       delete this.filteredDataset;
     }
@@ -1318,10 +1328,10 @@ ListView.prototype = {
         }
 
         if ((!isSelect) &&
-            (!item.hasClass('is-disabled')) &&
-            (self.settings.selectOnFocus) &&
-            (self.settings.selectable !== 'multiple') &&
-            (self.settings.selectable !== 'mixed')) {
+          (!item.hasClass('is-disabled')) &&
+          (self.settings.selectOnFocus) &&
+          (self.settings.selectable !== 'multiple') &&
+          (self.settings.selectable !== 'mixed')) {
           self.select(item);
           isSelect = true;
           isFocused = true;
