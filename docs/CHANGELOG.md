@@ -103,7 +103,7 @@
 - `[Tabs]` Added the select method inside the hide method to ensure proper focusing of the selected tab. ([#2346](https://github.com/infor-design/enterprise/issues/2346))
 - `[Tabs]` Added an independent count for adding new tabs and their associated IDs to prevent duplication. ([#2345](https://github.com/infor-design/enterprise/issues/2345))
 - `[Toolbar Flex]` Removed a 100% height on the toolbar which caused issues when nested in some situations. ([#474](https://github.com/infor-design/enterprise-ng/issues/474))
-- `[Listview]` Search not working the same as EP. ([#466](https://github.com/infor-design/enterprise-ng/issues/466))
+- `[Listview]` Fixed search to work when not using templates. ([#466](https://github.com/infor-design/enterprise-ng/issues/466))
 
 ### v4.20.0 Chores & Maintenance
 
