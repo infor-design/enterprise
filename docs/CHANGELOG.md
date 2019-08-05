@@ -2,6 +2,10 @@
 
 ## v4.21.0
 
+### v4.21.0 Features
+
+- `[Homepage]` Added a parameter to the `resize` event that provides metadata about the Homepage's state, including a calculated container height. ([#2446](https://github.com/infor-design/enterprise/issues/2446))
+
 ### v4.21.0 Fixes
 
 - `[Datagrid]` Fixed a bug where the value would clear when using a lookup editor with a mask on new rows. ([#2305](https://github.com/infor-design/enterprise/issues/2305))
