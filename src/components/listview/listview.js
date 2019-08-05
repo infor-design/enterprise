@@ -703,7 +703,6 @@ ListView.prototype = {
     if (!results.length) {
       results = [];
     }
-
     pagingInfo.filteredTotal = results.length;
     pagingInfo.searchActivePage = 1;
     results.forEach((result) => {
@@ -733,7 +732,7 @@ ListView.prototype = {
   resetSearch() {
     this.element.unhighlight();
 
-    //reset filter status
+    // reset filter status
     this.settings.dataset.forEach(function (item) {
       delete item.isFiltered;
     });
