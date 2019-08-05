@@ -43,6 +43,7 @@ const COMPONENT_NAME = 'listview';
  * @param {boolean} [settings.showPageSizeSelector=false] If true the page size select will be shown when paging.
  * @param {object} [settings.listFilterSettings=null] If defined as an object, passes settings into the internal ListFilter component
  * @param {object} [settings.pagerSettings=null] If defined as an object, passes settings into the internal Pager component
+ * @param {object} [settings.searchTermMinSize=1] The search term will trigger filtering only when its length is greater than or equals to the value.
  */
 const LISTVIEW_DEFAULTS = {
   dataset: [],
@@ -66,7 +67,7 @@ const LISTVIEW_DEFAULTS = {
     showFirstButton: false,
     showLastButton: false
   },
-  searchTermMinSize: 0
+  searchTermMinSize: 1
 };
 
 function ListView(element, settings) {
@@ -678,7 +679,7 @@ ListView.prototype = {
 
     // Make sure there is a search term...and its not the
     // same as the previous term
-    if (searchFieldVal.length <= this.settings.searchTermMinSize) {
+    if (searchFieldVal.length < this.settings.searchTermMinSize) {
       this.resetSearch();
       return;
     }
