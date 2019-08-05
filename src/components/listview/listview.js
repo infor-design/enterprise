@@ -344,7 +344,7 @@ ListView.prototype = {
     }
 
     // When DOM items are not rendered with "mustache" template, filtered items 
-    // have to be hiden specifically.  
+    // have to be hidden specifically.  
     const hideFlag = items.length > displayedDataset.length;
 
     items.each(function (i) {
