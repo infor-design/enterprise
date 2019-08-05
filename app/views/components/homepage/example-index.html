@@ -87,8 +87,7 @@
   </div>
 
 <script>
-
-  $('.homepage').homepage().on('resize', function () {
-    console.log(this, this.offsetHeight)
+  $('.homepage').homepage().on('resize', function (e, rows, metadata) {
+    console.log(this, this.offsetHeight, metadata);
   });
 </script>

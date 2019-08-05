@@ -300,9 +300,9 @@
     // Bind resize
     homepageApi.element.on('resize', function(e, numberOfColumns, metaData) {
       console.log(this, 'columns:', this.offsetHeight, 'metaData:', metaData);
+      $(this).attr('style', ('height: ' + metaData.containerHeight + 'px'));
       setView(numberOfColumns);
     });
-
 
     // Init
     setView(homepageApi.settings.columns);
