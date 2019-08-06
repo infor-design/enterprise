@@ -13,15 +13,30 @@
 
     &.close {
       right: 8px;
+      top: 13px;
     }
+  }
+
+  .go-button {
+    height: 100%;
+  }
+
+  .searchfield-category-button {
+    height: 38px;
   }
 }
 
 // Firefox needs some help
 html.is-firefox {
   .searchfield-wrapper {
+    height: 34px;
+
     > .icon {
       top: 10px;
+    }
+
+    .searchfield-category-button {
+      height: inherit;
     }
   }
 }
@@ -32,6 +47,24 @@ html[dir='rtl'] {
       &.close {
         left: 8px;
         right: auto;
+      }
+    }
+
+    .searchfield-category-button {
+      height: 39px;
+    }
+  }
+
+  &.is-firefox {
+    .searchfield-wrapper {
+      > .icon {
+        &.close {
+          top: 10px;
+        }
+      }
+
+      .searchfield-category-button {
+        height: inherit;
       }
     }
   }

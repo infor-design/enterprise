@@ -366,6 +366,11 @@ html[dir='rtl'] {
       padding-right: 34px;
     }
 
+    .go-button {
+      margin-left: 0;
+      margin-right: 10px;
+    }
+
     > .icon {
       &:not(.close) {
         left: auto;
@@ -421,6 +426,7 @@ html[dir='rtl'] {
         &.show-category {
           .searchfield {
             border-right: 1px solid $input-color-initial-border;
+            padding-right: 10px;
           }
         }
       }

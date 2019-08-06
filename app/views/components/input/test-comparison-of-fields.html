@@ -7,7 +7,7 @@
 
     <div class="field">
       <label for="searchfield">Searchfield</label>
-      <input type="text" class="searchfield" id="searchfield" name="searchfield" placeholder="Keyword Search" data-options="{ clearable: true }"/>
+      <input id="searchfield" data-init="false" type="text" class="searchfield" name="searchfield" placeholder="Keyword Search"/>
     </div>
 
     <div class="field">
@@ -73,6 +73,13 @@
         response(data);
       });
     }
+  });
+
+  $('#searchfield').searchfield({
+    clearable: true,
+    categories: ['Books', 'Movies', 'TV Shows', 'Video Games'],
+    showGoButton: true,
+    showCategoryText: true
   });
 
   $('#datepicker').datepicker({
