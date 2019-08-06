@@ -9,8 +9,19 @@
 
 .searchfield-wrapper {
   > .icon {
+    top: 12px;
+
     &.close {
       right: 8px;
+    }
+  }
+}
+
+// Firefox needs some help
+html.is-firefox {
+  .searchfield-wrapper {
+    > .icon {
+      top: 10px;
     }
   }
 }

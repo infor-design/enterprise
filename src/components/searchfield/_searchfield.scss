@@ -67,7 +67,6 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
   }
 
   .searchfield {
-    height: 34px;
     padding-left: 34px;
     padding-right: 10px;
 
@@ -253,7 +252,6 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     border-top-right-radius: 0;
     color: $font-color;
     font-weight: $theme-number-font-weight-base;
-    height: 34px;
     margin: 0;
     min-width: 0;
     padding: 0 0 0 10px;
@@ -349,6 +347,14 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   &.alternate {
     background-color: $searchfield-context-alt-bg;
+  }
+}
+
+// Remove the bottom margin when inside of `.field` or `.field-short`
+.field,
+.field-short {
+  .searchfield-wrapper {
+    margin-bottom: 0;
   }
 }
 
