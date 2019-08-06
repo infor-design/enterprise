@@ -237,6 +237,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   font-weight: $theme-number-font-weight-base;
   line-height: 16px;
   opacity: 1;
+  -webkit-text-fill-color: $input-placeholder-color;
 }
 
 // Wrap longer word

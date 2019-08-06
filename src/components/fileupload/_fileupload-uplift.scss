@@ -1,0 +1,65 @@
+// Fileupload Uplift styles
+// ===========================================
+
+.fileupload-wrapper {
+  .container {
+    .file-row,
+    .progress-row {
+      .status-icon {
+        margin-top: 9px;
+
+        > .icon {
+          top: -3px;
+        }
+
+        button {
+          .icon {
+            left: 0;
+            top: -4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Firefox needs some hand-holding
+.is-firefox {
+  .fileupload-wrapper {
+    .container {
+      .file-row,
+      .progress-row {
+        .status-icon {
+          button {
+            .icon {
+              top: -3px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .fileupload-wrapper {
+    .container {
+      .file-row,
+      .progress-row {
+        .status-icon {
+          > .icon {
+            top: -1px;
+          }
+
+          button {
+            .icon {
+              left: inherit;
+              right: 0;
+              top: -1px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

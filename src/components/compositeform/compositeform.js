@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 import { breakpoints } from '../../utils/breakpoints';
+import { warnAboutRemoval } from '../../utils/deprecated';
 
 // jQuery Components
 import '../expandablearea/expandablearea.jquery';
@@ -12,6 +13,7 @@ const COMPONENT_NAME = 'compositeform';
 /**
 * CompositeForm is a specialized responsive form component.
 * @class CompositeForm
+* @deprecated as of v4.20.0. This component is no longer supported by the IDS team.
 * @constructor
 * @param {jQuery[]|HTMLElement} element The component element.
 * @param {object} [settings] The component settings.
@@ -33,6 +35,7 @@ function CompositeForm(element, settings) {
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
+  warnAboutRemoval('CompositeForm');
 }
 
 // Component API

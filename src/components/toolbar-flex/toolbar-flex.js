@@ -1,5 +1,6 @@
 import { utils } from '../../utils/utils';
 import { log } from '../../utils/debug';
+import { Locale } from '../locale/locale';
 import { ToolbarFlexItem, TOOLBAR_ELEMENTS } from './toolbar-flex.item';
 
 // jQuery Components
@@ -137,6 +138,7 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   handleItemKeydown(e) {
+    const isRTL = Locale.isRTL();
     const key = e.key;
     const item = this.getItemFromElement(e.target);
     function preventScrolling() {
@@ -163,7 +165,7 @@ ToolbarFlex.prototype = {
       if (item.type === 'searchfield' && (key === 'ArrowLeft' || key === 'Left')) {
         return;
       }
-      this.navigate(-1, undefined, true);
+      this.navigate((isRTL ? 1 : -1), undefined, true);
       preventScrolling();
       return;
     }
@@ -174,7 +176,7 @@ ToolbarFlex.prototype = {
       if (item.type === 'searchfield' && (key === 'ArrowRight' || key === 'Right')) {
         return;
       }
-      this.navigate(1, undefined, true);
+      this.navigate((isRTL ? -1 : 1), undefined, true);
       preventScrolling();
     }
   },

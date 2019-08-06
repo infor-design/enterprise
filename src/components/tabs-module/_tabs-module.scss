@@ -362,7 +362,6 @@
       border-bottom-color: rgba($searchfield-moduletabs-border-color, 0);
       border-top-color: rgba($searchfield-moduletabs-bg-color, 0);
       color: $module-tabs-inactive-text-color;
-      width: auto !important;
 
       &::-webkit-input-placeholder { // Chrome/Opera/Safari */
         color: $module-tabs-inactive-text-color;

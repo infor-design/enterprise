@@ -3,16 +3,19 @@
 
 // Special Fonts for Certain Languages. First in this list is placeholders for now,
 // until we figure out the best way to load these dynamically
-// https://fonts.google.com/specimen/Tajawal
 $cultures-font-family: (
-  'ar-EG': ('Tajawal', 'helvetica', 'arial'),
-  'ar-SA': ('Tajawal', 'helvetica', 'arial'),
-  'ja-JP': ('Source Han Sans', 'helvetica', 'arial'),
-  'ko-KR': ('Source Han Sans', 'Source Sans Pro', 'helvetica', 'arial'),
-  'zh-CN': ('Source Han Sans', 'Source Sans Pro', 'helvetica', 'arial'),
-  'zh-tw': ('Source Han Sans', 'Source Sans Pro', 'helvetica', 'arial'),
-  'zh-Hans': ('Source Han Sans', 'Source Sans Pro', 'helvetica', 'arial'),
-  'zh-Hant': ('Source Han Sans', 'Source Sans Pro', 'helvetica', 'arial')
+  'ar-EG': ('Mada', 'Source Sans Pro', 'arial', sans-serif),
+  'ar-SA': ('Mada', 'Source Sans Pro', 'arial', sans-serif),
+  'he-IL': ('Assistant', 'Source Sans Pro', 'arial', sans-serif),
+  'hi-IN': ('Noto Sans', 'Source Sans Pro', 'arial', sans-serif),
+  'ja-JP': ('Noto Sans JP', 'Source Sans Pro', 'arial', sans-serif),
+  'ko-KR': ('Noto Sans KR', 'Source Sans Pro', 'arial', sans-serif),
+  'vi-VN': ('Source Sans Pro', 'arial', sans-serif),
+  'th-TH': ('Sarabun', 'Source Sans Pro', 'arial', sans-serif),
+  'zh-CN': ('Noto Sans SC', 'Source Sans Pro', 'arial', sans-serif),
+  'zh-tw': ('Noto Sans TC', 'Source Sans Pro', 'arial', sans-serif),
+  'zh-Hans': ('Noto Sans SC', 'Source Sans Pro', 'arial', sans-serif),
+  'zh-Hant': ('Noto Sans TC', 'Source Sans Pro', 'arial', sans-serif)
 );
 
 html {

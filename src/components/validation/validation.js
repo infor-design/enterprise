@@ -90,6 +90,11 @@ function ValidationRules() {
         this.message = Locale.translate('Required');
         let valid = true;
 
+        // Dont show message when opening dialog
+        if ($(field).is('.datepicker') && $('#monthview-popup').is(':visible')) {
+          return true;
+        }
+
         valid = field.is(':radio') ? this.isRadioChecked(field) : this.isNotEmpty(value, field);
         return valid;
       },
@@ -113,7 +118,13 @@ function ValidationRules() {
           dateFormat = field.data('datepicker').pattern;
         }
 
-        const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy');
+        const isStrict = !(
+          dateFormat === 'MMMM' ||
+          dateFormat === 'MMM' ||
+          dateFormat === 'MM' ||
+          dateFormat === 'MMMM d' ||
+          dateFormat === 'yyyy'
+        );
         const parsedDate = Locale.parseDate(value, dateFormat, isStrict);
         return !(((parsedDate === undefined) && value !== ''));
       },

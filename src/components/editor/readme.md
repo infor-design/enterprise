@@ -14,6 +14,8 @@ demo:
     slug: example-clickable-links
   - name: Rich Text Editor with Event Checking
     slug: example-with-events
+  - name: Rich Text Editor with Dirty Tracking
+    slug: example-dirty-tracking
 ---
 
 A Rich Text Editor is implemented using a `contenteditable` element with several polyfills. To make an editor all you need to do is add a `field` class to an element, a `label` class, and a `<div>` with the class `editor`. You should also add `aria-label` for better accessibility.

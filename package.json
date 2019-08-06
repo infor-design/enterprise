@@ -1,7 +1,7 @@
 {
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
-  "version": "4.20.0-dev",
+  "version": "4.21.0-dev",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "repository": {
     "type": "git",
@@ -53,10 +53,11 @@
     "functional:local": "npx karma start test/karma.conf.js",
     "functional:ci": "npx karma start test/karma.conf.js --single-run",
     "e2e:ci": "npm run webdriver:update && npx protractor-flake --max-attempts=3 -- test/protractor.ci.conf.js",
-    "e2e:ci:bs": "npx protractor-flake --max-attempts=3 -- test/protractor.ci.bs.conf.js ",
+    "e2e:ci:bs": "npm run webdriver:clean && npm run webdriver:update && npx protractor-flake --max-attempts=3 -- test/protractor.ci.bs.conf.js ",
     "e2e:ci:debug": "npm run webdriver:update && npx protractor test/protractor.ci.debug.conf.js",
     "e2e:local:bs": "npm run webdriver:update && npx protractor test/protractor.local.bs.conf.js",
     "e2e:local:debug": "npm run webdriver:update && npx protractor test/protractor.local.debug.conf.js",
+    "webdriver:clean": "npx webdriver-manager clean",
     "webdriver:update": "npx webdriver-manager update --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
@@ -148,6 +149,7 @@
     "stylelint": "^10.0.1",
     "stylelint-order": "^2.2.1",
     "uglify-es": "^3.3.10",
+    "webdriver-manager": "^12.1.6",
     "webpack": "^4.30.0",
     "yargs": "^11.0.0"
   },

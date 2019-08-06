@@ -625,6 +625,14 @@ ApplicationMenu.prototype = {
       const expandableArea = this.switcherPanel.data('expandablearea');
       if (expandableArea) {
         expandableArea.close();
+        if (this.settings.dismissOnClickMobile) {
+          this.userOpened = false;
+          if (this.isLargerThanBreakpoint()) {
+            return;
+          }
+
+          this.closeMenu();
+        }
       }
     }
   },

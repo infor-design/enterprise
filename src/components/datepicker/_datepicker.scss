@@ -42,8 +42,8 @@
     color: $trigger-icon-fill-color;
     cursor: pointer;
     height: 16px;
-    margin-left: -28px;
-    margin-top: 8px;
+    margin-left: -26px;
+    margin-top: 9px;
     position: absolute;
     width: 16px;
     z-index: 1;
@@ -97,6 +97,21 @@
   .tooltip-content {
     padding: 0;
   }
+
+  .popup-footer {
+    button {
+      width: 33.33%;
+
+      // Fixes cut off focus state on the middle button
+      &:nth-child(1) {
+        margin-right: -1px;
+      }
+
+      &:nth-child(2) {
+        position: relative;
+      }
+    }
+  }
 }
 
 // Short fields
@@ -147,8 +162,6 @@ html[dir='rtl'] {
 }
 
 // IE Hack
-.ie9,
-.ie10,
 .ie11 {
   .datepicker + .icon {
     background-color: rgba($theme-color-palette-white, 0);

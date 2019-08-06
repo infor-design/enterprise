@@ -144,13 +144,33 @@ Personalize.prototype = {
     const defaultColors = {
       header: '2578A9'
     };
+
+    // Force to be light text on custom colors { color: ['soho', 'uplift'] }
+    const forceToBeLightTextOn = {
+      amber: ['#db7726', '#9b3300'],
+      amethyst: ['#9279a6', '#7834dd'],
+      azure: ['#2578a9', '#0563c2'],
+      emerald: ['#56932e', '#0a834b'],
+      graphite: ['#5c5c5c', '#808080'],
+      ruby: ['#941e1e', '#7b0f11'],
+      slate: ['#50535a', '#98949e'],
+      turquoise: ['#206b62', '#248b8f']
+    };
+    let foundColor = false;
+    let isDark = `${colors.header || defaultColors.header}`.toLowerCase();
+    isDark = colorUtils.validateHex(isDark);
+    Object.keys(forceToBeLightTextOn).forEach((color) => {
+      foundColor = foundColor || forceToBeLightTextOn[color].indexOf(isDark) > -1;
+    });
+    isDark = foundColor ? 'white' : null;
+
     const lightest = colorUtils.validateHex(colors.lightest ||
       colorUtils.getLuminousColorShade((colors.header || defaultColors.header), 0.3));
-    const contrast = colorUtils.getContrastColor(lightest);
+    const contrast = colorUtils.getContrastColor(lightest, null, isDark);
 
     if (contrast === 'white') {
       defaultColors.text = 'ffffff';
-      defaultColors.subtext = 'd8d8d8';
+      defaultColors.subtext = 'f0f0f0';
     } else {
       defaultColors.text = '000000';
       defaultColors.subtext = '292929';

@@ -452,7 +452,7 @@ describe('Dropdown typeahead-reloading tests', () => {
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ENTER);
 
-      expect(['<span class="audible">Typeahead-Reloaded Dropdown </span> New Jersey', 'New Jersey'])
+      expect(['<span class="audible">Typeahead-Reloaded Dropdown </span> New Jersey', 'New Jersey', ''])
         .toContain(await element.all(by.css('.dropdown span')).first().getText());
     });
   }

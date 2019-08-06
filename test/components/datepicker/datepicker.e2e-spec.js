@@ -116,15 +116,18 @@ describe('Datepicker keyboard tests', () => {
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_DOWN);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await datepickerEl.getAttribute('value')).toEqual('');
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_DOWN);
 
     testDate.setDate(testDate.getDate() + 7);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await datepickerEl.getAttribute('value')).toEqual('');
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+    await element(by.css('.is-select.btn-primary')).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
 
   it('Should be able to use arrow up key', async () => {
@@ -139,15 +142,17 @@ describe('Datepicker keyboard tests', () => {
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_UP);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await datepickerEl.getAttribute('value')).toEqual('');
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_UP);
 
     testDate.setDate(testDate.getDate() - 7);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+    await element(by.css('#monthview-popup td.is-selected')).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
 
   it('Should be able to use arrow left key', async () => {
@@ -162,15 +167,17 @@ describe('Datepicker keyboard tests', () => {
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_LEFT);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await datepickerEl.getAttribute('value')).toEqual('');
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_LEFT);
 
     testDate.setDate(testDate.getDate() - 1);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+    await element(by.css('#monthview-popup td.is-selected')).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
 
   it('Should be able to use arrow right key', async () => {
@@ -185,15 +192,17 @@ describe('Datepicker keyboard tests', () => {
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_RIGHT);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await datepickerEl.getAttribute('value')).toEqual('');
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.ARROW_RIGHT);
 
     testDate.setDate(testDate.getDate() + 1);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
+    await element(by.css('#monthview-popup td.is-selected')).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
 
   it('Should be able to use page up key', async () => {
@@ -208,11 +217,13 @@ describe('Datepicker keyboard tests', () => {
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.PAGE_UP);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await datepickerEl.getAttribute('value')).toEqual('');
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.PAGE_UP);
 
     testDate.setMonth(testDate.getMonth() - 1);
+
+    await element(by.css('#monthview-popup td.is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
@@ -229,11 +240,13 @@ describe('Datepicker keyboard tests', () => {
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.PAGE_DOWN);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+    expect(await datepickerEl.getAttribute('value')).toEqual('');
 
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.PAGE_DOWN);
 
     testDate.setMonth(testDate.getMonth() + 1);
+
+    await element(by.css('#monthview-popup td.is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
@@ -249,6 +262,8 @@ describe('Datepicker keyboard tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.HOME);
 
+    await element(by.css('#monthview-popup td.is-selected')).click();
+
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
 
@@ -262,6 +277,8 @@ describe('Datepicker keyboard tests', () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await element(by.css('.monthview-table .is-selected')).sendKeys(protractor.Key.END);
+
+    await element(by.css('#monthview-popup td.is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(lastDayOfMonth.toLocaleDateString('en-US'));
   });
@@ -287,9 +304,9 @@ describe('Datepicker keyboard tests', () => {
   });
 });
 
-describe('Datepicker Anniversay tests', () => {
+describe('Datepicker Anniversary tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-anniversay-format');
+    await utils.setPage('/components/datepicker/example-anniversary-format');
   });
 
   it('Should 3 digit month year', async () => {
@@ -298,7 +315,7 @@ describe('Datepicker Anniversay tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#monthview-popup .is-selected')).click();
+    await element(by.css('#monthview-popup td.is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }));
   });
@@ -312,7 +329,7 @@ describe('Datepicker Anniversay tests', () => {
     testDate.setMinutes(0);
     testDate.setSeconds(0);
 
-    await element(by.css('#monthview-popup .is-selected')).click();
+    await element(by.css('#monthview-popup td.is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }));
   });
@@ -323,7 +340,7 @@ describe('Datepicker Anniversay tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#monthview-popup .is-selected')).click();
+    await element(by.css('#monthview-popup td.is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.getFullYear().toString());
   });
@@ -334,7 +351,7 @@ describe('Datepicker Anniversay tests', () => {
 
     const testDate = new Date();
 
-    await element(by.css('#monthview-popup .is-selected')).click();
+    await element(by.css('#monthview-popup td.is-selected')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
@@ -344,7 +361,7 @@ describe('Datepicker Anniversay tests', () => {
     await element(by.css('#Mdyyyy-date + .icon')).click();
 
     const testDate = new Date();
-    await element(by.css('#monthview-popup .is-selected')).click();
+    await element(by.css('#monthview-popup td.is-selected')).click();
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
@@ -363,7 +380,7 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-1 + .icon')).click();
 
     const testDate = new Date();
-    await element(by.css('#monthview-popup .is-selected')).click();
+    await element(by.css('#monthview-popup td.is-selected')).click();
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
@@ -376,7 +393,7 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-2 + .icon')).click();
 
     const testDate = new Date();
-    await element(by.css('#monthview-popup .is-selected')).click();
+    await element(by.css('#monthview-popup td.is-selected')).click();
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
@@ -389,7 +406,7 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-3 + .icon')).click();
 
     const testDate = new Date();
-    await element(by.css('#monthview-popup .is-selected')).click();
+    await element(by.css('#monthview-popup td.is-selected')).click();
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
@@ -402,7 +419,7 @@ describe('Datepicker custom format tests', () => {
     await element(by.css('#date-field-4 + .icon')).click();
 
     const testDate = new Date();
-    await element(by.css('#monthview-popup .is-selected')).click();
+    await element(by.css('#monthview-popup td.is-selected')).click();
     testDate.setHours(0);
     testDate.setMinutes(0);
     testDate.setSeconds(0);
@@ -455,33 +472,40 @@ describe('Datepicker Legend Tests', () => {
   });
 });
 
-describe('Datepicker Month Year Changer Tests', () => {
+describe('Datepicker Disable Month Year Changer Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-month-year-picker');
+    await utils.setPage('/components/datepicker/test-no-month-year-picker');
     const Date = () => {  //eslint-disable-line
       return new Date(2018, 1, 10);
     };
   });
 
-  it('Should be able to change month and year from the pickers', async () => {
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should not have a month year picker', async () => {
+    expect(await element(by.css('.monthview-monthyear-pane')).isPresent()).toEqual(false);
+    expect(await element(by.css('.btn-monthyear-pane')).isPresent()).toEqual(false);
+  });
+});
+
+describe('Datepicker Month Year Changer Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/example-index?layout=nofrills');
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
+  });
+
+  it('Should be able to change month', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys('10/1/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.id('btn-monthyear-pane')).click();
     await browser.driver.sleep(config.sleep);
 
-    let dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div.dropdown'));
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    dropdownEl = await element(by.css('.dropdown-search'));
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ENTER);
-    await browser.driver.sleep(config.sleep);
-
-    let yearEl = await element(by.css('#year-dropdown + .dropdown-wrapper div.dropdown'));
-    await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
-    yearEl = await element.all(by.css('.dropdown-search')).last();
-    await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await yearEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await yearEl.sendKeys(protractor.Key.ENTER);
+    await element(by.cssContainingText('.picklist-item', 'April')).click();
     await browser.driver.sleep(config.sleep);
 
     const prevButtonEl = await element(by.css('.prev.btn-icon'));
@@ -492,13 +516,138 @@ describe('Datepicker Month Year Changer Tests', () => {
     await lastButtonEl.sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
-    browser.executeScript('$("#dropdown-list").hide()');
     const buttonEl = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
     await buttonEl.click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('11/1/2020');
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('4/1/2018');
   });
+
+  it('Should be able to change year', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('10/1/2018');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.id('btn-monthyear-pane')).click();
+    await browser.driver.sleep(config.sleep);
+
+    await element(by.cssContainingText('.picklist-item', '2021')).click();
+    await browser.driver.sleep(config.sleep);
+
+    const prevButtonEl = await element(by.css('.prev.btn-icon'));
+    await prevButtonEl.sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    const lastButtonEl = await element(by.css('.next.btn-icon'));
+    await lastButtonEl.sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    const buttonEl = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
+    await buttonEl.click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('10/1/2021');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress when closed', async () => {
+      await element(by.css('#date-field-normal')).sendKeys('10/1/2018');
+      await element(by.css('#date-field-normal + .icon')).click();
+      const containerEl = await element(by.className('no-frills'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-closed')).toBeLessThan(0.2);
+    });
+  }
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress when open', async () => {
+      await element(by.css('#date-field-normal')).sendKeys('10/1/2018');
+      await element(by.css('#date-field-normal + .icon')).click();
+      await browser.driver.sleep(config.sleep);
+      await element(by.css('#btn-monthyear-pane')).click();
+
+      const containerEl = await element(by.className('no-frills'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-open')).toBeLessThan(0.2);
+    });
+  }
+});
+
+describe('Datepicker Month Year Changer Year First Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/example-index?layout=nofrills&locale=ja-JP');
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
+  });
+
+  it('Should be able to change month', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('10/1/2018');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.id('btn-monthyear-pane')).click();
+    await browser.driver.sleep(config.sleep);
+
+    await element(by.cssContainingText('.picklist-item', '4月')).click();
+
+    const prevButtonEl = await element(by.css('.prev.btn-icon'));
+    await prevButtonEl.sendKeys(protractor.Key.ENTER);
+
+    const lastButtonEl = await element(by.css('.next.btn-icon'));
+    await lastButtonEl.sendKeys(protractor.Key.ENTER);
+
+    const buttonEl = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
+    await buttonEl.click();
+
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('2019/04/01');
+  });
+
+  it('Should be able to change year', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('2019/07/09');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.id('btn-monthyear-pane')).click();
+    await browser.driver.sleep(config.sleep);
+
+    await element(by.cssContainingText('.picklist-item', '2021')).click();
+
+    const prevButtonEl = await element(by.css('.prev.btn-icon'));
+    await prevButtonEl.sendKeys(protractor.Key.ENTER);
+
+    const lastButtonEl = await element(by.css('.next.btn-icon'));
+    await lastButtonEl.sendKeys(protractor.Key.ENTER);
+
+    const buttonEl = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
+    await buttonEl.click();
+
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('2021/07/01');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress when closed', async () => {
+      await element(by.css('#date-field-normal')).sendKeys('2019/07/09');
+      await element(by.css('#date-field-normal + .icon')).click();
+      const containerEl = await element(by.className('no-frills'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-closed-yearfirst')).toBeLessThan(0.2);
+    });
+  }
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress when open', async () => {
+      await element(by.css('#date-field-normal')).sendKeys('2019/07/09');
+      await element(by.css('#date-field-normal + .icon')).click();
+      await browser.driver.sleep(config.sleep);
+      await element(by.css('#btn-monthyear-pane')).click();
+
+      const containerEl = await element(by.className('no-frills'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-yearfirst')).toBeLessThan(0.2);
+    });
+  }
 });
 
 describe('Datepicker Range Tests', () => {
@@ -592,7 +741,7 @@ describe('Datepicker Umalqura Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
-    expect(await element(by.css('.popup-footer .cancel')).getText()).toEqual('مسح');
+    expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
 
     const todayEl = await element(by.css('button.is-today'));
     await todayEl.click();
@@ -605,7 +754,7 @@ describe('Datepicker Umalqura Tests', () => {
 
 describe('Datepicker Month Year Picker Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-month-year-format');
+    await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
       return new Date(2018, 1, 10);
     };
@@ -616,37 +765,93 @@ describe('Datepicker Month Year Picker Tests', () => {
     await datepickerEl.sendKeys('01/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    let dropdownEl = await element(by.css('#year-dropdown + .dropdown-wrapper div.dropdown'));
-    await dropdownEl.click();
-    dropdownEl = await element(by.css('#dropdown-list .dropdown-search'));
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ENTER);
+    await element(by.cssContainingText('.picklist-item', 'April')).click();
+    await element(by.css('.picklist-item.down a')).click();
+    await element(by.css('.picklist-item.down a')).click();
+    await element(by.css('.picklist-item.down a')).click();
+    await element(by.cssContainingText('.picklist-item', '2017')).click();
 
-    await element(by.css('.select-month.btn-tertiary')).click();
+    await element(by.css('.is-select-month')).click();
 
-    expect(['01/2019', '01/2020']).toContain(await element(by.id('month-year')).getAttribute('value'));
+    expect(await element(by.id('month-year')).getAttribute('value')).toEqual('04/2017');
   });
 
-  it('Should be able to function as month/year picker long', async () => {
-    const datepickerEl = await element(by.id('month-year-long'));
-    await datepickerEl.sendKeys('Oct 2018');
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.css('#month-year')).sendKeys('01/2018');
+      await element(by.css('#month-year + .icon')).click();
+
+      const containerEl = await element(by.className('no-frills'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-month-year-picker')).toBeLessThan(0.2);
+    });
+  }
+});
+
+describe('Datepicker Year Picker Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
+  });
+
+  it('Should be able to function as year picker', async () => {
+    const datepickerEl = await element(by.id('year-only'));
+    await datepickerEl.sendKeys('2024');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    const dropdownEl = await element(by.css('#month-dropdown + .dropdown-wrapper div.dropdown'));
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ENTER);
+    await element(by.css('.picklist-item.down a')).click();
+    await element(by.css('.picklist-item.down a')).click();
+    await element(by.css('.picklist-item.down a')).click();
+    await element(by.cssContainingText('.picklist-item', '2030')).click();
 
-    const buttonEl = await element(by.css('.select-month.btn-tertiary'));
-    await buttonEl.click();
-
-    const testDate = new Date();
-    await testDate.setDate(1);
-    await testDate.setMonth(testDate.getMonth());
-
-    expect(await element(by.id('month-year-long')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }));
+    expect(await element(by.id('year-only')).getAttribute('value')).toEqual('2030');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.css('#year-only')).sendKeys('2024');
+      await element(by.css('#year-only + .icon')).click();
+
+      const containerEl = await element(by.className('no-frills'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-year-only-picker')).toBeLessThan(0.2);
+    });
+  }
+});
+
+describe('Datepicker Month Only Picker Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
+  });
+
+  it('Should be able to function as month/year picker', async () => {
+    const datepickerEl = await element(by.id('month-only'));
+    await datepickerEl.sendKeys('March');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await element(by.cssContainingText('.picklist-item', 'April')).click();
+
+    expect(await element(by.id('month-only')).getAttribute('value')).toEqual('April');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.css('#month-only')).sendKeys('March');
+      await element(by.css('#month-only + .icon')).click();
+
+      const containerEl = await element(by.className('no-frills'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-month-only-picker')).toBeLessThan(0.2);
+    });
+  }
 });
 
 describe('Datepicker Custom Validation Tests', () => {
@@ -742,7 +947,7 @@ describe('Datepicker Umalqura EG Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
-    expect(await element(by.css('.popup-footer .cancel')).getText()).toEqual('مسح');
+    expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
 
     const todayEl = await element(by.css('button.is-today'));
     await todayEl.click();
@@ -764,7 +969,7 @@ describe('Datepicker Gregorian SA Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
-    expect(await element(by.css('.popup-footer .cancel')).getText()).toEqual('مسح');
+    expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
 
     const todayEl = await element(by.css('button.is-today'));
     await todayEl.click();
@@ -876,6 +1081,7 @@ describe('Datepicker restrict month selection tests', () => {
   it('Should disable months in front and behind', async () => {
     const datepickerEl = await element(by.id('date-field'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('.monthview-header .prev')).getAttribute('disabled')).toEqual('true');
     expect(await element(by.css('.monthview-header .next')).getAttribute('disabled')).not.toEqual('true');
@@ -905,6 +1111,7 @@ describe('Datepicker restrict month selection tests', () => {
     const datepickerEl = await element(by.id('date-field'));
     await datepickerEl.sendKeys('04/15/2011');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('.monthview-header .prev')).getAttribute('disabled')).toEqual('true');
     expect(await element(by.css('.monthview-header .next')).getAttribute('disabled')).not.toEqual('true');

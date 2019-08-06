@@ -4,7 +4,7 @@
 .monthview {
   background-color: $popover-bg-color;
   display: inline-block;
-  min-height: 300px;
+  min-height: 235px;
   min-width: 297px;
   text-align: center;
   vertical-align: middle;
@@ -12,27 +12,186 @@
 
   // Hide Days Option
   &.is-monthyear {
-    min-height: 0;
+    height: 370px;
+
+    &.is-monthonly {
+      min-width: 225px;
+
+      .picklist-section {
+        &.is-month::after,
+        &.is-year {
+          display: none;
+        }
+      }
+    }
+
+    &.is-yearonly {
+      min-width: 225px;
+
+      .picklist-section.is-month {
+        display: none;
+      }
+    }
 
     .monthview-header {
-      border-bottom: 0;
-      margin-top: 7px;
+      display: none;
+    }
 
-      button.prev {
-        right: 35px;
+    .monthview-monthyear-pane {
+      padding: 10px 0;
+      position: static;
+
+      .content {
+        height: 302px;
       }
 
-      button.next {
-        right: 4px;
+      .picklist-section.is-month::after {
+        height: 300px;
       }
-
     }
 
     .popup-footer {
-      margin-top: 6px;
+      margin-top: 0;
 
       button {
-        width: 100%;
+        margin-right: 0;
+        width: 50%;
+
+        &:nth-child(1) {
+          margin-right: 0;
+          position: relative;
+        }
+
+        &:nth-child(2) {
+          margin-right: 0;
+          position: static;
+        }
+      }
+    }
+  }
+
+  // Trigger Button for Month/Year Pane
+  .btn-monthyear-pane {
+    border-radius: 2px;
+    color: $datepicker-month-year-color;
+    font-size: $theme-size-font-lg;
+    font-weight: $theme-number-font-weight-base;
+    margin-left: -5px;
+    padding: 4px 7px 5px;
+
+    .year,
+    .month {
+      top: 0;
+    }
+
+    &.active {
+      span,
+      .icon {
+        color: $theme-color-brand-primary-base;
+      }
+
+      .icon {
+        transform: rotateX(180deg);
+      }
+    }
+  }
+
+  // Collapsible Month/Year Pane
+  .monthview-monthyear-pane {
+    background-color: $popover-bg-color;
+    margin: 0 -1px;
+    max-height: calc(100% - 50px);
+    overflow: hidden;
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    z-index: 3011;
+
+    .content {
+      height: 312px;
+      padding: 0 !important;
+    }
+
+    &.is-yearfirst {
+      .picklist-section {
+        float: right;
+      }
+    }
+
+    .picklist-section {
+      display: inline-block;
+      height: 100%;
+      vertical-align: top;
+      width: 50%;
+
+      &.is-month::after {
+        border-left: 1px solid $popover-separator-color;
+        content: ' ';
+        height: 291px;
+        left: 150px;
+        position: absolute;
+        top: 10px;
+      }
+    }
+
+    .picklist {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      height: inherit;
+      justify-content: space-around;
+      padding: 6px 0;
+
+      &.is-year {
+        padding: 2px 0;
+      }
+
+      .picklist-item {
+        a {
+          border: 1px solid transparent;
+          border-radius: 14px;
+          box-shadow: none;
+          color: $datepicker-day-color;
+          font-size: $theme-size-font-base;
+          padding: 3px 10px;
+          text-decoration: none;
+          user-select: none;
+
+          &:focus {
+            border-color: $datepicker-focus-border-color;
+            box-shadow: $focus-box-shadow;
+            outline: none;
+            -moz-outline-style: none;
+          }
+        }
+
+        .icon {
+          color: $trigger-icon-fill-color;
+          position: relative;
+          top: 3px;
+
+          &:hover {
+            color: $trigger-hover-color;
+          }
+
+          &:active {
+            color: $trigger-active-color;
+          }
+        }
+
+        &.is-selected a {
+          background-color: $datepicker-selected-bg-color;
+          color: $theme-color-palette-white;
+          font-weight: $theme-number-font-weight-bold;
+
+          .icon {
+            color: $theme-color-palette-white;
+          }
+        }
+
+        &.up .icon {
+          top: 3px;
+        }
       }
     }
   }
@@ -58,7 +217,7 @@
     border: 1px solid transparent;
     border-radius: 50%;
     height: 40px;
-    width: 39px;
+    width: 40px;
 
     .day-text {
       @include rem(font-size, 1.4rem);
@@ -104,6 +263,7 @@
         z-index: 2;
       }
 
+      &:not(.is-disabled):focus,
       &:focus {
         border-color: transparent;
         box-shadow: none;
@@ -307,10 +467,11 @@
       .day-text {
         background-color: $datepicker-selected-bg-color;
         color: $datepicker-selected-color;
+        font-weight: $theme-number-font-weight-bold;
       }
     }
 
-    &:focus {
+    &:not(.is-disabled):focus {
       border-color: $datepicker-focus-border-color;
       box-shadow: $focus-box-shadow;
       outline: none;
@@ -343,7 +504,7 @@
   }
 
   .monthview-table {
-    margin: 17px auto 0;
+    margin: 20px auto 0;
     padding: 0 10px;
     width: 100%;
 
@@ -380,7 +541,7 @@
           + .icon {
             height: 14px;
             margin-left: -22px;
-            top: 9px;
+            top: 8px;
           }
 
           &:focus {
@@ -413,7 +574,9 @@
 
     &.monthview {
       border: 1px solid  $calendar-line-color;
-      overflow: hidden;
+      margin-right: -1px;
+      overflow-x: hidden;
+      overflow-y: auto;
 
       td {
         border: 1px solid  $calendar-line-color;
@@ -500,7 +663,7 @@
     }
   }
 
-  //Hide the buttons on the top
+  // Hide the buttons on the top
   &.hide-buttons {
     .prev,
     .next {
@@ -544,16 +707,8 @@
   .year {
     color: $datepicker-month-year-color;
     font-size: $theme-size-font-lg;
-  }
-
-  .dropdown-wrapper {
-    text-indent: 0;
-    width: 120px;
-  }
-
-  #year-dropdown + .dropdown-wrapper {
-    left: 10px;
-    width: 80px;
+    position: relative;
+    top: 2px;
   }
 }
 
@@ -590,25 +745,21 @@ html[dir='rtl'] {
   .monthview-header {
     padding-right: 0;
     text-align: right;
+    text-indent: 22px;
 
     .month {
       padding-left: 5px;
-      padding-right: 15px;
+      padding-right: 5px;
     }
 
-    #year-dropdown + .dropdown-wrapper {
-      left: 0;
-      right: 5px;
-    }
-
-    button {
+    button.prev,
+    button.next {
       left: 0;
       right: auto;
       transform: rotate(180deg);
 
       &.prev {
-        left: 30px;
-        margin-left: 5px;
+        left: 40px;
         right: auto;
 
         svg {
@@ -618,7 +769,7 @@ html[dir='rtl'] {
       }
 
       &.next {
-        margin: 0 5px 0 7px;
+        margin: 0 5px 0 10px;
 
         svg {
           left: auto;
@@ -728,6 +879,14 @@ html[dir='rtl'] {
         right: calc(100% - 25px);
       }
     }
+
+    .expandable-area-trigger .icon {
+      margin-right: 0 !important;
+    }
+
+    .monthview-monthyear-pane.is-yearfirst .picklist-section {
+      float: left;
+    }
   }
 
   //Footer Buttons
@@ -789,8 +948,15 @@ html[dir='rtl'] {
       top: 15px;
     }
 
+    .btn-monthyear-pane {
+      .month,
+      .year {
+        top: 0;
+      }
+    }
+
     .btn-icon {
-      top: 11px;
+      top: 7px;
     }
   }
 }

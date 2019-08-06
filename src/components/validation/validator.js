@@ -61,7 +61,6 @@ Validator.prototype = {
       this.inputs = $().add(this.element);
     }
 
-    this.element.addClass('validation-active');
     this.timeout = null;
 
     this.attachEvents();

@@ -8,6 +8,11 @@
     </div>
 
     <div class="field">
+      <label for="product-mask" class="label required">Products (mask)</label>
+      <input id="product-mask" data-init="false" data-validate="required" class="lookup" name="product-mask" type="text"/>
+    </div>
+
+    <div class="field">
       <label for="lookup-field-small" class="label">Lookup Field (Xtra - Small)</label>
       <input id="lookup-field-small" class="input-xs lookup" name="lookup-field-small" type="text" value="DA"/>
       <span class="data-description">Danonics 123 Group</span>
@@ -43,7 +48,7 @@
     columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
 
     //Init and get the api for the grid
-    grid = $('#product-lookup').lookup({
+    $('#product-lookup, #product-mask').lookup({
       field: 'productId',
       autoApply: true,
       options: {
@@ -66,4 +71,19 @@
       }
     });
 
+    $('#product-mask').mask({
+      patternOptions: {
+        allowDecimal: false,
+        allowNegative: false,
+        allowThousandsSeparator: false,
+        decimalLimit: 0,
+        integerLimit: 7,
+        symbols: {
+          decimal: '.',
+          negative: '-',
+          thousands: ','
+        }
+      },
+      process: "number"
+    });
 </script>

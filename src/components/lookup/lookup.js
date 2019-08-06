@@ -162,6 +162,8 @@ Lookup.prototype = {
     }
 
     this.addAria();
+
+    if (lookup.attr('autocomplete') === undefined) lookup.attr('autocomplete', 'off');
   },
 
   /**
@@ -441,6 +443,8 @@ Lookup.prototype = {
     search = null;
 
     if (this.grid && this.grid.destroy) {
+      this.grid.deSelectAllRows();
+      this.grid.clearFilter();
       this.grid.destroy();
       this.grid = null;
     }
@@ -681,6 +685,7 @@ Lookup.prototype = {
       * @property {object} selected rows
       */
     this.element.val(value).trigger('change', [this.selectedRows]);
+    this.element.trigger('input', [this.selectedRows]);
     this.applyAutoWidth();
     this.element.focus();
   },
