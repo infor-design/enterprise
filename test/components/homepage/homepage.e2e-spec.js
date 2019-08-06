@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Homepage example hero widget tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/homepage/example-hero-widget.html?layout=nofrills');
+    await utils.setPage('/components/homepage/example-hero-widget.html');
   });
 
   it('Should not have errors', async () => {
