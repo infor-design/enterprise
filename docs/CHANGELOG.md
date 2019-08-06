@@ -108,6 +108,7 @@
 - `[Scatter Plot]` Fixed the incorrect color on the tooltips. ([#1066](https://github.com/infor-design/enterprise/issues/1066))
 - `[Stepprocess]` Fixed an issue where a newly enabled step is not shown. ([#2391](https://github.com/infor-design/enterprise/issues/2391))
 - `[Searchfield]` Fixed an issue where the close icon on a searchfield is inoperable. ([#2578](https://github.com/infor-design/enterprise/issues/2578))
+- `[Searchfield]` Fixed strange alignment of text/icons on the Uplift theme. ([#2612](https://github.com/infor-design/enterprise/issues/2612))
 - `[Tabs]` Fixed the more tabs button to style as disabled when the tabs component is disabled. ([#2347](https://github.com/infor-design/enterprise/issues/2347))
 - `[Tabs]` Added the select method inside the hide method to ensure proper focusing of the selected tab. ([#2346](https://github.com/infor-design/enterprise/issues/2346))
 - `[Tabs]` Added an independent count for adding new tabs and their associated IDs to prevent duplication. ([#2345](https://github.com/infor-design/enterprise/issues/2345))
