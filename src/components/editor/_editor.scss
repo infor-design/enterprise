@@ -74,7 +74,7 @@
   &.is-active:hover:not(.error) {
     .toolbar,
     .flex-toolbar {
-      .formatter-toolbar {
+      &.formatter-toolbar {
         border-left-color: $editor-focus-border-color;
         border-right-color: $editor-focus-border-color;
         border-top-color: $editor-focus-border-color;
@@ -424,7 +424,8 @@
 
       .icon {
         margin-left: -5px;
-        width: 28px;
+        margin-right: -5px;
+        width: 32px;
       }
     }
 
