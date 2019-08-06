@@ -1,6 +1,14 @@
 // Uplift Timepicker
 //================================================== //
 
+.timepicker {
+  + .icon,
+  + .tooltip-description + .icon {
+    margin-left: -29px;
+    margin-top: 10px;
+  }
+}
+
 .field-short {
   .timepicker {
     + .icon,
@@ -11,7 +19,24 @@
   }
 }
 
+html.is-firefox {
+  .timepicker {
+    + .icon,
+    + .tooltip-description + .icon {
+      margin-top: 8px;
+    }
+  }
+}
+
 html[dir='rtl'] {
+  .timepicker {
+    + .icon,
+    + .tooltip-description + .icon {
+      margin-left: auto;
+      margin-right: -29px;
+    }
+  }
+
   .field-short {
     .timepicker {
       + .icon,

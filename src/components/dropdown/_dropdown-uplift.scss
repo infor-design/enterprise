@@ -7,6 +7,7 @@ $dropdown-size-padding-x-r: 30px;
 div.dropdown,
 div.multiselect {
   + .icon {
+    right: 8px;
     top: 3px;
   }
 
@@ -151,6 +152,10 @@ html.is-firefox:not([dir='rtl']) {
 html[dir='rtl'] {
   div.dropdown,
   div.multiselect {
+    + .icon {
+      left: 8px;
+    }
+
     .listoption-icon {
       top: 10px;
     }
@@ -159,6 +164,12 @@ html[dir='rtl'] {
   .dropdown-list {
     > .listoption-icon {
       top: 9px;
+    }
+
+    > .trigger {
+      .icon {
+        margin-right: -24px;
+      }
     }
   }
 
