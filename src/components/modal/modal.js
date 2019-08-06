@@ -889,8 +889,10 @@ Modal.prototype = {
       return true;
     }
 
-    this.changeObserver.disconnect();
-    delete this.changeObserver;
+    if (this.changeObserver) {
+      this.changeObserver.disconnect();
+      delete this.changeObserver;
+    }
     const elemCanClose = this.element.triggerHandler('beforeclose');
     const self = this;
     const fields = this.element.find('[data-validate]');
@@ -976,8 +978,10 @@ Modal.prototype = {
   destroy() {
     const self = this;
     const canDestroy = this.element.trigger('beforedestroy');
-    this.changeObserver.disconnect();
-    delete this.changeObserver;
+    if (this.changeObserver) {
+      this.changeObserver.disconnect();
+      delete this.changeObserver;
+    }
 
     if (!canDestroy) {
       return;
