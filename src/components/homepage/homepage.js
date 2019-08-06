@@ -55,9 +55,14 @@ Homepage.prototype = {
    * @returns {object} containing information about the current state of the Homepages component.
    */
   get state() {
-    const rows = this.rowsAndCols.length;
+    let rows = this.rowsAndCols.length;
     const cols = rows ? this.rowsAndCols[0].length : 0;
     const settings = this.settings;
+
+    const lastRow = this.rowsAndCols[rows - 1];
+    if (lastRow.indexOf(false) === -1) {
+      rows -= 1;
+    }
 
     function getContainerHeight() {
       const topGutter = settings.gutterSize;
@@ -67,7 +72,8 @@ Homepage.prototype = {
     return {
       rows,
       cols,
-      containerHeight: getContainerHeight()
+      containerHeight: getContainerHeight(),
+      matrix: this.rowsAndCols
     };
   },
 
