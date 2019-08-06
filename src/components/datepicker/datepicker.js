@@ -364,6 +364,7 @@ DatePicker.prototype = {
 
     if (s.dateFormat === 'locale') {
       this.pattern = localeDateFormat + (s.showTime ? ` ${(s.timeFormat || localeTimeFormat)}` : '');
+      s.dateFormat = this.pattern;
     } else {
       this.pattern = s.dateFormat + (s.showTime && s.timeFormat ? ` ${s.timeFormat}` : '');
     }
@@ -401,7 +402,7 @@ DatePicker.prototype = {
 
     if (this.isFullMonth) {
       this.pattern = this.settings.dateFormat;
-    } else {
+    } else if (this.element.data('mask') === undefined) {
       this.element.mask(maskOptions);
     }
 
