@@ -283,6 +283,12 @@
   $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: getBarData(), showLegend: false});
   $('#area-example').chart({type: 'area', dataset: getAreaData()});
 
+  // Bind resize event
+  $('.homepage').on('resize', function(e, numberOfColumns, metaData) {
+    console.log(this, 'columns:', this.offsetHeight, 'metaData:', metaData);
+    $(this).attr('style', ('height: ' + metaData.containerHeight + 'px'));
+  });
+
   // Wait for initialize
   $('body').on('initialized', function() {
     var homepageApi = $('.homepage').data('homepage');
@@ -298,9 +304,7 @@
     };
 
     // Bind resize
-    homepageApi.element.on('resize', function(e, numberOfColumns, metaData) {
-      console.log(this, 'columns:', this.offsetHeight, 'metaData:', metaData);
-      $(this).attr('style', ('height: ' + metaData.containerHeight + 'px'));
+    homepageApi.element.on('resize', function(e, numberOfColumns) {
       setView(numberOfColumns);
     });
 
