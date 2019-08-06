@@ -198,9 +198,7 @@ DatePicker.prototype = {
     this.conversions = this.currentCalendar.conversions;
     this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
     this.setFormat();
-    if (this.element.data('mask') === undefined) {
-      this.mask();
-    }
+    this.mask();
   },
 
   /**
@@ -404,7 +402,7 @@ DatePicker.prototype = {
 
     if (this.isFullMonth) {
       this.pattern = this.settings.dateFormat;
-    } else {
+    } else if (this.element.data('mask') === undefined) {
       this.element.mask(maskOptions);
     }
 
