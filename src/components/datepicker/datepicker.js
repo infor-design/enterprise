@@ -198,9 +198,7 @@ DatePicker.prototype = {
     this.conversions = this.currentCalendar.conversions;
     this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
     this.setFormat();
-    if (this.element.data('mask') === undefined) {
-      this.mask();
-    }
+    this.mask();
   },
 
   /**
@@ -366,7 +364,6 @@ DatePicker.prototype = {
 
     if (s.dateFormat === 'locale') {
       this.pattern = localeDateFormat + (s.showTime ? ` ${(s.timeFormat || localeTimeFormat)}` : '');
-      s.dateFormat = this.pattern;
     } else {
       this.pattern = s.dateFormat + (s.showTime && s.timeFormat ? ` ${s.timeFormat}` : '');
     }
