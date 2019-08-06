@@ -72,6 +72,8 @@
 - `[Datagrid]` Fixed a bug is the isEditable column callback in editable tree grid where some data was missing in the callback. ([#2357](https://github.com/infor-design/enterprise/issues/2357))
 - `[Datepicker]` Removed the advanceMonths option as the dropdowns for this are no longer there in the new design. ([#970](https://github.com/infor-design/enterprise/issues/970))
 - `[Datepicker]` Fixed an issue where range selection was not working. ([#2569](https://github.com/infor-design/enterprise/issues/2569))
+- `[Datepicker]` Fixed some issue where footer buttons were not working properly with range selection. ([#2595](https://github.com/infor-design/enterprise/issues/2595))
+- `[Datepicker]` Fixed an issue where time was not updating after change on range selection. ([#2599](https://github.com/infor-design/enterprise/issues/2599))
 - `[Datagrid]` Fixed a bug where deselect all would not deselect some rows when using grouping. ([#1796](https://github.com/infor-design/enterprise/issues/1796))
 - `[Datagrid]` Fixed a bug where summary counts in grouping would show even if the group is collapsed. ([#2221](https://github.com/infor-design/enterprise/issues/2221))
 - `[Datagrid]` Fixed issues when using paging (client side) and removeRow. ([#2590](https://github.com/infor-design/enterprise/issues/2590))
