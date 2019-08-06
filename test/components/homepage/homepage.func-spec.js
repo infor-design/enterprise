@@ -8,7 +8,7 @@ let homepageEl;
 let homepageAPI;
 let hasEventListeners = false;
 
-fdescribe('Homepage API', () => {
+describe('Homepage API', () => {
   beforeEach(() => {
     document.body.classList.add('no-scroll');
   });
