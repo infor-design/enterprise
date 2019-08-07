@@ -734,6 +734,10 @@ describe('Datepicker Umalqura Tests', () => {
     await utils.setPage('/components/datepicker/example-umalqura');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('Should render Umalqura monthview', async () => {
     const datepickerEl = await element(by.id('islamic-date'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -748,7 +752,8 @@ describe('Datepicker Umalqura Tests', () => {
 
     const value = await element(by.id('islamic-date')).getAttribute('value');
 
-    expect(value.substr(0, 2)).toEqual('14');
+    expect(value.length).toEqual(10);
+    await utils.checkForErrors();
   });
 });
 
