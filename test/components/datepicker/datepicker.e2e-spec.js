@@ -964,7 +964,7 @@ describe('Datepicker Umalqura EG Tests', () => {
 
 describe('Datepicker Gregorian SA Tests', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/test-ar-sa-gregorian');
+    await utils.setPage('/components/datepicker/test-ar-sa-gregorian?locale=ar-SA');
     await browser.driver.sleep(config.sleep);
   });
 
