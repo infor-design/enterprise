@@ -1,0 +1,113 @@
+<div class="row">
+  <div class="one-half column">
+    <div class="field">
+      <label for="normal">Normal text Field</label>
+      <input type="text" id="normal" name="normal" placeholder="Normal text Field"/>
+    </div>
+
+    <div class="field">
+      <label for="searchfield">Searchfield</label>
+      <input id="searchfield" data-init="false" type="text" class="searchfield" name="searchfield" placeholder="Keyword Search"/>
+    </div>
+
+    <div class="field">
+      <label for="colorpicker">Colorpicker</label>
+      <input class="colorpicker" id="colorpicker" type="text" />
+    </div>
+
+    <div class="field">
+      <label for="spinbox">Spinbox</label>
+      <input id="spinbox" name="spinbox" type="text" class="spinbox" value="10" data-options="{min: -1000, max: 1000}"/>
+    </div>
+  </div>
+  <div class="one-half column">
+    <div class="field">
+      <label for="datepicker">Date Picker</label>
+      <input id="datepicker" data-init="false" class="datepicker" name="datepicker" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="timepicker">Time Picker</label>
+      <input id="timepicker" class="timepicker" name="timepicker" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="lookup" class="label">Products</label>
+      <input id="lookup" data-init="false" class="lookup" name="lookup" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="dropdown">Dropdown</label>
+      <select class="dropdown" id="dropdown" name="dropdown" data-init="false"/>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  var grid,
+    columns = [],
+    data = [];
+
+  // Some Sample Data for the Lookup
+  data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+  data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+  data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+  data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+  data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+  data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+  data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+
+  // Define Columns for the Lookup's Datagrid
+  columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
+  columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+  columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
+  columns.push({ id: 'quantity', filterType: 'text', name: 'Quantity', field: 'quantity'});
+  columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+
+  // ===========================================
+  // Invoke a bunch of components manually
+  // ===========================================
+  $('#dropdown').dropdown({
+    source: function (response, term) {
+      $.getJSON('{{basepath}}api/states', function(data, term) {
+        response(data);
+      });
+    }
+  });
+
+  $('#searchfield').searchfield({
+    clearable: true,
+    categories: ['Books', 'Movies', 'TV Shows', 'Video Games'],
+    showGoButton: true,
+    showCategoryText: true
+  });
+
+  $('#datepicker').datepicker({
+    dateFormat: 'yyyy/M/d',
+    timeFormat: 'HH:mm',
+    showTime: true
+  });
+
+  grid = $('#lookup').lookup({
+    field: 'lookup',
+    autoApply: true,
+    options: {
+      columns: columns,
+      dataset: data,
+      selectable: 'single',
+      rowNavigation: true,
+      toolbar: {
+        results: true,
+        keywordFilter: true,
+        advancedFilter: false,
+        actions: false,
+        selectable: 'single',
+        filterable: true,
+        views: true,
+        rowHeight: false,
+        collapsibleFilter: false,
+        fullWidth: true
+      }
+    }
+  });
+</script>

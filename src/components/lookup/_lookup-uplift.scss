@@ -11,6 +11,16 @@
   }
 }
 
+html.is-firefox {
+  .lookup-wrapper {
+    .trigger {
+      .icon {
+        top: 6px;
+      }
+    }
+  }
+}
+
 html[dir='rtl'] {
   .field-short {
     .lookup-wrapper {

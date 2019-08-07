@@ -1196,7 +1196,7 @@ MonthView.prototype = {
     }
 
     // Error - date not found
-    if (!dayObj.lenth === 0) {
+    if (!dayObj.length === 0) {
       return;
     }
 
@@ -1248,14 +1248,22 @@ MonthView.prototype = {
       let handled = false;
       const minDate = new Date(s.disable.minDate);
       const maxDate = new Date(s.disable.maxDate);
+      const resetRange = () => {
+        if (this.datepickerApi && s.range.useRange &&
+            s.range.first && s.range.first.date &&
+            s.range.second && s.range.second.date) {
+          this.datepickerApi.resetRange({ isData: true });
+        }
+      };
 
       // Arrow Down: select same day of the week in the next week
       if (key === 40) {
         handled = true;
-        if (this.settings.range.useRange) {
+        if (s.range.useRange) {
           idx = allCell.index(e.target) + 7;
           selector = allCell.eq(idx);
           if (idx < allCellLength) {
+            resetRange();
             this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
             this.setRangeSelBeforeFirstSel(selector);
             this.activeTabindex(selector, true);
@@ -1280,6 +1288,7 @@ MonthView.prototype = {
           idx = allCell.index(e.target) - 7;
           selector = allCell.eq(idx);
           if (idx > -1) {
+            resetRange();
             this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
             this.setRangeSelBeforeFirstSel(selector);
             this.activeTabindex(selector, true);
@@ -1304,6 +1313,7 @@ MonthView.prototype = {
           idx = allCell.index(e.target) - 1;
           selector = allCell.eq(idx);
           if (idx > -1) {
+            resetRange();
             this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
             this.setRangeSelBeforeFirstSel(selector);
             this.activeTabindex(selector, true);
@@ -1328,6 +1338,7 @@ MonthView.prototype = {
           idx = allCell.index(e.target) + 1;
           selector = allCell.eq(idx);
           if (idx < allCellLength) {
+            resetRange();
             this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
             this.setRangeSelBeforeFirstSel(selector);
             this.activeTabindex(selector, true);
@@ -1348,6 +1359,7 @@ MonthView.prototype = {
       // Page Up Selects Same Day Prev Month
       if (key === 33 && !e.altKey) {
         handled = true;
+        resetRange();
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
           if (minDate.getMonth() !== this.currentDate.getMonth()) {
             this.currentDate.setMonth(this.currentDate.getMonth() - 1);
@@ -1362,6 +1374,7 @@ MonthView.prototype = {
       // Page Down Selects Same Day Next Month
       if (key === 34 && !e.altKey) {
         handled = true;
+        resetRange();
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
           if (this.currentDate.getMonth() !== maxDate.getMonth()) {
             this.currentDate.setMonth(this.currentDate.getMonth() + 1);
@@ -1376,6 +1389,7 @@ MonthView.prototype = {
       // ctrl + Page Up Selects Same Day previous Year
       if (key === 33 && e.ctrlKey) {
         handled = true;
+        resetRange();
         this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
         this.selectDay(this.currentDate, false, false);
       }
@@ -1383,6 +1397,7 @@ MonthView.prototype = {
       // ctrl + Page Down Selects Same Day next Year
       if (key === 34 && e.ctrlKey) {
         handled = true;
+        resetRange();
         this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
         this.selectDay(this.currentDate, false, false);
       }
@@ -1392,6 +1407,7 @@ MonthView.prototype = {
         handled = true;
         const d = this.currentDate;
         let firstDay;
+        resetRange();
 
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
           if (minDate.getMonth() !== this.currentDate.getMonth()) {
@@ -1416,6 +1432,8 @@ MonthView.prototype = {
         handled = true;
         const d = this.currentDate;
         let lastDay;
+        resetRange();
+
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
           if (this.currentDate.getMonth() !== maxDate.getMonth()) {
             lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0);
@@ -1436,7 +1454,18 @@ MonthView.prototype = {
 
       // 't' selects today
       if (key === 84) {
-        this.selectToday();
+        if (s.range.useRange && this.datepickerApi) {
+          resetRange();
+          const keepFocus = !(s.range.first && s.range.first.date &&
+            (!s.range.second || (s.range.second && !s.range.second.date)));
+          this.datepickerApi.setToday(keepFocus);
+          if (!keepFocus && this.datepickerApi &&
+            typeof this.datepickerApi.closeCalendar === 'function') {
+            this.datepickerApi.closeCalendar();
+          }
+        } else {
+          this.selectToday();
+        }
         handled = true;
       }
 
@@ -1652,6 +1681,66 @@ MonthView.prototype = {
         }
       });
     }
+  },
+
+  /**
+   * Set range selection to active cell with click.
+   * @private
+   * @returns {number} status
+   */
+  setRangeSelByClick() {
+    // 0: cell did not found
+    // 1: cell found but not changed and not clicked
+    // 2: cell found and changed but not clicked
+    // 3: cell found and clicked
+    let status = 0;
+
+    const s = this.settings;
+    if (s.range.useRange) {
+      if (s.range.first && s.range.first.date && s.range.second && s.range.second.date) {
+        if (s.showTime && this.datepickerApi) {
+          const getTime = d => (new Date(d)).getTime();
+          const d = {
+            time1: getTime(s.range.first.date),
+            time2: getTime(s.range.second.date),
+            first: this.datepickerApi.setTime(s.range.first.date),
+            second: this.datepickerApi.setTime(s.range.second.date)
+          };
+          if (d.time1 !== getTime(d.first)) {
+            this.datepickerApi.setRangeToElem(d.first, true);
+            this.datepickerApi.setRangeToElem(d.second, false);
+            status = 2; // 2: cell found and changed but not clicked
+          }
+        }
+        // 1: cell found but not changed and not clicked
+        status = (status === 0) ? 1 : status;
+      } else {
+        let cell;
+        if (!s.range.first || (s.range.first && !s.range.first.date)) {
+          cell = this.dayMap.filter(d => d.elem.is('.is-selected'));
+          if (cell && cell.length) {
+            this.days.find('td:visible').removeClass('is-selected').removeAttr('aria-selected');
+            cell[0].elem.focus().trigger('click');
+            status = 3; // 3: cell found and clicked
+          }
+        } else if (!s.range.second || (s.range.second && !s.range.second.date)) {
+          cell = this.days.find('td.range-prev:visible').first();
+          if (!cell.length) {
+            cell = this.days.find('td.range-next:visible').last();
+          }
+          if (!cell.length) {
+            cell = this.dayMap.filter(d => d.elem.is('.is-selected'));
+          }
+          if (cell && cell.length) {
+            const elem = cell[0].elem || cell;
+            elem.focus().trigger('click');
+            status = 3; // 3: cell found and clicked
+          }
+        }
+      }
+    }
+
+    return status;
   },
 
   /**

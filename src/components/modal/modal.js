@@ -702,7 +702,7 @@ Modal.prototype = {
     // of this element if it's clicked.
     $('.skip-link').on('focus.modal', (e) => {
       e.preventDefault();
-      this.getTabbableElements().first.focus();
+      this.element.find(':focusable').first().focus();
     });
 
     function focusElement(self) {
@@ -818,20 +818,8 @@ Modal.prototype = {
     return this.visible;
   },
 
-  getTabbableElements() {
-    const allTabbableElements = $(this.element).find('a[href], area[href], input:not([disabled]),' +
-      'select:not([disabled]), textarea:not([disabled]),' +
-      'button:not([disabled]), iframe, object, embed, *[tabindex],' +
-      '*[contenteditable]').filter(':visible');
-    return {
-      first: allTabbableElements[0],
-      last: allTabbableElements[allTabbableElements.length - 1]
-    };
-  },
-
   keepFocus() {
     const self = this;
-    let tabbableElements;
 
     // Escape key
     $(document)
@@ -858,24 +846,35 @@ Modal.prototype = {
         }
       });
 
+    // Cache tab fields and update them if the DOM changes
+    const selector = ':focusable, [contenteditable], iframe';
+    let tabbableElements = self.element.find(selector);
+    let firstTabbable = tabbableElements.first();
+    let lastTabbable = tabbableElements.last();
+
+    this.changeObserver = new MutationObserver(() => {
+      tabbableElements = self.element.find(selector);
+      firstTabbable = tabbableElements.first();
+      lastTabbable = tabbableElements.last();
+    });
+    this.changeObserver.observe(self.element[0], { childList: true, subtree: true });
+
     $(self.element)
       .off('keypress.modal keydown.modal')
       .on('keypress.modal keydown.modal', (e) => {
         const keyCode = e.which || e.keyCode;
 
         if (keyCode === 9) {
-          tabbableElements = self.getTabbableElements();
+          const field = $(e.target);
 
           // Move focus to first element that can be tabbed if Shift isn't used
-          if (e.target === tabbableElements.last && !e.shiftKey) {
+          if (!e.shiftKey && field.is(lastTabbable)) {
             e.preventDefault();
-            tabbableElements.first.focus();
-          } else if (e.target === tabbableElements.first && e.shiftKey) {
+            tabbableElements.first().removeClass('hide-focus').focus();
+          } else if (e.shiftKey && field.is(firstTabbable)) {
             e.preventDefault();
-            tabbableElements.last.focus();
+            tabbableElements.last().removeClass('hide-focus').focus();
           }
-
-          self.element.find('#message-title').removeAttr('tabindex');
         }
       });
   },
@@ -890,6 +889,10 @@ Modal.prototype = {
       return true;
     }
 
+    if (this.changeObserver) {
+      this.changeObserver.disconnect();
+      delete this.changeObserver;
+    }
     const elemCanClose = this.element.triggerHandler('beforeclose');
     const self = this;
     const fields = this.element.find('[data-validate]');
@@ -975,6 +978,10 @@ Modal.prototype = {
   destroy() {
     const self = this;
     const canDestroy = this.element.trigger('beforedestroy');
+    if (this.changeObserver) {
+      this.changeObserver.disconnect();
+      delete this.changeObserver;
+    }
 
     if (!canDestroy) {
       return;
