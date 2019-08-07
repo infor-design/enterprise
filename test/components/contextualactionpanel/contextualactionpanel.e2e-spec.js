@@ -68,3 +68,27 @@ describe('ContextualActionPanel example-index tests', () => {
     });
   }
 });
+
+describe('ContextualActionPanel example-workspace tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/example-workspaces.html');
+  });
+
+  it('Should not have errrors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should open popup on click', async () => {
+    await element(by.id('workspace-cap')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBe(true);
+  });
+
+  it('Should show the long title on truncated text', async () => {
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('truncated-text'))), config.waitsFor);
+
+    expect(await element(by.id('truncated-text')).isDisplayed()).toBeTruthy();
+  });
+});
