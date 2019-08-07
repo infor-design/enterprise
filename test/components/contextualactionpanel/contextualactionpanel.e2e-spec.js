@@ -87,8 +87,8 @@ describe('ContextualActionPanel example-workspace tests', () => {
 
   it('Should show the long title on truncated text', async () => {
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('truncated-text'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('truncated-text-cap'))), config.waitsFor);
 
-    expect(await element(by.id('truncated-text')).isDisplayed()).toBeTruthy();
+    expect(await element(by.id('truncated-text-cap')).isDisplayed()).toBeTruthy();
   });
 });
