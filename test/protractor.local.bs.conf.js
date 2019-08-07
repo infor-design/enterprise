@@ -5,19 +5,20 @@ const browserstack = require('browserstack-local');
 const protractorImageComparison = require('protractor-image-comparison');
 const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
-const theme = process.env.ENTERPRISE_THEME || 'light'
-let browserstackBuildID = `${theme} theme: ci:bs e2e ${Date.now()}`;
+const theme = process.env.ENTERPRISE_THEME || 'soho'
+const variant = process.env.ENTERPRISE_VARIANT || 'light'
+let browserstackBuildID = `${Date.now()} : ${theme} theme : ${variant} variant : ci:bs e2e`;
 
 if (process.env.TRAVIS_BUILD_NUMBER) {
-  browserstackBuildID = process.env.TRAVIS_BUILD_NUMBER;
-  browserstackBuildID = `${theme} theme: ci:bs e2e ${process.env.TRAVIS_BUILD_NUMBER}`;
+  browserstackBuildID = `Travis Build No. ${process.env.TRAVIS_BUILD_NUMBER} : ${theme} theme: : ${variant} variant: ci:bs e2e`;
 }
 
 process.env.isBrowserStack = true;
 
 exports.config = {
   params: {
-    theme
+    theme,
+    variant
   },
   allScriptsTimeout: 12000,
   getPageTimeout: 10000,

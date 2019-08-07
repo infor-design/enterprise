@@ -4,18 +4,20 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
 const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
-const theme = process.env.ENTERPRISE_THEME || 'light'
-let browserstackBuildID = `${Date.now()} : ${theme} theme: ci:bs e2e`;
+const theme = process.env.ENTERPRISE_THEME || 'soho'
+const variant = process.env.ENTERPRISE_VARIANT || 'light'
+let browserstackBuildID = `${Date.now()} : ${theme} theme : ${variant} variant : ci:bs e2e`;
 
 if (process.env.TRAVIS_BUILD_NUMBER) {
-  browserstackBuildID = `Travis Build No. ${process.env.TRAVIS_BUILD_NUMBER} : ${theme} theme: ci:bs e2e`;
+  browserstackBuildID = `Travis Build No. ${process.env.TRAVIS_BUILD_NUMBER} : ${theme} theme: : ${variant} variant: ci:bs e2e`;
 }
 
 process.env.isBrowserStack = true;
 
 exports.config = {
   params: {
-    theme
+    theme,
+    variant
   },
   allScriptsTimeout: 12000,
   logLevel: 'INFO',
@@ -44,17 +46,15 @@ exports.config = {
     },
     name: `${theme} theme ci:bs e2e tests`,
     project: 'ids-enterprise-e2e-ci',
-    shardTestFiles: true,
+    shardTestFiles: false,
     maxInstances: 2
   },
   multiCapabilities: [
     {
-      browserName: 'Chrome',
-      browser_version: '76.0',
+      browserName: 'chrome',
       resolution: '1280x800',
       os_version: '10',
-      os: 'Windows',
-      'browserstack.selenium_version': '3.11.0',
+      os: 'Windows'
     }
   ],
   onPrepare: () => {
