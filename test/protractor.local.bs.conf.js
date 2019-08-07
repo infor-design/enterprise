@@ -49,12 +49,17 @@ exports.config = {
   },
   multiCapabilities: [
     {
-      browserName: 'Chrome',
-      browser_version: '67.0',
+      browserName: 'chrome',
       resolution: '1280x800',
       os_version: '10',
-      os: 'Windows',
-      'browserstack.selenium_version': '3.11.0',
+      os: 'Windows'
+    },
+    {
+      browserName: 'Edge',
+      resolution: '1280x800',
+      browser_version: '17.0',
+      os_version: '10',
+      os: 'Windows'
     },
     {
       browserName: 'Firefox',
@@ -62,8 +67,7 @@ exports.config = {
       resolution: '1280x800',
       os_version: '10',
       os: 'Windows',
-      'browserstack.geckodriver' : '0.21.0',
-      'browserstack.selenium_version': '3.11.0',
+      'browserstack.geckodriver' : '0.21.0'
     },
     {
       browserName: 'Safari',
@@ -71,16 +75,7 @@ exports.config = {
       resolution: '1280x960',
       os_version: 'High Sierra',
       os: 'OS X',
-      'browserstack.selenium_version': '3.11.0',
       'browserstack.safari.driver' : '2.48'
-    },
-    {
-      browserName: 'Edge',
-      resolution: '1280x800',
-      browser_version: '17.0',
-      os_version: '10',
-      os: 'Windows',
-      'browserstack.selenium_version': '3.11.0',
     },
     {
       browserName: 'IE',

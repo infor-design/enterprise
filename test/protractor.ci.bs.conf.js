@@ -45,9 +45,7 @@ exports.config = {
       browser: 'SEVERE'
     },
     name: `${theme} theme ci:bs e2e tests`,
-    project: 'ids-enterprise-e2e-ci',
-    shardTestFiles: false,
-    maxInstances: 2
+    project: 'ids-enterprise-e2e-ci'
   },
   multiCapabilities: [
     {
