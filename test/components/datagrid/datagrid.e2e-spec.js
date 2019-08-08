@@ -2108,7 +2108,7 @@ describe('Datagrid save user settings', () => {
     await utils.checkForErrors();
   });
 
-  if (!utils.isCI()) {
+  if (!utils.isCI() && !utils.isBS()) {
     it('Should save active page on reload', async () => {
       await element(by.css('li.pager-next a')).click();
       await browser.driver.sleep(config.sleep);
