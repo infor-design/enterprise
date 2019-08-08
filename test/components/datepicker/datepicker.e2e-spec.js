@@ -738,7 +738,7 @@ describe('Datepicker Umalqura Tests', () => {
     const datepickerEl = await element(by.id('islamic-date'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
     expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
@@ -748,7 +748,8 @@ describe('Datepicker Umalqura Tests', () => {
 
     const value = await element(by.id('islamic-date')).getAttribute('value');
 
-    expect(value.substr(0, 2)).toEqual('14');
+    expect([9, 10]).toContain(value.length);
+    await utils.checkForErrors();
   });
 });
 
