@@ -179,6 +179,7 @@ const customLocations = {
   '_multi-tabs': 'complex',
   '_tabs-module': 'complex',
   '_tabs-header': 'complex',
+  'toolbar-flex.item': '',
   validation: 'rules',
   'validation.utils': '',
   validator: 'foundational'
