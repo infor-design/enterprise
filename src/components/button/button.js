@@ -202,6 +202,8 @@ Button.prototype = {
       moreTooltip.destroy();
     }
 
+    this.element.data('hidefocus').destroy();
+
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 

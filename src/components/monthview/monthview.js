@@ -324,30 +324,29 @@ MonthView.prototype = {
    */
   showMonth(month, year) {
     const self = this;
+    const s = this.settings;
     const now = new Date();
 
     now.setHours(0);
     now.setMinutes(0);
     now.setSeconds(0);
 
-    let elementDate = (this.settings.activeDate && this.settings.activeDate.getDate()) ?
-      this.settings.activeDate : now;
-
+    let elementDate = (s.activeDate && s.activeDate.getDate()) ? s.activeDate : now;
     this.setCurrentCalendar();
 
     if (this.isIslamic) {
-      if (!this.settings.activeDateIslamic) {
+      if (!s.activeDateIslamic) {
         const gregorianDate = new Date();
         this.todayDateIslamic = this.conversions.fromGregorian(gregorianDate);
-        this.settings.activeDateIslamic = [];
-        this.settings.activeDateIslamic[0] = this.todayDateIslamic[0];
-        this.settings.activeDateIslamic[1] = this.todayDateIslamic[1];
-        this.settings.activeDateIslamic[2] = this.todayDateIslamic[2];
-        year = this.settings.activeDateIslamic[0];
-        month = this.settings.activeDateIslamic[1];
+        s.activeDateIslamic = [];
+        s.activeDateIslamic[0] = this.todayDateIslamic[0];
+        s.activeDateIslamic[1] = this.todayDateIslamic[1];
+        s.activeDateIslamic[2] = this.todayDateIslamic[2];
+        year = s.activeDateIslamic[0];
+        month = s.activeDateIslamic[1];
         elementDate = this.conversions.fromGregorian(now);
       } else {
-        elementDate = this.settings.activeDateIslamic;
+        elementDate = s.activeDateIslamic;
       }
     }
 
@@ -374,7 +373,7 @@ MonthView.prototype = {
     let days = this.currentCalendar.days.narrow;
     days = days || this.currentCalendar.days.abbreviated;
 
-    if (!this.settings.isPopup) {
+    if (!s.isPopup) {
       days = this.currentCalendar.days.abbreviated;
     }
     const monthName = this.currentCalendar.months.wide[month];
@@ -385,8 +384,8 @@ MonthView.prototype = {
     // Set the Days of the week
     let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
 
-    if (this.settings.firstDayOfWeek) {
-      firstDayofWeek = this.settings.firstDayOfWeek;
+    if (s.firstDayOfWeek) {
+      firstDayofWeek = s.firstDayOfWeek;
     }
 
     this.dayNames.find('th').each(function (i) {
@@ -407,7 +406,7 @@ MonthView.prototype = {
       this.header.find('.year').insertBefore(this.header.find('.month'));
     }
 
-    if (this.settings.headerStyle === 'full' && this.monthPicker) {
+    if (s.headerStyle === 'full' && this.monthPicker) {
       this.monthPicker.val(Locale.formatDate(new Date(year, month, 1), { date: 'year', locale: this.locale.name }));
       this.monthPicker.prev('.year').text(year);
       this.monthPicker.prev().prev('.month').text(month);
@@ -431,7 +430,6 @@ MonthView.prototype = {
     let exMonth;
     let exDay;
 
-    const s = this.settings;
     this.dayMap = [];
     this.days.find('td').each(function (i) {
       const th = $(this).removeClass('alternate prev-month next-month is-selected range is-today');
@@ -525,14 +523,14 @@ MonthView.prototype = {
 
     if (!this.currentDate) {
       if (this.isIslamic) {
-        this.currentIslamicDate = [self.currentYear, self.currentMonth, self.currentDay];
+        this.currentIslamicDate = [this.currentYear, this.currentMonth, this.currentDay];
         this.currentDate = this.conversions.toGregorian(
-          self.currentYear,
-          self.currentMonth,
-          self.currentDay
+          this.currentYear,
+          this.currentMonth,
+          this.currentDay
         );
       } else {
-        this.currentDate = new Date(self.currentYear, self.currentMonth, self.currentDay);
+        this.currentDate = new Date(this.currentYear, this.currentMonth, this.currentDay);
       }
     }
 
@@ -540,14 +538,14 @@ MonthView.prototype = {
     this.validatePrevNext();
 
     // Select the same day as last month
-    if (this.element.find('td.is-selected').length === 0) {
+    if (!s.range.useRange && this.element.find('td.is-selected').length === 0) {
       this.element.find('td[tabindex]').removeAttr('tabindex');
       this.element
         .find('td:not(.alternate) .day-text')
         .filter(function () {
           let currentDay = self.currentDay;
-          if (self.settings.activeDate) {
-            currentDay = self.settings.activeDate.getDate();
+          if (s.activeDate) {
+            currentDay = s.activeDate.getDate();
             self.currentDay = currentDay;
           }
           return parseInt($(this).text(), 10) === parseInt(currentDay, 10);
@@ -860,51 +858,55 @@ MonthView.prototype = {
    */
   handleEvents() {
     const self = this;
+    const s = this.settings;
 
     this.element.off(`updated.${COMPONENT_NAME}`).on(`updated.${COMPONENT_NAME}`, () => {
-      self.updated();
+      this.updated();
     });
 
     // Change Month Events
     this.header.off('click.monthview').on('click.monthview', '.btn-icon', function () {
       const isNext = $(this).is('.next');
       const range = {};
+      const d = { month: self.currentMonth, year: self.currentYear };
 
-      if (self.settings.range.useRange) {
+      if (s.range.useRange) {
         if (isNext) {
-          range.date = new Date(self.currentYear, (self.currentMonth + 1), (self.element.find('.next-month:visible').length + 1));
+          range.date = new Date(d.year, (d.month + 1), (self.element.find('.next-month:visible').length + 1));
         } else {
-          range.date = new Date(self.currentYear, self.currentMonth, 1);
+          range.date = new Date(d.year, d.month, 1);
           range.date.setDate(range.date.getDate() - (self.days.find('.prev-month:visible').length + 1));
         }
+        d.month += isNext ? 1 : -1;
+      } else {
+        self.currentMonth += isNext ? 1 : -1;
+        self.currentDate.setMonth(self.currentMonth);
+        self.currentYear = parseInt(self.element[0].querySelector('span.year').innerText, 10);
+        self.currentDate.setFullYear(self.currentYear);
+        d.month = self.currentMonth;
+        d.year = self.currentYear;
       }
+      self.showMonth(d.month, d.year);
 
-      self.currentMonth += (isNext ? 1 : -1);
-      self.currentDate.setMonth(self.currentMonth);
-      self.currentYear = parseInt(self.element[0].querySelector('span.year').innerText, 10);
-      self.currentDate.setFullYear(self.currentYear);
-
-      self.showMonth(self.currentMonth, self.currentYear);
-
-      if (self.settings.range.useRange) {
+      if (s.range.useRange) {
         range.formatedDate = Locale.formatDate(range.date, { date: 'full', locale: self.locale.name });
         range.cell = self.days.find(`[aria-label="${range.formatedDate}"]`);
-        self.setRangeOnCell(self.settings.range.second ? false : range.cell);
+        self.setRangeOnCell(s.range.second ? false : range.cell);
       }
     });
 
-    if (self.settings.range.useRange) {
+    if (s.range.useRange) {
       this.header
         .off('mouseover.datepicker')
         .on('mouseover.datepicker', 'button', function () {
-          if (self.settings.range.extra) {
-            self.setRangeOnCell($(this).is('.next') ? self.settings.range.extra.maxCell : self.settings.range.extra.minCell);
+          if (s.range.extra) {
+            self.setRangeOnCell($(this).is('.next') ? s.range.extra.maxCell : s.range.extra.minCell);
           }
         })
         .off('focus.datepicker')
         .on('focus.datepicker', 'button:not(.hide-focus)', function () {
-          if (self.settings.range.extra) {
-            self.setRangeOnCell($(this).is('.next') ? self.settings.range.extra.maxCell : self.settings.range.extra.minCell);
+          if (s.range.extra) {
+            self.setRangeOnCell($(this).is('.next') ? s.range.extra.maxCell : s.range.extra.minCell);
           }
         });
 
@@ -915,28 +917,31 @@ MonthView.prototype = {
         });
     }
 
-    if (self.settings.headerStyle === 'full' && this.monthPicker) {
+    if (s.headerStyle === 'full' && this.monthPicker) {
       this.monthPicker.off('change.monthview').on('change.monthview', function () {
         const picker = $(this).data('datepicker');
         self.selectDay(picker.currentDate, false, true);
       });
 
       this.todayLink.off('click.monthview').on('click.monthview', () => {
-        self.selectToday();
+        this.selectToday();
       });
     }
 
     // Allow dates to be selected
-    if (self.settings.selectable) {
-      self.element.addClass('is-selectable').off('click.monthview-day').on('click.monthview-day', 'td', (e) => {
-        const key = e.currentTarget.getAttribute('data-key');
-        self.lastClickedKey = key;
+    if (s.selectable) {
+      this.element
+        .addClass('is-selectable')
+        .off('click.monthview-day')
+        .on('click.monthview-day', 'td', (e) => {
+          const key = e.currentTarget.getAttribute('data-key');
+          this.lastClickedKey = key;
 
-        if (e.currentTarget.classList.contains('is-disabled')) {
-          return;
-        }
-        self.selectDay(key, false, true);
-      });
+          if (e.currentTarget.classList.contains('is-disabled')) {
+            return;
+          }
+          this.selectDay(key, false, true);
+        });
     }
 
     this.handleMonthYearPane().handleKeys();
@@ -949,6 +954,7 @@ MonthView.prototype = {
    * @returns {object} The component for chaining.
    */
   handleMonthYearPane() {
+    const s = this.settings;
     const appendYear = (upDown) => {
       const yearContainer = this.monthYearPane[0].querySelector('.picklist.is-year');
       const yearList = yearContainer.children;
@@ -1007,35 +1013,55 @@ MonthView.prototype = {
       target.setAttribute('tabindex', '0');
     };
 
+    // Set selecting the month or year
+    // by click, keyboard from `monthYearPane`
+    // target: clicked or keyed element
+    // cssClass: target option `is-month` or `is-year`
+    const setMonthYearPane = (target, cssClass) => {
+      const elem = sel => this.monthYearPane[0].querySelector(`.is-${sel} .is-selected a`);
+      const d = cssClass === 'is-month' ? {
+        month: parseInt(target.getAttribute('data-month'), 10),
+        year: parseInt(elem('year').getAttribute('data-year'), 10)
+      } : {
+        month: parseInt(elem('month').getAttribute('data-month'), 10),
+        year: parseInt(target.getAttribute('data-year'), 10)
+      };
+
+      if (!s.range.useRange) {
+        this.currentMonth = d.month;
+        this.currentDate.setMonth(this.currentMonth);
+        this.currentYear = d.year;
+        this.currentDate.setFullYear(this.currentYear);
+        d.month = this.currentMonth;
+        d.year = this.currentYear;
+      }
+
+      if (s.hideDays) {
+        selectPicklistItem(target, cssClass);
+        if (this.element.hasClass(`${cssClass}only`)) {
+          this.monthYearPane.parent().find('button.is-select-month').click();
+        }
+      } else {
+        const triggerBtn = this.element[0].querySelector('#btn-monthyear-pane');
+        this.showMonth(d.month, d.year);
+        this.monthYearPane.data('expandablearea').close();
+        if (triggerBtn) {
+          DOM.removeClass(triggerBtn, 'hide-focus');
+          triggerBtn.focus();
+        }
+      }
+    };
+
     // Handle selecting a year, or month
     this.monthYearPane
       .off('click.picklist-month')
       .on('click.picklist-month', '.picklist.is-month li', (e) => {
-        const triggerBtn = this.element[0].querySelector('#btn-monthyear-pane');
-        this.currentMonth = parseInt(e.target.getAttribute('data-month'), 10);
-        this.currentDate.setMonth(this.currentMonth);
-        this.currentYear = parseInt(this.monthYearPane[0].querySelector('.is-year .is-selected a').getAttribute('data-year'), 10);
-        this.currentDate.setFullYear(this.currentYear);
-
-        if (this.settings.hideDays && this.element.hasClass('is-monthonly')) {
-          selectPicklistItem(e.target, 'is-month');
-          this.monthYearPane.parent().find('button.is-select-month').click();
-        } else if (this.settings.hideDays) {
-          selectPicklistItem(e.target, 'is-month');
-        } else {
-          this.showMonth(this.currentMonth, this.currentYear);
-          this.monthYearPane.data('expandablearea').close();
-          if (triggerBtn) {
-            DOM.removeClass(triggerBtn, 'hide-focus');
-            triggerBtn.focus();
-          }
-        }
+        setMonthYearPane(e.target, 'is-month');
       });
 
     this.monthYearPane
       .off('click.picklist-year')
       .on('click.picklist-year', '.picklist.is-year li', (e) => {
-        const triggerBtn = this.element[0].querySelector('#btn-monthyear-pane');
         if (e.currentTarget.classList.contains('up')) {
           appendYear('up');
           return;
@@ -1045,28 +1071,13 @@ MonthView.prototype = {
           return;
         }
 
-        this.currentYear = parseInt(e.target.getAttribute('data-year'), 10);
-        this.currentDate.setFullYear(this.currentYear);
-        this.currentMonth = parseInt(this.monthYearPane[0].querySelector('.is-month .is-selected a').getAttribute('data-month'), 10);
-        this.currentDate.setMonth(this.currentMonth);
-
-        if (this.settings.hideDays && this.element.hasClass('is-yearonly')) {
-          selectPicklistItem(e.target, 'is-year');
-          this.monthYearPane.parent().find('button.is-select-month').click();
-        } else if (this.settings.hideDays) {
-          selectPicklistItem(e.target, 'is-year');
-        } else {
-          this.showMonth(this.currentMonth, this.currentYear);
-          this.monthYearPane.data('expandablearea').close();
-          DOM.removeClass(triggerBtn, 'hide-focus');
-          triggerBtn.focus();
-        }
+        setMonthYearPane(e.target, 'is-year');
       });
 
     // Handle behaviors when expanding and collapsing like disabling buttons and setting height
     this.monthYearPane.on('expand.monthviewpane', () => {
       // Disable the main page buttons for tabbing
-      if (!this.settings.hideDays) {
+      if (!s.hideDays) {
         this.element.find('.btn-icon, .btn-tertiary, .btn-primary, td.is-selected').attr('disabled', 'true');
         this.element.find('td.is-selected').removeAttr('tabindex');
         this.monthYearPane.find('.content').css('height', this.header.parent().height() - this.header.height());
@@ -1081,7 +1092,7 @@ MonthView.prototype = {
       });
     }).on('collapse.monthviewpane', () => {
       // Enable it all again
-      if (!this.settings.hideDays) {
+      if (!s.hideDays) {
         this.element.find('.btn-icon, .btn-tertiary, .btn-primary').removeAttr('disabled');
         this.element.find('td.is-selected').attr('tabindex', '0');
       }
@@ -1111,18 +1122,26 @@ MonthView.prototype = {
         const isDown = e.currentTarget.parentNode.classList.contains('down');
         const isYear = e.currentTarget.parentNode.parentNode.classList.contains('is-year');
         const isMonth = e.currentTarget.parentNode.parentNode.classList.contains('is-month');
+        let handle = false;
 
         if (e.key === 'ArrowUp' && (isYear || isMonth)) {
           moveToItem(e, 'prev');
-        }
-        if (e.key === 'ArrowDown' && (isYear || isMonth)) {
+          handle = true;
+        } else if (e.key === 'ArrowDown' && (isYear || isMonth)) {
           moveToItem(e, 'next');
+          handle = true;
+        } else if (e.key === 'Enter') {
+          if (isUp || isDown) {
+            appendYear(isUp ? 'up' : 'down');
+            handle = true;
+          } else if (isYear || isMonth) {
+            setMonthYearPane(e.target, (isYear ? 'is-year' : 'is-month'));
+            handle = true;
+          }
         }
-        if (e.key === 'Enter' && (isUp)) {
-          appendYear('up');
-        }
-        if (e.key === 'Enter' && (isDown)) {
-          appendYear('down');
+
+        if (handle) {
+          e.preventDefault();
         }
       });
 
@@ -1177,7 +1196,7 @@ MonthView.prototype = {
     }
 
     // Error - date not found
-    if (!dayObj.lenth === 0) {
+    if (!dayObj.length === 0) {
       return;
     }
 
@@ -1229,15 +1248,24 @@ MonthView.prototype = {
       let handled = false;
       const minDate = new Date(s.disable.minDate);
       const maxDate = new Date(s.disable.maxDate);
+      const resetRange = () => {
+        if (this.datepickerApi && s.range.useRange &&
+            s.range.first && s.range.first.date &&
+            s.range.second && s.range.second.date) {
+          this.datepickerApi.resetRange({ isData: true });
+        }
+      };
 
       // Arrow Down: select same day of the week in the next week
       if (key === 40) {
         handled = true;
-        if (this.settings.range.useRange) {
+        if (s.range.useRange) {
           idx = allCell.index(e.target) + 7;
           selector = allCell.eq(idx);
           if (idx < allCellLength) {
+            resetRange();
             this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+            this.setRangeSelBeforeFirstSel(selector);
             this.activeTabindex(selector, true);
           }
         } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
@@ -1260,7 +1288,9 @@ MonthView.prototype = {
           idx = allCell.index(e.target) - 7;
           selector = allCell.eq(idx);
           if (idx > -1) {
+            resetRange();
             this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+            this.setRangeSelBeforeFirstSel(selector);
             this.activeTabindex(selector, true);
           }
         } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
@@ -1283,7 +1313,9 @@ MonthView.prototype = {
           idx = allCell.index(e.target) - 1;
           selector = allCell.eq(idx);
           if (idx > -1) {
+            resetRange();
             this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+            this.setRangeSelBeforeFirstSel(selector);
             this.activeTabindex(selector, true);
           }
         } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
@@ -1306,7 +1338,9 @@ MonthView.prototype = {
           idx = allCell.index(e.target) + 1;
           selector = allCell.eq(idx);
           if (idx < allCellLength) {
+            resetRange();
             this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+            this.setRangeSelBeforeFirstSel(selector);
             this.activeTabindex(selector, true);
           }
         } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
@@ -1325,6 +1359,7 @@ MonthView.prototype = {
       // Page Up Selects Same Day Prev Month
       if (key === 33 && !e.altKey) {
         handled = true;
+        resetRange();
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
           if (minDate.getMonth() !== this.currentDate.getMonth()) {
             this.currentDate.setMonth(this.currentDate.getMonth() - 1);
@@ -1339,6 +1374,7 @@ MonthView.prototype = {
       // Page Down Selects Same Day Next Month
       if (key === 34 && !e.altKey) {
         handled = true;
+        resetRange();
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
           if (this.currentDate.getMonth() !== maxDate.getMonth()) {
             this.currentDate.setMonth(this.currentDate.getMonth() + 1);
@@ -1353,6 +1389,7 @@ MonthView.prototype = {
       // ctrl + Page Up Selects Same Day previous Year
       if (key === 33 && e.ctrlKey) {
         handled = true;
+        resetRange();
         this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
         this.selectDay(this.currentDate, false, false);
       }
@@ -1360,6 +1397,7 @@ MonthView.prototype = {
       // ctrl + Page Down Selects Same Day next Year
       if (key === 34 && e.ctrlKey) {
         handled = true;
+        resetRange();
         this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
         this.selectDay(this.currentDate, false, false);
       }
@@ -1369,6 +1407,7 @@ MonthView.prototype = {
         handled = true;
         const d = this.currentDate;
         let firstDay;
+        resetRange();
 
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
           if (minDate.getMonth() !== this.currentDate.getMonth()) {
@@ -1393,6 +1432,8 @@ MonthView.prototype = {
         handled = true;
         const d = this.currentDate;
         let lastDay;
+        resetRange();
+
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
           if (this.currentDate.getMonth() !== maxDate.getMonth()) {
             lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0);
@@ -1413,7 +1454,18 @@ MonthView.prototype = {
 
       // 't' selects today
       if (key === 84) {
-        this.selectToday();
+        if (s.range.useRange && this.datepickerApi) {
+          resetRange();
+          const keepFocus = !(s.range.first && s.range.first.date &&
+            (!s.range.second || (s.range.second && !s.range.second.date)));
+          this.datepickerApi.setToday(keepFocus);
+          if (!keepFocus && this.datepickerApi &&
+            typeof this.datepickerApi.closeCalendar === 'function') {
+            this.datepickerApi.closeCalendar();
+          }
+        } else {
+          this.selectToday();
+        }
         handled = true;
       }
 
@@ -1632,6 +1684,66 @@ MonthView.prototype = {
   },
 
   /**
+   * Set range selection to active cell with click.
+   * @private
+   * @returns {number} status
+   */
+  setRangeSelByClick() {
+    // 0: cell did not found
+    // 1: cell found but not changed and not clicked
+    // 2: cell found and changed but not clicked
+    // 3: cell found and clicked
+    let status = 0;
+
+    const s = this.settings;
+    if (s.range.useRange) {
+      if (s.range.first && s.range.first.date && s.range.second && s.range.second.date) {
+        if (s.showTime && this.datepickerApi) {
+          const getTime = d => (new Date(d)).getTime();
+          const d = {
+            time1: getTime(s.range.first.date),
+            time2: getTime(s.range.second.date),
+            first: this.datepickerApi.setTime(s.range.first.date),
+            second: this.datepickerApi.setTime(s.range.second.date)
+          };
+          if (d.time1 !== getTime(d.first)) {
+            this.datepickerApi.setRangeToElem(d.first, true);
+            this.datepickerApi.setRangeToElem(d.second, false);
+            status = 2; // 2: cell found and changed but not clicked
+          }
+        }
+        // 1: cell found but not changed and not clicked
+        status = (status === 0) ? 1 : status;
+      } else {
+        let cell;
+        if (!s.range.first || (s.range.first && !s.range.first.date)) {
+          cell = this.dayMap.filter(d => d.elem.is('.is-selected'));
+          if (cell && cell.length) {
+            this.days.find('td:visible').removeClass('is-selected').removeAttr('aria-selected');
+            cell[0].elem.focus().trigger('click');
+            status = 3; // 3: cell found and clicked
+          }
+        } else if (!s.range.second || (s.range.second && !s.range.second.date)) {
+          cell = this.days.find('td.range-prev:visible').first();
+          if (!cell.length) {
+            cell = this.days.find('td.range-next:visible').last();
+          }
+          if (!cell.length) {
+            cell = this.dayMap.filter(d => d.elem.is('.is-selected'));
+          }
+          if (cell && cell.length) {
+            const elem = cell[0].elem || cell;
+            elem.focus().trigger('click');
+            status = 3; // 3: cell found and clicked
+          }
+        }
+      }
+    }
+
+    return status;
+  },
+
+  /**
    * Get date from given cell.
    * @private
    * @param {object} cell to get date.
@@ -1659,6 +1771,22 @@ MonthView.prototype = {
     }
 
     return { year, month, day };
+  },
+
+  /**
+   * Set range selection before first date selected
+   * @private
+   * @param {object} elem to set selection
+   * @returns {void}
+   */
+  setRangeSelBeforeFirstSel(elem) {
+    const s = this.settings;
+    if (s.range.useRange && $('#monthview-popup:visible')) {
+      if (!s.range.first) {
+        $('td', this.element).removeClass('is-selected');
+        elem.addClass('is-selected');
+      }
+    }
   },
 
   /**

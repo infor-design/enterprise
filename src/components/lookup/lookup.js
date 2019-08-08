@@ -443,6 +443,8 @@ Lookup.prototype = {
     search = null;
 
     if (this.grid && this.grid.destroy) {
+      this.grid.deSelectAllRows();
+      this.grid.clearFilter();
       this.grid.destroy();
       this.grid = null;
     }

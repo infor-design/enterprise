@@ -2051,7 +2051,6 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
     await browser.actions().click(checkboxTd).perform();
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(10);
-    expect(await element.all(by.css('.contextual-toolbar .title.selection-count')).getText()).toEqual(['10 Selected']);
     expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked.is-partial')).isPresent()).toBeFalsy();
     expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked')).isPresent()).toBeTruthy();
 
@@ -2059,7 +2058,6 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(8);
-    expect(await element.all(by.css('.contextual-toolbar .title.selection-count')).getText()).toEqual(['8 Selected']);
     expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked.is-partial')).isPresent()).toBeTruthy();
     expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked')).isPresent()).toBeTruthy();
   });

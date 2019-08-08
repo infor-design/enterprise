@@ -1,0 +1,48 @@
+<div class="row">
+	<div class="twelve columns">
+
+		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
+
+		<!-- Modal Example -->
+		<div id="modal-add-context" class="hidden">
+
+		</div>
+
+	</div>
+</div>
+
+<script>
+
+  // Append 800 inputs and text inputs
+  var html = '';
+  var content = $('#modal-add-context');
+  for (var i = 0; i < 500; i++) {
+    html += '<div class="field">'+
+				'<label for="subject' + i + '">Problem ' + i + '</label>'+
+				'<input type="text" id="subject' + i + '" name="subject' + i + '" />'+
+			'</div>';
+  };
+  content.append(html);
+
+  $('#add-context').on('click', function () {
+
+    $('body').modal({
+      title: 'Heavily Populated Modal',
+      content: content,
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    });
+  });
+
+</script>

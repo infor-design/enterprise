@@ -43,6 +43,7 @@ const COMPONENT_NAME = 'listview';
  * @param {boolean} [settings.showPageSizeSelector=false] If true the page size select will be shown when paging.
  * @param {object} [settings.listFilterSettings=null] If defined as an object, passes settings into the internal ListFilter component
  * @param {object} [settings.pagerSettings=null] If defined as an object, passes settings into the internal Pager component
+ * @param {object} [settings.searchTermMinSize=1] The search term will trigger filtering only when its length is greater than or equals to the value.
  */
 const LISTVIEW_DEFAULTS = {
   dataset: [],
@@ -65,7 +66,8 @@ const LISTVIEW_DEFAULTS = {
   pagerSettings: {
     showFirstButton: false,
     showLastButton: false
-  }
+  },
+  searchTermMinSize: 1
 };
 
 function ListView(element, settings) {
@@ -342,6 +344,10 @@ ListView.prototype = {
       first.removeAttr('tabindex');
     }
 
+    // When DOM items are not rendered with "mustache" template, filtered items 
+    // have to be hidden specifically.  
+    const hideFlag = items.length > displayedDataset.length;
+
     items.each(function (i) {
       const item = $(this);
 
@@ -358,14 +364,28 @@ ListView.prototype = {
         }
 
         if (self.settings.showCheckboxes) {
-          // For mixed selection mode primarily append a checkbox object
-          item.prepend(`<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox">
-            <input tabindex="-1" type="checkbox" class="checkbox">
-            <span class="label-text" role="presentation">
-              <span class="audible">${Locale.translate('Checkbox')} ${Locale.translate('NotSelected')}.</span>
-            </span>
-          </label>`);
+          // Only need one checkbox 
+          if (item.children('.listview-selection-checkbox').length === 0) {
+            // For mixed selection mode primarily append a checkbox object
+            item.prepend(`<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox">
+              <input tabindex="-1" type="checkbox" class="checkbox">
+              <span class="label-text" role="presentation">
+                <span class="audible">${Locale.translate('Checkbox')} ${Locale.translate('NotSelected')}.</span>
+              </span>
+            </label>`);
+          }
         }
+      }
+
+      // Hide filtered items
+      if (hideFlag) {
+        const n = firstRecordIdx + i;
+        if (n < self.settings.dataset.length) {
+          const data = self.settings.dataset[n];
+          item.css('display', (data.isFiltered === undefined || data.isFiltered) ? '' : 'none');
+        }
+      } else {
+        item.css('display', '');
       }
 
       // Add Aria
@@ -659,12 +679,25 @@ ListView.prototype = {
 
     // Make sure there is a search term...and its not the
     // same as the previous term
-    if (searchFieldVal.length < 2 || this.searchTerm === searchFieldVal) {
+    if (searchFieldVal.length < this.settings.searchTermMinSize) {
+      this.resetSearch();
+      return;
+    }
+
+    if (this.searchTerm === searchFieldVal) {
       return;
     }
 
     // Set a global "searchTerm" and get the list of elements
     this.searchTerm = searchFieldVal;
+
+    // Clean highlight marks before new filter action
+    this.element.unhighlight();
+
+    // Reset filter status
+    this.settings.dataset.forEach(function (item) {
+      item.isFiltered = false;
+    });
 
     // Filter the results and highlight things
     let results = this.listfilter.filter(this.settings.dataset, this.searchTerm);
@@ -698,6 +731,13 @@ ListView.prototype = {
    * @returns {void}
    */
   resetSearch() {
+    this.element.unhighlight();
+
+    // reset filter status
+    this.settings.dataset.forEach(function (item) {
+      delete item.isFiltered;
+    });
+
     if (this.filteredDataset) {
       delete this.filteredDataset;
     }
@@ -1288,10 +1328,10 @@ ListView.prototype = {
         }
 
         if ((!isSelect) &&
-            (!item.hasClass('is-disabled')) &&
-            (self.settings.selectOnFocus) &&
-            (self.settings.selectable !== 'multiple') &&
-            (self.settings.selectable !== 'mixed')) {
+          (!item.hasClass('is-disabled')) &&
+          (self.settings.selectOnFocus) &&
+          (self.settings.selectable !== 'multiple') &&
+          (self.settings.selectable !== 'mixed')) {
           self.select(item);
           isSelect = true;
           isFocused = true;
