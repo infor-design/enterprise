@@ -468,6 +468,16 @@ Homepage.prototype = {
   },
 
   /**
+   * Refresh resize calculations to update any changes.
+   * @param {boolean} animate False will disable animation during refresh
+   * @returns {void}
+   */
+  refresh(animate) {
+    animate = typeof animate !== 'undefined' ? animate : this.settings.animate;
+    this.resize(this, animate);
+  },
+
+  /**
    * Detach events
    * @private
    * @returns {void}
