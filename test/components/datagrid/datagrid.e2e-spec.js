@@ -1398,6 +1398,36 @@ describe('Datagrid Custom Tooltip tests', () => {
   });
 });
 
+describe('Datagrid filter load data and update columns tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-filter-load-data-update-columns?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should select and filter', async () => {
+    expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(7);
+    const multiselectEl = await element(by.css('.datagrid-filter-wrapper div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
+    await multiselectEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+    const multiselectSearchEl = await element(by.id('dropdown-search'));
+    await multiselectSearchEl.click();
+    await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await multiselectSearchEl.sendKeys(protractor.Key.SPACE);
+    await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await multiselectSearchEl.sendKeys(protractor.Key.SPACE);
+
+    expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(4);
+    await utils.checkForErrors();
+  });
+});
+
 describe('Datagrid filter single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-singleselect');
