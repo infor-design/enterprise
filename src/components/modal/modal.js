@@ -1039,7 +1039,7 @@ Modal.prototype = {
             elem = self.trigger[0];
           }
         }
-        if (elem) {
+        if (elem && modalApi && modalApi.overlay) {
           modalApi.overlay.remove();
           $.removeData(elem, COMPONENT_NAME);
         }
