@@ -16,7 +16,7 @@
 }
 
 .toolbar-section {
-  @include transition(width 100ms $cubic-bezier-ease, padding 100ms $cubic-bezier-ease);
+  @include transition(width 100ms $cubic-ease, padding 100ms $cubic-ease);
 
   white-space: nowrap;
   width: auto;

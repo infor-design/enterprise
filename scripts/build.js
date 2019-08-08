@@ -288,13 +288,13 @@ function addDynamicCssThemePaths() {
 function replaceDashesWithCaptials(str) {
   str = capitalize(str);
 
-  const matches = str.match(/(-\w)+/g);
+  const matches = str.match(/([-|\.]\w)+/g);
   if (!matches) {
     return str;
   }
 
   matches.forEach((match) => {
-    str = str.replace(match, capitalize(match.replace('-', '')));
+    str = str.replace(match, capitalize(match.replace(/[-|\.]/, '')));
   });
   return str;
 }

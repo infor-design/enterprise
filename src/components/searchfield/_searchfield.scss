@@ -17,17 +17,15 @@
   box-shadow: 0 3px 5px 0 rgba($searchfield-context-box-shadow-color, 0.7);
 }
 
-$cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
-
 .searchfield-wrapper {
   display: inline-block;
   margin-bottom: 20px;
   position: relative;
 
-  @include transition(width 300ms $cubic-bezier-ease,
-  left 300ms $cubic-bezier-ease,
-  right 300ms $cubic-bezier-ease,
-  box-shadow 300ms $cubic-bezier-ease);
+  @include transition(width 300ms $cubic-ease,
+  left 300ms $cubic-ease,
+  right 300ms $cubic-ease,
+  box-shadow 300ms $cubic-ease);
 
   > .icon {
     background-color: rgba($theme-color-palette-white, 0); // IE 10
@@ -70,8 +68,8 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
     padding-left: 34px;
     padding-right: 10px;
 
-    @include transition(background-color 300ms $cubic-bezier-ease,
-    border-color 300ms $cubic-bezier-ease);
+    @include transition(background-color 300ms $cubic-ease,
+    border-color 300ms $cubic-ease);
   }
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
@@ -243,7 +241,7 @@ $cubic-bezier-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 
   // Buttons inside of searchfields
   .btn {
-    @include transition(border 300ms $cubic-bezier-ease); // Matches the one on inputs
+    @include transition(border 300ms $cubic-ease); // Matches the one on inputs
 
     background-color: transparent;
     border-bottom-right-radius: 0;
