@@ -43,6 +43,41 @@ function Homepage(element, settings) {
 Homepage.prototype = {
 
   /**
+   * @name Homepage#rowsAndCols
+   * @type Array
+   * @default []
+   * @readonly
+   * Stores information about the current number of rows and columns that make up the Homepage layout.
+   * Each entry in the array
+   */
+
+  /**
+   * @returns {object} containing information about the current state of the Homepages component.
+   */
+  get state() {
+    let rows = this.rowsAndCols.length;
+    const cols = rows ? this.rowsAndCols[0].length : 0;
+    const settings = this.settings;
+
+    const lastRow = this.rowsAndCols[rows - 1];
+    if (lastRow.indexOf(false) === -1) {
+      rows -= 1;
+    }
+
+    function getContainerHeight() {
+      const topGutter = settings.gutterSize;
+      return topGutter + ((settings.gutterSize) + (settings.widgetHeight)) * rows;
+    }
+
+    return {
+      rows,
+      cols,
+      containerHeight: getContainerHeight(),
+      matrix: this.rowsAndCols
+    };
+  },
+
+  /**
    * @private
    * @returns {void}
    */
@@ -384,9 +419,11 @@ Homepage.prototype = {
     * @event resize
     * @memberof Homepage
     * @type {object}
-    * @param {object} event - The jquery event object
+    * @param {object} event The jquery event object
+    * @param {number} columns The number of columns provided by this instance's settings
+    * @param {object} metadata A compilation of current state information from the instance.
     */
-    self.element.triggerHandler('resize', self.settings.columns);
+    self.element.triggerHandler('resize', [self.settings.columns, self.state]);
   },
 
   /**

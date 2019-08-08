@@ -1,34 +1,25 @@
-<body class="no-scroll">
-  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
-  {{> includes/svg-inline-refs}}
+<div id="maincontent" class="page-container scrollable" role="main">
+  <div class="homepage" data-columns="3">
+    <div class="content">
 
-  <div class="page-container no-scroll">
-    {{> includes/header}}
-
-    <div id="maincontent" class="page-container scrollable" role="main">
-      <div class="homepage" data-columns="3">
-        <div class="content">
-
-          <div class="widget double-width double-height">
-            <div class="widget-header">
-              <h2 tabindex="0" class="widget-title">Widget 2x2 (Dom Order 1)</h2>
-            </div>
-          </div>
-
-          <div class="widget">
-            <div class="widget-header">
-              <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 2)</h2>
-            </div>
-          </div>
-
-          <div class="widget">
-            <div class="widget-header">
-              <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 3)</h2>
-            </div>
-          </div>
-
+      <div class="widget double-width double-height">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Widget 2x2 (Dom Order 1)</h2>
+        </div>
       </div>
-    </div>
 
+      <div class="widget">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 2)</h2>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 3)</h2>
+        </div>
+      </div>
+      
+    </div>
   </div>
 </div>
