@@ -38,6 +38,6 @@ describe('Circle pager example-circlepager tests', () => {
   });
 
   it('Should show the circle pager', async () => {
-    expect(await element(by.css('.example1 .slide-content')).isDisplayed()).toBe(true);
+    expect(await element(by.css('.example1 .slide-content')).getCssValue('padding-top')).toEqual('230px');
   });
 });
