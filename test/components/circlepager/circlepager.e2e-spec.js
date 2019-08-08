@@ -25,3 +25,24 @@ describe('Circle pager example-index tests', () => {
     });
   }
 });
+
+describe('Circle pager example-circlepager tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/pager/example-circlepager');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.circlepager'))), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show the circle pager', async () => {
+    const el = await element(by.css('div[role=main]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(el), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.example1 .slide-content p')).getCssValue('padding-top')).toEqual('230px');
+  });
+});
