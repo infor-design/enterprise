@@ -43,6 +43,6 @@ describe('Circle pager example-circlepager tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(el), config.waitsFor);
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.example1 .slide-content p')).getCssValue('padding-top')).toEqual('230px');
+    expect(await element(by.css('.example1 .slide-content')).getCssValue('padding-top')).toEqual('230px');
   });
 });
