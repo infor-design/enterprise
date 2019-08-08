@@ -455,6 +455,7 @@ describe('Validation Duplicate Events', () => {
 describe('Validation input tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/input/example-index');
+    await browser.driver.sleep(config.sleepShort);
   });
 
   it('Should not show duplicate messages', async () => {

@@ -106,7 +106,7 @@ describe('Timepicker 24 Hour tests', () => {
     expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
-  if (!utils.isCI()) {
+  if (!utils.isBS() && !utils.isCI()) {
     it('Should pick time from picker and set to field for 24 Hour', async () => {
       const timepickerEl = await element(by.id('timepicker-24hrs'));
       await timepickerEl.sendKeys('19:15');
