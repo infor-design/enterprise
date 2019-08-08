@@ -2098,9 +2098,14 @@ Dropdown.prototype = {
       .off([
         `click.${COMPONENT_NAME}`,
         `scroll.${COMPONENT_NAME}`,
+        `touchstart.${COMPONENT_NAME}`,
         `touchmove.${COMPONENT_NAME}`,
         `touchend.${COMPONENT_NAME}`,
         `touchcancel.${COMPONENT_NAME}`].join(' '));
+
+    const parentScroll = this.element.closest('.scrollable').length ?
+      this.element.closest('.scrollable') : $(document);
+    parentScroll.off('scroll.dropdown');
 
     $('body').off('resize.dropdown');
     $(window).off('orientationchange.dropdown');
