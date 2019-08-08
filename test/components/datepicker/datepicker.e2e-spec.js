@@ -732,6 +732,7 @@ describe('Datepicker Timeformat Tests', () => {
 describe('Datepicker Umalqura Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-umalqura');
+    await browser.driver.sleep(config.sleep);
   });
 
   it('Should not have errors', async () => {
@@ -742,7 +743,7 @@ describe('Datepicker Umalqura Tests', () => {
     const datepickerEl = await element(by.id('islamic-date'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
     expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
@@ -752,7 +753,7 @@ describe('Datepicker Umalqura Tests', () => {
 
     const value = await element(by.id('islamic-date')).getAttribute('value');
 
-    expect(value.length).toEqual(10);
+    expect([9, 10]).toContain(value.length);
     await utils.checkForErrors();
   });
 });
@@ -962,10 +963,9 @@ describe('Datepicker Umalqura EG Tests', () => {
   });
 });
 
-describe('Datepicker Gregorian SA Tests', () => { //eslint-disable-line
+describe('Datepicker Gregorian SA Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/test-ar-sa-gregorian?locale=ar-SA');
-    await browser.driver.sleep(config.sleep);
+    await utils.setPage('/components/datepicker/test-ar-sa-gregorian');
   });
 
   it('Should render gregorian on ar-SA time', async () => {

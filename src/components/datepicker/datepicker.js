@@ -357,8 +357,18 @@ DatePicker.prototype = {
   setFormat() {
     const s = this.settings;
     let localeDateFormat = ((typeof Locale === 'object' && this.currentCalendar.dateFormat) ? this.currentCalendar.dateFormat : null);
-    const localeTimeFormat = ((typeof Locale === 'object' && this.currentCalendar.timeFormat) ? this.currentCalendar.timeFormat : null);
+    let localeTimeFormat = ((typeof Locale === 'object' && this.currentCalendar.timeFormat) ? this.currentCalendar.timeFormat : null);
 
+    if (typeof Locale === 'object' && this.settings.calendarName) {
+      localeDateFormat = Locale.calendar(
+        this.settings.locale,
+        this.settings.calendarName
+      ).dateFormat;
+      localeTimeFormat = Locale.calendar(
+        this.settings.locale,
+        this.settings.calendarName
+      ).timeFormat;
+    }
     if (typeof localeDateFormat === 'object' && localeDateFormat.short !== undefined) {
       localeDateFormat = localeDateFormat.short;
     }
@@ -1338,14 +1348,16 @@ DatePicker.prototype = {
     if (typeof this.currentDate === 'string') {
       this.currentDate = Locale.parseDate(this.currentDate, {
         pattern: this.pattern,
-        locale: this.locale.name
+        locale: this.locale.name,
+        calendarName: this.settings.calendarName
       }, false);
     }
 
     if (this.currentDate === undefined) {
       this.currentDate = Locale.parseDate(gregorianValue, {
         pattern: this.pattern,
-        locale: this.locale.name
+        locale: this.locale.name,
+        calendarName: this.settings.calendarName
       }, false);
     }
 
@@ -1366,13 +1378,15 @@ DatePicker.prototype = {
     const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy');
     const parsedDate = Locale.parseDate(self.element.val().trim(), {
       pattern: dateFormat,
-      locale: this.locale.name
+      locale: this.locale.name,
+      calendarName: this.settings.calendarName
     }, isStrict);
 
     if (parsedDate !== undefined && self.element.val().trim() !== '' && !s.range.useRange) {
       self.setValue(Locale.parseDate(self.element.val().trim(), {
         pattern: self.pattern,
-        locale: this.locale.name
+        locale: this.locale.name,
+        calendarName: this.settings.calendarName
       }, false));
     }
 

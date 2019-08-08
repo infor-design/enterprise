@@ -765,12 +765,14 @@ describe('Datagrid multiselect tests', () => {
   it('Should work with sort', async () => {
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
     await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
     await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+    await browser.driver.sleep(config.sleep);
 
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
 
