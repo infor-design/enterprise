@@ -765,12 +765,14 @@ describe('Datagrid multiselect tests', () => {
   it('Should work with sort', async () => {
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
     await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
     await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+    await browser.driver.sleep(config.sleep);
 
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
 
@@ -1396,6 +1398,36 @@ describe('Datagrid Custom Tooltip tests', () => {
   });
 });
 
+describe('Datagrid filter load data and update columns tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-filter-load-data-update-columns?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should select and filter', async () => {
+    expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(7);
+    const multiselectEl = await element(by.css('.datagrid-filter-wrapper div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
+    await multiselectEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+    const multiselectSearchEl = await element(by.id('dropdown-search'));
+    await multiselectSearchEl.click();
+    await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await multiselectSearchEl.sendKeys(protractor.Key.SPACE);
+    await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await multiselectSearchEl.sendKeys(protractor.Key.SPACE);
+
+    expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(4);
+    await utils.checkForErrors();
+  });
+});
+
 describe('Datagrid filter single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-singleselect');
@@ -1906,13 +1938,13 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
 
-    expect(await element.all(await by.css('.datagrid-row.is-selected')).count()).toEqual(2);
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
     await browser.driver.sleep(config.sleep);
     await element(by.css('.pager-next a')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(await by.css('.datagrid-row.is-selected')).count()).toEqual(0);
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await browser.driver.sleep(config.sleep);
     await element(by.css('.pager-prev a')).click();
@@ -2106,7 +2138,7 @@ describe('Datagrid save user settings', () => {
     await utils.checkForErrors();
   });
 
-  if (!utils.isCI()) {
+  if (!utils.isCI() && !utils.isBS()) {
     it('Should save active page on reload', async () => {
       await element(by.css('li.pager-next a')).click();
       await browser.driver.sleep(config.sleep);

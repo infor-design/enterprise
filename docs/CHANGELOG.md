@@ -8,7 +8,9 @@
 
 ### v4.21.0 Fixes
 
+- `[Circle Pager]` Fixed a bug where it was not showing on mobile view. ([#2589](https://github.com/infor-design/enterprise/issues/2589))
 - `[Contextual Action Panel]` Fixed an issue where if the title is longer, there will be an overflow causing a white space on the right on mobile view. ([#2605](https://github.com/infor-design/enterprise/issues/2605))
+- `[Datagrid]` Fixed a bug where calling update rows in the filter callback will cause an infinite loop. ([#2526](https://github.com/infor-design/enterprise/issues/2526))
 - `[Datagrid]` Fixed a bug where the value would clear when using a lookup editor with a mask on new rows. ([#2305](https://github.com/infor-design/enterprise/issues/2305))
 - `[Fileupload Advanced]` Added custom errors example page. ([#2620](https://github.com/infor-design/enterprise/issues/2620))
 - `[Pager]` Changed pager number font color to be more legible in uplift dark theme. ([#2588](https://github.com/infor-design/enterprise/issues/2588))
