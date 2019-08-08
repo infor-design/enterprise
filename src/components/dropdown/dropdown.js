@@ -2103,8 +2103,10 @@ Dropdown.prototype = {
         `touchend.${COMPONENT_NAME}`,
         `touchcancel.${COMPONENT_NAME}`].join(' '));
 
-    const parentScroll = this.element.closest('.scrollable').length ?
-      this.element.closest('.scrollable') : $(document);
+    const modalScroll = $('.modal.is-visible .modal-body-wrapper');
+    let parentScroll = this.element.closest('.scrollable').length ? this.element.closest('.scrollable') : $(document);
+    parentScroll = this.element.closest('.scrollable-y').length ? this.element.closest('.scrollable-y') : parentScroll;
+    parentScroll = modalScroll.length ? modalScroll : parentScroll;
     parentScroll.off('scroll.dropdown');
 
     $('body').off('resize.dropdown');
