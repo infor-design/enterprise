@@ -104,6 +104,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {Function} [settings.onDestroyCell=null] A call back that goes along with onPostRenderCel and will fire when this cell is destroyed and you need noification of that.
  * @param {Function} [settings.onEditCell=null] A callback that fires when a cell is edited, the editor object is passed in to the function
  * @param {Function} [settings.onExpandRow=null] A callback function that fires when expanding rows. To be used. when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
+ * @param {Function} [settings.onKeyDown=null] A callback function that fires when any key is pressed down.
  * @param {boolean}  [settings.searchExpandableRow=true] If true keywordSearch will search in expandable rows (default). If false it will not search expandable rows.
  * @param {object}   [settings.emptyMessage]
  * @param {object}   [settings.emptyMessage.title='No Data Available']
@@ -197,6 +198,7 @@ const DATAGRID_DEFAULTS = {
   onDestroyCell: null,
   onEditCell: null,
   onExpandRow: null,
+  onKeyDown: null,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
   searchExpandableRow: true,
   allowChildExpandOnMatch: false
