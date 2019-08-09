@@ -782,6 +782,7 @@ DatePicker.prototype = {
         if (s.range.useRange) {
           self.isFocusAfterClose = false;
         } else if (btn.hasClass('is-select-month')) {
+          self.insertDate(self.isIslamic ? self.currentDateIslamic : self.currentDate);
           self.closeCalendar();
         } else if (btn.hasClass('is-select-month-pane')) {
           self.calendarAPI.showMonth(month, year);
