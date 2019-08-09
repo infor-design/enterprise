@@ -100,16 +100,17 @@
 
   .popup-footer {
     button {
+      background-color: transparent;
       width: 33.33%;
 
       // Fixes cut off focus state on the middle button
       &:nth-child(1) {
         margin-right: -1px;
       }
+    }
 
-      &:nth-child(2) {
-        position: relative;
-      }
+    &.is-half button {
+      width: 50%;
     }
   }
 }

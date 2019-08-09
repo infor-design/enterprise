@@ -533,7 +533,7 @@
 //Footer Buttons
 .popup-footer {
   border-top: 1px solid $popover-separator-color;
-  height: 50px;
+  height: 45px;
   margin-top: 10px;
 
   button {
@@ -546,13 +546,14 @@
     float: left;
     font-size: $theme-size-font-base;
     font-weight: $theme-number-font-weight-bold;
-    height: 50px;
-    line-height: 50px;
+    height: 45px;
+    line-height: 45px;
     margin: 0;
     overflow: hidden;
     text-align: center;
     text-decoration: none;
     text-overflow: ellipsis;
+    user-select: none;
     width: 50%;
 
     &:hover {
