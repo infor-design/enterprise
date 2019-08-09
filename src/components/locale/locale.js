@@ -109,8 +109,7 @@ const Locale = {  // eslint-disable-line
   getCulturesPath() {
     if (!this.culturesPath) {
       const scripts = document.getElementsByTagName('script');
-      const partialPathMin = 'sohoxi.min.js';
-      const partialPath = 'sohoxi.js';
+      const partialPathRegexp = /sohoxi(.min){0,1}(.{0,1}[a-z0-9]*).js/;
 
       for (let i = 0; i < scripts.length; i++) {
         let src = scripts[i].src;
@@ -125,11 +124,8 @@ const Locale = {  // eslint-disable-line
           return `${src.substring(0, src.lastIndexOf('/'))}/`;
         }
 
-        if (src.indexOf(partialPathMin) > -1) {
-          this.culturesPath = `${src.replace(partialPathMin, '')}cultures/`;
-        }
-        if (src.indexOf(partialPath) > -1) {
-          this.culturesPath = `${src.replace(partialPath, '')}cultures/`;
+        if (src.match(partialPathRegexp)) {
+          this.culturesPath = `${src.replace(partialPathRegexp, '')}cultures/`;
         }
       }
     }
