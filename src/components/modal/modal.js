@@ -120,6 +120,8 @@ Modal.prototype = {
 
     // Used for tracking events tied to the Window object
     this.id = this.element.attr('id') || (parseInt($('.modal').length, 10) + 1);
+    this.namespace = `${COMPONENT_NAME}-${this.id}`;
+
     // Prevent Css on the title
     this.settings.title = xssUtils.stripTags(this.settings.title, '<div><span><a><small><img><svg><i><b><use><br><strong><em>');
 
@@ -136,7 +138,7 @@ Modal.prototype = {
     this.oldActive = this.trigger;
 
     if (this.settings.trigger === 'click' && !this.isAttachedToBody) {
-      this.trigger.on('click.modal', (e) => {
+      this.trigger.on(`click.${self.namespace}`, (e) => {
         if (!$(e.currentTarget).is(self.trigger)) {
           return;
         }
@@ -194,7 +196,7 @@ Modal.prototype = {
         </button>
       `);
       this.element.find('.modal-content').append(closeBtn);
-      closeBtn.on('click.modal', () => this.close()).tooltip();
+      closeBtn.on(`click.${this.namespace}`, () => this.close()).tooltip();
     }
 
     if (this.settings.id) {
@@ -345,12 +347,14 @@ Modal.prototype = {
         inlineBtns[i].style.width = `${btnWidth}%`;
       }
       inlineBtns.button();
-      inlineBtns.not('[data-ng-click], [ng-click], [onclick], :submit').on('click.modal', (e) => {
-        if ($(e.target).is('.btn-cancel')) {
-          self.isCancelled = true;
-        }
-        self.close();
-      });
+      inlineBtns
+        .not('[data-ng-click], [ng-click], [onclick], :submit')
+        .on(`click.${self.namespace}`, (e) => {
+          if ($(e.target).is('.btn-cancel')) {
+            self.isCancelled = true;
+          }
+          self.close();
+        });
       return;
     }
 
@@ -434,7 +438,7 @@ Modal.prototype = {
 
       const func = buttons[cnt].click;
 
-      btn.on('click.modal', (e) => {
+      btn.on(`click.${self.namespace}`, (e) => {
         if (func) {
           func.apply(self.element[0], [e, self]);
           return;
@@ -558,7 +562,7 @@ Modal.prototype = {
 
     messageArea = this.element.find('.detailed-message');
     if (messageArea.length === 1) {
-      $('body').on(`resize.modal-${this.id}`, () => {
+      $('body').on(`resize.${this.namespace}`, () => {
         this.sizeInner();
       });
       this.sizeInner();
@@ -656,7 +660,7 @@ Modal.prototype = {
     this.removeNoScroll = !this.mainContent.hasClass('no-scroll');
     this.mainContent.addClass('no-scroll');
 
-    $('body').on(`resize.modal-${this.id}`, () => {
+    $('body').on(`resize.${this.namespace}`, () => {
       this.resize();
     });
 
@@ -679,7 +683,7 @@ Modal.prototype = {
     $('body').addClass('modal-engaged');
 
     // Handle Default button.
-    $(this.element).on('keypress.modal', (e) => {
+    $(this.element).on(`keypress.${this.namespace}`, (e) => {
       const target = $(e.target);
 
       if (target.is('.editor, .searchfield, textarea, :button') || target.closest('.tab-list').length || $('#dropdown-list').length) {
@@ -700,7 +704,7 @@ Modal.prototype = {
 
     // Override this page's skip-link default functionality to instead focus the top
     // of this element if it's clicked.
-    $('.skip-link').on('focus.modal', (e) => {
+    $('.skip-link').on(`focus.${this.namespace}`, (e) => {
       e.preventDefault();
       this.element.find(':focusable').first().focus();
     });
@@ -753,7 +757,7 @@ Modal.prototype = {
     }
 
     const pagerElem = this.element.find('.paginated');
-    pagerElem.on('afterpaging', () => {
+    pagerElem.on(`afterpaging.${this.namespace}`, () => {
       this.resize();
     });
 
@@ -823,8 +827,8 @@ Modal.prototype = {
 
     // Escape key
     $(document)
-      .off(`keydown.modal-${this.id}`)
-      .on(`keydown.modal-${this.id}`, (e) => {
+      .off(`keydown.${self.namespace}`)
+      .on(`keydown.${self.namespace}`, (e) => {
         const keyCode = e.which || e.keyCode;
         if (keyCode === 27) {
           const modals = $('.modal.is-visible');
@@ -832,9 +836,9 @@ Modal.prototype = {
           self.isCancelled = true;
 
           if (modals.length > 1) {
-            modals.not(':last').on('beforeclose.modal', () => false);
-            modals.on('afterclose.modal', () => {
-              modals.off('beforeclose.modal');
+            modals.not(':last').on(`beforeclose.${self.namespace}`, () => false);
+            modals.on(`afterclose.${self.namespace}`, () => {
+              modals.off(`beforeclose.${self.namespace}`);
             });
             const apiModal = modals.last().data('modal');
             if (apiModal && apiModal.close) {
@@ -860,8 +864,8 @@ Modal.prototype = {
     this.changeObserver.observe(self.element[0], { childList: true, subtree: true });
 
     $(self.element)
-      .off('keypress.modal keydown.modal')
-      .on('keypress.modal keydown.modal', (e) => {
+      .off(`keypress.${self.namespace} keydown.${self.namespace}`)
+      .on(`keypress.${self.namespace} keydown.${self.namespace}`, (e) => {
         const keyCode = e.which || e.keyCode;
 
         if (keyCode === 9) {
@@ -907,9 +911,9 @@ Modal.prototype = {
     if (this.mainContent && this.removeNoScroll) {
       this.mainContent.removeClass('no-scroll');
     }
-    $('body').off(`resize.modal-${this.id}`);
+    $('body').off(`resize.${this.namespace}`);
 
-    this.element.off('keypress.modal keydown.modal');
+    this.element.off(`keypress.${this.namespace} keydown.${this.namespace}`);
     this.element.removeClass('is-visible');
 
     this.overlay.attr('aria-hidden', 'true');
@@ -938,7 +942,7 @@ Modal.prototype = {
     $('#validation-errors, #tooltip, #validation-tooltip').addClass('is-hidden');
 
     // remove the event that changed this page's skip-link functionality in the open event.
-    $('.skip-link').off('focus.modal');
+    $('.skip-link').off(`focus.${this.namespace}`);
 
     setTimeout(() => {
       self.overlay.remove();
@@ -988,12 +992,21 @@ Modal.prototype = {
     }
 
     function destroyCallback() {
+      self.trigger.off(`click.${self.namespace}`);
+      self.element.off(`keypress.${self.namespace} keydown.${self.namespace} beforeclose.${self.namespace} afterclose.${self.namespace}`);
+      self.element.find('button, .btn-close').off(`click.${self.namespace}`);
+      self.element.find('.paginated').off(`afterpaging.${self.namespace}`);
+
+      $('.skip-link').off(`focus.${self.namespace}`);
+      $('body').off(`resize.${self.namespace}`);
+      $(document).off(`keydown.${self.namespace}`);
+
       if (self.modalButtons) {
-        self.element.find('button').off('click.modal');
+        self.element.find('button').off(`click.${self.namespace}`);
       }
 
       if (self.element.find('.detailed-message').length === 1) {
-        $('body').off(`resize.modal-${this.id}`);
+        $('body').off(`resize.${self.namespace}`);
       }
 
       // Properly teardown contexual action panels
@@ -1001,7 +1014,7 @@ Modal.prototype = {
         self.capAPI.teardown();
       }
 
-      self.trigger.off('click.modal');
+      self.trigger.off(`click.${self.namespace}`);
 
       if (self.root && self.root.length) {
         self.root.remove();
@@ -1010,10 +1023,27 @@ Modal.prototype = {
       }
       self.element[0].removeAttribute('data-modal');
 
-      $.removeData(self.element[0], 'modal');
+      $.removeData(self.element[0], COMPONENT_NAME);
       if (self.isCAP && self.capAPI) {
         self.capAPI.destroy();
       }
+
+      setTimeout(() => {
+        let elem = null;
+        let modalApi = self.element ? self.element.data(COMPONENT_NAME) : null;
+        if (modalApi) {
+          elem = self.element[0];
+        } else {
+          modalApi = self.trigger ? self.trigger.data(COMPONENT_NAME) : null;
+          if (modalApi) {
+            elem = self.trigger[0];
+          }
+        }
+        if (elem && modalApi && modalApi.overlay) {
+          modalApi.overlay.remove();
+          $.removeData(elem, COMPONENT_NAME);
+        }
+      }, 310); // should take the length of time needed for the overlay to fade out
     }
 
     if (!this.visible) {
@@ -1021,7 +1051,7 @@ Modal.prototype = {
       return;
     }
 
-    this.element.one('afterclose.modal', () => {
+    this.element.one(`afterclose.${self.namespace}`, () => {
       destroyCallback();
     });
 

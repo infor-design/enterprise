@@ -9,6 +9,8 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Bar Chart example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/example-index?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -50,6 +52,8 @@ describe('Bar Chart example-index tests', () => {
 describe('Bar Chart example-selected tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/test-selected');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -66,6 +70,8 @@ describe('Bar Chart example-selected tests', () => {
 describe('Bar Chart example-negative-value tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/example-negative-value');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -125,6 +131,8 @@ describe('Bar Chart example-colors', () => {
 describe('Bar Chart alignment tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/test-alignment?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -148,6 +156,8 @@ describe('Bar Chart alignment tests', () => {
 describe('Bar Chart axis adjust tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/test-axis-adjust?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -171,6 +181,8 @@ describe('Bar Chart axis adjust tests', () => {
 describe('Bar Chart axis formatter tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/test-axis-formatter?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
