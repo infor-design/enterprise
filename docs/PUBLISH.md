@@ -5,7 +5,7 @@
 To do a dev release, publish a dated semver to npm.
 
 1. Make sure you are on `master` and its clean
-1. Make sure you are authenticated witih npm cli (`npm login`)
+1. Make sure you are authenticated with npm cli (`npm login`)
 1. `npm run release:dev`
 
 ## Production Release (tagged)
