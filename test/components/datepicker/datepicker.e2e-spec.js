@@ -506,6 +506,7 @@ describe('Datepicker Month Year Changer Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     await element(by.cssContainingText('.picklist-item', 'April')).click();
+    await element(by.css('.is-select-month-pane')).click();
     await browser.driver.sleep(config.sleep);
 
     const prevButtonEl = await element(by.css('.prev.btn-icon'));
@@ -531,6 +532,7 @@ describe('Datepicker Month Year Changer Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     await element(by.cssContainingText('.picklist-item', '2021')).click();
+    await element(by.css('.is-select-month-pane')).click();
     await browser.driver.sleep(config.sleep);
 
     const prevButtonEl = await element(by.css('.prev.btn-icon'));
@@ -590,6 +592,8 @@ describe('Datepicker Month Year Changer Year First Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     await element(by.cssContainingText('.picklist-item', '4月')).click();
+    await element(by.css('.is-select-month-pane')).click();
+    await browser.driver.sleep(config.sleep);
 
     const prevButtonEl = await element(by.css('.prev.btn-icon'));
     await prevButtonEl.sendKeys(protractor.Key.ENTER);
@@ -611,6 +615,8 @@ describe('Datepicker Month Year Changer Year First Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     await element(by.cssContainingText('.picklist-item', '2021')).click();
+    await element(by.css('.is-select-month-pane')).click();
+    await browser.driver.sleep(config.sleep);
 
     const prevButtonEl = await element(by.css('.prev.btn-icon'));
     await prevButtonEl.sendKeys(protractor.Key.ENTER);
