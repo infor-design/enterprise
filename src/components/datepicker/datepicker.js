@@ -779,7 +779,6 @@ DatePicker.prototype = {
           self.currentDate = self.conversions.toGregorian(year, month, 1);
         }
 
-        self.insertDate(self.isIslamic ? self.currentDateIslamic : self.currentDate);
         if (s.range.useRange) {
           self.isFocusAfterClose = false;
         } else if (btn.hasClass('is-select-month')) {
