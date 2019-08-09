@@ -26,15 +26,19 @@ module.exports = {
     await browser.driver.get(pageurl);
   },
   checkForErrors: async () => {
-    await browser.manage().logs().get('browser').then((browserLog) => {
-      let errors = 0;
-      for (let i = 0; i < browserLog.length; i++) {
-        const type = browserLog[i].level.name;
-        logger(type, browserLog[i].message);
-        errors++;
-      }
-      expect(errors).toEqual(0);
-    });
+    try {
+      await browser.manage().logs().get('browser').then((browserLog) => {
+        let errors = 0;
+        for (let i = 0; i < browserLog.length; i++) {
+          const type = browserLog[i].level.name;
+          logger(type, browserLog[i].message);
+          errors++;
+        }
+        expect(errors).toEqual(0);
+      });
+    } catch (e) {
+      // Do nothing
+    }
   },
   getSelectedText: async () => {
     await browser.executeScript(() => {

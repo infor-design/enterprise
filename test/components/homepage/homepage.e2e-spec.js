@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Homepage example hero widget tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/homepage/example-hero-widget.html?layout=nofrills');
+    await utils.setPage('/components/homepage/example-hero-widget.html');
   });
 
   it('Should not have errors', async () => {
@@ -16,7 +16,7 @@ describe('Homepage example hero widget tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
+      const containerEl = await element(by.css('body'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
