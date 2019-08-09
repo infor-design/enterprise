@@ -1275,7 +1275,7 @@ Datagrid.prototype = {
 
     if (this.restoreFilter) {
       this.restoreFilter = false;
-      this.applyFilter(this.savedFilter, 'render');
+      this.applyFilter(this.savedFilter, 'restore');
       this.savedFilter = null;
     } else if (this.filterExpr && this.filterExpr.length > 0) {
       this.setFilterConditions(this.filterExpr);
@@ -1612,6 +1612,8 @@ Datagrid.prototype = {
       elem.find('select.multiselect').each(function () {
         const multiselect = $(this);
         multiselect.multiselect(col.editorOptions).on('selected.datagrid', () => {
+          // Wierd Hack - Sync to "sync" up the filter row
+          $(`#${$(this).attr('id')}`).val($(this).val());
           self.applyFilter(null, 'selected');
         });
 
@@ -2168,6 +2170,7 @@ Datagrid.prototype = {
         type: 'filtered'
       });
     }
+
     /**
     * Fires after a filter action ocurs
     * @event filtered
@@ -2178,6 +2181,10 @@ Datagrid.prototype = {
     * @property {object} args.conditions An object with all the condition data.
     * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
     */
+    if (this.settings.disableClientFilter && trigger === 'restore') {
+      return;
+    }
+
     this.element.trigger('filtered', { op: 'apply', conditions, trigger });
     this.saveUserSettings();
   },
