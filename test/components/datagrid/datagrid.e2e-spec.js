@@ -1344,7 +1344,7 @@ describe('Datagrid contextmenu tests', () => {
     await utils.checkForErrors();
   });
 
-  if (!utils.isBS()) {
+  if (!utils.isCI() && !utils.isBS()) {
     it('Should show context menu', async () => {
       const td = await element(by.css('#readonly-datagrid tr:first-child td:first-child')).getLocation();
       await browser.actions()
