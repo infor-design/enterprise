@@ -7816,15 +7816,6 @@ Datagrid.prototype = {
       const lastRow = visibleRows.last();
       const lastCell = self.settings.columns.length - 1;
 
-      if (self.settings.onKeyDown) {
-        const ret = self.settings.onKeyDown(e, { activeCell: self.activeCell, row, cell });
-        if (ret === false) {
-          e.stopPropagation();
-          e.preventDefault();
-          return;
-        }
-      }
-
       // Tab, Left, Up, Right and Down arrow keys.
       if ([9, 37, 38, 39, 40].indexOf(key) !== -1) {
         if (target.closest('.code-block').length &&
@@ -7843,6 +7834,15 @@ Datagrid.prototype = {
 
       // Tab, Left and Right arrow keys.
       if ([9, 37, 39].indexOf(key) !== -1) {
+        if (key === 9 && self.settings.onKeyDown) {
+          const ret = self.settings.onKeyDown(e);
+          if (ret === false) {
+            e.stopPropagation();
+            e.preventDefault();
+            return;
+          }
+        }
+
         if (key === 9 && self.editor && self.editor.name === 'input' && col.inlineEditor === true) {
           // Editor.destroy
           self.editor.destroy();

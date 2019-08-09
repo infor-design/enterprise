@@ -1242,33 +1242,6 @@ describe('Datagrid editor dropdown source tests', () => {
   });
 });
 
-describe('Datagrid onKeyDown Tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-editable-onkeydown?layout=nofrills');
-
-    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should show toast on keydown', async () => {
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-
-    const editCellSelector = '.has-editor.is-editing input';
-    const inputEl = await element(by.css(editCellSelector));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
-    await element(by.css(editCellSelector)).sendKeys('j');
-    await element(by.css(editCellSelector)).sendKeys(protractor.Key.TAB);
-
-    expect(await element.all(by.css('#toast-container .toast-message')).first().getText()).toEqual('You hit j. Event has been vetoed, so nothing will happen.');
-    expect(await element.all(by.css('#toast-container .toast-message')).last().getText()).toEqual('You hit Tab. Event has been vetoed, so nothing will happen.');
-  });
-});
-
 describe('Datagrid Header Alignment With Ellipsis', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-ellipsis-header-align?layout=nofrills');
