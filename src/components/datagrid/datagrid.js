@@ -9327,6 +9327,12 @@ Datagrid.prototype = {
   setDirtyCell(row, cell, dirtyOptions) {
     const cellNode = this.cellNode(row, cell);
 
+    // Do not show dirty indicator on new cells or cells with errors on them
+    if (this.settings.dataset[row] && this.settings.dataset[row].rowStatus &&
+      (this.settings.dataset[row].rowStatus.icon === 'new' || row === 0)) {
+      return;
+    }
+
     if (dirtyOptions) {
       this.addToDirtyArray(row, cell, dirtyOptions);
     }
