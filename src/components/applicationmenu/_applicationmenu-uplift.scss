@@ -76,15 +76,10 @@
 
     &.has-icons .accordion-pane .accordion-header.is-selected {
       background-color: unset;
-
     }
 
     &.has-icons .accordion-pane .accordion-header.is-selected > a {
       letter-spacing: 0;
-    }
-
-    .accordion-pane .accordion-header > a {
-      padding: 6px 0 8px 20px;
     }
 
     .accordion-pane .accordion-header.is-selected > a > span {
