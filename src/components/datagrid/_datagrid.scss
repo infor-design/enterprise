@@ -716,9 +716,22 @@ $datagrid-short-row-height: 25px;
   }
 }
 
-.full-height .datagrid-body {
+.full-height .datagrid-body,
+.card,
+.widget {
   .empty-message {
     @include vertical-align();
+  }
+}
+
+.card,
+.widget {
+  .empty-message {
+    left: 50%;
+    margin-top: 15px;
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
   }
 }
 
