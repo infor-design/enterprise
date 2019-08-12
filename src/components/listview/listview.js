@@ -344,8 +344,8 @@ ListView.prototype = {
       first.removeAttr('tabindex');
     }
 
-    // When DOM items are not rendered with "mustache" template, filtered items 
-    // have to be hidden specifically.  
+    // When DOM items are not rendered with "mustache" template, filtered items
+    // have to be hidden specifically.
     const hideFlag = items.length > displayedDataset.length;
 
     items.each(function (i) {
@@ -364,7 +364,7 @@ ListView.prototype = {
         }
 
         if (self.settings.showCheckboxes) {
-          // Only need one checkbox 
+          // Only need one checkbox
           if (item.children('.listview-selection-checkbox').length === 0) {
             // For mixed selection mode primarily append a checkbox object
             item.prepend(`<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox">
@@ -695,7 +695,7 @@ ListView.prototype = {
     this.element.unhighlight();
 
     // Reset filter status
-    this.settings.dataset.forEach(function (item) {
+    this.settings.dataset.forEach((item) => {
       item.isFiltered = false;
     });
 
@@ -734,7 +734,7 @@ ListView.prototype = {
     this.element.unhighlight();
 
     // reset filter status
-    this.settings.dataset.forEach(function (item) {
+    this.settings.dataset.forEach((item) => {
       delete item.isFiltered;
     });
 

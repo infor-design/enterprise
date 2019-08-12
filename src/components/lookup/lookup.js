@@ -808,7 +808,16 @@ Lookup.prototype = {
   */
   destroy() {
     $.removeData(this.element[0], COMPONENT_NAME);
-    this.element.off('click.dropdown keypress.dropdown');
+    $('.modal .searchfield').off('keypress.lookup');
+    $('body').off('open.lookup close.lookup');
+    if (this.modal && this.modal.element) {
+      this.modal.element.off('afterclose.lookup');
+      if (typeof this.modal.destroy === 'function') {
+        this.modal.destroy();
+      }
+    }
+    this.element.off('keyup.lookup');
+    this.icon.off('click.lookup');
 
     this.icon.remove();
     this.element.unwrap();
