@@ -7820,8 +7820,16 @@ Datagrid.prototype = {
       const lastCell = self.settings.columns.length - 1;
 
       if (self.settings.onKeyDown) {
-        const ret = self.settings.onKeyDown(e, { activeCell: self.activeCell, row, cell });
-        if (ret === false) {
+        const response = (isCancelled) => {
+          if (!isCancelled) {
+            e.stopPropagation();
+            e.preventDefault();
+          }
+        };
+
+        const args = { activeCell: self.activeCell, row, cell };
+        const ret = self.settings.onKeyDown(e, args, response);
+        if (ret === false || !response) {
           e.stopPropagation();
           e.preventDefault();
           return;
