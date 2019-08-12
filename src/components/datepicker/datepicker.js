@@ -786,7 +786,6 @@ DatePicker.prototype = {
           self.closeCalendar();
         } else if (btn.hasClass('is-select-month-pane')) {
           self.calendarAPI.showMonth(month, year);
-          self.calendarAPI.monthYearPane.data('expandablearea').close();
         }
       }
 
@@ -822,6 +821,10 @@ DatePicker.prototype = {
       }
       self.element.focus();
       e.preventDefault();
+
+      if (btn.hasClass('is-select-month-pane')) {
+        self.calendarAPI.monthYearPane.data('expandablearea').close();
+      }
     });
     setTimeout(() => {
       self.calendarAPI.validatePrevNext();
