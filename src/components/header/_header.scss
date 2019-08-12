@@ -194,6 +194,7 @@ $subheader-height: 60px;
   }
 
   .flex-toolbar {
+    height: inherit;
     max-height: $header-height;
     padding: 0 1.3rem;
 

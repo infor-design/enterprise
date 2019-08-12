@@ -1036,19 +1036,9 @@ MonthView.prototype = {
         d.year = this.currentYear;
       }
 
-      if (s.hideDays) {
-        selectPicklistItem(target, cssClass);
-        if (this.element.hasClass(`${cssClass}only`)) {
-          this.monthYearPane.parent().find('button.is-select-month').click();
-        }
-      } else {
-        const triggerBtn = this.element[0].querySelector('#btn-monthyear-pane');
-        this.showMonth(d.month, d.year);
-        this.monthYearPane.data('expandablearea').close();
-        if (triggerBtn) {
-          DOM.removeClass(triggerBtn, 'hide-focus');
-          triggerBtn.focus();
-        }
+      selectPicklistItem(target, cssClass);
+      if (this.element.hasClass(`${cssClass}only`)) {
+        this.monthYearPane.parent().find('button.is-select-month').click();
       }
     };
 
@@ -1078,11 +1068,17 @@ MonthView.prototype = {
     this.monthYearPane.on('expand.monthviewpane', () => {
       // Disable the main page buttons for tabbing
       if (!s.hideDays) {
-        this.element.find('.btn-icon, .btn-tertiary, .btn-primary, td.is-selected').attr('disabled', 'true');
+        this.element.find('.btn-icon, td.is-selected').attr('disabled', 'true');
         this.element.find('td.is-selected').removeAttr('tabindex');
-        this.monthYearPane.find('.content').css('height', this.header.parent().height() - this.header.height());
+        // Set the height
+        this.monthYearPane.find('.content').css('height', this.header.parent().height() - this.header.height() - 55); // 45 is the footer height
+        // Rename some buttons
+        this.element.find('.is-today').hide();
+        this.element.find('.popup-footer').addClass('is-half');
+        this.element.find('.is-select').removeClass('is-select').addClass('is-select-month-pane');
+        this.element.find('.is-cancel').removeClass('is-cancel').addClass('is-cancel-month-pane').text(Locale.translate('Cancel'));
       }
-      // Set the height and focus the month
+      // Focus the month
       setTimeout(() => {
         const selectedMonth = this.monthYearPane.find('.is-month .is-selected a');
         selectedMonth.focus();
@@ -1093,8 +1089,12 @@ MonthView.prototype = {
     }).on('collapse.monthviewpane', () => {
       // Enable it all again
       if (!s.hideDays) {
-        this.element.find('.btn-icon, .btn-tertiary, .btn-primary').removeAttr('disabled');
+        this.element.find('.btn-icon').removeAttr('disabled');
         this.element.find('td.is-selected').attr('tabindex', '0');
+        this.element.find('.is-today').show();
+        this.element.find('.popup-footer').removeClass('is-half');
+        this.element.find('.is-select').addClass('is-select').removeClass('is-select-month-pane');
+        this.element.find('.is-cancel-month-pane').addClass('is-cancel').removeClass('is-cancel-month-pane').text(Locale.translate('Clear'));
       }
     });
 

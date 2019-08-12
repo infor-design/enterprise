@@ -923,9 +923,11 @@ describe('Datagrid paging tests', () => {
       expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
       await element(by.css('.pager-count input')).clear();
+      await browser.driver.sleep(config.sleepShort);
       await element(by.css('.pager-count input')).sendKeys('101');
+      await browser.driver.sleep(config.sleepShort);
       await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepShort);
 
       expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
       expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
@@ -1344,7 +1346,7 @@ describe('Datagrid contextmenu tests', () => {
     await utils.checkForErrors();
   });
 
-  if (!utils.isBS()) {
+  if (!utils.isCI() && !utils.isBS()) {
     it('Should show context menu', async () => {
       const td = await element(by.css('#readonly-datagrid tr:first-child td:first-child')).getLocation();
       await browser.actions()
