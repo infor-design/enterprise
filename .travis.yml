@@ -1,3 +1,5 @@
+git:
+  quiet: true
 addons:
   chrome: stable
   artifacts:
@@ -23,10 +25,14 @@ before_script:
   - google-chrome --version
   - if [ $TEST_SUITE != lint ]; then npm run build; fi
 script:
-  - if [ $TEST_SUITE = e2e ]; then (npm run quickstart &) && sleep 5; fi
-  - npm run $TEST_SUITE:ci
-  - if [ $TEST_SUITE = e2e ]; then npm run stop; fi
-  - if [ $TRAVIS_EVENT_TYPE = cron ] && [ $TEST_SUITE = e2e ]; then npm run e2e:ci:bs; fi
+  # Run non-e2e tests
+  - if [ $TEST_SUITE != e2e ]; then npm run $TEST_SUITE:ci; fi
+  # e2e NON-Cron tests
+  - if [ $TEST_SUITE = e2e ] && [ $TRAVIS_EVENT_TYPE != cron ]; then (npm run quickstart &) && sleep 5; fi
+  - if [ $TEST_SUITE = e2e ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run e2e:ci; fi
+  - if [ $TEST_SUITE = e2e ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run stop; fi
+  # e2e Cron test (browserstack)
+  - if [ $TEST_SUITE = e2e ] && [ $TRAVIS_EVENT_TYPE = cron ]; then npm run e2e:ci:bs; fi
 jobs:
   include:
     - stage: deploy
