@@ -716,9 +716,7 @@ $datagrid-short-row-height: 25px;
   }
 }
 
-.full-height .datagrid-body,
-.card,
-.widget {
+.full-height .datagrid-body {
   .empty-message {
     @include vertical-align();
   }
