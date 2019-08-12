@@ -794,9 +794,9 @@ DatePicker.prototype = {
         } else if (btn.hasClass('is-select-month')) {
           self.insertDate(self.isIslamic ? self.currentDateIslamic : self.currentDate);
           self.closeCalendar();
-        } else if (btn.hasClass('is-select-month-pane')) {
+        }
+        if (btn.hasClass('is-select-month-pane')) {
           self.calendarAPI.showMonth(month, year);
-          self.calendarAPI.monthYearPane.data('expandablearea').close();
         }
       }
 
@@ -832,6 +832,10 @@ DatePicker.prototype = {
       }
       self.element.focus();
       e.preventDefault();
+
+      if (btn.hasClass('is-select-month-pane')) {
+        self.calendarAPI.monthYearPane.data('expandablearea').close();
+      }
     });
     setTimeout(() => {
       self.calendarAPI.validatePrevNext();
@@ -1109,7 +1113,14 @@ DatePicker.prototype = {
       let row = cell.closest('tr');
 
       if (s.range.second) {
-        this.resetRange({ cell });
+        if (!s.range.second.date) {
+          delete s.range.second.date;
+          if ($.isEmptyObject(s.range.second)) {
+            delete s.range.second;
+          }
+        } else {
+          this.resetRange({ cell });
+        }
       }
 
       const time = {};
