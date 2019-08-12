@@ -1103,7 +1103,14 @@ DatePicker.prototype = {
       let row = cell.closest('tr');
 
       if (s.range.second) {
-        this.resetRange({ cell });
+        if (!s.range.second.date) {
+          delete s.range.second.date;
+          if ($.isEmptyObject(s.range.second)) {
+            delete s.range.second;
+          }
+        } else {
+          this.resetRange({ cell });
+        }
       }
 
       const time = {};
