@@ -27,7 +27,7 @@ before_script:
 script:
   # Run non-e2e tests
   - if [ $TEST_SUITE != e2e ]; then npm run $TEST_SUITE:ci; fi
-  # e2e NON-Cron tests
+  # e2e non-Cron tests
   - if [ $TEST_SUITE = e2e ] && [ $TRAVIS_EVENT_TYPE != cron ]; then (npm run quickstart &) && sleep 5; fi
   - if [ $TEST_SUITE = e2e ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run e2e:ci; fi
   - if [ $TEST_SUITE = e2e ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run stop; fi
