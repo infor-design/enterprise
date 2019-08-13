@@ -85,7 +85,7 @@ describe('Searchfield example-index tests', () => {
   });
 });
 
-fdescribe('Searchfield go-button tests', () => {
+describe('Searchfield go-button tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/searchfield/example-go-button');
     await browser.driver
