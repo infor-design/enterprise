@@ -264,12 +264,12 @@ describe('Datagrid Expandable Row Tests', () => {
       expect(size.height).toEqual(0);
     });
     await button.click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     await detailRow.getSize().then((size) => {
       expect(size.height).toBeGreaterThan(150);
     });
     await button.click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     await detailRow.getSize().then((size) => {
       expect(size.height).toEqual(0);
     });
@@ -904,12 +904,14 @@ describe('Datagrid paging tests', () => {
       expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeFalsy();
 
       await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+      await browser.driver.sleep(config.sleep);
       await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
       await browser.driver.sleep(config.sleep);
 
       expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeTruthy();
 
       await element(by.css('.pager-next a')).click();
+      await browser.driver.sleep(config.sleep);
       await element(by.css('.pager-prev a')).click();
       await browser.driver.sleep(config.sleep);
 
@@ -1960,7 +1962,7 @@ describe('Datagrid paging indeterminate single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single?layout=nofrills');
 
-    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(5)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -2015,7 +2017,9 @@ describe('Datagrid paging serverside multi select tests', () => {
 
   it('Should be able to select and have selections clear when paging', async () => {
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await browser.driver.sleep(config.sleep);
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
@@ -2089,7 +2093,7 @@ describe('Datagrid paging serverside single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-serverside-single');
 
-    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(5)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -2100,23 +2104,19 @@ describe('Datagrid paging serverside single select tests', () => {
 
   it('Should be able to select and have selections clear when paging', async () => {
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await browser.driver.sleep(config.sleep);
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
 
     await element(by.css('.pager-next a')).click();
     await browser.driver.sleep(config.sleep);
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev'))), config.waitsFor);
-
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await element(by.css('.pager-prev a')).click();
     await browser.driver.sleep(config.sleep);
-
-    await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next'))), config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
   });
@@ -2534,7 +2534,7 @@ describe('Datagrid tooltip tests', () => {
 
   it('Should show tooltip on header text cut off with ellipsis', async () => {
     await browser.actions().mouseMove(element(by.css('.datagrid-header thead th[data-column-id="orderDate"] .datagrid-column-wrapper'))).perform();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
     const tooltip = await element(by.css('.grid-tooltip'));
