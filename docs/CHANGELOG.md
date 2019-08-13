@@ -8,6 +8,7 @@
 
 ### v4.21.0 Fixes
 
+- `[Application Menu]` Fixed an indentation issue with child elements in an accordion in the Angular application (enterprise-ng). ([#2616](https://github.com/infor-design/enterprise/issues/2616))
 - `[Circle Pager]` Fixed a bug where it was not showing on mobile view. ([#2589](https://github.com/infor-design/enterprise/issues/2589))
 - `[Contextual Action Panel]` Fixed an issue where if the title is longer, there will be an overflow causing a white space on the right on mobile view. ([#2605](https://github.com/infor-design/enterprise/issues/2605))
 - `[Custom Builds]` Fixed a problem where including components with extra punctuation (periods, etc) may cause a build to fail. ([#1322](https://github.com/infor-design/enterprise/issues/1322))
