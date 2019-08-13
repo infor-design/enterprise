@@ -32,9 +32,9 @@
           saveColumns: false,
           toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true},
           editable: true,
-          onKeyDown: function(e) {
-            console.log(e);
-            return false;
+          onKeyDown: function(e, args, response) {
+            $('body').toast({title: 'onKeyDown Fired!', message: 'You hit '+ e.key + '. Event has been vetoed, so nothing will happen.'});
+            response(false);
           }
         });
       });
