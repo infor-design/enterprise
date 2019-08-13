@@ -294,7 +294,6 @@ MonthView.prototype = {
         dateFormat: Locale.calendar(this.locale.name).dateFormat.year,
         locale: this.settings.locale,
         showMonthYearPicker: true,
-        hideButtons: true,
         onOpenCalendar: () => this.currentDate
       });
       this.header.find('button, a').hideFocus();
