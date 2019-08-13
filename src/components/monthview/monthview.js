@@ -294,7 +294,6 @@ MonthView.prototype = {
         dateFormat: Locale.calendar(this.locale.name).dateFormat.year,
         locale: this.settings.locale,
         showMonthYearPicker: true,
-        hideButtons: true,
         onOpenCalendar: () => this.currentDate
       });
       this.header.find('button, a').hideFocus();
@@ -1093,7 +1092,7 @@ MonthView.prototype = {
         this.element.find('td.is-selected').attr('tabindex', '0');
         this.element.find('.is-today').show();
         this.element.find('.popup-footer').removeClass('is-half');
-        this.element.find('.is-select').addClass('is-select').removeClass('is-select-month-pane');
+        this.element.find('.is-select-month-pane').addClass('is-select').removeClass('is-select-month-pane');
         this.element.find('.is-cancel-month-pane').addClass('is-cancel').removeClass('is-cancel-month-pane').text(Locale.translate('Clear'));
       }
     });
