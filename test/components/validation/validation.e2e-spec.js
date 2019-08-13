@@ -523,24 +523,24 @@ describe('Validation resetForm tests', () => {
     expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
     expect(await element(by.id('email-address-ok')).getAttribute('class')).toContain('error');
   });
+});
 
-  describe('Validation narrow field', () => {
-    beforeEach(async () => {
-      await utils.setPage('/components/validation/test-legacy-tooltip-narrow-field');
-    });
+describe('Validation narrow field', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/validation/test-legacy-tooltip-narrow-field');
+  });
 
-    it('Should be able to set error icon opacity', async () => {
-      const submitBtn = await element(by.id('test1'));
-      await submitBtn.click();
-      let errorIcon = await element(by.css('#field-one ~ .icon-error'));
+  it('Should be able to set error icon opacity', async () => {
+    const submitBtn = await element(by.id('test1'));
+    await submitBtn.click();
+    let errorIcon = await element(by.css('#field-one ~ .icon-error'));
 
-      expect(await errorIcon.getAttribute('class')).toContain('lower-opacity');
-      expect(await errorIcon.getCssValue('opacity')).toBeLessThan(1);
-      errorIcon = await element(by.css('#field-two ~ .icon-error'));
+    expect(await errorIcon.getAttribute('class')).toContain('lower-opacity');
+    expect(await errorIcon.getCssValue('opacity')).toBeLessThan(1);
+    errorIcon = await element(by.css('#field-two ~ .icon-error'));
 
-      expect(await errorIcon.getAttribute('class')).toContain('lower-opacity');
-      expect(await errorIcon.getCssValue('opacity')).toBeLessThan(1);
-    });
+    expect(await errorIcon.getAttribute('class')).toContain('lower-opacity');
+    expect(await errorIcon.getCssValue('opacity')).toBeLessThan(1);
   });
 });
 

@@ -2120,7 +2120,7 @@ describe('Datagrid paging serverside single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-serverside-single');
 
-    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(5)'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
