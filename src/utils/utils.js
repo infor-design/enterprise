@@ -556,6 +556,8 @@ utils.actualChar = function (e) {
   // Convert Keycode to Character String
   if (!e.shiftKey && (key >= 65 && key <= 90)) {
     character = String.fromCharCode(key + 32);
+  } else if (!e.shiftKey && (key >= 37 && key <= 40)) { // arrow keys
+    character = '';
   } else if (e.shiftKey &&
     Object.prototype.hasOwnProperty.call(shiftUps, key)) { // User was pressing Shift + any key
     character = shiftUps[key];

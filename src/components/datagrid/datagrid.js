@@ -298,6 +298,7 @@ Datagrid.prototype = {
   */
   initSettings() {
     this.ignoredColumnById('rowStatus');
+    this.setInlineActionableMode();
     this.sortColumn = { sortField: null, sortAsc: true };
     this.gridCount = $('.datagrid').length + 1;
     this.lastSelectedRow = 0; // Remember index to use shift key
@@ -325,6 +326,31 @@ Datagrid.prototype = {
     }
     if (column.index > -1) {
       s.columns.splice(column.index, 1);
+    }
+  },
+
+  /**
+  * Set `actionableMode` if found inlineEditor.
+  * @private
+  * @returns {void}
+  */
+  setInlineActionableMode() {
+    const s = this.settings;
+    if (!s.columns || (s.columns && !s.columns.length)) {
+      return;
+    }
+    const column = { index: -1 };
+    for (let i = 0, l = s.columns.length; i < l; i++) {
+      if (s.columns[i].inlineEditor) {
+        column.index = i;
+      }
+    }
+    this.inlineMode = column.index > -1;
+    if (this.inlineMode) {
+      this.element[0].classList.add('has-inline-editor');
+      this.settings.actionableMode = true;
+    } else {
+      this.element[0].classList.remove('has-inline-editor');
     }
   },
 
@@ -7739,7 +7765,8 @@ Datagrid.prototype = {
       let handled = false;
 
       // F2 - toggles actionableMode "true" and "false"
-      if (key === 113) {
+      // Force to not toggle, if "inlineMode: true"
+      if (key === 113 && !this.inlineMode) {
         self.settings.actionableMode = !self.settings.actionableMode;
         handled = true;
       }
@@ -7844,13 +7871,6 @@ Datagrid.prototype = {
           }
         }
 
-        if (key === 9 && self.editor && self.editor.name === 'input' && col.inlineEditor === true) {
-          // Editor.destroy
-          self.editor.destroy();
-          self.editor = null;
-          return;
-        }
-
         if (key === 9 && !self.settings.actionableMode) {
           return;
         }
@@ -7878,7 +7898,7 @@ Datagrid.prototype = {
             self.setActiveCell(row, cell);
           }
 
-          if (key === 9 && self.settings.actionableMode) {
+          if (self.settings.actionableMode) {
             self.makeCellEditable(self.activeCell.rowIndex, cell, e);
             if (self.containsTextField(node) && self.containsTriggerField(node)) {
               self.quickEditMode = true;
@@ -7919,7 +7939,7 @@ Datagrid.prototype = {
         }
       }
 
-      // Press Control+Spacebar to announce the current row when using a screen reader.
+      // Press (Control + Spacebar) to announce the current row when using a screen reader.
       if (key === 32 && e.ctrlKey && node) {
         let string = '';
         row = node.closest('tr');
