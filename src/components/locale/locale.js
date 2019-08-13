@@ -1750,16 +1750,6 @@ const Locale = {  // eslint-disable-line
       }
     });
   }
-
 };
-
-// Has to delay in order to check if no culture in head since scripts load async
-$(() => {
-  setTimeout(() => {
-    if (Locale && !Locale.cultureInHead() && !Locale.currentLocale.name) {
-      Locale.set('en-US');
-    }
-  }, 50);
-});
 
 export { Locale };

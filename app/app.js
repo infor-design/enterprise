@@ -122,17 +122,6 @@ router.get('/kitchen-sink', (req, res) => {
   res.render('kitchen-sink', res.opts);
 });
 
-// =========================================
-// Collection of Performance Tests Pages
-// =========================================
-router.get('/performance-tests', (req, res) => {
-  const opts = extend({}, res.opts, {
-    subtitle: 'Performance Tests'
-  });
-
-  res.render('performance-tests/index.html', opts);
-});
-
 // ======================================
 //  Components Routes
 // ======================================
@@ -142,7 +131,6 @@ app.use('/components', generalRoute);
 app.use('/patterns', generalRoute);
 app.use('/examples', generalRoute);
 app.use('/layouts', generalRoute);
-app.use('/tests', generalRoute);
 app.use('/utils', generalRoute);
 
 // =========================================
