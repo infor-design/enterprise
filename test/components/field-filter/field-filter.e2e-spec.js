@@ -15,6 +15,7 @@ const clickOnFieldFilter = async (id) => {
 describe('FieldFilter example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/field-filter/example-index');
+    await browser.driver.sleep(config.sleep);
   });
 
   it('Should not have errors', async () => {

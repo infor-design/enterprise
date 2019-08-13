@@ -110,6 +110,7 @@ describe('Datagrid Settings', () => {
       onDestroyCell: null,
       onEditCell: null,
       onExpandRow: null,
+      onKeyDown: null,
       emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
       searchExpandableRow: true,
       allowChildExpandOnMatch: false
