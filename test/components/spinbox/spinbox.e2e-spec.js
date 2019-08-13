@@ -25,13 +25,13 @@ describe('Spinbox example-index tests', () => {
       const spinboxElWrapper = element(by.className('spinbox-wrapper'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(spinboxElWrapper), config.waitsFor);
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(spinboxElWrapper, 'spinbox-init')).toEqual(0);
       await spinboxEl.sendKeys(protractor.Key.ARROW_UP);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.spinbox-wrapper.is-focused'))), config.waitsFor);
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(spinboxElWrapper, 'spinbox-clicked')).toEqual(0);
     });
