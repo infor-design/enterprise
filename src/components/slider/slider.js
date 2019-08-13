@@ -937,7 +937,7 @@ Slider.prototype = {
         'very-good': '#76b051',
         superior: '#488421'
       },
-      'contrast': {
+      contrast: {
         default: '#000000',
         'very-poor': '#a13030',
         poor: '#d66221',
