@@ -1362,6 +1362,56 @@ describe('Datagrid Header Overlapping Sorting Indicator', () => {
   }
 });
 
+describe('Datagrid Dirty and New Row Indicator', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-overlaps-row-cell-indicators?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show a new line indicator', async () => {
+    await element(by.id('add-row-top')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1).rowstatus-cell')).isPresent()).toBe(true);
+    await utils.checkForErrors();
+  });
+
+  it('should show a dirty indicator on existing rows', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    const editCellSelector = '.has-editor.is-editing input';
+    const inputEl = await element(by.css(editCellSelector));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+    await element(by.css(editCellSelector)).sendKeys('121');
+
+    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('121');
+    await element(by.css(editCellSelector)).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1).is-dirty-cell')).isPresent()).toBe(true);
+  });
+
+  it('should not show a dirty indicator on new rows', async () => {
+    await element(by.id('add-row-top')).click();
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    const editCellSelector = '.has-editor.is-editing input';
+    const inputEl = await element(by.css(editCellSelector));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+    await element(by.css(editCellSelector)).sendKeys('121');
+
+    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('121');
+    await element(by.css(editCellSelector)).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1).is-dirty-cell')).isPresent()).toBe(false);
+  });
+});
+
 describe('Datagrid contextmenu tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-contextmenu');

@@ -443,6 +443,7 @@ Datagrid.prototype = {
     }
     // Add row status
     data.rowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
+    this.saveDirtyRows();
 
     // Add to array
     const appendArray = this.settings.groupable &&
@@ -454,6 +455,7 @@ Datagrid.prototype = {
       appendArray.splice(location, 0, data);
     }
 
+    this.restoreDirtyRows();
     this.setRowGrouping();
     this.pagerRefresh(location);
     this.syncSelectedRowsIdx();
@@ -7781,7 +7783,6 @@ Datagrid.prototype = {
         }
         return self.dataRowIndex(visibleRow);
       };
-
       if (!node.length) {
         self.activeCell.node = self.cellNode(row, cell);
         node = self.activeCell.node;
@@ -9337,6 +9338,12 @@ Datagrid.prototype = {
   setDirtyCell(row, cell, dirtyOptions) {
     const cellNode = this.cellNode(row, cell);
 
+    // Do not show dirty indicator on new cells or cells with errors on them
+    if (this.settings.dataset[row] && this.settings.dataset[row].rowStatus &&
+      (this.settings.dataset[row].rowStatus.icon === 'new' || row === 0)) {
+      return;
+    }
+
     if (dirtyOptions) {
       this.addToDirtyArray(row, cell, dirtyOptions);
     }
@@ -10119,10 +10126,10 @@ Datagrid.prototype = {
     }
     const sort = this.sortFunction(this.sortColumn.sortId, this.sortColumn.sortAsc);
 
-    this.setDirtyBeforeSort();
+    this.saveDirtyRows();
     this.settings.dataset.sort(sort);
     this.setTreeDepth();
-    this.setDirtyAfterSort();
+    this.restoreDirtyRows();
 
     // Resync the _selectedRows array
     if (this.settings.selectable) {
@@ -10131,11 +10138,9 @@ Datagrid.prototype = {
   },
 
   /**
-  * Set current data to sync up dirtyArray before sort
-  * @private
-  * @returns {void}
-  */
-  setDirtyBeforeSort() {
+   * Set current data to sync up dirtyArray before sort
+   */
+  saveDirtyRows() {
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     if (s.showDirty && !this.settings.source && this.dirtyArray && this.dirtyArray.length) {
@@ -10153,7 +10158,7 @@ Datagrid.prototype = {
   * @private
   * @returns {void}
   */
-  setDirtyAfterSort() {
+  restoreDirtyRows() {
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     if (s.showDirty && this.dirtyArray && this.dirtyArray.length) {
