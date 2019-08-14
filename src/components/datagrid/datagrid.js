@@ -10141,7 +10141,6 @@ Datagrid.prototype = {
    * Set current data to sync up dirtyArray before sort
    */
   saveDirtyRows() {
-    console.log(this.dirtyArray);
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     if (s.showDirty && !this.settings.source && this.dirtyArray && this.dirtyArray.length) {
@@ -10177,7 +10176,6 @@ Datagrid.prototype = {
       }
       this.dirtyArray = newDirtyArray;
     }
-    console.log(this.dirtyArray);
   },
 
   /**
