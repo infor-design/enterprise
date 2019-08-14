@@ -1319,6 +1319,29 @@ describe('Datagrid Header Alignment With Ellipsis and Sorting', () => {
   }
 });
 
+describe('Datagrid Empty Card Scrolling', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-empty-card?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-body'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should show empty indicator initially', async () => {
+    expect(await element.all(by.css('.empty-message')).count()).toEqual(1);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-empty-card')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Empty Message Tests After Load', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-empty-message-after-load');

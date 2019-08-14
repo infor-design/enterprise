@@ -15,6 +15,7 @@
 - `[Datagrid]` Fixed an issue where key navigation was not working for inlineEditor. ([#2157](https://github.com/infor-design/enterprise/issues/2157))
 - `[Datagrid]` Fixed a bug where calling update rows in the filter callback will cause an infinite loop. ([#2526](https://github.com/infor-design/enterprise/issues/2526))
 - `[Datagrid]` Fixed a bug where the value would clear when using a lookup editor with a mask on new rows. ([#2305](https://github.com/infor-design/enterprise/issues/2305))
+- `[Datagrid]` Fixed a bug where horizontal scrolling would not work when in a card/widget. ([#1785](https://github.com/infor-design/enterprise/issues/1785))
 - `[Datagrid]` Fixed an issue where dirty and row status on the same cell would cause a UI issue. ([#2641](https://github.com/infor-design/enterprise/issues/2641))
 - `[Datagrid]` Changed the onKeyDown callback to fire on any key. ([#536](https://github.com/infor-design/enterprise-ng/issues/536))
 - `[Fileupload Advanced]` Added custom errors example page. ([#2620](https://github.com/infor-design/enterprise/issues/2620))

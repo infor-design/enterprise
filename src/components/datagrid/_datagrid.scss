@@ -732,6 +732,17 @@ $datagrid-short-row-height: 25px;
   }
 }
 
+.card,
+.widget {
+  .empty-message {
+    left: 50%;
+    margin-top: 15px;
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+
 // Grid Styling
 .datagrid {
   background-color: transparent;
