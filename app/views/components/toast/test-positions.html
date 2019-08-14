@@ -12,34 +12,51 @@
 </div>
 
 <script>
-  var cnt = 1;
+  var counter = 0;
+
+  function getSettings(position) {
+    counter++;
+    return {
+      title: 'Application Offline ('+ counter +')',
+      message: 'This is a Toast message.',
+      position: position
+    };
+  }
 
   $('#show-toast-top-left').on('click', function() {
-      cnt ++;
-      $('body').toast({title: 'Application Offline' + cnt, position: 'top left', message: 'This is a Toast message.'});
+    var settings = getSettings('top left');
+    $('body').toast(settings);
   });
 
   $('#show-toast-top-right').on('click', function() {
-    cnt ++;
-    $('body').toast({title: 'Application Offline' + cnt, position: 'top right', message: 'This is a Toast message.'});
+    var settings = getSettings('top right');
+    $('body').toast(settings);
   });
 
   $('#show-toast-bottom-left').on('click', function() {
-    cnt ++;
-    $('body').toast({title: 'Application Offline' + cnt, position: 'bottom left', message: 'This is a Toast message.'});
+    var settings = getSettings('bottom left');
+    $('body').toast(settings);
   });
 
   $('#show-toast-bottom-right').on('click', function() {
-    cnt ++;
-    $('body').toast({title: 'Application Offline' + cnt, position: 'bottom right', message: 'This is a Toast message.'});
+    var settings = getSettings('bottom right');
+    $('body').toast(settings);
   });
 
   $('#show-toast-big-text').on('click', function() {
-    cnt ++;
-    $('body').toast({title: 'Longer Application Offline' + cnt, position: 'bottom right', message: 'This is a Toast message that is much longer. It is so long it might wrap but that does not cause any issues.'});
+    counter++;
+    var settings = {
+      title: 'Longer Application Offline ('+ counter +')',
+      position: 'bottom right',
+      message: 'This is a Toast message that is much longer. It is so long it might wrap but that does not cause any issues.'
+    };
+    $('body').toast(settings);
   });
 
   $('#toast-destroy').on('click', function() {
-    $('body').data('toast').destroy();
+    var toastApi = $('body').data('toast');
+    if (toastApi) {
+      toastApi.destroy();
+    }
   });
 </script>
