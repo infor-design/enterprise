@@ -138,7 +138,7 @@ Toast.prototype = {
       timer[isPausePlay ? 'pause' : 'resume']();
     });
 
-    closeBtn.on('click', () => {
+    closeBtn.on('click.toast', () => {
       timer.destroy();
       self.remove(toast);
     });
@@ -389,7 +389,8 @@ Toast.prototype = {
   unbind(toast) {
     const container = toast.closest('.toast-container');
     container.off('dragstart.toast dragend.toast');
-    toast.off('mousedown.toast touchstart.toast');
+    toast.off('mousedown.toast mouseup.toast touchstart.toast touchend.toast');
+    toast.find('.btn-close').off('click.toast');
     return this;
   },
 
@@ -400,10 +401,18 @@ Toast.prototype = {
    * @returns {void}
    */
   remove(toast) {
+    const removeCallback = () => {
+      toast.remove();
+      const canDestroy = !$('#toast-container .toast').length;
+      if (canDestroy) {
+        this.destroy();
+      }
+    };
+
     this.unbind(toast);
 
     if (this.settings.audibleOnly) {
-      toast.remove();
+      removeCallback();
       return;
     }
 
@@ -413,7 +422,7 @@ Toast.prototype = {
       duration: 20,
       updateCallback() {}, // TODO: make this work without an empty function
       timeoutCallback() {
-        toast.remove();
+        removeCallback();
       }
     });
     renderLoop.register(closeTimer);
@@ -435,8 +444,16 @@ Toast.prototype = {
    * @returns {void}
    */
   destroy() {
+    const container = $('#toast-container');
+    if (container[0]) {
+      const toasts = [].slice.call(container[0].querySelectorAll('.toast'));
+      toasts.forEach((toast) => {
+        this.settings.audibleOnly = true; // Remove without delay
+        this.remove($(toast));
+      });
+    }
     $(document).off('keydown.toast keyup.toast mouseup.toast touchend.toast');
-    $('#toast-container').remove();
+    container.remove();
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
