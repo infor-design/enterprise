@@ -917,7 +917,7 @@ Slider.prototype = {
    * @returns {string} hex value representing a color
    */
   getColorClosestToValue() {
-    const currentTheme = theme.currentTheme.id;
+    const currentVariant = theme.currentTheme.id.split('-')[2];
     const preColors = {
       light: {
         default: '#000000',
@@ -937,7 +937,7 @@ Slider.prototype = {
         'very-good': '#76b051',
         superior: '#488421'
       },
-      'high-contrast': {
+      contrast: {
         default: '#000000',
         'very-poor': '#a13030',
         poor: '#d66221',
@@ -948,7 +948,7 @@ Slider.prototype = {
       }
     };
 
-    const themeColors = preColors[currentTheme];
+    const themeColors = preColors[currentVariant];
     const val = this.value()[0];
     let highestTickColor;
     let c;

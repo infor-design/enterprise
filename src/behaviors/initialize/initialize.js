@@ -12,7 +12,7 @@ const COMPONENT_NAME = 'initialize';
 
 // Component Defaults
 const INITIALIZE_DEFAULTS = {
-  locale: null
+  locale: 'en-US'
 };
 
 // Contains excluded CSS selectors that prevent automatic initialization
@@ -429,18 +429,9 @@ Initialize.prototype = {
    */
   init() {
     const self = this;
-    let locale = this.settings.locale;
-    if ((!Locale || !Locale.currentLocale) && !this.settings.locale) {
-      locale = 'en-US';
-    }
-
-    if (locale) {
-      Locale.set(locale).done(() => {
-        self.initAll();
-      });
-    } else {
+    Locale.set(this.settings.locale).done(() => {
       self.initAll();
-    }
+    });
 
     return this;
   },

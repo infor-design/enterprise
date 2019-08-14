@@ -101,7 +101,7 @@ describe('Accordion Collapse Children tests', () => {
     const buttonEl = await element(by.css('#start-test'));
     await buttonEl.click();
 
-    await browser.driver.sleep(2000);
+    await browser.driver.sleep(2600);
 
     expect(await element.all(by.css('#dropdown-list')).count()).toBe(0);
     expect(await element.all(by.css('#monthview-popup')).count()).toBe(0);

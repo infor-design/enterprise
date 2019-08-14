@@ -18,6 +18,8 @@ describe('Bar Chart example-index tests', () => {
   });
 
   it('Should have names for the graphs', async () => {
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.axis.y .tick text'))), config.waitsFor);
     const namesEl = await element.all(by.css('.axis.y .tick text')).count();
 
     expect(await namesEl).toBe(3);
