@@ -317,7 +317,7 @@ describe('Multiselect typeahead-reloading tests', () => {
         '<span class="audible">Typeahead-Reloaded Multiselect </span>New Jersey, New York', // on Local
       ];
 
-      expect(acceptableResults).toContain(await element(by.css('.dropdown span')).getText());
+      expect(acceptableResults).toContain(await element.all(by.css('.dropdown span')).first().getText());
     });
   }
 });

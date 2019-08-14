@@ -53,10 +53,10 @@ describe('Editor example-index tests', () => {
 
       await sourceElem.sendKeys('<b>Test</b>');
       await element(by.css('button[data-action=visual]')).click();
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'editor-index')).toEqual(0);
     });

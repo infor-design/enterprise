@@ -138,9 +138,6 @@ const filePaths = {
   }
 };
 
-addDynamicCssThemePaths(`${SRC_DIR}/themes`, true)
-
-
 // These search terms are used when scanning existing index files to determine
 // a component's placement in a generated file.
 const searchTerms = {
@@ -182,6 +179,7 @@ const customLocations = {
   '_multi-tabs': 'complex',
   '_tabs-module': 'complex',
   '_tabs-header': 'complex',
+  'toolbar-flex.item': '',
   validation: 'rules',
   'validation.utils': '',
   validator: 'foundational'
@@ -270,12 +268,12 @@ function addDynamicCssThemePaths() {
       filePaths.src.sass.themes[fileName] = srcPath;
       filePaths.target.sass.themes[fileName] = targetPath;
     }
-  }
+  };
 
-  IDS_THEMES.forEach(theme => {
+  IDS_THEMES.forEach((theme) => {
     tryAddPath(theme.name, theme.base.name);
 
-    theme.variants.forEach(variant => {
+    theme.variants.forEach((variant) => {
       tryAddPath(theme.name, variant.name);
     });
   });
@@ -291,13 +289,13 @@ function addDynamicCssThemePaths() {
 function replaceDashesWithCaptials(str) {
   str = capitalize(str);
 
-  const matches = str.match(/(-\w)+/g);
+  const matches = str.match(/([-|\.]\w)+/g);
   if (!matches) {
     return str;
   }
 
   matches.forEach((match) => {
-    str = str.replace(match, capitalize(match.replace('-', '')));
+    str = str.replace(match, capitalize(match.replace(/[-|\.]/, '')));
   });
   return str;
 }
@@ -983,6 +981,9 @@ if (!commandLineArgs.components) {
 } else {
   requestedComponents = commandLineArgs.components.split(',');
 }
+
+// Add all existing CSS theme paths dynamically.
+addDynamicCssThemePaths(`${SRC_DIR}/themes`, true);
 
 cleanAll(true).then(() => {
   if (!normalBuild) {

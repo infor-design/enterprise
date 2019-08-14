@@ -193,7 +193,7 @@ describe('Textarea Modal Tests', () => {
   it('Should not close a modal when hitting enter', async () => {
     const modalButton = await element(by.id('button-1'));
     modalButton.click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     const textareaEl = await element(by.id('context-desc'));
     await textareaEl.sendKeys('Test');
