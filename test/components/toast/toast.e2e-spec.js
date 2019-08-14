@@ -40,7 +40,7 @@ describe('Toast example-index tests', () => {
     await element(by.css('#toast-container button.btn-close')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('toast-container')).isDisplayed()).toBeFalsy();
+    expect(await element.all(by.id('toast-container')).count()).toEqual(0);
   });
 });
 
