@@ -1440,6 +1440,10 @@ Dropdown.prototype = {
     } else {
       this.filterTerm += $.actualChar(e).toLowerCase();
 
+      if (this.filterTerm === '') {
+        return;
+      }
+
       if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm
           && !self.settings.noSearch) {
         this.filterTerm = e.key;

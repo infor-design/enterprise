@@ -419,6 +419,15 @@ $datagrid-short-row-height: 25px;
     }
   }
 
+  &.has-inline-editor {
+    td {
+      &:focus,
+      &.is-focused {
+        box-shadow: none;
+      }
+    }
+  }
+
   //Short and Medium Row height
   &.short-rowheight {
     .datagrid-cell-wrapper {
