@@ -443,6 +443,7 @@ Datagrid.prototype = {
     }
     // Add row status
     data.rowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
+    this.saveDirtyRows();
 
     // Add to array
     const appendArray = this.settings.groupable &&
@@ -454,6 +455,7 @@ Datagrid.prototype = {
       appendArray.splice(location, 0, data);
     }
 
+    this.restoreDirtyRows();
     this.setRowGrouping();
     this.pagerRefresh(location);
     this.syncSelectedRowsIdx();
@@ -10124,10 +10126,10 @@ Datagrid.prototype = {
     }
     const sort = this.sortFunction(this.sortColumn.sortId, this.sortColumn.sortAsc);
 
-    this.setDirtyBeforeSort();
+    this.saveDirtyRows();
     this.settings.dataset.sort(sort);
     this.setTreeDepth();
-    this.setDirtyAfterSort();
+    this.restoreDirtyRows();
 
     // Resync the _selectedRows array
     if (this.settings.selectable) {
@@ -10136,11 +10138,10 @@ Datagrid.prototype = {
   },
 
   /**
-  * Set current data to sync up dirtyArray before sort
-  * @private
-  * @returns {void}
-  */
-  setDirtyBeforeSort() {
+   * Set current data to sync up dirtyArray before sort
+   */
+  saveDirtyRows() {
+    console.log(this.dirtyArray);
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     if (s.showDirty && !this.settings.source && this.dirtyArray && this.dirtyArray.length) {
@@ -10158,7 +10159,7 @@ Datagrid.prototype = {
   * @private
   * @returns {void}
   */
-  setDirtyAfterSort() {
+  restoreDirtyRows() {
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     if (s.showDirty && this.dirtyArray && this.dirtyArray.length) {
@@ -10176,6 +10177,7 @@ Datagrid.prototype = {
       }
       this.dirtyArray = newDirtyArray;
     }
+    console.log(this.dirtyArray);
   },
 
   /**
