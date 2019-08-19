@@ -27,6 +27,10 @@
 - `[Slider]` Updated the color variant logic to match new uplift theming. ([#2647](https://github.com/infor-design/enterprise/issues/2647))
 - `[Toast]` Fixed memory leak issues after destroy. ([#2634](https://github.com/infor-design/enterprise/issues/2634))
 
+### v4.21.0 Chores & Maintenance
+
+- `[Custom Builds]` Improved Sass builder's ability to code split and include partials once. ([#1038](https://github.com/infor-design/enterprise/issues/1038))
+
 ## v4.20.0
 
 ### v4.20.0 Deprecation
