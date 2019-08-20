@@ -605,7 +605,7 @@ Editor.prototype = {
         numberList.find('li').slice(-(i)).remove();
       }
       this.lineNumbers = lineNumberCount;
-      container[0].style.width = `calc(100% - ${(numberList.outerWidth() + 1)}px)`;
+      container[0].style.width = `calc(100% - ${(numberList.outerWidth() + 2)}px)`;
     }
     if (scrollHeight !== this.textarea[0].scrollHeight) {
       this.adjustSourceLineNumbers();
@@ -1891,30 +1891,86 @@ Editor.prototype = {
   },
 
   toggleSource() {
-    if (this.sourceViewActive()) {
-      this.element.empty().html(xssUtils.sanitizeHTML(this.textarea.val()));
-      this.element.removeClass('source-view-active hidden');
+    // Preview Mode
+    const doPreviewMode = (res) => {
+      let content = res || this.textarea.val();
+      this.element.empty().removeClass('source-view-active hidden');
       this.sourceView.addClass('hidden').removeClass('is-focused');
       this.element.trigger('focus.editor');
-    } else {
-      // Format The Text being pulled from the WYSIWYG editor
-      const val = this.element.html().toString().trim()
+      this.switchToolbars();
+      setTimeout(() => {
+        this.element.html(xssUtils.sanitizeHTML(content));
+        content = this.element.html();
+        /**
+         * Fires after preview mode activated.
+         * @event afterpreviewmode
+         * @memberof Editor
+         * @property {object} event The jquery event object
+         * @property {string} content Additional argument
+         */
+        this.element.triggerHandler('afterpreviewmode', content);
+      }, 0);
+    };
+
+    // Source Mode
+    const doSourceMode = (res) => {
+      let content = res || this.element.html()
+        .trim()
         .replace(/\s+/g, ' ')
         .replace(/<br( \/)?>/g, '<br>\n')
         .replace(/<\/p> /g, '</p>\n\n')
         .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
-
-      this.textarea.val(val).focus();
-
-      // var val = this.element.html().toString();
-      // this.textarea.val(this.formatHtml(val)).focus();
-
+      this.textarea.val(content).focus();
       this.element.addClass('source-view-active hidden');
       this.sourceView.removeClass('hidden');
       this.adjustSourceLineNumbers();
       this.textarea.focus();
+      this.switchToolbars();
+      content = this.textarea.val();
+      /**
+       * Fires after source mode activated.
+       * @event aftersourcemode
+       * @memberof Editor
+       * @property {object} event The jquery event object
+       * @property {string} content Additional argument
+       */
+      this.element.triggerHandler('aftersourcemode', content);
+    };
+
+    // Check the false value
+    const isFalse = v => ((typeof v === 'string' && v.toLowerCase() === 'false') ||
+      (typeof v === 'boolean' && v === false) ||
+      (typeof v === 'number' && v === 0));
+
+    if (this.sourceViewActive()) {
+      const content = this.textarea.val();
+      /**
+       * Fires before preview mode activated.
+       * @event beforepreviewmode
+       * @memberof Editor
+       * @property {object} event The jquery event object
+       * @property {string} content Additional argument
+       */
+      $.when(this.element.triggerHandler('beforepreviewmode', content)).done((res) => {
+        if (!isFalse(res)) {
+          doPreviewMode(res);
+        }
+      });
+    } else {
+      const content = this.element.html();
+      /**
+       * Fires before source mode activated.
+       * @event beforesourcemode
+       * @memberof Editor
+       * @property {object} event The jquery event object
+       * @property {string} content Additional argument
+       */
+      $.when(this.element.triggerHandler('beforesourcemode', content)).done((res) => {
+        if (!isFalse(res)) {
+          doSourceMode(res);
+        }
+      });
     }
-    this.switchToolbars();
   },
 
   /**

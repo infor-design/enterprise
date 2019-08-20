@@ -1,0 +1,155 @@
+
+{{={{{ }}}=}}
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <span class="label">Comments</span>
+      <div class="editor" data-init="false" id="editor-on-change-view" role="textbox" aria-multiline="true" aria-label="Comments">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var dataArray = [
+      { customeName: 'Kaylee E.', age: 43, showAge: true, selectedForSurvey: true },
+      { customeName: 'Tony C.', age: 22, selectedForSurvey: true },
+      { customeName: 'Julie D.', age: 34 },
+      { customeName: 'Richard F.', age: 47 },
+      { customeName: 'Jason A.', age: 23, showAge: true, selectedForSurvey: true },
+      { customeName: 'William M.', age: 27 },
+      { customeName: 'Jessica P.', age: 25, showAge: true },
+      { customeName: 'Sarah L.', age: 30, showAge: true },
+      { customeName: 'Jacob W.', age: 46, selectedForSurvey: true },
+      { customeName: 'Daniel C.', age: 26, selectedForSurvey: true },
+      { customeName: 'Michael B.', age: 29, showAge: true, selectedForSurvey: true },
+      { customeName: 'Emily J.', age: 42, selectedForSurvey: true },
+      { customeName: 'Rachel S.', age: 31, showAge: true, selectedForSurvey: true }
+    ];
+
+    var templateArray = [
+      '<p>' +
+        'Hello {{customeName}}, ' +
+        'Thank you for ordering.' +
+        '{{#selectedForSurvey}}' +
+        ' We would like to hear your feedback. Please fill up this survey form.' +
+        '{{/selectedForSurvey}}' +
+      '</p>',
+
+      '<p>' +
+        '{{customeName}}{{#showAge}}, {{age}} year old{{/showAge}}' +
+        '{{#selectedForSurvey}}' +
+        ' and selected for survey' +
+        '{{/selectedForSurvey}}' +
+      '</p>',
+
+      '<p>' +
+        '<b>Name:</b> {{customeName}}<br>' +
+        '<b>Age:</b> {{age}}<br>' +
+        '<b>Show Age:</b>{{#showAge}} Yes{{/showAge}}{{^showAge}} No{{/showAge}}<br>' +
+        '<b>Selected For Survey:</b>{{#selectedForSurvey}} Yes{{/selectedForSurvey}}{{^selectedForSurvey}} No{{/selectedForSurvey}}<br>' +
+      '</p>'
+    ];
+
+    // Get random template
+    function getRandomTemplate () {
+      var idx = getRandomNumber(0, templateArray.length - 1);
+      return templateArray[idx];
+    }
+
+    // Get random data
+    function getRandomData () {
+      var idx = getRandomNumber(0, dataArray.length - 1);
+      return dataArray[idx];
+    }
+
+    // Main Element
+    var elem = $('#editor-on-change-view');
+
+    // Append initialy with random template
+    elem.html(getRandomTemplate());
+
+    // Invoke editor component in source mode
+    elem.editor({ showHtmlView: true });
+
+    // Before Preview Mode
+    elem.on('beforepreviewmode', function(e, content) {
+      var deferred = $.Deferred();
+
+      setTimeout(function () {
+        var newContent = replaceMatch(content, getRandomData());
+        deferred.resolve(newContent);
+      }, 100); // Mock delay ie. ajax call
+      return deferred.promise();
+    });
+
+    // Before Source Mode
+    elem.on('beforesourcemode', function(e, content) {
+      return getRandomTemplate();
+    });
+
+    // // After Preview Mode
+    // elem.on('afterpreviewmode', function(e, content) {
+    //   console.log('After Preview Mode:');
+    //   console.log(content);
+    // });
+
+    // // After Source Mode
+    // elem.on('aftersourcemode', function(e, content) {
+    //   console.log('After Source Mode:');
+    //   console.log(content);
+    // });
+
+  });
+
+  /**************************************
+   Below Helper Methods for Demo example
+  ***************************************/
+
+  // Get random number
+  function getRandomNumber(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  // Replace matched pattern in given data
+  function replaceMatch(template, data) {
+    function getMatch(str, callback) {
+      var expr = /{{(.+?)}}/g;
+      if (typeof str === 'string' && typeof callback === 'function') {
+        while (expr.test(str)) {
+          str = str.replace(expr, (match, key) => callback(match, key));
+        }
+      }
+      return str;
+    }
+    template += '';
+    data = data && data.constructor === Array ? data : [data];
+    var content = '';
+    for (var i = 0, l = data.length; i < l; i++) {
+      var opt = { template: template, data: (data[i] || {}) };
+      getMatch(template, function(match, key) {
+        if (!/^\//.test(key)) {
+          if (/^#|\^/.test(key)) {
+            opt.key = key.replace(/^#|\^/, '');
+            opt.isTrue = (/^#/.test(key));
+            opt.isData = ((opt.isTrue && opt.data[opt.key]) || (!opt.isTrue && !opt.data[opt.key]));
+            opt.start = opt.isTrue ? match : '{{\\^'+ opt.key +'}}';
+            opt.expr = new RegExp(opt.start +'(.+?){{\\/'+ opt.key +'}}', 'g');
+            opt.template = opt.template.replace(opt.expr, (opt.isData ? '$1' : ''));
+          } else {
+            opt.template = opt.template.replace(match, opt.data[key]);
+          }
+        }
+      });
+      content += opt.template;
+    }
+    return content;
+  }
+
+</script>
