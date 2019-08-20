@@ -2252,7 +2252,7 @@ PopupMenu.prototype = {
     }
     wrapper.off().remove();
 
-    if (this.menu.length && this.menu.data('trigger')) {
+    if (this.menu && this.menu.length && this.menu.data('trigger')) {
       $.removeData(this.menu[0], 'trigger');
     }
 
