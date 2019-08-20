@@ -2053,7 +2053,9 @@ PopupMenu.prototype = {
     $('body').off('resize.popupmenu');
     $('.scrollable').off('scroll.popupmenu');
 
-    this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
+    if (this.menu && this.meny.length) {
+      this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
+    }
 
     $('iframe').each(function () {
       const frame = $(this);
