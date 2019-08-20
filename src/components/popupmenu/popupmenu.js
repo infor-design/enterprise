@@ -2053,7 +2053,7 @@ PopupMenu.prototype = {
     $('body').off('resize.popupmenu');
     $('.scrollable').off('scroll.popupmenu');
 
-    if (this.menu && this.meny.length) {
+    if (this.menu && this.menu.length) {
       this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
     }
 
