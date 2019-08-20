@@ -97,6 +97,7 @@
   p {
     color: $tooltip-color;
     font-size: $theme-size-font-sm;
+    -webkit-text-fill-color: $tooltip-color;
     word-break: normal;
     word-wrap: break-word;
   }
