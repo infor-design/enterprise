@@ -312,13 +312,16 @@ const formatters = {
       isChecked = api.isRowSelected(item);
     }
 
+    let ariaString = ' ';
+
     if (api.settings.columnIds.length !== null) {
-      let ariaString = '';
       for (let i = 0; i < api.settings.columnIds.length; i++) {
-        ariaString += ` ${item[api.settings.columnIds[i]]}`;
+        ariaString += item[api.settings.columnIds[i]];
       }
     }
-    return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select') + xssUtils.ensureAlphaNumericWithSpaces(ariaString))}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}" aria-checked="${isChecked}"></span></div>`;
+
+    ariaString = xssUtils.ensureAlphaNumericWithSpaces(ariaString);
+    return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}" aria-checked="${isChecked}"></span></div>`;
   },
 
   Actions(row, cell, value, col) {
