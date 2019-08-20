@@ -314,7 +314,7 @@ const formatters = {
 
     let ariaString = ' ';
 
-    if (api.settings.columnIds.length !== null) {
+    if (api.settings.columnIds !== null && api.settings.columnIds.length > 0) {
       for (let i = 0; i < api.settings.columnIds.length; i++) {
         ariaString += item[api.settings.columnIds[i]];
       }
