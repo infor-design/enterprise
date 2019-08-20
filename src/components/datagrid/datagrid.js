@@ -167,7 +167,7 @@ const DATAGRID_DEFAULTS = {
   clickToSelect: true,
   toolbar: false,
   initializeToolbar: true, // can set to false if you will initialize the toolbar yourself
-  columnIds: null,
+  columnIds: [],
   // Paging settings
   paging: false,
   pagesize: 25,
