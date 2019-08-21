@@ -3,6 +3,7 @@
 // -------------------------------------
 const path = require('path');
 const sass = require('node-sass');
+const onceImporter = require('node-sass-once-importer');
 
 const logger = require('../logger');
 const createDirs = require('./create-dirs');
@@ -26,7 +27,9 @@ const dirs = [
  */
 function compileSass(options = {}) {
   // set default options
+  /* eslint-disable-next-line */
   options = Object.assign({
+    importer: onceImporter(),
     style: 'expanded'
   }, options);
 
@@ -86,6 +89,7 @@ module.exports = function buildSass(config) {
     };
 
     if (config.options) {
+      /* eslint-disable-next-line */
       options = Object.assign(config.options, options);
     }
 
