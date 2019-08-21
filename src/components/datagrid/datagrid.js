@@ -2372,6 +2372,7 @@ Datagrid.prototype = {
             dropdownApi.setCode(conditions[i].value);
           }
         } else if (conditions[i].value instanceof Array && !conditions[i].selectedOptions) {
+          input.find('option[selected]').removeAttr('selected');
           for (let j = 0; j < conditions[i].value.length; j++) {
             input.find(`option[value="${conditions[i].value[j]}"]`).prop('selected', true);
           }
