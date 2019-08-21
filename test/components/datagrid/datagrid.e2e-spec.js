@@ -1524,10 +1524,8 @@ describe('Datagrid filter load data and update columns tests', () => {
     await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
     await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
     await multiselectSearchEl.sendKeys(protractor.Key.SPACE);
-    await multiselectSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await multiselectSearchEl.sendKeys(protractor.Key.SPACE);
 
-    expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(4);
+    expect(await element.all(by.css('#datagrid tbody tr')).count()).toEqual(3);
     await utils.checkForErrors();
   });
 });
