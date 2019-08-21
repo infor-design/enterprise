@@ -744,7 +744,10 @@ ToolbarFlexItem.prototype = {
       const menuElem = this.componentAPI.menu;
       const originalSubmenuData = this.componentAPI.toData({ noMenuWrap: true });
       itemData.id = this.componentAPI.element[0].id;
-      itemData.submenu = addMenuElementLinks(menuElem[0], originalSubmenuData);
+
+      if (originalSubmenuData.length) {
+        itemData.submenu = addMenuElementLinks(menuElem[0], originalSubmenuData);
+      }
     }
 
     return itemData;

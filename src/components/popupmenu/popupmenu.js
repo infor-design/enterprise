@@ -457,9 +457,9 @@ PopupMenu.prototype = {
       settings.contextElement = settings.contextElement.children('ul');
     }
 
-    const menuId = `${settings.contextElement.attr('id')}`;
-    if (menuId) {
-      data.menuId = menuId;
+    const idAttr = settings.contextElement.attr('id');
+    if (idAttr && idAttr.length) {
+      data.menuId = `${idAttr}`;
     }
 
     const hasIcons = settings.contextElement.hasClass('has-icons');
@@ -709,10 +709,22 @@ PopupMenu.prototype = {
     // TODO: Submenus
     // Build so the submenu data structure is used to rerun this method against each submenu item.
     if (data.submenu) {
-      const submenuItems = item.querySelector('.popupmenu').children;
-      for (let i = 0; i < data.submenu.length; i++) {
-        data.submenu[i].isSubmenuItem = true;
-        this.refreshMenuItem(submenuItems.item(i), data.submenu[i], callback);
+      const submenuContainer = item.querySelector('.popupmenu');
+      if (!submenuContainer) {
+        // If the submenu is controlled with an AJAX call, it's possible that it won't exist here
+        // and needs to be completely re-drawn.
+        let newSubmenu = '<ul class="popupmenu submenu">';
+        for (let i = 0; i < data.submenu.length; i++) {
+          newSubmenu += this.renderItem(data.submenu[i]);
+        }
+        newSubmenu += '</ul>';
+        $(item).append(newSubmenu);
+      } else {
+        const submenuItems = submenuContainer.children;
+        for (let i = 0; i < data.submenu.length; i++) {
+          data.submenu[i].isSubmenuItem = true;
+          this.refreshMenuItem(submenuItems.item(i), data.submenu[i], callback);
+        }
       }
     }
 
@@ -2218,34 +2230,28 @@ PopupMenu.prototype = {
       this.menu.unwrap();
     }
 
-    // Either completely remove the menu,
-    // or place it back where it came from while cleaning up.
-    if (this.settings.removeOnDestroy) {
-      this.menu.off().remove();
-      delete this.menu;
-    } else {
-      // Get an accurate target to place the menu back where it came from
-      let insertTarget = this.element;
-      const searchfield = this.element.parent().children('.searchfield');
-      if (searchfield.length) {
-        insertTarget = searchfield.first();
-      }
-      this.menu.insertAfter(insertTarget);
-
-      // Cleanup menu items
-      this.menu.find('.submenu').children('a').each((i, item) => {
-        const spantext = $(item).find('span').text();
-        const text = spantext || $(item).text();
-        $(item).find('span, svg').remove();
-        $(item).text(text);
-      });
-      this.menu.find('.submenu').removeClass('submenu');
-
-      // Unwrap submenus, if applicable
-      this.menu.find('.popupmenu').each(function () {
-        unwrapPopup($(this));
-      });
+    // Place the menu back where it came from while cleaning up.
+    // Get an accurate target to place the menu back where it came from
+    let insertTarget = this.element;
+    const searchfield = this.element.parent().children('.searchfield');
+    if (searchfield.length) {
+      insertTarget = searchfield.first();
     }
+    this.menu.insertAfter(insertTarget);
+
+    // Cleanup menu items
+    this.menu.find('.submenu').children('a').each((i, item) => {
+      const spantext = $(item).find('span').text();
+      const text = spantext || $(item).text();
+      $(item).find('span, svg').remove();
+      $(item).text(text);
+    });
+    this.menu.find('.submenu').removeClass('submenu');
+
+    // Unwrap submenus, if applicable
+    this.menu.find('.popupmenu').each(function () {
+      unwrapPopup($(this));
+    });
 
     // Finish cleaning up after the wrapper
     if (self.wrapperPlace) {
@@ -2286,7 +2292,14 @@ PopupMenu.prototype = {
   destroy() {
     this.close();
     this.teardown();
+
+    // In some cases, the menu needs to be completely removed on `destroy`.
     this.menu.trigger('destroy');
+    if (this.settings.removeOnDestroy && this.menu && this.menu.length) {
+      this.menu.off().remove();
+      delete this.menu;
+    }
+
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };

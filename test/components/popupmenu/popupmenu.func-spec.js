@@ -398,6 +398,42 @@ describe('Popupmenu toData() API', () => {
     });
   });
 
+  describe('Empty examples', () => {
+    const emptyMenuHTML = `
+      <button id="popupmenu-trigger" class="btn-menu">
+        <span>Normal Menu</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
+          <use xlink:href="#icon-dropdown"></use>
+        </svg>
+      </button>
+      <ul class="popupmenu"></ul>`;
+
+    beforeEach(() => {
+      popupmenuButtonEl = null;
+      svgEl = null;
+      popupmenuObj = null;
+      document.body.insertAdjacentHTML('afterbegin', emptyMenuHTML);
+      document.body.insertAdjacentHTML('afterbegin', svg);
+      popupmenuButtonEl = document.body.querySelector('#popupmenu-trigger');
+      svgEl = document.body.querySelector('.svg-icons');
+      popupmenuObj = new PopupMenu(popupmenuButtonEl);
+    });
+
+    afterEach(() => {
+      popupmenuObj.destroy();
+      popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
+      svgEl.parentNode.removeChild(svgEl);
+    });
+
+    it('Should gracefully handle empty menus', () => {
+      const data = popupmenuObj.toData();
+
+      expect(data).toBeDefined();
+      expect(data.menuId).toBeDefined(); // auto-generated
+      expect(data.menu.length).toBe(0);
+    });
+  });
+
   describe('Context Menu examples', () => {
     beforeEach(() => {
       popupmenuButtonEl = null;

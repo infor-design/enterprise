@@ -63,10 +63,17 @@
     <button id="btn-trigger-updated-menubutton" class="btn-secondary">
       <span>Trigger `updated()` on Menu Button Only</span>
     </button>
+
+    <button id="btn-destroy-invoke-menubutton" class="btn-secondary">
+      <span>Destroy Menu Button</span>
+    </button>
   </div>
 </div>
 
 <script id="test-script" type="text/javascript">
+  var DESTROY_TEXT = 'Destroy Menu Button';
+  var INVOKE_TEXT = 'Invoke Menu Button';
+
   var MENU_RESPONSE_HTML = '' +
     '<li><a href="#">Item One</a></li>' +
     '<li><a href="#">Item Two</a></li>' +
@@ -84,6 +91,8 @@
     '<li><a href="#">Sub-item Four</a></li>' +
   '';
 
+
+
   function popupmenuTestBeforeOpen(response, options) {
     if (options.contextElement) {
       setTimeout(function() {
@@ -97,15 +106,20 @@
     }, 100);
   }
 
-  $('#btn-new-document').popupmenu({
-    attachToBody: true,
-    beforeOpen: popupmenuTestBeforeOpen,
-    menu: 'btn-new-document-menu'
-  });
+  function invokeMenuButton() {
+    $('#btn-new-document').popupmenu({
+      attachToBody: true,
+      beforeOpen: popupmenuTestBeforeOpen,
+      menu: 'btn-new-document-menu',
+      removeOnDestroy: true
+    });
+  }
+
+  invokeMenuButton();
 
   $('body').on('initialized', function() {
-    const toolbarAPI = $('#test-toolbar').data('toolbarFlex');
-    const popupmenuAPI = $('#btn-new-document').data('popupmenu');
+    var toolbarAPI = $('#test-toolbar').data('toolbarFlex');
+    var popupmenuAPI = $('#btn-new-document').data('popupmenu');
 
     $('#btn-trigger-updated-toolbar').on('click.test', function() {
       toolbarAPI.updated();
@@ -113,6 +127,21 @@
 
     $('#btn-trigger-updated-menubutton').on('click.test', function() {
       popupmenuAPI.updated();
+    });
+
+    $('#btn-destroy-invoke-menubutton').on('click.test', function() {
+      if (popupmenuAPI && typeof popupmenuAPI.destroy === 'function') {
+        popupmenuAPI.destroy();
+        popupmenuAPI = null;
+        toolbarAPI.updated();
+        $(this).find('span').text(INVOKE_TEXT);
+      } else {
+        $('<ul id="btn-new-document-menu" class="popupmenu"></ul>').insertAfter('#btn-new-document');
+        invokeMenuButton();
+        toolbarAPI.updated();
+        popupmenuAPI = $('#btn-new-document').data('popupmenu');
+        $(this).find('span').text(DESTROY_TEXT);
+      }
     });
   });
 </script>
