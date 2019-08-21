@@ -179,13 +179,36 @@ Button.prototype = {
   },
 
   /**
+   * Removes bound events and generated markup from this component
+   * @private
+   * @returns {object} The api.
+   */
+  teardown() {
+    this.element.off('click.button touchstart.button focusin.hide-focus focusout.hide-focus mousedown.hide-focus touchstart.hide-focus');
+
+    const tooltipApi = this.element.data('tooltip');
+    if (this.element.hasClass('btn-actions') && tooltipApi) {
+      tooltipApi.destroy();
+    }
+
+    const hidefocusApi = this.element.data('hidefocus');
+    if (hidefocusApi) {
+      hidefocusApi.destroy();
+    }
+    return this;
+  },
+
+  /**
    * Update the component with new settings.
    * @param  {object} settings The settings you would like to modify.
    * @returns {object} The api.
    */
   updated(settings) {
     if (settings) {
-      this.settings = utils.extend({}, this.settings, settings);
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      this
+        .teardown()
+        .init();
     }
     return this;
   },
@@ -195,17 +218,7 @@ Button.prototype = {
   * @returns {void}
   */
   destroy() {
-    this.element.off('click.button touchstart.button focusin.hide-focus focusout.hide-focus mousedown.hide-focus touchstart.hide-focus');
-
-    const moreTooltip = this.element.data('tooltip');
-    if (this.element.hasClass('btn-actions') && moreTooltip) {
-      moreTooltip.destroy();
-    }
-
-    if (this.element.data('hidefocus')) {
-      this.element.data('hidefocus').destroy();
-    }
-
+    this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 

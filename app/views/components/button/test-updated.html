@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Button Test: Updated</h2>
+    <p>By clicking button `Update` will hide arrow icon from `Normal Menu` (the buttons attached to popupmenus.)</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <button type="button" id="btn-update" class="btn-secondary">
+      <span>Update</span>
+    </button>
+
+    <div class="field">
+      <button id="btn-normal-menu" class="btn-menu">
+        <span>Normal Menu</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
+          <use xlink:href="#icon-dropdown"></use>
+        </svg>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Menu Option #1</a></li>
+        <li><a href="#">Menu Option #2</a></li>
+        <li><a href="#">Menu Option #3</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var btnUpdate = $('#btn-update');
+
+  btnUpdate.on('click', function () {
+    const buttonApi = $('#btn-normal-menu').data('button');
+    if (buttonApi) {
+      buttonApi.updated({
+        hideMenuArrow: true
+      });
+    }
+  });
+
+</script>
