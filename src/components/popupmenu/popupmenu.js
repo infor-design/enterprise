@@ -667,6 +667,7 @@ PopupMenu.prototype = {
 
     const itemA = item.querySelector('a');
     const itemIcon = item.querySelector('.icon:not(.close):not(.icon-dropdown)');
+    const itemDDIcon = item.querySelector('.icon.icon-dropdown');
     let itemIconUse;
 
     if (data.text) {
@@ -706,26 +707,31 @@ PopupMenu.prototype = {
       itemIcon.remove();
     }
 
-    // TODO: Submenus
-    // Build so the submenu data structure is used to rerun this method against each submenu item.
+    // Refresh a menu item's submenu, if applicable.
     if (data.submenu) {
+      item.classList.add('submenu');
       const submenuContainer = item.querySelector('.popupmenu');
-      if (!submenuContainer) {
+      if (submenuContainer) {
+        // Simply update the menu item's children
+        const submenuItems = submenuContainer.children;
+        for (let j = 0; j < data.submenu.length; j++) {
+          data.submenu[j].isSubmenuItem = true;
+          this.refreshMenuItem(submenuItems.item(j), data.submenu[j], callback);
+        }
+      } else {
         // If the submenu is controlled with an AJAX call, it's possible that it won't exist here
         // and needs to be completely re-drawn.
-        let newSubmenu = '<ul class="popupmenu submenu">';
+        let newSubmenu = '<ul class="popupmenu">';
         for (let i = 0; i < data.submenu.length; i++) {
+          data.submenu[i].isSubmenuItem = true;
           newSubmenu += this.renderItem(data.submenu[i]);
         }
         newSubmenu += '</ul>';
         $(item).append(newSubmenu);
-      } else {
-        const submenuItems = submenuContainer.children;
-        for (let i = 0; i < data.submenu.length; i++) {
-          data.submenu[i].isSubmenuItem = true;
-          this.refreshMenuItem(submenuItems.item(i), data.submenu[i], callback);
-        }
+        $(itemA).append('<svg class="icon icon-dropdown" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>');
       }
+    } else if (itemDDIcon) {
+      itemDDIcon.remove();
     }
 
     // Run callback to apply additional refresh changes, if applicable.

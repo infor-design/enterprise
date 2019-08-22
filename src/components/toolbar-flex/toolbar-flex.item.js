@@ -571,7 +571,7 @@ ToolbarFlexItem.prototype = {
     }
 
     // If there are toolbar items, but no predefined items, render the more-actions menu
-    if ((!this.predefinedItems || !this.predefinedItems.length) && this.toolbarAPI.items.length) {
+    if ((!menuAPI.settings.beforeOpen && (!this.predefinedItems || !this.predefinedItems.length)) && this.toolbarAPI.items.length) {
       this.renderMoreActionsMenu();
     }
 
@@ -743,9 +743,7 @@ ToolbarFlexItem.prototype = {
     if (this.type === 'menubutton') {
       const menuElem = this.componentAPI.menu;
       const originalSubmenuData = this.componentAPI.toData({ noMenuWrap: true });
-      if (originalSubmenuData.length) {
-        itemData.submenu = addMenuElementLinks(menuElem[0], originalSubmenuData);
-      }
+      itemData.submenu = addMenuElementLinks(menuElem[0], originalSubmenuData);
     }
 
     return itemData;
