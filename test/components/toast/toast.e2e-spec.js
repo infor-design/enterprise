@@ -33,12 +33,13 @@ describe('Toast example-index tests', () => {
   it('Should close after clicking close button', async () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element.all(by.id('toast-container')).count()).toEqual(1);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepShort);
 
     await element(by.css('#toast-container button.btn-close')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element.all(by.id('toast-container')).count()).toEqual(0);
   });
