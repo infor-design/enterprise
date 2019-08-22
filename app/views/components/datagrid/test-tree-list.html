@@ -11,6 +11,7 @@
     var columns = [];
 
     //Define Columns for the Grid.
+    columns.push({ id: "selectionCheckbox", sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: "center" });
     columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 250});
     columns.push({ id: 'id', name: 'Id', field: 'id', width: 25,  formatter: Formatters.Hyperlink});
     columns.push({ id: 'desc', name: 'Description', field: 'desc', width: 200});
@@ -28,6 +29,7 @@
         editable: false,
         isList: true,
         treeGrid: true,
+        selectable: 'multiple',
         toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
       });
 
