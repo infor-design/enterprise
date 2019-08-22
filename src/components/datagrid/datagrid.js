@@ -6794,10 +6794,7 @@ Datagrid.prototype = {
           rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
-            let actualIdx = self.actualPagingRowIndex(index);
-            if (actualIdx === -1) {
-              actualIdx = index;
-            }
+            const actualIdx = self.actualPagingRowIndex(index);
             const data = s.treeDepth[actualIdx].node;
 
             // Allow select node if selectChildren is true or only first node
@@ -6822,10 +6819,7 @@ Datagrid.prototype = {
           rowNode.add(nexts).add(prevs).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
-            let actualIndex = self.actualPagingRowIndex(index);
-            if (actualIndex === -1) {
-              actualIndex = index;
-            }
+            const actualIndex = self.actualPagingRowIndex(index);
             const data = s.treeDepth[actualIndex].node;
 
             // Allow select node if selectChildren is true or only first node
@@ -6861,10 +6855,7 @@ Datagrid.prototype = {
 
       // Append data to selectedRows
       if (!s.groupable) {
-        let actualIdx = self.actualPagingRowIndex(idx);
-        if (actualIdx === -1) {
-          actualIdx = idx;
-        }
+        const actualIdx = self.actualPagingRowIndex(idx);
 
         this._selectedRows.push({
           idx: actualIdx,
@@ -7415,10 +7406,7 @@ Datagrid.prototype = {
         rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
           const elem = $(this);
           const index = elem.attr('aria-rowindex') - 1;
-          let actualIndex = self.actualPagingRowIndex(index);
-          if (actualIndex === -1) {
-            actualIndex = index;
-          }
+          const actualIndex = self.actualPagingRowIndex(index);
 
           // Allow unselect node if selectChildren is true or only first node
           if (s.selectChildren || (!s.selectChildren && i === 0)) {
@@ -7429,10 +7417,7 @@ Datagrid.prototype = {
         rowNode.parent().find('.is-selected').each(function (i) {
           const elem = $(this);
           const index = elem.attr('aria-rowindex') - 1;
-          let actualIndex = self.actualPagingRowIndex(index);
-          if (actualIndex === -1) {
-            actualIndex = index;
-          }
+          const actualIndex = self.actualPagingRowIndex(index);
 
           // Allow unselect node if selectChildren is true or only first node
           if (s.selectChildren || (!s.selectChildren && i === 0)) {
@@ -7440,10 +7425,7 @@ Datagrid.prototype = {
           }
         });
       } else { // Single element unselection
-        let actualIdx = self.actualPagingRowIndex(idx);
-        if (actualIdx === -1) {
-          actualIdx = idx;
-        }
+        const actualIdx = self.actualPagingRowIndex(idx);
         unselectNode(rowNode, actualIdx);
       }
       self.setNodeStatus(rowNode);
