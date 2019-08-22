@@ -60,8 +60,6 @@ describe('Button API', () => {
       toggleOnIcon: null,
       hideMenuArrow: null
     };
-
-    buttonObj.init();
     buttonObj.updated(settings);
 
     expect(buttonObj.settings.replaceText).toEqual(settings.replaceText);
@@ -74,15 +72,12 @@ describe('Button API', () => {
       toggleOnIcon: null,
       hideMenuArrow: true
     };
-
-    buttonObj.init();
     buttonObj.updated(settings);
 
     expect(buttonObj.settings.hideMenuArrow).toEqual(settings.hideMenuArrow);
   });
 
   it('Should remove menu icon if hideMenuArrow set to true', () => {
-    buttonObj.init();
     buttonObj.updated({ hideMenuArrow: true });
 
     expect(document.body.querySelector('.icon-dropdown')).toBeFalsy();
