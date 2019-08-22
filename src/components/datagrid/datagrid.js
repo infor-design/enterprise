@@ -1209,9 +1209,9 @@ Datagrid.prototype = {
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
-          headerRows[container] += '<span aria-checked="false" aria-selected="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
+          headerRows[container] += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
         } else {
-          headerRows[container] += '<span aria-checked="false" aria-selected="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox" style="display:none"></span>';
+          headerRows[container] += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox" style="display:none"></span>';
         }
       }
 
@@ -6085,11 +6085,11 @@ Datagrid.prototype = {
         const checkbox = $(this);
 
         if (!checkbox.hasClass('is-checked')) {
-          checkbox.addClass('is-checked').attr('aria-checked', 'true').attr('aria-selected', 'true');
+          checkbox.addClass('is-checked').attr('aria-checked', 'true');
 
           self.selectAllRows();
         } else {
-          checkbox.removeClass('is-checked').attr('aria-checked', 'false').attr('aria-selected', 'false');
+          checkbox.removeClass('is-checked').attr('aria-checked', 'false');
           self.unSelectAllRows();
         }
       });
@@ -6727,8 +6727,7 @@ Datagrid.prototype = {
     checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
     elem.addClass(selectClasses).attr('aria-selected', 'true');
     checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-      .addClass('is-checked').attr('aria-checked', 'true')
-      .attr('aria-selected', 'true');
+      .addClass('is-checked').attr('aria-checked', 'true');
 
     if (data) {
       data._selected = true;
@@ -7367,8 +7366,7 @@ Datagrid.prototype = {
       if (self.columnIdxById('selectionCheckbox') !== -1) {
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-          .removeClass('is-checked no-animate').attr('aria-checked', 'false')
-          .attr('aria-selected', 'true');
+          .removeClass('is-checked no-animate').attr('aria-checked', 'false');
       }
 
       if (s.treeGrid) {
@@ -7456,13 +7454,11 @@ Datagrid.prototype = {
     // Not multiselect
     if (!isMultiselect) {
       checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-        .removeClass('is-checked is-partial').attr('aria-checked', 'false')
-        .attr('aria-selected', 'false');
+        .removeClass('is-checked is-partial').attr('aria-checked', 'false');
 
       if (node.is('.is-selected')) {
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-          .addClass('is-checked').attr('aria-checked', 'true')
-          .attr('aria-selected', 'true');
+          .addClass('is-checked').attr('aria-checked', 'true');
       }
       return;
     }
@@ -7474,16 +7470,14 @@ Datagrid.prototype = {
         const status = self.getSelectedStatus(nodeToUse, isFirstSkipped);
 
         checkboxToUse.find('.datagrid-cell-wrapper .datagrid-checkbox')
-          .removeClass('is-checked is-partial').attr('aria-checked', 'false')
-          .attr('aria-selected', 'false');
+          .removeClass('is-checked is-partial').attr('aria-checked', 'false');
 
         if (status === 'mixed') {
           checkboxToUse.find('.datagrid-cell-wrapper .datagrid-checkbox')
             .addClass('is-checked is-partial').attr('aria-checked', 'mixed');
         } else if (status) {
           checkboxToUse.find('.datagrid-cell-wrapper .datagrid-checkbox')
-            .addClass('is-checked').attr('aria-checked', 'true')
-            .attr('aria-selected', 'true');
+            .addClass('is-checked').attr('aria-checked', 'true');
         }
       });
     };
