@@ -525,7 +525,7 @@ Datagrid.prototype = {
   removeRow(row, noSync, noTrigger) {
     const rowNode = this.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
     const arrayToUse = this.settings.groupable &&
-        this.originalDataset ? this.originalDataset : this.settings.dataset;
+      this.originalDataset ? this.originalDataset : this.settings.dataset;
     const rowData = arrayToUse[row];
 
     this.unselectRow(row, noSync);
@@ -1140,8 +1140,8 @@ Datagrid.prototype = {
       if ((self.hasLeftPane || self.hasRightPane)
         && (self.settings.frozenColumns.left &&
           self.settings.frozenColumns.left.indexOf(column.id) > -1 ||
-        self.settings.frozenColumns.right &&
-        self.settings.frozenColumns.right.indexOf(column.id) > -1)) {
+          self.settings.frozenColumns.right &&
+          self.settings.frozenColumns.right.indexOf(column.id) > -1)) {
         column.hideable = false;
       }
 
@@ -1719,9 +1719,9 @@ Datagrid.prototype = {
     };
     const renderButton = function (defaultValue) {
       return `<button type="button" class="btn-menu btn-filter" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} type="button"><span class="audible">Filter</span>` +
-      `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-filter-{{icon}}"></use></svg>${
+        `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-filter-{{icon}}"></use></svg>${
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
-      }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
+        }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
     };
     let btnMarkup = '';
     let btnDefault = '';
@@ -1769,18 +1769,18 @@ Datagrid.prototype = {
     if (/\b(integer|decimal|date|time|percent)\b/g.test(col.filterType)) {
       btnMarkup += `${
         render('less-than', 'LessThan')
-      }${render('less-equals', 'LessOrEquals')
-      }${render('greater-than', 'GreaterThan')
-      }${render('greater-equals', 'GreaterOrEquals')}`;
+        }${render('less-equals', 'LessOrEquals')
+        }${render('greater-than', 'GreaterThan')
+        }${render('greater-equals', 'GreaterOrEquals')}`;
       btnMarkup = btnMarkup.replace('{{icon}}', 'less-than');
     }
 
     if (col.filterType === 'text') {
       btnMarkup += `${
         render('end-with', 'EndsWith')
-      }${render('does-not-end-with', 'DoesNotEndWith')
-      }${render('start-with', 'StartsWith')
-      }${render('does-not-start-with', 'DoesNotStartWith')}`;
+        }${render('does-not-end-with', 'DoesNotEndWith')
+        }${render('start-with', 'StartsWith')
+        }${render('does-not-start-with', 'DoesNotStartWith')}`;
       btnMarkup = btnMarkup.replace('{{icon}}', 'end-with');
     }
 
@@ -1914,7 +1914,7 @@ Datagrid.prototype = {
         }
 
         if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '') && !(conditions[i].value instanceof Array)) &&
-              columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
+          columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
           rowValue = rowValue === null ? rowValue : parseFloat(rowValue);
           conditionValue = Locale.parseNumber(conditionValue);
         }
@@ -2582,7 +2582,7 @@ Datagrid.prototype = {
                 // Swap columns
                 for (i = 0, l = self.settings.columns.length; i < l; i++) {
                   if (!self.settings.columns[i].hidden &&
-                        self.settings.columns[i].id !== 'selectionCheckbox') {
+                    self.settings.columns[i].id !== 'selectionCheckbox') {
                     tempArray.push(i);
                   }
                 }
@@ -2659,7 +2659,7 @@ Datagrid.prototype = {
     for (i = 0, l = self.draggableColumnTargets.length - 1; i < l; i++) {
       target = self.draggableColumnTargets[i];
       if (pos.left > target.dropArea.x1 && pos.left < target.dropArea.x2 &&
-          pos.top > target.dropArea.y1 && pos.top < target.dropArea.y2) {
+        pos.top > target.dropArea.y1 && pos.top < target.dropArea.y2) {
         idx = target.index;
       }
     }
@@ -3360,7 +3360,7 @@ Datagrid.prototype = {
     if (!this.settings.virtualized) {
       if (this.settings.paging && !this.settings.source && rowIndex && this.pagerAPI) {
         return (this.pagerAPI.activePage - 1) * this.settings.pagesize <= rowIndex &&
-            (this.pagerAPI.activePage) * this.settings.pagesize >= rowIndex;
+          (this.pagerAPI.activePage) * this.settings.pagesize >= rowIndex;
       }
 
       return true;
@@ -3522,7 +3522,7 @@ Datagrid.prototype = {
           let currentDepth = 0;
           for (let i2 = i; i2 >= 0; i2--) {
             currentDepth = self.settings.treeDepth[i2].depth < currentDepth ||
-            currentDepth === 0 ? self.settings.treeDepth[i2].depth : currentDepth;
+              currentDepth === 0 ? self.settings.treeDepth[i2].depth : currentDepth;
             if (currentDepth < treeDepthItem.depth) {
               parentNode = self.settings.treeDepth[i2];
 
@@ -3598,14 +3598,14 @@ Datagrid.prototype = {
 
     containerHtml.center = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
       ` data-index="${actualIndex}"${
-        actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
+      actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
       }${
-        self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
+      self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
       }${self.settings.treeGrid ? ` aria-level="${depth}"` : ''
       }${isRowDisabled ? ' aria-disabled="true"' : ''
       }${isSelected ? ' aria-selected="true"' : ''} class="datagrid-row${rowStatus.class}${
-        isHidden ? ' is-hidden' : ''}${
-        rowData.isFiltered ? ' is-filtered' : ''
+      isHidden ? ' is-hidden' : ''}${
+      rowData.isFiltered ? ' is-filtered' : ''
       }${isActivated ? ' is-rowactivated' : ''
       }${isRowDisabled ? ' is-rowdisabled' : ''
       }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
@@ -3761,13 +3761,13 @@ Datagrid.prototype = {
       }
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
-          ` aria-describedby="${self.uniqueId(`-header-${j}`)}"${
-            isSelected ? ' aria-selected= "true"' : ''
-          }${cssClass ? ` class="${cssClass}"` : ''
-          }${colspan ? ` colspan="${colspan}"` : ''
-          }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
-          }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
-          }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
+        ` aria-describedby="${self.uniqueId(`-header-${j}`)}"${
+        isSelected ? ' aria-selected= "true"' : ''
+        }${cssClass ? ` class="${cssClass}"` : ''
+        }${colspan ? ` colspan="${colspan}"` : ''
+        }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
+        }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
+        }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
 
       if (col.contentVisible) {
         const canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
@@ -5604,7 +5604,7 @@ Datagrid.prototype = {
     // Handle Paging
     if (this.settings.paging) {
       this.element.on(`afterpaging.${COMPONENT_NAME}`, (e, args) => {
-      // Hide the entire pager bar if we're only showing one page, if applicable
+        // Hide the entire pager bar if we're only showing one page, if applicable
         if (self.pagerAPI.hidePagerBar(args)) {
           self.element.removeClass('paginated');
         } else {
@@ -5794,7 +5794,7 @@ Datagrid.prototype = {
       }
 
       const isSelectionCheckbox = target.is('.datagrid-selection-checkbox') ||
-                                target.find('.datagrid-selection-checkbox').length === 1;
+        target.find('.datagrid-selection-checkbox').length === 1;
       let canSelect = self.settings.clickToSelect ? true : isSelectionCheckbox;
 
       if (target.is('.datagrid-drilldown')) {
@@ -5887,7 +5887,7 @@ Datagrid.prototype = {
       if (isEditable) {
         setTimeout(() => {
           if ($('textarea, input', elem).length &&
-              (!$('.dropdown,' +
+            (!$('.dropdown,' +
               '[type=file],' +
               '[type=image],' +
               '[type=button],' +
@@ -6069,7 +6069,7 @@ Datagrid.prototype = {
           const focusElem = $('*:focus');
 
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
-              self.editor) {
+            self.editor) {
             if (focusElem.is('.spinbox, .trigger, .code-block-actions') || !$(target).is(':visible')) {
               return;
             }
@@ -6757,7 +6757,11 @@ Datagrid.prototype = {
           rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
-            const data = s.treeDepth[index].node;
+            let actualIdx = self.actualPagingRowIndex(index);
+            if (actualIdx === -1) {
+              actualIdx = index;
+            }
+            const data = s.treeDepth[actualIdx].node;
 
             // Allow select node if selectChildren is true or only first node
             // if selectChildren is false
@@ -6781,7 +6785,11 @@ Datagrid.prototype = {
           rowNode.add(nexts).add(prevs).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
-            const data = s.treeDepth[index].node;
+            let actualIndex = self.actualPagingRowIndex(index);
+            if (actualIndex === -1) {
+              actualIndex = index;
+            }
+            const data = s.treeDepth[actualIndex].node;
 
             // Allow select node if selectChildren is true or only first node
             // if selectChildren is false
@@ -6874,9 +6882,9 @@ Datagrid.prototype = {
 
     // Do not run if checkbox in same state
     if ((selectedRowsLength !== rowsLength &&
-          selectedRowsLength > 0 && status === 'partial') ||
-            (selectedRowsLength === rowsLength && status === 'all' && selectedRowsLength !== 0) ||
-              (selectedRowsLength === 0 && status === 'none')) {
+      selectedRowsLength > 0 && status === 'partial') ||
+      (selectedRowsLength === rowsLength && status === 'all' && selectedRowsLength !== 0) ||
+      (selectedRowsLength === 0 && status === 'none')) {
       return;
     }
 
@@ -7370,24 +7378,36 @@ Datagrid.prototype = {
         rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
           const elem = $(this);
           const index = elem.attr('aria-rowindex') - 1;
+          let actualIndex = self.actualPagingRowIndex(index);
+          if (actualIndex === -1) {
+            actualIndex = index;
+          }
 
           // Allow unselect node if selectChildren is true or only first node
           if (s.selectChildren || (!s.selectChildren && i === 0)) {
-            unselectNode(elem, index);
+            unselectNode(elem, actualIndex);
           }
         });
       } else if (s.selectable === 'siblings') {
         rowNode.parent().find('.is-selected').each(function (i) {
           const elem = $(this);
           const index = elem.attr('aria-rowindex') - 1;
+          let actualIndex = self.actualPagingRowIndex(index);
+          if (actualIndex === -1) {
+            actualIndex = index;
+          }
 
           // Allow unselect node if selectChildren is true or only first node
           if (s.selectChildren || (!s.selectChildren && i === 0)) {
-            unselectNode(elem, index);
+            unselectNode(elem, actualIndex);
           }
         });
       } else { // Single element unselection
-        unselectNode(rowNode, idx);
+        let actualIdx = self.actualPagingRowIndex(idx);
+        if (actualIdx === -1) {
+          actualIdx = idx;
+        }
+        unselectNode(rowNode, actualIdx);
       }
       self.setNodeStatus(rowNode);
     } else {
@@ -7858,7 +7878,7 @@ Datagrid.prototype = {
             self.focusNextPrev('prev', node);
           } else {
             if ((!isRTL && (key === 37 || key === 9 && e.shiftKey)) || // eslint-disable-line
-                (isRTL && (key === 39 || key === 9))) { // eslint-disable-line
+              (isRTL && (key === 39 || key === 9))) { // eslint-disable-line
               cell = getNextVisibleCell(cell, lastCell, true);
             } else {
               cell = getNextVisibleCell(cell, lastCell);
@@ -8292,7 +8312,7 @@ Datagrid.prototype = {
     */
     this.element.triggerHandler('beforeentereditmode', [{ row: idx, cell, item: rowData, target: cellNode, value: cellValue, column: col, editor: this.editor }]);
 
-    this.editor =  new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
+    this.editor = new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
     this.editor.row = idx;
     this.editor.cell = cell;
 
@@ -9776,8 +9796,8 @@ Datagrid.prototype = {
     }
 
     if (!rowElement.hasClass('datagrid-tree-parent') ||
-        (!$(e.target).is(expandButton) &&
-          (self.settings.editable || self.settings.selectable))) {
+      (!$(e.target).is(expandButton) &&
+        (self.settings.editable || self.settings.selectable))) {
       return;
     }
 

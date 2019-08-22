@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="twelve columns">
     <div id="datagrid">
@@ -11,24 +10,26 @@
     var columns = [];
 
     //Define Columns for the Grid.
-    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 250});
-    columns.push({ id: 'id', name: 'Id', field: 'id', width: 25,  formatter: Formatters.Hyperlink});
-    columns.push({ id: 'desc', name: 'Description', field: 'desc', width: 200});
-    columns.push({ id: 'time', name: 'Time', field: 'time', width: 60});
-    columns.push({ id: 'action', name: 'Action Item', field: 'portable', text: 'New Order', formatter: Formatters.Button, focusable: true, click: function () {console.log('Nice Clicking'); } });
+    columns.push({ id: "selectionCheckbox", sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: "center" });
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 250 });
+    columns.push({ id: 'id', name: 'Id', field: 'id', width: 25, formatter: Formatters.Hyperlink });
+    columns.push({ id: 'desc', name: 'Description', field: 'desc', width: 200 });
+    columns.push({ id: 'time', name: 'Time', field: 'time', width: 60 });
+    columns.push({ id: 'action', name: 'Action Item', field: 'portable', text: 'New Order', formatter: Formatters.Button, focusable: true, click: function () { console.log('Nice Clicking'); } });
 
     //Get some data via ajax
     var url = '{{basepath}}api/tree-tasks';
 
-    $.getJSON(url, function(data) {
+    $.getJSON(url, function (data) {
 
       $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
         editable: false,
+        selectable: true,
         isList: true,
         treeGrid: true,
-        toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
+        toolbar: { title: 'Tasks (Hierarchical)', results: true, personalize: true }
       });
 
     });

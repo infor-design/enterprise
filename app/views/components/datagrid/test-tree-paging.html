@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="twelve columns">
     <div id="datagrid">
@@ -9,34 +8,36 @@
 <script>
   $('body').one('initialized', function () {
 
-      var grid,
-        columns = [];
+    var grid,
+      columns = [];
 
-      //Define Columns for the Grid.
-      columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
-      columns.push({ id: 'id', name: 'Id', field: 'id'});
-      columns.push({ id: 'desc', name: 'Description', field: 'desc'});
-      columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink});
-      columns.push({ id: 'time', name: 'Time', field: 'time'});
+    //Define Columns for the Grid.
+    columns.push({ id: "selectionCheckbox", sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: "center" });
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree });
+    columns.push({ id: 'id', name: 'Id', field: 'id' });
+    columns.push({ id: 'desc', name: 'Description', field: 'desc' });
+    columns.push({ id: 'comments', name: 'Comments', field: 'comments', formatter: Formatters.Hyperlink });
+    columns.push({ id: 'time', name: 'Time', field: 'time' });
 
-      //Get some data via ajax
-      var url = '{{basepath}}api/tree-tasks';
+    //Get some data via ajax
+    var url = '{{basepath}}api/tree-tasks';
 
-      $.getJSON(url, function(data) {
+    $.getJSON(url, function (data) {
 
-        $('#datagrid').datagrid({
-          columns: columns,
-          dataset: data,
-          treeGrid: true,
-          paging: true,
-          pagesize: 2,
-          toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
-          }).on('selected', function (e, args) {
-            // console.log(args);
-          }).on('paging', function(e, args) {
-          //  console.log(args);
-          });
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        treeGrid: true,
+        selectable: 'multiple',
+        paging: true,
+        pagesize: 2,
+        toolbar: { title: 'Tasks (Hierarchical)', results: true, personalize: true }
+      }).on('selected', function (e, args) {
+        // console.log(args);
+      }).on('paging', function (e, args) {
+        //  console.log(args);
       });
+    });
 
   });
 </script>
