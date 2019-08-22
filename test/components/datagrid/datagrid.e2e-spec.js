@@ -1611,6 +1611,7 @@ describe('Datagrid filter lookup custom click function tests', () => {
     await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-filter-1')).click();
     if (utils.isChrome() && utils.isCI()) {
       const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-paging-lookup-ellipsis')).toEqual(0);
     }

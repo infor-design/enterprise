@@ -36,10 +36,10 @@ describe('Toast example-index tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.id('toast-container')).count()).toEqual(1);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     await element(by.css('#toast-container button.btn-close')).click();
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.id('toast-container')).count()).toEqual(0);
   });
