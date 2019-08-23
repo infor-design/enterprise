@@ -6856,8 +6856,8 @@ Datagrid.prototype = {
       // Append data to selectedRows
       if (!s.groupable) {
         let actualIdx = self.actualPagingRowIndex(idx);
-        if (actualIdx === -1) {	
-          actualIdx = idx;	
+        if (actualIdx === -1) {
+          actualIdx = idx;
         }
 
         this._selectedRows.push({
