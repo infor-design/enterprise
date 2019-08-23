@@ -2539,12 +2539,12 @@ describe('Datagrid Tree Paging Tests', () => {
   });
 
   it('Should expand/collapse on first page click', async () => {
-    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(3);
-    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(20);
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(10);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(13);
     await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1) button')).click();
 
-    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(0);
-    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(23);
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(7);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(16);
   });
 
   it('Should expand/collapse on second page click', async () => {
@@ -2552,12 +2552,12 @@ describe('Datagrid Tree Paging Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('tr[aria-rowindex="26"]')).count()).toEqual(1);
-    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(3);
-    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(20);
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(10);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(13);
     await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1) button')).click();
 
-    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(0);
-    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(23);
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(7);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(16);
   });
 });
 
