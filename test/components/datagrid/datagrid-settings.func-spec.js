@@ -80,6 +80,7 @@ describe('Datagrid Settings', () => {
       clickToSelect: true,
       toolbar: false,
       initializeToolbar: true,
+      columnIds: [],
       paging: false,
       pagesize: 25,
       pagesizes: [10, 25, 50, 75],

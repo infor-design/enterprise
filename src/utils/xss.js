@@ -94,6 +94,19 @@ xssUtils.ensureAlphaNumeric = function (string) {
 };
 
 /**
+ * Make sure a string is only alphanumeric with spaces.
+ * @private
+ * @param {string} string HTML in string form
+ * @returns {string} the modified value
+ */
+xssUtils.ensureAlphaNumericWithSpaces = function (string) {
+  if (typeof string === 'number') {
+    return string;
+  }
+  return this.stripTags(string).replace(/[^a-z0-9 ]/gi, '', '');
+};
+
+/**
  * Escapes HTML, replacing special characters with encoded symbols.
  * Symbols taken from https://bit.ly/1iVkGlc
  * @private

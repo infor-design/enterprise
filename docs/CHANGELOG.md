@@ -19,6 +19,7 @@
 - `[Datagrid]` Fixed a bug where horizontal scrolling would not work when in a card/widget. ([#1785](https://github.com/infor-design/enterprise/issues/1785))
 - `[Datagrid]` Fixed an issue where dirty and row status on the same cell would cause a UI issue. ([#2641](https://github.com/infor-design/enterprise/issues/2641))
 - `[Datagrid]` Changed the onKeyDown callback to fire on any key. ([#536](https://github.com/infor-design/enterprise-ng/issues/536))
+- `[Datagrid]` Added a more descriptive aria-label to checkboxes if the required descriptors exist. ([#2031](https://github.com/infor-design/enterprise-ng/issues/2031))
 - `[Dropdown]` Fixed an issue where tooltip on all browsers and ellipsis on firefox, ie11 was not showing with long text after update. ([#2534](https://github.com/infor-design/enterprise/issues/2534))
 - `[Fileupload Advanced]` Added custom errors example page. ([#2620](https://github.com/infor-design/enterprise/issues/2620))
 - `[Homepage]` Fixed an issue where dynamically added widget was not positioning correctly. ([#2425](https://github.com/infor-design/enterprise/issues/2425))
