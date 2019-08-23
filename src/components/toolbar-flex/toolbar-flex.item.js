@@ -571,7 +571,7 @@ ToolbarFlexItem.prototype = {
     }
 
     // If there are toolbar items, but no predefined items, render the more-actions menu
-    if ((!menuAPI.settings.beforeOpen && (!this.predefinedItems || !this.predefinedItems.length)) && this.toolbarAPI.items.length) {
+    if (((!this.predefinedItems || !this.predefinedItems.length)) && this.toolbarAPI.items.length) {
       this.renderMoreActionsMenu();
     }
 
