@@ -77,6 +77,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
  * @param {boolean}  [settings.allowSelectAcrossPages=null] Makes it possible to save selections when changing pages on server side paging. You may want to also use showSelectAllCheckBox: false
  * @param {boolean}  [settings.initializeToolbar=true] Set to false if you will initialize the toolbar yourself
+ * @param {array}    [settings.columnIds=[]] An array of column IDs used to define aria descriptors for selection checkboxes.
  * @param {boolean}  [settings.paging=false] Enable paging mode
  * @param {number}   [settings.pagesize=25] Number of rows per page
  * @param {array}    [settings.pagesizes=[10, 25, 50, 75]] Array of page sizes to show in the page size dropdown.
@@ -166,6 +167,7 @@ const DATAGRID_DEFAULTS = {
   clickToSelect: true,
   toolbar: false,
   initializeToolbar: true, // can set to false if you will initialize the toolbar yourself
+  columnIds: [],
   // Paging settings
   paging: false,
   pagesize: 25,

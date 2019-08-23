@@ -1,0 +1,40 @@
+{{={{{ }}}=}}
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label class="label" for="title">Title</label>
+      <input type="text" id="title" value="The Page Title"/>
+    </div>
+
+    <div class="field">
+      <span class="label">Comments</span>
+      <div class="editor" data-init="false" id="editor-source-formatter" role="textbox" aria-multiline="true" aria-label="Comments">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    var content = '' +
+      '<tbody>' +
+        '<tr>' +
+          '<td class="label" style="padding: 15px 0 15px 0;padding-left: 15px;">{{orderRoundingOffText}}</td>' +
+          '<td class="value" style="padding: 15px 0 15px 0;text-align: right;padding-right: 15px;">{{roundingOff}}</td>' +
+        '</tr>' +
+        '<tr>' +
+          '<td class="total-label" style="padding: 15px 0 15px 0;padding-left: 15px;padding-right: 15px;font-size: 18px;"> <strong>{{orderTotalText}} ({{currencyCode}})</strong> </td>' +
+          '<td class="total-value" style="padding: 15px 0 15px 0;text-align: right;padding-right: 15px;padding-left: 15px;font-size: 18px;"> <strong>{{total}}</strong> </td>' +
+        '</tr>' +
+      '</tbody>';
+
+    $('#editor-source-formatter').html(content).editor({
+      showHtmlView: true, // init in source mode
+      useSourceFormatter: true // use source formatter
+    });
+
+  });
+</script>

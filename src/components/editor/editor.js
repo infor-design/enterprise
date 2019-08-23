@@ -34,7 +34,9 @@ const COMPONENT_NAME = 'editor';
 * @param {function} [settings.onLinkClick = null] Call back for clicking on links to control link behavior.
 * @param {function} [settings.showHtmlView = false] If set to true, editor should be displayed in HTML view initialy.
 * @param {function} [settings.preview = false] If set to true, editor should be displayed in preview mode with noneditable content.
-* @param {boolean} [settings.useFlexToolbar = false] if set to true, renders the toolbar as
+* @param {boolean} [settings.useFlexToolbar = false] if set to true, renders the toolbar as flex toolbar.
+* @param {boolean} [settings.useSourceFormatter = false] true will format the html content in source mode.
+* @param {boolean} [settings.formatterTabsize = 4] number of spaces can use for indentation.
 */
 const EDITOR_DEFAULTS = {
   buttons: {
@@ -68,7 +70,9 @@ const EDITOR_DEFAULTS = {
   onLinkClick: null,
   showHtmlView: false,
   preview: false,
-  useFlexToolbar: false
+  useFlexToolbar: false,
+  useSourceFormatter: false,
+  formatterTabsize: 4
 };
 
 function Editor(element, settings) {
@@ -605,7 +609,7 @@ Editor.prototype = {
         numberList.find('li').slice(-(i)).remove();
       }
       this.lineNumbers = lineNumberCount;
-      container[0].style.width = `calc(100% - ${(numberList.outerWidth() + 1)}px)`;
+      container[0].style.width = `calc(100% - ${(numberList.outerWidth() + 2)}px)`;
     }
     if (scrollHeight !== this.textarea[0].scrollHeight) {
       this.adjustSourceLineNumbers();
@@ -1890,31 +1894,95 @@ Editor.prototype = {
     document.execCommand('insertImage', false, url);
   },
 
-  toggleSource() {
-    if (this.sourceViewActive()) {
-      this.element.empty().html(xssUtils.sanitizeHTML(this.textarea.val()));
-      this.element.removeClass('source-view-active hidden');
+  /**
+   * Toggle to source or preview mode.
+   * @param {boolean} forceToSourceMode true will force to toggle in to source mode.
+   * @returns {void}
+   */
+  toggleSource(forceToSourceMode) {
+    // Preview Mode
+    const doPreviewMode = (res) => {
+      let content = res || this.textarea.val();
+      this.element.empty().removeClass('source-view-active hidden');
       this.sourceView.addClass('hidden').removeClass('is-focused');
       this.element.trigger('focus.editor');
-    } else {
-      // Format The Text being pulled from the WYSIWYG editor
-      const val = this.element.html().toString().trim()
+      this.switchToolbars();
+      setTimeout(() => {
+        this.element.html(xssUtils.sanitizeHTML(content));
+        content = this.element.html();
+        /**
+         * Fires after preview mode activated.
+         * @event afterpreviewmode
+         * @memberof Editor
+         * @property {object} event The jquery event object
+         * @property {string} content Additional argument
+         */
+        this.element.triggerHandler('afterpreviewmode', content);
+      }, 0);
+    };
+
+    // Source Mode
+    const doSourceMode = (res) => {
+      let content = res || this.element.html()
+        .trim()
         .replace(/\s+/g, ' ')
         .replace(/<br( \/)?>/g, '<br>\n')
         .replace(/<\/p> /g, '</p>\n\n')
         .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
-
-      this.textarea.val(val).focus();
-
-      // var val = this.element.html().toString();
-      // this.textarea.val(this.formatHtml(val)).focus();
-
+      if (this.settings.useSourceFormatter) {
+        content = this.formatHtml(content);
+      }
+      this.textarea.val(content).focus();
       this.element.addClass('source-view-active hidden');
       this.sourceView.removeClass('hidden');
       this.adjustSourceLineNumbers();
       this.textarea.focus();
+      this.switchToolbars();
+      content = this.textarea.val();
+      /**
+       * Fires after source mode activated.
+       * @event aftersourcemode
+       * @memberof Editor
+       * @property {object} event The jquery event object
+       * @property {string} content Additional argument
+       */
+      this.element.triggerHandler('aftersourcemode', content);
+    };
+
+    // Check the false value
+    const isFalse = v => ((typeof v === 'string' && v.toLowerCase() === 'false') ||
+      (typeof v === 'boolean' && v === false) ||
+      (typeof v === 'number' && v === 0));
+
+    if (this.sourceViewActive() && !forceToSourceMode) {
+      const content = this.textarea.val();
+      /**
+       * Fires before preview mode activated.
+       * @event beforepreviewmode
+       * @memberof Editor
+       * @property {object} event The jquery event object
+       * @property {string} content Additional argument
+       */
+      $.when(this.element.triggerHandler('beforepreviewmode', content)).done((res) => {
+        if (!isFalse(res)) {
+          doPreviewMode(res);
+        }
+      });
+    } else {
+      const content = this.element.html();
+      /**
+       * Fires before source mode activated.
+       * @event beforesourcemode
+       * @memberof Editor
+       * @property {object} event The jquery event object
+       * @property {string} content Additional argument
+       */
+      $.when(this.element.triggerHandler('beforesourcemode', content)).done((res) => {
+        if (!isFalse(res)) {
+          doSourceMode(res);
+        }
+      });
     }
-    this.switchToolbars();
   },
 
   /**
@@ -2609,22 +2677,29 @@ Editor.prototype = {
     });
   },
 
-  getIndent(level) {
-    let result = '';
-    let i = level * 2;
-    if (level > -1) {
-      while (i--) {
-        result += ' ';
-      }
-    }
-    return result;
-  },
-
+  /**
+   * Format given string to proper indentation.
+   * @param {string} html true will force to toggle in to source mode.
+   * @returns {string} formated value
+   */
   formatHtml(html) {
     html = html.trim();
-    let result = '';
-    let indentLevel = 0;
+    const s = this.settings;
     const tokens = html.split(/</);
+    let indentLevel = 0;
+    let result = '';
+
+    function getIndent(level) {
+      const tabsize = typeof s.formatterTabsize === 'number' ? s.formatterTabsize : 4;
+      let indentation = '';
+      let i = level * tabsize;
+      if (level > -1) {
+        while (i--) {
+          indentation += ' ';
+        }
+      }
+      return indentation;
+    }
 
     for (let i = 0, l = tokens.length; i < l; i++) {
       const parts = tokens[i].split(/>/);
@@ -2632,22 +2707,22 @@ Editor.prototype = {
         if (tokens[i][0] === '/') {
           indentLevel--;
         }
-        result += this.getIndent(indentLevel);
+        result += getIndent(indentLevel);
         if (tokens[i][0] !== '/') {
           indentLevel++;
         }
         if (i > 0) {
           result += '<';
         }
-        result += `${parts[0].trim()} + >\n`;
+        result += `${parts[0].trim()}>\n`;
         if (parts[1].trim() !== '') {
-          result += `${this.getIndent(indentLevel) + parts[1].trim().replace(/\s+/g, ' ')}\n`;
+          result += `${getIndent(indentLevel) + parts[1].trim().replace(/\s+/g, ' ')}\n`;
         }
         if (parts[0].match(/^(area|base|br|col|command|embed|hr|img|input|link|meta|param|source)/)) {
           indentLevel--;
         }
       } else {
-        result += `${this.getIndent(indentLevel) + parts[0]}\n`;
+        result += `${getIndent(indentLevel) + parts[0]}\n`;
       }
     }
     return result.trim();
