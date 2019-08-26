@@ -422,7 +422,7 @@ PopupMenu.prototype = {
       </svg>`;
     }
 
-    return stringUtils.stripWhitespace(`<li${id} class="popupmenu-item${disabledClass}${hiddenClass}${selectableClass}${submenuClass}">
+    return stringUtils.stripWhitespace(`<li class="popupmenu-item${disabledClass}${hiddenClass}${selectableClass}${submenuClass}">
       <a${id} href="#">${icon}<span>${settings.text}</span>
         ${ddicon}
       </a>

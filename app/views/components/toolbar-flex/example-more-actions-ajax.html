@@ -117,7 +117,7 @@
       const toolbarSubMenuLink = toolbarUniqueId + '-menu-button-submenu';
 
       if (options.contextElement) {
-        if (options.contextElement[0].parentElement.parentElement.id === toolbarMenuLink) {
+        if (options.contextElement[0].parentElement.parentElement.querySelector('a').id === toolbarMenuLink) {
           options.isSubmenu = false;
           return menuButtonPopupmenuBeforeOpen(response, options);
         } else if (options.contextElement[0].id === toolbarSubMenuLink) {
