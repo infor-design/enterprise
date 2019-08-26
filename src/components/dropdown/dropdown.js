@@ -877,7 +877,10 @@ Dropdown.prototype = {
       text = text.substr(0, maxlength);
     }
     text = text.trim();
-    this.pseudoElem.find('span')[0].innerHTML = `<span class="audible">${this.label.text()} </span>${text}`;
+    const span = this.pseudoElem.find('span');
+    if (span.length > 0) {
+      span[0].innerHTML = `<span class="audible">${this.label.text()} </span>${text}`;
+    }
 
     // If there is a placeholder set the selected text
     if (this.element.attr('placeholder')) {
@@ -1504,7 +1507,7 @@ Dropdown.prototype = {
       input = this.searchInput;
     }
 
-    if (useSearchInput && (input.hasClass('is-readonly') || input.prop('readonly') === true)) {
+    if (useSearchInput && (input && (input.hasClass('is-readonly') || input.prop('readonly') === true))) {
       return;
     }
 
@@ -2329,6 +2332,8 @@ Dropdown.prototype = {
     this.toggleTooltip();
 
     this.element.trigger('change').triggerHandler('selected');
+
+    self.applyFilter(null, 'selected');
   },
 
   /**
@@ -2477,7 +2482,6 @@ Dropdown.prototype = {
     if (!noTrigger) {
       // Fire the change event with the new value if the noTrigger flag isn't set
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
-
       this.toggleTooltip();
     }
 
@@ -2494,6 +2498,13 @@ Dropdown.prototype = {
     }
 
     this.setBadge(option);
+
+    if (env.browser.name === 'ie' && env.browser.version === '11') {
+      const ieHtml = $(`#${this.element.attr('id')}`).html();
+      const ieVal = $(`#${this.element.attr('id')}`).val();
+      this.element.html(ieHtml);
+      this.element.val(ieVal);
+    }
   },
 
   /**

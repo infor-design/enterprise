@@ -1643,7 +1643,8 @@ Datagrid.prototype = {
         const multiselect = $(this);
         multiselect.multiselect(col.editorOptions).on('selected.datagrid', () => {
           // Wierd Hack - Sync to "sync" up the filter row
-          $(`#${$(this).attr('id')}`).val($(this).val());
+          const ddElem = $(this);
+          $(`#${ddElem.attr('id')}`).val(ddElem.val());
           self.applyFilter(null, 'selected');
         });
 
