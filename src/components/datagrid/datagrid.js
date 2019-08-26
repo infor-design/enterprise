@@ -6778,7 +6778,7 @@ Datagrid.prototype = {
     if (s.selectable === 'single') {
       let selectedIndex = -1;
       if (this._selectedRows.length > 0) {
-        selectedIndex = this._selectedRows[0].idx;
+        selectedIndex = this._selectedRows[0].pagingIdx;
       } else if (rowNode[0] && rowNode[0].classList.contains('is-selected')) {
         selectedIndex = dataRowIndex;
       }
@@ -6796,7 +6796,8 @@ Datagrid.prototype = {
           rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
-            const data = s.treeDepth[index].node;
+            const actualIdx = self.actualPagingRowIndex(index);
+            const data = s.treeDepth[actualIdx].node;
 
             // Allow select node if selectChildren is true or only first node
             // if selectChildren is false
@@ -6820,7 +6821,8 @@ Datagrid.prototype = {
           rowNode.add(nexts).add(prevs).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
-            const data = s.treeDepth[index].node;
+            const actualIndex = self.actualPagingRowIndex(index);
+            const data = s.treeDepth[actualIndex].node;
 
             // Allow select node if selectChildren is true or only first node
             // if selectChildren is false
@@ -7409,24 +7411,27 @@ Datagrid.prototype = {
         rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
           const elem = $(this);
           const index = elem.attr('aria-rowindex') - 1;
+          const actualIndex = self.actualPagingRowIndex(index);
 
           // Allow unselect node if selectChildren is true or only first node
           if (s.selectChildren || (!s.selectChildren && i === 0)) {
-            unselectNode(elem, index);
+            unselectNode(elem, actualIndex);
           }
         });
       } else if (s.selectable === 'siblings') {
         rowNode.parent().find('.is-selected').each(function (i) {
           const elem = $(this);
           const index = elem.attr('aria-rowindex') - 1;
+          const actualIndex = self.actualPagingRowIndex(index);
 
           // Allow unselect node if selectChildren is true or only first node
           if (s.selectChildren || (!s.selectChildren && i === 0)) {
-            unselectNode(elem, index);
+            unselectNode(elem, actualIndex);
           }
         });
       } else { // Single element unselection
-        unselectNode(rowNode, idx);
+        const actualIdx = self.actualPagingRowIndex(idx);
+        unselectNode(rowNode, actualIdx);
       }
       self.setNodeStatus(rowNode);
     } else {
