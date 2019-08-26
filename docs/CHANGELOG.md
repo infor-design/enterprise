@@ -118,6 +118,7 @@
 - `[Tabs]` Added the select method inside the hide method to ensure proper focusing of the selected tab. ([#2346](https://github.com/infor-design/enterprise/issues/2346))
 - `[Tabs]` Added an independent count for adding new tabs and their associated IDs to prevent duplication. ([#2345](https://github.com/infor-design/enterprise/issues/2345))
 - `[Toolbar]` Fixed memory leaks. ([#2496](https://github.com/infor-design/enterprise/issues/2496))
+- `[Toolbar]` Fixed an issue where `noSearchfieldReinvoke` was not being respected during the teardown method, causing lifecycle issues in Angular. ([#2691](https://github.com/infor-design/enterprise/issues/2691))
 - `[Toolbar Flex]` Removed a 100% height on the toolbar which caused issues when nested in some situations. ([#474](https://github.com/infor-design/enterprise-ng/issues/474))
 
 ### v4.20.0 Chores & Maintenance
