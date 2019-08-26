@@ -44,7 +44,7 @@ const COMPONENT_NAME = 'line';
  * right: 'Right axis label', bottom: 'Bottom axis label'}`
  * @param {boolean|string} [settings.animate] true|false - will do or not do the animation.
  * 'initial' will do only first time the animation.
- * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page.
+ * @param {boolean} [settings.redrawOnResize=true]  If set to false the component will not redraw when the page or parent is resized.
  * @param {object} [settings.dots] Option to customize the dot behavior. You can set the dot size (radius),
  * the size on hover and stroke or even add a custom class.
  * Example `dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}`

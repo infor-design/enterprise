@@ -638,7 +638,7 @@ describe('Locale API', () => {
 
     expect(Locale.formatNumber(123456.123456, { style: 'decimal', maximumFractionDigits: 5 })).toEqual('123,456.12345');
     expect(Locale.formatNumber(123456.123456, { style: 'decimal', maximumFractionDigits: 4 })).toEqual('123,456.1234');
-    expect(Locale.formatNumber(1.001, { style: 'decimal', minimumFractionDigits: 0, maximumFractionDigits: 3 })).toEqual('1');
+    expect(Locale.formatNumber(1.001, { style: 'decimal', minimumFractionDigits: 0, maximumFractionDigits: 3 })).toEqual('1.001');
     expect(Locale.formatNumber(1.001, { style: 'decimal', minimumFractionDigits: 3, maximumFractionDigits: 3 })).toEqual('1.001');
     expect(Locale.formatNumber(1.001, { style: 'decimal', minimumFractionDigits: 3, maximumFractionDigits: 3, round: true })).toEqual('1.001');
     expect(Locale.formatNumber(1.0019, { style: 'decimal', minimumFractionDigits: 0, maximumFractionDigits: 3 })).toEqual('1.001');
@@ -750,13 +750,33 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('1,234,567,890.12346')).toEqual(1234567890.12346);
   });
 
-  it('Should handle big numbers', () => {
+  it('Should parse big numbers', () => {
     Locale.set('en-US');
 
-    expect(Locale.parseNumber('1123456789123456.57')).toEqual(1123456789123456.57);
-    expect(Locale.parseNumber('1123456789123.57')).toEqual(1123456789123.57);
-    expect(Locale.parseNumber('112345678912345.57')).toEqual(112345678912345.57);
-    expect(Locale.parseNumber('11234567891.57')).toEqual(11234567891.57);
+    expect(Locale.parseNumber('123456,789,012,345,678.123456')).toEqual('123456789012345678.123456');
+    expect(Locale.parseNumber('1123456789123456.57')).toEqual('1123456789123456.57');
+    expect(Locale.parseNumber('1,123,456,789,123,456.57')).toEqual('1123456789123456.57');
+    Locale.set('de-DE');
+
+    expect(Locale.parseNumber('123.456.789.012.345.678,123456')).toEqual('123456789012345678.123456');
+  });
+
+  it('Should format big numbers', () => {
+    Locale.set('en-US');
+
+    expect(Locale.formatNumber('123456789012.123456', {
+      style: 'decimal',
+      round: true,
+      minimumFractionDigits: 6,
+      maximumFractionDigits: 6
+    })).toEqual('123,456,789,012.123456');
+
+    expect(Locale.formatNumber(parseFloat('123456789012.123456'), {
+      style: 'decimal',
+      round: true,
+      minimumFractionDigits: 6,
+      maximumFractionDigits: 6
+    })).toEqual('123,456,789,012.123460');
   });
 
   it('Should handle AM/PM', () => {
@@ -821,11 +841,31 @@ describe('Locale API', () => {
     expect(Locale.formatNumber('12345.12345678', { minimumFractionDigits: 2, maximumFractionDigits: 4, round: true })).toEqual('12,345.1235');
   });
 
+  it('work on big numbers (as string)', () => {
+    expect(Locale.truncateDecimals('123456789012.12346', 6, 6)).toEqual('123456789012.123460');
+    expect(Locale.truncateDecimals('123456789012.12346', 2, 2)).toEqual('123456789012.12');
+    expect(Locale.truncateDecimals('123456789012.12346', 0, 6)).toEqual('123456789012.12346');
+    expect(Locale.truncateDecimals('123456789012.12346', 6, 6)).toEqual('123456789012.123460');
+  });
+
   it('truncate decimals', () => {
     Locale.set('en-US');
 
-    expect(Locale.truncateDecimals('1111111111.11', 2, 2)).toEqual('1111111111.11');
-    expect(Locale.truncateDecimals('11111111111.11', 2, 2)).toEqual('11111111111.11');
+    expect(Locale.truncateDecimals(800.9905673502324, 0, 0, true)).toEqual('801');
+    expect(Locale.truncateDecimals(123456.123456, 6, 6)).toEqual('123456.123456');
+    expect(Locale.truncateDecimals('123456789012.123456', 6, 6)).toEqual('123456789012.123456');
+    expect(Locale.truncateDecimals('123456789012.12346', 6, 6)).toEqual('123456789012.123460');
+    expect(Locale.truncateDecimals('123456789012.12346', 6, 6)).toEqual('123456789012.123460');
+    expect(Locale.truncateDecimals('123456789012.1234', 6, 6)).toEqual('123456789012.123400');
+    expect(Locale.truncateDecimals('123456789012.12346', 6, 6)).toEqual('123456789012.123460');
+
+    expect(Locale.truncateDecimals('123456789012.12345699', 6, 6, true)).toEqual('123456789012.123457');
+    expect(Locale.truncateDecimals('123456789012.123456', 6, 6)).toEqual('123456789012.123456');
+    expect(Locale.truncateDecimals('123456789012.123456', 6, 6, true)).toEqual('123456789012.123456');
+    expect(Locale.truncateDecimals('123456789012.123456', 6, 6, true)).toEqual('123456789012.123456');
+    expect(Locale.truncateDecimals('123456789012.123456', 7, 7)).toEqual('123456789012.1234560');
+    expect(Locale.truncateDecimals('123456789012.123456', 7, 7, true)).toEqual('123456789012.1234560');
+
     expect(Locale.truncateDecimals('1.10', 2, 2)).toEqual('1.10');
     expect(Locale.truncateDecimals('2.10', 2, 2)).toEqual('2.10');
     expect(Locale.truncateDecimals('3.10', 2, 2)).toEqual('3.10');

@@ -22,7 +22,7 @@ const COMPONENT_NAME = 'bar';
  * @param {boolean} [settings.isGrouped=false] If true its a grouped bar chart
  * @param {boolean} [settings.showLegend=true] If false the legend will not be shown.
  * @param {boolean|string} [settings.animate=true] true|false - will do or not do the animation, 'initial' will do only first time the animation.
- * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page.
+ * @param {boolean} [settings.redrawOnResize=true]  If set to false the component will not redraw when the page or parent is resized.
  * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
  * @param {string} [settings.format=true] The d3 axis format
  * @param {string} [settings.tooltip=null] A tooltip for the whole chart
