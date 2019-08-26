@@ -11,7 +11,8 @@ const files = [
   'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
   'dist/js/d3.v4.js',
   'dist/js/sohoxi.js',
-  'dist/js/cultures/en-US.js'
+  'dist/js/cultures/en-US.js',
+  'src/components/locale/cultures/sv-SE.f0r73571n6purp0537051mul473h45h.js'
 ].concat(specs);
 
 module.exports = function (config) {
