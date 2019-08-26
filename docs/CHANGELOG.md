@@ -7,6 +7,7 @@
 - `[Datagrid]` Added support for a fixed row size, this can be used in some cases like frozen columns where rows may have a different size than the three row heights (normal, short, medium). ([#2101](https://github.com/infor-design/enterprise/issues/2101))
 - `[Editor]` Added events to trigger on view change. ([#2430](https://github.com/infor-design/enterprise/issues/2430))
 - `[Homepage]` Added a parameter to the `resize` event that provides metadata about the Homepage's state, including a calculated container height. ([#2446](https://github.com/infor-design/enterprise/issues/2446))
+- `[Locale]` Added support for big numbers (18.6) to formatNumber and parseNumber. ([#1800](https://github.com/infor-design/enterprise/issues/1800))
 
 ### v4.21.0 Fixes
 
