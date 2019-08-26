@@ -1370,7 +1370,7 @@ describe('Locale API', () => {
     delete Locale.cultures['sv-SE'];
     spyOn(Locale, 'getCulturesPath').and.returnValue(`${window.location.origin}/base/src/components/locale/cultures/`);
 
-    expect(Locale.cultures['sv-SE']).toBeUndefined('Prerequisit for this unit test was not met');
+    expect(Locale.cultures['sv-SE']).toBeUndefined('Prerequisite for this unit test was not met');
 
     Locale.set('en-US');
     Locale.getLocale('sv-SE', filename).done(() => {
