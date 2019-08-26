@@ -67,6 +67,7 @@ describe('Datagrid Settings', () => {
       headerMenuBeforeOpen: null,
       uniqueId: null,
       rowHeight: 'normal',
+      fixedRowHeight: null,
       selectable: false,
       onBeforeSelect: null,
       selectChildren: true,
