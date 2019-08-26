@@ -38,7 +38,7 @@ numberUtils.fixTo = function toFixed(number, decimals = 2) {
 
 /**
  * Returns a string representation of the number that does not use exponential notation
- * and has exactly digits digits after the decimal place. The number is rounded if necessary,
+ * and has exactly digits after the decimal place. The number is rounded if necessary,
  * and the fractional part is padded with zeros if necessary so that it has the specified length.
  * This implementation handles greater or equal to 1e+21 so accepts string or number.
  * @param  {string|number} number The number to fix
