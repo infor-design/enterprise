@@ -26,7 +26,7 @@ numberUtils.round = function round(number, decimals = 2) {
 };
 
 /**
- * Support function for toFixed that replaces JS toFixed and handled rounding properly.
+ * Support function for toFixed that replaces JS toFixed and handles rounding properly.
  * This function does not handle big numbers.
  * @param  {string|number} number The number to fix.
  * @param  {decimals} [decimals=2] The decimal precision.
