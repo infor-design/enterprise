@@ -571,7 +571,8 @@ ToolbarFlexItem.prototype = {
     }
 
     // If there are toolbar items, but no predefined items, render the more-actions menu
-    if (((!this.predefinedItems || !this.predefinedItems.length)) && this.toolbarAPI.items.length) {
+    if ((!menuAPI.settings.beforeOpen && (!this.predefinedItems || !this.predefinedItems.length))
+      && this.toolbarAPI.items.length) {
       this.renderMoreActionsMenu();
     }
 
@@ -743,6 +744,11 @@ ToolbarFlexItem.prototype = {
     if (this.type === 'menubutton') {
       const menuElem = this.componentAPI.menu;
       const originalSubmenuData = this.componentAPI.toData({ noMenuWrap: true });
+      const targetId = this.componentAPI.element[0].id;
+      if (targetId) {
+        // NOTE: don't pass the same ID here, which would cause duplicates
+        itemData.id = `${this.toolbarAPI.uniqueId}-${targetId}`;
+      }
       itemData.submenu = addMenuElementLinks(menuElem[0], originalSubmenuData);
     }
 

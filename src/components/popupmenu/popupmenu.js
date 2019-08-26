@@ -667,7 +667,6 @@ PopupMenu.prototype = {
 
     const itemA = item.querySelector('a');
     const itemIcon = item.querySelector('.icon:not(.close):not(.icon-dropdown)');
-    const itemDDIcon = item.querySelector('.icon.icon-dropdown');
     let itemIconUse;
 
     if (data.text) {
@@ -718,20 +717,7 @@ PopupMenu.prototype = {
           data.submenu[j].isSubmenuItem = true;
           this.refreshMenuItem(submenuItems.item(j), data.submenu[j], callback);
         }
-      } else {
-        // If the submenu is controlled with an AJAX call, it's possible that it won't exist here
-        // and needs to be completely re-drawn.
-        let newSubmenu = '<ul class="popupmenu">';
-        for (let i = 0; i < data.submenu.length; i++) {
-          data.submenu[i].isSubmenuItem = true;
-          newSubmenu += this.renderItem(data.submenu[i]);
-        }
-        newSubmenu += '</ul>';
-        $(item).append(newSubmenu);
-        $(itemA).append('<svg class="icon icon-dropdown" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>');
       }
-    } else if (itemDDIcon) {
-      itemDDIcon.remove();
     }
 
     // Run callback to apply additional refresh changes, if applicable.
