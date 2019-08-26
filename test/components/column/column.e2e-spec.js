@@ -55,6 +55,7 @@ describe('Custom Tooltips page tests', () => {
     await browser.actions()
       .mouseMove(await element(by.css('.bar.series-1')))
       .perform();
+    await browser.driver.sleep(config.sleepShort);
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css(tooltipContentSel))), config.waitsFor); // eslint-disable-line

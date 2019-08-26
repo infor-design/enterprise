@@ -2499,7 +2499,7 @@ describe('Datagrid Tree Paging Tests', () => {
   it('Should expand/collapse on first page click', async () => {
     expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(3);
     expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(20);
-    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1) button')).click();
+    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(2) button')).click();
 
     expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(0);
     expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(23);
@@ -2512,7 +2512,7 @@ describe('Datagrid Tree Paging Tests', () => {
     expect(await element.all(by.css('tr[aria-rowindex="26"]')).count()).toEqual(1);
     expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(3);
     expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(20);
-    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1) button')).click();
+    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(2) button')).click();
 
     expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(0);
     expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(23);

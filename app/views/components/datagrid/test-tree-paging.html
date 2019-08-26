@@ -13,6 +13,7 @@
         columns = [];
 
       //Define Columns for the Grid.
+      columns.push({ id: "selectionCheckbox", sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: "center" });
       columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
       columns.push({ id: 'id', name: 'Id', field: 'id'});
       columns.push({ id: 'desc', name: 'Description', field: 'desc'});
@@ -28,6 +29,7 @@
           columns: columns,
           dataset: data,
           treeGrid: true,
+          selectable: 'multiple',
           paging: true,
           pagesize: 2,
           toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
