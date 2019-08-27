@@ -6730,8 +6730,7 @@ Datagrid.prototype = {
     elem.addClass(selectClasses).attr('aria-selected', 'true');
     checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
       .addClass('is-checked').attr('aria-checked', 'true')
-      .attr('aria-selected', 'true')
-      .attr('aria-label', 'Selected');
+      .attr('aria-selected', 'true');
 
     if (data) {
       data._selected = true;
@@ -7374,8 +7373,7 @@ Datagrid.prototype = {
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
           .removeClass('is-checked no-animate')
           .attr('aria-checked', 'false')
-          .removeAttr('aria-selected')
-          .removeAttr('aria-label');
+          .removeAttr('aria-selected');
       }
 
       if (s.treeGrid) {
