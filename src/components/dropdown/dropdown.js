@@ -2921,6 +2921,7 @@ Dropdown.prototype = {
     // update the list and set a new value, if applicable
     this.updateList();
     this.setDisplayedValues();
+    this.toggleTooltip();
 
     this.element.trigger('has-updated');
 

@@ -1611,6 +1611,7 @@ describe('Datagrid filter lookup custom click function tests', () => {
     await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-filter-1')).click();
     if (utils.isChrome() && utils.isCI()) {
       const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-paging-lookup-ellipsis')).toEqual(0);
     }
@@ -2062,7 +2063,7 @@ describe('Datagrid paging indeterminate single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single?layout=nofrills');
 
-    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(5)'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(2)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -2499,7 +2500,7 @@ describe('Datagrid Tree Paging Tests', () => {
   it('Should expand/collapse on first page click', async () => {
     expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(3);
     expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(20);
-    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1) button')).click();
+    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(2) button')).click();
 
     expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(0);
     expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(23);
@@ -2512,7 +2513,7 @@ describe('Datagrid Tree Paging Tests', () => {
     expect(await element.all(by.css('tr[aria-rowindex="26"]')).count()).toEqual(1);
     expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(3);
     expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(20);
-    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1) button')).click();
+    await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(2) button')).click();
 
     expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(0);
     expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(23);

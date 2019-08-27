@@ -1,0 +1,53 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="states" class="label">States</label>
+      <select id="states" name="states" class="dropdown dropdown-mm">
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="states-readonly" class="label">States Readonly</label>
+      <select id="states-readonly" name="states-readonly" class="dropdown dropdown-mm" readonly="true" >
+      </select>
+    </div>
+
+    <button id="update-button" type="button" class="btn-secondary">Update</button>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    var options = [];
+    options.push('<option value=" "> </option>');
+    options.push('<option value="AL">Alaska gffgf gf fgf fg f gfg fgfg ff gfg f gf gff g</option>');
+    options.push('<option value="AZ">Arizona bvbcbcbv c cvbcvb cvbcv bcvbcvbccvb vcbcvbcbvcb</option>');
+    options.push('<option value="CA">California vb rtretetgrthrbrrtb rtbrtrtb rbrt brtbrtb rr b</option>');
+    options.push('<option value="CO">Colorado  rt gr grt grtrtg rtgrtg r r btrtrtr rtbrb rtrb t</option>');
+    options.push('<option value="MN">Minnesota  h trgbr rtgrtgrtg rtgrthgrt tr hrh hg rttr trh</option>');
+    options.push('<option value="ND">North Dakota  rt hrthrt hrt trtrhrt hrh trhrrt htr hrth rh</option>');
+    options.push('<option value="OR">Oregon y rt r tertert erreer tret rt erretet ert reert ert</option>');
+    options.push('<option value="WA">Washington r  ter tert er re treete t ertreert ertret ert err</option>');
+    options.push('<option value="WY">Wyoming r  re tret ert et re ter tert ret erter terte4ter ter t</option>');
+
+    var optionsString = options.join('');
+
+    $('#update-button').on('click', function () {
+      var states = $('#states, #states-readonly');
+
+
+      for (var index = 0, len = states.length; index < len; index++) {
+        var elem = $(states[index]);
+        var api = elem.data('dropdown');
+
+        elem.empty().append(optionsString);
+
+        api.element[0].selectedIndex = 2;
+        elem.trigger('updated');
+      }
+    });
+  });
+
+</script>

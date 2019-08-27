@@ -1,0 +1,258 @@
+
+{{={{{ }}}=}}
+
+<div class="row">
+  <div class="twelve columns">
+
+      <div class="fieldset-title">
+        Selected Template:
+        <button type="button" class="btn-menu" data-options="{'replaceText': 'true'}" id="btn-select-template">
+          <span>Random Template</span>
+        </button>
+        <ul class="popupmenu is-selectable">
+          <li class="is-checked"><a href="#" data-value="random">Random Template</a></li>
+          <li><a href="#" data-value="0">Template (0)</a></li>
+          <li><a href="#" data-value="1">Template (1)</a></li>
+          <li><a href="#" data-value="2">Template (2)</a></li>
+          <li><a href="#" data-value="3">Template (3)</a></li>
+          <li><a href="#" data-value="4">Template (4)</a></li>
+        </ul>
+      </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <span class="label">Comments</span>
+      <div class="editor" data-init="false" id="editor-on-view-change" role="textbox" aria-multiline="true" aria-label="Comments">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var dataArray = [
+      { customeName: 'Kaylee E.', age: 43, showAge: true, selectedForSurvey: true },
+      { customeName: 'Tony C.', age: 22, selectedForSurvey: true },
+      { customeName: 'Julie D.', age: 34 },
+      { customeName: 'Richard F.', age: 47 },
+      { customeName: 'Jason A.', age: 23, showAge: true, selectedForSurvey: true },
+      { customeName: 'William M.', age: 27 },
+      { customeName: 'Jessica P.', age: 25, showAge: true },
+      { customeName: 'Sarah L.', age: 30, showAge: true },
+      { customeName: 'Jacob W.', age: 46, selectedForSurvey: true },
+      { customeName: 'Daniel C.', age: 26, selectedForSurvey: true },
+      { customeName: 'Michael B.', age: 29, showAge: true, selectedForSurvey: true },
+      { customeName: 'Emily J.', age: 42, selectedForSurvey: true },
+      { customeName: 'Rachel S.', age: 31, showAge: true, selectedForSurvey: true }
+    ];
+
+    var templateArray = [
+      '<p>' +
+        'Hello {{customeName}}, ' +
+        'Thank you for ordering.' +
+        '{{#selectedForSurvey}}' +
+        ' We would like to hear your feedback. Please fill up this survey form.' +
+        '{{/selectedForSurvey}}' +
+      '</p>',
+
+      '<p>' +
+        '{{customeName}}{{#showAge}}, {{age}} year old{{/showAge}}' +
+        '{{#selectedForSurvey}}' +
+        ' and selected for survey' +
+        '{{/selectedForSurvey}}' +
+      '</p>',
+
+      '<p>' +
+        '<b>Name:</b> {{customeName}}<br>' +
+        '<b>Age:</b> {{age}}<br>' +
+        '<b>Show Age:</b>{{#showAge}} Yes{{/showAge}}{{^showAge}} No{{/showAge}}<br>' +
+        '<b>Selected For Survey:</b>{{#selectedForSurvey}} Yes{{/selectedForSurvey}}{{^selectedForSurvey}} No{{/selectedForSurvey}}<br>' +
+      '</p>',
+
+      {
+        id: 3,
+        header: '<table style="border-collapse: collapse;">' +
+          '<tr>' +
+            '<th style="border: 1px solid #bdbdbd;padding: 10px;"><b>Name</b></th>' +
+            '<th style="border: 1px solid #bdbdbd;padding: 10px;"><b>Age</b></th>' +
+            '<th style="border: 1px solid #bdbdbd;padding: 10px;"><b>Show Age</b></th>' +
+            '<th style="border: 1px solid #bdbdbd;padding: 10px;"><b>Selected For Survey</b></th>' +
+          '</tr>',
+        body: '<tr>' +
+            '<td style="border: 1px solid #bdbdbd;padding: 10px;">{{customeName}}</td>' +
+            '<td style="border: 1px solid #bdbdbd;padding: 10px;">{{age}}</td>' +
+            '<td style="border: 1px solid #bdbdbd;padding: 10px;">{{#showAge}} Yes{{/showAge}}{{^showAge}} No{{/showAge}}</td>' +
+            '<td style="border: 1px solid #bdbdbd;padding: 10px;">{{#selectedForSurvey}} Yes{{/selectedForSurvey}}{{^selectedForSurvey}} No{{/selectedForSurvey}}</td>' +
+          '</tr>',
+        footer: '</table>'
+      },
+
+      {
+        id: 4,
+        header: '<h1>All Data</h1>',
+        body: '<p>' +
+          '<b>Name:</b> {{customeName}}<br>' +
+          '<b>Age:</b> {{age}}<br>' +
+          '<b>Show Age:</b>{{#showAge}} Yes{{/showAge}}{{^showAge}} No{{/showAge}}<br>' +
+          '<b>Selected For Survey:</b>{{#selectedForSurvey}} Yes{{/selectedForSurvey}}{{^selectedForSurvey}} No{{/selectedForSurvey}}' +
+          '</p>'
+      }
+    ];
+
+    var btnSelTemplate = $('#btn-select-template');
+    function getSelectedTemplateIdx() {
+      var value = btnSelTemplate.data('popupmenu').menu.find('.is-checked a').attr('data-value');
+      return value !== 'random' ? parseInt(value, 10) : value;
+    }
+
+    // Get random template or given index
+    function getTemplate (idx) {
+      idx = typeof idx !== 'undefined' ? idx : getSelectedTemplateIdx();
+      idx = typeof idx === 'number' &&  idx > -1 && idx < templateArray.length ?
+        idx : getRandomNumber(0, templateArray.length - 1);
+      var temp = '';
+      if (typeof templateArray[idx] === 'string') {
+        temp = templateArray[idx];
+      } else if (templateArray[idx].body.indexOf('<tr') !== -1) {
+        temp = templateArray[idx].body.replace(/<tr/, '<tr ztempid="'+ templateArray[idx].id +'"');
+      } else {
+        temp = '{{ztempid="'+ templateArray[idx].id +'"}}'+ templateArray[idx].body;
+      }
+      return temp;
+    }
+
+    // Get random data
+    function getRandomData () {
+      var idx = getRandomNumber(0, dataArray.length - 1);
+      return dataArray[idx];
+    }
+
+    // Get new content for Preview mode
+    function getNewContent (template) {
+      var newContent = '';
+      if (template.indexOf('ztempid') !== -1) {
+        var expr = / ztempid="(.+?)"/;
+        if (!expr.test(template)) {
+          expr = /{{ztempid="(.+?)"}}/;
+        }
+        var id = -1;
+        template = template.replace(expr, function(m, k) {
+          id = parseInt(k.trim(), 10);
+          return '';
+        });
+        if (id > -1) {
+          newContent += templateArray[id].header || '';
+          newContent += replaceMatch(template, dataArray);
+          newContent += templateArray[id].footer || '';
+        }
+      } else {
+        newContent = replaceMatch(template, getRandomData());
+      }
+      return newContent;
+    }
+
+    // Main Element
+    var elem = $('#editor-on-view-change');
+
+    // Append initialy with template
+    elem.html(getTemplate());
+
+    // Invoke editor component
+    elem.editor({
+      showHtmlView: true, // init in source mode
+      useSourceFormatter: true // use source formatter
+    });
+
+    // Before Preview Mode
+    elem.on('beforepreviewmode', function(e, content) {
+      var deferred = $.Deferred();
+
+      setTimeout(function () {
+        var newContent = getNewContent(content);
+        deferred.resolve(newContent);
+      }, 100); // Mock delay ie. ajax call
+      return deferred.promise();
+    });
+
+    // Before Source Mode
+    elem.on('beforesourcemode', function(e, content) {
+      return getTemplate();
+    });
+
+    // // After Preview Mode
+    // elem.on('afterpreviewmode', function(e, content) {
+    //   console.log('After Preview Mode:');
+    //   console.log(content);
+    // });
+
+    // // After Source Mode
+    // elem.on('aftersourcemode', function(e, content) {
+    //   console.log('After Source Mode:');
+    //   console.log(content);
+    // });
+
+    btnSelTemplate.on('selected', function (e, args) {
+      var editorApi = elem.data('editor');
+      if (editorApi) {
+        var isSourceMode = editorApi.sourceViewActive();
+        editorApi.toggleSource(isSourceMode);
+      }
+    });
+
+  });
+
+  /**************************************
+   Below Helper Methods for Demo example
+  ***************************************/
+
+  // Get random number
+  function getRandomNumber(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  // Replace matched pattern in given data
+  function replaceMatch(template, data) {
+    function getMatch(str, callback) {
+      var expr = /{{(.+?)}}/g;
+      if (typeof str === 'string' && typeof callback === 'function') {
+        while (expr.test(str)) {
+          str = str.replace(expr, function (match, key) {
+            callback(match, key);
+          });
+        }
+      }
+      return str;
+    }
+    template += '';
+    data = data && data.constructor === Array ? data : [data];
+    var content = '';
+    for (var i = 0, l = data.length; i < l; i++) {
+      var opt = { template: template, data: (data[i] || {}) };
+      getMatch(template, function(match, key) {
+        if (!/^\//.test(key)) {
+          if (/^#|\^/.test(key)) {
+            opt.key = key.replace(/^#|\^/, '');
+            opt.isTrue = (/^#/.test(key));
+            opt.isData = ((opt.isTrue && opt.data[opt.key]) || (!opt.isTrue && !opt.data[opt.key]));
+            opt.start = opt.isTrue ? match : '{{\\^'+ opt.key +'}}';
+            opt.expr = new RegExp(opt.start +'(.+?){{\\/'+ opt.key +'}}', 'g');
+            opt.template = opt.template.replace(opt.expr, (opt.isData ? '$1' : ''));
+          } else {
+            opt.template = opt.template.replace(match, opt.data[key]);
+          }
+        }
+      });
+      content += opt.template;
+    }
+    return content;
+  }
+
+</script>

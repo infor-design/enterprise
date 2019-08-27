@@ -1409,6 +1409,10 @@ Toolbar.prototype = {
    * @returns {void}
    */
   updated(settings) {
+    if (this.settings.noSearchfieldReinvoke) {
+      this.keepSearchfield = true;
+    }
+
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
@@ -1498,11 +1502,20 @@ Toolbar.prototype = {
       delete this.buttonsetItems;
     }
     if (this.buttonset.children('.searchfield-wrapper').length) {
-      const searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');
-      if (searchFields.data('searchfield')) {
-        searchFields.data('searchfield').destroy();
+      // this flag is set in `updated()` if the setting `noSearchfieldReinvoke` is set
+      // to `true` before an update is performed. The Searchfield will stay in-tact for
+      // one update cycle, or until the setting is reset to `true`.
+      if (!this.settings.noSearchfieldReinvoke || !this.keepSearchfield) {
+        const searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');
+        if (searchFields.data('searchfield')) {
+          searchFields.data('searchfield').destroy();
+        }
+      } else if (this.keepSearchfield) {
+        delete this.keepSearchfield;
       }
+    }
 
+    if (this.buttonset && this.buttonset.length) {
       this.buttonset[0].style.width = '';
       delete this.buttonset;
     }

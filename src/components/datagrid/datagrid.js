@@ -77,6 +77,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
  * @param {boolean}  [settings.allowSelectAcrossPages=null] Makes it possible to save selections when changing pages on server side paging. You may want to also use showSelectAllCheckBox: false
  * @param {boolean}  [settings.initializeToolbar=true] Set to false if you will initialize the toolbar yourself
+ * @param {array}    [settings.columnIds=[]] An array of column IDs used to define aria descriptors for selection checkboxes.
  * @param {boolean}  [settings.paging=false] Enable paging mode
  * @param {number}   [settings.pagesize=25] Number of rows per page
  * @param {array}    [settings.pagesizes=[10, 25, 50, 75]] Array of page sizes to show in the page size dropdown.
@@ -166,6 +167,7 @@ const DATAGRID_DEFAULTS = {
   clickToSelect: true,
   toolbar: false,
   initializeToolbar: true, // can set to false if you will initialize the toolbar yourself
+  columnIds: [],
   // Paging settings
   paging: false,
   pagesize: 25,
@@ -1399,7 +1401,24 @@ Datagrid.prototype = {
     if (columnDef.filterType) {
       const col = columnDef;
       const filterId = self.uniqueId(`-header-filter-${idx}`);
+      const filterOptions = Array.isArray(col.filterRowEditorOptions) ?
+        col.filterRowEditorOptions : col.options;
       let integerDefaults;
+      let emptyOption = '';
+
+      // Set empty option for select filter type
+      if (col.filterType === 'select' && filterOptions) {
+        let found = false;
+        for (let i = 0, l = filterOptions.length; i < l; i++) {
+          if (!filterOptions[i].label) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          emptyOption = '<option></option>';
+        }
+      }
 
       filterMarkup = `<div class="datagrid-filter-wrapper${headerAlignmentClass}" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
         col.name}</label>`;
@@ -1466,15 +1485,10 @@ Datagrid.prototype = {
         }
         case 'contents':
         case 'select':
-
-          filterMarkup += `<select ${col.filterDisabled ? ' disabled' : ''}${col.filterType === 'select' ? ' class="dropdown"' : ' multiple class="multiselect"'}id="${filterId}">`;
-          if (col.options) {
-            if (col.filterType === 'select') {
-              filterMarkup += '<option></option>';
-            }
-
-            for (let i = 0; i < col.options.length; i++) {
-              const option = col.options[i];
+          filterMarkup += `<select id="${filterId}" ${col.filterType === 'select' ? 'class="dropdown"' : 'multiple class="multiselect"'}${col.filterDisabled ? ' disabled' : ''}>${emptyOption}`;
+          if (filterOptions) {
+            for (let i = 0, l = filterOptions.length; i < l; i++) {
+              const option = filterOptions[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
               if (option && optionValue !== '') {
                 filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
@@ -1485,12 +1499,12 @@ Datagrid.prototype = {
 
           break;
         case 'multiselect':
-          filterMarkup += `<select ${col.filterDisabled ? ' disabled' : ''}${col.filterType === 'select' ? ' class="dropdown"' : ' multiple class="multiselect"'}id="${filterId}">`;
-          if (col.options) {
-            for (let i = 0; i < col.options.length; i++) {
-              const option = col.options[i];
+          filterMarkup += `<select id="${filterId}" class="multiselect" multiple${col.filterDisabled ? ' disabled' : ''}>`;
+          if (filterOptions) {
+            for (let i = 0, l = filterOptions.length; i < l; i++) {
+              const option = filterOptions[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              if (option && option.label) {
+              if (option && typeof option.label === 'string') {
                 filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
               }
             }
@@ -6776,7 +6790,7 @@ Datagrid.prototype = {
     if (s.selectable === 'single') {
       let selectedIndex = -1;
       if (this._selectedRows.length > 0) {
-        selectedIndex = this._selectedRows[0].idx;
+        selectedIndex = this._selectedRows[0].pagingIdx;
       } else if (rowNode[0] && rowNode[0].classList.contains('is-selected')) {
         selectedIndex = dataRowIndex;
       }
@@ -6794,7 +6808,8 @@ Datagrid.prototype = {
           rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
-            const data = s.treeDepth[index].node;
+            const actualIdx = self.actualPagingRowIndex(index);
+            const data = s.treeDepth[actualIdx].node;
 
             // Allow select node if selectChildren is true or only first node
             // if selectChildren is false
@@ -6818,7 +6833,8 @@ Datagrid.prototype = {
           rowNode.add(nexts).add(prevs).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
-            const data = s.treeDepth[index].node;
+            const actualIndex = self.actualPagingRowIndex(index);
+            const data = s.treeDepth[actualIndex].node;
 
             // Allow select node if selectChildren is true or only first node
             // if selectChildren is false
@@ -7407,24 +7423,27 @@ Datagrid.prototype = {
         rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
           const elem = $(this);
           const index = elem.attr('aria-rowindex') - 1;
+          const actualIndex = self.actualPagingRowIndex(index);
 
           // Allow unselect node if selectChildren is true or only first node
           if (s.selectChildren || (!s.selectChildren && i === 0)) {
-            unselectNode(elem, index);
+            unselectNode(elem, actualIndex);
           }
         });
       } else if (s.selectable === 'siblings') {
         rowNode.parent().find('.is-selected').each(function (i) {
           const elem = $(this);
           const index = elem.attr('aria-rowindex') - 1;
+          const actualIndex = self.actualPagingRowIndex(index);
 
           // Allow unselect node if selectChildren is true or only first node
           if (s.selectChildren || (!s.selectChildren && i === 0)) {
-            unselectNode(elem, index);
+            unselectNode(elem, actualIndex);
           }
         });
       } else { // Single element unselection
-        unselectNode(rowNode, idx);
+        const actualIdx = self.actualPagingRowIndex(idx);
+        unselectNode(rowNode, actualIdx);
       }
       self.setNodeStatus(rowNode);
     } else {
