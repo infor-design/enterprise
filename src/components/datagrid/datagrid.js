@@ -1401,7 +1401,24 @@ Datagrid.prototype = {
     if (columnDef.filterType) {
       const col = columnDef;
       const filterId = self.uniqueId(`-header-filter-${idx}`);
+      const filterOptions = Array.isArray(col.filterRowEditorOptions) ?
+        col.filterRowEditorOptions : col.options;
       let integerDefaults;
+      let emptyOption = '';
+
+      // Set empty option for select filter type
+      if (col.filterType === 'select' && filterOptions) {
+        let found = false;
+        for (let i = 0, l = filterOptions.length; i < l; i++) {
+          if (!filterOptions[i].label) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          emptyOption = '<option></option>';
+        }
+      }
 
       filterMarkup = `<div class="datagrid-filter-wrapper${headerAlignmentClass}" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
         col.name}</label>`;
@@ -1468,15 +1485,10 @@ Datagrid.prototype = {
         }
         case 'contents':
         case 'select':
-
-          filterMarkup += `<select ${col.filterDisabled ? ' disabled' : ''}${col.filterType === 'select' ? ' class="dropdown"' : ' multiple class="multiselect"'}id="${filterId}">`;
-          if (col.options) {
-            if (col.filterType === 'select') {
-              filterMarkup += '<option></option>';
-            }
-
-            for (let i = 0; i < col.options.length; i++) {
-              const option = col.options[i];
+          filterMarkup += `<select id="${filterId}" ${col.filterType === 'select' ? 'class="dropdown"' : 'multiple class="multiselect"'}${col.filterDisabled ? ' disabled' : ''}>${emptyOption}`;
+          if (filterOptions) {
+            for (let i = 0, l = filterOptions.length; i < l; i++) {
+              const option = filterOptions[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
               if (option && optionValue !== '') {
                 filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
@@ -1487,12 +1499,12 @@ Datagrid.prototype = {
 
           break;
         case 'multiselect':
-          filterMarkup += `<select ${col.filterDisabled ? ' disabled' : ''}${col.filterType === 'select' ? ' class="dropdown"' : ' multiple class="multiselect"'}id="${filterId}">`;
-          if (col.options) {
-            for (let i = 0; i < col.options.length; i++) {
-              const option = col.options[i];
+          filterMarkup += `<select id="${filterId}" class="multiselect" multiple${col.filterDisabled ? ' disabled' : ''}>`;
+          if (filterOptions) {
+            for (let i = 0, l = filterOptions.length; i < l; i++) {
+              const option = filterOptions[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              if (option && option.label) {
+              if (option && typeof option.label === 'string') {
                 filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
               }
             }
