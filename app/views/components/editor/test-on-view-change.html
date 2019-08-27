@@ -224,7 +224,9 @@
       var expr = /{{(.+?)}}/g;
       if (typeof str === 'string' && typeof callback === 'function') {
         while (expr.test(str)) {
-          str = str.replace(expr, (match, key) => callback(match, key));
+          str = str.replace(expr, function (match, key) {
+            callback(match, key);
+          });
         }
       }
       return str;
