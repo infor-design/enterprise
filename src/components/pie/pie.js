@@ -22,7 +22,7 @@ const COMPONENT_NAME = 'pie';
  * @param {object} [settings] The component settings.
  * @param {array} [settings.dataset] The data to use in the line/area/bubble.
  * @param {boolean} [settings.isDonut=false] If true it renders as a donut chart.
- * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page. There is tooltip values provided.
+ * @param {boolean} [settings.redrawOnResize=true]  If set to false the component will not redraw when the page or parent is resized. There is tooltip values provided.
   It will not be shown. If you still want lines at the lower breakpoint you can set this to true
  * @param {boolean} [settings.hideCenterLabel=false] If false the center label will not be shown.
  * @param {boolean} [settings.showLines=true] If false connector lines wont be shown

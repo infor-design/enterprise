@@ -20,9 +20,9 @@ describe('Bar Chart example-index tests', () => {
   it('Should have names for the graphs', async () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.axis.y .tick text'))), config.waitsFor);
-    const namesEl = await element.all(by.css('.axis.y .tick text')).count();
+    await browser.driver.sleep(config.sleep);
 
-    expect(await namesEl).toBe(3);
+    expect(await element.all(by.css('.axis.y .tick text')).count()).toBe(3);
   });
 
   it('Should have greyed out bars when not selected', async () => {

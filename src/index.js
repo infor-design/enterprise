@@ -11,6 +11,7 @@ export { debug };
 export { uniqueIdCount, utils } from './utils/utils';
 export { DOM } from './utils/dom';
 export { stringUtils as string } from './utils/string';
+export { numberUtils as number } from './utils/number';
 export { xssUtils as xss } from './utils/xss';
 export { breakpoints } from './utils/breakpoints';
 export { Locale } from './components/locale/locale';

@@ -18,7 +18,7 @@ const COMPONENT_NAME = 'bullet';
  * @param {array} [settings.dataset.data] The data to use in the chart.
  * @param {array} [settings.dataset.data.tooltip] Tooltip contents for each point.
  * @param {boolean|string} [settings.animate=true] true|false - will do or not do the animation, 'initial' will do only first time the animation.
- * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page.
+ * @param {boolean} [settings.redrawOnResize=true] If set to false the component will not redraw when the page or parent is resized.
  */
 const BULLET_DEFAULTS = {
   dataset: [],

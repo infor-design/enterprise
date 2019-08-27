@@ -52,8 +52,9 @@
     color: $toast-header-color;
     display: block;
     font-weight: $theme-number-font-weight-bold;
-    margin-right: 20px;
+    margin-right: 25px;
     margin-top: 19px;
+    z-index: -1;
   }
 
   .toast-message {
