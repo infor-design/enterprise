@@ -2436,9 +2436,9 @@ Tabs.prototype = {
 
     // Remove these from the collections
     if (hasTargetPanel) {
-      this.panels = this.panels.not(targetPanel);
+      this.panels = $(this.panels.not(targetPanel));
     }
-    this.anchors = this.anchors.not(targetAnchor);
+    this.anchors = $(this.anchors.not(targetAnchor));
 
     // Destroy Anchor tooltips, if applicable
     if (this.settings.moduleTabsTooltips) {
@@ -2469,15 +2469,16 @@ Tabs.prototype = {
     targetAnchor.off('click.tabs focus.tabs keydown.tabs');
 
     // Remove Markup
+    targetLi.removeData();
     targetLi.remove();
     if (hasTargetPanel) {
-      targetPanel.remove();
+      targetPanel.removeData().remove();
     }
 
     const menuItem = targetAnchor.data('moremenu-link');
     if (menuItem) {
-      menuItem.parent().off().remove();
-      $.removeData(targetAnchor[0], 'moremenu-link');
+      menuItem.parent().off().removeData().remove();
+      targetAnchor.removeData();
     }
 
     function isLastDropdownTabItem(menu) {

@@ -31,6 +31,7 @@
 - `[Lookup]` Fixed memory leak issues after destroy. ([#2494](https://github.com/infor-design/enterprise/issues/2494))
 - `[Modal]` Fixed memory leak issues after destroy. ([#2497](https://github.com/infor-design/enterprise/issues/2497))
 - `[Slider]` Updated the color variant logic to match new uplift theming. ([#2647](https://github.com/infor-design/enterprise/issues/2647))
+- `[Tabs]` Fixed memory leak issues after a tab removed. ([#2686](https://github.com/infor-design/enterprise/issues/2686))
 - `[Toast]` Fixed memory leak issues after destroy. ([#2634](https://github.com/infor-design/enterprise/issues/2634))
 
 ### v4.21.0 Chores & Maintenance
