@@ -2,6 +2,10 @@
 
 ## v4.21.0
 
+### v4.21.0 Deprecation
+
+- `[Icons]` The `icon-flag` icon has its hard coded red color removed so it can be used as a normal icon, if you still want to red you need to add an additional class and make it `icon-flag icon-error`. ([#2548](https://github.com/infor-design/enterprise/issues/2548))
+
 ### v4.21.0 Features
 
 - `[Datagrid]` Added filter row editor options to api setting. ([#2648](https://github.com/infor-design/enterprise/issues/2648))
