@@ -630,6 +630,8 @@ describe('Datagrid index tests', () => {
     it('Should not visual regress', async () => {
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
+      await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
 
       const datagridEl = await element(by.id('datagrid'));
       await browser.driver.sleep(config.sleep);
@@ -1081,7 +1083,7 @@ describe('Datagrid single select tests', () => {
 
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).getText()).toEqual('2142201');
+    expect(await element.all(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).first().getText()).toEqual('2142201');
 
     // Sort
     await element(by.css('#datagrid .datagrid-header th:nth-child(4)')).click();
@@ -1433,6 +1435,43 @@ describe('Datagrid Dirty and New Row Indicator', () => {
 
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1).is-dirty-cell')).isPresent()).toBe(false);
   });
+});
+
+describe('Datagrid Frozen Column Card tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-card-frozen-columns?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render frozen columns', async () => {
+    // Check all containers rendered on the header
+    expect(await element.all(by.css('.datagrid-header th')).count()).toEqual(8);
+    expect(await element.all(by.css('.datagrid-header.left th')).count()).toEqual(1);
+
+    // Check all containers rendered on the body
+    expect(await element.all(by.css('.datagrid-body tr:first-child td')).count()).toEqual(8);
+    expect(await element.all(by.css('.datagrid-body.left tr:first-child td')).count()).toEqual(1);
+
+    // Check all rows rendered on the body
+    expect(await element.all(by.css('.datagrid-body tr')).count()).toEqual(14);
+    expect(await element.all(by.css('.datagrid-body.left tr')).count()).toEqual(7);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-card-frozen')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid contextmenu tests', () => {
