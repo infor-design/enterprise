@@ -65,6 +65,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.headerMenuBeforeOpen=false] Callback for the header level beforeopen menu event
  * @param {string}   [settings.uniqueId=null] Unique DOM ID to use as local storage reference and internal variable names
  * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (short, medium or normal)
+ * @param {string}   [settings.fixedRowHeight=null] Sets the height of the row to something other then the three built in rowHeights.
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
  * @param {null|function} [settings.onBeforeSelect=null] If defined as a function will fire as callback before rows are selected. You can return false to veto row selection.
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
@@ -154,6 +155,7 @@ const DATAGRID_DEFAULTS = {
   headerMenuBeforeOpen: null, // Call back for the header level before open menu event
   uniqueId: null, // Unique ID for local storage reference and variable names
   rowHeight: 'normal', // (short, medium or normal)
+  fixedRowHeight: null,
   selectable: false, // false, 'single' or 'multiple' or 'siblings'
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
   onBeforeSelect: null,
@@ -3647,6 +3649,16 @@ Datagrid.prototype = {
       rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"${rowStatus.title}><use xlink:href="${rowStatus.icon}"></use></svg>`;
     }
 
+    // Run a function that dynamically gets the rowHeight
+    let dynamicRowHeight = '';
+    if (this.settings.fixedRowHeight && typeof this.settings.fixedRowHeight === 'function') {
+      dynamicRowHeight = ` style="height: ${this.settings.fixedRowHeight(this.recordCount, ariaRowindex, actualIndex, rowData)}"px" `;
+    }
+
+    if (this.settings.fixedRowHeight && typeof this.settings.fixedRowHeight === 'number') {
+      dynamicRowHeight = ` style="height: ${this.settings.fixedRowHeight}px" `;
+    }
+
     containerHtml.center = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
       ` data-index="${actualIndex}"${
         actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
@@ -3664,7 +3676,7 @@ Datagrid.prototype = {
       }${isSummaryRow ? ' datagrid-summary-row' : ''
       }${!self.settings.cellNavigation && self.settings.selectable !== false ? ' is-clickable' : ''
       }${self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : ''
-      }">`;
+      }"${dynamicRowHeight}>`;
 
     containerHtml.left = containerHtml.center;
     containerHtml.right = containerHtml.center;
