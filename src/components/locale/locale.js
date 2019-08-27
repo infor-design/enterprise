@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary, no-useless-escape */
 import { Environment as env } from '../../utils/environment';
+import { numberUtils } from '../../utils/number';
 
 // If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
 // culture files. This allows manually setting the directory for the culture files.
@@ -1233,6 +1234,10 @@ const Locale = {  // eslint-disable-line
       number = Locale.parseNumber(number);
     }
 
+    if (number.toString().indexOf('e') > -1) {
+      number = number.toFixed(maximumFractionDigits + 1);
+    }
+
     if (options && options.style === 'percent') {
       // the toFixed for maximumFractionDigits + 1 means we won't loose any precision
       number = (number * 100).toFixed(minimumFractionDigits);
@@ -1289,23 +1294,6 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-   * Return the number of decimal places in a number
-   * @private
-   * @param  {number} number The starting number.
-   * @returns {number} The number of decimal places.
-   */
-  decimalPlaces(number) {
-    if (Math.floor(number) === number) {
-      return 0;
-    }
-
-    if (number.toString().indexOf('.') === -1) {
-      return 0;
-    }
-    return number.toString().split('.')[1].length || 0;
-  },
-
-  /**
    * Expand the number to the groupsize.
    * @private
    * @param  {string} numberString The number to expand
@@ -1349,46 +1337,29 @@ const Locale = {  // eslint-disable-line
    * @param  {number} minDigits Minimum number of digits to show on the decimal portion.
    * @param  {number} maxDigits Maximum number of digits to show on the decimal portion.
    * @param  {boolean} round If true round, if false truncate.
-   * @returns {number} The updated number.
+   * @returns {string} The updated number as a string.
    */
   truncateDecimals(number, minDigits, maxDigits, round) {
-    let multiplier = Math.pow(10, maxDigits);
-    let adjustedNum = number * multiplier;
-    let truncatedNum;
-
-    // Round Decimals
-    const decimals = this.decimalPlaces(number);
-
-    // Handle larger numbers
-    if (number.toString().length - decimals - 1 >= 10 ||
-      (decimals === minDigits && decimals === maxDigits) || (decimals < maxDigits)) {
-      multiplier = Math.pow(100, maxDigits);
-      adjustedNum = number * multiplier;
+    let processed = number;
+    if (round) {
+      processed = numberUtils.round(number, maxDigits);
+    } else {
+      processed = numberUtils.truncate(number, maxDigits);
     }
 
-    truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
-
-    if (round && decimals >= maxDigits && adjustedNum > 0) {
-      truncatedNum = Math.round(adjustedNum);
+    // Add zeros
+    const actualDecimals = numberUtils.decimalPlaces(processed);
+    if (actualDecimals < minDigits) {
+      processed = processed.toString() + new Array(minDigits - actualDecimals + 1).join('0');
     }
-
-    if (round && decimals <= maxDigits && decimals > 0) {
-      truncatedNum = Math.round(adjustedNum);
-    }
-
-    if (decimals < maxDigits && decimals > 0) {
-      truncatedNum = Math.floor(adjustedNum);
-      maxDigits = Math.max(decimals, minDigits);
-    }
-
-    return (truncatedNum / multiplier).toFixed(maxDigits);
+    return processed.toString();
   },
 
   /**
    * Takes a formatted number string and returns back real number object.
    * @param {string} input  The source number (as a string).
    * @param {object} options  Any special options to pass in such as the locale.
-   * @returns {number} the number as an actual Number type.
+   * @returns {number} The number as an actual Number type unless the number is a big int (19 significant digits), in this case a string will be returned
    */
   parseNumber(input, options) {
     const localeData = this.useLocale(options);
@@ -1417,7 +1388,7 @@ const Locale = {  // eslint-disable-line
     numString = numString.replace('$', '');
     numString = numString.replace(' ', '');
 
-    return parseFloat(numString);
+    return numString.length >= 19 ? numString : parseFloat(numString);
   },
 
   /**

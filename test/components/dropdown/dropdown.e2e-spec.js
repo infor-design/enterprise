@@ -242,11 +242,9 @@ describe('Dropdown example-index tests', () => {
 
     dropdownEl = await element(by.css('div.dropdown'));
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await dropdownEl.click();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('dropdown-search')).isDisplayed()).toBeTruthy();
   });
@@ -263,14 +261,12 @@ describe('Dropdown example-ajax tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await dropdownEl.click();
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
       const dropdownSearchEl = await element(by.id('dropdown-search'));
       await dropdownSearchEl.click();
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('is-focused'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await element(by.className('is-focused')).getText()).toEqual('American Samoa');
     });
@@ -284,12 +280,10 @@ describe('Dropdown example-no-search-lsf tests', () => {
 
   it('Should select a Dropdown item when keying on a closed Dropdown component', async () => {
     const dropdownPseudoEl = await element.all(by.css('div.dropdown')).first();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     await dropdownPseudoEl.sendKeys('r');
-    await browser.driver
-      .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), 'R - Rocket Raccoon'), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('div.dropdown')).first().getText()).toEqual('R - Rocket Raccoon');
   });
