@@ -2063,7 +2063,7 @@ describe('Datagrid paging indeterminate single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single?layout=nofrills');
 
-    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(5)'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(2)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
