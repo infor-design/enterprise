@@ -30,6 +30,7 @@
 - `[Dropdown]` Fixed an issue where tooltip on all browsers and ellipsis on firefox, ie11 was not showing with long text after update. ([#2534](https://github.com/infor-design/enterprise/issues/2534))
 - `[Fileupload Advanced]` Added custom errors example page. ([#2620](https://github.com/infor-design/enterprise/issues/2620))
 - `[Homepage]` Fixed an issue where dynamically added widget was not positioning correctly. ([#2425](https://github.com/infor-design/enterprise/issues/2425))
+- `[Icons]` Fixed an issue with empty messages in uplift theme, they were partially invisible ([#2474](https://github.com/infor-design/enterprise/issues/2474))
 - `[Locale]` Fixed a bug where getCulturePath does not work if the sohoxi.js file name has a hash part. ([#2637](https://github.com/infor-design/enterprise/issues/2637))
 - `[Locale]` Fixed a bug found when using NG8 that the default us locale causes issues. It is now an official requirement that you set a locale for all components that require locale information. ([#2640](https://github.com/infor-design/enterprise/issues/2640))
 - `[Lookup]` Fixed memory leak issues after destroy. ([#2494](https://github.com/infor-design/enterprise/issues/2494))
