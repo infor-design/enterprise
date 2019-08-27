@@ -1,0 +1,42 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div id="regular-toolbar-example" class="toolbar" role="toolbar" data-options="{'noSearchfieldReinvoke': 'true'}">
+      <div class="title">
+        Toolbar Title
+      </div>
+      <div class="buttonset">
+        <div class="searchfield-wrapper toolbar-searchfield-wrapper">
+          <label class="audible" for="regular-toolbar-searchfield">Toolbar Searchfield</label>
+          <input class="searchfield" placeholder="keyword" id="regular-toolbar-searchfield" name="regular-toolbar-searchfield" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button id="update-toolbar" class="btn-secondary">
+      <span>Update Toolbar</span>
+    </button>
+  </div>
+</div>
+
+<script id="test-script">
+  // NOTE: IDS Initializer skips invoking Searchfields that are children of Toolbars by default,
+  // so we have to manually invoke it here:
+  $('#regular-toolbar-searchfield').searchfield();
+  var searchfieldAPI = $('#regular-toolbar-searchfield').data('searchfield');
+
+  $('body').on('initialized', function() {
+    var toolbarElem = $('#regular-toolbar-example');
+    var toolbarAPI = toolbarElem.data('toolbar');
+    var btnUpdate = $('#update-toolbar');
+
+    btnUpdate.on('click', function() {
+      toolbarAPI.updated();
+    });
+  });
+</script>
