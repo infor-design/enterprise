@@ -747,7 +747,7 @@ ToolbarFlexItem.prototype = {
       const targetId = this.componentAPI.element[0].id;
       if (targetId) {
         // NOTE: don't pass the same ID here, which would cause duplicates
-        itemData.id = `${this.toolbarAPI.uniqueId}-${targetId}`;
+        itemData.menuId = `${this.toolbarAPI.uniqueId}-${targetId}`;
       }
       itemData.submenu = addMenuElementLinks(menuElem[0], originalSubmenuData);
     }
