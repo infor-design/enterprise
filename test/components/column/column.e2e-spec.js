@@ -64,6 +64,7 @@ describe('Custom Tooltips page tests', () => {
   });
 
   it('Should not display tooltip when hovering to specific column node', async () => {
+    await browser.driver.sleep(config.sleep);
     await browser.actions()
       .mouseMove(await element(by.css('.bar.series-2')))
       .perform();
