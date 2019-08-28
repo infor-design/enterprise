@@ -13,7 +13,8 @@
     cursor: pointer;
     display: inline-block;
 
-    > a {
+    > a,
+    > .btn-icon {
       border: 1px solid transparent;
       border-radius: 2px;
       color: $pager-text-color;
@@ -43,6 +44,16 @@
       .audible {
         color: $theme-color-font-base;
       }
+    }
+
+    > .btn-icon {
+      height: 28px;
+      margin-top: -2px;
+      min-height: auto;
+      min-width: auto;
+      padding-top: 4px;
+      vertical-align: middle;
+      width: 34px;
     }
 
     &.pager-no {
@@ -89,6 +100,21 @@
       pointer-events: none;
     }
   }
+
+  &.is-standalone,
+  &.has-pager-no {
+    .pager-prev,
+    .pager-first,
+    .pager-last,
+    .pager-next,
+    .pager-no {
+      margin-top: -1px;
+
+      a {
+        vertical-align: middle;
+      }
+    }
+  }
 }
 
 // Buttons
@@ -104,7 +130,8 @@
     top: 4px;
   }
 
-  a {
+  a,
+  .btn-icon {
     backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
     border-radius: 20px;
     overflow: hidden;  // Makes the round ripple-effect pressed state work
@@ -127,6 +154,7 @@
   display: inline-block;
   font-size: $theme-size-font-base;
   line-height: normal;
+  vertical-align: middle;
 
   > label {
     font-size: inherit !important;
@@ -179,12 +207,75 @@ li + .pager-count {
   }
 }
 
+// Inside Widgets
+.card,
+.widget {
+  .pager-toolbar {
+    margin: 0;
+  }
+
+  &.card .card-footer .pager-toolbar {
+    height: 30px;
+
+    > li {
+      > a,
+      > .btn-icon {
+        height: 30px;
+        margin: 0;
+        padding: 5px 7px;
+      }
+
+      &.pager-prev,
+      &.pager-next {
+        > a,
+        > .btn-icon {
+          height: 29px;
+          padding: 5px;
+        }
+      }
+    }
+
+    &.has-pager-no {
+      .pager-prev,
+      .pager-first,
+      .pager-last,
+      .pager-next,
+      .pager-no {
+        margin-top: -2px;
+      }
+    }
+  }
+}
+
 .ie {
+  .pager-toolbar {
+    .pager-prev,
+    .pager-first,
+    .pager-last,
+    .pager-next {
+      > .btn-icon {
+        margin-top: 1px;
+      }
+    }
+
+    &.is-standalone,
+    &.has-pager-no {
+      .pager-prev,
+      .pager-first,
+      .pager-last,
+      .pager-next,
+      .pager-no {
+        margin-top: -2px;
+      }
+    }
+  }
+
   &.ie11 {
     .pager-toolbar > li {
       vertical-align: middle;
 
-      > a {
+      > a,
+      > .btn-icon {
         display: inline-block;
 
         svg {
@@ -192,12 +283,9 @@ li + .pager-count {
         }
       }
 
-      &.pager-prev a,
-      &.pager-first a,
-      &.pager-last a,
-      &.pager-next a {
-        svg {
-          top: 2px;
+      &.pager-count {
+        input {
+          margin-top: 4px;
         }
       }
     }
@@ -211,29 +299,49 @@ li + .pager-count {
   }
 }
 
-// Inside Widgets
-.card,
-.widget {
+.is-firefox {
   .pager-toolbar {
-    margin: 0;
-  }
-
-  &.card .card-footer .pager-toolbar {
-    height: 30px;
-
-    > li {
-      > a {
-        height: 30px;
-        margin: 0;
-        padding: 5px 7px;
+    .pager-prev,
+    .pager-first,
+    .pager-last,
+    .pager-next {
+      > .btn-icon {
+        margin-top: -2px;
       }
+    }
 
-      &.pager-prev,
-      &.pager-next {
-        > a {
-          height: 29px;
-          padding: 5px;
-        }
+    &.is-standalone,
+    &.has-pager-no {
+      .pager-prev,
+      .pager-first,
+      .pager-last,
+      .pager-next,
+      .pager-no {
+        margin-top: 1px;
+      }
+    }
+  }
+}
+
+.is-safari {
+  .pager-toolbar {
+    .pager-prev,
+    .pager-first,
+    .pager-last,
+    .pager-next {
+      > .btn-icon {
+        margin-top: -1px;
+      }
+    }
+
+    &.is-standalone,
+    &.has-pager-no {
+      .pager-prev,
+      .pager-first,
+      .pager-last,
+      .pager-next,
+      .pager-no {
+        margin-top: 0;
       }
     }
   }

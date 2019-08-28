@@ -18,10 +18,10 @@ const COMPONENT_NAME = 'pager';
 
 // Selector for Pager elements that should have a tabIndex
 const FOCUSABLE_SELECTOR = [
-  '.pager-first > a',
-  '.pager-prev > a',
-  '.pager-next > a',
-  '.pager-last > a',
+  '.pager-first > .btn-icon',
+  '.pager-prev > .btn-icon',
+  '.pager-next > .btn-icon',
+  '.pager-last > .btn-icon',
   '.pager-no > a',
   '.pager-count input',
   '.pager-pagesize button'
@@ -334,6 +334,7 @@ Pager.prototype = {
     }
 
     if (this.settings.type === 'standalone') {
+      this.pagerBar.addClass('is-standalone');
       if (this.isListView) {
         this.mainContainer.after(this.pagerBar);
       } else {
@@ -396,7 +397,7 @@ Pager.prototype = {
     const self = this;
 
     // Attach button click and touch
-    this.pagerBar.on('click.pager', 'a', function (e) {
+    this.pagerBar.on('click.pager', 'a, .btn-icon', function (e) {
       const a = e.currentTarget;
       const li = a.parentNode;
 
@@ -545,9 +546,9 @@ Pager.prototype = {
     if (types.indexOf(type) === -1) {
       return;
     }
-    let selector = `.pager-${type} a`;
+    let selector = `.pager-${type} a, .pager-${type} .btn-icon`;
     if (type === 'previous') {
-      selector = '.pager-prev a';
+      selector = '.pager-prev a, .pager-prev .btn-icon';
     }
 
     // Get anchor/option
@@ -581,9 +582,9 @@ Pager.prototype = {
     if (types.indexOf(type) === -1) {
       return;
     }
-    let selector = `.pager-${type} a`;
+    let selector = `.pager-${type} a, .pager-${type} .btn-icon`;
     if (type === 'previous') {
-      selector = '.pager-prev a';
+      selector = '.pager-prev a, .pager-prev .btn-icon';
     }
 
     // Get anchor/option
@@ -732,6 +733,7 @@ Pager.prototype = {
    * @returns {void}
    */
   renderButtons() {
+    const self = this;
     // Only certain types of Pages get to have the `last` and `first` buttons
     // const types = ['table', 'pageof', 'firstlast', 'standalone'];
     // const canHaveFirstLastButtons = types.indexOf(this.settings.type) > -1 || !this.isListView;
@@ -838,11 +840,11 @@ Pager.prototype = {
     function renderButton(visibleContent = '', audibleContent = '', tooltipContent, targetPageNum, classAttr = '', selected = false, disabled = false, hidden = false) {
       let isAriaDisabled = '';
       let isControlDisabled = '';
+      let isDisabledTooltip = '';
       let titleAttr = '';
-      let pageAttr = '';
 
-      if (targetPageNum) {
-        pageAttr = ` data-page="${targetPageNum}"`;
+      if (tooltipContent) {
+        titleAttr = ` title="${tooltipContent}"`;
       }
       if (hidden) {
         classAttr += ' hidden';
@@ -854,16 +856,28 @@ Pager.prototype = {
       if (disabled) {
         isControlDisabled = ' disabled';
         isAriaDisabled = ' aria-disabled="true"';
-      }
-      if (tooltipContent) {
-        titleAttr = ` title="${tooltipContent}"`;
+        isDisabledTooltip = `<div class="disabled-tooltip"${titleAttr}></div>`;
+        if (!targetPageNum) {
+          titleAttr = '';
+        }
       }
 
-      const html = `<li class="${classAttr}">
-        <a${titleAttr}${pageAttr} href="#"${isAriaDisabled}${isControlDisabled}>
-          <span class="audible">${audibleContent} </span>${visibleContent}
-        </a>
-      </li>`;
+      let html = '';
+      if (targetPageNum) {
+        self.pagerBar.addClass('has-pager-no');
+        html = `<li class="${classAttr}">
+          <a href="#" data-page="${targetPageNum}"${titleAttr}${isAriaDisabled}${isControlDisabled}>
+            <span class="audible">${audibleContent} </span>${visibleContent}
+          </a>
+        </li>`;
+      } else {
+        html = `<li class="${classAttr}">
+          <button type="button" class="btn-icon"${titleAttr}${isAriaDisabled}${isControlDisabled}>
+            ${isDisabledTooltip}<span>${audibleContent}</span>
+            ${visibleContent}
+          </button>
+        </li>`;
+      }
 
       return html;
     }
@@ -915,7 +929,8 @@ Pager.prototype = {
     }
 
     // Invoke all sub-components
-    this.pagerBar.children('li').children('a')
+    this.pagerBar.children('li')
+      .find('> a, > .btn-icon, > .btn-icon[disabled] .disabled-tooltip')
       .button()
       .tooltip();
   },
@@ -1427,7 +1442,7 @@ Pager.prototype = {
   teardown() {
     if (this.numberButtons) {
       this.numberButtons.forEach((li) => {
-        const a = li.querySelector('a');
+        const a = li.querySelector('a, .btn-icon');
         const buttonAPI = $(a).data('button');
         const tooltipAPI = $(a).data('tooltip');
 

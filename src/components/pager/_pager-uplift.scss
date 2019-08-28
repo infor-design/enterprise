@@ -7,3 +7,34 @@
     min-height: 26px;
   }
 }
+
+.pager-toolbar > li {
+  &.pager-prev,
+  &.pager-first,
+  &.pager-last,
+  &.pager-next {
+    .btn-icon {
+      svg {
+        top: -3px;
+      }
+    }
+  }
+}
+
+.ie {
+  &.ie11 {
+    .pager-toolbar > li {
+      &.pager-prev,
+      &.pager-first,
+      &.pager-last,
+      &.pager-next {
+        a,
+        .btn-icon {
+          svg {
+            top: -1px;
+          }
+        }
+      }
+    }
+  }
+}
