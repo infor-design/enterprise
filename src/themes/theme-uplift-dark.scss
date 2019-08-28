@@ -15,9 +15,9 @@
 @import '../core/config';
 
 // Form Background Color
-$header-bg-color: $theme-color-palette-slate-100;
-$subhead-bg-color: $theme-color-palette-slate-60;
-$header-border-color: $theme-color-palette-slate-100;
+$header-bg-color: $theme-color-palette-black;
+$subhead-bg-color: $theme-color-palette-slate-100;
+$header-border-color: $theme-color-palette-slate-90;
 $header-button-color: rgba($theme-color-palette-white, 0.7);
 $header-button-focus-color: rgba($theme-color-palette-white, 1);
 $header-button-hover-color: rgba($theme-color-palette-white, 1);
@@ -26,8 +26,8 @@ $header-disabled-color: $theme-color-palette-slate-50;
 $header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
 
 $dropdown-search-bg-color: $theme-color-palette-slate-80;
-$panel-bg-color: $theme-color-palette-slate-70;
-$panel-border-color: $theme-color-palette-slate-50;
+$panel-bg-color: $theme-color-palette-slate-80;
+$panel-border-color: $theme-color-palette-slate-70;
 $drop-shadow-depth: rgba(0, 0, 0, 0.4);
 $focus-box-shadow-color: rgba(141, 201, 230, 0.3);
 $focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
@@ -84,8 +84,8 @@ $circlepager-disable-hover-border-color: $theme-color-palette-slate-50;
 $circlepager-disable-focus-border-color: $theme-color-palette-slate-50;
 
 // Popovers
-$popover-bg-color: $theme-color-palette-slate-70;
-$popover-border-color: $theme-color-palette-slate-50;
+$popover-bg-color: $theme-color-palette-slate-80;
+$popover-border-color: $theme-color-palette-slate-60;
 $popover-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popover-arrow-border-color: $theme-color-palette-slate-50;
 $popover-color: $font-color;
@@ -172,14 +172,14 @@ $trigger-focus-color: $theme-color-brand-primary-base;
 $trigger-disabled-color: $theme-color-palette-slate-40;
 
 // List View
-$listview-bg-color: $theme-color-palette-slate-70;
-$listview-bg-color-alternate: $theme-color-palette-slate-80;
-$listview-hover-bg-color: $theme-color-palette-slate-60;
-$listview-border-color: $theme-color-palette-slate-50;
+$listview-bg-color: $theme-color-palette-slate-90;
+$listview-bg-color-alternate: $theme-color-palette-slate-100;
+$listview-hover-bg-color: $theme-color-palette-slate-80;
+$listview-border-color: $theme-color-palette-slate-70;
 $listview-color: $inverse-color;
 $listview-secondary-color: $theme-color-palette-slate-30;
 $listview-tertiary-color: $theme-color-palette-slate-40;
-$listview-disabled-color: $theme-color-palette-slate-40;
+$listview-disabled-color: $input-disabled-color;
 $listview-selected-text-color: $theme-color-palette-white;
 $listview-header-bg-color: $theme-color-palette-slate-60;
 $listview-header-color: $theme-color-palette-white;
@@ -212,7 +212,7 @@ $toolbar-standalone-disabled-color: $theme-color-palette-slate-30;
 $toolbar-separator-color: $theme-color-palette-slate-50;
 
 // Formatter Toolbar
-$formatter-toolbar-separator-color: $theme-color-palette-slate-40;
+$formatter-toolbar-separator-color: $theme-color-palette-slate-70;
 
 // Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
@@ -301,10 +301,11 @@ $expandable-area-border-color: $theme-color-palette-slate-50;
 $expandable-area-title-color: $theme-color-palette-white;
 
 // Cardlist
-$cardlist-bg-color: $theme-color-palette-slate-70;
-$cardlist-border-color: $theme-color-palette-slate-50;
+$cardlist-bg-color: $theme-color-palette-slate-90;
+$cardlist-border-color: $theme-color-palette-slate-70;
 $cardlist-header-color: $theme-color-palette-white;
 $cardlist-actions-color: $theme-color-palette-slate-30;
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.7);
 
 // Checkboxes
 $checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
@@ -332,7 +333,7 @@ $editor-hover-border-color: $theme-color-palette-slate-20;
 $editor-focus-border-color: $theme-color-brand-primary-base;
 $editor-line-number-color: $theme-color-palette-slate-40;
 $editor-color: $input-color;
-$editor-toolbar-bg-color: $theme-color-palette-slate-60;
+$editor-toolbar-bg-color: $theme-color-palette-slate-80;
 $editor-middle-border-color: $theme-color-palette-slate-40;
 $editor-btn-color: $theme-color-palette-slate-30;
 $editor-btn-hover-color: $theme-color-palette-white;
@@ -348,7 +349,7 @@ $radio-checked-bg-color: $radio-color-checked-initial-background;
 $radio-disabled-checked-bg-color: $radio-color-checked-disabled-background;
 
 // Pager
-$pager-text-color: $theme-color-brand-primary-base;
+$pager-text-color: $theme-color-brand-primary-lighter;
 $pager-selected-color: $font-color-extrahighcontrast;
 $pager-focus-border-color: $input-color-focus-border;
 $pager-hover-color: $font-color-extrahighcontrast;
@@ -584,6 +585,9 @@ $wizard-active-color: $theme-color-brand-primary-base;
 $wizard-active-text-color: $theme-color-palette-azure-40;
 $wizard-focus-box-shadow: 0 0 0 1px $theme-color-brand-primary-base;
 
+$wizard-toolbar-bg-color: $theme-color-palette-slate-90;
+$wizard-toolbar-border-color: $theme-color-palette-slate-70;
+
 // Themable Variables in config.scss
 $hierarchy-line-color: $theme-color-palette-slate-40;
 
@@ -631,7 +635,10 @@ $toast-text-color: $theme-color-palette-white;
 $toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
 
 // Builder Pattern
-$builder-header-bg-color: $theme-color-palette-slate-80;
+$builder-header-bg-color: $theme-color-palette-slate-90;
+$builder-actions-bg-color: $theme-color-palette-slate-100;
+$builder-sidebar-bg-color: $theme-color-palette-slate-90;
+$builder-border-color: $theme-color-palette-slate-80;
 
 // About
 $about-header-color: $theme-color-palette-white;

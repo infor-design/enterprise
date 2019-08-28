@@ -683,6 +683,9 @@ $wizard-header-disabled-color: rgba($theme-color-palette-white, 0.3);
 $wizard-header-text-color: rgba($theme-color-palette-white, 0.5);
 $wizard-header-focus-box-shadow: 0 0 0 1px $theme-color-palette-white;
 
+$wizard-toolbar-bg-color: $panel-bg-color;
+$wizard-toolbar-border-color: $panel-border-color;
+
 //Hierarch
 $hierarchy-line-color: $theme-color-palette-graphite-30;
 
@@ -736,6 +739,9 @@ $toast-shadow: none; //0 0 5px $drop-shadow-depth;
 
 //Builder Pattern
 $builder-header-bg-color: $theme-color-palette-slate-60;
+$builder-actions-bg-color: $panel-bg-color;
+$builder-sidebar-bg-color: $panel-bg-color;
+$builder-border-color: $panel-border-color;
 
 //About
 $about-header-color: $theme-color-font-base;
