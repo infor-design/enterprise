@@ -3565,7 +3565,7 @@ Datagrid.prototype = {
     d = d ? d.depth : 0;
     depth = d;
 
-    // Setup if this row will be hidden or not
+    // Determine if the tree rows should be hidden or not
     if (self.settings.treeDepth && self.settings.treeDepth.length) {
       for (let i = 0; i < self.settings.treeDepth.length; i++) {
         const treeDepthItem = self.settings.treeDepth[i];
@@ -3899,8 +3899,8 @@ Datagrid.prototype = {
           lineage
         );
 
+        containerHtml.left += childRowHtml.left;
         containerHtml.center += childRowHtml.center;
-        containerHtml.left += childRowHtml.center;
         containerHtml.right += childRowHtml.right;
       }
     }
@@ -9844,8 +9844,7 @@ Datagrid.prototype = {
       return;
     }
     const self = this;
-    let rowElement = this.settings.treeGrid ?
-      this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
+    let rowElement = this.rowNodes(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
     const isExpanded = expandButton.hasClass('is-expanded');
@@ -9862,8 +9861,7 @@ Datagrid.prototype = {
     }
 
     const toggleExpanded = function () {
-      rowElement = self.settings.treeGrid ?
-        self.actualRowNode(dataRowIndex) : self.visualRowNode(dataRowIndex);
+      rowElement = self.rowNodes(dataRowIndex);
       expandButton = rowElement.find('.datagrid-expand-btn');
       const children = rowElement.nextUntil(`[aria-level="${level}"]`);
       const parentRowIdx = self.settings.treeGrid && self.settings.source && self.settings.paging ?
@@ -9896,16 +9894,14 @@ Datagrid.prototype = {
             const node = $(this);
             const nodeLevel = parseInt(node.attr('aria-level'), 10);
 
-            if (nodeLevel === (lev + 1)) {
-              if (!node.hasClass('is-filtered')) {
-                node.removeClass('is-hidden');
-              }
+            if (!node.hasClass('is-filtered')) {
+              node.removeClass('is-hidden');
+            }
 
-              if (node.is('.datagrid-tree-parent')) {
-                const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
-                if (nodeIsExpanded) {
-                  setChildren(node, nodeLevel, !nodeIsExpanded);
-                }
+            if (node.is('.datagrid-tree-parent')) {
+              const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
+              if (nodeIsExpanded) {
+                setChildren(node, nodeLevel, !nodeIsExpanded);
               }
             }
           });

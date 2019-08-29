@@ -699,7 +699,6 @@ const formatters = {
   // Process Indicator
   // File Upload (Simple)
   // Menu Button
-  // Color Picker (Low)
   // Radio
 };
 
