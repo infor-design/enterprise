@@ -4,7 +4,7 @@
 
 ### v4.21.0 Deprecation
 
-- `[Icons]` The `icon-flag` icon has its hard coded red color removed so it can be used as a normal icon, if you still want to red you need to add an additional class and make it `icon-flag icon-error`. ([#2548](https://github.com/infor-design/enterprise/issues/2548))
+- `[Icons]` Removed the hardcoded red color of the `icon-flag` so it can be used as a normal icon. If red is desired please add an additional class of `icon-flag icon-error`. ([#2548](https://github.com/infor-design/enterprise/issues/2548))
 
 ### v4.21.0 Features
 
