@@ -24,6 +24,7 @@
 - `[Homepage]` Fixed an issue where dynamically added widget was not positioning correctly. ([#2425](https://github.com/infor-design/enterprise/issues/2425))
 - `[Locale]` Fixed a bug where getCulturePath does not work if the sohoxi.js file name has a hash part. ([#2637](https://github.com/infor-design/enterprise/issues/2637))
 - `[Locale]` Fixed a bug found when using NG8 that the default us locale causes issues. It is now an official requirement that you set a locale for all components that require locale information. ([#2640](https://github.com/infor-design/enterprise/issues/2640))
+- `[Locale]` Fixed an occurrence where an nonstandard locale filename was not correctly processed. ([#2684](https://github.com/infor-design/enterprise/issues/2684))
 - `[Lookup]` Fixed memory leak issues after destroy. ([#2494](https://github.com/infor-design/enterprise/issues/2494))
 - `[Modal]` Fixed memory leak issues after destroy. ([#2497](https://github.com/infor-design/enterprise/issues/2497))
 - `[Slider]` Updated the color variant logic to match new uplift theming. ([#2647](https://github.com/infor-design/enterprise/issues/2647))
