@@ -867,7 +867,10 @@ Dropdown.prototype = {
     }
 
     if (this.settings.empty && opts.length === 0) {
-      DOM.html(this.pseudoElem.find('span'), `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
+      let span = this.pseudoElem.find('span').first();
+      DOM.html(span, `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
+      span = $(`#${this.element.attr('id')}`).next().find('span').first();
+      DOM.html(span, `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
       return;
     }
 
@@ -1512,7 +1515,7 @@ Dropdown.prototype = {
     }
 
     function selectText() {
-      if (self.isMobile() || self.filterTerm) {
+      if (self.isMobile() || self.filterTerm || !input) {
         return;
       }
 
@@ -1526,7 +1529,9 @@ Dropdown.prototype = {
     selectText();
 
     // Set focus back to the element
-    input[0].focus();
+    if (input) {
+      input[0].focus();
+    }
   },
 
   /**
