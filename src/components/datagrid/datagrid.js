@@ -3825,7 +3825,7 @@ Datagrid.prototype = {
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
           ` aria-describedby="${self.uniqueId(`-header-${j}`)}"${
-            isSelected ? ' aria-selected= "true"' : ''
+            isSelected ? ' aria-selected="true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
           }${colspan ? ` colspan="${colspan}"` : ''
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
@@ -6753,7 +6753,9 @@ Datagrid.prototype = {
     checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
     elem.addClass(selectClasses).attr('aria-selected', 'true');
     checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-      .addClass('is-checked').attr('aria-checked', 'true');
+      .addClass('is-checked').attr('aria-checked', 'true')
+      .attr('aria-selected', 'true')
+      .attr('aria-label', 'Selected');
 
     if (data) {
       data._selected = true;
@@ -7394,7 +7396,10 @@ Datagrid.prototype = {
       if (self.columnIdxById('selectionCheckbox') !== -1) {
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-          .removeClass('is-checked no-animate').attr('aria-checked', 'false');
+          .removeClass('is-checked no-animate')
+          .attr('aria-checked', 'false')
+          .removeAttr('aria-selected')
+          .removeAttr('aria-label');
       }
 
       if (s.treeGrid) {
