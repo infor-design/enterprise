@@ -68,7 +68,7 @@
     dataCC.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', portable: false, quantity: 41, price: 120.99, orderDate: new Date(2014, 6, 9), action: 'cc'});
 
     var dropDownFormatter = function (row, cell, value, col) {
-      for (let index = 0, len = actionOptions.length; index < len; index++) {
+      for (var index = 0, len = actionOptions.length; index < len; index++) {
         var item = actionOptions[ index ];
         if (value === item.value) {
           return item.label;

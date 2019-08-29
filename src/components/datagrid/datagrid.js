@@ -1659,7 +1659,8 @@ Datagrid.prototype = {
         const multiselect = $(this);
         multiselect.multiselect(col.editorOptions).on('selected.datagrid', () => {
           // Wierd Hack - Sync to "sync" up the filter row
-          $(`#${$(this).attr('id')}`).val($(this).val());
+          const ddElem = $(this);
+          $(`#${ddElem.attr('id')}`).val(ddElem.val());
           self.applyFilter(null, 'selected');
         });
 
@@ -2388,6 +2389,11 @@ Datagrid.prototype = {
             dropdownApi.setCode(conditions[i].value);
           }
         } else if (conditions[i].value instanceof Array && !conditions[i].selectedOptions) {
+          const options = input[0].querySelectorAll('option');
+          input.val('');
+          for (let k = 0; k < options.length; k++) {
+            options[k].selected = false;
+          }
           for (let j = 0; j < conditions[i].value.length; j++) {
             input.find(`option[value="${conditions[i].value[j]}"]`).prop('selected', true);
           }
