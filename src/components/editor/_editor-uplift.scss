@@ -31,6 +31,7 @@
 
     &[data-element='h3'],
     &[data-element='h4'] {
+      min-width: 32px;
       margin-right: $theme-number-spacing-base;
 
       .icon {
