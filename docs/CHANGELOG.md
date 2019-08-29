@@ -4,6 +4,7 @@
 
 ### v4.21.0 Features
 
+- `[Datagrid]` Added the ability to use frozen columns with tree grid. ([#2102](https://github.com/infor-design/enterprise/issues/2102))
 - `[Datagrid]` Added support for a fixed row size, this can be used in some cases like frozen columns where rows may have a different size than the three row heights (normal, short, medium). ([#2101](https://github.com/infor-design/enterprise/issues/2101))
 - `[Datagrid]` Added filter row editor options to api setting. ([#2648](https://github.com/infor-design/enterprise/issues/2648))
 - `[Editor]` Added events to trigger on view change. ([#2430](https://github.com/infor-design/enterprise/issues/2430))
@@ -24,11 +25,13 @@
 - `[Datagrid]` Fixed an issue where dirty and row status on the same cell would cause a UI issue. ([#2641](https://github.com/infor-design/enterprise/issues/2641))
 - `[Datagrid]` Changed the onKeyDown callback to fire on any key. ([#536](https://github.com/infor-design/enterprise-ng/issues/536))
 - `[Datagrid]` Added a more descriptive aria-label to checkboxes if the required descriptors exist. ([#2031](https://github.com/infor-design/enterprise-ng/issues/2031))
+- `[Datagrid]` Added an announcement of the selection state of a row. ([#2535](https://github.com/infor-design/enterprise/issues/2535))
 - `[Dropdown]` Fixed an issue where tooltip on all browsers and ellipsis on firefox, ie11 was not showing with long text after update. ([#2534](https://github.com/infor-design/enterprise/issues/2534))
 - `[Fileupload Advanced]` Added custom errors example page. ([#2620](https://github.com/infor-design/enterprise/issues/2620))
 - `[Homepage]` Fixed an issue where dynamically added widget was not positioning correctly. ([#2425](https://github.com/infor-design/enterprise/issues/2425))
 - `[Locale]` Fixed a bug where getCulturePath does not work if the sohoxi.js file name has a hash part. ([#2637](https://github.com/infor-design/enterprise/issues/2637))
 - `[Locale]` Fixed a bug found when using NG8 that the default us locale causes issues. It is now an official requirement that you set a locale for all components that require locale information. ([#2640](https://github.com/infor-design/enterprise/issues/2640))
+- `[Locale]` Fixed an occurrence where an nonstandard locale filename was not correctly processed. ([#2684](https://github.com/infor-design/enterprise/issues/2684))
 - `[Lookup]` Fixed memory leak issues after destroy. ([#2494](https://github.com/infor-design/enterprise/issues/2494))
 - `[Modal]` Fixed memory leak issues after destroy. ([#2497](https://github.com/infor-design/enterprise/issues/2497))
 - `[Slider]` Updated the color variant logic to match new uplift theming. ([#2647](https://github.com/infor-design/enterprise/issues/2647))

@@ -24,6 +24,8 @@ describe('Custom Tooltips page tests', () => {
 
   beforeEach(async () => {
     await utils.setPage('/components/column/test-custom-tooltips.html');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.bar.series-6'))), config.waitsFor);
   });
 
   it('Should display custom tooltip when hovering to all column nodes default method', async () => {

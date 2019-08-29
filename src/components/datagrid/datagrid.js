@@ -3565,7 +3565,7 @@ Datagrid.prototype = {
     d = d ? d.depth : 0;
     depth = d;
 
-    // Setup if this row will be hidden or not
+    // Determine if the tree rows should be hidden or not
     if (self.settings.treeDepth && self.settings.treeDepth.length) {
       for (let i = 0; i < self.settings.treeDepth.length; i++) {
         const treeDepthItem = self.settings.treeDepth[i];
@@ -3825,7 +3825,7 @@ Datagrid.prototype = {
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
           ` aria-describedby="${self.uniqueId(`-header-${j}`)}"${
-            isSelected ? ' aria-selected= "true"' : ''
+            isSelected ? ' aria-selected="true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
           }${colspan ? ` colspan="${colspan}"` : ''
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
@@ -3899,8 +3899,8 @@ Datagrid.prototype = {
           lineage
         );
 
+        containerHtml.left += childRowHtml.left;
         containerHtml.center += childRowHtml.center;
-        containerHtml.left += childRowHtml.center;
         containerHtml.right += childRowHtml.right;
       }
     }
@@ -6753,7 +6753,9 @@ Datagrid.prototype = {
     checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
     elem.addClass(selectClasses).attr('aria-selected', 'true');
     checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-      .addClass('is-checked').attr('aria-checked', 'true');
+      .addClass('is-checked').attr('aria-checked', 'true')
+      .attr('aria-selected', 'true')
+      .attr('aria-label', 'Selected');
 
     if (data) {
       data._selected = true;
@@ -7394,7 +7396,10 @@ Datagrid.prototype = {
       if (self.columnIdxById('selectionCheckbox') !== -1) {
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-          .removeClass('is-checked no-animate').attr('aria-checked', 'false');
+          .removeClass('is-checked no-animate')
+          .attr('aria-checked', 'false')
+          .removeAttr('aria-selected')
+          .removeAttr('aria-label');
       }
 
       if (s.treeGrid) {
@@ -9839,8 +9844,7 @@ Datagrid.prototype = {
       return;
     }
     const self = this;
-    let rowElement = this.settings.treeGrid ?
-      this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
+    let rowElement = this.rowNodes(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
     const isExpanded = expandButton.hasClass('is-expanded');
@@ -9857,8 +9861,7 @@ Datagrid.prototype = {
     }
 
     const toggleExpanded = function () {
-      rowElement = self.settings.treeGrid ?
-        self.actualRowNode(dataRowIndex) : self.visualRowNode(dataRowIndex);
+      rowElement = self.rowNodes(dataRowIndex);
       expandButton = rowElement.find('.datagrid-expand-btn');
       const children = rowElement.nextUntil(`[aria-level="${level}"]`);
       const parentRowIdx = self.settings.treeGrid && self.settings.source && self.settings.paging ?
@@ -9891,16 +9894,14 @@ Datagrid.prototype = {
             const node = $(this);
             const nodeLevel = parseInt(node.attr('aria-level'), 10);
 
-            if (nodeLevel === (lev + 1)) {
-              if (!node.hasClass('is-filtered')) {
-                node.removeClass('is-hidden');
-              }
+            if (!node.hasClass('is-filtered')) {
+              node.removeClass('is-hidden');
+            }
 
-              if (node.is('.datagrid-tree-parent')) {
-                const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
-                if (nodeIsExpanded) {
-                  setChildren(node, nodeLevel, !nodeIsExpanded);
-                }
+            if (node.is('.datagrid-tree-parent')) {
+              const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
+              if (nodeIsExpanded) {
+                setChildren(node, nodeLevel, !nodeIsExpanded);
               }
             }
           });
