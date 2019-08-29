@@ -95,7 +95,7 @@ app.use(require('./src/js/middleware/info-handler')(app));
 
 app.use(router);
 
-const customRoutes = require('./src/js/routes/customRoutes');
+const customRoutes = require('./src/js/routes/custom-routes');
 const generalRoute = require('./src/js/routes/general');
 const sendGeneratedDocPage = require('./src/js/routes/docs');
 
