@@ -302,11 +302,13 @@ $datepicker-focus-border-color: $theme-color-brand-primary-base;
 $datepicker-selected-bg-color: $theme-color-brand-primary-base;
 $datepicker-selected-color: $button-color-primary-initial-font;
 $datepicker-today-color: $theme-color-font-base;
+$datepicker-hover-text-color: $input-color-initial-font;
 $datepicker-hover-bg-color: $theme-color-palette-graphite-10;
-$datepicker-disabled-icon-color: $theme-color-brand-secondary-alt;
-$datepicker-disabled-border-color: $theme-color-palette-graphite-30;
-$datepicker-disabled-bg-color: $theme-color-palette-graphite-10;
-$datepicker-disabled-color: $theme-color-palette-graphite-30;
+$datepicker-disabled-icon-color: $input-color-disabled-font;
+$datepicker-disabled-border-color: $input-color-disabled-border;
+$datepicker-disabled-bg-color: $input-color-disabled-background;
+$datepicker-disabled-color: $input-color-disabled-font;
+$datepicker-readonly-icon-color: $input-color-readonly-font;
 $datepicker-default-width: 150px;
 
 //Time Picker

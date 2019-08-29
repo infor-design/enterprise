@@ -157,7 +157,6 @@ $secondary-border-btn-ripple-color: $theme-color-brand-primary-alt;
 
 // Input Fields
 $input-color: $input-color-initial-font;
-$input-color-readonly-background: $theme-color-palette-graphite-60;
 $input-disabled-color: $input-color-disabled-font;
 $input-placeholder-color: $input-color-initial-placeholder;
 $input-readonly-color: $input-color-readonly-font;
@@ -251,15 +250,15 @@ $dropdown-menu-separator-border-color: $theme-color-palette-slate-60;
 // Date Picker
 $datepicker-month-year-color: $theme-color-palette-black;
 $datepicker-icon-active-color: $theme-color-palette-azure-90;
-// $datepicker-alternate-month-color: rgba($theme-color-palette-graphite-60, 0.5);
 $datepicker-alternate-month-color: $theme-color-palette-graphite-50;
 $datepicker-day-color: $theme-color-palette-black;
 $datepicker-focus-border-color: $theme-color-brand-primary-alt;
 $datepicker-selected-bg-color: $theme-color-brand-primary-base;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $theme-color-palette-black;
+$datepicker-hover-text-color: $theme-color-brand-primary-contrast;
 $datepicker-hover-bg-color: $theme-color-brand-secondary-alt;
-$datepicker-disabled-border-color: $theme-color-brand-secondary-alt;
+$datepicker-disabled-border-color: $input-color-disabled-border;
 $datepicker-disabled-bg-color: $input-color-readonly-background;
 $datepicker-disabled-color: $theme-color-brand-secondary-alt;
 

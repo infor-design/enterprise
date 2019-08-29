@@ -432,6 +432,7 @@
 
     //Selected
     &:hover .day-text {
+      color: $datepicker-hover-text-color;
       background-color: $datepicker-hover-bg-color;
     }
 
