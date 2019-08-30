@@ -268,7 +268,9 @@ PopupMenu.prototype = {
       const arrow = $('<div class="arrow"></div>');
       const wrapper = this.menu.parent('.popupmenu-wrapper');
 
-      wrapper.addClass('bottom').append(arrow);
+      if (wrapper.find('.arrow').length === 0) {
+        wrapper.addClass('bottom').append(arrow);
+      }
     }
 
     // If inside of a ".field-short" container, make smaller
