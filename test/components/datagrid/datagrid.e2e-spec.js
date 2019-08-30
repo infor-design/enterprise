@@ -276,7 +276,7 @@ describe('Datagrid Expandable Row Tests', () => {
   });
 });
 
-fdescribe('Datagrid filter tests', () => { //eslint-disable-line
+describe('Datagrid filter tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-filter?layout=nofrills');
 
@@ -322,7 +322,7 @@ fdescribe('Datagrid filter tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datagrid filter meduim row tests', () => { //eslint-disable-line
+describe('Datagrid filter medium row tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-medium-rowheight?layout=nofrills');
 
@@ -345,7 +345,7 @@ fdescribe('Datagrid filter meduim row tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datagrid filter short row tests', () => {  //eslint-disable-line
+describe('Datagrid filter short row tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-short-rowheight?layout=nofrills');
 
@@ -1245,7 +1245,7 @@ describe('Datagrid Lookup Editor', () => {
   });
 });
 
-fdescribe('Datagrid Time Editor Test', () => { //eslint-disable-line
+describe('Datagrid Time Editor Test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-time?layout=nofrills');
 
