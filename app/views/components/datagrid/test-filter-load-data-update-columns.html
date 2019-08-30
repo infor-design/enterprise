@@ -1,10 +1,4 @@
 <div class="row">
-  <div class="six columns">
-    <h2>Datagrid Test: Calling updateColumns with disableClientSideFilter set</h2>
-  </div>
-</div>
-
-<div class="row">
   <div class="twelve columns">
     <div role="toolbar" class="toolbar">
       <div class="title">
@@ -74,7 +68,7 @@
 
     columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
     columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input });
-    columns.push({ id: 'status', name: 'Status', field: 'price', formatter: Formatters.Alert, readonly: true, ranges: [{ 'min': LOW_RANGE_LOW_NUMBER, 'max': LOW_RANGE_HIGH_NUMBER, 'classes': 'success', text: 'Confirmed' }, { 'min': HIGH_RANGE_LOW_NUMBER, 'max': HIGH_RANGE_HIGH_NUMBER, 'classes': 'error', text: 'Error' }] });
+    columns.push({ id: 'status', name: 'Status', field: 'price', formatter: Formatters.Alert, readonly: true, width: 150, ranges: [{ 'min': LOW_RANGE_LOW_NUMBER, 'max': LOW_RANGE_HIGH_NUMBER, 'classes': 'success', text: 'Confirmed' }, { 'min': HIGH_RANGE_LOW_NUMBER, 'max': HIGH_RANGE_HIGH_NUMBER, 'classes': 'error', text: 'Error' }] });
     columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3 }, editor: Editors.Input, mask: '###.000' });
     columns.push({ id: 'action', name: 'Action', field: 'action', formatter: dropDownFormatter, filterType: 'multiselect', options:  [{ label: ' ', value: ' ' }], editor: Editors.Dropdown, editorOptions: { editable: false, source: dropDownSource }});
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date });
@@ -125,7 +119,8 @@
           gridApi.loadData(dataAll);
         } else {
           let results = [];
-          for (let value of args.conditions[0].value) {
+          for (var i = 0; i < args.conditions[0].value.length; i++) {
+            var value = args.conditions[0].value[i];
             switch(value) {
               case 'poh':
                 results = $.merge(results, dataPOH);

@@ -4,6 +4,11 @@
 .icon {
   fill: transparent;
   width: 18px; // Normalize against `height: 18px`;
+
+  &.icon-empty-state {
+    fill: $theme-color-brand-primary-base;
+    width: 65px;
+  }
 }
 
 .icon.app-header span:not(.audible) {

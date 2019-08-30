@@ -185,7 +185,7 @@
         return optionText;
       };
       var itemsHtml = '';
-      for (let i = 0, l = gridApi.settings.treeDepth.length; i < l; i++) {
+      for (var i = 0, l = gridApi.settings.treeDepth.length; i < l; i++) {
         itemsHtml += '<option value="'+ i +'">'+ getOptionText(i) +'</option>';
       }
       dropdownEl.append(itemsHtml).trigger('updated');

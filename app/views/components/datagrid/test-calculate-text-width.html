@@ -115,7 +115,7 @@
       $('#update-datagrid').on('click', function() {
         let api = $('#datagrid').data('datagrid');
         let columns = api.settings.columns;
-        for (let j = 0; j < columns.length; j++) {
+        for (var j = 0; j < columns.length; j++) {
           columns[j].sortable = $('#sortable')[0].checked;
         }
 
