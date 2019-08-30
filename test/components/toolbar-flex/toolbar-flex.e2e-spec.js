@@ -64,7 +64,7 @@ describe('Flex toobar ajax tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-menu-button')).toEqual(0);
-      browser.driver.actions().mouseMove(element.all(by.css('ul#flex-toolbar-menu-button-submenu')).last()).perform();
+      browser.driver.actions().mouseMove(element.all(by.css('ul#flex-toolbar-menu-button-submenu')).first()).perform();
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-menu-button-submenu')).toEqual(0);
