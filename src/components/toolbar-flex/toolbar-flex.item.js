@@ -537,8 +537,23 @@ ToolbarFlexItem.prototype = {
 
     this.teardownPredefinedItems();
 
-    // Add Toolbar Items
+    // Get Popupmenu data equivalent of the current set of Toolbar items.
+    // Menu item data is scrubbed for IDs that would otherwise be duplicated
+    function removeMenuIds(item, isSubmenu) {
+      if (item.menuId) {
+        delete item.menuId;
+      }
+      const menuTarget = isSubmenu ? 'submenu' : 'menu';
+      if (Array.isArray(item[menuTarget])) {
+        item[menuTarget].forEach((subitem) => {
+          removeMenuIds(subitem, true);
+        });
+      }
+    }
     const data = this.toolbarAPI.toPopupmenuData();
+    removeMenuIds(data);
+
+    // Add Toolbar Items as predefined items to the Popupmenu.
     const menuItems = $(menuAPI.renderItem(data));
     this.predefinedItems = menuItems;
     this.linkToolbarItems(data);
@@ -608,6 +623,10 @@ ToolbarFlexItem.prototype = {
 
       const itemData = item.toPopupmenuData();
       itemData.overflowed = item.overflowed;
+
+      if (itemData.id) {
+        delete itemData.id;
+      }
 
       menuAPI.refreshMenuItem(item.actionButtonLink, itemData, itemRefreshCallback);
     });
@@ -747,7 +766,7 @@ ToolbarFlexItem.prototype = {
       const targetId = this.componentAPI.element[0].id;
       if (targetId) {
         // NOTE: don't pass the same ID here, which would cause duplicates
-        itemData.menuId = `${this.toolbarAPI.uniqueId}-${targetId}`;
+        itemData.id = `${this.toolbarAPI.uniqueId}-${targetId}`;
       }
       itemData.submenu = addMenuElementLinks(menuElem[0], originalSubmenuData);
     }
