@@ -2613,8 +2613,9 @@ $datagrid-short-row-height: 25px;
       + .icon {
         color: $datagrid-filter-icon-color;
         height: 13px;
-        margin-left: -8px;
+        margin-left: -10px;
         position: relative;
+        right: -2px;
         top: -3px;
         width: 13px;
       }
@@ -2634,7 +2635,7 @@ $datagrid-short-row-height: 25px;
     .dropdown {
       + .icon {
         height: 16px;
-        margin-left: -12px;
+        margin-left: -22px;
         top: 4px !important;
         width: 16px;
       }

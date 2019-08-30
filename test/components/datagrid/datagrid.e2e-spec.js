@@ -276,7 +276,7 @@ describe('Datagrid Expandable Row Tests', () => {
   });
 });
 
-describe('Datagrid filter tests', () => {
+fdescribe('Datagrid filter tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-filter?layout=nofrills');
 
@@ -311,6 +311,61 @@ describe('Datagrid filter tests', () => {
     expect(await element(by.css('#datagrid .datagrid-body:nth-child(2) tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
     expect(await element(by.css('#datagrid .datagrid-body:nth-child(2) tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter')).toEqual(0);
+    });
+  }
+});
+
+fdescribe('Datagrid filter meduim row tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-filter-medium-rowheight?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter-medium-rowheight')).toEqual(0);
+    });
+  }
+});
+
+fdescribe('Datagrid filter short row tests', () => {  //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-filter-short-rowheight?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter-short-rowheight')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid frozen column tests', () => {
@@ -1188,6 +1243,64 @@ describe('Datagrid Lookup Editor', () => {
 
     expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('1234567');
   });
+});
+
+fdescribe('Datagrid Time Editor Test', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-editable-time?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('should be usable with a Mask', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(3) td:nth-child(2)')).click();
+
+    const editCellSelector = '.has-editor.is-editing input';
+    const inputEl = await element(by.css(editCellSelector));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+    await element(by.css(editCellSelector)).sendKeys('aaaaa');
+
+    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('');
+    await element(by.css(editCellSelector)).sendKeys('2:40 AM');
+
+    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('2:40 AM');
+  });
+
+  it('should be editable', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(3) td:nth-child(2)')).click();
+
+    const editCellSelector = '.has-editor.is-editing input';
+    const inputEl = await element(by.css(editCellSelector));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+    await inputEl.sendKeys('2:40 AM');
+    await inputEl.sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(3) td:nth-child(2)')).getText()).toEqual('2:40 AM');
+  });
+
+  it('Should filter time', async () => {
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(9);
+
+    await element(by.css('#test-editable-time-datagrid-1-header-filter-1')).sendKeys('1:30 AM');
+    await element(by.css('#test-editable-time-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(1);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-time-editor')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid editor dropdown source tests', () => {
