@@ -34,7 +34,7 @@ describe('Pager Event Test', () => {
 
     const spyFunc = spyOn(pagerObj.settings, 'onFirstPage');
     const spyEvent = spyOnEvent($(pagerEl), 'firstpage');
-    document.body.querySelector('.pager-container .pager-first a').click();
+    document.body.querySelector('.pager-container .pager-first .btn-icon').click();
 
     expect(spyFunc).toHaveBeenCalled();
     expect(spyEvent).toHaveBeenTriggered();
@@ -50,7 +50,7 @@ describe('Pager Event Test', () => {
 
     const spyFunc = spyOn(pagerObj.settings, 'onPreviousPage');
     const spyEvent = spyOnEvent($(pagerEl), 'previouspage');
-    document.body.querySelector('.pager-container .pager-prev a').click();
+    document.body.querySelector('.pager-container .pager-prev .btn-icon').click();
 
     expect(spyFunc).toHaveBeenCalled();
     expect(spyEvent).toHaveBeenTriggered();
@@ -66,7 +66,7 @@ describe('Pager Event Test', () => {
 
     const spyFunc = spyOn(pagerObj.settings, 'onNextPage');
     const spyEvent = spyOnEvent($(pagerEl), 'nextpage');
-    document.body.querySelector('.pager-container .pager-next a').click();
+    document.body.querySelector('.pager-container .pager-next .btn-icon').click();
 
     expect(spyFunc).toHaveBeenCalled();
     expect(spyEvent).toHaveBeenTriggered();
@@ -82,7 +82,7 @@ describe('Pager Event Test', () => {
 
     const spyFunc = spyOn(pagerObj.settings, 'onLastPage');
     const spyEvent = spyOnEvent($(pagerEl), 'lastpage');
-    document.body.querySelector('.pager-container .pager-last a').click();
+    document.body.querySelector('.pager-container .pager-last .btn-icon').click();
 
     expect(spyFunc).toHaveBeenCalled();
     expect(spyEvent).toHaveBeenTriggered();

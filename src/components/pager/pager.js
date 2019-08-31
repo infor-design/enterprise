@@ -22,7 +22,7 @@ const FOCUSABLE_SELECTOR = [
   '.pager-prev > .btn-icon',
   '.pager-next > .btn-icon',
   '.pager-last > .btn-icon',
-  '.pager-no > a',
+  '.pager-no > .btn-icon',
   '.pager-count input',
   '.pager-pagesize button'
 ].join(', ');
@@ -397,9 +397,9 @@ Pager.prototype = {
     const self = this;
 
     // Attach button click and touch
-    this.pagerBar.on('click.pager', 'a, .btn-icon', function (e) {
-      const a = e.currentTarget;
-      const li = a.parentNode;
+    this.pagerBar.on('click.pager', '.btn-icon', function (e) {
+      const btn = e.currentTarget;
+      const li = btn.parentNode;
 
       e.preventDefault();
 
@@ -439,7 +439,7 @@ Pager.prototype = {
       }
 
       // Go to the page via the applied `data-page` attribute of the button
-      let activePageIdx = Number(a.getAttribute('data-page'));
+      let activePageIdx = Number(btn.getAttribute('data-page'));
       if (isNaN(activePageIdx) || activePageIdx < 1) {
         activePageIdx = 1;
       }
@@ -473,7 +473,7 @@ Pager.prototype = {
       event.preventDefault();
 
       if (isLeft && !isFirst) {
-        const link = prev.querySelector('a, button, input');
+        const link = prev.querySelector('button, input');
         link.removeAttribute('tabindex');
         elem.setAttribute('tabindex', '-1');
         link.focus();
@@ -481,7 +481,7 @@ Pager.prototype = {
       }
 
       if (isLeft && isFirst) {
-        const link = parent.parentNode.lastChild.querySelector('a, button, input');
+        const link = parent.parentNode.lastChild.querySelector('button, input');
         link.removeAttribute('tabindex');
         elem.setAttribute('tabindex', '-1');
         link.focus();
@@ -489,7 +489,7 @@ Pager.prototype = {
       }
 
       if (isRight && !isLast) {
-        const link = next.querySelector('a, button, input');
+        const link = next.querySelector('button, input');
         link.removeAttribute('tabindex');
         elem.setAttribute('tabindex', '-1');
         link.focus();
@@ -497,7 +497,7 @@ Pager.prototype = {
       }
 
       if (isRight && isLast) {
-        const link = parent.parentNode.firstChild.querySelector('a, button, input');
+        const link = parent.parentNode.firstChild.querySelector('button, input');
         link.removeAttribute('tabindex');
         elem.setAttribute('tabindex', '-1');
         link.focus();
@@ -546,28 +546,28 @@ Pager.prototype = {
     if (types.indexOf(type) === -1) {
       return;
     }
-    let selector = `.pager-${type} a, .pager-${type} .btn-icon`;
+    let selector = `.pager-${type} .btn-icon`;
     if (type === 'previous') {
-      selector = '.pager-prev a, .pager-prev .btn-icon';
+      selector = '.pager-prev .btn-icon';
     }
 
     // Get anchor/option
-    const a = this.pagerBar[0].querySelector(selector);
+    const btn = this.pagerBar[0].querySelector(selector);
     toggleOption = (`${toggleOption}`).toLowerCase() === 'true';
 
     // Set the value in the settings
     this.settings[`show${stringUtils.capitalize(type)}Button`] = toggleOption;
 
     // If the button hasn't been rendered, don't alter the DOM.
-    if (!a) {
+    if (!btn) {
       return;
     }
 
     // Change the DOM
     if (toggleOption) {
-      a.parentNode.classList.remove('hidden');
+      btn.parentNode.classList.remove('hidden');
     } else {
-      a.parentNode.classList.add('hidden');
+      btn.parentNode.classList.add('hidden');
     }
   },
 
@@ -582,32 +582,32 @@ Pager.prototype = {
     if (types.indexOf(type) === -1) {
       return;
     }
-    let selector = `.pager-${type} a, .pager-${type} .btn-icon`;
+    let selector = `.pager-${type} .btn-icon`;
     if (type === 'previous') {
-      selector = '.pager-prev a, .pager-prev .btn-icon';
+      selector = '.pager-prev .btn-icon';
     }
 
     // Get anchor/option
-    const a = this.pagerBar[0].querySelector(selector);
+    const btn = this.pagerBar[0].querySelector(selector);
     toggleOption = (`${toggleOption}`).toLowerCase() === 'true';
 
     // Set the value in the settings
     this.settings[`enable${stringUtils.capitalize(type)}Button`] = toggleOption;
 
     // If the button hasn't been rendered, don't alter the DOM.
-    if (!a) {
+    if (!btn) {
       return;
     }
 
     // Change the DOM
     if (toggleOption) {
-      a.disabled = false;
-      a.parentNode.classList.remove('is-disabled');
-      $(a).removeAttr('disabled');
+      btn.disabled = false;
+      btn.parentNode.classList.remove('is-disabled');
+      $(btn).removeAttr('disabled');
     } else {
-      a.disabled = true;
-      a.parentNode.classList.add('is-disabled');
-      $(a).attr('disabled', 'disabled');
+      btn.disabled = true;
+      btn.parentNode.classList.add('is-disabled');
+      $(btn).attr('disabled', 'disabled');
     }
   },
 
@@ -733,7 +733,6 @@ Pager.prototype = {
    * @returns {void}
    */
   renderButtons() {
-    const self = this;
     // Only certain types of Pages get to have the `last` and `first` buttons
     // const types = ['table', 'pageof', 'firstlast', 'standalone'];
     // const canHaveFirstLastButtons = types.indexOf(this.settings.type) > -1 || !this.isListView;
@@ -842,7 +841,11 @@ Pager.prototype = {
       let isControlDisabled = '';
       let isDisabledTooltip = '';
       let titleAttr = '';
+      let pageAttr = '';
 
+      if (targetPageNum) {
+        pageAttr = ` data-page="${targetPageNum}"`;
+      }
       if (tooltipContent) {
         titleAttr = ` title="${tooltipContent}"`;
       }
@@ -862,22 +865,12 @@ Pager.prototype = {
         }
       }
 
-      let html = '';
-      if (targetPageNum) {
-        self.pagerBar.addClass('has-pager-no');
-        html = `<li class="${classAttr}">
-          <a href="#" data-page="${targetPageNum}"${titleAttr}${isAriaDisabled}${isControlDisabled}>
-            <span class="audible">${audibleContent} </span>${visibleContent}
-          </a>
-        </li>`;
-      } else {
-        html = `<li class="${classAttr}">
-          <button type="button" class="btn-icon"${titleAttr}${isAriaDisabled}${isControlDisabled}>
-            ${isDisabledTooltip}<span>${audibleContent}</span>
-            ${visibleContent}
-          </button>
-        </li>`;
-      }
+      const html = `<li class="${classAttr}">
+        <button type="button" class="btn-icon"${titleAttr}${pageAttr}${isAriaDisabled}${isControlDisabled}>
+          ${isDisabledTooltip}<span>${audibleContent}</span>
+          ${visibleContent}
+        </button>
+      </li>`;
 
       return html;
     }
@@ -929,10 +922,8 @@ Pager.prototype = {
     }
 
     // Invoke all sub-components
-    this.pagerBar.children('li')
-      .find('> a, > .btn-icon, > .btn-icon[disabled] .disabled-tooltip')
-      .button()
-      .tooltip();
+    this.pagerBar.children('li').find('> .btn-icon').button().tooltip();
+    this.pagerBar.children('li').find('> .btn-icon[disabled] .disabled-tooltip').tooltip();
   },
 
   /**
@@ -1442,9 +1433,9 @@ Pager.prototype = {
   teardown() {
     if (this.numberButtons) {
       this.numberButtons.forEach((li) => {
-        const a = li.querySelector('a, .btn-icon');
-        const buttonAPI = $(a).data('button');
-        const tooltipAPI = $(a).data('tooltip');
+        const btn = li.querySelector('.btn-icon');
+        const buttonAPI = $(btn).data('button');
+        const tooltipAPI = $(btn).data('tooltip');
 
         if (buttonAPI) {
           buttonAPI.destroy();

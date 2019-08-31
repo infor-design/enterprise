@@ -531,16 +531,16 @@ describe('Listview inside of List/Detail Pattern', () => {
     expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(10);
     expect(await element(by.css('.pager-toolbar.is-listview')).isPresent()).toBeTruthy();
     expect(await element(by.css('.pager-toolbar .pager-prev')).isPresent()).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeTruthy();
     expect(await element(by.css('.pager-toolbar .pager-next')).isPresent()).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeFalsy();
 
     await element(by.css('.pager-toolbar .pager-next')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(2);
-    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeFalsy();
-    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeTruthy();
   });
 });
 
@@ -558,9 +558,9 @@ describe('Listview with indeterminate paging inside of List/Detail Pattern', () 
     expect(await element(by.css('.listview li[role="option"]:last-child .listview-heading')).getText()).toEqual('Compressor 19');
     expect(await element(by.css('.pager-toolbar.is-listview')).isPresent()).toBeTruthy();
     expect(await element(by.css('.pager-toolbar .pager-prev')).isPresent()).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeTruthy();
     expect(await element(by.css('.pager-toolbar .pager-next')).isPresent()).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeFalsy();
 
     await element(by.css('.pager-toolbar .pager-next')).click();
     await browser.driver.sleep(config.sleep);
@@ -568,7 +568,7 @@ describe('Listview with indeterminate paging inside of List/Detail Pattern', () 
     expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(20);
     expect(await element(by.css('.listview li[role="option"]:first-child .listview-heading')).getText()).toEqual('Compressor 20');
     expect(await element(by.css('.listview li[role="option"]:last-child .listview-heading')).getText()).toEqual('Compressor 39');
-    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeFalsy();
-    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeFalsy();
   });
 });

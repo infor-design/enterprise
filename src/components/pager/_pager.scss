@@ -13,13 +13,14 @@
     cursor: pointer;
     display: inline-block;
 
-    > a,
     > .btn-icon {
       border: 1px solid transparent;
       border-radius: 2px;
       color: $pager-text-color;
       cursor: pointer;
+      height: 28px;
       margin: 0 2px;
+      min-height: 28px;
       outline: none;
       padding: 5px;
       position: static;
@@ -46,19 +47,31 @@
       }
     }
 
-    > .btn-icon {
-      height: 28px;
-      margin-top: -2px;
-      min-height: auto;
-      min-width: auto;
-      padding-top: 4px;
-      vertical-align: middle;
-      width: 34px;
+    &.pager-prev,
+    &.pager-first,
+    &.pager-last,
+    &.pager-next {
+      > .btn-icon {
+        margin-top: -1px;
+        min-width: 34px;
+        width: 34px;
+
+        .icon {
+          margin-top: -2px;
+        }
+      }
     }
 
     &.pager-no {
+      > .btn-icon {
+        font-weight: $theme-number-font-weight-base;
+        margin-top: -1px;
+        min-width: 19px;
+        width: auto;
+      }
+
       &:hover {
-        > a {
+        > .btn-icon {
           border-bottom: 1px solid $pager-text-color;
 
           &[disabled] {
@@ -69,13 +82,13 @@
     }
 
     &.selected {
-      > a {
+      > .btn-icon {
         color: $pager-selected-color;
         font-weight: $theme-number-font-weight-bold;
       }
 
       &:hover {
-        > a {
+        > .btn-icon {
           border-bottom: 1px solid $pager-text-color;
 
           &:focus {
@@ -86,7 +99,7 @@
     }
 
     &:not(.selected) {
-      a:not([disabled]) {
+      .btn-icon:not([disabled]) {
         &:active,
         &:hover {
           svg {
@@ -98,21 +111,6 @@
 
     svg {
       pointer-events: none;
-    }
-  }
-
-  &.is-standalone,
-  &.has-pager-no {
-    .pager-prev,
-    .pager-first,
-    .pager-last,
-    .pager-next,
-    .pager-no {
-      margin-top: -1px;
-
-      a {
-        vertical-align: middle;
-      }
     }
   }
 }
@@ -130,7 +128,6 @@
     top: 4px;
   }
 
-  a,
   .btn-icon {
     backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
     border-radius: 20px;
@@ -154,7 +151,6 @@
   display: inline-block;
   font-size: $theme-size-font-base;
   line-height: normal;
-  vertical-align: middle;
 
   > label {
     font-size: inherit !important;
@@ -207,74 +203,11 @@ li + .pager-count {
   }
 }
 
-// Inside Widgets
-.card,
-.widget {
-  .pager-toolbar {
-    margin: 0;
-  }
-
-  &.card .card-footer .pager-toolbar {
-    height: 30px;
-
-    > li {
-      > a,
-      > .btn-icon {
-        height: 30px;
-        margin: 0;
-        padding: 5px 7px;
-      }
-
-      &.pager-prev,
-      &.pager-next {
-        > a,
-        > .btn-icon {
-          height: 29px;
-          padding: 5px;
-        }
-      }
-    }
-
-    &.has-pager-no {
-      .pager-prev,
-      .pager-first,
-      .pager-last,
-      .pager-next,
-      .pager-no {
-        margin-top: -2px;
-      }
-    }
-  }
-}
-
 .ie {
-  .pager-toolbar {
-    .pager-prev,
-    .pager-first,
-    .pager-last,
-    .pager-next {
-      > .btn-icon {
-        margin-top: 1px;
-      }
-    }
-
-    &.is-standalone,
-    &.has-pager-no {
-      .pager-prev,
-      .pager-first,
-      .pager-last,
-      .pager-next,
-      .pager-no {
-        margin-top: -2px;
-      }
-    }
-  }
-
   &.ie11 {
     .pager-toolbar > li {
       vertical-align: middle;
 
-      > a,
       > .btn-icon {
         display: inline-block;
 
@@ -283,9 +216,28 @@ li + .pager-count {
         }
       }
 
-      &.pager-count {
-        input {
+      &.pager-prev,
+      &.pager-first,
+      &.pager-last,
+      &.pager-next {
+        .btn-icon {
+          margin-top: 3px;
+
+          svg {
+            top: 2px;
+          }
+        }
+      }
+
+      &.pager-no {
+        .btn-icon {
           margin-top: 4px;
+        }
+      }
+
+      &.pager-count {
+        label {
+          margin-top: 2px;
         }
       }
     }
@@ -299,49 +251,65 @@ li + .pager-count {
   }
 }
 
-.is-firefox {
+// Inside Widgets
+.card,
+.widget {
   .pager-toolbar {
-    .pager-prev,
-    .pager-first,
-    .pager-last,
-    .pager-next {
-      > .btn-icon {
-        margin-top: -2px;
-      }
-    }
+    margin: 0;
+  }
 
-    &.is-standalone,
-    &.has-pager-no {
-      .pager-prev,
-      .pager-first,
-      .pager-last,
-      .pager-next,
-      .pager-no {
-        margin-top: 1px;
+  &.card .card-footer .pager-toolbar {
+    height: 30px;
+
+    > li {
+      > .btn-icon {
+        height: 30px;
+        margin: 0;
+        padding: 5px 7px;
+      }
+
+      &.pager-prev,
+      &.pager-first,
+      &.pager-last,
+      &.pager-next,
+      &.pager-no {
+        > .btn-icon {
+          height: 28px;
+          margin-top: -1px;
+        }
       }
     }
   }
 }
 
-.is-safari {
+.is-firefox {
   .pager-toolbar {
-    .pager-prev,
-    .pager-first,
-    .pager-last,
-    .pager-next {
-      > .btn-icon {
-        margin-top: -1px;
+    > li {
+      &.pager-prev,
+      &.pager-first,
+      &.pager-last,
+      &.pager-next,
+      &.pager-no {
+        > .btn-icon {
+          margin-top: 0;
+        }
       }
     }
+  }
 
-    &.is-standalone,
-    &.has-pager-no {
-      .pager-prev,
-      .pager-first,
-      .pager-last,
-      .pager-next,
-      .pager-no {
-        margin-top: 0;
+  .card,
+  .widget {
+    &.card .card-footer .pager-toolbar {
+      > li {
+        &.pager-prev,
+        &.pager-first,
+        &.pager-last,
+        &.pager-next,
+        &.pager-no {
+          > .btn-icon {
+            margin-top: 0;
+          }
+        }
       }
     }
   }
