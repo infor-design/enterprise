@@ -43,6 +43,7 @@
 - `[Locale]` Fixed an occurrence where an nonstandard locale filename was not correctly processed. ([#2684](https://github.com/infor-design/enterprise/issues/2684))
 - `[Lookup]` Fixed memory leak issues after destroy. ([#2494](https://github.com/infor-design/enterprise/issues/2494))
 - `[Modal]` Fixed memory leak issues after destroy. ([#2497](https://github.com/infor-design/enterprise/issues/2497))
+- `[Popupmenu]` Fixed DOM leak where many arrows could be inserted in the DOM. ([#568](https://github.com/infor-design/enterprise-ng/issues/568))
 - `[Pager]` Fixed a bug where clicking disabled buttons caused a refresh of the page in NG. ([#2170](https://github.com/infor-design/enterprise/issues/2170))
 - `[Slider]` Updated the color variant logic to match new uplift theming. ([#2647](https://github.com/infor-design/enterprise/issues/2647))
 - `[Tabs]` Fixed a memory leak caused by removing a tab. ([#2686](https://github.com/infor-design/enterprise/issues/2686))
